@@ -10,10 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary>
-    /// InMageRcm last source agent upgrade error details.
-    /// Serialized Name: InMageRcmLastAgentUpgradeErrorDetails
-    /// </summary>
+    /// <summary> InMageRcm last source agent upgrade error details. </summary>
     public partial class InMageRcmLastAgentUpgradeErrorDetails
     {
         /// <summary> Initializes a new instance of InMageRcmLastAgentUpgradeErrorDetails. </summary>
@@ -24,30 +21,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Initializes a new instance of InMageRcmLastAgentUpgradeErrorDetails. </summary>
-        /// <param name="errorCode">
-        /// The error code.
-        /// Serialized Name: InMageRcmLastAgentUpgradeErrorDetails.errorCode
-        /// </param>
-        /// <param name="errorMessage">
-        /// The error message.
-        /// Serialized Name: InMageRcmLastAgentUpgradeErrorDetails.errorMessage
-        /// </param>
-        /// <param name="possibleCauses">
-        /// The possible causes.
-        /// Serialized Name: InMageRcmLastAgentUpgradeErrorDetails.possibleCauses
-        /// </param>
-        /// <param name="recommendedAction">
-        /// The recommended action.
-        /// Serialized Name: InMageRcmLastAgentUpgradeErrorDetails.recommendedAction
-        /// </param>
-        /// <param name="errorMessageParameters">
-        /// The error message parameters.
-        /// Serialized Name: InMageRcmLastAgentUpgradeErrorDetails.errorMessageParameters
-        /// </param>
-        /// <param name="errorTags">
-        /// The error tags.
-        /// Serialized Name: InMageRcmLastAgentUpgradeErrorDetails.errorTags
-        /// </param>
+        /// <param name="errorCode"> The error code. </param>
+        /// <param name="errorMessage"> The error message. </param>
+        /// <param name="possibleCauses"> The possible causes. </param>
+        /// <param name="recommendedAction"> The recommended action. </param>
+        /// <param name="errorMessageParameters"> The error message parameters. </param>
+        /// <param name="errorTags"> The error tags. </param>
         internal InMageRcmLastAgentUpgradeErrorDetails(string errorCode, string errorMessage, string possibleCauses, string recommendedAction, IReadOnlyDictionary<string, string> errorMessageParameters, IReadOnlyDictionary<string, string> errorTags)
         {
             ErrorCode = errorCode;
@@ -58,35 +37,17 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             ErrorTags = errorTags;
         }
 
-        /// <summary>
-        /// The error code.
-        /// Serialized Name: InMageRcmLastAgentUpgradeErrorDetails.errorCode
-        /// </summary>
+        /// <summary> The error code. </summary>
         public string ErrorCode { get; }
-        /// <summary>
-        /// The error message.
-        /// Serialized Name: InMageRcmLastAgentUpgradeErrorDetails.errorMessage
-        /// </summary>
+        /// <summary> The error message. </summary>
         public string ErrorMessage { get; }
-        /// <summary>
-        /// The possible causes.
-        /// Serialized Name: InMageRcmLastAgentUpgradeErrorDetails.possibleCauses
-        /// </summary>
+        /// <summary> The possible causes. </summary>
         public string PossibleCauses { get; }
-        /// <summary>
-        /// The recommended action.
-        /// Serialized Name: InMageRcmLastAgentUpgradeErrorDetails.recommendedAction
-        /// </summary>
+        /// <summary> The recommended action. </summary>
         public string RecommendedAction { get; }
-        /// <summary>
-        /// The error message parameters.
-        /// Serialized Name: InMageRcmLastAgentUpgradeErrorDetails.errorMessageParameters
-        /// </summary>
+        /// <summary> The error message parameters. </summary>
         public IReadOnlyDictionary<string, string> ErrorMessageParameters { get; }
-        /// <summary>
-        /// The error tags.
-        /// Serialized Name: InMageRcmLastAgentUpgradeErrorDetails.errorTags
-        /// </summary>
+        /// <summary> The error tags. </summary>
         public IReadOnlyDictionary<string, string> ErrorTags { get; }
     }
 }

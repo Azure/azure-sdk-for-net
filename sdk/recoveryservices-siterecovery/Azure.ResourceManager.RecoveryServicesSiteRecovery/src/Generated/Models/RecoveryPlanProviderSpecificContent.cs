@@ -9,9 +9,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     /// <summary>
     /// Recovery plan provider specific input base class.
-    /// Serialized Name: RecoveryPlanProviderSpecificInput
     /// Please note <see cref="RecoveryPlanProviderSpecificContent"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-    /// The available derived classes include <see cref="RecoveryPlanA2AInput"/>.
+    /// The available derived classes include <see cref="RecoveryPlanA2AContent"/>.
     /// </summary>
     public abstract partial class RecoveryPlanProviderSpecificContent
     {
@@ -20,10 +19,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         {
         }
 
-        /// <summary>
-        /// Gets the Instance type.
-        /// Serialized Name: RecoveryPlanProviderSpecificInput.instanceType
-        /// </summary>
+        /// <summary> Gets the Instance type. </summary>
         internal string InstanceType { get; set; }
     }
 }

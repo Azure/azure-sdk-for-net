@@ -7,10 +7,7 @@
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary>
-    /// A2A cloud creation input.
-    /// Serialized Name: A2AContainerCreationInput
-    /// </summary>
+    /// <summary> A2A cloud creation input. </summary>
     public partial class A2AContainerCreationContent : ReplicationProviderSpecificContainerCreationContent
     {
         /// <summary> Initializes a new instance of A2AContainerCreationContent. </summary>

@@ -7,17 +7,11 @@
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary>
-    /// The UnknownApplianceSpecificDetails.
-    /// Serialized Name: UnknownApplianceSpecificDetails
-    /// </summary>
+    /// <summary> The UnknownApplianceSpecificDetails. </summary>
     internal partial class UnknownApplianceSpecificDetails : SiteRecoveryApplianceSpecificDetails
     {
         /// <summary> Initializes a new instance of UnknownApplianceSpecificDetails. </summary>
-        /// <param name="instanceType">
-        /// Gets the class type. Overridden in derived classes.
-        /// Serialized Name: ApplianceSpecificDetails.instanceType
-        /// </param>
+        /// <param name="instanceType"> Gets the class type. Overridden in derived classes. </param>
         internal UnknownApplianceSpecificDetails(string instanceType) : base(instanceType)
         {
             InstanceType = instanceType ?? "Unknown";

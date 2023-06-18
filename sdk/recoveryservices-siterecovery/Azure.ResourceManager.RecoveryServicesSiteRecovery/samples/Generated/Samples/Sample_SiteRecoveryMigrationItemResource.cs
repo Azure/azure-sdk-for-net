@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Samples
             // invoke the operation
             SiteRecoveryMigrationItemPatch patch = new SiteRecoveryMigrationItemPatch()
             {
-                UpdateMigrationItemContentProviderSpecificDetails = new VMwareCbtUpdateMigrationItemContent(),
+                UpdateMigrationItemProviderSpecificDetails = new VMwareCbtUpdateMigrationItemContent(),
             };
             ArmOperation<SiteRecoveryMigrationItemResource> lro = await siteRecoveryMigrationItem.UpdateAsync(WaitUntil.Completed, patch);
             SiteRecoveryMigrationItemResource result = lro.Value;
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Samples
             SiteRecoveryMigrationItemResource siteRecoveryMigrationItem = client.GetSiteRecoveryMigrationItemResource(siteRecoveryMigrationItemResourceId);
 
             // invoke the operation
-            MigrateContent content = new MigrateContent(new MigrateContentProperties(new VMwareCbtMigrateContent("true")));
+            SiteRecoveryMigrateContent content = new SiteRecoveryMigrateContent(new SiteRecoveryMigratetProperties(new VMwareCbtMigrateContent("true")));
             ArmOperation<SiteRecoveryMigrationItemResource> lro = await siteRecoveryMigrationItem.MigrateAsync(WaitUntil.Completed, content);
             SiteRecoveryMigrationItemResource result = lro.Value;
 
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Samples
             SiteRecoveryMigrationItemResource siteRecoveryMigrationItem = client.GetSiteRecoveryMigrationItemResource(siteRecoveryMigrationItemResourceId);
 
             // invoke the operation
-            PauseReplicationContent content = new PauseReplicationContent(new PauseReplicationContentProperties("VMwareCbt"));
+            PauseReplicationContent content = new PauseReplicationContent(new PauseReplicationProperties("VMwareCbt"));
             ArmOperation<SiteRecoveryMigrationItemResource> lro = await siteRecoveryMigrationItem.PauseReplicationAsync(WaitUntil.Completed, content);
             SiteRecoveryMigrationItemResource result = lro.Value;
 
@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Samples
             SiteRecoveryMigrationItemResource siteRecoveryMigrationItem = client.GetSiteRecoveryMigrationItemResource(siteRecoveryMigrationItemResourceId);
 
             // invoke the operation
-            ResumeReplicationContent content = new ResumeReplicationContent(new ResumeReplicationContentProperties(new VMwareCbtResumeReplicationContent()
+            ResumeReplicationContent content = new ResumeReplicationContent(new ResumeReplicationProperties(new VMwareCbtResumeReplicationContent()
             {
                 DeleteMigrationResources = "false",
             }));
@@ -258,7 +258,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Samples
             SiteRecoveryMigrationItemResource siteRecoveryMigrationItem = client.GetSiteRecoveryMigrationItemResource(siteRecoveryMigrationItemResourceId);
 
             // invoke the operation
-            ResyncContent content = new ResyncContent(new ResyncContentProperties(new VMwareCbtResyncContent("true")));
+            MigrationItemResyncContent content = new MigrationItemResyncContent(new MigrationItemResyncProperties(new VMwareCbtResyncContent("true")));
             ArmOperation<SiteRecoveryMigrationItemResource> lro = await siteRecoveryMigrationItem.ResyncAsync(WaitUntil.Completed, content);
             SiteRecoveryMigrationItemResource result = lro.Value;
 
@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Samples
             SiteRecoveryMigrationItemResource siteRecoveryMigrationItem = client.GetSiteRecoveryMigrationItemResource(siteRecoveryMigrationItemResourceId);
 
             // invoke the operation
-            TestMigrateContent content = new TestMigrateContent(new TestMigrateContentProperties(new VMwareCbtTestMigrateContent(new ResourceIdentifier("/Subscriptions/cb53d0c3-bd59-4721-89bc-06916a9147ef/resourceGroups/resourcegroup1/providers/Microsoft.RecoveryServices/vaults/migrationvault/replicationFabrics/vmwarefabric1/replicationProtectionContainers/vmwareContainer1/replicationMigrationItems/virtualmachine1/migrationRecoveryPoints/9e737191-317e-43d0-8c83-e32ac3b34686"), new ResourceIdentifier("/Subscriptions/cb53d0c3-bd59-4721-89bc-06916a9147ef/resourceGroups/resourcegroup1/providers/Microsoft.Network/virtualNetworks/virtualNetwork1"))));
+            TestMigrateContent content = new TestMigrateContent(new TestMigrateProperties(new VMwareCbtTestMigrateContent(new ResourceIdentifier("/Subscriptions/cb53d0c3-bd59-4721-89bc-06916a9147ef/resourceGroups/resourcegroup1/providers/Microsoft.RecoveryServices/vaults/migrationvault/replicationFabrics/vmwarefabric1/replicationProtectionContainers/vmwareContainer1/replicationMigrationItems/virtualmachine1/migrationRecoveryPoints/9e737191-317e-43d0-8c83-e32ac3b34686"), new ResourceIdentifier("/Subscriptions/cb53d0c3-bd59-4721-89bc-06916a9147ef/resourceGroups/resourcegroup1/providers/Microsoft.Network/virtualNetworks/virtualNetwork1"))));
             ArmOperation<SiteRecoveryMigrationItemResource> lro = await siteRecoveryMigrationItem.TestMigrateAsync(WaitUntil.Completed, content);
             SiteRecoveryMigrationItemResource result = lro.Value;
 
@@ -330,7 +330,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Samples
             SiteRecoveryMigrationItemResource siteRecoveryMigrationItem = client.GetSiteRecoveryMigrationItemResource(siteRecoveryMigrationItemResourceId);
 
             // invoke the operation
-            TestMigrateCleanupContent content = new TestMigrateCleanupContent(new TestMigrateCleanupContentProperties()
+            TestMigrateCleanupContent content = new TestMigrateCleanupContent(new TestMigrateCleanupProperties()
             {
                 Comments = "Test Failover Cleanup",
             });

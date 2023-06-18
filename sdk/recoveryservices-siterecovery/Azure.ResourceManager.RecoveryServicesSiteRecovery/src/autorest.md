@@ -15,46 +15,16 @@ skip-csproj: true
 modelerfour:
   flatten-payloads: false
 
-mgmt-debug: 
-  show-serialized-names: true
+#mgmt-debug: 
+#  show-serialized-names: true
 
 rename-mapping:
   Alert: SiteRecoveryAlert
   AlertProperties: SiteRecoveryAlertProperties
   AlertCollection: SiteRecoveryAlertListResult
-  Fabric: SiteRecoveryFabric
-  LogicalNetwork: SiteRecoveryLogicalNetwork
-  MigrationItem: SiteRecoveryMigrationItem
-  MigrationItemCollection: SiteRecoveryMigrationItemListResult
-  MigrationItemProperties: SiteRecoveryMigrationItemProperties
-  MigrationRecoveryPoint: SiteRecoveryMigrationRecoveryPoint
-  MigrationRecoveryPointCollection: SiteRecoveryMigrationRecoveryPointListResult
-  Network: SiteRecoveryNetwork
-  NetworkProperties: SiteRecoveryNetworkProperties
-  NetworkCollection: SiteRecoveryNetworkListResult
-  NetworkMapping: SiteRecoveryNetworkMapping
-  Policy: SiteRecoveryPolicy
-  PolicyProperties: SiteRecoveryPolicyProperties
-  ProtectableItem: SiteRecoveryProtectableItem
-  ProtectionContainer: SiteRecoveryProtectionContainer
-  ProtectionContainerMapping: SiteRecoveryProtectionContainerMapping
-  RecoveryPlan: SiteRecoveryRecoveryPlan
-  RecoveryPoint: SiteRecoveryPoint
-  RecoveryServicesProvider: SiteRecoveryServicesProvider
-  StorageClassification: SiteRecoveryStorageClassification
-  StorageClassificationMapping: SiteRecoveryStorageClassificationMapping
-  VaultSetting: SiteRecoveryVaultSetting
-  VCenter: SiteRecoveryVCenter
-  ReplicationAppliance: SiteRecoveryAppliance
   ApplianceCollection: SiteRecoveryApplianceListResult
   ApplianceSpecificDetails: SiteRecoveryApplianceSpecificDetails
   ASRTask: AsrTask
-  ConfigurationSettings: SiteRecoveryReplicationProviderSettings
-  CreateNetworkMappingInputProperties: SiteRecoveryCreateReplicationNetworkMappingProperties
-  CreateProtectionContainerInputProperties: SiteRecoveryCreateProtectionContainerProperties
-  CreateProtectionContainerMappingInputProperties: SiteRecoveryCreateProtectionContainerMappingProperties
-  InMageRcmFailbackReplicationDetails.targetvCenterId: TargetVCenterId
-  SecurityType: VirtualMachineSecurityType
   A2ACrossClusterMigrationReplicationDetails.primaryFabricLocation: -|azure-location
   A2AVmManagedDiskInputDetails: A2AVmManagedDiskDetails
   A2AProtectedDiskDetails.resyncRequired: IsResyncRequired
@@ -69,7 +39,7 @@ rename-mapping:
   AddDisksInput: SiteRecoveryAddDisksContent
   AddDisksInputProperties: SiteRecoveryAddDisksProperties
   AddDisksProviderSpecificInput: SiteRecoveryAddDisksProviderSpecificContent
-  AddVCenterRequestProperties: SiteRecoveryAddVCenterRequestProperties
+  AddVCenterRequestProperties: SiteRecoveryAddVCenterProperties
   AddVCenterRequestProperties.ipAddress: -|ip-address
   AddRecoveryServicesProviderInputProperties: SiteRecoveryAddRecoveryServicesProviderProperties
   AgentAutoUpdateStatus: SiteRecoveryAgentAutoUpdateStatus
@@ -87,16 +57,22 @@ rename-mapping:
   AzureToAzureUpdateNetworkMappingInput: A2AUpdateNetworkMappingContent
   AzureToAzureVmSyncedConfigDetails: A2AVmSyncedConfigDetails
   AzureVmDiskDetails: SiteRecoveryVmDiskDetails
+  ConfigurationSettings: SiteRecoveryReplicationProviderSettings
+  ConfigureAlertRequestProperties: SiteRecoveryConfigureAlertProperties
+  CreateNetworkMappingInputProperties: SiteRecoveryCreateReplicationNetworkMappingProperties
+  CreateProtectionContainerInputProperties: SiteRecoveryCreateProtectionContainerProperties
+  CreateProtectionContainerMappingInputProperties: SiteRecoveryCreateProtectionContainerMappingProperties
   ComputeSizeErrorDetails: SiteRecoveryComputeSizeErrorDetails
   CreatePolicyInputProperties: SiteRecoveryCreatePolicyProperties
-  CreateProtectionIntentProperties: ReplicationCreateProtectionIntentProperties
-  CreateProtectionIntentProviderSpecificDetails: ReplicationCreateProtectionIntentProviderDetail
+  CreateProtectionIntentProperties: SiteRecoveryCreateProtectionIntentProperties
+  CreateProtectionIntentProviderSpecificDetails: SiteRecoveryCreateProtectionIntentProviderDetail
   CreateRecoveryPlanInputProperties: SiteRecoveryCreateRecoveryPlanProperties
   DataStore: SiteRecoveryDataStore
   DataStore.uuid: -|uuid
   DataSyncStatus: SiteRecoveryDataSyncStatus
   DisableProtectionInputProperties: DisableProtectionProperties
   DiskAccountType: SiteRecoveryDiskAccountType
+  DiscoverProtectableItemRequestProperties: DiscoverProtectableItemProperties
   DiskDetails: SiteRecoveryDiskDetails
   DiskEncryptionInfo: SiteRecoveryDiskEncryptionInfo
   DiskEncryptionKeyInfo: SiteRecoveryDiskEncryptionKeyInfo
@@ -116,32 +92,20 @@ rename-mapping:
   EventSpecificDetails: SiteRecoveryEventSpecificDetails
   ExtendedLocation: SiteRecoveryExtendedLocation
   ExtendedLocationType: SiteRecoveryExtendedLocationType
+  Fabric: SiteRecoveryFabric
   FabricCollection: SiteRecoveryFabricListResult
-  FabricCreationInputProperties: SiteRecoveryFabricCreationProperties
   FabricProperties: SiteRecoveryFabricProperties
-  FabricReplicationGroupTaskDetails: SiteRecoveryFabricReplicationGroupTaskDetails
-  FabricSpecificCreateNetworkMappingInput: SiteRecoveryFabricSpecificCreateNetworkMappingContent
-  FabricSpecificCreationInput: SiteRecoveryFabricSpecificCreationContent
-  FabricSpecificDetails: SiteRecoveryFabricSpecificDetails
-  FabricSpecificUpdateNetworkMappingInput: SiteRecoveryFabricSpecificUpdateNetworkMappingContent
-  FailoverDeploymentModel: SiteRecoveryFailoverDeploymentModel
-  FailoverJobDetails: SiteRecoveryFailoverJobDetails
-  FailoverProcessServerRequest: SiteRecoveryFailoverProcessServerContent
-  FailoverProcessServerRequestProperties: SiteRecoveryFailoverProcessServerProperties
-  FailoverReplicationProtectedItemDetails: SiteRecoveryFailoverReplicationProtectedItemDetails
+  FabricCreationInputProperties: FabricCreationProperties
+  FailoverProcessServerRequest: FailoverProcessServerContent
+  FailoverProcessServerRequestProperties: FailoverProcessServerProperties
   GroupTaskDetails: SiteRecoveryGroupTaskDetails
   HealthError: SiteRecoveryHealthError
-  HealthErrorCategory: SiteRecoveryHealthErrorCategory
-  HealthErrorCustomerResolvability: SiteRecoveryHealthErrorCustomerResolvability
-  HealthErrorSummary: SiteRecoveryHealthErrorSummary
   HyperVReplicaAzureDiskInputDetails: HyperVReplicaAzureDiskDetails
   HyperVReplicaAzureEnableProtectionInput.hvHostVmId: HyperVHostVmId
   HyperVReplicaAzureEnableProtectionInput.targetAzureSubnetId: -|arm-id
   HyperVReplicaAzureReprotectInput.hvHostVmId: HyperVHostVmId
   HyperVReplicaAzureReprotectInput.vHDId: VhdId
   HyperVVirtualMachineDetails: HyperVVmDetails
-  IdentityProviderDetails: SiteRecoveryIdentityProviderDetails
-  IdentityProviderInput: SiteRecoveryIdentityProviderContent
   InMageAzureV2DiskInputDetails: InMageAzureV2DiskDetails
   InMageAzureV2ProtectedDiskDetails.psDataInMegaBytes: PSDataInMegaBytes
   InMageAzureV2ProtectedDiskDetails.resyncLastDataTransferTimeUTC: ResyncLastDataTransferOn
@@ -157,6 +121,7 @@ rename-mapping:
   InMageRcmFailbackMobilityAgentDetails.lastHeartbeatUtc: LastHeartbeatReceivedOn
   InMageRcmFailbackProtectedDiskDetails.lastSyncTime: LastSyncedOn
   InMageRcmFailbackReplicationDetails.azureVirtualMachineId: -|arm-id
+  InMageRcmFailbackReplicationDetails.targetvCenterId: TargetVCenterId
   InMageRcmFailbackSyncDetails.lastDataTransferTimeUtc: LastDataTransferOn|date-time
   InMageRcmFailbackSyncDetails.startTime: StartOn|date-time
   InMageRcmFailbackSyncDetails.lastRefreshTime: LastRefreshedOn|date-time
@@ -184,9 +149,150 @@ rename-mapping:
   JobQueryParameter: SiteRecoveryJobQueryContent
   JobQueryParameter.startTime: StartOn
   JobQueryParameter.endTime: EndOn
-  JobStatusEventDetails: SiteRecoveryJJobStatusEventDetails
-  JobTaskDetails: SiteRecoveryJJobTaskDetails
-
+  JobStatusEventDetails: SiteRecoveryJobStatusEventDetails
+  JobTaskDetails: SiteRecoveryJobTaskDetails
+  KeyEncryptionKeyInfo: SiteRecoveryKeyEncryptionKeyInfo
+  LicenseType: SiteRecoveryLicenseType
+  LogicalNetwork: SiteRecoveryLogicalNetwork
+  LogicalNetworkCollection: SiteRecoveryLogicalNetworkListResult
+  LogicalNetworkProperties: SiteRecoveryLogicalNetworkProperties
+  MarsAgentDetails.lastHeartbeatUtc: LastHeartbeatReceivedOn
+  MasterTargetServer.lastHeartbeat: LastHeartbeatReceivedOn
+  MigrateInput: SiteRecoveryMigrateContent
+  MigrateInputProperties: SiteRecoveryMigratetProperties
+  MigrationItem: SiteRecoveryMigrationItem
+  MigrationItemCollection: SiteRecoveryMigrationItemListResult
+  MigrationItemProperties: SiteRecoveryMigrationItemProperties
+  MigrationRecoveryPointCollection: MigrationRecoveryPointListResult
+  MigrationState: SiteRecoveryMigrationState
+  Network: SiteRecoveryNetwork
+  NetworkProperties: SiteRecoveryNetworkProperties
+  NetworkCollection: SiteRecoveryNetworkListResult
+  NetworkMapping: SiteRecoveryNetworkMapping
+  NetworkMappingCollection: SiteRecoveryNetworkMappingListResult
+  NetworkMappingProperties: SiteRecoveryNetworkMappingProperties
+  OSDetails: SiteRecoveryOSDetails
+  OSDiskDetails: SiteRecoveryOSDiskDetails
+  OSVersionWrapper: SiteRecoveryOSVersionWrapper
+  PauseReplicationInputProperties: PauseReplicationProperties
+  PlannedFailoverInputProperties: PlannedFailoverProperties
+  Policy: SiteRecoveryPolicy
+  PolicyCollection: SiteRecoveryPolicyListResult
+  PolicyProperties: SiteRecoveryPolicyProperties
+  PresenceStatus: HyperVVmDiskPresenceStatus
+  ProcessServer: SiteRecoveryProcessServer
+  ProcessServer.lastHeartbeat: LastHeartbeatReceivedOn
+  ProcessServerDetails: SiteRecoveryProcessServerDetails
+  ProcessServerDetails.lastHeartbeatUtc: LastHeartbeatReceivedOn
+  ProtectableItem: SiteRecoveryProtectableItem
+  ProtectableItemCollection: SiteRecoveryProtectableItemListResult
+  ProtectableItemProperties: SiteRecoveryProtectableItemProperties
+  ProtectableItemProperties.replicationProtectedItemId: -|arm-id
+  ProtectableItemProperties.recoveryServicesProviderId: -|arm-id
+  ProtectionContainer: SiteRecoveryProtectionContainer
+  ProtectionContainerCollection: SiteRecoveryProtectionContainerListResult
+  ProtectionContainerProperties: SiteRecoveryProtectionContainerProperties
+  ProtectionContainerMappingCollection: ProtectionContainerMappingListResult
+  ProtectionContainerMappingProperties.targetProtectionContainerId: -|arm-id
+  ProtectionHealth: SiteRecoveryProtectionHealth
+  ProviderError: SiteRecoveryJobProviderError
+  PushInstallerDetails.lastHeartbeatUtc: LastHeartbeatReceivedOn
+  RcmProxyDetails.lastHeartbeatUtc: LastHeartbeatReceivedOn
+  RecoveryPlan: SiteRecoveryRecoveryPlan
+  RecoveryPlanCollection: SiteRecoveryRecoveryPlanListResult
+  RecoveryPlanProperties: SiteRecoveryRecoveryPlanProperties
+  RecoveryPlanA2AInput: RecoveryPlanA2AContent
+  RecoveryPlanAutomationRunbookActionDetails.runbookId: -|arm-id
+  RecoveryPlanGroup: SiteRecoveryRecoveryPlanGroup
+  RecoveryPoint: SiteRecoveryPoint
+  RecoveryPointCollection: SiteRecoveryPointListResult
+  RecoveryPointProperties: SiteRecoveryPointProperties
+  RecoveryPointType: SiteRecoveryPointType
+  RecoveryServicesProvider: SiteRecoveryServicesProvider
+  RecoveryServicesProviderCollection: SiteRecoveryServicesProviderListResult
+  RecoveryServicesProviderProperties: SiteRecoveryServicesProviderProperties
+  RecoveryServicesProviderProperties.lastHeartBeat: LastHeartbeatReceivedOn
+  RecoveryPlanPlannedFailoverInputProperties: RecoveryPlanPlannedFailoverProperties
+  RecoveryPlanProtectedItem.id: -|arm-id
+  RecoveryPlanTestFailoverCleanupInputProperties: RecoveryPlanTestFailoverCleanupProperties
+  RecoveryPlanTestFailoverInputProperties: RecoveryPlanTestFailoverProperties
+  RecoveryPlanUnplannedFailoverInputProperties: RecoveryPlanUnplannedFailoverProperties
+  RecoveryPlanUnplannedFailoverInputProperties.sourceSiteOperations: SourceSiteOperation
+  RemoveProtectionContainerMappingInputProperties: RemoveProtectionContainerMappingProperties
+  ReplicationAppliance: SiteRecoveryReplicationAppliance
+  ReplicationApplianceProperties: SiteRecoveryReplicationApplianceProperties
+  ReplicationEligibilityResultsCollection: ReplicationEligibilityResultListResult
+  ReplicationEligibilityResultsErrorInfo: ReplicationEligibilityResultErrorInfo
+  ReplicationEligibilityResultsProperties: ReplicationEligibilityResultProperties
+  ReplicationProtectedItemCollection: ReplicationProtectedItemListResult
+  ReplicationProtectedItemProperties.eventCorrelationId: -|uuid
+  ReplicationProtectionIntentCollection: ReplicationProtectionIntentListResult
+  ReplicationProtectionIntentProperties.creationTimeUTC: CreatedOn
+  ReprotectAgentDetails.lastHeartbeatUtc: LastHeartbeatReceivedOn
+  ReprotectAgentDetails.lastDiscoveryInUtc: Last
+  ResumeJobParams: ReplicationResumeJobContent
+  ResumeJobParamsProperties: ReplicationResumeJobProperties
+  ResumeReplicationInputProperties: ResumeReplicationProperties
+  ResyncInput: MigrationItemResyncContent
+  ResyncInputProperties: MigrationItemResyncProperties
+  ResyncState: SiteRecoveryResyncState
+  RetentionVolume: SiteRecoveryRetentionVolume
+  ReverseReplicationInputProperties: ReverseReplicationProperties
+  RunAsAccount: SiteRecoveryRunAsAccount
+  ServiceError: SiteRecoveryServiceError
+  Severity: SiteRecoveryErrorSeverity
+  SqlServerLicenseType: SiteRecoverySqlServerLicenseType
+  StorageClassificationCollection: StorageClassificationListResult
+  StorageClassificationProperties: StorageClassificationProperties
+  StorageClassificationMappingCollection: StorageClassificationMappingListResult
+  StorageClassificationMappingProperties.targetStorageClassificationId: -|arm-id
+  StorageMappingInputProperties: StorageMappingProperties
+  StorageMappingInputProperties.targetStorageClassificationId: -|arm-id
+  Subnet: SiteRecoverySubnet
+  SupportedOperatingSystems: SiteRecoverySupportedOperatingSystems
+  SupportedOSDetails: SiteRecoverySupportedOSDetails
+  SupportedOSProperties: SiteRecoverySupportedOSProperties
+  SupportedOSProperty: SiteRecoverySupportedOSProperty
+  SwitchProtectionInputProperties: SwitchProtectionProperties
+  SwitchProtectionJobDetails.newReplicationProtectedItemId: -|arm-id
+  SwitchProviderInputProperties: SwitchProviderProperties
+  TargetComputeSizeCollection: TargetComputeSizeListResult
+  TaskTypeDetails: SiteRecoveryTaskTypeDetails
+  TestFailoverCleanupInputProperties: TestFailoverCleanupProperties
+  TestFailoverInputProperties: TestFailoverProperties
+  TestMigrateCleanupInputProperties: TestMigrateCleanupProperties
+  TestMigrateInputProperties: TestMigrateProperties
+  UpdateApplianceForReplicationProtectedItemInputProperties: UpdateApplianceForReplicationProtectedItemProperties
+  UpdateMigrationItemInputProperties: UpdateMigrationItemProperties
+  UpdateNetworkMappingInputProperties: UpdateNetworkMappingProperties
+  UpdateReplicationProtectedItemInputProperties: UpdateReplicationProtectedItemProperties
+  UpdateVCenterRequestProperties: SiteRecoveryUpdateVCenterProperties
+  UnplannedFailoverInputProperties: UnplannedFailoverProperties
+  VaultSetting: SiteRecoveryVaultSetting
+  VaultSettingCollection: SiteRecoveryVaultSettingListResult
+  VaultSettingProperties: SiteRecoveryVaultSettingProperties
+  VaultSettingCreationInputProperties: VaultSettingCreationProperties
+  VCenter: SiteRecoveryVCenter
+  VCenterCollection: SiteRecoveryVCenterListResult
+  VCenterProperties: SiteRecoveryVCenterProperties
+  VCenterProperties.lastHeartbeat: LastHeartbeatReceivedOn
+  VersionDetails: SiteRecoveryVersionDetails
+  SecurityType: SiteRecoveryVmSecurityType
+  VirtualMachineTaskDetails: SiteRecoveryVmTaskDetails
+  VmEncryptionType: SiteRecoveryVmEncryptionType
+  VmmDetails: VmmFabricDetails
+  VmmVirtualMachineDetails: VmmVmDetails
+  VMwareDetails.psTemplateVersion: PSTemplateVersion
+  VMwareVirtualMachineDetails: VMwareVmDetails
+  VMNicInputDetails.enableAcceleratedNetworkingOnRecovery: IsAcceleratedNetworkingOnRecoveryEnabled
+  VMNicInputDetails.enableAcceleratedNetworkingOnTfo: IsAcceleratedNetworkingOnTfoEnabled
+  VMNicInputDetails.reuseExistingNic: IsReuseExistingNicAllowed
+  VMNicInputDetails.tfoReuseExistingNic: IsTfoReuseExistingNicAllowed
+  VMNicDetails.enableAcceleratedNetworkingOnRecovery: IsAcceleratedNetworkingOnRecoveryEnabled
+  VMNicDetails.enableAcceleratedNetworkingOnTfo: IsAcceleratedNetworkingOnTfoEnabled
+  VMNicDetails.reuseExistingNic: IsReuseExistingNicAllowed
+  VMNicDetails.tfoReuseExistingNic: IsTfoReuseExistingNicAllowed
+  
 format-by-name-rules:
   'tenantId': 'uuid'
   'ETag': 'etag'
@@ -215,6 +321,9 @@ format-by-name-rules:
   'ProtectableItemId': 'arm-id'
   '*IPAddress': 'ip-address'
   '*IPAddresses': 'ip-address'
+  'VMwareSiteId': 'arm-id'
+  'PhysicalSiteId': 'arm-id'
+  'MigrationSolutionId': 'arm-id'
 
 rename-rules:
   CPU: Cpu

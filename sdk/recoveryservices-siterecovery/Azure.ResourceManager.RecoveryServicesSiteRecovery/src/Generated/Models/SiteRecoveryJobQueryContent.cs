@@ -9,10 +9,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary>
-    /// Query parameter to enumerate jobs.
-    /// Serialized Name: JobQueryParameter
-    /// </summary>
+    /// <summary> Query parameter to enumerate jobs. </summary>
     public partial class SiteRecoveryJobQueryContent
     {
         /// <summary> Initializes a new instance of SiteRecoveryJobQueryContent. </summary>
@@ -20,45 +17,21 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         {
         }
 
-        /// <summary>
-        /// Date time to get jobs from.
-        /// Serialized Name: JobQueryParameter.startTime
-        /// </summary>
+        /// <summary> Date time to get jobs from. </summary>
         public string StartOn { get; set; }
-        /// <summary>
-        /// Date time to get jobs upto.
-        /// Serialized Name: JobQueryParameter.endTime
-        /// </summary>
+        /// <summary> Date time to get jobs upto. </summary>
         public string EndOn { get; set; }
-        /// <summary>
-        /// The Id of the fabric to search jobs under.
-        /// Serialized Name: JobQueryParameter.fabricId
-        /// </summary>
+        /// <summary> The Id of the fabric to search jobs under. </summary>
         public ResourceIdentifier FabricId { get; set; }
-        /// <summary>
-        /// The type of objects.
-        /// Serialized Name: JobQueryParameter.affectedObjectTypes
-        /// </summary>
+        /// <summary> The type of objects. </summary>
         public string AffectedObjectTypes { get; set; }
-        /// <summary>
-        /// The states of the job to be filtered can be in.
-        /// Serialized Name: JobQueryParameter.jobStatus
-        /// </summary>
+        /// <summary> The states of the job to be filtered can be in. </summary>
         public string JobStatus { get; set; }
-        /// <summary>
-        /// The output type of the jobs.
-        /// Serialized Name: JobQueryParameter.jobOutputType
-        /// </summary>
+        /// <summary> The output type of the jobs. </summary>
         public ExportJobOutputSerializationType? JobOutputType { get; set; }
-        /// <summary>
-        /// The job Name.
-        /// Serialized Name: JobQueryParameter.jobName
-        /// </summary>
+        /// <summary> The job Name. </summary>
         public string JobName { get; set; }
-        /// <summary>
-        /// The timezone offset for the location of the request (in minutes).
-        /// Serialized Name: JobQueryParameter.timezoneOffset
-        /// </summary>
+        /// <summary> The timezone offset for the location of the request (in minutes). </summary>
         public double? TimezoneOffset { get; set; }
     }
 }

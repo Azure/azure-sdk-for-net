@@ -7,10 +7,7 @@
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary>
-    /// ExtendedLocation details data.
-    /// Serialized Name: A2AExtendedLocationDetails
-    /// </summary>
+    /// <summary> ExtendedLocation details data. </summary>
     public partial class A2AExtendedLocationDetails
     {
         /// <summary> Initializes a new instance of A2AExtendedLocationDetails. </summary>
@@ -19,29 +16,17 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Initializes a new instance of A2AExtendedLocationDetails. </summary>
-        /// <param name="primaryExtendedLocation">
-        /// The primary ExtendedLocation.
-        /// Serialized Name: A2AExtendedLocationDetails.primaryExtendedLocation
-        /// </param>
-        /// <param name="recoveryExtendedLocation">
-        /// The recovery ExtendedLocation.
-        /// Serialized Name: A2AExtendedLocationDetails.recoveryExtendedLocation
-        /// </param>
+        /// <param name="primaryExtendedLocation"> The primary ExtendedLocation. </param>
+        /// <param name="recoveryExtendedLocation"> The recovery ExtendedLocation. </param>
         internal A2AExtendedLocationDetails(SiteRecoveryExtendedLocation primaryExtendedLocation, SiteRecoveryExtendedLocation recoveryExtendedLocation)
         {
             PrimaryExtendedLocation = primaryExtendedLocation;
             RecoveryExtendedLocation = recoveryExtendedLocation;
         }
 
-        /// <summary>
-        /// The primary ExtendedLocation.
-        /// Serialized Name: A2AExtendedLocationDetails.primaryExtendedLocation
-        /// </summary>
+        /// <summary> The primary ExtendedLocation. </summary>
         public SiteRecoveryExtendedLocation PrimaryExtendedLocation { get; }
-        /// <summary>
-        /// The recovery ExtendedLocation.
-        /// Serialized Name: A2AExtendedLocationDetails.recoveryExtendedLocation
-        /// </summary>
+        /// <summary> The recovery ExtendedLocation. </summary>
         public SiteRecoveryExtendedLocation RecoveryExtendedLocation { get; }
     }
 }

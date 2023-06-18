@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
             {
                 return null;
             }
-            Optional<NetworkMappingProperties> properties = default;
+            Optional<SiteRecoveryNetworkMappingProperties> properties = default;
             Optional<AzureLocation> location = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
                     {
                         continue;
                     }
-                    properties = NetworkMappingProperties.DeserializeNetworkMappingProperties(property.Value);
+                    properties = SiteRecoveryNetworkMappingProperties.DeserializeSiteRecoveryNetworkMappingProperties(property.Value);
                     continue;
                 }
                 if (property.NameEquals("location"u8))

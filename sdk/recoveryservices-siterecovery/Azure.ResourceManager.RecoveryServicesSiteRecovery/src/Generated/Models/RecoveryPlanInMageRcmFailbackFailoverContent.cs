@@ -7,32 +7,20 @@
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary>
-    /// Recovery plan InMageRcmFailback failover input.
-    /// Serialized Name: RecoveryPlanInMageRcmFailbackFailoverInput
-    /// </summary>
+    /// <summary> Recovery plan InMageRcmFailback failover input. </summary>
     public partial class RecoveryPlanInMageRcmFailbackFailoverContent : RecoveryPlanProviderSpecificFailoverContent
     {
         /// <summary> Initializes a new instance of RecoveryPlanInMageRcmFailbackFailoverContent. </summary>
-        /// <param name="recoveryPointType">
-        /// The recovery point type.
-        /// Serialized Name: RecoveryPlanInMageRcmFailbackFailoverInput.recoveryPointType
-        /// </param>
+        /// <param name="recoveryPointType"> The recovery point type. </param>
         public RecoveryPlanInMageRcmFailbackFailoverContent(InMageRcmFailbackRecoveryPointType recoveryPointType)
         {
             RecoveryPointType = recoveryPointType;
             InstanceType = "InMageRcmFailback";
         }
 
-        /// <summary>
-        /// The recovery point type.
-        /// Serialized Name: RecoveryPlanInMageRcmFailbackFailoverInput.recoveryPointType
-        /// </summary>
+        /// <summary> The recovery point type. </summary>
         public InMageRcmFailbackRecoveryPointType RecoveryPointType { get; }
-        /// <summary>
-        /// A value indicating whether multi VM sync enabled VMs should use multi VM sync points for failover.
-        /// Serialized Name: RecoveryPlanInMageRcmFailbackFailoverInput.useMultiVmSyncPoint
-        /// </summary>
+        /// <summary> A value indicating whether multi VM sync enabled VMs should use multi VM sync points for failover. </summary>
         public string UseMultiVmSyncPoint { get; set; }
     }
 }

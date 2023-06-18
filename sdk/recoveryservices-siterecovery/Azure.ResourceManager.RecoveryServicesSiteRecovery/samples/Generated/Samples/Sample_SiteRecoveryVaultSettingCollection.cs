@@ -148,9 +148,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Samples
 
             // invoke the operation
             string vaultSettingName = "default";
-            SiteRecoveryVaultSettingCreateOrUpdateContent content = new SiteRecoveryVaultSettingCreateOrUpdateContent(new VaultSettingCreationContentProperties()
+            SiteRecoveryVaultSettingCreateOrUpdateContent content = new SiteRecoveryVaultSettingCreateOrUpdateContent(new VaultSettingCreationProperties()
             {
-                MigrationSolutionId = "/subscriptions/c183865e-6077-46f2-a3b1-deb0f4f4650a/resourceGroups/resourceGroupPS1/providers/Microsoft.Migrate/MigrateProjects/resourceGroupPS1-MigrateProject/Solutions/Servers-Migration-ServerMigration",
+                MigrationSolutionId = new ResourceIdentifier("/subscriptions/c183865e-6077-46f2-a3b1-deb0f4f4650a/resourceGroups/resourceGroupPS1/providers/Microsoft.Migrate/MigrateProjects/resourceGroupPS1-MigrateProject/Solutions/Servers-Migration-ServerMigration"),
             });
             ArmOperation<SiteRecoveryVaultSettingResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, vaultSettingName, content);
             SiteRecoveryVaultSettingResource result = lro.Value;

@@ -10,10 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary>
-    /// Hyper-V Replica Azure specific input for creating a protection profile.
-    /// Serialized Name: HyperVReplicaAzurePolicyInput
-    /// </summary>
+    /// <summary> Hyper-V Replica Azure specific input for creating a protection profile. </summary>
     public partial class HyperVReplicaAzurePolicyContent : PolicyProviderSpecificContent
     {
         /// <summary> Initializes a new instance of HyperVReplicaAzurePolicyContent. </summary>
@@ -23,30 +20,15 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             InstanceType = "HyperVReplicaAzure";
         }
 
-        /// <summary>
-        /// The duration (in hours) to which point the recovery history needs to be maintained.
-        /// Serialized Name: HyperVReplicaAzurePolicyInput.recoveryPointHistoryDuration
-        /// </summary>
+        /// <summary> The duration (in hours) to which point the recovery history needs to be maintained. </summary>
         public int? RecoveryPointHistoryDuration { get; set; }
-        /// <summary>
-        /// The interval (in hours) at which Hyper-V Replica should create an application consistent snapshot within the VM.
-        /// Serialized Name: HyperVReplicaAzurePolicyInput.applicationConsistentSnapshotFrequencyInHours
-        /// </summary>
+        /// <summary> The interval (in hours) at which Hyper-V Replica should create an application consistent snapshot within the VM. </summary>
         public int? ApplicationConsistentSnapshotFrequencyInHours { get; set; }
-        /// <summary>
-        /// The replication interval.
-        /// Serialized Name: HyperVReplicaAzurePolicyInput.replicationInterval
-        /// </summary>
+        /// <summary> The replication interval. </summary>
         public int? ReplicationInterval { get; set; }
-        /// <summary>
-        /// The scheduled start time for the initial replication. If this parameter is Null, the initial replication starts immediately.
-        /// Serialized Name: HyperVReplicaAzurePolicyInput.onlineReplicationStartTime
-        /// </summary>
+        /// <summary> The scheduled start time for the initial replication. If this parameter is Null, the initial replication starts immediately. </summary>
         public string OnlineReplicationStartTime { get; set; }
-        /// <summary>
-        /// The list of storage accounts to which the VMs in the primary cloud can replicate to.
-        /// Serialized Name: HyperVReplicaAzurePolicyInput.storageAccounts
-        /// </summary>
+        /// <summary> The list of storage accounts to which the VMs in the primary cloud can replicate to. </summary>
         public IList<string> StorageAccounts { get; }
     }
 }

@@ -9,7 +9,6 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     /// <summary>
     /// Enable protection provider specific input.
-    /// Serialized Name: EnableProtectionProviderSpecificInput
     /// Please note <see cref="EnableProtectionProviderSpecificContent"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="A2AEnableProtectionContent"/>, <see cref="A2ACrossClusterMigrationEnableProtectionContent"/>, <see cref="HyperVReplicaAzureEnableProtectionContent"/>, <see cref="InMageEnableProtectionContent"/>, <see cref="InMageAzureV2EnableProtectionContent"/> and <see cref="InMageRcmEnableProtectionContent"/>.
     /// </summary>
@@ -20,10 +19,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         {
         }
 
-        /// <summary>
-        /// The class type.
-        /// Serialized Name: EnableProtectionProviderSpecificInput.instanceType
-        /// </summary>
+        /// <summary> The class type. </summary>
         internal string InstanceType { get; set; }
     }
 }

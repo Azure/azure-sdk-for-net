@@ -10,10 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary>
-    /// InMageRcm appliance specific details.
-    /// Serialized Name: InMageRcmApplianceSpecificDetails
-    /// </summary>
+    /// <summary> InMageRcm appliance specific details. </summary>
     public partial class InMageRcmApplianceSpecificDetails : SiteRecoveryApplianceSpecificDetails
     {
         /// <summary> Initializes a new instance of InMageRcmApplianceSpecificDetails. </summary>
@@ -24,24 +21,15 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Initializes a new instance of InMageRcmApplianceSpecificDetails. </summary>
-        /// <param name="instanceType">
-        /// Gets the class type. Overridden in derived classes.
-        /// Serialized Name: ApplianceSpecificDetails.instanceType
-        /// </param>
-        /// <param name="appliances">
-        /// The list of appliances.
-        /// Serialized Name: InMageRcmApplianceSpecificDetails.appliances
-        /// </param>
+        /// <param name="instanceType"> Gets the class type. Overridden in derived classes. </param>
+        /// <param name="appliances"> The list of appliances. </param>
         internal InMageRcmApplianceSpecificDetails(string instanceType, IReadOnlyList<InMageRcmApplianceDetails> appliances) : base(instanceType)
         {
             Appliances = appliances;
             InstanceType = instanceType ?? "InMageRcm";
         }
 
-        /// <summary>
-        /// The list of appliances.
-        /// Serialized Name: InMageRcmApplianceSpecificDetails.appliances
-        /// </summary>
+        /// <summary> The list of appliances. </summary>
         public IReadOnlyList<InMageRcmApplianceDetails> Appliances { get; }
     }
 }

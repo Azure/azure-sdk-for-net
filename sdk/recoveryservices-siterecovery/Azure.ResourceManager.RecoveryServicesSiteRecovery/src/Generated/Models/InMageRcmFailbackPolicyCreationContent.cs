@@ -7,10 +7,7 @@
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary>
-    /// InMageRcmFailback policy creation input.
-    /// Serialized Name: InMageRcmFailbackPolicyCreationInput
-    /// </summary>
+    /// <summary> InMageRcmFailback policy creation input. </summary>
     public partial class InMageRcmFailbackPolicyCreationContent : PolicyProviderSpecificContent
     {
         /// <summary> Initializes a new instance of InMageRcmFailbackPolicyCreationContent. </summary>
@@ -19,15 +16,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             InstanceType = "InMageRcmFailback";
         }
 
-        /// <summary>
-        /// The crash consistent snapshot frequency (in minutes).
-        /// Serialized Name: InMageRcmFailbackPolicyCreationInput.crashConsistentFrequencyInMinutes
-        /// </summary>
+        /// <summary> The crash consistent snapshot frequency (in minutes). </summary>
         public int? CrashConsistentFrequencyInMinutes { get; set; }
-        /// <summary>
-        /// The app consistent snapshot frequency (in minutes).
-        /// Serialized Name: InMageRcmFailbackPolicyCreationInput.appConsistentFrequencyInMinutes
-        /// </summary>
+        /// <summary> The app consistent snapshot frequency (in minutes). </summary>
         public int? AppConsistentFrequencyInMinutes { get; set; }
     }
 }

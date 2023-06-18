@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Samples
 
             // invoke the operation and iterate over the result
             string resourceName = "vault1";
-            await foreach (SiteRecoveryAppliance item in resourceGroupResource.GetReplicationAppliancesAsync(resourceName))
+            await foreach (SiteRecoveryReplicationAppliance item in resourceGroupResource.GetReplicationAppliancesAsync(resourceName))
             {
                 Console.WriteLine($"Succeeded: {item}");
             }
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Samples
 
             // invoke the operation
             string resourceName = "vault1";
-            SupportedOperatingSystems result = await resourceGroupResource.GetSupportedOperatingSystemAsync(resourceName);
+            SiteRecoverySupportedOperatingSystems result = await resourceGroupResource.GetSupportedOperatingSystemAsync(resourceName);
 
             Console.WriteLine($"Succeeded: {result}");
         }

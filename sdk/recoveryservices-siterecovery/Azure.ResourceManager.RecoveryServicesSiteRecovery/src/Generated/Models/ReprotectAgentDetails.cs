@@ -11,10 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary>
-    /// Reprotect agent details.
-    /// Serialized Name: ReprotectAgentDetails
-    /// </summary>
+    /// <summary> Reprotect agent details. </summary>
     public partial class ReprotectAgentDetails
     {
         /// <summary> Initializes a new instance of ReprotectAgentDetails. </summary>
@@ -25,59 +22,20 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Initializes a new instance of ReprotectAgentDetails. </summary>
-        /// <param name="id">
-        /// The reprotect agent Id.
-        /// Serialized Name: ReprotectAgentDetails.id
-        /// </param>
-        /// <param name="name">
-        /// The reprotect agent name.
-        /// Serialized Name: ReprotectAgentDetails.name
-        /// </param>
-        /// <param name="biosId">
-        /// The reprotect agent Bios Id.
-        /// Serialized Name: ReprotectAgentDetails.biosId
-        /// </param>
-        /// <param name="fabricObjectId">
-        /// The fabric object Id.
-        /// Serialized Name: ReprotectAgentDetails.fabricObjectId
-        /// </param>
-        /// <param name="fqdn">
-        /// The reprotect agent Fqdn.
-        /// Serialized Name: ReprotectAgentDetails.fqdn
-        /// </param>
-        /// <param name="version">
-        /// The version.
-        /// Serialized Name: ReprotectAgentDetails.version
-        /// </param>
-        /// <param name="lastHeartbeatUtc">
-        /// The last heartbeat received from the reprotect agent.
-        /// Serialized Name: ReprotectAgentDetails.lastHeartbeatUtc
-        /// </param>
-        /// <param name="health">
-        /// The health of the reprotect agent.
-        /// Serialized Name: ReprotectAgentDetails.health
-        /// </param>
-        /// <param name="healthErrors">
-        /// The health errors.
-        /// Serialized Name: ReprotectAgentDetails.healthErrors
-        /// </param>
-        /// <param name="protectedItemCount">
-        /// The protected item count.
-        /// Serialized Name: ReprotectAgentDetails.protectedItemCount
-        /// </param>
-        /// <param name="accessibleDatastores">
-        /// The list of accessible datastores fetched from discovery.
-        /// Serialized Name: ReprotectAgentDetails.accessibleDatastores
-        /// </param>
-        /// <param name="vCenterId">
-        /// The Vcenter Id.
-        /// Serialized Name: ReprotectAgentDetails.vcenterId
-        /// </param>
-        /// <param name="lastDiscoveryInUtc">
-        /// The last time when SDS information discovered in SRS.
-        /// Serialized Name: ReprotectAgentDetails.lastDiscoveryInUtc
-        /// </param>
-        internal ReprotectAgentDetails(string id, string name, string biosId, ResourceIdentifier fabricObjectId, string fqdn, string version, DateTimeOffset? lastHeartbeatUtc, ProtectionHealth? health, IReadOnlyList<SiteRecoveryHealthError> healthErrors, int? protectedItemCount, IReadOnlyList<string> accessibleDatastores, string vCenterId, DateTimeOffset? lastDiscoveryInUtc)
+        /// <param name="id"> The reprotect agent Id. </param>
+        /// <param name="name"> The reprotect agent name. </param>
+        /// <param name="biosId"> The reprotect agent Bios Id. </param>
+        /// <param name="fabricObjectId"> The fabric object Id. </param>
+        /// <param name="fqdn"> The reprotect agent Fqdn. </param>
+        /// <param name="version"> The version. </param>
+        /// <param name="lastHeartbeatReceivedOn"> The last heartbeat received from the reprotect agent. </param>
+        /// <param name="health"> The health of the reprotect agent. </param>
+        /// <param name="healthErrors"> The health errors. </param>
+        /// <param name="protectedItemCount"> The protected item count. </param>
+        /// <param name="accessibleDatastores"> The list of accessible datastores fetched from discovery. </param>
+        /// <param name="vCenterId"> The Vcenter Id. </param>
+        /// <param name="last"> The last time when SDS information discovered in SRS. </param>
+        internal ReprotectAgentDetails(string id, string name, string biosId, ResourceIdentifier fabricObjectId, string fqdn, string version, DateTimeOffset? lastHeartbeatReceivedOn, SiteRecoveryProtectionHealth? health, IReadOnlyList<SiteRecoveryHealthError> healthErrors, int? protectedItemCount, IReadOnlyList<string> accessibleDatastores, string vCenterId, DateTimeOffset? last)
         {
             Id = id;
             Name = name;
@@ -85,79 +43,40 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             FabricObjectId = fabricObjectId;
             Fqdn = fqdn;
             Version = version;
-            LastHeartbeatUtc = lastHeartbeatUtc;
+            LastHeartbeatReceivedOn = lastHeartbeatReceivedOn;
             Health = health;
             HealthErrors = healthErrors;
             ProtectedItemCount = protectedItemCount;
             AccessibleDatastores = accessibleDatastores;
             VCenterId = vCenterId;
-            LastDiscoveryInUtc = lastDiscoveryInUtc;
+            Last = last;
         }
 
-        /// <summary>
-        /// The reprotect agent Id.
-        /// Serialized Name: ReprotectAgentDetails.id
-        /// </summary>
+        /// <summary> The reprotect agent Id. </summary>
         public string Id { get; }
-        /// <summary>
-        /// The reprotect agent name.
-        /// Serialized Name: ReprotectAgentDetails.name
-        /// </summary>
+        /// <summary> The reprotect agent name. </summary>
         public string Name { get; }
-        /// <summary>
-        /// The reprotect agent Bios Id.
-        /// Serialized Name: ReprotectAgentDetails.biosId
-        /// </summary>
+        /// <summary> The reprotect agent Bios Id. </summary>
         public string BiosId { get; }
-        /// <summary>
-        /// The fabric object Id.
-        /// Serialized Name: ReprotectAgentDetails.fabricObjectId
-        /// </summary>
+        /// <summary> The fabric object Id. </summary>
         public ResourceIdentifier FabricObjectId { get; }
-        /// <summary>
-        /// The reprotect agent Fqdn.
-        /// Serialized Name: ReprotectAgentDetails.fqdn
-        /// </summary>
+        /// <summary> The reprotect agent Fqdn. </summary>
         public string Fqdn { get; }
-        /// <summary>
-        /// The version.
-        /// Serialized Name: ReprotectAgentDetails.version
-        /// </summary>
+        /// <summary> The version. </summary>
         public string Version { get; }
-        /// <summary>
-        /// The last heartbeat received from the reprotect agent.
-        /// Serialized Name: ReprotectAgentDetails.lastHeartbeatUtc
-        /// </summary>
-        public DateTimeOffset? LastHeartbeatUtc { get; }
-        /// <summary>
-        /// The health of the reprotect agent.
-        /// Serialized Name: ReprotectAgentDetails.health
-        /// </summary>
-        public ProtectionHealth? Health { get; }
-        /// <summary>
-        /// The health errors.
-        /// Serialized Name: ReprotectAgentDetails.healthErrors
-        /// </summary>
+        /// <summary> The last heartbeat received from the reprotect agent. </summary>
+        public DateTimeOffset? LastHeartbeatReceivedOn { get; }
+        /// <summary> The health of the reprotect agent. </summary>
+        public SiteRecoveryProtectionHealth? Health { get; }
+        /// <summary> The health errors. </summary>
         public IReadOnlyList<SiteRecoveryHealthError> HealthErrors { get; }
-        /// <summary>
-        /// The protected item count.
-        /// Serialized Name: ReprotectAgentDetails.protectedItemCount
-        /// </summary>
+        /// <summary> The protected item count. </summary>
         public int? ProtectedItemCount { get; }
-        /// <summary>
-        /// The list of accessible datastores fetched from discovery.
-        /// Serialized Name: ReprotectAgentDetails.accessibleDatastores
-        /// </summary>
+        /// <summary> The list of accessible datastores fetched from discovery. </summary>
         public IReadOnlyList<string> AccessibleDatastores { get; }
-        /// <summary>
-        /// The Vcenter Id.
-        /// Serialized Name: ReprotectAgentDetails.vcenterId
-        /// </summary>
+        /// <summary> The Vcenter Id. </summary>
         public string VCenterId { get; }
-        /// <summary>
-        /// The last time when SDS information discovered in SRS.
-        /// Serialized Name: ReprotectAgentDetails.lastDiscoveryInUtc
-        /// </summary>
-        public DateTimeOffset? LastDiscoveryInUtc { get; }
+        /// <summary> The last time when SDS information discovered in SRS. </summary>
+        public DateTimeOffset? Last { get; }
     }
 }

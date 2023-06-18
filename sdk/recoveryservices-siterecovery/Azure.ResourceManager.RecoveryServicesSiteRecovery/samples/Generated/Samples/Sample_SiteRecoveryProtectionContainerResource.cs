@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Samples
             // invoke the operation
             DiscoverProtectableItemContent content = new DiscoverProtectableItemContent()
             {
-                Properties = new DiscoverProtectableItemRequestProperties()
+                Properties = new DiscoverProtectableItemProperties()
                 {
                     FriendlyName = "Test",
                     IPAddress = IPAddress.Parse("10.150.2.3"),
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Samples
             // invoke the operation
             SwitchProtectionContent content = new SwitchProtectionContent()
             {
-                Properties = new SwitchProtectionContentProperties()
+                Properties = new SwitchProtectionProperties()
                 {
                     ReplicationProtectedItemName = "a2aSwapOsVm",
                     ProviderSpecificDetails = new A2ASwitchProtectionContent(),

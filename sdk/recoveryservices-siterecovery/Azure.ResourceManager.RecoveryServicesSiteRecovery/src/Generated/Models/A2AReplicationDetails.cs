@@ -11,10 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary>
-    /// A2A provider specific settings.
-    /// Serialized Name: A2AReplicationDetails
-    /// </summary>
+    /// <summary> A2A provider specific settings. </summary>
     public partial class A2AReplicationDetails : ReplicationProviderSpecificSettings
     {
         /// <summary> Initializes a new instance of A2AReplicationDetails. </summary>
@@ -28,223 +25,61 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Initializes a new instance of A2AReplicationDetails. </summary>
-        /// <param name="instanceType">
-        /// Gets the Instance type.
-        /// Serialized Name: ReplicationProviderSpecificSettings.instanceType
-        /// </param>
-        /// <param name="fabricObjectId">
-        /// The fabric specific object Id of the virtual machine.
-        /// Serialized Name: A2AReplicationDetails.fabricObjectId
-        /// </param>
-        /// <param name="initialPrimaryZone">
-        /// The initial primary availability zone.
-        /// Serialized Name: A2AReplicationDetails.initialPrimaryZone
-        /// </param>
-        /// <param name="initialPrimaryFabricLocation">
-        /// The initial primary fabric location.
-        /// Serialized Name: A2AReplicationDetails.initialPrimaryFabricLocation
-        /// </param>
-        /// <param name="initialRecoveryZone">
-        /// The initial recovery availability zone.
-        /// Serialized Name: A2AReplicationDetails.initialRecoveryZone
-        /// </param>
-        /// <param name="initialPrimaryExtendedLocation">
-        /// The initial primary extended location.
-        /// Serialized Name: A2AReplicationDetails.initialPrimaryExtendedLocation
-        /// </param>
-        /// <param name="initialRecoveryExtendedLocation">
-        /// The initial recovery extended location.
-        /// Serialized Name: A2AReplicationDetails.initialRecoveryExtendedLocation
-        /// </param>
-        /// <param name="initialRecoveryFabricLocation">
-        /// The initial recovery fabric location.
-        /// Serialized Name: A2AReplicationDetails.initialRecoveryFabricLocation
-        /// </param>
-        /// <param name="multiVmGroupId">
-        /// The multi vm group Id.
-        /// Serialized Name: A2AReplicationDetails.multiVmGroupId
-        /// </param>
-        /// <param name="multiVmGroupName">
-        /// The multi vm group name.
-        /// Serialized Name: A2AReplicationDetails.multiVmGroupName
-        /// </param>
-        /// <param name="multiVmGroupCreateOption">
-        /// Whether Multi VM group is auto created or specified by user.
-        /// Serialized Name: A2AReplicationDetails.multiVmGroupCreateOption
-        /// </param>
-        /// <param name="managementId">
-        /// The management Id.
-        /// Serialized Name: A2AReplicationDetails.managementId
-        /// </param>
-        /// <param name="protectedDisks">
-        /// The list of protected disks.
-        /// Serialized Name: A2AReplicationDetails.protectedDisks
-        /// </param>
-        /// <param name="unprotectedDisks">
-        /// The list of unprotected disks.
-        /// Serialized Name: A2AReplicationDetails.unprotectedDisks
-        /// </param>
-        /// <param name="protectedManagedDisks">
-        /// The list of protected managed disks.
-        /// Serialized Name: A2AReplicationDetails.protectedManagedDisks
-        /// </param>
-        /// <param name="recoveryBootDiagStorageAccountId">
-        /// The recovery boot diagnostic storage account Arm Id.
-        /// Serialized Name: A2AReplicationDetails.recoveryBootDiagStorageAccountId
-        /// </param>
-        /// <param name="primaryFabricLocation">
-        /// Primary fabric location.
-        /// Serialized Name: A2AReplicationDetails.primaryFabricLocation
-        /// </param>
-        /// <param name="recoveryFabricLocation">
-        /// The recovery fabric location.
-        /// Serialized Name: A2AReplicationDetails.recoveryFabricLocation
-        /// </param>
-        /// <param name="osType">
-        /// The type of operating system.
-        /// Serialized Name: A2AReplicationDetails.osType
-        /// </param>
-        /// <param name="recoveryAzureVmSize">
-        /// The size of recovery virtual machine.
-        /// Serialized Name: A2AReplicationDetails.recoveryAzureVMSize
-        /// </param>
-        /// <param name="recoveryAzureVmName">
-        /// The name of recovery virtual machine.
-        /// Serialized Name: A2AReplicationDetails.recoveryAzureVMName
-        /// </param>
-        /// <param name="recoveryAzureResourceGroupId">
-        /// The recovery resource group.
-        /// Serialized Name: A2AReplicationDetails.recoveryAzureResourceGroupId
-        /// </param>
-        /// <param name="recoveryCloudService">
-        /// The recovery cloud service.
-        /// Serialized Name: A2AReplicationDetails.recoveryCloudService
-        /// </param>
-        /// <param name="recoveryAvailabilitySet">
-        /// The recovery availability set.
-        /// Serialized Name: A2AReplicationDetails.recoveryAvailabilitySet
-        /// </param>
-        /// <param name="selectedRecoveryAzureNetworkId">
-        /// The recovery virtual network.
-        /// Serialized Name: A2AReplicationDetails.selectedRecoveryAzureNetworkId
-        /// </param>
-        /// <param name="selectedTfoAzureNetworkId">
-        /// The test failover virtual network.
-        /// Serialized Name: A2AReplicationDetails.selectedTfoAzureNetworkId
-        /// </param>
-        /// <param name="vmNics">
-        /// The virtual machine nic details.
-        /// Serialized Name: A2AReplicationDetails.vmNics
-        /// </param>
-        /// <param name="vmSyncedConfigDetails">
-        /// The synced configuration details.
-        /// Serialized Name: A2AReplicationDetails.vmSyncedConfigDetails
-        /// </param>
-        /// <param name="monitoringPercentageCompletion">
-        /// The percentage of the monitoring job. The type of the monitoring job is defined by MonitoringJobType property.
-        /// Serialized Name: A2AReplicationDetails.monitoringPercentageCompletion
-        /// </param>
-        /// <param name="monitoringJobType">
-        /// The type of the monitoring job. The progress is contained in MonitoringPercentageCompletion property.
-        /// Serialized Name: A2AReplicationDetails.monitoringJobType
-        /// </param>
-        /// <param name="lastHeartbeat">
-        /// The last heartbeat received from the source server.
-        /// Serialized Name: A2AReplicationDetails.lastHeartbeat
-        /// </param>
-        /// <param name="agentVersion">
-        /// The agent version.
-        /// Serialized Name: A2AReplicationDetails.agentVersion
-        /// </param>
-        /// <param name="agentExpireOn">
-        /// Agent expiry date.
-        /// Serialized Name: A2AReplicationDetails.agentExpiryDate
-        /// </param>
-        /// <param name="isReplicationAgentUpdateRequired">
-        /// A value indicating whether replication agent update is required.
-        /// Serialized Name: A2AReplicationDetails.isReplicationAgentUpdateRequired
-        /// </param>
-        /// <param name="agentCertificateExpireOn">
-        /// Agent certificate expiry date.
-        /// Serialized Name: A2AReplicationDetails.agentCertificateExpiryDate
-        /// </param>
-        /// <param name="isReplicationAgentCertificateUpdateRequired">
-        /// A value indicating whether agent certificate update is required.
-        /// Serialized Name: A2AReplicationDetails.isReplicationAgentCertificateUpdateRequired
-        /// </param>
-        /// <param name="recoveryFabricObjectId">
-        /// The recovery fabric object Id.
-        /// Serialized Name: A2AReplicationDetails.recoveryFabricObjectId
-        /// </param>
-        /// <param name="vmProtectionState">
-        /// The protection state for the vm.
-        /// Serialized Name: A2AReplicationDetails.vmProtectionState
-        /// </param>
-        /// <param name="vmProtectionStateDescription">
-        /// The protection state description for the vm.
-        /// Serialized Name: A2AReplicationDetails.vmProtectionStateDescription
-        /// </param>
-        /// <param name="lifecycleId">
-        /// An id associated with the PE that survives actions like switch protection which change the backing PE/CPE objects internally.The lifecycle id gets carried forward to have a link/continuity in being able to have an Id that denotes the "same" protected item even though other internal Ids/ARM Id might be changing.
-        /// Serialized Name: A2AReplicationDetails.lifecycleId
-        /// </param>
-        /// <param name="testFailoverRecoveryFabricObjectId">
-        /// The test failover fabric object Id.
-        /// Serialized Name: A2AReplicationDetails.testFailoverRecoveryFabricObjectId
-        /// </param>
-        /// <param name="rpoInSeconds">
-        /// The last RPO value in seconds.
-        /// Serialized Name: A2AReplicationDetails.rpoInSeconds
-        /// </param>
-        /// <param name="lastRpoCalculatedOn">
-        /// The time (in UTC) when the last RPO value was calculated by Protection Service.
-        /// Serialized Name: A2AReplicationDetails.lastRpoCalculatedTime
-        /// </param>
-        /// <param name="primaryAvailabilityZone">
-        /// The primary availability zone.
-        /// Serialized Name: A2AReplicationDetails.primaryAvailabilityZone
-        /// </param>
-        /// <param name="recoveryAvailabilityZone">
-        /// The recovery availability zone.
-        /// Serialized Name: A2AReplicationDetails.recoveryAvailabilityZone
-        /// </param>
-        /// <param name="primaryExtendedLocation">
-        /// The primary Extended Location.
-        /// Serialized Name: A2AReplicationDetails.primaryExtendedLocation
-        /// </param>
-        /// <param name="recoveryExtendedLocation">
-        /// The recovery Extended Location.
-        /// Serialized Name: A2AReplicationDetails.recoveryExtendedLocation
-        /// </param>
-        /// <param name="vmEncryptionType">
-        /// The encryption type of the VM.
-        /// Serialized Name: A2AReplicationDetails.vmEncryptionType
-        /// </param>
-        /// <param name="tfoAzureVmName">
-        /// The test failover vm name.
-        /// Serialized Name: A2AReplicationDetails.tfoAzureVMName
-        /// </param>
-        /// <param name="recoveryAzureGeneration">
-        /// The recovery azure generation.
-        /// Serialized Name: A2AReplicationDetails.recoveryAzureGeneration
-        /// </param>
-        /// <param name="recoveryProximityPlacementGroupId">
-        /// The recovery proximity placement group Id.
-        /// Serialized Name: A2AReplicationDetails.recoveryProximityPlacementGroupId
-        /// </param>
-        /// <param name="autoProtectionOfDataDisk">
-        /// A value indicating whether the auto protection is enabled.
-        /// Serialized Name: A2AReplicationDetails.autoProtectionOfDataDisk
-        /// </param>
-        /// <param name="recoveryVirtualMachineScaleSetId">
-        /// The recovery virtual machine scale set id.
-        /// Serialized Name: A2AReplicationDetails.recoveryVirtualMachineScaleSetId
-        /// </param>
-        /// <param name="recoveryCapacityReservationGroupId">
-        /// The recovery capacity reservation group Id.
-        /// Serialized Name: A2AReplicationDetails.recoveryCapacityReservationGroupId
-        /// </param>
-        internal A2AReplicationDetails(string instanceType, ResourceIdentifier fabricObjectId, string initialPrimaryZone, AzureLocation? initialPrimaryFabricLocation, string initialRecoveryZone, SiteRecoveryExtendedLocation initialPrimaryExtendedLocation, SiteRecoveryExtendedLocation initialRecoveryExtendedLocation, AzureLocation? initialRecoveryFabricLocation, string multiVmGroupId, string multiVmGroupName, MultiVmGroupCreateOption? multiVmGroupCreateOption, string managementId, IReadOnlyList<A2AProtectedDiskDetails> protectedDisks, IReadOnlyList<A2AUnprotectedDiskDetails> unprotectedDisks, IReadOnlyList<A2AProtectedManagedDiskDetails> protectedManagedDisks, ResourceIdentifier recoveryBootDiagStorageAccountId, AzureLocation? primaryFabricLocation, AzureLocation? recoveryFabricLocation, string osType, string recoveryAzureVmSize, string recoveryAzureVmName, ResourceIdentifier recoveryAzureResourceGroupId, string recoveryCloudService, string recoveryAvailabilitySet, ResourceIdentifier selectedRecoveryAzureNetworkId, ResourceIdentifier selectedTfoAzureNetworkId, IReadOnlyList<VmNicDetails> vmNics, A2AVmSyncedConfigDetails vmSyncedConfigDetails, int? monitoringPercentageCompletion, string monitoringJobType, DateTimeOffset? lastHeartbeat, string agentVersion, DateTimeOffset? agentExpireOn, bool? isReplicationAgentUpdateRequired, DateTimeOffset? agentCertificateExpireOn, bool? isReplicationAgentCertificateUpdateRequired, ResourceIdentifier recoveryFabricObjectId, string vmProtectionState, string vmProtectionStateDescription, string lifecycleId, ResourceIdentifier testFailoverRecoveryFabricObjectId, long? rpoInSeconds, DateTimeOffset? lastRpoCalculatedOn, string primaryAvailabilityZone, string recoveryAvailabilityZone, SiteRecoveryExtendedLocation primaryExtendedLocation, SiteRecoveryExtendedLocation recoveryExtendedLocation, VmEncryptionType? vmEncryptionType, string tfoAzureVmName, string recoveryAzureGeneration, ResourceIdentifier recoveryProximityPlacementGroupId, AutoProtectionOfDataDisk? autoProtectionOfDataDisk, ResourceIdentifier recoveryVirtualMachineScaleSetId, ResourceIdentifier recoveryCapacityReservationGroupId) : base(instanceType)
+        /// <param name="instanceType"> Gets the Instance type. </param>
+        /// <param name="fabricObjectId"> The fabric specific object Id of the virtual machine. </param>
+        /// <param name="initialPrimaryZone"> The initial primary availability zone. </param>
+        /// <param name="initialPrimaryFabricLocation"> The initial primary fabric location. </param>
+        /// <param name="initialRecoveryZone"> The initial recovery availability zone. </param>
+        /// <param name="initialPrimaryExtendedLocation"> The initial primary extended location. </param>
+        /// <param name="initialRecoveryExtendedLocation"> The initial recovery extended location. </param>
+        /// <param name="initialRecoveryFabricLocation"> The initial recovery fabric location. </param>
+        /// <param name="multiVmGroupId"> The multi vm group Id. </param>
+        /// <param name="multiVmGroupName"> The multi vm group name. </param>
+        /// <param name="multiVmGroupCreateOption"> Whether Multi VM group is auto created or specified by user. </param>
+        /// <param name="managementId"> The management Id. </param>
+        /// <param name="protectedDisks"> The list of protected disks. </param>
+        /// <param name="unprotectedDisks"> The list of unprotected disks. </param>
+        /// <param name="protectedManagedDisks"> The list of protected managed disks. </param>
+        /// <param name="recoveryBootDiagStorageAccountId"> The recovery boot diagnostic storage account Arm Id. </param>
+        /// <param name="primaryFabricLocation"> Primary fabric location. </param>
+        /// <param name="recoveryFabricLocation"> The recovery fabric location. </param>
+        /// <param name="osType"> The type of operating system. </param>
+        /// <param name="recoveryAzureVmSize"> The size of recovery virtual machine. </param>
+        /// <param name="recoveryAzureVmName"> The name of recovery virtual machine. </param>
+        /// <param name="recoveryAzureResourceGroupId"> The recovery resource group. </param>
+        /// <param name="recoveryCloudService"> The recovery cloud service. </param>
+        /// <param name="recoveryAvailabilitySet"> The recovery availability set. </param>
+        /// <param name="selectedRecoveryAzureNetworkId"> The recovery virtual network. </param>
+        /// <param name="selectedTfoAzureNetworkId"> The test failover virtual network. </param>
+        /// <param name="vmNics"> The virtual machine nic details. </param>
+        /// <param name="vmSyncedConfigDetails"> The synced configuration details. </param>
+        /// <param name="monitoringPercentageCompletion"> The percentage of the monitoring job. The type of the monitoring job is defined by MonitoringJobType property. </param>
+        /// <param name="monitoringJobType"> The type of the monitoring job. The progress is contained in MonitoringPercentageCompletion property. </param>
+        /// <param name="lastHeartbeat"> The last heartbeat received from the source server. </param>
+        /// <param name="agentVersion"> The agent version. </param>
+        /// <param name="agentExpireOn"> Agent expiry date. </param>
+        /// <param name="isReplicationAgentUpdateRequired"> A value indicating whether replication agent update is required. </param>
+        /// <param name="agentCertificateExpireOn"> Agent certificate expiry date. </param>
+        /// <param name="isReplicationAgentCertificateUpdateRequired"> A value indicating whether agent certificate update is required. </param>
+        /// <param name="recoveryFabricObjectId"> The recovery fabric object Id. </param>
+        /// <param name="vmProtectionState"> The protection state for the vm. </param>
+        /// <param name="vmProtectionStateDescription"> The protection state description for the vm. </param>
+        /// <param name="lifecycleId"> An id associated with the PE that survives actions like switch protection which change the backing PE/CPE objects internally.The lifecycle id gets carried forward to have a link/continuity in being able to have an Id that denotes the "same" protected item even though other internal Ids/ARM Id might be changing. </param>
+        /// <param name="testFailoverRecoveryFabricObjectId"> The test failover fabric object Id. </param>
+        /// <param name="rpoInSeconds"> The last RPO value in seconds. </param>
+        /// <param name="lastRpoCalculatedOn"> The time (in UTC) when the last RPO value was calculated by Protection Service. </param>
+        /// <param name="primaryAvailabilityZone"> The primary availability zone. </param>
+        /// <param name="recoveryAvailabilityZone"> The recovery availability zone. </param>
+        /// <param name="primaryExtendedLocation"> The primary Extended Location. </param>
+        /// <param name="recoveryExtendedLocation"> The recovery Extended Location. </param>
+        /// <param name="vmEncryptionType"> The encryption type of the VM. </param>
+        /// <param name="tfoAzureVmName"> The test failover vm name. </param>
+        /// <param name="recoveryAzureGeneration"> The recovery azure generation. </param>
+        /// <param name="recoveryProximityPlacementGroupId"> The recovery proximity placement group Id. </param>
+        /// <param name="autoProtectionOfDataDisk"> A value indicating whether the auto protection is enabled. </param>
+        /// <param name="recoveryVirtualMachineScaleSetId"> The recovery virtual machine scale set id. </param>
+        /// <param name="recoveryCapacityReservationGroupId"> The recovery capacity reservation group Id. </param>
+        internal A2AReplicationDetails(string instanceType, ResourceIdentifier fabricObjectId, string initialPrimaryZone, AzureLocation? initialPrimaryFabricLocation, string initialRecoveryZone, SiteRecoveryExtendedLocation initialPrimaryExtendedLocation, SiteRecoveryExtendedLocation initialRecoveryExtendedLocation, AzureLocation? initialRecoveryFabricLocation, string multiVmGroupId, string multiVmGroupName, MultiVmGroupCreateOption? multiVmGroupCreateOption, string managementId, IReadOnlyList<A2AProtectedDiskDetails> protectedDisks, IReadOnlyList<A2AUnprotectedDiskDetails> unprotectedDisks, IReadOnlyList<A2AProtectedManagedDiskDetails> protectedManagedDisks, ResourceIdentifier recoveryBootDiagStorageAccountId, AzureLocation? primaryFabricLocation, AzureLocation? recoveryFabricLocation, string osType, string recoveryAzureVmSize, string recoveryAzureVmName, ResourceIdentifier recoveryAzureResourceGroupId, string recoveryCloudService, string recoveryAvailabilitySet, ResourceIdentifier selectedRecoveryAzureNetworkId, ResourceIdentifier selectedTfoAzureNetworkId, IReadOnlyList<VmNicDetails> vmNics, A2AVmSyncedConfigDetails vmSyncedConfigDetails, int? monitoringPercentageCompletion, string monitoringJobType, DateTimeOffset? lastHeartbeat, string agentVersion, DateTimeOffset? agentExpireOn, bool? isReplicationAgentUpdateRequired, DateTimeOffset? agentCertificateExpireOn, bool? isReplicationAgentCertificateUpdateRequired, ResourceIdentifier recoveryFabricObjectId, string vmProtectionState, string vmProtectionStateDescription, string lifecycleId, ResourceIdentifier testFailoverRecoveryFabricObjectId, long? rpoInSeconds, DateTimeOffset? lastRpoCalculatedOn, string primaryAvailabilityZone, string recoveryAvailabilityZone, SiteRecoveryExtendedLocation primaryExtendedLocation, SiteRecoveryExtendedLocation recoveryExtendedLocation, SiteRecoveryVmEncryptionType? vmEncryptionType, string tfoAzureVmName, string recoveryAzureGeneration, ResourceIdentifier recoveryProximityPlacementGroupId, AutoProtectionOfDataDisk? autoProtectionOfDataDisk, ResourceIdentifier recoveryVirtualMachineScaleSetId, ResourceIdentifier recoveryCapacityReservationGroupId) : base(instanceType)
         {
             FabricObjectId = fabricObjectId;
             InitialPrimaryZone = initialPrimaryZone;
@@ -302,270 +137,111 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             InstanceType = instanceType ?? "A2A";
         }
 
-        /// <summary>
-        /// The fabric specific object Id of the virtual machine.
-        /// Serialized Name: A2AReplicationDetails.fabricObjectId
-        /// </summary>
+        /// <summary> The fabric specific object Id of the virtual machine. </summary>
         public ResourceIdentifier FabricObjectId { get; }
-        /// <summary>
-        /// The initial primary availability zone.
-        /// Serialized Name: A2AReplicationDetails.initialPrimaryZone
-        /// </summary>
+        /// <summary> The initial primary availability zone. </summary>
         public string InitialPrimaryZone { get; }
-        /// <summary>
-        /// The initial primary fabric location.
-        /// Serialized Name: A2AReplicationDetails.initialPrimaryFabricLocation
-        /// </summary>
+        /// <summary> The initial primary fabric location. </summary>
         public AzureLocation? InitialPrimaryFabricLocation { get; }
-        /// <summary>
-        /// The initial recovery availability zone.
-        /// Serialized Name: A2AReplicationDetails.initialRecoveryZone
-        /// </summary>
+        /// <summary> The initial recovery availability zone. </summary>
         public string InitialRecoveryZone { get; }
-        /// <summary>
-        /// The initial primary extended location.
-        /// Serialized Name: A2AReplicationDetails.initialPrimaryExtendedLocation
-        /// </summary>
+        /// <summary> The initial primary extended location. </summary>
         public SiteRecoveryExtendedLocation InitialPrimaryExtendedLocation { get; }
-        /// <summary>
-        /// The initial recovery extended location.
-        /// Serialized Name: A2AReplicationDetails.initialRecoveryExtendedLocation
-        /// </summary>
+        /// <summary> The initial recovery extended location. </summary>
         public SiteRecoveryExtendedLocation InitialRecoveryExtendedLocation { get; }
-        /// <summary>
-        /// The initial recovery fabric location.
-        /// Serialized Name: A2AReplicationDetails.initialRecoveryFabricLocation
-        /// </summary>
+        /// <summary> The initial recovery fabric location. </summary>
         public AzureLocation? InitialRecoveryFabricLocation { get; }
-        /// <summary>
-        /// The multi vm group Id.
-        /// Serialized Name: A2AReplicationDetails.multiVmGroupId
-        /// </summary>
+        /// <summary> The multi vm group Id. </summary>
         public string MultiVmGroupId { get; }
-        /// <summary>
-        /// The multi vm group name.
-        /// Serialized Name: A2AReplicationDetails.multiVmGroupName
-        /// </summary>
+        /// <summary> The multi vm group name. </summary>
         public string MultiVmGroupName { get; }
-        /// <summary>
-        /// Whether Multi VM group is auto created or specified by user.
-        /// Serialized Name: A2AReplicationDetails.multiVmGroupCreateOption
-        /// </summary>
+        /// <summary> Whether Multi VM group is auto created or specified by user. </summary>
         public MultiVmGroupCreateOption? MultiVmGroupCreateOption { get; }
-        /// <summary>
-        /// The management Id.
-        /// Serialized Name: A2AReplicationDetails.managementId
-        /// </summary>
+        /// <summary> The management Id. </summary>
         public string ManagementId { get; }
-        /// <summary>
-        /// The list of protected disks.
-        /// Serialized Name: A2AReplicationDetails.protectedDisks
-        /// </summary>
+        /// <summary> The list of protected disks. </summary>
         public IReadOnlyList<A2AProtectedDiskDetails> ProtectedDisks { get; }
-        /// <summary>
-        /// The list of unprotected disks.
-        /// Serialized Name: A2AReplicationDetails.unprotectedDisks
-        /// </summary>
+        /// <summary> The list of unprotected disks. </summary>
         public IReadOnlyList<A2AUnprotectedDiskDetails> UnprotectedDisks { get; }
-        /// <summary>
-        /// The list of protected managed disks.
-        /// Serialized Name: A2AReplicationDetails.protectedManagedDisks
-        /// </summary>
+        /// <summary> The list of protected managed disks. </summary>
         public IReadOnlyList<A2AProtectedManagedDiskDetails> ProtectedManagedDisks { get; }
-        /// <summary>
-        /// The recovery boot diagnostic storage account Arm Id.
-        /// Serialized Name: A2AReplicationDetails.recoveryBootDiagStorageAccountId
-        /// </summary>
+        /// <summary> The recovery boot diagnostic storage account Arm Id. </summary>
         public ResourceIdentifier RecoveryBootDiagStorageAccountId { get; }
-        /// <summary>
-        /// Primary fabric location.
-        /// Serialized Name: A2AReplicationDetails.primaryFabricLocation
-        /// </summary>
+        /// <summary> Primary fabric location. </summary>
         public AzureLocation? PrimaryFabricLocation { get; }
-        /// <summary>
-        /// The recovery fabric location.
-        /// Serialized Name: A2AReplicationDetails.recoveryFabricLocation
-        /// </summary>
+        /// <summary> The recovery fabric location. </summary>
         public AzureLocation? RecoveryFabricLocation { get; }
-        /// <summary>
-        /// The type of operating system.
-        /// Serialized Name: A2AReplicationDetails.osType
-        /// </summary>
+        /// <summary> The type of operating system. </summary>
         public string OSType { get; }
-        /// <summary>
-        /// The size of recovery virtual machine.
-        /// Serialized Name: A2AReplicationDetails.recoveryAzureVMSize
-        /// </summary>
+        /// <summary> The size of recovery virtual machine. </summary>
         public string RecoveryAzureVmSize { get; }
-        /// <summary>
-        /// The name of recovery virtual machine.
-        /// Serialized Name: A2AReplicationDetails.recoveryAzureVMName
-        /// </summary>
+        /// <summary> The name of recovery virtual machine. </summary>
         public string RecoveryAzureVmName { get; }
-        /// <summary>
-        /// The recovery resource group.
-        /// Serialized Name: A2AReplicationDetails.recoveryAzureResourceGroupId
-        /// </summary>
+        /// <summary> The recovery resource group. </summary>
         public ResourceIdentifier RecoveryAzureResourceGroupId { get; }
-        /// <summary>
-        /// The recovery cloud service.
-        /// Serialized Name: A2AReplicationDetails.recoveryCloudService
-        /// </summary>
+        /// <summary> The recovery cloud service. </summary>
         public string RecoveryCloudService { get; }
-        /// <summary>
-        /// The recovery availability set.
-        /// Serialized Name: A2AReplicationDetails.recoveryAvailabilitySet
-        /// </summary>
+        /// <summary> The recovery availability set. </summary>
         public string RecoveryAvailabilitySet { get; }
-        /// <summary>
-        /// The recovery virtual network.
-        /// Serialized Name: A2AReplicationDetails.selectedRecoveryAzureNetworkId
-        /// </summary>
+        /// <summary> The recovery virtual network. </summary>
         public ResourceIdentifier SelectedRecoveryAzureNetworkId { get; }
-        /// <summary>
-        /// The test failover virtual network.
-        /// Serialized Name: A2AReplicationDetails.selectedTfoAzureNetworkId
-        /// </summary>
+        /// <summary> The test failover virtual network. </summary>
         public ResourceIdentifier SelectedTfoAzureNetworkId { get; }
-        /// <summary>
-        /// The virtual machine nic details.
-        /// Serialized Name: A2AReplicationDetails.vmNics
-        /// </summary>
+        /// <summary> The virtual machine nic details. </summary>
         public IReadOnlyList<VmNicDetails> VmNics { get; }
-        /// <summary>
-        /// The synced configuration details.
-        /// Serialized Name: A2AReplicationDetails.vmSyncedConfigDetails
-        /// </summary>
+        /// <summary> The synced configuration details. </summary>
         public A2AVmSyncedConfigDetails VmSyncedConfigDetails { get; }
-        /// <summary>
-        /// The percentage of the monitoring job. The type of the monitoring job is defined by MonitoringJobType property.
-        /// Serialized Name: A2AReplicationDetails.monitoringPercentageCompletion
-        /// </summary>
+        /// <summary> The percentage of the monitoring job. The type of the monitoring job is defined by MonitoringJobType property. </summary>
         public int? MonitoringPercentageCompletion { get; }
-        /// <summary>
-        /// The type of the monitoring job. The progress is contained in MonitoringPercentageCompletion property.
-        /// Serialized Name: A2AReplicationDetails.monitoringJobType
-        /// </summary>
+        /// <summary> The type of the monitoring job. The progress is contained in MonitoringPercentageCompletion property. </summary>
         public string MonitoringJobType { get; }
-        /// <summary>
-        /// The last heartbeat received from the source server.
-        /// Serialized Name: A2AReplicationDetails.lastHeartbeat
-        /// </summary>
+        /// <summary> The last heartbeat received from the source server. </summary>
         public DateTimeOffset? LastHeartbeat { get; }
-        /// <summary>
-        /// The agent version.
-        /// Serialized Name: A2AReplicationDetails.agentVersion
-        /// </summary>
+        /// <summary> The agent version. </summary>
         public string AgentVersion { get; }
-        /// <summary>
-        /// Agent expiry date.
-        /// Serialized Name: A2AReplicationDetails.agentExpiryDate
-        /// </summary>
+        /// <summary> Agent expiry date. </summary>
         public DateTimeOffset? AgentExpireOn { get; }
-        /// <summary>
-        /// A value indicating whether replication agent update is required.
-        /// Serialized Name: A2AReplicationDetails.isReplicationAgentUpdateRequired
-        /// </summary>
+        /// <summary> A value indicating whether replication agent update is required. </summary>
         public bool? IsReplicationAgentUpdateRequired { get; }
-        /// <summary>
-        /// Agent certificate expiry date.
-        /// Serialized Name: A2AReplicationDetails.agentCertificateExpiryDate
-        /// </summary>
+        /// <summary> Agent certificate expiry date. </summary>
         public DateTimeOffset? AgentCertificateExpireOn { get; }
-        /// <summary>
-        /// A value indicating whether agent certificate update is required.
-        /// Serialized Name: A2AReplicationDetails.isReplicationAgentCertificateUpdateRequired
-        /// </summary>
+        /// <summary> A value indicating whether agent certificate update is required. </summary>
         public bool? IsReplicationAgentCertificateUpdateRequired { get; }
-        /// <summary>
-        /// The recovery fabric object Id.
-        /// Serialized Name: A2AReplicationDetails.recoveryFabricObjectId
-        /// </summary>
+        /// <summary> The recovery fabric object Id. </summary>
         public ResourceIdentifier RecoveryFabricObjectId { get; }
-        /// <summary>
-        /// The protection state for the vm.
-        /// Serialized Name: A2AReplicationDetails.vmProtectionState
-        /// </summary>
+        /// <summary> The protection state for the vm. </summary>
         public string VmProtectionState { get; }
-        /// <summary>
-        /// The protection state description for the vm.
-        /// Serialized Name: A2AReplicationDetails.vmProtectionStateDescription
-        /// </summary>
+        /// <summary> The protection state description for the vm. </summary>
         public string VmProtectionStateDescription { get; }
-        /// <summary>
-        /// An id associated with the PE that survives actions like switch protection which change the backing PE/CPE objects internally.The lifecycle id gets carried forward to have a link/continuity in being able to have an Id that denotes the "same" protected item even though other internal Ids/ARM Id might be changing.
-        /// Serialized Name: A2AReplicationDetails.lifecycleId
-        /// </summary>
+        /// <summary> An id associated with the PE that survives actions like switch protection which change the backing PE/CPE objects internally.The lifecycle id gets carried forward to have a link/continuity in being able to have an Id that denotes the "same" protected item even though other internal Ids/ARM Id might be changing. </summary>
         public string LifecycleId { get; }
-        /// <summary>
-        /// The test failover fabric object Id.
-        /// Serialized Name: A2AReplicationDetails.testFailoverRecoveryFabricObjectId
-        /// </summary>
+        /// <summary> The test failover fabric object Id. </summary>
         public ResourceIdentifier TestFailoverRecoveryFabricObjectId { get; }
-        /// <summary>
-        /// The last RPO value in seconds.
-        /// Serialized Name: A2AReplicationDetails.rpoInSeconds
-        /// </summary>
+        /// <summary> The last RPO value in seconds. </summary>
         public long? RpoInSeconds { get; }
-        /// <summary>
-        /// The time (in UTC) when the last RPO value was calculated by Protection Service.
-        /// Serialized Name: A2AReplicationDetails.lastRpoCalculatedTime
-        /// </summary>
+        /// <summary> The time (in UTC) when the last RPO value was calculated by Protection Service. </summary>
         public DateTimeOffset? LastRpoCalculatedOn { get; }
-        /// <summary>
-        /// The primary availability zone.
-        /// Serialized Name: A2AReplicationDetails.primaryAvailabilityZone
-        /// </summary>
+        /// <summary> The primary availability zone. </summary>
         public string PrimaryAvailabilityZone { get; }
-        /// <summary>
-        /// The recovery availability zone.
-        /// Serialized Name: A2AReplicationDetails.recoveryAvailabilityZone
-        /// </summary>
+        /// <summary> The recovery availability zone. </summary>
         public string RecoveryAvailabilityZone { get; }
-        /// <summary>
-        /// The primary Extended Location.
-        /// Serialized Name: A2AReplicationDetails.primaryExtendedLocation
-        /// </summary>
+        /// <summary> The primary Extended Location. </summary>
         public SiteRecoveryExtendedLocation PrimaryExtendedLocation { get; }
-        /// <summary>
-        /// The recovery Extended Location.
-        /// Serialized Name: A2AReplicationDetails.recoveryExtendedLocation
-        /// </summary>
+        /// <summary> The recovery Extended Location. </summary>
         public SiteRecoveryExtendedLocation RecoveryExtendedLocation { get; }
-        /// <summary>
-        /// The encryption type of the VM.
-        /// Serialized Name: A2AReplicationDetails.vmEncryptionType
-        /// </summary>
-        public VmEncryptionType? VmEncryptionType { get; }
-        /// <summary>
-        /// The test failover vm name.
-        /// Serialized Name: A2AReplicationDetails.tfoAzureVMName
-        /// </summary>
+        /// <summary> The encryption type of the VM. </summary>
+        public SiteRecoveryVmEncryptionType? VmEncryptionType { get; }
+        /// <summary> The test failover vm name. </summary>
         public string TfoAzureVmName { get; }
-        /// <summary>
-        /// The recovery azure generation.
-        /// Serialized Name: A2AReplicationDetails.recoveryAzureGeneration
-        /// </summary>
+        /// <summary> The recovery azure generation. </summary>
         public string RecoveryAzureGeneration { get; }
-        /// <summary>
-        /// The recovery proximity placement group Id.
-        /// Serialized Name: A2AReplicationDetails.recoveryProximityPlacementGroupId
-        /// </summary>
+        /// <summary> The recovery proximity placement group Id. </summary>
         public ResourceIdentifier RecoveryProximityPlacementGroupId { get; }
-        /// <summary>
-        /// A value indicating whether the auto protection is enabled.
-        /// Serialized Name: A2AReplicationDetails.autoProtectionOfDataDisk
-        /// </summary>
+        /// <summary> A value indicating whether the auto protection is enabled. </summary>
         public AutoProtectionOfDataDisk? AutoProtectionOfDataDisk { get; }
-        /// <summary>
-        /// The recovery virtual machine scale set id.
-        /// Serialized Name: A2AReplicationDetails.recoveryVirtualMachineScaleSetId
-        /// </summary>
+        /// <summary> The recovery virtual machine scale set id. </summary>
         public ResourceIdentifier RecoveryVirtualMachineScaleSetId { get; }
-        /// <summary>
-        /// The recovery capacity reservation group Id.
-        /// Serialized Name: A2AReplicationDetails.recoveryCapacityReservationGroupId
-        /// </summary>
+        /// <summary> The recovery capacity reservation group Id. </summary>
         public ResourceIdentifier RecoveryCapacityReservationGroupId { get; }
     }
 }

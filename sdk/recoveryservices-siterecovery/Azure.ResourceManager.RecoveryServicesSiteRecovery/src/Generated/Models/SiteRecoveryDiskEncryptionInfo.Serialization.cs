@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 return null;
             }
             Optional<SiteRecoveryDiskEncryptionKeyInfo> diskEncryptionKeyInfo = default;
-            Optional<KeyEncryptionKeyInfo> keyEncryptionKeyInfo = default;
+            Optional<SiteRecoveryKeyEncryptionKeyInfo> keyEncryptionKeyInfo = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("diskEncryptionKeyInfo"u8))
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    keyEncryptionKeyInfo = KeyEncryptionKeyInfo.DeserializeKeyEncryptionKeyInfo(property.Value);
+                    keyEncryptionKeyInfo = SiteRecoveryKeyEncryptionKeyInfo.DeserializeSiteRecoveryKeyEncryptionKeyInfo(property.Value);
                     continue;
                 }
             }

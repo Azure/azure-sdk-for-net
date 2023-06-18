@@ -7,11 +7,8 @@
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary>
-    /// This class represents the vm NicUpdates task details.
-    /// Serialized Name: VmNicUpdatesTaskDetails
-    /// </summary>
-    public partial class VmNicUpdatesTaskDetails : TaskTypeDetails
+    /// <summary> This class represents the vm NicUpdates task details. </summary>
+    public partial class VmNicUpdatesTaskDetails : SiteRecoveryTaskTypeDetails
     {
         /// <summary> Initializes a new instance of VmNicUpdatesTaskDetails. </summary>
         internal VmNicUpdatesTaskDetails()
@@ -20,22 +17,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Initializes a new instance of VmNicUpdatesTaskDetails. </summary>
-        /// <param name="instanceType">
-        /// The type of task details.
-        /// Serialized Name: TaskTypeDetails.instanceType
-        /// </param>
-        /// <param name="vmId">
-        /// Virtual machine Id.
-        /// Serialized Name: VmNicUpdatesTaskDetails.vmId
-        /// </param>
-        /// <param name="nicId">
-        /// Nic Id.
-        /// Serialized Name: VmNicUpdatesTaskDetails.nicId
-        /// </param>
-        /// <param name="name">
-        /// Name of the Nic.
-        /// Serialized Name: VmNicUpdatesTaskDetails.name
-        /// </param>
+        /// <param name="instanceType"> The type of task details. </param>
+        /// <param name="vmId"> Virtual machine Id. </param>
+        /// <param name="nicId"> Nic Id. </param>
+        /// <param name="name"> Name of the Nic. </param>
         internal VmNicUpdatesTaskDetails(string instanceType, string vmId, string nicId, string name) : base(instanceType)
         {
             VmId = vmId;
@@ -44,20 +29,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             InstanceType = instanceType ?? "VmNicUpdatesTaskDetails";
         }
 
-        /// <summary>
-        /// Virtual machine Id.
-        /// Serialized Name: VmNicUpdatesTaskDetails.vmId
-        /// </summary>
+        /// <summary> Virtual machine Id. </summary>
         public string VmId { get; }
-        /// <summary>
-        /// Nic Id.
-        /// Serialized Name: VmNicUpdatesTaskDetails.nicId
-        /// </summary>
+        /// <summary> Nic Id. </summary>
         public string NicId { get; }
-        /// <summary>
-        /// Name of the Nic.
-        /// Serialized Name: VmNicUpdatesTaskDetails.name
-        /// </summary>
+        /// <summary> Name of the Nic. </summary>
         public string Name { get; }
     }
 }

@@ -9,10 +9,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary>
-    /// InMageAzureV2 switch provider details.
-    /// Serialized Name: InMageAzureV2SwitchProviderDetails
-    /// </summary>
+    /// <summary> InMageAzureV2 switch provider details. </summary>
     public partial class InMageAzureV2SwitchProviderDetails
     {
         /// <summary> Initializes a new instance of InMageAzureV2SwitchProviderDetails. </summary>
@@ -21,22 +18,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Initializes a new instance of InMageAzureV2SwitchProviderDetails. </summary>
-        /// <param name="targetVaultId">
-        /// The target vault Id.
-        /// Serialized Name: InMageAzureV2SwitchProviderDetails.targetVaultId
-        /// </param>
-        /// <param name="targetResourceId">
-        /// The target resource Id.
-        /// Serialized Name: InMageAzureV2SwitchProviderDetails.targetResourceId
-        /// </param>
-        /// <param name="targetFabricId">
-        /// The target fabric Id.
-        /// Serialized Name: InMageAzureV2SwitchProviderDetails.targetFabricId
-        /// </param>
-        /// <param name="targetApplianceId">
-        /// The target appliance Id.
-        /// Serialized Name: InMageAzureV2SwitchProviderDetails.targetApplianceId
-        /// </param>
+        /// <param name="targetVaultId"> The target vault Id. </param>
+        /// <param name="targetResourceId"> The target resource Id. </param>
+        /// <param name="targetFabricId"> The target fabric Id. </param>
+        /// <param name="targetApplianceId"> The target appliance Id. </param>
         internal InMageAzureV2SwitchProviderDetails(ResourceIdentifier targetVaultId, ResourceIdentifier targetResourceId, ResourceIdentifier targetFabricId, string targetApplianceId)
         {
             TargetVaultId = targetVaultId;
@@ -45,25 +30,13 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             TargetApplianceId = targetApplianceId;
         }
 
-        /// <summary>
-        /// The target vault Id.
-        /// Serialized Name: InMageAzureV2SwitchProviderDetails.targetVaultId
-        /// </summary>
+        /// <summary> The target vault Id. </summary>
         public ResourceIdentifier TargetVaultId { get; }
-        /// <summary>
-        /// The target resource Id.
-        /// Serialized Name: InMageAzureV2SwitchProviderDetails.targetResourceId
-        /// </summary>
+        /// <summary> The target resource Id. </summary>
         public ResourceIdentifier TargetResourceId { get; }
-        /// <summary>
-        /// The target fabric Id.
-        /// Serialized Name: InMageAzureV2SwitchProviderDetails.targetFabricId
-        /// </summary>
+        /// <summary> The target fabric Id. </summary>
         public ResourceIdentifier TargetFabricId { get; }
-        /// <summary>
-        /// The target appliance Id.
-        /// Serialized Name: InMageAzureV2SwitchProviderDetails.targetApplianceId
-        /// </summary>
+        /// <summary> The target appliance Id. </summary>
         public string TargetApplianceId { get; }
     }
 }

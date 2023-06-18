@@ -10,27 +10,15 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary>
-    /// InMageRcm fabric provider specific settings.
-    /// Serialized Name: InMageRcmFabricCreationInput
-    /// </summary>
-    public partial class InMageRcmFabricCreationContent : SiteRecoveryFabricSpecificCreationContent
+    /// <summary> InMageRcm fabric provider specific settings. </summary>
+    public partial class InMageRcmFabricCreationContent : FabricSpecificCreationContent
     {
         /// <summary> Initializes a new instance of InMageRcmFabricCreationContent. </summary>
-        /// <param name="vmwareSiteId">
-        /// The ARM Id of the VMware site.
-        /// Serialized Name: InMageRcmFabricCreationInput.vmwareSiteId
-        /// </param>
-        /// <param name="physicalSiteId">
-        /// The ARM Id of the physical site.
-        /// Serialized Name: InMageRcmFabricCreationInput.physicalSiteId
-        /// </param>
-        /// <param name="sourceAgentIdentity">
-        /// The identity provider input for source agent authentication.
-        /// Serialized Name: InMageRcmFabricCreationInput.sourceAgentIdentity
-        /// </param>
+        /// <param name="vmwareSiteId"> The ARM Id of the VMware site. </param>
+        /// <param name="physicalSiteId"> The ARM Id of the physical site. </param>
+        /// <param name="sourceAgentIdentity"> The identity provider input for source agent authentication. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="vmwareSiteId"/>, <paramref name="physicalSiteId"/> or <paramref name="sourceAgentIdentity"/> is null. </exception>
-        public InMageRcmFabricCreationContent(string vmwareSiteId, string physicalSiteId, SiteRecoveryIdentityProviderContent sourceAgentIdentity)
+        public InMageRcmFabricCreationContent(ResourceIdentifier vmwareSiteId, ResourceIdentifier physicalSiteId, IdentityProviderContent sourceAgentIdentity)
         {
             Argument.AssertNotNull(vmwareSiteId, nameof(vmwareSiteId));
             Argument.AssertNotNull(physicalSiteId, nameof(physicalSiteId));
@@ -42,20 +30,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             InstanceType = "InMageRcm";
         }
 
-        /// <summary>
-        /// The ARM Id of the VMware site.
-        /// Serialized Name: InMageRcmFabricCreationInput.vmwareSiteId
-        /// </summary>
-        public string VMwareSiteId { get; }
-        /// <summary>
-        /// The ARM Id of the physical site.
-        /// Serialized Name: InMageRcmFabricCreationInput.physicalSiteId
-        /// </summary>
-        public string PhysicalSiteId { get; }
-        /// <summary>
-        /// The identity provider input for source agent authentication.
-        /// Serialized Name: InMageRcmFabricCreationInput.sourceAgentIdentity
-        /// </summary>
-        public SiteRecoveryIdentityProviderContent SourceAgentIdentity { get; }
+        /// <summary> The ARM Id of the VMware site. </summary>
+        public ResourceIdentifier VMwareSiteId { get; }
+        /// <summary> The ARM Id of the physical site. </summary>
+        public ResourceIdentifier PhysicalSiteId { get; }
+        /// <summary> The identity provider input for source agent authentication. </summary>
+        public IdentityProviderContent SourceAgentIdentity { get; }
     }
 }

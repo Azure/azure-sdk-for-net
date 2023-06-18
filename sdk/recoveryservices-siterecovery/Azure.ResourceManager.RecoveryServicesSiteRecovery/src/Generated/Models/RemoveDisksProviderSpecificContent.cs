@@ -9,7 +9,6 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     /// <summary>
     /// Remove Disk provider specific input.
-    /// Serialized Name: RemoveDisksProviderSpecificInput
     /// Please note <see cref="RemoveDisksProviderSpecificContent"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="A2ARemoveDisksContent"/>.
     /// </summary>
@@ -20,10 +19,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         {
         }
 
-        /// <summary>
-        /// The class type.
-        /// Serialized Name: RemoveDisksProviderSpecificInput.instanceType
-        /// </summary>
+        /// <summary> The class type. </summary>
         internal string InstanceType { get; set; }
     }
 }

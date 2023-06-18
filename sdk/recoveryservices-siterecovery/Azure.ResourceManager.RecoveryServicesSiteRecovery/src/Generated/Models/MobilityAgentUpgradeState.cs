@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary>
-    /// The agent auto upgrade state.
-    /// Serialized Name: MobilityAgentUpgradeState
-    /// </summary>
+    /// <summary> The agent auto upgrade state. </summary>
     public readonly partial struct MobilityAgentUpgradeState : IEquatable<MobilityAgentUpgradeState>
     {
         private readonly string _value;
@@ -30,25 +27,13 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         private const string CompletedValue = "Completed";
         private const string CommitValue = "Commit";
 
-        /// <summary>
-        /// None
-        /// Serialized Name: MobilityAgentUpgradeState.None
-        /// </summary>
+        /// <summary> None. </summary>
         public static MobilityAgentUpgradeState None { get; } = new MobilityAgentUpgradeState(NoneValue);
-        /// <summary>
-        /// Started
-        /// Serialized Name: MobilityAgentUpgradeState.Started
-        /// </summary>
+        /// <summary> Started. </summary>
         public static MobilityAgentUpgradeState Started { get; } = new MobilityAgentUpgradeState(StartedValue);
-        /// <summary>
-        /// Completed
-        /// Serialized Name: MobilityAgentUpgradeState.Completed
-        /// </summary>
+        /// <summary> Completed. </summary>
         public static MobilityAgentUpgradeState Completed { get; } = new MobilityAgentUpgradeState(CompletedValue);
-        /// <summary>
-        /// Commit
-        /// Serialized Name: MobilityAgentUpgradeState.Commit
-        /// </summary>
+        /// <summary> Commit. </summary>
         public static MobilityAgentUpgradeState Commit { get; } = new MobilityAgentUpgradeState(CommitValue);
         /// <summary> Determines if two <see cref="MobilityAgentUpgradeState"/> values are the same. </summary>
         public static bool operator ==(MobilityAgentUpgradeState left, MobilityAgentUpgradeState right) => left.Equals(right);

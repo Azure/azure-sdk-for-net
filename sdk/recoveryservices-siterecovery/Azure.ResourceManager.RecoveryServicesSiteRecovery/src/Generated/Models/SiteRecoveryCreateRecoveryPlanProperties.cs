@@ -12,27 +12,15 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary>
-    /// Recovery plan creation properties.
-    /// Serialized Name: CreateRecoveryPlanInputProperties
-    /// </summary>
+    /// <summary> Recovery plan creation properties. </summary>
     public partial class SiteRecoveryCreateRecoveryPlanProperties
     {
         /// <summary> Initializes a new instance of SiteRecoveryCreateRecoveryPlanProperties. </summary>
-        /// <param name="primaryFabricId">
-        /// The primary fabric Id.
-        /// Serialized Name: CreateRecoveryPlanInputProperties.primaryFabricId
-        /// </param>
-        /// <param name="recoveryFabricId">
-        /// The recovery fabric Id.
-        /// Serialized Name: CreateRecoveryPlanInputProperties.recoveryFabricId
-        /// </param>
-        /// <param name="groups">
-        /// The recovery plan groups.
-        /// Serialized Name: CreateRecoveryPlanInputProperties.groups
-        /// </param>
+        /// <param name="primaryFabricId"> The primary fabric Id. </param>
+        /// <param name="recoveryFabricId"> The recovery fabric Id. </param>
+        /// <param name="groups"> The recovery plan groups. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="primaryFabricId"/>, <paramref name="recoveryFabricId"/> or <paramref name="groups"/> is null. </exception>
-        public SiteRecoveryCreateRecoveryPlanProperties(ResourceIdentifier primaryFabricId, ResourceIdentifier recoveryFabricId, IEnumerable<RecoveryPlanGroup> groups)
+        public SiteRecoveryCreateRecoveryPlanProperties(ResourceIdentifier primaryFabricId, ResourceIdentifier recoveryFabricId, IEnumerable<SiteRecoveryRecoveryPlanGroup> groups)
         {
             Argument.AssertNotNull(primaryFabricId, nameof(primaryFabricId));
             Argument.AssertNotNull(recoveryFabricId, nameof(recoveryFabricId));
@@ -44,31 +32,18 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             ProviderSpecificContent = new ChangeTrackingList<RecoveryPlanProviderSpecificContent>();
         }
 
-        /// <summary>
-        /// The primary fabric Id.
-        /// Serialized Name: CreateRecoveryPlanInputProperties.primaryFabricId
-        /// </summary>
+        /// <summary> The primary fabric Id. </summary>
         public ResourceIdentifier PrimaryFabricId { get; }
-        /// <summary>
-        /// The recovery fabric Id.
-        /// Serialized Name: CreateRecoveryPlanInputProperties.recoveryFabricId
-        /// </summary>
+        /// <summary> The recovery fabric Id. </summary>
         public ResourceIdentifier RecoveryFabricId { get; }
-        /// <summary>
-        /// The failover deployment model.
-        /// Serialized Name: CreateRecoveryPlanInputProperties.failoverDeploymentModel
-        /// </summary>
-        public SiteRecoveryFailoverDeploymentModel? FailoverDeploymentModel { get; set; }
-        /// <summary>
-        /// The recovery plan groups.
-        /// Serialized Name: CreateRecoveryPlanInputProperties.groups
-        /// </summary>
-        public IList<RecoveryPlanGroup> Groups { get; }
+        /// <summary> The failover deployment model. </summary>
+        public FailoverDeploymentModel? FailoverDeploymentModel { get; set; }
+        /// <summary> The recovery plan groups. </summary>
+        public IList<SiteRecoveryRecoveryPlanGroup> Groups { get; }
         /// <summary>
         /// The provider specific input.
-        /// Serialized Name: CreateRecoveryPlanInputProperties.providerSpecificInput
         /// Please note <see cref="RecoveryPlanProviderSpecificContent"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="RecoveryPlanA2AInput"/>.
+        /// The available derived classes include <see cref="RecoveryPlanA2AContent"/>.
         /// </summary>
         public IList<RecoveryPlanProviderSpecificContent> ProviderSpecificContent { get; }
     }

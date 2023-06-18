@@ -10,25 +10,13 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary>
-    /// A2A managed disk input details.
-    /// Serialized Name: A2AVmManagedDiskInputDetails
-    /// </summary>
+    /// <summary> A2A managed disk input details. </summary>
     public partial class A2AVmManagedDiskDetails
     {
         /// <summary> Initializes a new instance of A2AVmManagedDiskDetails. </summary>
-        /// <param name="diskId">
-        /// The disk Id.
-        /// Serialized Name: A2AVmManagedDiskInputDetails.diskId
-        /// </param>
-        /// <param name="primaryStagingAzureStorageAccountId">
-        /// The primary staging storage account Arm Id.
-        /// Serialized Name: A2AVmManagedDiskInputDetails.primaryStagingAzureStorageAccountId
-        /// </param>
-        /// <param name="recoveryResourceGroupId">
-        /// The target resource group Arm Id.
-        /// Serialized Name: A2AVmManagedDiskInputDetails.recoveryResourceGroupId
-        /// </param>
+        /// <param name="diskId"> The disk Id. </param>
+        /// <param name="primaryStagingAzureStorageAccountId"> The primary staging storage account Arm Id. </param>
+        /// <param name="recoveryResourceGroupId"> The target resource group Arm Id. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="diskId"/>, <paramref name="primaryStagingAzureStorageAccountId"/> or <paramref name="recoveryResourceGroupId"/> is null. </exception>
         public A2AVmManagedDiskDetails(string diskId, ResourceIdentifier primaryStagingAzureStorageAccountId, ResourceIdentifier recoveryResourceGroupId)
         {
@@ -41,40 +29,19 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             RecoveryResourceGroupId = recoveryResourceGroupId;
         }
 
-        /// <summary>
-        /// The disk Id.
-        /// Serialized Name: A2AVmManagedDiskInputDetails.diskId
-        /// </summary>
+        /// <summary> The disk Id. </summary>
         public string DiskId { get; }
-        /// <summary>
-        /// The primary staging storage account Arm Id.
-        /// Serialized Name: A2AVmManagedDiskInputDetails.primaryStagingAzureStorageAccountId
-        /// </summary>
+        /// <summary> The primary staging storage account Arm Id. </summary>
         public ResourceIdentifier PrimaryStagingAzureStorageAccountId { get; }
-        /// <summary>
-        /// The target resource group Arm Id.
-        /// Serialized Name: A2AVmManagedDiskInputDetails.recoveryResourceGroupId
-        /// </summary>
+        /// <summary> The target resource group Arm Id. </summary>
         public ResourceIdentifier RecoveryResourceGroupId { get; }
-        /// <summary>
-        /// The replica disk type. Its an optional value and will be same as source disk type if not user provided.
-        /// Serialized Name: A2AVmManagedDiskInputDetails.recoveryReplicaDiskAccountType
-        /// </summary>
+        /// <summary> The replica disk type. Its an optional value and will be same as source disk type if not user provided. </summary>
         public string RecoveryReplicaDiskAccountType { get; set; }
-        /// <summary>
-        /// The target disk type after failover. Its an optional value and will be same as source disk type if not user provided.
-        /// Serialized Name: A2AVmManagedDiskInputDetails.recoveryTargetDiskAccountType
-        /// </summary>
+        /// <summary> The target disk type after failover. Its an optional value and will be same as source disk type if not user provided. </summary>
         public string RecoveryTargetDiskAccountType { get; set; }
-        /// <summary>
-        /// The recovery disk encryption set Id.
-        /// Serialized Name: A2AVmManagedDiskInputDetails.recoveryDiskEncryptionSetId
-        /// </summary>
+        /// <summary> The recovery disk encryption set Id. </summary>
         public ResourceIdentifier RecoveryDiskEncryptionSetId { get; set; }
-        /// <summary>
-        /// The recovery disk encryption information (for one / single pass flows).
-        /// Serialized Name: A2AVmManagedDiskInputDetails.diskEncryptionInfo
-        /// </summary>
+        /// <summary> The recovery disk encryption information (for one / single pass flows). </summary>
         public SiteRecoveryDiskEncryptionInfo DiskEncryptionInfo { get; set; }
     }
 }

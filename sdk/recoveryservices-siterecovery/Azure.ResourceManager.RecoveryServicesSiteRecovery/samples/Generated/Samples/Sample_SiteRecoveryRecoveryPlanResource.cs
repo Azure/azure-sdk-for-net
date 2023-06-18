@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Samples
             {
                 UpdateRecoveryPlanContentGroups =
 {
-new RecoveryPlanGroup(RecoveryPlanGroupType.Shutdown)
+new SiteRecoveryRecoveryPlanGroup(RecoveryPlanGroupType.Shutdown)
 {
 ReplicationProtectedItems =
 {
@@ -116,7 +116,7 @@ StartGroupActions =
 EndGroupActions =
 {
 },
-},new RecoveryPlanGroup(RecoveryPlanGroupType.Failover)
+},new SiteRecoveryRecoveryPlanGroup(RecoveryPlanGroupType.Failover)
 {
 ReplicationProtectedItems =
 {
@@ -127,13 +127,13 @@ StartGroupActions =
 EndGroupActions =
 {
 },
-},new RecoveryPlanGroup(RecoveryPlanGroupType.Boot)
+},new SiteRecoveryRecoveryPlanGroup(RecoveryPlanGroupType.Boot)
 {
 ReplicationProtectedItems =
 {
 new RecoveryPlanProtectedItem()
 {
-Id = "/Subscriptions/c183865e-6077-46f2-a3b1-deb0f4f4650a/resourceGroups/resourceGroupPS1/providers/Microsoft.RecoveryServices/vaults/vault1/replicationFabrics/cloud1/replicationProtectionContainers/cloud_6d224fc6-f326-5d35-96de-fbf51efb3179/replicationProtectedItems/f8491e4f-817a-40dd-a90c-af773978c75b",
+Id = new ResourceIdentifier("/Subscriptions/c183865e-6077-46f2-a3b1-deb0f4f4650a/resourceGroups/resourceGroupPS1/providers/Microsoft.RecoveryServices/vaults/vault1/replicationFabrics/cloud1/replicationProtectionContainers/cloud_6d224fc6-f326-5d35-96de-fbf51efb3179/replicationProtectedItems/f8491e4f-817a-40dd-a90c-af773978c75b"),
 VirtualMachineId = "f8491e4f-817a-40dd-a90c-af773978c75b",
 }
 },
@@ -143,13 +143,13 @@ StartGroupActions =
 EndGroupActions =
 {
 },
-},new RecoveryPlanGroup(RecoveryPlanGroupType.Boot)
+},new SiteRecoveryRecoveryPlanGroup(RecoveryPlanGroupType.Boot)
 {
 ReplicationProtectedItems =
 {
 new RecoveryPlanProtectedItem()
 {
-Id = "/Subscriptions/c183865e-6077-46f2-a3b1-deb0f4f4650a/resourceGroups/resourceGroupPS1/providers/Microsoft.RecoveryServices/vaults/vault1/replicationFabrics/cloud1/replicationProtectionContainers/cloud_6d224fc6-f326-5d35-96de-fbf51efb3179/replicationProtectedItems/c0c14913-3d7a-48ea-9531-cc99e0e686e6",
+Id = new ResourceIdentifier("/Subscriptions/c183865e-6077-46f2-a3b1-deb0f4f4650a/resourceGroups/resourceGroupPS1/providers/Microsoft.RecoveryServices/vaults/vault1/replicationFabrics/cloud1/replicationProtectionContainers/cloud_6d224fc6-f326-5d35-96de-fbf51efb3179/replicationProtectedItems/c0c14913-3d7a-48ea-9531-cc99e0e686e6"),
 VirtualMachineId = "c0c14913-3d7a-48ea-9531-cc99e0e686e6",
 }
 },
@@ -261,7 +261,7 @@ EndGroupActions =
             SiteRecoveryRecoveryPlanResource siteRecoveryRecoveryPlan = client.GetSiteRecoveryRecoveryPlanResource(siteRecoveryRecoveryPlanResourceId);
 
             // invoke the operation
-            RecoveryPlanPlannedFailoverContent content = new RecoveryPlanPlannedFailoverContent(new RecoveryPlanPlannedFailoverContentProperties(PossibleOperationsDirection.PrimaryToRecovery)
+            RecoveryPlanPlannedFailoverContent content = new RecoveryPlanPlannedFailoverContent(new RecoveryPlanPlannedFailoverProperties(PossibleOperationsDirection.PrimaryToRecovery)
             {
                 ProviderSpecificDetails =
 {
@@ -334,7 +334,7 @@ new RecoveryPlanHyperVReplicaAzureFailoverContent()
             SiteRecoveryRecoveryPlanResource siteRecoveryRecoveryPlan = client.GetSiteRecoveryRecoveryPlanResource(siteRecoveryRecoveryPlanResourceId);
 
             // invoke the operation
-            RecoveryPlanTestFailoverContent content = new RecoveryPlanTestFailoverContent(new RecoveryPlanTestFailoverContentProperties(PossibleOperationsDirection.PrimaryToRecovery, "VmNetworkAsInput")
+            RecoveryPlanTestFailoverContent content = new RecoveryPlanTestFailoverContent(new RecoveryPlanTestFailoverProperties(PossibleOperationsDirection.PrimaryToRecovery, "VmNetworkAsInput")
             {
                 NetworkId = new ResourceIdentifier("/subscriptions/c183865e-6077-46f2-a3b1-deb0f4f4650a/resourceGroups/siterecoveryProd1/providers/Microsoft.Network/virtualNetworks/vnetavrai"),
                 ProviderSpecificDetails =
@@ -375,7 +375,7 @@ new RecoveryPlanHyperVReplicaAzureFailoverContent()
             SiteRecoveryRecoveryPlanResource siteRecoveryRecoveryPlan = client.GetSiteRecoveryRecoveryPlanResource(siteRecoveryRecoveryPlanResourceId);
 
             // invoke the operation
-            RecoveryPlanTestFailoverCleanupContent content = new RecoveryPlanTestFailoverCleanupContent(new RecoveryPlanTestFailoverCleanupContentProperties()
+            RecoveryPlanTestFailoverCleanupContent content = new RecoveryPlanTestFailoverCleanupContent(new RecoveryPlanTestFailoverCleanupProperties()
             {
                 Comments = "Test Failover Cleanup",
             });
@@ -412,7 +412,7 @@ new RecoveryPlanHyperVReplicaAzureFailoverContent()
             SiteRecoveryRecoveryPlanResource siteRecoveryRecoveryPlan = client.GetSiteRecoveryRecoveryPlanResource(siteRecoveryRecoveryPlanResourceId);
 
             // invoke the operation
-            RecoveryPlanUnplannedFailoverContent content = new RecoveryPlanUnplannedFailoverContent(new RecoveryPlanUnplannedFailoverContentProperties(PossibleOperationsDirection.PrimaryToRecovery, SourceSiteOperation.Required)
+            RecoveryPlanUnplannedFailoverContent content = new RecoveryPlanUnplannedFailoverContent(new RecoveryPlanUnplannedFailoverProperties(PossibleOperationsDirection.PrimaryToRecovery, SourceSiteOperation.Required)
             {
                 ProviderSpecificDetails =
 {

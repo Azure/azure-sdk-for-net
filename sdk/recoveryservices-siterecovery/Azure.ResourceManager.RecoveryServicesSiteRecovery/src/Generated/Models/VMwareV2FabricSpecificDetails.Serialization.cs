@@ -19,29 +19,41 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<string> vmwareSiteId = default;
-            Optional<string> physicalSiteId = default;
-            Optional<string> migrationSolutionId = default;
+            Optional<ResourceIdentifier> vmwareSiteId = default;
+            Optional<ResourceIdentifier> physicalSiteId = default;
+            Optional<ResourceIdentifier> migrationSolutionId = default;
             Optional<string> serviceEndpoint = default;
             Optional<string> serviceResourceId = default;
             Optional<string> serviceContainerId = default;
-            Optional<IReadOnlyList<ProcessServerDetails>> processServers = default;
+            Optional<IReadOnlyList<SiteRecoveryProcessServerDetails>> processServers = default;
             string instanceType = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("vmwareSiteId"u8))
                 {
-                    vmwareSiteId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    vmwareSiteId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("physicalSiteId"u8))
                 {
-                    physicalSiteId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    physicalSiteId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("migrationSolutionId"u8))
                 {
-                    migrationSolutionId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    migrationSolutionId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("serviceEndpoint"u8))
@@ -65,10 +77,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    List<ProcessServerDetails> array = new List<ProcessServerDetails>();
+                    List<SiteRecoveryProcessServerDetails> array = new List<SiteRecoveryProcessServerDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ProcessServerDetails.DeserializeProcessServerDetails(item));
+                        array.Add(SiteRecoveryProcessServerDetails.DeserializeSiteRecoveryProcessServerDetails(item));
                     }
                     processServers = array;
                     continue;

@@ -7,10 +7,7 @@
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary>
-    /// A2A specific policy details.
-    /// Serialized Name: A2APolicyDetails
-    /// </summary>
+    /// <summary> A2A specific policy details. </summary>
     public partial class A2APolicyDetails : PolicyProviderSpecificDetails
     {
         /// <summary> Initializes a new instance of A2APolicyDetails. </summary>
@@ -20,30 +17,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Initializes a new instance of A2APolicyDetails. </summary>
-        /// <param name="instanceType">
-        /// Gets the class type. Overridden in derived classes.
-        /// Serialized Name: PolicyProviderSpecificDetails.instanceType
-        /// </param>
-        /// <param name="recoveryPointThresholdInMinutes">
-        /// The recovery point threshold in minutes.
-        /// Serialized Name: A2APolicyDetails.recoveryPointThresholdInMinutes
-        /// </param>
-        /// <param name="recoveryPointHistory">
-        /// The duration in minutes until which the recovery points need to be stored.
-        /// Serialized Name: A2APolicyDetails.recoveryPointHistory
-        /// </param>
-        /// <param name="appConsistentFrequencyInMinutes">
-        /// The app consistent snapshot frequency in minutes.
-        /// Serialized Name: A2APolicyDetails.appConsistentFrequencyInMinutes
-        /// </param>
-        /// <param name="multiVmSyncStatus">
-        /// A value indicating whether multi-VM sync has to be enabled.
-        /// Serialized Name: A2APolicyDetails.multiVmSyncStatus
-        /// </param>
-        /// <param name="crashConsistentFrequencyInMinutes">
-        /// The crash consistent snapshot frequency in minutes.
-        /// Serialized Name: A2APolicyDetails.crashConsistentFrequencyInMinutes
-        /// </param>
+        /// <param name="instanceType"> Gets the class type. Overridden in derived classes. </param>
+        /// <param name="recoveryPointThresholdInMinutes"> The recovery point threshold in minutes. </param>
+        /// <param name="recoveryPointHistory"> The duration in minutes until which the recovery points need to be stored. </param>
+        /// <param name="appConsistentFrequencyInMinutes"> The app consistent snapshot frequency in minutes. </param>
+        /// <param name="multiVmSyncStatus"> A value indicating whether multi-VM sync has to be enabled. </param>
+        /// <param name="crashConsistentFrequencyInMinutes"> The crash consistent snapshot frequency in minutes. </param>
         internal A2APolicyDetails(string instanceType, int? recoveryPointThresholdInMinutes, int? recoveryPointHistory, int? appConsistentFrequencyInMinutes, string multiVmSyncStatus, int? crashConsistentFrequencyInMinutes) : base(instanceType)
         {
             RecoveryPointThresholdInMinutes = recoveryPointThresholdInMinutes;
@@ -54,30 +33,15 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             InstanceType = instanceType ?? "A2A";
         }
 
-        /// <summary>
-        /// The recovery point threshold in minutes.
-        /// Serialized Name: A2APolicyDetails.recoveryPointThresholdInMinutes
-        /// </summary>
+        /// <summary> The recovery point threshold in minutes. </summary>
         public int? RecoveryPointThresholdInMinutes { get; }
-        /// <summary>
-        /// The duration in minutes until which the recovery points need to be stored.
-        /// Serialized Name: A2APolicyDetails.recoveryPointHistory
-        /// </summary>
+        /// <summary> The duration in minutes until which the recovery points need to be stored. </summary>
         public int? RecoveryPointHistory { get; }
-        /// <summary>
-        /// The app consistent snapshot frequency in minutes.
-        /// Serialized Name: A2APolicyDetails.appConsistentFrequencyInMinutes
-        /// </summary>
+        /// <summary> The app consistent snapshot frequency in minutes. </summary>
         public int? AppConsistentFrequencyInMinutes { get; }
-        /// <summary>
-        /// A value indicating whether multi-VM sync has to be enabled.
-        /// Serialized Name: A2APolicyDetails.multiVmSyncStatus
-        /// </summary>
+        /// <summary> A value indicating whether multi-VM sync has to be enabled. </summary>
         public string MultiVmSyncStatus { get; }
-        /// <summary>
-        /// The crash consistent snapshot frequency in minutes.
-        /// Serialized Name: A2APolicyDetails.crashConsistentFrequencyInMinutes
-        /// </summary>
+        /// <summary> The crash consistent snapshot frequency in minutes. </summary>
         public int? CrashConsistentFrequencyInMinutes { get; }
     }
 }

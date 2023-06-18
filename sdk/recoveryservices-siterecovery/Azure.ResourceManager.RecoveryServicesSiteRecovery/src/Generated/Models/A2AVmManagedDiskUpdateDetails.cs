@@ -7,10 +7,7 @@
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary>
-    /// A2A Vm managed disk update details.
-    /// Serialized Name: A2AVmManagedDiskUpdateDetails
-    /// </summary>
+    /// <summary> A2A Vm managed disk update details. </summary>
     public partial class A2AVmManagedDiskUpdateDetails
     {
         /// <summary> Initializes a new instance of A2AVmManagedDiskUpdateDetails. </summary>
@@ -18,35 +15,17 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         {
         }
 
-        /// <summary>
-        /// The disk Id.
-        /// Serialized Name: A2AVmManagedDiskUpdateDetails.diskId
-        /// </summary>
+        /// <summary> The disk Id. </summary>
         public string DiskId { get; set; }
-        /// <summary>
-        /// The target disk type before failover.
-        /// Serialized Name: A2AVmManagedDiskUpdateDetails.recoveryTargetDiskAccountType
-        /// </summary>
+        /// <summary> The target disk type before failover. </summary>
         public string RecoveryTargetDiskAccountType { get; set; }
-        /// <summary>
-        /// The replica disk type before failover.
-        /// Serialized Name: A2AVmManagedDiskUpdateDetails.recoveryReplicaDiskAccountType
-        /// </summary>
+        /// <summary> The replica disk type before failover. </summary>
         public string RecoveryReplicaDiskAccountType { get; set; }
-        /// <summary>
-        /// The recovery os disk encryption information.
-        /// Serialized Name: A2AVmManagedDiskUpdateDetails.diskEncryptionInfo
-        /// </summary>
+        /// <summary> The recovery os disk encryption information. </summary>
         public SiteRecoveryDiskEncryptionInfo DiskEncryptionInfo { get; set; }
-        /// <summary>
-        /// The target disk name for unplanned failover operation.
-        /// Serialized Name: A2AVmManagedDiskUpdateDetails.failoverDiskName
-        /// </summary>
+        /// <summary> The target disk name for unplanned failover operation. </summary>
         public string FailoverDiskName { get; set; }
-        /// <summary>
-        /// The target disk name for test failover operation.
-        /// Serialized Name: A2AVmManagedDiskUpdateDetails.tfoDiskName
-        /// </summary>
+        /// <summary> The target disk name for test failover operation. </summary>
         public string TfoDiskName { get; set; }
     }
 }

@@ -9,10 +9,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary>
-    /// InMageRcm provider specific input for test failover.
-    /// Serialized Name: InMageRcmTestFailoverInput
-    /// </summary>
+    /// <summary> InMageRcm provider specific input for test failover. </summary>
     public partial class InMageRcmTestFailoverContent : TestFailoverProviderSpecificContent
     {
         /// <summary> Initializes a new instance of InMageRcmTestFailoverContent. </summary>
@@ -21,15 +18,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             InstanceType = "InMageRcm";
         }
 
-        /// <summary>
-        /// The test network Id.
-        /// Serialized Name: InMageRcmTestFailoverInput.networkId
-        /// </summary>
+        /// <summary> The test network Id. </summary>
         public ResourceIdentifier NetworkId { get; set; }
-        /// <summary>
-        /// The recovery point id to be passed to test failover to a particular recovery point. In case of latest recovery point, null should be passed.
-        /// Serialized Name: InMageRcmTestFailoverInput.recoveryPointId
-        /// </summary>
+        /// <summary> The recovery point id to be passed to test failover to a particular recovery point. In case of latest recovery point, null should be passed. </summary>
         public ResourceIdentifier RecoveryPointId { get; set; }
     }
 }

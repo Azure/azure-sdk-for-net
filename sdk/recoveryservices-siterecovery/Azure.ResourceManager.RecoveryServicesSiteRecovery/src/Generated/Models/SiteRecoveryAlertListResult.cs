@@ -11,10 +11,7 @@ using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary>
-    /// Collection of alerts.
-    /// Serialized Name: AlertCollection
-    /// </summary>
+    /// <summary> Collection of alerts. </summary>
     internal partial class SiteRecoveryAlertListResult
     {
         /// <summary> Initializes a new instance of SiteRecoveryAlertListResult. </summary>
@@ -24,29 +21,17 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Initializes a new instance of SiteRecoveryAlertListResult. </summary>
-        /// <param name="value">
-        /// The list of alerts.
-        /// Serialized Name: AlertCollection.value
-        /// </param>
-        /// <param name="nextLink">
-        /// The value of next link.
-        /// Serialized Name: AlertCollection.nextLink
-        /// </param>
+        /// <param name="value"> The list of alerts. </param>
+        /// <param name="nextLink"> The value of next link. </param>
         internal SiteRecoveryAlertListResult(IReadOnlyList<SiteRecoveryAlertData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
-        /// <summary>
-        /// The list of alerts.
-        /// Serialized Name: AlertCollection.value
-        /// </summary>
+        /// <summary> The list of alerts. </summary>
         public IReadOnlyList<SiteRecoveryAlertData> Value { get; }
-        /// <summary>
-        /// The value of next link.
-        /// Serialized Name: AlertCollection.nextLink
-        /// </summary>
+        /// <summary> The value of next link. </summary>
         public string NextLink { get; }
     }
 }

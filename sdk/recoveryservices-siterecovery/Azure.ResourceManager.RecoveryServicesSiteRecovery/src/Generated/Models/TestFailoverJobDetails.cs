@@ -10,53 +10,26 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary>
-    /// This class represents the details for a test failover job.
-    /// Serialized Name: TestFailoverJobDetails
-    /// </summary>
+    /// <summary> This class represents the details for a test failover job. </summary>
     public partial class TestFailoverJobDetails : SiteRecoveryJobDetails
     {
         /// <summary> Initializes a new instance of TestFailoverJobDetails. </summary>
         internal TestFailoverJobDetails()
         {
-            ProtectedItemDetails = new ChangeTrackingList<SiteRecoveryFailoverReplicationProtectedItemDetails>();
+            ProtectedItemDetails = new ChangeTrackingList<FailoverReplicationProtectedItemDetails>();
             InstanceType = "TestFailoverJobDetails";
         }
 
         /// <summary> Initializes a new instance of TestFailoverJobDetails. </summary>
-        /// <param name="instanceType">
-        /// Gets the type of job details (see JobDetailsTypes enum for possible values).
-        /// Serialized Name: JobDetails.instanceType
-        /// </param>
-        /// <param name="affectedObjectDetails">
-        /// The affected object properties like source server, source cloud, target server, target cloud etc. based on the workflow object details.
-        /// Serialized Name: JobDetails.affectedObjectDetails
-        /// </param>
-        /// <param name="testFailoverStatus">
-        /// The test failover status.
-        /// Serialized Name: TestFailoverJobDetails.testFailoverStatus
-        /// </param>
-        /// <param name="comments">
-        /// The test failover comments.
-        /// Serialized Name: TestFailoverJobDetails.comments
-        /// </param>
-        /// <param name="networkName">
-        /// The test network name.
-        /// Serialized Name: TestFailoverJobDetails.networkName
-        /// </param>
-        /// <param name="networkFriendlyName">
-        /// The test network friendly name.
-        /// Serialized Name: TestFailoverJobDetails.networkFriendlyName
-        /// </param>
-        /// <param name="networkType">
-        /// The test network type (see TestFailoverInput enum for possible values).
-        /// Serialized Name: TestFailoverJobDetails.networkType
-        /// </param>
-        /// <param name="protectedItemDetails">
-        /// The test VM details.
-        /// Serialized Name: TestFailoverJobDetails.protectedItemDetails
-        /// </param>
-        internal TestFailoverJobDetails(string instanceType, IReadOnlyDictionary<string, string> affectedObjectDetails, string testFailoverStatus, string comments, string networkName, string networkFriendlyName, string networkType, IReadOnlyList<SiteRecoveryFailoverReplicationProtectedItemDetails> protectedItemDetails) : base(instanceType, affectedObjectDetails)
+        /// <param name="instanceType"> Gets the type of job details (see JobDetailsTypes enum for possible values). </param>
+        /// <param name="affectedObjectDetails"> The affected object properties like source server, source cloud, target server, target cloud etc. based on the workflow object details. </param>
+        /// <param name="testFailoverStatus"> The test failover status. </param>
+        /// <param name="comments"> The test failover comments. </param>
+        /// <param name="networkName"> The test network name. </param>
+        /// <param name="networkFriendlyName"> The test network friendly name. </param>
+        /// <param name="networkType"> The test network type (see TestFailoverInput enum for possible values). </param>
+        /// <param name="protectedItemDetails"> The test VM details. </param>
+        internal TestFailoverJobDetails(string instanceType, IReadOnlyDictionary<string, string> affectedObjectDetails, string testFailoverStatus, string comments, string networkName, string networkFriendlyName, string networkType, IReadOnlyList<FailoverReplicationProtectedItemDetails> protectedItemDetails) : base(instanceType, affectedObjectDetails)
         {
             TestFailoverStatus = testFailoverStatus;
             Comments = comments;
@@ -67,35 +40,17 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             InstanceType = instanceType ?? "TestFailoverJobDetails";
         }
 
-        /// <summary>
-        /// The test failover status.
-        /// Serialized Name: TestFailoverJobDetails.testFailoverStatus
-        /// </summary>
+        /// <summary> The test failover status. </summary>
         public string TestFailoverStatus { get; }
-        /// <summary>
-        /// The test failover comments.
-        /// Serialized Name: TestFailoverJobDetails.comments
-        /// </summary>
+        /// <summary> The test failover comments. </summary>
         public string Comments { get; }
-        /// <summary>
-        /// The test network name.
-        /// Serialized Name: TestFailoverJobDetails.networkName
-        /// </summary>
+        /// <summary> The test network name. </summary>
         public string NetworkName { get; }
-        /// <summary>
-        /// The test network friendly name.
-        /// Serialized Name: TestFailoverJobDetails.networkFriendlyName
-        /// </summary>
+        /// <summary> The test network friendly name. </summary>
         public string NetworkFriendlyName { get; }
-        /// <summary>
-        /// The test network type (see TestFailoverInput enum for possible values).
-        /// Serialized Name: TestFailoverJobDetails.networkType
-        /// </summary>
+        /// <summary> The test network type (see TestFailoverInput enum for possible values). </summary>
         public string NetworkType { get; }
-        /// <summary>
-        /// The test VM details.
-        /// Serialized Name: TestFailoverJobDetails.protectedItemDetails
-        /// </summary>
-        public IReadOnlyList<SiteRecoveryFailoverReplicationProtectedItemDetails> ProtectedItemDetails { get; }
+        /// <summary> The test VM details. </summary>
+        public IReadOnlyList<FailoverReplicationProtectedItemDetails> ProtectedItemDetails { get; }
     }
 }

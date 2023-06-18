@@ -10,10 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary>
-    /// Create protection container input properties.
-    /// Serialized Name: CreateProtectionContainerInputProperties
-    /// </summary>
+    /// <summary> Create protection container input properties. </summary>
     internal partial class SiteRecoveryCreateProtectionContainerProperties
     {
         /// <summary> Initializes a new instance of SiteRecoveryCreateProtectionContainerProperties. </summary>
@@ -24,7 +21,6 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 
         /// <summary>
         /// Provider specific inputs for container creation.
-        /// Serialized Name: CreateProtectionContainerInputProperties.providerSpecificInput
         /// Please note <see cref="ReplicationProviderSpecificContainerCreationContent"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="A2AContainerCreationContent"/>, <see cref="A2ACrossClusterMigrationContainerCreationContent"/> and <see cref="VMwareCbtContainerCreationContent"/>.
         /// </summary>

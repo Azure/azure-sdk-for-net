@@ -9,7 +9,6 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     /// <summary>
     /// Migrate provider specific input.
-    /// Serialized Name: MigrateProviderSpecificInput
     /// Please note <see cref="MigrateProviderSpecificContent"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="VMwareCbtMigrateContent"/>.
     /// </summary>
@@ -20,10 +19,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         {
         }
 
-        /// <summary>
-        /// The class type.
-        /// Serialized Name: MigrateProviderSpecificInput.instanceType
-        /// </summary>
+        /// <summary> The class type. </summary>
         internal string InstanceType { get; set; }
     }
 }

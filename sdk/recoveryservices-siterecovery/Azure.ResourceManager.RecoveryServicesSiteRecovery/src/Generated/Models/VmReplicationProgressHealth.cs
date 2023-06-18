@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary>
-    /// The initial replication progress health.
-    /// Serialized Name: VmReplicationProgressHealth
-    /// </summary>
+    /// <summary> The initial replication progress health. </summary>
     public readonly partial struct VmReplicationProgressHealth : IEquatable<VmReplicationProgressHealth>
     {
         private readonly string _value;
@@ -30,25 +27,13 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         private const string SlowProgressValue = "SlowProgress";
         private const string NoProgressValue = "NoProgress";
 
-        /// <summary>
-        /// None
-        /// Serialized Name: VmReplicationProgressHealth.None
-        /// </summary>
+        /// <summary> None. </summary>
         public static VmReplicationProgressHealth None { get; } = new VmReplicationProgressHealth(NoneValue);
-        /// <summary>
-        /// InProgress
-        /// Serialized Name: VmReplicationProgressHealth.InProgress
-        /// </summary>
+        /// <summary> InProgress. </summary>
         public static VmReplicationProgressHealth InProgress { get; } = new VmReplicationProgressHealth(InProgressValue);
-        /// <summary>
-        /// SlowProgress
-        /// Serialized Name: VmReplicationProgressHealth.SlowProgress
-        /// </summary>
+        /// <summary> SlowProgress. </summary>
         public static VmReplicationProgressHealth SlowProgress { get; } = new VmReplicationProgressHealth(SlowProgressValue);
-        /// <summary>
-        /// NoProgress
-        /// Serialized Name: VmReplicationProgressHealth.NoProgress
-        /// </summary>
+        /// <summary> NoProgress. </summary>
         public static VmReplicationProgressHealth NoProgress { get; } = new VmReplicationProgressHealth(NoProgressValue);
         /// <summary> Determines if two <see cref="VmReplicationProgressHealth"/> values are the same. </summary>
         public static bool operator ==(VmReplicationProgressHealth left, VmReplicationProgressHealth right) => left.Equals(right);

@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
             {
                 return null;
             }
-            Optional<VaultSettingProperties> properties = default;
+            Optional<SiteRecoveryVaultSettingProperties> properties = default;
             Optional<AzureLocation> location = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
                     {
                         continue;
                     }
-                    properties = VaultSettingProperties.DeserializeVaultSettingProperties(property.Value);
+                    properties = SiteRecoveryVaultSettingProperties.DeserializeSiteRecoveryVaultSettingProperties(property.Value);
                     continue;
                 }
                 if (property.NameEquals("location"u8))

@@ -7,27 +7,18 @@
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary>
-    /// Recovery plan InMage failover input.
-    /// Serialized Name: RecoveryPlanInMageFailoverInput
-    /// </summary>
+    /// <summary> Recovery plan InMage failover input. </summary>
     public partial class RecoveryPlanInMageFailoverContent : RecoveryPlanProviderSpecificFailoverContent
     {
         /// <summary> Initializes a new instance of RecoveryPlanInMageFailoverContent. </summary>
-        /// <param name="recoveryPointType">
-        /// The recovery point type.
-        /// Serialized Name: RecoveryPlanInMageFailoverInput.recoveryPointType
-        /// </param>
+        /// <param name="recoveryPointType"> The recovery point type. </param>
         public RecoveryPlanInMageFailoverContent(RpInMageRecoveryPointType recoveryPointType)
         {
             RecoveryPointType = recoveryPointType;
             InstanceType = "InMage";
         }
 
-        /// <summary>
-        /// The recovery point type.
-        /// Serialized Name: RecoveryPlanInMageFailoverInput.recoveryPointType
-        /// </summary>
+        /// <summary> The recovery point type. </summary>
         public RpInMageRecoveryPointType RecoveryPointType { get; }
     }
 }

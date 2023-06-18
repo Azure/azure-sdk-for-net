@@ -10,29 +10,20 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary>
-    /// Input definition for unplanned failover.
-    /// Serialized Name: UnplannedFailoverInput
-    /// </summary>
+    /// <summary> Input definition for unplanned failover. </summary>
     public partial class UnplannedFailoverContent
     {
         /// <summary> Initializes a new instance of UnplannedFailoverContent. </summary>
-        /// <param name="properties">
-        /// Unplanned failover input properties.
-        /// Serialized Name: UnplannedFailoverInput.properties
-        /// </param>
+        /// <param name="properties"> Unplanned failover input properties. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
-        public UnplannedFailoverContent(UnplannedFailoverContentProperties properties)
+        public UnplannedFailoverContent(UnplannedFailoverProperties properties)
         {
             Argument.AssertNotNull(properties, nameof(properties));
 
             Properties = properties;
         }
 
-        /// <summary>
-        /// Unplanned failover input properties.
-        /// Serialized Name: UnplannedFailoverInput.properties
-        /// </summary>
-        public UnplannedFailoverContentProperties Properties { get; }
+        /// <summary> Unplanned failover input properties. </summary>
+        public UnplannedFailoverProperties Properties { get; }
     }
 }

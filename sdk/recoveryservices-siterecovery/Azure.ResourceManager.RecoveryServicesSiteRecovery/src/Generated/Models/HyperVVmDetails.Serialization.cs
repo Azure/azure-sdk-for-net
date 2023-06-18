@@ -23,16 +23,16 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "VmmVirtualMachine": return VmmVirtualMachineDetails.DeserializeVmmVirtualMachineDetails(element);
+                    case "VmmVirtualMachine": return VmmVmDetails.DeserializeVmmVmDetails(element);
                 }
             }
             Optional<string> sourceItemId = default;
             Optional<string> generation = default;
-            Optional<OSDetails> osDetails = default;
+            Optional<SiteRecoveryOSDetails> osDetails = default;
             Optional<IReadOnlyList<SiteRecoveryDiskDetails>> diskDetails = default;
-            Optional<PresenceStatus> hasPhysicalDisk = default;
-            Optional<PresenceStatus> hasFibreChannelAdapter = default;
-            Optional<PresenceStatus> hasSharedVhd = default;
+            Optional<HyperVVmDiskPresenceStatus> hasPhysicalDisk = default;
+            Optional<HyperVVmDiskPresenceStatus> hasFibreChannelAdapter = default;
+            Optional<HyperVVmDiskPresenceStatus> hasSharedVhd = default;
             Optional<string> hyperVHostId = default;
             string instanceType = "HyperVVirtualMachine";
             foreach (var property in element.EnumerateObject())
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    osDetails = OSDetails.DeserializeOSDetails(property.Value);
+                    osDetails = SiteRecoveryOSDetails.DeserializeSiteRecoveryOSDetails(property.Value);
                     continue;
                 }
                 if (property.NameEquals("diskDetails"u8))
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    hasPhysicalDisk = new PresenceStatus(property.Value.GetString());
+                    hasPhysicalDisk = new HyperVVmDiskPresenceStatus(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("hasFibreChannelAdapter"u8))
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    hasFibreChannelAdapter = new PresenceStatus(property.Value.GetString());
+                    hasFibreChannelAdapter = new HyperVVmDiskPresenceStatus(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("hasSharedVhd"u8))
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    hasSharedVhd = new PresenceStatus(property.Value.GetString());
+                    hasSharedVhd = new HyperVVmDiskPresenceStatus(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("hyperVHostId"u8))

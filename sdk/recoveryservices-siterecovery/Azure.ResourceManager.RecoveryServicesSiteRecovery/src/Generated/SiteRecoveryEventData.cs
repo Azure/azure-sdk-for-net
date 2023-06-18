@@ -14,7 +14,6 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
     /// <summary>
     /// A class representing the SiteRecoveryEvent data model.
     /// Implements the Event class.
-    /// Serialized Name: Event
     /// </summary>
     public partial class SiteRecoveryEventData : ResourceData
     {
@@ -28,29 +27,17 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="properties">
-        /// Event related data.
-        /// Serialized Name: Event.properties
-        /// </param>
-        /// <param name="location">
-        /// Resource Location
-        /// Serialized Name: Resource.location
-        /// </param>
+        /// <param name="properties"> Event related data. </param>
+        /// <param name="location"> Resource Location. </param>
         internal SiteRecoveryEventData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SiteRecoveryEventProperties properties, AzureLocation? location) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
             Location = location;
         }
 
-        /// <summary>
-        /// Event related data.
-        /// Serialized Name: Event.properties
-        /// </summary>
+        /// <summary> Event related data. </summary>
         public SiteRecoveryEventProperties Properties { get; }
-        /// <summary>
-        /// Resource Location
-        /// Serialized Name: Resource.location
-        /// </summary>
+        /// <summary> Resource Location. </summary>
         public AzureLocation? Location { get; }
     }
 }

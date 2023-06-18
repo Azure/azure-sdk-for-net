@@ -7,10 +7,7 @@
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary>
-    /// Input definition for planned failover.
-    /// Serialized Name: PlannedFailoverInput
-    /// </summary>
+    /// <summary> Input definition for planned failover. </summary>
     public partial class PlannedFailoverContent
     {
         /// <summary> Initializes a new instance of PlannedFailoverContent. </summary>
@@ -18,10 +15,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         {
         }
 
-        /// <summary>
-        /// Planned failover input properties.
-        /// Serialized Name: PlannedFailoverInput.properties
-        /// </summary>
-        public PlannedFailoverContentProperties Properties { get; set; }
+        /// <summary> Planned failover input properties. </summary>
+        public PlannedFailoverProperties Properties { get; set; }
     }
 }

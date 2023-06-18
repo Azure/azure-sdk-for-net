@@ -10,35 +10,23 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary>
-    /// Input for test migrate cleanup.
-    /// Serialized Name: TestMigrateCleanupInput
-    /// </summary>
+    /// <summary> Input for test migrate cleanup. </summary>
     public partial class TestMigrateCleanupContent
     {
         /// <summary> Initializes a new instance of TestMigrateCleanupContent. </summary>
-        /// <param name="properties">
-        /// Test migrate cleanup input properties.
-        /// Serialized Name: TestMigrateCleanupInput.properties
-        /// </param>
+        /// <param name="properties"> Test migrate cleanup input properties. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
-        public TestMigrateCleanupContent(TestMigrateCleanupContentProperties properties)
+        public TestMigrateCleanupContent(TestMigrateCleanupProperties properties)
         {
             Argument.AssertNotNull(properties, nameof(properties));
 
             Properties = properties;
         }
 
-        /// <summary>
-        /// Test migrate cleanup input properties.
-        /// Serialized Name: TestMigrateCleanupInput.properties
-        /// </summary>
-        internal TestMigrateCleanupContentProperties Properties { get; }
-        /// <summary>
-        /// Test migrate cleanup comments.
-        /// Serialized Name: TestMigrateCleanupInputProperties.comments
-        /// </summary>
-        public string TestMigrateCleanupContentComments
+        /// <summary> Test migrate cleanup input properties. </summary>
+        internal TestMigrateCleanupProperties Properties { get; }
+        /// <summary> Test migrate cleanup comments. </summary>
+        public string TestMigrateCleanupComments
         {
             get => Properties?.Comments;
         }

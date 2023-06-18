@@ -7,10 +7,7 @@
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary>
-    /// Event details for VMwareCbt provider.
-    /// Serialized Name: VMwareCbtEventDetails
-    /// </summary>
+    /// <summary> Event details for VMwareCbt provider. </summary>
     public partial class VMwareCbtEventDetails : SiteRecoveryEventProviderSpecificDetails
     {
         /// <summary> Initializes a new instance of VMwareCbtEventDetails. </summary>
@@ -20,24 +17,15 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Initializes a new instance of VMwareCbtEventDetails. </summary>
-        /// <param name="instanceType">
-        /// Gets the class type. Overridden in derived classes.
-        /// Serialized Name: EventProviderSpecificDetails.instanceType
-        /// </param>
-        /// <param name="migrationItemName">
-        /// The migration item name.
-        /// Serialized Name: VMwareCbtEventDetails.migrationItemName
-        /// </param>
+        /// <param name="instanceType"> Gets the class type. Overridden in derived classes. </param>
+        /// <param name="migrationItemName"> The migration item name. </param>
         internal VMwareCbtEventDetails(string instanceType, string migrationItemName) : base(instanceType)
         {
             MigrationItemName = migrationItemName;
             InstanceType = instanceType ?? "VMwareCbt";
         }
 
-        /// <summary>
-        /// The migration item name.
-        /// Serialized Name: VMwareCbtEventDetails.migrationItemName
-        /// </summary>
+        /// <summary> The migration item name. </summary>
         public string MigrationItemName { get; }
     }
 }

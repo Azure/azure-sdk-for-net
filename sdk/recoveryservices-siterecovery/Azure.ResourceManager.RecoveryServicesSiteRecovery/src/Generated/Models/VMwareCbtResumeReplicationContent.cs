@@ -7,10 +7,7 @@
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary>
-    /// VMwareCbt specific resume replication input.
-    /// Serialized Name: VMwareCbtResumeReplicationInput
-    /// </summary>
+    /// <summary> VMwareCbt specific resume replication input. </summary>
     public partial class VMwareCbtResumeReplicationContent : ResumeReplicationProviderSpecificContent
     {
         /// <summary> Initializes a new instance of VMwareCbtResumeReplicationContent. </summary>
@@ -19,10 +16,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             InstanceType = "VMwareCbt";
         }
 
-        /// <summary>
-        /// A value indicating whether Migration resources to be deleted.
-        /// Serialized Name: VMwareCbtResumeReplicationInput.deleteMigrationResources
-        /// </summary>
+        /// <summary> A value indicating whether Migration resources to be deleted. </summary>
         public string DeleteMigrationResources { get; set; }
     }
 }

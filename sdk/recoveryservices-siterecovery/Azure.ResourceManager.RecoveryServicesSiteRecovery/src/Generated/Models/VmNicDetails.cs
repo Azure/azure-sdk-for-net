@@ -10,10 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary>
-    /// Hyper V VM network details.
-    /// Serialized Name: VMNicDetails
-    /// </summary>
+    /// <summary> Hyper V VM network details. </summary>
     public partial class VmNicDetails
     {
         /// <summary> Initializes a new instance of VmNicDetails. </summary>
@@ -23,83 +20,26 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Initializes a new instance of VmNicDetails. </summary>
-        /// <param name="nicId">
-        /// The nic Id.
-        /// Serialized Name: VMNicDetails.nicId
-        /// </param>
-        /// <param name="replicaNicId">
-        /// The replica nic Id.
-        /// Serialized Name: VMNicDetails.replicaNicId
-        /// </param>
-        /// <param name="sourceNicArmId">
-        /// The source nic ARM Id.
-        /// Serialized Name: VMNicDetails.sourceNicArmId
-        /// </param>
-        /// <param name="vmNetworkName">
-        /// VM network name.
-        /// Serialized Name: VMNicDetails.vMNetworkName
-        /// </param>
-        /// <param name="recoveryVmNetworkId">
-        /// Recovery VM network Id.
-        /// Serialized Name: VMNicDetails.recoveryVMNetworkId
-        /// </param>
-        /// <param name="ipConfigs">
-        /// The IP configurations of the NIC.
-        /// Serialized Name: VMNicDetails.ipConfigs
-        /// </param>
-        /// <param name="selectionType">
-        /// Selection type for failover.
-        /// Serialized Name: VMNicDetails.selectionType
-        /// </param>
-        /// <param name="recoveryNetworkSecurityGroupId">
-        /// The id of the NSG associated with the NIC.
-        /// Serialized Name: VMNicDetails.recoveryNetworkSecurityGroupId
-        /// </param>
-        /// <param name="enableAcceleratedNetworkingOnRecovery">
-        /// A value indicating whether the NIC has accelerated networking enabled.
-        /// Serialized Name: VMNicDetails.enableAcceleratedNetworkingOnRecovery
-        /// </param>
-        /// <param name="tfoVmNetworkId">
-        /// The network to be used by NIC during test failover.
-        /// Serialized Name: VMNicDetails.tfoVMNetworkId
-        /// </param>
-        /// <param name="tfoNetworkSecurityGroupId">
-        /// The NSG to be used by NIC during test failover.
-        /// Serialized Name: VMNicDetails.tfoNetworkSecurityGroupId
-        /// </param>
-        /// <param name="enableAcceleratedNetworkingOnTfo">
-        /// Whether the TFO NIC has accelerated networking enabled.
-        /// Serialized Name: VMNicDetails.enableAcceleratedNetworkingOnTfo
-        /// </param>
-        /// <param name="recoveryNicName">
-        /// The name of the NIC to be used when creating target NICs.
-        /// Serialized Name: VMNicDetails.recoveryNicName
-        /// </param>
-        /// <param name="recoveryNicResourceGroupName">
-        /// The resource group of the NIC to be used when creating target NICs.
-        /// Serialized Name: VMNicDetails.recoveryNicResourceGroupName
-        /// </param>
-        /// <param name="reuseExistingNic">
-        /// A value indicating whether an existing NIC is allowed to be reused during failover subject to availability.
-        /// Serialized Name: VMNicDetails.reuseExistingNic
-        /// </param>
-        /// <param name="tfoRecoveryNicName">
-        /// The name of the NIC to be used when creating target NICs in TFO.
-        /// Serialized Name: VMNicDetails.tfoRecoveryNicName
-        /// </param>
-        /// <param name="tfoRecoveryNicResourceGroupName">
-        /// The resource group of the NIC to be used when creating target NICs in TFO.
-        /// Serialized Name: VMNicDetails.tfoRecoveryNicResourceGroupName
-        /// </param>
-        /// <param name="tfoReuseExistingNic">
-        /// A value indicating whether an existing NIC is allowed to be reused during test failover subject to availability.
-        /// Serialized Name: VMNicDetails.tfoReuseExistingNic
-        /// </param>
-        /// <param name="targetNicName">
-        /// Target NIC name.
-        /// Serialized Name: VMNicDetails.targetNicName
-        /// </param>
-        internal VmNicDetails(string nicId, string replicaNicId, ResourceIdentifier sourceNicArmId, string vmNetworkName, ResourceIdentifier recoveryVmNetworkId, IReadOnlyList<HyperVIPConfigDetails> ipConfigs, string selectionType, string recoveryNetworkSecurityGroupId, bool? enableAcceleratedNetworkingOnRecovery, ResourceIdentifier tfoVmNetworkId, string tfoNetworkSecurityGroupId, bool? enableAcceleratedNetworkingOnTfo, string recoveryNicName, string recoveryNicResourceGroupName, bool? reuseExistingNic, string tfoRecoveryNicName, string tfoRecoveryNicResourceGroupName, bool? tfoReuseExistingNic, string targetNicName)
+        /// <param name="nicId"> The nic Id. </param>
+        /// <param name="replicaNicId"> The replica nic Id. </param>
+        /// <param name="sourceNicArmId"> The source nic ARM Id. </param>
+        /// <param name="vmNetworkName"> VM network name. </param>
+        /// <param name="recoveryVmNetworkId"> Recovery VM network Id. </param>
+        /// <param name="ipConfigs"> The IP configurations of the NIC. </param>
+        /// <param name="selectionType"> Selection type for failover. </param>
+        /// <param name="recoveryNetworkSecurityGroupId"> The id of the NSG associated with the NIC. </param>
+        /// <param name="isAcceleratedNetworkingOnRecoveryEnabled"> A value indicating whether the NIC has accelerated networking enabled. </param>
+        /// <param name="tfoVmNetworkId"> The network to be used by NIC during test failover. </param>
+        /// <param name="tfoNetworkSecurityGroupId"> The NSG to be used by NIC during test failover. </param>
+        /// <param name="isAcceleratedNetworkingOnTfoEnabled"> Whether the TFO NIC has accelerated networking enabled. </param>
+        /// <param name="recoveryNicName"> The name of the NIC to be used when creating target NICs. </param>
+        /// <param name="recoveryNicResourceGroupName"> The resource group of the NIC to be used when creating target NICs. </param>
+        /// <param name="isReuseExistingNicAllowed"> A value indicating whether an existing NIC is allowed to be reused during failover subject to availability. </param>
+        /// <param name="tfoRecoveryNicName"> The name of the NIC to be used when creating target NICs in TFO. </param>
+        /// <param name="tfoRecoveryNicResourceGroupName"> The resource group of the NIC to be used when creating target NICs in TFO. </param>
+        /// <param name="isTfoReuseExistingNicAllowed"> A value indicating whether an existing NIC is allowed to be reused during test failover subject to availability. </param>
+        /// <param name="targetNicName"> Target NIC name. </param>
+        internal VmNicDetails(string nicId, string replicaNicId, ResourceIdentifier sourceNicArmId, string vmNetworkName, ResourceIdentifier recoveryVmNetworkId, IReadOnlyList<HyperVIPConfigDetails> ipConfigs, string selectionType, string recoveryNetworkSecurityGroupId, bool? isAcceleratedNetworkingOnRecoveryEnabled, ResourceIdentifier tfoVmNetworkId, string tfoNetworkSecurityGroupId, bool? isAcceleratedNetworkingOnTfoEnabled, string recoveryNicName, string recoveryNicResourceGroupName, bool? isReuseExistingNicAllowed, string tfoRecoveryNicName, string tfoRecoveryNicResourceGroupName, bool? isTfoReuseExistingNicAllowed, string targetNicName)
         {
             NicId = nicId;
             ReplicaNicId = replicaNicId;
@@ -109,113 +49,56 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             IPConfigs = ipConfigs;
             SelectionType = selectionType;
             RecoveryNetworkSecurityGroupId = recoveryNetworkSecurityGroupId;
-            EnableAcceleratedNetworkingOnRecovery = enableAcceleratedNetworkingOnRecovery;
+            IsAcceleratedNetworkingOnRecoveryEnabled = isAcceleratedNetworkingOnRecoveryEnabled;
             TfoVmNetworkId = tfoVmNetworkId;
             TfoNetworkSecurityGroupId = tfoNetworkSecurityGroupId;
-            EnableAcceleratedNetworkingOnTfo = enableAcceleratedNetworkingOnTfo;
+            IsAcceleratedNetworkingOnTfoEnabled = isAcceleratedNetworkingOnTfoEnabled;
             RecoveryNicName = recoveryNicName;
             RecoveryNicResourceGroupName = recoveryNicResourceGroupName;
-            ReuseExistingNic = reuseExistingNic;
+            IsReuseExistingNicAllowed = isReuseExistingNicAllowed;
             TfoRecoveryNicName = tfoRecoveryNicName;
             TfoRecoveryNicResourceGroupName = tfoRecoveryNicResourceGroupName;
-            TfoReuseExistingNic = tfoReuseExistingNic;
+            IsTfoReuseExistingNicAllowed = isTfoReuseExistingNicAllowed;
             TargetNicName = targetNicName;
         }
 
-        /// <summary>
-        /// The nic Id.
-        /// Serialized Name: VMNicDetails.nicId
-        /// </summary>
+        /// <summary> The nic Id. </summary>
         public string NicId { get; }
-        /// <summary>
-        /// The replica nic Id.
-        /// Serialized Name: VMNicDetails.replicaNicId
-        /// </summary>
+        /// <summary> The replica nic Id. </summary>
         public string ReplicaNicId { get; }
-        /// <summary>
-        /// The source nic ARM Id.
-        /// Serialized Name: VMNicDetails.sourceNicArmId
-        /// </summary>
+        /// <summary> The source nic ARM Id. </summary>
         public ResourceIdentifier SourceNicArmId { get; }
-        /// <summary>
-        /// VM network name.
-        /// Serialized Name: VMNicDetails.vMNetworkName
-        /// </summary>
+        /// <summary> VM network name. </summary>
         public string VmNetworkName { get; }
-        /// <summary>
-        /// Recovery VM network Id.
-        /// Serialized Name: VMNicDetails.recoveryVMNetworkId
-        /// </summary>
+        /// <summary> Recovery VM network Id. </summary>
         public ResourceIdentifier RecoveryVmNetworkId { get; }
-        /// <summary>
-        /// The IP configurations of the NIC.
-        /// Serialized Name: VMNicDetails.ipConfigs
-        /// </summary>
+        /// <summary> The IP configurations of the NIC. </summary>
         public IReadOnlyList<HyperVIPConfigDetails> IPConfigs { get; }
-        /// <summary>
-        /// Selection type for failover.
-        /// Serialized Name: VMNicDetails.selectionType
-        /// </summary>
+        /// <summary> Selection type for failover. </summary>
         public string SelectionType { get; }
-        /// <summary>
-        /// The id of the NSG associated with the NIC.
-        /// Serialized Name: VMNicDetails.recoveryNetworkSecurityGroupId
-        /// </summary>
+        /// <summary> The id of the NSG associated with the NIC. </summary>
         public string RecoveryNetworkSecurityGroupId { get; }
-        /// <summary>
-        /// A value indicating whether the NIC has accelerated networking enabled.
-        /// Serialized Name: VMNicDetails.enableAcceleratedNetworkingOnRecovery
-        /// </summary>
-        public bool? EnableAcceleratedNetworkingOnRecovery { get; }
-        /// <summary>
-        /// The network to be used by NIC during test failover.
-        /// Serialized Name: VMNicDetails.tfoVMNetworkId
-        /// </summary>
+        /// <summary> A value indicating whether the NIC has accelerated networking enabled. </summary>
+        public bool? IsAcceleratedNetworkingOnRecoveryEnabled { get; }
+        /// <summary> The network to be used by NIC during test failover. </summary>
         public ResourceIdentifier TfoVmNetworkId { get; }
-        /// <summary>
-        /// The NSG to be used by NIC during test failover.
-        /// Serialized Name: VMNicDetails.tfoNetworkSecurityGroupId
-        /// </summary>
+        /// <summary> The NSG to be used by NIC during test failover. </summary>
         public string TfoNetworkSecurityGroupId { get; }
-        /// <summary>
-        /// Whether the TFO NIC has accelerated networking enabled.
-        /// Serialized Name: VMNicDetails.enableAcceleratedNetworkingOnTfo
-        /// </summary>
-        public bool? EnableAcceleratedNetworkingOnTfo { get; }
-        /// <summary>
-        /// The name of the NIC to be used when creating target NICs.
-        /// Serialized Name: VMNicDetails.recoveryNicName
-        /// </summary>
+        /// <summary> Whether the TFO NIC has accelerated networking enabled. </summary>
+        public bool? IsAcceleratedNetworkingOnTfoEnabled { get; }
+        /// <summary> The name of the NIC to be used when creating target NICs. </summary>
         public string RecoveryNicName { get; }
-        /// <summary>
-        /// The resource group of the NIC to be used when creating target NICs.
-        /// Serialized Name: VMNicDetails.recoveryNicResourceGroupName
-        /// </summary>
+        /// <summary> The resource group of the NIC to be used when creating target NICs. </summary>
         public string RecoveryNicResourceGroupName { get; }
-        /// <summary>
-        /// A value indicating whether an existing NIC is allowed to be reused during failover subject to availability.
-        /// Serialized Name: VMNicDetails.reuseExistingNic
-        /// </summary>
-        public bool? ReuseExistingNic { get; }
-        /// <summary>
-        /// The name of the NIC to be used when creating target NICs in TFO.
-        /// Serialized Name: VMNicDetails.tfoRecoveryNicName
-        /// </summary>
+        /// <summary> A value indicating whether an existing NIC is allowed to be reused during failover subject to availability. </summary>
+        public bool? IsReuseExistingNicAllowed { get; }
+        /// <summary> The name of the NIC to be used when creating target NICs in TFO. </summary>
         public string TfoRecoveryNicName { get; }
-        /// <summary>
-        /// The resource group of the NIC to be used when creating target NICs in TFO.
-        /// Serialized Name: VMNicDetails.tfoRecoveryNicResourceGroupName
-        /// </summary>
+        /// <summary> The resource group of the NIC to be used when creating target NICs in TFO. </summary>
         public string TfoRecoveryNicResourceGroupName { get; }
-        /// <summary>
-        /// A value indicating whether an existing NIC is allowed to be reused during test failover subject to availability.
-        /// Serialized Name: VMNicDetails.tfoReuseExistingNic
-        /// </summary>
-        public bool? TfoReuseExistingNic { get; }
-        /// <summary>
-        /// Target NIC name.
-        /// Serialized Name: VMNicDetails.targetNicName
-        /// </summary>
+        /// <summary> A value indicating whether an existing NIC is allowed to be reused during test failover subject to availability. </summary>
+        public bool? IsTfoReuseExistingNicAllowed { get; }
+        /// <summary> Target NIC name. </summary>
         public string TargetNicName { get; }
     }
 }

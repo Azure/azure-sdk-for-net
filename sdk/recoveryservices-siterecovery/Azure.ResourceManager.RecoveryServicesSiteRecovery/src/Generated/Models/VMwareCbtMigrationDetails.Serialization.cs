@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Optional<long> resyncRetryCount = default;
             Optional<long> resumeRetryCount = default;
             Optional<string> resyncRequired = default;
-            Optional<ResyncState> resyncState = default;
+            Optional<SiteRecoveryResyncState> resyncState = default;
             Optional<string> performAutoResync = default;
             Optional<IReadOnlyDictionary<string, string>> seedDiskTags = default;
             Optional<IReadOnlyDictionary<string, string>> targetDiskTags = default;
@@ -368,7 +368,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    resyncState = new ResyncState(property.Value.GetString());
+                    resyncState = new SiteRecoveryResyncState(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("performAutoResync"u8))

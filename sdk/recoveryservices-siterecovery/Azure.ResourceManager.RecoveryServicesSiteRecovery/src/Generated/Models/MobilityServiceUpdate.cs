@@ -7,10 +7,7 @@
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary>
-    /// The Mobility Service update details.
-    /// Serialized Name: MobilityServiceUpdate
-    /// </summary>
+    /// <summary> The Mobility Service update details. </summary>
     public partial class MobilityServiceUpdate
     {
         /// <summary> Initializes a new instance of MobilityServiceUpdate. </summary>
@@ -19,18 +16,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Initializes a new instance of MobilityServiceUpdate. </summary>
-        /// <param name="version">
-        /// The version of the latest update.
-        /// Serialized Name: MobilityServiceUpdate.version
-        /// </param>
-        /// <param name="rebootStatus">
-        /// The reboot status of the update - whether it is required or not.
-        /// Serialized Name: MobilityServiceUpdate.rebootStatus
-        /// </param>
-        /// <param name="osType">
-        /// The OS type.
-        /// Serialized Name: MobilityServiceUpdate.osType
-        /// </param>
+        /// <param name="version"> The version of the latest update. </param>
+        /// <param name="rebootStatus"> The reboot status of the update - whether it is required or not. </param>
+        /// <param name="osType"> The OS type. </param>
         internal MobilityServiceUpdate(string version, string rebootStatus, string osType)
         {
             Version = version;
@@ -38,20 +26,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             OSType = osType;
         }
 
-        /// <summary>
-        /// The version of the latest update.
-        /// Serialized Name: MobilityServiceUpdate.version
-        /// </summary>
+        /// <summary> The version of the latest update. </summary>
         public string Version { get; }
-        /// <summary>
-        /// The reboot status of the update - whether it is required or not.
-        /// Serialized Name: MobilityServiceUpdate.rebootStatus
-        /// </summary>
+        /// <summary> The reboot status of the update - whether it is required or not. </summary>
         public string RebootStatus { get; }
-        /// <summary>
-        /// The OS type.
-        /// Serialized Name: MobilityServiceUpdate.osType
-        /// </summary>
+        /// <summary> The OS type. </summary>
         public string OSType { get; }
     }
 }

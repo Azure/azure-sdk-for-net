@@ -7,10 +7,7 @@
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary>
-    /// InMageRcm policy creation input.
-    /// Serialized Name: InMageRcmPolicyCreationInput
-    /// </summary>
+    /// <summary> InMageRcm policy creation input. </summary>
     public partial class InMageRcmPolicyCreationContent : PolicyProviderSpecificContent
     {
         /// <summary> Initializes a new instance of InMageRcmPolicyCreationContent. </summary>
@@ -19,25 +16,13 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             InstanceType = "InMageRcm";
         }
 
-        /// <summary>
-        /// The duration in minutes until which the recovery points need to be stored.
-        /// Serialized Name: InMageRcmPolicyCreationInput.recoveryPointHistoryInMinutes
-        /// </summary>
+        /// <summary> The duration in minutes until which the recovery points need to be stored. </summary>
         public int? RecoveryPointHistoryInMinutes { get; set; }
-        /// <summary>
-        /// The crash consistent snapshot frequency (in minutes).
-        /// Serialized Name: InMageRcmPolicyCreationInput.crashConsistentFrequencyInMinutes
-        /// </summary>
+        /// <summary> The crash consistent snapshot frequency (in minutes). </summary>
         public int? CrashConsistentFrequencyInMinutes { get; set; }
-        /// <summary>
-        /// The app consistent snapshot frequency (in minutes).
-        /// Serialized Name: InMageRcmPolicyCreationInput.appConsistentFrequencyInMinutes
-        /// </summary>
+        /// <summary> The app consistent snapshot frequency (in minutes). </summary>
         public int? AppConsistentFrequencyInMinutes { get; set; }
-        /// <summary>
-        /// A value indicating whether multi-VM sync has to be enabled.
-        /// Serialized Name: InMageRcmPolicyCreationInput.enableMultiVmSync
-        /// </summary>
+        /// <summary> A value indicating whether multi-VM sync has to be enabled. </summary>
         public string EnableMultiVmSync { get; set; }
     }
 }

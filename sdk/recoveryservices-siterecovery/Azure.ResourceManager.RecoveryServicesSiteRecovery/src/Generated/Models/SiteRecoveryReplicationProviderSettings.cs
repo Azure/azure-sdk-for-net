@@ -9,9 +9,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     /// <summary>
     /// Replication provider specific settings.
-    /// Serialized Name: ConfigurationSettings
     /// Please note <see cref="SiteRecoveryReplicationProviderSettings"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-    /// The available derived classes include <see cref="HyperVVmDetails"/>, <see cref="ReplicationGroupDetails"/>, <see cref="VMwareVirtualMachineDetails"/> and <see cref="VmmVirtualMachineDetails"/>.
+    /// The available derived classes include <see cref="HyperVVmDetails"/>, <see cref="ReplicationGroupDetails"/>, <see cref="VMwareVmDetails"/> and <see cref="VmmVmDetails"/>.
     /// </summary>
     public abstract partial class SiteRecoveryReplicationProviderSettings
     {
@@ -21,19 +20,13 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Initializes a new instance of SiteRecoveryReplicationProviderSettings. </summary>
-        /// <param name="instanceType">
-        /// Gets the class type. Overridden in derived classes.
-        /// Serialized Name: ConfigurationSettings.instanceType
-        /// </param>
+        /// <param name="instanceType"> Gets the class type. Overridden in derived classes. </param>
         internal SiteRecoveryReplicationProviderSettings(string instanceType)
         {
             InstanceType = instanceType;
         }
 
-        /// <summary>
-        /// Gets the class type. Overridden in derived classes.
-        /// Serialized Name: ConfigurationSettings.instanceType
-        /// </summary>
+        /// <summary> Gets the class type. Overridden in derived classes. </summary>
         internal string InstanceType { get; set; }
     }
 }

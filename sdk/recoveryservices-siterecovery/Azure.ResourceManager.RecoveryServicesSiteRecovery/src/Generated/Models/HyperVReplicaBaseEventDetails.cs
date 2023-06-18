@@ -7,10 +7,7 @@
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary>
-    /// Abstract model class for event details of a HyperVReplica E2E event.
-    /// Serialized Name: HyperVReplicaBaseEventDetails
-    /// </summary>
+    /// <summary> Abstract model class for event details of a HyperVReplica E2E event. </summary>
     public partial class HyperVReplicaBaseEventDetails : SiteRecoveryEventProviderSpecificDetails
     {
         /// <summary> Initializes a new instance of HyperVReplicaBaseEventDetails. </summary>
@@ -20,26 +17,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Initializes a new instance of HyperVReplicaBaseEventDetails. </summary>
-        /// <param name="instanceType">
-        /// Gets the class type. Overridden in derived classes.
-        /// Serialized Name: EventProviderSpecificDetails.instanceType
-        /// </param>
-        /// <param name="containerName">
-        /// The container friendly name.
-        /// Serialized Name: HyperVReplicaBaseEventDetails.containerName
-        /// </param>
-        /// <param name="fabricName">
-        /// The fabric friendly name.
-        /// Serialized Name: HyperVReplicaBaseEventDetails.fabricName
-        /// </param>
-        /// <param name="remoteContainerName">
-        /// The remote container name.
-        /// Serialized Name: HyperVReplicaBaseEventDetails.remoteContainerName
-        /// </param>
-        /// <param name="remoteFabricName">
-        /// The remote fabric name.
-        /// Serialized Name: HyperVReplicaBaseEventDetails.remoteFabricName
-        /// </param>
+        /// <param name="instanceType"> Gets the class type. Overridden in derived classes. </param>
+        /// <param name="containerName"> The container friendly name. </param>
+        /// <param name="fabricName"> The fabric friendly name. </param>
+        /// <param name="remoteContainerName"> The remote container name. </param>
+        /// <param name="remoteFabricName"> The remote fabric name. </param>
         internal HyperVReplicaBaseEventDetails(string instanceType, string containerName, string fabricName, string remoteContainerName, string remoteFabricName) : base(instanceType)
         {
             ContainerName = containerName;
@@ -49,25 +31,13 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             InstanceType = instanceType ?? "HyperVReplicaBaseEventDetails";
         }
 
-        /// <summary>
-        /// The container friendly name.
-        /// Serialized Name: HyperVReplicaBaseEventDetails.containerName
-        /// </summary>
+        /// <summary> The container friendly name. </summary>
         public string ContainerName { get; }
-        /// <summary>
-        /// The fabric friendly name.
-        /// Serialized Name: HyperVReplicaBaseEventDetails.fabricName
-        /// </summary>
+        /// <summary> The fabric friendly name. </summary>
         public string FabricName { get; }
-        /// <summary>
-        /// The remote container name.
-        /// Serialized Name: HyperVReplicaBaseEventDetails.remoteContainerName
-        /// </summary>
+        /// <summary> The remote container name. </summary>
         public string RemoteContainerName { get; }
-        /// <summary>
-        /// The remote fabric name.
-        /// Serialized Name: HyperVReplicaBaseEventDetails.remoteFabricName
-        /// </summary>
+        /// <summary> The remote fabric name. </summary>
         public string RemoteFabricName { get; }
     }
 }

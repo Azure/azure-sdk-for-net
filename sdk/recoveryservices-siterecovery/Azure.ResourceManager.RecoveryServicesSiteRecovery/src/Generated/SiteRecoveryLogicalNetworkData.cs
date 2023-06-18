@@ -14,7 +14,6 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
     /// <summary>
     /// A class representing the SiteRecoveryLogicalNetwork data model.
     /// Logical network data model.
-    /// Serialized Name: LogicalNetwork
     /// </summary>
     public partial class SiteRecoveryLogicalNetworkData : ResourceData
     {
@@ -28,29 +27,17 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="properties">
-        /// The Logical Network Properties.
-        /// Serialized Name: LogicalNetwork.properties
-        /// </param>
-        /// <param name="location">
-        /// Resource Location
-        /// Serialized Name: Resource.location
-        /// </param>
-        internal SiteRecoveryLogicalNetworkData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, LogicalNetworkProperties properties, AzureLocation? location) : base(id, name, resourceType, systemData)
+        /// <param name="properties"> The Logical Network Properties. </param>
+        /// <param name="location"> Resource Location. </param>
+        internal SiteRecoveryLogicalNetworkData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SiteRecoveryLogicalNetworkProperties properties, AzureLocation? location) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
             Location = location;
         }
 
-        /// <summary>
-        /// The Logical Network Properties.
-        /// Serialized Name: LogicalNetwork.properties
-        /// </summary>
-        public LogicalNetworkProperties Properties { get; }
-        /// <summary>
-        /// Resource Location
-        /// Serialized Name: Resource.location
-        /// </summary>
+        /// <summary> The Logical Network Properties. </summary>
+        public SiteRecoveryLogicalNetworkProperties Properties { get; }
+        /// <summary> Resource Location. </summary>
         public AzureLocation? Location { get; }
     }
 }

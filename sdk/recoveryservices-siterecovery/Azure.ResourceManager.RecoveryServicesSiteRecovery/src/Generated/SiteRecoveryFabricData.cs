@@ -14,7 +14,6 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
     /// <summary>
     /// A class representing the SiteRecoveryFabric data model.
     /// Fabric definition.
-    /// Serialized Name: Fabric
     /// </summary>
     public partial class SiteRecoveryFabricData : ResourceData
     {
@@ -28,29 +27,17 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="properties">
-        /// Fabric related data.
-        /// Serialized Name: Fabric.properties
-        /// </param>
-        /// <param name="location">
-        /// Resource Location
-        /// Serialized Name: Resource.location
-        /// </param>
+        /// <param name="properties"> Fabric related data. </param>
+        /// <param name="location"> Resource Location. </param>
         internal SiteRecoveryFabricData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SiteRecoveryFabricProperties properties, AzureLocation? location) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
             Location = location;
         }
 
-        /// <summary>
-        /// Fabric related data.
-        /// Serialized Name: Fabric.properties
-        /// </summary>
+        /// <summary> Fabric related data. </summary>
         public SiteRecoveryFabricProperties Properties { get; }
-        /// <summary>
-        /// Resource Location
-        /// Serialized Name: Resource.location
-        /// </summary>
+        /// <summary> Resource Location. </summary>
         public AzureLocation? Location { get; }
     }
 }

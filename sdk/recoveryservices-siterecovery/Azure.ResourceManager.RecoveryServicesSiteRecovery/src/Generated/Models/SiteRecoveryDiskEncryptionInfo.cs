@@ -7,10 +7,7 @@
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary>
-    /// Recovery disk encryption info (BEK and KEK).
-    /// Serialized Name: DiskEncryptionInfo
-    /// </summary>
+    /// <summary> Recovery disk encryption info (BEK and KEK). </summary>
     public partial class SiteRecoveryDiskEncryptionInfo
     {
         /// <summary> Initializes a new instance of SiteRecoveryDiskEncryptionInfo. </summary>
@@ -19,29 +16,17 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Initializes a new instance of SiteRecoveryDiskEncryptionInfo. </summary>
-        /// <param name="diskEncryptionKeyInfo">
-        /// The recovery KeyVault reference for secret.
-        /// Serialized Name: DiskEncryptionInfo.diskEncryptionKeyInfo
-        /// </param>
-        /// <param name="keyEncryptionKeyInfo">
-        /// The recovery KeyVault reference for key.
-        /// Serialized Name: DiskEncryptionInfo.keyEncryptionKeyInfo
-        /// </param>
-        internal SiteRecoveryDiskEncryptionInfo(SiteRecoveryDiskEncryptionKeyInfo diskEncryptionKeyInfo, KeyEncryptionKeyInfo keyEncryptionKeyInfo)
+        /// <param name="diskEncryptionKeyInfo"> The recovery KeyVault reference for secret. </param>
+        /// <param name="keyEncryptionKeyInfo"> The recovery KeyVault reference for key. </param>
+        internal SiteRecoveryDiskEncryptionInfo(SiteRecoveryDiskEncryptionKeyInfo diskEncryptionKeyInfo, SiteRecoveryKeyEncryptionKeyInfo keyEncryptionKeyInfo)
         {
             DiskEncryptionKeyInfo = diskEncryptionKeyInfo;
             KeyEncryptionKeyInfo = keyEncryptionKeyInfo;
         }
 
-        /// <summary>
-        /// The recovery KeyVault reference for secret.
-        /// Serialized Name: DiskEncryptionInfo.diskEncryptionKeyInfo
-        /// </summary>
+        /// <summary> The recovery KeyVault reference for secret. </summary>
         public SiteRecoveryDiskEncryptionKeyInfo DiskEncryptionKeyInfo { get; set; }
-        /// <summary>
-        /// The recovery KeyVault reference for key.
-        /// Serialized Name: DiskEncryptionInfo.keyEncryptionKeyInfo
-        /// </summary>
-        public KeyEncryptionKeyInfo KeyEncryptionKeyInfo { get; set; }
+        /// <summary> The recovery KeyVault reference for key. </summary>
+        public SiteRecoveryKeyEncryptionKeyInfo KeyEncryptionKeyInfo { get; set; }
     }
 }

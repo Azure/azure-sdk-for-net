@@ -302,19 +302,19 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="resumeJobParams"> Resume rob comments. </param>
+        /// <param name="content"> Resume rob comments. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resumeJobParams"/> is null. </exception>
-        public virtual async Task<ArmOperation<SiteRecoveryJobResource>> ResumeAsync(WaitUntil waitUntil, ResumeJobParams resumeJobParams, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<ArmOperation<SiteRecoveryJobResource>> ResumeAsync(WaitUntil waitUntil, ReplicationResumeJobContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(resumeJobParams, nameof(resumeJobParams));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _siteRecoveryJobReplicationJobsClientDiagnostics.CreateScope("SiteRecoveryJobResource.Resume");
             scope.Start();
             try
             {
-                var response = await _siteRecoveryJobReplicationJobsRestClient.ResumeAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, resumeJobParams, cancellationToken).ConfigureAwait(false);
-                var operation = new RecoveryServicesSiteRecoveryArmOperation<SiteRecoveryJobResource>(new SiteRecoveryJobOperationSource(Client), _siteRecoveryJobReplicationJobsClientDiagnostics, Pipeline, _siteRecoveryJobReplicationJobsRestClient.CreateResumeRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, resumeJobParams).Request, response, OperationFinalStateVia.Location);
+                var response = await _siteRecoveryJobReplicationJobsRestClient.ResumeAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content, cancellationToken).ConfigureAwait(false);
+                var operation = new RecoveryServicesSiteRecoveryArmOperation<SiteRecoveryJobResource>(new SiteRecoveryJobOperationSource(Client), _siteRecoveryJobReplicationJobsClientDiagnostics, Pipeline, _siteRecoveryJobReplicationJobsRestClient.CreateResumeRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -340,19 +340,19 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="resumeJobParams"> Resume rob comments. </param>
+        /// <param name="content"> Resume rob comments. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resumeJobParams"/> is null. </exception>
-        public virtual ArmOperation<SiteRecoveryJobResource> Resume(WaitUntil waitUntil, ResumeJobParams resumeJobParams, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual ArmOperation<SiteRecoveryJobResource> Resume(WaitUntil waitUntil, ReplicationResumeJobContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(resumeJobParams, nameof(resumeJobParams));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _siteRecoveryJobReplicationJobsClientDiagnostics.CreateScope("SiteRecoveryJobResource.Resume");
             scope.Start();
             try
             {
-                var response = _siteRecoveryJobReplicationJobsRestClient.Resume(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, resumeJobParams, cancellationToken);
-                var operation = new RecoveryServicesSiteRecoveryArmOperation<SiteRecoveryJobResource>(new SiteRecoveryJobOperationSource(Client), _siteRecoveryJobReplicationJobsClientDiagnostics, Pipeline, _siteRecoveryJobReplicationJobsRestClient.CreateResumeRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, resumeJobParams).Request, response, OperationFinalStateVia.Location);
+                var response = _siteRecoveryJobReplicationJobsRestClient.Resume(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content, cancellationToken);
+                var operation = new RecoveryServicesSiteRecoveryArmOperation<SiteRecoveryJobResource>(new SiteRecoveryJobOperationSource(Client), _siteRecoveryJobReplicationJobsClientDiagnostics, Pipeline, _siteRecoveryJobReplicationJobsRestClient.CreateResumeRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

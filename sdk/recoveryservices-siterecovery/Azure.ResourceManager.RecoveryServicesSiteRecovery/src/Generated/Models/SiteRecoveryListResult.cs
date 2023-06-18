@@ -11,10 +11,7 @@ using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary>
-    /// Collection of fabric details.
-    /// Serialized Name: EventCollection
-    /// </summary>
+    /// <summary> Collection of fabric details. </summary>
     internal partial class SiteRecoveryListResult
     {
         /// <summary> Initializes a new instance of SiteRecoveryListResult. </summary>
@@ -24,29 +21,17 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Initializes a new instance of SiteRecoveryListResult. </summary>
-        /// <param name="value">
-        /// The list of events.
-        /// Serialized Name: EventCollection.value
-        /// </param>
-        /// <param name="nextLink">
-        /// The value of next link.
-        /// Serialized Name: EventCollection.nextLink
-        /// </param>
+        /// <param name="value"> The list of events. </param>
+        /// <param name="nextLink"> The value of next link. </param>
         internal SiteRecoveryListResult(IReadOnlyList<SiteRecoveryEventData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
-        /// <summary>
-        /// The list of events.
-        /// Serialized Name: EventCollection.value
-        /// </summary>
+        /// <summary> The list of events. </summary>
         public IReadOnlyList<SiteRecoveryEventData> Value { get; }
-        /// <summary>
-        /// The value of next link.
-        /// Serialized Name: EventCollection.nextLink
-        /// </summary>
+        /// <summary> The value of next link. </summary>
         public string NextLink { get; }
     }
 }

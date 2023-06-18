@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Samples
             string vCenterName = "esx-78";
             SiteRecoveryVCenterCreateOrUpdateContent content = new SiteRecoveryVCenterCreateOrUpdateContent()
             {
-                Properties = new SiteRecoveryAddVCenterRequestProperties()
+                Properties = new SiteRecoveryAddVCenterProperties()
                 {
                     FriendlyName = "esx-78",
                     IPAddress = IPAddress.Parse("inmtest78"),

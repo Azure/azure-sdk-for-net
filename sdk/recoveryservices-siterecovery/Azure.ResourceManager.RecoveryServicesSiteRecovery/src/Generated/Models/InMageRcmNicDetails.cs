@@ -10,10 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary>
-    /// InMageRcm NIC details.
-    /// Serialized Name: InMageRcmNicDetails
-    /// </summary>
+    /// <summary> InMageRcm NIC details. </summary>
     public partial class InMageRcmNicDetails
     {
         /// <summary> Initializes a new instance of InMageRcmNicDetails. </summary>
@@ -22,58 +19,19 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Initializes a new instance of InMageRcmNicDetails. </summary>
-        /// <param name="nicId">
-        /// The NIC Id.
-        /// Serialized Name: InMageRcmNicDetails.nicId
-        /// </param>
-        /// <param name="isPrimaryNic">
-        /// A value indicating whether this is the primary NIC.
-        /// Serialized Name: InMageRcmNicDetails.isPrimaryNic
-        /// </param>
-        /// <param name="isSelectedForFailover">
-        /// A value indicating whether this NIC is selected for failover.
-        /// Serialized Name: InMageRcmNicDetails.isSelectedForFailover
-        /// </param>
-        /// <param name="sourceIPAddress">
-        /// The source IP address.
-        /// Serialized Name: InMageRcmNicDetails.sourceIPAddress
-        /// </param>
-        /// <param name="sourceIPAddressType">
-        /// The source IP address type.
-        /// Serialized Name: InMageRcmNicDetails.sourceIPAddressType
-        /// </param>
-        /// <param name="sourceNetworkId">
-        /// Source network Id.
-        /// Serialized Name: InMageRcmNicDetails.sourceNetworkId
-        /// </param>
-        /// <param name="sourceSubnetName">
-        /// Source subnet name.
-        /// Serialized Name: InMageRcmNicDetails.sourceSubnetName
-        /// </param>
-        /// <param name="targetIPAddress">
-        /// The target IP address.
-        /// Serialized Name: InMageRcmNicDetails.targetIPAddress
-        /// </param>
-        /// <param name="targetIPAddressType">
-        /// The target IP address type.
-        /// Serialized Name: InMageRcmNicDetails.targetIPAddressType
-        /// </param>
-        /// <param name="targetSubnetName">
-        /// Target subnet name.
-        /// Serialized Name: InMageRcmNicDetails.targetSubnetName
-        /// </param>
-        /// <param name="testSubnetName">
-        /// Test subnet name.
-        /// Serialized Name: InMageRcmNicDetails.testSubnetName
-        /// </param>
-        /// <param name="testIPAddress">
-        /// The test IP address.
-        /// Serialized Name: InMageRcmNicDetails.testIPAddress
-        /// </param>
-        /// <param name="testIPAddressType">
-        /// The test IP address type.
-        /// Serialized Name: InMageRcmNicDetails.testIPAddressType
-        /// </param>
+        /// <param name="nicId"> The NIC Id. </param>
+        /// <param name="isPrimaryNic"> A value indicating whether this is the primary NIC. </param>
+        /// <param name="isSelectedForFailover"> A value indicating whether this NIC is selected for failover. </param>
+        /// <param name="sourceIPAddress"> The source IP address. </param>
+        /// <param name="sourceIPAddressType"> The source IP address type. </param>
+        /// <param name="sourceNetworkId"> Source network Id. </param>
+        /// <param name="sourceSubnetName"> Source subnet name. </param>
+        /// <param name="targetIPAddress"> The target IP address. </param>
+        /// <param name="targetIPAddressType"> The target IP address type. </param>
+        /// <param name="targetSubnetName"> Target subnet name. </param>
+        /// <param name="testSubnetName"> Test subnet name. </param>
+        /// <param name="testIPAddress"> The test IP address. </param>
+        /// <param name="testIPAddressType"> The test IP address type. </param>
         internal InMageRcmNicDetails(string nicId, string isPrimaryNic, string isSelectedForFailover, IPAddress sourceIPAddress, SiteRecoveryEthernetAddressType? sourceIPAddressType, ResourceIdentifier sourceNetworkId, string sourceSubnetName, IPAddress targetIPAddress, SiteRecoveryEthernetAddressType? targetIPAddressType, string targetSubnetName, string testSubnetName, IPAddress testIPAddress, SiteRecoveryEthernetAddressType? testIPAddressType)
         {
             NicId = nicId;
@@ -91,70 +49,31 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             TestIPAddressType = testIPAddressType;
         }
 
-        /// <summary>
-        /// The NIC Id.
-        /// Serialized Name: InMageRcmNicDetails.nicId
-        /// </summary>
+        /// <summary> The NIC Id. </summary>
         public string NicId { get; }
-        /// <summary>
-        /// A value indicating whether this is the primary NIC.
-        /// Serialized Name: InMageRcmNicDetails.isPrimaryNic
-        /// </summary>
+        /// <summary> A value indicating whether this is the primary NIC. </summary>
         public string IsPrimaryNic { get; }
-        /// <summary>
-        /// A value indicating whether this NIC is selected for failover.
-        /// Serialized Name: InMageRcmNicDetails.isSelectedForFailover
-        /// </summary>
+        /// <summary> A value indicating whether this NIC is selected for failover. </summary>
         public string IsSelectedForFailover { get; }
-        /// <summary>
-        /// The source IP address.
-        /// Serialized Name: InMageRcmNicDetails.sourceIPAddress
-        /// </summary>
+        /// <summary> The source IP address. </summary>
         public IPAddress SourceIPAddress { get; }
-        /// <summary>
-        /// The source IP address type.
-        /// Serialized Name: InMageRcmNicDetails.sourceIPAddressType
-        /// </summary>
+        /// <summary> The source IP address type. </summary>
         public SiteRecoveryEthernetAddressType? SourceIPAddressType { get; }
-        /// <summary>
-        /// Source network Id.
-        /// Serialized Name: InMageRcmNicDetails.sourceNetworkId
-        /// </summary>
+        /// <summary> Source network Id. </summary>
         public ResourceIdentifier SourceNetworkId { get; }
-        /// <summary>
-        /// Source subnet name.
-        /// Serialized Name: InMageRcmNicDetails.sourceSubnetName
-        /// </summary>
+        /// <summary> Source subnet name. </summary>
         public string SourceSubnetName { get; }
-        /// <summary>
-        /// The target IP address.
-        /// Serialized Name: InMageRcmNicDetails.targetIPAddress
-        /// </summary>
+        /// <summary> The target IP address. </summary>
         public IPAddress TargetIPAddress { get; }
-        /// <summary>
-        /// The target IP address type.
-        /// Serialized Name: InMageRcmNicDetails.targetIPAddressType
-        /// </summary>
+        /// <summary> The target IP address type. </summary>
         public SiteRecoveryEthernetAddressType? TargetIPAddressType { get; }
-        /// <summary>
-        /// Target subnet name.
-        /// Serialized Name: InMageRcmNicDetails.targetSubnetName
-        /// </summary>
+        /// <summary> Target subnet name. </summary>
         public string TargetSubnetName { get; }
-        /// <summary>
-        /// Test subnet name.
-        /// Serialized Name: InMageRcmNicDetails.testSubnetName
-        /// </summary>
+        /// <summary> Test subnet name. </summary>
         public string TestSubnetName { get; }
-        /// <summary>
-        /// The test IP address.
-        /// Serialized Name: InMageRcmNicDetails.testIPAddress
-        /// </summary>
+        /// <summary> The test IP address. </summary>
         public IPAddress TestIPAddress { get; }
-        /// <summary>
-        /// The test IP address type.
-        /// Serialized Name: InMageRcmNicDetails.testIPAddressType
-        /// </summary>
+        /// <summary> The test IP address type. </summary>
         public SiteRecoveryEthernetAddressType? TestIPAddressType { get; }
     }
 }

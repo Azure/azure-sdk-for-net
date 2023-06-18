@@ -7,11 +7,8 @@
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary>
-    /// Update network mappings input properties/behavior specific to vmm to azure.
-    /// Serialized Name: VmmToAzureUpdateNetworkMappingInput
-    /// </summary>
-    public partial class VmmToAzureUpdateNetworkMappingContent : SiteRecoveryFabricSpecificUpdateNetworkMappingContent
+    /// <summary> Update network mappings input properties/behavior specific to vmm to azure. </summary>
+    public partial class VmmToAzureUpdateNetworkMappingContent : FabricSpecificUpdateNetworkMappingContent
     {
         /// <summary> Initializes a new instance of VmmToAzureUpdateNetworkMappingContent. </summary>
         public VmmToAzureUpdateNetworkMappingContent()

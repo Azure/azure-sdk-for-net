@@ -9,10 +9,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary>
-    /// This class represents the recovery plan shutdown group task details.
-    /// Serialized Name: RecoveryPlanShutdownGroupTaskDetails
-    /// </summary>
+    /// <summary> This class represents the recovery plan shutdown group task details. </summary>
     public partial class RecoveryPlanShutdownGroupTaskDetails : RecoveryPlanGroupTaskDetails
     {
         /// <summary> Initializes a new instance of RecoveryPlanShutdownGroupTaskDetails. </summary>
@@ -22,26 +19,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Initializes a new instance of RecoveryPlanShutdownGroupTaskDetails. </summary>
-        /// <param name="instanceType">
-        /// The type of task details.
-        /// Serialized Name: GroupTaskDetails.instanceType
-        /// </param>
-        /// <param name="childTasks">
-        /// The child tasks.
-        /// Serialized Name: GroupTaskDetails.childTasks
-        /// </param>
-        /// <param name="name">
-        /// The name.
-        /// Serialized Name: RecoveryPlanGroupTaskDetails.name
-        /// </param>
-        /// <param name="groupId">
-        /// The group identifier.
-        /// Serialized Name: RecoveryPlanGroupTaskDetails.groupId
-        /// </param>
-        /// <param name="rpGroupType">
-        /// The group type.
-        /// Serialized Name: RecoveryPlanGroupTaskDetails.rpGroupType
-        /// </param>
+        /// <param name="instanceType"> The type of task details. </param>
+        /// <param name="childTasks"> The child tasks. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="groupId"> The group identifier. </param>
+        /// <param name="rpGroupType"> The group type. </param>
         internal RecoveryPlanShutdownGroupTaskDetails(string instanceType, IReadOnlyList<AsrTask> childTasks, string name, string groupId, string rpGroupType) : base(instanceType, childTasks, name, groupId, rpGroupType)
         {
             InstanceType = instanceType ?? "RecoveryPlanShutdownGroupTaskDetails";

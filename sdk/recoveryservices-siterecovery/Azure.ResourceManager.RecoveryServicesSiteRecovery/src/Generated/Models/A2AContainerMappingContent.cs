@@ -9,10 +9,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary>
-    /// A2A container mapping input.
-    /// Serialized Name: A2AContainerMappingInput
-    /// </summary>
+    /// <summary> A2A container mapping input. </summary>
     public partial class A2AContainerMappingContent : ReplicationProviderSpecificContainerMappingContent
     {
         /// <summary> Initializes a new instance of A2AContainerMappingContent. </summary>
@@ -21,20 +18,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             InstanceType = "A2A";
         }
 
-        /// <summary>
-        /// A value indicating whether the auto update is enabled.
-        /// Serialized Name: A2AContainerMappingInput.agentAutoUpdateStatus
-        /// </summary>
+        /// <summary> A value indicating whether the auto update is enabled. </summary>
         public SiteRecoveryAgentAutoUpdateStatus? AgentAutoUpdateStatus { get; set; }
-        /// <summary>
-        /// The automation account arm id.
-        /// Serialized Name: A2AContainerMappingInput.automationAccountArmId
-        /// </summary>
+        /// <summary> The automation account arm id. </summary>
         public ResourceIdentifier AutomationAccountArmId { get; set; }
-        /// <summary>
-        /// A value indicating the type authentication to use for automation Account.
-        /// Serialized Name: A2AContainerMappingInput.automationAccountAuthenticationType
-        /// </summary>
+        /// <summary> A value indicating the type authentication to use for automation Account. </summary>
         public AutomationAccountAuthenticationType? AutomationAccountAuthenticationType { get; set; }
     }
 }

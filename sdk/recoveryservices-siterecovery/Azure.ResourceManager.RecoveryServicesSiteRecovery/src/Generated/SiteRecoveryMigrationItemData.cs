@@ -14,7 +14,6 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
     /// <summary>
     /// A class representing the SiteRecoveryMigrationItem data model.
     /// Migration item.
-    /// Serialized Name: MigrationItem
     /// </summary>
     public partial class SiteRecoveryMigrationItemData : ResourceData
     {
@@ -28,29 +27,17 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="properties">
-        /// The migration item properties.
-        /// Serialized Name: MigrationItem.properties
-        /// </param>
-        /// <param name="location">
-        /// Resource Location
-        /// Serialized Name: Resource.location
-        /// </param>
+        /// <param name="properties"> The migration item properties. </param>
+        /// <param name="location"> Resource Location. </param>
         internal SiteRecoveryMigrationItemData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SiteRecoveryMigrationItemProperties properties, AzureLocation? location) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
             Location = location;
         }
 
-        /// <summary>
-        /// The migration item properties.
-        /// Serialized Name: MigrationItem.properties
-        /// </summary>
+        /// <summary> The migration item properties. </summary>
         public SiteRecoveryMigrationItemProperties Properties { get; }
-        /// <summary>
-        /// Resource Location
-        /// Serialized Name: Resource.location
-        /// </summary>
+        /// <summary> Resource Location. </summary>
         public AzureLocation? Location { get; }
     }
 }

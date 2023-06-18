@@ -7,10 +7,7 @@
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary>
-    /// ApplyRecoveryPoint input specific to InMageAzureV2 provider.
-    /// Serialized Name: InMageAzureV2ApplyRecoveryPointInput
-    /// </summary>
+    /// <summary> ApplyRecoveryPoint input specific to InMageAzureV2 provider. </summary>
     public partial class InMageAzureV2ApplyRecoveryPointContent : SiteRecoveryApplyRecoveryPointProviderSpecificContent
     {
         /// <summary> Initializes a new instance of InMageAzureV2ApplyRecoveryPointContent. </summary>

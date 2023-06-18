@@ -9,7 +9,6 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     /// <summary>
     /// Provider specific test failover input.
-    /// Serialized Name: TestFailoverProviderSpecificInput
     /// Please note <see cref="TestFailoverProviderSpecificContent"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="A2ATestFailoverContent"/>, <see cref="HyperVReplicaAzureTestFailoverContent"/>, <see cref="InMageTestFailoverContent"/>, <see cref="InMageAzureV2TestFailoverContent"/> and <see cref="InMageRcmTestFailoverContent"/>.
     /// </summary>
@@ -20,10 +19,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         {
         }
 
-        /// <summary>
-        /// The class type.
-        /// Serialized Name: TestFailoverProviderSpecificInput.instanceType
-        /// </summary>
+        /// <summary> The class type. </summary>
         internal string InstanceType { get; set; }
     }
 }

@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary>
-    /// The PossibleOperationsDirection.
-    /// Serialized Name: PossibleOperationsDirections
-    /// </summary>
+    /// <summary> The PossibleOperationsDirection. </summary>
     public readonly partial struct PossibleOperationsDirection : IEquatable<PossibleOperationsDirection>
     {
         private readonly string _value;
@@ -28,15 +25,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         private const string PrimaryToRecoveryValue = "PrimaryToRecovery";
         private const string RecoveryToPrimaryValue = "RecoveryToPrimary";
 
-        /// <summary>
-        /// PrimaryToRecovery
-        /// Serialized Name: PossibleOperationsDirections.PrimaryToRecovery
-        /// </summary>
+        /// <summary> PrimaryToRecovery. </summary>
         public static PossibleOperationsDirection PrimaryToRecovery { get; } = new PossibleOperationsDirection(PrimaryToRecoveryValue);
-        /// <summary>
-        /// RecoveryToPrimary
-        /// Serialized Name: PossibleOperationsDirections.RecoveryToPrimary
-        /// </summary>
+        /// <summary> RecoveryToPrimary. </summary>
         public static PossibleOperationsDirection RecoveryToPrimary { get; } = new PossibleOperationsDirection(RecoveryToPrimaryValue);
         /// <summary> Determines if two <see cref="PossibleOperationsDirection"/> values are the same. </summary>
         public static bool operator ==(PossibleOperationsDirection left, PossibleOperationsDirection right) => left.Equals(right);

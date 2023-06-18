@@ -10,17 +10,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary>
-    /// VMwareCbt specific resync input.
-    /// Serialized Name: VMwareCbtResyncInput
-    /// </summary>
+    /// <summary> VMwareCbt specific resync input. </summary>
     public partial class VMwareCbtResyncContent : ResyncProviderSpecificContent
     {
         /// <summary> Initializes a new instance of VMwareCbtResyncContent. </summary>
-        /// <param name="skipCbtReset">
-        /// A value indicating whether CBT is to be reset.
-        /// Serialized Name: VMwareCbtResyncInput.skipCbtReset
-        /// </param>
+        /// <param name="skipCbtReset"> A value indicating whether CBT is to be reset. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="skipCbtReset"/> is null. </exception>
         public VMwareCbtResyncContent(string skipCbtReset)
         {
@@ -30,10 +24,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             InstanceType = "VMwareCbt";
         }
 
-        /// <summary>
-        /// A value indicating whether CBT is to be reset.
-        /// Serialized Name: VMwareCbtResyncInput.skipCbtReset
-        /// </summary>
+        /// <summary> A value indicating whether CBT is to be reset. </summary>
         public string SkipCbtReset { get; }
     }
 }

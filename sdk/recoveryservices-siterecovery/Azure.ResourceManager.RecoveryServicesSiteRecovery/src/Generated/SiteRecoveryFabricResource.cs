@@ -300,11 +300,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
             return GetSiteRecoveryServicesProviders().Get(providerName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of SiteRecoveryStorageClassificationResources in the SiteRecoveryFabric. </summary>
-        /// <returns> An object representing collection of SiteRecoveryStorageClassificationResources and their operations over a SiteRecoveryStorageClassificationResource. </returns>
-        public virtual SiteRecoveryStorageClassificationCollection GetSiteRecoveryStorageClassifications()
+        /// <summary> Gets a collection of StorageClassificationResources in the SiteRecoveryFabric. </summary>
+        /// <returns> An object representing collection of StorageClassificationResources and their operations over a StorageClassificationResource. </returns>
+        public virtual StorageClassificationCollection GetStorageClassifications()
         {
-            return GetCachedClient(Client => new SiteRecoveryStorageClassificationCollection(Client, Id));
+            return GetCachedClient(Client => new StorageClassificationCollection(Client, Id));
         }
 
         /// <summary>
@@ -325,9 +325,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <exception cref="ArgumentException"> <paramref name="storageClassificationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="storageClassificationName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<SiteRecoveryStorageClassificationResource>> GetSiteRecoveryStorageClassificationAsync(string storageClassificationName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<StorageClassificationResource>> GetStorageClassificationAsync(string storageClassificationName, CancellationToken cancellationToken = default)
         {
-            return await GetSiteRecoveryStorageClassifications().GetAsync(storageClassificationName, cancellationToken).ConfigureAwait(false);
+            return await GetStorageClassifications().GetAsync(storageClassificationName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -348,9 +348,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <exception cref="ArgumentException"> <paramref name="storageClassificationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="storageClassificationName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<SiteRecoveryStorageClassificationResource> GetSiteRecoveryStorageClassification(string storageClassificationName, CancellationToken cancellationToken = default)
+        public virtual Response<StorageClassificationResource> GetStorageClassification(string storageClassificationName, CancellationToken cancellationToken = default)
         {
-            return GetSiteRecoveryStorageClassifications().Get(storageClassificationName, cancellationToken);
+            return GetStorageClassifications().Get(storageClassificationName, cancellationToken);
         }
 
         /// <summary> Gets a collection of SiteRecoveryVCenterResources in the SiteRecoveryFabric. </summary>
@@ -701,7 +701,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <param name="content"> The input to the failover process server operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<ArmOperation<SiteRecoveryFabricResource>> ReassociateGatewayAsync(WaitUntil waitUntil, SiteRecoveryFailoverProcessServerContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<SiteRecoveryFabricResource>> ReassociateGatewayAsync(WaitUntil waitUntil, FailoverProcessServerContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -739,7 +739,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <param name="content"> The input to the failover process server operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual ArmOperation<SiteRecoveryFabricResource> ReassociateGateway(WaitUntil waitUntil, SiteRecoveryFailoverProcessServerContent content, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<SiteRecoveryFabricResource> ReassociateGateway(WaitUntil waitUntil, FailoverProcessServerContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 

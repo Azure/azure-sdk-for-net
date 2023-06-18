@@ -9,10 +9,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary>
-    /// A2A provider specific input for unplanned failover.
-    /// Serialized Name: A2AUnplannedFailoverInput
-    /// </summary>
+    /// <summary> A2A provider specific input for unplanned failover. </summary>
     public partial class A2AUnplannedFailoverContent : UnplannedFailoverProviderSpecificContent
     {
         /// <summary> Initializes a new instance of A2AUnplannedFailoverContent. </summary>
@@ -21,15 +18,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             InstanceType = "A2A";
         }
 
-        /// <summary>
-        /// The recovery point id to be passed to failover to a particular recovery point. In case of latest recovery point, null should be passed.
-        /// Serialized Name: A2AUnplannedFailoverInput.recoveryPointId
-        /// </summary>
+        /// <summary> The recovery point id to be passed to failover to a particular recovery point. In case of latest recovery point, null should be passed. </summary>
         public ResourceIdentifier RecoveryPointId { get; set; }
-        /// <summary>
-        /// A value indicating whether to use recovery cloud service for failover or not.
-        /// Serialized Name: A2AUnplannedFailoverInput.cloudServiceCreationOption
-        /// </summary>
+        /// <summary> A value indicating whether to use recovery cloud service for failover or not. </summary>
         public string CloudServiceCreationOption { get; set; }
     }
 }

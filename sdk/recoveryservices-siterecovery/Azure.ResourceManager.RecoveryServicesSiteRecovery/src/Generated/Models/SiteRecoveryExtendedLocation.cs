@@ -10,21 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary>
-    /// Extended location of the resource.
-    /// Serialized Name: ExtendedLocation
-    /// </summary>
+    /// <summary> Extended location of the resource. </summary>
     public partial class SiteRecoveryExtendedLocation
     {
         /// <summary> Initializes a new instance of SiteRecoveryExtendedLocation. </summary>
-        /// <param name="name">
-        /// The name of the extended location.
-        /// Serialized Name: ExtendedLocation.name
-        /// </param>
-        /// <param name="extendedLocationType">
-        /// The extended location type.
-        /// Serialized Name: ExtendedLocation.type
-        /// </param>
+        /// <param name="name"> The name of the extended location. </param>
+        /// <param name="extendedLocationType"> The extended location type. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public SiteRecoveryExtendedLocation(string name, SiteRecoveryExtendedLocationType extendedLocationType)
         {
@@ -34,15 +25,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             ExtendedLocationType = extendedLocationType;
         }
 
-        /// <summary>
-        /// The name of the extended location.
-        /// Serialized Name: ExtendedLocation.name
-        /// </summary>
+        /// <summary> The name of the extended location. </summary>
         public string Name { get; set; }
-        /// <summary>
-        /// The extended location type.
-        /// Serialized Name: ExtendedLocation.type
-        /// </summary>
+        /// <summary> The extended location type. </summary>
         public SiteRecoveryExtendedLocationType ExtendedLocationType { get; set; }
     }
 }

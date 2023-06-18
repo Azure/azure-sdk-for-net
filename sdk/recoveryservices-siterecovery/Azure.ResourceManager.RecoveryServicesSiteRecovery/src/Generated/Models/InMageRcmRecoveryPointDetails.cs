@@ -7,10 +7,7 @@
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary>
-    /// InMageRcm provider specific recovery point details.
-    /// Serialized Name: InMageRcmRecoveryPointDetails
-    /// </summary>
+    /// <summary> InMageRcm provider specific recovery point details. </summary>
     public partial class InMageRcmRecoveryPointDetails : ProviderSpecificRecoveryPointDetails
     {
         /// <summary> Initializes a new instance of InMageRcmRecoveryPointDetails. </summary>
@@ -20,24 +17,15 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Initializes a new instance of InMageRcmRecoveryPointDetails. </summary>
-        /// <param name="instanceType">
-        /// Gets the provider type.
-        /// Serialized Name: ProviderSpecificRecoveryPointDetails.instanceType
-        /// </param>
-        /// <param name="isMultiVmSyncPoint">
-        /// A value indicating whether the recovery point is multi VM consistent.
-        /// Serialized Name: InMageRcmRecoveryPointDetails.isMultiVmSyncPoint
-        /// </param>
+        /// <param name="instanceType"> Gets the provider type. </param>
+        /// <param name="isMultiVmSyncPoint"> A value indicating whether the recovery point is multi VM consistent. </param>
         internal InMageRcmRecoveryPointDetails(string instanceType, string isMultiVmSyncPoint) : base(instanceType)
         {
             IsMultiVmSyncPoint = isMultiVmSyncPoint;
             InstanceType = instanceType ?? "InMageRcm";
         }
 
-        /// <summary>
-        /// A value indicating whether the recovery point is multi VM consistent.
-        /// Serialized Name: InMageRcmRecoveryPointDetails.isMultiVmSyncPoint
-        /// </summary>
+        /// <summary> A value indicating whether the recovery point is multi VM consistent. </summary>
         public string IsMultiVmSyncPoint { get; }
     }
 }

@@ -14,7 +14,6 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
     /// <summary>
     /// A class representing the SiteRecoveryNetworkMapping data model.
     /// Network Mapping model. Ideally it should have been possible to inherit this class from prev version in InheritedModels as long as there is no difference in structure or method signature. Since there were no base Models for certain fields and methods viz NetworkMappingProperties and Load with required return type, the class has been introduced in its entirety with references to base models to facilitate extensions in subsequent versions.
-    /// Serialized Name: NetworkMapping
     /// </summary>
     public partial class SiteRecoveryNetworkMappingData : ResourceData
     {
@@ -28,29 +27,17 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="properties">
-        /// The Network Mapping Properties.
-        /// Serialized Name: NetworkMapping.properties
-        /// </param>
-        /// <param name="location">
-        /// Resource Location
-        /// Serialized Name: Resource.location
-        /// </param>
-        internal SiteRecoveryNetworkMappingData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, NetworkMappingProperties properties, AzureLocation? location) : base(id, name, resourceType, systemData)
+        /// <param name="properties"> The Network Mapping Properties. </param>
+        /// <param name="location"> Resource Location. </param>
+        internal SiteRecoveryNetworkMappingData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SiteRecoveryNetworkMappingProperties properties, AzureLocation? location) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
             Location = location;
         }
 
-        /// <summary>
-        /// The Network Mapping Properties.
-        /// Serialized Name: NetworkMapping.properties
-        /// </summary>
-        public NetworkMappingProperties Properties { get; }
-        /// <summary>
-        /// Resource Location
-        /// Serialized Name: Resource.location
-        /// </summary>
+        /// <summary> The Network Mapping Properties. </summary>
+        public SiteRecoveryNetworkMappingProperties Properties { get; }
+        /// <summary> Resource Location. </summary>
         public AzureLocation? Location { get; }
     }
 }

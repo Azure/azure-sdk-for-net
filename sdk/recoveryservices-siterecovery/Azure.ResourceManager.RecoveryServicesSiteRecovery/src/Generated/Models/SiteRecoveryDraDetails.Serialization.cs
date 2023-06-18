@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Optional<string> biosId = default;
             Optional<string> version = default;
             Optional<DateTimeOffset> lastHeartbeatUtc = default;
-            Optional<ProtectionHealth> health = default;
+            Optional<SiteRecoveryProtectionHealth> health = default;
             Optional<IReadOnlyList<SiteRecoveryHealthError>> healthErrors = default;
             Optional<int> forwardProtectedItemCount = default;
             Optional<int> reverseProtectedItemCount = default;
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    health = new ProtectionHealth(property.Value.GetString());
+                    health = new SiteRecoveryProtectionHealth(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("healthErrors"u8))

@@ -10,10 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary>
-    /// HyperV replica Azure input to update replication protected item.
-    /// Serialized Name: HyperVReplicaAzureUpdateReplicationProtectedItemInput
-    /// </summary>
+    /// <summary> HyperV replica Azure input to update replication protected item. </summary>
     public partial class HyperVReplicaAzureUpdateReplicationProtectedItemContent : UpdateReplicationProtectedItemProviderContent
     {
         /// <summary> Initializes a new instance of HyperVReplicaAzureUpdateReplicationProtectedItemContent. </summary>
@@ -27,60 +24,27 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             InstanceType = "HyperVReplicaAzure";
         }
 
-        /// <summary>
-        /// The recovery Azure resource group Id for classic deployment.
-        /// Serialized Name: HyperVReplicaAzureUpdateReplicationProtectedItemInput.recoveryAzureV1ResourceGroupId
-        /// </summary>
+        /// <summary> The recovery Azure resource group Id for classic deployment. </summary>
         public ResourceIdentifier RecoveryAzureV1ResourceGroupId { get; set; }
-        /// <summary>
-        /// The recovery Azure resource group Id for resource manager deployment.
-        /// Serialized Name: HyperVReplicaAzureUpdateReplicationProtectedItemInput.recoveryAzureV2ResourceGroupId
-        /// </summary>
+        /// <summary> The recovery Azure resource group Id for resource manager deployment. </summary>
         public ResourceIdentifier RecoveryAzureV2ResourceGroupId { get; set; }
-        /// <summary>
-        /// A value indicating whether managed disks should be used during failover.
-        /// Serialized Name: HyperVReplicaAzureUpdateReplicationProtectedItemInput.useManagedDisks
-        /// </summary>
+        /// <summary> A value indicating whether managed disks should be used during failover. </summary>
         public string UseManagedDisks { get; set; }
-        /// <summary>
-        /// The dictionary of disk resource Id to disk encryption set ARM Id.
-        /// Serialized Name: HyperVReplicaAzureUpdateReplicationProtectedItemInput.diskIdToDiskEncryptionMap
-        /// </summary>
+        /// <summary> The dictionary of disk resource Id to disk encryption set ARM Id. </summary>
         public IDictionary<string, string> DiskIdToDiskEncryptionMap { get; }
-        /// <summary>
-        /// The target proximity placement group Id.
-        /// Serialized Name: HyperVReplicaAzureUpdateReplicationProtectedItemInput.targetProximityPlacementGroupId
-        /// </summary>
+        /// <summary> The target proximity placement group Id. </summary>
         public ResourceIdentifier TargetProximityPlacementGroupId { get; set; }
-        /// <summary>
-        /// The target availability zone.
-        /// Serialized Name: HyperVReplicaAzureUpdateReplicationProtectedItemInput.targetAvailabilityZone
-        /// </summary>
+        /// <summary> The target availability zone. </summary>
         public string TargetAvailabilityZone { get; set; }
-        /// <summary>
-        /// The target VM tags.
-        /// Serialized Name: HyperVReplicaAzureUpdateReplicationProtectedItemInput.targetVmTags
-        /// </summary>
+        /// <summary> The target VM tags. </summary>
         public IDictionary<string, string> TargetVmTags { get; }
-        /// <summary>
-        /// The tags for the target managed disks.
-        /// Serialized Name: HyperVReplicaAzureUpdateReplicationProtectedItemInput.targetManagedDiskTags
-        /// </summary>
+        /// <summary> The tags for the target managed disks. </summary>
         public IDictionary<string, string> TargetManagedDiskTags { get; }
-        /// <summary>
-        /// The tags for the target NICs.
-        /// Serialized Name: HyperVReplicaAzureUpdateReplicationProtectedItemInput.targetNicTags
-        /// </summary>
+        /// <summary> The tags for the target NICs. </summary>
         public IDictionary<string, string> TargetNicTags { get; }
-        /// <summary>
-        /// The SQL Server license type.
-        /// Serialized Name: HyperVReplicaAzureUpdateReplicationProtectedItemInput.sqlServerLicenseType
-        /// </summary>
-        public SqlServerLicenseType? SqlServerLicenseType { get; set; }
-        /// <summary>
-        /// The list of disk update properties.
-        /// Serialized Name: HyperVReplicaAzureUpdateReplicationProtectedItemInput.vmDisks
-        /// </summary>
+        /// <summary> The SQL Server license type. </summary>
+        public SiteRecoverySqlServerLicenseType? SqlServerLicenseType { get; set; }
+        /// <summary> The list of disk update properties. </summary>
         public IList<UpdateDiskContent> VmDisks { get; }
     }
 }

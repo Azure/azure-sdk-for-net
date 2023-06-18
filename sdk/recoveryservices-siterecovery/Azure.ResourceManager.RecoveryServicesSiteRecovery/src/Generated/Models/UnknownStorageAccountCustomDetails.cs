@@ -7,17 +7,11 @@
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary>
-    /// The UnknownStorageAccountCustomDetails.
-    /// Serialized Name: UnknownStorageAccountCustomDetails
-    /// </summary>
+    /// <summary> The UnknownStorageAccountCustomDetails. </summary>
     internal partial class UnknownStorageAccountCustomDetails : StorageAccountCustomDetails
     {
         /// <summary> Initializes a new instance of UnknownStorageAccountCustomDetails. </summary>
-        /// <param name="resourceType">
-        /// The class type.
-        /// Serialized Name: StorageAccountCustomDetails.resourceType
-        /// </param>
+        /// <param name="resourceType"> The class type. </param>
         internal UnknownStorageAccountCustomDetails(string resourceType) : base(resourceType)
         {
             ResourceType = resourceType ?? "Unknown";

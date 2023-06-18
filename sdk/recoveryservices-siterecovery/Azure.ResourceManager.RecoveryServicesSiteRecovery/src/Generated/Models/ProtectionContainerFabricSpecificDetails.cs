@@ -7,10 +7,7 @@
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary>
-    /// Base class for fabric specific details of container.
-    /// Serialized Name: ProtectionContainerFabricSpecificDetails
-    /// </summary>
+    /// <summary> Base class for fabric specific details of container. </summary>
     internal partial class ProtectionContainerFabricSpecificDetails
     {
         /// <summary> Initializes a new instance of ProtectionContainerFabricSpecificDetails. </summary>
@@ -19,19 +16,13 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Initializes a new instance of ProtectionContainerFabricSpecificDetails. </summary>
-        /// <param name="instanceType">
-        /// Gets the class type. Overridden in derived classes.
-        /// Serialized Name: ProtectionContainerFabricSpecificDetails.instanceType
-        /// </param>
+        /// <param name="instanceType"> Gets the class type. Overridden in derived classes. </param>
         internal ProtectionContainerFabricSpecificDetails(string instanceType)
         {
             InstanceType = instanceType;
         }
 
-        /// <summary>
-        /// Gets the class type. Overridden in derived classes.
-        /// Serialized Name: ProtectionContainerFabricSpecificDetails.instanceType
-        /// </summary>
+        /// <summary> Gets the class type. Overridden in derived classes. </summary>
         public string InstanceType { get; }
     }
 }

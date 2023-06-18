@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Samples
             // invoke the operation
             SiteRecoveryNetworkMappingPatch patch = new SiteRecoveryNetworkMappingPatch()
             {
-                Properties = new UpdateNetworkMappingContentProperties()
+                Properties = new UpdateNetworkMappingProperties()
                 {
                     RecoveryFabricName = "Microsoft Azure",
                     RecoveryNetworkId = new ResourceIdentifier("/subscriptions/c183865e-6077-46f2-a3b1-deb0f4f4650a/resourceGroups/siterecoveryProd1/providers/Microsoft.Network/virtualNetworks/vnetavrai2"),

@@ -9,11 +9,8 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary>
-    /// Updates network mappings input.
-    /// Serialized Name: AzureToAzureUpdateNetworkMappingInput
-    /// </summary>
-    public partial class A2AUpdateNetworkMappingContent : SiteRecoveryFabricSpecificUpdateNetworkMappingContent
+    /// <summary> Updates network mappings input. </summary>
+    public partial class A2AUpdateNetworkMappingContent : FabricSpecificUpdateNetworkMappingContent
     {
         /// <summary> Initializes a new instance of A2AUpdateNetworkMappingContent. </summary>
         public A2AUpdateNetworkMappingContent()
@@ -21,10 +18,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             InstanceType = "AzureToAzure";
         }
 
-        /// <summary>
-        /// The primary azure vnet Id.
-        /// Serialized Name: AzureToAzureUpdateNetworkMappingInput.primaryNetworkId
-        /// </summary>
+        /// <summary> The primary azure vnet Id. </summary>
         public ResourceIdentifier PrimaryNetworkId { get; set; }
     }
 }

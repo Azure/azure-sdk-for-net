@@ -11,17 +11,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary>
-    /// A2A enable protection input.
-    /// Serialized Name: A2AEnableProtectionInput
-    /// </summary>
+    /// <summary> A2A enable protection input. </summary>
     public partial class A2AEnableProtectionContent : EnableProtectionProviderSpecificContent
     {
         /// <summary> Initializes a new instance of A2AEnableProtectionContent. </summary>
-        /// <param name="fabricObjectId">
-        /// The fabric specific object Id of the virtual machine.
-        /// Serialized Name: A2AEnableProtectionInput.fabricObjectId
-        /// </param>
+        /// <param name="fabricObjectId"> The fabric specific object Id of the virtual machine. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="fabricObjectId"/> is null. </exception>
         public A2AEnableProtectionContent(ResourceIdentifier fabricObjectId)
         {
@@ -33,95 +27,41 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             InstanceType = "A2A";
         }
 
-        /// <summary>
-        /// The fabric specific object Id of the virtual machine.
-        /// Serialized Name: A2AEnableProtectionInput.fabricObjectId
-        /// </summary>
+        /// <summary> The fabric specific object Id of the virtual machine. </summary>
         public ResourceIdentifier FabricObjectId { get; }
-        /// <summary>
-        /// The recovery container Id.
-        /// Serialized Name: A2AEnableProtectionInput.recoveryContainerId
-        /// </summary>
+        /// <summary> The recovery container Id. </summary>
         public ResourceIdentifier RecoveryContainerId { get; set; }
-        /// <summary>
-        /// The recovery resource group Id. Valid for V2 scenarios.
-        /// Serialized Name: A2AEnableProtectionInput.recoveryResourceGroupId
-        /// </summary>
+        /// <summary> The recovery resource group Id. Valid for V2 scenarios. </summary>
         public ResourceIdentifier RecoveryResourceGroupId { get; set; }
-        /// <summary>
-        /// The recovery cloud service Id. Valid for V1 scenarios.
-        /// Serialized Name: A2AEnableProtectionInput.recoveryCloudServiceId
-        /// </summary>
+        /// <summary> The recovery cloud service Id. Valid for V1 scenarios. </summary>
         public string RecoveryCloudServiceId { get; set; }
-        /// <summary>
-        /// The recovery availability set Id.
-        /// Serialized Name: A2AEnableProtectionInput.recoveryAvailabilitySetId
-        /// </summary>
+        /// <summary> The recovery availability set Id. </summary>
         public ResourceIdentifier RecoveryAvailabilitySetId { get; set; }
-        /// <summary>
-        /// The recovery proximity placement group Id.
-        /// Serialized Name: A2AEnableProtectionInput.recoveryProximityPlacementGroupId
-        /// </summary>
+        /// <summary> The recovery proximity placement group Id. </summary>
         public ResourceIdentifier RecoveryProximityPlacementGroupId { get; set; }
-        /// <summary>
-        /// The list of vm disk details.
-        /// Serialized Name: A2AEnableProtectionInput.vmDisks
-        /// </summary>
+        /// <summary> The list of vm disk details. </summary>
         public IList<A2AVmDiskDetails> VmDisks { get; }
-        /// <summary>
-        /// The list of vm managed disk details.
-        /// Serialized Name: A2AEnableProtectionInput.vmManagedDisks
-        /// </summary>
+        /// <summary> The list of vm managed disk details. </summary>
         public IList<A2AVmManagedDiskDetails> VmManagedDisks { get; }
-        /// <summary>
-        /// The multi vm group name.
-        /// Serialized Name: A2AEnableProtectionInput.multiVmGroupName
-        /// </summary>
+        /// <summary> The multi vm group name. </summary>
         public string MultiVmGroupName { get; set; }
-        /// <summary>
-        /// The multi vm group id.
-        /// Serialized Name: A2AEnableProtectionInput.multiVmGroupId
-        /// </summary>
+        /// <summary> The multi vm group id. </summary>
         public string MultiVmGroupId { get; set; }
-        /// <summary>
-        /// The boot diagnostic storage account.
-        /// Serialized Name: A2AEnableProtectionInput.recoveryBootDiagStorageAccountId
-        /// </summary>
+        /// <summary> The boot diagnostic storage account. </summary>
         public ResourceIdentifier RecoveryBootDiagStorageAccountId { get; set; }
-        /// <summary>
-        /// The recovery disk encryption information (for two pass flows).
-        /// Serialized Name: A2AEnableProtectionInput.diskEncryptionInfo
-        /// </summary>
+        /// <summary> The recovery disk encryption information (for two pass flows). </summary>
         public SiteRecoveryDiskEncryptionInfo DiskEncryptionInfo { get; set; }
-        /// <summary>
-        /// The recovery availability zone.
-        /// Serialized Name: A2AEnableProtectionInput.recoveryAvailabilityZone
-        /// </summary>
+        /// <summary> The recovery availability zone. </summary>
         public string RecoveryAvailabilityZone { get; set; }
-        /// <summary>
-        /// The recovery extended location.
-        /// Serialized Name: A2AEnableProtectionInput.recoveryExtendedLocation
-        /// </summary>
+        /// <summary> The recovery extended location. </summary>
         public SiteRecoveryExtendedLocation RecoveryExtendedLocation { get; set; }
-        /// <summary>
-        /// The recovery Azure virtual network ARM id.
-        /// Serialized Name: A2AEnableProtectionInput.recoveryAzureNetworkId
-        /// </summary>
+        /// <summary> The recovery Azure virtual network ARM id. </summary>
         public ResourceIdentifier RecoveryAzureNetworkId { get; set; }
-        /// <summary>
-        /// The recovery subnet name.
-        /// Serialized Name: A2AEnableProtectionInput.recoverySubnetName
-        /// </summary>
+        /// <summary> The recovery subnet name. </summary>
         public string RecoverySubnetName { get; set; }
-        /// <summary>
-        /// The virtual machine scale set Id.
-        /// Serialized Name: A2AEnableProtectionInput.recoveryVirtualMachineScaleSetId
-        /// </summary>
+        /// <summary> The virtual machine scale set Id. </summary>
         public ResourceIdentifier RecoveryVirtualMachineScaleSetId { get; set; }
-        /// <summary>
-        /// The recovery capacity reservation group Id.
-        /// Serialized Name: A2AEnableProtectionInput.recoveryCapacityReservationGroupId
-        /// </summary>
+        /// <summary> The recovery capacity reservation group Id. </summary>
         public ResourceIdentifier RecoveryCapacityReservationGroupId { get; set; }
     }
 }

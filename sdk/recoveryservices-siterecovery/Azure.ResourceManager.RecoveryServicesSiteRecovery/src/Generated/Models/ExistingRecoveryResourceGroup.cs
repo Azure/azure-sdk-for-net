@@ -9,10 +9,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary>
-    /// Existing recovery resource group input.
-    /// Serialized Name: ExistingRecoveryResourceGroup
-    /// </summary>
+    /// <summary> Existing recovery resource group input. </summary>
     public partial class ExistingRecoveryResourceGroup : RecoveryResourceGroupCustomDetails
     {
         /// <summary> Initializes a new instance of ExistingRecoveryResourceGroup. </summary>
@@ -22,24 +19,15 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Initializes a new instance of ExistingRecoveryResourceGroup. </summary>
-        /// <param name="resourceType">
-        /// The class type.
-        /// Serialized Name: RecoveryResourceGroupCustomDetails.resourceType
-        /// </param>
-        /// <param name="recoveryResourceGroupId">
-        /// The recovery resource group Id. Valid for V2 scenarios.
-        /// Serialized Name: ExistingRecoveryResourceGroup.recoveryResourceGroupId
-        /// </param>
+        /// <param name="resourceType"> The class type. </param>
+        /// <param name="recoveryResourceGroupId"> The recovery resource group Id. Valid for V2 scenarios. </param>
         internal ExistingRecoveryResourceGroup(string resourceType, ResourceIdentifier recoveryResourceGroupId) : base(resourceType)
         {
             RecoveryResourceGroupId = recoveryResourceGroupId;
             ResourceType = resourceType ?? "Existing";
         }
 
-        /// <summary>
-        /// The recovery resource group Id. Valid for V2 scenarios.
-        /// Serialized Name: ExistingRecoveryResourceGroup.recoveryResourceGroupId
-        /// </summary>
+        /// <summary> The recovery resource group Id. Valid for V2 scenarios. </summary>
         public ResourceIdentifier RecoveryResourceGroupId { get; set; }
     }
 }

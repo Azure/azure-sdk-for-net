@@ -10,25 +10,13 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary>
-    /// Provider specific input for InMageAzureV2 switch provider.
-    /// Serialized Name: InMageAzureV2SwitchProviderInput
-    /// </summary>
+    /// <summary> Provider specific input for InMageAzureV2 switch provider. </summary>
     public partial class InMageAzureV2SwitchProviderContent : SwitchProviderSpecificContent
     {
         /// <summary> Initializes a new instance of InMageAzureV2SwitchProviderContent. </summary>
-        /// <param name="targetVaultId">
-        /// The target vault Id.
-        /// Serialized Name: InMageAzureV2SwitchProviderInput.targetVaultID
-        /// </param>
-        /// <param name="targetFabricId">
-        /// The target fabric Id.
-        /// Serialized Name: InMageAzureV2SwitchProviderInput.targetFabricID
-        /// </param>
-        /// <param name="targetApplianceId">
-        /// The target appliance Id.
-        /// Serialized Name: InMageAzureV2SwitchProviderInput.targetApplianceID
-        /// </param>
+        /// <param name="targetVaultId"> The target vault Id. </param>
+        /// <param name="targetFabricId"> The target fabric Id. </param>
+        /// <param name="targetApplianceId"> The target appliance Id. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="targetVaultId"/>, <paramref name="targetFabricId"/> or <paramref name="targetApplianceId"/> is null. </exception>
         public InMageAzureV2SwitchProviderContent(ResourceIdentifier targetVaultId, ResourceIdentifier targetFabricId, string targetApplianceId)
         {
@@ -42,20 +30,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             InstanceType = "InMageAzureV2";
         }
 
-        /// <summary>
-        /// The target vault Id.
-        /// Serialized Name: InMageAzureV2SwitchProviderInput.targetVaultID
-        /// </summary>
+        /// <summary> The target vault Id. </summary>
         public ResourceIdentifier TargetVaultId { get; }
-        /// <summary>
-        /// The target fabric Id.
-        /// Serialized Name: InMageAzureV2SwitchProviderInput.targetFabricID
-        /// </summary>
+        /// <summary> The target fabric Id. </summary>
         public ResourceIdentifier TargetFabricId { get; }
-        /// <summary>
-        /// The target appliance Id.
-        /// Serialized Name: InMageAzureV2SwitchProviderInput.targetApplianceID
-        /// </summary>
+        /// <summary> The target appliance Id. </summary>
         public string TargetApplianceId { get; }
     }
 }

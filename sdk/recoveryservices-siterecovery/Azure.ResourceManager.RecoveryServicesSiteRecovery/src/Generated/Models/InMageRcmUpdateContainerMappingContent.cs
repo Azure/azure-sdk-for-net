@@ -10,17 +10,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary>
-    /// InMageRcm update protection container mapping.
-    /// Serialized Name: InMageRcmUpdateContainerMappingInput
-    /// </summary>
+    /// <summary> InMageRcm update protection container mapping. </summary>
     public partial class InMageRcmUpdateContainerMappingContent : ReplicationProviderSpecificUpdateContainerMappingContent
     {
         /// <summary> Initializes a new instance of InMageRcmUpdateContainerMappingContent. </summary>
-        /// <param name="enableAgentAutoUpgrade">
-        /// A value indicating whether agent auto upgrade has to be enabled.
-        /// Serialized Name: InMageRcmUpdateContainerMappingInput.enableAgentAutoUpgrade
-        /// </param>
+        /// <param name="enableAgentAutoUpgrade"> A value indicating whether agent auto upgrade has to be enabled. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="enableAgentAutoUpgrade"/> is null. </exception>
         public InMageRcmUpdateContainerMappingContent(string enableAgentAutoUpgrade)
         {
@@ -30,10 +24,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             InstanceType = "InMageRcm";
         }
 
-        /// <summary>
-        /// A value indicating whether agent auto upgrade has to be enabled.
-        /// Serialized Name: InMageRcmUpdateContainerMappingInput.enableAgentAutoUpgrade
-        /// </summary>
+        /// <summary> A value indicating whether agent auto upgrade has to be enabled. </summary>
         public string EnableAgentAutoUpgrade { get; }
     }
 }

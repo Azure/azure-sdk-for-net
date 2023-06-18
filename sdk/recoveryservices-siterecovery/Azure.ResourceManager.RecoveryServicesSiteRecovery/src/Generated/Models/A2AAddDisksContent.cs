@@ -10,10 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary>
-    /// A2A add disk(s) input.
-    /// Serialized Name: A2AAddDisksInput
-    /// </summary>
+    /// <summary> A2A add disk(s) input. </summary>
     public partial class A2AAddDisksContent : SiteRecoveryAddDisksProviderSpecificContent
     {
         /// <summary> Initializes a new instance of A2AAddDisksContent. </summary>
@@ -24,15 +21,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             InstanceType = "A2A";
         }
 
-        /// <summary>
-        /// The list of vm disk details.
-        /// Serialized Name: A2AAddDisksInput.vmDisks
-        /// </summary>
+        /// <summary> The list of vm disk details. </summary>
         public IList<A2AVmDiskDetails> VmDisks { get; }
-        /// <summary>
-        /// The list of vm managed disk details.
-        /// Serialized Name: A2AAddDisksInput.vmManagedDisks
-        /// </summary>
+        /// <summary> The list of vm managed disk details. </summary>
         public IList<A2AVmManagedDiskDetails> VmManagedDisks { get; }
     }
 }

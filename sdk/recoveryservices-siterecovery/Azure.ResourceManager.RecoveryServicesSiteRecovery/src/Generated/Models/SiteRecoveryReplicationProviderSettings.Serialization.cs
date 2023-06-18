@@ -23,8 +23,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 {
                     case "HyperVVirtualMachine": return HyperVVmDetails.DeserializeHyperVVmDetails(element);
                     case "ReplicationGroupDetails": return ReplicationGroupDetails.DeserializeReplicationGroupDetails(element);
-                    case "VMwareVirtualMachine": return VMwareVirtualMachineDetails.DeserializeVMwareVirtualMachineDetails(element);
-                    case "VmmVirtualMachine": return VmmVirtualMachineDetails.DeserializeVmmVirtualMachineDetails(element);
+                    case "VMwareVirtualMachine": return VMwareVmDetails.DeserializeVMwareVmDetails(element);
+                    case "VmmVirtualMachine": return VmmVmDetails.DeserializeVmmVmDetails(element);
                 }
             }
             return UnknownConfigurationSettings.DeserializeUnknownConfigurationSettings(element);

@@ -9,10 +9,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary>
-    /// Configure pairing input properties.
-    /// Serialized Name: CreateProtectionContainerMappingInputProperties
-    /// </summary>
+    /// <summary> Configure pairing input properties. </summary>
     public partial class SiteRecoveryCreateProtectionContainerMappingProperties
     {
         /// <summary> Initializes a new instance of SiteRecoveryCreateProtectionContainerMappingProperties. </summary>
@@ -20,19 +17,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         {
         }
 
-        /// <summary>
-        /// The target unique protection container name.
-        /// Serialized Name: CreateProtectionContainerMappingInputProperties.targetProtectionContainerId
-        /// </summary>
+        /// <summary> The target unique protection container name. </summary>
         public string TargetProtectionContainerId { get; set; }
-        /// <summary>
-        /// Applicable policy.
-        /// Serialized Name: CreateProtectionContainerMappingInputProperties.policyId
-        /// </summary>
+        /// <summary> Applicable policy. </summary>
         public ResourceIdentifier PolicyId { get; set; }
         /// <summary>
         /// Provider specific input for pairing.
-        /// Serialized Name: CreateProtectionContainerMappingInputProperties.providerSpecificInput
         /// Please note <see cref="ReplicationProviderSpecificContainerMappingContent"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="A2AContainerMappingContent"/> and <see cref="VMwareCbtContainerMappingContent"/>.
         /// </summary>

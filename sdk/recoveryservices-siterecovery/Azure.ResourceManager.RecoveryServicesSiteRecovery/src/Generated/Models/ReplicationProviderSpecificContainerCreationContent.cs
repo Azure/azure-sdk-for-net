@@ -9,7 +9,6 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     /// <summary>
     /// Provider specific input for container creation operation.
-    /// Serialized Name: ReplicationProviderSpecificContainerCreationInput
     /// Please note <see cref="ReplicationProviderSpecificContainerCreationContent"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="A2AContainerCreationContent"/>, <see cref="A2ACrossClusterMigrationContainerCreationContent"/> and <see cref="VMwareCbtContainerCreationContent"/>.
     /// </summary>
@@ -20,10 +19,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         {
         }
 
-        /// <summary>
-        /// The class type.
-        /// Serialized Name: ReplicationProviderSpecificContainerCreationInput.instanceType
-        /// </summary>
+        /// <summary> The class type. </summary>
         internal string InstanceType { get; set; }
     }
 }

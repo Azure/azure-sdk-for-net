@@ -9,7 +9,6 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     /// <summary>
     /// Provider specific reverse replication input.
-    /// Serialized Name: ReverseReplicationProviderSpecificInput
     /// Please note <see cref="ReverseReplicationProviderSpecificContent"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="A2AReprotectContent"/>, <see cref="HyperVReplicaAzureReprotectContent"/>, <see cref="InMageReprotectContent"/>, <see cref="InMageAzureV2ReprotectContent"/>, <see cref="InMageRcmReprotectContent"/> and <see cref="InMageRcmFailbackReprotectContent"/>.
     /// </summary>
@@ -20,10 +19,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         {
         }
 
-        /// <summary>
-        /// The class type.
-        /// Serialized Name: ReverseReplicationProviderSpecificInput.instanceType
-        /// </summary>
+        /// <summary> The class type. </summary>
         internal string InstanceType { get; set; }
     }
 }

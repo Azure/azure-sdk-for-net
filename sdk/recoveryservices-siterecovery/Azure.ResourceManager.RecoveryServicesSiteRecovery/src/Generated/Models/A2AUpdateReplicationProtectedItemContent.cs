@@ -10,10 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary>
-    /// InMage Azure V2 input to update replication protected item.
-    /// Serialized Name: A2AUpdateReplicationProtectedItemInput
-    /// </summary>
+    /// <summary> InMage Azure V2 input to update replication protected item. </summary>
     public partial class A2AUpdateReplicationProtectedItemContent : UpdateReplicationProtectedItemProviderContent
     {
         /// <summary> Initializes a new instance of A2AUpdateReplicationProtectedItemContent. </summary>
@@ -23,50 +20,23 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             InstanceType = "A2A";
         }
 
-        /// <summary>
-        /// The target cloud service ARM Id (for V1).
-        /// Serialized Name: A2AUpdateReplicationProtectedItemInput.recoveryCloudServiceId
-        /// </summary>
+        /// <summary> The target cloud service ARM Id (for V1). </summary>
         public string RecoveryCloudServiceId { get; set; }
-        /// <summary>
-        /// The target resource group ARM Id (for V2).
-        /// Serialized Name: A2AUpdateReplicationProtectedItemInput.recoveryResourceGroupId
-        /// </summary>
+        /// <summary> The target resource group ARM Id (for V2). </summary>
         public ResourceIdentifier RecoveryResourceGroupId { get; set; }
-        /// <summary>
-        /// Managed disk update details.
-        /// Serialized Name: A2AUpdateReplicationProtectedItemInput.managedDiskUpdateDetails
-        /// </summary>
+        /// <summary> Managed disk update details. </summary>
         public IList<A2AVmManagedDiskUpdateDetails> ManagedDiskUpdateDetails { get; }
-        /// <summary>
-        /// The boot diagnostic storage account.
-        /// Serialized Name: A2AUpdateReplicationProtectedItemInput.recoveryBootDiagStorageAccountId
-        /// </summary>
+        /// <summary> The boot diagnostic storage account. </summary>
         public ResourceIdentifier RecoveryBootDiagStorageAccountId { get; set; }
-        /// <summary>
-        /// The recovery os disk encryption information.
-        /// Serialized Name: A2AUpdateReplicationProtectedItemInput.diskEncryptionInfo
-        /// </summary>
+        /// <summary> The recovery os disk encryption information. </summary>
         public SiteRecoveryDiskEncryptionInfo DiskEncryptionInfo { get; set; }
-        /// <summary>
-        /// The user given name for Test Failover VM.
-        /// Serialized Name: A2AUpdateReplicationProtectedItemInput.tfoAzureVMName
-        /// </summary>
+        /// <summary> The user given name for Test Failover VM. </summary>
         public string TfoAzureVmName { get; set; }
-        /// <summary>
-        /// The recovery proximity placement group Id.
-        /// Serialized Name: A2AUpdateReplicationProtectedItemInput.recoveryProximityPlacementGroupId
-        /// </summary>
+        /// <summary> The recovery proximity placement group Id. </summary>
         public ResourceIdentifier RecoveryProximityPlacementGroupId { get; set; }
-        /// <summary>
-        /// The recovery virtual machine scale set Id.
-        /// Serialized Name: A2AUpdateReplicationProtectedItemInput.recoveryVirtualMachineScaleSetId
-        /// </summary>
+        /// <summary> The recovery virtual machine scale set Id. </summary>
         public ResourceIdentifier RecoveryVirtualMachineScaleSetId { get; set; }
-        /// <summary>
-        /// The recovery capacity reservation group Id.
-        /// Serialized Name: A2AUpdateReplicationProtectedItemInput.recoveryCapacityReservationGroupId
-        /// </summary>
+        /// <summary> The recovery capacity reservation group Id. </summary>
         public ResourceIdentifier RecoveryCapacityReservationGroupId { get; set; }
     }
 }

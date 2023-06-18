@@ -11,10 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary>
-    /// Task of the Job.
-    /// Serialized Name: ASRTask
-    /// </summary>
+    /// <summary> Task of the Job. </summary>
     public partial class AsrTask
     {
         /// <summary> Initializes a new instance of AsrTask. </summary>
@@ -25,59 +22,27 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Initializes a new instance of AsrTask. </summary>
-        /// <param name="taskId">
-        /// The Id.
-        /// Serialized Name: ASRTask.taskId
-        /// </param>
-        /// <param name="name">
-        /// The unique Task name.
-        /// Serialized Name: ASRTask.name
-        /// </param>
-        /// <param name="startOn">
-        /// The start time.
-        /// Serialized Name: ASRTask.startTime
-        /// </param>
-        /// <param name="endOn">
-        /// The end time.
-        /// Serialized Name: ASRTask.endTime
-        /// </param>
-        /// <param name="allowedActions">
-        /// The state/actions applicable on this task.
-        /// Serialized Name: ASRTask.allowedActions
-        /// </param>
-        /// <param name="friendlyName">
-        /// The name.
-        /// Serialized Name: ASRTask.friendlyName
-        /// </param>
-        /// <param name="state">
-        /// The State. It is one of these values - NotStarted, InProgress, Succeeded, Failed, Cancelled, Suspended or Other.
-        /// Serialized Name: ASRTask.state
-        /// </param>
-        /// <param name="stateDescription">
-        /// The description of the task state. For example - For Succeeded state, description can be Completed, PartiallySucceeded, CompletedWithInformation or Skipped.
-        /// Serialized Name: ASRTask.stateDescription
-        /// </param>
-        /// <param name="taskType">
-        /// The type of task. Details in CustomDetails property depend on this type.
-        /// Serialized Name: ASRTask.taskType
-        /// </param>
+        /// <param name="taskId"> The Id. </param>
+        /// <param name="name"> The unique Task name. </param>
+        /// <param name="startOn"> The start time. </param>
+        /// <param name="endOn"> The end time. </param>
+        /// <param name="allowedActions"> The state/actions applicable on this task. </param>
+        /// <param name="friendlyName"> The name. </param>
+        /// <param name="state"> The State. It is one of these values - NotStarted, InProgress, Succeeded, Failed, Cancelled, Suspended or Other. </param>
+        /// <param name="stateDescription"> The description of the task state. For example - For Succeeded state, description can be Completed, PartiallySucceeded, CompletedWithInformation or Skipped. </param>
+        /// <param name="taskType"> The type of task. Details in CustomDetails property depend on this type. </param>
         /// <param name="customDetails">
         /// The custom task details based on the task type.
-        /// Serialized Name: ASRTask.customDetails
-        /// Please note <see cref="TaskTypeDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="AutomationRunbookTaskDetails"/>, <see cref="ConsistencyCheckTaskDetails"/>, <see cref="SiteRecoveryFabricReplicationGroupTaskDetails"/>, <see cref="SiteRecoveryJJobTaskDetails"/>, <see cref="ManualActionTaskDetails"/>, <see cref="ScriptActionTaskDetails"/>, <see cref="VirtualMachineTaskDetails"/> and <see cref="VmNicUpdatesTaskDetails"/>.
+        /// Please note <see cref="SiteRecoveryTaskTypeDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="AutomationRunbookTaskDetails"/>, <see cref="ConsistencyCheckTaskDetails"/>, <see cref="FabricReplicationGroupTaskDetails"/>, <see cref="SiteRecoveryJobTaskDetails"/>, <see cref="ManualActionTaskDetails"/>, <see cref="ScriptActionTaskDetails"/>, <see cref="SiteRecoveryVmTaskDetails"/> and <see cref="VmNicUpdatesTaskDetails"/>.
         /// </param>
         /// <param name="groupTaskCustomDetails">
         /// The custom task details based on the task type, if the task type is GroupTaskDetails or one of the types derived from it.
-        /// Serialized Name: ASRTask.groupTaskCustomDetails
         /// Please note <see cref="SiteRecoveryGroupTaskDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="InlineWorkflowTaskDetails"/>, <see cref="RecoveryPlanGroupTaskDetails"/> and <see cref="RecoveryPlanShutdownGroupTaskDetails"/>.
         /// </param>
-        /// <param name="errors">
-        /// The task error details.
-        /// Serialized Name: ASRTask.errors
-        /// </param>
-        internal AsrTask(string taskId, string name, DateTimeOffset? startOn, DateTimeOffset? endOn, IReadOnlyList<string> allowedActions, string friendlyName, string state, string stateDescription, string taskType, TaskTypeDetails customDetails, SiteRecoveryGroupTaskDetails groupTaskCustomDetails, IReadOnlyList<SiteRecoveryJobErrorDetails> errors)
+        /// <param name="errors"> The task error details. </param>
+        internal AsrTask(string taskId, string name, DateTimeOffset? startOn, DateTimeOffset? endOn, IReadOnlyList<string> allowedActions, string friendlyName, string state, string stateDescription, string taskType, SiteRecoveryTaskTypeDetails customDetails, SiteRecoveryGroupTaskDetails groupTaskCustomDetails, IReadOnlyList<SiteRecoveryJobErrorDetails> errors)
         {
             TaskId = taskId;
             Name = name;
@@ -93,69 +58,37 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Errors = errors;
         }
 
-        /// <summary>
-        /// The Id.
-        /// Serialized Name: ASRTask.taskId
-        /// </summary>
+        /// <summary> The Id. </summary>
         public string TaskId { get; }
-        /// <summary>
-        /// The unique Task name.
-        /// Serialized Name: ASRTask.name
-        /// </summary>
+        /// <summary> The unique Task name. </summary>
         public string Name { get; }
-        /// <summary>
-        /// The start time.
-        /// Serialized Name: ASRTask.startTime
-        /// </summary>
+        /// <summary> The start time. </summary>
         public DateTimeOffset? StartOn { get; }
-        /// <summary>
-        /// The end time.
-        /// Serialized Name: ASRTask.endTime
-        /// </summary>
+        /// <summary> The end time. </summary>
         public DateTimeOffset? EndOn { get; }
-        /// <summary>
-        /// The state/actions applicable on this task.
-        /// Serialized Name: ASRTask.allowedActions
-        /// </summary>
+        /// <summary> The state/actions applicable on this task. </summary>
         public IReadOnlyList<string> AllowedActions { get; }
-        /// <summary>
-        /// The name.
-        /// Serialized Name: ASRTask.friendlyName
-        /// </summary>
+        /// <summary> The name. </summary>
         public string FriendlyName { get; }
-        /// <summary>
-        /// The State. It is one of these values - NotStarted, InProgress, Succeeded, Failed, Cancelled, Suspended or Other.
-        /// Serialized Name: ASRTask.state
-        /// </summary>
+        /// <summary> The State. It is one of these values - NotStarted, InProgress, Succeeded, Failed, Cancelled, Suspended or Other. </summary>
         public string State { get; }
-        /// <summary>
-        /// The description of the task state. For example - For Succeeded state, description can be Completed, PartiallySucceeded, CompletedWithInformation or Skipped.
-        /// Serialized Name: ASRTask.stateDescription
-        /// </summary>
+        /// <summary> The description of the task state. For example - For Succeeded state, description can be Completed, PartiallySucceeded, CompletedWithInformation or Skipped. </summary>
         public string StateDescription { get; }
-        /// <summary>
-        /// The type of task. Details in CustomDetails property depend on this type.
-        /// Serialized Name: ASRTask.taskType
-        /// </summary>
+        /// <summary> The type of task. Details in CustomDetails property depend on this type. </summary>
         public string TaskType { get; }
         /// <summary>
         /// The custom task details based on the task type.
-        /// Serialized Name: ASRTask.customDetails
-        /// Please note <see cref="TaskTypeDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="AutomationRunbookTaskDetails"/>, <see cref="ConsistencyCheckTaskDetails"/>, <see cref="SiteRecoveryFabricReplicationGroupTaskDetails"/>, <see cref="SiteRecoveryJJobTaskDetails"/>, <see cref="ManualActionTaskDetails"/>, <see cref="ScriptActionTaskDetails"/>, <see cref="VirtualMachineTaskDetails"/> and <see cref="VmNicUpdatesTaskDetails"/>.
+        /// Please note <see cref="SiteRecoveryTaskTypeDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="AutomationRunbookTaskDetails"/>, <see cref="ConsistencyCheckTaskDetails"/>, <see cref="FabricReplicationGroupTaskDetails"/>, <see cref="SiteRecoveryJobTaskDetails"/>, <see cref="ManualActionTaskDetails"/>, <see cref="ScriptActionTaskDetails"/>, <see cref="SiteRecoveryVmTaskDetails"/> and <see cref="VmNicUpdatesTaskDetails"/>.
         /// </summary>
-        public TaskTypeDetails CustomDetails { get; }
+        public SiteRecoveryTaskTypeDetails CustomDetails { get; }
         /// <summary>
         /// The custom task details based on the task type, if the task type is GroupTaskDetails or one of the types derived from it.
-        /// Serialized Name: ASRTask.groupTaskCustomDetails
         /// Please note <see cref="SiteRecoveryGroupTaskDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="InlineWorkflowTaskDetails"/>, <see cref="RecoveryPlanGroupTaskDetails"/> and <see cref="RecoveryPlanShutdownGroupTaskDetails"/>.
         /// </summary>
         public SiteRecoveryGroupTaskDetails GroupTaskCustomDetails { get; }
-        /// <summary>
-        /// The task error details.
-        /// Serialized Name: ASRTask.errors
-        /// </summary>
+        /// <summary> The task error details. </summary>
         public IReadOnlyList<SiteRecoveryJobErrorDetails> Errors { get; }
     }
 }

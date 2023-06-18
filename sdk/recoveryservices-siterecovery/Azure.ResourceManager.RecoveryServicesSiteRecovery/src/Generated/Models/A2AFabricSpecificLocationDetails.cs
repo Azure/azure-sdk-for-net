@@ -9,10 +9,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary>
-    /// ExtendedLocation details data.
-    /// Serialized Name: A2AFabricSpecificLocationDetails
-    /// </summary>
+    /// <summary> ExtendedLocation details data. </summary>
     public partial class A2AFabricSpecificLocationDetails
     {
         /// <summary> Initializes a new instance of A2AFabricSpecificLocationDetails. </summary>
@@ -21,54 +18,18 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Initializes a new instance of A2AFabricSpecificLocationDetails. </summary>
-        /// <param name="initialPrimaryZone">
-        /// The initial source zone info.
-        /// Serialized Name: A2AFabricSpecificLocationDetails.initialPrimaryZone
-        /// </param>
-        /// <param name="initialRecoveryZone">
-        /// The initial target zone info.
-        /// Serialized Name: A2AFabricSpecificLocationDetails.initialRecoveryZone
-        /// </param>
-        /// <param name="initialPrimaryExtendedLocation">
-        /// The initial primary ExtendedLocation.
-        /// Serialized Name: A2AFabricSpecificLocationDetails.initialPrimaryExtendedLocation
-        /// </param>
-        /// <param name="initialRecoveryExtendedLocation">
-        /// The initial recovery ExtendedLocation.
-        /// Serialized Name: A2AFabricSpecificLocationDetails.initialRecoveryExtendedLocation
-        /// </param>
-        /// <param name="initialPrimaryFabricLocation">
-        /// Initial primary fabric location info.
-        /// Serialized Name: A2AFabricSpecificLocationDetails.initialPrimaryFabricLocation
-        /// </param>
-        /// <param name="initialRecoveryFabricLocation">
-        /// The initial recovery fabric location info.
-        /// Serialized Name: A2AFabricSpecificLocationDetails.initialRecoveryFabricLocation
-        /// </param>
-        /// <param name="primaryZone">
-        /// Source zone info.
-        /// Serialized Name: A2AFabricSpecificLocationDetails.primaryZone
-        /// </param>
-        /// <param name="recoveryZone">
-        /// The target zone info.
-        /// Serialized Name: A2AFabricSpecificLocationDetails.recoveryZone
-        /// </param>
-        /// <param name="primaryExtendedLocation">
-        /// The primary ExtendedLocation.
-        /// Serialized Name: A2AFabricSpecificLocationDetails.primaryExtendedLocation
-        /// </param>
-        /// <param name="recoveryExtendedLocation">
-        /// The recovery ExtendedLocation.
-        /// Serialized Name: A2AFabricSpecificLocationDetails.recoveryExtendedLocation
-        /// </param>
-        /// <param name="primaryFabricLocation">
-        /// Primary fabric location info.
-        /// Serialized Name: A2AFabricSpecificLocationDetails.primaryFabricLocation
-        /// </param>
-        /// <param name="recoveryFabricLocation">
-        /// The recovery fabric location info.
-        /// Serialized Name: A2AFabricSpecificLocationDetails.recoveryFabricLocation
-        /// </param>
+        /// <param name="initialPrimaryZone"> The initial source zone info. </param>
+        /// <param name="initialRecoveryZone"> The initial target zone info. </param>
+        /// <param name="initialPrimaryExtendedLocation"> The initial primary ExtendedLocation. </param>
+        /// <param name="initialRecoveryExtendedLocation"> The initial recovery ExtendedLocation. </param>
+        /// <param name="initialPrimaryFabricLocation"> Initial primary fabric location info. </param>
+        /// <param name="initialRecoveryFabricLocation"> The initial recovery fabric location info. </param>
+        /// <param name="primaryZone"> Source zone info. </param>
+        /// <param name="recoveryZone"> The target zone info. </param>
+        /// <param name="primaryExtendedLocation"> The primary ExtendedLocation. </param>
+        /// <param name="recoveryExtendedLocation"> The recovery ExtendedLocation. </param>
+        /// <param name="primaryFabricLocation"> Primary fabric location info. </param>
+        /// <param name="recoveryFabricLocation"> The recovery fabric location info. </param>
         internal A2AFabricSpecificLocationDetails(string initialPrimaryZone, string initialRecoveryZone, SiteRecoveryExtendedLocation initialPrimaryExtendedLocation, SiteRecoveryExtendedLocation initialRecoveryExtendedLocation, AzureLocation? initialPrimaryFabricLocation, AzureLocation? initialRecoveryFabricLocation, string primaryZone, string recoveryZone, SiteRecoveryExtendedLocation primaryExtendedLocation, SiteRecoveryExtendedLocation recoveryExtendedLocation, AzureLocation? primaryFabricLocation, AzureLocation? recoveryFabricLocation)
         {
             InitialPrimaryZone = initialPrimaryZone;
@@ -85,65 +46,29 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             RecoveryFabricLocation = recoveryFabricLocation;
         }
 
-        /// <summary>
-        /// The initial source zone info.
-        /// Serialized Name: A2AFabricSpecificLocationDetails.initialPrimaryZone
-        /// </summary>
+        /// <summary> The initial source zone info. </summary>
         public string InitialPrimaryZone { get; }
-        /// <summary>
-        /// The initial target zone info.
-        /// Serialized Name: A2AFabricSpecificLocationDetails.initialRecoveryZone
-        /// </summary>
+        /// <summary> The initial target zone info. </summary>
         public string InitialRecoveryZone { get; }
-        /// <summary>
-        /// The initial primary ExtendedLocation.
-        /// Serialized Name: A2AFabricSpecificLocationDetails.initialPrimaryExtendedLocation
-        /// </summary>
+        /// <summary> The initial primary ExtendedLocation. </summary>
         public SiteRecoveryExtendedLocation InitialPrimaryExtendedLocation { get; }
-        /// <summary>
-        /// The initial recovery ExtendedLocation.
-        /// Serialized Name: A2AFabricSpecificLocationDetails.initialRecoveryExtendedLocation
-        /// </summary>
+        /// <summary> The initial recovery ExtendedLocation. </summary>
         public SiteRecoveryExtendedLocation InitialRecoveryExtendedLocation { get; }
-        /// <summary>
-        /// Initial primary fabric location info.
-        /// Serialized Name: A2AFabricSpecificLocationDetails.initialPrimaryFabricLocation
-        /// </summary>
+        /// <summary> Initial primary fabric location info. </summary>
         public AzureLocation? InitialPrimaryFabricLocation { get; }
-        /// <summary>
-        /// The initial recovery fabric location info.
-        /// Serialized Name: A2AFabricSpecificLocationDetails.initialRecoveryFabricLocation
-        /// </summary>
+        /// <summary> The initial recovery fabric location info. </summary>
         public AzureLocation? InitialRecoveryFabricLocation { get; }
-        /// <summary>
-        /// Source zone info.
-        /// Serialized Name: A2AFabricSpecificLocationDetails.primaryZone
-        /// </summary>
+        /// <summary> Source zone info. </summary>
         public string PrimaryZone { get; }
-        /// <summary>
-        /// The target zone info.
-        /// Serialized Name: A2AFabricSpecificLocationDetails.recoveryZone
-        /// </summary>
+        /// <summary> The target zone info. </summary>
         public string RecoveryZone { get; }
-        /// <summary>
-        /// The primary ExtendedLocation.
-        /// Serialized Name: A2AFabricSpecificLocationDetails.primaryExtendedLocation
-        /// </summary>
+        /// <summary> The primary ExtendedLocation. </summary>
         public SiteRecoveryExtendedLocation PrimaryExtendedLocation { get; }
-        /// <summary>
-        /// The recovery ExtendedLocation.
-        /// Serialized Name: A2AFabricSpecificLocationDetails.recoveryExtendedLocation
-        /// </summary>
+        /// <summary> The recovery ExtendedLocation. </summary>
         public SiteRecoveryExtendedLocation RecoveryExtendedLocation { get; }
-        /// <summary>
-        /// Primary fabric location info.
-        /// Serialized Name: A2AFabricSpecificLocationDetails.primaryFabricLocation
-        /// </summary>
+        /// <summary> Primary fabric location info. </summary>
         public AzureLocation? PrimaryFabricLocation { get; }
-        /// <summary>
-        /// The recovery fabric location info.
-        /// Serialized Name: A2AFabricSpecificLocationDetails.recoveryFabricLocation
-        /// </summary>
+        /// <summary> The recovery fabric location info. </summary>
         public AzureLocation? RecoveryFabricLocation { get; }
     }
 }

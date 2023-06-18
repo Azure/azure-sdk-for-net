@@ -14,7 +14,6 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
     /// <summary>
     /// A class representing the SiteRecoveryServicesProvider data model.
     /// Provider details.
-    /// Serialized Name: RecoveryServicesProvider
     /// </summary>
     public partial class SiteRecoveryServicesProviderData : ResourceData
     {
@@ -28,29 +27,17 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="properties">
-        /// Provider properties.
-        /// Serialized Name: RecoveryServicesProvider.properties
-        /// </param>
-        /// <param name="location">
-        /// Resource Location
-        /// Serialized Name: Resource.location
-        /// </param>
-        internal SiteRecoveryServicesProviderData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, RecoveryServicesProviderProperties properties, AzureLocation? location) : base(id, name, resourceType, systemData)
+        /// <param name="properties"> Provider properties. </param>
+        /// <param name="location"> Resource Location. </param>
+        internal SiteRecoveryServicesProviderData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SiteRecoveryServicesProviderProperties properties, AzureLocation? location) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
             Location = location;
         }
 
-        /// <summary>
-        /// Provider properties.
-        /// Serialized Name: RecoveryServicesProvider.properties
-        /// </summary>
-        public RecoveryServicesProviderProperties Properties { get; }
-        /// <summary>
-        /// Resource Location
-        /// Serialized Name: Resource.location
-        /// </summary>
+        /// <summary> Provider properties. </summary>
+        public SiteRecoveryServicesProviderProperties Properties { get; }
+        /// <summary> Resource Location. </summary>
         public AzureLocation? Location { get; }
     }
 }

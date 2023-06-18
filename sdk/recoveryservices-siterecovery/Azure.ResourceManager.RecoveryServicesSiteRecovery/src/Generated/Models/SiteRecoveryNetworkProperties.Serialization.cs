@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 return null;
             }
             Optional<string> fabricType = default;
-            Optional<IReadOnlyList<Subnet>> subnets = default;
+            Optional<IReadOnlyList<SiteRecoverySubnet>> subnets = default;
             Optional<string> friendlyName = default;
             Optional<string> networkType = default;
             foreach (var property in element.EnumerateObject())
@@ -36,10 +36,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    List<Subnet> array = new List<Subnet>();
+                    List<SiteRecoverySubnet> array = new List<SiteRecoverySubnet>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Subnet.DeserializeSubnet(item));
+                        array.Add(SiteRecoverySubnet.DeserializeSiteRecoverySubnet(item));
                     }
                     subnets = array;
                     continue;

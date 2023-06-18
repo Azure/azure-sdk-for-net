@@ -7,10 +7,7 @@
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary>
-    /// InMageRcm provider specific input to update appliance for replication protected item.
-    /// Serialized Name: InMageRcmUpdateApplianceForReplicationProtectedItemInput
-    /// </summary>
+    /// <summary> InMageRcm provider specific input to update appliance for replication protected item. </summary>
     public partial class InMageRcmUpdateApplianceForReplicationProtectedItemContent : UpdateApplianceForReplicationProtectedItemProviderSpecificContent
     {
         /// <summary> Initializes a new instance of InMageRcmUpdateApplianceForReplicationProtectedItemContent. </summary>
@@ -19,10 +16,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             InstanceType = "InMageRcm";
         }
 
-        /// <summary>
-        /// The run as account Id.
-        /// Serialized Name: InMageRcmUpdateApplianceForReplicationProtectedItemInput.runAsAccountId
-        /// </summary>
+        /// <summary> The run as account Id. </summary>
         public string RunAsAccountId { get; set; }
     }
 }

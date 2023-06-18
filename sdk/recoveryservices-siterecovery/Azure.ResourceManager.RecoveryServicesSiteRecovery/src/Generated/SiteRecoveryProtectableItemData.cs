@@ -14,7 +14,6 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
     /// <summary>
     /// A class representing the SiteRecoveryProtectableItem data model.
     /// Replication protected item.
-    /// Serialized Name: ProtectableItem
     /// </summary>
     public partial class SiteRecoveryProtectableItemData : ResourceData
     {
@@ -28,29 +27,17 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="properties">
-        /// The custom data.
-        /// Serialized Name: ProtectableItem.properties
-        /// </param>
-        /// <param name="location">
-        /// Resource Location
-        /// Serialized Name: Resource.location
-        /// </param>
-        internal SiteRecoveryProtectableItemData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ProtectableItemProperties properties, AzureLocation? location) : base(id, name, resourceType, systemData)
+        /// <param name="properties"> The custom data. </param>
+        /// <param name="location"> Resource Location. </param>
+        internal SiteRecoveryProtectableItemData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SiteRecoveryProtectableItemProperties properties, AzureLocation? location) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
             Location = location;
         }
 
-        /// <summary>
-        /// The custom data.
-        /// Serialized Name: ProtectableItem.properties
-        /// </summary>
-        public ProtectableItemProperties Properties { get; }
-        /// <summary>
-        /// Resource Location
-        /// Serialized Name: Resource.location
-        /// </summary>
+        /// <summary> The custom data. </summary>
+        public SiteRecoveryProtectableItemProperties Properties { get; }
+        /// <summary> Resource Location. </summary>
         public AzureLocation? Location { get; }
     }
 }

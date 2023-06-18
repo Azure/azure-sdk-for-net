@@ -139,11 +139,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Samples
             SiteRecoveryJobResource siteRecoveryJob = client.GetSiteRecoveryJobResource(siteRecoveryJobResourceId);
 
             // invoke the operation
-            ResumeJobParams resumeJobParams = new ResumeJobParams()
+            ReplicationResumeJobContent content = new ReplicationResumeJobContent()
             {
-                ResumeJobParamsComments = " ",
+                ReplicationResumeJobComments = " ",
             };
-            ArmOperation<SiteRecoveryJobResource> lro = await siteRecoveryJob.ResumeAsync(WaitUntil.Completed, resumeJobParams);
+            ArmOperation<SiteRecoveryJobResource> lro = await siteRecoveryJob.ResumeAsync(WaitUntil.Completed, content);
             SiteRecoveryJobResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well

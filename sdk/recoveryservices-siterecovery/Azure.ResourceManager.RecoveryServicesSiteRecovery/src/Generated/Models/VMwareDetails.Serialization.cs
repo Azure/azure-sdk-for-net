@@ -21,9 +21,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<ProcessServer>> processServers = default;
+            Optional<IReadOnlyList<SiteRecoveryProcessServer>> processServers = default;
             Optional<IReadOnlyList<MasterTargetServer>> masterTargetServers = default;
-            Optional<IReadOnlyList<RunAsAccount>> runAsAccounts = default;
+            Optional<IReadOnlyList<SiteRecoveryRunAsAccount>> runAsAccounts = default;
             Optional<string> replicationPairCount = default;
             Optional<string> processServerCount = default;
             Optional<string> agentCount = default;
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Optional<int> sslCertExpiryRemainingDays = default;
             Optional<string> psTemplateVersion = default;
             Optional<DateTimeOffset> agentExpireOn = default;
-            Optional<VersionDetails> agentVersionDetails = default;
+            Optional<SiteRecoveryVersionDetails> agentVersionDetails = default;
             Optional<IReadOnlyList<InMageFabricSwitchProviderBlockingErrorDetails>> switchProviderBlockingErrorDetails = default;
             string instanceType = default;
             foreach (var property in element.EnumerateObject())
@@ -63,10 +63,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    List<ProcessServer> array = new List<ProcessServer>();
+                    List<SiteRecoveryProcessServer> array = new List<SiteRecoveryProcessServer>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ProcessServer.DeserializeProcessServer(item));
+                        array.Add(SiteRecoveryProcessServer.DeserializeSiteRecoveryProcessServer(item));
                     }
                     processServers = array;
                     continue;
@@ -91,10 +91,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    List<RunAsAccount> array = new List<RunAsAccount>();
+                    List<SiteRecoveryRunAsAccount> array = new List<SiteRecoveryRunAsAccount>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RunAsAccount.DeserializeRunAsAccount(item));
+                        array.Add(SiteRecoveryRunAsAccount.DeserializeSiteRecoveryRunAsAccount(item));
                     }
                     runAsAccounts = array;
                     continue;
@@ -281,7 +281,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    agentVersionDetails = VersionDetails.DeserializeVersionDetails(property.Value);
+                    agentVersionDetails = SiteRecoveryVersionDetails.DeserializeSiteRecoveryVersionDetails(property.Value);
                     continue;
                 }
                 if (property.NameEquals("switchProviderBlockingErrorDetails"u8))

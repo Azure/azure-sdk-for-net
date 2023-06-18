@@ -14,7 +14,6 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
     /// <summary>
     /// A class representing the SiteRecoveryVaultSetting data model.
     /// Vault setting.
-    /// Serialized Name: VaultSetting
     /// </summary>
     public partial class SiteRecoveryVaultSettingData : ResourceData
     {
@@ -28,29 +27,17 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="properties">
-        /// The vault setting properties.
-        /// Serialized Name: VaultSetting.properties
-        /// </param>
-        /// <param name="location">
-        /// Resource Location
-        /// Serialized Name: Resource.location
-        /// </param>
-        internal SiteRecoveryVaultSettingData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, VaultSettingProperties properties, AzureLocation? location) : base(id, name, resourceType, systemData)
+        /// <param name="properties"> The vault setting properties. </param>
+        /// <param name="location"> Resource Location. </param>
+        internal SiteRecoveryVaultSettingData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SiteRecoveryVaultSettingProperties properties, AzureLocation? location) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
             Location = location;
         }
 
-        /// <summary>
-        /// The vault setting properties.
-        /// Serialized Name: VaultSetting.properties
-        /// </summary>
-        public VaultSettingProperties Properties { get; }
-        /// <summary>
-        /// Resource Location
-        /// Serialized Name: Resource.location
-        /// </summary>
+        /// <summary> The vault setting properties. </summary>
+        public SiteRecoveryVaultSettingProperties Properties { get; }
+        /// <summary> Resource Location. </summary>
         public AzureLocation? Location { get; }
     }
 }

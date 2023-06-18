@@ -7,10 +7,7 @@
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary>
-    /// Certificate renewal input.
-    /// Serialized Name: RenewCertificateInput
-    /// </summary>
+    /// <summary> Certificate renewal input. </summary>
     public partial class RenewCertificateContent
     {
         /// <summary> Initializes a new instance of RenewCertificateContent. </summary>
@@ -18,15 +15,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         {
         }
 
-        /// <summary>
-        /// Renew certificate input properties.
-        /// Serialized Name: RenewCertificateInput.properties
-        /// </summary>
+        /// <summary> Renew certificate input properties. </summary>
         internal RenewCertificateContentProperties Properties { get; set; }
-        /// <summary>
-        /// Renew certificate type.
-        /// Serialized Name: RenewCertificateInputProperties.renewCertificateType
-        /// </summary>
+        /// <summary> Renew certificate type. </summary>
         public string RenewCertificateType
         {
             get => Properties is null ? default : Properties.RenewCertificateType;

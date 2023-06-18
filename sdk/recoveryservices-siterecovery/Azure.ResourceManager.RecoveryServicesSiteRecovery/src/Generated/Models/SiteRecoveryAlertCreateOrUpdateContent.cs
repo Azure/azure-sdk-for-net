@@ -7,10 +7,7 @@
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary>
-    /// Request to configure alerts for the system.
-    /// Serialized Name: ConfigureAlertRequest
-    /// </summary>
+    /// <summary> Request to configure alerts for the system. </summary>
     public partial class SiteRecoveryAlertCreateOrUpdateContent
     {
         /// <summary> Initializes a new instance of SiteRecoveryAlertCreateOrUpdateContent. </summary>
@@ -18,10 +15,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         {
         }
 
-        /// <summary>
-        /// The properties of a configure alert request.
-        /// Serialized Name: ConfigureAlertRequest.properties
-        /// </summary>
-        public ConfigureAlertRequestProperties Properties { get; set; }
+        /// <summary> The properties of a configure alert request. </summary>
+        public SiteRecoveryConfigureAlertProperties Properties { get; set; }
     }
 }

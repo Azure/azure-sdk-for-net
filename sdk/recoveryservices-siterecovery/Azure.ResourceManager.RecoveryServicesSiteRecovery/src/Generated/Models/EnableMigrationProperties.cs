@@ -10,20 +10,13 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary>
-    /// Enable migration input properties.
-    /// Serialized Name: EnableMigrationInputProperties
-    /// </summary>
+    /// <summary> Enable migration input properties. </summary>
     public partial class EnableMigrationProperties
     {
         /// <summary> Initializes a new instance of EnableMigrationProperties. </summary>
-        /// <param name="policyId">
-        /// The policy Id.
-        /// Serialized Name: EnableMigrationInputProperties.policyId
-        /// </param>
+        /// <param name="policyId"> The policy Id. </param>
         /// <param name="providerSpecificDetails">
         /// The provider specific details.
-        /// Serialized Name: EnableMigrationInputProperties.providerSpecificDetails
         /// Please note <see cref="EnableMigrationProviderSpecificContent"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="VMwareCbtEnableMigrationContent"/>.
         /// </param>
@@ -37,14 +30,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             ProviderSpecificDetails = providerSpecificDetails;
         }
 
-        /// <summary>
-        /// The policy Id.
-        /// Serialized Name: EnableMigrationInputProperties.policyId
-        /// </summary>
+        /// <summary> The policy Id. </summary>
         public ResourceIdentifier PolicyId { get; }
         /// <summary>
         /// The provider specific details.
-        /// Serialized Name: EnableMigrationInputProperties.providerSpecificDetails
         /// Please note <see cref="EnableMigrationProviderSpecificContent"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="VMwareCbtEnableMigrationContent"/>.
         /// </summary>

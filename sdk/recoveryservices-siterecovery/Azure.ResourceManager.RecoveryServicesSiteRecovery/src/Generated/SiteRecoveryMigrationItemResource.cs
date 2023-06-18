@@ -87,11 +87,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets a collection of SiteRecoveryMigrationRecoveryPointResources in the SiteRecoveryMigrationItem. </summary>
-        /// <returns> An object representing collection of SiteRecoveryMigrationRecoveryPointResources and their operations over a SiteRecoveryMigrationRecoveryPointResource. </returns>
-        public virtual SiteRecoveryMigrationRecoveryPointCollection GetSiteRecoveryMigrationRecoveryPoints()
+        /// <summary> Gets a collection of MigrationRecoveryPointResources in the SiteRecoveryMigrationItem. </summary>
+        /// <returns> An object representing collection of MigrationRecoveryPointResources and their operations over a MigrationRecoveryPointResource. </returns>
+        public virtual MigrationRecoveryPointCollection GetMigrationRecoveryPoints()
         {
-            return GetCachedClient(Client => new SiteRecoveryMigrationRecoveryPointCollection(Client, Id));
+            return GetCachedClient(Client => new MigrationRecoveryPointCollection(Client, Id));
         }
 
         /// <summary>
@@ -112,9 +112,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <exception cref="ArgumentException"> <paramref name="migrationRecoveryPointName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="migrationRecoveryPointName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<SiteRecoveryMigrationRecoveryPointResource>> GetSiteRecoveryMigrationRecoveryPointAsync(string migrationRecoveryPointName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<MigrationRecoveryPointResource>> GetMigrationRecoveryPointAsync(string migrationRecoveryPointName, CancellationToken cancellationToken = default)
         {
-            return await GetSiteRecoveryMigrationRecoveryPoints().GetAsync(migrationRecoveryPointName, cancellationToken).ConfigureAwait(false);
+            return await GetMigrationRecoveryPoints().GetAsync(migrationRecoveryPointName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -135,9 +135,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <exception cref="ArgumentException"> <paramref name="migrationRecoveryPointName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="migrationRecoveryPointName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<SiteRecoveryMigrationRecoveryPointResource> GetSiteRecoveryMigrationRecoveryPoint(string migrationRecoveryPointName, CancellationToken cancellationToken = default)
+        public virtual Response<MigrationRecoveryPointResource> GetMigrationRecoveryPoint(string migrationRecoveryPointName, CancellationToken cancellationToken = default)
         {
-            return GetSiteRecoveryMigrationRecoveryPoints().Get(migrationRecoveryPointName, cancellationToken);
+            return GetMigrationRecoveryPoints().Get(migrationRecoveryPointName, cancellationToken);
         }
 
         /// <summary>
@@ -367,7 +367,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <param name="content"> Migrate input. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<ArmOperation<SiteRecoveryMigrationItemResource>> MigrateAsync(WaitUntil waitUntil, MigrateContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<SiteRecoveryMigrationItemResource>> MigrateAsync(WaitUntil waitUntil, SiteRecoveryMigrateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -405,7 +405,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <param name="content"> Migrate input. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual ArmOperation<SiteRecoveryMigrationItemResource> Migrate(WaitUntil waitUntil, MigrateContent content, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<SiteRecoveryMigrationItemResource> Migrate(WaitUntil waitUntil, SiteRecoveryMigrateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -595,7 +595,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <param name="content"> Resync input. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<ArmOperation<SiteRecoveryMigrationItemResource>> ResyncAsync(WaitUntil waitUntil, ResyncContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<SiteRecoveryMigrationItemResource>> ResyncAsync(WaitUntil waitUntil, MigrationItemResyncContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -633,7 +633,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <param name="content"> Resync input. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual ArmOperation<SiteRecoveryMigrationItemResource> Resync(WaitUntil waitUntil, ResyncContent content, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<SiteRecoveryMigrationItemResource> Resync(WaitUntil waitUntil, MigrationItemResyncContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 

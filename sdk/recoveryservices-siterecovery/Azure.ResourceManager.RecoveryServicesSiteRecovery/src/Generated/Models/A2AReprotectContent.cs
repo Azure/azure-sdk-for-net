@@ -10,10 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary>
-    /// Azure specific reprotect input.
-    /// Serialized Name: A2AReprotectInput
-    /// </summary>
+    /// <summary> Azure specific reprotect input. </summary>
     public partial class A2AReprotectContent : ReverseReplicationProviderSpecificContent
     {
         /// <summary> Initializes a new instance of A2AReprotectContent. </summary>
@@ -23,35 +20,17 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             InstanceType = "A2A";
         }
 
-        /// <summary>
-        /// The recovery container Id.
-        /// Serialized Name: A2AReprotectInput.recoveryContainerId
-        /// </summary>
+        /// <summary> The recovery container Id. </summary>
         public ResourceIdentifier RecoveryContainerId { get; set; }
-        /// <summary>
-        /// The list of vm disk details.
-        /// Serialized Name: A2AReprotectInput.vmDisks
-        /// </summary>
+        /// <summary> The list of vm disk details. </summary>
         public IList<A2AVmDiskDetails> VmDisks { get; }
-        /// <summary>
-        /// The recovery resource group Id. Valid for V2 scenarios.
-        /// Serialized Name: A2AReprotectInput.recoveryResourceGroupId
-        /// </summary>
+        /// <summary> The recovery resource group Id. Valid for V2 scenarios. </summary>
         public ResourceIdentifier RecoveryResourceGroupId { get; set; }
-        /// <summary>
-        /// The recovery cloud service Id. Valid for V1 scenarios.
-        /// Serialized Name: A2AReprotectInput.recoveryCloudServiceId
-        /// </summary>
+        /// <summary> The recovery cloud service Id. Valid for V1 scenarios. </summary>
         public string RecoveryCloudServiceId { get; set; }
-        /// <summary>
-        /// The recovery availability set.
-        /// Serialized Name: A2AReprotectInput.recoveryAvailabilitySetId
-        /// </summary>
+        /// <summary> The recovery availability set. </summary>
         public ResourceIdentifier RecoveryAvailabilitySetId { get; set; }
-        /// <summary>
-        /// The Policy Id.
-        /// Serialized Name: A2AReprotectInput.policyId
-        /// </summary>
+        /// <summary> The Policy Id. </summary>
         public ResourceIdentifier PolicyId { get; set; }
     }
 }

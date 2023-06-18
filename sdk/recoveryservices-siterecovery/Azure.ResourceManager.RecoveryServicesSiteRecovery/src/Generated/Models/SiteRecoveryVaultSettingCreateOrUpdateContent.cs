@@ -10,29 +10,20 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary>
-    /// Input to create vault setting.
-    /// Serialized Name: VaultSettingCreationInput
-    /// </summary>
+    /// <summary> Input to create vault setting. </summary>
     public partial class SiteRecoveryVaultSettingCreateOrUpdateContent
     {
         /// <summary> Initializes a new instance of SiteRecoveryVaultSettingCreateOrUpdateContent. </summary>
-        /// <param name="properties">
-        /// Vault setting creation input properties.
-        /// Serialized Name: VaultSettingCreationInput.properties
-        /// </param>
+        /// <param name="properties"> Vault setting creation input properties. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
-        public SiteRecoveryVaultSettingCreateOrUpdateContent(VaultSettingCreationContentProperties properties)
+        public SiteRecoveryVaultSettingCreateOrUpdateContent(VaultSettingCreationProperties properties)
         {
             Argument.AssertNotNull(properties, nameof(properties));
 
             Properties = properties;
         }
 
-        /// <summary>
-        /// Vault setting creation input properties.
-        /// Serialized Name: VaultSettingCreationInput.properties
-        /// </summary>
-        public VaultSettingCreationContentProperties Properties { get; }
+        /// <summary> Vault setting creation input properties. </summary>
+        public VaultSettingCreationProperties Properties { get; }
     }
 }

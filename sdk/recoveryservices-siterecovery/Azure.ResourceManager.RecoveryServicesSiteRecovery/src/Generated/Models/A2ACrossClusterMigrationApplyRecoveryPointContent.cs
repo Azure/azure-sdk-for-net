@@ -7,10 +7,7 @@
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary>
-    /// ApplyRecoveryPoint input specific to A2ACrossClusterMigration provider.
-    /// Serialized Name: A2ACrossClusterMigrationApplyRecoveryPointInput
-    /// </summary>
+    /// <summary> ApplyRecoveryPoint input specific to A2ACrossClusterMigration provider. </summary>
     public partial class A2ACrossClusterMigrationApplyRecoveryPointContent : SiteRecoveryApplyRecoveryPointProviderSpecificContent
     {
         /// <summary> Initializes a new instance of A2ACrossClusterMigrationApplyRecoveryPointContent. </summary>

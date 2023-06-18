@@ -10,10 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary>
-    /// VMwareCbt specific update migration item input.
-    /// Serialized Name: VMwareCbtUpdateMigrationItemInput
-    /// </summary>
+    /// <summary> VMwareCbt specific update migration item input. </summary>
     public partial class VMwareCbtUpdateMigrationItemContent : UpdateMigrationItemProviderSpecificContent
     {
         /// <summary> Initializes a new instance of VMwareCbtUpdateMigrationItemContent. </summary>
@@ -27,90 +24,39 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             InstanceType = "VMwareCbt";
         }
 
-        /// <summary>
-        /// The target VM name.
-        /// Serialized Name: VMwareCbtUpdateMigrationItemInput.targetVmName
-        /// </summary>
+        /// <summary> The target VM name. </summary>
         public string TargetVmName { get; set; }
-        /// <summary>
-        /// The target VM size.
-        /// Serialized Name: VMwareCbtUpdateMigrationItemInput.targetVmSize
-        /// </summary>
+        /// <summary> The target VM size. </summary>
         public string TargetVmSize { get; set; }
-        /// <summary>
-        /// The target resource group ARM Id.
-        /// Serialized Name: VMwareCbtUpdateMigrationItemInput.targetResourceGroupId
-        /// </summary>
+        /// <summary> The target resource group ARM Id. </summary>
         public ResourceIdentifier TargetResourceGroupId { get; set; }
-        /// <summary>
-        /// The target availability set ARM Id.
-        /// Serialized Name: VMwareCbtUpdateMigrationItemInput.targetAvailabilitySetId
-        /// </summary>
+        /// <summary> The target availability set ARM Id. </summary>
         public ResourceIdentifier TargetAvailabilitySetId { get; set; }
-        /// <summary>
-        /// The target availability zone.
-        /// Serialized Name: VMwareCbtUpdateMigrationItemInput.targetAvailabilityZone
-        /// </summary>
+        /// <summary> The target availability zone. </summary>
         public string TargetAvailabilityZone { get; set; }
-        /// <summary>
-        /// The target proximity placement group ARM Id.
-        /// Serialized Name: VMwareCbtUpdateMigrationItemInput.targetProximityPlacementGroupId
-        /// </summary>
+        /// <summary> The target proximity placement group ARM Id. </summary>
         public ResourceIdentifier TargetProximityPlacementGroupId { get; set; }
-        /// <summary>
-        /// The target boot diagnostics storage account ARM Id.
-        /// Serialized Name: VMwareCbtUpdateMigrationItemInput.targetBootDiagnosticsStorageAccountId
-        /// </summary>
+        /// <summary> The target boot diagnostics storage account ARM Id. </summary>
         public ResourceIdentifier TargetBootDiagnosticsStorageAccountId { get; set; }
-        /// <summary>
-        /// The target network ARM Id.
-        /// Serialized Name: VMwareCbtUpdateMigrationItemInput.targetNetworkId
-        /// </summary>
+        /// <summary> The target network ARM Id. </summary>
         public ResourceIdentifier TargetNetworkId { get; set; }
-        /// <summary>
-        /// The test network ARM Id.
-        /// Serialized Name: VMwareCbtUpdateMigrationItemInput.testNetworkId
-        /// </summary>
+        /// <summary> The test network ARM Id. </summary>
         public ResourceIdentifier TestNetworkId { get; set; }
-        /// <summary>
-        /// The list of NIC details.
-        /// Serialized Name: VMwareCbtUpdateMigrationItemInput.vmNics
-        /// </summary>
+        /// <summary> The list of NIC details. </summary>
         public IList<VMwareCbtNicContent> VmNics { get; }
-        /// <summary>
-        /// The list of disk update properties.
-        /// Serialized Name: VMwareCbtUpdateMigrationItemInput.vmDisks
-        /// </summary>
+        /// <summary> The list of disk update properties. </summary>
         public IList<VMwareCbtUpdateDiskContent> VmDisks { get; }
-        /// <summary>
-        /// The license type.
-        /// Serialized Name: VMwareCbtUpdateMigrationItemInput.licenseType
-        /// </summary>
-        public LicenseType? LicenseType { get; set; }
-        /// <summary>
-        /// The SQL Server license type.
-        /// Serialized Name: VMwareCbtUpdateMigrationItemInput.sqlServerLicenseType
-        /// </summary>
-        public SqlServerLicenseType? SqlServerLicenseType { get; set; }
-        /// <summary>
-        /// A value indicating whether auto resync is to be done.
-        /// Serialized Name: VMwareCbtUpdateMigrationItemInput.performAutoResync
-        /// </summary>
+        /// <summary> The license type. </summary>
+        public SiteRecoveryLicenseType? LicenseType { get; set; }
+        /// <summary> The SQL Server license type. </summary>
+        public SiteRecoverySqlServerLicenseType? SqlServerLicenseType { get; set; }
+        /// <summary> A value indicating whether auto resync is to be done. </summary>
         public string PerformAutoResync { get; set; }
-        /// <summary>
-        /// The target VM tags.
-        /// Serialized Name: VMwareCbtUpdateMigrationItemInput.targetVmTags
-        /// </summary>
+        /// <summary> The target VM tags. </summary>
         public IDictionary<string, string> TargetVmTags { get; }
-        /// <summary>
-        /// The tags for the target disks.
-        /// Serialized Name: VMwareCbtUpdateMigrationItemInput.targetDiskTags
-        /// </summary>
+        /// <summary> The tags for the target disks. </summary>
         public IDictionary<string, string> TargetDiskTags { get; }
-        /// <summary>
-        /// The tags for the target NICs.
-        /// Serialized Name: VMwareCbtUpdateMigrationItemInput.targetNicTags
-        /// </summary>
+        /// <summary> The tags for the target NICs. </summary>
         public IDictionary<string, string> TargetNicTags { get; }
     }
 }

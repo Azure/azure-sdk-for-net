@@ -11,10 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary>
-    /// Hyper V replica provider specific settings base class.
-    /// Serialized Name: HyperVReplicaBaseReplicationDetails
-    /// </summary>
+    /// <summary> Hyper V replica provider specific settings base class. </summary>
     public partial class HyperVReplicaBaseReplicationDetails : ReplicationProviderSpecificSettings
     {
         /// <summary> Initializes a new instance of HyperVReplicaBaseReplicationDetails. </summary>
@@ -26,38 +23,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Initializes a new instance of HyperVReplicaBaseReplicationDetails. </summary>
-        /// <param name="instanceType">
-        /// Gets the Instance type.
-        /// Serialized Name: ReplicationProviderSpecificSettings.instanceType
-        /// </param>
-        /// <param name="lastReplicatedOn">
-        /// The Last replication time.
-        /// Serialized Name: HyperVReplicaBaseReplicationDetails.lastReplicatedTime
-        /// </param>
-        /// <param name="vmNics">
-        /// The PE Network details.
-        /// Serialized Name: HyperVReplicaBaseReplicationDetails.vmNics
-        /// </param>
-        /// <param name="vmId">
-        /// The virtual machine Id.
-        /// Serialized Name: HyperVReplicaBaseReplicationDetails.vmId
-        /// </param>
-        /// <param name="vmProtectionState">
-        /// The protection state for the vm.
-        /// Serialized Name: HyperVReplicaBaseReplicationDetails.vmProtectionState
-        /// </param>
-        /// <param name="vmProtectionStateDescription">
-        /// The protection state description for the vm.
-        /// Serialized Name: HyperVReplicaBaseReplicationDetails.vmProtectionStateDescription
-        /// </param>
-        /// <param name="initialReplicationDetails">
-        /// Initial replication details.
-        /// Serialized Name: HyperVReplicaBaseReplicationDetails.initialReplicationDetails
-        /// </param>
-        /// <param name="vmDiskDetails">
-        /// VM disk details.
-        /// Serialized Name: HyperVReplicaBaseReplicationDetails.vMDiskDetails
-        /// </param>
+        /// <param name="instanceType"> Gets the Instance type. </param>
+        /// <param name="lastReplicatedOn"> The Last replication time. </param>
+        /// <param name="vmNics"> The PE Network details. </param>
+        /// <param name="vmId"> The virtual machine Id. </param>
+        /// <param name="vmProtectionState"> The protection state for the vm. </param>
+        /// <param name="vmProtectionStateDescription"> The protection state description for the vm. </param>
+        /// <param name="initialReplicationDetails"> Initial replication details. </param>
+        /// <param name="vmDiskDetails"> VM disk details. </param>
         internal HyperVReplicaBaseReplicationDetails(string instanceType, DateTimeOffset? lastReplicatedOn, IReadOnlyList<VmNicDetails> vmNics, string vmId, string vmProtectionState, string vmProtectionStateDescription, InitialReplicationDetails initialReplicationDetails, IReadOnlyList<SiteRecoveryDiskDetails> vmDiskDetails) : base(instanceType)
         {
             LastReplicatedOn = lastReplicatedOn;
@@ -70,40 +43,19 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             InstanceType = instanceType ?? "HyperVReplicaBaseReplicationDetails";
         }
 
-        /// <summary>
-        /// The Last replication time.
-        /// Serialized Name: HyperVReplicaBaseReplicationDetails.lastReplicatedTime
-        /// </summary>
+        /// <summary> The Last replication time. </summary>
         public DateTimeOffset? LastReplicatedOn { get; }
-        /// <summary>
-        /// The PE Network details.
-        /// Serialized Name: HyperVReplicaBaseReplicationDetails.vmNics
-        /// </summary>
+        /// <summary> The PE Network details. </summary>
         public IReadOnlyList<VmNicDetails> VmNics { get; }
-        /// <summary>
-        /// The virtual machine Id.
-        /// Serialized Name: HyperVReplicaBaseReplicationDetails.vmId
-        /// </summary>
+        /// <summary> The virtual machine Id. </summary>
         public string VmId { get; }
-        /// <summary>
-        /// The protection state for the vm.
-        /// Serialized Name: HyperVReplicaBaseReplicationDetails.vmProtectionState
-        /// </summary>
+        /// <summary> The protection state for the vm. </summary>
         public string VmProtectionState { get; }
-        /// <summary>
-        /// The protection state description for the vm.
-        /// Serialized Name: HyperVReplicaBaseReplicationDetails.vmProtectionStateDescription
-        /// </summary>
+        /// <summary> The protection state description for the vm. </summary>
         public string VmProtectionStateDescription { get; }
-        /// <summary>
-        /// Initial replication details.
-        /// Serialized Name: HyperVReplicaBaseReplicationDetails.initialReplicationDetails
-        /// </summary>
+        /// <summary> Initial replication details. </summary>
         public InitialReplicationDetails InitialReplicationDetails { get; }
-        /// <summary>
-        /// VM disk details.
-        /// Serialized Name: HyperVReplicaBaseReplicationDetails.vMDiskDetails
-        /// </summary>
+        /// <summary> VM disk details. </summary>
         public IReadOnlyList<SiteRecoveryDiskDetails> VmDiskDetails { get; }
     }
 }

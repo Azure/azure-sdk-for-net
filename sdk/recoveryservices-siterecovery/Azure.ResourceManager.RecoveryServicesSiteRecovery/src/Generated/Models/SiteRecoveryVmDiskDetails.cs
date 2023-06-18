@@ -9,10 +9,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary>
-    /// Disk details for E2A provider.
-    /// Serialized Name: AzureVmDiskDetails
-    /// </summary>
+    /// <summary> Disk details for E2A provider. </summary>
     public partial class SiteRecoveryVmDiskDetails
     {
         /// <summary> Initializes a new instance of SiteRecoveryVmDiskDetails. </summary>
@@ -21,46 +18,16 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Initializes a new instance of SiteRecoveryVmDiskDetails. </summary>
-        /// <param name="vhdType">
-        /// VHD type.
-        /// Serialized Name: AzureVmDiskDetails.vhdType
-        /// </param>
-        /// <param name="vhdId">
-        /// The VHD id.
-        /// Serialized Name: AzureVmDiskDetails.vhdId
-        /// </param>
-        /// <param name="diskId">
-        /// The disk resource id.
-        /// Serialized Name: AzureVmDiskDetails.diskId
-        /// </param>
-        /// <param name="vhdName">
-        /// VHD name.
-        /// Serialized Name: AzureVmDiskDetails.vhdName
-        /// </param>
-        /// <param name="maxSizeMB">
-        /// Max side in MB.
-        /// Serialized Name: AzureVmDiskDetails.maxSizeMB
-        /// </param>
-        /// <param name="targetDiskLocation">
-        /// Blob uri of the Azure disk.
-        /// Serialized Name: AzureVmDiskDetails.targetDiskLocation
-        /// </param>
-        /// <param name="targetDiskName">
-        /// The target Azure disk name.
-        /// Serialized Name: AzureVmDiskDetails.targetDiskName
-        /// </param>
-        /// <param name="lunId">
-        /// Ordinal\LunId of the disk for the Azure VM.
-        /// Serialized Name: AzureVmDiskDetails.lunId
-        /// </param>
-        /// <param name="diskEncryptionSetId">
-        /// The DiskEncryptionSet ARM ID.
-        /// Serialized Name: AzureVmDiskDetails.diskEncryptionSetId
-        /// </param>
-        /// <param name="customTargetDiskName">
-        /// The custom target Azure disk name.
-        /// Serialized Name: AzureVmDiskDetails.customTargetDiskName
-        /// </param>
+        /// <param name="vhdType"> VHD type. </param>
+        /// <param name="vhdId"> The VHD id. </param>
+        /// <param name="diskId"> The disk resource id. </param>
+        /// <param name="vhdName"> VHD name. </param>
+        /// <param name="maxSizeMB"> Max side in MB. </param>
+        /// <param name="targetDiskLocation"> Blob uri of the Azure disk. </param>
+        /// <param name="targetDiskName"> The target Azure disk name. </param>
+        /// <param name="lunId"> Ordinal\LunId of the disk for the Azure VM. </param>
+        /// <param name="diskEncryptionSetId"> The DiskEncryptionSet ARM ID. </param>
+        /// <param name="customTargetDiskName"> The custom target Azure disk name. </param>
         internal SiteRecoveryVmDiskDetails(string vhdType, string vhdId, string diskId, string vhdName, string maxSizeMB, string targetDiskLocation, string targetDiskName, string lunId, ResourceIdentifier diskEncryptionSetId, string customTargetDiskName)
         {
             VhdType = vhdType;
@@ -75,55 +42,25 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             CustomTargetDiskName = customTargetDiskName;
         }
 
-        /// <summary>
-        /// VHD type.
-        /// Serialized Name: AzureVmDiskDetails.vhdType
-        /// </summary>
+        /// <summary> VHD type. </summary>
         public string VhdType { get; }
-        /// <summary>
-        /// The VHD id.
-        /// Serialized Name: AzureVmDiskDetails.vhdId
-        /// </summary>
+        /// <summary> The VHD id. </summary>
         public string VhdId { get; }
-        /// <summary>
-        /// The disk resource id.
-        /// Serialized Name: AzureVmDiskDetails.diskId
-        /// </summary>
+        /// <summary> The disk resource id. </summary>
         public string DiskId { get; }
-        /// <summary>
-        /// VHD name.
-        /// Serialized Name: AzureVmDiskDetails.vhdName
-        /// </summary>
+        /// <summary> VHD name. </summary>
         public string VhdName { get; }
-        /// <summary>
-        /// Max side in MB.
-        /// Serialized Name: AzureVmDiskDetails.maxSizeMB
-        /// </summary>
+        /// <summary> Max side in MB. </summary>
         public string MaxSizeMB { get; }
-        /// <summary>
-        /// Blob uri of the Azure disk.
-        /// Serialized Name: AzureVmDiskDetails.targetDiskLocation
-        /// </summary>
+        /// <summary> Blob uri of the Azure disk. </summary>
         public string TargetDiskLocation { get; }
-        /// <summary>
-        /// The target Azure disk name.
-        /// Serialized Name: AzureVmDiskDetails.targetDiskName
-        /// </summary>
+        /// <summary> The target Azure disk name. </summary>
         public string TargetDiskName { get; }
-        /// <summary>
-        /// Ordinal\LunId of the disk for the Azure VM.
-        /// Serialized Name: AzureVmDiskDetails.lunId
-        /// </summary>
+        /// <summary> Ordinal\LunId of the disk for the Azure VM. </summary>
         public string LunId { get; }
-        /// <summary>
-        /// The DiskEncryptionSet ARM ID.
-        /// Serialized Name: AzureVmDiskDetails.diskEncryptionSetId
-        /// </summary>
+        /// <summary> The DiskEncryptionSet ARM ID. </summary>
         public ResourceIdentifier DiskEncryptionSetId { get; }
-        /// <summary>
-        /// The custom target Azure disk name.
-        /// Serialized Name: AzureVmDiskDetails.customTargetDiskName
-        /// </summary>
+        /// <summary> The custom target Azure disk name. </summary>
         public string CustomTargetDiskName { get; }
     }
 }

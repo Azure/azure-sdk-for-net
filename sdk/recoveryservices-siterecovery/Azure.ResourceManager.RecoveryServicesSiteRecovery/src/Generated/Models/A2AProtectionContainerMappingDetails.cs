@@ -9,10 +9,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary>
-    /// A2A provider specific settings.
-    /// Serialized Name: A2AProtectionContainerMappingDetails
-    /// </summary>
+    /// <summary> A2A provider specific settings. </summary>
     public partial class A2AProtectionContainerMappingDetails : ProtectionContainerMappingProviderSpecificDetails
     {
         /// <summary> Initializes a new instance of A2AProtectionContainerMappingDetails. </summary>
@@ -22,30 +19,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Initializes a new instance of A2AProtectionContainerMappingDetails. </summary>
-        /// <param name="instanceType">
-        /// Gets the class type. Overridden in derived classes.
-        /// Serialized Name: ProtectionContainerMappingProviderSpecificDetails.instanceType
-        /// </param>
-        /// <param name="agentAutoUpdateStatus">
-        /// A value indicating whether the auto update is enabled.
-        /// Serialized Name: A2AProtectionContainerMappingDetails.agentAutoUpdateStatus
-        /// </param>
-        /// <param name="automationAccountArmId">
-        /// The automation account arm id.
-        /// Serialized Name: A2AProtectionContainerMappingDetails.automationAccountArmId
-        /// </param>
-        /// <param name="automationAccountAuthenticationType">
-        /// A value indicating the type authentication to use for automation Account.
-        /// Serialized Name: A2AProtectionContainerMappingDetails.automationAccountAuthenticationType
-        /// </param>
-        /// <param name="scheduleName">
-        /// The schedule arm name.
-        /// Serialized Name: A2AProtectionContainerMappingDetails.scheduleName
-        /// </param>
-        /// <param name="jobScheduleName">
-        /// The job schedule arm name.
-        /// Serialized Name: A2AProtectionContainerMappingDetails.jobScheduleName
-        /// </param>
+        /// <param name="instanceType"> Gets the class type. Overridden in derived classes. </param>
+        /// <param name="agentAutoUpdateStatus"> A value indicating whether the auto update is enabled. </param>
+        /// <param name="automationAccountArmId"> The automation account arm id. </param>
+        /// <param name="automationAccountAuthenticationType"> A value indicating the type authentication to use for automation Account. </param>
+        /// <param name="scheduleName"> The schedule arm name. </param>
+        /// <param name="jobScheduleName"> The job schedule arm name. </param>
         internal A2AProtectionContainerMappingDetails(string instanceType, SiteRecoveryAgentAutoUpdateStatus? agentAutoUpdateStatus, ResourceIdentifier automationAccountArmId, AutomationAccountAuthenticationType? automationAccountAuthenticationType, string scheduleName, string jobScheduleName) : base(instanceType)
         {
             AgentAutoUpdateStatus = agentAutoUpdateStatus;
@@ -56,30 +35,15 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             InstanceType = instanceType ?? "A2A";
         }
 
-        /// <summary>
-        /// A value indicating whether the auto update is enabled.
-        /// Serialized Name: A2AProtectionContainerMappingDetails.agentAutoUpdateStatus
-        /// </summary>
+        /// <summary> A value indicating whether the auto update is enabled. </summary>
         public SiteRecoveryAgentAutoUpdateStatus? AgentAutoUpdateStatus { get; }
-        /// <summary>
-        /// The automation account arm id.
-        /// Serialized Name: A2AProtectionContainerMappingDetails.automationAccountArmId
-        /// </summary>
+        /// <summary> The automation account arm id. </summary>
         public ResourceIdentifier AutomationAccountArmId { get; }
-        /// <summary>
-        /// A value indicating the type authentication to use for automation Account.
-        /// Serialized Name: A2AProtectionContainerMappingDetails.automationAccountAuthenticationType
-        /// </summary>
+        /// <summary> A value indicating the type authentication to use for automation Account. </summary>
         public AutomationAccountAuthenticationType? AutomationAccountAuthenticationType { get; }
-        /// <summary>
-        /// The schedule arm name.
-        /// Serialized Name: A2AProtectionContainerMappingDetails.scheduleName
-        /// </summary>
+        /// <summary> The schedule arm name. </summary>
         public string ScheduleName { get; }
-        /// <summary>
-        /// The job schedule arm name.
-        /// Serialized Name: A2AProtectionContainerMappingDetails.jobScheduleName
-        /// </summary>
+        /// <summary> The job schedule arm name. </summary>
         public string JobScheduleName { get; }
     }
 }

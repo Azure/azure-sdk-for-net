@@ -11,21 +11,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary>
-    /// VMwareCbt specific test migrate input.
-    /// Serialized Name: VMwareCbtTestMigrateInput
-    /// </summary>
+    /// <summary> VMwareCbt specific test migrate input. </summary>
     public partial class VMwareCbtTestMigrateContent : TestMigrateProviderSpecificContent
     {
         /// <summary> Initializes a new instance of VMwareCbtTestMigrateContent. </summary>
-        /// <param name="recoveryPointId">
-        /// The recovery point Id.
-        /// Serialized Name: VMwareCbtTestMigrateInput.recoveryPointId
-        /// </param>
-        /// <param name="networkId">
-        /// The test network Id.
-        /// Serialized Name: VMwareCbtTestMigrateInput.networkId
-        /// </param>
+        /// <param name="recoveryPointId"> The recovery point Id. </param>
+        /// <param name="networkId"> The test network Id. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="recoveryPointId"/> or <paramref name="networkId"/> is null. </exception>
         public VMwareCbtTestMigrateContent(ResourceIdentifier recoveryPointId, ResourceIdentifier networkId)
         {
@@ -38,25 +29,13 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             InstanceType = "VMwareCbt";
         }
 
-        /// <summary>
-        /// The recovery point Id.
-        /// Serialized Name: VMwareCbtTestMigrateInput.recoveryPointId
-        /// </summary>
+        /// <summary> The recovery point Id. </summary>
         public ResourceIdentifier RecoveryPointId { get; }
-        /// <summary>
-        /// The test network Id.
-        /// Serialized Name: VMwareCbtTestMigrateInput.networkId
-        /// </summary>
+        /// <summary> The test network Id. </summary>
         public ResourceIdentifier NetworkId { get; }
-        /// <summary>
-        /// The list of NIC details.
-        /// Serialized Name: VMwareCbtTestMigrateInput.vmNics
-        /// </summary>
+        /// <summary> The list of NIC details. </summary>
         public IList<VMwareCbtNicContent> VmNics { get; }
-        /// <summary>
-        /// A value indicating the inplace OS Upgrade version.
-        /// Serialized Name: VMwareCbtTestMigrateInput.osUpgradeVersion
-        /// </summary>
+        /// <summary> A value indicating the inplace OS Upgrade version. </summary>
         public string OSUpgradeVersion { get; set; }
     }
 }

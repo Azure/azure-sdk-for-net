@@ -7,17 +7,11 @@
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary>
-    /// The UnknownProviderSpecificRecoveryPointDetails.
-    /// Serialized Name: UnknownProviderSpecificRecoveryPointDetails
-    /// </summary>
+    /// <summary> The UnknownProviderSpecificRecoveryPointDetails. </summary>
     internal partial class UnknownProviderSpecificRecoveryPointDetails : ProviderSpecificRecoveryPointDetails
     {
         /// <summary> Initializes a new instance of UnknownProviderSpecificRecoveryPointDetails. </summary>
-        /// <param name="instanceType">
-        /// Gets the provider type.
-        /// Serialized Name: ProviderSpecificRecoveryPointDetails.instanceType
-        /// </param>
+        /// <param name="instanceType"> Gets the provider type. </param>
         internal UnknownProviderSpecificRecoveryPointDetails(string instanceType) : base(instanceType)
         {
             InstanceType = instanceType ?? "Unknown";

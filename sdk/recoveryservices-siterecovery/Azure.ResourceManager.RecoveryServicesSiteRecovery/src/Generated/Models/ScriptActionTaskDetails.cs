@@ -7,11 +7,8 @@
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary>
-    /// This class represents the script action task details.
-    /// Serialized Name: ScriptActionTaskDetails
-    /// </summary>
-    public partial class ScriptActionTaskDetails : TaskTypeDetails
+    /// <summary> This class represents the script action task details. </summary>
+    public partial class ScriptActionTaskDetails : SiteRecoveryTaskTypeDetails
     {
         /// <summary> Initializes a new instance of ScriptActionTaskDetails. </summary>
         internal ScriptActionTaskDetails()
@@ -20,26 +17,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Initializes a new instance of ScriptActionTaskDetails. </summary>
-        /// <param name="instanceType">
-        /// The type of task details.
-        /// Serialized Name: TaskTypeDetails.instanceType
-        /// </param>
-        /// <param name="name">
-        /// The name.
-        /// Serialized Name: ScriptActionTaskDetails.name
-        /// </param>
-        /// <param name="path">
-        /// The path.
-        /// Serialized Name: ScriptActionTaskDetails.path
-        /// </param>
-        /// <param name="output">
-        /// The output.
-        /// Serialized Name: ScriptActionTaskDetails.output
-        /// </param>
-        /// <param name="isPrimarySideScript">
-        /// A value indicating whether it is a primary side script or not.
-        /// Serialized Name: ScriptActionTaskDetails.isPrimarySideScript
-        /// </param>
+        /// <param name="instanceType"> The type of task details. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="path"> The path. </param>
+        /// <param name="output"> The output. </param>
+        /// <param name="isPrimarySideScript"> A value indicating whether it is a primary side script or not. </param>
         internal ScriptActionTaskDetails(string instanceType, string name, string path, string output, bool? isPrimarySideScript) : base(instanceType)
         {
             Name = name;
@@ -49,25 +31,13 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             InstanceType = instanceType ?? "ScriptActionTaskDetails";
         }
 
-        /// <summary>
-        /// The name.
-        /// Serialized Name: ScriptActionTaskDetails.name
-        /// </summary>
+        /// <summary> The name. </summary>
         public string Name { get; }
-        /// <summary>
-        /// The path.
-        /// Serialized Name: ScriptActionTaskDetails.path
-        /// </summary>
+        /// <summary> The path. </summary>
         public string Path { get; }
-        /// <summary>
-        /// The output.
-        /// Serialized Name: ScriptActionTaskDetails.output
-        /// </summary>
+        /// <summary> The output. </summary>
         public string Output { get; }
-        /// <summary>
-        /// A value indicating whether it is a primary side script or not.
-        /// Serialized Name: ScriptActionTaskDetails.isPrimarySideScript
-        /// </summary>
+        /// <summary> A value indicating whether it is a primary side script or not. </summary>
         public bool? IsPrimarySideScript { get; }
     }
 }

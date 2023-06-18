@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary>
-    /// The AgentUpgradeBlockedReason.
-    /// Serialized Name: AgentUpgradeBlockedReason
-    /// </summary>
+    /// <summary> The AgentUpgradeBlockedReason. </summary>
     public readonly partial struct AgentUpgradeBlockedReason : IEquatable<AgentUpgradeBlockedReason>
     {
         private readonly string _value;
@@ -40,75 +37,33 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         private const string InvalidDriverVersionValue = "InvalidDriverVersion";
         private const string UnknownValue = "Unknown";
 
-        /// <summary>
-        /// AlreadyOnLatestVersion
-        /// Serialized Name: AgentUpgradeBlockedReason.AlreadyOnLatestVersion
-        /// </summary>
+        /// <summary> AlreadyOnLatestVersion. </summary>
         public static AgentUpgradeBlockedReason AlreadyOnLatestVersion { get; } = new AgentUpgradeBlockedReason(AlreadyOnLatestVersionValue);
-        /// <summary>
-        /// RebootRequired
-        /// Serialized Name: AgentUpgradeBlockedReason.RebootRequired
-        /// </summary>
+        /// <summary> RebootRequired. </summary>
         public static AgentUpgradeBlockedReason RebootRequired { get; } = new AgentUpgradeBlockedReason(RebootRequiredValue);
-        /// <summary>
-        /// AgentNoHeartbeat
-        /// Serialized Name: AgentUpgradeBlockedReason.AgentNoHeartbeat
-        /// </summary>
+        /// <summary> AgentNoHeartbeat. </summary>
         public static AgentUpgradeBlockedReason AgentNoHeartbeat { get; } = new AgentUpgradeBlockedReason(AgentNoHeartbeatValue);
-        /// <summary>
-        /// RcmProxyNoHeartbeat
-        /// Serialized Name: AgentUpgradeBlockedReason.RcmProxyNoHeartbeat
-        /// </summary>
+        /// <summary> RcmProxyNoHeartbeat. </summary>
         public static AgentUpgradeBlockedReason RcmProxyNoHeartbeat { get; } = new AgentUpgradeBlockedReason(RcmProxyNoHeartbeatValue);
-        /// <summary>
-        /// ProcessServerNoHeartbeat
-        /// Serialized Name: AgentUpgradeBlockedReason.ProcessServerNoHeartbeat
-        /// </summary>
+        /// <summary> ProcessServerNoHeartbeat. </summary>
         public static AgentUpgradeBlockedReason ProcessServerNoHeartbeat { get; } = new AgentUpgradeBlockedReason(ProcessServerNoHeartbeatValue);
-        /// <summary>
-        /// IncompatibleApplianceVersion
-        /// Serialized Name: AgentUpgradeBlockedReason.IncompatibleApplianceVersion
-        /// </summary>
+        /// <summary> IncompatibleApplianceVersion. </summary>
         public static AgentUpgradeBlockedReason IncompatibleApplianceVersion { get; } = new AgentUpgradeBlockedReason(IncompatibleApplianceVersionValue);
-        /// <summary>
-        /// NotProtected
-        /// Serialized Name: AgentUpgradeBlockedReason.NotProtected
-        /// </summary>
+        /// <summary> NotProtected. </summary>
         public static AgentUpgradeBlockedReason NotProtected { get; } = new AgentUpgradeBlockedReason(NotProtectedValue);
-        /// <summary>
-        /// UnsupportedProtectionScenario
-        /// Serialized Name: AgentUpgradeBlockedReason.UnsupportedProtectionScenario
-        /// </summary>
+        /// <summary> UnsupportedProtectionScenario. </summary>
         public static AgentUpgradeBlockedReason UnsupportedProtectionScenario { get; } = new AgentUpgradeBlockedReason(UnsupportedProtectionScenarioValue);
-        /// <summary>
-        /// DistroIsNotReported
-        /// Serialized Name: AgentUpgradeBlockedReason.DistroIsNotReported
-        /// </summary>
+        /// <summary> DistroIsNotReported. </summary>
         public static AgentUpgradeBlockedReason DistroIsNotReported { get; } = new AgentUpgradeBlockedReason(DistroIsNotReportedValue);
-        /// <summary>
-        /// DistroNotSupportedForUpgrade
-        /// Serialized Name: AgentUpgradeBlockedReason.DistroNotSupportedForUpgrade
-        /// </summary>
+        /// <summary> DistroNotSupportedForUpgrade. </summary>
         public static AgentUpgradeBlockedReason DistroNotSupportedForUpgrade { get; } = new AgentUpgradeBlockedReason(DistroNotSupportedForUpgradeValue);
-        /// <summary>
-        /// MissingUpgradePath
-        /// Serialized Name: AgentUpgradeBlockedReason.MissingUpgradePath
-        /// </summary>
+        /// <summary> MissingUpgradePath. </summary>
         public static AgentUpgradeBlockedReason MissingUpgradePath { get; } = new AgentUpgradeBlockedReason(MissingUpgradePathValue);
-        /// <summary>
-        /// InvalidAgentVersion
-        /// Serialized Name: AgentUpgradeBlockedReason.InvalidAgentVersion
-        /// </summary>
+        /// <summary> InvalidAgentVersion. </summary>
         public static AgentUpgradeBlockedReason InvalidAgentVersion { get; } = new AgentUpgradeBlockedReason(InvalidAgentVersionValue);
-        /// <summary>
-        /// InvalidDriverVersion
-        /// Serialized Name: AgentUpgradeBlockedReason.InvalidDriverVersion
-        /// </summary>
+        /// <summary> InvalidDriverVersion. </summary>
         public static AgentUpgradeBlockedReason InvalidDriverVersion { get; } = new AgentUpgradeBlockedReason(InvalidDriverVersionValue);
-        /// <summary>
-        /// Unknown
-        /// Serialized Name: AgentUpgradeBlockedReason.Unknown
-        /// </summary>
+        /// <summary> Unknown. </summary>
         public static AgentUpgradeBlockedReason Unknown { get; } = new AgentUpgradeBlockedReason(UnknownValue);
         /// <summary> Determines if two <see cref="AgentUpgradeBlockedReason"/> values are the same. </summary>
         public static bool operator ==(AgentUpgradeBlockedReason left, AgentUpgradeBlockedReason right) => left.Equals(right);

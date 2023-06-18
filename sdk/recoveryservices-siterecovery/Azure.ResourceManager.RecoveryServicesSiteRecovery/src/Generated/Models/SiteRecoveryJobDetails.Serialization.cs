@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 {
                     case "AsrJobDetails": return AsrJobDetails.DeserializeAsrJobDetails(element);
                     case "ExportJobDetails": return ExportJobDetails.DeserializeExportJobDetails(element);
-                    case "FailoverJobDetails": return SiteRecoveryFailoverJobDetails.DeserializeSiteRecoveryFailoverJobDetails(element);
+                    case "FailoverJobDetails": return FailoverJobDetails.DeserializeFailoverJobDetails(element);
                     case "SwitchProtectionJobDetails": return SwitchProtectionJobDetails.DeserializeSwitchProtectionJobDetails(element);
                     case "TestFailoverJobDetails": return TestFailoverJobDetails.DeserializeTestFailoverJobDetails(element);
                 }

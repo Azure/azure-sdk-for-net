@@ -9,10 +9,7 @@ using System;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary>
-    /// The details of the InMage agent.
-    /// Serialized Name: InMageAgentDetails
-    /// </summary>
+    /// <summary> The details of the InMage agent. </summary>
     public partial class InMageAgentDetails
     {
         /// <summary> Initializes a new instance of InMageAgentDetails. </summary>
@@ -21,22 +18,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Initializes a new instance of InMageAgentDetails. </summary>
-        /// <param name="agentVersion">
-        /// The agent version.
-        /// Serialized Name: InMageAgentDetails.agentVersion
-        /// </param>
-        /// <param name="agentUpdateStatus">
-        /// A value indicating whether installed agent needs to be updated.
-        /// Serialized Name: InMageAgentDetails.agentUpdateStatus
-        /// </param>
-        /// <param name="postUpdateRebootStatus">
-        /// A value indicating whether reboot is required after update is applied.
-        /// Serialized Name: InMageAgentDetails.postUpdateRebootStatus
-        /// </param>
-        /// <param name="agentExpireOn">
-        /// Agent expiry date.
-        /// Serialized Name: InMageAgentDetails.agentExpiryDate
-        /// </param>
+        /// <param name="agentVersion"> The agent version. </param>
+        /// <param name="agentUpdateStatus"> A value indicating whether installed agent needs to be updated. </param>
+        /// <param name="postUpdateRebootStatus"> A value indicating whether reboot is required after update is applied. </param>
+        /// <param name="agentExpireOn"> Agent expiry date. </param>
         internal InMageAgentDetails(string agentVersion, string agentUpdateStatus, string postUpdateRebootStatus, DateTimeOffset? agentExpireOn)
         {
             AgentVersion = agentVersion;
@@ -45,25 +30,13 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             AgentExpireOn = agentExpireOn;
         }
 
-        /// <summary>
-        /// The agent version.
-        /// Serialized Name: InMageAgentDetails.agentVersion
-        /// </summary>
+        /// <summary> The agent version. </summary>
         public string AgentVersion { get; }
-        /// <summary>
-        /// A value indicating whether installed agent needs to be updated.
-        /// Serialized Name: InMageAgentDetails.agentUpdateStatus
-        /// </summary>
+        /// <summary> A value indicating whether installed agent needs to be updated. </summary>
         public string AgentUpdateStatus { get; }
-        /// <summary>
-        /// A value indicating whether reboot is required after update is applied.
-        /// Serialized Name: InMageAgentDetails.postUpdateRebootStatus
-        /// </summary>
+        /// <summary> A value indicating whether reboot is required after update is applied. </summary>
         public string PostUpdateRebootStatus { get; }
-        /// <summary>
-        /// Agent expiry date.
-        /// Serialized Name: InMageAgentDetails.agentExpiryDate
-        /// </summary>
+        /// <summary> Agent expiry date. </summary>
         public DateTimeOffset? AgentExpireOn { get; }
     }
 }

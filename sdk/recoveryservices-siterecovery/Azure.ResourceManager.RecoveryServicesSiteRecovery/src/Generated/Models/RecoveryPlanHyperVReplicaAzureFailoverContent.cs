@@ -7,10 +7,7 @@
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary>
-    /// Recovery plan HVR Azure failover input.
-    /// Serialized Name: RecoveryPlanHyperVReplicaAzureFailoverInput
-    /// </summary>
+    /// <summary> Recovery plan HVR Azure failover input. </summary>
     public partial class RecoveryPlanHyperVReplicaAzureFailoverContent : RecoveryPlanProviderSpecificFailoverContent
     {
         /// <summary> Initializes a new instance of RecoveryPlanHyperVReplicaAzureFailoverContent. </summary>
@@ -19,20 +16,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             InstanceType = "HyperVReplicaAzure";
         }
 
-        /// <summary>
-        /// The primary KEK certificate PFX.
-        /// Serialized Name: RecoveryPlanHyperVReplicaAzureFailoverInput.primaryKekCertificatePfx
-        /// </summary>
+        /// <summary> The primary KEK certificate PFX. </summary>
         public string PrimaryKekCertificatePfx { get; set; }
-        /// <summary>
-        /// The secondary KEK certificate PFX.
-        /// Serialized Name: RecoveryPlanHyperVReplicaAzureFailoverInput.secondaryKekCertificatePfx
-        /// </summary>
+        /// <summary> The secondary KEK certificate PFX. </summary>
         public string SecondaryKekCertificatePfx { get; set; }
-        /// <summary>
-        /// The recovery point type.
-        /// Serialized Name: RecoveryPlanHyperVReplicaAzureFailoverInput.recoveryPointType
-        /// </summary>
+        /// <summary> The recovery point type. </summary>
         public HyperVReplicaAzureRpRecoveryPointType? RecoveryPointType { get; set; }
     }
 }

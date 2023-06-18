@@ -7,10 +7,7 @@
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary>
-    /// Request to update the mobility service on a protected item.
-    /// Serialized Name: UpdateMobilityServiceRequest
-    /// </summary>
+    /// <summary> Request to update the mobility service on a protected item. </summary>
     public partial class UpdateMobilityServiceContent
     {
         /// <summary> Initializes a new instance of UpdateMobilityServiceContent. </summary>
@@ -18,15 +15,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         {
         }
 
-        /// <summary>
-        /// The properties of the update mobility service request.
-        /// Serialized Name: UpdateMobilityServiceRequest.properties
-        /// </summary>
+        /// <summary> The properties of the update mobility service request. </summary>
         internal UpdateMobilityServiceRequestProperties Properties { get; set; }
-        /// <summary>
-        /// The CS run as account Id.
-        /// Serialized Name: UpdateMobilityServiceRequestProperties.runAsAccountId
-        /// </summary>
+        /// <summary> The CS run as account Id. </summary>
         public string UpdateMobilityServiceRequestRunAsAccountId
         {
             get => Properties is null ? default : Properties.RunAsAccountId;

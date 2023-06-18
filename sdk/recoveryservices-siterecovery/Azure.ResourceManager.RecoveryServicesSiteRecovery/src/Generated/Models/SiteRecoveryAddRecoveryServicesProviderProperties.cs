@@ -10,27 +10,15 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary>
-    /// The properties of an add provider request.
-    /// Serialized Name: AddRecoveryServicesProviderInputProperties
-    /// </summary>
+    /// <summary> The properties of an add provider request. </summary>
     public partial class SiteRecoveryAddRecoveryServicesProviderProperties
     {
         /// <summary> Initializes a new instance of SiteRecoveryAddRecoveryServicesProviderProperties. </summary>
-        /// <param name="machineName">
-        /// The name of the machine where the provider is getting added.
-        /// Serialized Name: AddRecoveryServicesProviderInputProperties.machineName
-        /// </param>
-        /// <param name="authenticationIdentityContent">
-        /// The identity provider input for DRA authentication.
-        /// Serialized Name: AddRecoveryServicesProviderInputProperties.authenticationIdentityInput
-        /// </param>
-        /// <param name="resourceAccessIdentityContent">
-        /// The identity provider input for resource access.
-        /// Serialized Name: AddRecoveryServicesProviderInputProperties.resourceAccessIdentityInput
-        /// </param>
+        /// <param name="machineName"> The name of the machine where the provider is getting added. </param>
+        /// <param name="authenticationIdentityContent"> The identity provider input for DRA authentication. </param>
+        /// <param name="resourceAccessIdentityContent"> The identity provider input for resource access. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="machineName"/>, <paramref name="authenticationIdentityContent"/> or <paramref name="resourceAccessIdentityContent"/> is null. </exception>
-        public SiteRecoveryAddRecoveryServicesProviderProperties(string machineName, SiteRecoveryIdentityProviderContent authenticationIdentityContent, SiteRecoveryIdentityProviderContent resourceAccessIdentityContent)
+        public SiteRecoveryAddRecoveryServicesProviderProperties(string machineName, IdentityProviderContent authenticationIdentityContent, IdentityProviderContent resourceAccessIdentityContent)
         {
             Argument.AssertNotNull(machineName, nameof(machineName));
             Argument.AssertNotNull(authenticationIdentityContent, nameof(authenticationIdentityContent));
@@ -41,35 +29,17 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             ResourceAccessIdentityContent = resourceAccessIdentityContent;
         }
 
-        /// <summary>
-        /// The name of the machine where the provider is getting added.
-        /// Serialized Name: AddRecoveryServicesProviderInputProperties.machineName
-        /// </summary>
+        /// <summary> The name of the machine where the provider is getting added. </summary>
         public string MachineName { get; }
-        /// <summary>
-        /// The Id of the machine where the provider is getting added.
-        /// Serialized Name: AddRecoveryServicesProviderInputProperties.machineId
-        /// </summary>
+        /// <summary> The Id of the machine where the provider is getting added. </summary>
         public string MachineId { get; set; }
-        /// <summary>
-        /// The Bios Id of the machine.
-        /// Serialized Name: AddRecoveryServicesProviderInputProperties.biosId
-        /// </summary>
+        /// <summary> The Bios Id of the machine. </summary>
         public string BiosId { get; set; }
-        /// <summary>
-        /// The identity provider input for DRA authentication.
-        /// Serialized Name: AddRecoveryServicesProviderInputProperties.authenticationIdentityInput
-        /// </summary>
-        public SiteRecoveryIdentityProviderContent AuthenticationIdentityContent { get; }
-        /// <summary>
-        /// The identity provider input for resource access.
-        /// Serialized Name: AddRecoveryServicesProviderInputProperties.resourceAccessIdentityInput
-        /// </summary>
-        public SiteRecoveryIdentityProviderContent ResourceAccessIdentityContent { get; }
-        /// <summary>
-        /// The identity provider input for data plane authentication.
-        /// Serialized Name: AddRecoveryServicesProviderInputProperties.dataPlaneAuthenticationIdentityInput
-        /// </summary>
-        public SiteRecoveryIdentityProviderContent DataPlaneAuthenticationIdentityContent { get; set; }
+        /// <summary> The identity provider input for DRA authentication. </summary>
+        public IdentityProviderContent AuthenticationIdentityContent { get; }
+        /// <summary> The identity provider input for resource access. </summary>
+        public IdentityProviderContent ResourceAccessIdentityContent { get; }
+        /// <summary> The identity provider input for data plane authentication. </summary>
+        public IdentityProviderContent DataPlaneAuthenticationIdentityContent { get; set; }
     }
 }

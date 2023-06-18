@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary>
-    /// The last planned failover status.
-    /// Serialized Name: PlannedFailoverStatus
-    /// </summary>
+    /// <summary> The last planned failover status. </summary>
     public readonly partial struct PlannedFailoverStatus : IEquatable<PlannedFailoverStatus>
     {
         private readonly string _value;
@@ -30,25 +27,13 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         private const string CancelledValue = "Cancelled";
         private const string UnknownValue = "Unknown";
 
-        /// <summary>
-        /// Succeeded
-        /// Serialized Name: PlannedFailoverStatus.Succeeded
-        /// </summary>
+        /// <summary> Succeeded. </summary>
         public static PlannedFailoverStatus Succeeded { get; } = new PlannedFailoverStatus(SucceededValue);
-        /// <summary>
-        /// Failed
-        /// Serialized Name: PlannedFailoverStatus.Failed
-        /// </summary>
+        /// <summary> Failed. </summary>
         public static PlannedFailoverStatus Failed { get; } = new PlannedFailoverStatus(FailedValue);
-        /// <summary>
-        /// Cancelled
-        /// Serialized Name: PlannedFailoverStatus.Cancelled
-        /// </summary>
+        /// <summary> Cancelled. </summary>
         public static PlannedFailoverStatus Cancelled { get; } = new PlannedFailoverStatus(CancelledValue);
-        /// <summary>
-        /// Unknown
-        /// Serialized Name: PlannedFailoverStatus.Unknown
-        /// </summary>
+        /// <summary> Unknown. </summary>
         public static PlannedFailoverStatus Unknown { get; } = new PlannedFailoverStatus(UnknownValue);
         /// <summary> Determines if two <see cref="PlannedFailoverStatus"/> values are the same. </summary>
         public static bool operator ==(PlannedFailoverStatus left, PlannedFailoverStatus right) => left.Equals(right);

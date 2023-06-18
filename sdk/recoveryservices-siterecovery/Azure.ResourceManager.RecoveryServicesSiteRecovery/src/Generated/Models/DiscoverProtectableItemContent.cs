@@ -7,10 +7,7 @@
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary>
-    /// Request to add a physical machine as a protectable item in a container.
-    /// Serialized Name: DiscoverProtectableItemRequest
-    /// </summary>
+    /// <summary> Request to add a physical machine as a protectable item in a container. </summary>
     public partial class DiscoverProtectableItemContent
     {
         /// <summary> Initializes a new instance of DiscoverProtectableItemContent. </summary>
@@ -18,10 +15,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         {
         }
 
-        /// <summary>
-        /// The properties of a discover protectable item request.
-        /// Serialized Name: DiscoverProtectableItemRequest.properties
-        /// </summary>
-        public DiscoverProtectableItemRequestProperties Properties { get; set; }
+        /// <summary> The properties of a discover protectable item request. </summary>
+        public DiscoverProtectableItemProperties Properties { get; set; }
     }
 }

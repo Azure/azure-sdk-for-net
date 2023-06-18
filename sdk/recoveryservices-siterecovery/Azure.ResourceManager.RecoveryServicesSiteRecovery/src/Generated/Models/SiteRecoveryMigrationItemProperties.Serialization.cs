@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Optional<string> policyFriendlyName = default;
             Optional<string> recoveryServicesProviderId = default;
             Optional<string> replicationStatus = default;
-            Optional<MigrationState> migrationState = default;
+            Optional<SiteRecoveryMigrationState> migrationState = default;
             Optional<string> migrationStateDescription = default;
             Optional<DateTimeOffset> lastTestMigrationTime = default;
             Optional<string> lastTestMigrationStatus = default;
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Optional<string> lastMigrationStatus = default;
             Optional<TestMigrationState> testMigrateState = default;
             Optional<string> testMigrateStateDescription = default;
-            Optional<ProtectionHealth> health = default;
+            Optional<SiteRecoveryProtectionHealth> health = default;
             Optional<IReadOnlyList<SiteRecoveryHealthError>> healthErrors = default;
             Optional<IReadOnlyList<MigrationItemOperation>> allowedOperations = default;
             Optional<CurrentJobDetails> currentJob = default;
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    migrationState = new MigrationState(property.Value.GetString());
+                    migrationState = new SiteRecoveryMigrationState(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("migrationStateDescription"u8))
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    health = new ProtectionHealth(property.Value.GetString());
+                    health = new SiteRecoveryProtectionHealth(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("healthErrors"u8))

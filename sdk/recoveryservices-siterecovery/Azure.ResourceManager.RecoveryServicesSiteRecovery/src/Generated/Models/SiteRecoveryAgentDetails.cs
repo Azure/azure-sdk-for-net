@@ -10,10 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary>
-    /// Agent details.
-    /// Serialized Name: AgentDetails
-    /// </summary>
+    /// <summary> Agent details. </summary>
     public partial class SiteRecoveryAgentDetails
     {
         /// <summary> Initializes a new instance of SiteRecoveryAgentDetails. </summary>
@@ -23,26 +20,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Initializes a new instance of SiteRecoveryAgentDetails. </summary>
-        /// <param name="agentId">
-        /// The Id of the agent running on the server.
-        /// Serialized Name: AgentDetails.agentId
-        /// </param>
-        /// <param name="machineId">
-        /// The Id of the machine to which the agent is registered.
-        /// Serialized Name: AgentDetails.machineId
-        /// </param>
-        /// <param name="biosId">
-        /// The machine BIOS Id.
-        /// Serialized Name: AgentDetails.biosId
-        /// </param>
-        /// <param name="fqdn">
-        /// The machine FQDN.
-        /// Serialized Name: AgentDetails.fqdn
-        /// </param>
-        /// <param name="disks">
-        /// The disks.
-        /// Serialized Name: AgentDetails.disks
-        /// </param>
+        /// <param name="agentId"> The Id of the agent running on the server. </param>
+        /// <param name="machineId"> The Id of the machine to which the agent is registered. </param>
+        /// <param name="biosId"> The machine BIOS Id. </param>
+        /// <param name="fqdn"> The machine FQDN. </param>
+        /// <param name="disks"> The disks. </param>
         internal SiteRecoveryAgentDetails(string agentId, string machineId, string biosId, string fqdn, IReadOnlyList<SiteRecoveryAgentDiskDetails> disks)
         {
             AgentId = agentId;
@@ -52,30 +34,15 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Disks = disks;
         }
 
-        /// <summary>
-        /// The Id of the agent running on the server.
-        /// Serialized Name: AgentDetails.agentId
-        /// </summary>
+        /// <summary> The Id of the agent running on the server. </summary>
         public string AgentId { get; }
-        /// <summary>
-        /// The Id of the machine to which the agent is registered.
-        /// Serialized Name: AgentDetails.machineId
-        /// </summary>
+        /// <summary> The Id of the machine to which the agent is registered. </summary>
         public string MachineId { get; }
-        /// <summary>
-        /// The machine BIOS Id.
-        /// Serialized Name: AgentDetails.biosId
-        /// </summary>
+        /// <summary> The machine BIOS Id. </summary>
         public string BiosId { get; }
-        /// <summary>
-        /// The machine FQDN.
-        /// Serialized Name: AgentDetails.fqdn
-        /// </summary>
+        /// <summary> The machine FQDN. </summary>
         public string Fqdn { get; }
-        /// <summary>
-        /// The disks.
-        /// Serialized Name: AgentDetails.disks
-        /// </summary>
+        /// <summary> The disks. </summary>
         public IReadOnlyList<SiteRecoveryAgentDiskDetails> Disks { get; }
     }
 }

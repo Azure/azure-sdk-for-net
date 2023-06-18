@@ -7,17 +7,11 @@
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary>
-    /// The UnknownRecoveryResourceGroupCustomDetails.
-    /// Serialized Name: UnknownRecoveryResourceGroupCustomDetails
-    /// </summary>
+    /// <summary> The UnknownRecoveryResourceGroupCustomDetails. </summary>
     internal partial class UnknownRecoveryResourceGroupCustomDetails : RecoveryResourceGroupCustomDetails
     {
         /// <summary> Initializes a new instance of UnknownRecoveryResourceGroupCustomDetails. </summary>
-        /// <param name="resourceType">
-        /// The class type.
-        /// Serialized Name: RecoveryResourceGroupCustomDetails.resourceType
-        /// </param>
+        /// <param name="resourceType"> The class type. </param>
         internal UnknownRecoveryResourceGroupCustomDetails(string resourceType) : base(resourceType)
         {
             ResourceType = resourceType ?? "Unknown";

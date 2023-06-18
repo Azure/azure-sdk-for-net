@@ -5,12 +5,11 @@
 
 #nullable disable
 
+using Azure.Core;
+
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary>
-    /// Recovery plan protected item.
-    /// Serialized Name: RecoveryPlanProtectedItem
-    /// </summary>
+    /// <summary> Recovery plan protected item. </summary>
     public partial class RecoveryPlanProtectedItem
     {
         /// <summary> Initializes a new instance of RecoveryPlanProtectedItem. </summary>
@@ -19,29 +18,17 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Initializes a new instance of RecoveryPlanProtectedItem. </summary>
-        /// <param name="id">
-        /// The ARM Id of the recovery plan protected item.
-        /// Serialized Name: RecoveryPlanProtectedItem.id
-        /// </param>
-        /// <param name="virtualMachineId">
-        /// The virtual machine Id.
-        /// Serialized Name: RecoveryPlanProtectedItem.virtualMachineId
-        /// </param>
-        internal RecoveryPlanProtectedItem(string id, string virtualMachineId)
+        /// <param name="id"> The ARM Id of the recovery plan protected item. </param>
+        /// <param name="virtualMachineId"> The virtual machine Id. </param>
+        internal RecoveryPlanProtectedItem(ResourceIdentifier id, string virtualMachineId)
         {
             Id = id;
             VirtualMachineId = virtualMachineId;
         }
 
-        /// <summary>
-        /// The ARM Id of the recovery plan protected item.
-        /// Serialized Name: RecoveryPlanProtectedItem.id
-        /// </summary>
-        public string Id { get; set; }
-        /// <summary>
-        /// The virtual machine Id.
-        /// Serialized Name: RecoveryPlanProtectedItem.virtualMachineId
-        /// </summary>
+        /// <summary> The ARM Id of the recovery plan protected item. </summary>
+        public ResourceIdentifier Id { get; set; }
+        /// <summary> The virtual machine Id. </summary>
         public string VirtualMachineId { get; set; }
     }
 }

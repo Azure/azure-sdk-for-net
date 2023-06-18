@@ -10,17 +10,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary>
-    /// Existing storage account input.
-    /// Serialized Name: ExistingStorageAccount
-    /// </summary>
+    /// <summary> Existing storage account input. </summary>
     public partial class ExistingStorageAccount : StorageAccountCustomDetails
     {
         /// <summary> Initializes a new instance of ExistingStorageAccount. </summary>
-        /// <param name="azureStorageAccountId">
-        /// The storage account Arm Id. Throw error, if resource does not exists.
-        /// Serialized Name: ExistingStorageAccount.azureStorageAccountId
-        /// </param>
+        /// <param name="azureStorageAccountId"> The storage account Arm Id. Throw error, if resource does not exists. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="azureStorageAccountId"/> is null. </exception>
         public ExistingStorageAccount(ResourceIdentifier azureStorageAccountId)
         {
@@ -31,24 +25,15 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Initializes a new instance of ExistingStorageAccount. </summary>
-        /// <param name="resourceType">
-        /// The class type.
-        /// Serialized Name: StorageAccountCustomDetails.resourceType
-        /// </param>
-        /// <param name="azureStorageAccountId">
-        /// The storage account Arm Id. Throw error, if resource does not exists.
-        /// Serialized Name: ExistingStorageAccount.azureStorageAccountId
-        /// </param>
+        /// <param name="resourceType"> The class type. </param>
+        /// <param name="azureStorageAccountId"> The storage account Arm Id. Throw error, if resource does not exists. </param>
         internal ExistingStorageAccount(string resourceType, ResourceIdentifier azureStorageAccountId) : base(resourceType)
         {
             AzureStorageAccountId = azureStorageAccountId;
             ResourceType = resourceType ?? "Existing";
         }
 
-        /// <summary>
-        /// The storage account Arm Id. Throw error, if resource does not exists.
-        /// Serialized Name: ExistingStorageAccount.azureStorageAccountId
-        /// </summary>
+        /// <summary> The storage account Arm Id. Throw error, if resource does not exists. </summary>
         public ResourceIdentifier AzureStorageAccountId { get; set; }
     }
 }

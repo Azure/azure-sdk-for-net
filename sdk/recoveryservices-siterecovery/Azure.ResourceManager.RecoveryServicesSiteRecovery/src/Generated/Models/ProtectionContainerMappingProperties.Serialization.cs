@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<string> targetProtectionContainerId = default;
+            Optional<ResourceIdentifier> targetProtectionContainerId = default;
             Optional<string> targetProtectionContainerFriendlyName = default;
             Optional<ProtectionContainerMappingProviderSpecificDetails> providerSpecificDetails = default;
             Optional<string> health = default;
@@ -34,7 +34,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 if (property.NameEquals("targetProtectionContainerId"u8))
                 {
-                    targetProtectionContainerId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    targetProtectionContainerId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("targetProtectionContainerFriendlyName"u8))

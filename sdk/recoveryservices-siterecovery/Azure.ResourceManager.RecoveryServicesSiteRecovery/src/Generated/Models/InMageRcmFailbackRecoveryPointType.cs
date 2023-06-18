@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary>
-    /// The recovery point type.
-    /// Serialized Name: InMageRcmFailbackRecoveryPointType
-    /// </summary>
+    /// <summary> The recovery point type. </summary>
     public readonly partial struct InMageRcmFailbackRecoveryPointType : IEquatable<InMageRcmFailbackRecoveryPointType>
     {
         private readonly string _value;
@@ -28,15 +25,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         private const string ApplicationConsistentValue = "ApplicationConsistent";
         private const string CrashConsistentValue = "CrashConsistent";
 
-        /// <summary>
-        /// ApplicationConsistent
-        /// Serialized Name: InMageRcmFailbackRecoveryPointType.ApplicationConsistent
-        /// </summary>
+        /// <summary> ApplicationConsistent. </summary>
         public static InMageRcmFailbackRecoveryPointType ApplicationConsistent { get; } = new InMageRcmFailbackRecoveryPointType(ApplicationConsistentValue);
-        /// <summary>
-        /// CrashConsistent
-        /// Serialized Name: InMageRcmFailbackRecoveryPointType.CrashConsistent
-        /// </summary>
+        /// <summary> CrashConsistent. </summary>
         public static InMageRcmFailbackRecoveryPointType CrashConsistent { get; } = new InMageRcmFailbackRecoveryPointType(CrashConsistentValue);
         /// <summary> Determines if two <see cref="InMageRcmFailbackRecoveryPointType"/> values are the same. </summary>
         public static bool operator ==(InMageRcmFailbackRecoveryPointType left, InMageRcmFailbackRecoveryPointType right) => left.Equals(right);

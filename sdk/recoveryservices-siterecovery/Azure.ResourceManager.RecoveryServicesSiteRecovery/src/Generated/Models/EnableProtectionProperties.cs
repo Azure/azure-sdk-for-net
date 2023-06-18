@@ -9,10 +9,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary>
-    /// Enable protection input properties.
-    /// Serialized Name: EnableProtectionInputProperties
-    /// </summary>
+    /// <summary> Enable protection input properties. </summary>
     public partial class EnableProtectionProperties
     {
         /// <summary> Initializes a new instance of EnableProtectionProperties. </summary>
@@ -20,19 +17,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         {
         }
 
-        /// <summary>
-        /// The Policy Id.
-        /// Serialized Name: EnableProtectionInputProperties.policyId
-        /// </summary>
+        /// <summary> The Policy Id. </summary>
         public ResourceIdentifier PolicyId { get; set; }
-        /// <summary>
-        /// The protectable item Id.
-        /// Serialized Name: EnableProtectionInputProperties.protectableItemId
-        /// </summary>
+        /// <summary> The protectable item Id. </summary>
         public ResourceIdentifier ProtectableItemId { get; set; }
         /// <summary>
         /// The ReplicationProviderInput. For HyperVReplicaAzure provider, it will be AzureEnableProtectionInput object. For San provider, it will be SanEnableProtectionInput object. For HyperVReplicaAzure provider, it can be null.
-        /// Serialized Name: EnableProtectionInputProperties.providerSpecificDetails
         /// Please note <see cref="EnableProtectionProviderSpecificContent"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="A2AEnableProtectionContent"/>, <see cref="A2ACrossClusterMigrationEnableProtectionContent"/>, <see cref="HyperVReplicaAzureEnableProtectionContent"/>, <see cref="InMageEnableProtectionContent"/>, <see cref="InMageAzureV2EnableProtectionContent"/> and <see cref="InMageRcmEnableProtectionContent"/>.
         /// </summary>

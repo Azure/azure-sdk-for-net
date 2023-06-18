@@ -7,10 +7,7 @@
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary>
-    /// Input for add disk(s) operation.
-    /// Serialized Name: AddDisksInput
-    /// </summary>
+    /// <summary> Input for add disk(s) operation. </summary>
     public partial class SiteRecoveryAddDisksContent
     {
         /// <summary> Initializes a new instance of SiteRecoveryAddDisksContent. </summary>
@@ -18,14 +15,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         {
         }
 
-        /// <summary>
-        /// Add disks input properties.
-        /// Serialized Name: AddDisksInput.properties
-        /// </summary>
+        /// <summary> Add disks input properties. </summary>
         internal SiteRecoveryAddDisksProperties Properties { get; set; }
         /// <summary>
         /// The ReplicationProviderInput. For HyperVReplicaAzure provider, it will be AzureEnableProtectionInput object. For San provider, it will be SanEnableProtectionInput object. For HyperVReplicaAzure provider, it can be null.
-        /// Serialized Name: AddDisksInputProperties.providerSpecificDetails
         /// Please note <see cref="SiteRecoveryAddDisksProviderSpecificContent"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="A2AAddDisksContent"/>.
         /// </summary>

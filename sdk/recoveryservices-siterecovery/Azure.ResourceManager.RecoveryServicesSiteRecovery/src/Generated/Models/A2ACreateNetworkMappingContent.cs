@@ -10,17 +10,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary>
-    /// Create network mappings input properties/behavior specific to Azure to Azure Network mapping.
-    /// Serialized Name: AzureToAzureCreateNetworkMappingInput
-    /// </summary>
-    public partial class A2ACreateNetworkMappingContent : SiteRecoveryFabricSpecificCreateNetworkMappingContent
+    /// <summary> Create network mappings input properties/behavior specific to Azure to Azure Network mapping. </summary>
+    public partial class A2ACreateNetworkMappingContent : FabricSpecificCreateNetworkMappingContent
     {
         /// <summary> Initializes a new instance of A2ACreateNetworkMappingContent. </summary>
-        /// <param name="primaryNetworkId">
-        /// The primary azure vnet Id.
-        /// Serialized Name: AzureToAzureCreateNetworkMappingInput.primaryNetworkId
-        /// </param>
+        /// <param name="primaryNetworkId"> The primary azure vnet Id. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="primaryNetworkId"/> is null. </exception>
         public A2ACreateNetworkMappingContent(ResourceIdentifier primaryNetworkId)
         {
@@ -30,10 +24,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             InstanceType = "AzureToAzure";
         }
 
-        /// <summary>
-        /// The primary azure vnet Id.
-        /// Serialized Name: AzureToAzureCreateNetworkMappingInput.primaryNetworkId
-        /// </summary>
+        /// <summary> The primary azure vnet Id. </summary>
         public ResourceIdentifier PrimaryNetworkId { get; }
     }
 }

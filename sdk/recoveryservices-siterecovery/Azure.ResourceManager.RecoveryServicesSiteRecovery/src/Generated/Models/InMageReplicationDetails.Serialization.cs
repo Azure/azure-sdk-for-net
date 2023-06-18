@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Optional<string> activeSiteType = default;
             Optional<int> sourceVmCpuCount = default;
             Optional<int> sourceVmRamSizeInMB = default;
-            Optional<OSDiskDetails> osDetails = default;
+            Optional<SiteRecoveryOSDiskDetails> osDetails = default;
             Optional<string> protectionStage = default;
             Optional<string> vmId = default;
             Optional<string> vmProtectionState = default;
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    osDetails = OSDiskDetails.DeserializeOSDiskDetails(property.Value);
+                    osDetails = SiteRecoveryOSDiskDetails.DeserializeSiteRecoveryOSDiskDetails(property.Value);
                     continue;
                 }
                 if (property.NameEquals("protectionStage"u8))

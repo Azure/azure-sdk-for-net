@@ -10,10 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary>
-    /// InMageRcm protected disk details.
-    /// Serialized Name: InMageRcmProtectedDiskDetails
-    /// </summary>
+    /// <summary> InMageRcm protected disk details. </summary>
     public partial class InMageRcmProtectedDiskDetails
     {
         /// <summary> Initializes a new instance of InMageRcmProtectedDiskDetails. </summary>
@@ -22,66 +19,21 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Initializes a new instance of InMageRcmProtectedDiskDetails. </summary>
-        /// <param name="diskId">
-        /// The disk Id.
-        /// Serialized Name: InMageRcmProtectedDiskDetails.diskId
-        /// </param>
-        /// <param name="diskName">
-        /// The disk name.
-        /// Serialized Name: InMageRcmProtectedDiskDetails.diskName
-        /// </param>
-        /// <param name="isOSDisk">
-        /// A value indicating whether the disk is the OS disk.
-        /// Serialized Name: InMageRcmProtectedDiskDetails.isOSDisk
-        /// </param>
-        /// <param name="capacityInBytes">
-        /// The disk capacity in bytes.
-        /// Serialized Name: InMageRcmProtectedDiskDetails.capacityInBytes
-        /// </param>
-        /// <param name="logStorageAccountId">
-        /// The log storage account ARM Id.
-        /// Serialized Name: InMageRcmProtectedDiskDetails.logStorageAccountId
-        /// </param>
-        /// <param name="diskEncryptionSetId">
-        /// The DiskEncryptionSet ARM Id.
-        /// Serialized Name: InMageRcmProtectedDiskDetails.diskEncryptionSetId
-        /// </param>
-        /// <param name="seedManagedDiskId">
-        /// The ARM Id of the seed managed disk.
-        /// Serialized Name: InMageRcmProtectedDiskDetails.seedManagedDiskId
-        /// </param>
-        /// <param name="seedBlobUri">
-        /// The uri of the seed blob.
-        /// Serialized Name: InMageRcmProtectedDiskDetails.seedBlobUri
-        /// </param>
-        /// <param name="targetManagedDiskId">
-        /// The ARM Id of the target managed disk.
-        /// Serialized Name: InMageRcmProtectedDiskDetails.targetManagedDiskId
-        /// </param>
-        /// <param name="diskType">
-        /// The disk type.
-        /// Serialized Name: InMageRcmProtectedDiskDetails.diskType
-        /// </param>
-        /// <param name="dataPendingInLogDataStoreInMB">
-        /// The data pending in log data store in MB.
-        /// Serialized Name: InMageRcmProtectedDiskDetails.dataPendingInLogDataStoreInMB
-        /// </param>
-        /// <param name="dataPendingAtSourceAgentInMB">
-        /// The data pending at source agent in MB.
-        /// Serialized Name: InMageRcmProtectedDiskDetails.dataPendingAtSourceAgentInMB
-        /// </param>
-        /// <param name="isInitialReplicationComplete">
-        /// A value indicating whether initial replication is complete or not.
-        /// Serialized Name: InMageRcmProtectedDiskDetails.isInitialReplicationComplete
-        /// </param>
-        /// <param name="irDetails">
-        /// The initial replication details.
-        /// Serialized Name: InMageRcmProtectedDiskDetails.irDetails
-        /// </param>
-        /// <param name="resyncDetails">
-        /// The resync details.
-        /// Serialized Name: InMageRcmProtectedDiskDetails.resyncDetails
-        /// </param>
+        /// <param name="diskId"> The disk Id. </param>
+        /// <param name="diskName"> The disk name. </param>
+        /// <param name="isOSDisk"> A value indicating whether the disk is the OS disk. </param>
+        /// <param name="capacityInBytes"> The disk capacity in bytes. </param>
+        /// <param name="logStorageAccountId"> The log storage account ARM Id. </param>
+        /// <param name="diskEncryptionSetId"> The DiskEncryptionSet ARM Id. </param>
+        /// <param name="seedManagedDiskId"> The ARM Id of the seed managed disk. </param>
+        /// <param name="seedBlobUri"> The uri of the seed blob. </param>
+        /// <param name="targetManagedDiskId"> The ARM Id of the target managed disk. </param>
+        /// <param name="diskType"> The disk type. </param>
+        /// <param name="dataPendingInLogDataStoreInMB"> The data pending in log data store in MB. </param>
+        /// <param name="dataPendingAtSourceAgentInMB"> The data pending at source agent in MB. </param>
+        /// <param name="isInitialReplicationComplete"> A value indicating whether initial replication is complete or not. </param>
+        /// <param name="irDetails"> The initial replication details. </param>
+        /// <param name="resyncDetails"> The resync details. </param>
         internal InMageRcmProtectedDiskDetails(string diskId, string diskName, string isOSDisk, long? capacityInBytes, ResourceIdentifier logStorageAccountId, ResourceIdentifier diskEncryptionSetId, string seedManagedDiskId, Uri seedBlobUri, string targetManagedDiskId, SiteRecoveryDiskAccountType? diskType, double? dataPendingInLogDataStoreInMB, double? dataPendingAtSourceAgentInMB, string isInitialReplicationComplete, InMageRcmSyncDetails irDetails, InMageRcmSyncDetails resyncDetails)
         {
             DiskId = diskId;
@@ -101,80 +53,35 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             ResyncDetails = resyncDetails;
         }
 
-        /// <summary>
-        /// The disk Id.
-        /// Serialized Name: InMageRcmProtectedDiskDetails.diskId
-        /// </summary>
+        /// <summary> The disk Id. </summary>
         public string DiskId { get; }
-        /// <summary>
-        /// The disk name.
-        /// Serialized Name: InMageRcmProtectedDiskDetails.diskName
-        /// </summary>
+        /// <summary> The disk name. </summary>
         public string DiskName { get; }
-        /// <summary>
-        /// A value indicating whether the disk is the OS disk.
-        /// Serialized Name: InMageRcmProtectedDiskDetails.isOSDisk
-        /// </summary>
+        /// <summary> A value indicating whether the disk is the OS disk. </summary>
         public string IsOSDisk { get; }
-        /// <summary>
-        /// The disk capacity in bytes.
-        /// Serialized Name: InMageRcmProtectedDiskDetails.capacityInBytes
-        /// </summary>
+        /// <summary> The disk capacity in bytes. </summary>
         public long? CapacityInBytes { get; }
-        /// <summary>
-        /// The log storage account ARM Id.
-        /// Serialized Name: InMageRcmProtectedDiskDetails.logStorageAccountId
-        /// </summary>
+        /// <summary> The log storage account ARM Id. </summary>
         public ResourceIdentifier LogStorageAccountId { get; }
-        /// <summary>
-        /// The DiskEncryptionSet ARM Id.
-        /// Serialized Name: InMageRcmProtectedDiskDetails.diskEncryptionSetId
-        /// </summary>
+        /// <summary> The DiskEncryptionSet ARM Id. </summary>
         public ResourceIdentifier DiskEncryptionSetId { get; }
-        /// <summary>
-        /// The ARM Id of the seed managed disk.
-        /// Serialized Name: InMageRcmProtectedDiskDetails.seedManagedDiskId
-        /// </summary>
+        /// <summary> The ARM Id of the seed managed disk. </summary>
         public string SeedManagedDiskId { get; }
-        /// <summary>
-        /// The uri of the seed blob.
-        /// Serialized Name: InMageRcmProtectedDiskDetails.seedBlobUri
-        /// </summary>
+        /// <summary> The uri of the seed blob. </summary>
         public Uri SeedBlobUri { get; }
-        /// <summary>
-        /// The ARM Id of the target managed disk.
-        /// Serialized Name: InMageRcmProtectedDiskDetails.targetManagedDiskId
-        /// </summary>
+        /// <summary> The ARM Id of the target managed disk. </summary>
         public string TargetManagedDiskId { get; }
-        /// <summary>
-        /// The disk type.
-        /// Serialized Name: InMageRcmProtectedDiskDetails.diskType
-        /// </summary>
+        /// <summary> The disk type. </summary>
         public SiteRecoveryDiskAccountType? DiskType { get; }
-        /// <summary>
-        /// The data pending in log data store in MB.
-        /// Serialized Name: InMageRcmProtectedDiskDetails.dataPendingInLogDataStoreInMB
-        /// </summary>
+        /// <summary> The data pending in log data store in MB. </summary>
         public double? DataPendingInLogDataStoreInMB { get; }
-        /// <summary>
-        /// The data pending at source agent in MB.
-        /// Serialized Name: InMageRcmProtectedDiskDetails.dataPendingAtSourceAgentInMB
-        /// </summary>
+        /// <summary> The data pending at source agent in MB. </summary>
         public double? DataPendingAtSourceAgentInMB { get; }
-        /// <summary>
-        /// A value indicating whether initial replication is complete or not.
-        /// Serialized Name: InMageRcmProtectedDiskDetails.isInitialReplicationComplete
-        /// </summary>
+        /// <summary> A value indicating whether initial replication is complete or not. </summary>
         public string IsInitialReplicationComplete { get; }
-        /// <summary>
-        /// The initial replication details.
-        /// Serialized Name: InMageRcmProtectedDiskDetails.irDetails
-        /// </summary>
+        /// <summary> The initial replication details. </summary>
         public InMageRcmSyncDetails IrDetails { get; }
-        /// <summary>
-        /// The resync details.
-        /// Serialized Name: InMageRcmProtectedDiskDetails.resyncDetails
-        /// </summary>
+        /// <summary> The resync details. </summary>
         public InMageRcmSyncDetails ResyncDetails { get; }
     }
 }

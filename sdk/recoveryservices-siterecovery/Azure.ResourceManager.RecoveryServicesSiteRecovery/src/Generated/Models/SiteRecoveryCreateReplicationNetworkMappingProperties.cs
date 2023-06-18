@@ -10,17 +10,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary>
-    /// Common input details for network mapping operation.
-    /// Serialized Name: CreateNetworkMappingInputProperties
-    /// </summary>
+    /// <summary> Common input details for network mapping operation. </summary>
     public partial class SiteRecoveryCreateReplicationNetworkMappingProperties
     {
         /// <summary> Initializes a new instance of SiteRecoveryCreateReplicationNetworkMappingProperties. </summary>
-        /// <param name="recoveryNetworkId">
-        /// Recovery network Id.
-        /// Serialized Name: CreateNetworkMappingInputProperties.recoveryNetworkId
-        /// </param>
+        /// <param name="recoveryNetworkId"> Recovery network Id. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="recoveryNetworkId"/> is null. </exception>
         public SiteRecoveryCreateReplicationNetworkMappingProperties(ResourceIdentifier recoveryNetworkId)
         {
@@ -29,22 +23,15 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             RecoveryNetworkId = recoveryNetworkId;
         }
 
-        /// <summary>
-        /// Recovery fabric Name.
-        /// Serialized Name: CreateNetworkMappingInputProperties.recoveryFabricName
-        /// </summary>
+        /// <summary> Recovery fabric Name. </summary>
         public string RecoveryFabricName { get; set; }
-        /// <summary>
-        /// Recovery network Id.
-        /// Serialized Name: CreateNetworkMappingInputProperties.recoveryNetworkId
-        /// </summary>
+        /// <summary> Recovery network Id. </summary>
         public ResourceIdentifier RecoveryNetworkId { get; }
         /// <summary>
         /// Fabric specific input properties.
-        /// Serialized Name: CreateNetworkMappingInputProperties.fabricSpecificDetails
-        /// Please note <see cref="SiteRecoveryFabricSpecificCreateNetworkMappingContent"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="FabricSpecificCreateNetworkMappingContent"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="A2ACreateNetworkMappingContent"/>, <see cref="VmmToAzureCreateNetworkMappingContent"/> and <see cref="VmmToVmmCreateNetworkMappingContent"/>.
         /// </summary>
-        public SiteRecoveryFabricSpecificCreateNetworkMappingContent FabricSpecificDetails { get; set; }
+        public FabricSpecificCreateNetworkMappingContent FabricSpecificDetails { get; set; }
     }
 }

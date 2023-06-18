@@ -9,10 +9,7 @@ using System;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary>
-    /// Migration item recovery point properties.
-    /// Serialized Name: MigrationRecoveryPointProperties
-    /// </summary>
+    /// <summary> Migration item recovery point properties. </summary>
     public partial class MigrationRecoveryPointProperties
     {
         /// <summary> Initializes a new instance of MigrationRecoveryPointProperties. </summary>
@@ -21,29 +18,17 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Initializes a new instance of MigrationRecoveryPointProperties. </summary>
-        /// <param name="recoveryPointOn">
-        /// The recovery point time.
-        /// Serialized Name: MigrationRecoveryPointProperties.recoveryPointTime
-        /// </param>
-        /// <param name="recoveryPointType">
-        /// The recovery point type.
-        /// Serialized Name: MigrationRecoveryPointProperties.recoveryPointType
-        /// </param>
+        /// <param name="recoveryPointOn"> The recovery point time. </param>
+        /// <param name="recoveryPointType"> The recovery point type. </param>
         internal MigrationRecoveryPointProperties(DateTimeOffset? recoveryPointOn, MigrationRecoveryPointType? recoveryPointType)
         {
             RecoveryPointOn = recoveryPointOn;
             RecoveryPointType = recoveryPointType;
         }
 
-        /// <summary>
-        /// The recovery point time.
-        /// Serialized Name: MigrationRecoveryPointProperties.recoveryPointTime
-        /// </summary>
+        /// <summary> The recovery point time. </summary>
         public DateTimeOffset? RecoveryPointOn { get; }
-        /// <summary>
-        /// The recovery point type.
-        /// Serialized Name: MigrationRecoveryPointProperties.recoveryPointType
-        /// </summary>
+        /// <summary> The recovery point type. </summary>
         public MigrationRecoveryPointType? RecoveryPointType { get; }
     }
 }

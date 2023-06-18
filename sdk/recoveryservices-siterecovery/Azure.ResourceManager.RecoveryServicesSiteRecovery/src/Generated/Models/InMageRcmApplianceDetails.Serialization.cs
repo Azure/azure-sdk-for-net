@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Optional<string> id = default;
             Optional<string> name = default;
             Optional<ResourceIdentifier> fabricArmId = default;
-            Optional<ProcessServerDetails> processServer = default;
+            Optional<SiteRecoveryProcessServerDetails> processServer = default;
             Optional<RcmProxyDetails> rcmProxy = default;
             Optional<PushInstallerDetails> pushInstaller = default;
             Optional<ReplicationAgentDetails> replicationAgent = default;
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    processServer = ProcessServerDetails.DeserializeProcessServerDetails(property.Value);
+                    processServer = SiteRecoveryProcessServerDetails.DeserializeSiteRecoveryProcessServerDetails(property.Value);
                     continue;
                 }
                 if (property.NameEquals("rcmProxy"u8))

@@ -7,10 +7,7 @@
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary>
-    /// Switch protection input.
-    /// Serialized Name: SwitchProtectionInput
-    /// </summary>
+    /// <summary> Switch protection input. </summary>
     public partial class SwitchProtectionContent
     {
         /// <summary> Initializes a new instance of SwitchProtectionContent. </summary>
@@ -18,10 +15,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         {
         }
 
-        /// <summary>
-        /// Switch protection properties.
-        /// Serialized Name: SwitchProtectionInput.properties
-        /// </summary>
-        public SwitchProtectionContentProperties Properties { get; set; }
+        /// <summary> Switch protection properties. </summary>
+        public SwitchProtectionProperties Properties { get; set; }
     }
 }

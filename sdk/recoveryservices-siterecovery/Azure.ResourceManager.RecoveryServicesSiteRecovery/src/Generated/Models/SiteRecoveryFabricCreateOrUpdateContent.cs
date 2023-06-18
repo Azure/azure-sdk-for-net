@@ -7,10 +7,7 @@
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary>
-    /// Site details provided during the time of site creation.
-    /// Serialized Name: FabricCreationInput
-    /// </summary>
+    /// <summary> Site details provided during the time of site creation. </summary>
     public partial class SiteRecoveryFabricCreateOrUpdateContent
     {
         /// <summary> Initializes a new instance of SiteRecoveryFabricCreateOrUpdateContent. </summary>
@@ -18,24 +15,20 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         {
         }
 
-        /// <summary>
-        /// Fabric creation input.
-        /// Serialized Name: FabricCreationInput.properties
-        /// </summary>
-        internal SiteRecoveryFabricCreationProperties Properties { get; set; }
+        /// <summary> Fabric creation input. </summary>
+        internal FabricCreationProperties Properties { get; set; }
         /// <summary>
         /// Fabric provider specific creation input.
-        /// Serialized Name: FabricCreationInputProperties.customDetails
-        /// Please note <see cref="SiteRecoveryFabricSpecificCreationContent"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="FabricSpecificCreationContent"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="SiteRecoveryFabricProviderCreationContent"/>, <see cref="InMageRcmFabricCreationContent"/> and <see cref="VMwareV2FabricCreationContent"/>.
         /// </summary>
-        public SiteRecoveryFabricSpecificCreationContent SiteRecoveryFabricCreationCustomDetails
+        public FabricSpecificCreationContent FabricCreationCustomDetails
         {
             get => Properties is null ? default : Properties.CustomDetails;
             set
             {
                 if (Properties is null)
-                    Properties = new SiteRecoveryFabricCreationProperties();
+                    Properties = new FabricCreationProperties();
                 Properties.CustomDetails = value;
             }
         }

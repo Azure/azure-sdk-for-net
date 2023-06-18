@@ -9,10 +9,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary>
-    /// Disk Encryption Key Information (BitLocker Encryption Key (BEK) on Windows).
-    /// Serialized Name: DiskEncryptionKeyInfo
-    /// </summary>
+    /// <summary> Disk Encryption Key Information (BitLocker Encryption Key (BEK) on Windows). </summary>
     public partial class SiteRecoveryDiskEncryptionKeyInfo
     {
         /// <summary> Initializes a new instance of SiteRecoveryDiskEncryptionKeyInfo. </summary>
@@ -21,29 +18,17 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Initializes a new instance of SiteRecoveryDiskEncryptionKeyInfo. </summary>
-        /// <param name="secretIdentifier">
-        /// The secret url / identifier.
-        /// Serialized Name: DiskEncryptionKeyInfo.secretIdentifier
-        /// </param>
-        /// <param name="keyVaultResourceArmId">
-        /// The KeyVault resource ARM id for secret.
-        /// Serialized Name: DiskEncryptionKeyInfo.keyVaultResourceArmId
-        /// </param>
+        /// <param name="secretIdentifier"> The secret url / identifier. </param>
+        /// <param name="keyVaultResourceArmId"> The KeyVault resource ARM id for secret. </param>
         internal SiteRecoveryDiskEncryptionKeyInfo(string secretIdentifier, ResourceIdentifier keyVaultResourceArmId)
         {
             SecretIdentifier = secretIdentifier;
             KeyVaultResourceArmId = keyVaultResourceArmId;
         }
 
-        /// <summary>
-        /// The secret url / identifier.
-        /// Serialized Name: DiskEncryptionKeyInfo.secretIdentifier
-        /// </summary>
+        /// <summary> The secret url / identifier. </summary>
         public string SecretIdentifier { get; set; }
-        /// <summary>
-        /// The KeyVault resource ARM id for secret.
-        /// Serialized Name: DiskEncryptionKeyInfo.keyVaultResourceArmId
-        /// </summary>
+        /// <summary> The KeyVault resource ARM id for secret. </summary>
         public ResourceIdentifier KeyVaultResourceArmId { get; set; }
     }
 }

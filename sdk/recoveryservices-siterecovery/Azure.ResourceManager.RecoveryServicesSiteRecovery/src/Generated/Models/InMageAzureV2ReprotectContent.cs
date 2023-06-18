@@ -10,10 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary>
-    /// InMageAzureV2 specific provider input.
-    /// Serialized Name: InMageAzureV2ReprotectInput
-    /// </summary>
+    /// <summary> InMageAzureV2 specific provider input. </summary>
     public partial class InMageAzureV2ReprotectContent : ReverseReplicationProviderSpecificContent
     {
         /// <summary> Initializes a new instance of InMageAzureV2ReprotectContent. </summary>
@@ -23,40 +20,19 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             InstanceType = "InMageAzureV2";
         }
 
-        /// <summary>
-        /// The Master target Id.
-        /// Serialized Name: InMageAzureV2ReprotectInput.masterTargetId
-        /// </summary>
+        /// <summary> The Master target Id. </summary>
         public string MasterTargetId { get; set; }
-        /// <summary>
-        /// The Process Server Id.
-        /// Serialized Name: InMageAzureV2ReprotectInput.processServerId
-        /// </summary>
+        /// <summary> The Process Server Id. </summary>
         public string ProcessServerId { get; set; }
-        /// <summary>
-        /// The storage account id.
-        /// Serialized Name: InMageAzureV2ReprotectInput.storageAccountId
-        /// </summary>
+        /// <summary> The storage account id. </summary>
         public ResourceIdentifier StorageAccountId { get; set; }
-        /// <summary>
-        /// The CS account Id.
-        /// Serialized Name: InMageAzureV2ReprotectInput.runAsAccountId
-        /// </summary>
+        /// <summary> The CS account Id. </summary>
         public string RunAsAccountId { get; set; }
-        /// <summary>
-        /// The Policy Id.
-        /// Serialized Name: InMageAzureV2ReprotectInput.policyId
-        /// </summary>
+        /// <summary> The Policy Id. </summary>
         public ResourceIdentifier PolicyId { get; set; }
-        /// <summary>
-        /// The storage account to be used for logging during replication.
-        /// Serialized Name: InMageAzureV2ReprotectInput.logStorageAccountId
-        /// </summary>
+        /// <summary> The storage account to be used for logging during replication. </summary>
         public ResourceIdentifier LogStorageAccountId { get; set; }
-        /// <summary>
-        /// The disks to include list.
-        /// Serialized Name: InMageAzureV2ReprotectInput.disksToInclude
-        /// </summary>
+        /// <summary> The disks to include list. </summary>
         public IList<string> DisksToInclude { get; }
     }
 }

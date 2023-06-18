@@ -14,7 +14,6 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
     /// <summary>
     /// A class representing the SiteRecoveryJob data model.
     /// Job details.
-    /// Serialized Name: Job
     /// </summary>
     public partial class SiteRecoveryJobData : ResourceData
     {
@@ -28,29 +27,17 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="properties">
-        /// The custom data.
-        /// Serialized Name: Job.properties
-        /// </param>
-        /// <param name="location">
-        /// Resource Location
-        /// Serialized Name: Resource.location
-        /// </param>
+        /// <param name="properties"> The custom data. </param>
+        /// <param name="location"> Resource Location. </param>
         internal SiteRecoveryJobData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SiteRecoveryJobProperties properties, AzureLocation? location) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
             Location = location;
         }
 
-        /// <summary>
-        /// The custom data.
-        /// Serialized Name: Job.properties
-        /// </summary>
+        /// <summary> The custom data. </summary>
         public SiteRecoveryJobProperties Properties { get; }
-        /// <summary>
-        /// Resource Location
-        /// Serialized Name: Resource.location
-        /// </summary>
+        /// <summary> Resource Location. </summary>
         public AzureLocation? Location { get; }
     }
 }

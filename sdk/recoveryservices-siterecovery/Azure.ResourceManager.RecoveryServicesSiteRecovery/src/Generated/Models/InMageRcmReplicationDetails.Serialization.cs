@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Optional<long> resyncTransferredBytes = default;
             Optional<VmReplicationProgressHealth> resyncProgressHealth = default;
             Optional<string> resyncRequired = default;
-            Optional<ResyncState> resyncState = default;
+            Optional<SiteRecoveryResyncState> resyncState = default;
             Optional<MobilityAgentUpgradeState> agentUpgradeState = default;
             Optional<string> lastAgentUpgradeType = default;
             Optional<string> agentUpgradeJobId = default;
@@ -369,7 +369,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    resyncState = new ResyncState(property.Value.GetString());
+                    resyncState = new SiteRecoveryResyncState(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("agentUpgradeState"u8))

@@ -14,7 +14,6 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
     /// <summary>
     /// A class representing the SiteRecoveryProtectionContainer data model.
     /// Protection container details.
-    /// Serialized Name: ProtectionContainer
     /// </summary>
     public partial class SiteRecoveryProtectionContainerData : ResourceData
     {
@@ -28,29 +27,17 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="properties">
-        /// The custom data.
-        /// Serialized Name: ProtectionContainer.properties
-        /// </param>
-        /// <param name="location">
-        /// Resource Location
-        /// Serialized Name: Resource.location
-        /// </param>
-        internal SiteRecoveryProtectionContainerData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ProtectionContainerProperties properties, AzureLocation? location) : base(id, name, resourceType, systemData)
+        /// <param name="properties"> The custom data. </param>
+        /// <param name="location"> Resource Location. </param>
+        internal SiteRecoveryProtectionContainerData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SiteRecoveryProtectionContainerProperties properties, AzureLocation? location) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
             Location = location;
         }
 
-        /// <summary>
-        /// The custom data.
-        /// Serialized Name: ProtectionContainer.properties
-        /// </summary>
-        public ProtectionContainerProperties Properties { get; }
-        /// <summary>
-        /// Resource Location
-        /// Serialized Name: Resource.location
-        /// </summary>
+        /// <summary> The custom data. </summary>
+        public SiteRecoveryProtectionContainerProperties Properties { get; }
+        /// <summary> Resource Location. </summary>
         public AzureLocation? Location { get; }
     }
 }

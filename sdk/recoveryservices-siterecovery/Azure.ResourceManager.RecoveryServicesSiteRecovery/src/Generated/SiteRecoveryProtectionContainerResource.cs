@@ -246,11 +246,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
             return GetReplicationProtectedItems().Get(replicatedProtectedItemName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of SiteRecoveryProtectionContainerMappingResources in the SiteRecoveryProtectionContainer. </summary>
-        /// <returns> An object representing collection of SiteRecoveryProtectionContainerMappingResources and their operations over a SiteRecoveryProtectionContainerMappingResource. </returns>
-        public virtual SiteRecoveryProtectionContainerMappingCollection GetSiteRecoveryProtectionContainerMappings()
+        /// <summary> Gets a collection of ProtectionContainerMappingResources in the SiteRecoveryProtectionContainer. </summary>
+        /// <returns> An object representing collection of ProtectionContainerMappingResources and their operations over a ProtectionContainerMappingResource. </returns>
+        public virtual ProtectionContainerMappingCollection GetProtectionContainerMappings()
         {
-            return GetCachedClient(Client => new SiteRecoveryProtectionContainerMappingCollection(Client, Id));
+            return GetCachedClient(Client => new ProtectionContainerMappingCollection(Client, Id));
         }
 
         /// <summary>
@@ -271,9 +271,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <exception cref="ArgumentException"> <paramref name="mappingName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="mappingName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<SiteRecoveryProtectionContainerMappingResource>> GetSiteRecoveryProtectionContainerMappingAsync(string mappingName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ProtectionContainerMappingResource>> GetProtectionContainerMappingAsync(string mappingName, CancellationToken cancellationToken = default)
         {
-            return await GetSiteRecoveryProtectionContainerMappings().GetAsync(mappingName, cancellationToken).ConfigureAwait(false);
+            return await GetProtectionContainerMappings().GetAsync(mappingName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -294,9 +294,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <exception cref="ArgumentException"> <paramref name="mappingName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="mappingName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<SiteRecoveryProtectionContainerMappingResource> GetSiteRecoveryProtectionContainerMapping(string mappingName, CancellationToken cancellationToken = default)
+        public virtual Response<ProtectionContainerMappingResource> GetProtectionContainerMapping(string mappingName, CancellationToken cancellationToken = default)
         {
-            return GetSiteRecoveryProtectionContainerMappings().Get(mappingName, cancellationToken);
+            return GetProtectionContainerMappings().Get(mappingName, cancellationToken);
         }
 
         /// <summary>

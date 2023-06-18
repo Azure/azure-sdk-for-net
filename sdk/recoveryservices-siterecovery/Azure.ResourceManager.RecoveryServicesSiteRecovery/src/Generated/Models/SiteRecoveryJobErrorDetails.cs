@@ -9,10 +9,7 @@ using System;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary>
-    /// This class contains the error details per object.
-    /// Serialized Name: JobErrorDetails
-    /// </summary>
+    /// <summary> This class contains the error details per object. </summary>
     public partial class SiteRecoveryJobErrorDetails
     {
         /// <summary> Initializes a new instance of SiteRecoveryJobErrorDetails. </summary>
@@ -21,27 +18,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Initializes a new instance of SiteRecoveryJobErrorDetails. </summary>
-        /// <param name="serviceErrorDetails">
-        /// The Service error details.
-        /// Serialized Name: JobErrorDetails.serviceErrorDetails
-        /// </param>
-        /// <param name="providerErrorDetails">
-        /// The Provider error details.
-        /// Serialized Name: JobErrorDetails.providerErrorDetails
-        /// </param>
-        /// <param name="errorLevel">
-        /// Error level of error.
-        /// Serialized Name: JobErrorDetails.errorLevel
-        /// </param>
-        /// <param name="createdOn">
-        /// The creation time of job error.
-        /// Serialized Name: JobErrorDetails.creationTime
-        /// </param>
-        /// <param name="taskId">
-        /// The Id of the task.
-        /// Serialized Name: JobErrorDetails.taskId
-        /// </param>
-        internal SiteRecoveryJobErrorDetails(ServiceError serviceErrorDetails, ProviderError providerErrorDetails, string errorLevel, DateTimeOffset? createdOn, string taskId)
+        /// <param name="serviceErrorDetails"> The Service error details. </param>
+        /// <param name="providerErrorDetails"> The Provider error details. </param>
+        /// <param name="errorLevel"> Error level of error. </param>
+        /// <param name="createdOn"> The creation time of job error. </param>
+        /// <param name="taskId"> The Id of the task. </param>
+        internal SiteRecoveryJobErrorDetails(SiteRecoveryServiceError serviceErrorDetails, SiteRecoveryJobProviderError providerErrorDetails, string errorLevel, DateTimeOffset? createdOn, string taskId)
         {
             ServiceErrorDetails = serviceErrorDetails;
             ProviderErrorDetails = providerErrorDetails;
@@ -50,30 +32,15 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             TaskId = taskId;
         }
 
-        /// <summary>
-        /// The Service error details.
-        /// Serialized Name: JobErrorDetails.serviceErrorDetails
-        /// </summary>
-        public ServiceError ServiceErrorDetails { get; }
-        /// <summary>
-        /// The Provider error details.
-        /// Serialized Name: JobErrorDetails.providerErrorDetails
-        /// </summary>
-        public ProviderError ProviderErrorDetails { get; }
-        /// <summary>
-        /// Error level of error.
-        /// Serialized Name: JobErrorDetails.errorLevel
-        /// </summary>
+        /// <summary> The Service error details. </summary>
+        public SiteRecoveryServiceError ServiceErrorDetails { get; }
+        /// <summary> The Provider error details. </summary>
+        public SiteRecoveryJobProviderError ProviderErrorDetails { get; }
+        /// <summary> Error level of error. </summary>
         public string ErrorLevel { get; }
-        /// <summary>
-        /// The creation time of job error.
-        /// Serialized Name: JobErrorDetails.creationTime
-        /// </summary>
+        /// <summary> The creation time of job error. </summary>
         public DateTimeOffset? CreatedOn { get; }
-        /// <summary>
-        /// The Id of the task.
-        /// Serialized Name: JobErrorDetails.taskId
-        /// </summary>
+        /// <summary> The Id of the task. </summary>
         public string TaskId { get; }
     }
 }

@@ -19,8 +19,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<ServiceError> serviceErrorDetails = default;
-            Optional<ProviderError> providerErrorDetails = default;
+            Optional<SiteRecoveryServiceError> serviceErrorDetails = default;
+            Optional<SiteRecoveryJobProviderError> providerErrorDetails = default;
             Optional<string> errorLevel = default;
             Optional<DateTimeOffset> creationTime = default;
             Optional<string> taskId = default;
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    serviceErrorDetails = ServiceError.DeserializeServiceError(property.Value);
+                    serviceErrorDetails = SiteRecoveryServiceError.DeserializeSiteRecoveryServiceError(property.Value);
                     continue;
                 }
                 if (property.NameEquals("providerErrorDetails"u8))
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    providerErrorDetails = ProviderError.DeserializeProviderError(property.Value);
+                    providerErrorDetails = SiteRecoveryJobProviderError.DeserializeSiteRecoveryJobProviderError(property.Value);
                     continue;
                 }
                 if (property.NameEquals("errorLevel"u8))

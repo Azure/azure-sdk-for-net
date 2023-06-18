@@ -10,11 +10,8 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary>
-    /// HyperVSite fabric specific details.
-    /// Serialized Name: HyperVSiteDetails
-    /// </summary>
-    public partial class HyperVSiteDetails : SiteRecoveryFabricSpecificDetails
+    /// <summary> HyperVSite fabric specific details. </summary>
+    public partial class HyperVSiteDetails : FabricSpecificDetails
     {
         /// <summary> Initializes a new instance of HyperVSiteDetails. </summary>
         internal HyperVSiteDetails()
@@ -24,24 +21,15 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Initializes a new instance of HyperVSiteDetails. </summary>
-        /// <param name="instanceType">
-        /// Gets the class type. Overridden in derived classes.
-        /// Serialized Name: FabricSpecificDetails.instanceType
-        /// </param>
-        /// <param name="hyperVHosts">
-        /// The list of Hyper-V hosts associated with the fabric.
-        /// Serialized Name: HyperVSiteDetails.hyperVHosts
-        /// </param>
+        /// <param name="instanceType"> Gets the class type. Overridden in derived classes. </param>
+        /// <param name="hyperVHosts"> The list of Hyper-V hosts associated with the fabric. </param>
         internal HyperVSiteDetails(string instanceType, IReadOnlyList<HyperVHostDetails> hyperVHosts) : base(instanceType)
         {
             HyperVHosts = hyperVHosts;
             InstanceType = instanceType ?? "HyperVSite";
         }
 
-        /// <summary>
-        /// The list of Hyper-V hosts associated with the fabric.
-        /// Serialized Name: HyperVSiteDetails.hyperVHosts
-        /// </summary>
+        /// <summary> The list of Hyper-V hosts associated with the fabric. </summary>
         public IReadOnlyList<HyperVHostDetails> HyperVHosts { get; }
     }
 }

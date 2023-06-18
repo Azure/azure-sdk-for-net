@@ -7,10 +7,7 @@
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary>
-    /// InMage disable protection provider specific input.
-    /// Serialized Name: InMageDisableProtectionProviderSpecificInput
-    /// </summary>
+    /// <summary> InMage disable protection provider specific input. </summary>
     public partial class InMageDisableProtectionProviderSpecificContent : DisableProtectionProviderSpecificContent
     {
         /// <summary> Initializes a new instance of InMageDisableProtectionProviderSpecificContent. </summary>
@@ -19,10 +16,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             InstanceType = "InMage";
         }
 
-        /// <summary>
-        /// A value indicating whether the replica VM should be destroyed or retained. Values from Delete and Retain.
-        /// Serialized Name: InMageDisableProtectionProviderSpecificInput.replicaVmDeletionStatus
-        /// </summary>
+        /// <summary> A value indicating whether the replica VM should be destroyed or retained. Values from Delete and Retain. </summary>
         public string ReplicaVmDeletionStatus { get; set; }
     }
 }

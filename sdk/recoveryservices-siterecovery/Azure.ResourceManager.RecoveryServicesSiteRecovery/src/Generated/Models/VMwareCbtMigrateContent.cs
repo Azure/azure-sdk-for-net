@@ -10,17 +10,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary>
-    /// VMwareCbt specific migrate input.
-    /// Serialized Name: VMwareCbtMigrateInput
-    /// </summary>
+    /// <summary> VMwareCbt specific migrate input. </summary>
     public partial class VMwareCbtMigrateContent : MigrateProviderSpecificContent
     {
         /// <summary> Initializes a new instance of VMwareCbtMigrateContent. </summary>
-        /// <param name="performShutdown">
-        /// A value indicating whether VM is to be shutdown.
-        /// Serialized Name: VMwareCbtMigrateInput.performShutdown
-        /// </param>
+        /// <param name="performShutdown"> A value indicating whether VM is to be shutdown. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="performShutdown"/> is null. </exception>
         public VMwareCbtMigrateContent(string performShutdown)
         {
@@ -30,15 +24,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             InstanceType = "VMwareCbt";
         }
 
-        /// <summary>
-        /// A value indicating whether VM is to be shutdown.
-        /// Serialized Name: VMwareCbtMigrateInput.performShutdown
-        /// </summary>
+        /// <summary> A value indicating whether VM is to be shutdown. </summary>
         public string PerformShutdown { get; }
-        /// <summary>
-        /// A value indicating the inplace OS Upgrade version.
-        /// Serialized Name: VMwareCbtMigrateInput.osUpgradeVersion
-        /// </summary>
+        /// <summary> A value indicating the inplace OS Upgrade version. </summary>
         public string OSUpgradeVersion { get; set; }
     }
 }

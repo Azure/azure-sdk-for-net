@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary>
-    /// A value indicating whether security update required.
-    /// Serialized Name: AgentVersionStatus
-    /// </summary>
+    /// <summary> A value indicating whether security update required. </summary>
     public readonly partial struct SiteRecoveryAgentVersionStatus : IEquatable<SiteRecoveryAgentVersionStatus>
     {
         private readonly string _value;
@@ -31,30 +28,15 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         private const string UpdateRequiredValue = "UpdateRequired";
         private const string SecurityUpdateRequiredValue = "SecurityUpdateRequired";
 
-        /// <summary>
-        /// Supported
-        /// Serialized Name: AgentVersionStatus.Supported
-        /// </summary>
+        /// <summary> Supported. </summary>
         public static SiteRecoveryAgentVersionStatus Supported { get; } = new SiteRecoveryAgentVersionStatus(SupportedValue);
-        /// <summary>
-        /// NotSupported
-        /// Serialized Name: AgentVersionStatus.NotSupported
-        /// </summary>
+        /// <summary> NotSupported. </summary>
         public static SiteRecoveryAgentVersionStatus NotSupported { get; } = new SiteRecoveryAgentVersionStatus(NotSupportedValue);
-        /// <summary>
-        /// Deprecated
-        /// Serialized Name: AgentVersionStatus.Deprecated
-        /// </summary>
+        /// <summary> Deprecated. </summary>
         public static SiteRecoveryAgentVersionStatus Deprecated { get; } = new SiteRecoveryAgentVersionStatus(DeprecatedValue);
-        /// <summary>
-        /// UpdateRequired
-        /// Serialized Name: AgentVersionStatus.UpdateRequired
-        /// </summary>
+        /// <summary> UpdateRequired. </summary>
         public static SiteRecoveryAgentVersionStatus UpdateRequired { get; } = new SiteRecoveryAgentVersionStatus(UpdateRequiredValue);
-        /// <summary>
-        /// SecurityUpdateRequired
-        /// Serialized Name: AgentVersionStatus.SecurityUpdateRequired
-        /// </summary>
+        /// <summary> SecurityUpdateRequired. </summary>
         public static SiteRecoveryAgentVersionStatus SecurityUpdateRequired { get; } = new SiteRecoveryAgentVersionStatus(SecurityUpdateRequiredValue);
         /// <summary> Determines if two <see cref="SiteRecoveryAgentVersionStatus"/> values are the same. </summary>
         public static bool operator ==(SiteRecoveryAgentVersionStatus left, SiteRecoveryAgentVersionStatus right) => left.Equals(right);

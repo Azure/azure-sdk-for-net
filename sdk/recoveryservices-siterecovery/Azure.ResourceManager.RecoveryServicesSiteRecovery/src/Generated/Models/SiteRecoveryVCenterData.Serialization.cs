@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
             {
                 return null;
             }
-            Optional<VCenterProperties> properties = default;
+            Optional<SiteRecoveryVCenterProperties> properties = default;
             Optional<AzureLocation> location = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
                     {
                         continue;
                     }
-                    properties = VCenterProperties.DeserializeVCenterProperties(property.Value);
+                    properties = SiteRecoveryVCenterProperties.DeserializeSiteRecoveryVCenterProperties(property.Value);
                     continue;
                 }
                 if (property.NameEquals("location"u8))

@@ -7,10 +7,7 @@
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary>
-    /// Hyper-V host details.
-    /// Serialized Name: HyperVHostDetails
-    /// </summary>
+    /// <summary> Hyper-V host details. </summary>
     public partial class HyperVHostDetails
     {
         /// <summary> Initializes a new instance of HyperVHostDetails. </summary>
@@ -19,18 +16,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Initializes a new instance of HyperVHostDetails. </summary>
-        /// <param name="id">
-        /// The Hyper-V host Id.
-        /// Serialized Name: HyperVHostDetails.id
-        /// </param>
-        /// <param name="name">
-        /// The Hyper-V host name.
-        /// Serialized Name: HyperVHostDetails.name
-        /// </param>
-        /// <param name="marsAgentVersion">
-        /// The Mars agent version.
-        /// Serialized Name: HyperVHostDetails.marsAgentVersion
-        /// </param>
+        /// <param name="id"> The Hyper-V host Id. </param>
+        /// <param name="name"> The Hyper-V host name. </param>
+        /// <param name="marsAgentVersion"> The Mars agent version. </param>
         internal HyperVHostDetails(string id, string name, string marsAgentVersion)
         {
             Id = id;
@@ -38,20 +26,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             MarsAgentVersion = marsAgentVersion;
         }
 
-        /// <summary>
-        /// The Hyper-V host Id.
-        /// Serialized Name: HyperVHostDetails.id
-        /// </summary>
+        /// <summary> The Hyper-V host Id. </summary>
         public string Id { get; }
-        /// <summary>
-        /// The Hyper-V host name.
-        /// Serialized Name: HyperVHostDetails.name
-        /// </summary>
+        /// <summary> The Hyper-V host name. </summary>
         public string Name { get; }
-        /// <summary>
-        /// The Mars agent version.
-        /// Serialized Name: HyperVHostDetails.marsAgentVersion
-        /// </summary>
+        /// <summary> The Mars agent version. </summary>
         public string MarsAgentVersion { get; }
     }
 }

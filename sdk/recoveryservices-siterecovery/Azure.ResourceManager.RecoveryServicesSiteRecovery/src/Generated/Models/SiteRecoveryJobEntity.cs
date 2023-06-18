@@ -9,10 +9,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary>
-    /// This class contains the minimal job details required to navigate to the desired drill down.
-    /// Serialized Name: JobEntity
-    /// </summary>
+    /// <summary> This class contains the minimal job details required to navigate to the desired drill down. </summary>
     public partial class SiteRecoveryJobEntity
     {
         /// <summary> Initializes a new instance of SiteRecoveryJobEntity. </summary>
@@ -21,30 +18,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Initializes a new instance of SiteRecoveryJobEntity. </summary>
-        /// <param name="jobId">
-        /// The job id.
-        /// Serialized Name: JobEntity.jobId
-        /// </param>
-        /// <param name="jobFriendlyName">
-        /// The job display name.
-        /// Serialized Name: JobEntity.jobFriendlyName
-        /// </param>
-        /// <param name="targetObjectId">
-        /// The object id.
-        /// Serialized Name: JobEntity.targetObjectId
-        /// </param>
-        /// <param name="targetObjectName">
-        /// The object name.
-        /// Serialized Name: JobEntity.targetObjectName
-        /// </param>
-        /// <param name="targetInstanceType">
-        /// The workflow affected object type.
-        /// Serialized Name: JobEntity.targetInstanceType
-        /// </param>
-        /// <param name="jobScenarioName">
-        /// The job name. Enum type ScenarioName.
-        /// Serialized Name: JobEntity.jobScenarioName
-        /// </param>
+        /// <param name="jobId"> The job id. </param>
+        /// <param name="jobFriendlyName"> The job display name. </param>
+        /// <param name="targetObjectId"> The object id. </param>
+        /// <param name="targetObjectName"> The object name. </param>
+        /// <param name="targetInstanceType"> The workflow affected object type. </param>
+        /// <param name="jobScenarioName"> The job name. Enum type ScenarioName. </param>
         internal SiteRecoveryJobEntity(ResourceIdentifier jobId, string jobFriendlyName, string targetObjectId, string targetObjectName, string targetInstanceType, string jobScenarioName)
         {
             JobId = jobId;
@@ -55,35 +34,17 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             JobScenarioName = jobScenarioName;
         }
 
-        /// <summary>
-        /// The job id.
-        /// Serialized Name: JobEntity.jobId
-        /// </summary>
+        /// <summary> The job id. </summary>
         public ResourceIdentifier JobId { get; }
-        /// <summary>
-        /// The job display name.
-        /// Serialized Name: JobEntity.jobFriendlyName
-        /// </summary>
+        /// <summary> The job display name. </summary>
         public string JobFriendlyName { get; }
-        /// <summary>
-        /// The object id.
-        /// Serialized Name: JobEntity.targetObjectId
-        /// </summary>
+        /// <summary> The object id. </summary>
         public string TargetObjectId { get; }
-        /// <summary>
-        /// The object name.
-        /// Serialized Name: JobEntity.targetObjectName
-        /// </summary>
+        /// <summary> The object name. </summary>
         public string TargetObjectName { get; }
-        /// <summary>
-        /// The workflow affected object type.
-        /// Serialized Name: JobEntity.targetInstanceType
-        /// </summary>
+        /// <summary> The workflow affected object type. </summary>
         public string TargetInstanceType { get; }
-        /// <summary>
-        /// The job name. Enum type ScenarioName.
-        /// Serialized Name: JobEntity.jobScenarioName
-        /// </summary>
+        /// <summary> The job name. Enum type ScenarioName. </summary>
         public string JobScenarioName { get; }
     }
 }

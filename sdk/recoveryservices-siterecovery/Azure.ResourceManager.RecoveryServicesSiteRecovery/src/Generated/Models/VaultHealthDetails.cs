@@ -10,10 +10,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary>
-    /// Vault health details definition.
-    /// Serialized Name: VaultHealthDetails
-    /// </summary>
+    /// <summary> Vault health details definition. </summary>
     public partial class VaultHealthDetails : ResourceData
     {
         /// <summary> Initializes a new instance of VaultHealthDetails. </summary>
@@ -26,29 +23,17 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="properties">
-        /// The vault health related data.
-        /// Serialized Name: VaultHealthDetails.properties
-        /// </param>
-        /// <param name="location">
-        /// Resource Location
-        /// Serialized Name: Resource.location
-        /// </param>
+        /// <param name="properties"> The vault health related data. </param>
+        /// <param name="location"> Resource Location. </param>
         internal VaultHealthDetails(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, VaultHealthProperties properties, AzureLocation? location) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
             Location = location;
         }
 
-        /// <summary>
-        /// The vault health related data.
-        /// Serialized Name: VaultHealthDetails.properties
-        /// </summary>
+        /// <summary> The vault health related data. </summary>
         public VaultHealthProperties Properties { get; }
-        /// <summary>
-        /// Resource Location
-        /// Serialized Name: Resource.location
-        /// </summary>
+        /// <summary> Resource Location. </summary>
         public AzureLocation? Location { get; }
     }
 }

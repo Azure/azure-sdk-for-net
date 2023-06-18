@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Samples
             string alertSettingName = "defaultAlertSetting";
             SiteRecoveryAlertCreateOrUpdateContent content = new SiteRecoveryAlertCreateOrUpdateContent()
             {
-                Properties = new ConfigureAlertRequestProperties()
+                Properties = new SiteRecoveryConfigureAlertProperties()
                 {
                     SendToOwners = "false",
                     CustomEmailAddresses =

@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Optional<string> state = default;
             Optional<string> stateDescription = default;
             Optional<string> taskType = default;
-            Optional<TaskTypeDetails> customDetails = default;
+            Optional<SiteRecoveryTaskTypeDetails> customDetails = default;
             Optional<SiteRecoveryGroupTaskDetails> groupTaskCustomDetails = default;
             Optional<IReadOnlyList<SiteRecoveryJobErrorDetails>> errors = default;
             foreach (var property in element.EnumerateObject())
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    customDetails = TaskTypeDetails.DeserializeTaskTypeDetails(property.Value);
+                    customDetails = SiteRecoveryTaskTypeDetails.DeserializeSiteRecoveryTaskTypeDetails(property.Value);
                     continue;
                 }
                 if (property.NameEquals("groupTaskCustomDetails"u8))

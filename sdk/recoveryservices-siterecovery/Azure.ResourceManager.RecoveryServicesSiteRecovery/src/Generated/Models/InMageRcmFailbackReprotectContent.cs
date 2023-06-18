@@ -10,21 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary>
-    /// InMageRcmFailback specific provider input.
-    /// Serialized Name: InMageRcmFailbackReprotectInput
-    /// </summary>
+    /// <summary> InMageRcmFailback specific provider input. </summary>
     public partial class InMageRcmFailbackReprotectContent : ReverseReplicationProviderSpecificContent
     {
         /// <summary> Initializes a new instance of InMageRcmFailbackReprotectContent. </summary>
-        /// <param name="processServerId">
-        /// The process server Id.
-        /// Serialized Name: InMageRcmFailbackReprotectInput.processServerId
-        /// </param>
-        /// <param name="policyId">
-        /// The Policy Id.
-        /// Serialized Name: InMageRcmFailbackReprotectInput.policyId
-        /// </param>
+        /// <param name="processServerId"> The process server Id. </param>
+        /// <param name="policyId"> The Policy Id. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="processServerId"/> or <paramref name="policyId"/> is null. </exception>
         public InMageRcmFailbackReprotectContent(string processServerId, ResourceIdentifier policyId)
         {
@@ -36,20 +27,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             InstanceType = "InMageRcmFailback";
         }
 
-        /// <summary>
-        /// The process server Id.
-        /// Serialized Name: InMageRcmFailbackReprotectInput.processServerId
-        /// </summary>
+        /// <summary> The process server Id. </summary>
         public string ProcessServerId { get; }
-        /// <summary>
-        /// The run as account Id.
-        /// Serialized Name: InMageRcmFailbackReprotectInput.runAsAccountId
-        /// </summary>
+        /// <summary> The run as account Id. </summary>
         public string RunAsAccountId { get; set; }
-        /// <summary>
-        /// The Policy Id.
-        /// Serialized Name: InMageRcmFailbackReprotectInput.policyId
-        /// </summary>
+        /// <summary> The Policy Id. </summary>
         public ResourceIdentifier PolicyId { get; }
     }
 }

@@ -14,7 +14,6 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
     /// <summary>
     /// A class representing the SiteRecoveryAlert data model.
     /// Implements the Alert class.
-    /// Serialized Name: Alert
     /// </summary>
     public partial class SiteRecoveryAlertData : ResourceData
     {
@@ -28,29 +27,17 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="properties">
-        /// Alert related data.
-        /// Serialized Name: Alert.properties
-        /// </param>
-        /// <param name="location">
-        /// Resource Location
-        /// Serialized Name: Resource.location
-        /// </param>
+        /// <param name="properties"> Alert related data. </param>
+        /// <param name="location"> Resource Location. </param>
         internal SiteRecoveryAlertData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SiteRecoveryAlertProperties properties, AzureLocation? location) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
             Location = location;
         }
 
-        /// <summary>
-        /// Alert related data.
-        /// Serialized Name: Alert.properties
-        /// </summary>
+        /// <summary> Alert related data. </summary>
         public SiteRecoveryAlertProperties Properties { get; }
-        /// <summary>
-        /// Resource Location
-        /// Serialized Name: Resource.location
-        /// </summary>
+        /// <summary> Resource Location. </summary>
         public AzureLocation? Location { get; }
     }
 }

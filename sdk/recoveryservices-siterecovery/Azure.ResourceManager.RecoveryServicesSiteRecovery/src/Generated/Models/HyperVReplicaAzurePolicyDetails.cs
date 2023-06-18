@@ -9,10 +9,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary>
-    /// Hyper-V Replica Azure specific protection profile details.
-    /// Serialized Name: HyperVReplicaAzurePolicyDetails
-    /// </summary>
+    /// <summary> Hyper-V Replica Azure specific protection profile details. </summary>
     public partial class HyperVReplicaAzurePolicyDetails : PolicyProviderSpecificDetails
     {
         /// <summary> Initializes a new instance of HyperVReplicaAzurePolicyDetails. </summary>
@@ -22,34 +19,13 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Initializes a new instance of HyperVReplicaAzurePolicyDetails. </summary>
-        /// <param name="instanceType">
-        /// Gets the class type. Overridden in derived classes.
-        /// Serialized Name: PolicyProviderSpecificDetails.instanceType
-        /// </param>
-        /// <param name="recoveryPointHistoryDurationInHours">
-        /// The duration (in hours) to which point the recovery history needs to be maintained.
-        /// Serialized Name: HyperVReplicaAzurePolicyDetails.recoveryPointHistoryDurationInHours
-        /// </param>
-        /// <param name="applicationConsistentSnapshotFrequencyInHours">
-        /// The interval (in hours) at which Hyper-V Replica should create an application consistent snapshot within the VM.
-        /// Serialized Name: HyperVReplicaAzurePolicyDetails.applicationConsistentSnapshotFrequencyInHours
-        /// </param>
-        /// <param name="replicationInterval">
-        /// The replication interval.
-        /// Serialized Name: HyperVReplicaAzurePolicyDetails.replicationInterval
-        /// </param>
-        /// <param name="onlineReplicationStartTime">
-        /// The scheduled start time for the initial replication. If this parameter is Null, the initial replication starts immediately.
-        /// Serialized Name: HyperVReplicaAzurePolicyDetails.onlineReplicationStartTime
-        /// </param>
-        /// <param name="encryption">
-        /// A value indicating whether encryption is enabled for virtual machines in this cloud.
-        /// Serialized Name: HyperVReplicaAzurePolicyDetails.encryption
-        /// </param>
-        /// <param name="activeStorageAccountId">
-        /// The active storage account Id.
-        /// Serialized Name: HyperVReplicaAzurePolicyDetails.activeStorageAccountId
-        /// </param>
+        /// <param name="instanceType"> Gets the class type. Overridden in derived classes. </param>
+        /// <param name="recoveryPointHistoryDurationInHours"> The duration (in hours) to which point the recovery history needs to be maintained. </param>
+        /// <param name="applicationConsistentSnapshotFrequencyInHours"> The interval (in hours) at which Hyper-V Replica should create an application consistent snapshot within the VM. </param>
+        /// <param name="replicationInterval"> The replication interval. </param>
+        /// <param name="onlineReplicationStartTime"> The scheduled start time for the initial replication. If this parameter is Null, the initial replication starts immediately. </param>
+        /// <param name="encryption"> A value indicating whether encryption is enabled for virtual machines in this cloud. </param>
+        /// <param name="activeStorageAccountId"> The active storage account Id. </param>
         internal HyperVReplicaAzurePolicyDetails(string instanceType, int? recoveryPointHistoryDurationInHours, int? applicationConsistentSnapshotFrequencyInHours, int? replicationInterval, string onlineReplicationStartTime, string encryption, ResourceIdentifier activeStorageAccountId) : base(instanceType)
         {
             RecoveryPointHistoryDurationInHours = recoveryPointHistoryDurationInHours;
@@ -61,35 +37,17 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             InstanceType = instanceType ?? "HyperVReplicaAzure";
         }
 
-        /// <summary>
-        /// The duration (in hours) to which point the recovery history needs to be maintained.
-        /// Serialized Name: HyperVReplicaAzurePolicyDetails.recoveryPointHistoryDurationInHours
-        /// </summary>
+        /// <summary> The duration (in hours) to which point the recovery history needs to be maintained. </summary>
         public int? RecoveryPointHistoryDurationInHours { get; }
-        /// <summary>
-        /// The interval (in hours) at which Hyper-V Replica should create an application consistent snapshot within the VM.
-        /// Serialized Name: HyperVReplicaAzurePolicyDetails.applicationConsistentSnapshotFrequencyInHours
-        /// </summary>
+        /// <summary> The interval (in hours) at which Hyper-V Replica should create an application consistent snapshot within the VM. </summary>
         public int? ApplicationConsistentSnapshotFrequencyInHours { get; }
-        /// <summary>
-        /// The replication interval.
-        /// Serialized Name: HyperVReplicaAzurePolicyDetails.replicationInterval
-        /// </summary>
+        /// <summary> The replication interval. </summary>
         public int? ReplicationInterval { get; }
-        /// <summary>
-        /// The scheduled start time for the initial replication. If this parameter is Null, the initial replication starts immediately.
-        /// Serialized Name: HyperVReplicaAzurePolicyDetails.onlineReplicationStartTime
-        /// </summary>
+        /// <summary> The scheduled start time for the initial replication. If this parameter is Null, the initial replication starts immediately. </summary>
         public string OnlineReplicationStartTime { get; }
-        /// <summary>
-        /// A value indicating whether encryption is enabled for virtual machines in this cloud.
-        /// Serialized Name: HyperVReplicaAzurePolicyDetails.encryption
-        /// </summary>
+        /// <summary> A value indicating whether encryption is enabled for virtual machines in this cloud. </summary>
         public string Encryption { get; }
-        /// <summary>
-        /// The active storage account Id.
-        /// Serialized Name: HyperVReplicaAzurePolicyDetails.activeStorageAccountId
-        /// </summary>
+        /// <summary> The active storage account Id. </summary>
         public ResourceIdentifier ActiveStorageAccountId { get; }
     }
 }

@@ -14,7 +14,6 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
     /// <summary>
     /// A class representing the SiteRecoveryNetwork data model.
     /// Network model.
-    /// Serialized Name: Network
     /// </summary>
     public partial class SiteRecoveryNetworkData : ResourceData
     {
@@ -28,29 +27,17 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="properties">
-        /// The Network Properties.
-        /// Serialized Name: Network.properties
-        /// </param>
-        /// <param name="location">
-        /// Resource Location
-        /// Serialized Name: Resource.location
-        /// </param>
+        /// <param name="properties"> The Network Properties. </param>
+        /// <param name="location"> Resource Location. </param>
         internal SiteRecoveryNetworkData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SiteRecoveryNetworkProperties properties, AzureLocation? location) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
             Location = location;
         }
 
-        /// <summary>
-        /// The Network Properties.
-        /// Serialized Name: Network.properties
-        /// </summary>
+        /// <summary> The Network Properties. </summary>
         public SiteRecoveryNetworkProperties Properties { get; }
-        /// <summary>
-        /// Resource Location
-        /// Serialized Name: Resource.location
-        /// </summary>
+        /// <summary> Resource Location. </summary>
         public AzureLocation? Location { get; }
     }
 }

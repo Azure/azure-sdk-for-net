@@ -7,17 +7,11 @@
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary>
-    /// The UnknownNetworkMappingFabricSpecificSettings.
-    /// Serialized Name: UnknownNetworkMappingFabricSpecificSettings
-    /// </summary>
+    /// <summary> The UnknownNetworkMappingFabricSpecificSettings. </summary>
     internal partial class UnknownNetworkMappingFabricSpecificSettings : NetworkMappingFabricSpecificSettings
     {
         /// <summary> Initializes a new instance of UnknownNetworkMappingFabricSpecificSettings. </summary>
-        /// <param name="instanceType">
-        /// Gets the Instance type.
-        /// Serialized Name: NetworkMappingFabricSpecificSettings.instanceType
-        /// </param>
+        /// <param name="instanceType"> Gets the Instance type. </param>
         internal UnknownNetworkMappingFabricSpecificSettings(string instanceType) : base(instanceType)
         {
             InstanceType = instanceType ?? "Unknown";

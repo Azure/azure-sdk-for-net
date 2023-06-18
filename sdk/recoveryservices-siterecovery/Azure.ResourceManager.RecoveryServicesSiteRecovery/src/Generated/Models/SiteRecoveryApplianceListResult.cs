@@ -10,42 +10,27 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary>
-    /// Collection of appliance details.
-    /// Serialized Name: ApplianceCollection
-    /// </summary>
+    /// <summary> Collection of appliance details. </summary>
     internal partial class SiteRecoveryApplianceListResult
     {
         /// <summary> Initializes a new instance of SiteRecoveryApplianceListResult. </summary>
         internal SiteRecoveryApplianceListResult()
         {
-            Value = new ChangeTrackingList<SiteRecoveryAppliance>();
+            Value = new ChangeTrackingList<SiteRecoveryReplicationAppliance>();
         }
 
         /// <summary> Initializes a new instance of SiteRecoveryApplianceListResult. </summary>
-        /// <param name="value">
-        /// The appliance details.
-        /// Serialized Name: ApplianceCollection.value
-        /// </param>
-        /// <param name="nextLink">
-        /// The value of next link.
-        /// Serialized Name: ApplianceCollection.nextLink
-        /// </param>
-        internal SiteRecoveryApplianceListResult(IReadOnlyList<SiteRecoveryAppliance> value, string nextLink)
+        /// <param name="value"> The appliance details. </param>
+        /// <param name="nextLink"> The value of next link. </param>
+        internal SiteRecoveryApplianceListResult(IReadOnlyList<SiteRecoveryReplicationAppliance> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
-        /// <summary>
-        /// The appliance details.
-        /// Serialized Name: ApplianceCollection.value
-        /// </summary>
-        public IReadOnlyList<SiteRecoveryAppliance> Value { get; }
-        /// <summary>
-        /// The value of next link.
-        /// Serialized Name: ApplianceCollection.nextLink
-        /// </summary>
+        /// <summary> The appliance details. </summary>
+        public IReadOnlyList<SiteRecoveryReplicationAppliance> Value { get; }
+        /// <summary> The value of next link. </summary>
         public string NextLink { get; }
     }
 }

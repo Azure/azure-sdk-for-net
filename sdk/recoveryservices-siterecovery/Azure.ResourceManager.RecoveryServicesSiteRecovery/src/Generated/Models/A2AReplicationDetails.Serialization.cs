@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Optional<string> recoveryAvailabilityZone = default;
             Optional<SiteRecoveryExtendedLocation> primaryExtendedLocation = default;
             Optional<SiteRecoveryExtendedLocation> recoveryExtendedLocation = default;
-            Optional<VmEncryptionType> vmEncryptionType = default;
+            Optional<SiteRecoveryVmEncryptionType> vmEncryptionType = default;
             Optional<string> tfoAzureVmName = default;
             Optional<string> recoveryAzureGeneration = default;
             Optional<ResourceIdentifier> recoveryProximityPlacementGroupId = default;
@@ -448,7 +448,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    vmEncryptionType = new VmEncryptionType(property.Value.GetString());
+                    vmEncryptionType = new SiteRecoveryVmEncryptionType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("tfoAzureVMName"u8))

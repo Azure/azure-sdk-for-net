@@ -11,10 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary>
-    /// DRA details.
-    /// Serialized Name: DraDetails
-    /// </summary>
+    /// <summary> DRA details. </summary>
     public partial class SiteRecoveryDraDetails
     {
         /// <summary> Initializes a new instance of SiteRecoveryDraDetails. </summary>
@@ -24,43 +21,16 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Initializes a new instance of SiteRecoveryDraDetails. </summary>
-        /// <param name="id">
-        /// The DRA Id.
-        /// Serialized Name: DraDetails.id
-        /// </param>
-        /// <param name="name">
-        /// The DRA name.
-        /// Serialized Name: DraDetails.name
-        /// </param>
-        /// <param name="biosId">
-        /// The DRA Bios Id.
-        /// Serialized Name: DraDetails.biosId
-        /// </param>
-        /// <param name="version">
-        /// The version.
-        /// Serialized Name: DraDetails.version
-        /// </param>
-        /// <param name="lastHeartbeatReceivedOn">
-        /// The last heartbeat received from the DRA.
-        /// Serialized Name: DraDetails.lastHeartbeatUtc
-        /// </param>
-        /// <param name="health">
-        /// The health.
-        /// Serialized Name: DraDetails.health
-        /// </param>
-        /// <param name="healthErrors">
-        /// The health errors.
-        /// Serialized Name: DraDetails.healthErrors
-        /// </param>
-        /// <param name="forwardProtectedItemCount">
-        /// The count of protected items which are protected in forward direction.
-        /// Serialized Name: DraDetails.forwardProtectedItemCount
-        /// </param>
-        /// <param name="reverseProtectedItemCount">
-        /// The count of protected items which are protected in reverse direction.
-        /// Serialized Name: DraDetails.reverseProtectedItemCount
-        /// </param>
-        internal SiteRecoveryDraDetails(string id, string name, string biosId, string version, DateTimeOffset? lastHeartbeatReceivedOn, ProtectionHealth? health, IReadOnlyList<SiteRecoveryHealthError> healthErrors, int? forwardProtectedItemCount, int? reverseProtectedItemCount)
+        /// <param name="id"> The DRA Id. </param>
+        /// <param name="name"> The DRA name. </param>
+        /// <param name="biosId"> The DRA Bios Id. </param>
+        /// <param name="version"> The version. </param>
+        /// <param name="lastHeartbeatReceivedOn"> The last heartbeat received from the DRA. </param>
+        /// <param name="health"> The health. </param>
+        /// <param name="healthErrors"> The health errors. </param>
+        /// <param name="forwardProtectedItemCount"> The count of protected items which are protected in forward direction. </param>
+        /// <param name="reverseProtectedItemCount"> The count of protected items which are protected in reverse direction. </param>
+        internal SiteRecoveryDraDetails(string id, string name, string biosId, string version, DateTimeOffset? lastHeartbeatReceivedOn, SiteRecoveryProtectionHealth? health, IReadOnlyList<SiteRecoveryHealthError> healthErrors, int? forwardProtectedItemCount, int? reverseProtectedItemCount)
         {
             Id = id;
             Name = name;
@@ -73,50 +43,23 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             ReverseProtectedItemCount = reverseProtectedItemCount;
         }
 
-        /// <summary>
-        /// The DRA Id.
-        /// Serialized Name: DraDetails.id
-        /// </summary>
+        /// <summary> The DRA Id. </summary>
         public string Id { get; }
-        /// <summary>
-        /// The DRA name.
-        /// Serialized Name: DraDetails.name
-        /// </summary>
+        /// <summary> The DRA name. </summary>
         public string Name { get; }
-        /// <summary>
-        /// The DRA Bios Id.
-        /// Serialized Name: DraDetails.biosId
-        /// </summary>
+        /// <summary> The DRA Bios Id. </summary>
         public string BiosId { get; }
-        /// <summary>
-        /// The version.
-        /// Serialized Name: DraDetails.version
-        /// </summary>
+        /// <summary> The version. </summary>
         public string Version { get; }
-        /// <summary>
-        /// The last heartbeat received from the DRA.
-        /// Serialized Name: DraDetails.lastHeartbeatUtc
-        /// </summary>
+        /// <summary> The last heartbeat received from the DRA. </summary>
         public DateTimeOffset? LastHeartbeatReceivedOn { get; }
-        /// <summary>
-        /// The health.
-        /// Serialized Name: DraDetails.health
-        /// </summary>
-        public ProtectionHealth? Health { get; }
-        /// <summary>
-        /// The health errors.
-        /// Serialized Name: DraDetails.healthErrors
-        /// </summary>
+        /// <summary> The health. </summary>
+        public SiteRecoveryProtectionHealth? Health { get; }
+        /// <summary> The health errors. </summary>
         public IReadOnlyList<SiteRecoveryHealthError> HealthErrors { get; }
-        /// <summary>
-        /// The count of protected items which are protected in forward direction.
-        /// Serialized Name: DraDetails.forwardProtectedItemCount
-        /// </summary>
+        /// <summary> The count of protected items which are protected in forward direction. </summary>
         public int? ForwardProtectedItemCount { get; }
-        /// <summary>
-        /// The count of protected items which are protected in reverse direction.
-        /// Serialized Name: DraDetails.reverseProtectedItemCount
-        /// </summary>
+        /// <summary> The count of protected items which are protected in reverse direction. </summary>
         public int? ReverseProtectedItemCount { get; }
     }
 }

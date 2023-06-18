@@ -7,10 +7,7 @@
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary>
-    /// Model class for event details of a VMwareAzureV2 event.
-    /// Serialized Name: InMageAzureV2EventDetails
-    /// </summary>
+    /// <summary> Model class for event details of a VMwareAzureV2 event. </summary>
     public partial class InMageAzureV2EventDetails : SiteRecoveryEventProviderSpecificDetails
     {
         /// <summary> Initializes a new instance of InMageAzureV2EventDetails. </summary>
@@ -20,38 +17,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Initializes a new instance of InMageAzureV2EventDetails. </summary>
-        /// <param name="instanceType">
-        /// Gets the class type. Overridden in derived classes.
-        /// Serialized Name: EventProviderSpecificDetails.instanceType
-        /// </param>
-        /// <param name="eventType">
-        /// InMage Event type. Takes one of the values of InMageDataContract.InMageMonitoringEventType.
-        /// Serialized Name: InMageAzureV2EventDetails.eventType
-        /// </param>
-        /// <param name="category">
-        /// InMage Event Category.
-        /// Serialized Name: InMageAzureV2EventDetails.category
-        /// </param>
-        /// <param name="component">
-        /// InMage Event Component.
-        /// Serialized Name: InMageAzureV2EventDetails.component
-        /// </param>
-        /// <param name="correctiveAction">
-        /// Corrective Action string for the event.
-        /// Serialized Name: InMageAzureV2EventDetails.correctiveAction
-        /// </param>
-        /// <param name="details">
-        /// InMage Event Details.
-        /// Serialized Name: InMageAzureV2EventDetails.details
-        /// </param>
-        /// <param name="summary">
-        /// InMage Event Summary.
-        /// Serialized Name: InMageAzureV2EventDetails.summary
-        /// </param>
-        /// <param name="siteName">
-        /// VMware Site name.
-        /// Serialized Name: InMageAzureV2EventDetails.siteName
-        /// </param>
+        /// <param name="instanceType"> Gets the class type. Overridden in derived classes. </param>
+        /// <param name="eventType"> InMage Event type. Takes one of the values of InMageDataContract.InMageMonitoringEventType. </param>
+        /// <param name="category"> InMage Event Category. </param>
+        /// <param name="component"> InMage Event Component. </param>
+        /// <param name="correctiveAction"> Corrective Action string for the event. </param>
+        /// <param name="details"> InMage Event Details. </param>
+        /// <param name="summary"> InMage Event Summary. </param>
+        /// <param name="siteName"> VMware Site name. </param>
         internal InMageAzureV2EventDetails(string instanceType, string eventType, string category, string component, string correctiveAction, string details, string summary, string siteName) : base(instanceType)
         {
             EventType = eventType;
@@ -64,40 +37,19 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             InstanceType = instanceType ?? "InMageAzureV2";
         }
 
-        /// <summary>
-        /// InMage Event type. Takes one of the values of InMageDataContract.InMageMonitoringEventType.
-        /// Serialized Name: InMageAzureV2EventDetails.eventType
-        /// </summary>
+        /// <summary> InMage Event type. Takes one of the values of InMageDataContract.InMageMonitoringEventType. </summary>
         public string EventType { get; }
-        /// <summary>
-        /// InMage Event Category.
-        /// Serialized Name: InMageAzureV2EventDetails.category
-        /// </summary>
+        /// <summary> InMage Event Category. </summary>
         public string Category { get; }
-        /// <summary>
-        /// InMage Event Component.
-        /// Serialized Name: InMageAzureV2EventDetails.component
-        /// </summary>
+        /// <summary> InMage Event Component. </summary>
         public string Component { get; }
-        /// <summary>
-        /// Corrective Action string for the event.
-        /// Serialized Name: InMageAzureV2EventDetails.correctiveAction
-        /// </summary>
+        /// <summary> Corrective Action string for the event. </summary>
         public string CorrectiveAction { get; }
-        /// <summary>
-        /// InMage Event Details.
-        /// Serialized Name: InMageAzureV2EventDetails.details
-        /// </summary>
+        /// <summary> InMage Event Details. </summary>
         public string Details { get; }
-        /// <summary>
-        /// InMage Event Summary.
-        /// Serialized Name: InMageAzureV2EventDetails.summary
-        /// </summary>
+        /// <summary> InMage Event Summary. </summary>
         public string Summary { get; }
-        /// <summary>
-        /// VMware Site name.
-        /// Serialized Name: InMageAzureV2EventDetails.siteName
-        /// </summary>
+        /// <summary> VMware Site name. </summary>
         public string SiteName { get; }
     }
 }

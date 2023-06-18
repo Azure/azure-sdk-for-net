@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Optional<ResourceIdentifier> selectedRecoveryAzureNetworkId = default;
             Optional<string> selectedSourceNicId = default;
             Optional<string> encryption = default;
-            Optional<OSDetails> osDetails = default;
+            Optional<SiteRecoveryOSDetails> osDetails = default;
             Optional<int> sourceVmRamSizeInMB = default;
             Optional<int> sourceVmCpuCount = default;
             Optional<string> enableRdpOnTargetOption = default;
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    osDetails = OSDetails.DeserializeOSDetails(property.Value);
+                    osDetails = SiteRecoveryOSDetails.DeserializeSiteRecoveryOSDetails(property.Value);
                     continue;
                 }
                 if (property.NameEquals("sourceVmRamSizeInMB"u8))

@@ -7,10 +7,7 @@
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary>
-    /// InMageRcm provider specific container mapping details.
-    /// Serialized Name: InMageRcmProtectionContainerMappingDetails
-    /// </summary>
+    /// <summary> InMageRcm provider specific container mapping details. </summary>
     public partial class InMageRcmProtectionContainerMappingDetails : ProtectionContainerMappingProviderSpecificDetails
     {
         /// <summary> Initializes a new instance of InMageRcmProtectionContainerMappingDetails. </summary>
@@ -20,24 +17,15 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Initializes a new instance of InMageRcmProtectionContainerMappingDetails. </summary>
-        /// <param name="instanceType">
-        /// Gets the class type. Overridden in derived classes.
-        /// Serialized Name: ProtectionContainerMappingProviderSpecificDetails.instanceType
-        /// </param>
-        /// <param name="enableAgentAutoUpgrade">
-        /// A value indicating whether the flag for enable agent auto upgrade.
-        /// Serialized Name: InMageRcmProtectionContainerMappingDetails.enableAgentAutoUpgrade
-        /// </param>
+        /// <param name="instanceType"> Gets the class type. Overridden in derived classes. </param>
+        /// <param name="enableAgentAutoUpgrade"> A value indicating whether the flag for enable agent auto upgrade. </param>
         internal InMageRcmProtectionContainerMappingDetails(string instanceType, string enableAgentAutoUpgrade) : base(instanceType)
         {
             EnableAgentAutoUpgrade = enableAgentAutoUpgrade;
             InstanceType = instanceType ?? "InMageRcm";
         }
 
-        /// <summary>
-        /// A value indicating whether the flag for enable agent auto upgrade.
-        /// Serialized Name: InMageRcmProtectionContainerMappingDetails.enableAgentAutoUpgrade
-        /// </summary>
+        /// <summary> A value indicating whether the flag for enable agent auto upgrade. </summary>
         public string EnableAgentAutoUpgrade { get; }
     }
 }

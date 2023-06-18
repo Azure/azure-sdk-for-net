@@ -10,21 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary>
-    /// VMwareCbt container mapping input.
-    /// Serialized Name: VMwareCbtContainerMappingInput
-    /// </summary>
+    /// <summary> VMwareCbt container mapping input. </summary>
     public partial class VMwareCbtContainerMappingContent : ReplicationProviderSpecificContainerMappingContent
     {
         /// <summary> Initializes a new instance of VMwareCbtContainerMappingContent. </summary>
-        /// <param name="storageAccountId">
-        /// The storage account ARM Id.
-        /// Serialized Name: VMwareCbtContainerMappingInput.storageAccountId
-        /// </param>
-        /// <param name="targetLocation">
-        /// The target location.
-        /// Serialized Name: VMwareCbtContainerMappingInput.targetLocation
-        /// </param>
+        /// <param name="storageAccountId"> The storage account ARM Id. </param>
+        /// <param name="targetLocation"> The target location. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="storageAccountId"/> or <paramref name="targetLocation"/> is null. </exception>
         public VMwareCbtContainerMappingContent(ResourceIdentifier storageAccountId, string targetLocation)
         {
@@ -36,35 +27,17 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             InstanceType = "VMwareCbt";
         }
 
-        /// <summary>
-        /// The target key vault ARM Id.
-        /// Serialized Name: VMwareCbtContainerMappingInput.keyVaultId
-        /// </summary>
+        /// <summary> The target key vault ARM Id. </summary>
         public ResourceIdentifier KeyVaultId { get; set; }
-        /// <summary>
-        /// The target key vault URL.
-        /// Serialized Name: VMwareCbtContainerMappingInput.keyVaultUri
-        /// </summary>
+        /// <summary> The target key vault URL. </summary>
         public Uri KeyVaultUri { get; set; }
-        /// <summary>
-        /// The storage account ARM Id.
-        /// Serialized Name: VMwareCbtContainerMappingInput.storageAccountId
-        /// </summary>
+        /// <summary> The storage account ARM Id. </summary>
         public ResourceIdentifier StorageAccountId { get; }
-        /// <summary>
-        /// The secret name of the storage account.
-        /// Serialized Name: VMwareCbtContainerMappingInput.storageAccountSasSecretName
-        /// </summary>
+        /// <summary> The secret name of the storage account. </summary>
         public string StorageAccountSasSecretName { get; set; }
-        /// <summary>
-        /// The secret name of the service bus connection string.
-        /// Serialized Name: VMwareCbtContainerMappingInput.serviceBusConnectionStringSecretName
-        /// </summary>
+        /// <summary> The secret name of the service bus connection string. </summary>
         public string ServiceBusConnectionStringSecretName { get; set; }
-        /// <summary>
-        /// The target location.
-        /// Serialized Name: VMwareCbtContainerMappingInput.targetLocation
-        /// </summary>
+        /// <summary> The target location. </summary>
         public string TargetLocation { get; }
     }
 }

@@ -11,10 +11,7 @@ using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary>
-    /// Collection of fabric details.
-    /// Serialized Name: FabricCollection
-    /// </summary>
+    /// <summary> Collection of fabric details. </summary>
     internal partial class SiteRecoveryFabricListResult
     {
         /// <summary> Initializes a new instance of SiteRecoveryFabricListResult. </summary>
@@ -24,29 +21,17 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Initializes a new instance of SiteRecoveryFabricListResult. </summary>
-        /// <param name="value">
-        /// The fabric details.
-        /// Serialized Name: FabricCollection.value
-        /// </param>
-        /// <param name="nextLink">
-        /// The value of next link.
-        /// Serialized Name: FabricCollection.nextLink
-        /// </param>
+        /// <param name="value"> The fabric details. </param>
+        /// <param name="nextLink"> The value of next link. </param>
         internal SiteRecoveryFabricListResult(IReadOnlyList<SiteRecoveryFabricData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
-        /// <summary>
-        /// The fabric details.
-        /// Serialized Name: FabricCollection.value
-        /// </summary>
+        /// <summary> The fabric details. </summary>
         public IReadOnlyList<SiteRecoveryFabricData> Value { get; }
-        /// <summary>
-        /// The value of next link.
-        /// Serialized Name: FabricCollection.nextLink
-        /// </summary>
+        /// <summary> The value of next link. </summary>
         public string NextLink { get; }
     }
 }

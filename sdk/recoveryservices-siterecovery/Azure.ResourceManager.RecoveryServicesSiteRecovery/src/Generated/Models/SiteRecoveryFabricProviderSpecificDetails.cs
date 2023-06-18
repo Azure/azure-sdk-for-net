@@ -10,11 +10,8 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary>
-    /// Azure Fabric Specific Details.
-    /// Serialized Name: AzureFabricSpecificDetails
-    /// </summary>
-    public partial class SiteRecoveryFabricProviderSpecificDetails : SiteRecoveryFabricSpecificDetails
+    /// <summary> Azure Fabric Specific Details. </summary>
+    public partial class SiteRecoveryFabricProviderSpecificDetails : FabricSpecificDetails
     {
         /// <summary> Initializes a new instance of SiteRecoveryFabricProviderSpecificDetails. </summary>
         internal SiteRecoveryFabricProviderSpecificDetails()
@@ -27,30 +24,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Initializes a new instance of SiteRecoveryFabricProviderSpecificDetails. </summary>
-        /// <param name="instanceType">
-        /// Gets the class type. Overridden in derived classes.
-        /// Serialized Name: FabricSpecificDetails.instanceType
-        /// </param>
-        /// <param name="location">
-        /// The Location for the Azure fabric.
-        /// Serialized Name: AzureFabricSpecificDetails.location
-        /// </param>
-        /// <param name="containerIds">
-        /// The container Ids for the Azure fabric.
-        /// Serialized Name: AzureFabricSpecificDetails.containerIds
-        /// </param>
-        /// <param name="zones">
-        /// The zones.
-        /// Serialized Name: AzureFabricSpecificDetails.zones
-        /// </param>
-        /// <param name="extendedLocations">
-        /// The ExtendedLocations.
-        /// Serialized Name: AzureFabricSpecificDetails.extendedLocations
-        /// </param>
-        /// <param name="locationDetails">
-        /// The location details.
-        /// Serialized Name: AzureFabricSpecificDetails.locationDetails
-        /// </param>
+        /// <param name="instanceType"> Gets the class type. Overridden in derived classes. </param>
+        /// <param name="location"> The Location for the Azure fabric. </param>
+        /// <param name="containerIds"> The container Ids for the Azure fabric. </param>
+        /// <param name="zones"> The zones. </param>
+        /// <param name="extendedLocations"> The ExtendedLocations. </param>
+        /// <param name="locationDetails"> The location details. </param>
         internal SiteRecoveryFabricProviderSpecificDetails(string instanceType, AzureLocation? location, IReadOnlyList<ResourceIdentifier> containerIds, IReadOnlyList<A2AZoneDetails> zones, IReadOnlyList<A2AExtendedLocationDetails> extendedLocations, IReadOnlyList<A2AFabricSpecificLocationDetails> locationDetails) : base(instanceType)
         {
             Location = location;
@@ -61,30 +40,15 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             InstanceType = instanceType ?? "Azure";
         }
 
-        /// <summary>
-        /// The Location for the Azure fabric.
-        /// Serialized Name: AzureFabricSpecificDetails.location
-        /// </summary>
+        /// <summary> The Location for the Azure fabric. </summary>
         public AzureLocation? Location { get; }
-        /// <summary>
-        /// The container Ids for the Azure fabric.
-        /// Serialized Name: AzureFabricSpecificDetails.containerIds
-        /// </summary>
+        /// <summary> The container Ids for the Azure fabric. </summary>
         public IReadOnlyList<ResourceIdentifier> ContainerIds { get; }
-        /// <summary>
-        /// The zones.
-        /// Serialized Name: AzureFabricSpecificDetails.zones
-        /// </summary>
+        /// <summary> The zones. </summary>
         public IReadOnlyList<A2AZoneDetails> Zones { get; }
-        /// <summary>
-        /// The ExtendedLocations.
-        /// Serialized Name: AzureFabricSpecificDetails.extendedLocations
-        /// </summary>
+        /// <summary> The ExtendedLocations. </summary>
         public IReadOnlyList<A2AExtendedLocationDetails> ExtendedLocations { get; }
-        /// <summary>
-        /// The location details.
-        /// Serialized Name: AzureFabricSpecificDetails.locationDetails
-        /// </summary>
+        /// <summary> The location details. </summary>
         public IReadOnlyList<A2AFabricSpecificLocationDetails> LocationDetails { get; }
     }
 }

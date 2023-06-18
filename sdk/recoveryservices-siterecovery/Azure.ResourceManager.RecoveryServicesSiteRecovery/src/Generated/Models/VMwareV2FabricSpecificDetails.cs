@@ -10,53 +10,26 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary>
-    /// VMwareV2 fabric specific details.
-    /// Serialized Name: VMwareV2FabricSpecificDetails
-    /// </summary>
-    public partial class VMwareV2FabricSpecificDetails : SiteRecoveryFabricSpecificDetails
+    /// <summary> VMwareV2 fabric specific details. </summary>
+    public partial class VMwareV2FabricSpecificDetails : FabricSpecificDetails
     {
         /// <summary> Initializes a new instance of VMwareV2FabricSpecificDetails. </summary>
         internal VMwareV2FabricSpecificDetails()
         {
-            ProcessServers = new ChangeTrackingList<ProcessServerDetails>();
+            ProcessServers = new ChangeTrackingList<SiteRecoveryProcessServerDetails>();
             InstanceType = "VMwareV2";
         }
 
         /// <summary> Initializes a new instance of VMwareV2FabricSpecificDetails. </summary>
-        /// <param name="instanceType">
-        /// Gets the class type. Overridden in derived classes.
-        /// Serialized Name: FabricSpecificDetails.instanceType
-        /// </param>
-        /// <param name="vmwareSiteId">
-        /// The ARM Id of the VMware site.
-        /// Serialized Name: VMwareV2FabricSpecificDetails.vmwareSiteId
-        /// </param>
-        /// <param name="physicalSiteId">
-        /// The ARM Id of the physical site.
-        /// Serialized Name: VMwareV2FabricSpecificDetails.physicalSiteId
-        /// </param>
-        /// <param name="migrationSolutionId">
-        /// The Migration solution ARM Id.
-        /// Serialized Name: VMwareV2FabricSpecificDetails.migrationSolutionId
-        /// </param>
-        /// <param name="serviceEndpoint">
-        /// The service endpoint.
-        /// Serialized Name: VMwareV2FabricSpecificDetails.serviceEndpoint
-        /// </param>
-        /// <param name="serviceResourceId">
-        /// The service resource Id.
-        /// Serialized Name: VMwareV2FabricSpecificDetails.serviceResourceId
-        /// </param>
-        /// <param name="serviceContainerId">
-        /// The service container Id.
-        /// Serialized Name: VMwareV2FabricSpecificDetails.serviceContainerId
-        /// </param>
-        /// <param name="processServers">
-        /// The list of process servers.
-        /// Serialized Name: VMwareV2FabricSpecificDetails.processServers
-        /// </param>
-        internal VMwareV2FabricSpecificDetails(string instanceType, string vmwareSiteId, string physicalSiteId, string migrationSolutionId, string serviceEndpoint, string serviceResourceId, string serviceContainerId, IReadOnlyList<ProcessServerDetails> processServers) : base(instanceType)
+        /// <param name="instanceType"> Gets the class type. Overridden in derived classes. </param>
+        /// <param name="vmwareSiteId"> The ARM Id of the VMware site. </param>
+        /// <param name="physicalSiteId"> The ARM Id of the physical site. </param>
+        /// <param name="migrationSolutionId"> The Migration solution ARM Id. </param>
+        /// <param name="serviceEndpoint"> The service endpoint. </param>
+        /// <param name="serviceResourceId"> The service resource Id. </param>
+        /// <param name="serviceContainerId"> The service container Id. </param>
+        /// <param name="processServers"> The list of process servers. </param>
+        internal VMwareV2FabricSpecificDetails(string instanceType, ResourceIdentifier vmwareSiteId, ResourceIdentifier physicalSiteId, ResourceIdentifier migrationSolutionId, string serviceEndpoint, string serviceResourceId, string serviceContainerId, IReadOnlyList<SiteRecoveryProcessServerDetails> processServers) : base(instanceType)
         {
             VMwareSiteId = vmwareSiteId;
             PhysicalSiteId = physicalSiteId;
@@ -68,40 +41,19 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             InstanceType = instanceType ?? "VMwareV2";
         }
 
-        /// <summary>
-        /// The ARM Id of the VMware site.
-        /// Serialized Name: VMwareV2FabricSpecificDetails.vmwareSiteId
-        /// </summary>
-        public string VMwareSiteId { get; }
-        /// <summary>
-        /// The ARM Id of the physical site.
-        /// Serialized Name: VMwareV2FabricSpecificDetails.physicalSiteId
-        /// </summary>
-        public string PhysicalSiteId { get; }
-        /// <summary>
-        /// The Migration solution ARM Id.
-        /// Serialized Name: VMwareV2FabricSpecificDetails.migrationSolutionId
-        /// </summary>
-        public string MigrationSolutionId { get; }
-        /// <summary>
-        /// The service endpoint.
-        /// Serialized Name: VMwareV2FabricSpecificDetails.serviceEndpoint
-        /// </summary>
+        /// <summary> The ARM Id of the VMware site. </summary>
+        public ResourceIdentifier VMwareSiteId { get; }
+        /// <summary> The ARM Id of the physical site. </summary>
+        public ResourceIdentifier PhysicalSiteId { get; }
+        /// <summary> The Migration solution ARM Id. </summary>
+        public ResourceIdentifier MigrationSolutionId { get; }
+        /// <summary> The service endpoint. </summary>
         public string ServiceEndpoint { get; }
-        /// <summary>
-        /// The service resource Id.
-        /// Serialized Name: VMwareV2FabricSpecificDetails.serviceResourceId
-        /// </summary>
+        /// <summary> The service resource Id. </summary>
         public string ServiceResourceId { get; }
-        /// <summary>
-        /// The service container Id.
-        /// Serialized Name: VMwareV2FabricSpecificDetails.serviceContainerId
-        /// </summary>
+        /// <summary> The service container Id. </summary>
         public string ServiceContainerId { get; }
-        /// <summary>
-        /// The list of process servers.
-        /// Serialized Name: VMwareV2FabricSpecificDetails.processServers
-        /// </summary>
-        public IReadOnlyList<ProcessServerDetails> ProcessServers { get; }
+        /// <summary> The list of process servers. </summary>
+        public IReadOnlyList<SiteRecoveryProcessServerDetails> ProcessServers { get; }
     }
 }

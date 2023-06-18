@@ -9,10 +9,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary>
-    /// Model class for event details of a A2A event.
-    /// Serialized Name: A2AEventDetails
-    /// </summary>
+    /// <summary> Model class for event details of a A2A event. </summary>
     public partial class A2AEventDetails : SiteRecoveryEventProviderSpecificDetails
     {
         /// <summary> Initializes a new instance of A2AEventDetails. </summary>
@@ -22,34 +19,13 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Initializes a new instance of A2AEventDetails. </summary>
-        /// <param name="instanceType">
-        /// Gets the class type. Overridden in derived classes.
-        /// Serialized Name: EventProviderSpecificDetails.instanceType
-        /// </param>
-        /// <param name="protectedItemName">
-        /// The protected item arm name.
-        /// Serialized Name: A2AEventDetails.protectedItemName
-        /// </param>
-        /// <param name="fabricObjectId">
-        /// The azure vm arm id.
-        /// Serialized Name: A2AEventDetails.fabricObjectId
-        /// </param>
-        /// <param name="fabricName">
-        /// Fabric arm name.
-        /// Serialized Name: A2AEventDetails.fabricName
-        /// </param>
-        /// <param name="fabricLocation">
-        /// The fabric location.
-        /// Serialized Name: A2AEventDetails.fabricLocation
-        /// </param>
-        /// <param name="remoteFabricName">
-        /// Remote fabric arm name.
-        /// Serialized Name: A2AEventDetails.remoteFabricName
-        /// </param>
-        /// <param name="remoteFabricLocation">
-        /// Remote fabric location.
-        /// Serialized Name: A2AEventDetails.remoteFabricLocation
-        /// </param>
+        /// <param name="instanceType"> Gets the class type. Overridden in derived classes. </param>
+        /// <param name="protectedItemName"> The protected item arm name. </param>
+        /// <param name="fabricObjectId"> The azure vm arm id. </param>
+        /// <param name="fabricName"> Fabric arm name. </param>
+        /// <param name="fabricLocation"> The fabric location. </param>
+        /// <param name="remoteFabricName"> Remote fabric arm name. </param>
+        /// <param name="remoteFabricLocation"> Remote fabric location. </param>
         internal A2AEventDetails(string instanceType, string protectedItemName, ResourceIdentifier fabricObjectId, string fabricName, AzureLocation? fabricLocation, string remoteFabricName, AzureLocation? remoteFabricLocation) : base(instanceType)
         {
             ProtectedItemName = protectedItemName;
@@ -61,35 +37,17 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             InstanceType = instanceType ?? "A2A";
         }
 
-        /// <summary>
-        /// The protected item arm name.
-        /// Serialized Name: A2AEventDetails.protectedItemName
-        /// </summary>
+        /// <summary> The protected item arm name. </summary>
         public string ProtectedItemName { get; }
-        /// <summary>
-        /// The azure vm arm id.
-        /// Serialized Name: A2AEventDetails.fabricObjectId
-        /// </summary>
+        /// <summary> The azure vm arm id. </summary>
         public ResourceIdentifier FabricObjectId { get; }
-        /// <summary>
-        /// Fabric arm name.
-        /// Serialized Name: A2AEventDetails.fabricName
-        /// </summary>
+        /// <summary> Fabric arm name. </summary>
         public string FabricName { get; }
-        /// <summary>
-        /// The fabric location.
-        /// Serialized Name: A2AEventDetails.fabricLocation
-        /// </summary>
+        /// <summary> The fabric location. </summary>
         public AzureLocation? FabricLocation { get; }
-        /// <summary>
-        /// Remote fabric arm name.
-        /// Serialized Name: A2AEventDetails.remoteFabricName
-        /// </summary>
+        /// <summary> Remote fabric arm name. </summary>
         public string RemoteFabricName { get; }
-        /// <summary>
-        /// Remote fabric location.
-        /// Serialized Name: A2AEventDetails.remoteFabricLocation
-        /// </summary>
+        /// <summary> Remote fabric location. </summary>
         public AzureLocation? RemoteFabricLocation { get; }
     }
 }

@@ -9,10 +9,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary>
-    /// A2A Cross-Cluster Migration enable protection input.
-    /// Serialized Name: A2ACrossClusterMigrationEnableProtectionInput
-    /// </summary>
+    /// <summary> A2A Cross-Cluster Migration enable protection input. </summary>
     public partial class A2ACrossClusterMigrationEnableProtectionContent : EnableProtectionProviderSpecificContent
     {
         /// <summary> Initializes a new instance of A2ACrossClusterMigrationEnableProtectionContent. </summary>
@@ -21,15 +18,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             InstanceType = "A2ACrossClusterMigration";
         }
 
-        /// <summary>
-        /// The fabric specific object Id of the virtual machine.
-        /// Serialized Name: A2ACrossClusterMigrationEnableProtectionInput.fabricObjectId
-        /// </summary>
+        /// <summary> The fabric specific object Id of the virtual machine. </summary>
         public ResourceIdentifier FabricObjectId { get; set; }
-        /// <summary>
-        /// The recovery container Id.
-        /// Serialized Name: A2ACrossClusterMigrationEnableProtectionInput.recoveryContainerId
-        /// </summary>
+        /// <summary> The recovery container Id. </summary>
         public ResourceIdentifier RecoveryContainerId { get; set; }
     }
 }

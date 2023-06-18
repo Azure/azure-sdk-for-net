@@ -9,10 +9,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary>
-    /// InMageAzureV2 provider specific input for test failover.
-    /// Serialized Name: InMageAzureV2TestFailoverInput
-    /// </summary>
+    /// <summary> InMageAzureV2 provider specific input for test failover. </summary>
     public partial class InMageAzureV2TestFailoverContent : TestFailoverProviderSpecificContent
     {
         /// <summary> Initializes a new instance of InMageAzureV2TestFailoverContent. </summary>
@@ -21,10 +18,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             InstanceType = "InMageAzureV2";
         }
 
-        /// <summary>
-        /// The recovery point id to be passed to test failover to a particular recovery point. In case of latest recovery point, null should be passed.
-        /// Serialized Name: InMageAzureV2TestFailoverInput.recoveryPointId
-        /// </summary>
+        /// <summary> The recovery point id to be passed to test failover to a particular recovery point. In case of latest recovery point, null should be passed. </summary>
         public ResourceIdentifier RecoveryPointId { get; set; }
     }
 }

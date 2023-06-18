@@ -10,17 +10,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary>
-    /// Existing recovery virtual network input.
-    /// Serialized Name: ExistingRecoveryVirtualNetwork
-    /// </summary>
+    /// <summary> Existing recovery virtual network input. </summary>
     public partial class ExistingRecoveryVirtualNetwork : RecoveryVirtualNetworkCustomDetails
     {
         /// <summary> Initializes a new instance of ExistingRecoveryVirtualNetwork. </summary>
-        /// <param name="recoveryVirtualNetworkId">
-        /// The recovery virtual network Id. Will throw error, if resource does not exist.
-        /// Serialized Name: ExistingRecoveryVirtualNetwork.recoveryVirtualNetworkId
-        /// </param>
+        /// <param name="recoveryVirtualNetworkId"> The recovery virtual network Id. Will throw error, if resource does not exist. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="recoveryVirtualNetworkId"/> is null. </exception>
         public ExistingRecoveryVirtualNetwork(ResourceIdentifier recoveryVirtualNetworkId)
         {
@@ -31,18 +25,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Initializes a new instance of ExistingRecoveryVirtualNetwork. </summary>
-        /// <param name="resourceType">
-        /// The class type.
-        /// Serialized Name: RecoveryVirtualNetworkCustomDetails.resourceType
-        /// </param>
-        /// <param name="recoveryVirtualNetworkId">
-        /// The recovery virtual network Id. Will throw error, if resource does not exist.
-        /// Serialized Name: ExistingRecoveryVirtualNetwork.recoveryVirtualNetworkId
-        /// </param>
-        /// <param name="recoverySubnetName">
-        /// The recovery subnet name.
-        /// Serialized Name: ExistingRecoveryVirtualNetwork.recoverySubnetName
-        /// </param>
+        /// <param name="resourceType"> The class type. </param>
+        /// <param name="recoveryVirtualNetworkId"> The recovery virtual network Id. Will throw error, if resource does not exist. </param>
+        /// <param name="recoverySubnetName"> The recovery subnet name. </param>
         internal ExistingRecoveryVirtualNetwork(string resourceType, ResourceIdentifier recoveryVirtualNetworkId, string recoverySubnetName) : base(resourceType)
         {
             RecoveryVirtualNetworkId = recoveryVirtualNetworkId;
@@ -50,15 +35,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             ResourceType = resourceType ?? "Existing";
         }
 
-        /// <summary>
-        /// The recovery virtual network Id. Will throw error, if resource does not exist.
-        /// Serialized Name: ExistingRecoveryVirtualNetwork.recoveryVirtualNetworkId
-        /// </summary>
+        /// <summary> The recovery virtual network Id. Will throw error, if resource does not exist. </summary>
         public ResourceIdentifier RecoveryVirtualNetworkId { get; set; }
-        /// <summary>
-        /// The recovery subnet name.
-        /// Serialized Name: ExistingRecoveryVirtualNetwork.recoverySubnetName
-        /// </summary>
+        /// <summary> The recovery subnet name. </summary>
         public string RecoverySubnetName { get; set; }
     }
 }

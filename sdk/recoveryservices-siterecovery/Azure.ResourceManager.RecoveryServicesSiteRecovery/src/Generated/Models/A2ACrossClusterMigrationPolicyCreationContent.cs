@@ -7,10 +7,7 @@
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary>
-    /// A2A Cross-Cluster Migration Policy creation input.
-    /// Serialized Name: A2ACrossClusterMigrationPolicyCreationInput
-    /// </summary>
+    /// <summary> A2A Cross-Cluster Migration Policy creation input. </summary>
     public partial class A2ACrossClusterMigrationPolicyCreationContent : PolicyProviderSpecificContent
     {
         /// <summary> Initializes a new instance of A2ACrossClusterMigrationPolicyCreationContent. </summary>

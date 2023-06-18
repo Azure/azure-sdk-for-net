@@ -11,10 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary>
-    /// A2A remove disk(s) input.
-    /// Serialized Name: A2ARemoveDisksInput
-    /// </summary>
+    /// <summary> A2A remove disk(s) input. </summary>
     public partial class A2ARemoveDisksContent : RemoveDisksProviderSpecificContent
     {
         /// <summary> Initializes a new instance of A2ARemoveDisksContent. </summary>
@@ -25,15 +22,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             InstanceType = "A2A";
         }
 
-        /// <summary>
-        /// The list of vm disk vhd URIs.
-        /// Serialized Name: A2ARemoveDisksInput.vmDisksUris
-        /// </summary>
+        /// <summary> The list of vm disk vhd URIs. </summary>
         public IList<Uri> VmDisksUris { get; }
-        /// <summary>
-        /// The list of vm managed disk Ids.
-        /// Serialized Name: A2ARemoveDisksInput.vmManagedDisksIds
-        /// </summary>
+        /// <summary> The list of vm managed disk Ids. </summary>
         public IList<string> VmManagedDisksIds { get; }
     }
 }

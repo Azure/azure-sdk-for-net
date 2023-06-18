@@ -9,7 +9,6 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     /// <summary>
     /// Replication provider specific recovery point details.
-    /// Serialized Name: ProviderSpecificRecoveryPointDetails
     /// Please note <see cref="ProviderSpecificRecoveryPointDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="A2ARecoveryPointDetails"/>, <see cref="InMageAzureV2RecoveryPointDetails"/> and <see cref="InMageRcmRecoveryPointDetails"/>.
     /// </summary>
@@ -21,19 +20,13 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Initializes a new instance of ProviderSpecificRecoveryPointDetails. </summary>
-        /// <param name="instanceType">
-        /// Gets the provider type.
-        /// Serialized Name: ProviderSpecificRecoveryPointDetails.instanceType
-        /// </param>
+        /// <param name="instanceType"> Gets the provider type. </param>
         internal ProviderSpecificRecoveryPointDetails(string instanceType)
         {
             InstanceType = instanceType;
         }
 
-        /// <summary>
-        /// Gets the provider type.
-        /// Serialized Name: ProviderSpecificRecoveryPointDetails.instanceType
-        /// </summary>
+        /// <summary> Gets the provider type. </summary>
         internal string InstanceType { get; set; }
     }
 }

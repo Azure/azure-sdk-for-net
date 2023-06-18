@@ -11,10 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary>
-    /// InMageRcmFailback provider specific details.
-    /// Serialized Name: InMageRcmFailbackReplicationDetails
-    /// </summary>
+    /// <summary> InMageRcmFailback provider specific details. </summary>
     public partial class InMageRcmFailbackReplicationDetails : ReplicationProviderSpecificSettings
     {
         /// <summary> Initializes a new instance of InMageRcmFailbackReplicationDetails. </summary>
@@ -26,127 +23,37 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Initializes a new instance of InMageRcmFailbackReplicationDetails. </summary>
-        /// <param name="instanceType">
-        /// Gets the Instance type.
-        /// Serialized Name: ReplicationProviderSpecificSettings.instanceType
-        /// </param>
-        /// <param name="internalIdentifier">
-        /// The virtual machine internal identifier.
-        /// Serialized Name: InMageRcmFailbackReplicationDetails.internalIdentifier
-        /// </param>
-        /// <param name="azureVirtualMachineId">
-        /// The ARM Id of the azure VM.
-        /// Serialized Name: InMageRcmFailbackReplicationDetails.azureVirtualMachineId
-        /// </param>
-        /// <param name="multiVmGroupName">
-        /// The multi VM group name.
-        /// Serialized Name: InMageRcmFailbackReplicationDetails.multiVmGroupName
-        /// </param>
-        /// <param name="reprotectAgentId">
-        /// The reprotect agent Id.
-        /// Serialized Name: InMageRcmFailbackReplicationDetails.reprotectAgentId
-        /// </param>
-        /// <param name="reprotectAgentName">
-        /// The reprotect agent name.
-        /// Serialized Name: InMageRcmFailbackReplicationDetails.reprotectAgentName
-        /// </param>
-        /// <param name="osType">
-        /// The type of the OS on the VM.
-        /// Serialized Name: InMageRcmFailbackReplicationDetails.osType
-        /// </param>
-        /// <param name="logStorageAccountId">
-        /// The log storage account ARM Id.
-        /// Serialized Name: InMageRcmFailbackReplicationDetails.logStorageAccountId
-        /// </param>
-        /// <param name="targetVCenterId">
-        /// The target vCenter Id.
-        /// Serialized Name: InMageRcmFailbackReplicationDetails.targetvCenterId
-        /// </param>
-        /// <param name="targetDataStoreName">
-        /// The target datastore name.
-        /// Serialized Name: InMageRcmFailbackReplicationDetails.targetDataStoreName
-        /// </param>
-        /// <param name="targetVmName">
-        /// The target VM name.
-        /// Serialized Name: InMageRcmFailbackReplicationDetails.targetVmName
-        /// </param>
-        /// <param name="initialReplicationProgressPercentage">
-        /// The initial replication progress percentage.
-        /// Serialized Name: InMageRcmFailbackReplicationDetails.initialReplicationProgressPercentage
-        /// </param>
-        /// <param name="initialReplicationProcessedBytes">
-        /// The initial replication processed bytes. This includes sum of total bytes transferred and matched bytes on all selected disks in source VM.
-        /// Serialized Name: InMageRcmFailbackReplicationDetails.initialReplicationProcessedBytes
-        /// </param>
-        /// <param name="initialReplicationTransferredBytes">
-        /// The initial replication transferred bytes from source VM to target for all selected disks on source VM.
-        /// Serialized Name: InMageRcmFailbackReplicationDetails.initialReplicationTransferredBytes
-        /// </param>
-        /// <param name="initialReplicationProgressHealth">
-        /// The initial replication progress health.
-        /// Serialized Name: InMageRcmFailbackReplicationDetails.initialReplicationProgressHealth
-        /// </param>
-        /// <param name="resyncProgressPercentage">
-        /// The resync progress percentage.
-        /// Serialized Name: InMageRcmFailbackReplicationDetails.resyncProgressPercentage
-        /// </param>
-        /// <param name="resyncProcessedBytes">
-        /// The resync processed bytes. This includes sum of total bytes transferred and matched bytes on all selected disks in source VM.
-        /// Serialized Name: InMageRcmFailbackReplicationDetails.resyncProcessedBytes
-        /// </param>
-        /// <param name="resyncTransferredBytes">
-        /// The resync transferred bytes from source VM to target for all selected disks on source VM.
-        /// Serialized Name: InMageRcmFailbackReplicationDetails.resyncTransferredBytes
-        /// </param>
-        /// <param name="resyncProgressHealth">
-        /// The resync progress health.
-        /// Serialized Name: InMageRcmFailbackReplicationDetails.resyncProgressHealth
-        /// </param>
-        /// <param name="resyncRequired">
-        /// A value indicating whether resync is required.
-        /// Serialized Name: InMageRcmFailbackReplicationDetails.resyncRequired
-        /// </param>
-        /// <param name="resyncState">
-        /// The resync state.
-        /// Serialized Name: InMageRcmFailbackReplicationDetails.resyncState
-        /// </param>
-        /// <param name="protectedDisks">
-        /// The list of protected disks.
-        /// Serialized Name: InMageRcmFailbackReplicationDetails.protectedDisks
-        /// </param>
-        /// <param name="mobilityAgentDetails">
-        /// The mobility agent information.
-        /// Serialized Name: InMageRcmFailbackReplicationDetails.mobilityAgentDetails
-        /// </param>
-        /// <param name="vmNics">
-        /// The network details.
-        /// Serialized Name: InMageRcmFailbackReplicationDetails.vmNics
-        /// </param>
-        /// <param name="lastPlannedFailoverStartOn">
-        /// The last planned failover start time.
-        /// Serialized Name: InMageRcmFailbackReplicationDetails.lastPlannedFailoverStartTime
-        /// </param>
-        /// <param name="lastPlannedFailoverStatus">
-        /// The last planned failover status.
-        /// Serialized Name: InMageRcmFailbackReplicationDetails.lastPlannedFailoverStatus
-        /// </param>
-        /// <param name="discoveredVmDetails">
-        /// The discovered VM information.
-        /// Serialized Name: InMageRcmFailbackReplicationDetails.discoveredVmDetails
-        /// </param>
-        /// <param name="lastUsedPolicyId">
-        /// The policy Id used by the forward replication.
-        /// Serialized Name: InMageRcmFailbackReplicationDetails.lastUsedPolicyId
-        /// </param>
-        /// <param name="lastUsedPolicyFriendlyName">
-        /// The policy friendly name used by the forward replication.
-        /// Serialized Name: InMageRcmFailbackReplicationDetails.lastUsedPolicyFriendlyName
-        /// </param>
-        /// <param name="isAgentRegistrationSuccessfulAfterFailover">
-        /// A value indicating whether agent registration was successful after failover.
-        /// Serialized Name: InMageRcmFailbackReplicationDetails.isAgentRegistrationSuccessfulAfterFailover
-        /// </param>
-        internal InMageRcmFailbackReplicationDetails(string instanceType, string internalIdentifier, ResourceIdentifier azureVirtualMachineId, string multiVmGroupName, string reprotectAgentId, string reprotectAgentName, string osType, ResourceIdentifier logStorageAccountId, string targetVCenterId, string targetDataStoreName, string targetVmName, int? initialReplicationProgressPercentage, long? initialReplicationProcessedBytes, long? initialReplicationTransferredBytes, VmReplicationProgressHealth? initialReplicationProgressHealth, int? resyncProgressPercentage, long? resyncProcessedBytes, long? resyncTransferredBytes, VmReplicationProgressHealth? resyncProgressHealth, string resyncRequired, ResyncState? resyncState, IReadOnlyList<InMageRcmFailbackProtectedDiskDetails> protectedDisks, InMageRcmFailbackMobilityAgentDetails mobilityAgentDetails, IReadOnlyList<InMageRcmFailbackNicDetails> vmNics, DateTimeOffset? lastPlannedFailoverStartOn, PlannedFailoverStatus? lastPlannedFailoverStatus, InMageRcmFailbackDiscoveredProtectedVmDetails discoveredVmDetails, ResourceIdentifier lastUsedPolicyId, string lastUsedPolicyFriendlyName, bool? isAgentRegistrationSuccessfulAfterFailover) : base(instanceType)
+        /// <param name="instanceType"> Gets the Instance type. </param>
+        /// <param name="internalIdentifier"> The virtual machine internal identifier. </param>
+        /// <param name="azureVirtualMachineId"> The ARM Id of the azure VM. </param>
+        /// <param name="multiVmGroupName"> The multi VM group name. </param>
+        /// <param name="reprotectAgentId"> The reprotect agent Id. </param>
+        /// <param name="reprotectAgentName"> The reprotect agent name. </param>
+        /// <param name="osType"> The type of the OS on the VM. </param>
+        /// <param name="logStorageAccountId"> The log storage account ARM Id. </param>
+        /// <param name="targetVCenterId"> The target vCenter Id. </param>
+        /// <param name="targetDataStoreName"> The target datastore name. </param>
+        /// <param name="targetVmName"> The target VM name. </param>
+        /// <param name="initialReplicationProgressPercentage"> The initial replication progress percentage. </param>
+        /// <param name="initialReplicationProcessedBytes"> The initial replication processed bytes. This includes sum of total bytes transferred and matched bytes on all selected disks in source VM. </param>
+        /// <param name="initialReplicationTransferredBytes"> The initial replication transferred bytes from source VM to target for all selected disks on source VM. </param>
+        /// <param name="initialReplicationProgressHealth"> The initial replication progress health. </param>
+        /// <param name="resyncProgressPercentage"> The resync progress percentage. </param>
+        /// <param name="resyncProcessedBytes"> The resync processed bytes. This includes sum of total bytes transferred and matched bytes on all selected disks in source VM. </param>
+        /// <param name="resyncTransferredBytes"> The resync transferred bytes from source VM to target for all selected disks on source VM. </param>
+        /// <param name="resyncProgressHealth"> The resync progress health. </param>
+        /// <param name="resyncRequired"> A value indicating whether resync is required. </param>
+        /// <param name="resyncState"> The resync state. </param>
+        /// <param name="protectedDisks"> The list of protected disks. </param>
+        /// <param name="mobilityAgentDetails"> The mobility agent information. </param>
+        /// <param name="vmNics"> The network details. </param>
+        /// <param name="lastPlannedFailoverStartOn"> The last planned failover start time. </param>
+        /// <param name="lastPlannedFailoverStatus"> The last planned failover status. </param>
+        /// <param name="discoveredVmDetails"> The discovered VM information. </param>
+        /// <param name="lastUsedPolicyId"> The policy Id used by the forward replication. </param>
+        /// <param name="lastUsedPolicyFriendlyName"> The policy friendly name used by the forward replication. </param>
+        /// <param name="isAgentRegistrationSuccessfulAfterFailover"> A value indicating whether agent registration was successful after failover. </param>
+        internal InMageRcmFailbackReplicationDetails(string instanceType, string internalIdentifier, ResourceIdentifier azureVirtualMachineId, string multiVmGroupName, string reprotectAgentId, string reprotectAgentName, string osType, ResourceIdentifier logStorageAccountId, string targetVCenterId, string targetDataStoreName, string targetVmName, int? initialReplicationProgressPercentage, long? initialReplicationProcessedBytes, long? initialReplicationTransferredBytes, VmReplicationProgressHealth? initialReplicationProgressHealth, int? resyncProgressPercentage, long? resyncProcessedBytes, long? resyncTransferredBytes, VmReplicationProgressHealth? resyncProgressHealth, string resyncRequired, SiteRecoveryResyncState? resyncState, IReadOnlyList<InMageRcmFailbackProtectedDiskDetails> protectedDisks, InMageRcmFailbackMobilityAgentDetails mobilityAgentDetails, IReadOnlyList<InMageRcmFailbackNicDetails> vmNics, DateTimeOffset? lastPlannedFailoverStartOn, PlannedFailoverStatus? lastPlannedFailoverStatus, InMageRcmFailbackDiscoveredProtectedVmDetails discoveredVmDetails, ResourceIdentifier lastUsedPolicyId, string lastUsedPolicyFriendlyName, bool? isAgentRegistrationSuccessfulAfterFailover) : base(instanceType)
         {
             InternalIdentifier = internalIdentifier;
             AzureVirtualMachineId = azureVirtualMachineId;
@@ -180,150 +87,63 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             InstanceType = instanceType ?? "InMageRcmFailback";
         }
 
-        /// <summary>
-        /// The virtual machine internal identifier.
-        /// Serialized Name: InMageRcmFailbackReplicationDetails.internalIdentifier
-        /// </summary>
+        /// <summary> The virtual machine internal identifier. </summary>
         public string InternalIdentifier { get; }
-        /// <summary>
-        /// The ARM Id of the azure VM.
-        /// Serialized Name: InMageRcmFailbackReplicationDetails.azureVirtualMachineId
-        /// </summary>
+        /// <summary> The ARM Id of the azure VM. </summary>
         public ResourceIdentifier AzureVirtualMachineId { get; }
-        /// <summary>
-        /// The multi VM group name.
-        /// Serialized Name: InMageRcmFailbackReplicationDetails.multiVmGroupName
-        /// </summary>
+        /// <summary> The multi VM group name. </summary>
         public string MultiVmGroupName { get; }
-        /// <summary>
-        /// The reprotect agent Id.
-        /// Serialized Name: InMageRcmFailbackReplicationDetails.reprotectAgentId
-        /// </summary>
+        /// <summary> The reprotect agent Id. </summary>
         public string ReprotectAgentId { get; }
-        /// <summary>
-        /// The reprotect agent name.
-        /// Serialized Name: InMageRcmFailbackReplicationDetails.reprotectAgentName
-        /// </summary>
+        /// <summary> The reprotect agent name. </summary>
         public string ReprotectAgentName { get; }
-        /// <summary>
-        /// The type of the OS on the VM.
-        /// Serialized Name: InMageRcmFailbackReplicationDetails.osType
-        /// </summary>
+        /// <summary> The type of the OS on the VM. </summary>
         public string OSType { get; }
-        /// <summary>
-        /// The log storage account ARM Id.
-        /// Serialized Name: InMageRcmFailbackReplicationDetails.logStorageAccountId
-        /// </summary>
+        /// <summary> The log storage account ARM Id. </summary>
         public ResourceIdentifier LogStorageAccountId { get; }
-        /// <summary>
-        /// The target vCenter Id.
-        /// Serialized Name: InMageRcmFailbackReplicationDetails.targetvCenterId
-        /// </summary>
+        /// <summary> The target vCenter Id. </summary>
         public string TargetVCenterId { get; }
-        /// <summary>
-        /// The target datastore name.
-        /// Serialized Name: InMageRcmFailbackReplicationDetails.targetDataStoreName
-        /// </summary>
+        /// <summary> The target datastore name. </summary>
         public string TargetDataStoreName { get; }
-        /// <summary>
-        /// The target VM name.
-        /// Serialized Name: InMageRcmFailbackReplicationDetails.targetVmName
-        /// </summary>
+        /// <summary> The target VM name. </summary>
         public string TargetVmName { get; }
-        /// <summary>
-        /// The initial replication progress percentage.
-        /// Serialized Name: InMageRcmFailbackReplicationDetails.initialReplicationProgressPercentage
-        /// </summary>
+        /// <summary> The initial replication progress percentage. </summary>
         public int? InitialReplicationProgressPercentage { get; }
-        /// <summary>
-        /// The initial replication processed bytes. This includes sum of total bytes transferred and matched bytes on all selected disks in source VM.
-        /// Serialized Name: InMageRcmFailbackReplicationDetails.initialReplicationProcessedBytes
-        /// </summary>
+        /// <summary> The initial replication processed bytes. This includes sum of total bytes transferred and matched bytes on all selected disks in source VM. </summary>
         public long? InitialReplicationProcessedBytes { get; }
-        /// <summary>
-        /// The initial replication transferred bytes from source VM to target for all selected disks on source VM.
-        /// Serialized Name: InMageRcmFailbackReplicationDetails.initialReplicationTransferredBytes
-        /// </summary>
+        /// <summary> The initial replication transferred bytes from source VM to target for all selected disks on source VM. </summary>
         public long? InitialReplicationTransferredBytes { get; }
-        /// <summary>
-        /// The initial replication progress health.
-        /// Serialized Name: InMageRcmFailbackReplicationDetails.initialReplicationProgressHealth
-        /// </summary>
+        /// <summary> The initial replication progress health. </summary>
         public VmReplicationProgressHealth? InitialReplicationProgressHealth { get; }
-        /// <summary>
-        /// The resync progress percentage.
-        /// Serialized Name: InMageRcmFailbackReplicationDetails.resyncProgressPercentage
-        /// </summary>
+        /// <summary> The resync progress percentage. </summary>
         public int? ResyncProgressPercentage { get; }
-        /// <summary>
-        /// The resync processed bytes. This includes sum of total bytes transferred and matched bytes on all selected disks in source VM.
-        /// Serialized Name: InMageRcmFailbackReplicationDetails.resyncProcessedBytes
-        /// </summary>
+        /// <summary> The resync processed bytes. This includes sum of total bytes transferred and matched bytes on all selected disks in source VM. </summary>
         public long? ResyncProcessedBytes { get; }
-        /// <summary>
-        /// The resync transferred bytes from source VM to target for all selected disks on source VM.
-        /// Serialized Name: InMageRcmFailbackReplicationDetails.resyncTransferredBytes
-        /// </summary>
+        /// <summary> The resync transferred bytes from source VM to target for all selected disks on source VM. </summary>
         public long? ResyncTransferredBytes { get; }
-        /// <summary>
-        /// The resync progress health.
-        /// Serialized Name: InMageRcmFailbackReplicationDetails.resyncProgressHealth
-        /// </summary>
+        /// <summary> The resync progress health. </summary>
         public VmReplicationProgressHealth? ResyncProgressHealth { get; }
-        /// <summary>
-        /// A value indicating whether resync is required.
-        /// Serialized Name: InMageRcmFailbackReplicationDetails.resyncRequired
-        /// </summary>
+        /// <summary> A value indicating whether resync is required. </summary>
         public string ResyncRequired { get; }
-        /// <summary>
-        /// The resync state.
-        /// Serialized Name: InMageRcmFailbackReplicationDetails.resyncState
-        /// </summary>
-        public ResyncState? ResyncState { get; }
-        /// <summary>
-        /// The list of protected disks.
-        /// Serialized Name: InMageRcmFailbackReplicationDetails.protectedDisks
-        /// </summary>
+        /// <summary> The resync state. </summary>
+        public SiteRecoveryResyncState? ResyncState { get; }
+        /// <summary> The list of protected disks. </summary>
         public IReadOnlyList<InMageRcmFailbackProtectedDiskDetails> ProtectedDisks { get; }
-        /// <summary>
-        /// The mobility agent information.
-        /// Serialized Name: InMageRcmFailbackReplicationDetails.mobilityAgentDetails
-        /// </summary>
+        /// <summary> The mobility agent information. </summary>
         public InMageRcmFailbackMobilityAgentDetails MobilityAgentDetails { get; }
-        /// <summary>
-        /// The network details.
-        /// Serialized Name: InMageRcmFailbackReplicationDetails.vmNics
-        /// </summary>
+        /// <summary> The network details. </summary>
         public IReadOnlyList<InMageRcmFailbackNicDetails> VmNics { get; }
-        /// <summary>
-        /// The last planned failover start time.
-        /// Serialized Name: InMageRcmFailbackReplicationDetails.lastPlannedFailoverStartTime
-        /// </summary>
+        /// <summary> The last planned failover start time. </summary>
         public DateTimeOffset? LastPlannedFailoverStartOn { get; }
-        /// <summary>
-        /// The last planned failover status.
-        /// Serialized Name: InMageRcmFailbackReplicationDetails.lastPlannedFailoverStatus
-        /// </summary>
+        /// <summary> The last planned failover status. </summary>
         public PlannedFailoverStatus? LastPlannedFailoverStatus { get; }
-        /// <summary>
-        /// The discovered VM information.
-        /// Serialized Name: InMageRcmFailbackReplicationDetails.discoveredVmDetails
-        /// </summary>
+        /// <summary> The discovered VM information. </summary>
         public InMageRcmFailbackDiscoveredProtectedVmDetails DiscoveredVmDetails { get; }
-        /// <summary>
-        /// The policy Id used by the forward replication.
-        /// Serialized Name: InMageRcmFailbackReplicationDetails.lastUsedPolicyId
-        /// </summary>
+        /// <summary> The policy Id used by the forward replication. </summary>
         public ResourceIdentifier LastUsedPolicyId { get; }
-        /// <summary>
-        /// The policy friendly name used by the forward replication.
-        /// Serialized Name: InMageRcmFailbackReplicationDetails.lastUsedPolicyFriendlyName
-        /// </summary>
+        /// <summary> The policy friendly name used by the forward replication. </summary>
         public string LastUsedPolicyFriendlyName { get; }
-        /// <summary>
-        /// A value indicating whether agent registration was successful after failover.
-        /// Serialized Name: InMageRcmFailbackReplicationDetails.isAgentRegistrationSuccessfulAfterFailover
-        /// </summary>
+        /// <summary> A value indicating whether agent registration was successful after failover. </summary>
         public bool? IsAgentRegistrationSuccessfulAfterFailover { get; }
     }
 }

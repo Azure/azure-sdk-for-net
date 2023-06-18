@@ -40,20 +40,20 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WritePropertyName("recoveryNetworkSecurityGroupId"u8);
                 writer.WriteStringValue(RecoveryNetworkSecurityGroupId);
             }
-            if (Optional.IsDefined(EnableAcceleratedNetworkingOnRecovery))
+            if (Optional.IsDefined(IsAcceleratedNetworkingOnRecoveryEnabled))
             {
                 writer.WritePropertyName("enableAcceleratedNetworkingOnRecovery"u8);
-                writer.WriteBooleanValue(EnableAcceleratedNetworkingOnRecovery.Value);
+                writer.WriteBooleanValue(IsAcceleratedNetworkingOnRecoveryEnabled.Value);
             }
             if (Optional.IsDefined(TfoNetworkSecurityGroupId))
             {
                 writer.WritePropertyName("tfoNetworkSecurityGroupId"u8);
                 writer.WriteStringValue(TfoNetworkSecurityGroupId);
             }
-            if (Optional.IsDefined(EnableAcceleratedNetworkingOnTfo))
+            if (Optional.IsDefined(IsAcceleratedNetworkingOnTfoEnabled))
             {
                 writer.WritePropertyName("enableAcceleratedNetworkingOnTfo"u8);
-                writer.WriteBooleanValue(EnableAcceleratedNetworkingOnTfo.Value);
+                writer.WriteBooleanValue(IsAcceleratedNetworkingOnTfoEnabled.Value);
             }
             if (Optional.IsDefined(RecoveryNicName))
             {
@@ -65,10 +65,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WritePropertyName("recoveryNicResourceGroupName"u8);
                 writer.WriteStringValue(RecoveryNicResourceGroupName);
             }
-            if (Optional.IsDefined(ReuseExistingNic))
+            if (Optional.IsDefined(IsReuseExistingNicAllowed))
             {
                 writer.WritePropertyName("reuseExistingNic"u8);
-                writer.WriteBooleanValue(ReuseExistingNic.Value);
+                writer.WriteBooleanValue(IsReuseExistingNicAllowed.Value);
             }
             if (Optional.IsDefined(TfoNicName))
             {
@@ -80,10 +80,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WritePropertyName("tfoNicResourceGroupName"u8);
                 writer.WriteStringValue(TfoNicResourceGroupName);
             }
-            if (Optional.IsDefined(TfoReuseExistingNic))
+            if (Optional.IsDefined(IsTfoReuseExistingNicAllowed))
             {
                 writer.WritePropertyName("tfoReuseExistingNic"u8);
-                writer.WriteBooleanValue(TfoReuseExistingNic.Value);
+                writer.WriteBooleanValue(IsTfoReuseExistingNicAllowed.Value);
             }
             if (Optional.IsDefined(TargetNicName))
             {

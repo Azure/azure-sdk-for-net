@@ -7,10 +7,7 @@
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary>
-    /// Container pairing update input.
-    /// Serialized Name: UpdateProtectionContainerMappingInputProperties
-    /// </summary>
+    /// <summary> Container pairing update input. </summary>
     internal partial class UpdateProtectionContainerMappingContentProperties
     {
         /// <summary> Initializes a new instance of UpdateProtectionContainerMappingContentProperties. </summary>
@@ -20,7 +17,6 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 
         /// <summary>
         /// Provider specific input for updating protection container mapping.
-        /// Serialized Name: UpdateProtectionContainerMappingInputProperties.providerSpecificInput
         /// Please note <see cref="ReplicationProviderSpecificUpdateContainerMappingContent"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="A2AUpdateContainerMappingContent"/> and <see cref="InMageRcmUpdateContainerMappingContent"/>.
         /// </summary>

@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Samples
             // invoke the operation
             SiteRecoveryAlertCreateOrUpdateContent content = new SiteRecoveryAlertCreateOrUpdateContent()
             {
-                Properties = new ConfigureAlertRequestProperties()
+                Properties = new SiteRecoveryConfigureAlertProperties()
                 {
                     SendToOwners = "false",
                     CustomEmailAddresses =

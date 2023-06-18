@@ -11,10 +11,7 @@ using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary>
-    /// Collection of jobs.
-    /// Serialized Name: JobCollection
-    /// </summary>
+    /// <summary> Collection of jobs. </summary>
     internal partial class SiteRecoveryJobListResult
     {
         /// <summary> Initializes a new instance of SiteRecoveryJobListResult. </summary>
@@ -24,29 +21,17 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Initializes a new instance of SiteRecoveryJobListResult. </summary>
-        /// <param name="value">
-        /// The list of jobs.
-        /// Serialized Name: JobCollection.value
-        /// </param>
-        /// <param name="nextLink">
-        /// The value of next link.
-        /// Serialized Name: JobCollection.nextLink
-        /// </param>
+        /// <param name="value"> The list of jobs. </param>
+        /// <param name="nextLink"> The value of next link. </param>
         internal SiteRecoveryJobListResult(IReadOnlyList<SiteRecoveryJobData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
-        /// <summary>
-        /// The list of jobs.
-        /// Serialized Name: JobCollection.value
-        /// </summary>
+        /// <summary> The list of jobs. </summary>
         public IReadOnlyList<SiteRecoveryJobData> Value { get; }
-        /// <summary>
-        /// The value of next link.
-        /// Serialized Name: JobCollection.nextLink
-        /// </summary>
+        /// <summary> The value of next link. </summary>
         public string NextLink { get; }
     }
 }

@@ -31,14 +31,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         private ReplicationMigrationItemsRestOperations _siteRecoveryMigrationItemReplicationMigrationItemsRestClient;
         private ClientDiagnostics _replicationProtectedItemClientDiagnostics;
         private ReplicationProtectedItemsRestOperations _replicationProtectedItemRestClient;
-        private ClientDiagnostics _siteRecoveryProtectionContainerMappingReplicationProtectionContainerMappingsClientDiagnostics;
-        private ReplicationProtectionContainerMappingsRestOperations _siteRecoveryProtectionContainerMappingReplicationProtectionContainerMappingsRestClient;
+        private ClientDiagnostics _protectionContainerMappingReplicationProtectionContainerMappingsClientDiagnostics;
+        private ReplicationProtectionContainerMappingsRestOperations _protectionContainerMappingReplicationProtectionContainerMappingsRestClient;
         private ClientDiagnostics _siteRecoveryServicesProviderReplicationRecoveryServicesProvidersClientDiagnostics;
         private ReplicationRecoveryServicesProvidersRestOperations _siteRecoveryServicesProviderReplicationRecoveryServicesProvidersRestClient;
-        private ClientDiagnostics _siteRecoveryStorageClassificationReplicationStorageClassificationsClientDiagnostics;
-        private ReplicationStorageClassificationsRestOperations _siteRecoveryStorageClassificationReplicationStorageClassificationsRestClient;
-        private ClientDiagnostics _siteRecoveryStorageClassificationMappingReplicationStorageClassificationMappingsClientDiagnostics;
-        private ReplicationStorageClassificationMappingsRestOperations _siteRecoveryStorageClassificationMappingReplicationStorageClassificationMappingsRestClient;
+        private ClientDiagnostics _storageClassificationReplicationStorageClassificationsClientDiagnostics;
+        private ReplicationStorageClassificationsRestOperations _storageClassificationReplicationStorageClassificationsRestClient;
+        private ClientDiagnostics _storageClassificationMappingReplicationStorageClassificationMappingsClientDiagnostics;
+        private ReplicationStorageClassificationMappingsRestOperations _storageClassificationMappingReplicationStorageClassificationMappingsRestClient;
         private ClientDiagnostics _siteRecoveryVCenterReplicationvCentersClientDiagnostics;
         private ReplicationvCentersRestOperations _siteRecoveryVCenterReplicationvCentersRestClient;
         private ClientDiagnostics _supportedOperatingSystemsClientDiagnostics;
@@ -70,14 +70,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         private ReplicationMigrationItemsRestOperations SiteRecoveryMigrationItemReplicationMigrationItemsRestClient => _siteRecoveryMigrationItemReplicationMigrationItemsRestClient ??= new ReplicationMigrationItemsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(SiteRecoveryMigrationItemResource.ResourceType));
         private ClientDiagnostics ReplicationProtectedItemClientDiagnostics => _replicationProtectedItemClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesSiteRecovery", ReplicationProtectedItemResource.ResourceType.Namespace, Diagnostics);
         private ReplicationProtectedItemsRestOperations ReplicationProtectedItemRestClient => _replicationProtectedItemRestClient ??= new ReplicationProtectedItemsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(ReplicationProtectedItemResource.ResourceType));
-        private ClientDiagnostics SiteRecoveryProtectionContainerMappingReplicationProtectionContainerMappingsClientDiagnostics => _siteRecoveryProtectionContainerMappingReplicationProtectionContainerMappingsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesSiteRecovery", SiteRecoveryProtectionContainerMappingResource.ResourceType.Namespace, Diagnostics);
-        private ReplicationProtectionContainerMappingsRestOperations SiteRecoveryProtectionContainerMappingReplicationProtectionContainerMappingsRestClient => _siteRecoveryProtectionContainerMappingReplicationProtectionContainerMappingsRestClient ??= new ReplicationProtectionContainerMappingsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(SiteRecoveryProtectionContainerMappingResource.ResourceType));
+        private ClientDiagnostics ProtectionContainerMappingReplicationProtectionContainerMappingsClientDiagnostics => _protectionContainerMappingReplicationProtectionContainerMappingsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesSiteRecovery", ProtectionContainerMappingResource.ResourceType.Namespace, Diagnostics);
+        private ReplicationProtectionContainerMappingsRestOperations ProtectionContainerMappingReplicationProtectionContainerMappingsRestClient => _protectionContainerMappingReplicationProtectionContainerMappingsRestClient ??= new ReplicationProtectionContainerMappingsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(ProtectionContainerMappingResource.ResourceType));
         private ClientDiagnostics SiteRecoveryServicesProviderReplicationRecoveryServicesProvidersClientDiagnostics => _siteRecoveryServicesProviderReplicationRecoveryServicesProvidersClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesSiteRecovery", SiteRecoveryServicesProviderResource.ResourceType.Namespace, Diagnostics);
         private ReplicationRecoveryServicesProvidersRestOperations SiteRecoveryServicesProviderReplicationRecoveryServicesProvidersRestClient => _siteRecoveryServicesProviderReplicationRecoveryServicesProvidersRestClient ??= new ReplicationRecoveryServicesProvidersRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(SiteRecoveryServicesProviderResource.ResourceType));
-        private ClientDiagnostics SiteRecoveryStorageClassificationReplicationStorageClassificationsClientDiagnostics => _siteRecoveryStorageClassificationReplicationStorageClassificationsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesSiteRecovery", SiteRecoveryStorageClassificationResource.ResourceType.Namespace, Diagnostics);
-        private ReplicationStorageClassificationsRestOperations SiteRecoveryStorageClassificationReplicationStorageClassificationsRestClient => _siteRecoveryStorageClassificationReplicationStorageClassificationsRestClient ??= new ReplicationStorageClassificationsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(SiteRecoveryStorageClassificationResource.ResourceType));
-        private ClientDiagnostics SiteRecoveryStorageClassificationMappingReplicationStorageClassificationMappingsClientDiagnostics => _siteRecoveryStorageClassificationMappingReplicationStorageClassificationMappingsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesSiteRecovery", SiteRecoveryStorageClassificationMappingResource.ResourceType.Namespace, Diagnostics);
-        private ReplicationStorageClassificationMappingsRestOperations SiteRecoveryStorageClassificationMappingReplicationStorageClassificationMappingsRestClient => _siteRecoveryStorageClassificationMappingReplicationStorageClassificationMappingsRestClient ??= new ReplicationStorageClassificationMappingsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(SiteRecoveryStorageClassificationMappingResource.ResourceType));
+        private ClientDiagnostics StorageClassificationReplicationStorageClassificationsClientDiagnostics => _storageClassificationReplicationStorageClassificationsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesSiteRecovery", StorageClassificationResource.ResourceType.Namespace, Diagnostics);
+        private ReplicationStorageClassificationsRestOperations StorageClassificationReplicationStorageClassificationsRestClient => _storageClassificationReplicationStorageClassificationsRestClient ??= new ReplicationStorageClassificationsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(StorageClassificationResource.ResourceType));
+        private ClientDiagnostics StorageClassificationMappingReplicationStorageClassificationMappingsClientDiagnostics => _storageClassificationMappingReplicationStorageClassificationMappingsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesSiteRecovery", StorageClassificationMappingResource.ResourceType.Namespace, Diagnostics);
+        private ReplicationStorageClassificationMappingsRestOperations StorageClassificationMappingReplicationStorageClassificationMappingsRestClient => _storageClassificationMappingReplicationStorageClassificationMappingsRestClient ??= new ReplicationStorageClassificationMappingsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(StorageClassificationMappingResource.ResourceType));
         private ClientDiagnostics SiteRecoveryVCenterReplicationvCentersClientDiagnostics => _siteRecoveryVCenterReplicationvCentersClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesSiteRecovery", SiteRecoveryVCenterResource.ResourceType.Namespace, Diagnostics);
         private ReplicationvCentersRestOperations SiteRecoveryVCenterReplicationvCentersRestClient => _siteRecoveryVCenterReplicationvCentersRestClient ??= new ReplicationvCentersRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(SiteRecoveryVCenterResource.ResourceType));
         private ClientDiagnostics SupportedOperatingSystemsClientDiagnostics => _supportedOperatingSystemsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesSiteRecovery", ProviderConstants.DefaultProviderNamespace, Diagnostics);
@@ -179,12 +179,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <param name="resourceName"> The name of the recovery services vault. </param>
         /// <param name="filter"> OData filter options. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SiteRecoveryAppliance" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<SiteRecoveryAppliance> GetReplicationAppliancesAsync(string resourceName, string filter = null, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="SiteRecoveryReplicationAppliance" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<SiteRecoveryReplicationAppliance> GetReplicationAppliancesAsync(string resourceName, string filter = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ReplicationAppliancesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, resourceName, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ReplicationAppliancesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, resourceName, filter);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, SiteRecoveryAppliance.DeserializeSiteRecoveryAppliance, ReplicationAppliancesClientDiagnostics, Pipeline, "ResourceGroupResourceExtensionClient.GetReplicationAppliances", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, SiteRecoveryReplicationAppliance.DeserializeSiteRecoveryReplicationAppliance, ReplicationAppliancesClientDiagnostics, Pipeline, "ResourceGroupResourceExtensionClient.GetReplicationAppliances", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -203,12 +203,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <param name="resourceName"> The name of the recovery services vault. </param>
         /// <param name="filter"> OData filter options. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SiteRecoveryAppliance" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<SiteRecoveryAppliance> GetReplicationAppliances(string resourceName, string filter = null, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="SiteRecoveryReplicationAppliance" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<SiteRecoveryReplicationAppliance> GetReplicationAppliances(string resourceName, string filter = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ReplicationAppliancesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, resourceName, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ReplicationAppliancesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, resourceName, filter);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, SiteRecoveryAppliance.DeserializeSiteRecoveryAppliance, ReplicationAppliancesClientDiagnostics, Pipeline, "ResourceGroupResourceExtensionClient.GetReplicationAppliances", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, SiteRecoveryReplicationAppliance.DeserializeSiteRecoveryReplicationAppliance, ReplicationAppliancesClientDiagnostics, Pipeline, "ResourceGroupResourceExtensionClient.GetReplicationAppliances", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -466,12 +466,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// </summary>
         /// <param name="resourceName"> The name of the recovery services vault. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SiteRecoveryProtectionContainerMappingResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<SiteRecoveryProtectionContainerMappingResource> GetSiteRecoveryProtectionContainerMappingsAsync(string resourceName, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="ProtectionContainerMappingResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ProtectionContainerMappingResource> GetProtectionContainerMappingsAsync(string resourceName, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => SiteRecoveryProtectionContainerMappingReplicationProtectionContainerMappingsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, resourceName);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => SiteRecoveryProtectionContainerMappingReplicationProtectionContainerMappingsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, resourceName);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SiteRecoveryProtectionContainerMappingResource(Client, SiteRecoveryProtectionContainerMappingData.DeserializeSiteRecoveryProtectionContainerMappingData(e)), SiteRecoveryProtectionContainerMappingReplicationProtectionContainerMappingsClientDiagnostics, Pipeline, "ResourceGroupResourceExtensionClient.GetSiteRecoveryProtectionContainerMappings", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => ProtectionContainerMappingReplicationProtectionContainerMappingsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, resourceName);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ProtectionContainerMappingReplicationProtectionContainerMappingsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, resourceName);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ProtectionContainerMappingResource(Client, ProtectionContainerMappingData.DeserializeProtectionContainerMappingData(e)), ProtectionContainerMappingReplicationProtectionContainerMappingsClientDiagnostics, Pipeline, "ResourceGroupResourceExtensionClient.GetProtectionContainerMappings", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -489,12 +489,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// </summary>
         /// <param name="resourceName"> The name of the recovery services vault. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SiteRecoveryProtectionContainerMappingResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<SiteRecoveryProtectionContainerMappingResource> GetSiteRecoveryProtectionContainerMappings(string resourceName, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ProtectionContainerMappingResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ProtectionContainerMappingResource> GetProtectionContainerMappings(string resourceName, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => SiteRecoveryProtectionContainerMappingReplicationProtectionContainerMappingsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, resourceName);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => SiteRecoveryProtectionContainerMappingReplicationProtectionContainerMappingsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, resourceName);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SiteRecoveryProtectionContainerMappingResource(Client, SiteRecoveryProtectionContainerMappingData.DeserializeSiteRecoveryProtectionContainerMappingData(e)), SiteRecoveryProtectionContainerMappingReplicationProtectionContainerMappingsClientDiagnostics, Pipeline, "ResourceGroupResourceExtensionClient.GetSiteRecoveryProtectionContainerMappings", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => ProtectionContainerMappingReplicationProtectionContainerMappingsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, resourceName);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ProtectionContainerMappingReplicationProtectionContainerMappingsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, resourceName);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ProtectionContainerMappingResource(Client, ProtectionContainerMappingData.DeserializeProtectionContainerMappingData(e)), ProtectionContainerMappingReplicationProtectionContainerMappingsClientDiagnostics, Pipeline, "ResourceGroupResourceExtensionClient.GetProtectionContainerMappings", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -558,12 +558,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// </summary>
         /// <param name="resourceName"> The name of the recovery services vault. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SiteRecoveryStorageClassificationResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<SiteRecoveryStorageClassificationResource> GetSiteRecoveryStorageClassificationsAsync(string resourceName, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="StorageClassificationResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<StorageClassificationResource> GetStorageClassificationsAsync(string resourceName, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => SiteRecoveryStorageClassificationReplicationStorageClassificationsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, resourceName);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => SiteRecoveryStorageClassificationReplicationStorageClassificationsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, resourceName);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SiteRecoveryStorageClassificationResource(Client, SiteRecoveryStorageClassificationData.DeserializeSiteRecoveryStorageClassificationData(e)), SiteRecoveryStorageClassificationReplicationStorageClassificationsClientDiagnostics, Pipeline, "ResourceGroupResourceExtensionClient.GetSiteRecoveryStorageClassifications", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => StorageClassificationReplicationStorageClassificationsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, resourceName);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => StorageClassificationReplicationStorageClassificationsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, resourceName);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new StorageClassificationResource(Client, StorageClassificationData.DeserializeStorageClassificationData(e)), StorageClassificationReplicationStorageClassificationsClientDiagnostics, Pipeline, "ResourceGroupResourceExtensionClient.GetStorageClassifications", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -581,12 +581,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// </summary>
         /// <param name="resourceName"> The name of the recovery services vault. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SiteRecoveryStorageClassificationResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<SiteRecoveryStorageClassificationResource> GetSiteRecoveryStorageClassifications(string resourceName, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="StorageClassificationResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<StorageClassificationResource> GetStorageClassifications(string resourceName, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => SiteRecoveryStorageClassificationReplicationStorageClassificationsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, resourceName);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => SiteRecoveryStorageClassificationReplicationStorageClassificationsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, resourceName);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SiteRecoveryStorageClassificationResource(Client, SiteRecoveryStorageClassificationData.DeserializeSiteRecoveryStorageClassificationData(e)), SiteRecoveryStorageClassificationReplicationStorageClassificationsClientDiagnostics, Pipeline, "ResourceGroupResourceExtensionClient.GetSiteRecoveryStorageClassifications", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => StorageClassificationReplicationStorageClassificationsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, resourceName);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => StorageClassificationReplicationStorageClassificationsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, resourceName);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new StorageClassificationResource(Client, StorageClassificationData.DeserializeStorageClassificationData(e)), StorageClassificationReplicationStorageClassificationsClientDiagnostics, Pipeline, "ResourceGroupResourceExtensionClient.GetStorageClassifications", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -604,12 +604,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// </summary>
         /// <param name="resourceName"> The name of the recovery services vault. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SiteRecoveryStorageClassificationMappingResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<SiteRecoveryStorageClassificationMappingResource> GetSiteRecoveryStorageClassificationMappingsAsync(string resourceName, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="StorageClassificationMappingResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<StorageClassificationMappingResource> GetStorageClassificationMappingsAsync(string resourceName, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => SiteRecoveryStorageClassificationMappingReplicationStorageClassificationMappingsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, resourceName);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => SiteRecoveryStorageClassificationMappingReplicationStorageClassificationMappingsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, resourceName);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SiteRecoveryStorageClassificationMappingResource(Client, SiteRecoveryStorageClassificationMappingData.DeserializeSiteRecoveryStorageClassificationMappingData(e)), SiteRecoveryStorageClassificationMappingReplicationStorageClassificationMappingsClientDiagnostics, Pipeline, "ResourceGroupResourceExtensionClient.GetSiteRecoveryStorageClassificationMappings", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => StorageClassificationMappingReplicationStorageClassificationMappingsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, resourceName);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => StorageClassificationMappingReplicationStorageClassificationMappingsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, resourceName);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new StorageClassificationMappingResource(Client, StorageClassificationMappingData.DeserializeStorageClassificationMappingData(e)), StorageClassificationMappingReplicationStorageClassificationMappingsClientDiagnostics, Pipeline, "ResourceGroupResourceExtensionClient.GetStorageClassificationMappings", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -627,12 +627,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// </summary>
         /// <param name="resourceName"> The name of the recovery services vault. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SiteRecoveryStorageClassificationMappingResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<SiteRecoveryStorageClassificationMappingResource> GetSiteRecoveryStorageClassificationMappings(string resourceName, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="StorageClassificationMappingResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<StorageClassificationMappingResource> GetStorageClassificationMappings(string resourceName, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => SiteRecoveryStorageClassificationMappingReplicationStorageClassificationMappingsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, resourceName);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => SiteRecoveryStorageClassificationMappingReplicationStorageClassificationMappingsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, resourceName);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SiteRecoveryStorageClassificationMappingResource(Client, SiteRecoveryStorageClassificationMappingData.DeserializeSiteRecoveryStorageClassificationMappingData(e)), SiteRecoveryStorageClassificationMappingReplicationStorageClassificationMappingsClientDiagnostics, Pipeline, "ResourceGroupResourceExtensionClient.GetSiteRecoveryStorageClassificationMappings", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => StorageClassificationMappingReplicationStorageClassificationMappingsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, resourceName);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => StorageClassificationMappingReplicationStorageClassificationMappingsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, resourceName);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new StorageClassificationMappingResource(Client, StorageClassificationMappingData.DeserializeStorageClassificationMappingData(e)), StorageClassificationMappingReplicationStorageClassificationMappingsClientDiagnostics, Pipeline, "ResourceGroupResourceExtensionClient.GetStorageClassificationMappings", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -697,7 +697,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <param name="resourceName"> The name of the recovery services vault. </param>
         /// <param name="instanceType"> The instance type. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<SupportedOperatingSystems>> GetSupportedOperatingSystemAsync(string resourceName, string instanceType = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SiteRecoverySupportedOperatingSystems>> GetSupportedOperatingSystemAsync(string resourceName, string instanceType = null, CancellationToken cancellationToken = default)
         {
             using var scope = SupportedOperatingSystemsClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetSupportedOperatingSystem");
             scope.Start();
@@ -729,7 +729,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <param name="resourceName"> The name of the recovery services vault. </param>
         /// <param name="instanceType"> The instance type. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<SupportedOperatingSystems> GetSupportedOperatingSystem(string resourceName, string instanceType = null, CancellationToken cancellationToken = default)
+        public virtual Response<SiteRecoverySupportedOperatingSystems> GetSupportedOperatingSystem(string resourceName, string instanceType = null, CancellationToken cancellationToken = default)
         {
             using var scope = SupportedOperatingSystemsClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetSupportedOperatingSystem");
             scope.Start();

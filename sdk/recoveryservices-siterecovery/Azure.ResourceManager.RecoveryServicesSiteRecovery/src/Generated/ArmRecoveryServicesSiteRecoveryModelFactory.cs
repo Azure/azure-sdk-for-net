@@ -23,14 +23,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="properties">
-        /// Alert related data.
-        /// Serialized Name: Alert.properties
-        /// </param>
-        /// <param name="location">
-        /// Resource Location
-        /// Serialized Name: Resource.location
-        /// </param>
+        /// <param name="properties"> Alert related data. </param>
+        /// <param name="location"> Resource Location. </param>
         /// <returns> A new <see cref="RecoveryServicesSiteRecovery.SiteRecoveryAlertData"/> instance for mocking. </returns>
         public static SiteRecoveryAlertData SiteRecoveryAlertData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, SiteRecoveryAlertProperties properties = null, AzureLocation? location = null)
         {
@@ -38,18 +32,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Initializes a new instance of SiteRecoveryAlertProperties. </summary>
-        /// <param name="sendToOwners">
-        /// A value indicating whether to send email to subscription administrator.
-        /// Serialized Name: AlertProperties.sendToOwners
-        /// </param>
-        /// <param name="customEmailAddresses">
-        /// The custom email address for sending emails.
-        /// Serialized Name: AlertProperties.customEmailAddresses
-        /// </param>
-        /// <param name="locale">
-        /// The locale for the email notification.
-        /// Serialized Name: AlertProperties.locale
-        /// </param>
+        /// <param name="sendToOwners"> A value indicating whether to send email to subscription administrator. </param>
+        /// <param name="customEmailAddresses"> The custom email address for sending emails. </param>
+        /// <param name="locale"> The locale for the email notification. </param>
         /// <returns> A new <see cref="Models.SiteRecoveryAlertProperties"/> instance for mocking. </returns>
         public static SiteRecoveryAlertProperties SiteRecoveryAlertProperties(string sendToOwners = null, IEnumerable<string> customEmailAddresses = null, string locale = null)
         {
@@ -58,15 +43,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             return new SiteRecoveryAlertProperties(sendToOwners, customEmailAddresses?.ToList(), locale);
         }
 
-        /// <summary> Initializes a new instance of SiteRecoveryAppliance. </summary>
-        /// <param name="replicationApplianceProviderSpecificDetails">
-        /// Appliance related data.
-        /// Serialized Name: ReplicationAppliance.properties
-        /// </param>
-        /// <returns> A new <see cref="Models.SiteRecoveryAppliance"/> instance for mocking. </returns>
-        public static SiteRecoveryAppliance SiteRecoveryAppliance(SiteRecoveryApplianceSpecificDetails replicationApplianceProviderSpecificDetails = null)
+        /// <summary> Initializes a new instance of SiteRecoveryReplicationAppliance. </summary>
+        /// <param name="siteRecoveryReplicationApplianceProviderSpecificDetails"> Appliance related data. </param>
+        /// <returns> A new <see cref="Models.SiteRecoveryReplicationAppliance"/> instance for mocking. </returns>
+        public static SiteRecoveryReplicationAppliance SiteRecoveryReplicationAppliance(SiteRecoveryApplianceSpecificDetails siteRecoveryReplicationApplianceProviderSpecificDetails = null)
         {
-            return new SiteRecoveryAppliance(replicationApplianceProviderSpecificDetails != null ? new ReplicationApplianceProperties(replicationApplianceProviderSpecificDetails) : null);
+            return new SiteRecoveryReplicationAppliance(siteRecoveryReplicationApplianceProviderSpecificDetails != null ? new SiteRecoveryReplicationApplianceProperties(siteRecoveryReplicationApplianceProviderSpecificDetails) : null);
         }
 
         /// <summary> Initializes a new instance of ReplicationEligibilityResultData. </summary>
@@ -74,58 +56,34 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="properties">
-        /// Gets properties model for replication eligibility results API.
-        /// Serialized Name: ReplicationEligibilityResults.properties
-        /// </param>
+        /// <param name="properties"> Gets properties model for replication eligibility results API. </param>
         /// <returns> A new <see cref="RecoveryServicesSiteRecovery.ReplicationEligibilityResultData"/> instance for mocking. </returns>
-        public static ReplicationEligibilityResultData ReplicationEligibilityResultData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ReplicationEligibilityResultsProperties properties = null)
+        public static ReplicationEligibilityResultData ReplicationEligibilityResultData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ReplicationEligibilityResultProperties properties = null)
         {
             return new ReplicationEligibilityResultData(id, name, resourceType, systemData, properties);
         }
 
-        /// <summary> Initializes a new instance of ReplicationEligibilityResultsProperties. </summary>
-        /// <param name="clientRequestId">
-        /// The client request Id.
-        /// Serialized Name: ReplicationEligibilityResultsProperties.clientRequestId
-        /// </param>
-        /// <param name="errors">
-        /// The error details.
-        /// Serialized Name: ReplicationEligibilityResultsProperties.errors
-        /// </param>
-        /// <returns> A new <see cref="Models.ReplicationEligibilityResultsProperties"/> instance for mocking. </returns>
-        public static ReplicationEligibilityResultsProperties ReplicationEligibilityResultsProperties(string clientRequestId = null, IEnumerable<ReplicationEligibilityResultsErrorInfo> errors = null)
+        /// <summary> Initializes a new instance of ReplicationEligibilityResultProperties. </summary>
+        /// <param name="clientRequestId"> The client request Id. </param>
+        /// <param name="errors"> The error details. </param>
+        /// <returns> A new <see cref="Models.ReplicationEligibilityResultProperties"/> instance for mocking. </returns>
+        public static ReplicationEligibilityResultProperties ReplicationEligibilityResultProperties(string clientRequestId = null, IEnumerable<ReplicationEligibilityResultErrorInfo> errors = null)
         {
-            errors ??= new List<ReplicationEligibilityResultsErrorInfo>();
+            errors ??= new List<ReplicationEligibilityResultErrorInfo>();
 
-            return new ReplicationEligibilityResultsProperties(clientRequestId, errors?.ToList());
+            return new ReplicationEligibilityResultProperties(clientRequestId, errors?.ToList());
         }
 
-        /// <summary> Initializes a new instance of ReplicationEligibilityResultsErrorInfo. </summary>
-        /// <param name="code">
-        /// The error code.
-        /// Serialized Name: ReplicationEligibilityResultsErrorInfo.code
-        /// </param>
-        /// <param name="message">
-        /// The error message.
-        /// Serialized Name: ReplicationEligibilityResultsErrorInfo.message
-        /// </param>
-        /// <param name="possibleCauses">
-        /// The possible causes.
-        /// Serialized Name: ReplicationEligibilityResultsErrorInfo.possibleCauses
-        /// </param>
-        /// <param name="recommendedAction">
-        /// The recommended action.
-        /// Serialized Name: ReplicationEligibilityResultsErrorInfo.recommendedAction
-        /// </param>
-        /// <param name="status">
-        /// The error status.
-        /// Serialized Name: ReplicationEligibilityResultsErrorInfo.status
-        /// </param>
-        /// <returns> A new <see cref="Models.ReplicationEligibilityResultsErrorInfo"/> instance for mocking. </returns>
-        public static ReplicationEligibilityResultsErrorInfo ReplicationEligibilityResultsErrorInfo(string code = null, string message = null, string possibleCauses = null, string recommendedAction = null, string status = null)
+        /// <summary> Initializes a new instance of ReplicationEligibilityResultErrorInfo. </summary>
+        /// <param name="code"> The error code. </param>
+        /// <param name="message"> The error message. </param>
+        /// <param name="possibleCauses"> The possible causes. </param>
+        /// <param name="recommendedAction"> The recommended action. </param>
+        /// <param name="status"> The error status. </param>
+        /// <returns> A new <see cref="Models.ReplicationEligibilityResultErrorInfo"/> instance for mocking. </returns>
+        public static ReplicationEligibilityResultErrorInfo ReplicationEligibilityResultErrorInfo(string code = null, string message = null, string possibleCauses = null, string recommendedAction = null, string status = null)
         {
-            return new ReplicationEligibilityResultsErrorInfo(code, message, possibleCauses, recommendedAction, status);
+            return new ReplicationEligibilityResultErrorInfo(code, message, possibleCauses, recommendedAction, status);
         }
 
         /// <summary> Initializes a new instance of SiteRecoveryEventData. </summary>
@@ -133,14 +91,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="properties">
-        /// Event related data.
-        /// Serialized Name: Event.properties
-        /// </param>
-        /// <param name="location">
-        /// Resource Location
-        /// Serialized Name: Resource.location
-        /// </param>
+        /// <param name="properties"> Event related data. </param>
+        /// <param name="location"> Resource Location. </param>
         /// <returns> A new <see cref="RecoveryServicesSiteRecovery.SiteRecoveryEventData"/> instance for mocking. </returns>
         public static SiteRecoveryEventData SiteRecoveryEventData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, SiteRecoveryEventProperties properties = null, AzureLocation? location = null)
         {
@@ -148,54 +100,25 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Initializes a new instance of SiteRecoveryEventProperties. </summary>
-        /// <param name="eventCode">
-        /// The Id of the monitoring event.
-        /// Serialized Name: EventProperties.eventCode
-        /// </param>
-        /// <param name="description">
-        /// The event name.
-        /// Serialized Name: EventProperties.description
-        /// </param>
-        /// <param name="eventType">
-        /// The type of the event. for example: VM Health, Server Health, Job Failure etc.
-        /// Serialized Name: EventProperties.eventType
-        /// </param>
-        /// <param name="affectedObjectFriendlyName">
-        /// The friendly name of the source of the event on which it is raised (for example, VM, VMM etc).
-        /// Serialized Name: EventProperties.affectedObjectFriendlyName
-        /// </param>
-        /// <param name="affectedObjectCorrelationId">
-        /// The affected object correlationId for the event.
-        /// Serialized Name: EventProperties.affectedObjectCorrelationId
-        /// </param>
-        /// <param name="severity">
-        /// The severity of the event.
-        /// Serialized Name: EventProperties.severity
-        /// </param>
-        /// <param name="occurredOn">
-        /// The time of occurrence of the event.
-        /// Serialized Name: EventProperties.timeOfOccurrence
-        /// </param>
-        /// <param name="fabricId">
-        /// The ARM ID of the fabric.
-        /// Serialized Name: EventProperties.fabricId
-        /// </param>
+        /// <param name="eventCode"> The Id of the monitoring event. </param>
+        /// <param name="description"> The event name. </param>
+        /// <param name="eventType"> The type of the event. for example: VM Health, Server Health, Job Failure etc. </param>
+        /// <param name="affectedObjectFriendlyName"> The friendly name of the source of the event on which it is raised (for example, VM, VMM etc). </param>
+        /// <param name="affectedObjectCorrelationId"> The affected object correlationId for the event. </param>
+        /// <param name="severity"> The severity of the event. </param>
+        /// <param name="occurredOn"> The time of occurrence of the event. </param>
+        /// <param name="fabricId"> The ARM ID of the fabric. </param>
         /// <param name="providerSpecificDetails">
         /// The provider specific settings.
-        /// Serialized Name: EventProperties.providerSpecificDetails
         /// Please note <see cref="SiteRecoveryEventProviderSpecificDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="A2AEventDetails"/>, <see cref="HyperVReplica2012EventDetails"/>, <see cref="HyperVReplica2012R2EventDetails"/>, <see cref="HyperVReplicaAzureEventDetails"/>, <see cref="HyperVReplicaBaseEventDetails"/>, <see cref="InMageAzureV2EventDetails"/>, <see cref="InMageRcmEventDetails"/>, <see cref="InMageRcmFailbackEventDetails"/> and <see cref="VMwareCbtEventDetails"/>.
         /// </param>
         /// <param name="eventSpecificDetails">
         /// The event specific settings.
-        /// Serialized Name: EventProperties.eventSpecificDetails
         /// Please note <see cref="SiteRecoveryEventSpecificDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="SiteRecoveryJJobStatusEventDetails"/>.
+        /// The available derived classes include <see cref="SiteRecoveryJobStatusEventDetails"/>.
         /// </param>
-        /// <param name="healthErrors">
-        /// The list of errors / warnings capturing details associated with the issue(s).
-        /// Serialized Name: EventProperties.healthErrors
-        /// </param>
+        /// <param name="healthErrors"> The list of errors / warnings capturing details associated with the issue(s). </param>
         /// <returns> A new <see cref="Models.SiteRecoveryEventProperties"/> instance for mocking. </returns>
         public static SiteRecoveryEventProperties SiteRecoveryEventProperties(string eventCode = null, string description = null, string eventType = null, string affectedObjectFriendlyName = null, string affectedObjectCorrelationId = null, string severity = null, DateTimeOffset? occurredOn = null, ResourceIdentifier fabricId = null, SiteRecoveryEventProviderSpecificDetails providerSpecificDetails = null, SiteRecoveryEventSpecificDetails eventSpecificDetails = null, IEnumerable<SiteRecoveryHealthError> healthErrors = null)
         {
@@ -205,68 +128,23 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Initializes a new instance of SiteRecoveryHealthError. </summary>
-        /// <param name="innerHealthErrors">
-        /// The inner health errors. HealthError having a list of HealthError as child errors is problematic. InnerHealthError is used because this will prevent an infinite loop of structures when Hydra tries to auto-generate the contract. We are exposing the related health errors as inner health errors and all API consumers can utilize this in the same fashion as Exception -&gt; InnerException.
-        /// Serialized Name: HealthError.innerHealthErrors
-        /// </param>
-        /// <param name="errorSource">
-        /// Source of error.
-        /// Serialized Name: HealthError.errorSource
-        /// </param>
-        /// <param name="errorType">
-        /// Type of error.
-        /// Serialized Name: HealthError.errorType
-        /// </param>
-        /// <param name="errorLevel">
-        /// Level of error.
-        /// Serialized Name: HealthError.errorLevel
-        /// </param>
-        /// <param name="errorCategory">
-        /// Category of error.
-        /// Serialized Name: HealthError.errorCategory
-        /// </param>
-        /// <param name="errorCode">
-        /// Error code.
-        /// Serialized Name: HealthError.errorCode
-        /// </param>
-        /// <param name="summaryMessage">
-        /// Summary message of the entity.
-        /// Serialized Name: HealthError.summaryMessage
-        /// </param>
-        /// <param name="errorMessage">
-        /// Error message.
-        /// Serialized Name: HealthError.errorMessage
-        /// </param>
-        /// <param name="possibleCauses">
-        /// Possible causes of error.
-        /// Serialized Name: HealthError.possibleCauses
-        /// </param>
-        /// <param name="recommendedAction">
-        /// Recommended action to resolve error.
-        /// Serialized Name: HealthError.recommendedAction
-        /// </param>
-        /// <param name="creationTimeUtc">
-        /// Error creation time (UTC).
-        /// Serialized Name: HealthError.creationTimeUtc
-        /// </param>
-        /// <param name="recoveryProviderErrorMessage">
-        /// DRA error message.
-        /// Serialized Name: HealthError.recoveryProviderErrorMessage
-        /// </param>
-        /// <param name="entityId">
-        /// ID of the entity.
-        /// Serialized Name: HealthError.entityId
-        /// </param>
-        /// <param name="errorId">
-        /// The health error unique id.
-        /// Serialized Name: HealthError.errorId
-        /// </param>
-        /// <param name="customerResolvability">
-        /// Value indicating whether the health error is customer resolvable.
-        /// Serialized Name: HealthError.customerResolvability
-        /// </param>
+        /// <param name="innerHealthErrors"> The inner health errors. HealthError having a list of HealthError as child errors is problematic. InnerHealthError is used because this will prevent an infinite loop of structures when Hydra tries to auto-generate the contract. We are exposing the related health errors as inner health errors and all API consumers can utilize this in the same fashion as Exception -&gt; InnerException. </param>
+        /// <param name="errorSource"> Source of error. </param>
+        /// <param name="errorType"> Type of error. </param>
+        /// <param name="errorLevel"> Level of error. </param>
+        /// <param name="errorCategory"> Category of error. </param>
+        /// <param name="errorCode"> Error code. </param>
+        /// <param name="summaryMessage"> Summary message of the entity. </param>
+        /// <param name="errorMessage"> Error message. </param>
+        /// <param name="possibleCauses"> Possible causes of error. </param>
+        /// <param name="recommendedAction"> Recommended action to resolve error. </param>
+        /// <param name="creationTimeUtc"> Error creation time (UTC). </param>
+        /// <param name="recoveryProviderErrorMessage"> DRA error message. </param>
+        /// <param name="entityId"> ID of the entity. </param>
+        /// <param name="errorId"> The health error unique id. </param>
+        /// <param name="customerResolvability"> Value indicating whether the health error is customer resolvable. </param>
         /// <returns> A new <see cref="Models.SiteRecoveryHealthError"/> instance for mocking. </returns>
-        public static SiteRecoveryHealthError SiteRecoveryHealthError(IEnumerable<SiteRecoveryInnerHealthError> innerHealthErrors = null, string errorSource = null, string errorType = null, string errorLevel = null, string errorCategory = null, string errorCode = null, string summaryMessage = null, string errorMessage = null, string possibleCauses = null, string recommendedAction = null, DateTimeOffset? creationTimeUtc = null, string recoveryProviderErrorMessage = null, string entityId = null, string errorId = null, SiteRecoveryHealthErrorCustomerResolvability? customerResolvability = null)
+        public static SiteRecoveryHealthError SiteRecoveryHealthError(IEnumerable<SiteRecoveryInnerHealthError> innerHealthErrors = null, string errorSource = null, string errorType = null, string errorLevel = null, string errorCategory = null, string errorCode = null, string summaryMessage = null, string errorMessage = null, string possibleCauses = null, string recommendedAction = null, DateTimeOffset? creationTimeUtc = null, string recoveryProviderErrorMessage = null, string entityId = null, string errorId = null, HealthErrorCustomerResolvability? customerResolvability = null)
         {
             innerHealthErrors ??= new List<SiteRecoveryInnerHealthError>();
 
@@ -274,64 +152,22 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Initializes a new instance of SiteRecoveryInnerHealthError. </summary>
-        /// <param name="errorSource">
-        /// Source of error.
-        /// Serialized Name: InnerHealthError.errorSource
-        /// </param>
-        /// <param name="errorType">
-        /// Type of error.
-        /// Serialized Name: InnerHealthError.errorType
-        /// </param>
-        /// <param name="errorLevel">
-        /// Level of error.
-        /// Serialized Name: InnerHealthError.errorLevel
-        /// </param>
-        /// <param name="errorCategory">
-        /// Category of error.
-        /// Serialized Name: InnerHealthError.errorCategory
-        /// </param>
-        /// <param name="errorCode">
-        /// Error code.
-        /// Serialized Name: InnerHealthError.errorCode
-        /// </param>
-        /// <param name="summaryMessage">
-        /// Summary message of the entity.
-        /// Serialized Name: InnerHealthError.summaryMessage
-        /// </param>
-        /// <param name="errorMessage">
-        /// Error message.
-        /// Serialized Name: InnerHealthError.errorMessage
-        /// </param>
-        /// <param name="possibleCauses">
-        /// Possible causes of error.
-        /// Serialized Name: InnerHealthError.possibleCauses
-        /// </param>
-        /// <param name="recommendedAction">
-        /// Recommended action to resolve error.
-        /// Serialized Name: InnerHealthError.recommendedAction
-        /// </param>
-        /// <param name="createdOn">
-        /// Error creation time (UTC).
-        /// Serialized Name: InnerHealthError.creationTimeUtc
-        /// </param>
-        /// <param name="recoveryProviderErrorMessage">
-        /// DRA error message.
-        /// Serialized Name: InnerHealthError.recoveryProviderErrorMessage
-        /// </param>
-        /// <param name="entityId">
-        /// ID of the entity.
-        /// Serialized Name: InnerHealthError.entityId
-        /// </param>
-        /// <param name="errorId">
-        /// The health error unique id.
-        /// Serialized Name: InnerHealthError.errorId
-        /// </param>
-        /// <param name="customerResolvability">
-        /// Value indicating whether the health error is customer resolvable.
-        /// Serialized Name: InnerHealthError.customerResolvability
-        /// </param>
+        /// <param name="errorSource"> Source of error. </param>
+        /// <param name="errorType"> Type of error. </param>
+        /// <param name="errorLevel"> Level of error. </param>
+        /// <param name="errorCategory"> Category of error. </param>
+        /// <param name="errorCode"> Error code. </param>
+        /// <param name="summaryMessage"> Summary message of the entity. </param>
+        /// <param name="errorMessage"> Error message. </param>
+        /// <param name="possibleCauses"> Possible causes of error. </param>
+        /// <param name="recommendedAction"> Recommended action to resolve error. </param>
+        /// <param name="createdOn"> Error creation time (UTC). </param>
+        /// <param name="recoveryProviderErrorMessage"> DRA error message. </param>
+        /// <param name="entityId"> ID of the entity. </param>
+        /// <param name="errorId"> The health error unique id. </param>
+        /// <param name="customerResolvability"> Value indicating whether the health error is customer resolvable. </param>
         /// <returns> A new <see cref="Models.SiteRecoveryInnerHealthError"/> instance for mocking. </returns>
-        public static SiteRecoveryInnerHealthError SiteRecoveryInnerHealthError(string errorSource = null, string errorType = null, string errorLevel = null, string errorCategory = null, string errorCode = null, string summaryMessage = null, string errorMessage = null, string possibleCauses = null, string recommendedAction = null, DateTimeOffset? createdOn = null, string recoveryProviderErrorMessage = null, string entityId = null, string errorId = null, SiteRecoveryHealthErrorCustomerResolvability? customerResolvability = null)
+        public static SiteRecoveryInnerHealthError SiteRecoveryInnerHealthError(string errorSource = null, string errorType = null, string errorLevel = null, string errorCategory = null, string errorCode = null, string summaryMessage = null, string errorMessage = null, string possibleCauses = null, string recommendedAction = null, DateTimeOffset? createdOn = null, string recoveryProviderErrorMessage = null, string entityId = null, string errorId = null, HealthErrorCustomerResolvability? customerResolvability = null)
         {
             return new SiteRecoveryInnerHealthError(errorSource, errorType, errorLevel, errorCategory, errorCode, summaryMessage, errorMessage, possibleCauses, recommendedAction, createdOn, recoveryProviderErrorMessage, entityId, errorId, customerResolvability);
         }
@@ -341,14 +177,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="properties">
-        /// Fabric related data.
-        /// Serialized Name: Fabric.properties
-        /// </param>
-        /// <param name="location">
-        /// Resource Location
-        /// Serialized Name: Resource.location
-        /// </param>
+        /// <param name="properties"> Fabric related data. </param>
+        /// <param name="location"> Resource Location. </param>
         /// <returns> A new <see cref="RecoveryServicesSiteRecovery.SiteRecoveryFabricData"/> instance for mocking. </returns>
         public static SiteRecoveryFabricData SiteRecoveryFabricData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, SiteRecoveryFabricProperties properties = null, AzureLocation? location = null)
         {
@@ -356,42 +186,20 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Initializes a new instance of SiteRecoveryFabricProperties. </summary>
-        /// <param name="friendlyName">
-        /// Friendly name of the fabric.
-        /// Serialized Name: FabricProperties.friendlyName
-        /// </param>
-        /// <param name="encryptionDetails">
-        /// Encryption details for the fabric.
-        /// Serialized Name: FabricProperties.encryptionDetails
-        /// </param>
-        /// <param name="rolloverEncryptionDetails">
-        /// Rollover encryption details for the fabric.
-        /// Serialized Name: FabricProperties.rolloverEncryptionDetails
-        /// </param>
-        /// <param name="internalIdentifier">
-        /// Dra Registration Id.
-        /// Serialized Name: FabricProperties.internalIdentifier
-        /// </param>
-        /// <param name="bcdrState">
-        /// BCDR state of the fabric.
-        /// Serialized Name: FabricProperties.bcdrState
-        /// </param>
+        /// <param name="friendlyName"> Friendly name of the fabric. </param>
+        /// <param name="encryptionDetails"> Encryption details for the fabric. </param>
+        /// <param name="rolloverEncryptionDetails"> Rollover encryption details for the fabric. </param>
+        /// <param name="internalIdentifier"> Dra Registration Id. </param>
+        /// <param name="bcdrState"> BCDR state of the fabric. </param>
         /// <param name="customDetails">
         /// Fabric specific settings.
-        /// Serialized Name: FabricProperties.customDetails
-        /// Please note <see cref="SiteRecoveryFabricSpecificDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="SiteRecoveryFabricProviderSpecificDetails"/>, <see cref="HyperVSiteDetails"/>, <see cref="InMageRcmFabricSpecificDetails"/>, <see cref="VmmDetails"/>, <see cref="VMwareDetails"/> and <see cref="VMwareV2FabricSpecificDetails"/>.
+        /// Please note <see cref="FabricSpecificDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="SiteRecoveryFabricProviderSpecificDetails"/>, <see cref="HyperVSiteDetails"/>, <see cref="InMageRcmFabricSpecificDetails"/>, <see cref="VmmFabricDetails"/>, <see cref="VMwareDetails"/> and <see cref="VMwareV2FabricSpecificDetails"/>.
         /// </param>
-        /// <param name="healthErrorDetails">
-        /// Fabric health error details.
-        /// Serialized Name: FabricProperties.healthErrorDetails
-        /// </param>
-        /// <param name="health">
-        /// Health of fabric.
-        /// Serialized Name: FabricProperties.health
-        /// </param>
+        /// <param name="healthErrorDetails"> Fabric health error details. </param>
+        /// <param name="health"> Health of fabric. </param>
         /// <returns> A new <see cref="Models.SiteRecoveryFabricProperties"/> instance for mocking. </returns>
-        public static SiteRecoveryFabricProperties SiteRecoveryFabricProperties(string friendlyName = null, SiteRecoveryEncryptionDetails encryptionDetails = null, SiteRecoveryEncryptionDetails rolloverEncryptionDetails = null, string internalIdentifier = null, string bcdrState = null, SiteRecoveryFabricSpecificDetails customDetails = null, IEnumerable<SiteRecoveryHealthError> healthErrorDetails = null, string health = null)
+        public static SiteRecoveryFabricProperties SiteRecoveryFabricProperties(string friendlyName = null, SiteRecoveryEncryptionDetails encryptionDetails = null, SiteRecoveryEncryptionDetails rolloverEncryptionDetails = null, string internalIdentifier = null, string bcdrState = null, FabricSpecificDetails customDetails = null, IEnumerable<SiteRecoveryHealthError> healthErrorDetails = null, string health = null)
         {
             healthErrorDetails ??= new List<SiteRecoveryHealthError>();
 
@@ -399,18 +207,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Initializes a new instance of SiteRecoveryEncryptionDetails. </summary>
-        /// <param name="kekState">
-        /// The key encryption key state for the Vmm.
-        /// Serialized Name: EncryptionDetails.kekState
-        /// </param>
-        /// <param name="kekCertThumbprint">
-        /// The key encryption key certificate thumbprint.
-        /// Serialized Name: EncryptionDetails.kekCertThumbprint
-        /// </param>
-        /// <param name="kekCertExpireOn">
-        /// The key encryption key certificate expiry date.
-        /// Serialized Name: EncryptionDetails.kekCertExpiryDate
-        /// </param>
+        /// <param name="kekState"> The key encryption key state for the Vmm. </param>
+        /// <param name="kekCertThumbprint"> The key encryption key certificate thumbprint. </param>
+        /// <param name="kekCertExpireOn"> The key encryption key certificate expiry date. </param>
         /// <returns> A new <see cref="Models.SiteRecoveryEncryptionDetails"/> instance for mocking. </returns>
         public static SiteRecoveryEncryptionDetails SiteRecoveryEncryptionDetails(string kekState = null, string kekCertThumbprint = null, DateTimeOffset? kekCertExpireOn = null)
         {
@@ -422,41 +221,23 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="properties">
-        /// The Logical Network Properties.
-        /// Serialized Name: LogicalNetwork.properties
-        /// </param>
-        /// <param name="location">
-        /// Resource Location
-        /// Serialized Name: Resource.location
-        /// </param>
+        /// <param name="properties"> The Logical Network Properties. </param>
+        /// <param name="location"> Resource Location. </param>
         /// <returns> A new <see cref="RecoveryServicesSiteRecovery.SiteRecoveryLogicalNetworkData"/> instance for mocking. </returns>
-        public static SiteRecoveryLogicalNetworkData SiteRecoveryLogicalNetworkData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, LogicalNetworkProperties properties = null, AzureLocation? location = null)
+        public static SiteRecoveryLogicalNetworkData SiteRecoveryLogicalNetworkData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, SiteRecoveryLogicalNetworkProperties properties = null, AzureLocation? location = null)
         {
             return new SiteRecoveryLogicalNetworkData(id, name, resourceType, systemData, properties, location);
         }
 
-        /// <summary> Initializes a new instance of LogicalNetworkProperties. </summary>
-        /// <param name="friendlyName">
-        /// The Friendly Name.
-        /// Serialized Name: LogicalNetworkProperties.friendlyName
-        /// </param>
-        /// <param name="networkVirtualizationStatus">
-        /// A value indicating whether Network Virtualization is enabled for the logical network.
-        /// Serialized Name: LogicalNetworkProperties.networkVirtualizationStatus
-        /// </param>
-        /// <param name="logicalNetworkUsage">
-        /// A value indicating whether logical network is used as private test network by test failover.
-        /// Serialized Name: LogicalNetworkProperties.logicalNetworkUsage
-        /// </param>
-        /// <param name="logicalNetworkDefinitionsStatus">
-        /// A value indicating whether logical network definitions are isolated.
-        /// Serialized Name: LogicalNetworkProperties.logicalNetworkDefinitionsStatus
-        /// </param>
-        /// <returns> A new <see cref="Models.LogicalNetworkProperties"/> instance for mocking. </returns>
-        public static LogicalNetworkProperties LogicalNetworkProperties(string friendlyName = null, string networkVirtualizationStatus = null, string logicalNetworkUsage = null, string logicalNetworkDefinitionsStatus = null)
+        /// <summary> Initializes a new instance of SiteRecoveryLogicalNetworkProperties. </summary>
+        /// <param name="friendlyName"> The Friendly Name. </param>
+        /// <param name="networkVirtualizationStatus"> A value indicating whether Network Virtualization is enabled for the logical network. </param>
+        /// <param name="logicalNetworkUsage"> A value indicating whether logical network is used as private test network by test failover. </param>
+        /// <param name="logicalNetworkDefinitionsStatus"> A value indicating whether logical network definitions are isolated. </param>
+        /// <returns> A new <see cref="Models.SiteRecoveryLogicalNetworkProperties"/> instance for mocking. </returns>
+        public static SiteRecoveryLogicalNetworkProperties SiteRecoveryLogicalNetworkProperties(string friendlyName = null, string networkVirtualizationStatus = null, string logicalNetworkUsage = null, string logicalNetworkDefinitionsStatus = null)
         {
-            return new LogicalNetworkProperties(friendlyName, networkVirtualizationStatus, logicalNetworkUsage, logicalNetworkDefinitionsStatus);
+            return new SiteRecoveryLogicalNetworkProperties(friendlyName, networkVirtualizationStatus, logicalNetworkUsage, logicalNetworkDefinitionsStatus);
         }
 
         /// <summary> Initializes a new instance of SiteRecoveryNetworkData. </summary>
@@ -464,14 +245,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="properties">
-        /// The Network Properties.
-        /// Serialized Name: Network.properties
-        /// </param>
-        /// <param name="location">
-        /// Resource Location
-        /// Serialized Name: Resource.location
-        /// </param>
+        /// <param name="properties"> The Network Properties. </param>
+        /// <param name="location"> Resource Location. </param>
         /// <returns> A new <see cref="RecoveryServicesSiteRecovery.SiteRecoveryNetworkData"/> instance for mocking. </returns>
         public static SiteRecoveryNetworkData SiteRecoveryNetworkData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, SiteRecoveryNetworkProperties properties = null, AzureLocation? location = null)
         {
@@ -479,49 +254,28 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Initializes a new instance of SiteRecoveryNetworkProperties. </summary>
-        /// <param name="fabricType">
-        /// The Fabric Type.
-        /// Serialized Name: NetworkProperties.fabricType
-        /// </param>
-        /// <param name="subnets">
-        /// The List of subnets.
-        /// Serialized Name: NetworkProperties.subnets
-        /// </param>
-        /// <param name="friendlyName">
-        /// The Friendly Name.
-        /// Serialized Name: NetworkProperties.friendlyName
-        /// </param>
-        /// <param name="networkType">
-        /// The Network Type.
-        /// Serialized Name: NetworkProperties.networkType
-        /// </param>
+        /// <param name="fabricType"> The Fabric Type. </param>
+        /// <param name="subnets"> The List of subnets. </param>
+        /// <param name="friendlyName"> The Friendly Name. </param>
+        /// <param name="networkType"> The Network Type. </param>
         /// <returns> A new <see cref="Models.SiteRecoveryNetworkProperties"/> instance for mocking. </returns>
-        public static SiteRecoveryNetworkProperties SiteRecoveryNetworkProperties(string fabricType = null, IEnumerable<Subnet> subnets = null, string friendlyName = null, string networkType = null)
+        public static SiteRecoveryNetworkProperties SiteRecoveryNetworkProperties(string fabricType = null, IEnumerable<SiteRecoverySubnet> subnets = null, string friendlyName = null, string networkType = null)
         {
-            subnets ??= new List<Subnet>();
+            subnets ??= new List<SiteRecoverySubnet>();
 
             return new SiteRecoveryNetworkProperties(fabricType, subnets?.ToList(), friendlyName, networkType);
         }
 
-        /// <summary> Initializes a new instance of Subnet. </summary>
-        /// <param name="name">
-        /// The subnet name.
-        /// Serialized Name: Subnet.name
-        /// </param>
-        /// <param name="friendlyName">
-        /// The subnet friendly name.
-        /// Serialized Name: Subnet.friendlyName
-        /// </param>
-        /// <param name="addressList">
-        /// The list of addresses for the subnet.
-        /// Serialized Name: Subnet.addressList
-        /// </param>
-        /// <returns> A new <see cref="Models.Subnet"/> instance for mocking. </returns>
-        public static Subnet Subnet(string name = null, string friendlyName = null, IEnumerable<string> addressList = null)
+        /// <summary> Initializes a new instance of SiteRecoverySubnet. </summary>
+        /// <param name="name"> The subnet name. </param>
+        /// <param name="friendlyName"> The subnet friendly name. </param>
+        /// <param name="addressList"> The list of addresses for the subnet. </param>
+        /// <returns> A new <see cref="Models.SiteRecoverySubnet"/> instance for mocking. </returns>
+        public static SiteRecoverySubnet SiteRecoverySubnet(string name = null, string friendlyName = null, IEnumerable<string> addressList = null)
         {
             addressList ??= new List<string>();
 
-            return new Subnet(name, friendlyName, addressList?.ToList());
+            return new SiteRecoverySubnet(name, friendlyName, addressList?.ToList());
         }
 
         /// <summary> Initializes a new instance of SiteRecoveryNetworkMappingData. </summary>
@@ -529,63 +283,32 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="properties">
-        /// The Network Mapping Properties.
-        /// Serialized Name: NetworkMapping.properties
-        /// </param>
-        /// <param name="location">
-        /// Resource Location
-        /// Serialized Name: Resource.location
-        /// </param>
+        /// <param name="properties"> The Network Mapping Properties. </param>
+        /// <param name="location"> Resource Location. </param>
         /// <returns> A new <see cref="RecoveryServicesSiteRecovery.SiteRecoveryNetworkMappingData"/> instance for mocking. </returns>
-        public static SiteRecoveryNetworkMappingData SiteRecoveryNetworkMappingData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, NetworkMappingProperties properties = null, AzureLocation? location = null)
+        public static SiteRecoveryNetworkMappingData SiteRecoveryNetworkMappingData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, SiteRecoveryNetworkMappingProperties properties = null, AzureLocation? location = null)
         {
             return new SiteRecoveryNetworkMappingData(id, name, resourceType, systemData, properties, location);
         }
 
-        /// <summary> Initializes a new instance of NetworkMappingProperties. </summary>
-        /// <param name="state">
-        /// The pairing state for network mapping.
-        /// Serialized Name: NetworkMappingProperties.state
-        /// </param>
-        /// <param name="primaryNetworkFriendlyName">
-        /// The primary network friendly name.
-        /// Serialized Name: NetworkMappingProperties.primaryNetworkFriendlyName
-        /// </param>
-        /// <param name="primaryNetworkId">
-        /// The primary network id for network mapping.
-        /// Serialized Name: NetworkMappingProperties.primaryNetworkId
-        /// </param>
-        /// <param name="primaryFabricFriendlyName">
-        /// The primary fabric friendly name.
-        /// Serialized Name: NetworkMappingProperties.primaryFabricFriendlyName
-        /// </param>
-        /// <param name="recoveryNetworkFriendlyName">
-        /// The recovery network friendly name.
-        /// Serialized Name: NetworkMappingProperties.recoveryNetworkFriendlyName
-        /// </param>
-        /// <param name="recoveryNetworkId">
-        /// The recovery network id for network mapping.
-        /// Serialized Name: NetworkMappingProperties.recoveryNetworkId
-        /// </param>
-        /// <param name="recoveryFabricArmId">
-        /// The recovery fabric ARM id.
-        /// Serialized Name: NetworkMappingProperties.recoveryFabricArmId
-        /// </param>
-        /// <param name="recoveryFabricFriendlyName">
-        /// The recovery fabric friendly name.
-        /// Serialized Name: NetworkMappingProperties.recoveryFabricFriendlyName
-        /// </param>
+        /// <summary> Initializes a new instance of SiteRecoveryNetworkMappingProperties. </summary>
+        /// <param name="state"> The pairing state for network mapping. </param>
+        /// <param name="primaryNetworkFriendlyName"> The primary network friendly name. </param>
+        /// <param name="primaryNetworkId"> The primary network id for network mapping. </param>
+        /// <param name="primaryFabricFriendlyName"> The primary fabric friendly name. </param>
+        /// <param name="recoveryNetworkFriendlyName"> The recovery network friendly name. </param>
+        /// <param name="recoveryNetworkId"> The recovery network id for network mapping. </param>
+        /// <param name="recoveryFabricArmId"> The recovery fabric ARM id. </param>
+        /// <param name="recoveryFabricFriendlyName"> The recovery fabric friendly name. </param>
         /// <param name="fabricSpecificSettings">
         /// The fabric specific settings.
-        /// Serialized Name: NetworkMappingProperties.fabricSpecificSettings
         /// Please note <see cref="NetworkMappingFabricSpecificSettings"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="A2ANetworkMappingSettings"/>, <see cref="VmmToAzureNetworkMappingSettings"/> and <see cref="VmmToVmmNetworkMappingSettings"/>.
         /// </param>
-        /// <returns> A new <see cref="Models.NetworkMappingProperties"/> instance for mocking. </returns>
-        public static NetworkMappingProperties NetworkMappingProperties(string state = null, string primaryNetworkFriendlyName = null, ResourceIdentifier primaryNetworkId = null, string primaryFabricFriendlyName = null, string recoveryNetworkFriendlyName = null, ResourceIdentifier recoveryNetworkId = null, ResourceIdentifier recoveryFabricArmId = null, string recoveryFabricFriendlyName = null, NetworkMappingFabricSpecificSettings fabricSpecificSettings = null)
+        /// <returns> A new <see cref="Models.SiteRecoveryNetworkMappingProperties"/> instance for mocking. </returns>
+        public static SiteRecoveryNetworkMappingProperties SiteRecoveryNetworkMappingProperties(string state = null, string primaryNetworkFriendlyName = null, ResourceIdentifier primaryNetworkId = null, string primaryFabricFriendlyName = null, string recoveryNetworkFriendlyName = null, ResourceIdentifier recoveryNetworkId = null, ResourceIdentifier recoveryFabricArmId = null, string recoveryFabricFriendlyName = null, NetworkMappingFabricSpecificSettings fabricSpecificSettings = null)
         {
-            return new NetworkMappingProperties(state, primaryNetworkFriendlyName, primaryNetworkId, primaryFabricFriendlyName, recoveryNetworkFriendlyName, recoveryNetworkId, recoveryFabricArmId, recoveryFabricFriendlyName, fabricSpecificSettings);
+            return new SiteRecoveryNetworkMappingProperties(state, primaryNetworkFriendlyName, primaryNetworkId, primaryFabricFriendlyName, recoveryNetworkFriendlyName, recoveryNetworkId, recoveryFabricArmId, recoveryFabricFriendlyName, fabricSpecificSettings);
         }
 
         /// <summary> Initializes a new instance of SiteRecoveryProtectionContainerData. </summary>
@@ -593,53 +316,26 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="properties">
-        /// The custom data.
-        /// Serialized Name: ProtectionContainer.properties
-        /// </param>
-        /// <param name="location">
-        /// Resource Location
-        /// Serialized Name: Resource.location
-        /// </param>
+        /// <param name="properties"> The custom data. </param>
+        /// <param name="location"> Resource Location. </param>
         /// <returns> A new <see cref="RecoveryServicesSiteRecovery.SiteRecoveryProtectionContainerData"/> instance for mocking. </returns>
-        public static SiteRecoveryProtectionContainerData SiteRecoveryProtectionContainerData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ProtectionContainerProperties properties = null, AzureLocation? location = null)
+        public static SiteRecoveryProtectionContainerData SiteRecoveryProtectionContainerData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, SiteRecoveryProtectionContainerProperties properties = null, AzureLocation? location = null)
         {
             return new SiteRecoveryProtectionContainerData(id, name, resourceType, systemData, properties, location);
         }
 
-        /// <summary> Initializes a new instance of ProtectionContainerProperties. </summary>
-        /// <param name="fabricFriendlyName">
-        /// Fabric friendly name.
-        /// Serialized Name: ProtectionContainerProperties.fabricFriendlyName
-        /// </param>
-        /// <param name="friendlyName">
-        /// The name.
-        /// Serialized Name: ProtectionContainerProperties.friendlyName
-        /// </param>
-        /// <param name="fabricType">
-        /// The fabric type.
-        /// Serialized Name: ProtectionContainerProperties.fabricType
-        /// </param>
-        /// <param name="protectedItemCount">
-        /// Number of protected PEs.
-        /// Serialized Name: ProtectionContainerProperties.protectedItemCount
-        /// </param>
-        /// <param name="pairingStatus">
-        /// The pairing status of this cloud.
-        /// Serialized Name: ProtectionContainerProperties.pairingStatus
-        /// </param>
-        /// <param name="role">
-        /// The role of this cloud.
-        /// Serialized Name: ProtectionContainerProperties.role
-        /// </param>
-        /// <param name="fabricSpecificDetailsInstanceType">
-        /// Fabric specific details.
-        /// Serialized Name: ProtectionContainerProperties.fabricSpecificDetails
-        /// </param>
-        /// <returns> A new <see cref="Models.ProtectionContainerProperties"/> instance for mocking. </returns>
-        public static ProtectionContainerProperties ProtectionContainerProperties(string fabricFriendlyName = null, string friendlyName = null, string fabricType = null, int? protectedItemCount = null, string pairingStatus = null, string role = null, string fabricSpecificDetailsInstanceType = null)
+        /// <summary> Initializes a new instance of SiteRecoveryProtectionContainerProperties. </summary>
+        /// <param name="fabricFriendlyName"> Fabric friendly name. </param>
+        /// <param name="friendlyName"> The name. </param>
+        /// <param name="fabricType"> The fabric type. </param>
+        /// <param name="protectedItemCount"> Number of protected PEs. </param>
+        /// <param name="pairingStatus"> The pairing status of this cloud. </param>
+        /// <param name="role"> The role of this cloud. </param>
+        /// <param name="fabricSpecificDetailsInstanceType"> Fabric specific details. </param>
+        /// <returns> A new <see cref="Models.SiteRecoveryProtectionContainerProperties"/> instance for mocking. </returns>
+        public static SiteRecoveryProtectionContainerProperties SiteRecoveryProtectionContainerProperties(string fabricFriendlyName = null, string friendlyName = null, string fabricType = null, int? protectedItemCount = null, string pairingStatus = null, string role = null, string fabricSpecificDetailsInstanceType = null)
         {
-            return new ProtectionContainerProperties(fabricFriendlyName, friendlyName, fabricType, protectedItemCount, pairingStatus, role, fabricSpecificDetailsInstanceType != null ? new ProtectionContainerFabricSpecificDetails(fabricSpecificDetailsInstanceType) : null);
+            return new SiteRecoveryProtectionContainerProperties(fabricFriendlyName, friendlyName, fabricType, protectedItemCount, pairingStatus, role, fabricSpecificDetailsInstanceType != null ? new ProtectionContainerFabricSpecificDetails(fabricSpecificDetailsInstanceType) : null);
         }
 
         /// <summary> Initializes a new instance of SiteRecoveryMigrationItemData. </summary>
@@ -647,14 +343,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="properties">
-        /// The migration item properties.
-        /// Serialized Name: MigrationItem.properties
-        /// </param>
-        /// <param name="location">
-        /// Resource Location
-        /// Serialized Name: Resource.location
-        /// </param>
+        /// <param name="properties"> The migration item properties. </param>
+        /// <param name="location"> Resource Location. </param>
         /// <returns> A new <see cref="RecoveryServicesSiteRecovery.SiteRecoveryMigrationItemData"/> instance for mocking. </returns>
         public static SiteRecoveryMigrationItemData SiteRecoveryMigrationItemData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, SiteRecoveryMigrationItemProperties properties = null, AzureLocation? location = null)
         {
@@ -662,90 +352,32 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Initializes a new instance of SiteRecoveryMigrationItemProperties. </summary>
-        /// <param name="machineName">
-        /// The on-premise virtual machine name.
-        /// Serialized Name: MigrationItemProperties.machineName
-        /// </param>
-        /// <param name="policyId">
-        /// The ARM Id of policy governing this item.
-        /// Serialized Name: MigrationItemProperties.policyId
-        /// </param>
-        /// <param name="policyFriendlyName">
-        /// The name of policy governing this item.
-        /// Serialized Name: MigrationItemProperties.policyFriendlyName
-        /// </param>
-        /// <param name="recoveryServicesProviderId">
-        /// The recovery services provider ARM Id.
-        /// Serialized Name: MigrationItemProperties.recoveryServicesProviderId
-        /// </param>
-        /// <param name="replicationStatus">
-        /// The replication status.
-        /// Serialized Name: MigrationItemProperties.replicationStatus
-        /// </param>
-        /// <param name="migrationState">
-        /// The migration status.
-        /// Serialized Name: MigrationItemProperties.migrationState
-        /// </param>
-        /// <param name="migrationStateDescription">
-        /// The migration state description.
-        /// Serialized Name: MigrationItemProperties.migrationStateDescription
-        /// </param>
-        /// <param name="lastTestMigrationOn">
-        /// The last test migration time.
-        /// Serialized Name: MigrationItemProperties.lastTestMigrationTime
-        /// </param>
-        /// <param name="lastTestMigrationStatus">
-        /// The status of the last test migration.
-        /// Serialized Name: MigrationItemProperties.lastTestMigrationStatus
-        /// </param>
-        /// <param name="lastMigrationOn">
-        /// The last migration time.
-        /// Serialized Name: MigrationItemProperties.lastMigrationTime
-        /// </param>
-        /// <param name="lastMigrationStatus">
-        /// The status of the last migration.
-        /// Serialized Name: MigrationItemProperties.lastMigrationStatus
-        /// </param>
-        /// <param name="testMigrateState">
-        /// The test migrate state.
-        /// Serialized Name: MigrationItemProperties.testMigrateState
-        /// </param>
-        /// <param name="testMigrateStateDescription">
-        /// The test migrate state description.
-        /// Serialized Name: MigrationItemProperties.testMigrateStateDescription
-        /// </param>
-        /// <param name="health">
-        /// The consolidated health.
-        /// Serialized Name: MigrationItemProperties.health
-        /// </param>
-        /// <param name="healthErrors">
-        /// The list of health errors.
-        /// Serialized Name: MigrationItemProperties.healthErrors
-        /// </param>
-        /// <param name="allowedOperations">
-        /// The allowed operations on the migration item based on the current migration state of the item.
-        /// Serialized Name: MigrationItemProperties.allowedOperations
-        /// </param>
-        /// <param name="currentJob">
-        /// The current job details.
-        /// Serialized Name: MigrationItemProperties.currentJob
-        /// </param>
-        /// <param name="criticalJobHistory">
-        /// The critical past job details.
-        /// Serialized Name: MigrationItemProperties.criticalJobHistory
-        /// </param>
-        /// <param name="eventCorrelationId">
-        /// The correlation Id for events associated with this migration item.
-        /// Serialized Name: MigrationItemProperties.eventCorrelationId
-        /// </param>
+        /// <param name="machineName"> The on-premise virtual machine name. </param>
+        /// <param name="policyId"> The ARM Id of policy governing this item. </param>
+        /// <param name="policyFriendlyName"> The name of policy governing this item. </param>
+        /// <param name="recoveryServicesProviderId"> The recovery services provider ARM Id. </param>
+        /// <param name="replicationStatus"> The replication status. </param>
+        /// <param name="migrationState"> The migration status. </param>
+        /// <param name="migrationStateDescription"> The migration state description. </param>
+        /// <param name="lastTestMigrationOn"> The last test migration time. </param>
+        /// <param name="lastTestMigrationStatus"> The status of the last test migration. </param>
+        /// <param name="lastMigrationOn"> The last migration time. </param>
+        /// <param name="lastMigrationStatus"> The status of the last migration. </param>
+        /// <param name="testMigrateState"> The test migrate state. </param>
+        /// <param name="testMigrateStateDescription"> The test migrate state description. </param>
+        /// <param name="health"> The consolidated health. </param>
+        /// <param name="healthErrors"> The list of health errors. </param>
+        /// <param name="allowedOperations"> The allowed operations on the migration item based on the current migration state of the item. </param>
+        /// <param name="currentJob"> The current job details. </param>
+        /// <param name="criticalJobHistory"> The critical past job details. </param>
+        /// <param name="eventCorrelationId"> The correlation Id for events associated with this migration item. </param>
         /// <param name="providerSpecificDetails">
         /// The migration provider custom settings.
-        /// Serialized Name: MigrationItemProperties.providerSpecificDetails
         /// Please note <see cref="MigrationProviderSpecificSettings"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="VMwareCbtMigrationDetails"/>.
         /// </param>
         /// <returns> A new <see cref="Models.SiteRecoveryMigrationItemProperties"/> instance for mocking. </returns>
-        public static SiteRecoveryMigrationItemProperties SiteRecoveryMigrationItemProperties(string machineName = null, ResourceIdentifier policyId = null, string policyFriendlyName = null, string recoveryServicesProviderId = null, string replicationStatus = null, MigrationState? migrationState = null, string migrationStateDescription = null, DateTimeOffset? lastTestMigrationOn = null, string lastTestMigrationStatus = null, DateTimeOffset? lastMigrationOn = null, string lastMigrationStatus = null, TestMigrationState? testMigrateState = null, string testMigrateStateDescription = null, ProtectionHealth? health = null, IEnumerable<SiteRecoveryHealthError> healthErrors = null, IEnumerable<MigrationItemOperation> allowedOperations = null, CurrentJobDetails currentJob = null, IEnumerable<CriticalJobHistoryDetails> criticalJobHistory = null, string eventCorrelationId = null, MigrationProviderSpecificSettings providerSpecificDetails = null)
+        public static SiteRecoveryMigrationItemProperties SiteRecoveryMigrationItemProperties(string machineName = null, ResourceIdentifier policyId = null, string policyFriendlyName = null, string recoveryServicesProviderId = null, string replicationStatus = null, SiteRecoveryMigrationState? migrationState = null, string migrationStateDescription = null, DateTimeOffset? lastTestMigrationOn = null, string lastTestMigrationStatus = null, DateTimeOffset? lastMigrationOn = null, string lastMigrationStatus = null, TestMigrationState? testMigrateState = null, string testMigrateStateDescription = null, SiteRecoveryProtectionHealth? health = null, IEnumerable<SiteRecoveryHealthError> healthErrors = null, IEnumerable<MigrationItemOperation> allowedOperations = null, CurrentJobDetails currentJob = null, IEnumerable<CriticalJobHistoryDetails> criticalJobHistory = null, string eventCorrelationId = null, MigrationProviderSpecificSettings providerSpecificDetails = null)
         {
             healthErrors ??= new List<SiteRecoveryHealthError>();
             allowedOperations ??= new List<MigrationItemOperation>();
@@ -755,18 +387,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Initializes a new instance of CurrentJobDetails. </summary>
-        /// <param name="jobName">
-        /// The job name.
-        /// Serialized Name: CurrentJobDetails.jobName
-        /// </param>
-        /// <param name="jobId">
-        /// The ARM Id of the job being executed.
-        /// Serialized Name: CurrentJobDetails.jobId
-        /// </param>
-        /// <param name="startOn">
-        /// The start time of the job.
-        /// Serialized Name: CurrentJobDetails.startTime
-        /// </param>
+        /// <param name="jobName"> The job name. </param>
+        /// <param name="jobId"> The ARM Id of the job being executed. </param>
+        /// <param name="startOn"> The start time of the job. </param>
         /// <returns> A new <see cref="Models.CurrentJobDetails"/> instance for mocking. </returns>
         public static CurrentJobDetails CurrentJobDetails(string jobName = null, ResourceIdentifier jobId = null, DateTimeOffset? startOn = null)
         {
@@ -774,56 +397,32 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Initializes a new instance of CriticalJobHistoryDetails. </summary>
-        /// <param name="jobName">
-        /// The job name.
-        /// Serialized Name: CriticalJobHistoryDetails.jobName
-        /// </param>
-        /// <param name="jobId">
-        /// The ARM Id of the job being executed.
-        /// Serialized Name: CriticalJobHistoryDetails.jobId
-        /// </param>
-        /// <param name="startOn">
-        /// The start time of the job.
-        /// Serialized Name: CriticalJobHistoryDetails.startTime
-        /// </param>
-        /// <param name="jobStatus">
-        /// The job state.
-        /// Serialized Name: CriticalJobHistoryDetails.jobStatus
-        /// </param>
+        /// <param name="jobName"> The job name. </param>
+        /// <param name="jobId"> The ARM Id of the job being executed. </param>
+        /// <param name="startOn"> The start time of the job. </param>
+        /// <param name="jobStatus"> The job state. </param>
         /// <returns> A new <see cref="Models.CriticalJobHistoryDetails"/> instance for mocking. </returns>
         public static CriticalJobHistoryDetails CriticalJobHistoryDetails(string jobName = null, ResourceIdentifier jobId = null, DateTimeOffset? startOn = null, string jobStatus = null)
         {
             return new CriticalJobHistoryDetails(jobName, jobId, startOn, jobStatus);
         }
 
-        /// <summary> Initializes a new instance of SiteRecoveryMigrationRecoveryPointData. </summary>
+        /// <summary> Initializes a new instance of MigrationRecoveryPointData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="properties">
-        /// Recovery point properties.
-        /// Serialized Name: MigrationRecoveryPoint.properties
-        /// </param>
-        /// <param name="location">
-        /// Resource Location
-        /// Serialized Name: Resource.location
-        /// </param>
-        /// <returns> A new <see cref="RecoveryServicesSiteRecovery.SiteRecoveryMigrationRecoveryPointData"/> instance for mocking. </returns>
-        public static SiteRecoveryMigrationRecoveryPointData SiteRecoveryMigrationRecoveryPointData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, MigrationRecoveryPointProperties properties = null, AzureLocation? location = null)
+        /// <param name="properties"> Recovery point properties. </param>
+        /// <param name="location"> Resource Location. </param>
+        /// <returns> A new <see cref="RecoveryServicesSiteRecovery.MigrationRecoveryPointData"/> instance for mocking. </returns>
+        public static MigrationRecoveryPointData MigrationRecoveryPointData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, MigrationRecoveryPointProperties properties = null, AzureLocation? location = null)
         {
-            return new SiteRecoveryMigrationRecoveryPointData(id, name, resourceType, systemData, properties, location);
+            return new MigrationRecoveryPointData(id, name, resourceType, systemData, properties, location);
         }
 
         /// <summary> Initializes a new instance of MigrationRecoveryPointProperties. </summary>
-        /// <param name="recoveryPointOn">
-        /// The recovery point time.
-        /// Serialized Name: MigrationRecoveryPointProperties.recoveryPointTime
-        /// </param>
-        /// <param name="recoveryPointType">
-        /// The recovery point type.
-        /// Serialized Name: MigrationRecoveryPointProperties.recoveryPointType
-        /// </param>
+        /// <param name="recoveryPointOn"> The recovery point time. </param>
+        /// <param name="recoveryPointType"> The recovery point type. </param>
         /// <returns> A new <see cref="Models.MigrationRecoveryPointProperties"/> instance for mocking. </returns>
         public static MigrationRecoveryPointProperties MigrationRecoveryPointProperties(DateTimeOffset? recoveryPointOn = null, MigrationRecoveryPointType? recoveryPointType = null)
         {
@@ -835,58 +434,33 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="properties">
-        /// The custom data.
-        /// Serialized Name: ProtectableItem.properties
-        /// </param>
-        /// <param name="location">
-        /// Resource Location
-        /// Serialized Name: Resource.location
-        /// </param>
+        /// <param name="properties"> The custom data. </param>
+        /// <param name="location"> Resource Location. </param>
         /// <returns> A new <see cref="RecoveryServicesSiteRecovery.SiteRecoveryProtectableItemData"/> instance for mocking. </returns>
-        public static SiteRecoveryProtectableItemData SiteRecoveryProtectableItemData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ProtectableItemProperties properties = null, AzureLocation? location = null)
+        public static SiteRecoveryProtectableItemData SiteRecoveryProtectableItemData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, SiteRecoveryProtectableItemProperties properties = null, AzureLocation? location = null)
         {
             return new SiteRecoveryProtectableItemData(id, name, resourceType, systemData, properties, location);
         }
 
-        /// <summary> Initializes a new instance of ProtectableItemProperties. </summary>
-        /// <param name="friendlyName">
-        /// The name.
-        /// Serialized Name: ProtectableItemProperties.friendlyName
-        /// </param>
-        /// <param name="protectionStatus">
-        /// The protection status.
-        /// Serialized Name: ProtectableItemProperties.protectionStatus
-        /// </param>
-        /// <param name="replicationProtectedItemId">
-        /// The ARM resource of protected items.
-        /// Serialized Name: ProtectableItemProperties.replicationProtectedItemId
-        /// </param>
-        /// <param name="recoveryServicesProviderId">
-        /// The recovery provider ARM Id.
-        /// Serialized Name: ProtectableItemProperties.recoveryServicesProviderId
-        /// </param>
-        /// <param name="protectionReadinessErrors">
-        /// The Current protection readiness errors.
-        /// Serialized Name: ProtectableItemProperties.protectionReadinessErrors
-        /// </param>
-        /// <param name="supportedReplicationProviders">
-        /// The list of replication providers supported for the protectable item.
-        /// Serialized Name: ProtectableItemProperties.supportedReplicationProviders
-        /// </param>
+        /// <summary> Initializes a new instance of SiteRecoveryProtectableItemProperties. </summary>
+        /// <param name="friendlyName"> The name. </param>
+        /// <param name="protectionStatus"> The protection status. </param>
+        /// <param name="replicationProtectedItemId"> The ARM resource of protected items. </param>
+        /// <param name="recoveryServicesProviderId"> The recovery provider ARM Id. </param>
+        /// <param name="protectionReadinessErrors"> The Current protection readiness errors. </param>
+        /// <param name="supportedReplicationProviders"> The list of replication providers supported for the protectable item. </param>
         /// <param name="customDetails">
         /// The Replication provider custom settings.
-        /// Serialized Name: ProtectableItemProperties.customDetails
         /// Please note <see cref="SiteRecoveryReplicationProviderSettings"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="HyperVVmDetails"/>, <see cref="ReplicationGroupDetails"/>, <see cref="VMwareVirtualMachineDetails"/> and <see cref="VmmVirtualMachineDetails"/>.
+        /// The available derived classes include <see cref="HyperVVmDetails"/>, <see cref="ReplicationGroupDetails"/>, <see cref="VMwareVmDetails"/> and <see cref="VmmVmDetails"/>.
         /// </param>
-        /// <returns> A new <see cref="Models.ProtectableItemProperties"/> instance for mocking. </returns>
-        public static ProtectableItemProperties ProtectableItemProperties(string friendlyName = null, string protectionStatus = null, string replicationProtectedItemId = null, string recoveryServicesProviderId = null, IEnumerable<string> protectionReadinessErrors = null, IEnumerable<string> supportedReplicationProviders = null, SiteRecoveryReplicationProviderSettings customDetails = null)
+        /// <returns> A new <see cref="Models.SiteRecoveryProtectableItemProperties"/> instance for mocking. </returns>
+        public static SiteRecoveryProtectableItemProperties SiteRecoveryProtectableItemProperties(string friendlyName = null, string protectionStatus = null, ResourceIdentifier replicationProtectedItemId = null, ResourceIdentifier recoveryServicesProviderId = null, IEnumerable<string> protectionReadinessErrors = null, IEnumerable<string> supportedReplicationProviders = null, SiteRecoveryReplicationProviderSettings customDetails = null)
         {
             protectionReadinessErrors ??= new List<string>();
             supportedReplicationProviders ??= new List<string>();
 
-            return new ProtectableItemProperties(friendlyName, protectionStatus, replicationProtectedItemId, recoveryServicesProviderId, protectionReadinessErrors?.ToList(), supportedReplicationProviders?.ToList(), customDetails);
+            return new SiteRecoveryProtectableItemProperties(friendlyName, protectionStatus, replicationProtectedItemId, recoveryServicesProviderId, protectionReadinessErrors?.ToList(), supportedReplicationProviders?.ToList(), customDetails);
         }
 
         /// <summary> Initializes a new instance of ReplicationProtectedItemData. </summary>
@@ -894,14 +468,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="properties">
-        /// The custom data.
-        /// Serialized Name: ReplicationProtectedItem.properties
-        /// </param>
-        /// <param name="location">
-        /// Resource Location
-        /// Serialized Name: Resource.location
-        /// </param>
+        /// <param name="properties"> The custom data. </param>
+        /// <param name="location"> Resource Location. </param>
         /// <returns> A new <see cref="RecoveryServicesSiteRecovery.ReplicationProtectedItemData"/> instance for mocking. </returns>
         public static ReplicationProtectedItemData ReplicationProtectedItemData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ReplicationProtectedItemProperties properties = null, AzureLocation? location = null)
         {
@@ -909,130 +477,42 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Initializes a new instance of ReplicationProtectedItemProperties. </summary>
-        /// <param name="friendlyName">
-        /// The name.
-        /// Serialized Name: ReplicationProtectedItemProperties.friendlyName
-        /// </param>
-        /// <param name="protectedItemType">
-        /// The type of protected item type.
-        /// Serialized Name: ReplicationProtectedItemProperties.protectedItemType
-        /// </param>
-        /// <param name="protectableItemId">
-        /// The protected item ARM Id.
-        /// Serialized Name: ReplicationProtectedItemProperties.protectableItemId
-        /// </param>
-        /// <param name="recoveryServicesProviderId">
-        /// The recovery provider ARM Id.
-        /// Serialized Name: ReplicationProtectedItemProperties.recoveryServicesProviderId
-        /// </param>
-        /// <param name="primaryFabricFriendlyName">
-        /// The friendly name of the primary fabric.
-        /// Serialized Name: ReplicationProtectedItemProperties.primaryFabricFriendlyName
-        /// </param>
-        /// <param name="primaryFabricProvider">
-        /// The fabric provider of the primary fabric.
-        /// Serialized Name: ReplicationProtectedItemProperties.primaryFabricProvider
-        /// </param>
-        /// <param name="recoveryFabricFriendlyName">
-        /// The friendly name of recovery fabric.
-        /// Serialized Name: ReplicationProtectedItemProperties.recoveryFabricFriendlyName
-        /// </param>
-        /// <param name="recoveryFabricId">
-        /// The Arm Id of recovery fabric.
-        /// Serialized Name: ReplicationProtectedItemProperties.recoveryFabricId
-        /// </param>
-        /// <param name="primaryProtectionContainerFriendlyName">
-        /// The name of primary protection container friendly name.
-        /// Serialized Name: ReplicationProtectedItemProperties.primaryProtectionContainerFriendlyName
-        /// </param>
-        /// <param name="recoveryProtectionContainerFriendlyName">
-        /// The name of recovery container friendly name.
-        /// Serialized Name: ReplicationProtectedItemProperties.recoveryProtectionContainerFriendlyName
-        /// </param>
-        /// <param name="protectionState">
-        /// The protection status.
-        /// Serialized Name: ReplicationProtectedItemProperties.protectionState
-        /// </param>
-        /// <param name="protectionStateDescription">
-        /// The protection state description.
-        /// Serialized Name: ReplicationProtectedItemProperties.protectionStateDescription
-        /// </param>
-        /// <param name="activeLocation">
-        /// The Current active location of the PE.
-        /// Serialized Name: ReplicationProtectedItemProperties.activeLocation
-        /// </param>
-        /// <param name="testFailoverState">
-        /// The Test failover state.
-        /// Serialized Name: ReplicationProtectedItemProperties.testFailoverState
-        /// </param>
-        /// <param name="testFailoverStateDescription">
-        /// The Test failover state description.
-        /// Serialized Name: ReplicationProtectedItemProperties.testFailoverStateDescription
-        /// </param>
-        /// <param name="switchProviderState">
-        /// The switch provider state.
-        /// Serialized Name: ReplicationProtectedItemProperties.switchProviderState
-        /// </param>
-        /// <param name="switchProviderStateDescription">
-        /// The switch provider state description.
-        /// Serialized Name: ReplicationProtectedItemProperties.switchProviderStateDescription
-        /// </param>
-        /// <param name="allowedOperations">
-        /// The allowed operations on the Replication protected item.
-        /// Serialized Name: ReplicationProtectedItemProperties.allowedOperations
-        /// </param>
-        /// <param name="replicationHealth">
-        /// The consolidated protection health for the VM taking any issues with SRS as well as all the replication units associated with the VM's replication group into account. This is a string representation of the ProtectionHealth enumeration.
-        /// Serialized Name: ReplicationProtectedItemProperties.replicationHealth
-        /// </param>
-        /// <param name="failoverHealth">
-        /// The consolidated failover health for the VM.
-        /// Serialized Name: ReplicationProtectedItemProperties.failoverHealth
-        /// </param>
-        /// <param name="healthErrors">
-        /// List of health errors.
-        /// Serialized Name: ReplicationProtectedItemProperties.healthErrors
-        /// </param>
-        /// <param name="policyId">
-        /// The ID of Policy governing this PE.
-        /// Serialized Name: ReplicationProtectedItemProperties.policyId
-        /// </param>
-        /// <param name="policyFriendlyName">
-        /// The name of Policy governing this PE.
-        /// Serialized Name: ReplicationProtectedItemProperties.policyFriendlyName
-        /// </param>
-        /// <param name="lastSuccessfulFailoverOn">
-        /// The Last successful failover time.
-        /// Serialized Name: ReplicationProtectedItemProperties.lastSuccessfulFailoverTime
-        /// </param>
-        /// <param name="lastSuccessfulTestFailoverOn">
-        /// The Last successful test failover time.
-        /// Serialized Name: ReplicationProtectedItemProperties.lastSuccessfulTestFailoverTime
-        /// </param>
-        /// <param name="currentScenario">
-        /// The current scenario.
-        /// Serialized Name: ReplicationProtectedItemProperties.currentScenario
-        /// </param>
-        /// <param name="failoverRecoveryPointId">
-        /// The recovery point ARM Id to which the Vm was failed over.
-        /// Serialized Name: ReplicationProtectedItemProperties.failoverRecoveryPointId
-        /// </param>
+        /// <param name="friendlyName"> The name. </param>
+        /// <param name="protectedItemType"> The type of protected item type. </param>
+        /// <param name="protectableItemId"> The protected item ARM Id. </param>
+        /// <param name="recoveryServicesProviderId"> The recovery provider ARM Id. </param>
+        /// <param name="primaryFabricFriendlyName"> The friendly name of the primary fabric. </param>
+        /// <param name="primaryFabricProvider"> The fabric provider of the primary fabric. </param>
+        /// <param name="recoveryFabricFriendlyName"> The friendly name of recovery fabric. </param>
+        /// <param name="recoveryFabricId"> The Arm Id of recovery fabric. </param>
+        /// <param name="primaryProtectionContainerFriendlyName"> The name of primary protection container friendly name. </param>
+        /// <param name="recoveryProtectionContainerFriendlyName"> The name of recovery container friendly name. </param>
+        /// <param name="protectionState"> The protection status. </param>
+        /// <param name="protectionStateDescription"> The protection state description. </param>
+        /// <param name="activeLocation"> The Current active location of the PE. </param>
+        /// <param name="testFailoverState"> The Test failover state. </param>
+        /// <param name="testFailoverStateDescription"> The Test failover state description. </param>
+        /// <param name="switchProviderState"> The switch provider state. </param>
+        /// <param name="switchProviderStateDescription"> The switch provider state description. </param>
+        /// <param name="allowedOperations"> The allowed operations on the Replication protected item. </param>
+        /// <param name="replicationHealth"> The consolidated protection health for the VM taking any issues with SRS as well as all the replication units associated with the VM's replication group into account. This is a string representation of the ProtectionHealth enumeration. </param>
+        /// <param name="failoverHealth"> The consolidated failover health for the VM. </param>
+        /// <param name="healthErrors"> List of health errors. </param>
+        /// <param name="policyId"> The ID of Policy governing this PE. </param>
+        /// <param name="policyFriendlyName"> The name of Policy governing this PE. </param>
+        /// <param name="lastSuccessfulFailoverOn"> The Last successful failover time. </param>
+        /// <param name="lastSuccessfulTestFailoverOn"> The Last successful test failover time. </param>
+        /// <param name="currentScenario"> The current scenario. </param>
+        /// <param name="failoverRecoveryPointId"> The recovery point ARM Id to which the Vm was failed over. </param>
         /// <param name="providerSpecificDetails">
         /// The Replication provider custom settings.
-        /// Serialized Name: ReplicationProtectedItemProperties.providerSpecificDetails
         /// Please note <see cref="ReplicationProviderSpecificSettings"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="A2AReplicationDetails"/>, <see cref="A2ACrossClusterMigrationReplicationDetails"/>, <see cref="HyperVReplicaReplicationDetails"/>, <see cref="HyperVReplicaBlueReplicationDetails"/>, <see cref="HyperVReplicaAzureReplicationDetails"/>, <see cref="HyperVReplicaBaseReplicationDetails"/>, <see cref="InMageReplicationDetails"/>, <see cref="InMageAzureV2ReplicationDetails"/>, <see cref="InMageRcmReplicationDetails"/> and <see cref="InMageRcmFailbackReplicationDetails"/>.
         /// </param>
-        /// <param name="recoveryContainerId">
-        /// The recovery container Id.
-        /// Serialized Name: ReplicationProtectedItemProperties.recoveryContainerId
-        /// </param>
-        /// <param name="eventCorrelationId">
-        /// The correlation Id for events associated with this protected item.
-        /// Serialized Name: ReplicationProtectedItemProperties.eventCorrelationId
-        /// </param>
+        /// <param name="recoveryContainerId"> The recovery container Id. </param>
+        /// <param name="eventCorrelationId"> The correlation Id for events associated with this protected item. </param>
         /// <returns> A new <see cref="Models.ReplicationProtectedItemProperties"/> instance for mocking. </returns>
-        public static ReplicationProtectedItemProperties ReplicationProtectedItemProperties(string friendlyName = null, string protectedItemType = null, ResourceIdentifier protectableItemId = null, string recoveryServicesProviderId = null, string primaryFabricFriendlyName = null, string primaryFabricProvider = null, string recoveryFabricFriendlyName = null, ResourceIdentifier recoveryFabricId = null, string primaryProtectionContainerFriendlyName = null, string recoveryProtectionContainerFriendlyName = null, string protectionState = null, string protectionStateDescription = null, string activeLocation = null, string testFailoverState = null, string testFailoverStateDescription = null, string switchProviderState = null, string switchProviderStateDescription = null, IEnumerable<string> allowedOperations = null, string replicationHealth = null, string failoverHealth = null, IEnumerable<SiteRecoveryHealthError> healthErrors = null, ResourceIdentifier policyId = null, string policyFriendlyName = null, DateTimeOffset? lastSuccessfulFailoverOn = null, DateTimeOffset? lastSuccessfulTestFailoverOn = null, CurrentScenarioDetails currentScenario = null, ResourceIdentifier failoverRecoveryPointId = null, ReplicationProviderSpecificSettings providerSpecificDetails = null, ResourceIdentifier recoveryContainerId = null, string eventCorrelationId = null)
+        public static ReplicationProtectedItemProperties ReplicationProtectedItemProperties(string friendlyName = null, string protectedItemType = null, ResourceIdentifier protectableItemId = null, string recoveryServicesProviderId = null, string primaryFabricFriendlyName = null, string primaryFabricProvider = null, string recoveryFabricFriendlyName = null, ResourceIdentifier recoveryFabricId = null, string primaryProtectionContainerFriendlyName = null, string recoveryProtectionContainerFriendlyName = null, string protectionState = null, string protectionStateDescription = null, string activeLocation = null, string testFailoverState = null, string testFailoverStateDescription = null, string switchProviderState = null, string switchProviderStateDescription = null, IEnumerable<string> allowedOperations = null, string replicationHealth = null, string failoverHealth = null, IEnumerable<SiteRecoveryHealthError> healthErrors = null, ResourceIdentifier policyId = null, string policyFriendlyName = null, DateTimeOffset? lastSuccessfulFailoverOn = null, DateTimeOffset? lastSuccessfulTestFailoverOn = null, CurrentScenarioDetails currentScenario = null, ResourceIdentifier failoverRecoveryPointId = null, ReplicationProviderSpecificSettings providerSpecificDetails = null, ResourceIdentifier recoveryContainerId = null, Guid? eventCorrelationId = null)
         {
             allowedOperations ??= new List<string>();
             healthErrors ??= new List<SiteRecoveryHealthError>();
@@ -1041,18 +521,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Initializes a new instance of CurrentScenarioDetails. </summary>
-        /// <param name="scenarioName">
-        /// Scenario name.
-        /// Serialized Name: CurrentScenarioDetails.scenarioName
-        /// </param>
-        /// <param name="jobId">
-        /// ARM Id of the job being executed.
-        /// Serialized Name: CurrentScenarioDetails.jobId
-        /// </param>
-        /// <param name="startOn">
-        /// Start time of the workflow.
-        /// Serialized Name: CurrentScenarioDetails.startTime
-        /// </param>
+        /// <param name="scenarioName"> Scenario name. </param>
+        /// <param name="jobId"> ARM Id of the job being executed. </param>
+        /// <param name="startOn"> Start time of the workflow. </param>
         /// <returns> A new <see cref="Models.CurrentScenarioDetails"/> instance for mocking. </returns>
         public static CurrentScenarioDetails CurrentScenarioDetails(string scenarioName = null, ResourceIdentifier jobId = null, DateTimeOffset? startOn = null)
         {
@@ -1064,39 +535,26 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="properties">
-        /// The recovery point properties.
-        /// Serialized Name: RecoveryPoint.properties
-        /// </param>
-        /// <param name="location">
-        /// Resource Location
-        /// Serialized Name: Resource.location
-        /// </param>
+        /// <param name="properties"> The recovery point properties. </param>
+        /// <param name="location"> Resource Location. </param>
         /// <returns> A new <see cref="RecoveryServicesSiteRecovery.SiteRecoveryPointData"/> instance for mocking. </returns>
-        public static SiteRecoveryPointData SiteRecoveryPointData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, RecoveryPointProperties properties = null, AzureLocation? location = null)
+        public static SiteRecoveryPointData SiteRecoveryPointData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, SiteRecoveryPointProperties properties = null, AzureLocation? location = null)
         {
             return new SiteRecoveryPointData(id, name, resourceType, systemData, properties, location);
         }
 
-        /// <summary> Initializes a new instance of RecoveryPointProperties. </summary>
-        /// <param name="recoveryPointOn">
-        /// The recovery point time.
-        /// Serialized Name: RecoveryPointProperties.recoveryPointTime
-        /// </param>
-        /// <param name="recoveryPointType">
-        /// The recovery point type: ApplicationConsistent, CrashConsistent.
-        /// Serialized Name: RecoveryPointProperties.recoveryPointType
-        /// </param>
+        /// <summary> Initializes a new instance of SiteRecoveryPointProperties. </summary>
+        /// <param name="recoveryPointOn"> The recovery point time. </param>
+        /// <param name="recoveryPointType"> The recovery point type: ApplicationConsistent, CrashConsistent. </param>
         /// <param name="providerSpecificDetails">
         /// The provider specific details for the recovery point.
-        /// Serialized Name: RecoveryPointProperties.providerSpecificDetails
         /// Please note <see cref="ProviderSpecificRecoveryPointDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="A2ARecoveryPointDetails"/>, <see cref="InMageAzureV2RecoveryPointDetails"/> and <see cref="InMageRcmRecoveryPointDetails"/>.
         /// </param>
-        /// <returns> A new <see cref="Models.RecoveryPointProperties"/> instance for mocking. </returns>
-        public static RecoveryPointProperties RecoveryPointProperties(DateTimeOffset? recoveryPointOn = null, string recoveryPointType = null, ProviderSpecificRecoveryPointDetails providerSpecificDetails = null)
+        /// <returns> A new <see cref="Models.SiteRecoveryPointProperties"/> instance for mocking. </returns>
+        public static SiteRecoveryPointProperties SiteRecoveryPointProperties(DateTimeOffset? recoveryPointOn = null, string recoveryPointType = null, ProviderSpecificRecoveryPointDetails providerSpecificDetails = null)
         {
-            return new RecoveryPointProperties(recoveryPointOn, recoveryPointType, providerSpecificDetails);
+            return new SiteRecoveryPointProperties(recoveryPointOn, recoveryPointType, providerSpecificDetails);
         }
 
         /// <summary> Initializes a new instance of TargetComputeSize. </summary>
@@ -1104,10 +562,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="properties">
-        /// The custom data.
-        /// Serialized Name: TargetComputeSize.properties
-        /// </param>
+        /// <param name="properties"> The custom data. </param>
         /// <returns> A new <see cref="Models.TargetComputeSize"/> instance for mocking. </returns>
         public static TargetComputeSize TargetComputeSize(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, TargetComputeSizeProperties properties = null)
         {
@@ -1115,46 +570,16 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Initializes a new instance of TargetComputeSizeProperties. </summary>
-        /// <param name="name">
-        /// Target compute size name.
-        /// Serialized Name: TargetComputeSizeProperties.name
-        /// </param>
-        /// <param name="friendlyName">
-        /// Target compute size display name.
-        /// Serialized Name: TargetComputeSizeProperties.friendlyName
-        /// </param>
-        /// <param name="cpuCoresCount">
-        /// The maximum cpu cores count supported by target compute size.
-        /// Serialized Name: TargetComputeSizeProperties.cpuCoresCount
-        /// </param>
-        /// <param name="vCpusAvailable">
-        /// The Available vCPUs supported by target compute size.
-        /// Serialized Name: TargetComputeSizeProperties.vCPUsAvailable
-        /// </param>
-        /// <param name="memoryInGB">
-        /// The maximum memory in GB supported by target compute size.
-        /// Serialized Name: TargetComputeSizeProperties.memoryInGB
-        /// </param>
-        /// <param name="maxDataDiskCount">
-        /// The maximum data disks count supported by target compute size.
-        /// Serialized Name: TargetComputeSizeProperties.maxDataDiskCount
-        /// </param>
-        /// <param name="maxNicsCount">
-        /// The maximum Nics count supported by target compute size.
-        /// Serialized Name: TargetComputeSizeProperties.maxNicsCount
-        /// </param>
-        /// <param name="errors">
-        /// The reasons why the target compute size is not applicable for the protected item.
-        /// Serialized Name: TargetComputeSizeProperties.errors
-        /// </param>
-        /// <param name="highIopsSupported">
-        /// The value indicating whether the target compute size supports high Iops.
-        /// Serialized Name: TargetComputeSizeProperties.highIopsSupported
-        /// </param>
-        /// <param name="hyperVGenerations">
-        /// The supported HyperV Generations.
-        /// Serialized Name: TargetComputeSizeProperties.hyperVGenerations
-        /// </param>
+        /// <param name="name"> Target compute size name. </param>
+        /// <param name="friendlyName"> Target compute size display name. </param>
+        /// <param name="cpuCoresCount"> The maximum cpu cores count supported by target compute size. </param>
+        /// <param name="vCpusAvailable"> The Available vCPUs supported by target compute size. </param>
+        /// <param name="memoryInGB"> The maximum memory in GB supported by target compute size. </param>
+        /// <param name="maxDataDiskCount"> The maximum data disks count supported by target compute size. </param>
+        /// <param name="maxNicsCount"> The maximum Nics count supported by target compute size. </param>
+        /// <param name="errors"> The reasons why the target compute size is not applicable for the protected item. </param>
+        /// <param name="highIopsSupported"> The value indicating whether the target compute size supports high Iops. </param>
+        /// <param name="hyperVGenerations"> The supported HyperV Generations. </param>
         /// <returns> A new <see cref="Models.TargetComputeSizeProperties"/> instance for mocking. </returns>
         public static TargetComputeSizeProperties TargetComputeSizeProperties(string name = null, string friendlyName = null, int? cpuCoresCount = null, int? vCpusAvailable = null, double? memoryInGB = null, int? maxDataDiskCount = null, int? maxNicsCount = null, IEnumerable<SiteRecoveryComputeSizeErrorDetails> errors = null, string highIopsSupported = null, IEnumerable<string> hyperVGenerations = null)
         {
@@ -1165,88 +590,45 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Initializes a new instance of SiteRecoveryComputeSizeErrorDetails. </summary>
-        /// <param name="message">
-        /// The error message.
-        /// Serialized Name: ComputeSizeErrorDetails.message
-        /// </param>
-        /// <param name="severity">
-        /// The severity of the error.
-        /// Serialized Name: ComputeSizeErrorDetails.severity
-        /// </param>
+        /// <param name="message"> The error message. </param>
+        /// <param name="severity"> The severity of the error. </param>
         /// <returns> A new <see cref="Models.SiteRecoveryComputeSizeErrorDetails"/> instance for mocking. </returns>
         public static SiteRecoveryComputeSizeErrorDetails SiteRecoveryComputeSizeErrorDetails(string message = null, string severity = null)
         {
             return new SiteRecoveryComputeSizeErrorDetails(message, severity);
         }
 
-        /// <summary> Initializes a new instance of SiteRecoveryProtectionContainerMappingData. </summary>
+        /// <summary> Initializes a new instance of ProtectionContainerMappingData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="properties">
-        /// The custom data.
-        /// Serialized Name: ProtectionContainerMapping.properties
-        /// </param>
-        /// <param name="location">
-        /// Resource Location
-        /// Serialized Name: Resource.location
-        /// </param>
-        /// <returns> A new <see cref="RecoveryServicesSiteRecovery.SiteRecoveryProtectionContainerMappingData"/> instance for mocking. </returns>
-        public static SiteRecoveryProtectionContainerMappingData SiteRecoveryProtectionContainerMappingData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ProtectionContainerMappingProperties properties = null, AzureLocation? location = null)
+        /// <param name="properties"> The custom data. </param>
+        /// <param name="location"> Resource Location. </param>
+        /// <returns> A new <see cref="RecoveryServicesSiteRecovery.ProtectionContainerMappingData"/> instance for mocking. </returns>
+        public static ProtectionContainerMappingData ProtectionContainerMappingData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ProtectionContainerMappingProperties properties = null, AzureLocation? location = null)
         {
-            return new SiteRecoveryProtectionContainerMappingData(id, name, resourceType, systemData, properties, location);
+            return new ProtectionContainerMappingData(id, name, resourceType, systemData, properties, location);
         }
 
         /// <summary> Initializes a new instance of ProtectionContainerMappingProperties. </summary>
-        /// <param name="targetProtectionContainerId">
-        /// Paired protection container ARM ID.
-        /// Serialized Name: ProtectionContainerMappingProperties.targetProtectionContainerId
-        /// </param>
-        /// <param name="targetProtectionContainerFriendlyName">
-        /// Friendly name of paired container.
-        /// Serialized Name: ProtectionContainerMappingProperties.targetProtectionContainerFriendlyName
-        /// </param>
+        /// <param name="targetProtectionContainerId"> Paired protection container ARM ID. </param>
+        /// <param name="targetProtectionContainerFriendlyName"> Friendly name of paired container. </param>
         /// <param name="providerSpecificDetails">
         /// Provider specific provider details.
-        /// Serialized Name: ProtectionContainerMappingProperties.providerSpecificDetails
         /// Please note <see cref="ProtectionContainerMappingProviderSpecificDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="A2AProtectionContainerMappingDetails"/>, <see cref="InMageRcmProtectionContainerMappingDetails"/> and <see cref="VMwareCbtProtectionContainerMappingDetails"/>.
         /// </param>
-        /// <param name="health">
-        /// Health of pairing.
-        /// Serialized Name: ProtectionContainerMappingProperties.health
-        /// </param>
-        /// <param name="healthErrorDetails">
-        /// Health error.
-        /// Serialized Name: ProtectionContainerMappingProperties.healthErrorDetails
-        /// </param>
-        /// <param name="policyId">
-        /// Policy ARM Id.
-        /// Serialized Name: ProtectionContainerMappingProperties.policyId
-        /// </param>
-        /// <param name="state">
-        /// Association Status.
-        /// Serialized Name: ProtectionContainerMappingProperties.state
-        /// </param>
-        /// <param name="sourceProtectionContainerFriendlyName">
-        /// Friendly name of source protection container.
-        /// Serialized Name: ProtectionContainerMappingProperties.sourceProtectionContainerFriendlyName
-        /// </param>
-        /// <param name="sourceFabricFriendlyName">
-        /// Friendly name of source fabric.
-        /// Serialized Name: ProtectionContainerMappingProperties.sourceFabricFriendlyName
-        /// </param>
-        /// <param name="targetFabricFriendlyName">
-        /// Friendly name of target fabric.
-        /// Serialized Name: ProtectionContainerMappingProperties.targetFabricFriendlyName
-        /// </param>
-        /// <param name="policyFriendlyName">
-        /// Friendly name of replication policy.
-        /// Serialized Name: ProtectionContainerMappingProperties.policyFriendlyName
-        /// </param>
+        /// <param name="health"> Health of pairing. </param>
+        /// <param name="healthErrorDetails"> Health error. </param>
+        /// <param name="policyId"> Policy ARM Id. </param>
+        /// <param name="state"> Association Status. </param>
+        /// <param name="sourceProtectionContainerFriendlyName"> Friendly name of source protection container. </param>
+        /// <param name="sourceFabricFriendlyName"> Friendly name of source fabric. </param>
+        /// <param name="targetFabricFriendlyName"> Friendly name of target fabric. </param>
+        /// <param name="policyFriendlyName"> Friendly name of replication policy. </param>
         /// <returns> A new <see cref="Models.ProtectionContainerMappingProperties"/> instance for mocking. </returns>
-        public static ProtectionContainerMappingProperties ProtectionContainerMappingProperties(string targetProtectionContainerId = null, string targetProtectionContainerFriendlyName = null, ProtectionContainerMappingProviderSpecificDetails providerSpecificDetails = null, string health = null, IEnumerable<SiteRecoveryHealthError> healthErrorDetails = null, ResourceIdentifier policyId = null, string state = null, string sourceProtectionContainerFriendlyName = null, string sourceFabricFriendlyName = null, string targetFabricFriendlyName = null, string policyFriendlyName = null)
+        public static ProtectionContainerMappingProperties ProtectionContainerMappingProperties(ResourceIdentifier targetProtectionContainerId = null, string targetProtectionContainerFriendlyName = null, ProtectionContainerMappingProviderSpecificDetails providerSpecificDetails = null, string health = null, IEnumerable<SiteRecoveryHealthError> healthErrorDetails = null, ResourceIdentifier policyId = null, string state = null, string sourceProtectionContainerFriendlyName = null, string sourceFabricFriendlyName = null, string targetFabricFriendlyName = null, string policyFriendlyName = null)
         {
             healthErrorDetails ??= new List<SiteRecoveryHealthError>();
 
@@ -1258,192 +640,90 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="properties">
-        /// Provider properties.
-        /// Serialized Name: RecoveryServicesProvider.properties
-        /// </param>
-        /// <param name="location">
-        /// Resource Location
-        /// Serialized Name: Resource.location
-        /// </param>
+        /// <param name="properties"> Provider properties. </param>
+        /// <param name="location"> Resource Location. </param>
         /// <returns> A new <see cref="RecoveryServicesSiteRecovery.SiteRecoveryServicesProviderData"/> instance for mocking. </returns>
-        public static SiteRecoveryServicesProviderData SiteRecoveryServicesProviderData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, RecoveryServicesProviderProperties properties = null, AzureLocation? location = null)
+        public static SiteRecoveryServicesProviderData SiteRecoveryServicesProviderData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, SiteRecoveryServicesProviderProperties properties = null, AzureLocation? location = null)
         {
             return new SiteRecoveryServicesProviderData(id, name, resourceType, systemData, properties, location);
         }
 
-        /// <summary> Initializes a new instance of RecoveryServicesProviderProperties. </summary>
-        /// <param name="fabricType">
-        /// Type of the site.
-        /// Serialized Name: RecoveryServicesProviderProperties.fabricType
-        /// </param>
-        /// <param name="friendlyName">
-        /// Friendly name of the DRA.
-        /// Serialized Name: RecoveryServicesProviderProperties.friendlyName
-        /// </param>
-        /// <param name="providerVersion">
-        /// The provider version.
-        /// Serialized Name: RecoveryServicesProviderProperties.providerVersion
-        /// </param>
-        /// <param name="serverVersion">
-        /// The fabric provider.
-        /// Serialized Name: RecoveryServicesProviderProperties.serverVersion
-        /// </param>
-        /// <param name="providerVersionState">
-        /// DRA version status.
-        /// Serialized Name: RecoveryServicesProviderProperties.providerVersionState
-        /// </param>
-        /// <param name="providerVersionExpireOn">
-        /// Expiry date of the version.
-        /// Serialized Name: RecoveryServicesProviderProperties.providerVersionExpiryDate
-        /// </param>
-        /// <param name="fabricFriendlyName">
-        /// The fabric friendly name.
-        /// Serialized Name: RecoveryServicesProviderProperties.fabricFriendlyName
-        /// </param>
-        /// <param name="lastHeartBeat">
-        /// Time when last heartbeat was sent by the DRA.
-        /// Serialized Name: RecoveryServicesProviderProperties.lastHeartBeat
-        /// </param>
-        /// <param name="connectionStatus">
-        /// A value indicating whether DRA is responsive.
-        /// Serialized Name: RecoveryServicesProviderProperties.connectionStatus
-        /// </param>
-        /// <param name="protectedItemCount">
-        /// Number of protected VMs currently managed by the DRA.
-        /// Serialized Name: RecoveryServicesProviderProperties.protectedItemCount
-        /// </param>
-        /// <param name="allowedScenarios">
-        /// The scenarios allowed on this provider.
-        /// Serialized Name: RecoveryServicesProviderProperties.allowedScenarios
-        /// </param>
-        /// <param name="healthErrorDetails">
-        /// The recovery services provider health error details.
-        /// Serialized Name: RecoveryServicesProviderProperties.healthErrorDetails
-        /// </param>
-        /// <param name="draIdentifier">
-        /// The DRA Id.
-        /// Serialized Name: RecoveryServicesProviderProperties.draIdentifier
-        /// </param>
-        /// <param name="machineId">
-        /// The machine Id.
-        /// Serialized Name: RecoveryServicesProviderProperties.machineId
-        /// </param>
-        /// <param name="machineName">
-        /// The machine name.
-        /// Serialized Name: RecoveryServicesProviderProperties.machineName
-        /// </param>
-        /// <param name="biosId">
-        /// The Bios Id.
-        /// Serialized Name: RecoveryServicesProviderProperties.biosId
-        /// </param>
-        /// <param name="authenticationIdentityDetails">
-        /// The authentication identity details.
-        /// Serialized Name: RecoveryServicesProviderProperties.authenticationIdentityDetails
-        /// </param>
-        /// <param name="resourceAccessIdentityDetails">
-        /// The resource access identity details.
-        /// Serialized Name: RecoveryServicesProviderProperties.resourceAccessIdentityDetails
-        /// </param>
-        /// <param name="dataPlaneAuthenticationIdentityDetails">
-        /// The data plane authentication identity details.
-        /// Serialized Name: RecoveryServicesProviderProperties.dataPlaneAuthenticationIdentityDetails
-        /// </param>
-        /// <param name="providerVersionDetails">
-        /// The provider version details.
-        /// Serialized Name: RecoveryServicesProviderProperties.providerVersionDetails
-        /// </param>
-        /// <returns> A new <see cref="Models.RecoveryServicesProviderProperties"/> instance for mocking. </returns>
-        public static RecoveryServicesProviderProperties RecoveryServicesProviderProperties(string fabricType = null, string friendlyName = null, string providerVersion = null, string serverVersion = null, string providerVersionState = null, DateTimeOffset? providerVersionExpireOn = null, string fabricFriendlyName = null, DateTimeOffset? lastHeartBeat = null, string connectionStatus = null, int? protectedItemCount = null, IEnumerable<string> allowedScenarios = null, IEnumerable<SiteRecoveryHealthError> healthErrorDetails = null, string draIdentifier = null, string machineId = null, string machineName = null, string biosId = null, SiteRecoveryIdentityProviderDetails authenticationIdentityDetails = null, SiteRecoveryIdentityProviderDetails resourceAccessIdentityDetails = null, SiteRecoveryIdentityProviderDetails dataPlaneAuthenticationIdentityDetails = null, VersionDetails providerVersionDetails = null)
+        /// <summary> Initializes a new instance of SiteRecoveryServicesProviderProperties. </summary>
+        /// <param name="fabricType"> Type of the site. </param>
+        /// <param name="friendlyName"> Friendly name of the DRA. </param>
+        /// <param name="providerVersion"> The provider version. </param>
+        /// <param name="serverVersion"> The fabric provider. </param>
+        /// <param name="providerVersionState"> DRA version status. </param>
+        /// <param name="providerVersionExpireOn"> Expiry date of the version. </param>
+        /// <param name="fabricFriendlyName"> The fabric friendly name. </param>
+        /// <param name="lastHeartbeatReceivedOn"> Time when last heartbeat was sent by the DRA. </param>
+        /// <param name="connectionStatus"> A value indicating whether DRA is responsive. </param>
+        /// <param name="protectedItemCount"> Number of protected VMs currently managed by the DRA. </param>
+        /// <param name="allowedScenarios"> The scenarios allowed on this provider. </param>
+        /// <param name="healthErrorDetails"> The recovery services provider health error details. </param>
+        /// <param name="draIdentifier"> The DRA Id. </param>
+        /// <param name="machineId"> The machine Id. </param>
+        /// <param name="machineName"> The machine name. </param>
+        /// <param name="biosId"> The Bios Id. </param>
+        /// <param name="authenticationIdentityDetails"> The authentication identity details. </param>
+        /// <param name="resourceAccessIdentityDetails"> The resource access identity details. </param>
+        /// <param name="dataPlaneAuthenticationIdentityDetails"> The data plane authentication identity details. </param>
+        /// <param name="providerVersionDetails"> The provider version details. </param>
+        /// <returns> A new <see cref="Models.SiteRecoveryServicesProviderProperties"/> instance for mocking. </returns>
+        public static SiteRecoveryServicesProviderProperties SiteRecoveryServicesProviderProperties(string fabricType = null, string friendlyName = null, string providerVersion = null, string serverVersion = null, string providerVersionState = null, DateTimeOffset? providerVersionExpireOn = null, string fabricFriendlyName = null, DateTimeOffset? lastHeartbeatReceivedOn = null, string connectionStatus = null, int? protectedItemCount = null, IEnumerable<string> allowedScenarios = null, IEnumerable<SiteRecoveryHealthError> healthErrorDetails = null, string draIdentifier = null, string machineId = null, string machineName = null, string biosId = null, IdentityProviderDetails authenticationIdentityDetails = null, IdentityProviderDetails resourceAccessIdentityDetails = null, IdentityProviderDetails dataPlaneAuthenticationIdentityDetails = null, SiteRecoveryVersionDetails providerVersionDetails = null)
         {
             allowedScenarios ??= new List<string>();
             healthErrorDetails ??= new List<SiteRecoveryHealthError>();
 
-            return new RecoveryServicesProviderProperties(fabricType, friendlyName, providerVersion, serverVersion, providerVersionState, providerVersionExpireOn, fabricFriendlyName, lastHeartBeat, connectionStatus, protectedItemCount, allowedScenarios?.ToList(), healthErrorDetails?.ToList(), draIdentifier, machineId, machineName, biosId, authenticationIdentityDetails, resourceAccessIdentityDetails, dataPlaneAuthenticationIdentityDetails, providerVersionDetails);
+            return new SiteRecoveryServicesProviderProperties(fabricType, friendlyName, providerVersion, serverVersion, providerVersionState, providerVersionExpireOn, fabricFriendlyName, lastHeartbeatReceivedOn, connectionStatus, protectedItemCount, allowedScenarios?.ToList(), healthErrorDetails?.ToList(), draIdentifier, machineId, machineName, biosId, authenticationIdentityDetails, resourceAccessIdentityDetails, dataPlaneAuthenticationIdentityDetails, providerVersionDetails);
         }
 
-        /// <summary> Initializes a new instance of SiteRecoveryIdentityProviderDetails. </summary>
-        /// <param name="tenantId">
-        /// The tenant Id for the service principal with which the on-premise management/data plane components would communicate with our Azure services.
-        /// Serialized Name: IdentityProviderDetails.tenantId
-        /// </param>
-        /// <param name="applicationId">
-        /// The application/client Id for the service principal with which the on-premise management/data plane components would communicate with our Azure services.
-        /// Serialized Name: IdentityProviderDetails.applicationId
-        /// </param>
-        /// <param name="objectId">
-        /// The object Id of the service principal with which the on-premise management/data plane components would communicate with our Azure services.
-        /// Serialized Name: IdentityProviderDetails.objectId
-        /// </param>
-        /// <param name="audience">
-        /// The intended Audience of the service principal with which the on-premise management/data plane components would communicate with our Azure services.
-        /// Serialized Name: IdentityProviderDetails.audience
-        /// </param>
-        /// <param name="aadAuthority">
-        /// The base authority for Azure Active Directory authentication.
-        /// Serialized Name: IdentityProviderDetails.aadAuthority
-        /// </param>
-        /// <returns> A new <see cref="Models.SiteRecoveryIdentityProviderDetails"/> instance for mocking. </returns>
-        public static SiteRecoveryIdentityProviderDetails SiteRecoveryIdentityProviderDetails(Guid? tenantId = null, string applicationId = null, string objectId = null, string audience = null, string aadAuthority = null)
+        /// <summary> Initializes a new instance of IdentityProviderDetails. </summary>
+        /// <param name="tenantId"> The tenant Id for the service principal with which the on-premise management/data plane components would communicate with our Azure services. </param>
+        /// <param name="applicationId"> The application/client Id for the service principal with which the on-premise management/data plane components would communicate with our Azure services. </param>
+        /// <param name="objectId"> The object Id of the service principal with which the on-premise management/data plane components would communicate with our Azure services. </param>
+        /// <param name="audience"> The intended Audience of the service principal with which the on-premise management/data plane components would communicate with our Azure services. </param>
+        /// <param name="aadAuthority"> The base authority for Azure Active Directory authentication. </param>
+        /// <returns> A new <see cref="Models.IdentityProviderDetails"/> instance for mocking. </returns>
+        public static IdentityProviderDetails IdentityProviderDetails(Guid? tenantId = null, string applicationId = null, string objectId = null, string audience = null, string aadAuthority = null)
         {
-            return new SiteRecoveryIdentityProviderDetails(tenantId, applicationId, objectId, audience, aadAuthority);
+            return new IdentityProviderDetails(tenantId, applicationId, objectId, audience, aadAuthority);
         }
 
-        /// <summary> Initializes a new instance of VersionDetails. </summary>
-        /// <param name="version">
-        /// The agent version.
-        /// Serialized Name: VersionDetails.version
-        /// </param>
-        /// <param name="expireOn">
-        /// Version expiry date.
-        /// Serialized Name: VersionDetails.expiryDate
-        /// </param>
-        /// <param name="status">
-        /// A value indicating whether security update required.
-        /// Serialized Name: VersionDetails.status
-        /// </param>
-        /// <returns> A new <see cref="Models.VersionDetails"/> instance for mocking. </returns>
-        public static VersionDetails VersionDetails(string version = null, DateTimeOffset? expireOn = null, SiteRecoveryAgentVersionStatus? status = null)
+        /// <summary> Initializes a new instance of SiteRecoveryVersionDetails. </summary>
+        /// <param name="version"> The agent version. </param>
+        /// <param name="expireOn"> Version expiry date. </param>
+        /// <param name="status"> A value indicating whether security update required. </param>
+        /// <returns> A new <see cref="Models.SiteRecoveryVersionDetails"/> instance for mocking. </returns>
+        public static SiteRecoveryVersionDetails SiteRecoveryVersionDetails(string version = null, DateTimeOffset? expireOn = null, SiteRecoveryAgentVersionStatus? status = null)
         {
-            return new VersionDetails(version, expireOn, status);
+            return new SiteRecoveryVersionDetails(version, expireOn, status);
         }
 
-        /// <summary> Initializes a new instance of SiteRecoveryStorageClassificationData. </summary>
+        /// <summary> Initializes a new instance of StorageClassificationData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="storageClassificationFriendlyName">
-        /// Properties of the storage object.
-        /// Serialized Name: StorageClassification.properties
-        /// </param>
-        /// <param name="location">
-        /// Resource Location
-        /// Serialized Name: Resource.location
-        /// </param>
-        /// <returns> A new <see cref="RecoveryServicesSiteRecovery.SiteRecoveryStorageClassificationData"/> instance for mocking. </returns>
-        public static SiteRecoveryStorageClassificationData SiteRecoveryStorageClassificationData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string storageClassificationFriendlyName = null, AzureLocation? location = null)
+        /// <param name="storageClassificationFriendlyName"> Properties of the storage object. </param>
+        /// <param name="location"> Resource Location. </param>
+        /// <returns> A new <see cref="RecoveryServicesSiteRecovery.StorageClassificationData"/> instance for mocking. </returns>
+        public static StorageClassificationData StorageClassificationData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string storageClassificationFriendlyName = null, AzureLocation? location = null)
         {
-            return new SiteRecoveryStorageClassificationData(id, name, resourceType, systemData, storageClassificationFriendlyName != null ? new StorageClassificationProperties(storageClassificationFriendlyName) : null, location);
+            return new StorageClassificationData(id, name, resourceType, systemData, storageClassificationFriendlyName != null ? new StorageClassificationProperties(storageClassificationFriendlyName) : null, location);
         }
 
-        /// <summary> Initializes a new instance of SiteRecoveryStorageClassificationMappingData. </summary>
+        /// <summary> Initializes a new instance of StorageClassificationMappingData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="targetStorageClassificationId">
-        /// Properties of the storage mapping object.
-        /// Serialized Name: StorageClassificationMapping.properties
-        /// </param>
-        /// <param name="location">
-        /// Resource Location
-        /// Serialized Name: Resource.location
-        /// </param>
-        /// <returns> A new <see cref="RecoveryServicesSiteRecovery.SiteRecoveryStorageClassificationMappingData"/> instance for mocking. </returns>
-        public static SiteRecoveryStorageClassificationMappingData SiteRecoveryStorageClassificationMappingData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string targetStorageClassificationId = null, AzureLocation? location = null)
+        /// <param name="targetStorageClassificationId"> Properties of the storage mapping object. </param>
+        /// <param name="location"> Resource Location. </param>
+        /// <returns> A new <see cref="RecoveryServicesSiteRecovery.StorageClassificationMappingData"/> instance for mocking. </returns>
+        public static StorageClassificationMappingData StorageClassificationMappingData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ResourceIdentifier targetStorageClassificationId = null, AzureLocation? location = null)
         {
-            return new SiteRecoveryStorageClassificationMappingData(id, name, resourceType, systemData, targetStorageClassificationId != null ? new StorageClassificationMappingProperties(targetStorageClassificationId) : null, location);
+            return new StorageClassificationMappingData(id, name, resourceType, systemData, targetStorageClassificationId != null ? new StorageClassificationMappingProperties(targetStorageClassificationId) : null, location);
         }
 
         /// <summary> Initializes a new instance of SiteRecoveryVCenterData. </summary>
@@ -1451,71 +731,32 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="properties">
-        /// VCenter related data.
-        /// Serialized Name: VCenter.properties
-        /// </param>
-        /// <param name="location">
-        /// Resource Location
-        /// Serialized Name: Resource.location
-        /// </param>
+        /// <param name="properties"> VCenter related data. </param>
+        /// <param name="location"> Resource Location. </param>
         /// <returns> A new <see cref="RecoveryServicesSiteRecovery.SiteRecoveryVCenterData"/> instance for mocking. </returns>
-        public static SiteRecoveryVCenterData SiteRecoveryVCenterData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, VCenterProperties properties = null, AzureLocation? location = null)
+        public static SiteRecoveryVCenterData SiteRecoveryVCenterData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, SiteRecoveryVCenterProperties properties = null, AzureLocation? location = null)
         {
             return new SiteRecoveryVCenterData(id, name, resourceType, systemData, properties, location);
         }
 
-        /// <summary> Initializes a new instance of VCenterProperties. </summary>
-        /// <param name="friendlyName">
-        /// Friendly name of the vCenter.
-        /// Serialized Name: VCenterProperties.friendlyName
-        /// </param>
-        /// <param name="internalId">
-        /// VCenter internal ID.
-        /// Serialized Name: VCenterProperties.internalId
-        /// </param>
-        /// <param name="lastHeartbeat">
-        /// The time when the last heartbeat was received by vCenter.
-        /// Serialized Name: VCenterProperties.lastHeartbeat
-        /// </param>
-        /// <param name="discoveryStatus">
-        /// The VCenter discovery status.
-        /// Serialized Name: VCenterProperties.discoveryStatus
-        /// </param>
-        /// <param name="processServerId">
-        /// The process server Id.
-        /// Serialized Name: VCenterProperties.processServerId
-        /// </param>
-        /// <param name="ipAddress">
-        /// The IP address of the vCenter.
-        /// Serialized Name: VCenterProperties.ipAddress
-        /// </param>
-        /// <param name="infrastructureId">
-        /// The infrastructure Id of vCenter.
-        /// Serialized Name: VCenterProperties.infrastructureId
-        /// </param>
-        /// <param name="port">
-        /// The port number for discovery.
-        /// Serialized Name: VCenterProperties.port
-        /// </param>
-        /// <param name="runAsAccountId">
-        /// The account Id which has privileges to discover the vCenter.
-        /// Serialized Name: VCenterProperties.runAsAccountId
-        /// </param>
-        /// <param name="fabricArmResourceName">
-        /// The ARM resource name of the fabric containing this VCenter.
-        /// Serialized Name: VCenterProperties.fabricArmResourceName
-        /// </param>
-        /// <param name="healthErrors">
-        /// The health errors for this VCenter.
-        /// Serialized Name: VCenterProperties.healthErrors
-        /// </param>
-        /// <returns> A new <see cref="Models.VCenterProperties"/> instance for mocking. </returns>
-        public static VCenterProperties VCenterProperties(string friendlyName = null, string internalId = null, DateTimeOffset? lastHeartbeat = null, string discoveryStatus = null, string processServerId = null, IPAddress ipAddress = null, string infrastructureId = null, string port = null, string runAsAccountId = null, string fabricArmResourceName = null, IEnumerable<SiteRecoveryHealthError> healthErrors = null)
+        /// <summary> Initializes a new instance of SiteRecoveryVCenterProperties. </summary>
+        /// <param name="friendlyName"> Friendly name of the vCenter. </param>
+        /// <param name="internalId"> VCenter internal ID. </param>
+        /// <param name="lastHeartbeatReceivedOn"> The time when the last heartbeat was received by vCenter. </param>
+        /// <param name="discoveryStatus"> The VCenter discovery status. </param>
+        /// <param name="processServerId"> The process server Id. </param>
+        /// <param name="ipAddress"> The IP address of the vCenter. </param>
+        /// <param name="infrastructureId"> The infrastructure Id of vCenter. </param>
+        /// <param name="port"> The port number for discovery. </param>
+        /// <param name="runAsAccountId"> The account Id which has privileges to discover the vCenter. </param>
+        /// <param name="fabricArmResourceName"> The ARM resource name of the fabric containing this VCenter. </param>
+        /// <param name="healthErrors"> The health errors for this VCenter. </param>
+        /// <returns> A new <see cref="Models.SiteRecoveryVCenterProperties"/> instance for mocking. </returns>
+        public static SiteRecoveryVCenterProperties SiteRecoveryVCenterProperties(string friendlyName = null, string internalId = null, DateTimeOffset? lastHeartbeatReceivedOn = null, string discoveryStatus = null, string processServerId = null, IPAddress ipAddress = null, string infrastructureId = null, string port = null, string runAsAccountId = null, string fabricArmResourceName = null, IEnumerable<SiteRecoveryHealthError> healthErrors = null)
         {
             healthErrors ??= new List<SiteRecoveryHealthError>();
 
-            return new VCenterProperties(friendlyName, internalId, lastHeartbeat, discoveryStatus, processServerId, ipAddress, infrastructureId, port, runAsAccountId, fabricArmResourceName, healthErrors?.ToList());
+            return new SiteRecoveryVCenterProperties(friendlyName, internalId, lastHeartbeatReceivedOn, discoveryStatus, processServerId, ipAddress, infrastructureId, port, runAsAccountId, fabricArmResourceName, healthErrors?.ToList());
         }
 
         /// <summary> Initializes a new instance of SiteRecoveryJobData. </summary>
@@ -1523,14 +764,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="properties">
-        /// The custom data.
-        /// Serialized Name: Job.properties
-        /// </param>
-        /// <param name="location">
-        /// Resource Location
-        /// Serialized Name: Resource.location
-        /// </param>
+        /// <param name="properties"> The custom data. </param>
+        /// <param name="location"> Resource Location. </param>
         /// <returns> A new <see cref="RecoveryServicesSiteRecovery.SiteRecoveryJobData"/> instance for mocking. </returns>
         public static SiteRecoveryJobData SiteRecoveryJobData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, SiteRecoveryJobProperties properties = null, AzureLocation? location = null)
         {
@@ -1538,63 +773,23 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Initializes a new instance of SiteRecoveryJobProperties. </summary>
-        /// <param name="activityId">
-        /// The activity id.
-        /// Serialized Name: JobProperties.activityId
-        /// </param>
-        /// <param name="scenarioName">
-        /// The ScenarioName.
-        /// Serialized Name: JobProperties.scenarioName
-        /// </param>
-        /// <param name="friendlyName">
-        /// The DisplayName.
-        /// Serialized Name: JobProperties.friendlyName
-        /// </param>
-        /// <param name="state">
-        /// The status of the Job. It is one of these values - NotStarted, InProgress, Succeeded, Failed, Cancelled, Suspended or Other.
-        /// Serialized Name: JobProperties.state
-        /// </param>
-        /// <param name="stateDescription">
-        /// The description of the state of the Job. For e.g. - For Succeeded state, description can be Completed, PartiallySucceeded, CompletedWithInformation or Skipped.
-        /// Serialized Name: JobProperties.stateDescription
-        /// </param>
-        /// <param name="tasks">
-        /// The tasks.
-        /// Serialized Name: JobProperties.tasks
-        /// </param>
-        /// <param name="errors">
-        /// The errors.
-        /// Serialized Name: JobProperties.errors
-        /// </param>
-        /// <param name="startOn">
-        /// The start time.
-        /// Serialized Name: JobProperties.startTime
-        /// </param>
-        /// <param name="endOn">
-        /// The end time.
-        /// Serialized Name: JobProperties.endTime
-        /// </param>
-        /// <param name="allowedActions">
-        /// The Allowed action the job.
-        /// Serialized Name: JobProperties.allowedActions
-        /// </param>
-        /// <param name="targetObjectId">
-        /// The affected Object Id.
-        /// Serialized Name: JobProperties.targetObjectId
-        /// </param>
-        /// <param name="targetObjectName">
-        /// The name of the affected object.
-        /// Serialized Name: JobProperties.targetObjectName
-        /// </param>
-        /// <param name="targetInstanceType">
-        /// The type of the affected object which is of Microsoft.Azure.SiteRecovery.V2015_11_10.AffectedObjectType class.
-        /// Serialized Name: JobProperties.targetInstanceType
-        /// </param>
+        /// <param name="activityId"> The activity id. </param>
+        /// <param name="scenarioName"> The ScenarioName. </param>
+        /// <param name="friendlyName"> The DisplayName. </param>
+        /// <param name="state"> The status of the Job. It is one of these values - NotStarted, InProgress, Succeeded, Failed, Cancelled, Suspended or Other. </param>
+        /// <param name="stateDescription"> The description of the state of the Job. For e.g. - For Succeeded state, description can be Completed, PartiallySucceeded, CompletedWithInformation or Skipped. </param>
+        /// <param name="tasks"> The tasks. </param>
+        /// <param name="errors"> The errors. </param>
+        /// <param name="startOn"> The start time. </param>
+        /// <param name="endOn"> The end time. </param>
+        /// <param name="allowedActions"> The Allowed action the job. </param>
+        /// <param name="targetObjectId"> The affected Object Id. </param>
+        /// <param name="targetObjectName"> The name of the affected object. </param>
+        /// <param name="targetInstanceType"> The type of the affected object which is of Microsoft.Azure.SiteRecovery.V2015_11_10.AffectedObjectType class. </param>
         /// <param name="customDetails">
         /// The custom job details like test failover job details.
-        /// Serialized Name: JobProperties.customDetails
         /// Please note <see cref="SiteRecoveryJobDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="AsrJobDetails"/>, <see cref="ExportJobDetails"/>, <see cref="SiteRecoveryFailoverJobDetails"/>, <see cref="SwitchProtectionJobDetails"/> and <see cref="TestFailoverJobDetails"/>.
+        /// The available derived classes include <see cref="AsrJobDetails"/>, <see cref="ExportJobDetails"/>, <see cref="FailoverJobDetails"/>, <see cref="SwitchProtectionJobDetails"/> and <see cref="TestFailoverJobDetails"/>.
         /// </param>
         /// <returns> A new <see cref="Models.SiteRecoveryJobProperties"/> instance for mocking. </returns>
         public static SiteRecoveryJobProperties SiteRecoveryJobProperties(string activityId = null, string scenarioName = null, string friendlyName = null, string state = null, string stateDescription = null, IEnumerable<AsrTask> tasks = null, IEnumerable<SiteRecoveryJobErrorDetails> errors = null, DateTimeOffset? startOn = null, DateTimeOffset? endOn = null, IEnumerable<string> allowedActions = null, string targetObjectId = null, string targetObjectName = null, string targetInstanceType = null, SiteRecoveryJobDetails customDetails = null)
@@ -1607,60 +802,28 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Initializes a new instance of AsrTask. </summary>
-        /// <param name="taskId">
-        /// The Id.
-        /// Serialized Name: ASRTask.taskId
-        /// </param>
-        /// <param name="name">
-        /// The unique Task name.
-        /// Serialized Name: ASRTask.name
-        /// </param>
-        /// <param name="startOn">
-        /// The start time.
-        /// Serialized Name: ASRTask.startTime
-        /// </param>
-        /// <param name="endOn">
-        /// The end time.
-        /// Serialized Name: ASRTask.endTime
-        /// </param>
-        /// <param name="allowedActions">
-        /// The state/actions applicable on this task.
-        /// Serialized Name: ASRTask.allowedActions
-        /// </param>
-        /// <param name="friendlyName">
-        /// The name.
-        /// Serialized Name: ASRTask.friendlyName
-        /// </param>
-        /// <param name="state">
-        /// The State. It is one of these values - NotStarted, InProgress, Succeeded, Failed, Cancelled, Suspended or Other.
-        /// Serialized Name: ASRTask.state
-        /// </param>
-        /// <param name="stateDescription">
-        /// The description of the task state. For example - For Succeeded state, description can be Completed, PartiallySucceeded, CompletedWithInformation or Skipped.
-        /// Serialized Name: ASRTask.stateDescription
-        /// </param>
-        /// <param name="taskType">
-        /// The type of task. Details in CustomDetails property depend on this type.
-        /// Serialized Name: ASRTask.taskType
-        /// </param>
+        /// <param name="taskId"> The Id. </param>
+        /// <param name="name"> The unique Task name. </param>
+        /// <param name="startOn"> The start time. </param>
+        /// <param name="endOn"> The end time. </param>
+        /// <param name="allowedActions"> The state/actions applicable on this task. </param>
+        /// <param name="friendlyName"> The name. </param>
+        /// <param name="state"> The State. It is one of these values - NotStarted, InProgress, Succeeded, Failed, Cancelled, Suspended or Other. </param>
+        /// <param name="stateDescription"> The description of the task state. For example - For Succeeded state, description can be Completed, PartiallySucceeded, CompletedWithInformation or Skipped. </param>
+        /// <param name="taskType"> The type of task. Details in CustomDetails property depend on this type. </param>
         /// <param name="customDetails">
         /// The custom task details based on the task type.
-        /// Serialized Name: ASRTask.customDetails
-        /// Please note <see cref="TaskTypeDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="AutomationRunbookTaskDetails"/>, <see cref="ConsistencyCheckTaskDetails"/>, <see cref="SiteRecoveryFabricReplicationGroupTaskDetails"/>, <see cref="SiteRecoveryJJobTaskDetails"/>, <see cref="ManualActionTaskDetails"/>, <see cref="ScriptActionTaskDetails"/>, <see cref="VirtualMachineTaskDetails"/> and <see cref="VmNicUpdatesTaskDetails"/>.
+        /// Please note <see cref="SiteRecoveryTaskTypeDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="AutomationRunbookTaskDetails"/>, <see cref="ConsistencyCheckTaskDetails"/>, <see cref="FabricReplicationGroupTaskDetails"/>, <see cref="SiteRecoveryJobTaskDetails"/>, <see cref="ManualActionTaskDetails"/>, <see cref="ScriptActionTaskDetails"/>, <see cref="SiteRecoveryVmTaskDetails"/> and <see cref="VmNicUpdatesTaskDetails"/>.
         /// </param>
         /// <param name="groupTaskCustomDetails">
         /// The custom task details based on the task type, if the task type is GroupTaskDetails or one of the types derived from it.
-        /// Serialized Name: ASRTask.groupTaskCustomDetails
         /// Please note <see cref="SiteRecoveryGroupTaskDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="InlineWorkflowTaskDetails"/>, <see cref="RecoveryPlanGroupTaskDetails"/> and <see cref="RecoveryPlanShutdownGroupTaskDetails"/>.
         /// </param>
-        /// <param name="errors">
-        /// The task error details.
-        /// Serialized Name: ASRTask.errors
-        /// </param>
+        /// <param name="errors"> The task error details. </param>
         /// <returns> A new <see cref="Models.AsrTask"/> instance for mocking. </returns>
-        public static AsrTask AsrTask(string taskId = null, string name = null, DateTimeOffset? startOn = null, DateTimeOffset? endOn = null, IEnumerable<string> allowedActions = null, string friendlyName = null, string state = null, string stateDescription = null, string taskType = null, TaskTypeDetails customDetails = null, SiteRecoveryGroupTaskDetails groupTaskCustomDetails = null, IEnumerable<SiteRecoveryJobErrorDetails> errors = null)
+        public static AsrTask AsrTask(string taskId = null, string name = null, DateTimeOffset? startOn = null, DateTimeOffset? endOn = null, IEnumerable<string> allowedActions = null, string friendlyName = null, string state = null, string stateDescription = null, string taskType = null, SiteRecoveryTaskTypeDetails customDetails = null, SiteRecoveryGroupTaskDetails groupTaskCustomDetails = null, IEnumerable<SiteRecoveryJobErrorDetails> errors = null)
         {
             allowedActions ??= new List<string>();
             errors ??= new List<SiteRecoveryJobErrorDetails>();
@@ -1669,14 +832,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Initializes a new instance of SiteRecoveryGroupTaskDetails. </summary>
-        /// <param name="instanceType">
-        /// The type of task details.
-        /// Serialized Name: GroupTaskDetails.instanceType
-        /// </param>
-        /// <param name="childTasks">
-        /// The child tasks.
-        /// Serialized Name: GroupTaskDetails.childTasks
-        /// </param>
+        /// <param name="instanceType"> The type of task details. </param>
+        /// <param name="childTasks"> The child tasks. </param>
         /// <returns> A new <see cref="Models.SiteRecoveryGroupTaskDetails"/> instance for mocking. </returns>
         public static SiteRecoveryGroupTaskDetails SiteRecoveryGroupTaskDetails(string instanceType = null, IEnumerable<AsrTask> childTasks = null)
         {
@@ -1686,95 +843,44 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Initializes a new instance of SiteRecoveryJobErrorDetails. </summary>
-        /// <param name="serviceErrorDetails">
-        /// The Service error details.
-        /// Serialized Name: JobErrorDetails.serviceErrorDetails
-        /// </param>
-        /// <param name="providerErrorDetails">
-        /// The Provider error details.
-        /// Serialized Name: JobErrorDetails.providerErrorDetails
-        /// </param>
-        /// <param name="errorLevel">
-        /// Error level of error.
-        /// Serialized Name: JobErrorDetails.errorLevel
-        /// </param>
-        /// <param name="createdOn">
-        /// The creation time of job error.
-        /// Serialized Name: JobErrorDetails.creationTime
-        /// </param>
-        /// <param name="taskId">
-        /// The Id of the task.
-        /// Serialized Name: JobErrorDetails.taskId
-        /// </param>
+        /// <param name="serviceErrorDetails"> The Service error details. </param>
+        /// <param name="providerErrorDetails"> The Provider error details. </param>
+        /// <param name="errorLevel"> Error level of error. </param>
+        /// <param name="createdOn"> The creation time of job error. </param>
+        /// <param name="taskId"> The Id of the task. </param>
         /// <returns> A new <see cref="Models.SiteRecoveryJobErrorDetails"/> instance for mocking. </returns>
-        public static SiteRecoveryJobErrorDetails SiteRecoveryJobErrorDetails(ServiceError serviceErrorDetails = null, ProviderError providerErrorDetails = null, string errorLevel = null, DateTimeOffset? createdOn = null, string taskId = null)
+        public static SiteRecoveryJobErrorDetails SiteRecoveryJobErrorDetails(SiteRecoveryServiceError serviceErrorDetails = null, SiteRecoveryJobProviderError providerErrorDetails = null, string errorLevel = null, DateTimeOffset? createdOn = null, string taskId = null)
         {
             return new SiteRecoveryJobErrorDetails(serviceErrorDetails, providerErrorDetails, errorLevel, createdOn, taskId);
         }
 
-        /// <summary> Initializes a new instance of ServiceError. </summary>
-        /// <param name="code">
-        /// Error code.
-        /// Serialized Name: ServiceError.code
-        /// </param>
-        /// <param name="message">
-        /// Error message.
-        /// Serialized Name: ServiceError.message
-        /// </param>
-        /// <param name="possibleCauses">
-        /// Possible causes of error.
-        /// Serialized Name: ServiceError.possibleCauses
-        /// </param>
-        /// <param name="recommendedAction">
-        /// Recommended action to resolve error.
-        /// Serialized Name: ServiceError.recommendedAction
-        /// </param>
-        /// <param name="activityId">
-        /// Activity Id.
-        /// Serialized Name: ServiceError.activityId
-        /// </param>
-        /// <returns> A new <see cref="Models.ServiceError"/> instance for mocking. </returns>
-        public static ServiceError ServiceError(string code = null, string message = null, string possibleCauses = null, string recommendedAction = null, string activityId = null)
+        /// <summary> Initializes a new instance of SiteRecoveryServiceError. </summary>
+        /// <param name="code"> Error code. </param>
+        /// <param name="message"> Error message. </param>
+        /// <param name="possibleCauses"> Possible causes of error. </param>
+        /// <param name="recommendedAction"> Recommended action to resolve error. </param>
+        /// <param name="activityId"> Activity Id. </param>
+        /// <returns> A new <see cref="Models.SiteRecoveryServiceError"/> instance for mocking. </returns>
+        public static SiteRecoveryServiceError SiteRecoveryServiceError(string code = null, string message = null, string possibleCauses = null, string recommendedAction = null, string activityId = null)
         {
-            return new ServiceError(code, message, possibleCauses, recommendedAction, activityId);
+            return new SiteRecoveryServiceError(code, message, possibleCauses, recommendedAction, activityId);
         }
 
-        /// <summary> Initializes a new instance of ProviderError. </summary>
-        /// <param name="errorCode">
-        /// The Error code.
-        /// Serialized Name: ProviderError.errorCode
-        /// </param>
-        /// <param name="errorMessage">
-        /// The Error message.
-        /// Serialized Name: ProviderError.errorMessage
-        /// </param>
-        /// <param name="errorId">
-        /// The Provider error Id.
-        /// Serialized Name: ProviderError.errorId
-        /// </param>
-        /// <param name="possibleCauses">
-        /// The possible causes for the error.
-        /// Serialized Name: ProviderError.possibleCauses
-        /// </param>
-        /// <param name="recommendedAction">
-        /// The recommended action to resolve the error.
-        /// Serialized Name: ProviderError.recommendedAction
-        /// </param>
-        /// <returns> A new <see cref="Models.ProviderError"/> instance for mocking. </returns>
-        public static ProviderError ProviderError(int? errorCode = null, string errorMessage = null, string errorId = null, string possibleCauses = null, string recommendedAction = null)
+        /// <summary> Initializes a new instance of SiteRecoveryJobProviderError. </summary>
+        /// <param name="errorCode"> The Error code. </param>
+        /// <param name="errorMessage"> The Error message. </param>
+        /// <param name="errorId"> The Provider error Id. </param>
+        /// <param name="possibleCauses"> The possible causes for the error. </param>
+        /// <param name="recommendedAction"> The recommended action to resolve the error. </param>
+        /// <returns> A new <see cref="Models.SiteRecoveryJobProviderError"/> instance for mocking. </returns>
+        public static SiteRecoveryJobProviderError SiteRecoveryJobProviderError(int? errorCode = null, string errorMessage = null, string errorId = null, string possibleCauses = null, string recommendedAction = null)
         {
-            return new ProviderError(errorCode, errorMessage, errorId, possibleCauses, recommendedAction);
+            return new SiteRecoveryJobProviderError(errorCode, errorMessage, errorId, possibleCauses, recommendedAction);
         }
 
         /// <summary> Initializes a new instance of SiteRecoveryJobDetails. </summary>
-        /// <param name="instanceType">
-        /// Gets the type of job details (see JobDetailsTypes enum for possible values).
-        /// Serialized Name: JobDetails.instanceType
-        /// </param>
-        /// <param name="affectedObjectDetails">
-        /// The affected object properties like source server, source cloud, target server, target cloud etc. based on the workflow object details.
-        /// Serialized Name: JobDetails.affectedObjectDetails
-        /// </param>
+        /// <param name="instanceType"> Gets the type of job details (see JobDetailsTypes enum for possible values). </param>
+        /// <param name="affectedObjectDetails"> The affected object properties like source server, source cloud, target server, target cloud etc. based on the workflow object details. </param>
         /// <returns> A new <see cref="Models.SiteRecoveryJobDetails"/> instance for mocking. </returns>
         public static SiteRecoveryJobDetails SiteRecoveryJobDetails(string instanceType = null, IReadOnlyDictionary<string, string> affectedObjectDetails = null)
         {
@@ -1788,14 +894,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="properties">
-        /// The custom data.
-        /// Serialized Name: Policy.properties
-        /// </param>
-        /// <param name="location">
-        /// Resource Location
-        /// Serialized Name: Resource.location
-        /// </param>
+        /// <param name="properties"> The custom data. </param>
+        /// <param name="location"> Resource Location. </param>
         /// <returns> A new <see cref="RecoveryServicesSiteRecovery.SiteRecoveryPolicyData"/> instance for mocking. </returns>
         public static SiteRecoveryPolicyData SiteRecoveryPolicyData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, SiteRecoveryPolicyProperties properties = null, AzureLocation? location = null)
         {
@@ -1803,13 +903,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Initializes a new instance of SiteRecoveryPolicyProperties. </summary>
-        /// <param name="friendlyName">
-        /// The FriendlyName.
-        /// Serialized Name: PolicyProperties.friendlyName
-        /// </param>
+        /// <param name="friendlyName"> The FriendlyName. </param>
         /// <param name="providerSpecificDetails">
         /// The ReplicationChannelSetting.
-        /// Serialized Name: PolicyProperties.providerSpecificDetails
         /// Please note <see cref="PolicyProviderSpecificDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="A2APolicyDetails"/>, <see cref="HyperVReplicaPolicyDetails"/>, <see cref="HyperVReplicaBluePolicyDetails"/>, <see cref="HyperVReplicaAzurePolicyDetails"/>, <see cref="HyperVReplicaBasePolicyDetails"/>, <see cref="InMagePolicyDetails"/>, <see cref="InMageAzureV2PolicyDetails"/>, <see cref="InMageBasePolicyDetails"/>, <see cref="InMageRcmPolicyDetails"/>, <see cref="InMageRcmFailbackPolicyDetails"/> and <see cref="VMwareCbtPolicyDetails"/>.
         /// </param>
@@ -1824,14 +920,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="properties">
-        /// The custom data.
-        /// Serialized Name: ReplicationProtectionIntent.properties
-        /// </param>
-        /// <param name="location">
-        /// Resource Location
-        /// Serialized Name: Resource.location
-        /// </param>
+        /// <param name="properties"> The custom data. </param>
+        /// <param name="location"> Resource Location. </param>
         /// <returns> A new <see cref="RecoveryServicesSiteRecovery.ReplicationProtectionIntentData"/> instance for mocking. </returns>
         public static ReplicationProtectionIntentData ReplicationProtectionIntentData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ReplicationProtectionIntentProperties properties = null, AzureLocation? location = null)
         {
@@ -1839,36 +929,20 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Initializes a new instance of ReplicationProtectionIntentProperties. </summary>
-        /// <param name="friendlyName">
-        /// The name.
-        /// Serialized Name: ReplicationProtectionIntentProperties.friendlyName
-        /// </param>
-        /// <param name="jobId">
-        /// The job Id.
-        /// Serialized Name: ReplicationProtectionIntentProperties.jobId
-        /// </param>
-        /// <param name="jobState">
-        /// The job state.
-        /// Serialized Name: ReplicationProtectionIntentProperties.jobState
-        /// </param>
-        /// <param name="isActive">
-        /// A value indicating whether the intent object is active.
-        /// Serialized Name: ReplicationProtectionIntentProperties.isActive
-        /// </param>
-        /// <param name="creationTimeUTC">
-        /// The creation time in UTC.
-        /// Serialized Name: ReplicationProtectionIntentProperties.creationTimeUTC
-        /// </param>
+        /// <param name="friendlyName"> The name. </param>
+        /// <param name="jobId"> The job Id. </param>
+        /// <param name="jobState"> The job state. </param>
+        /// <param name="isActive"> A value indicating whether the intent object is active. </param>
+        /// <param name="createdOn"> The creation time in UTC. </param>
         /// <param name="providerSpecificDetails">
         /// The Replication provider custom settings.
-        /// Serialized Name: ReplicationProtectionIntentProperties.providerSpecificDetails
         /// Please note <see cref="ReplicationProtectionIntentProviderSpecificSettings"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="A2AReplicationIntentDetails"/>.
         /// </param>
         /// <returns> A new <see cref="Models.ReplicationProtectionIntentProperties"/> instance for mocking. </returns>
-        public static ReplicationProtectionIntentProperties ReplicationProtectionIntentProperties(string friendlyName = null, ResourceIdentifier jobId = null, string jobState = null, bool? isActive = null, string creationTimeUTC = null, ReplicationProtectionIntentProviderSpecificSettings providerSpecificDetails = null)
+        public static ReplicationProtectionIntentProperties ReplicationProtectionIntentProperties(string friendlyName = null, ResourceIdentifier jobId = null, string jobState = null, bool? isActive = null, string createdOn = null, ReplicationProtectionIntentProviderSpecificSettings providerSpecificDetails = null)
         {
-            return new ReplicationProtectionIntentProperties(friendlyName, jobId, jobState, isActive, creationTimeUTC, providerSpecificDetails);
+            return new ReplicationProtectionIntentProperties(friendlyName, jobId, jobState, isActive, createdOn, providerSpecificDetails);
         }
 
         /// <summary> Initializes a new instance of SiteRecoveryRecoveryPlanData. </summary>
@@ -1876,170 +950,91 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="properties">
-        /// The custom details.
-        /// Serialized Name: RecoveryPlan.properties
-        /// </param>
-        /// <param name="location">
-        /// Resource Location
-        /// Serialized Name: Resource.location
-        /// </param>
+        /// <param name="properties"> The custom details. </param>
+        /// <param name="location"> Resource Location. </param>
         /// <returns> A new <see cref="RecoveryServicesSiteRecovery.SiteRecoveryRecoveryPlanData"/> instance for mocking. </returns>
-        public static SiteRecoveryRecoveryPlanData SiteRecoveryRecoveryPlanData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, RecoveryPlanProperties properties = null, AzureLocation? location = null)
+        public static SiteRecoveryRecoveryPlanData SiteRecoveryRecoveryPlanData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, SiteRecoveryRecoveryPlanProperties properties = null, AzureLocation? location = null)
         {
             return new SiteRecoveryRecoveryPlanData(id, name, resourceType, systemData, properties, location);
         }
 
-        /// <summary> Initializes a new instance of RecoveryPlanProperties. </summary>
-        /// <param name="friendlyName">
-        /// The friendly name.
-        /// Serialized Name: RecoveryPlanProperties.friendlyName
-        /// </param>
-        /// <param name="primaryFabricId">
-        /// The primary fabric Id.
-        /// Serialized Name: RecoveryPlanProperties.primaryFabricId
-        /// </param>
-        /// <param name="primaryFabricFriendlyName">
-        /// The primary fabric friendly name.
-        /// Serialized Name: RecoveryPlanProperties.primaryFabricFriendlyName
-        /// </param>
-        /// <param name="recoveryFabricId">
-        /// The recovery fabric Id.
-        /// Serialized Name: RecoveryPlanProperties.recoveryFabricId
-        /// </param>
-        /// <param name="recoveryFabricFriendlyName">
-        /// The recovery fabric friendly name.
-        /// Serialized Name: RecoveryPlanProperties.recoveryFabricFriendlyName
-        /// </param>
-        /// <param name="failoverDeploymentModel">
-        /// The failover deployment model.
-        /// Serialized Name: RecoveryPlanProperties.failoverDeploymentModel
-        /// </param>
-        /// <param name="replicationProviders">
-        /// The list of replication providers.
-        /// Serialized Name: RecoveryPlanProperties.replicationProviders
-        /// </param>
-        /// <param name="allowedOperations">
-        /// The list of allowed operations.
-        /// Serialized Name: RecoveryPlanProperties.allowedOperations
-        /// </param>
-        /// <param name="lastPlannedFailoverOn">
-        /// The start time of the last planned failover.
-        /// Serialized Name: RecoveryPlanProperties.lastPlannedFailoverTime
-        /// </param>
-        /// <param name="lastUnplannedFailoverOn">
-        /// The start time of the last unplanned failover.
-        /// Serialized Name: RecoveryPlanProperties.lastUnplannedFailoverTime
-        /// </param>
-        /// <param name="lastTestFailoverOn">
-        /// The start time of the last test failover.
-        /// Serialized Name: RecoveryPlanProperties.lastTestFailoverTime
-        /// </param>
-        /// <param name="currentScenario">
-        /// The current scenario details.
-        /// Serialized Name: RecoveryPlanProperties.currentScenario
-        /// </param>
-        /// <param name="currentScenarioStatus">
-        /// The recovery plan status.
-        /// Serialized Name: RecoveryPlanProperties.currentScenarioStatus
-        /// </param>
-        /// <param name="currentScenarioStatusDescription">
-        /// The recovery plan status description.
-        /// Serialized Name: RecoveryPlanProperties.currentScenarioStatusDescription
-        /// </param>
-        /// <param name="groups">
-        /// The recovery plan groups.
-        /// Serialized Name: RecoveryPlanProperties.groups
-        /// </param>
+        /// <summary> Initializes a new instance of SiteRecoveryRecoveryPlanProperties. </summary>
+        /// <param name="friendlyName"> The friendly name. </param>
+        /// <param name="primaryFabricId"> The primary fabric Id. </param>
+        /// <param name="primaryFabricFriendlyName"> The primary fabric friendly name. </param>
+        /// <param name="recoveryFabricId"> The recovery fabric Id. </param>
+        /// <param name="recoveryFabricFriendlyName"> The recovery fabric friendly name. </param>
+        /// <param name="failoverDeploymentModel"> The failover deployment model. </param>
+        /// <param name="replicationProviders"> The list of replication providers. </param>
+        /// <param name="allowedOperations"> The list of allowed operations. </param>
+        /// <param name="lastPlannedFailoverOn"> The start time of the last planned failover. </param>
+        /// <param name="lastUnplannedFailoverOn"> The start time of the last unplanned failover. </param>
+        /// <param name="lastTestFailoverOn"> The start time of the last test failover. </param>
+        /// <param name="currentScenario"> The current scenario details. </param>
+        /// <param name="currentScenarioStatus"> The recovery plan status. </param>
+        /// <param name="currentScenarioStatusDescription"> The recovery plan status description. </param>
+        /// <param name="groups"> The recovery plan groups. </param>
         /// <param name="providerSpecificDetails">
         /// The provider id and provider specific details.
-        /// Serialized Name: RecoveryPlanProperties.providerSpecificDetails
         /// Please note <see cref="RecoveryPlanProviderSpecificDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="RecoveryPlanA2ADetails"/>.
         /// </param>
-        /// <returns> A new <see cref="Models.RecoveryPlanProperties"/> instance for mocking. </returns>
-        public static RecoveryPlanProperties RecoveryPlanProperties(string friendlyName = null, ResourceIdentifier primaryFabricId = null, string primaryFabricFriendlyName = null, ResourceIdentifier recoveryFabricId = null, string recoveryFabricFriendlyName = null, string failoverDeploymentModel = null, IEnumerable<string> replicationProviders = null, IEnumerable<string> allowedOperations = null, DateTimeOffset? lastPlannedFailoverOn = null, DateTimeOffset? lastUnplannedFailoverOn = null, DateTimeOffset? lastTestFailoverOn = null, CurrentScenarioDetails currentScenario = null, string currentScenarioStatus = null, string currentScenarioStatusDescription = null, IEnumerable<RecoveryPlanGroup> groups = null, IEnumerable<RecoveryPlanProviderSpecificDetails> providerSpecificDetails = null)
+        /// <returns> A new <see cref="Models.SiteRecoveryRecoveryPlanProperties"/> instance for mocking. </returns>
+        public static SiteRecoveryRecoveryPlanProperties SiteRecoveryRecoveryPlanProperties(string friendlyName = null, ResourceIdentifier primaryFabricId = null, string primaryFabricFriendlyName = null, ResourceIdentifier recoveryFabricId = null, string recoveryFabricFriendlyName = null, string failoverDeploymentModel = null, IEnumerable<string> replicationProviders = null, IEnumerable<string> allowedOperations = null, DateTimeOffset? lastPlannedFailoverOn = null, DateTimeOffset? lastUnplannedFailoverOn = null, DateTimeOffset? lastTestFailoverOn = null, CurrentScenarioDetails currentScenario = null, string currentScenarioStatus = null, string currentScenarioStatusDescription = null, IEnumerable<SiteRecoveryRecoveryPlanGroup> groups = null, IEnumerable<RecoveryPlanProviderSpecificDetails> providerSpecificDetails = null)
         {
             replicationProviders ??= new List<string>();
             allowedOperations ??= new List<string>();
-            groups ??= new List<RecoveryPlanGroup>();
+            groups ??= new List<SiteRecoveryRecoveryPlanGroup>();
             providerSpecificDetails ??= new List<RecoveryPlanProviderSpecificDetails>();
 
-            return new RecoveryPlanProperties(friendlyName, primaryFabricId, primaryFabricFriendlyName, recoveryFabricId, recoveryFabricFriendlyName, failoverDeploymentModel, replicationProviders?.ToList(), allowedOperations?.ToList(), lastPlannedFailoverOn, lastUnplannedFailoverOn, lastTestFailoverOn, currentScenario, currentScenarioStatus, currentScenarioStatusDescription, groups?.ToList(), providerSpecificDetails?.ToList());
+            return new SiteRecoveryRecoveryPlanProperties(friendlyName, primaryFabricId, primaryFabricFriendlyName, recoveryFabricId, recoveryFabricFriendlyName, failoverDeploymentModel, replicationProviders?.ToList(), allowedOperations?.ToList(), lastPlannedFailoverOn, lastUnplannedFailoverOn, lastTestFailoverOn, currentScenario, currentScenarioStatus, currentScenarioStatusDescription, groups?.ToList(), providerSpecificDetails?.ToList());
         }
 
-        /// <summary> Initializes a new instance of SupportedOperatingSystems. </summary>
+        /// <summary> Initializes a new instance of SiteRecoverySupportedOperatingSystems. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="supportedOSList">
-        /// The supported operating systems properties.
-        /// Serialized Name: SupportedOperatingSystems.properties
-        /// </param>
-        /// <param name="location">
-        /// Resource Location
-        /// Serialized Name: Resource.location
-        /// </param>
-        /// <returns> A new <see cref="Models.SupportedOperatingSystems"/> instance for mocking. </returns>
-        public static SupportedOperatingSystems SupportedOperatingSystems(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IEnumerable<SupportedOSProperty> supportedOSList = null, AzureLocation? location = null)
+        /// <param name="supportedOSList"> The supported operating systems properties. </param>
+        /// <param name="location"> Resource Location. </param>
+        /// <returns> A new <see cref="Models.SiteRecoverySupportedOperatingSystems"/> instance for mocking. </returns>
+        public static SiteRecoverySupportedOperatingSystems SiteRecoverySupportedOperatingSystems(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IEnumerable<SiteRecoverySupportedOSProperty> supportedOSList = null, AzureLocation? location = null)
         {
-            supportedOSList ??= new List<SupportedOSProperty>();
+            supportedOSList ??= new List<SiteRecoverySupportedOSProperty>();
 
-            return new SupportedOperatingSystems(id, name, resourceType, systemData, supportedOSList != null ? new SupportedOSProperties(supportedOSList?.ToList()) : null, location);
+            return new SiteRecoverySupportedOperatingSystems(id, name, resourceType, systemData, supportedOSList != null ? new SiteRecoverySupportedOSProperties(supportedOSList?.ToList()) : null, location);
         }
 
-        /// <summary> Initializes a new instance of SupportedOSProperty. </summary>
-        /// <param name="instanceType">
-        /// The replication provider type.
-        /// Serialized Name: SupportedOSProperty.instanceType
-        /// </param>
-        /// <param name="supportedOS">
-        /// The list of supported operating systems.
-        /// Serialized Name: SupportedOSProperty.supportedOs
-        /// </param>
-        /// <returns> A new <see cref="Models.SupportedOSProperty"/> instance for mocking. </returns>
-        public static SupportedOSProperty SupportedOSProperty(string instanceType = null, IEnumerable<SupportedOSDetails> supportedOS = null)
+        /// <summary> Initializes a new instance of SiteRecoverySupportedOSProperty. </summary>
+        /// <param name="instanceType"> The replication provider type. </param>
+        /// <param name="supportedOS"> The list of supported operating systems. </param>
+        /// <returns> A new <see cref="Models.SiteRecoverySupportedOSProperty"/> instance for mocking. </returns>
+        public static SiteRecoverySupportedOSProperty SiteRecoverySupportedOSProperty(string instanceType = null, IEnumerable<SiteRecoverySupportedOSDetails> supportedOS = null)
         {
-            supportedOS ??= new List<SupportedOSDetails>();
+            supportedOS ??= new List<SiteRecoverySupportedOSDetails>();
 
-            return new SupportedOSProperty(instanceType, supportedOS?.ToList());
+            return new SiteRecoverySupportedOSProperty(instanceType, supportedOS?.ToList());
         }
 
-        /// <summary> Initializes a new instance of SupportedOSDetails. </summary>
-        /// <param name="osName">
-        /// The name.
-        /// Serialized Name: SupportedOSDetails.osName
-        /// </param>
-        /// <param name="osType">
-        /// The type.
-        /// Serialized Name: SupportedOSDetails.osType
-        /// </param>
-        /// <param name="osVersions">
-        /// The list of version for operating system.
-        /// Serialized Name: SupportedOSDetails.osVersions
-        /// </param>
-        /// <returns> A new <see cref="Models.SupportedOSDetails"/> instance for mocking. </returns>
-        public static SupportedOSDetails SupportedOSDetails(string osName = null, string osType = null, IEnumerable<OSVersionWrapper> osVersions = null)
+        /// <summary> Initializes a new instance of SiteRecoverySupportedOSDetails. </summary>
+        /// <param name="osName"> The name. </param>
+        /// <param name="osType"> The type. </param>
+        /// <param name="osVersions"> The list of version for operating system. </param>
+        /// <returns> A new <see cref="Models.SiteRecoverySupportedOSDetails"/> instance for mocking. </returns>
+        public static SiteRecoverySupportedOSDetails SiteRecoverySupportedOSDetails(string osName = null, string osType = null, IEnumerable<SiteRecoveryOSVersionWrapper> osVersions = null)
         {
-            osVersions ??= new List<OSVersionWrapper>();
+            osVersions ??= new List<SiteRecoveryOSVersionWrapper>();
 
-            return new SupportedOSDetails(osName, osType, osVersions?.ToList());
+            return new SiteRecoverySupportedOSDetails(osName, osType, osVersions?.ToList());
         }
 
-        /// <summary> Initializes a new instance of OSVersionWrapper. </summary>
-        /// <param name="version">
-        /// The version.
-        /// Serialized Name: OSVersionWrapper.version
-        /// </param>
-        /// <param name="servicePack">
-        /// The service pack.
-        /// Serialized Name: OSVersionWrapper.servicePack
-        /// </param>
-        /// <returns> A new <see cref="Models.OSVersionWrapper"/> instance for mocking. </returns>
-        public static OSVersionWrapper OSVersionWrapper(string version = null, string servicePack = null)
+        /// <summary> Initializes a new instance of SiteRecoveryOSVersionWrapper. </summary>
+        /// <param name="version"> The version. </param>
+        /// <param name="servicePack"> The service pack. </param>
+        /// <returns> A new <see cref="Models.SiteRecoveryOSVersionWrapper"/> instance for mocking. </returns>
+        public static SiteRecoveryOSVersionWrapper SiteRecoveryOSVersionWrapper(string version = null, string servicePack = null)
         {
-            return new OSVersionWrapper(version, servicePack);
+            return new SiteRecoveryOSVersionWrapper(version, servicePack);
         }
 
         /// <summary> Initializes a new instance of VaultHealthDetails. </summary>
@@ -2047,14 +1042,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="properties">
-        /// The vault health related data.
-        /// Serialized Name: VaultHealthDetails.properties
-        /// </param>
-        /// <param name="location">
-        /// Resource Location
-        /// Serialized Name: Resource.location
-        /// </param>
+        /// <param name="properties"> The vault health related data. </param>
+        /// <param name="location"> Resource Location. </param>
         /// <returns> A new <see cref="Models.VaultHealthDetails"/> instance for mocking. </returns>
         public static VaultHealthDetails VaultHealthDetails(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, VaultHealthProperties properties = null, AzureLocation? location = null)
         {
@@ -2062,22 +1051,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Initializes a new instance of VaultHealthProperties. </summary>
-        /// <param name="vaultErrors">
-        /// The list of errors on the vault.
-        /// Serialized Name: VaultHealthProperties.vaultErrors
-        /// </param>
-        /// <param name="protectedItemsHealth">
-        /// The list of the health detail of the protected items in the vault.
-        /// Serialized Name: VaultHealthProperties.protectedItemsHealth
-        /// </param>
-        /// <param name="fabricsHealth">
-        /// The list of the health detail of the fabrics in the vault.
-        /// Serialized Name: VaultHealthProperties.fabricsHealth
-        /// </param>
-        /// <param name="containersHealth">
-        /// The list of the health detail of the containers in the vault.
-        /// Serialized Name: VaultHealthProperties.containersHealth
-        /// </param>
+        /// <param name="vaultErrors"> The list of errors on the vault. </param>
+        /// <param name="protectedItemsHealth"> The list of the health detail of the protected items in the vault. </param>
+        /// <param name="fabricsHealth"> The list of the health detail of the fabrics in the vault. </param>
+        /// <param name="containersHealth"> The list of the health detail of the containers in the vault. </param>
         /// <returns> A new <see cref="Models.VaultHealthProperties"/> instance for mocking. </returns>
         public static VaultHealthProperties VaultHealthProperties(IEnumerable<SiteRecoveryHealthError> vaultErrors = null, ResourceHealthSummary protectedItemsHealth = null, ResourceHealthSummary fabricsHealth = null, ResourceHealthSummary containersHealth = null)
         {
@@ -2087,62 +1064,32 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Initializes a new instance of ResourceHealthSummary. </summary>
-        /// <param name="resourceCount">
-        /// The count of total resources under the container.
-        /// Serialized Name: ResourceHealthSummary.resourceCount
-        /// </param>
-        /// <param name="issues">
-        /// The list of summary of health errors across the resources under the container.
-        /// Serialized Name: ResourceHealthSummary.issues
-        /// </param>
-        /// <param name="categorizedResourceCounts">
-        /// The categorized resource counts.
-        /// Serialized Name: ResourceHealthSummary.categorizedResourceCounts
-        /// </param>
+        /// <param name="resourceCount"> The count of total resources under the container. </param>
+        /// <param name="issues"> The list of summary of health errors across the resources under the container. </param>
+        /// <param name="categorizedResourceCounts"> The categorized resource counts. </param>
         /// <returns> A new <see cref="Models.ResourceHealthSummary"/> instance for mocking. </returns>
-        public static ResourceHealthSummary ResourceHealthSummary(int? resourceCount = null, IEnumerable<SiteRecoveryHealthErrorSummary> issues = null, IReadOnlyDictionary<string, int> categorizedResourceCounts = null)
+        public static ResourceHealthSummary ResourceHealthSummary(int? resourceCount = null, IEnumerable<HealthErrorSummary> issues = null, IReadOnlyDictionary<string, int> categorizedResourceCounts = null)
         {
-            issues ??= new List<SiteRecoveryHealthErrorSummary>();
+            issues ??= new List<HealthErrorSummary>();
             categorizedResourceCounts ??= new Dictionary<string, int>();
 
             return new ResourceHealthSummary(resourceCount, issues?.ToList(), categorizedResourceCounts);
         }
 
-        /// <summary> Initializes a new instance of SiteRecoveryHealthErrorSummary. </summary>
-        /// <param name="summaryCode">
-        /// The code of the health error.
-        /// Serialized Name: HealthErrorSummary.summaryCode
-        /// </param>
-        /// <param name="category">
-        /// The category of the health error.
-        /// Serialized Name: HealthErrorSummary.category
-        /// </param>
-        /// <param name="severity">
-        /// Severity of error.
-        /// Serialized Name: HealthErrorSummary.severity
-        /// </param>
-        /// <param name="summaryMessage">
-        /// The summary message of the health error.
-        /// Serialized Name: HealthErrorSummary.summaryMessage
-        /// </param>
-        /// <param name="affectedResourceType">
-        /// The type of affected ARM resource.
-        /// Serialized Name: HealthErrorSummary.affectedResourceType
-        /// </param>
-        /// <param name="affectedResourceSubtype">
-        /// The sub type of any subcomponent within the ARM resource that this might be applicable. Value remains null if not applicable.
-        /// Serialized Name: HealthErrorSummary.affectedResourceSubtype
-        /// </param>
-        /// <param name="affectedResourceCorrelationIds">
-        /// The list of affected resource correlation Ids. This can be used to uniquely identify the count of items affected by a specific category and severity as well as count of item affected by an specific issue.
-        /// Serialized Name: HealthErrorSummary.affectedResourceCorrelationIds
-        /// </param>
-        /// <returns> A new <see cref="Models.SiteRecoveryHealthErrorSummary"/> instance for mocking. </returns>
-        public static SiteRecoveryHealthErrorSummary SiteRecoveryHealthErrorSummary(string summaryCode = null, SiteRecoveryHealthErrorCategory? category = null, Severity? severity = null, string summaryMessage = null, string affectedResourceType = null, string affectedResourceSubtype = null, IEnumerable<string> affectedResourceCorrelationIds = null)
+        /// <summary> Initializes a new instance of HealthErrorSummary. </summary>
+        /// <param name="summaryCode"> The code of the health error. </param>
+        /// <param name="category"> The category of the health error. </param>
+        /// <param name="severity"> Severity of error. </param>
+        /// <param name="summaryMessage"> The summary message of the health error. </param>
+        /// <param name="affectedResourceType"> The type of affected ARM resource. </param>
+        /// <param name="affectedResourceSubtype"> The sub type of any subcomponent within the ARM resource that this might be applicable. Value remains null if not applicable. </param>
+        /// <param name="affectedResourceCorrelationIds"> The list of affected resource correlation Ids. This can be used to uniquely identify the count of items affected by a specific category and severity as well as count of item affected by an specific issue. </param>
+        /// <returns> A new <see cref="Models.HealthErrorSummary"/> instance for mocking. </returns>
+        public static HealthErrorSummary HealthErrorSummary(string summaryCode = null, HealthErrorCategory? category = null, SiteRecoveryErrorSeverity? severity = null, string summaryMessage = null, string affectedResourceType = null, string affectedResourceSubtype = null, IEnumerable<string> affectedResourceCorrelationIds = null)
         {
             affectedResourceCorrelationIds ??= new List<string>();
 
-            return new SiteRecoveryHealthErrorSummary(summaryCode, category, severity, summaryMessage, affectedResourceType, affectedResourceSubtype, affectedResourceCorrelationIds?.ToList());
+            return new HealthErrorSummary(summaryCode, category, severity, summaryMessage, affectedResourceType, affectedResourceSubtype, affectedResourceCorrelationIds?.ToList());
         }
 
         /// <summary> Initializes a new instance of SiteRecoveryVaultSettingData. </summary>
@@ -2150,60 +1097,30 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="properties">
-        /// The vault setting properties.
-        /// Serialized Name: VaultSetting.properties
-        /// </param>
-        /// <param name="location">
-        /// Resource Location
-        /// Serialized Name: Resource.location
-        /// </param>
+        /// <param name="properties"> The vault setting properties. </param>
+        /// <param name="location"> Resource Location. </param>
         /// <returns> A new <see cref="RecoveryServicesSiteRecovery.SiteRecoveryVaultSettingData"/> instance for mocking. </returns>
-        public static SiteRecoveryVaultSettingData SiteRecoveryVaultSettingData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, VaultSettingProperties properties = null, AzureLocation? location = null)
+        public static SiteRecoveryVaultSettingData SiteRecoveryVaultSettingData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, SiteRecoveryVaultSettingProperties properties = null, AzureLocation? location = null)
         {
             return new SiteRecoveryVaultSettingData(id, name, resourceType, systemData, properties, location);
         }
 
-        /// <summary> Initializes a new instance of VaultSettingProperties. </summary>
-        /// <param name="migrationSolutionId">
-        /// The migration solution ARM Id.
-        /// Serialized Name: VaultSettingProperties.migrationSolutionId
-        /// </param>
-        /// <param name="vmwareToAzureProviderType">
-        /// VMware to Azure provider type.
-        /// Serialized Name: VaultSettingProperties.vmwareToAzureProviderType
-        /// </param>
-        /// <returns> A new <see cref="Models.VaultSettingProperties"/> instance for mocking. </returns>
-        public static VaultSettingProperties VaultSettingProperties(string migrationSolutionId = null, string vmwareToAzureProviderType = null)
+        /// <summary> Initializes a new instance of SiteRecoveryVaultSettingProperties. </summary>
+        /// <param name="migrationSolutionId"> The migration solution ARM Id. </param>
+        /// <param name="vmwareToAzureProviderType"> VMware to Azure provider type. </param>
+        /// <returns> A new <see cref="Models.SiteRecoveryVaultSettingProperties"/> instance for mocking. </returns>
+        public static SiteRecoveryVaultSettingProperties SiteRecoveryVaultSettingProperties(ResourceIdentifier migrationSolutionId = null, string vmwareToAzureProviderType = null)
         {
-            return new VaultSettingProperties(migrationSolutionId, vmwareToAzureProviderType);
+            return new SiteRecoveryVaultSettingProperties(migrationSolutionId, vmwareToAzureProviderType);
         }
 
         /// <summary> Initializes a new instance of A2ACrossClusterMigrationReplicationDetails. </summary>
-        /// <param name="fabricObjectId">
-        /// The fabric specific object Id of the virtual machine.
-        /// Serialized Name: A2ACrossClusterMigrationReplicationDetails.fabricObjectId
-        /// </param>
-        /// <param name="primaryFabricLocation">
-        /// Primary fabric location.
-        /// Serialized Name: A2ACrossClusterMigrationReplicationDetails.primaryFabricLocation
-        /// </param>
-        /// <param name="osType">
-        /// The type of operating system.
-        /// Serialized Name: A2ACrossClusterMigrationReplicationDetails.osType
-        /// </param>
-        /// <param name="vmProtectionState">
-        /// The protection state for the vm.
-        /// Serialized Name: A2ACrossClusterMigrationReplicationDetails.vmProtectionState
-        /// </param>
-        /// <param name="vmProtectionStateDescription">
-        /// The protection state description for the vm.
-        /// Serialized Name: A2ACrossClusterMigrationReplicationDetails.vmProtectionStateDescription
-        /// </param>
-        /// <param name="lifecycleId">
-        /// An id associated with the PE that survives actions like switch protection which change the backing PE/CPE objects internally.The lifecycle id gets carried forward to have a link/continuity in being able to have an Id that denotes the "same" protected item even though other internal Ids/ARM Id might be changing.
-        /// Serialized Name: A2ACrossClusterMigrationReplicationDetails.lifecycleId
-        /// </param>
+        /// <param name="fabricObjectId"> The fabric specific object Id of the virtual machine. </param>
+        /// <param name="primaryFabricLocation"> Primary fabric location. </param>
+        /// <param name="osType"> The type of operating system. </param>
+        /// <param name="vmProtectionState"> The protection state for the vm. </param>
+        /// <param name="vmProtectionStateDescription"> The protection state description for the vm. </param>
+        /// <param name="lifecycleId"> An id associated with the PE that survives actions like switch protection which change the backing PE/CPE objects internally.The lifecycle id gets carried forward to have a link/continuity in being able to have an Id that denotes the "same" protected item even though other internal Ids/ARM Id might be changing. </param>
         /// <returns> A new <see cref="Models.A2ACrossClusterMigrationReplicationDetails"/> instance for mocking. </returns>
         public static A2ACrossClusterMigrationReplicationDetails A2ACrossClusterMigrationReplicationDetails(ResourceIdentifier fabricObjectId = null, AzureLocation? primaryFabricLocation = null, string osType = null, string vmProtectionState = null, string vmProtectionStateDescription = null, string lifecycleId = null)
         {
@@ -2211,30 +1128,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Initializes a new instance of A2AEventDetails. </summary>
-        /// <param name="protectedItemName">
-        /// The protected item arm name.
-        /// Serialized Name: A2AEventDetails.protectedItemName
-        /// </param>
-        /// <param name="fabricObjectId">
-        /// The azure vm arm id.
-        /// Serialized Name: A2AEventDetails.fabricObjectId
-        /// </param>
-        /// <param name="fabricName">
-        /// Fabric arm name.
-        /// Serialized Name: A2AEventDetails.fabricName
-        /// </param>
-        /// <param name="fabricLocation">
-        /// The fabric location.
-        /// Serialized Name: A2AEventDetails.fabricLocation
-        /// </param>
-        /// <param name="remoteFabricName">
-        /// Remote fabric arm name.
-        /// Serialized Name: A2AEventDetails.remoteFabricName
-        /// </param>
-        /// <param name="remoteFabricLocation">
-        /// Remote fabric location.
-        /// Serialized Name: A2AEventDetails.remoteFabricLocation
-        /// </param>
+        /// <param name="protectedItemName"> The protected item arm name. </param>
+        /// <param name="fabricObjectId"> The azure vm arm id. </param>
+        /// <param name="fabricName"> Fabric arm name. </param>
+        /// <param name="fabricLocation"> The fabric location. </param>
+        /// <param name="remoteFabricName"> Remote fabric arm name. </param>
+        /// <param name="remoteFabricLocation"> Remote fabric location. </param>
         /// <returns> A new <see cref="Models.A2AEventDetails"/> instance for mocking. </returns>
         public static A2AEventDetails A2AEventDetails(string protectedItemName = null, ResourceIdentifier fabricObjectId = null, string fabricName = null, AzureLocation? fabricLocation = null, string remoteFabricName = null, AzureLocation? remoteFabricLocation = null)
         {
@@ -2242,14 +1141,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Initializes a new instance of A2AExtendedLocationDetails. </summary>
-        /// <param name="primaryExtendedLocation">
-        /// The primary ExtendedLocation.
-        /// Serialized Name: A2AExtendedLocationDetails.primaryExtendedLocation
-        /// </param>
-        /// <param name="recoveryExtendedLocation">
-        /// The recovery ExtendedLocation.
-        /// Serialized Name: A2AExtendedLocationDetails.recoveryExtendedLocation
-        /// </param>
+        /// <param name="primaryExtendedLocation"> The primary ExtendedLocation. </param>
+        /// <param name="recoveryExtendedLocation"> The recovery ExtendedLocation. </param>
         /// <returns> A new <see cref="Models.A2AExtendedLocationDetails"/> instance for mocking. </returns>
         public static A2AExtendedLocationDetails A2AExtendedLocationDetails(SiteRecoveryExtendedLocation primaryExtendedLocation = null, SiteRecoveryExtendedLocation recoveryExtendedLocation = null)
         {
@@ -2257,54 +1150,18 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Initializes a new instance of A2AFabricSpecificLocationDetails. </summary>
-        /// <param name="initialPrimaryZone">
-        /// The initial source zone info.
-        /// Serialized Name: A2AFabricSpecificLocationDetails.initialPrimaryZone
-        /// </param>
-        /// <param name="initialRecoveryZone">
-        /// The initial target zone info.
-        /// Serialized Name: A2AFabricSpecificLocationDetails.initialRecoveryZone
-        /// </param>
-        /// <param name="initialPrimaryExtendedLocation">
-        /// The initial primary ExtendedLocation.
-        /// Serialized Name: A2AFabricSpecificLocationDetails.initialPrimaryExtendedLocation
-        /// </param>
-        /// <param name="initialRecoveryExtendedLocation">
-        /// The initial recovery ExtendedLocation.
-        /// Serialized Name: A2AFabricSpecificLocationDetails.initialRecoveryExtendedLocation
-        /// </param>
-        /// <param name="initialPrimaryFabricLocation">
-        /// Initial primary fabric location info.
-        /// Serialized Name: A2AFabricSpecificLocationDetails.initialPrimaryFabricLocation
-        /// </param>
-        /// <param name="initialRecoveryFabricLocation">
-        /// The initial recovery fabric location info.
-        /// Serialized Name: A2AFabricSpecificLocationDetails.initialRecoveryFabricLocation
-        /// </param>
-        /// <param name="primaryZone">
-        /// Source zone info.
-        /// Serialized Name: A2AFabricSpecificLocationDetails.primaryZone
-        /// </param>
-        /// <param name="recoveryZone">
-        /// The target zone info.
-        /// Serialized Name: A2AFabricSpecificLocationDetails.recoveryZone
-        /// </param>
-        /// <param name="primaryExtendedLocation">
-        /// The primary ExtendedLocation.
-        /// Serialized Name: A2AFabricSpecificLocationDetails.primaryExtendedLocation
-        /// </param>
-        /// <param name="recoveryExtendedLocation">
-        /// The recovery ExtendedLocation.
-        /// Serialized Name: A2AFabricSpecificLocationDetails.recoveryExtendedLocation
-        /// </param>
-        /// <param name="primaryFabricLocation">
-        /// Primary fabric location info.
-        /// Serialized Name: A2AFabricSpecificLocationDetails.primaryFabricLocation
-        /// </param>
-        /// <param name="recoveryFabricLocation">
-        /// The recovery fabric location info.
-        /// Serialized Name: A2AFabricSpecificLocationDetails.recoveryFabricLocation
-        /// </param>
+        /// <param name="initialPrimaryZone"> The initial source zone info. </param>
+        /// <param name="initialRecoveryZone"> The initial target zone info. </param>
+        /// <param name="initialPrimaryExtendedLocation"> The initial primary ExtendedLocation. </param>
+        /// <param name="initialRecoveryExtendedLocation"> The initial recovery ExtendedLocation. </param>
+        /// <param name="initialPrimaryFabricLocation"> Initial primary fabric location info. </param>
+        /// <param name="initialRecoveryFabricLocation"> The initial recovery fabric location info. </param>
+        /// <param name="primaryZone"> Source zone info. </param>
+        /// <param name="recoveryZone"> The target zone info. </param>
+        /// <param name="primaryExtendedLocation"> The primary ExtendedLocation. </param>
+        /// <param name="recoveryExtendedLocation"> The recovery ExtendedLocation. </param>
+        /// <param name="primaryFabricLocation"> Primary fabric location info. </param>
+        /// <param name="recoveryFabricLocation"> The recovery fabric location info. </param>
         /// <returns> A new <see cref="Models.A2AFabricSpecificLocationDetails"/> instance for mocking. </returns>
         public static A2AFabricSpecificLocationDetails A2AFabricSpecificLocationDetails(string initialPrimaryZone = null, string initialRecoveryZone = null, SiteRecoveryExtendedLocation initialPrimaryExtendedLocation = null, SiteRecoveryExtendedLocation initialRecoveryExtendedLocation = null, AzureLocation? initialPrimaryFabricLocation = null, AzureLocation? initialRecoveryFabricLocation = null, string primaryZone = null, string recoveryZone = null, SiteRecoveryExtendedLocation primaryExtendedLocation = null, SiteRecoveryExtendedLocation recoveryExtendedLocation = null, AzureLocation? primaryFabricLocation = null, AzureLocation? recoveryFabricLocation = null)
         {
@@ -2312,26 +1169,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Initializes a new instance of A2APolicyDetails. </summary>
-        /// <param name="recoveryPointThresholdInMinutes">
-        /// The recovery point threshold in minutes.
-        /// Serialized Name: A2APolicyDetails.recoveryPointThresholdInMinutes
-        /// </param>
-        /// <param name="recoveryPointHistory">
-        /// The duration in minutes until which the recovery points need to be stored.
-        /// Serialized Name: A2APolicyDetails.recoveryPointHistory
-        /// </param>
-        /// <param name="appConsistentFrequencyInMinutes">
-        /// The app consistent snapshot frequency in minutes.
-        /// Serialized Name: A2APolicyDetails.appConsistentFrequencyInMinutes
-        /// </param>
-        /// <param name="multiVmSyncStatus">
-        /// A value indicating whether multi-VM sync has to be enabled.
-        /// Serialized Name: A2APolicyDetails.multiVmSyncStatus
-        /// </param>
-        /// <param name="crashConsistentFrequencyInMinutes">
-        /// The crash consistent snapshot frequency in minutes.
-        /// Serialized Name: A2APolicyDetails.crashConsistentFrequencyInMinutes
-        /// </param>
+        /// <param name="recoveryPointThresholdInMinutes"> The recovery point threshold in minutes. </param>
+        /// <param name="recoveryPointHistory"> The duration in minutes until which the recovery points need to be stored. </param>
+        /// <param name="appConsistentFrequencyInMinutes"> The app consistent snapshot frequency in minutes. </param>
+        /// <param name="multiVmSyncStatus"> A value indicating whether multi-VM sync has to be enabled. </param>
+        /// <param name="crashConsistentFrequencyInMinutes"> The crash consistent snapshot frequency in minutes. </param>
         /// <returns> A new <see cref="Models.A2APolicyDetails"/> instance for mocking. </returns>
         public static A2APolicyDetails A2APolicyDetails(int? recoveryPointThresholdInMinutes = null, int? recoveryPointHistory = null, int? appConsistentFrequencyInMinutes = null, string multiVmSyncStatus = null, int? crashConsistentFrequencyInMinutes = null)
         {
@@ -2339,98 +1181,29 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Initializes a new instance of A2AProtectedDiskDetails. </summary>
-        /// <param name="diskUri">
-        /// The disk uri.
-        /// Serialized Name: A2AProtectedDiskDetails.diskUri
-        /// </param>
-        /// <param name="recoveryAzureStorageAccountId">
-        /// The recovery disk storage account.
-        /// Serialized Name: A2AProtectedDiskDetails.recoveryAzureStorageAccountId
-        /// </param>
-        /// <param name="primaryDiskAzureStorageAccountId">
-        /// The primary disk storage account.
-        /// Serialized Name: A2AProtectedDiskDetails.primaryDiskAzureStorageAccountId
-        /// </param>
-        /// <param name="recoveryDiskUri">
-        /// Recovery disk uri.
-        /// Serialized Name: A2AProtectedDiskDetails.recoveryDiskUri
-        /// </param>
-        /// <param name="diskName">
-        /// The disk name.
-        /// Serialized Name: A2AProtectedDiskDetails.diskName
-        /// </param>
-        /// <param name="diskCapacityInBytes">
-        /// The disk capacity in bytes.
-        /// Serialized Name: A2AProtectedDiskDetails.diskCapacityInBytes
-        /// </param>
-        /// <param name="primaryStagingAzureStorageAccountId">
-        /// The primary staging storage account.
-        /// Serialized Name: A2AProtectedDiskDetails.primaryStagingAzureStorageAccountId
-        /// </param>
-        /// <param name="diskType">
-        /// The type of disk.
-        /// Serialized Name: A2AProtectedDiskDetails.diskType
-        /// </param>
-        /// <param name="isResyncRequired">
-        /// A value indicating whether resync is required for this disk.
-        /// Serialized Name: A2AProtectedDiskDetails.resyncRequired
-        /// </param>
-        /// <param name="monitoringPercentageCompletion">
-        /// The percentage of the monitoring job. The type of the monitoring job is defined by MonitoringJobType property.
-        /// Serialized Name: A2AProtectedDiskDetails.monitoringPercentageCompletion
-        /// </param>
-        /// <param name="monitoringJobType">
-        /// The type of the monitoring job. The progress is contained in MonitoringPercentageCompletion property.
-        /// Serialized Name: A2AProtectedDiskDetails.monitoringJobType
-        /// </param>
-        /// <param name="dataPendingInStagingStorageAccountInMB">
-        /// The data pending for replication in MB at staging account.
-        /// Serialized Name: A2AProtectedDiskDetails.dataPendingInStagingStorageAccountInMB
-        /// </param>
-        /// <param name="dataPendingAtSourceAgentInMB">
-        /// The data pending at source virtual machine in MB.
-        /// Serialized Name: A2AProtectedDiskDetails.dataPendingAtSourceAgentInMB
-        /// </param>
-        /// <param name="diskState">
-        /// The disk state.
-        /// Serialized Name: A2AProtectedDiskDetails.diskState
-        /// </param>
-        /// <param name="allowedDiskLevelOperation">
-        /// The disk level operations list.
-        /// Serialized Name: A2AProtectedDiskDetails.allowedDiskLevelOperation
-        /// </param>
-        /// <param name="isDiskEncrypted">
-        /// A value indicating whether vm has encrypted os disk or not.
-        /// Serialized Name: A2AProtectedDiskDetails.isDiskEncrypted
-        /// </param>
-        /// <param name="secretIdentifier">
-        /// The secret URL / identifier (BEK).
-        /// Serialized Name: A2AProtectedDiskDetails.secretIdentifier
-        /// </param>
-        /// <param name="dekKeyVaultArmId">
-        /// The KeyVault resource id for secret (BEK).
-        /// Serialized Name: A2AProtectedDiskDetails.dekKeyVaultArmId
-        /// </param>
-        /// <param name="isDiskKeyEncrypted">
-        /// A value indicating whether disk key got encrypted or not.
-        /// Serialized Name: A2AProtectedDiskDetails.isDiskKeyEncrypted
-        /// </param>
-        /// <param name="keyIdentifier">
-        /// The key URL / identifier (KEK).
-        /// Serialized Name: A2AProtectedDiskDetails.keyIdentifier
-        /// </param>
-        /// <param name="kekKeyVaultArmId">
-        /// The KeyVault resource id for key (KEK).
-        /// Serialized Name: A2AProtectedDiskDetails.kekKeyVaultArmId
-        /// </param>
-        /// <param name="failoverDiskName">
-        /// The failover name for the managed disk.
-        /// Serialized Name: A2AProtectedDiskDetails.failoverDiskName
-        /// </param>
-        /// <param name="tfoDiskName">
-        /// The test failover name for the managed disk.
-        /// Serialized Name: A2AProtectedDiskDetails.tfoDiskName
-        /// </param>
+        /// <param name="diskUri"> The disk uri. </param>
+        /// <param name="recoveryAzureStorageAccountId"> The recovery disk storage account. </param>
+        /// <param name="primaryDiskAzureStorageAccountId"> The primary disk storage account. </param>
+        /// <param name="recoveryDiskUri"> Recovery disk uri. </param>
+        /// <param name="diskName"> The disk name. </param>
+        /// <param name="diskCapacityInBytes"> The disk capacity in bytes. </param>
+        /// <param name="primaryStagingAzureStorageAccountId"> The primary staging storage account. </param>
+        /// <param name="diskType"> The type of disk. </param>
+        /// <param name="isResyncRequired"> A value indicating whether resync is required for this disk. </param>
+        /// <param name="monitoringPercentageCompletion"> The percentage of the monitoring job. The type of the monitoring job is defined by MonitoringJobType property. </param>
+        /// <param name="monitoringJobType"> The type of the monitoring job. The progress is contained in MonitoringPercentageCompletion property. </param>
+        /// <param name="dataPendingInStagingStorageAccountInMB"> The data pending for replication in MB at staging account. </param>
+        /// <param name="dataPendingAtSourceAgentInMB"> The data pending at source virtual machine in MB. </param>
+        /// <param name="diskState"> The disk state. </param>
+        /// <param name="allowedDiskLevelOperation"> The disk level operations list. </param>
+        /// <param name="isDiskEncrypted"> A value indicating whether vm has encrypted os disk or not. </param>
+        /// <param name="secretIdentifier"> The secret URL / identifier (BEK). </param>
+        /// <param name="dekKeyVaultArmId"> The KeyVault resource id for secret (BEK). </param>
+        /// <param name="isDiskKeyEncrypted"> A value indicating whether disk key got encrypted or not. </param>
+        /// <param name="keyIdentifier"> The key URL / identifier (KEK). </param>
+        /// <param name="kekKeyVaultArmId"> The KeyVault resource id for key (KEK). </param>
+        /// <param name="failoverDiskName"> The failover name for the managed disk. </param>
+        /// <param name="tfoDiskName"> The test failover name for the managed disk. </param>
         /// <returns> A new <see cref="Models.A2AProtectedDiskDetails"/> instance for mocking. </returns>
         public static A2AProtectedDiskDetails A2AProtectedDiskDetails(Uri diskUri = null, ResourceIdentifier recoveryAzureStorageAccountId = null, ResourceIdentifier primaryDiskAzureStorageAccountId = null, Uri recoveryDiskUri = null, string diskName = null, long? diskCapacityInBytes = null, ResourceIdentifier primaryStagingAzureStorageAccountId = null, string diskType = null, bool? isResyncRequired = null, int? monitoringPercentageCompletion = null, string monitoringJobType = null, double? dataPendingInStagingStorageAccountInMB = null, double? dataPendingAtSourceAgentInMB = null, string diskState = null, IEnumerable<string> allowedDiskLevelOperation = null, bool? isDiskEncrypted = null, string secretIdentifier = null, ResourceIdentifier dekKeyVaultArmId = null, bool? isDiskKeyEncrypted = null, string keyIdentifier = null, ResourceIdentifier kekKeyVaultArmId = null, string failoverDiskName = null, string tfoDiskName = null)
         {
@@ -2440,118 +1213,34 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Initializes a new instance of A2AProtectedManagedDiskDetails. </summary>
-        /// <param name="diskId">
-        /// The managed disk Arm id.
-        /// Serialized Name: A2AProtectedManagedDiskDetails.diskId
-        /// </param>
-        /// <param name="recoveryResourceGroupId">
-        /// The recovery disk resource group Arm Id.
-        /// Serialized Name: A2AProtectedManagedDiskDetails.recoveryResourceGroupId
-        /// </param>
-        /// <param name="recoveryTargetDiskId">
-        /// Recovery target disk Arm Id.
-        /// Serialized Name: A2AProtectedManagedDiskDetails.recoveryTargetDiskId
-        /// </param>
-        /// <param name="recoveryReplicaDiskId">
-        /// Recovery replica disk Arm Id.
-        /// Serialized Name: A2AProtectedManagedDiskDetails.recoveryReplicaDiskId
-        /// </param>
-        /// <param name="recoveryOrignalTargetDiskId">
-        /// Recovery original target disk Arm Id.
-        /// Serialized Name: A2AProtectedManagedDiskDetails.recoveryOrignalTargetDiskId
-        /// </param>
-        /// <param name="recoveryReplicaDiskAccountType">
-        /// The replica disk type. Its an optional value and will be same as source disk type if not user provided.
-        /// Serialized Name: A2AProtectedManagedDiskDetails.recoveryReplicaDiskAccountType
-        /// </param>
-        /// <param name="recoveryTargetDiskAccountType">
-        /// The target disk type after failover. Its an optional value and will be same as source disk type if not user provided.
-        /// Serialized Name: A2AProtectedManagedDiskDetails.recoveryTargetDiskAccountType
-        /// </param>
-        /// <param name="recoveryDiskEncryptionSetId">
-        /// The recovery disk encryption set Id.
-        /// Serialized Name: A2AProtectedManagedDiskDetails.recoveryDiskEncryptionSetId
-        /// </param>
-        /// <param name="primaryDiskEncryptionSetId">
-        /// The primary disk encryption set Id.
-        /// Serialized Name: A2AProtectedManagedDiskDetails.primaryDiskEncryptionSetId
-        /// </param>
-        /// <param name="diskName">
-        /// The disk name.
-        /// Serialized Name: A2AProtectedManagedDiskDetails.diskName
-        /// </param>
-        /// <param name="diskCapacityInBytes">
-        /// The disk capacity in bytes.
-        /// Serialized Name: A2AProtectedManagedDiskDetails.diskCapacityInBytes
-        /// </param>
-        /// <param name="primaryStagingAzureStorageAccountId">
-        /// The primary staging storage account.
-        /// Serialized Name: A2AProtectedManagedDiskDetails.primaryStagingAzureStorageAccountId
-        /// </param>
-        /// <param name="diskType">
-        /// The type of disk.
-        /// Serialized Name: A2AProtectedManagedDiskDetails.diskType
-        /// </param>
-        /// <param name="isResyncRequired">
-        /// A value indicating whether resync is required for this disk.
-        /// Serialized Name: A2AProtectedManagedDiskDetails.resyncRequired
-        /// </param>
-        /// <param name="monitoringPercentageCompletion">
-        /// The percentage of the monitoring job. The type of the monitoring job is defined by MonitoringJobType property.
-        /// Serialized Name: A2AProtectedManagedDiskDetails.monitoringPercentageCompletion
-        /// </param>
-        /// <param name="monitoringJobType">
-        /// The type of the monitoring job. The progress is contained in MonitoringPercentageCompletion property.
-        /// Serialized Name: A2AProtectedManagedDiskDetails.monitoringJobType
-        /// </param>
-        /// <param name="dataPendingInStagingStorageAccountInMB">
-        /// The data pending for replication in MB at staging account.
-        /// Serialized Name: A2AProtectedManagedDiskDetails.dataPendingInStagingStorageAccountInMB
-        /// </param>
-        /// <param name="dataPendingAtSourceAgentInMB">
-        /// The data pending at source virtual machine in MB.
-        /// Serialized Name: A2AProtectedManagedDiskDetails.dataPendingAtSourceAgentInMB
-        /// </param>
-        /// <param name="diskState">
-        /// The disk state.
-        /// Serialized Name: A2AProtectedManagedDiskDetails.diskState
-        /// </param>
-        /// <param name="allowedDiskLevelOperation">
-        /// The disk level operations list.
-        /// Serialized Name: A2AProtectedManagedDiskDetails.allowedDiskLevelOperation
-        /// </param>
-        /// <param name="isDiskEncrypted">
-        /// A value indicating whether vm has encrypted os disk or not.
-        /// Serialized Name: A2AProtectedManagedDiskDetails.isDiskEncrypted
-        /// </param>
-        /// <param name="secretIdentifier">
-        /// The secret URL / identifier (BEK).
-        /// Serialized Name: A2AProtectedManagedDiskDetails.secretIdentifier
-        /// </param>
-        /// <param name="dekKeyVaultArmId">
-        /// The KeyVault resource id for secret (BEK).
-        /// Serialized Name: A2AProtectedManagedDiskDetails.dekKeyVaultArmId
-        /// </param>
-        /// <param name="isDiskKeyEncrypted">
-        /// A value indicating whether disk key got encrypted or not.
-        /// Serialized Name: A2AProtectedManagedDiskDetails.isDiskKeyEncrypted
-        /// </param>
-        /// <param name="keyIdentifier">
-        /// The key URL / identifier (KEK).
-        /// Serialized Name: A2AProtectedManagedDiskDetails.keyIdentifier
-        /// </param>
-        /// <param name="kekKeyVaultArmId">
-        /// The KeyVault resource id for key (KEK).
-        /// Serialized Name: A2AProtectedManagedDiskDetails.kekKeyVaultArmId
-        /// </param>
-        /// <param name="failoverDiskName">
-        /// The failover name for the managed disk.
-        /// Serialized Name: A2AProtectedManagedDiskDetails.failoverDiskName
-        /// </param>
-        /// <param name="tfoDiskName">
-        /// The test failover name for the managed disk.
-        /// Serialized Name: A2AProtectedManagedDiskDetails.tfoDiskName
-        /// </param>
+        /// <param name="diskId"> The managed disk Arm id. </param>
+        /// <param name="recoveryResourceGroupId"> The recovery disk resource group Arm Id. </param>
+        /// <param name="recoveryTargetDiskId"> Recovery target disk Arm Id. </param>
+        /// <param name="recoveryReplicaDiskId"> Recovery replica disk Arm Id. </param>
+        /// <param name="recoveryOrignalTargetDiskId"> Recovery original target disk Arm Id. </param>
+        /// <param name="recoveryReplicaDiskAccountType"> The replica disk type. Its an optional value and will be same as source disk type if not user provided. </param>
+        /// <param name="recoveryTargetDiskAccountType"> The target disk type after failover. Its an optional value and will be same as source disk type if not user provided. </param>
+        /// <param name="recoveryDiskEncryptionSetId"> The recovery disk encryption set Id. </param>
+        /// <param name="primaryDiskEncryptionSetId"> The primary disk encryption set Id. </param>
+        /// <param name="diskName"> The disk name. </param>
+        /// <param name="diskCapacityInBytes"> The disk capacity in bytes. </param>
+        /// <param name="primaryStagingAzureStorageAccountId"> The primary staging storage account. </param>
+        /// <param name="diskType"> The type of disk. </param>
+        /// <param name="isResyncRequired"> A value indicating whether resync is required for this disk. </param>
+        /// <param name="monitoringPercentageCompletion"> The percentage of the monitoring job. The type of the monitoring job is defined by MonitoringJobType property. </param>
+        /// <param name="monitoringJobType"> The type of the monitoring job. The progress is contained in MonitoringPercentageCompletion property. </param>
+        /// <param name="dataPendingInStagingStorageAccountInMB"> The data pending for replication in MB at staging account. </param>
+        /// <param name="dataPendingAtSourceAgentInMB"> The data pending at source virtual machine in MB. </param>
+        /// <param name="diskState"> The disk state. </param>
+        /// <param name="allowedDiskLevelOperation"> The disk level operations list. </param>
+        /// <param name="isDiskEncrypted"> A value indicating whether vm has encrypted os disk or not. </param>
+        /// <param name="secretIdentifier"> The secret URL / identifier (BEK). </param>
+        /// <param name="dekKeyVaultArmId"> The KeyVault resource id for secret (BEK). </param>
+        /// <param name="isDiskKeyEncrypted"> A value indicating whether disk key got encrypted or not. </param>
+        /// <param name="keyIdentifier"> The key URL / identifier (KEK). </param>
+        /// <param name="kekKeyVaultArmId"> The KeyVault resource id for key (KEK). </param>
+        /// <param name="failoverDiskName"> The failover name for the managed disk. </param>
+        /// <param name="tfoDiskName"> The test failover name for the managed disk. </param>
         /// <returns> A new <see cref="Models.A2AProtectedManagedDiskDetails"/> instance for mocking. </returns>
         public static A2AProtectedManagedDiskDetails A2AProtectedManagedDiskDetails(string diskId = null, ResourceIdentifier recoveryResourceGroupId = null, ResourceIdentifier recoveryTargetDiskId = null, ResourceIdentifier recoveryReplicaDiskId = null, ResourceIdentifier recoveryOrignalTargetDiskId = null, string recoveryReplicaDiskAccountType = null, string recoveryTargetDiskAccountType = null, ResourceIdentifier recoveryDiskEncryptionSetId = null, ResourceIdentifier primaryDiskEncryptionSetId = null, string diskName = null, long? diskCapacityInBytes = null, ResourceIdentifier primaryStagingAzureStorageAccountId = null, string diskType = null, bool? isResyncRequired = null, int? monitoringPercentageCompletion = null, string monitoringJobType = null, double? dataPendingInStagingStorageAccountInMB = null, double? dataPendingAtSourceAgentInMB = null, string diskState = null, IEnumerable<string> allowedDiskLevelOperation = null, bool? isDiskEncrypted = null, string secretIdentifier = null, ResourceIdentifier dekKeyVaultArmId = null, bool? isDiskKeyEncrypted = null, string keyIdentifier = null, ResourceIdentifier kekKeyVaultArmId = null, string failoverDiskName = null, string tfoDiskName = null)
         {
@@ -2561,26 +1250,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Initializes a new instance of A2AProtectionContainerMappingDetails. </summary>
-        /// <param name="agentAutoUpdateStatus">
-        /// A value indicating whether the auto update is enabled.
-        /// Serialized Name: A2AProtectionContainerMappingDetails.agentAutoUpdateStatus
-        /// </param>
-        /// <param name="automationAccountArmId">
-        /// The automation account arm id.
-        /// Serialized Name: A2AProtectionContainerMappingDetails.automationAccountArmId
-        /// </param>
-        /// <param name="automationAccountAuthenticationType">
-        /// A value indicating the type authentication to use for automation Account.
-        /// Serialized Name: A2AProtectionContainerMappingDetails.automationAccountAuthenticationType
-        /// </param>
-        /// <param name="scheduleName">
-        /// The schedule arm name.
-        /// Serialized Name: A2AProtectionContainerMappingDetails.scheduleName
-        /// </param>
-        /// <param name="jobScheduleName">
-        /// The job schedule arm name.
-        /// Serialized Name: A2AProtectionContainerMappingDetails.jobScheduleName
-        /// </param>
+        /// <param name="agentAutoUpdateStatus"> A value indicating whether the auto update is enabled. </param>
+        /// <param name="automationAccountArmId"> The automation account arm id. </param>
+        /// <param name="automationAccountAuthenticationType"> A value indicating the type authentication to use for automation Account. </param>
+        /// <param name="scheduleName"> The schedule arm name. </param>
+        /// <param name="jobScheduleName"> The job schedule arm name. </param>
         /// <returns> A new <see cref="Models.A2AProtectionContainerMappingDetails"/> instance for mocking. </returns>
         public static A2AProtectionContainerMappingDetails A2AProtectionContainerMappingDetails(SiteRecoveryAgentAutoUpdateStatus? agentAutoUpdateStatus = null, ResourceIdentifier automationAccountArmId = null, AutomationAccountAuthenticationType? automationAccountAuthenticationType = null, string scheduleName = null, string jobScheduleName = null)
         {
@@ -2588,14 +1262,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Initializes a new instance of A2ARecoveryPointDetails. </summary>
-        /// <param name="recoveryPointSyncType">
-        /// A value indicating whether the recovery point is multi VM consistent.
-        /// Serialized Name: A2ARecoveryPointDetails.recoveryPointSyncType
-        /// </param>
-        /// <param name="disks">
-        /// List of disk ids representing a recovery point.
-        /// Serialized Name: A2ARecoveryPointDetails.disks
-        /// </param>
+        /// <param name="recoveryPointSyncType"> A value indicating whether the recovery point is multi VM consistent. </param>
+        /// <param name="disks"> List of disk ids representing a recovery point. </param>
         /// <returns> A new <see cref="Models.A2ARecoveryPointDetails"/> instance for mocking. </returns>
         public static A2ARecoveryPointDetails A2ARecoveryPointDetails(RecoveryPointSyncType? recoveryPointSyncType = null, IEnumerable<string> disks = null)
         {
@@ -2605,220 +1273,61 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Initializes a new instance of A2AReplicationDetails. </summary>
-        /// <param name="fabricObjectId">
-        /// The fabric specific object Id of the virtual machine.
-        /// Serialized Name: A2AReplicationDetails.fabricObjectId
-        /// </param>
-        /// <param name="initialPrimaryZone">
-        /// The initial primary availability zone.
-        /// Serialized Name: A2AReplicationDetails.initialPrimaryZone
-        /// </param>
-        /// <param name="initialPrimaryFabricLocation">
-        /// The initial primary fabric location.
-        /// Serialized Name: A2AReplicationDetails.initialPrimaryFabricLocation
-        /// </param>
-        /// <param name="initialRecoveryZone">
-        /// The initial recovery availability zone.
-        /// Serialized Name: A2AReplicationDetails.initialRecoveryZone
-        /// </param>
-        /// <param name="initialPrimaryExtendedLocation">
-        /// The initial primary extended location.
-        /// Serialized Name: A2AReplicationDetails.initialPrimaryExtendedLocation
-        /// </param>
-        /// <param name="initialRecoveryExtendedLocation">
-        /// The initial recovery extended location.
-        /// Serialized Name: A2AReplicationDetails.initialRecoveryExtendedLocation
-        /// </param>
-        /// <param name="initialRecoveryFabricLocation">
-        /// The initial recovery fabric location.
-        /// Serialized Name: A2AReplicationDetails.initialRecoveryFabricLocation
-        /// </param>
-        /// <param name="multiVmGroupId">
-        /// The multi vm group Id.
-        /// Serialized Name: A2AReplicationDetails.multiVmGroupId
-        /// </param>
-        /// <param name="multiVmGroupName">
-        /// The multi vm group name.
-        /// Serialized Name: A2AReplicationDetails.multiVmGroupName
-        /// </param>
-        /// <param name="multiVmGroupCreateOption">
-        /// Whether Multi VM group is auto created or specified by user.
-        /// Serialized Name: A2AReplicationDetails.multiVmGroupCreateOption
-        /// </param>
-        /// <param name="managementId">
-        /// The management Id.
-        /// Serialized Name: A2AReplicationDetails.managementId
-        /// </param>
-        /// <param name="protectedDisks">
-        /// The list of protected disks.
-        /// Serialized Name: A2AReplicationDetails.protectedDisks
-        /// </param>
-        /// <param name="unprotectedDisks">
-        /// The list of unprotected disks.
-        /// Serialized Name: A2AReplicationDetails.unprotectedDisks
-        /// </param>
-        /// <param name="protectedManagedDisks">
-        /// The list of protected managed disks.
-        /// Serialized Name: A2AReplicationDetails.protectedManagedDisks
-        /// </param>
-        /// <param name="recoveryBootDiagStorageAccountId">
-        /// The recovery boot diagnostic storage account Arm Id.
-        /// Serialized Name: A2AReplicationDetails.recoveryBootDiagStorageAccountId
-        /// </param>
-        /// <param name="primaryFabricLocation">
-        /// Primary fabric location.
-        /// Serialized Name: A2AReplicationDetails.primaryFabricLocation
-        /// </param>
-        /// <param name="recoveryFabricLocation">
-        /// The recovery fabric location.
-        /// Serialized Name: A2AReplicationDetails.recoveryFabricLocation
-        /// </param>
-        /// <param name="osType">
-        /// The type of operating system.
-        /// Serialized Name: A2AReplicationDetails.osType
-        /// </param>
-        /// <param name="recoveryAzureVmSize">
-        /// The size of recovery virtual machine.
-        /// Serialized Name: A2AReplicationDetails.recoveryAzureVMSize
-        /// </param>
-        /// <param name="recoveryAzureVmName">
-        /// The name of recovery virtual machine.
-        /// Serialized Name: A2AReplicationDetails.recoveryAzureVMName
-        /// </param>
-        /// <param name="recoveryAzureResourceGroupId">
-        /// The recovery resource group.
-        /// Serialized Name: A2AReplicationDetails.recoveryAzureResourceGroupId
-        /// </param>
-        /// <param name="recoveryCloudService">
-        /// The recovery cloud service.
-        /// Serialized Name: A2AReplicationDetails.recoveryCloudService
-        /// </param>
-        /// <param name="recoveryAvailabilitySet">
-        /// The recovery availability set.
-        /// Serialized Name: A2AReplicationDetails.recoveryAvailabilitySet
-        /// </param>
-        /// <param name="selectedRecoveryAzureNetworkId">
-        /// The recovery virtual network.
-        /// Serialized Name: A2AReplicationDetails.selectedRecoveryAzureNetworkId
-        /// </param>
-        /// <param name="selectedTfoAzureNetworkId">
-        /// The test failover virtual network.
-        /// Serialized Name: A2AReplicationDetails.selectedTfoAzureNetworkId
-        /// </param>
-        /// <param name="vmNics">
-        /// The virtual machine nic details.
-        /// Serialized Name: A2AReplicationDetails.vmNics
-        /// </param>
-        /// <param name="vmSyncedConfigDetails">
-        /// The synced configuration details.
-        /// Serialized Name: A2AReplicationDetails.vmSyncedConfigDetails
-        /// </param>
-        /// <param name="monitoringPercentageCompletion">
-        /// The percentage of the monitoring job. The type of the monitoring job is defined by MonitoringJobType property.
-        /// Serialized Name: A2AReplicationDetails.monitoringPercentageCompletion
-        /// </param>
-        /// <param name="monitoringJobType">
-        /// The type of the monitoring job. The progress is contained in MonitoringPercentageCompletion property.
-        /// Serialized Name: A2AReplicationDetails.monitoringJobType
-        /// </param>
-        /// <param name="lastHeartbeat">
-        /// The last heartbeat received from the source server.
-        /// Serialized Name: A2AReplicationDetails.lastHeartbeat
-        /// </param>
-        /// <param name="agentVersion">
-        /// The agent version.
-        /// Serialized Name: A2AReplicationDetails.agentVersion
-        /// </param>
-        /// <param name="agentExpireOn">
-        /// Agent expiry date.
-        /// Serialized Name: A2AReplicationDetails.agentExpiryDate
-        /// </param>
-        /// <param name="isReplicationAgentUpdateRequired">
-        /// A value indicating whether replication agent update is required.
-        /// Serialized Name: A2AReplicationDetails.isReplicationAgentUpdateRequired
-        /// </param>
-        /// <param name="agentCertificateExpireOn">
-        /// Agent certificate expiry date.
-        /// Serialized Name: A2AReplicationDetails.agentCertificateExpiryDate
-        /// </param>
-        /// <param name="isReplicationAgentCertificateUpdateRequired">
-        /// A value indicating whether agent certificate update is required.
-        /// Serialized Name: A2AReplicationDetails.isReplicationAgentCertificateUpdateRequired
-        /// </param>
-        /// <param name="recoveryFabricObjectId">
-        /// The recovery fabric object Id.
-        /// Serialized Name: A2AReplicationDetails.recoveryFabricObjectId
-        /// </param>
-        /// <param name="vmProtectionState">
-        /// The protection state for the vm.
-        /// Serialized Name: A2AReplicationDetails.vmProtectionState
-        /// </param>
-        /// <param name="vmProtectionStateDescription">
-        /// The protection state description for the vm.
-        /// Serialized Name: A2AReplicationDetails.vmProtectionStateDescription
-        /// </param>
-        /// <param name="lifecycleId">
-        /// An id associated with the PE that survives actions like switch protection which change the backing PE/CPE objects internally.The lifecycle id gets carried forward to have a link/continuity in being able to have an Id that denotes the "same" protected item even though other internal Ids/ARM Id might be changing.
-        /// Serialized Name: A2AReplicationDetails.lifecycleId
-        /// </param>
-        /// <param name="testFailoverRecoveryFabricObjectId">
-        /// The test failover fabric object Id.
-        /// Serialized Name: A2AReplicationDetails.testFailoverRecoveryFabricObjectId
-        /// </param>
-        /// <param name="rpoInSeconds">
-        /// The last RPO value in seconds.
-        /// Serialized Name: A2AReplicationDetails.rpoInSeconds
-        /// </param>
-        /// <param name="lastRpoCalculatedOn">
-        /// The time (in UTC) when the last RPO value was calculated by Protection Service.
-        /// Serialized Name: A2AReplicationDetails.lastRpoCalculatedTime
-        /// </param>
-        /// <param name="primaryAvailabilityZone">
-        /// The primary availability zone.
-        /// Serialized Name: A2AReplicationDetails.primaryAvailabilityZone
-        /// </param>
-        /// <param name="recoveryAvailabilityZone">
-        /// The recovery availability zone.
-        /// Serialized Name: A2AReplicationDetails.recoveryAvailabilityZone
-        /// </param>
-        /// <param name="primaryExtendedLocation">
-        /// The primary Extended Location.
-        /// Serialized Name: A2AReplicationDetails.primaryExtendedLocation
-        /// </param>
-        /// <param name="recoveryExtendedLocation">
-        /// The recovery Extended Location.
-        /// Serialized Name: A2AReplicationDetails.recoveryExtendedLocation
-        /// </param>
-        /// <param name="vmEncryptionType">
-        /// The encryption type of the VM.
-        /// Serialized Name: A2AReplicationDetails.vmEncryptionType
-        /// </param>
-        /// <param name="tfoAzureVmName">
-        /// The test failover vm name.
-        /// Serialized Name: A2AReplicationDetails.tfoAzureVMName
-        /// </param>
-        /// <param name="recoveryAzureGeneration">
-        /// The recovery azure generation.
-        /// Serialized Name: A2AReplicationDetails.recoveryAzureGeneration
-        /// </param>
-        /// <param name="recoveryProximityPlacementGroupId">
-        /// The recovery proximity placement group Id.
-        /// Serialized Name: A2AReplicationDetails.recoveryProximityPlacementGroupId
-        /// </param>
-        /// <param name="autoProtectionOfDataDisk">
-        /// A value indicating whether the auto protection is enabled.
-        /// Serialized Name: A2AReplicationDetails.autoProtectionOfDataDisk
-        /// </param>
-        /// <param name="recoveryVirtualMachineScaleSetId">
-        /// The recovery virtual machine scale set id.
-        /// Serialized Name: A2AReplicationDetails.recoveryVirtualMachineScaleSetId
-        /// </param>
-        /// <param name="recoveryCapacityReservationGroupId">
-        /// The recovery capacity reservation group Id.
-        /// Serialized Name: A2AReplicationDetails.recoveryCapacityReservationGroupId
-        /// </param>
+        /// <param name="fabricObjectId"> The fabric specific object Id of the virtual machine. </param>
+        /// <param name="initialPrimaryZone"> The initial primary availability zone. </param>
+        /// <param name="initialPrimaryFabricLocation"> The initial primary fabric location. </param>
+        /// <param name="initialRecoveryZone"> The initial recovery availability zone. </param>
+        /// <param name="initialPrimaryExtendedLocation"> The initial primary extended location. </param>
+        /// <param name="initialRecoveryExtendedLocation"> The initial recovery extended location. </param>
+        /// <param name="initialRecoveryFabricLocation"> The initial recovery fabric location. </param>
+        /// <param name="multiVmGroupId"> The multi vm group Id. </param>
+        /// <param name="multiVmGroupName"> The multi vm group name. </param>
+        /// <param name="multiVmGroupCreateOption"> Whether Multi VM group is auto created or specified by user. </param>
+        /// <param name="managementId"> The management Id. </param>
+        /// <param name="protectedDisks"> The list of protected disks. </param>
+        /// <param name="unprotectedDisks"> The list of unprotected disks. </param>
+        /// <param name="protectedManagedDisks"> The list of protected managed disks. </param>
+        /// <param name="recoveryBootDiagStorageAccountId"> The recovery boot diagnostic storage account Arm Id. </param>
+        /// <param name="primaryFabricLocation"> Primary fabric location. </param>
+        /// <param name="recoveryFabricLocation"> The recovery fabric location. </param>
+        /// <param name="osType"> The type of operating system. </param>
+        /// <param name="recoveryAzureVmSize"> The size of recovery virtual machine. </param>
+        /// <param name="recoveryAzureVmName"> The name of recovery virtual machine. </param>
+        /// <param name="recoveryAzureResourceGroupId"> The recovery resource group. </param>
+        /// <param name="recoveryCloudService"> The recovery cloud service. </param>
+        /// <param name="recoveryAvailabilitySet"> The recovery availability set. </param>
+        /// <param name="selectedRecoveryAzureNetworkId"> The recovery virtual network. </param>
+        /// <param name="selectedTfoAzureNetworkId"> The test failover virtual network. </param>
+        /// <param name="vmNics"> The virtual machine nic details. </param>
+        /// <param name="vmSyncedConfigDetails"> The synced configuration details. </param>
+        /// <param name="monitoringPercentageCompletion"> The percentage of the monitoring job. The type of the monitoring job is defined by MonitoringJobType property. </param>
+        /// <param name="monitoringJobType"> The type of the monitoring job. The progress is contained in MonitoringPercentageCompletion property. </param>
+        /// <param name="lastHeartbeat"> The last heartbeat received from the source server. </param>
+        /// <param name="agentVersion"> The agent version. </param>
+        /// <param name="agentExpireOn"> Agent expiry date. </param>
+        /// <param name="isReplicationAgentUpdateRequired"> A value indicating whether replication agent update is required. </param>
+        /// <param name="agentCertificateExpireOn"> Agent certificate expiry date. </param>
+        /// <param name="isReplicationAgentCertificateUpdateRequired"> A value indicating whether agent certificate update is required. </param>
+        /// <param name="recoveryFabricObjectId"> The recovery fabric object Id. </param>
+        /// <param name="vmProtectionState"> The protection state for the vm. </param>
+        /// <param name="vmProtectionStateDescription"> The protection state description for the vm. </param>
+        /// <param name="lifecycleId"> An id associated with the PE that survives actions like switch protection which change the backing PE/CPE objects internally.The lifecycle id gets carried forward to have a link/continuity in being able to have an Id that denotes the "same" protected item even though other internal Ids/ARM Id might be changing. </param>
+        /// <param name="testFailoverRecoveryFabricObjectId"> The test failover fabric object Id. </param>
+        /// <param name="rpoInSeconds"> The last RPO value in seconds. </param>
+        /// <param name="lastRpoCalculatedOn"> The time (in UTC) when the last RPO value was calculated by Protection Service. </param>
+        /// <param name="primaryAvailabilityZone"> The primary availability zone. </param>
+        /// <param name="recoveryAvailabilityZone"> The recovery availability zone. </param>
+        /// <param name="primaryExtendedLocation"> The primary Extended Location. </param>
+        /// <param name="recoveryExtendedLocation"> The recovery Extended Location. </param>
+        /// <param name="vmEncryptionType"> The encryption type of the VM. </param>
+        /// <param name="tfoAzureVmName"> The test failover vm name. </param>
+        /// <param name="recoveryAzureGeneration"> The recovery azure generation. </param>
+        /// <param name="recoveryProximityPlacementGroupId"> The recovery proximity placement group Id. </param>
+        /// <param name="autoProtectionOfDataDisk"> A value indicating whether the auto protection is enabled. </param>
+        /// <param name="recoveryVirtualMachineScaleSetId"> The recovery virtual machine scale set id. </param>
+        /// <param name="recoveryCapacityReservationGroupId"> The recovery capacity reservation group Id. </param>
         /// <returns> A new <see cref="Models.A2AReplicationDetails"/> instance for mocking. </returns>
-        public static A2AReplicationDetails A2AReplicationDetails(ResourceIdentifier fabricObjectId = null, string initialPrimaryZone = null, AzureLocation? initialPrimaryFabricLocation = null, string initialRecoveryZone = null, SiteRecoveryExtendedLocation initialPrimaryExtendedLocation = null, SiteRecoveryExtendedLocation initialRecoveryExtendedLocation = null, AzureLocation? initialRecoveryFabricLocation = null, string multiVmGroupId = null, string multiVmGroupName = null, MultiVmGroupCreateOption? multiVmGroupCreateOption = null, string managementId = null, IEnumerable<A2AProtectedDiskDetails> protectedDisks = null, IEnumerable<A2AUnprotectedDiskDetails> unprotectedDisks = null, IEnumerable<A2AProtectedManagedDiskDetails> protectedManagedDisks = null, ResourceIdentifier recoveryBootDiagStorageAccountId = null, AzureLocation? primaryFabricLocation = null, AzureLocation? recoveryFabricLocation = null, string osType = null, string recoveryAzureVmSize = null, string recoveryAzureVmName = null, ResourceIdentifier recoveryAzureResourceGroupId = null, string recoveryCloudService = null, string recoveryAvailabilitySet = null, ResourceIdentifier selectedRecoveryAzureNetworkId = null, ResourceIdentifier selectedTfoAzureNetworkId = null, IEnumerable<VmNicDetails> vmNics = null, A2AVmSyncedConfigDetails vmSyncedConfigDetails = null, int? monitoringPercentageCompletion = null, string monitoringJobType = null, DateTimeOffset? lastHeartbeat = null, string agentVersion = null, DateTimeOffset? agentExpireOn = null, bool? isReplicationAgentUpdateRequired = null, DateTimeOffset? agentCertificateExpireOn = null, bool? isReplicationAgentCertificateUpdateRequired = null, ResourceIdentifier recoveryFabricObjectId = null, string vmProtectionState = null, string vmProtectionStateDescription = null, string lifecycleId = null, ResourceIdentifier testFailoverRecoveryFabricObjectId = null, long? rpoInSeconds = null, DateTimeOffset? lastRpoCalculatedOn = null, string primaryAvailabilityZone = null, string recoveryAvailabilityZone = null, SiteRecoveryExtendedLocation primaryExtendedLocation = null, SiteRecoveryExtendedLocation recoveryExtendedLocation = null, VmEncryptionType? vmEncryptionType = null, string tfoAzureVmName = null, string recoveryAzureGeneration = null, ResourceIdentifier recoveryProximityPlacementGroupId = null, AutoProtectionOfDataDisk? autoProtectionOfDataDisk = null, ResourceIdentifier recoveryVirtualMachineScaleSetId = null, ResourceIdentifier recoveryCapacityReservationGroupId = null)
+        public static A2AReplicationDetails A2AReplicationDetails(ResourceIdentifier fabricObjectId = null, string initialPrimaryZone = null, AzureLocation? initialPrimaryFabricLocation = null, string initialRecoveryZone = null, SiteRecoveryExtendedLocation initialPrimaryExtendedLocation = null, SiteRecoveryExtendedLocation initialRecoveryExtendedLocation = null, AzureLocation? initialRecoveryFabricLocation = null, string multiVmGroupId = null, string multiVmGroupName = null, MultiVmGroupCreateOption? multiVmGroupCreateOption = null, string managementId = null, IEnumerable<A2AProtectedDiskDetails> protectedDisks = null, IEnumerable<A2AUnprotectedDiskDetails> unprotectedDisks = null, IEnumerable<A2AProtectedManagedDiskDetails> protectedManagedDisks = null, ResourceIdentifier recoveryBootDiagStorageAccountId = null, AzureLocation? primaryFabricLocation = null, AzureLocation? recoveryFabricLocation = null, string osType = null, string recoveryAzureVmSize = null, string recoveryAzureVmName = null, ResourceIdentifier recoveryAzureResourceGroupId = null, string recoveryCloudService = null, string recoveryAvailabilitySet = null, ResourceIdentifier selectedRecoveryAzureNetworkId = null, ResourceIdentifier selectedTfoAzureNetworkId = null, IEnumerable<VmNicDetails> vmNics = null, A2AVmSyncedConfigDetails vmSyncedConfigDetails = null, int? monitoringPercentageCompletion = null, string monitoringJobType = null, DateTimeOffset? lastHeartbeat = null, string agentVersion = null, DateTimeOffset? agentExpireOn = null, bool? isReplicationAgentUpdateRequired = null, DateTimeOffset? agentCertificateExpireOn = null, bool? isReplicationAgentCertificateUpdateRequired = null, ResourceIdentifier recoveryFabricObjectId = null, string vmProtectionState = null, string vmProtectionStateDescription = null, string lifecycleId = null, ResourceIdentifier testFailoverRecoveryFabricObjectId = null, long? rpoInSeconds = null, DateTimeOffset? lastRpoCalculatedOn = null, string primaryAvailabilityZone = null, string recoveryAvailabilityZone = null, SiteRecoveryExtendedLocation primaryExtendedLocation = null, SiteRecoveryExtendedLocation recoveryExtendedLocation = null, SiteRecoveryVmEncryptionType? vmEncryptionType = null, string tfoAzureVmName = null, string recoveryAzureGeneration = null, ResourceIdentifier recoveryProximityPlacementGroupId = null, AutoProtectionOfDataDisk? autoProtectionOfDataDisk = null, ResourceIdentifier recoveryVirtualMachineScaleSetId = null, ResourceIdentifier recoveryCapacityReservationGroupId = null)
         {
             protectedDisks ??= new List<A2AProtectedDiskDetails>();
             unprotectedDisks ??= new List<A2AUnprotectedDiskDetails>();
@@ -2829,14 +1338,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Initializes a new instance of A2AUnprotectedDiskDetails. </summary>
-        /// <param name="diskLunId">
-        /// The source lun Id for the data disk.
-        /// Serialized Name: A2AUnprotectedDiskDetails.diskLunId
-        /// </param>
-        /// <param name="diskAutoProtectionStatus">
-        /// A value indicating whether the disk auto protection is enabled.
-        /// Serialized Name: A2AUnprotectedDiskDetails.diskAutoProtectionStatus
-        /// </param>
+        /// <param name="diskLunId"> The source lun Id for the data disk. </param>
+        /// <param name="diskAutoProtectionStatus"> A value indicating whether the disk auto protection is enabled. </param>
         /// <returns> A new <see cref="Models.A2AUnprotectedDiskDetails"/> instance for mocking. </returns>
         public static A2AUnprotectedDiskDetails A2AUnprotectedDiskDetails(int? diskLunId = null, AutoProtectionOfDataDisk? diskAutoProtectionStatus = null)
         {
@@ -2844,106 +1347,49 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Initializes a new instance of VmNicDetails. </summary>
-        /// <param name="nicId">
-        /// The nic Id.
-        /// Serialized Name: VMNicDetails.nicId
-        /// </param>
-        /// <param name="replicaNicId">
-        /// The replica nic Id.
-        /// Serialized Name: VMNicDetails.replicaNicId
-        /// </param>
-        /// <param name="sourceNicArmId">
-        /// The source nic ARM Id.
-        /// Serialized Name: VMNicDetails.sourceNicArmId
-        /// </param>
-        /// <param name="vmNetworkName">
-        /// VM network name.
-        /// Serialized Name: VMNicDetails.vMNetworkName
-        /// </param>
-        /// <param name="recoveryVmNetworkId">
-        /// Recovery VM network Id.
-        /// Serialized Name: VMNicDetails.recoveryVMNetworkId
-        /// </param>
-        /// <param name="ipConfigs">
-        /// The IP configurations of the NIC.
-        /// Serialized Name: VMNicDetails.ipConfigs
-        /// </param>
-        /// <param name="selectionType">
-        /// Selection type for failover.
-        /// Serialized Name: VMNicDetails.selectionType
-        /// </param>
-        /// <param name="recoveryNetworkSecurityGroupId">
-        /// The id of the NSG associated with the NIC.
-        /// Serialized Name: VMNicDetails.recoveryNetworkSecurityGroupId
-        /// </param>
-        /// <param name="enableAcceleratedNetworkingOnRecovery">
-        /// A value indicating whether the NIC has accelerated networking enabled.
-        /// Serialized Name: VMNicDetails.enableAcceleratedNetworkingOnRecovery
-        /// </param>
-        /// <param name="tfoVmNetworkId">
-        /// The network to be used by NIC during test failover.
-        /// Serialized Name: VMNicDetails.tfoVMNetworkId
-        /// </param>
-        /// <param name="tfoNetworkSecurityGroupId">
-        /// The NSG to be used by NIC during test failover.
-        /// Serialized Name: VMNicDetails.tfoNetworkSecurityGroupId
-        /// </param>
-        /// <param name="enableAcceleratedNetworkingOnTfo">
-        /// Whether the TFO NIC has accelerated networking enabled.
-        /// Serialized Name: VMNicDetails.enableAcceleratedNetworkingOnTfo
-        /// </param>
-        /// <param name="recoveryNicName">
-        /// The name of the NIC to be used when creating target NICs.
-        /// Serialized Name: VMNicDetails.recoveryNicName
-        /// </param>
-        /// <param name="recoveryNicResourceGroupName">
-        /// The resource group of the NIC to be used when creating target NICs.
-        /// Serialized Name: VMNicDetails.recoveryNicResourceGroupName
-        /// </param>
-        /// <param name="reuseExistingNic">
-        /// A value indicating whether an existing NIC is allowed to be reused during failover subject to availability.
-        /// Serialized Name: VMNicDetails.reuseExistingNic
-        /// </param>
-        /// <param name="tfoRecoveryNicName">
-        /// The name of the NIC to be used when creating target NICs in TFO.
-        /// Serialized Name: VMNicDetails.tfoRecoveryNicName
-        /// </param>
-        /// <param name="tfoRecoveryNicResourceGroupName">
-        /// The resource group of the NIC to be used when creating target NICs in TFO.
-        /// Serialized Name: VMNicDetails.tfoRecoveryNicResourceGroupName
-        /// </param>
-        /// <param name="tfoReuseExistingNic">
-        /// A value indicating whether an existing NIC is allowed to be reused during test failover subject to availability.
-        /// Serialized Name: VMNicDetails.tfoReuseExistingNic
-        /// </param>
-        /// <param name="targetNicName">
-        /// Target NIC name.
-        /// Serialized Name: VMNicDetails.targetNicName
-        /// </param>
+        /// <param name="nicId"> The nic Id. </param>
+        /// <param name="replicaNicId"> The replica nic Id. </param>
+        /// <param name="sourceNicArmId"> The source nic ARM Id. </param>
+        /// <param name="vmNetworkName"> VM network name. </param>
+        /// <param name="recoveryVmNetworkId"> Recovery VM network Id. </param>
+        /// <param name="ipConfigs"> The IP configurations of the NIC. </param>
+        /// <param name="selectionType"> Selection type for failover. </param>
+        /// <param name="recoveryNetworkSecurityGroupId"> The id of the NSG associated with the NIC. </param>
+        /// <param name="isAcceleratedNetworkingOnRecoveryEnabled"> A value indicating whether the NIC has accelerated networking enabled. </param>
+        /// <param name="tfoVmNetworkId"> The network to be used by NIC during test failover. </param>
+        /// <param name="tfoNetworkSecurityGroupId"> The NSG to be used by NIC during test failover. </param>
+        /// <param name="isAcceleratedNetworkingOnTfoEnabled"> Whether the TFO NIC has accelerated networking enabled. </param>
+        /// <param name="recoveryNicName"> The name of the NIC to be used when creating target NICs. </param>
+        /// <param name="recoveryNicResourceGroupName"> The resource group of the NIC to be used when creating target NICs. </param>
+        /// <param name="isReuseExistingNicAllowed"> A value indicating whether an existing NIC is allowed to be reused during failover subject to availability. </param>
+        /// <param name="tfoRecoveryNicName"> The name of the NIC to be used when creating target NICs in TFO. </param>
+        /// <param name="tfoRecoveryNicResourceGroupName"> The resource group of the NIC to be used when creating target NICs in TFO. </param>
+        /// <param name="isTfoReuseExistingNicAllowed"> A value indicating whether an existing NIC is allowed to be reused during test failover subject to availability. </param>
+        /// <param name="targetNicName"> Target NIC name. </param>
         /// <returns> A new <see cref="Models.VmNicDetails"/> instance for mocking. </returns>
-        public static VmNicDetails VmNicDetails(string nicId = null, string replicaNicId = null, ResourceIdentifier sourceNicArmId = null, string vmNetworkName = null, ResourceIdentifier recoveryVmNetworkId = null, IEnumerable<HyperVIPConfigDetails> ipConfigs = null, string selectionType = null, string recoveryNetworkSecurityGroupId = null, bool? enableAcceleratedNetworkingOnRecovery = null, ResourceIdentifier tfoVmNetworkId = null, string tfoNetworkSecurityGroupId = null, bool? enableAcceleratedNetworkingOnTfo = null, string recoveryNicName = null, string recoveryNicResourceGroupName = null, bool? reuseExistingNic = null, string tfoRecoveryNicName = null, string tfoRecoveryNicResourceGroupName = null, bool? tfoReuseExistingNic = null, string targetNicName = null)
+        public static VmNicDetails VmNicDetails(string nicId = null, string replicaNicId = null, ResourceIdentifier sourceNicArmId = null, string vmNetworkName = null, ResourceIdentifier recoveryVmNetworkId = null, IEnumerable<HyperVIPConfigDetails> ipConfigs = null, string selectionType = null, string recoveryNetworkSecurityGroupId = null, bool? isAcceleratedNetworkingOnRecoveryEnabled = null, ResourceIdentifier tfoVmNetworkId = null, string tfoNetworkSecurityGroupId = null, bool? isAcceleratedNetworkingOnTfoEnabled = null, string recoveryNicName = null, string recoveryNicResourceGroupName = null, bool? isReuseExistingNicAllowed = null, string tfoRecoveryNicName = null, string tfoRecoveryNicResourceGroupName = null, bool? isTfoReuseExistingNicAllowed = null, string targetNicName = null)
         {
             ipConfigs ??= new List<HyperVIPConfigDetails>();
 
-            return new VmNicDetails(nicId, replicaNicId, sourceNicArmId, vmNetworkName, recoveryVmNetworkId, ipConfigs?.ToList(), selectionType, recoveryNetworkSecurityGroupId, enableAcceleratedNetworkingOnRecovery, tfoVmNetworkId, tfoNetworkSecurityGroupId, enableAcceleratedNetworkingOnTfo, recoveryNicName, recoveryNicResourceGroupName, reuseExistingNic, tfoRecoveryNicName, tfoRecoveryNicResourceGroupName, tfoReuseExistingNic, targetNicName);
+            return new VmNicDetails(nicId, replicaNicId, sourceNicArmId, vmNetworkName, recoveryVmNetworkId, ipConfigs?.ToList(), selectionType, recoveryNetworkSecurityGroupId, isAcceleratedNetworkingOnRecoveryEnabled, tfoVmNetworkId, tfoNetworkSecurityGroupId, isAcceleratedNetworkingOnTfoEnabled, recoveryNicName, recoveryNicResourceGroupName, isReuseExistingNicAllowed, tfoRecoveryNicName, tfoRecoveryNicResourceGroupName, isTfoReuseExistingNicAllowed, targetNicName);
         }
 
         /// <summary> Initializes a new instance of HyperVIPConfigDetails. </summary>
-        /// <param name="name"> Serialized Name: IPConfigDetails.name. </param>
-        /// <param name="isPrimary"> Serialized Name: IPConfigDetails.isPrimary. </param>
-        /// <param name="subnetName"> Serialized Name: IPConfigDetails.subnetName. </param>
-        /// <param name="staticIPAddress"> Serialized Name: IPConfigDetails.staticIPAddress. </param>
-        /// <param name="ipAddressType"> Serialized Name: IPConfigDetails.ipAddressType. </param>
-        /// <param name="isSeletedForFailover"> Serialized Name: IPConfigDetails.isSeletedForFailover. </param>
-        /// <param name="recoverySubnetName"> Serialized Name: IPConfigDetails.recoverySubnetName. </param>
-        /// <param name="recoveryStaticIPAddress"> Serialized Name: IPConfigDetails.recoveryStaticIPAddress. </param>
-        /// <param name="recoveryIPAddressType"> Serialized Name: IPConfigDetails.recoveryIPAddressType. </param>
-        /// <param name="recoveryPublicIPAddressId"> Serialized Name: IPConfigDetails.recoveryPublicIPAddressId. </param>
-        /// <param name="recoveryLBBackendAddressPoolIds"> Serialized Name: IPConfigDetails.recoveryLBBackendAddressPoolIds. </param>
-        /// <param name="tfoSubnetName"> Serialized Name: IPConfigDetails.tfoSubnetName. </param>
-        /// <param name="tfoStaticIPAddress"> Serialized Name: IPConfigDetails.tfoStaticIPAddress. </param>
-        /// <param name="tfoPublicIPAddressId"> Serialized Name: IPConfigDetails.tfoPublicIPAddressId. </param>
-        /// <param name="tfoLBBackendAddressPoolIds"> Serialized Name: IPConfigDetails.tfoLBBackendAddressPoolIds. </param>
+        /// <param name="name"></param>
+        /// <param name="isPrimary"></param>
+        /// <param name="subnetName"></param>
+        /// <param name="staticIPAddress"></param>
+        /// <param name="ipAddressType"></param>
+        /// <param name="isSeletedForFailover"></param>
+        /// <param name="recoverySubnetName"></param>
+        /// <param name="recoveryStaticIPAddress"></param>
+        /// <param name="recoveryIPAddressType"></param>
+        /// <param name="recoveryPublicIPAddressId"></param>
+        /// <param name="recoveryLBBackendAddressPoolIds"></param>
+        /// <param name="tfoSubnetName"></param>
+        /// <param name="tfoStaticIPAddress"></param>
+        /// <param name="tfoPublicIPAddressId"></param>
+        /// <param name="tfoLBBackendAddressPoolIds"></param>
         /// <returns> A new <see cref="Models.HyperVIPConfigDetails"/> instance for mocking. </returns>
         public static HyperVIPConfigDetails HyperVIPConfigDetails(string name = null, bool? isPrimary = null, string subnetName = null, IPAddress staticIPAddress = null, string ipAddressType = null, bool? isSeletedForFailover = null, string recoverySubnetName = null, IPAddress recoveryStaticIPAddress = null, string recoveryIPAddressType = null, ResourceIdentifier recoveryPublicIPAddressId = null, IEnumerable<string> recoveryLBBackendAddressPoolIds = null, string tfoSubnetName = null, IPAddress tfoStaticIPAddress = null, ResourceIdentifier tfoPublicIPAddressId = null, IEnumerable<string> tfoLBBackendAddressPoolIds = null)
         {
@@ -2954,14 +1400,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Initializes a new instance of A2AVmSyncedConfigDetails. </summary>
-        /// <param name="tags">
-        /// The Azure VM tags.
-        /// Serialized Name: AzureToAzureVmSyncedConfigDetails.tags
-        /// </param>
-        /// <param name="vmEndpoints">
-        /// The Azure VM input endpoints.
-        /// Serialized Name: AzureToAzureVmSyncedConfigDetails.inputEndpoints
-        /// </param>
+        /// <param name="tags"> The Azure VM tags. </param>
+        /// <param name="vmEndpoints"> The Azure VM input endpoints. </param>
         /// <returns> A new <see cref="Models.A2AVmSyncedConfigDetails"/> instance for mocking. </returns>
         public static A2AVmSyncedConfigDetails A2AVmSyncedConfigDetails(IReadOnlyDictionary<string, string> tags = null, IEnumerable<SiteRecoveryVmEndpoint> vmEndpoints = null)
         {
@@ -2972,10 +1412,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Initializes a new instance of SiteRecoveryVmEndpoint. </summary>
-        /// <param name="endpointName"> Serialized Name: InputEndpoint.endpointName. </param>
-        /// <param name="privatePort"> Serialized Name: InputEndpoint.privatePort. </param>
-        /// <param name="publicPort"> Serialized Name: InputEndpoint.publicPort. </param>
-        /// <param name="protocol"> Serialized Name: InputEndpoint.protocol. </param>
+        /// <param name="endpointName"></param>
+        /// <param name="privatePort"></param>
+        /// <param name="publicPort"></param>
+        /// <param name="protocol"></param>
         /// <returns> A new <see cref="Models.SiteRecoveryVmEndpoint"/> instance for mocking. </returns>
         public static SiteRecoveryVmEndpoint SiteRecoveryVmEndpoint(string endpointName = null, int? privatePort = null, int? publicPort = null, string protocol = null)
         {
@@ -2983,106 +1423,52 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Initializes a new instance of A2AReplicationIntentDetails. </summary>
-        /// <param name="fabricObjectId">
-        /// The fabric specific object Id of the virtual machine.
-        /// Serialized Name: A2AReplicationIntentDetails.fabricObjectId
-        /// </param>
-        /// <param name="primaryLocation">
-        /// The primary location for the virtual machine.
-        /// Serialized Name: A2AReplicationIntentDetails.primaryLocation
-        /// </param>
-        /// <param name="recoveryLocation">
-        /// The recovery location for the virtual machine.
-        /// Serialized Name: A2AReplicationIntentDetails.recoveryLocation
-        /// </param>
-        /// <param name="recoverySubscriptionId">
-        /// The recovery subscription Id of the virtual machine.
-        /// Serialized Name: A2AReplicationIntentDetails.recoverySubscriptionId
-        /// </param>
-        /// <param name="vmDisks">
-        /// The list of vm disk details.
-        /// Serialized Name: A2AReplicationIntentDetails.vmDisks
-        /// </param>
-        /// <param name="vmManagedDisks">
-        /// The list of vm managed disk details.
-        /// Serialized Name: A2AReplicationIntentDetails.vmManagedDisks
-        /// </param>
-        /// <param name="recoveryResourceGroupId">
-        /// The recovery resource group id.
-        /// Serialized Name: A2AReplicationIntentDetails.recoveryResourceGroupId
-        /// </param>
+        /// <param name="fabricObjectId"> The fabric specific object Id of the virtual machine. </param>
+        /// <param name="primaryLocation"> The primary location for the virtual machine. </param>
+        /// <param name="recoveryLocation"> The recovery location for the virtual machine. </param>
+        /// <param name="recoverySubscriptionId"> The recovery subscription Id of the virtual machine. </param>
+        /// <param name="vmDisks"> The list of vm disk details. </param>
+        /// <param name="vmManagedDisks"> The list of vm managed disk details. </param>
+        /// <param name="recoveryResourceGroupId"> The recovery resource group id. </param>
         /// <param name="protectionProfile">
         /// The protection profile custom details.
-        /// Serialized Name: A2AReplicationIntentDetails.protectionProfile
         /// Please note <see cref="ProtectionProfileCustomDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="ExistingProtectionProfile"/> and <see cref="NewProtectionProfile"/>.
         /// </param>
         /// <param name="primaryStagingStorageAccount">
         /// The primary staging storage account details.
-        /// Serialized Name: A2AReplicationIntentDetails.primaryStagingStorageAccount
         /// Please note <see cref="StorageAccountCustomDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="ExistingStorageAccount"/>.
         /// </param>
         /// <param name="recoveryAvailabilitySet">
         /// The recovery availability set details.
-        /// Serialized Name: A2AReplicationIntentDetails.recoveryAvailabilitySet
         /// Please note <see cref="RecoveryAvailabilitySetCustomDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="ExistingRecoveryAvailabilitySet"/>.
         /// </param>
         /// <param name="recoveryVirtualNetwork">
         /// The recovery virtual network details.
-        /// Serialized Name: A2AReplicationIntentDetails.recoveryVirtualNetwork
         /// Please note <see cref="RecoveryVirtualNetworkCustomDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="ExistingRecoveryVirtualNetwork"/> and <see cref="NewRecoveryVirtualNetwork"/>.
         /// </param>
         /// <param name="recoveryProximityPlacementGroup">
         /// The recovery proximity placement group custom details.
-        /// Serialized Name: A2AReplicationIntentDetails.recoveryProximityPlacementGroup
         /// Please note <see cref="RecoveryProximityPlacementGroupCustomDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="ExistingRecoveryProximityPlacementGroup"/>.
         /// </param>
-        /// <param name="autoProtectionOfDataDisk">
-        /// A value indicating whether the auto protection is enabled.
-        /// Serialized Name: A2AReplicationIntentDetails.autoProtectionOfDataDisk
-        /// </param>
-        /// <param name="multiVmGroupName">
-        /// The multi vm group name.
-        /// Serialized Name: A2AReplicationIntentDetails.multiVmGroupName
-        /// </param>
-        /// <param name="multiVmGroupId">
-        /// The multi vm group id.
-        /// Serialized Name: A2AReplicationIntentDetails.multiVmGroupId
-        /// </param>
+        /// <param name="autoProtectionOfDataDisk"> A value indicating whether the auto protection is enabled. </param>
+        /// <param name="multiVmGroupName"> The multi vm group name. </param>
+        /// <param name="multiVmGroupId"> The multi vm group id. </param>
         /// <param name="recoveryBootDiagStorageAccount">
         /// The boot diagnostic storage account.
-        /// Serialized Name: A2AReplicationIntentDetails.recoveryBootDiagStorageAccount
         /// Please note <see cref="StorageAccountCustomDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="ExistingStorageAccount"/>.
         /// </param>
-        /// <param name="diskEncryptionInfo">
-        /// The recovery disk encryption information (for two pass flows).
-        /// Serialized Name: A2AReplicationIntentDetails.diskEncryptionInfo
-        /// </param>
-        /// <param name="recoveryAvailabilityZone">
-        /// The recovery availability zone.
-        /// Serialized Name: A2AReplicationIntentDetails.recoveryAvailabilityZone
-        /// </param>
-        /// <param name="recoveryAvailabilityType">
-        /// The recovery availability type of the virtual machine.
-        /// Serialized Name: A2AReplicationIntentDetails.recoveryAvailabilityType
-        /// </param>
-        /// <param name="agentAutoUpdateStatus">
-        /// A value indicating whether the auto update is enabled.
-        /// Serialized Name: A2AReplicationIntentDetails.agentAutoUpdateStatus
-        /// </param>
-        /// <param name="automationAccountArmId">
-        /// The automation account arm id.
-        /// Serialized Name: A2AReplicationIntentDetails.automationAccountArmId
-        /// </param>
-        /// <param name="automationAccountAuthenticationType">
-        /// A value indicating the type authentication to use for automation Account.
-        /// Serialized Name: A2AReplicationIntentDetails.automationAccountAuthenticationType
-        /// </param>
+        /// <param name="diskEncryptionInfo"> The recovery disk encryption information (for two pass flows). </param>
+        /// <param name="recoveryAvailabilityZone"> The recovery availability zone. </param>
+        /// <param name="recoveryAvailabilityType"> The recovery availability type of the virtual machine. </param>
+        /// <param name="agentAutoUpdateStatus"> A value indicating whether the auto update is enabled. </param>
+        /// <param name="automationAccountArmId"> The automation account arm id. </param>
+        /// <param name="automationAccountAuthenticationType"> A value indicating the type authentication to use for automation Account. </param>
         /// <returns> A new <see cref="Models.A2AReplicationIntentDetails"/> instance for mocking. </returns>
         public static A2AReplicationIntentDetails A2AReplicationIntentDetails(ResourceIdentifier fabricObjectId = null, AzureLocation? primaryLocation = null, AzureLocation? recoveryLocation = null, string recoverySubscriptionId = null, IEnumerable<A2AProtectionIntentDiskDetails> vmDisks = null, IEnumerable<A2AProtectionIntentManagedDiskDetails> vmManagedDisks = null, ResourceIdentifier recoveryResourceGroupId = null, ProtectionProfileCustomDetails protectionProfile = null, StorageAccountCustomDetails primaryStagingStorageAccount = null, RecoveryAvailabilitySetCustomDetails recoveryAvailabilitySet = null, RecoveryVirtualNetworkCustomDetails recoveryVirtualNetwork = null, RecoveryProximityPlacementGroupCustomDetails recoveryProximityPlacementGroup = null, AutoProtectionOfDataDisk? autoProtectionOfDataDisk = null, string multiVmGroupName = null, string multiVmGroupId = null, StorageAccountCustomDetails recoveryBootDiagStorageAccount = null, SiteRecoveryDiskEncryptionInfo diskEncryptionInfo = null, string recoveryAvailabilityZone = null, string recoveryAvailabilityType = null, SiteRecoveryAgentAutoUpdateStatus? agentAutoUpdateStatus = null, ResourceIdentifier automationAccountArmId = null, AutomationAccountAuthenticationType? automationAccountAuthenticationType = null)
         {
@@ -3093,14 +1479,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Initializes a new instance of A2AZoneDetails. </summary>
-        /// <param name="source">
-        /// Source zone info.
-        /// Serialized Name: A2AZoneDetails.source
-        /// </param>
-        /// <param name="target">
-        /// The target zone info.
-        /// Serialized Name: A2AZoneDetails.target
-        /// </param>
+        /// <param name="source"> Source zone info. </param>
+        /// <param name="target"> The target zone info. </param>
         /// <returns> A new <see cref="Models.A2AZoneDetails"/> instance for mocking. </returns>
         public static A2AZoneDetails A2AZoneDetails(string source = null, string target = null)
         {
@@ -3108,26 +1488,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Initializes a new instance of SiteRecoveryAgentDetails. </summary>
-        /// <param name="agentId">
-        /// The Id of the agent running on the server.
-        /// Serialized Name: AgentDetails.agentId
-        /// </param>
-        /// <param name="machineId">
-        /// The Id of the machine to which the agent is registered.
-        /// Serialized Name: AgentDetails.machineId
-        /// </param>
-        /// <param name="biosId">
-        /// The machine BIOS Id.
-        /// Serialized Name: AgentDetails.biosId
-        /// </param>
-        /// <param name="fqdn">
-        /// The machine FQDN.
-        /// Serialized Name: AgentDetails.fqdn
-        /// </param>
-        /// <param name="disks">
-        /// The disks.
-        /// Serialized Name: AgentDetails.disks
-        /// </param>
+        /// <param name="agentId"> The Id of the agent running on the server. </param>
+        /// <param name="machineId"> The Id of the machine to which the agent is registered. </param>
+        /// <param name="biosId"> The machine BIOS Id. </param>
+        /// <param name="fqdn"> The machine FQDN. </param>
+        /// <param name="disks"> The disks. </param>
         /// <returns> A new <see cref="Models.SiteRecoveryAgentDetails"/> instance for mocking. </returns>
         public static SiteRecoveryAgentDetails SiteRecoveryAgentDetails(string agentId = null, string machineId = null, string biosId = null, string fqdn = null, IEnumerable<SiteRecoveryAgentDiskDetails> disks = null)
         {
@@ -3137,26 +1502,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Initializes a new instance of SiteRecoveryAgentDiskDetails. </summary>
-        /// <param name="diskId">
-        /// The disk Id.
-        /// Serialized Name: AgentDiskDetails.diskId
-        /// </param>
-        /// <param name="diskName">
-        /// The disk name.
-        /// Serialized Name: AgentDiskDetails.diskName
-        /// </param>
-        /// <param name="isOSDisk">
-        /// A value indicating whether the disk is the OS disk.
-        /// Serialized Name: AgentDiskDetails.isOSDisk
-        /// </param>
-        /// <param name="capacityInBytes">
-        /// The disk capacity in bytes.
-        /// Serialized Name: AgentDiskDetails.capacityInBytes
-        /// </param>
-        /// <param name="lunId">
-        /// The lun of disk.
-        /// Serialized Name: AgentDiskDetails.lunId
-        /// </param>
+        /// <param name="diskId"> The disk Id. </param>
+        /// <param name="diskName"> The disk name. </param>
+        /// <param name="isOSDisk"> A value indicating whether the disk is the OS disk. </param>
+        /// <param name="capacityInBytes"> The disk capacity in bytes. </param>
+        /// <param name="lunId"> The lun of disk. </param>
         /// <returns> A new <see cref="Models.SiteRecoveryAgentDiskDetails"/> instance for mocking. </returns>
         public static SiteRecoveryAgentDiskDetails SiteRecoveryAgentDiskDetails(string diskId = null, string diskName = null, string isOSDisk = null, long? capacityInBytes = null, int? lunId = null)
         {
@@ -3164,10 +1514,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Initializes a new instance of AsrJobDetails. </summary>
-        /// <param name="affectedObjectDetails">
-        /// The affected object properties like source server, source cloud, target server, target cloud etc. based on the workflow object details.
-        /// Serialized Name: JobDetails.affectedObjectDetails
-        /// </param>
+        /// <param name="affectedObjectDetails"> The affected object properties like source server, source cloud, target server, target cloud etc. based on the workflow object details. </param>
         /// <returns> A new <see cref="Models.AsrJobDetails"/> instance for mocking. </returns>
         public static AsrJobDetails AsrJobDetails(IReadOnlyDictionary<string, string> affectedObjectDetails = null)
         {
@@ -3177,42 +1524,15 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Initializes a new instance of AutomationRunbookTaskDetails. </summary>
-        /// <param name="name">
-        /// The recovery plan task name.
-        /// Serialized Name: AutomationRunbookTaskDetails.name
-        /// </param>
-        /// <param name="cloudServiceName">
-        /// The cloud service of the automation runbook account.
-        /// Serialized Name: AutomationRunbookTaskDetails.cloudServiceName
-        /// </param>
-        /// <param name="subscriptionId">
-        /// The subscription Id of the automation runbook account.
-        /// Serialized Name: AutomationRunbookTaskDetails.subscriptionId
-        /// </param>
-        /// <param name="accountName">
-        /// The automation account name of the runbook.
-        /// Serialized Name: AutomationRunbookTaskDetails.accountName
-        /// </param>
-        /// <param name="runbookId">
-        /// The runbook Id.
-        /// Serialized Name: AutomationRunbookTaskDetails.runbookId
-        /// </param>
-        /// <param name="runbookName">
-        /// The runbook name.
-        /// Serialized Name: AutomationRunbookTaskDetails.runbookName
-        /// </param>
-        /// <param name="jobId">
-        /// The job Id of the runbook execution.
-        /// Serialized Name: AutomationRunbookTaskDetails.jobId
-        /// </param>
-        /// <param name="jobOutput">
-        /// The execution output of the runbook.
-        /// Serialized Name: AutomationRunbookTaskDetails.jobOutput
-        /// </param>
-        /// <param name="isPrimarySideScript">
-        /// A value indicating whether it is a primary side script or not.
-        /// Serialized Name: AutomationRunbookTaskDetails.isPrimarySideScript
-        /// </param>
+        /// <param name="name"> The recovery plan task name. </param>
+        /// <param name="cloudServiceName"> The cloud service of the automation runbook account. </param>
+        /// <param name="subscriptionId"> The subscription Id of the automation runbook account. </param>
+        /// <param name="accountName"> The automation account name of the runbook. </param>
+        /// <param name="runbookId"> The runbook Id. </param>
+        /// <param name="runbookName"> The runbook name. </param>
+        /// <param name="jobId"> The job Id of the runbook execution. </param>
+        /// <param name="jobOutput"> The execution output of the runbook. </param>
+        /// <param name="isPrimarySideScript"> A value indicating whether it is a primary side script or not. </param>
         /// <returns> A new <see cref="Models.AutomationRunbookTaskDetails"/> instance for mocking. </returns>
         public static AutomationRunbookTaskDetails AutomationRunbookTaskDetails(string name = null, string cloudServiceName = null, string subscriptionId = null, string accountName = null, string runbookId = null, string runbookName = null, ResourceIdentifier jobId = null, string jobOutput = null, bool? isPrimarySideScript = null)
         {
@@ -3220,26 +1540,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Initializes a new instance of SiteRecoveryFabricProviderSpecificDetails. </summary>
-        /// <param name="location">
-        /// The Location for the Azure fabric.
-        /// Serialized Name: AzureFabricSpecificDetails.location
-        /// </param>
-        /// <param name="containerIds">
-        /// The container Ids for the Azure fabric.
-        /// Serialized Name: AzureFabricSpecificDetails.containerIds
-        /// </param>
-        /// <param name="zones">
-        /// The zones.
-        /// Serialized Name: AzureFabricSpecificDetails.zones
-        /// </param>
-        /// <param name="extendedLocations">
-        /// The ExtendedLocations.
-        /// Serialized Name: AzureFabricSpecificDetails.extendedLocations
-        /// </param>
-        /// <param name="locationDetails">
-        /// The location details.
-        /// Serialized Name: AzureFabricSpecificDetails.locationDetails
-        /// </param>
+        /// <param name="location"> The Location for the Azure fabric. </param>
+        /// <param name="containerIds"> The container Ids for the Azure fabric. </param>
+        /// <param name="zones"> The zones. </param>
+        /// <param name="extendedLocations"> The ExtendedLocations. </param>
+        /// <param name="locationDetails"> The location details. </param>
         /// <returns> A new <see cref="Models.SiteRecoveryFabricProviderSpecificDetails"/> instance for mocking. </returns>
         public static SiteRecoveryFabricProviderSpecificDetails SiteRecoveryFabricProviderSpecificDetails(AzureLocation? location = null, IEnumerable<ResourceIdentifier> containerIds = null, IEnumerable<A2AZoneDetails> zones = null, IEnumerable<A2AExtendedLocationDetails> extendedLocations = null, IEnumerable<A2AFabricSpecificLocationDetails> locationDetails = null)
         {
@@ -3252,14 +1557,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Initializes a new instance of A2ANetworkMappingSettings. </summary>
-        /// <param name="primaryFabricLocation">
-        /// The primary fabric location.
-        /// Serialized Name: AzureToAzureNetworkMappingSettings.primaryFabricLocation
-        /// </param>
-        /// <param name="recoveryFabricLocation">
-        /// The recovery fabric location.
-        /// Serialized Name: AzureToAzureNetworkMappingSettings.recoveryFabricLocation
-        /// </param>
+        /// <param name="primaryFabricLocation"> The primary fabric location. </param>
+        /// <param name="recoveryFabricLocation"> The recovery fabric location. </param>
         /// <returns> A new <see cref="Models.A2ANetworkMappingSettings"/> instance for mocking. </returns>
         public static A2ANetworkMappingSettings A2ANetworkMappingSettings(AzureLocation? primaryFabricLocation = null, AzureLocation? recoveryFabricLocation = null)
         {
@@ -3267,46 +1566,16 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Initializes a new instance of SiteRecoveryVmDiskDetails. </summary>
-        /// <param name="vhdType">
-        /// VHD type.
-        /// Serialized Name: AzureVmDiskDetails.vhdType
-        /// </param>
-        /// <param name="vhdId">
-        /// The VHD id.
-        /// Serialized Name: AzureVmDiskDetails.vhdId
-        /// </param>
-        /// <param name="diskId">
-        /// The disk resource id.
-        /// Serialized Name: AzureVmDiskDetails.diskId
-        /// </param>
-        /// <param name="vhdName">
-        /// VHD name.
-        /// Serialized Name: AzureVmDiskDetails.vhdName
-        /// </param>
-        /// <param name="maxSizeMB">
-        /// Max side in MB.
-        /// Serialized Name: AzureVmDiskDetails.maxSizeMB
-        /// </param>
-        /// <param name="targetDiskLocation">
-        /// Blob uri of the Azure disk.
-        /// Serialized Name: AzureVmDiskDetails.targetDiskLocation
-        /// </param>
-        /// <param name="targetDiskName">
-        /// The target Azure disk name.
-        /// Serialized Name: AzureVmDiskDetails.targetDiskName
-        /// </param>
-        /// <param name="lunId">
-        /// Ordinal\LunId of the disk for the Azure VM.
-        /// Serialized Name: AzureVmDiskDetails.lunId
-        /// </param>
-        /// <param name="diskEncryptionSetId">
-        /// The DiskEncryptionSet ARM ID.
-        /// Serialized Name: AzureVmDiskDetails.diskEncryptionSetId
-        /// </param>
-        /// <param name="customTargetDiskName">
-        /// The custom target Azure disk name.
-        /// Serialized Name: AzureVmDiskDetails.customTargetDiskName
-        /// </param>
+        /// <param name="vhdType"> VHD type. </param>
+        /// <param name="vhdId"> The VHD id. </param>
+        /// <param name="diskId"> The disk resource id. </param>
+        /// <param name="vhdName"> VHD name. </param>
+        /// <param name="maxSizeMB"> Max side in MB. </param>
+        /// <param name="targetDiskLocation"> Blob uri of the Azure disk. </param>
+        /// <param name="targetDiskName"> The target Azure disk name. </param>
+        /// <param name="lunId"> Ordinal\LunId of the disk for the Azure VM. </param>
+        /// <param name="diskEncryptionSetId"> The DiskEncryptionSet ARM ID. </param>
+        /// <param name="customTargetDiskName"> The custom target Azure disk name. </param>
         /// <returns> A new <see cref="Models.SiteRecoveryVmDiskDetails"/> instance for mocking. </returns>
         public static SiteRecoveryVmDiskDetails SiteRecoveryVmDiskDetails(string vhdType = null, string vhdId = null, string diskId = null, string vhdName = null, string maxSizeMB = null, string targetDiskLocation = null, string targetDiskName = null, string lunId = null, ResourceIdentifier diskEncryptionSetId = null, string customTargetDiskName = null)
         {
@@ -3314,10 +1583,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Initializes a new instance of ConsistencyCheckTaskDetails. </summary>
-        /// <param name="vmDetails">
-        /// The list of inconsistent Vm details.
-        /// Serialized Name: ConsistencyCheckTaskDetails.vmDetails
-        /// </param>
+        /// <param name="vmDetails"> The list of inconsistent Vm details. </param>
         /// <returns> A new <see cref="Models.ConsistencyCheckTaskDetails"/> instance for mocking. </returns>
         public static ConsistencyCheckTaskDetails ConsistencyCheckTaskDetails(IEnumerable<InconsistentVmDetails> vmDetails = null)
         {
@@ -3327,22 +1593,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Initializes a new instance of InconsistentVmDetails. </summary>
-        /// <param name="vmName">
-        /// The Vm name.
-        /// Serialized Name: InconsistentVmDetails.vmName
-        /// </param>
-        /// <param name="cloudName">
-        /// The Cloud name.
-        /// Serialized Name: InconsistentVmDetails.cloudName
-        /// </param>
-        /// <param name="details">
-        /// The list of details regarding state of the Protected Entity in SRS and On prem.
-        /// Serialized Name: InconsistentVmDetails.details
-        /// </param>
-        /// <param name="errorIds">
-        /// The list of error ids.
-        /// Serialized Name: InconsistentVmDetails.errorIds
-        /// </param>
+        /// <param name="vmName"> The Vm name. </param>
+        /// <param name="cloudName"> The Cloud name. </param>
+        /// <param name="details"> The list of details regarding state of the Protected Entity in SRS and On prem. </param>
+        /// <param name="errorIds"> The list of error ids. </param>
         /// <returns> A new <see cref="Models.InconsistentVmDetails"/> instance for mocking. </returns>
         public static InconsistentVmDetails InconsistentVmDetails(string vmName = null, string cloudName = null, IEnumerable<string> details = null, IEnumerable<string> errorIds = null)
         {
@@ -3353,26 +1607,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Initializes a new instance of SiteRecoveryDataStore. </summary>
-        /// <param name="symbolicName">
-        /// The symbolic name of data store.
-        /// Serialized Name: DataStore.symbolicName
-        /// </param>
-        /// <param name="uuid">
-        /// The uuid of data store.
-        /// Serialized Name: DataStore.uuid
-        /// </param>
-        /// <param name="capacity">
-        /// The capacity of data store in GBs.
-        /// Serialized Name: DataStore.capacity
-        /// </param>
-        /// <param name="freeSpace">
-        /// The free space of data store in GBs.
-        /// Serialized Name: DataStore.freeSpace
-        /// </param>
-        /// <param name="dataStoreType">
-        /// The type of data store.
-        /// Serialized Name: DataStore.type
-        /// </param>
+        /// <param name="symbolicName"> The symbolic name of data store. </param>
+        /// <param name="uuid"> The uuid of data store. </param>
+        /// <param name="capacity"> The capacity of data store in GBs. </param>
+        /// <param name="freeSpace"> The free space of data store in GBs. </param>
+        /// <param name="dataStoreType"> The type of data store. </param>
         /// <returns> A new <see cref="Models.SiteRecoveryDataStore"/> instance for mocking. </returns>
         public static SiteRecoveryDataStore SiteRecoveryDataStore(string symbolicName = null, Guid? uuid = null, string capacity = null, string freeSpace = null, string dataStoreType = null)
         {
@@ -3380,22 +1619,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Initializes a new instance of SiteRecoveryDiskDetails. </summary>
-        /// <param name="maxSizeMB">
-        /// The hard disk max size in MB.
-        /// Serialized Name: DiskDetails.maxSizeMB
-        /// </param>
-        /// <param name="vhdType">
-        /// The type of the volume.
-        /// Serialized Name: DiskDetails.vhdType
-        /// </param>
-        /// <param name="vhdId">
-        /// The VHD Id.
-        /// Serialized Name: DiskDetails.vhdId
-        /// </param>
-        /// <param name="vhdName">
-        /// The VHD name.
-        /// Serialized Name: DiskDetails.vhdName
-        /// </param>
+        /// <param name="maxSizeMB"> The hard disk max size in MB. </param>
+        /// <param name="vhdType"> The type of the volume. </param>
+        /// <param name="vhdId"> The VHD Id. </param>
+        /// <param name="vhdName"> The VHD name. </param>
         /// <returns> A new <see cref="Models.SiteRecoveryDiskDetails"/> instance for mocking. </returns>
         public static SiteRecoveryDiskDetails SiteRecoveryDiskDetails(long? maxSizeMB = null, string vhdType = null, string vhdId = null, string vhdName = null)
         {
@@ -3403,14 +1630,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Initializes a new instance of SiteRecoveryDiskVolumeDetails. </summary>
-        /// <param name="label">
-        /// The volume label.
-        /// Serialized Name: DiskVolumeDetails.label
-        /// </param>
-        /// <param name="name">
-        /// The volume name.
-        /// Serialized Name: DiskVolumeDetails.name
-        /// </param>
+        /// <param name="label"> The volume label. </param>
+        /// <param name="name"> The volume name. </param>
         /// <returns> A new <see cref="Models.SiteRecoveryDiskVolumeDetails"/> instance for mocking. </returns>
         public static SiteRecoveryDiskVolumeDetails SiteRecoveryDiskVolumeDetails(string label = null, string name = null)
         {
@@ -3418,44 +1639,17 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Initializes a new instance of SiteRecoveryDraDetails. </summary>
-        /// <param name="id">
-        /// The DRA Id.
-        /// Serialized Name: DraDetails.id
-        /// </param>
-        /// <param name="name">
-        /// The DRA name.
-        /// Serialized Name: DraDetails.name
-        /// </param>
-        /// <param name="biosId">
-        /// The DRA Bios Id.
-        /// Serialized Name: DraDetails.biosId
-        /// </param>
-        /// <param name="version">
-        /// The version.
-        /// Serialized Name: DraDetails.version
-        /// </param>
-        /// <param name="lastHeartbeatReceivedOn">
-        /// The last heartbeat received from the DRA.
-        /// Serialized Name: DraDetails.lastHeartbeatUtc
-        /// </param>
-        /// <param name="health">
-        /// The health.
-        /// Serialized Name: DraDetails.health
-        /// </param>
-        /// <param name="healthErrors">
-        /// The health errors.
-        /// Serialized Name: DraDetails.healthErrors
-        /// </param>
-        /// <param name="forwardProtectedItemCount">
-        /// The count of protected items which are protected in forward direction.
-        /// Serialized Name: DraDetails.forwardProtectedItemCount
-        /// </param>
-        /// <param name="reverseProtectedItemCount">
-        /// The count of protected items which are protected in reverse direction.
-        /// Serialized Name: DraDetails.reverseProtectedItemCount
-        /// </param>
+        /// <param name="id"> The DRA Id. </param>
+        /// <param name="name"> The DRA name. </param>
+        /// <param name="biosId"> The DRA Bios Id. </param>
+        /// <param name="version"> The version. </param>
+        /// <param name="lastHeartbeatReceivedOn"> The last heartbeat received from the DRA. </param>
+        /// <param name="health"> The health. </param>
+        /// <param name="healthErrors"> The health errors. </param>
+        /// <param name="forwardProtectedItemCount"> The count of protected items which are protected in forward direction. </param>
+        /// <param name="reverseProtectedItemCount"> The count of protected items which are protected in reverse direction. </param>
         /// <returns> A new <see cref="Models.SiteRecoveryDraDetails"/> instance for mocking. </returns>
-        public static SiteRecoveryDraDetails SiteRecoveryDraDetails(string id = null, string name = null, string biosId = null, string version = null, DateTimeOffset? lastHeartbeatReceivedOn = null, ProtectionHealth? health = null, IEnumerable<SiteRecoveryHealthError> healthErrors = null, int? forwardProtectedItemCount = null, int? reverseProtectedItemCount = null)
+        public static SiteRecoveryDraDetails SiteRecoveryDraDetails(string id = null, string name = null, string biosId = null, string version = null, DateTimeOffset? lastHeartbeatReceivedOn = null, SiteRecoveryProtectionHealth? health = null, IEnumerable<SiteRecoveryHealthError> healthErrors = null, int? forwardProtectedItemCount = null, int? reverseProtectedItemCount = null)
         {
             healthErrors ??= new List<SiteRecoveryHealthError>();
 
@@ -3463,18 +1657,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Initializes a new instance of ExportJobDetails. </summary>
-        /// <param name="affectedObjectDetails">
-        /// The affected object properties like source server, source cloud, target server, target cloud etc. based on the workflow object details.
-        /// Serialized Name: JobDetails.affectedObjectDetails
-        /// </param>
-        /// <param name="blobUri">
-        /// BlobUri of the exported jobs.
-        /// Serialized Name: ExportJobDetails.blobUri
-        /// </param>
-        /// <param name="sasToken">
-        /// The sas token to access blob.
-        /// Serialized Name: ExportJobDetails.sasToken
-        /// </param>
+        /// <param name="affectedObjectDetails"> The affected object properties like source server, source cloud, target server, target cloud etc. based on the workflow object details. </param>
+        /// <param name="blobUri"> BlobUri of the exported jobs. </param>
+        /// <param name="sasToken"> The sas token to access blob. </param>
         /// <returns> A new <see cref="Models.ExportJobDetails"/> instance for mocking. </returns>
         public static ExportJobDetails ExportJobDetails(IReadOnlyDictionary<string, string> affectedObjectDetails = null, Uri blobUri = null, string sasToken = null)
         {
@@ -3483,141 +1668,69 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             return new ExportJobDetails("ExportJobDetails", affectedObjectDetails, blobUri, sasToken);
         }
 
-        /// <summary> Initializes a new instance of SiteRecoveryFabricReplicationGroupTaskDetails. </summary>
-        /// <param name="jobTask">
-        /// The job entity.
-        /// Serialized Name: JobTaskDetails.jobTask
-        /// </param>
-        /// <param name="skippedReason">
-        /// The skipped reason.
-        /// Serialized Name: FabricReplicationGroupTaskDetails.skippedReason
-        /// </param>
-        /// <param name="skippedReasonString">
-        /// The skipped reason string.
-        /// Serialized Name: FabricReplicationGroupTaskDetails.skippedReasonString
-        /// </param>
-        /// <returns> A new <see cref="Models.SiteRecoveryFabricReplicationGroupTaskDetails"/> instance for mocking. </returns>
-        public static SiteRecoveryFabricReplicationGroupTaskDetails SiteRecoveryFabricReplicationGroupTaskDetails(SiteRecoveryJobEntity jobTask = null, string skippedReason = null, string skippedReasonString = null)
+        /// <summary> Initializes a new instance of FabricReplicationGroupTaskDetails. </summary>
+        /// <param name="jobTask"> The job entity. </param>
+        /// <param name="skippedReason"> The skipped reason. </param>
+        /// <param name="skippedReasonString"> The skipped reason string. </param>
+        /// <returns> A new <see cref="Models.FabricReplicationGroupTaskDetails"/> instance for mocking. </returns>
+        public static FabricReplicationGroupTaskDetails FabricReplicationGroupTaskDetails(SiteRecoveryJobEntity jobTask = null, string skippedReason = null, string skippedReasonString = null)
         {
-            return new SiteRecoveryFabricReplicationGroupTaskDetails("FabricReplicationGroupTaskDetails", jobTask, skippedReason, skippedReasonString);
+            return new FabricReplicationGroupTaskDetails("FabricReplicationGroupTaskDetails", jobTask, skippedReason, skippedReasonString);
         }
 
-        /// <summary> Initializes a new instance of SiteRecoveryJJobTaskDetails. </summary>
-        /// <param name="jobTask">
-        /// The job entity.
-        /// Serialized Name: JobTaskDetails.jobTask
-        /// </param>
-        /// <returns> A new <see cref="Models.SiteRecoveryJJobTaskDetails"/> instance for mocking. </returns>
-        public static SiteRecoveryJJobTaskDetails SiteRecoveryJJobTaskDetails(SiteRecoveryJobEntity jobTask = null)
+        /// <summary> Initializes a new instance of SiteRecoveryJobTaskDetails. </summary>
+        /// <param name="jobTask"> The job entity. </param>
+        /// <returns> A new <see cref="Models.SiteRecoveryJobTaskDetails"/> instance for mocking. </returns>
+        public static SiteRecoveryJobTaskDetails SiteRecoveryJobTaskDetails(SiteRecoveryJobEntity jobTask = null)
         {
-            return new SiteRecoveryJJobTaskDetails("JobTaskDetails", jobTask);
+            return new SiteRecoveryJobTaskDetails("JobTaskDetails", jobTask);
         }
 
         /// <summary> Initializes a new instance of SiteRecoveryJobEntity. </summary>
-        /// <param name="jobId">
-        /// The job id.
-        /// Serialized Name: JobEntity.jobId
-        /// </param>
-        /// <param name="jobFriendlyName">
-        /// The job display name.
-        /// Serialized Name: JobEntity.jobFriendlyName
-        /// </param>
-        /// <param name="targetObjectId">
-        /// The object id.
-        /// Serialized Name: JobEntity.targetObjectId
-        /// </param>
-        /// <param name="targetObjectName">
-        /// The object name.
-        /// Serialized Name: JobEntity.targetObjectName
-        /// </param>
-        /// <param name="targetInstanceType">
-        /// The workflow affected object type.
-        /// Serialized Name: JobEntity.targetInstanceType
-        /// </param>
-        /// <param name="jobScenarioName">
-        /// The job name. Enum type ScenarioName.
-        /// Serialized Name: JobEntity.jobScenarioName
-        /// </param>
+        /// <param name="jobId"> The job id. </param>
+        /// <param name="jobFriendlyName"> The job display name. </param>
+        /// <param name="targetObjectId"> The object id. </param>
+        /// <param name="targetObjectName"> The object name. </param>
+        /// <param name="targetInstanceType"> The workflow affected object type. </param>
+        /// <param name="jobScenarioName"> The job name. Enum type ScenarioName. </param>
         /// <returns> A new <see cref="Models.SiteRecoveryJobEntity"/> instance for mocking. </returns>
         public static SiteRecoveryJobEntity SiteRecoveryJobEntity(ResourceIdentifier jobId = null, string jobFriendlyName = null, string targetObjectId = null, string targetObjectName = null, string targetInstanceType = null, string jobScenarioName = null)
         {
             return new SiteRecoveryJobEntity(jobId, jobFriendlyName, targetObjectId, targetObjectName, targetInstanceType, jobScenarioName);
         }
 
-        /// <summary> Initializes a new instance of SiteRecoveryFailoverJobDetails. </summary>
-        /// <param name="affectedObjectDetails">
-        /// The affected object properties like source server, source cloud, target server, target cloud etc. based on the workflow object details.
-        /// Serialized Name: JobDetails.affectedObjectDetails
-        /// </param>
-        /// <param name="protectedItemDetails">
-        /// The test VM details.
-        /// Serialized Name: FailoverJobDetails.protectedItemDetails
-        /// </param>
-        /// <returns> A new <see cref="Models.SiteRecoveryFailoverJobDetails"/> instance for mocking. </returns>
-        public static SiteRecoveryFailoverJobDetails SiteRecoveryFailoverJobDetails(IReadOnlyDictionary<string, string> affectedObjectDetails = null, IEnumerable<SiteRecoveryFailoverReplicationProtectedItemDetails> protectedItemDetails = null)
+        /// <summary> Initializes a new instance of FailoverJobDetails. </summary>
+        /// <param name="affectedObjectDetails"> The affected object properties like source server, source cloud, target server, target cloud etc. based on the workflow object details. </param>
+        /// <param name="protectedItemDetails"> The test VM details. </param>
+        /// <returns> A new <see cref="Models.FailoverJobDetails"/> instance for mocking. </returns>
+        public static FailoverJobDetails FailoverJobDetails(IReadOnlyDictionary<string, string> affectedObjectDetails = null, IEnumerable<FailoverReplicationProtectedItemDetails> protectedItemDetails = null)
         {
             affectedObjectDetails ??= new Dictionary<string, string>();
-            protectedItemDetails ??= new List<SiteRecoveryFailoverReplicationProtectedItemDetails>();
+            protectedItemDetails ??= new List<FailoverReplicationProtectedItemDetails>();
 
-            return new SiteRecoveryFailoverJobDetails("FailoverJobDetails", affectedObjectDetails, protectedItemDetails?.ToList());
+            return new FailoverJobDetails("FailoverJobDetails", affectedObjectDetails, protectedItemDetails?.ToList());
         }
 
-        /// <summary> Initializes a new instance of SiteRecoveryFailoverReplicationProtectedItemDetails. </summary>
-        /// <param name="name">
-        /// The name.
-        /// Serialized Name: FailoverReplicationProtectedItemDetails.name
-        /// </param>
-        /// <param name="friendlyName">
-        /// The friendly name.
-        /// Serialized Name: FailoverReplicationProtectedItemDetails.friendlyName
-        /// </param>
-        /// <param name="testVmName">
-        /// The test Vm name.
-        /// Serialized Name: FailoverReplicationProtectedItemDetails.testVmName
-        /// </param>
-        /// <param name="testVmFriendlyName">
-        /// The test Vm friendly name.
-        /// Serialized Name: FailoverReplicationProtectedItemDetails.testVmFriendlyName
-        /// </param>
-        /// <param name="networkConnectionStatus">
-        /// The network connection status.
-        /// Serialized Name: FailoverReplicationProtectedItemDetails.networkConnectionStatus
-        /// </param>
-        /// <param name="networkFriendlyName">
-        /// The network friendly name.
-        /// Serialized Name: FailoverReplicationProtectedItemDetails.networkFriendlyName
-        /// </param>
-        /// <param name="subnet">
-        /// The network subnet.
-        /// Serialized Name: FailoverReplicationProtectedItemDetails.subnet
-        /// </param>
-        /// <param name="recoveryPointId">
-        /// The recovery point Id.
-        /// Serialized Name: FailoverReplicationProtectedItemDetails.recoveryPointId
-        /// </param>
-        /// <param name="recoveryPointOn">
-        /// The recovery point time.
-        /// Serialized Name: FailoverReplicationProtectedItemDetails.recoveryPointTime
-        /// </param>
-        /// <returns> A new <see cref="Models.SiteRecoveryFailoverReplicationProtectedItemDetails"/> instance for mocking. </returns>
-        public static SiteRecoveryFailoverReplicationProtectedItemDetails SiteRecoveryFailoverReplicationProtectedItemDetails(string name = null, string friendlyName = null, string testVmName = null, string testVmFriendlyName = null, string networkConnectionStatus = null, string networkFriendlyName = null, string subnet = null, ResourceIdentifier recoveryPointId = null, DateTimeOffset? recoveryPointOn = null)
+        /// <summary> Initializes a new instance of FailoverReplicationProtectedItemDetails. </summary>
+        /// <param name="name"> The name. </param>
+        /// <param name="friendlyName"> The friendly name. </param>
+        /// <param name="testVmName"> The test Vm name. </param>
+        /// <param name="testVmFriendlyName"> The test Vm friendly name. </param>
+        /// <param name="networkConnectionStatus"> The network connection status. </param>
+        /// <param name="networkFriendlyName"> The network friendly name. </param>
+        /// <param name="subnet"> The network subnet. </param>
+        /// <param name="recoveryPointId"> The recovery point Id. </param>
+        /// <param name="recoveryPointOn"> The recovery point time. </param>
+        /// <returns> A new <see cref="Models.FailoverReplicationProtectedItemDetails"/> instance for mocking. </returns>
+        public static FailoverReplicationProtectedItemDetails FailoverReplicationProtectedItemDetails(string name = null, string friendlyName = null, string testVmName = null, string testVmFriendlyName = null, string networkConnectionStatus = null, string networkFriendlyName = null, string subnet = null, ResourceIdentifier recoveryPointId = null, DateTimeOffset? recoveryPointOn = null)
         {
-            return new SiteRecoveryFailoverReplicationProtectedItemDetails(name, friendlyName, testVmName, testVmFriendlyName, networkConnectionStatus, networkFriendlyName, subnet, recoveryPointId, recoveryPointOn);
+            return new FailoverReplicationProtectedItemDetails(name, friendlyName, testVmName, testVmFriendlyName, networkConnectionStatus, networkFriendlyName, subnet, recoveryPointId, recoveryPointOn);
         }
 
         /// <summary> Initializes a new instance of HyperVHostDetails. </summary>
-        /// <param name="id">
-        /// The Hyper-V host Id.
-        /// Serialized Name: HyperVHostDetails.id
-        /// </param>
-        /// <param name="name">
-        /// The Hyper-V host name.
-        /// Serialized Name: HyperVHostDetails.name
-        /// </param>
-        /// <param name="marsAgentVersion">
-        /// The Mars agent version.
-        /// Serialized Name: HyperVHostDetails.marsAgentVersion
-        /// </param>
+        /// <param name="id"> The Hyper-V host Id. </param>
+        /// <param name="name"> The Hyper-V host name. </param>
+        /// <param name="marsAgentVersion"> The Mars agent version. </param>
         /// <returns> A new <see cref="Models.HyperVHostDetails"/> instance for mocking. </returns>
         public static HyperVHostDetails HyperVHostDetails(string id = null, string name = null, string marsAgentVersion = null)
         {
@@ -3625,22 +1738,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Initializes a new instance of HyperVReplica2012EventDetails. </summary>
-        /// <param name="containerName">
-        /// The container friendly name.
-        /// Serialized Name: HyperVReplica2012EventDetails.containerName
-        /// </param>
-        /// <param name="fabricName">
-        /// The fabric friendly name.
-        /// Serialized Name: HyperVReplica2012EventDetails.fabricName
-        /// </param>
-        /// <param name="remoteContainerName">
-        /// The remote container name.
-        /// Serialized Name: HyperVReplica2012EventDetails.remoteContainerName
-        /// </param>
-        /// <param name="remoteFabricName">
-        /// The remote fabric name.
-        /// Serialized Name: HyperVReplica2012EventDetails.remoteFabricName
-        /// </param>
+        /// <param name="containerName"> The container friendly name. </param>
+        /// <param name="fabricName"> The fabric friendly name. </param>
+        /// <param name="remoteContainerName"> The remote container name. </param>
+        /// <param name="remoteFabricName"> The remote fabric name. </param>
         /// <returns> A new <see cref="Models.HyperVReplica2012EventDetails"/> instance for mocking. </returns>
         public static HyperVReplica2012EventDetails HyperVReplica2012EventDetails(string containerName = null, string fabricName = null, string remoteContainerName = null, string remoteFabricName = null)
         {
@@ -3648,22 +1749,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Initializes a new instance of HyperVReplica2012R2EventDetails. </summary>
-        /// <param name="containerName">
-        /// The container friendly name.
-        /// Serialized Name: HyperVReplica2012R2EventDetails.containerName
-        /// </param>
-        /// <param name="fabricName">
-        /// The fabric friendly name.
-        /// Serialized Name: HyperVReplica2012R2EventDetails.fabricName
-        /// </param>
-        /// <param name="remoteContainerName">
-        /// The remote container name.
-        /// Serialized Name: HyperVReplica2012R2EventDetails.remoteContainerName
-        /// </param>
-        /// <param name="remoteFabricName">
-        /// The remote fabric name.
-        /// Serialized Name: HyperVReplica2012R2EventDetails.remoteFabricName
-        /// </param>
+        /// <param name="containerName"> The container friendly name. </param>
+        /// <param name="fabricName"> The fabric friendly name. </param>
+        /// <param name="remoteContainerName"> The remote container name. </param>
+        /// <param name="remoteFabricName"> The remote fabric name. </param>
         /// <returns> A new <see cref="Models.HyperVReplica2012R2EventDetails"/> instance for mocking. </returns>
         public static HyperVReplica2012R2EventDetails HyperVReplica2012R2EventDetails(string containerName = null, string fabricName = null, string remoteContainerName = null, string remoteFabricName = null)
         {
@@ -3671,18 +1760,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Initializes a new instance of HyperVReplicaAzureEventDetails. </summary>
-        /// <param name="containerName">
-        /// The container friendly name.
-        /// Serialized Name: HyperVReplicaAzureEventDetails.containerName
-        /// </param>
-        /// <param name="fabricName">
-        /// The fabric friendly name.
-        /// Serialized Name: HyperVReplicaAzureEventDetails.fabricName
-        /// </param>
-        /// <param name="remoteContainerName">
-        /// The remote container name.
-        /// Serialized Name: HyperVReplicaAzureEventDetails.remoteContainerName
-        /// </param>
+        /// <param name="containerName"> The container friendly name. </param>
+        /// <param name="fabricName"> The fabric friendly name. </param>
+        /// <param name="remoteContainerName"> The remote container name. </param>
         /// <returns> A new <see cref="Models.HyperVReplicaAzureEventDetails"/> instance for mocking. </returns>
         public static HyperVReplicaAzureEventDetails HyperVReplicaAzureEventDetails(string containerName = null, string fabricName = null, string remoteContainerName = null)
         {
@@ -3690,22 +1770,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Initializes a new instance of HyperVReplicaAzureManagedDiskDetails. </summary>
-        /// <param name="diskId">
-        /// The disk Id.
-        /// Serialized Name: HyperVReplicaAzureManagedDiskDetails.diskId
-        /// </param>
-        /// <param name="seedManagedDiskId">
-        /// Seed managed disk Id.
-        /// Serialized Name: HyperVReplicaAzureManagedDiskDetails.seedManagedDiskId
-        /// </param>
-        /// <param name="replicaDiskType">
-        /// The replica disk type.
-        /// Serialized Name: HyperVReplicaAzureManagedDiskDetails.replicaDiskType
-        /// </param>
-        /// <param name="diskEncryptionSetId">
-        /// The disk encryption set ARM Id.
-        /// Serialized Name: HyperVReplicaAzureManagedDiskDetails.diskEncryptionSetId
-        /// </param>
+        /// <param name="diskId"> The disk Id. </param>
+        /// <param name="seedManagedDiskId"> Seed managed disk Id. </param>
+        /// <param name="replicaDiskType"> The replica disk type. </param>
+        /// <param name="diskEncryptionSetId"> The disk encryption set ARM Id. </param>
         /// <returns> A new <see cref="Models.HyperVReplicaAzureManagedDiskDetails"/> instance for mocking. </returns>
         public static HyperVReplicaAzureManagedDiskDetails HyperVReplicaAzureManagedDiskDetails(string diskId = null, string seedManagedDiskId = null, string replicaDiskType = null, ResourceIdentifier diskEncryptionSetId = null)
         {
@@ -3713,30 +1781,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Initializes a new instance of HyperVReplicaAzurePolicyDetails. </summary>
-        /// <param name="recoveryPointHistoryDurationInHours">
-        /// The duration (in hours) to which point the recovery history needs to be maintained.
-        /// Serialized Name: HyperVReplicaAzurePolicyDetails.recoveryPointHistoryDurationInHours
-        /// </param>
-        /// <param name="applicationConsistentSnapshotFrequencyInHours">
-        /// The interval (in hours) at which Hyper-V Replica should create an application consistent snapshot within the VM.
-        /// Serialized Name: HyperVReplicaAzurePolicyDetails.applicationConsistentSnapshotFrequencyInHours
-        /// </param>
-        /// <param name="replicationInterval">
-        /// The replication interval.
-        /// Serialized Name: HyperVReplicaAzurePolicyDetails.replicationInterval
-        /// </param>
-        /// <param name="onlineReplicationStartTime">
-        /// The scheduled start time for the initial replication. If this parameter is Null, the initial replication starts immediately.
-        /// Serialized Name: HyperVReplicaAzurePolicyDetails.onlineReplicationStartTime
-        /// </param>
-        /// <param name="encryption">
-        /// A value indicating whether encryption is enabled for virtual machines in this cloud.
-        /// Serialized Name: HyperVReplicaAzurePolicyDetails.encryption
-        /// </param>
-        /// <param name="activeStorageAccountId">
-        /// The active storage account Id.
-        /// Serialized Name: HyperVReplicaAzurePolicyDetails.activeStorageAccountId
-        /// </param>
+        /// <param name="recoveryPointHistoryDurationInHours"> The duration (in hours) to which point the recovery history needs to be maintained. </param>
+        /// <param name="applicationConsistentSnapshotFrequencyInHours"> The interval (in hours) at which Hyper-V Replica should create an application consistent snapshot within the VM. </param>
+        /// <param name="replicationInterval"> The replication interval. </param>
+        /// <param name="onlineReplicationStartTime"> The scheduled start time for the initial replication. If this parameter is Null, the initial replication starts immediately. </param>
+        /// <param name="encryption"> A value indicating whether encryption is enabled for virtual machines in this cloud. </param>
+        /// <param name="activeStorageAccountId"> The active storage account Id. </param>
         /// <returns> A new <see cref="Models.HyperVReplicaAzurePolicyDetails"/> instance for mocking. </returns>
         public static HyperVReplicaAzurePolicyDetails HyperVReplicaAzurePolicyDetails(int? recoveryPointHistoryDurationInHours = null, int? applicationConsistentSnapshotFrequencyInHours = null, int? replicationInterval = null, string onlineReplicationStartTime = null, string encryption = null, ResourceIdentifier activeStorageAccountId = null)
         {
@@ -3744,140 +1794,41 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Initializes a new instance of HyperVReplicaAzureReplicationDetails. </summary>
-        /// <param name="azureVmDiskDetails">
-        /// Azure VM Disk details.
-        /// Serialized Name: HyperVReplicaAzureReplicationDetails.azureVmDiskDetails
-        /// </param>
-        /// <param name="recoveryAzureVmName">
-        /// Recovery Azure given name.
-        /// Serialized Name: HyperVReplicaAzureReplicationDetails.recoveryAzureVmName
-        /// </param>
-        /// <param name="recoveryAzureVmSize">
-        /// The Recovery Azure VM size.
-        /// Serialized Name: HyperVReplicaAzureReplicationDetails.recoveryAzureVMSize
-        /// </param>
-        /// <param name="recoveryAzureStorageAccount">
-        /// The recovery Azure storage account.
-        /// Serialized Name: HyperVReplicaAzureReplicationDetails.recoveryAzureStorageAccount
-        /// </param>
-        /// <param name="recoveryAzureLogStorageAccountId">
-        /// The ARM id of the log storage account used for replication. This will be set to null if no log storage account was provided during enable protection.
-        /// Serialized Name: HyperVReplicaAzureReplicationDetails.recoveryAzureLogStorageAccountId
-        /// </param>
-        /// <param name="lastReplicatedOn">
-        /// The Last replication time.
-        /// Serialized Name: HyperVReplicaAzureReplicationDetails.lastReplicatedTime
-        /// </param>
-        /// <param name="rpoInSeconds">
-        /// Last RPO value.
-        /// Serialized Name: HyperVReplicaAzureReplicationDetails.rpoInSeconds
-        /// </param>
-        /// <param name="lastRpoCalculatedOn">
-        /// The last RPO calculated time.
-        /// Serialized Name: HyperVReplicaAzureReplicationDetails.lastRpoCalculatedTime
-        /// </param>
-        /// <param name="vmId">
-        /// The virtual machine Id.
-        /// Serialized Name: HyperVReplicaAzureReplicationDetails.vmId
-        /// </param>
-        /// <param name="vmProtectionState">
-        /// The protection state for the vm.
-        /// Serialized Name: HyperVReplicaAzureReplicationDetails.vmProtectionState
-        /// </param>
-        /// <param name="vmProtectionStateDescription">
-        /// The protection state description for the vm.
-        /// Serialized Name: HyperVReplicaAzureReplicationDetails.vmProtectionStateDescription
-        /// </param>
-        /// <param name="initialReplicationDetails">
-        /// Initial replication details.
-        /// Serialized Name: HyperVReplicaAzureReplicationDetails.initialReplicationDetails
-        /// </param>
-        /// <param name="vmNics">
-        /// The PE Network details.
-        /// Serialized Name: HyperVReplicaAzureReplicationDetails.vmNics
-        /// </param>
-        /// <param name="selectedRecoveryAzureNetworkId">
-        /// The selected recovery azure network Id.
-        /// Serialized Name: HyperVReplicaAzureReplicationDetails.selectedRecoveryAzureNetworkId
-        /// </param>
-        /// <param name="selectedSourceNicId">
-        /// The selected source nic Id which will be used as the primary nic during failover.
-        /// Serialized Name: HyperVReplicaAzureReplicationDetails.selectedSourceNicId
-        /// </param>
-        /// <param name="encryption">
-        /// The encryption info.
-        /// Serialized Name: HyperVReplicaAzureReplicationDetails.encryption
-        /// </param>
-        /// <param name="osDetails">
-        /// The operating system info.
-        /// Serialized Name: HyperVReplicaAzureReplicationDetails.oSDetails
-        /// </param>
-        /// <param name="sourceVmRamSizeInMB">
-        /// The RAM size of the VM on the primary side.
-        /// Serialized Name: HyperVReplicaAzureReplicationDetails.sourceVmRamSizeInMB
-        /// </param>
-        /// <param name="sourceVmCpuCount">
-        /// The CPU count of the VM on the primary side.
-        /// Serialized Name: HyperVReplicaAzureReplicationDetails.sourceVmCpuCount
-        /// </param>
-        /// <param name="enableRdpOnTargetOption">
-        /// The selected option to enable RDP\SSH on target vm after failover. String value of SrsDataContract.EnableRDPOnTargetOption enum.
-        /// Serialized Name: HyperVReplicaAzureReplicationDetails.enableRdpOnTargetOption
-        /// </param>
-        /// <param name="recoveryAzureResourceGroupId">
-        /// The target resource group Id.
-        /// Serialized Name: HyperVReplicaAzureReplicationDetails.recoveryAzureResourceGroupId
-        /// </param>
-        /// <param name="recoveryAvailabilitySetId">
-        /// The recovery availability set Id.
-        /// Serialized Name: HyperVReplicaAzureReplicationDetails.recoveryAvailabilitySetId
-        /// </param>
-        /// <param name="targetAvailabilityZone">
-        /// The target availability zone.
-        /// Serialized Name: HyperVReplicaAzureReplicationDetails.targetAvailabilityZone
-        /// </param>
-        /// <param name="targetProximityPlacementGroupId">
-        /// The target proximity placement group Id.
-        /// Serialized Name: HyperVReplicaAzureReplicationDetails.targetProximityPlacementGroupId
-        /// </param>
-        /// <param name="useManagedDisks">
-        /// A value indicating whether managed disks should be used during failover.
-        /// Serialized Name: HyperVReplicaAzureReplicationDetails.useManagedDisks
-        /// </param>
-        /// <param name="licenseType">
-        /// License Type of the VM to be used.
-        /// Serialized Name: HyperVReplicaAzureReplicationDetails.licenseType
-        /// </param>
-        /// <param name="sqlServerLicenseType">
-        /// The SQL Server license type.
-        /// Serialized Name: HyperVReplicaAzureReplicationDetails.sqlServerLicenseType
-        /// </param>
-        /// <param name="lastRecoveryPointReceived">
-        /// The last recovery point received time.
-        /// Serialized Name: HyperVReplicaAzureReplicationDetails.lastRecoveryPointReceived
-        /// </param>
-        /// <param name="targetVmTags">
-        /// The target VM tags.
-        /// Serialized Name: HyperVReplicaAzureReplicationDetails.targetVmTags
-        /// </param>
-        /// <param name="seedManagedDiskTags">
-        /// The tags for the seed managed disks.
-        /// Serialized Name: HyperVReplicaAzureReplicationDetails.seedManagedDiskTags
-        /// </param>
-        /// <param name="targetManagedDiskTags">
-        /// The tags for the target managed disks.
-        /// Serialized Name: HyperVReplicaAzureReplicationDetails.targetManagedDiskTags
-        /// </param>
-        /// <param name="targetNicTags">
-        /// The tags for the target NICs.
-        /// Serialized Name: HyperVReplicaAzureReplicationDetails.targetNicTags
-        /// </param>
-        /// <param name="protectedManagedDisks">
-        /// The list of protected managed disks.
-        /// Serialized Name: HyperVReplicaAzureReplicationDetails.protectedManagedDisks
-        /// </param>
+        /// <param name="azureVmDiskDetails"> Azure VM Disk details. </param>
+        /// <param name="recoveryAzureVmName"> Recovery Azure given name. </param>
+        /// <param name="recoveryAzureVmSize"> The Recovery Azure VM size. </param>
+        /// <param name="recoveryAzureStorageAccount"> The recovery Azure storage account. </param>
+        /// <param name="recoveryAzureLogStorageAccountId"> The ARM id of the log storage account used for replication. This will be set to null if no log storage account was provided during enable protection. </param>
+        /// <param name="lastReplicatedOn"> The Last replication time. </param>
+        /// <param name="rpoInSeconds"> Last RPO value. </param>
+        /// <param name="lastRpoCalculatedOn"> The last RPO calculated time. </param>
+        /// <param name="vmId"> The virtual machine Id. </param>
+        /// <param name="vmProtectionState"> The protection state for the vm. </param>
+        /// <param name="vmProtectionStateDescription"> The protection state description for the vm. </param>
+        /// <param name="initialReplicationDetails"> Initial replication details. </param>
+        /// <param name="vmNics"> The PE Network details. </param>
+        /// <param name="selectedRecoveryAzureNetworkId"> The selected recovery azure network Id. </param>
+        /// <param name="selectedSourceNicId"> The selected source nic Id which will be used as the primary nic during failover. </param>
+        /// <param name="encryption"> The encryption info. </param>
+        /// <param name="osDetails"> The operating system info. </param>
+        /// <param name="sourceVmRamSizeInMB"> The RAM size of the VM on the primary side. </param>
+        /// <param name="sourceVmCpuCount"> The CPU count of the VM on the primary side. </param>
+        /// <param name="enableRdpOnTargetOption"> The selected option to enable RDP\SSH on target vm after failover. String value of SrsDataContract.EnableRDPOnTargetOption enum. </param>
+        /// <param name="recoveryAzureResourceGroupId"> The target resource group Id. </param>
+        /// <param name="recoveryAvailabilitySetId"> The recovery availability set Id. </param>
+        /// <param name="targetAvailabilityZone"> The target availability zone. </param>
+        /// <param name="targetProximityPlacementGroupId"> The target proximity placement group Id. </param>
+        /// <param name="useManagedDisks"> A value indicating whether managed disks should be used during failover. </param>
+        /// <param name="licenseType"> License Type of the VM to be used. </param>
+        /// <param name="sqlServerLicenseType"> The SQL Server license type. </param>
+        /// <param name="lastRecoveryPointReceived"> The last recovery point received time. </param>
+        /// <param name="targetVmTags"> The target VM tags. </param>
+        /// <param name="seedManagedDiskTags"> The tags for the seed managed disks. </param>
+        /// <param name="targetManagedDiskTags"> The tags for the target managed disks. </param>
+        /// <param name="targetNicTags"> The tags for the target NICs. </param>
+        /// <param name="protectedManagedDisks"> The list of protected managed disks. </param>
         /// <returns> A new <see cref="Models.HyperVReplicaAzureReplicationDetails"/> instance for mocking. </returns>
-        public static HyperVReplicaAzureReplicationDetails HyperVReplicaAzureReplicationDetails(IEnumerable<SiteRecoveryVmDiskDetails> azureVmDiskDetails = null, string recoveryAzureVmName = null, string recoveryAzureVmSize = null, string recoveryAzureStorageAccount = null, ResourceIdentifier recoveryAzureLogStorageAccountId = null, DateTimeOffset? lastReplicatedOn = null, long? rpoInSeconds = null, DateTimeOffset? lastRpoCalculatedOn = null, string vmId = null, string vmProtectionState = null, string vmProtectionStateDescription = null, InitialReplicationDetails initialReplicationDetails = null, IEnumerable<VmNicDetails> vmNics = null, ResourceIdentifier selectedRecoveryAzureNetworkId = null, string selectedSourceNicId = null, string encryption = null, OSDetails osDetails = null, int? sourceVmRamSizeInMB = null, int? sourceVmCpuCount = null, string enableRdpOnTargetOption = null, ResourceIdentifier recoveryAzureResourceGroupId = null, ResourceIdentifier recoveryAvailabilitySetId = null, string targetAvailabilityZone = null, ResourceIdentifier targetProximityPlacementGroupId = null, string useManagedDisks = null, string licenseType = null, string sqlServerLicenseType = null, DateTimeOffset? lastRecoveryPointReceived = null, IReadOnlyDictionary<string, string> targetVmTags = null, IReadOnlyDictionary<string, string> seedManagedDiskTags = null, IReadOnlyDictionary<string, string> targetManagedDiskTags = null, IReadOnlyDictionary<string, string> targetNicTags = null, IEnumerable<HyperVReplicaAzureManagedDiskDetails> protectedManagedDisks = null)
+        public static HyperVReplicaAzureReplicationDetails HyperVReplicaAzureReplicationDetails(IEnumerable<SiteRecoveryVmDiskDetails> azureVmDiskDetails = null, string recoveryAzureVmName = null, string recoveryAzureVmSize = null, string recoveryAzureStorageAccount = null, ResourceIdentifier recoveryAzureLogStorageAccountId = null, DateTimeOffset? lastReplicatedOn = null, long? rpoInSeconds = null, DateTimeOffset? lastRpoCalculatedOn = null, string vmId = null, string vmProtectionState = null, string vmProtectionStateDescription = null, InitialReplicationDetails initialReplicationDetails = null, IEnumerable<VmNicDetails> vmNics = null, ResourceIdentifier selectedRecoveryAzureNetworkId = null, string selectedSourceNicId = null, string encryption = null, SiteRecoveryOSDetails osDetails = null, int? sourceVmRamSizeInMB = null, int? sourceVmCpuCount = null, string enableRdpOnTargetOption = null, ResourceIdentifier recoveryAzureResourceGroupId = null, ResourceIdentifier recoveryAvailabilitySetId = null, string targetAvailabilityZone = null, ResourceIdentifier targetProximityPlacementGroupId = null, string useManagedDisks = null, string licenseType = null, string sqlServerLicenseType = null, DateTimeOffset? lastRecoveryPointReceived = null, IReadOnlyDictionary<string, string> targetVmTags = null, IReadOnlyDictionary<string, string> seedManagedDiskTags = null, IReadOnlyDictionary<string, string> targetManagedDiskTags = null, IReadOnlyDictionary<string, string> targetNicTags = null, IEnumerable<HyperVReplicaAzureManagedDiskDetails> protectedManagedDisks = null)
         {
             azureVmDiskDetails ??= new List<SiteRecoveryVmDiskDetails>();
             vmNics ??= new List<VmNicDetails>();
@@ -3891,68 +1842,32 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Initializes a new instance of InitialReplicationDetails. </summary>
-        /// <param name="initialReplicationType">
-        /// Initial replication type.
-        /// Serialized Name: InitialReplicationDetails.initialReplicationType
-        /// </param>
-        /// <param name="initialReplicationProgressPercentage">
-        /// The initial replication progress percentage.
-        /// Serialized Name: InitialReplicationDetails.initialReplicationProgressPercentage
-        /// </param>
+        /// <param name="initialReplicationType"> Initial replication type. </param>
+        /// <param name="initialReplicationProgressPercentage"> The initial replication progress percentage. </param>
         /// <returns> A new <see cref="Models.InitialReplicationDetails"/> instance for mocking. </returns>
         public static InitialReplicationDetails InitialReplicationDetails(string initialReplicationType = null, string initialReplicationProgressPercentage = null)
         {
             return new InitialReplicationDetails(initialReplicationType, initialReplicationProgressPercentage);
         }
 
-        /// <summary> Initializes a new instance of OSDetails. </summary>
-        /// <param name="osType">
-        /// VM Disk details.
-        /// Serialized Name: OSDetails.osType
-        /// </param>
-        /// <param name="productType">
-        /// Product type.
-        /// Serialized Name: OSDetails.productType
-        /// </param>
-        /// <param name="osEdition">
-        /// The OSEdition.
-        /// Serialized Name: OSDetails.osEdition
-        /// </param>
-        /// <param name="osVersion">
-        /// The OS Version.
-        /// Serialized Name: OSDetails.oSVersion
-        /// </param>
-        /// <param name="osMajorVersion">
-        /// The OS Major Version.
-        /// Serialized Name: OSDetails.oSMajorVersion
-        /// </param>
-        /// <param name="osMinorVersion">
-        /// The OS Minor Version.
-        /// Serialized Name: OSDetails.oSMinorVersion
-        /// </param>
-        /// <returns> A new <see cref="Models.OSDetails"/> instance for mocking. </returns>
-        public static OSDetails OSDetails(string osType = null, string productType = null, string osEdition = null, string osVersion = null, string osMajorVersion = null, string osMinorVersion = null)
+        /// <summary> Initializes a new instance of SiteRecoveryOSDetails. </summary>
+        /// <param name="osType"> VM Disk details. </param>
+        /// <param name="productType"> Product type. </param>
+        /// <param name="osEdition"> The OSEdition. </param>
+        /// <param name="osVersion"> The OS Version. </param>
+        /// <param name="osMajorVersion"> The OS Major Version. </param>
+        /// <param name="osMinorVersion"> The OS Minor Version. </param>
+        /// <returns> A new <see cref="Models.SiteRecoveryOSDetails"/> instance for mocking. </returns>
+        public static SiteRecoveryOSDetails SiteRecoveryOSDetails(string osType = null, string productType = null, string osEdition = null, string osVersion = null, string osMajorVersion = null, string osMinorVersion = null)
         {
-            return new OSDetails(osType, productType, osEdition, osVersion, osMajorVersion, osMinorVersion);
+            return new SiteRecoveryOSDetails(osType, productType, osEdition, osVersion, osMajorVersion, osMinorVersion);
         }
 
         /// <summary> Initializes a new instance of HyperVReplicaBaseEventDetails. </summary>
-        /// <param name="containerName">
-        /// The container friendly name.
-        /// Serialized Name: HyperVReplicaBaseEventDetails.containerName
-        /// </param>
-        /// <param name="fabricName">
-        /// The fabric friendly name.
-        /// Serialized Name: HyperVReplicaBaseEventDetails.fabricName
-        /// </param>
-        /// <param name="remoteContainerName">
-        /// The remote container name.
-        /// Serialized Name: HyperVReplicaBaseEventDetails.remoteContainerName
-        /// </param>
-        /// <param name="remoteFabricName">
-        /// The remote fabric name.
-        /// Serialized Name: HyperVReplicaBaseEventDetails.remoteFabricName
-        /// </param>
+        /// <param name="containerName"> The container friendly name. </param>
+        /// <param name="fabricName"> The fabric friendly name. </param>
+        /// <param name="remoteContainerName"> The remote container name. </param>
+        /// <param name="remoteFabricName"> The remote fabric name. </param>
         /// <returns> A new <see cref="Models.HyperVReplicaBaseEventDetails"/> instance for mocking. </returns>
         public static HyperVReplicaBaseEventDetails HyperVReplicaBaseEventDetails(string containerName = null, string fabricName = null, string remoteContainerName = null, string remoteFabricName = null)
         {
@@ -3960,46 +1875,16 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Initializes a new instance of HyperVReplicaBasePolicyDetails. </summary>
-        /// <param name="recoveryPoints">
-        /// A value indicating the number of recovery points.
-        /// Serialized Name: HyperVReplicaBasePolicyDetails.recoveryPoints
-        /// </param>
-        /// <param name="applicationConsistentSnapshotFrequencyInHours">
-        /// A value indicating the application consistent frequency.
-        /// Serialized Name: HyperVReplicaBasePolicyDetails.applicationConsistentSnapshotFrequencyInHours
-        /// </param>
-        /// <param name="compression">
-        /// A value indicating whether compression has to be enabled.
-        /// Serialized Name: HyperVReplicaBasePolicyDetails.compression
-        /// </param>
-        /// <param name="initialReplicationMethod">
-        /// A value indicating whether IR is online.
-        /// Serialized Name: HyperVReplicaBasePolicyDetails.initialReplicationMethod
-        /// </param>
-        /// <param name="onlineReplicationStartTime">
-        /// A value indicating the online IR start time.
-        /// Serialized Name: HyperVReplicaBasePolicyDetails.onlineReplicationStartTime
-        /// </param>
-        /// <param name="offlineReplicationImportPath">
-        /// A value indicating the offline IR import path.
-        /// Serialized Name: HyperVReplicaBasePolicyDetails.offlineReplicationImportPath
-        /// </param>
-        /// <param name="offlineReplicationExportPath">
-        /// A value indicating the offline IR export path.
-        /// Serialized Name: HyperVReplicaBasePolicyDetails.offlineReplicationExportPath
-        /// </param>
-        /// <param name="replicationPort">
-        /// A value indicating the recovery HTTPS port.
-        /// Serialized Name: HyperVReplicaBasePolicyDetails.replicationPort
-        /// </param>
-        /// <param name="allowedAuthenticationType">
-        /// A value indicating the authentication type.
-        /// Serialized Name: HyperVReplicaBasePolicyDetails.allowedAuthenticationType
-        /// </param>
-        /// <param name="replicaDeletionOption">
-        /// A value indicating whether the VM has to be auto deleted. Supported Values: String.Empty, None, OnRecoveryCloud.
-        /// Serialized Name: HyperVReplicaBasePolicyDetails.replicaDeletionOption
-        /// </param>
+        /// <param name="recoveryPoints"> A value indicating the number of recovery points. </param>
+        /// <param name="applicationConsistentSnapshotFrequencyInHours"> A value indicating the application consistent frequency. </param>
+        /// <param name="compression"> A value indicating whether compression has to be enabled. </param>
+        /// <param name="initialReplicationMethod"> A value indicating whether IR is online. </param>
+        /// <param name="onlineReplicationStartTime"> A value indicating the online IR start time. </param>
+        /// <param name="offlineReplicationImportPath"> A value indicating the offline IR import path. </param>
+        /// <param name="offlineReplicationExportPath"> A value indicating the offline IR export path. </param>
+        /// <param name="replicationPort"> A value indicating the recovery HTTPS port. </param>
+        /// <param name="allowedAuthenticationType"> A value indicating the authentication type. </param>
+        /// <param name="replicaDeletionOption"> A value indicating whether the VM has to be auto deleted. Supported Values: String.Empty, None, OnRecoveryCloud. </param>
         /// <returns> A new <see cref="Models.HyperVReplicaBasePolicyDetails"/> instance for mocking. </returns>
         public static HyperVReplicaBasePolicyDetails HyperVReplicaBasePolicyDetails(int? recoveryPoints = null, int? applicationConsistentSnapshotFrequencyInHours = null, string compression = null, string initialReplicationMethod = null, string onlineReplicationStartTime = null, string offlineReplicationImportPath = null, string offlineReplicationExportPath = null, int? replicationPort = null, int? allowedAuthenticationType = null, string replicaDeletionOption = null)
         {
@@ -4007,34 +1892,13 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Initializes a new instance of HyperVReplicaBaseReplicationDetails. </summary>
-        /// <param name="lastReplicatedOn">
-        /// The Last replication time.
-        /// Serialized Name: HyperVReplicaBaseReplicationDetails.lastReplicatedTime
-        /// </param>
-        /// <param name="vmNics">
-        /// The PE Network details.
-        /// Serialized Name: HyperVReplicaBaseReplicationDetails.vmNics
-        /// </param>
-        /// <param name="vmId">
-        /// The virtual machine Id.
-        /// Serialized Name: HyperVReplicaBaseReplicationDetails.vmId
-        /// </param>
-        /// <param name="vmProtectionState">
-        /// The protection state for the vm.
-        /// Serialized Name: HyperVReplicaBaseReplicationDetails.vmProtectionState
-        /// </param>
-        /// <param name="vmProtectionStateDescription">
-        /// The protection state description for the vm.
-        /// Serialized Name: HyperVReplicaBaseReplicationDetails.vmProtectionStateDescription
-        /// </param>
-        /// <param name="initialReplicationDetails">
-        /// Initial replication details.
-        /// Serialized Name: HyperVReplicaBaseReplicationDetails.initialReplicationDetails
-        /// </param>
-        /// <param name="vmDiskDetails">
-        /// VM disk details.
-        /// Serialized Name: HyperVReplicaBaseReplicationDetails.vMDiskDetails
-        /// </param>
+        /// <param name="lastReplicatedOn"> The Last replication time. </param>
+        /// <param name="vmNics"> The PE Network details. </param>
+        /// <param name="vmId"> The virtual machine Id. </param>
+        /// <param name="vmProtectionState"> The protection state for the vm. </param>
+        /// <param name="vmProtectionStateDescription"> The protection state description for the vm. </param>
+        /// <param name="initialReplicationDetails"> Initial replication details. </param>
+        /// <param name="vmDiskDetails"> VM disk details. </param>
         /// <returns> A new <see cref="Models.HyperVReplicaBaseReplicationDetails"/> instance for mocking. </returns>
         public static HyperVReplicaBaseReplicationDetails HyperVReplicaBaseReplicationDetails(DateTimeOffset? lastReplicatedOn = null, IEnumerable<VmNicDetails> vmNics = null, string vmId = null, string vmProtectionState = null, string vmProtectionStateDescription = null, InitialReplicationDetails initialReplicationDetails = null, IEnumerable<SiteRecoveryDiskDetails> vmDiskDetails = null)
         {
@@ -4045,50 +1909,17 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Initializes a new instance of HyperVReplicaBluePolicyDetails. </summary>
-        /// <param name="replicationFrequencyInSeconds">
-        /// A value indicating the replication interval.
-        /// Serialized Name: HyperVReplicaBluePolicyDetails.replicationFrequencyInSeconds
-        /// </param>
-        /// <param name="recoveryPoints">
-        /// A value indicating the number of recovery points.
-        /// Serialized Name: HyperVReplicaBluePolicyDetails.recoveryPoints
-        /// </param>
-        /// <param name="applicationConsistentSnapshotFrequencyInHours">
-        /// A value indicating the application consistent frequency.
-        /// Serialized Name: HyperVReplicaBluePolicyDetails.applicationConsistentSnapshotFrequencyInHours
-        /// </param>
-        /// <param name="compression">
-        /// A value indicating whether compression has to be enabled.
-        /// Serialized Name: HyperVReplicaBluePolicyDetails.compression
-        /// </param>
-        /// <param name="initialReplicationMethod">
-        /// A value indicating whether IR is online.
-        /// Serialized Name: HyperVReplicaBluePolicyDetails.initialReplicationMethod
-        /// </param>
-        /// <param name="onlineReplicationStartTime">
-        /// A value indicating the online IR start time.
-        /// Serialized Name: HyperVReplicaBluePolicyDetails.onlineReplicationStartTime
-        /// </param>
-        /// <param name="offlineReplicationImportPath">
-        /// A value indicating the offline IR import path.
-        /// Serialized Name: HyperVReplicaBluePolicyDetails.offlineReplicationImportPath
-        /// </param>
-        /// <param name="offlineReplicationExportPath">
-        /// A value indicating the offline IR export path.
-        /// Serialized Name: HyperVReplicaBluePolicyDetails.offlineReplicationExportPath
-        /// </param>
-        /// <param name="replicationPort">
-        /// A value indicating the recovery HTTPS port.
-        /// Serialized Name: HyperVReplicaBluePolicyDetails.replicationPort
-        /// </param>
-        /// <param name="allowedAuthenticationType">
-        /// A value indicating the authentication type.
-        /// Serialized Name: HyperVReplicaBluePolicyDetails.allowedAuthenticationType
-        /// </param>
-        /// <param name="replicaDeletionOption">
-        /// A value indicating whether the VM has to be auto deleted. Supported Values: String.Empty, None, OnRecoveryCloud
-        /// Serialized Name: HyperVReplicaBluePolicyDetails.replicaDeletionOption
-        /// </param>
+        /// <param name="replicationFrequencyInSeconds"> A value indicating the replication interval. </param>
+        /// <param name="recoveryPoints"> A value indicating the number of recovery points. </param>
+        /// <param name="applicationConsistentSnapshotFrequencyInHours"> A value indicating the application consistent frequency. </param>
+        /// <param name="compression"> A value indicating whether compression has to be enabled. </param>
+        /// <param name="initialReplicationMethod"> A value indicating whether IR is online. </param>
+        /// <param name="onlineReplicationStartTime"> A value indicating the online IR start time. </param>
+        /// <param name="offlineReplicationImportPath"> A value indicating the offline IR import path. </param>
+        /// <param name="offlineReplicationExportPath"> A value indicating the offline IR export path. </param>
+        /// <param name="replicationPort"> A value indicating the recovery HTTPS port. </param>
+        /// <param name="allowedAuthenticationType"> A value indicating the authentication type. </param>
+        /// <param name="replicaDeletionOption"> A value indicating whether the VM has to be auto deleted. Supported Values: String.Empty, None, OnRecoveryCloud. </param>
         /// <returns> A new <see cref="Models.HyperVReplicaBluePolicyDetails"/> instance for mocking. </returns>
         public static HyperVReplicaBluePolicyDetails HyperVReplicaBluePolicyDetails(int? replicationFrequencyInSeconds = null, int? recoveryPoints = null, int? applicationConsistentSnapshotFrequencyInHours = null, string compression = null, string initialReplicationMethod = null, string onlineReplicationStartTime = null, string offlineReplicationImportPath = null, string offlineReplicationExportPath = null, int? replicationPort = null, int? allowedAuthenticationType = null, string replicaDeletionOption = null)
         {
@@ -4096,34 +1927,13 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Initializes a new instance of HyperVReplicaBlueReplicationDetails. </summary>
-        /// <param name="lastReplicatedOn">
-        /// The Last replication time.
-        /// Serialized Name: HyperVReplicaBlueReplicationDetails.lastReplicatedTime
-        /// </param>
-        /// <param name="vmNics">
-        /// The PE Network details.
-        /// Serialized Name: HyperVReplicaBlueReplicationDetails.vmNics
-        /// </param>
-        /// <param name="vmId">
-        /// The virtual machine Id.
-        /// Serialized Name: HyperVReplicaBlueReplicationDetails.vmId
-        /// </param>
-        /// <param name="vmProtectionState">
-        /// The protection state for the vm.
-        /// Serialized Name: HyperVReplicaBlueReplicationDetails.vmProtectionState
-        /// </param>
-        /// <param name="vmProtectionStateDescription">
-        /// The protection state description for the vm.
-        /// Serialized Name: HyperVReplicaBlueReplicationDetails.vmProtectionStateDescription
-        /// </param>
-        /// <param name="initialReplicationDetails">
-        /// Initial replication details.
-        /// Serialized Name: HyperVReplicaBlueReplicationDetails.initialReplicationDetails
-        /// </param>
-        /// <param name="vmDiskDetails">
-        /// VM disk details.
-        /// Serialized Name: HyperVReplicaBlueReplicationDetails.vMDiskDetails
-        /// </param>
+        /// <param name="lastReplicatedOn"> The Last replication time. </param>
+        /// <param name="vmNics"> The PE Network details. </param>
+        /// <param name="vmId"> The virtual machine Id. </param>
+        /// <param name="vmProtectionState"> The protection state for the vm. </param>
+        /// <param name="vmProtectionStateDescription"> The protection state description for the vm. </param>
+        /// <param name="initialReplicationDetails"> Initial replication details. </param>
+        /// <param name="vmDiskDetails"> VM disk details. </param>
         /// <returns> A new <see cref="Models.HyperVReplicaBlueReplicationDetails"/> instance for mocking. </returns>
         public static HyperVReplicaBlueReplicationDetails HyperVReplicaBlueReplicationDetails(DateTimeOffset? lastReplicatedOn = null, IEnumerable<VmNicDetails> vmNics = null, string vmId = null, string vmProtectionState = null, string vmProtectionStateDescription = null, InitialReplicationDetails initialReplicationDetails = null, IEnumerable<SiteRecoveryDiskDetails> vmDiskDetails = null)
         {
@@ -4134,46 +1944,16 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Initializes a new instance of HyperVReplicaPolicyDetails. </summary>
-        /// <param name="recoveryPoints">
-        /// A value indicating the number of recovery points.
-        /// Serialized Name: HyperVReplicaPolicyDetails.recoveryPoints
-        /// </param>
-        /// <param name="applicationConsistentSnapshotFrequencyInHours">
-        /// A value indicating the application consistent frequency.
-        /// Serialized Name: HyperVReplicaPolicyDetails.applicationConsistentSnapshotFrequencyInHours
-        /// </param>
-        /// <param name="compression">
-        /// A value indicating whether compression has to be enabled.
-        /// Serialized Name: HyperVReplicaPolicyDetails.compression
-        /// </param>
-        /// <param name="initialReplicationMethod">
-        /// A value indicating whether IR is online.
-        /// Serialized Name: HyperVReplicaPolicyDetails.initialReplicationMethod
-        /// </param>
-        /// <param name="onlineReplicationStartTime">
-        /// A value indicating the online IR start time.
-        /// Serialized Name: HyperVReplicaPolicyDetails.onlineReplicationStartTime
-        /// </param>
-        /// <param name="offlineReplicationImportPath">
-        /// A value indicating the offline IR import path.
-        /// Serialized Name: HyperVReplicaPolicyDetails.offlineReplicationImportPath
-        /// </param>
-        /// <param name="offlineReplicationExportPath">
-        /// A value indicating the offline IR export path.
-        /// Serialized Name: HyperVReplicaPolicyDetails.offlineReplicationExportPath
-        /// </param>
-        /// <param name="replicationPort">
-        /// A value indicating the recovery HTTPS port.
-        /// Serialized Name: HyperVReplicaPolicyDetails.replicationPort
-        /// </param>
-        /// <param name="allowedAuthenticationType">
-        /// A value indicating the authentication type.
-        /// Serialized Name: HyperVReplicaPolicyDetails.allowedAuthenticationType
-        /// </param>
-        /// <param name="replicaDeletionOption">
-        /// A value indicating whether the VM has to be auto deleted. Supported Values: String.Empty, None, OnRecoveryCloud
-        /// Serialized Name: HyperVReplicaPolicyDetails.replicaDeletionOption
-        /// </param>
+        /// <param name="recoveryPoints"> A value indicating the number of recovery points. </param>
+        /// <param name="applicationConsistentSnapshotFrequencyInHours"> A value indicating the application consistent frequency. </param>
+        /// <param name="compression"> A value indicating whether compression has to be enabled. </param>
+        /// <param name="initialReplicationMethod"> A value indicating whether IR is online. </param>
+        /// <param name="onlineReplicationStartTime"> A value indicating the online IR start time. </param>
+        /// <param name="offlineReplicationImportPath"> A value indicating the offline IR import path. </param>
+        /// <param name="offlineReplicationExportPath"> A value indicating the offline IR export path. </param>
+        /// <param name="replicationPort"> A value indicating the recovery HTTPS port. </param>
+        /// <param name="allowedAuthenticationType"> A value indicating the authentication type. </param>
+        /// <param name="replicaDeletionOption"> A value indicating whether the VM has to be auto deleted. Supported Values: String.Empty, None, OnRecoveryCloud. </param>
         /// <returns> A new <see cref="Models.HyperVReplicaPolicyDetails"/> instance for mocking. </returns>
         public static HyperVReplicaPolicyDetails HyperVReplicaPolicyDetails(int? recoveryPoints = null, int? applicationConsistentSnapshotFrequencyInHours = null, string compression = null, string initialReplicationMethod = null, string onlineReplicationStartTime = null, string offlineReplicationImportPath = null, string offlineReplicationExportPath = null, int? replicationPort = null, int? allowedAuthenticationType = null, string replicaDeletionOption = null)
         {
@@ -4181,34 +1961,13 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Initializes a new instance of HyperVReplicaReplicationDetails. </summary>
-        /// <param name="lastReplicatedOn">
-        /// The Last replication time.
-        /// Serialized Name: HyperVReplicaReplicationDetails.lastReplicatedTime
-        /// </param>
-        /// <param name="vmNics">
-        /// The PE Network details.
-        /// Serialized Name: HyperVReplicaReplicationDetails.vmNics
-        /// </param>
-        /// <param name="vmId">
-        /// The virtual machine Id.
-        /// Serialized Name: HyperVReplicaReplicationDetails.vmId
-        /// </param>
-        /// <param name="vmProtectionState">
-        /// The protection state for the vm.
-        /// Serialized Name: HyperVReplicaReplicationDetails.vmProtectionState
-        /// </param>
-        /// <param name="vmProtectionStateDescription">
-        /// The protection state description for the vm.
-        /// Serialized Name: HyperVReplicaReplicationDetails.vmProtectionStateDescription
-        /// </param>
-        /// <param name="initialReplicationDetails">
-        /// Initial replication details.
-        /// Serialized Name: HyperVReplicaReplicationDetails.initialReplicationDetails
-        /// </param>
-        /// <param name="vmDiskDetails">
-        /// VM disk details.
-        /// Serialized Name: HyperVReplicaReplicationDetails.vMDiskDetails
-        /// </param>
+        /// <param name="lastReplicatedOn"> The Last replication time. </param>
+        /// <param name="vmNics"> The PE Network details. </param>
+        /// <param name="vmId"> The virtual machine Id. </param>
+        /// <param name="vmProtectionState"> The protection state for the vm. </param>
+        /// <param name="vmProtectionStateDescription"> The protection state description for the vm. </param>
+        /// <param name="initialReplicationDetails"> Initial replication details. </param>
+        /// <param name="vmDiskDetails"> VM disk details. </param>
         /// <returns> A new <see cref="Models.HyperVReplicaReplicationDetails"/> instance for mocking. </returns>
         public static HyperVReplicaReplicationDetails HyperVReplicaReplicationDetails(DateTimeOffset? lastReplicatedOn = null, IEnumerable<VmNicDetails> vmNics = null, string vmId = null, string vmProtectionState = null, string vmProtectionStateDescription = null, InitialReplicationDetails initialReplicationDetails = null, IEnumerable<SiteRecoveryDiskDetails> vmDiskDetails = null)
         {
@@ -4219,10 +1978,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Initializes a new instance of HyperVSiteDetails. </summary>
-        /// <param name="hyperVHosts">
-        /// The list of Hyper-V hosts associated with the fabric.
-        /// Serialized Name: HyperVSiteDetails.hyperVHosts
-        /// </param>
+        /// <param name="hyperVHosts"> The list of Hyper-V hosts associated with the fabric. </param>
         /// <returns> A new <see cref="Models.HyperVSiteDetails"/> instance for mocking. </returns>
         public static HyperVSiteDetails HyperVSiteDetails(IEnumerable<HyperVHostDetails> hyperVHosts = null)
         {
@@ -4232,40 +1988,16 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Initializes a new instance of HyperVVmDetails. </summary>
-        /// <param name="sourceItemId">
-        /// The source id of the object.
-        /// Serialized Name: HyperVVirtualMachineDetails.sourceItemId
-        /// </param>
-        /// <param name="generation">
-        /// The id of the object in fabric.
-        /// Serialized Name: HyperVVirtualMachineDetails.generation
-        /// </param>
-        /// <param name="osDetails">
-        /// The Last replication time.
-        /// Serialized Name: HyperVVirtualMachineDetails.osDetails
-        /// </param>
-        /// <param name="diskDetails">
-        /// The Last successful failover time.
-        /// Serialized Name: HyperVVirtualMachineDetails.diskDetails
-        /// </param>
-        /// <param name="hasPhysicalDisk">
-        /// A value indicating whether the VM has a physical disk attached. String value of SrsDataContract.PresenceStatus enum.
-        /// Serialized Name: HyperVVirtualMachineDetails.hasPhysicalDisk
-        /// </param>
-        /// <param name="hasFibreChannelAdapter">
-        /// A value indicating whether the VM has a fibre channel adapter attached. String value of SrsDataContract.PresenceStatus enum.
-        /// Serialized Name: HyperVVirtualMachineDetails.hasFibreChannelAdapter
-        /// </param>
-        /// <param name="hasSharedVhd">
-        /// A value indicating whether the VM has a shared VHD attached. String value of SrsDataContract.PresenceStatus enum.
-        /// Serialized Name: HyperVVirtualMachineDetails.hasSharedVhd
-        /// </param>
-        /// <param name="hyperVHostId">
-        /// The Id of the hyper-v host in fabric.
-        /// Serialized Name: HyperVVirtualMachineDetails.hyperVHostId
-        /// </param>
+        /// <param name="sourceItemId"> The source id of the object. </param>
+        /// <param name="generation"> The id of the object in fabric. </param>
+        /// <param name="osDetails"> The Last replication time. </param>
+        /// <param name="diskDetails"> The Last successful failover time. </param>
+        /// <param name="hasPhysicalDisk"> A value indicating whether the VM has a physical disk attached. String value of SrsDataContract.PresenceStatus enum. </param>
+        /// <param name="hasFibreChannelAdapter"> A value indicating whether the VM has a fibre channel adapter attached. String value of SrsDataContract.PresenceStatus enum. </param>
+        /// <param name="hasSharedVhd"> A value indicating whether the VM has a shared VHD attached. String value of SrsDataContract.PresenceStatus enum. </param>
+        /// <param name="hyperVHostId"> The Id of the hyper-v host in fabric. </param>
         /// <returns> A new <see cref="Models.HyperVVmDetails"/> instance for mocking. </returns>
-        public static HyperVVmDetails HyperVVmDetails(string sourceItemId = null, string generation = null, OSDetails osDetails = null, IEnumerable<SiteRecoveryDiskDetails> diskDetails = null, PresenceStatus? hasPhysicalDisk = null, PresenceStatus? hasFibreChannelAdapter = null, PresenceStatus? hasSharedVhd = null, string hyperVHostId = null)
+        public static HyperVVmDetails HyperVVmDetails(string sourceItemId = null, string generation = null, SiteRecoveryOSDetails osDetails = null, IEnumerable<SiteRecoveryDiskDetails> diskDetails = null, HyperVVmDiskPresenceStatus? hasPhysicalDisk = null, HyperVVmDiskPresenceStatus? hasFibreChannelAdapter = null, HyperVVmDiskPresenceStatus? hasSharedVhd = null, string hyperVHostId = null)
         {
             diskDetails ??= new List<SiteRecoveryDiskDetails>();
 
@@ -4273,14 +2005,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Initializes a new instance of InlineWorkflowTaskDetails. </summary>
-        /// <param name="childTasks">
-        /// The child tasks.
-        /// Serialized Name: GroupTaskDetails.childTasks
-        /// </param>
-        /// <param name="workflowIds">
-        /// The list of child workflow ids.
-        /// Serialized Name: InlineWorkflowTaskDetails.workflowIds
-        /// </param>
+        /// <param name="childTasks"> The child tasks. </param>
+        /// <param name="workflowIds"> The list of child workflow ids. </param>
         /// <returns> A new <see cref="Models.InlineWorkflowTaskDetails"/> instance for mocking. </returns>
         public static InlineWorkflowTaskDetails InlineWorkflowTaskDetails(IEnumerable<AsrTask> childTasks = null, IEnumerable<string> workflowIds = null)
         {
@@ -4291,22 +2017,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Initializes a new instance of InMageAgentDetails. </summary>
-        /// <param name="agentVersion">
-        /// The agent version.
-        /// Serialized Name: InMageAgentDetails.agentVersion
-        /// </param>
-        /// <param name="agentUpdateStatus">
-        /// A value indicating whether installed agent needs to be updated.
-        /// Serialized Name: InMageAgentDetails.agentUpdateStatus
-        /// </param>
-        /// <param name="postUpdateRebootStatus">
-        /// A value indicating whether reboot is required after update is applied.
-        /// Serialized Name: InMageAgentDetails.postUpdateRebootStatus
-        /// </param>
-        /// <param name="agentExpireOn">
-        /// Agent expiry date.
-        /// Serialized Name: InMageAgentDetails.agentExpiryDate
-        /// </param>
+        /// <param name="agentVersion"> The agent version. </param>
+        /// <param name="agentUpdateStatus"> A value indicating whether installed agent needs to be updated. </param>
+        /// <param name="postUpdateRebootStatus"> A value indicating whether reboot is required after update is applied. </param>
+        /// <param name="agentExpireOn"> Agent expiry date. </param>
         /// <returns> A new <see cref="Models.InMageAgentDetails"/> instance for mocking. </returns>
         public static InMageAgentDetails InMageAgentDetails(string agentVersion = null, string agentUpdateStatus = null, string postUpdateRebootStatus = null, DateTimeOffset? agentExpireOn = null)
         {
@@ -4314,34 +2028,13 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Initializes a new instance of InMageAzureV2EventDetails. </summary>
-        /// <param name="eventType">
-        /// InMage Event type. Takes one of the values of InMageDataContract.InMageMonitoringEventType.
-        /// Serialized Name: InMageAzureV2EventDetails.eventType
-        /// </param>
-        /// <param name="category">
-        /// InMage Event Category.
-        /// Serialized Name: InMageAzureV2EventDetails.category
-        /// </param>
-        /// <param name="component">
-        /// InMage Event Component.
-        /// Serialized Name: InMageAzureV2EventDetails.component
-        /// </param>
-        /// <param name="correctiveAction">
-        /// Corrective Action string for the event.
-        /// Serialized Name: InMageAzureV2EventDetails.correctiveAction
-        /// </param>
-        /// <param name="details">
-        /// InMage Event Details.
-        /// Serialized Name: InMageAzureV2EventDetails.details
-        /// </param>
-        /// <param name="summary">
-        /// InMage Event Summary.
-        /// Serialized Name: InMageAzureV2EventDetails.summary
-        /// </param>
-        /// <param name="siteName">
-        /// VMware Site name.
-        /// Serialized Name: InMageAzureV2EventDetails.siteName
-        /// </param>
+        /// <param name="eventType"> InMage Event type. Takes one of the values of InMageDataContract.InMageMonitoringEventType. </param>
+        /// <param name="category"> InMage Event Category. </param>
+        /// <param name="component"> InMage Event Component. </param>
+        /// <param name="correctiveAction"> Corrective Action string for the event. </param>
+        /// <param name="details"> InMage Event Details. </param>
+        /// <param name="summary"> InMage Event Summary. </param>
+        /// <param name="siteName"> VMware Site name. </param>
         /// <returns> A new <see cref="Models.InMageAzureV2EventDetails"/> instance for mocking. </returns>
         public static InMageAzureV2EventDetails InMageAzureV2EventDetails(string eventType = null, string category = null, string component = null, string correctiveAction = null, string details = null, string summary = null, string siteName = null)
         {
@@ -4349,26 +2042,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Initializes a new instance of InMageAzureV2ManagedDiskDetails. </summary>
-        /// <param name="diskId">
-        /// The disk id.
-        /// Serialized Name: InMageAzureV2ManagedDiskDetails.diskId
-        /// </param>
-        /// <param name="seedManagedDiskId">
-        /// Seed managed disk Id.
-        /// Serialized Name: InMageAzureV2ManagedDiskDetails.seedManagedDiskId
-        /// </param>
-        /// <param name="replicaDiskType">
-        /// The replica disk type.
-        /// Serialized Name: InMageAzureV2ManagedDiskDetails.replicaDiskType
-        /// </param>
-        /// <param name="diskEncryptionSetId">
-        /// The DiskEncryptionSet ARM ID.
-        /// Serialized Name: InMageAzureV2ManagedDiskDetails.diskEncryptionSetId
-        /// </param>
-        /// <param name="targetDiskName">
-        /// The target disk name.
-        /// Serialized Name: InMageAzureV2ManagedDiskDetails.targetDiskName
-        /// </param>
+        /// <param name="diskId"> The disk id. </param>
+        /// <param name="seedManagedDiskId"> Seed managed disk Id. </param>
+        /// <param name="replicaDiskType"> The replica disk type. </param>
+        /// <param name="diskEncryptionSetId"> The DiskEncryptionSet ARM ID. </param>
+        /// <param name="targetDiskName"> The target disk name. </param>
         /// <returns> A new <see cref="Models.InMageAzureV2ManagedDiskDetails"/> instance for mocking. </returns>
         public static InMageAzureV2ManagedDiskDetails InMageAzureV2ManagedDiskDetails(string diskId = null, string seedManagedDiskId = null, string replicaDiskType = null, ResourceIdentifier diskEncryptionSetId = null, string targetDiskName = null)
         {
@@ -4376,26 +2054,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Initializes a new instance of InMageAzureV2PolicyDetails. </summary>
-        /// <param name="crashConsistentFrequencyInMinutes">
-        /// The crash consistent snapshot frequency in minutes.
-        /// Serialized Name: InMageAzureV2PolicyDetails.crashConsistentFrequencyInMinutes
-        /// </param>
-        /// <param name="recoveryPointThresholdInMinutes">
-        /// The recovery point threshold in minutes.
-        /// Serialized Name: InMageAzureV2PolicyDetails.recoveryPointThresholdInMinutes
-        /// </param>
-        /// <param name="recoveryPointHistory">
-        /// The duration in minutes until which the recovery points need to be stored.
-        /// Serialized Name: InMageAzureV2PolicyDetails.recoveryPointHistory
-        /// </param>
-        /// <param name="appConsistentFrequencyInMinutes">
-        /// The app consistent snapshot frequency in minutes.
-        /// Serialized Name: InMageAzureV2PolicyDetails.appConsistentFrequencyInMinutes
-        /// </param>
-        /// <param name="multiVmSyncStatus">
-        /// A value indicating whether multi-VM sync has to be enabled.
-        /// Serialized Name: InMageAzureV2PolicyDetails.multiVmSyncStatus
-        /// </param>
+        /// <param name="crashConsistentFrequencyInMinutes"> The crash consistent snapshot frequency in minutes. </param>
+        /// <param name="recoveryPointThresholdInMinutes"> The recovery point threshold in minutes. </param>
+        /// <param name="recoveryPointHistory"> The duration in minutes until which the recovery points need to be stored. </param>
+        /// <param name="appConsistentFrequencyInMinutes"> The app consistent snapshot frequency in minutes. </param>
+        /// <param name="multiVmSyncStatus"> A value indicating whether multi-VM sync has to be enabled. </param>
         /// <returns> A new <see cref="Models.InMageAzureV2PolicyDetails"/> instance for mocking. </returns>
         public static InMageAzureV2PolicyDetails InMageAzureV2PolicyDetails(int? crashConsistentFrequencyInMinutes = null, int? recoveryPointThresholdInMinutes = null, int? recoveryPointHistory = null, int? appConsistentFrequencyInMinutes = null, string multiVmSyncStatus = null)
         {
@@ -4403,98 +2066,29 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Initializes a new instance of InMageAzureV2ProtectedDiskDetails. </summary>
-        /// <param name="diskId">
-        /// The disk id.
-        /// Serialized Name: InMageAzureV2ProtectedDiskDetails.diskId
-        /// </param>
-        /// <param name="diskName">
-        /// The disk name.
-        /// Serialized Name: InMageAzureV2ProtectedDiskDetails.diskName
-        /// </param>
-        /// <param name="protectionStage">
-        /// The protection stage.
-        /// Serialized Name: InMageAzureV2ProtectedDiskDetails.protectionStage
-        /// </param>
-        /// <param name="healthErrorCode">
-        /// The health error code for the disk.
-        /// Serialized Name: InMageAzureV2ProtectedDiskDetails.healthErrorCode
-        /// </param>
-        /// <param name="rpoInSeconds">
-        /// The RPO in seconds.
-        /// Serialized Name: InMageAzureV2ProtectedDiskDetails.rpoInSeconds
-        /// </param>
-        /// <param name="resyncRequired">
-        /// A value indicating whether resync is required for this disk.
-        /// Serialized Name: InMageAzureV2ProtectedDiskDetails.resyncRequired
-        /// </param>
-        /// <param name="resyncProgressPercentage">
-        /// The resync progress percentage.
-        /// Serialized Name: InMageAzureV2ProtectedDiskDetails.resyncProgressPercentage
-        /// </param>
-        /// <param name="resyncDurationInSeconds">
-        /// The resync duration in seconds.
-        /// Serialized Name: InMageAzureV2ProtectedDiskDetails.resyncDurationInSeconds
-        /// </param>
-        /// <param name="diskCapacityInBytes">
-        /// The disk capacity in bytes.
-        /// Serialized Name: InMageAzureV2ProtectedDiskDetails.diskCapacityInBytes
-        /// </param>
-        /// <param name="fileSystemCapacityInBytes">
-        /// The disk file system capacity in bytes.
-        /// Serialized Name: InMageAzureV2ProtectedDiskDetails.fileSystemCapacityInBytes
-        /// </param>
-        /// <param name="sourceDataInMegaBytes">
-        /// The source data transit in MB.
-        /// Serialized Name: InMageAzureV2ProtectedDiskDetails.sourceDataInMegaBytes
-        /// </param>
-        /// <param name="psDataInMegaBytes">
-        /// The PS data transit in MB.
-        /// Serialized Name: InMageAzureV2ProtectedDiskDetails.psDataInMegaBytes
-        /// </param>
-        /// <param name="targetDataInMegaBytes">
-        /// The target data transit in MB.
-        /// Serialized Name: InMageAzureV2ProtectedDiskDetails.targetDataInMegaBytes
-        /// </param>
-        /// <param name="diskResized">
-        /// A value indicating whether disk is resized.
-        /// Serialized Name: InMageAzureV2ProtectedDiskDetails.diskResized
-        /// </param>
-        /// <param name="lastRpoCalculatedOn">
-        /// The last RPO calculated time.
-        /// Serialized Name: InMageAzureV2ProtectedDiskDetails.lastRpoCalculatedTime
-        /// </param>
-        /// <param name="resyncProcessedBytes">
-        /// The resync processed bytes.
-        /// Serialized Name: InMageAzureV2ProtectedDiskDetails.resyncProcessedBytes
-        /// </param>
-        /// <param name="resyncTotalTransferredBytes">
-        /// The resync total transferred bytes.
-        /// Serialized Name: InMageAzureV2ProtectedDiskDetails.resyncTotalTransferredBytes
-        /// </param>
-        /// <param name="resyncLast15MinutesTransferredBytes">
-        /// The resync last 15 minutes transferred bytes.
-        /// Serialized Name: InMageAzureV2ProtectedDiskDetails.resyncLast15MinutesTransferredBytes
-        /// </param>
-        /// <param name="resyncLastDataTransferOn">
-        /// The last data transfer time in UTC.
-        /// Serialized Name: InMageAzureV2ProtectedDiskDetails.resyncLastDataTransferTimeUTC
-        /// </param>
-        /// <param name="resyncStartOn">
-        /// The resync start time.
-        /// Serialized Name: InMageAzureV2ProtectedDiskDetails.resyncStartTime
-        /// </param>
-        /// <param name="progressHealth">
-        /// The Progress Health.
-        /// Serialized Name: InMageAzureV2ProtectedDiskDetails.progressHealth
-        /// </param>
-        /// <param name="progressStatus">
-        /// The Progress Status.
-        /// Serialized Name: InMageAzureV2ProtectedDiskDetails.progressStatus
-        /// </param>
-        /// <param name="secondsToTakeSwitchProvider">
-        /// The seconds to take for switch provider.
-        /// Serialized Name: InMageAzureV2ProtectedDiskDetails.secondsToTakeSwitchProvider
-        /// </param>
+        /// <param name="diskId"> The disk id. </param>
+        /// <param name="diskName"> The disk name. </param>
+        /// <param name="protectionStage"> The protection stage. </param>
+        /// <param name="healthErrorCode"> The health error code for the disk. </param>
+        /// <param name="rpoInSeconds"> The RPO in seconds. </param>
+        /// <param name="resyncRequired"> A value indicating whether resync is required for this disk. </param>
+        /// <param name="resyncProgressPercentage"> The resync progress percentage. </param>
+        /// <param name="resyncDurationInSeconds"> The resync duration in seconds. </param>
+        /// <param name="diskCapacityInBytes"> The disk capacity in bytes. </param>
+        /// <param name="fileSystemCapacityInBytes"> The disk file system capacity in bytes. </param>
+        /// <param name="sourceDataInMegaBytes"> The source data transit in MB. </param>
+        /// <param name="psDataInMegaBytes"> The PS data transit in MB. </param>
+        /// <param name="targetDataInMegaBytes"> The target data transit in MB. </param>
+        /// <param name="diskResized"> A value indicating whether disk is resized. </param>
+        /// <param name="lastRpoCalculatedOn"> The last RPO calculated time. </param>
+        /// <param name="resyncProcessedBytes"> The resync processed bytes. </param>
+        /// <param name="resyncTotalTransferredBytes"> The resync total transferred bytes. </param>
+        /// <param name="resyncLast15MinutesTransferredBytes"> The resync last 15 minutes transferred bytes. </param>
+        /// <param name="resyncLastDataTransferOn"> The last data transfer time in UTC. </param>
+        /// <param name="resyncStartOn"> The resync start time. </param>
+        /// <param name="progressHealth"> The Progress Health. </param>
+        /// <param name="progressStatus"> The Progress Status. </param>
+        /// <param name="secondsToTakeSwitchProvider"> The seconds to take for switch provider. </param>
         /// <returns> A new <see cref="Models.InMageAzureV2ProtectedDiskDetails"/> instance for mocking. </returns>
         public static InMageAzureV2ProtectedDiskDetails InMageAzureV2ProtectedDiskDetails(string diskId = null, string diskName = null, string protectionStage = null, string healthErrorCode = null, long? rpoInSeconds = null, string resyncRequired = null, int? resyncProgressPercentage = null, long? resyncDurationInSeconds = null, long? diskCapacityInBytes = null, long? fileSystemCapacityInBytes = null, double? sourceDataInMegaBytes = null, double? psDataInMegaBytes = null, double? targetDataInMegaBytes = null, string diskResized = null, DateTimeOffset? lastRpoCalculatedOn = null, long? resyncProcessedBytes = null, long? resyncTotalTransferredBytes = null, long? resyncLast15MinutesTransferredBytes = null, DateTimeOffset? resyncLastDataTransferOn = null, DateTimeOffset? resyncStartOn = null, string progressHealth = null, string progressStatus = null, long? secondsToTakeSwitchProvider = null)
         {
@@ -4502,10 +2096,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Initializes a new instance of InMageAzureV2RecoveryPointDetails. </summary>
-        /// <param name="isMultiVmSyncPoint">
-        /// A value indicating whether the recovery point is multi VM consistent.
-        /// Serialized Name: InMageAzureV2RecoveryPointDetails.isMultiVmSyncPoint
-        /// </param>
+        /// <param name="isMultiVmSyncPoint"> A value indicating whether the recovery point is multi VM consistent. </param>
         /// <returns> A new <see cref="Models.InMageAzureV2RecoveryPointDetails"/> instance for mocking. </returns>
         public static InMageAzureV2RecoveryPointDetails InMageAzureV2RecoveryPointDetails(string isMultiVmSyncPoint = null)
         {
@@ -4513,274 +2104,73 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Initializes a new instance of InMageAzureV2ReplicationDetails. </summary>
-        /// <param name="infrastructureVmId">
-        /// The infrastructure VM Id.
-        /// Serialized Name: InMageAzureV2ReplicationDetails.infrastructureVmId
-        /// </param>
-        /// <param name="vCenterInfrastructureId">
-        /// The vCenter infrastructure Id.
-        /// Serialized Name: InMageAzureV2ReplicationDetails.vCenterInfrastructureId
-        /// </param>
-        /// <param name="protectionStage">
-        /// The protection stage.
-        /// Serialized Name: InMageAzureV2ReplicationDetails.protectionStage
-        /// </param>
-        /// <param name="vmId">
-        /// The virtual machine Id.
-        /// Serialized Name: InMageAzureV2ReplicationDetails.vmId
-        /// </param>
-        /// <param name="vmProtectionState">
-        /// The protection state for the vm.
-        /// Serialized Name: InMageAzureV2ReplicationDetails.vmProtectionState
-        /// </param>
-        /// <param name="vmProtectionStateDescription">
-        /// The protection state description for the vm.
-        /// Serialized Name: InMageAzureV2ReplicationDetails.vmProtectionStateDescription
-        /// </param>
-        /// <param name="resyncProgressPercentage">
-        /// The resync progress percentage.
-        /// Serialized Name: InMageAzureV2ReplicationDetails.resyncProgressPercentage
-        /// </param>
-        /// <param name="rpoInSeconds">
-        /// The RPO in seconds.
-        /// Serialized Name: InMageAzureV2ReplicationDetails.rpoInSeconds
-        /// </param>
-        /// <param name="compressedDataRateInMB">
-        /// The compressed data change rate in MB.
-        /// Serialized Name: InMageAzureV2ReplicationDetails.compressedDataRateInMB
-        /// </param>
-        /// <param name="uncompressedDataRateInMB">
-        /// The uncompressed data change rate in MB.
-        /// Serialized Name: InMageAzureV2ReplicationDetails.uncompressedDataRateInMB
-        /// </param>
-        /// <param name="ipAddress">
-        /// The source IP address.
-        /// Serialized Name: InMageAzureV2ReplicationDetails.ipAddress
-        /// </param>
-        /// <param name="agentVersion">
-        /// The agent version.
-        /// Serialized Name: InMageAzureV2ReplicationDetails.agentVersion
-        /// </param>
-        /// <param name="agentExpireOn">
-        /// Agent expiry date.
-        /// Serialized Name: InMageAzureV2ReplicationDetails.agentExpiryDate
-        /// </param>
-        /// <param name="isAgentUpdateRequired">
-        /// A value indicating whether installed agent needs to be updated.
-        /// Serialized Name: InMageAzureV2ReplicationDetails.isAgentUpdateRequired
-        /// </param>
-        /// <param name="isRebootAfterUpdateRequired">
-        /// A value indicating whether the source server requires a restart after update.
-        /// Serialized Name: InMageAzureV2ReplicationDetails.isRebootAfterUpdateRequired
-        /// </param>
-        /// <param name="lastHeartbeat">
-        /// The last heartbeat received from the source server.
-        /// Serialized Name: InMageAzureV2ReplicationDetails.lastHeartbeat
-        /// </param>
-        /// <param name="processServerId">
-        /// The process server Id.
-        /// Serialized Name: InMageAzureV2ReplicationDetails.processServerId
-        /// </param>
-        /// <param name="processServerName">
-        /// The process server name.
-        /// Serialized Name: InMageAzureV2ReplicationDetails.processServerName
-        /// </param>
-        /// <param name="multiVmGroupId">
-        /// The multi vm group Id.
-        /// Serialized Name: InMageAzureV2ReplicationDetails.multiVmGroupId
-        /// </param>
-        /// <param name="multiVmGroupName">
-        /// The multi vm group name.
-        /// Serialized Name: InMageAzureV2ReplicationDetails.multiVmGroupName
-        /// </param>
-        /// <param name="multiVmSyncStatus">
-        /// A value indicating whether multi vm sync is enabled or disabled.
-        /// Serialized Name: InMageAzureV2ReplicationDetails.multiVmSyncStatus
-        /// </param>
-        /// <param name="protectedDisks">
-        /// The list of protected disks.
-        /// Serialized Name: InMageAzureV2ReplicationDetails.protectedDisks
-        /// </param>
-        /// <param name="diskResized">
-        /// A value indicating whether any disk is resized for this VM.
-        /// Serialized Name: InMageAzureV2ReplicationDetails.diskResized
-        /// </param>
-        /// <param name="masterTargetId">
-        /// The master target Id.
-        /// Serialized Name: InMageAzureV2ReplicationDetails.masterTargetId
-        /// </param>
-        /// <param name="sourceVmCpuCount">
-        /// The CPU count of the VM on the primary side.
-        /// Serialized Name: InMageAzureV2ReplicationDetails.sourceVmCpuCount
-        /// </param>
-        /// <param name="sourceVmRamSizeInMB">
-        /// The RAM size of the VM on the primary side.
-        /// Serialized Name: InMageAzureV2ReplicationDetails.sourceVmRamSizeInMB
-        /// </param>
-        /// <param name="osType">
-        /// The type of the OS on the VM.
-        /// Serialized Name: InMageAzureV2ReplicationDetails.osType
-        /// </param>
-        /// <param name="vhdName">
-        /// The OS disk VHD name.
-        /// Serialized Name: InMageAzureV2ReplicationDetails.vhdName
-        /// </param>
-        /// <param name="osDiskId">
-        /// The id of the disk containing the OS.
-        /// Serialized Name: InMageAzureV2ReplicationDetails.osDiskId
-        /// </param>
-        /// <param name="azureVmDiskDetails">
-        /// Azure VM Disk details.
-        /// Serialized Name: InMageAzureV2ReplicationDetails.azureVMDiskDetails
-        /// </param>
-        /// <param name="recoveryAzureVmName">
-        /// Recovery Azure given name.
-        /// Serialized Name: InMageAzureV2ReplicationDetails.recoveryAzureVMName
-        /// </param>
-        /// <param name="recoveryAzureVmSize">
-        /// The Recovery Azure VM size.
-        /// Serialized Name: InMageAzureV2ReplicationDetails.recoveryAzureVMSize
-        /// </param>
-        /// <param name="recoveryAzureStorageAccount">
-        /// The recovery Azure storage account.
-        /// Serialized Name: InMageAzureV2ReplicationDetails.recoveryAzureStorageAccount
-        /// </param>
-        /// <param name="recoveryAzureLogStorageAccountId">
-        /// The ARM id of the log storage account used for replication. This will be set to null if no log storage account was provided during enable protection.
-        /// Serialized Name: InMageAzureV2ReplicationDetails.recoveryAzureLogStorageAccountId
-        /// </param>
-        /// <param name="vmNics">
-        /// The PE Network details.
-        /// Serialized Name: InMageAzureV2ReplicationDetails.vmNics
-        /// </param>
-        /// <param name="selectedRecoveryAzureNetworkId">
-        /// The selected recovery azure network Id.
-        /// Serialized Name: InMageAzureV2ReplicationDetails.selectedRecoveryAzureNetworkId
-        /// </param>
-        /// <param name="selectedTfoAzureNetworkId">
-        /// The test failover virtual network.
-        /// Serialized Name: InMageAzureV2ReplicationDetails.selectedTfoAzureNetworkId
-        /// </param>
-        /// <param name="selectedSourceNicId">
-        /// The selected source nic Id which will be used as the primary nic during failover.
-        /// Serialized Name: InMageAzureV2ReplicationDetails.selectedSourceNicId
-        /// </param>
-        /// <param name="discoveryType">
-        /// A value indicating the discovery type of the machine. Value can be vCenter or physical.
-        /// Serialized Name: InMageAzureV2ReplicationDetails.discoveryType
-        /// </param>
-        /// <param name="enableRdpOnTargetOption">
-        /// The selected option to enable RDP\SSH on target vm after failover. String value of SrsDataContract.EnableRDPOnTargetOption enum.
-        /// Serialized Name: InMageAzureV2ReplicationDetails.enableRdpOnTargetOption
-        /// </param>
-        /// <param name="datastores">
-        /// The datastores of the on-premise machine. Value can be list of strings that contain datastore names.
-        /// Serialized Name: InMageAzureV2ReplicationDetails.datastores
-        /// </param>
-        /// <param name="targetVmId">
-        /// The ARM Id of the target Azure VM. This value will be null until the VM is failed over. Only after failure it will be populated with the ARM Id of the Azure VM.
-        /// Serialized Name: InMageAzureV2ReplicationDetails.targetVmId
-        /// </param>
-        /// <param name="recoveryAzureResourceGroupId">
-        /// The target resource group Id.
-        /// Serialized Name: InMageAzureV2ReplicationDetails.recoveryAzureResourceGroupId
-        /// </param>
-        /// <param name="recoveryAvailabilitySetId">
-        /// The recovery availability set Id.
-        /// Serialized Name: InMageAzureV2ReplicationDetails.recoveryAvailabilitySetId
-        /// </param>
-        /// <param name="targetAvailabilityZone">
-        /// The target availability zone.
-        /// Serialized Name: InMageAzureV2ReplicationDetails.targetAvailabilityZone
-        /// </param>
-        /// <param name="targetProximityPlacementGroupId">
-        /// The target proximity placement group Id.
-        /// Serialized Name: InMageAzureV2ReplicationDetails.targetProximityPlacementGroupId
-        /// </param>
-        /// <param name="useManagedDisks">
-        /// A value indicating whether managed disks should be used during failover.
-        /// Serialized Name: InMageAzureV2ReplicationDetails.useManagedDisks
-        /// </param>
-        /// <param name="licenseType">
-        /// License Type of the VM to be used.
-        /// Serialized Name: InMageAzureV2ReplicationDetails.licenseType
-        /// </param>
-        /// <param name="sqlServerLicenseType">
-        /// The SQL Server license type.
-        /// Serialized Name: InMageAzureV2ReplicationDetails.sqlServerLicenseType
-        /// </param>
-        /// <param name="validationErrors">
-        /// The validation errors of the on-premise machine Value can be list of validation errors.
-        /// Serialized Name: InMageAzureV2ReplicationDetails.validationErrors
-        /// </param>
-        /// <param name="lastRpoCalculatedOn">
-        /// The last RPO calculated time.
-        /// Serialized Name: InMageAzureV2ReplicationDetails.lastRpoCalculatedTime
-        /// </param>
-        /// <param name="lastUpdateReceivedOn">
-        /// The last update time received from on-prem components.
-        /// Serialized Name: InMageAzureV2ReplicationDetails.lastUpdateReceivedTime
-        /// </param>
-        /// <param name="replicaId">
-        /// The replica id of the protected item.
-        /// Serialized Name: InMageAzureV2ReplicationDetails.replicaId
-        /// </param>
-        /// <param name="osVersion">
-        /// The OS Version of the protected item.
-        /// Serialized Name: InMageAzureV2ReplicationDetails.osVersion
-        /// </param>
-        /// <param name="protectedManagedDisks">
-        /// The list of protected managed disks.
-        /// Serialized Name: InMageAzureV2ReplicationDetails.protectedManagedDisks
-        /// </param>
-        /// <param name="lastRecoveryPointReceived">
-        /// The last recovery point received time.
-        /// Serialized Name: InMageAzureV2ReplicationDetails.lastRecoveryPointReceived
-        /// </param>
-        /// <param name="firmwareType">
-        /// The firmware type of this protected item.
-        /// Serialized Name: InMageAzureV2ReplicationDetails.firmwareType
-        /// </param>
-        /// <param name="azureVmGeneration">
-        /// The target generation for this protected item.
-        /// Serialized Name: InMageAzureV2ReplicationDetails.azureVmGeneration
-        /// </param>
-        /// <param name="isAdditionalStatsAvailable">
-        /// A value indicating whether additional IR stats are available or not.
-        /// Serialized Name: InMageAzureV2ReplicationDetails.isAdditionalStatsAvailable
-        /// </param>
-        /// <param name="totalDataTransferred">
-        /// The total transferred data in bytes.
-        /// Serialized Name: InMageAzureV2ReplicationDetails.totalDataTransferred
-        /// </param>
-        /// <param name="totalProgressHealth">
-        /// The progress health.
-        /// Serialized Name: InMageAzureV2ReplicationDetails.totalProgressHealth
-        /// </param>
-        /// <param name="targetVmTags">
-        /// The target VM tags.
-        /// Serialized Name: InMageAzureV2ReplicationDetails.targetVmTags
-        /// </param>
-        /// <param name="seedManagedDiskTags">
-        /// The tags for the seed managed disks.
-        /// Serialized Name: InMageAzureV2ReplicationDetails.seedManagedDiskTags
-        /// </param>
-        /// <param name="targetManagedDiskTags">
-        /// The tags for the target managed disks.
-        /// Serialized Name: InMageAzureV2ReplicationDetails.targetManagedDiskTags
-        /// </param>
-        /// <param name="targetNicTags">
-        /// The tags for the target NICs.
-        /// Serialized Name: InMageAzureV2ReplicationDetails.targetNicTags
-        /// </param>
-        /// <param name="switchProviderBlockingErrorDetails">
-        /// The switch provider blocking error information.
-        /// Serialized Name: InMageAzureV2ReplicationDetails.switchProviderBlockingErrorDetails
-        /// </param>
-        /// <param name="switchProviderDetails">
-        /// The switch provider blocking error information.
-        /// Serialized Name: InMageAzureV2ReplicationDetails.switchProviderDetails
-        /// </param>
+        /// <param name="infrastructureVmId"> The infrastructure VM Id. </param>
+        /// <param name="vCenterInfrastructureId"> The vCenter infrastructure Id. </param>
+        /// <param name="protectionStage"> The protection stage. </param>
+        /// <param name="vmId"> The virtual machine Id. </param>
+        /// <param name="vmProtectionState"> The protection state for the vm. </param>
+        /// <param name="vmProtectionStateDescription"> The protection state description for the vm. </param>
+        /// <param name="resyncProgressPercentage"> The resync progress percentage. </param>
+        /// <param name="rpoInSeconds"> The RPO in seconds. </param>
+        /// <param name="compressedDataRateInMB"> The compressed data change rate in MB. </param>
+        /// <param name="uncompressedDataRateInMB"> The uncompressed data change rate in MB. </param>
+        /// <param name="ipAddress"> The source IP address. </param>
+        /// <param name="agentVersion"> The agent version. </param>
+        /// <param name="agentExpireOn"> Agent expiry date. </param>
+        /// <param name="isAgentUpdateRequired"> A value indicating whether installed agent needs to be updated. </param>
+        /// <param name="isRebootAfterUpdateRequired"> A value indicating whether the source server requires a restart after update. </param>
+        /// <param name="lastHeartbeat"> The last heartbeat received from the source server. </param>
+        /// <param name="processServerId"> The process server Id. </param>
+        /// <param name="processServerName"> The process server name. </param>
+        /// <param name="multiVmGroupId"> The multi vm group Id. </param>
+        /// <param name="multiVmGroupName"> The multi vm group name. </param>
+        /// <param name="multiVmSyncStatus"> A value indicating whether multi vm sync is enabled or disabled. </param>
+        /// <param name="protectedDisks"> The list of protected disks. </param>
+        /// <param name="diskResized"> A value indicating whether any disk is resized for this VM. </param>
+        /// <param name="masterTargetId"> The master target Id. </param>
+        /// <param name="sourceVmCpuCount"> The CPU count of the VM on the primary side. </param>
+        /// <param name="sourceVmRamSizeInMB"> The RAM size of the VM on the primary side. </param>
+        /// <param name="osType"> The type of the OS on the VM. </param>
+        /// <param name="vhdName"> The OS disk VHD name. </param>
+        /// <param name="osDiskId"> The id of the disk containing the OS. </param>
+        /// <param name="azureVmDiskDetails"> Azure VM Disk details. </param>
+        /// <param name="recoveryAzureVmName"> Recovery Azure given name. </param>
+        /// <param name="recoveryAzureVmSize"> The Recovery Azure VM size. </param>
+        /// <param name="recoveryAzureStorageAccount"> The recovery Azure storage account. </param>
+        /// <param name="recoveryAzureLogStorageAccountId"> The ARM id of the log storage account used for replication. This will be set to null if no log storage account was provided during enable protection. </param>
+        /// <param name="vmNics"> The PE Network details. </param>
+        /// <param name="selectedRecoveryAzureNetworkId"> The selected recovery azure network Id. </param>
+        /// <param name="selectedTfoAzureNetworkId"> The test failover virtual network. </param>
+        /// <param name="selectedSourceNicId"> The selected source nic Id which will be used as the primary nic during failover. </param>
+        /// <param name="discoveryType"> A value indicating the discovery type of the machine. Value can be vCenter or physical. </param>
+        /// <param name="enableRdpOnTargetOption"> The selected option to enable RDP\SSH on target vm after failover. String value of SrsDataContract.EnableRDPOnTargetOption enum. </param>
+        /// <param name="datastores"> The datastores of the on-premise machine. Value can be list of strings that contain datastore names. </param>
+        /// <param name="targetVmId"> The ARM Id of the target Azure VM. This value will be null until the VM is failed over. Only after failure it will be populated with the ARM Id of the Azure VM. </param>
+        /// <param name="recoveryAzureResourceGroupId"> The target resource group Id. </param>
+        /// <param name="recoveryAvailabilitySetId"> The recovery availability set Id. </param>
+        /// <param name="targetAvailabilityZone"> The target availability zone. </param>
+        /// <param name="targetProximityPlacementGroupId"> The target proximity placement group Id. </param>
+        /// <param name="useManagedDisks"> A value indicating whether managed disks should be used during failover. </param>
+        /// <param name="licenseType"> License Type of the VM to be used. </param>
+        /// <param name="sqlServerLicenseType"> The SQL Server license type. </param>
+        /// <param name="validationErrors"> The validation errors of the on-premise machine Value can be list of validation errors. </param>
+        /// <param name="lastRpoCalculatedOn"> The last RPO calculated time. </param>
+        /// <param name="lastUpdateReceivedOn"> The last update time received from on-prem components. </param>
+        /// <param name="replicaId"> The replica id of the protected item. </param>
+        /// <param name="osVersion"> The OS Version of the protected item. </param>
+        /// <param name="protectedManagedDisks"> The list of protected managed disks. </param>
+        /// <param name="lastRecoveryPointReceived"> The last recovery point received time. </param>
+        /// <param name="firmwareType"> The firmware type of this protected item. </param>
+        /// <param name="azureVmGeneration"> The target generation for this protected item. </param>
+        /// <param name="isAdditionalStatsAvailable"> A value indicating whether additional IR stats are available or not. </param>
+        /// <param name="totalDataTransferred"> The total transferred data in bytes. </param>
+        /// <param name="totalProgressHealth"> The progress health. </param>
+        /// <param name="targetVmTags"> The target VM tags. </param>
+        /// <param name="seedManagedDiskTags"> The tags for the seed managed disks. </param>
+        /// <param name="targetManagedDiskTags"> The tags for the target managed disks. </param>
+        /// <param name="targetNicTags"> The tags for the target NICs. </param>
+        /// <param name="switchProviderBlockingErrorDetails"> The switch provider blocking error information. </param>
+        /// <param name="switchProviderDetails"> The switch provider blocking error information. </param>
         /// <returns> A new <see cref="Models.InMageAzureV2ReplicationDetails"/> instance for mocking. </returns>
         public static InMageAzureV2ReplicationDetails InMageAzureV2ReplicationDetails(string infrastructureVmId = null, string vCenterInfrastructureId = null, string protectionStage = null, string vmId = null, string vmProtectionState = null, string vmProtectionStateDescription = null, int? resyncProgressPercentage = null, long? rpoInSeconds = null, double? compressedDataRateInMB = null, double? uncompressedDataRateInMB = null, IPAddress ipAddress = null, string agentVersion = null, DateTimeOffset? agentExpireOn = null, string isAgentUpdateRequired = null, string isRebootAfterUpdateRequired = null, DateTimeOffset? lastHeartbeat = null, string processServerId = null, string processServerName = null, string multiVmGroupId = null, string multiVmGroupName = null, string multiVmSyncStatus = null, IEnumerable<InMageAzureV2ProtectedDiskDetails> protectedDisks = null, string diskResized = null, string masterTargetId = null, int? sourceVmCpuCount = null, int? sourceVmRamSizeInMB = null, string osType = null, string vhdName = null, string osDiskId = null, IEnumerable<SiteRecoveryVmDiskDetails> azureVmDiskDetails = null, string recoveryAzureVmName = null, string recoveryAzureVmSize = null, string recoveryAzureStorageAccount = null, ResourceIdentifier recoveryAzureLogStorageAccountId = null, IEnumerable<VmNicDetails> vmNics = null, ResourceIdentifier selectedRecoveryAzureNetworkId = null, ResourceIdentifier selectedTfoAzureNetworkId = null, string selectedSourceNicId = null, string discoveryType = null, string enableRdpOnTargetOption = null, IEnumerable<string> datastores = null, string targetVmId = null, ResourceIdentifier recoveryAzureResourceGroupId = null, ResourceIdentifier recoveryAvailabilitySetId = null, string targetAvailabilityZone = null, ResourceIdentifier targetProximityPlacementGroupId = null, string useManagedDisks = null, string licenseType = null, string sqlServerLicenseType = null, IEnumerable<SiteRecoveryHealthError> validationErrors = null, DateTimeOffset? lastRpoCalculatedOn = null, DateTimeOffset? lastUpdateReceivedOn = null, string replicaId = null, string osVersion = null, IEnumerable<InMageAzureV2ManagedDiskDetails> protectedManagedDisks = null, DateTimeOffset? lastRecoveryPointReceived = null, string firmwareType = null, string azureVmGeneration = null, bool? isAdditionalStatsAvailable = null, long? totalDataTransferred = null, string totalProgressHealth = null, IReadOnlyDictionary<string, string> targetVmTags = null, IReadOnlyDictionary<string, string> seedManagedDiskTags = null, IReadOnlyDictionary<string, string> targetManagedDiskTags = null, IReadOnlyDictionary<string, string> targetNicTags = null, IEnumerable<InMageAzureV2SwitchProviderBlockingErrorDetails> switchProviderBlockingErrorDetails = null, InMageAzureV2SwitchProviderDetails switchProviderDetails = null)
         {
@@ -4800,30 +2190,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Initializes a new instance of InMageAzureV2SwitchProviderBlockingErrorDetails. </summary>
-        /// <param name="errorCode">
-        /// The error code.
-        /// Serialized Name: InMageAzureV2SwitchProviderBlockingErrorDetails.errorCode
-        /// </param>
-        /// <param name="errorMessage">
-        /// The error message.
-        /// Serialized Name: InMageAzureV2SwitchProviderBlockingErrorDetails.errorMessage
-        /// </param>
-        /// <param name="possibleCauses">
-        /// The possible causes.
-        /// Serialized Name: InMageAzureV2SwitchProviderBlockingErrorDetails.possibleCauses
-        /// </param>
-        /// <param name="recommendedAction">
-        /// The recommended action.
-        /// Serialized Name: InMageAzureV2SwitchProviderBlockingErrorDetails.recommendedAction
-        /// </param>
-        /// <param name="errorMessageParameters">
-        /// The error message parameters.
-        /// Serialized Name: InMageAzureV2SwitchProviderBlockingErrorDetails.errorMessageParameters
-        /// </param>
-        /// <param name="errorTags">
-        /// The error tags.
-        /// Serialized Name: InMageAzureV2SwitchProviderBlockingErrorDetails.errorTags
-        /// </param>
+        /// <param name="errorCode"> The error code. </param>
+        /// <param name="errorMessage"> The error message. </param>
+        /// <param name="possibleCauses"> The possible causes. </param>
+        /// <param name="recommendedAction"> The recommended action. </param>
+        /// <param name="errorMessageParameters"> The error message parameters. </param>
+        /// <param name="errorTags"> The error tags. </param>
         /// <returns> A new <see cref="Models.InMageAzureV2SwitchProviderBlockingErrorDetails"/> instance for mocking. </returns>
         public static InMageAzureV2SwitchProviderBlockingErrorDetails InMageAzureV2SwitchProviderBlockingErrorDetails(string errorCode = null, string errorMessage = null, string possibleCauses = null, string recommendedAction = null, IReadOnlyDictionary<string, string> errorMessageParameters = null, IReadOnlyDictionary<string, string> errorTags = null)
         {
@@ -4834,22 +2206,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Initializes a new instance of InMageAzureV2SwitchProviderDetails. </summary>
-        /// <param name="targetVaultId">
-        /// The target vault Id.
-        /// Serialized Name: InMageAzureV2SwitchProviderDetails.targetVaultId
-        /// </param>
-        /// <param name="targetResourceId">
-        /// The target resource Id.
-        /// Serialized Name: InMageAzureV2SwitchProviderDetails.targetResourceId
-        /// </param>
-        /// <param name="targetFabricId">
-        /// The target fabric Id.
-        /// Serialized Name: InMageAzureV2SwitchProviderDetails.targetFabricId
-        /// </param>
-        /// <param name="targetApplianceId">
-        /// The target appliance Id.
-        /// Serialized Name: InMageAzureV2SwitchProviderDetails.targetApplianceId
-        /// </param>
+        /// <param name="targetVaultId"> The target vault Id. </param>
+        /// <param name="targetResourceId"> The target resource Id. </param>
+        /// <param name="targetFabricId"> The target fabric Id. </param>
+        /// <param name="targetApplianceId"> The target appliance Id. </param>
         /// <returns> A new <see cref="Models.InMageAzureV2SwitchProviderDetails"/> instance for mocking. </returns>
         public static InMageAzureV2SwitchProviderDetails InMageAzureV2SwitchProviderDetails(ResourceIdentifier targetVaultId = null, ResourceIdentifier targetResourceId = null, ResourceIdentifier targetFabricId = null, string targetApplianceId = null)
         {
@@ -4857,22 +2217,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Initializes a new instance of InMageBasePolicyDetails. </summary>
-        /// <param name="recoveryPointThresholdInMinutes">
-        /// The recovery point threshold in minutes.
-        /// Serialized Name: InMageBasePolicyDetails.recoveryPointThresholdInMinutes
-        /// </param>
-        /// <param name="recoveryPointHistory">
-        /// The duration in minutes until which the recovery points need to be stored.
-        /// Serialized Name: InMageBasePolicyDetails.recoveryPointHistory
-        /// </param>
-        /// <param name="appConsistentFrequencyInMinutes">
-        /// The app consistent snapshot frequency in minutes.
-        /// Serialized Name: InMageBasePolicyDetails.appConsistentFrequencyInMinutes
-        /// </param>
-        /// <param name="multiVmSyncStatus">
-        /// A value indicating whether multi-VM sync has to be enabled.
-        /// Serialized Name: InMageBasePolicyDetails.multiVmSyncStatus
-        /// </param>
+        /// <param name="recoveryPointThresholdInMinutes"> The recovery point threshold in minutes. </param>
+        /// <param name="recoveryPointHistory"> The duration in minutes until which the recovery points need to be stored. </param>
+        /// <param name="appConsistentFrequencyInMinutes"> The app consistent snapshot frequency in minutes. </param>
+        /// <param name="multiVmSyncStatus"> A value indicating whether multi-VM sync has to be enabled. </param>
         /// <returns> A new <see cref="Models.InMageBasePolicyDetails"/> instance for mocking. </returns>
         public static InMageBasePolicyDetails InMageBasePolicyDetails(int? recoveryPointThresholdInMinutes = null, int? recoveryPointHistory = null, int? appConsistentFrequencyInMinutes = null, string multiVmSyncStatus = null)
         {
@@ -4880,30 +2228,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Initializes a new instance of InMageDiskDetails. </summary>
-        /// <param name="diskId">
-        /// The disk Id.
-        /// Serialized Name: InMageDiskDetails.diskId
-        /// </param>
-        /// <param name="diskName">
-        /// The disk name.
-        /// Serialized Name: InMageDiskDetails.diskName
-        /// </param>
-        /// <param name="diskSizeInMB">
-        /// The disk size in MB.
-        /// Serialized Name: InMageDiskDetails.diskSizeInMB
-        /// </param>
-        /// <param name="diskType">
-        /// Whether disk is system disk or data disk.
-        /// Serialized Name: InMageDiskDetails.diskType
-        /// </param>
-        /// <param name="diskConfiguration">
-        /// Whether disk is dynamic disk or basic disk.
-        /// Serialized Name: InMageDiskDetails.diskConfiguration
-        /// </param>
-        /// <param name="volumeList">
-        /// Volumes of the disk.
-        /// Serialized Name: InMageDiskDetails.volumeList
-        /// </param>
+        /// <param name="diskId"> The disk Id. </param>
+        /// <param name="diskName"> The disk name. </param>
+        /// <param name="diskSizeInMB"> The disk size in MB. </param>
+        /// <param name="diskType"> Whether disk is system disk or data disk. </param>
+        /// <param name="diskConfiguration"> Whether disk is dynamic disk or basic disk. </param>
+        /// <param name="volumeList"> Volumes of the disk. </param>
         /// <returns> A new <see cref="Models.InMageDiskDetails"/> instance for mocking. </returns>
         public static InMageDiskDetails InMageDiskDetails(string diskId = null, string diskName = null, string diskSizeInMB = null, string diskType = null, string diskConfiguration = null, IEnumerable<SiteRecoveryDiskVolumeDetails> volumeList = null)
         {
@@ -4913,30 +2243,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Initializes a new instance of InMageFabricSwitchProviderBlockingErrorDetails. </summary>
-        /// <param name="errorCode">
-        /// The error code.
-        /// Serialized Name: InMageFabricSwitchProviderBlockingErrorDetails.errorCode
-        /// </param>
-        /// <param name="errorMessage">
-        /// The error message.
-        /// Serialized Name: InMageFabricSwitchProviderBlockingErrorDetails.errorMessage
-        /// </param>
-        /// <param name="possibleCauses">
-        /// The possible causes.
-        /// Serialized Name: InMageFabricSwitchProviderBlockingErrorDetails.possibleCauses
-        /// </param>
-        /// <param name="recommendedAction">
-        /// The recommended action.
-        /// Serialized Name: InMageFabricSwitchProviderBlockingErrorDetails.recommendedAction
-        /// </param>
-        /// <param name="errorMessageParameters">
-        /// The error message parameters.
-        /// Serialized Name: InMageFabricSwitchProviderBlockingErrorDetails.errorMessageParameters
-        /// </param>
-        /// <param name="errorTags">
-        /// The error tags.
-        /// Serialized Name: InMageFabricSwitchProviderBlockingErrorDetails.errorTags
-        /// </param>
+        /// <param name="errorCode"> The error code. </param>
+        /// <param name="errorMessage"> The error message. </param>
+        /// <param name="possibleCauses"> The possible causes. </param>
+        /// <param name="recommendedAction"> The recommended action. </param>
+        /// <param name="errorMessageParameters"> The error message parameters. </param>
+        /// <param name="errorTags"> The error tags. </param>
         /// <returns> A new <see cref="Models.InMageFabricSwitchProviderBlockingErrorDetails"/> instance for mocking. </returns>
         public static InMageFabricSwitchProviderBlockingErrorDetails InMageFabricSwitchProviderBlockingErrorDetails(string errorCode = null, string errorMessage = null, string possibleCauses = null, string recommendedAction = null, IReadOnlyDictionary<string, string> errorMessageParameters = null, IReadOnlyDictionary<string, string> errorTags = null)
         {
@@ -4947,22 +2259,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Initializes a new instance of InMagePolicyDetails. </summary>
-        /// <param name="recoveryPointThresholdInMinutes">
-        /// The recovery point threshold in minutes.
-        /// Serialized Name: InMagePolicyDetails.recoveryPointThresholdInMinutes
-        /// </param>
-        /// <param name="recoveryPointHistory">
-        /// The duration in minutes until which the recovery points need to be stored.
-        /// Serialized Name: InMagePolicyDetails.recoveryPointHistory
-        /// </param>
-        /// <param name="appConsistentFrequencyInMinutes">
-        /// The app consistent snapshot frequency in minutes.
-        /// Serialized Name: InMagePolicyDetails.appConsistentFrequencyInMinutes
-        /// </param>
-        /// <param name="multiVmSyncStatus">
-        /// A value indicating whether multi-VM sync has to be enabled.
-        /// Serialized Name: InMagePolicyDetails.multiVmSyncStatus
-        /// </param>
+        /// <param name="recoveryPointThresholdInMinutes"> The recovery point threshold in minutes. </param>
+        /// <param name="recoveryPointHistory"> The duration in minutes until which the recovery points need to be stored. </param>
+        /// <param name="appConsistentFrequencyInMinutes"> The app consistent snapshot frequency in minutes. </param>
+        /// <param name="multiVmSyncStatus"> A value indicating whether multi-VM sync has to be enabled. </param>
         /// <returns> A new <see cref="Models.InMagePolicyDetails"/> instance for mocking. </returns>
         public static InMagePolicyDetails InMagePolicyDetails(int? recoveryPointThresholdInMinutes = null, int? recoveryPointHistory = null, int? appConsistentFrequencyInMinutes = null, string multiVmSyncStatus = null)
         {
@@ -4970,94 +2270,28 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Initializes a new instance of InMageProtectedDiskDetails. </summary>
-        /// <param name="diskId">
-        /// The disk id.
-        /// Serialized Name: InMageProtectedDiskDetails.diskId
-        /// </param>
-        /// <param name="diskName">
-        /// The disk name.
-        /// Serialized Name: InMageProtectedDiskDetails.diskName
-        /// </param>
-        /// <param name="protectionStage">
-        /// The protection stage.
-        /// Serialized Name: InMageProtectedDiskDetails.protectionStage
-        /// </param>
-        /// <param name="healthErrorCode">
-        /// The health error code for the disk.
-        /// Serialized Name: InMageProtectedDiskDetails.healthErrorCode
-        /// </param>
-        /// <param name="rpoInSeconds">
-        /// The RPO in seconds.
-        /// Serialized Name: InMageProtectedDiskDetails.rpoInSeconds
-        /// </param>
-        /// <param name="resyncRequired">
-        /// A value indicating whether resync is required for this disk.
-        /// Serialized Name: InMageProtectedDiskDetails.resyncRequired
-        /// </param>
-        /// <param name="resyncProgressPercentage">
-        /// The resync progress percentage.
-        /// Serialized Name: InMageProtectedDiskDetails.resyncProgressPercentage
-        /// </param>
-        /// <param name="resyncDurationInSeconds">
-        /// The resync duration in seconds.
-        /// Serialized Name: InMageProtectedDiskDetails.resyncDurationInSeconds
-        /// </param>
-        /// <param name="diskCapacityInBytes">
-        /// The disk capacity in bytes.
-        /// Serialized Name: InMageProtectedDiskDetails.diskCapacityInBytes
-        /// </param>
-        /// <param name="fileSystemCapacityInBytes">
-        /// The file system capacity in bytes.
-        /// Serialized Name: InMageProtectedDiskDetails.fileSystemCapacityInBytes
-        /// </param>
-        /// <param name="sourceDataInMB">
-        /// The source data transit in MB.
-        /// Serialized Name: InMageProtectedDiskDetails.sourceDataInMB
-        /// </param>
-        /// <param name="psDataInMB">
-        /// The PS data transit in MB.
-        /// Serialized Name: InMageProtectedDiskDetails.psDataInMB
-        /// </param>
-        /// <param name="targetDataInMB">
-        /// The target data transit in MB.
-        /// Serialized Name: InMageProtectedDiskDetails.targetDataInMB
-        /// </param>
-        /// <param name="diskResized">
-        /// A value indicating whether disk is resized.
-        /// Serialized Name: InMageProtectedDiskDetails.diskResized
-        /// </param>
-        /// <param name="lastRpoCalculatedOn">
-        /// The last RPO calculated time.
-        /// Serialized Name: InMageProtectedDiskDetails.lastRpoCalculatedTime
-        /// </param>
-        /// <param name="resyncProcessedBytes">
-        /// The resync processed bytes.
-        /// Serialized Name: InMageProtectedDiskDetails.resyncProcessedBytes
-        /// </param>
-        /// <param name="resyncTotalTransferredBytes">
-        /// The resync total transferred bytes.
-        /// Serialized Name: InMageProtectedDiskDetails.resyncTotalTransferredBytes
-        /// </param>
-        /// <param name="resyncLast15MinutesTransferredBytes">
-        /// The resync last 15 minutes transferred bytes.
-        /// Serialized Name: InMageProtectedDiskDetails.resyncLast15MinutesTransferredBytes
-        /// </param>
-        /// <param name="resyncLastDataTransferTimeUTC">
-        /// The last data transfer time in UTC.
-        /// Serialized Name: InMageProtectedDiskDetails.resyncLastDataTransferTimeUTC
-        /// </param>
-        /// <param name="resyncStartOn">
-        /// The resync start time.
-        /// Serialized Name: InMageProtectedDiskDetails.resyncStartTime
-        /// </param>
-        /// <param name="progressHealth">
-        /// The Progress Health.
-        /// Serialized Name: InMageProtectedDiskDetails.progressHealth
-        /// </param>
-        /// <param name="progressStatus">
-        /// The Progress Status.
-        /// Serialized Name: InMageProtectedDiskDetails.progressStatus
-        /// </param>
+        /// <param name="diskId"> The disk id. </param>
+        /// <param name="diskName"> The disk name. </param>
+        /// <param name="protectionStage"> The protection stage. </param>
+        /// <param name="healthErrorCode"> The health error code for the disk. </param>
+        /// <param name="rpoInSeconds"> The RPO in seconds. </param>
+        /// <param name="resyncRequired"> A value indicating whether resync is required for this disk. </param>
+        /// <param name="resyncProgressPercentage"> The resync progress percentage. </param>
+        /// <param name="resyncDurationInSeconds"> The resync duration in seconds. </param>
+        /// <param name="diskCapacityInBytes"> The disk capacity in bytes. </param>
+        /// <param name="fileSystemCapacityInBytes"> The file system capacity in bytes. </param>
+        /// <param name="sourceDataInMB"> The source data transit in MB. </param>
+        /// <param name="psDataInMB"> The PS data transit in MB. </param>
+        /// <param name="targetDataInMB"> The target data transit in MB. </param>
+        /// <param name="diskResized"> A value indicating whether disk is resized. </param>
+        /// <param name="lastRpoCalculatedOn"> The last RPO calculated time. </param>
+        /// <param name="resyncProcessedBytes"> The resync processed bytes. </param>
+        /// <param name="resyncTotalTransferredBytes"> The resync total transferred bytes. </param>
+        /// <param name="resyncLast15MinutesTransferredBytes"> The resync last 15 minutes transferred bytes. </param>
+        /// <param name="resyncLastDataTransferTimeUTC"> The last data transfer time in UTC. </param>
+        /// <param name="resyncStartOn"> The resync start time. </param>
+        /// <param name="progressHealth"> The Progress Health. </param>
+        /// <param name="progressStatus"> The Progress Status. </param>
         /// <returns> A new <see cref="Models.InMageProtectedDiskDetails"/> instance for mocking. </returns>
         public static InMageProtectedDiskDetails InMageProtectedDiskDetails(string diskId = null, string diskName = null, string protectionStage = null, string healthErrorCode = null, long? rpoInSeconds = null, string resyncRequired = null, int? resyncProgressPercentage = null, long? resyncDurationInSeconds = null, long? diskCapacityInBytes = null, long? fileSystemCapacityInBytes = null, double? sourceDataInMB = null, double? psDataInMB = null, double? targetDataInMB = null, string diskResized = null, DateTimeOffset? lastRpoCalculatedOn = null, long? resyncProcessedBytes = null, long? resyncTotalTransferredBytes = null, long? resyncLast15MinutesTransferredBytes = null, DateTimeOffset? resyncLastDataTransferTimeUTC = null, DateTimeOffset? resyncStartOn = null, string progressHealth = null, string progressStatus = null)
         {
@@ -5065,30 +2299,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Initializes a new instance of InMageRcmAgentUpgradeBlockingErrorDetails. </summary>
-        /// <param name="errorCode">
-        /// The error code.
-        /// Serialized Name: InMageRcmAgentUpgradeBlockingErrorDetails.errorCode
-        /// </param>
-        /// <param name="errorMessage">
-        /// The error message.
-        /// Serialized Name: InMageRcmAgentUpgradeBlockingErrorDetails.errorMessage
-        /// </param>
-        /// <param name="possibleCauses">
-        /// The possible causes.
-        /// Serialized Name: InMageRcmAgentUpgradeBlockingErrorDetails.possibleCauses
-        /// </param>
-        /// <param name="recommendedAction">
-        /// The recommended action.
-        /// Serialized Name: InMageRcmAgentUpgradeBlockingErrorDetails.recommendedAction
-        /// </param>
-        /// <param name="errorMessageParameters">
-        /// The error message parameters.
-        /// Serialized Name: InMageRcmAgentUpgradeBlockingErrorDetails.errorMessageParameters
-        /// </param>
-        /// <param name="errorTags">
-        /// The error tags.
-        /// Serialized Name: InMageRcmAgentUpgradeBlockingErrorDetails.errorTags
-        /// </param>
+        /// <param name="errorCode"> The error code. </param>
+        /// <param name="errorMessage"> The error message. </param>
+        /// <param name="possibleCauses"> The possible causes. </param>
+        /// <param name="recommendedAction"> The recommended action. </param>
+        /// <param name="errorMessageParameters"> The error message parameters. </param>
+        /// <param name="errorTags"> The error tags. </param>
         /// <returns> A new <see cref="Models.InMageRcmAgentUpgradeBlockingErrorDetails"/> instance for mocking. </returns>
         public static InMageRcmAgentUpgradeBlockingErrorDetails InMageRcmAgentUpgradeBlockingErrorDetails(string errorCode = null, string errorMessage = null, string possibleCauses = null, string recommendedAction = null, IReadOnlyDictionary<string, string> errorMessageParameters = null, IReadOnlyDictionary<string, string> errorTags = null)
         {
@@ -5099,317 +2315,113 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Initializes a new instance of InMageRcmApplianceDetails. </summary>
-        /// <param name="id">
-        /// The appliance Id.
-        /// Serialized Name: InMageRcmApplianceDetails.id
-        /// </param>
-        /// <param name="name">
-        /// The appliance name.
-        /// Serialized Name: InMageRcmApplianceDetails.name
-        /// </param>
-        /// <param name="fabricArmId">
-        /// The fabric ARM Id.
-        /// Serialized Name: InMageRcmApplianceDetails.fabricArmId
-        /// </param>
-        /// <param name="processServer">
-        /// The process server.
-        /// Serialized Name: InMageRcmApplianceDetails.processServer
-        /// </param>
-        /// <param name="rcmProxy">
-        /// The of RCM proxy.
-        /// Serialized Name: InMageRcmApplianceDetails.rcmProxy
-        /// </param>
-        /// <param name="pushInstaller">
-        /// The push installer.
-        /// Serialized Name: InMageRcmApplianceDetails.pushInstaller
-        /// </param>
-        /// <param name="replicationAgent">
-        /// The replication agent.
-        /// Serialized Name: InMageRcmApplianceDetails.replicationAgent
-        /// </param>
-        /// <param name="reprotectAgent">
-        /// The reprotect agent.
-        /// Serialized Name: InMageRcmApplianceDetails.reprotectAgent
-        /// </param>
-        /// <param name="marsAgent">
-        /// The Mars agent.
-        /// Serialized Name: InMageRcmApplianceDetails.marsAgent
-        /// </param>
-        /// <param name="dra">
-        /// The DRA.
-        /// Serialized Name: InMageRcmApplianceDetails.dra
-        /// </param>
-        /// <param name="switchProviderBlockingErrorDetails">
-        /// The switch provider blocking error information.
-        /// Serialized Name: InMageRcmApplianceDetails.switchProviderBlockingErrorDetails
-        /// </param>
+        /// <param name="id"> The appliance Id. </param>
+        /// <param name="name"> The appliance name. </param>
+        /// <param name="fabricArmId"> The fabric ARM Id. </param>
+        /// <param name="processServer"> The process server. </param>
+        /// <param name="rcmProxy"> The of RCM proxy. </param>
+        /// <param name="pushInstaller"> The push installer. </param>
+        /// <param name="replicationAgent"> The replication agent. </param>
+        /// <param name="reprotectAgent"> The reprotect agent. </param>
+        /// <param name="marsAgent"> The Mars agent. </param>
+        /// <param name="dra"> The DRA. </param>
+        /// <param name="switchProviderBlockingErrorDetails"> The switch provider blocking error information. </param>
         /// <returns> A new <see cref="Models.InMageRcmApplianceDetails"/> instance for mocking. </returns>
-        public static InMageRcmApplianceDetails InMageRcmApplianceDetails(string id = null, string name = null, ResourceIdentifier fabricArmId = null, ProcessServerDetails processServer = null, RcmProxyDetails rcmProxy = null, PushInstallerDetails pushInstaller = null, ReplicationAgentDetails replicationAgent = null, ReprotectAgentDetails reprotectAgent = null, MarsAgentDetails marsAgent = null, SiteRecoveryDraDetails dra = null, IEnumerable<InMageRcmFabricSwitchProviderBlockingErrorDetails> switchProviderBlockingErrorDetails = null)
+        public static InMageRcmApplianceDetails InMageRcmApplianceDetails(string id = null, string name = null, ResourceIdentifier fabricArmId = null, SiteRecoveryProcessServerDetails processServer = null, RcmProxyDetails rcmProxy = null, PushInstallerDetails pushInstaller = null, ReplicationAgentDetails replicationAgent = null, ReprotectAgentDetails reprotectAgent = null, MarsAgentDetails marsAgent = null, SiteRecoveryDraDetails dra = null, IEnumerable<InMageRcmFabricSwitchProviderBlockingErrorDetails> switchProviderBlockingErrorDetails = null)
         {
             switchProviderBlockingErrorDetails ??= new List<InMageRcmFabricSwitchProviderBlockingErrorDetails>();
 
             return new InMageRcmApplianceDetails(id, name, fabricArmId, processServer, rcmProxy, pushInstaller, replicationAgent, reprotectAgent, marsAgent, dra, switchProviderBlockingErrorDetails?.ToList());
         }
 
-        /// <summary> Initializes a new instance of ProcessServerDetails. </summary>
-        /// <param name="id">
-        /// The process server Id.
-        /// Serialized Name: ProcessServerDetails.id
-        /// </param>
-        /// <param name="name">
-        /// The process server name.
-        /// Serialized Name: ProcessServerDetails.name
-        /// </param>
-        /// <param name="biosId">
-        /// The process server Bios Id.
-        /// Serialized Name: ProcessServerDetails.biosId
-        /// </param>
-        /// <param name="fabricObjectId">
-        /// The fabric object Id.
-        /// Serialized Name: ProcessServerDetails.fabricObjectId
-        /// </param>
-        /// <param name="fqdn">
-        /// The process server Fqdn.
-        /// Serialized Name: ProcessServerDetails.fqdn
-        /// </param>
-        /// <param name="ipAddresses">
-        /// The list of IP addresses for communicating with the RCM component.
-        /// Serialized Name: ProcessServerDetails.ipAddresses
-        /// </param>
-        /// <param name="version">
-        /// The version.
-        /// Serialized Name: ProcessServerDetails.version
-        /// </param>
-        /// <param name="lastHeartbeatUtc">
-        /// The last heartbeat received from the process server.
-        /// Serialized Name: ProcessServerDetails.lastHeartbeatUtc
-        /// </param>
-        /// <param name="totalMemoryInBytes">
-        /// The total memory.
-        /// Serialized Name: ProcessServerDetails.totalMemoryInBytes
-        /// </param>
-        /// <param name="availableMemoryInBytes">
-        /// The available memory.
-        /// Serialized Name: ProcessServerDetails.availableMemoryInBytes
-        /// </param>
-        /// <param name="usedMemoryInBytes">
-        /// The used memory.
-        /// Serialized Name: ProcessServerDetails.usedMemoryInBytes
-        /// </param>
-        /// <param name="memoryUsagePercentage">
-        /// The memory usage percentage.
-        /// Serialized Name: ProcessServerDetails.memoryUsagePercentage
-        /// </param>
-        /// <param name="totalSpaceInBytes">
-        /// The total disk space.
-        /// Serialized Name: ProcessServerDetails.totalSpaceInBytes
-        /// </param>
-        /// <param name="availableSpaceInBytes">
-        /// The available disk space.
-        /// Serialized Name: ProcessServerDetails.availableSpaceInBytes
-        /// </param>
-        /// <param name="usedSpaceInBytes">
-        /// The used disk space.
-        /// Serialized Name: ProcessServerDetails.usedSpaceInBytes
-        /// </param>
-        /// <param name="freeSpacePercentage">
-        /// The free disk space percentage.
-        /// Serialized Name: ProcessServerDetails.freeSpacePercentage
-        /// </param>
-        /// <param name="throughputUploadPendingDataInBytes">
-        /// The uploading pending data in bytes.
-        /// Serialized Name: ProcessServerDetails.throughputUploadPendingDataInBytes
-        /// </param>
-        /// <param name="throughputInBytes">
-        /// The throughput in bytes.
-        /// Serialized Name: ProcessServerDetails.throughputInBytes
-        /// </param>
-        /// <param name="processorUsagePercentage">
-        /// The processor usage percentage.
-        /// Serialized Name: ProcessServerDetails.processorUsagePercentage
-        /// </param>
-        /// <param name="throughputStatus">
-        /// The throughput status.
-        /// Serialized Name: ProcessServerDetails.throughputStatus
-        /// </param>
-        /// <param name="systemLoad">
-        /// The system load.
-        /// Serialized Name: ProcessServerDetails.systemLoad
-        /// </param>
-        /// <param name="systemLoadStatus">
-        /// The system load status.
-        /// Serialized Name: ProcessServerDetails.systemLoadStatus
-        /// </param>
-        /// <param name="diskUsageStatus">
-        /// The disk usage status.
-        /// Serialized Name: ProcessServerDetails.diskUsageStatus
-        /// </param>
-        /// <param name="memoryUsageStatus">
-        /// The memory usage status.
-        /// Serialized Name: ProcessServerDetails.memoryUsageStatus
-        /// </param>
-        /// <param name="processorUsageStatus">
-        /// The processor usage status.
-        /// Serialized Name: ProcessServerDetails.processorUsageStatus
-        /// </param>
-        /// <param name="health">
-        /// The health of the process server.
-        /// Serialized Name: ProcessServerDetails.health
-        /// </param>
-        /// <param name="healthErrors">
-        /// The health errors.
-        /// Serialized Name: ProcessServerDetails.healthErrors
-        /// </param>
-        /// <param name="protectedItemCount">
-        /// The protected item count.
-        /// Serialized Name: ProcessServerDetails.protectedItemCount
-        /// </param>
-        /// <param name="historicHealth">
-        /// The historic health of the process server based on the health in last 24 hours.
-        /// Serialized Name: ProcessServerDetails.historicHealth
-        /// </param>
-        /// <returns> A new <see cref="Models.ProcessServerDetails"/> instance for mocking. </returns>
-        public static ProcessServerDetails ProcessServerDetails(string id = null, string name = null, string biosId = null, ResourceIdentifier fabricObjectId = null, string fqdn = null, IEnumerable<IPAddress> ipAddresses = null, string version = null, DateTimeOffset? lastHeartbeatUtc = null, long? totalMemoryInBytes = null, long? availableMemoryInBytes = null, long? usedMemoryInBytes = null, double? memoryUsagePercentage = null, long? totalSpaceInBytes = null, long? availableSpaceInBytes = null, long? usedSpaceInBytes = null, double? freeSpacePercentage = null, long? throughputUploadPendingDataInBytes = null, long? throughputInBytes = null, double? processorUsagePercentage = null, RcmComponentStatus? throughputStatus = null, long? systemLoad = null, RcmComponentStatus? systemLoadStatus = null, RcmComponentStatus? diskUsageStatus = null, RcmComponentStatus? memoryUsageStatus = null, RcmComponentStatus? processorUsageStatus = null, ProtectionHealth? health = null, IEnumerable<SiteRecoveryHealthError> healthErrors = null, int? protectedItemCount = null, ProtectionHealth? historicHealth = null)
+        /// <summary> Initializes a new instance of SiteRecoveryProcessServerDetails. </summary>
+        /// <param name="id"> The process server Id. </param>
+        /// <param name="name"> The process server name. </param>
+        /// <param name="biosId"> The process server Bios Id. </param>
+        /// <param name="fabricObjectId"> The fabric object Id. </param>
+        /// <param name="fqdn"> The process server Fqdn. </param>
+        /// <param name="ipAddresses"> The list of IP addresses for communicating with the RCM component. </param>
+        /// <param name="version"> The version. </param>
+        /// <param name="lastHeartbeatReceivedOn"> The last heartbeat received from the process server. </param>
+        /// <param name="totalMemoryInBytes"> The total memory. </param>
+        /// <param name="availableMemoryInBytes"> The available memory. </param>
+        /// <param name="usedMemoryInBytes"> The used memory. </param>
+        /// <param name="memoryUsagePercentage"> The memory usage percentage. </param>
+        /// <param name="totalSpaceInBytes"> The total disk space. </param>
+        /// <param name="availableSpaceInBytes"> The available disk space. </param>
+        /// <param name="usedSpaceInBytes"> The used disk space. </param>
+        /// <param name="freeSpacePercentage"> The free disk space percentage. </param>
+        /// <param name="throughputUploadPendingDataInBytes"> The uploading pending data in bytes. </param>
+        /// <param name="throughputInBytes"> The throughput in bytes. </param>
+        /// <param name="processorUsagePercentage"> The processor usage percentage. </param>
+        /// <param name="throughputStatus"> The throughput status. </param>
+        /// <param name="systemLoad"> The system load. </param>
+        /// <param name="systemLoadStatus"> The system load status. </param>
+        /// <param name="diskUsageStatus"> The disk usage status. </param>
+        /// <param name="memoryUsageStatus"> The memory usage status. </param>
+        /// <param name="processorUsageStatus"> The processor usage status. </param>
+        /// <param name="health"> The health of the process server. </param>
+        /// <param name="healthErrors"> The health errors. </param>
+        /// <param name="protectedItemCount"> The protected item count. </param>
+        /// <param name="historicHealth"> The historic health of the process server based on the health in last 24 hours. </param>
+        /// <returns> A new <see cref="Models.SiteRecoveryProcessServerDetails"/> instance for mocking. </returns>
+        public static SiteRecoveryProcessServerDetails SiteRecoveryProcessServerDetails(string id = null, string name = null, string biosId = null, ResourceIdentifier fabricObjectId = null, string fqdn = null, IEnumerable<IPAddress> ipAddresses = null, string version = null, DateTimeOffset? lastHeartbeatReceivedOn = null, long? totalMemoryInBytes = null, long? availableMemoryInBytes = null, long? usedMemoryInBytes = null, double? memoryUsagePercentage = null, long? totalSpaceInBytes = null, long? availableSpaceInBytes = null, long? usedSpaceInBytes = null, double? freeSpacePercentage = null, long? throughputUploadPendingDataInBytes = null, long? throughputInBytes = null, double? processorUsagePercentage = null, RcmComponentStatus? throughputStatus = null, long? systemLoad = null, RcmComponentStatus? systemLoadStatus = null, RcmComponentStatus? diskUsageStatus = null, RcmComponentStatus? memoryUsageStatus = null, RcmComponentStatus? processorUsageStatus = null, SiteRecoveryProtectionHealth? health = null, IEnumerable<SiteRecoveryHealthError> healthErrors = null, int? protectedItemCount = null, SiteRecoveryProtectionHealth? historicHealth = null)
         {
             ipAddresses ??= new List<IPAddress>();
             healthErrors ??= new List<SiteRecoveryHealthError>();
 
-            return new ProcessServerDetails(id, name, biosId, fabricObjectId, fqdn, ipAddresses?.ToList(), version, lastHeartbeatUtc, totalMemoryInBytes, availableMemoryInBytes, usedMemoryInBytes, memoryUsagePercentage, totalSpaceInBytes, availableSpaceInBytes, usedSpaceInBytes, freeSpacePercentage, throughputUploadPendingDataInBytes, throughputInBytes, processorUsagePercentage, throughputStatus, systemLoad, systemLoadStatus, diskUsageStatus, memoryUsageStatus, processorUsageStatus, health, healthErrors?.ToList(), protectedItemCount, historicHealth);
+            return new SiteRecoveryProcessServerDetails(id, name, biosId, fabricObjectId, fqdn, ipAddresses?.ToList(), version, lastHeartbeatReceivedOn, totalMemoryInBytes, availableMemoryInBytes, usedMemoryInBytes, memoryUsagePercentage, totalSpaceInBytes, availableSpaceInBytes, usedSpaceInBytes, freeSpacePercentage, throughputUploadPendingDataInBytes, throughputInBytes, processorUsagePercentage, throughputStatus, systemLoad, systemLoadStatus, diskUsageStatus, memoryUsageStatus, processorUsageStatus, health, healthErrors?.ToList(), protectedItemCount, historicHealth);
         }
 
         /// <summary> Initializes a new instance of RcmProxyDetails. </summary>
-        /// <param name="id">
-        /// The RCM proxy Id.
-        /// Serialized Name: RcmProxyDetails.id
-        /// </param>
-        /// <param name="name">
-        /// The RCM proxy name.
-        /// Serialized Name: RcmProxyDetails.name
-        /// </param>
-        /// <param name="biosId">
-        /// The RCM proxy Bios Id.
-        /// Serialized Name: RcmProxyDetails.biosId
-        /// </param>
-        /// <param name="fabricObjectId">
-        /// The fabric object Id.
-        /// Serialized Name: RcmProxyDetails.fabricObjectId
-        /// </param>
-        /// <param name="fqdn">
-        /// The RCM proxy Fqdn.
-        /// Serialized Name: RcmProxyDetails.fqdn
-        /// </param>
-        /// <param name="clientAuthenticationType">
-        /// The client authentication type.
-        /// Serialized Name: RcmProxyDetails.clientAuthenticationType
-        /// </param>
-        /// <param name="version">
-        /// The version.
-        /// Serialized Name: RcmProxyDetails.version
-        /// </param>
-        /// <param name="lastHeartbeatUtc">
-        /// The last heartbeat received from the RCM proxy.
-        /// Serialized Name: RcmProxyDetails.lastHeartbeatUtc
-        /// </param>
-        /// <param name="health">
-        /// The health of the RCM proxy.
-        /// Serialized Name: RcmProxyDetails.health
-        /// </param>
-        /// <param name="healthErrors">
-        /// The health errors.
-        /// Serialized Name: RcmProxyDetails.healthErrors
-        /// </param>
+        /// <param name="id"> The RCM proxy Id. </param>
+        /// <param name="name"> The RCM proxy name. </param>
+        /// <param name="biosId"> The RCM proxy Bios Id. </param>
+        /// <param name="fabricObjectId"> The fabric object Id. </param>
+        /// <param name="fqdn"> The RCM proxy Fqdn. </param>
+        /// <param name="clientAuthenticationType"> The client authentication type. </param>
+        /// <param name="version"> The version. </param>
+        /// <param name="lastHeartbeatReceivedOn"> The last heartbeat received from the RCM proxy. </param>
+        /// <param name="health"> The health of the RCM proxy. </param>
+        /// <param name="healthErrors"> The health errors. </param>
         /// <returns> A new <see cref="Models.RcmProxyDetails"/> instance for mocking. </returns>
-        public static RcmProxyDetails RcmProxyDetails(string id = null, string name = null, string biosId = null, ResourceIdentifier fabricObjectId = null, string fqdn = null, string clientAuthenticationType = null, string version = null, DateTimeOffset? lastHeartbeatUtc = null, ProtectionHealth? health = null, IEnumerable<SiteRecoveryHealthError> healthErrors = null)
+        public static RcmProxyDetails RcmProxyDetails(string id = null, string name = null, string biosId = null, ResourceIdentifier fabricObjectId = null, string fqdn = null, string clientAuthenticationType = null, string version = null, DateTimeOffset? lastHeartbeatReceivedOn = null, SiteRecoveryProtectionHealth? health = null, IEnumerable<SiteRecoveryHealthError> healthErrors = null)
         {
             healthErrors ??= new List<SiteRecoveryHealthError>();
 
-            return new RcmProxyDetails(id, name, biosId, fabricObjectId, fqdn, clientAuthenticationType, version, lastHeartbeatUtc, health, healthErrors?.ToList());
+            return new RcmProxyDetails(id, name, biosId, fabricObjectId, fqdn, clientAuthenticationType, version, lastHeartbeatReceivedOn, health, healthErrors?.ToList());
         }
 
         /// <summary> Initializes a new instance of PushInstallerDetails. </summary>
-        /// <param name="id">
-        /// The push installer Id.
-        /// Serialized Name: PushInstallerDetails.id
-        /// </param>
-        /// <param name="name">
-        /// The push installer name.
-        /// Serialized Name: PushInstallerDetails.name
-        /// </param>
-        /// <param name="biosId">
-        /// The push installer Bios Id.
-        /// Serialized Name: PushInstallerDetails.biosId
-        /// </param>
-        /// <param name="fabricObjectId">
-        /// The fabric object Id.
-        /// Serialized Name: PushInstallerDetails.fabricObjectId
-        /// </param>
-        /// <param name="fqdn">
-        /// The push installer Fqdn.
-        /// Serialized Name: PushInstallerDetails.fqdn
-        /// </param>
-        /// <param name="version">
-        /// The version.
-        /// Serialized Name: PushInstallerDetails.version
-        /// </param>
-        /// <param name="lastHeartbeatUtc">
-        /// The last heartbeat received from the push installer.
-        /// Serialized Name: PushInstallerDetails.lastHeartbeatUtc
-        /// </param>
-        /// <param name="health">
-        /// The health of the push installer.
-        /// Serialized Name: PushInstallerDetails.health
-        /// </param>
-        /// <param name="healthErrors">
-        /// The health errors.
-        /// Serialized Name: PushInstallerDetails.healthErrors
-        /// </param>
+        /// <param name="id"> The push installer Id. </param>
+        /// <param name="name"> The push installer name. </param>
+        /// <param name="biosId"> The push installer Bios Id. </param>
+        /// <param name="fabricObjectId"> The fabric object Id. </param>
+        /// <param name="fqdn"> The push installer Fqdn. </param>
+        /// <param name="version"> The version. </param>
+        /// <param name="lastHeartbeatReceivedOn"> The last heartbeat received from the push installer. </param>
+        /// <param name="health"> The health of the push installer. </param>
+        /// <param name="healthErrors"> The health errors. </param>
         /// <returns> A new <see cref="Models.PushInstallerDetails"/> instance for mocking. </returns>
-        public static PushInstallerDetails PushInstallerDetails(string id = null, string name = null, string biosId = null, ResourceIdentifier fabricObjectId = null, string fqdn = null, string version = null, DateTimeOffset? lastHeartbeatUtc = null, ProtectionHealth? health = null, IEnumerable<SiteRecoveryHealthError> healthErrors = null)
+        public static PushInstallerDetails PushInstallerDetails(string id = null, string name = null, string biosId = null, ResourceIdentifier fabricObjectId = null, string fqdn = null, string version = null, DateTimeOffset? lastHeartbeatReceivedOn = null, SiteRecoveryProtectionHealth? health = null, IEnumerable<SiteRecoveryHealthError> healthErrors = null)
         {
             healthErrors ??= new List<SiteRecoveryHealthError>();
 
-            return new PushInstallerDetails(id, name, biosId, fabricObjectId, fqdn, version, lastHeartbeatUtc, health, healthErrors?.ToList());
+            return new PushInstallerDetails(id, name, biosId, fabricObjectId, fqdn, version, lastHeartbeatReceivedOn, health, healthErrors?.ToList());
         }
 
         /// <summary> Initializes a new instance of ReplicationAgentDetails. </summary>
-        /// <param name="id">
-        /// The replication agent Id.
-        /// Serialized Name: ReplicationAgentDetails.id
-        /// </param>
-        /// <param name="name">
-        /// The replication agent name.
-        /// Serialized Name: ReplicationAgentDetails.name
-        /// </param>
-        /// <param name="biosId">
-        /// The replication agent Bios Id.
-        /// Serialized Name: ReplicationAgentDetails.biosId
-        /// </param>
-        /// <param name="fabricObjectId">
-        /// The fabric object Id.
-        /// Serialized Name: ReplicationAgentDetails.fabricObjectId
-        /// </param>
-        /// <param name="fqdn">
-        /// The replication agent Fqdn.
-        /// Serialized Name: ReplicationAgentDetails.fqdn
-        /// </param>
-        /// <param name="version">
-        /// The version.
-        /// Serialized Name: ReplicationAgentDetails.version
-        /// </param>
-        /// <param name="lastHeartbeatUtc">
-        /// The last heartbeat received from the replication agent.
-        /// Serialized Name: ReplicationAgentDetails.lastHeartbeatUtc
-        /// </param>
-        /// <param name="health">
-        /// The health of the replication agent.
-        /// Serialized Name: ReplicationAgentDetails.health
-        /// </param>
-        /// <param name="healthErrors">
-        /// The health errors.
-        /// Serialized Name: ReplicationAgentDetails.healthErrors
-        /// </param>
+        /// <param name="id"> The replication agent Id. </param>
+        /// <param name="name"> The replication agent name. </param>
+        /// <param name="biosId"> The replication agent Bios Id. </param>
+        /// <param name="fabricObjectId"> The fabric object Id. </param>
+        /// <param name="fqdn"> The replication agent Fqdn. </param>
+        /// <param name="version"> The version. </param>
+        /// <param name="lastHeartbeatUtc"> The last heartbeat received from the replication agent. </param>
+        /// <param name="health"> The health of the replication agent. </param>
+        /// <param name="healthErrors"> The health errors. </param>
         /// <returns> A new <see cref="Models.ReplicationAgentDetails"/> instance for mocking. </returns>
-        public static ReplicationAgentDetails ReplicationAgentDetails(string id = null, string name = null, string biosId = null, ResourceIdentifier fabricObjectId = null, string fqdn = null, string version = null, DateTimeOffset? lastHeartbeatUtc = null, ProtectionHealth? health = null, IEnumerable<SiteRecoveryHealthError> healthErrors = null)
+        public static ReplicationAgentDetails ReplicationAgentDetails(string id = null, string name = null, string biosId = null, ResourceIdentifier fabricObjectId = null, string fqdn = null, string version = null, DateTimeOffset? lastHeartbeatUtc = null, SiteRecoveryProtectionHealth? health = null, IEnumerable<SiteRecoveryHealthError> healthErrors = null)
         {
             healthErrors ??= new List<SiteRecoveryHealthError>();
 
@@ -5417,137 +2429,53 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Initializes a new instance of ReprotectAgentDetails. </summary>
-        /// <param name="id">
-        /// The reprotect agent Id.
-        /// Serialized Name: ReprotectAgentDetails.id
-        /// </param>
-        /// <param name="name">
-        /// The reprotect agent name.
-        /// Serialized Name: ReprotectAgentDetails.name
-        /// </param>
-        /// <param name="biosId">
-        /// The reprotect agent Bios Id.
-        /// Serialized Name: ReprotectAgentDetails.biosId
-        /// </param>
-        /// <param name="fabricObjectId">
-        /// The fabric object Id.
-        /// Serialized Name: ReprotectAgentDetails.fabricObjectId
-        /// </param>
-        /// <param name="fqdn">
-        /// The reprotect agent Fqdn.
-        /// Serialized Name: ReprotectAgentDetails.fqdn
-        /// </param>
-        /// <param name="version">
-        /// The version.
-        /// Serialized Name: ReprotectAgentDetails.version
-        /// </param>
-        /// <param name="lastHeartbeatUtc">
-        /// The last heartbeat received from the reprotect agent.
-        /// Serialized Name: ReprotectAgentDetails.lastHeartbeatUtc
-        /// </param>
-        /// <param name="health">
-        /// The health of the reprotect agent.
-        /// Serialized Name: ReprotectAgentDetails.health
-        /// </param>
-        /// <param name="healthErrors">
-        /// The health errors.
-        /// Serialized Name: ReprotectAgentDetails.healthErrors
-        /// </param>
-        /// <param name="protectedItemCount">
-        /// The protected item count.
-        /// Serialized Name: ReprotectAgentDetails.protectedItemCount
-        /// </param>
-        /// <param name="accessibleDatastores">
-        /// The list of accessible datastores fetched from discovery.
-        /// Serialized Name: ReprotectAgentDetails.accessibleDatastores
-        /// </param>
-        /// <param name="vCenterId">
-        /// The Vcenter Id.
-        /// Serialized Name: ReprotectAgentDetails.vcenterId
-        /// </param>
-        /// <param name="lastDiscoveryInUtc">
-        /// The last time when SDS information discovered in SRS.
-        /// Serialized Name: ReprotectAgentDetails.lastDiscoveryInUtc
-        /// </param>
+        /// <param name="id"> The reprotect agent Id. </param>
+        /// <param name="name"> The reprotect agent name. </param>
+        /// <param name="biosId"> The reprotect agent Bios Id. </param>
+        /// <param name="fabricObjectId"> The fabric object Id. </param>
+        /// <param name="fqdn"> The reprotect agent Fqdn. </param>
+        /// <param name="version"> The version. </param>
+        /// <param name="lastHeartbeatReceivedOn"> The last heartbeat received from the reprotect agent. </param>
+        /// <param name="health"> The health of the reprotect agent. </param>
+        /// <param name="healthErrors"> The health errors. </param>
+        /// <param name="protectedItemCount"> The protected item count. </param>
+        /// <param name="accessibleDatastores"> The list of accessible datastores fetched from discovery. </param>
+        /// <param name="vCenterId"> The Vcenter Id. </param>
+        /// <param name="last"> The last time when SDS information discovered in SRS. </param>
         /// <returns> A new <see cref="Models.ReprotectAgentDetails"/> instance for mocking. </returns>
-        public static ReprotectAgentDetails ReprotectAgentDetails(string id = null, string name = null, string biosId = null, ResourceIdentifier fabricObjectId = null, string fqdn = null, string version = null, DateTimeOffset? lastHeartbeatUtc = null, ProtectionHealth? health = null, IEnumerable<SiteRecoveryHealthError> healthErrors = null, int? protectedItemCount = null, IEnumerable<string> accessibleDatastores = null, string vCenterId = null, DateTimeOffset? lastDiscoveryInUtc = null)
+        public static ReprotectAgentDetails ReprotectAgentDetails(string id = null, string name = null, string biosId = null, ResourceIdentifier fabricObjectId = null, string fqdn = null, string version = null, DateTimeOffset? lastHeartbeatReceivedOn = null, SiteRecoveryProtectionHealth? health = null, IEnumerable<SiteRecoveryHealthError> healthErrors = null, int? protectedItemCount = null, IEnumerable<string> accessibleDatastores = null, string vCenterId = null, DateTimeOffset? last = null)
         {
             healthErrors ??= new List<SiteRecoveryHealthError>();
             accessibleDatastores ??= new List<string>();
 
-            return new ReprotectAgentDetails(id, name, biosId, fabricObjectId, fqdn, version, lastHeartbeatUtc, health, healthErrors?.ToList(), protectedItemCount, accessibleDatastores?.ToList(), vCenterId, lastDiscoveryInUtc);
+            return new ReprotectAgentDetails(id, name, biosId, fabricObjectId, fqdn, version, lastHeartbeatReceivedOn, health, healthErrors?.ToList(), protectedItemCount, accessibleDatastores?.ToList(), vCenterId, last);
         }
 
         /// <summary> Initializes a new instance of MarsAgentDetails. </summary>
-        /// <param name="id">
-        /// The Mars agent Id.
-        /// Serialized Name: MarsAgentDetails.id
-        /// </param>
-        /// <param name="name">
-        /// The Mars agent name.
-        /// Serialized Name: MarsAgentDetails.name
-        /// </param>
-        /// <param name="biosId">
-        /// The Mars agent Bios Id.
-        /// Serialized Name: MarsAgentDetails.biosId
-        /// </param>
-        /// <param name="fabricObjectId">
-        /// The fabric object Id.
-        /// Serialized Name: MarsAgentDetails.fabricObjectId
-        /// </param>
-        /// <param name="fqdn">
-        /// The Mars agent Fqdn.
-        /// Serialized Name: MarsAgentDetails.fqdn
-        /// </param>
-        /// <param name="version">
-        /// The version.
-        /// Serialized Name: MarsAgentDetails.version
-        /// </param>
-        /// <param name="lastHeartbeatUtc">
-        /// The last heartbeat received from the Mars agent.
-        /// Serialized Name: MarsAgentDetails.lastHeartbeatUtc
-        /// </param>
-        /// <param name="health">
-        /// The health of the Mars agent.
-        /// Serialized Name: MarsAgentDetails.health
-        /// </param>
-        /// <param name="healthErrors">
-        /// The health errors.
-        /// Serialized Name: MarsAgentDetails.healthErrors
-        /// </param>
+        /// <param name="id"> The Mars agent Id. </param>
+        /// <param name="name"> The Mars agent name. </param>
+        /// <param name="biosId"> The Mars agent Bios Id. </param>
+        /// <param name="fabricObjectId"> The fabric object Id. </param>
+        /// <param name="fqdn"> The Mars agent Fqdn. </param>
+        /// <param name="version"> The version. </param>
+        /// <param name="lastHeartbeatReceivedOn"> The last heartbeat received from the Mars agent. </param>
+        /// <param name="health"> The health of the Mars agent. </param>
+        /// <param name="healthErrors"> The health errors. </param>
         /// <returns> A new <see cref="Models.MarsAgentDetails"/> instance for mocking. </returns>
-        public static MarsAgentDetails MarsAgentDetails(string id = null, string name = null, string biosId = null, ResourceIdentifier fabricObjectId = null, string fqdn = null, string version = null, DateTimeOffset? lastHeartbeatUtc = null, ProtectionHealth? health = null, IEnumerable<SiteRecoveryHealthError> healthErrors = null)
+        public static MarsAgentDetails MarsAgentDetails(string id = null, string name = null, string biosId = null, ResourceIdentifier fabricObjectId = null, string fqdn = null, string version = null, DateTimeOffset? lastHeartbeatReceivedOn = null, SiteRecoveryProtectionHealth? health = null, IEnumerable<SiteRecoveryHealthError> healthErrors = null)
         {
             healthErrors ??= new List<SiteRecoveryHealthError>();
 
-            return new MarsAgentDetails(id, name, biosId, fabricObjectId, fqdn, version, lastHeartbeatUtc, health, healthErrors?.ToList());
+            return new MarsAgentDetails(id, name, biosId, fabricObjectId, fqdn, version, lastHeartbeatReceivedOn, health, healthErrors?.ToList());
         }
 
         /// <summary> Initializes a new instance of InMageRcmFabricSwitchProviderBlockingErrorDetails. </summary>
-        /// <param name="errorCode">
-        /// The error code.
-        /// Serialized Name: InMageRcmFabricSwitchProviderBlockingErrorDetails.errorCode
-        /// </param>
-        /// <param name="errorMessage">
-        /// The error message.
-        /// Serialized Name: InMageRcmFabricSwitchProviderBlockingErrorDetails.errorMessage
-        /// </param>
-        /// <param name="possibleCauses">
-        /// The possible causes.
-        /// Serialized Name: InMageRcmFabricSwitchProviderBlockingErrorDetails.possibleCauses
-        /// </param>
-        /// <param name="recommendedAction">
-        /// The recommended action.
-        /// Serialized Name: InMageRcmFabricSwitchProviderBlockingErrorDetails.recommendedAction
-        /// </param>
-        /// <param name="errorMessageParameters">
-        /// The error message parameters.
-        /// Serialized Name: InMageRcmFabricSwitchProviderBlockingErrorDetails.errorMessageParameters
-        /// </param>
-        /// <param name="errorTags">
-        /// The error tags.
-        /// Serialized Name: InMageRcmFabricSwitchProviderBlockingErrorDetails.errorTags
-        /// </param>
+        /// <param name="errorCode"> The error code. </param>
+        /// <param name="errorMessage"> The error message. </param>
+        /// <param name="possibleCauses"> The possible causes. </param>
+        /// <param name="recommendedAction"> The recommended action. </param>
+        /// <param name="errorMessageParameters"> The error message parameters. </param>
+        /// <param name="errorTags"> The error tags. </param>
         /// <returns> A new <see cref="Models.InMageRcmFabricSwitchProviderBlockingErrorDetails"/> instance for mocking. </returns>
         public static InMageRcmFabricSwitchProviderBlockingErrorDetails InMageRcmFabricSwitchProviderBlockingErrorDetails(string errorCode = null, string errorMessage = null, string possibleCauses = null, string recommendedAction = null, IReadOnlyDictionary<string, string> errorMessageParameters = null, IReadOnlyDictionary<string, string> errorTags = null)
         {
@@ -5558,10 +2486,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Initializes a new instance of InMageRcmApplianceSpecificDetails. </summary>
-        /// <param name="appliances">
-        /// The list of appliances.
-        /// Serialized Name: InMageRcmApplianceSpecificDetails.appliances
-        /// </param>
+        /// <param name="appliances"> The list of appliances. </param>
         /// <returns> A new <see cref="Models.InMageRcmApplianceSpecificDetails"/> instance for mocking. </returns>
         public static InMageRcmApplianceSpecificDetails InMageRcmApplianceSpecificDetails(IEnumerable<InMageRcmApplianceDetails> appliances = null)
         {
@@ -5571,54 +2496,18 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Initializes a new instance of InMageRcmDiscoveredProtectedVmDetails. </summary>
-        /// <param name="vCenterId">
-        /// The VCenter Id.
-        /// Serialized Name: InMageRcmDiscoveredProtectedVmDetails.vCenterId
-        /// </param>
-        /// <param name="vCenterFqdn">
-        /// The VCenter fqdn.
-        /// Serialized Name: InMageRcmDiscoveredProtectedVmDetails.vCenterFqdn
-        /// </param>
-        /// <param name="datastores">
-        /// The list of datastores.
-        /// Serialized Name: InMageRcmDiscoveredProtectedVmDetails.datastores
-        /// </param>
-        /// <param name="ipAddresses">
-        /// The list of IP addresses.
-        /// Serialized Name: InMageRcmDiscoveredProtectedVmDetails.ipAddresses
-        /// </param>
-        /// <param name="vmwareToolsStatus">
-        /// The VMware tools status.
-        /// Serialized Name: InMageRcmDiscoveredProtectedVmDetails.vmwareToolsStatus
-        /// </param>
-        /// <param name="powerStatus">
-        /// The VM power status.
-        /// Serialized Name: InMageRcmDiscoveredProtectedVmDetails.powerStatus
-        /// </param>
-        /// <param name="vmFqdn">
-        /// The VM fqdn.
-        /// Serialized Name: InMageRcmDiscoveredProtectedVmDetails.vmFqdn
-        /// </param>
-        /// <param name="osName">
-        /// The VM's OS name.
-        /// Serialized Name: InMageRcmDiscoveredProtectedVmDetails.osName
-        /// </param>
-        /// <param name="createdOn">
-        /// The SDS created timestamp.
-        /// Serialized Name: InMageRcmDiscoveredProtectedVmDetails.createdTimestamp
-        /// </param>
-        /// <param name="updatedOn">
-        /// The SDS updated timestamp.
-        /// Serialized Name: InMageRcmDiscoveredProtectedVmDetails.updatedTimestamp
-        /// </param>
-        /// <param name="isDeleted">
-        /// A value indicating whether the VM is deleted.
-        /// Serialized Name: InMageRcmDiscoveredProtectedVmDetails.isDeleted
-        /// </param>
-        /// <param name="lastDiscoveryTimeInUtc">
-        /// The last time when SDS information discovered in SRS.
-        /// Serialized Name: InMageRcmDiscoveredProtectedVmDetails.lastDiscoveryTimeInUtc
-        /// </param>
+        /// <param name="vCenterId"> The VCenter Id. </param>
+        /// <param name="vCenterFqdn"> The VCenter fqdn. </param>
+        /// <param name="datastores"> The list of datastores. </param>
+        /// <param name="ipAddresses"> The list of IP addresses. </param>
+        /// <param name="vmwareToolsStatus"> The VMware tools status. </param>
+        /// <param name="powerStatus"> The VM power status. </param>
+        /// <param name="vmFqdn"> The VM fqdn. </param>
+        /// <param name="osName"> The VM's OS name. </param>
+        /// <param name="createdOn"> The SDS created timestamp. </param>
+        /// <param name="updatedOn"> The SDS updated timestamp. </param>
+        /// <param name="isDeleted"> A value indicating whether the VM is deleted. </param>
+        /// <param name="lastDiscoveryTimeInUtc"> The last time when SDS information discovered in SRS. </param>
         /// <returns> A new <see cref="Models.InMageRcmDiscoveredProtectedVmDetails"/> instance for mocking. </returns>
         public static InMageRcmDiscoveredProtectedVmDetails InMageRcmDiscoveredProtectedVmDetails(string vCenterId = null, string vCenterFqdn = null, IEnumerable<string> datastores = null, IEnumerable<IPAddress> ipAddresses = null, string vmwareToolsStatus = null, string powerStatus = null, string vmFqdn = null, string osName = null, DateTimeOffset? createdOn = null, DateTimeOffset? updatedOn = null, bool? isDeleted = null, DateTimeOffset? lastDiscoveryTimeInUtc = null)
         {
@@ -5629,38 +2518,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Initializes a new instance of InMageRcmEventDetails. </summary>
-        /// <param name="protectedItemName">
-        /// The protected item name.
-        /// Serialized Name: InMageRcmEventDetails.protectedItemName
-        /// </param>
-        /// <param name="vmName">
-        /// The protected item name.
-        /// Serialized Name: InMageRcmEventDetails.vmName
-        /// </param>
-        /// <param name="latestAgentVersion">
-        /// The latest agent version.
-        /// Serialized Name: InMageRcmEventDetails.latestAgentVersion
-        /// </param>
-        /// <param name="jobId">
-        /// The job Id.
-        /// Serialized Name: InMageRcmEventDetails.jobId
-        /// </param>
-        /// <param name="fabricName">
-        /// The fabric name.
-        /// Serialized Name: InMageRcmEventDetails.fabricName
-        /// </param>
-        /// <param name="applianceName">
-        /// The appliance name.
-        /// Serialized Name: InMageRcmEventDetails.applianceName
-        /// </param>
-        /// <param name="serverType">
-        /// The server type.
-        /// Serialized Name: InMageRcmEventDetails.serverType
-        /// </param>
-        /// <param name="componentDisplayName">
-        /// The component display name.
-        /// Serialized Name: InMageRcmEventDetails.componentDisplayName
-        /// </param>
+        /// <param name="protectedItemName"> The protected item name. </param>
+        /// <param name="vmName"> The protected item name. </param>
+        /// <param name="latestAgentVersion"> The latest agent version. </param>
+        /// <param name="jobId"> The job Id. </param>
+        /// <param name="fabricName"> The fabric name. </param>
+        /// <param name="applianceName"> The appliance name. </param>
+        /// <param name="serverType"> The server type. </param>
+        /// <param name="componentDisplayName"> The component display name. </param>
         /// <returns> A new <see cref="Models.InMageRcmEventDetails"/> instance for mocking. </returns>
         public static InMageRcmEventDetails InMageRcmEventDetails(string protectedItemName = null, string vmName = null, string latestAgentVersion = null, ResourceIdentifier jobId = null, string fabricName = null, string applianceName = null, string serverType = null, string componentDisplayName = null)
         {
@@ -5668,74 +2533,26 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Initializes a new instance of InMageRcmFabricSpecificDetails. </summary>
-        /// <param name="vmwareSiteId">
-        /// The ARM Id of the VMware site.
-        /// Serialized Name: InMageRcmFabricSpecificDetails.vmwareSiteId
-        /// </param>
-        /// <param name="physicalSiteId">
-        /// The ARM Id of the physical site.
-        /// Serialized Name: InMageRcmFabricSpecificDetails.physicalSiteId
-        /// </param>
-        /// <param name="serviceEndpoint">
-        /// The service endpoint.
-        /// Serialized Name: InMageRcmFabricSpecificDetails.serviceEndpoint
-        /// </param>
-        /// <param name="serviceResourceId">
-        /// The service resource Id.
-        /// Serialized Name: InMageRcmFabricSpecificDetails.serviceResourceId
-        /// </param>
-        /// <param name="serviceContainerId">
-        /// The service container Id.
-        /// Serialized Name: InMageRcmFabricSpecificDetails.serviceContainerId
-        /// </param>
-        /// <param name="dataPlaneUri">
-        /// The data plane Uri.
-        /// Serialized Name: InMageRcmFabricSpecificDetails.dataPlaneUri
-        /// </param>
-        /// <param name="controlPlaneUri">
-        /// The control plane Uri.
-        /// Serialized Name: InMageRcmFabricSpecificDetails.controlPlaneUri
-        /// </param>
-        /// <param name="sourceAgentIdentityDetails">
-        /// The source agent identity details.
-        /// Serialized Name: InMageRcmFabricSpecificDetails.sourceAgentIdentityDetails
-        /// </param>
-        /// <param name="processServers">
-        /// The list of process servers.
-        /// Serialized Name: InMageRcmFabricSpecificDetails.processServers
-        /// </param>
-        /// <param name="rcmProxies">
-        /// The list of RCM proxies.
-        /// Serialized Name: InMageRcmFabricSpecificDetails.rcmProxies
-        /// </param>
-        /// <param name="pushInstallers">
-        /// The list of push installers.
-        /// Serialized Name: InMageRcmFabricSpecificDetails.pushInstallers
-        /// </param>
-        /// <param name="replicationAgents">
-        /// The list of replication agents.
-        /// Serialized Name: InMageRcmFabricSpecificDetails.replicationAgents
-        /// </param>
-        /// <param name="reprotectAgents">
-        /// The list of reprotect agents.
-        /// Serialized Name: InMageRcmFabricSpecificDetails.reprotectAgents
-        /// </param>
-        /// <param name="marsAgents">
-        /// The list of Mars agents.
-        /// Serialized Name: InMageRcmFabricSpecificDetails.marsAgents
-        /// </param>
-        /// <param name="dras">
-        /// The list of DRAs.
-        /// Serialized Name: InMageRcmFabricSpecificDetails.dras
-        /// </param>
-        /// <param name="agentDetails">
-        /// The list of agent details.
-        /// Serialized Name: InMageRcmFabricSpecificDetails.agentDetails
-        /// </param>
+        /// <param name="vmwareSiteId"> The ARM Id of the VMware site. </param>
+        /// <param name="physicalSiteId"> The ARM Id of the physical site. </param>
+        /// <param name="serviceEndpoint"> The service endpoint. </param>
+        /// <param name="serviceResourceId"> The service resource Id. </param>
+        /// <param name="serviceContainerId"> The service container Id. </param>
+        /// <param name="dataPlaneUri"> The data plane Uri. </param>
+        /// <param name="controlPlaneUri"> The control plane Uri. </param>
+        /// <param name="sourceAgentIdentityDetails"> The source agent identity details. </param>
+        /// <param name="processServers"> The list of process servers. </param>
+        /// <param name="rcmProxies"> The list of RCM proxies. </param>
+        /// <param name="pushInstallers"> The list of push installers. </param>
+        /// <param name="replicationAgents"> The list of replication agents. </param>
+        /// <param name="reprotectAgents"> The list of reprotect agents. </param>
+        /// <param name="marsAgents"> The list of Mars agents. </param>
+        /// <param name="dras"> The list of DRAs. </param>
+        /// <param name="agentDetails"> The list of agent details. </param>
         /// <returns> A new <see cref="Models.InMageRcmFabricSpecificDetails"/> instance for mocking. </returns>
-        public static InMageRcmFabricSpecificDetails InMageRcmFabricSpecificDetails(string vmwareSiteId = null, string physicalSiteId = null, string serviceEndpoint = null, string serviceResourceId = null, string serviceContainerId = null, Uri dataPlaneUri = null, Uri controlPlaneUri = null, SiteRecoveryIdentityProviderDetails sourceAgentIdentityDetails = null, IEnumerable<ProcessServerDetails> processServers = null, IEnumerable<RcmProxyDetails> rcmProxies = null, IEnumerable<PushInstallerDetails> pushInstallers = null, IEnumerable<ReplicationAgentDetails> replicationAgents = null, IEnumerable<ReprotectAgentDetails> reprotectAgents = null, IEnumerable<MarsAgentDetails> marsAgents = null, IEnumerable<SiteRecoveryDraDetails> dras = null, IEnumerable<SiteRecoveryAgentDetails> agentDetails = null)
+        public static InMageRcmFabricSpecificDetails InMageRcmFabricSpecificDetails(ResourceIdentifier vmwareSiteId = null, ResourceIdentifier physicalSiteId = null, string serviceEndpoint = null, string serviceResourceId = null, string serviceContainerId = null, Uri dataPlaneUri = null, Uri controlPlaneUri = null, IdentityProviderDetails sourceAgentIdentityDetails = null, IEnumerable<SiteRecoveryProcessServerDetails> processServers = null, IEnumerable<RcmProxyDetails> rcmProxies = null, IEnumerable<PushInstallerDetails> pushInstallers = null, IEnumerable<ReplicationAgentDetails> replicationAgents = null, IEnumerable<ReprotectAgentDetails> reprotectAgents = null, IEnumerable<MarsAgentDetails> marsAgents = null, IEnumerable<SiteRecoveryDraDetails> dras = null, IEnumerable<SiteRecoveryAgentDetails> agentDetails = null)
         {
-            processServers ??= new List<ProcessServerDetails>();
+            processServers ??= new List<SiteRecoveryProcessServerDetails>();
             rcmProxies ??= new List<RcmProxyDetails>();
             pushInstallers ??= new List<PushInstallerDetails>();
             replicationAgents ??= new List<ReplicationAgentDetails>();
@@ -5748,54 +2565,18 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Initializes a new instance of InMageRcmFailbackDiscoveredProtectedVmDetails. </summary>
-        /// <param name="vCenterId">
-        /// The VCenter Id.
-        /// Serialized Name: InMageRcmFailbackDiscoveredProtectedVmDetails.vCenterId
-        /// </param>
-        /// <param name="vCenterFqdn">
-        /// The VCenter fqdn.
-        /// Serialized Name: InMageRcmFailbackDiscoveredProtectedVmDetails.vCenterFqdn
-        /// </param>
-        /// <param name="datastores">
-        /// The list of datastores.
-        /// Serialized Name: InMageRcmFailbackDiscoveredProtectedVmDetails.datastores
-        /// </param>
-        /// <param name="ipAddresses">
-        /// The list of IP addresses.
-        /// Serialized Name: InMageRcmFailbackDiscoveredProtectedVmDetails.ipAddresses
-        /// </param>
-        /// <param name="vmwareToolsStatus">
-        /// The VMware tools status.
-        /// Serialized Name: InMageRcmFailbackDiscoveredProtectedVmDetails.vmwareToolsStatus
-        /// </param>
-        /// <param name="powerStatus">
-        /// The VM power status.
-        /// Serialized Name: InMageRcmFailbackDiscoveredProtectedVmDetails.powerStatus
-        /// </param>
-        /// <param name="vmFqdn">
-        /// The VM fqdn.
-        /// Serialized Name: InMageRcmFailbackDiscoveredProtectedVmDetails.vmFqdn
-        /// </param>
-        /// <param name="osName">
-        /// The VM's OS name.
-        /// Serialized Name: InMageRcmFailbackDiscoveredProtectedVmDetails.osName
-        /// </param>
-        /// <param name="createdOn">
-        /// The SDS created timestamp.
-        /// Serialized Name: InMageRcmFailbackDiscoveredProtectedVmDetails.createdTimestamp
-        /// </param>
-        /// <param name="updatedOn">
-        /// The SDS updated timestamp.
-        /// Serialized Name: InMageRcmFailbackDiscoveredProtectedVmDetails.updatedTimestamp
-        /// </param>
-        /// <param name="isDeleted">
-        /// A value indicating whether the VM is deleted.
-        /// Serialized Name: InMageRcmFailbackDiscoveredProtectedVmDetails.isDeleted
-        /// </param>
-        /// <param name="lastDiscoveredOn">
-        /// The last time when SDS information discovered in SRS.
-        /// Serialized Name: InMageRcmFailbackDiscoveredProtectedVmDetails.lastDiscoveryTimeInUtc
-        /// </param>
+        /// <param name="vCenterId"> The VCenter Id. </param>
+        /// <param name="vCenterFqdn"> The VCenter fqdn. </param>
+        /// <param name="datastores"> The list of datastores. </param>
+        /// <param name="ipAddresses"> The list of IP addresses. </param>
+        /// <param name="vmwareToolsStatus"> The VMware tools status. </param>
+        /// <param name="powerStatus"> The VM power status. </param>
+        /// <param name="vmFqdn"> The VM fqdn. </param>
+        /// <param name="osName"> The VM's OS name. </param>
+        /// <param name="createdOn"> The SDS created timestamp. </param>
+        /// <param name="updatedOn"> The SDS updated timestamp. </param>
+        /// <param name="isDeleted"> A value indicating whether the VM is deleted. </param>
+        /// <param name="lastDiscoveredOn"> The last time when SDS information discovered in SRS. </param>
         /// <returns> A new <see cref="Models.InMageRcmFailbackDiscoveredProtectedVmDetails"/> instance for mocking. </returns>
         public static InMageRcmFailbackDiscoveredProtectedVmDetails InMageRcmFailbackDiscoveredProtectedVmDetails(string vCenterId = null, string vCenterFqdn = null, IEnumerable<string> datastores = null, IEnumerable<IPAddress> ipAddresses = null, string vmwareToolsStatus = null, string powerStatus = null, string vmFqdn = null, string osName = null, DateTimeOffset? createdOn = null, DateTimeOffset? updatedOn = null, bool? isDeleted = null, DateTimeOffset? lastDiscoveredOn = null)
         {
@@ -5806,26 +2587,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Initializes a new instance of InMageRcmFailbackEventDetails. </summary>
-        /// <param name="protectedItemName">
-        /// The protected item name.
-        /// Serialized Name: InMageRcmFailbackEventDetails.protectedItemName
-        /// </param>
-        /// <param name="vmName">
-        /// The protected item name.
-        /// Serialized Name: InMageRcmFailbackEventDetails.vmName
-        /// </param>
-        /// <param name="applianceName">
-        /// The appliance name.
-        /// Serialized Name: InMageRcmFailbackEventDetails.applianceName
-        /// </param>
-        /// <param name="serverType">
-        /// The server type.
-        /// Serialized Name: InMageRcmFailbackEventDetails.serverType
-        /// </param>
-        /// <param name="componentDisplayName">
-        /// The component display name.
-        /// Serialized Name: InMageRcmFailbackEventDetails.componentDisplayName
-        /// </param>
+        /// <param name="protectedItemName"> The protected item name. </param>
+        /// <param name="vmName"> The protected item name. </param>
+        /// <param name="applianceName"> The appliance name. </param>
+        /// <param name="serverType"> The server type. </param>
+        /// <param name="componentDisplayName"> The component display name. </param>
         /// <returns> A new <see cref="Models.InMageRcmFailbackEventDetails"/> instance for mocking. </returns>
         public static InMageRcmFailbackEventDetails InMageRcmFailbackEventDetails(string protectedItemName = null, string vmName = null, string applianceName = null, string serverType = null, string componentDisplayName = null)
         {
@@ -5833,42 +2599,15 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Initializes a new instance of InMageRcmFailbackMobilityAgentDetails. </summary>
-        /// <param name="version">
-        /// The agent version.
-        /// Serialized Name: InMageRcmFailbackMobilityAgentDetails.version
-        /// </param>
-        /// <param name="latestVersion">
-        /// The latest agent version available.
-        /// Serialized Name: InMageRcmFailbackMobilityAgentDetails.latestVersion
-        /// </param>
-        /// <param name="driverVersion">
-        /// The driver version.
-        /// Serialized Name: InMageRcmFailbackMobilityAgentDetails.driverVersion
-        /// </param>
-        /// <param name="latestUpgradableVersionWithoutReboot">
-        /// The latest upgradeable version available without reboot.
-        /// Serialized Name: InMageRcmFailbackMobilityAgentDetails.latestUpgradableVersionWithoutReboot
-        /// </param>
-        /// <param name="agentVersionExpireOn">
-        /// The agent version expiry date.
-        /// Serialized Name: InMageRcmFailbackMobilityAgentDetails.agentVersionExpiryDate
-        /// </param>
-        /// <param name="driverVersionExpireOn">
-        /// The driver version expiry date.
-        /// Serialized Name: InMageRcmFailbackMobilityAgentDetails.driverVersionExpiryDate
-        /// </param>
-        /// <param name="lastHeartbeatReceivedOn">
-        /// The time of the last heartbeat received from the agent.
-        /// Serialized Name: InMageRcmFailbackMobilityAgentDetails.lastHeartbeatUtc
-        /// </param>
-        /// <param name="reasonsBlockingUpgrade">
-        /// The whether update is possible or not.
-        /// Serialized Name: InMageRcmFailbackMobilityAgentDetails.reasonsBlockingUpgrade
-        /// </param>
-        /// <param name="isUpgradeable">
-        /// A value indicating whether agent is upgradeable or not.
-        /// Serialized Name: InMageRcmFailbackMobilityAgentDetails.isUpgradeable
-        /// </param>
+        /// <param name="version"> The agent version. </param>
+        /// <param name="latestVersion"> The latest agent version available. </param>
+        /// <param name="driverVersion"> The driver version. </param>
+        /// <param name="latestUpgradableVersionWithoutReboot"> The latest upgradeable version available without reboot. </param>
+        /// <param name="agentVersionExpireOn"> The agent version expiry date. </param>
+        /// <param name="driverVersionExpireOn"> The driver version expiry date. </param>
+        /// <param name="lastHeartbeatReceivedOn"> The time of the last heartbeat received from the agent. </param>
+        /// <param name="reasonsBlockingUpgrade"> The whether update is possible or not. </param>
+        /// <param name="isUpgradeable"> A value indicating whether agent is upgradeable or not. </param>
         /// <returns> A new <see cref="Models.InMageRcmFailbackMobilityAgentDetails"/> instance for mocking. </returns>
         public static InMageRcmFailbackMobilityAgentDetails InMageRcmFailbackMobilityAgentDetails(string version = null, string latestVersion = null, string driverVersion = null, string latestUpgradableVersionWithoutReboot = null, DateTimeOffset? agentVersionExpireOn = null, DateTimeOffset? driverVersionExpireOn = null, DateTimeOffset? lastHeartbeatReceivedOn = null, IEnumerable<AgentUpgradeBlockedReason> reasonsBlockingUpgrade = null, string isUpgradeable = null)
         {
@@ -5878,22 +2617,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Initializes a new instance of InMageRcmFailbackNicDetails. </summary>
-        /// <param name="macAddress">
-        /// The mac address.
-        /// Serialized Name: InMageRcmFailbackNicDetails.macAddress
-        /// </param>
-        /// <param name="networkName">
-        /// The network name.
-        /// Serialized Name: InMageRcmFailbackNicDetails.networkName
-        /// </param>
-        /// <param name="adapterType">
-        /// The adapter type.
-        /// Serialized Name: InMageRcmFailbackNicDetails.adapterType
-        /// </param>
-        /// <param name="sourceIPAddress">
-        /// The IP address.
-        /// Serialized Name: InMageRcmFailbackNicDetails.sourceIpAddress
-        /// </param>
+        /// <param name="macAddress"> The mac address. </param>
+        /// <param name="networkName"> The network name. </param>
+        /// <param name="adapterType"> The adapter type. </param>
+        /// <param name="sourceIPAddress"> The IP address. </param>
         /// <returns> A new <see cref="Models.InMageRcmFailbackNicDetails"/> instance for mocking. </returns>
         public static InMageRcmFailbackNicDetails InMageRcmFailbackNicDetails(string macAddress = null, string networkName = null, string adapterType = null, IPAddress sourceIPAddress = null)
         {
@@ -5901,14 +2628,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Initializes a new instance of InMageRcmFailbackPolicyDetails. </summary>
-        /// <param name="appConsistentFrequencyInMinutes">
-        /// The app consistent snapshot frequency in minutes.
-        /// Serialized Name: InMageRcmFailbackPolicyDetails.appConsistentFrequencyInMinutes
-        /// </param>
-        /// <param name="crashConsistentFrequencyInMinutes">
-        /// The crash consistent snapshot frequency in minutes.
-        /// Serialized Name: InMageRcmFailbackPolicyDetails.crashConsistentFrequencyInMinutes
-        /// </param>
+        /// <param name="appConsistentFrequencyInMinutes"> The app consistent snapshot frequency in minutes. </param>
+        /// <param name="crashConsistentFrequencyInMinutes"> The crash consistent snapshot frequency in minutes. </param>
         /// <returns> A new <see cref="Models.InMageRcmFailbackPolicyDetails"/> instance for mocking. </returns>
         public static InMageRcmFailbackPolicyDetails InMageRcmFailbackPolicyDetails(int? appConsistentFrequencyInMinutes = null, int? crashConsistentFrequencyInMinutes = null)
         {
@@ -5916,50 +2637,17 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Initializes a new instance of InMageRcmFailbackProtectedDiskDetails. </summary>
-        /// <param name="diskId">
-        /// The disk Id (reported by source agent).
-        /// Serialized Name: InMageRcmFailbackProtectedDiskDetails.diskId
-        /// </param>
-        /// <param name="diskName">
-        /// The disk name.
-        /// Serialized Name: InMageRcmFailbackProtectedDiskDetails.diskName
-        /// </param>
-        /// <param name="isOSDisk">
-        /// A value indicating whether the disk is the OS disk.
-        /// Serialized Name: InMageRcmFailbackProtectedDiskDetails.isOSDisk
-        /// </param>
-        /// <param name="capacityInBytes">
-        /// The disk capacity in bytes.
-        /// Serialized Name: InMageRcmFailbackProtectedDiskDetails.capacityInBytes
-        /// </param>
-        /// <param name="diskUuid">
-        /// The disk Uuid (reported by vCenter).
-        /// Serialized Name: InMageRcmFailbackProtectedDiskDetails.diskUuid
-        /// </param>
-        /// <param name="dataPendingInLogDataStoreInMB">
-        /// The data pending in log data store in MB.
-        /// Serialized Name: InMageRcmFailbackProtectedDiskDetails.dataPendingInLogDataStoreInMB
-        /// </param>
-        /// <param name="dataPendingAtSourceAgentInMB">
-        /// The data pending at source agent in MB.
-        /// Serialized Name: InMageRcmFailbackProtectedDiskDetails.dataPendingAtSourceAgentInMB
-        /// </param>
-        /// <param name="isInitialReplicationComplete">
-        /// A value indicating whether initial replication is complete or not.
-        /// Serialized Name: InMageRcmFailbackProtectedDiskDetails.isInitialReplicationComplete
-        /// </param>
-        /// <param name="irDetails">
-        /// The initial replication details.
-        /// Serialized Name: InMageRcmFailbackProtectedDiskDetails.irDetails
-        /// </param>
-        /// <param name="resyncDetails">
-        /// The resync details.
-        /// Serialized Name: InMageRcmFailbackProtectedDiskDetails.resyncDetails
-        /// </param>
-        /// <param name="lastSyncedOn">
-        /// The last sync time.
-        /// Serialized Name: InMageRcmFailbackProtectedDiskDetails.lastSyncTime
-        /// </param>
+        /// <param name="diskId"> The disk Id (reported by source agent). </param>
+        /// <param name="diskName"> The disk name. </param>
+        /// <param name="isOSDisk"> A value indicating whether the disk is the OS disk. </param>
+        /// <param name="capacityInBytes"> The disk capacity in bytes. </param>
+        /// <param name="diskUuid"> The disk Uuid (reported by vCenter). </param>
+        /// <param name="dataPendingInLogDataStoreInMB"> The data pending in log data store in MB. </param>
+        /// <param name="dataPendingAtSourceAgentInMB"> The data pending at source agent in MB. </param>
+        /// <param name="isInitialReplicationComplete"> A value indicating whether initial replication is complete or not. </param>
+        /// <param name="irDetails"> The initial replication details. </param>
+        /// <param name="resyncDetails"> The resync details. </param>
+        /// <param name="lastSyncedOn"> The last sync time. </param>
         /// <returns> A new <see cref="Models.InMageRcmFailbackProtectedDiskDetails"/> instance for mocking. </returns>
         public static InMageRcmFailbackProtectedDiskDetails InMageRcmFailbackProtectedDiskDetails(string diskId = null, string diskName = null, string isOSDisk = null, long? capacityInBytes = null, string diskUuid = null, double? dataPendingInLogDataStoreInMB = null, double? dataPendingAtSourceAgentInMB = null, string isInitialReplicationComplete = null, InMageRcmFailbackSyncDetails irDetails = null, InMageRcmFailbackSyncDetails resyncDetails = null, DateTimeOffset? lastSyncedOn = null)
         {
@@ -5967,38 +2655,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Initializes a new instance of InMageRcmFailbackSyncDetails. </summary>
-        /// <param name="progressHealth">
-        /// The progress health.
-        /// Serialized Name: InMageRcmFailbackSyncDetails.progressHealth
-        /// </param>
-        /// <param name="transferredBytes">
-        /// The transferred bytes from source VM to azure for the disk.
-        /// Serialized Name: InMageRcmFailbackSyncDetails.transferredBytes
-        /// </param>
-        /// <param name="last15MinutesTransferredBytes">
-        /// The bytes transferred in last 15 minutes from source VM to target.
-        /// Serialized Name: InMageRcmFailbackSyncDetails.last15MinutesTransferredBytes
-        /// </param>
-        /// <param name="lastDataTransferOn">
-        /// The time of the last data transfer from source VM to target.
-        /// Serialized Name: InMageRcmFailbackSyncDetails.lastDataTransferTimeUtc
-        /// </param>
-        /// <param name="processedBytes">
-        /// The total processed bytes. This includes bytes that are transferred from source VM to target and matched bytes.
-        /// Serialized Name: InMageRcmFailbackSyncDetails.processedBytes
-        /// </param>
-        /// <param name="startOn">
-        /// The start time.
-        /// Serialized Name: InMageRcmFailbackSyncDetails.startTime
-        /// </param>
-        /// <param name="lastRefreshedOn">
-        /// The last refresh time.
-        /// Serialized Name: InMageRcmFailbackSyncDetails.lastRefreshTime
-        /// </param>
-        /// <param name="progressPercentage">
-        /// Progress in percentage. Progress percentage is calculated based on processed bytes.
-        /// Serialized Name: InMageRcmFailbackSyncDetails.progressPercentage
-        /// </param>
+        /// <param name="progressHealth"> The progress health. </param>
+        /// <param name="transferredBytes"> The transferred bytes from source VM to azure for the disk. </param>
+        /// <param name="last15MinutesTransferredBytes"> The bytes transferred in last 15 minutes from source VM to target. </param>
+        /// <param name="lastDataTransferOn"> The time of the last data transfer from source VM to target. </param>
+        /// <param name="processedBytes"> The total processed bytes. This includes bytes that are transferred from source VM to target and matched bytes. </param>
+        /// <param name="startOn"> The start time. </param>
+        /// <param name="lastRefreshedOn"> The last refresh time. </param>
+        /// <param name="progressPercentage"> Progress in percentage. Progress percentage is calculated based on processed bytes. </param>
         /// <returns> A new <see cref="Models.InMageRcmFailbackSyncDetails"/> instance for mocking. </returns>
         public static InMageRcmFailbackSyncDetails InMageRcmFailbackSyncDetails(SiteRecoveryDiskReplicationProgressHealth? progressHealth = null, long? transferredBytes = null, long? last15MinutesTransferredBytes = null, DateTimeOffset? lastDataTransferOn = null, long? processedBytes = null, DateTimeOffset? startOn = null, DateTimeOffset? lastRefreshedOn = null, int? progressPercentage = null)
         {
@@ -6006,124 +2670,37 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Initializes a new instance of InMageRcmFailbackReplicationDetails. </summary>
-        /// <param name="internalIdentifier">
-        /// The virtual machine internal identifier.
-        /// Serialized Name: InMageRcmFailbackReplicationDetails.internalIdentifier
-        /// </param>
-        /// <param name="azureVirtualMachineId">
-        /// The ARM Id of the azure VM.
-        /// Serialized Name: InMageRcmFailbackReplicationDetails.azureVirtualMachineId
-        /// </param>
-        /// <param name="multiVmGroupName">
-        /// The multi VM group name.
-        /// Serialized Name: InMageRcmFailbackReplicationDetails.multiVmGroupName
-        /// </param>
-        /// <param name="reprotectAgentId">
-        /// The reprotect agent Id.
-        /// Serialized Name: InMageRcmFailbackReplicationDetails.reprotectAgentId
-        /// </param>
-        /// <param name="reprotectAgentName">
-        /// The reprotect agent name.
-        /// Serialized Name: InMageRcmFailbackReplicationDetails.reprotectAgentName
-        /// </param>
-        /// <param name="osType">
-        /// The type of the OS on the VM.
-        /// Serialized Name: InMageRcmFailbackReplicationDetails.osType
-        /// </param>
-        /// <param name="logStorageAccountId">
-        /// The log storage account ARM Id.
-        /// Serialized Name: InMageRcmFailbackReplicationDetails.logStorageAccountId
-        /// </param>
-        /// <param name="targetVCenterId">
-        /// The target vCenter Id.
-        /// Serialized Name: InMageRcmFailbackReplicationDetails.targetvCenterId
-        /// </param>
-        /// <param name="targetDataStoreName">
-        /// The target datastore name.
-        /// Serialized Name: InMageRcmFailbackReplicationDetails.targetDataStoreName
-        /// </param>
-        /// <param name="targetVmName">
-        /// The target VM name.
-        /// Serialized Name: InMageRcmFailbackReplicationDetails.targetVmName
-        /// </param>
-        /// <param name="initialReplicationProgressPercentage">
-        /// The initial replication progress percentage.
-        /// Serialized Name: InMageRcmFailbackReplicationDetails.initialReplicationProgressPercentage
-        /// </param>
-        /// <param name="initialReplicationProcessedBytes">
-        /// The initial replication processed bytes. This includes sum of total bytes transferred and matched bytes on all selected disks in source VM.
-        /// Serialized Name: InMageRcmFailbackReplicationDetails.initialReplicationProcessedBytes
-        /// </param>
-        /// <param name="initialReplicationTransferredBytes">
-        /// The initial replication transferred bytes from source VM to target for all selected disks on source VM.
-        /// Serialized Name: InMageRcmFailbackReplicationDetails.initialReplicationTransferredBytes
-        /// </param>
-        /// <param name="initialReplicationProgressHealth">
-        /// The initial replication progress health.
-        /// Serialized Name: InMageRcmFailbackReplicationDetails.initialReplicationProgressHealth
-        /// </param>
-        /// <param name="resyncProgressPercentage">
-        /// The resync progress percentage.
-        /// Serialized Name: InMageRcmFailbackReplicationDetails.resyncProgressPercentage
-        /// </param>
-        /// <param name="resyncProcessedBytes">
-        /// The resync processed bytes. This includes sum of total bytes transferred and matched bytes on all selected disks in source VM.
-        /// Serialized Name: InMageRcmFailbackReplicationDetails.resyncProcessedBytes
-        /// </param>
-        /// <param name="resyncTransferredBytes">
-        /// The resync transferred bytes from source VM to target for all selected disks on source VM.
-        /// Serialized Name: InMageRcmFailbackReplicationDetails.resyncTransferredBytes
-        /// </param>
-        /// <param name="resyncProgressHealth">
-        /// The resync progress health.
-        /// Serialized Name: InMageRcmFailbackReplicationDetails.resyncProgressHealth
-        /// </param>
-        /// <param name="resyncRequired">
-        /// A value indicating whether resync is required.
-        /// Serialized Name: InMageRcmFailbackReplicationDetails.resyncRequired
-        /// </param>
-        /// <param name="resyncState">
-        /// The resync state.
-        /// Serialized Name: InMageRcmFailbackReplicationDetails.resyncState
-        /// </param>
-        /// <param name="protectedDisks">
-        /// The list of protected disks.
-        /// Serialized Name: InMageRcmFailbackReplicationDetails.protectedDisks
-        /// </param>
-        /// <param name="mobilityAgentDetails">
-        /// The mobility agent information.
-        /// Serialized Name: InMageRcmFailbackReplicationDetails.mobilityAgentDetails
-        /// </param>
-        /// <param name="vmNics">
-        /// The network details.
-        /// Serialized Name: InMageRcmFailbackReplicationDetails.vmNics
-        /// </param>
-        /// <param name="lastPlannedFailoverStartOn">
-        /// The last planned failover start time.
-        /// Serialized Name: InMageRcmFailbackReplicationDetails.lastPlannedFailoverStartTime
-        /// </param>
-        /// <param name="lastPlannedFailoverStatus">
-        /// The last planned failover status.
-        /// Serialized Name: InMageRcmFailbackReplicationDetails.lastPlannedFailoverStatus
-        /// </param>
-        /// <param name="discoveredVmDetails">
-        /// The discovered VM information.
-        /// Serialized Name: InMageRcmFailbackReplicationDetails.discoveredVmDetails
-        /// </param>
-        /// <param name="lastUsedPolicyId">
-        /// The policy Id used by the forward replication.
-        /// Serialized Name: InMageRcmFailbackReplicationDetails.lastUsedPolicyId
-        /// </param>
-        /// <param name="lastUsedPolicyFriendlyName">
-        /// The policy friendly name used by the forward replication.
-        /// Serialized Name: InMageRcmFailbackReplicationDetails.lastUsedPolicyFriendlyName
-        /// </param>
-        /// <param name="isAgentRegistrationSuccessfulAfterFailover">
-        /// A value indicating whether agent registration was successful after failover.
-        /// Serialized Name: InMageRcmFailbackReplicationDetails.isAgentRegistrationSuccessfulAfterFailover
-        /// </param>
+        /// <param name="internalIdentifier"> The virtual machine internal identifier. </param>
+        /// <param name="azureVirtualMachineId"> The ARM Id of the azure VM. </param>
+        /// <param name="multiVmGroupName"> The multi VM group name. </param>
+        /// <param name="reprotectAgentId"> The reprotect agent Id. </param>
+        /// <param name="reprotectAgentName"> The reprotect agent name. </param>
+        /// <param name="osType"> The type of the OS on the VM. </param>
+        /// <param name="logStorageAccountId"> The log storage account ARM Id. </param>
+        /// <param name="targetVCenterId"> The target vCenter Id. </param>
+        /// <param name="targetDataStoreName"> The target datastore name. </param>
+        /// <param name="targetVmName"> The target VM name. </param>
+        /// <param name="initialReplicationProgressPercentage"> The initial replication progress percentage. </param>
+        /// <param name="initialReplicationProcessedBytes"> The initial replication processed bytes. This includes sum of total bytes transferred and matched bytes on all selected disks in source VM. </param>
+        /// <param name="initialReplicationTransferredBytes"> The initial replication transferred bytes from source VM to target for all selected disks on source VM. </param>
+        /// <param name="initialReplicationProgressHealth"> The initial replication progress health. </param>
+        /// <param name="resyncProgressPercentage"> The resync progress percentage. </param>
+        /// <param name="resyncProcessedBytes"> The resync processed bytes. This includes sum of total bytes transferred and matched bytes on all selected disks in source VM. </param>
+        /// <param name="resyncTransferredBytes"> The resync transferred bytes from source VM to target for all selected disks on source VM. </param>
+        /// <param name="resyncProgressHealth"> The resync progress health. </param>
+        /// <param name="resyncRequired"> A value indicating whether resync is required. </param>
+        /// <param name="resyncState"> The resync state. </param>
+        /// <param name="protectedDisks"> The list of protected disks. </param>
+        /// <param name="mobilityAgentDetails"> The mobility agent information. </param>
+        /// <param name="vmNics"> The network details. </param>
+        /// <param name="lastPlannedFailoverStartOn"> The last planned failover start time. </param>
+        /// <param name="lastPlannedFailoverStatus"> The last planned failover status. </param>
+        /// <param name="discoveredVmDetails"> The discovered VM information. </param>
+        /// <param name="lastUsedPolicyId"> The policy Id used by the forward replication. </param>
+        /// <param name="lastUsedPolicyFriendlyName"> The policy friendly name used by the forward replication. </param>
+        /// <param name="isAgentRegistrationSuccessfulAfterFailover"> A value indicating whether agent registration was successful after failover. </param>
         /// <returns> A new <see cref="Models.InMageRcmFailbackReplicationDetails"/> instance for mocking. </returns>
-        public static InMageRcmFailbackReplicationDetails InMageRcmFailbackReplicationDetails(string internalIdentifier = null, ResourceIdentifier azureVirtualMachineId = null, string multiVmGroupName = null, string reprotectAgentId = null, string reprotectAgentName = null, string osType = null, ResourceIdentifier logStorageAccountId = null, string targetVCenterId = null, string targetDataStoreName = null, string targetVmName = null, int? initialReplicationProgressPercentage = null, long? initialReplicationProcessedBytes = null, long? initialReplicationTransferredBytes = null, VmReplicationProgressHealth? initialReplicationProgressHealth = null, int? resyncProgressPercentage = null, long? resyncProcessedBytes = null, long? resyncTransferredBytes = null, VmReplicationProgressHealth? resyncProgressHealth = null, string resyncRequired = null, ResyncState? resyncState = null, IEnumerable<InMageRcmFailbackProtectedDiskDetails> protectedDisks = null, InMageRcmFailbackMobilityAgentDetails mobilityAgentDetails = null, IEnumerable<InMageRcmFailbackNicDetails> vmNics = null, DateTimeOffset? lastPlannedFailoverStartOn = null, PlannedFailoverStatus? lastPlannedFailoverStatus = null, InMageRcmFailbackDiscoveredProtectedVmDetails discoveredVmDetails = null, ResourceIdentifier lastUsedPolicyId = null, string lastUsedPolicyFriendlyName = null, bool? isAgentRegistrationSuccessfulAfterFailover = null)
+        public static InMageRcmFailbackReplicationDetails InMageRcmFailbackReplicationDetails(string internalIdentifier = null, ResourceIdentifier azureVirtualMachineId = null, string multiVmGroupName = null, string reprotectAgentId = null, string reprotectAgentName = null, string osType = null, ResourceIdentifier logStorageAccountId = null, string targetVCenterId = null, string targetDataStoreName = null, string targetVmName = null, int? initialReplicationProgressPercentage = null, long? initialReplicationProcessedBytes = null, long? initialReplicationTransferredBytes = null, VmReplicationProgressHealth? initialReplicationProgressHealth = null, int? resyncProgressPercentage = null, long? resyncProcessedBytes = null, long? resyncTransferredBytes = null, VmReplicationProgressHealth? resyncProgressHealth = null, string resyncRequired = null, SiteRecoveryResyncState? resyncState = null, IEnumerable<InMageRcmFailbackProtectedDiskDetails> protectedDisks = null, InMageRcmFailbackMobilityAgentDetails mobilityAgentDetails = null, IEnumerable<InMageRcmFailbackNicDetails> vmNics = null, DateTimeOffset? lastPlannedFailoverStartOn = null, PlannedFailoverStatus? lastPlannedFailoverStatus = null, InMageRcmFailbackDiscoveredProtectedVmDetails discoveredVmDetails = null, ResourceIdentifier lastUsedPolicyId = null, string lastUsedPolicyFriendlyName = null, bool? isAgentRegistrationSuccessfulAfterFailover = null)
         {
             protectedDisks ??= new List<InMageRcmFailbackProtectedDiskDetails>();
             vmNics ??= new List<InMageRcmFailbackNicDetails>();
@@ -6132,30 +2709,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Initializes a new instance of InMageRcmLastAgentUpgradeErrorDetails. </summary>
-        /// <param name="errorCode">
-        /// The error code.
-        /// Serialized Name: InMageRcmLastAgentUpgradeErrorDetails.errorCode
-        /// </param>
-        /// <param name="errorMessage">
-        /// The error message.
-        /// Serialized Name: InMageRcmLastAgentUpgradeErrorDetails.errorMessage
-        /// </param>
-        /// <param name="possibleCauses">
-        /// The possible causes.
-        /// Serialized Name: InMageRcmLastAgentUpgradeErrorDetails.possibleCauses
-        /// </param>
-        /// <param name="recommendedAction">
-        /// The recommended action.
-        /// Serialized Name: InMageRcmLastAgentUpgradeErrorDetails.recommendedAction
-        /// </param>
-        /// <param name="errorMessageParameters">
-        /// The error message parameters.
-        /// Serialized Name: InMageRcmLastAgentUpgradeErrorDetails.errorMessageParameters
-        /// </param>
-        /// <param name="errorTags">
-        /// The error tags.
-        /// Serialized Name: InMageRcmLastAgentUpgradeErrorDetails.errorTags
-        /// </param>
+        /// <param name="errorCode"> The error code. </param>
+        /// <param name="errorMessage"> The error message. </param>
+        /// <param name="possibleCauses"> The possible causes. </param>
+        /// <param name="recommendedAction"> The recommended action. </param>
+        /// <param name="errorMessageParameters"> The error message parameters. </param>
+        /// <param name="errorTags"> The error tags. </param>
         /// <returns> A new <see cref="Models.InMageRcmLastAgentUpgradeErrorDetails"/> instance for mocking. </returns>
         public static InMageRcmLastAgentUpgradeErrorDetails InMageRcmLastAgentUpgradeErrorDetails(string errorCode = null, string errorMessage = null, string possibleCauses = null, string recommendedAction = null, IReadOnlyDictionary<string, string> errorMessageParameters = null, IReadOnlyDictionary<string, string> errorTags = null)
         {
@@ -6166,46 +2725,16 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Initializes a new instance of InMageRcmMobilityAgentDetails. </summary>
-        /// <param name="version">
-        /// The agent version.
-        /// Serialized Name: InMageRcmMobilityAgentDetails.version
-        /// </param>
-        /// <param name="latestVersion">
-        /// The latest agent version available.
-        /// Serialized Name: InMageRcmMobilityAgentDetails.latestVersion
-        /// </param>
-        /// <param name="latestAgentReleaseDate">
-        /// The latest agent version release date.
-        /// Serialized Name: InMageRcmMobilityAgentDetails.latestAgentReleaseDate
-        /// </param>
-        /// <param name="driverVersion">
-        /// The driver version.
-        /// Serialized Name: InMageRcmMobilityAgentDetails.driverVersion
-        /// </param>
-        /// <param name="latestUpgradableVersionWithoutReboot">
-        /// The latest upgradeable version available without reboot.
-        /// Serialized Name: InMageRcmMobilityAgentDetails.latestUpgradableVersionWithoutReboot
-        /// </param>
-        /// <param name="agentVersionExpireOn">
-        /// The agent version expiry date.
-        /// Serialized Name: InMageRcmMobilityAgentDetails.agentVersionExpiryDate
-        /// </param>
-        /// <param name="driverVersionExpireOn">
-        /// The driver version expiry date.
-        /// Serialized Name: InMageRcmMobilityAgentDetails.driverVersionExpiryDate
-        /// </param>
-        /// <param name="lastHeartbeatReceivedOn">
-        /// The time of the last heartbeat received from the agent.
-        /// Serialized Name: InMageRcmMobilityAgentDetails.lastHeartbeatUtc
-        /// </param>
-        /// <param name="reasonsBlockingUpgrade">
-        /// The whether update is possible or not.
-        /// Serialized Name: InMageRcmMobilityAgentDetails.reasonsBlockingUpgrade
-        /// </param>
-        /// <param name="isUpgradeable">
-        /// A value indicating whether agent is upgradeable or not.
-        /// Serialized Name: InMageRcmMobilityAgentDetails.isUpgradeable
-        /// </param>
+        /// <param name="version"> The agent version. </param>
+        /// <param name="latestVersion"> The latest agent version available. </param>
+        /// <param name="latestAgentReleaseDate"> The latest agent version release date. </param>
+        /// <param name="driverVersion"> The driver version. </param>
+        /// <param name="latestUpgradableVersionWithoutReboot"> The latest upgradeable version available without reboot. </param>
+        /// <param name="agentVersionExpireOn"> The agent version expiry date. </param>
+        /// <param name="driverVersionExpireOn"> The driver version expiry date. </param>
+        /// <param name="lastHeartbeatReceivedOn"> The time of the last heartbeat received from the agent. </param>
+        /// <param name="reasonsBlockingUpgrade"> The whether update is possible or not. </param>
+        /// <param name="isUpgradeable"> A value indicating whether agent is upgradeable or not. </param>
         /// <returns> A new <see cref="Models.InMageRcmMobilityAgentDetails"/> instance for mocking. </returns>
         public static InMageRcmMobilityAgentDetails InMageRcmMobilityAgentDetails(string version = null, string latestVersion = null, string latestAgentReleaseDate = null, string driverVersion = null, string latestUpgradableVersionWithoutReboot = null, DateTimeOffset? agentVersionExpireOn = null, DateTimeOffset? driverVersionExpireOn = null, DateTimeOffset? lastHeartbeatReceivedOn = null, IEnumerable<AgentUpgradeBlockedReason> reasonsBlockingUpgrade = null, string isUpgradeable = null)
         {
@@ -6215,58 +2744,19 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Initializes a new instance of InMageRcmNicDetails. </summary>
-        /// <param name="nicId">
-        /// The NIC Id.
-        /// Serialized Name: InMageRcmNicDetails.nicId
-        /// </param>
-        /// <param name="isPrimaryNic">
-        /// A value indicating whether this is the primary NIC.
-        /// Serialized Name: InMageRcmNicDetails.isPrimaryNic
-        /// </param>
-        /// <param name="isSelectedForFailover">
-        /// A value indicating whether this NIC is selected for failover.
-        /// Serialized Name: InMageRcmNicDetails.isSelectedForFailover
-        /// </param>
-        /// <param name="sourceIPAddress">
-        /// The source IP address.
-        /// Serialized Name: InMageRcmNicDetails.sourceIPAddress
-        /// </param>
-        /// <param name="sourceIPAddressType">
-        /// The source IP address type.
-        /// Serialized Name: InMageRcmNicDetails.sourceIPAddressType
-        /// </param>
-        /// <param name="sourceNetworkId">
-        /// Source network Id.
-        /// Serialized Name: InMageRcmNicDetails.sourceNetworkId
-        /// </param>
-        /// <param name="sourceSubnetName">
-        /// Source subnet name.
-        /// Serialized Name: InMageRcmNicDetails.sourceSubnetName
-        /// </param>
-        /// <param name="targetIPAddress">
-        /// The target IP address.
-        /// Serialized Name: InMageRcmNicDetails.targetIPAddress
-        /// </param>
-        /// <param name="targetIPAddressType">
-        /// The target IP address type.
-        /// Serialized Name: InMageRcmNicDetails.targetIPAddressType
-        /// </param>
-        /// <param name="targetSubnetName">
-        /// Target subnet name.
-        /// Serialized Name: InMageRcmNicDetails.targetSubnetName
-        /// </param>
-        /// <param name="testSubnetName">
-        /// Test subnet name.
-        /// Serialized Name: InMageRcmNicDetails.testSubnetName
-        /// </param>
-        /// <param name="testIPAddress">
-        /// The test IP address.
-        /// Serialized Name: InMageRcmNicDetails.testIPAddress
-        /// </param>
-        /// <param name="testIPAddressType">
-        /// The test IP address type.
-        /// Serialized Name: InMageRcmNicDetails.testIPAddressType
-        /// </param>
+        /// <param name="nicId"> The NIC Id. </param>
+        /// <param name="isPrimaryNic"> A value indicating whether this is the primary NIC. </param>
+        /// <param name="isSelectedForFailover"> A value indicating whether this NIC is selected for failover. </param>
+        /// <param name="sourceIPAddress"> The source IP address. </param>
+        /// <param name="sourceIPAddressType"> The source IP address type. </param>
+        /// <param name="sourceNetworkId"> Source network Id. </param>
+        /// <param name="sourceSubnetName"> Source subnet name. </param>
+        /// <param name="targetIPAddress"> The target IP address. </param>
+        /// <param name="targetIPAddressType"> The target IP address type. </param>
+        /// <param name="targetSubnetName"> Target subnet name. </param>
+        /// <param name="testSubnetName"> Test subnet name. </param>
+        /// <param name="testIPAddress"> The test IP address. </param>
+        /// <param name="testIPAddressType"> The test IP address type. </param>
         /// <returns> A new <see cref="Models.InMageRcmNicDetails"/> instance for mocking. </returns>
         public static InMageRcmNicDetails InMageRcmNicDetails(string nicId = null, string isPrimaryNic = null, string isSelectedForFailover = null, IPAddress sourceIPAddress = null, SiteRecoveryEthernetAddressType? sourceIPAddressType = null, ResourceIdentifier sourceNetworkId = null, string sourceSubnetName = null, IPAddress targetIPAddress = null, SiteRecoveryEthernetAddressType? targetIPAddressType = null, string targetSubnetName = null, string testSubnetName = null, IPAddress testIPAddress = null, SiteRecoveryEthernetAddressType? testIPAddressType = null)
         {
@@ -6274,22 +2764,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Initializes a new instance of InMageRcmPolicyDetails. </summary>
-        /// <param name="recoveryPointHistoryInMinutes">
-        /// The duration in minutes until which the recovery points need to be stored.
-        /// Serialized Name: InMageRcmPolicyDetails.recoveryPointHistoryInMinutes
-        /// </param>
-        /// <param name="appConsistentFrequencyInMinutes">
-        /// The app consistent snapshot frequency in minutes.
-        /// Serialized Name: InMageRcmPolicyDetails.appConsistentFrequencyInMinutes
-        /// </param>
-        /// <param name="crashConsistentFrequencyInMinutes">
-        /// The crash consistent snapshot frequency in minutes.
-        /// Serialized Name: InMageRcmPolicyDetails.crashConsistentFrequencyInMinutes
-        /// </param>
-        /// <param name="enableMultiVmSync">
-        /// A value indicating whether multi-VM sync has to be enabled.
-        /// Serialized Name: InMageRcmPolicyDetails.enableMultiVmSync
-        /// </param>
+        /// <param name="recoveryPointHistoryInMinutes"> The duration in minutes until which the recovery points need to be stored. </param>
+        /// <param name="appConsistentFrequencyInMinutes"> The app consistent snapshot frequency in minutes. </param>
+        /// <param name="crashConsistentFrequencyInMinutes"> The crash consistent snapshot frequency in minutes. </param>
+        /// <param name="enableMultiVmSync"> A value indicating whether multi-VM sync has to be enabled. </param>
         /// <returns> A new <see cref="Models.InMageRcmPolicyDetails"/> instance for mocking. </returns>
         public static InMageRcmPolicyDetails InMageRcmPolicyDetails(int? recoveryPointHistoryInMinutes = null, int? appConsistentFrequencyInMinutes = null, int? crashConsistentFrequencyInMinutes = null, string enableMultiVmSync = null)
         {
@@ -6297,66 +2775,21 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Initializes a new instance of InMageRcmProtectedDiskDetails. </summary>
-        /// <param name="diskId">
-        /// The disk Id.
-        /// Serialized Name: InMageRcmProtectedDiskDetails.diskId
-        /// </param>
-        /// <param name="diskName">
-        /// The disk name.
-        /// Serialized Name: InMageRcmProtectedDiskDetails.diskName
-        /// </param>
-        /// <param name="isOSDisk">
-        /// A value indicating whether the disk is the OS disk.
-        /// Serialized Name: InMageRcmProtectedDiskDetails.isOSDisk
-        /// </param>
-        /// <param name="capacityInBytes">
-        /// The disk capacity in bytes.
-        /// Serialized Name: InMageRcmProtectedDiskDetails.capacityInBytes
-        /// </param>
-        /// <param name="logStorageAccountId">
-        /// The log storage account ARM Id.
-        /// Serialized Name: InMageRcmProtectedDiskDetails.logStorageAccountId
-        /// </param>
-        /// <param name="diskEncryptionSetId">
-        /// The DiskEncryptionSet ARM Id.
-        /// Serialized Name: InMageRcmProtectedDiskDetails.diskEncryptionSetId
-        /// </param>
-        /// <param name="seedManagedDiskId">
-        /// The ARM Id of the seed managed disk.
-        /// Serialized Name: InMageRcmProtectedDiskDetails.seedManagedDiskId
-        /// </param>
-        /// <param name="seedBlobUri">
-        /// The uri of the seed blob.
-        /// Serialized Name: InMageRcmProtectedDiskDetails.seedBlobUri
-        /// </param>
-        /// <param name="targetManagedDiskId">
-        /// The ARM Id of the target managed disk.
-        /// Serialized Name: InMageRcmProtectedDiskDetails.targetManagedDiskId
-        /// </param>
-        /// <param name="diskType">
-        /// The disk type.
-        /// Serialized Name: InMageRcmProtectedDiskDetails.diskType
-        /// </param>
-        /// <param name="dataPendingInLogDataStoreInMB">
-        /// The data pending in log data store in MB.
-        /// Serialized Name: InMageRcmProtectedDiskDetails.dataPendingInLogDataStoreInMB
-        /// </param>
-        /// <param name="dataPendingAtSourceAgentInMB">
-        /// The data pending at source agent in MB.
-        /// Serialized Name: InMageRcmProtectedDiskDetails.dataPendingAtSourceAgentInMB
-        /// </param>
-        /// <param name="isInitialReplicationComplete">
-        /// A value indicating whether initial replication is complete or not.
-        /// Serialized Name: InMageRcmProtectedDiskDetails.isInitialReplicationComplete
-        /// </param>
-        /// <param name="irDetails">
-        /// The initial replication details.
-        /// Serialized Name: InMageRcmProtectedDiskDetails.irDetails
-        /// </param>
-        /// <param name="resyncDetails">
-        /// The resync details.
-        /// Serialized Name: InMageRcmProtectedDiskDetails.resyncDetails
-        /// </param>
+        /// <param name="diskId"> The disk Id. </param>
+        /// <param name="diskName"> The disk name. </param>
+        /// <param name="isOSDisk"> A value indicating whether the disk is the OS disk. </param>
+        /// <param name="capacityInBytes"> The disk capacity in bytes. </param>
+        /// <param name="logStorageAccountId"> The log storage account ARM Id. </param>
+        /// <param name="diskEncryptionSetId"> The DiskEncryptionSet ARM Id. </param>
+        /// <param name="seedManagedDiskId"> The ARM Id of the seed managed disk. </param>
+        /// <param name="seedBlobUri"> The uri of the seed blob. </param>
+        /// <param name="targetManagedDiskId"> The ARM Id of the target managed disk. </param>
+        /// <param name="diskType"> The disk type. </param>
+        /// <param name="dataPendingInLogDataStoreInMB"> The data pending in log data store in MB. </param>
+        /// <param name="dataPendingAtSourceAgentInMB"> The data pending at source agent in MB. </param>
+        /// <param name="isInitialReplicationComplete"> A value indicating whether initial replication is complete or not. </param>
+        /// <param name="irDetails"> The initial replication details. </param>
+        /// <param name="resyncDetails"> The resync details. </param>
         /// <returns> A new <see cref="Models.InMageRcmProtectedDiskDetails"/> instance for mocking. </returns>
         public static InMageRcmProtectedDiskDetails InMageRcmProtectedDiskDetails(string diskId = null, string diskName = null, string isOSDisk = null, long? capacityInBytes = null, ResourceIdentifier logStorageAccountId = null, ResourceIdentifier diskEncryptionSetId = null, string seedManagedDiskId = null, Uri seedBlobUri = null, string targetManagedDiskId = null, SiteRecoveryDiskAccountType? diskType = null, double? dataPendingInLogDataStoreInMB = null, double? dataPendingAtSourceAgentInMB = null, string isInitialReplicationComplete = null, InMageRcmSyncDetails irDetails = null, InMageRcmSyncDetails resyncDetails = null)
         {
@@ -6364,38 +2797,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Initializes a new instance of InMageRcmSyncDetails. </summary>
-        /// <param name="progressHealth">
-        /// The progress health.
-        /// Serialized Name: InMageRcmSyncDetails.progressHealth
-        /// </param>
-        /// <param name="transferredBytes">
-        /// The transferred bytes from source VM to azure for the disk.
-        /// Serialized Name: InMageRcmSyncDetails.transferredBytes
-        /// </param>
-        /// <param name="last15MinutesTransferredBytes">
-        /// The bytes transferred in last 15 minutes from source VM to azure.
-        /// Serialized Name: InMageRcmSyncDetails.last15MinutesTransferredBytes
-        /// </param>
-        /// <param name="lastDataTransferTimeUtc">
-        /// The time of the last data transfer from source VM to azure.
-        /// Serialized Name: InMageRcmSyncDetails.lastDataTransferTimeUtc
-        /// </param>
-        /// <param name="processedBytes">
-        /// The total processed bytes. This includes bytes that are transferred from source VM to azure and matched bytes.
-        /// Serialized Name: InMageRcmSyncDetails.processedBytes
-        /// </param>
-        /// <param name="staStartOn">
-        /// The start time.
-        /// Serialized Name: InMageRcmSyncDetails.startTime
-        /// </param>
-        /// <param name="lastRefreshedOn">
-        /// The last refresh time.
-        /// Serialized Name: InMageRcmSyncDetails.lastRefreshTime
-        /// </param>
-        /// <param name="progressPercentage">
-        /// Progress in percentage. Progress percentage is calculated based on processed bytes.
-        /// Serialized Name: InMageRcmSyncDetails.progressPercentage
-        /// </param>
+        /// <param name="progressHealth"> The progress health. </param>
+        /// <param name="transferredBytes"> The transferred bytes from source VM to azure for the disk. </param>
+        /// <param name="last15MinutesTransferredBytes"> The bytes transferred in last 15 minutes from source VM to azure. </param>
+        /// <param name="lastDataTransferTimeUtc"> The time of the last data transfer from source VM to azure. </param>
+        /// <param name="processedBytes"> The total processed bytes. This includes bytes that are transferred from source VM to azure and matched bytes. </param>
+        /// <param name="staStartOn"> The start time. </param>
+        /// <param name="lastRefreshedOn"> The last refresh time. </param>
+        /// <param name="progressPercentage"> Progress in percentage. Progress percentage is calculated based on processed bytes. </param>
         /// <returns> A new <see cref="Models.InMageRcmSyncDetails"/> instance for mocking. </returns>
         public static InMageRcmSyncDetails InMageRcmSyncDetails(SiteRecoveryDiskReplicationProgressHealth? progressHealth = null, long? transferredBytes = null, long? last15MinutesTransferredBytes = null, string lastDataTransferTimeUtc = null, long? processedBytes = null, DateTimeOffset? staStartOn = null, DateTimeOffset? lastRefreshedOn = null, int? progressPercentage = null)
         {
@@ -6403,10 +2812,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Initializes a new instance of InMageRcmProtectionContainerMappingDetails. </summary>
-        /// <param name="enableAgentAutoUpgrade">
-        /// A value indicating whether the flag for enable agent auto upgrade.
-        /// Serialized Name: InMageRcmProtectionContainerMappingDetails.enableAgentAutoUpgrade
-        /// </param>
+        /// <param name="enableAgentAutoUpgrade"> A value indicating whether the flag for enable agent auto upgrade. </param>
         /// <returns> A new <see cref="Models.InMageRcmProtectionContainerMappingDetails"/> instance for mocking. </returns>
         public static InMageRcmProtectionContainerMappingDetails InMageRcmProtectionContainerMappingDetails(string enableAgentAutoUpgrade = null)
         {
@@ -6414,10 +2820,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Initializes a new instance of InMageRcmRecoveryPointDetails. </summary>
-        /// <param name="isMultiVmSyncPoint">
-        /// A value indicating whether the recovery point is multi VM consistent.
-        /// Serialized Name: InMageRcmRecoveryPointDetails.isMultiVmSyncPoint
-        /// </param>
+        /// <param name="isMultiVmSyncPoint"> A value indicating whether the recovery point is multi VM consistent. </param>
         /// <returns> A new <see cref="Models.InMageRcmRecoveryPointDetails"/> instance for mocking. </returns>
         public static InMageRcmRecoveryPointDetails InMageRcmRecoveryPointDetails(string isMultiVmSyncPoint = null)
         {
@@ -6425,216 +2828,60 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Initializes a new instance of InMageRcmReplicationDetails. </summary>
-        /// <param name="internalIdentifier">
-        /// The virtual machine internal identifier.
-        /// Serialized Name: InMageRcmReplicationDetails.internalIdentifier
-        /// </param>
-        /// <param name="fabricDiscoveryMachineId">
-        /// The ARM Id of the discovered VM.
-        /// Serialized Name: InMageRcmReplicationDetails.fabricDiscoveryMachineId
-        /// </param>
-        /// <param name="multiVmGroupName">
-        /// The multi VM group name.
-        /// Serialized Name: InMageRcmReplicationDetails.multiVmGroupName
-        /// </param>
-        /// <param name="discoveryType">
-        /// The type of the discovered VM.
-        /// Serialized Name: InMageRcmReplicationDetails.discoveryType
-        /// </param>
-        /// <param name="processServerId">
-        /// The process server Id.
-        /// Serialized Name: InMageRcmReplicationDetails.processServerId
-        /// </param>
-        /// <param name="processorCoreCount">
-        /// The processor core count.
-        /// Serialized Name: InMageRcmReplicationDetails.processorCoreCount
-        /// </param>
-        /// <param name="allocatedMemoryInMB">
-        /// The allocated memory in MB.
-        /// Serialized Name: InMageRcmReplicationDetails.allocatedMemoryInMB
-        /// </param>
-        /// <param name="processServerName">
-        /// The process server name.
-        /// Serialized Name: InMageRcmReplicationDetails.processServerName
-        /// </param>
-        /// <param name="runAsAccountId">
-        /// The run-as account Id.
-        /// Serialized Name: InMageRcmReplicationDetails.runAsAccountId
-        /// </param>
-        /// <param name="osType">
-        /// The type of the OS on the VM.
-        /// Serialized Name: InMageRcmReplicationDetails.osType
-        /// </param>
-        /// <param name="firmwareType">
-        /// The firmware type.
-        /// Serialized Name: InMageRcmReplicationDetails.firmwareType
-        /// </param>
-        /// <param name="primaryNicIPAddress">
-        /// The IP address of the primary network interface.
-        /// Serialized Name: InMageRcmReplicationDetails.primaryNicIpAddress
-        /// </param>
-        /// <param name="targetGeneration">
-        /// The target generation.
-        /// Serialized Name: InMageRcmReplicationDetails.targetGeneration
-        /// </param>
-        /// <param name="licenseType">
-        /// License Type of the VM to be used.
-        /// Serialized Name: InMageRcmReplicationDetails.licenseType
-        /// </param>
-        /// <param name="storageAccountId">
-        /// The replication storage account ARM Id. This is applicable only for the blob based replication test hook.
-        /// Serialized Name: InMageRcmReplicationDetails.storageAccountId
-        /// </param>
-        /// <param name="targetVmName">
-        /// Target VM name.
-        /// Serialized Name: InMageRcmReplicationDetails.targetVmName
-        /// </param>
-        /// <param name="targetVmSize">
-        /// The target VM size.
-        /// Serialized Name: InMageRcmReplicationDetails.targetVmSize
-        /// </param>
-        /// <param name="targetResourceGroupId">
-        /// The target resource group Id.
-        /// Serialized Name: InMageRcmReplicationDetails.targetResourceGroupId
-        /// </param>
-        /// <param name="targetLocation">
-        /// The target location.
-        /// Serialized Name: InMageRcmReplicationDetails.targetLocation
-        /// </param>
-        /// <param name="targetAvailabilitySetId">
-        /// The target availability set Id.
-        /// Serialized Name: InMageRcmReplicationDetails.targetAvailabilitySetId
-        /// </param>
-        /// <param name="targetAvailabilityZone">
-        /// The target availability zone.
-        /// Serialized Name: InMageRcmReplicationDetails.targetAvailabilityZone
-        /// </param>
-        /// <param name="targetProximityPlacementGroupId">
-        /// The target proximity placement group Id.
-        /// Serialized Name: InMageRcmReplicationDetails.targetProximityPlacementGroupId
-        /// </param>
-        /// <param name="targetBootDiagnosticsStorageAccountId">
-        /// The target boot diagnostics storage account ARM Id.
-        /// Serialized Name: InMageRcmReplicationDetails.targetBootDiagnosticsStorageAccountId
-        /// </param>
-        /// <param name="targetNetworkId">
-        /// The target network Id.
-        /// Serialized Name: InMageRcmReplicationDetails.targetNetworkId
-        /// </param>
-        /// <param name="testNetworkId">
-        /// The test network Id.
-        /// Serialized Name: InMageRcmReplicationDetails.testNetworkId
-        /// </param>
-        /// <param name="failoverRecoveryPointId">
-        /// The recovery point Id to which the VM was failed over.
-        /// Serialized Name: InMageRcmReplicationDetails.failoverRecoveryPointId
-        /// </param>
-        /// <param name="lastRecoveryPointReceived">
-        /// The last recovery point received time.
-        /// Serialized Name: InMageRcmReplicationDetails.lastRecoveryPointReceived
-        /// </param>
-        /// <param name="lastRpoInSeconds">
-        /// The last recovery point objective value.
-        /// Serialized Name: InMageRcmReplicationDetails.lastRpoInSeconds
-        /// </param>
-        /// <param name="lastRpoCalculatedOn">
-        /// The last recovery point objective calculated time.
-        /// Serialized Name: InMageRcmReplicationDetails.lastRpoCalculatedTime
-        /// </param>
-        /// <param name="lastRecoveryPointId">
-        /// The last recovery point Id.
-        /// Serialized Name: InMageRcmReplicationDetails.lastRecoveryPointId
-        /// </param>
-        /// <param name="initialReplicationProgressPercentage">
-        /// The initial replication progress percentage. This is calculated based on total bytes processed for all disks in the source VM.
-        /// Serialized Name: InMageRcmReplicationDetails.initialReplicationProgressPercentage
-        /// </param>
-        /// <param name="initialReplicationProcessedBytes">
-        /// The initial replication processed bytes. This includes sum of total bytes transferred and matched bytes on all selected disks in source VM.
-        /// Serialized Name: InMageRcmReplicationDetails.initialReplicationProcessedBytes
-        /// </param>
-        /// <param name="initialReplicationTransferredBytes">
-        /// The initial replication transferred bytes from source VM to azure for all selected disks on source VM.
-        /// Serialized Name: InMageRcmReplicationDetails.initialReplicationTransferredBytes
-        /// </param>
-        /// <param name="initialReplicationProgressHealth">
-        /// The initial replication progress health.
-        /// Serialized Name: InMageRcmReplicationDetails.initialReplicationProgressHealth
-        /// </param>
-        /// <param name="resyncProgressPercentage">
-        /// The resync progress percentage. This is calculated based on total bytes processed for all disks in the source VM.
-        /// Serialized Name: InMageRcmReplicationDetails.resyncProgressPercentage
-        /// </param>
-        /// <param name="resyncProcessedBytes">
-        /// The resync processed bytes. This includes sum of total bytes transferred and matched bytes on all selected disks in source VM.
-        /// Serialized Name: InMageRcmReplicationDetails.resyncProcessedBytes
-        /// </param>
-        /// <param name="resyncTransferredBytes">
-        /// The resync transferred bytes from source VM to azure for all selected disks on source VM.
-        /// Serialized Name: InMageRcmReplicationDetails.resyncTransferredBytes
-        /// </param>
-        /// <param name="resyncProgressHealth">
-        /// The resync progress health.
-        /// Serialized Name: InMageRcmReplicationDetails.resyncProgressHealth
-        /// </param>
-        /// <param name="resyncRequired">
-        /// A value indicating whether resync is required.
-        /// Serialized Name: InMageRcmReplicationDetails.resyncRequired
-        /// </param>
-        /// <param name="resyncState">
-        /// The resync state.
-        /// Serialized Name: InMageRcmReplicationDetails.resyncState
-        /// </param>
-        /// <param name="agentUpgradeState">
-        /// The agent auto upgrade state.
-        /// Serialized Name: InMageRcmReplicationDetails.agentUpgradeState
-        /// </param>
-        /// <param name="lastAgentUpgradeType">
-        /// The last agent upgrade type.
-        /// Serialized Name: InMageRcmReplicationDetails.lastAgentUpgradeType
-        /// </param>
-        /// <param name="agentUpgradeJobId">
-        /// The agent upgrade job Id.
-        /// Serialized Name: InMageRcmReplicationDetails.agentUpgradeJobId
-        /// </param>
-        /// <param name="agentUpgradeAttemptToVersion">
-        /// The agent version to which last agent upgrade was attempted.
-        /// Serialized Name: InMageRcmReplicationDetails.agentUpgradeAttemptToVersion
-        /// </param>
-        /// <param name="protectedDisks">
-        /// The list of protected disks.
-        /// Serialized Name: InMageRcmReplicationDetails.protectedDisks
-        /// </param>
-        /// <param name="isLastUpgradeSuccessful">
-        /// A value indicating whether last agent upgrade was successful or not.
-        /// Serialized Name: InMageRcmReplicationDetails.isLastUpgradeSuccessful
-        /// </param>
-        /// <param name="isAgentRegistrationSuccessfulAfterFailover">
-        /// A value indicating whether agent registration was successful after failover.
-        /// Serialized Name: InMageRcmReplicationDetails.isAgentRegistrationSuccessfulAfterFailover
-        /// </param>
-        /// <param name="mobilityAgentDetails">
-        /// The mobility agent information.
-        /// Serialized Name: InMageRcmReplicationDetails.mobilityAgentDetails
-        /// </param>
-        /// <param name="lastAgentUpgradeErrorDetails">
-        /// The last agent upgrade error information.
-        /// Serialized Name: InMageRcmReplicationDetails.lastAgentUpgradeErrorDetails
-        /// </param>
-        /// <param name="agentUpgradeBlockingErrorDetails">
-        /// The agent upgrade blocking error information.
-        /// Serialized Name: InMageRcmReplicationDetails.agentUpgradeBlockingErrorDetails
-        /// </param>
-        /// <param name="vmNics">
-        /// The network details.
-        /// Serialized Name: InMageRcmReplicationDetails.vmNics
-        /// </param>
-        /// <param name="discoveredVmDetails">
-        /// The discovered VM details.
-        /// Serialized Name: InMageRcmReplicationDetails.discoveredVmDetails
-        /// </param>
+        /// <param name="internalIdentifier"> The virtual machine internal identifier. </param>
+        /// <param name="fabricDiscoveryMachineId"> The ARM Id of the discovered VM. </param>
+        /// <param name="multiVmGroupName"> The multi VM group name. </param>
+        /// <param name="discoveryType"> The type of the discovered VM. </param>
+        /// <param name="processServerId"> The process server Id. </param>
+        /// <param name="processorCoreCount"> The processor core count. </param>
+        /// <param name="allocatedMemoryInMB"> The allocated memory in MB. </param>
+        /// <param name="processServerName"> The process server name. </param>
+        /// <param name="runAsAccountId"> The run-as account Id. </param>
+        /// <param name="osType"> The type of the OS on the VM. </param>
+        /// <param name="firmwareType"> The firmware type. </param>
+        /// <param name="primaryNicIPAddress"> The IP address of the primary network interface. </param>
+        /// <param name="targetGeneration"> The target generation. </param>
+        /// <param name="licenseType"> License Type of the VM to be used. </param>
+        /// <param name="storageAccountId"> The replication storage account ARM Id. This is applicable only for the blob based replication test hook. </param>
+        /// <param name="targetVmName"> Target VM name. </param>
+        /// <param name="targetVmSize"> The target VM size. </param>
+        /// <param name="targetResourceGroupId"> The target resource group Id. </param>
+        /// <param name="targetLocation"> The target location. </param>
+        /// <param name="targetAvailabilitySetId"> The target availability set Id. </param>
+        /// <param name="targetAvailabilityZone"> The target availability zone. </param>
+        /// <param name="targetProximityPlacementGroupId"> The target proximity placement group Id. </param>
+        /// <param name="targetBootDiagnosticsStorageAccountId"> The target boot diagnostics storage account ARM Id. </param>
+        /// <param name="targetNetworkId"> The target network Id. </param>
+        /// <param name="testNetworkId"> The test network Id. </param>
+        /// <param name="failoverRecoveryPointId"> The recovery point Id to which the VM was failed over. </param>
+        /// <param name="lastRecoveryPointReceived"> The last recovery point received time. </param>
+        /// <param name="lastRpoInSeconds"> The last recovery point objective value. </param>
+        /// <param name="lastRpoCalculatedOn"> The last recovery point objective calculated time. </param>
+        /// <param name="lastRecoveryPointId"> The last recovery point Id. </param>
+        /// <param name="initialReplicationProgressPercentage"> The initial replication progress percentage. This is calculated based on total bytes processed for all disks in the source VM. </param>
+        /// <param name="initialReplicationProcessedBytes"> The initial replication processed bytes. This includes sum of total bytes transferred and matched bytes on all selected disks in source VM. </param>
+        /// <param name="initialReplicationTransferredBytes"> The initial replication transferred bytes from source VM to azure for all selected disks on source VM. </param>
+        /// <param name="initialReplicationProgressHealth"> The initial replication progress health. </param>
+        /// <param name="resyncProgressPercentage"> The resync progress percentage. This is calculated based on total bytes processed for all disks in the source VM. </param>
+        /// <param name="resyncProcessedBytes"> The resync processed bytes. This includes sum of total bytes transferred and matched bytes on all selected disks in source VM. </param>
+        /// <param name="resyncTransferredBytes"> The resync transferred bytes from source VM to azure for all selected disks on source VM. </param>
+        /// <param name="resyncProgressHealth"> The resync progress health. </param>
+        /// <param name="resyncRequired"> A value indicating whether resync is required. </param>
+        /// <param name="resyncState"> The resync state. </param>
+        /// <param name="agentUpgradeState"> The agent auto upgrade state. </param>
+        /// <param name="lastAgentUpgradeType"> The last agent upgrade type. </param>
+        /// <param name="agentUpgradeJobId"> The agent upgrade job Id. </param>
+        /// <param name="agentUpgradeAttemptToVersion"> The agent version to which last agent upgrade was attempted. </param>
+        /// <param name="protectedDisks"> The list of protected disks. </param>
+        /// <param name="isLastUpgradeSuccessful"> A value indicating whether last agent upgrade was successful or not. </param>
+        /// <param name="isAgentRegistrationSuccessfulAfterFailover"> A value indicating whether agent registration was successful after failover. </param>
+        /// <param name="mobilityAgentDetails"> The mobility agent information. </param>
+        /// <param name="lastAgentUpgradeErrorDetails"> The last agent upgrade error information. </param>
+        /// <param name="agentUpgradeBlockingErrorDetails"> The agent upgrade blocking error information. </param>
+        /// <param name="vmNics"> The network details. </param>
+        /// <param name="discoveredVmDetails"> The discovered VM details. </param>
         /// <returns> A new <see cref="Models.InMageRcmReplicationDetails"/> instance for mocking. </returns>
-        public static InMageRcmReplicationDetails InMageRcmReplicationDetails(string internalIdentifier = null, string fabricDiscoveryMachineId = null, string multiVmGroupName = null, string discoveryType = null, string processServerId = null, int? processorCoreCount = null, double? allocatedMemoryInMB = null, string processServerName = null, string runAsAccountId = null, string osType = null, string firmwareType = null, IPAddress primaryNicIPAddress = null, string targetGeneration = null, string licenseType = null, ResourceIdentifier storageAccountId = null, string targetVmName = null, string targetVmSize = null, ResourceIdentifier targetResourceGroupId = null, string targetLocation = null, ResourceIdentifier targetAvailabilitySetId = null, string targetAvailabilityZone = null, ResourceIdentifier targetProximityPlacementGroupId = null, ResourceIdentifier targetBootDiagnosticsStorageAccountId = null, ResourceIdentifier targetNetworkId = null, ResourceIdentifier testNetworkId = null, ResourceIdentifier failoverRecoveryPointId = null, DateTimeOffset? lastRecoveryPointReceived = null, long? lastRpoInSeconds = null, DateTimeOffset? lastRpoCalculatedOn = null, ResourceIdentifier lastRecoveryPointId = null, int? initialReplicationProgressPercentage = null, long? initialReplicationProcessedBytes = null, long? initialReplicationTransferredBytes = null, VmReplicationProgressHealth? initialReplicationProgressHealth = null, int? resyncProgressPercentage = null, long? resyncProcessedBytes = null, long? resyncTransferredBytes = null, VmReplicationProgressHealth? resyncProgressHealth = null, string resyncRequired = null, ResyncState? resyncState = null, MobilityAgentUpgradeState? agentUpgradeState = null, string lastAgentUpgradeType = null, string agentUpgradeJobId = null, string agentUpgradeAttemptToVersion = null, IEnumerable<InMageRcmProtectedDiskDetails> protectedDisks = null, string isLastUpgradeSuccessful = null, bool? isAgentRegistrationSuccessfulAfterFailover = null, InMageRcmMobilityAgentDetails mobilityAgentDetails = null, IEnumerable<InMageRcmLastAgentUpgradeErrorDetails> lastAgentUpgradeErrorDetails = null, IEnumerable<InMageRcmAgentUpgradeBlockingErrorDetails> agentUpgradeBlockingErrorDetails = null, IEnumerable<InMageRcmNicDetails> vmNics = null, InMageRcmDiscoveredProtectedVmDetails discoveredVmDetails = null)
+        public static InMageRcmReplicationDetails InMageRcmReplicationDetails(string internalIdentifier = null, string fabricDiscoveryMachineId = null, string multiVmGroupName = null, string discoveryType = null, string processServerId = null, int? processorCoreCount = null, double? allocatedMemoryInMB = null, string processServerName = null, string runAsAccountId = null, string osType = null, string firmwareType = null, IPAddress primaryNicIPAddress = null, string targetGeneration = null, string licenseType = null, ResourceIdentifier storageAccountId = null, string targetVmName = null, string targetVmSize = null, ResourceIdentifier targetResourceGroupId = null, string targetLocation = null, ResourceIdentifier targetAvailabilitySetId = null, string targetAvailabilityZone = null, ResourceIdentifier targetProximityPlacementGroupId = null, ResourceIdentifier targetBootDiagnosticsStorageAccountId = null, ResourceIdentifier targetNetworkId = null, ResourceIdentifier testNetworkId = null, ResourceIdentifier failoverRecoveryPointId = null, DateTimeOffset? lastRecoveryPointReceived = null, long? lastRpoInSeconds = null, DateTimeOffset? lastRpoCalculatedOn = null, ResourceIdentifier lastRecoveryPointId = null, int? initialReplicationProgressPercentage = null, long? initialReplicationProcessedBytes = null, long? initialReplicationTransferredBytes = null, VmReplicationProgressHealth? initialReplicationProgressHealth = null, int? resyncProgressPercentage = null, long? resyncProcessedBytes = null, long? resyncTransferredBytes = null, VmReplicationProgressHealth? resyncProgressHealth = null, string resyncRequired = null, SiteRecoveryResyncState? resyncState = null, MobilityAgentUpgradeState? agentUpgradeState = null, string lastAgentUpgradeType = null, string agentUpgradeJobId = null, string agentUpgradeAttemptToVersion = null, IEnumerable<InMageRcmProtectedDiskDetails> protectedDisks = null, string isLastUpgradeSuccessful = null, bool? isAgentRegistrationSuccessfulAfterFailover = null, InMageRcmMobilityAgentDetails mobilityAgentDetails = null, IEnumerable<InMageRcmLastAgentUpgradeErrorDetails> lastAgentUpgradeErrorDetails = null, IEnumerable<InMageRcmAgentUpgradeBlockingErrorDetails> agentUpgradeBlockingErrorDetails = null, IEnumerable<InMageRcmNicDetails> vmNics = null, InMageRcmDiscoveredProtectedVmDetails discoveredVmDetails = null)
         {
             protectedDisks ??= new List<InMageRcmProtectedDiskDetails>();
             lastAgentUpgradeErrorDetails ??= new List<InMageRcmLastAgentUpgradeErrorDetails>();
@@ -6645,168 +2892,48 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Initializes a new instance of InMageReplicationDetails. </summary>
-        /// <param name="activeSiteType">
-        /// The active location of the VM. If the VM is being protected from Azure, this field will take values from { Azure, OnPrem }. If the VM is being protected between two data-centers, this field will be OnPrem always.
-        /// Serialized Name: InMageReplicationDetails.activeSiteType
-        /// </param>
-        /// <param name="sourceVmCpuCount">
-        /// The CPU count of the VM on the primary side.
-        /// Serialized Name: InMageReplicationDetails.sourceVmCpuCount
-        /// </param>
-        /// <param name="sourceVmRamSizeInMB">
-        /// The RAM size of the VM on the primary side.
-        /// Serialized Name: InMageReplicationDetails.sourceVmRamSizeInMB
-        /// </param>
-        /// <param name="osDetails">
-        /// The OS details.
-        /// Serialized Name: InMageReplicationDetails.osDetails
-        /// </param>
-        /// <param name="protectionStage">
-        /// The protection stage.
-        /// Serialized Name: InMageReplicationDetails.protectionStage
-        /// </param>
-        /// <param name="vmId">
-        /// The virtual machine Id.
-        /// Serialized Name: InMageReplicationDetails.vmId
-        /// </param>
-        /// <param name="vmProtectionState">
-        /// The protection state for the vm.
-        /// Serialized Name: InMageReplicationDetails.vmProtectionState
-        /// </param>
-        /// <param name="vmProtectionStateDescription">
-        /// The protection state description for the vm.
-        /// Serialized Name: InMageReplicationDetails.vmProtectionStateDescription
-        /// </param>
-        /// <param name="resyncDetails">
-        /// The resync details of the machine.
-        /// Serialized Name: InMageReplicationDetails.resyncDetails
-        /// </param>
-        /// <param name="retentionWindowStartOn">
-        /// The retention window start time.
-        /// Serialized Name: InMageReplicationDetails.retentionWindowStart
-        /// </param>
-        /// <param name="retentionWindowEndOn">
-        /// The retention window end time.
-        /// Serialized Name: InMageReplicationDetails.retentionWindowEnd
-        /// </param>
-        /// <param name="compressedDataRateInMB">
-        /// The compressed data change rate in MB.
-        /// Serialized Name: InMageReplicationDetails.compressedDataRateInMB
-        /// </param>
-        /// <param name="uncompressedDataRateInMB">
-        /// The uncompressed data change rate in MB.
-        /// Serialized Name: InMageReplicationDetails.uncompressedDataRateInMB
-        /// </param>
-        /// <param name="rpoInSeconds">
-        /// The RPO in seconds.
-        /// Serialized Name: InMageReplicationDetails.rpoInSeconds
-        /// </param>
-        /// <param name="protectedDisks">
-        /// The list of protected disks.
-        /// Serialized Name: InMageReplicationDetails.protectedDisks
-        /// </param>
-        /// <param name="ipAddress">
-        /// The source IP address.
-        /// Serialized Name: InMageReplicationDetails.ipAddress
-        /// </param>
-        /// <param name="lastHeartbeatReceivedOn">
-        /// The last heartbeat received from the source server.
-        /// Serialized Name: InMageReplicationDetails.lastHeartbeat
-        /// </param>
-        /// <param name="processServerId">
-        /// The process server Id.
-        /// Serialized Name: InMageReplicationDetails.processServerId
-        /// </param>
-        /// <param name="masterTargetId">
-        /// The master target Id.
-        /// Serialized Name: InMageReplicationDetails.masterTargetId
-        /// </param>
-        /// <param name="consistencyPoints">
-        /// The collection of Consistency points.
-        /// Serialized Name: InMageReplicationDetails.consistencyPoints
-        /// </param>
-        /// <param name="diskResized">
-        /// A value indicating whether any disk is resized for this VM.
-        /// Serialized Name: InMageReplicationDetails.diskResized
-        /// </param>
-        /// <param name="rebootAfterUpdateStatus">
-        /// A value indicating whether the source server requires a restart after update.
-        /// Serialized Name: InMageReplicationDetails.rebootAfterUpdateStatus
-        /// </param>
-        /// <param name="multiVmGroupId">
-        /// The multi vm group Id, if any.
-        /// Serialized Name: InMageReplicationDetails.multiVmGroupId
-        /// </param>
-        /// <param name="multiVmGroupName">
-        /// The multi vm group name, if any.
-        /// Serialized Name: InMageReplicationDetails.multiVmGroupName
-        /// </param>
-        /// <param name="multiVmSyncStatus">
-        /// A value indicating whether the multi vm sync is enabled or disabled.
-        /// Serialized Name: InMageReplicationDetails.multiVmSyncStatus
-        /// </param>
-        /// <param name="agentDetails">
-        /// The agent details.
-        /// Serialized Name: InMageReplicationDetails.agentDetails
-        /// </param>
-        /// <param name="vCenterInfrastructureId">
-        /// The vCenter infrastructure Id.
-        /// Serialized Name: InMageReplicationDetails.vCenterInfrastructureId
-        /// </param>
-        /// <param name="infrastructureVmId">
-        /// The infrastructure VM Id.
-        /// Serialized Name: InMageReplicationDetails.infrastructureVmId
-        /// </param>
-        /// <param name="vmNics">
-        /// The PE Network details.
-        /// Serialized Name: InMageReplicationDetails.vmNics
-        /// </param>
-        /// <param name="discoveryType">
-        /// A value indicating the discovery type of the machine.
-        /// Serialized Name: InMageReplicationDetails.discoveryType
-        /// </param>
-        /// <param name="azureStorageAccountId">
-        /// A value indicating the underlying Azure storage account. If the VM is not running in Azure, this value shall be set to null.
-        /// Serialized Name: InMageReplicationDetails.azureStorageAccountId
-        /// </param>
-        /// <param name="datastores">
-        /// The datastores of the on-premise machine Value can be list of strings that contain datastore names.
-        /// Serialized Name: InMageReplicationDetails.datastores
-        /// </param>
-        /// <param name="validationErrors">
-        /// The validation errors of the on-premise machine Value can be list of validation errors.
-        /// Serialized Name: InMageReplicationDetails.validationErrors
-        /// </param>
-        /// <param name="lastRpoCalculatedOn">
-        /// The last RPO calculated time.
-        /// Serialized Name: InMageReplicationDetails.lastRpoCalculatedTime
-        /// </param>
-        /// <param name="lastUpdateReceivedOn">
-        /// The last update time received from on-prem components.
-        /// Serialized Name: InMageReplicationDetails.lastUpdateReceivedTime
-        /// </param>
-        /// <param name="replicaId">
-        /// The replica id of the protected item.
-        /// Serialized Name: InMageReplicationDetails.replicaId
-        /// </param>
-        /// <param name="osVersion">
-        /// The OS Version of the protected item.
-        /// Serialized Name: InMageReplicationDetails.osVersion
-        /// </param>
-        /// <param name="isAdditionalStatsAvailable">
-        /// A value indicating whether additional IR stats are available or not.
-        /// Serialized Name: InMageReplicationDetails.isAdditionalStatsAvailable
-        /// </param>
-        /// <param name="totalDataTransferred">
-        /// The total transferred data in bytes.
-        /// Serialized Name: InMageReplicationDetails.totalDataTransferred
-        /// </param>
-        /// <param name="totalProgressHealth">
-        /// The progress health.
-        /// Serialized Name: InMageReplicationDetails.totalProgressHealth
-        /// </param>
+        /// <param name="activeSiteType"> The active location of the VM. If the VM is being protected from Azure, this field will take values from { Azure, OnPrem }. If the VM is being protected between two data-centers, this field will be OnPrem always. </param>
+        /// <param name="sourceVmCpuCount"> The CPU count of the VM on the primary side. </param>
+        /// <param name="sourceVmRamSizeInMB"> The RAM size of the VM on the primary side. </param>
+        /// <param name="osDetails"> The OS details. </param>
+        /// <param name="protectionStage"> The protection stage. </param>
+        /// <param name="vmId"> The virtual machine Id. </param>
+        /// <param name="vmProtectionState"> The protection state for the vm. </param>
+        /// <param name="vmProtectionStateDescription"> The protection state description for the vm. </param>
+        /// <param name="resyncDetails"> The resync details of the machine. </param>
+        /// <param name="retentionWindowStartOn"> The retention window start time. </param>
+        /// <param name="retentionWindowEndOn"> The retention window end time. </param>
+        /// <param name="compressedDataRateInMB"> The compressed data change rate in MB. </param>
+        /// <param name="uncompressedDataRateInMB"> The uncompressed data change rate in MB. </param>
+        /// <param name="rpoInSeconds"> The RPO in seconds. </param>
+        /// <param name="protectedDisks"> The list of protected disks. </param>
+        /// <param name="ipAddress"> The source IP address. </param>
+        /// <param name="lastHeartbeatReceivedOn"> The last heartbeat received from the source server. </param>
+        /// <param name="processServerId"> The process server Id. </param>
+        /// <param name="masterTargetId"> The master target Id. </param>
+        /// <param name="consistencyPoints"> The collection of Consistency points. </param>
+        /// <param name="diskResized"> A value indicating whether any disk is resized for this VM. </param>
+        /// <param name="rebootAfterUpdateStatus"> A value indicating whether the source server requires a restart after update. </param>
+        /// <param name="multiVmGroupId"> The multi vm group Id, if any. </param>
+        /// <param name="multiVmGroupName"> The multi vm group name, if any. </param>
+        /// <param name="multiVmSyncStatus"> A value indicating whether the multi vm sync is enabled or disabled. </param>
+        /// <param name="agentDetails"> The agent details. </param>
+        /// <param name="vCenterInfrastructureId"> The vCenter infrastructure Id. </param>
+        /// <param name="infrastructureVmId"> The infrastructure VM Id. </param>
+        /// <param name="vmNics"> The PE Network details. </param>
+        /// <param name="discoveryType"> A value indicating the discovery type of the machine. </param>
+        /// <param name="azureStorageAccountId"> A value indicating the underlying Azure storage account. If the VM is not running in Azure, this value shall be set to null. </param>
+        /// <param name="datastores"> The datastores of the on-premise machine Value can be list of strings that contain datastore names. </param>
+        /// <param name="validationErrors"> The validation errors of the on-premise machine Value can be list of validation errors. </param>
+        /// <param name="lastRpoCalculatedOn"> The last RPO calculated time. </param>
+        /// <param name="lastUpdateReceivedOn"> The last update time received from on-prem components. </param>
+        /// <param name="replicaId"> The replica id of the protected item. </param>
+        /// <param name="osVersion"> The OS Version of the protected item. </param>
+        /// <param name="isAdditionalStatsAvailable"> A value indicating whether additional IR stats are available or not. </param>
+        /// <param name="totalDataTransferred"> The total transferred data in bytes. </param>
+        /// <param name="totalProgressHealth"> The progress health. </param>
         /// <returns> A new <see cref="Models.InMageReplicationDetails"/> instance for mocking. </returns>
-        public static InMageReplicationDetails InMageReplicationDetails(string activeSiteType = null, int? sourceVmCpuCount = null, int? sourceVmRamSizeInMB = null, OSDiskDetails osDetails = null, string protectionStage = null, string vmId = null, string vmProtectionState = null, string vmProtectionStateDescription = null, InitialReplicationDetails resyncDetails = null, DateTimeOffset? retentionWindowStartOn = null, DateTimeOffset? retentionWindowEndOn = null, double? compressedDataRateInMB = null, double? uncompressedDataRateInMB = null, long? rpoInSeconds = null, IEnumerable<InMageProtectedDiskDetails> protectedDisks = null, IPAddress ipAddress = null, DateTimeOffset? lastHeartbeatReceivedOn = null, string processServerId = null, string masterTargetId = null, IReadOnlyDictionary<string, DateTimeOffset> consistencyPoints = null, string diskResized = null, string rebootAfterUpdateStatus = null, string multiVmGroupId = null, string multiVmGroupName = null, string multiVmSyncStatus = null, InMageAgentDetails agentDetails = null, string vCenterInfrastructureId = null, string infrastructureVmId = null, IEnumerable<VmNicDetails> vmNics = null, string discoveryType = null, ResourceIdentifier azureStorageAccountId = null, IEnumerable<string> datastores = null, IEnumerable<SiteRecoveryHealthError> validationErrors = null, DateTimeOffset? lastRpoCalculatedOn = null, DateTimeOffset? lastUpdateReceivedOn = null, string replicaId = null, string osVersion = null, bool? isAdditionalStatsAvailable = null, long? totalDataTransferred = null, string totalProgressHealth = null)
+        public static InMageReplicationDetails InMageReplicationDetails(string activeSiteType = null, int? sourceVmCpuCount = null, int? sourceVmRamSizeInMB = null, SiteRecoveryOSDiskDetails osDetails = null, string protectionStage = null, string vmId = null, string vmProtectionState = null, string vmProtectionStateDescription = null, InitialReplicationDetails resyncDetails = null, DateTimeOffset? retentionWindowStartOn = null, DateTimeOffset? retentionWindowEndOn = null, double? compressedDataRateInMB = null, double? uncompressedDataRateInMB = null, long? rpoInSeconds = null, IEnumerable<InMageProtectedDiskDetails> protectedDisks = null, IPAddress ipAddress = null, DateTimeOffset? lastHeartbeatReceivedOn = null, string processServerId = null, string masterTargetId = null, IReadOnlyDictionary<string, DateTimeOffset> consistencyPoints = null, string diskResized = null, string rebootAfterUpdateStatus = null, string multiVmGroupId = null, string multiVmGroupName = null, string multiVmSyncStatus = null, InMageAgentDetails agentDetails = null, string vCenterInfrastructureId = null, string infrastructureVmId = null, IEnumerable<VmNicDetails> vmNics = null, string discoveryType = null, ResourceIdentifier azureStorageAccountId = null, IEnumerable<string> datastores = null, IEnumerable<SiteRecoveryHealthError> validationErrors = null, DateTimeOffset? lastRpoCalculatedOn = null, DateTimeOffset? lastUpdateReceivedOn = null, string replicaId = null, string osVersion = null, bool? isAdditionalStatsAvailable = null, long? totalDataTransferred = null, string totalProgressHealth = null)
         {
             protectedDisks ??= new List<InMageProtectedDiskDetails>();
             consistencyPoints ??= new Dictionary<string, DateTimeOffset>();
@@ -6817,61 +2944,31 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             return new InMageReplicationDetails("InMage", activeSiteType, sourceVmCpuCount, sourceVmRamSizeInMB, osDetails, protectionStage, vmId, vmProtectionState, vmProtectionStateDescription, resyncDetails, retentionWindowStartOn, retentionWindowEndOn, compressedDataRateInMB, uncompressedDataRateInMB, rpoInSeconds, protectedDisks?.ToList(), ipAddress, lastHeartbeatReceivedOn, processServerId, masterTargetId, consistencyPoints, diskResized, rebootAfterUpdateStatus, multiVmGroupId, multiVmGroupName, multiVmSyncStatus, agentDetails, vCenterInfrastructureId, infrastructureVmId, vmNics?.ToList(), discoveryType, azureStorageAccountId, datastores?.ToList(), validationErrors?.ToList(), lastRpoCalculatedOn, lastUpdateReceivedOn, replicaId, osVersion, isAdditionalStatsAvailable, totalDataTransferred, totalProgressHealth);
         }
 
-        /// <summary> Initializes a new instance of OSDiskDetails. </summary>
-        /// <param name="osVhdId">
-        /// The id of the disk containing the OS.
-        /// Serialized Name: OSDiskDetails.osVhdId
-        /// </param>
-        /// <param name="osType">
-        /// The type of the OS on the VM.
-        /// Serialized Name: OSDiskDetails.osType
-        /// </param>
-        /// <param name="vhdName">
-        /// The OS disk VHD name.
-        /// Serialized Name: OSDiskDetails.vhdName
-        /// </param>
-        /// <returns> A new <see cref="Models.OSDiskDetails"/> instance for mocking. </returns>
-        public static OSDiskDetails OSDiskDetails(string osVhdId = null, string osType = null, string vhdName = null)
+        /// <summary> Initializes a new instance of SiteRecoveryOSDiskDetails. </summary>
+        /// <param name="osVhdId"> The id of the disk containing the OS. </param>
+        /// <param name="osType"> The type of the OS on the VM. </param>
+        /// <param name="vhdName"> The OS disk VHD name. </param>
+        /// <returns> A new <see cref="Models.SiteRecoveryOSDiskDetails"/> instance for mocking. </returns>
+        public static SiteRecoveryOSDiskDetails SiteRecoveryOSDiskDetails(string osVhdId = null, string osType = null, string vhdName = null)
         {
-            return new OSDiskDetails(osVhdId, osType, vhdName);
+            return new SiteRecoveryOSDiskDetails(osVhdId, osType, vhdName);
         }
 
-        /// <summary> Initializes a new instance of SiteRecoveryJJobStatusEventDetails. </summary>
-        /// <param name="jobId">
-        /// Job arm id for the event.
-        /// Serialized Name: JobStatusEventDetails.jobId
-        /// </param>
-        /// <param name="jobFriendlyName">
-        /// JobName for the Event.
-        /// Serialized Name: JobStatusEventDetails.jobFriendlyName
-        /// </param>
-        /// <param name="jobStatus">
-        /// JobStatus for the Event.
-        /// Serialized Name: JobStatusEventDetails.jobStatus
-        /// </param>
-        /// <param name="affectedObjectType">
-        /// AffectedObjectType for the event.
-        /// Serialized Name: JobStatusEventDetails.affectedObjectType
-        /// </param>
-        /// <returns> A new <see cref="Models.SiteRecoveryJJobStatusEventDetails"/> instance for mocking. </returns>
-        public static SiteRecoveryJJobStatusEventDetails SiteRecoveryJJobStatusEventDetails(ResourceIdentifier jobId = null, string jobFriendlyName = null, string jobStatus = null, string affectedObjectType = null)
+        /// <summary> Initializes a new instance of SiteRecoveryJobStatusEventDetails. </summary>
+        /// <param name="jobId"> Job arm id for the event. </param>
+        /// <param name="jobFriendlyName"> JobName for the Event. </param>
+        /// <param name="jobStatus"> JobStatus for the Event. </param>
+        /// <param name="affectedObjectType"> AffectedObjectType for the event. </param>
+        /// <returns> A new <see cref="Models.SiteRecoveryJobStatusEventDetails"/> instance for mocking. </returns>
+        public static SiteRecoveryJobStatusEventDetails SiteRecoveryJobStatusEventDetails(ResourceIdentifier jobId = null, string jobFriendlyName = null, string jobStatus = null, string affectedObjectType = null)
         {
-            return new SiteRecoveryJJobStatusEventDetails("JobStatus", jobId, jobFriendlyName, jobStatus, affectedObjectType);
+            return new SiteRecoveryJobStatusEventDetails("JobStatus", jobId, jobFriendlyName, jobStatus, affectedObjectType);
         }
 
         /// <summary> Initializes a new instance of ManualActionTaskDetails. </summary>
-        /// <param name="name">
-        /// The name.
-        /// Serialized Name: ManualActionTaskDetails.name
-        /// </param>
-        /// <param name="instructions">
-        /// The instructions.
-        /// Serialized Name: ManualActionTaskDetails.instructions
-        /// </param>
-        /// <param name="observation">
-        /// The observation.
-        /// Serialized Name: ManualActionTaskDetails.observation
-        /// </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="instructions"> The instructions. </param>
+        /// <param name="observation"> The observation. </param>
         /// <returns> A new <see cref="Models.ManualActionTaskDetails"/> instance for mocking. </returns>
         public static ManualActionTaskDetails ManualActionTaskDetails(string name = null, string instructions = null, string observation = null)
         {
@@ -6879,302 +2976,107 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Initializes a new instance of MasterTargetServer. </summary>
-        /// <param name="id">
-        /// The server Id.
-        /// Serialized Name: MasterTargetServer.id
-        /// </param>
-        /// <param name="ipAddress">
-        /// The IP address of the server.
-        /// Serialized Name: MasterTargetServer.ipAddress
-        /// </param>
-        /// <param name="name">
-        /// The server name.
-        /// Serialized Name: MasterTargetServer.name
-        /// </param>
-        /// <param name="osType">
-        /// The OS type of the server.
-        /// Serialized Name: MasterTargetServer.osType
-        /// </param>
-        /// <param name="agentVersion">
-        /// The version of the scout component on the server.
-        /// Serialized Name: MasterTargetServer.agentVersion
-        /// </param>
-        /// <param name="lastHeartbeat">
-        /// The last heartbeat received from the server.
-        /// Serialized Name: MasterTargetServer.lastHeartbeat
-        /// </param>
-        /// <param name="versionStatus">
-        /// Version status.
-        /// Serialized Name: MasterTargetServer.versionStatus
-        /// </param>
-        /// <param name="retentionVolumes">
-        /// The retention volumes of Master target Server.
-        /// Serialized Name: MasterTargetServer.retentionVolumes
-        /// </param>
-        /// <param name="dataStores">
-        /// The list of data stores in the fabric.
-        /// Serialized Name: MasterTargetServer.dataStores
-        /// </param>
-        /// <param name="validationErrors">
-        /// Validation errors.
-        /// Serialized Name: MasterTargetServer.validationErrors
-        /// </param>
-        /// <param name="healthErrors">
-        /// Health errors.
-        /// Serialized Name: MasterTargetServer.healthErrors
-        /// </param>
-        /// <param name="diskCount">
-        /// Disk count of the master target.
-        /// Serialized Name: MasterTargetServer.diskCount
-        /// </param>
-        /// <param name="osVersion">
-        /// OS Version of the master target.
-        /// Serialized Name: MasterTargetServer.osVersion
-        /// </param>
-        /// <param name="agentExpireOn">
-        /// Agent expiry date.
-        /// Serialized Name: MasterTargetServer.agentExpiryDate
-        /// </param>
-        /// <param name="marsAgentVersion">
-        /// MARS agent version.
-        /// Serialized Name: MasterTargetServer.marsAgentVersion
-        /// </param>
-        /// <param name="marsAgentExpireOn">
-        /// MARS agent expiry date.
-        /// Serialized Name: MasterTargetServer.marsAgentExpiryDate
-        /// </param>
-        /// <param name="agentVersionDetails">
-        /// Agent version details.
-        /// Serialized Name: MasterTargetServer.agentVersionDetails
-        /// </param>
-        /// <param name="marsAgentVersionDetails">
-        /// Mars agent version details.
-        /// Serialized Name: MasterTargetServer.marsAgentVersionDetails
-        /// </param>
+        /// <param name="id"> The server Id. </param>
+        /// <param name="ipAddress"> The IP address of the server. </param>
+        /// <param name="name"> The server name. </param>
+        /// <param name="osType"> The OS type of the server. </param>
+        /// <param name="agentVersion"> The version of the scout component on the server. </param>
+        /// <param name="lastHeartbeatReceivedOn"> The last heartbeat received from the server. </param>
+        /// <param name="versionStatus"> Version status. </param>
+        /// <param name="retentionVolumes"> The retention volumes of Master target Server. </param>
+        /// <param name="dataStores"> The list of data stores in the fabric. </param>
+        /// <param name="validationErrors"> Validation errors. </param>
+        /// <param name="healthErrors"> Health errors. </param>
+        /// <param name="diskCount"> Disk count of the master target. </param>
+        /// <param name="osVersion"> OS Version of the master target. </param>
+        /// <param name="agentExpireOn"> Agent expiry date. </param>
+        /// <param name="marsAgentVersion"> MARS agent version. </param>
+        /// <param name="marsAgentExpireOn"> MARS agent expiry date. </param>
+        /// <param name="agentVersionDetails"> Agent version details. </param>
+        /// <param name="marsAgentVersionDetails"> Mars agent version details. </param>
         /// <returns> A new <see cref="Models.MasterTargetServer"/> instance for mocking. </returns>
-        public static MasterTargetServer MasterTargetServer(string id = null, IPAddress ipAddress = null, string name = null, string osType = null, string agentVersion = null, DateTimeOffset? lastHeartbeat = null, string versionStatus = null, IEnumerable<RetentionVolume> retentionVolumes = null, IEnumerable<SiteRecoveryDataStore> dataStores = null, IEnumerable<SiteRecoveryHealthError> validationErrors = null, IEnumerable<SiteRecoveryHealthError> healthErrors = null, int? diskCount = null, string osVersion = null, DateTimeOffset? agentExpireOn = null, string marsAgentVersion = null, DateTimeOffset? marsAgentExpireOn = null, VersionDetails agentVersionDetails = null, VersionDetails marsAgentVersionDetails = null)
+        public static MasterTargetServer MasterTargetServer(string id = null, IPAddress ipAddress = null, string name = null, string osType = null, string agentVersion = null, DateTimeOffset? lastHeartbeatReceivedOn = null, string versionStatus = null, IEnumerable<SiteRecoveryRetentionVolume> retentionVolumes = null, IEnumerable<SiteRecoveryDataStore> dataStores = null, IEnumerable<SiteRecoveryHealthError> validationErrors = null, IEnumerable<SiteRecoveryHealthError> healthErrors = null, int? diskCount = null, string osVersion = null, DateTimeOffset? agentExpireOn = null, string marsAgentVersion = null, DateTimeOffset? marsAgentExpireOn = null, SiteRecoveryVersionDetails agentVersionDetails = null, SiteRecoveryVersionDetails marsAgentVersionDetails = null)
         {
-            retentionVolumes ??= new List<RetentionVolume>();
+            retentionVolumes ??= new List<SiteRecoveryRetentionVolume>();
             dataStores ??= new List<SiteRecoveryDataStore>();
             validationErrors ??= new List<SiteRecoveryHealthError>();
             healthErrors ??= new List<SiteRecoveryHealthError>();
 
-            return new MasterTargetServer(id, ipAddress, name, osType, agentVersion, lastHeartbeat, versionStatus, retentionVolumes?.ToList(), dataStores?.ToList(), validationErrors?.ToList(), healthErrors?.ToList(), diskCount, osVersion, agentExpireOn, marsAgentVersion, marsAgentExpireOn, agentVersionDetails, marsAgentVersionDetails);
+            return new MasterTargetServer(id, ipAddress, name, osType, agentVersion, lastHeartbeatReceivedOn, versionStatus, retentionVolumes?.ToList(), dataStores?.ToList(), validationErrors?.ToList(), healthErrors?.ToList(), diskCount, osVersion, agentExpireOn, marsAgentVersion, marsAgentExpireOn, agentVersionDetails, marsAgentVersionDetails);
         }
 
-        /// <summary> Initializes a new instance of RetentionVolume. </summary>
-        /// <param name="volumeName">
-        /// The volume name.
-        /// Serialized Name: RetentionVolume.volumeName
-        /// </param>
-        /// <param name="capacityInBytes">
-        /// The volume capacity.
-        /// Serialized Name: RetentionVolume.capacityInBytes
-        /// </param>
-        /// <param name="freeSpaceInBytes">
-        /// The free space available in this volume.
-        /// Serialized Name: RetentionVolume.freeSpaceInBytes
-        /// </param>
-        /// <param name="thresholdPercentage">
-        /// The threshold percentage.
-        /// Serialized Name: RetentionVolume.thresholdPercentage
-        /// </param>
-        /// <returns> A new <see cref="Models.RetentionVolume"/> instance for mocking. </returns>
-        public static RetentionVolume RetentionVolume(string volumeName = null, long? capacityInBytes = null, long? freeSpaceInBytes = null, int? thresholdPercentage = null)
+        /// <summary> Initializes a new instance of SiteRecoveryRetentionVolume. </summary>
+        /// <param name="volumeName"> The volume name. </param>
+        /// <param name="capacityInBytes"> The volume capacity. </param>
+        /// <param name="freeSpaceInBytes"> The free space available in this volume. </param>
+        /// <param name="thresholdPercentage"> The threshold percentage. </param>
+        /// <returns> A new <see cref="Models.SiteRecoveryRetentionVolume"/> instance for mocking. </returns>
+        public static SiteRecoveryRetentionVolume SiteRecoveryRetentionVolume(string volumeName = null, long? capacityInBytes = null, long? freeSpaceInBytes = null, int? thresholdPercentage = null)
         {
-            return new RetentionVolume(volumeName, capacityInBytes, freeSpaceInBytes, thresholdPercentage);
+            return new SiteRecoveryRetentionVolume(volumeName, capacityInBytes, freeSpaceInBytes, thresholdPercentage);
         }
 
         /// <summary> Initializes a new instance of MobilityServiceUpdate. </summary>
-        /// <param name="version">
-        /// The version of the latest update.
-        /// Serialized Name: MobilityServiceUpdate.version
-        /// </param>
-        /// <param name="rebootStatus">
-        /// The reboot status of the update - whether it is required or not.
-        /// Serialized Name: MobilityServiceUpdate.rebootStatus
-        /// </param>
-        /// <param name="osType">
-        /// The OS type.
-        /// Serialized Name: MobilityServiceUpdate.osType
-        /// </param>
+        /// <param name="version"> The version of the latest update. </param>
+        /// <param name="rebootStatus"> The reboot status of the update - whether it is required or not. </param>
+        /// <param name="osType"> The OS type. </param>
         /// <returns> A new <see cref="Models.MobilityServiceUpdate"/> instance for mocking. </returns>
         public static MobilityServiceUpdate MobilityServiceUpdate(string version = null, string rebootStatus = null, string osType = null)
         {
             return new MobilityServiceUpdate(version, rebootStatus, osType);
         }
 
-        /// <summary> Initializes a new instance of ProcessServer. </summary>
-        /// <param name="friendlyName">
-        /// The Process Server's friendly name.
-        /// Serialized Name: ProcessServer.friendlyName
-        /// </param>
-        /// <param name="id">
-        /// The Process Server Id.
-        /// Serialized Name: ProcessServer.id
-        /// </param>
-        /// <param name="ipAddress">
-        /// The IP address of the server.
-        /// Serialized Name: ProcessServer.ipAddress
-        /// </param>
-        /// <param name="osType">
-        /// The OS type of the server.
-        /// Serialized Name: ProcessServer.osType
-        /// </param>
-        /// <param name="agentVersion">
-        /// The version of the scout component on the server.
-        /// Serialized Name: ProcessServer.agentVersion
-        /// </param>
-        /// <param name="lastHeartbeat">
-        /// The last heartbeat received from the server.
-        /// Serialized Name: ProcessServer.lastHeartbeat
-        /// </param>
-        /// <param name="versionStatus">
-        /// Version status.
-        /// Serialized Name: ProcessServer.versionStatus
-        /// </param>
-        /// <param name="mobilityServiceUpdates">
-        /// The list of the mobility service updates available on the Process Server.
-        /// Serialized Name: ProcessServer.mobilityServiceUpdates
-        /// </param>
-        /// <param name="hostId">
-        /// The agent generated Id.
-        /// Serialized Name: ProcessServer.hostId
-        /// </param>
-        /// <param name="machineCount">
-        /// The servers configured with this PS.
-        /// Serialized Name: ProcessServer.machineCount
-        /// </param>
-        /// <param name="replicationPairCount">
-        /// The number of replication pairs configured in this PS.
-        /// Serialized Name: ProcessServer.replicationPairCount
-        /// </param>
-        /// <param name="systemLoad">
-        /// The percentage of the system load.
-        /// Serialized Name: ProcessServer.systemLoad
-        /// </param>
-        /// <param name="systemLoadStatus">
-        /// The system load status.
-        /// Serialized Name: ProcessServer.systemLoadStatus
-        /// </param>
-        /// <param name="cpuLoad">
-        /// The percentage of the CPU load.
-        /// Serialized Name: ProcessServer.cpuLoad
-        /// </param>
-        /// <param name="cpuLoadStatus">
-        /// The CPU load status.
-        /// Serialized Name: ProcessServer.cpuLoadStatus
-        /// </param>
-        /// <param name="totalMemoryInBytes">
-        /// The total memory.
-        /// Serialized Name: ProcessServer.totalMemoryInBytes
-        /// </param>
-        /// <param name="availableMemoryInBytes">
-        /// The available memory.
-        /// Serialized Name: ProcessServer.availableMemoryInBytes
-        /// </param>
-        /// <param name="memoryUsageStatus">
-        /// The memory usage status.
-        /// Serialized Name: ProcessServer.memoryUsageStatus
-        /// </param>
-        /// <param name="totalSpaceInBytes">
-        /// The total space.
-        /// Serialized Name: ProcessServer.totalSpaceInBytes
-        /// </param>
-        /// <param name="availableSpaceInBytes">
-        /// The available space.
-        /// Serialized Name: ProcessServer.availableSpaceInBytes
-        /// </param>
-        /// <param name="spaceUsageStatus">
-        /// The space usage status.
-        /// Serialized Name: ProcessServer.spaceUsageStatus
-        /// </param>
-        /// <param name="psServiceStatus">
-        /// The PS service status.
-        /// Serialized Name: ProcessServer.psServiceStatus
-        /// </param>
-        /// <param name="sslCertExpireOn">
-        /// The PS SSL cert expiry date.
-        /// Serialized Name: ProcessServer.sslCertExpiryDate
-        /// </param>
-        /// <param name="sslCertExpiryRemainingDays">
-        /// CS SSL cert expiry date.
-        /// Serialized Name: ProcessServer.sslCertExpiryRemainingDays
-        /// </param>
-        /// <param name="osVersion">
-        /// OS Version of the process server. Note: This will get populated if user has CS version greater than 9.12.0.0.
-        /// Serialized Name: ProcessServer.osVersion
-        /// </param>
-        /// <param name="healthErrors">
-        /// Health errors.
-        /// Serialized Name: ProcessServer.healthErrors
-        /// </param>
-        /// <param name="agentExpireOn">
-        /// Agent expiry date.
-        /// Serialized Name: ProcessServer.agentExpiryDate
-        /// </param>
-        /// <param name="agentVersionDetails">
-        /// The agent version details.
-        /// Serialized Name: ProcessServer.agentVersionDetails
-        /// </param>
-        /// <param name="health">
-        /// The health of Process Server.
-        /// Serialized Name: ProcessServer.health
-        /// </param>
-        /// <param name="psStatsRefreshOn">
-        /// The process server stats refresh time.
-        /// Serialized Name: ProcessServer.psStatsRefreshTime
-        /// </param>
-        /// <param name="throughputUploadPendingDataInBytes">
-        /// The uploading pending data in bytes.
-        /// Serialized Name: ProcessServer.throughputUploadPendingDataInBytes
-        /// </param>
-        /// <param name="throughputInMBps">
-        /// The throughput in MBps.
-        /// Serialized Name: ProcessServer.throughputInMBps
-        /// </param>
-        /// <param name="throughputInBytes">
-        /// The throughput in bytes.
-        /// Serialized Name: ProcessServer.throughputInBytes
-        /// </param>
-        /// <param name="throughputStatus">
-        /// The throughput status.
-        /// Serialized Name: ProcessServer.throughputStatus
-        /// </param>
-        /// <param name="marsCommunicationStatus">
-        /// The MARS communication status.
-        /// Serialized Name: ProcessServer.marsCommunicationStatus
-        /// </param>
-        /// <param name="marsRegistrationStatus">
-        /// The MARS registration status.
-        /// Serialized Name: ProcessServer.marsRegistrationStatus
-        /// </param>
-        /// <returns> A new <see cref="Models.ProcessServer"/> instance for mocking. </returns>
-        public static ProcessServer ProcessServer(string friendlyName = null, string id = null, IPAddress ipAddress = null, string osType = null, string agentVersion = null, DateTimeOffset? lastHeartbeat = null, string versionStatus = null, IEnumerable<MobilityServiceUpdate> mobilityServiceUpdates = null, string hostId = null, string machineCount = null, string replicationPairCount = null, string systemLoad = null, string systemLoadStatus = null, string cpuLoad = null, string cpuLoadStatus = null, long? totalMemoryInBytes = null, long? availableMemoryInBytes = null, string memoryUsageStatus = null, long? totalSpaceInBytes = null, long? availableSpaceInBytes = null, string spaceUsageStatus = null, string psServiceStatus = null, DateTimeOffset? sslCertExpireOn = null, int? sslCertExpiryRemainingDays = null, string osVersion = null, IEnumerable<SiteRecoveryHealthError> healthErrors = null, DateTimeOffset? agentExpireOn = null, VersionDetails agentVersionDetails = null, ProtectionHealth? health = null, DateTimeOffset? psStatsRefreshOn = null, long? throughputUploadPendingDataInBytes = null, long? throughputInMBps = null, long? throughputInBytes = null, string throughputStatus = null, string marsCommunicationStatus = null, string marsRegistrationStatus = null)
+        /// <summary> Initializes a new instance of SiteRecoveryProcessServer. </summary>
+        /// <param name="friendlyName"> The Process Server's friendly name. </param>
+        /// <param name="id"> The Process Server Id. </param>
+        /// <param name="ipAddress"> The IP address of the server. </param>
+        /// <param name="osType"> The OS type of the server. </param>
+        /// <param name="agentVersion"> The version of the scout component on the server. </param>
+        /// <param name="lastHeartbeatReceivedOn"> The last heartbeat received from the server. </param>
+        /// <param name="versionStatus"> Version status. </param>
+        /// <param name="mobilityServiceUpdates"> The list of the mobility service updates available on the Process Server. </param>
+        /// <param name="hostId"> The agent generated Id. </param>
+        /// <param name="machineCount"> The servers configured with this PS. </param>
+        /// <param name="replicationPairCount"> The number of replication pairs configured in this PS. </param>
+        /// <param name="systemLoad"> The percentage of the system load. </param>
+        /// <param name="systemLoadStatus"> The system load status. </param>
+        /// <param name="cpuLoad"> The percentage of the CPU load. </param>
+        /// <param name="cpuLoadStatus"> The CPU load status. </param>
+        /// <param name="totalMemoryInBytes"> The total memory. </param>
+        /// <param name="availableMemoryInBytes"> The available memory. </param>
+        /// <param name="memoryUsageStatus"> The memory usage status. </param>
+        /// <param name="totalSpaceInBytes"> The total space. </param>
+        /// <param name="availableSpaceInBytes"> The available space. </param>
+        /// <param name="spaceUsageStatus"> The space usage status. </param>
+        /// <param name="psServiceStatus"> The PS service status. </param>
+        /// <param name="sslCertExpireOn"> The PS SSL cert expiry date. </param>
+        /// <param name="sslCertExpiryRemainingDays"> CS SSL cert expiry date. </param>
+        /// <param name="osVersion"> OS Version of the process server. Note: This will get populated if user has CS version greater than 9.12.0.0. </param>
+        /// <param name="healthErrors"> Health errors. </param>
+        /// <param name="agentExpireOn"> Agent expiry date. </param>
+        /// <param name="agentVersionDetails"> The agent version details. </param>
+        /// <param name="health"> The health of Process Server. </param>
+        /// <param name="psStatsRefreshOn"> The process server stats refresh time. </param>
+        /// <param name="throughputUploadPendingDataInBytes"> The uploading pending data in bytes. </param>
+        /// <param name="throughputInMBps"> The throughput in MBps. </param>
+        /// <param name="throughputInBytes"> The throughput in bytes. </param>
+        /// <param name="throughputStatus"> The throughput status. </param>
+        /// <param name="marsCommunicationStatus"> The MARS communication status. </param>
+        /// <param name="marsRegistrationStatus"> The MARS registration status. </param>
+        /// <returns> A new <see cref="Models.SiteRecoveryProcessServer"/> instance for mocking. </returns>
+        public static SiteRecoveryProcessServer SiteRecoveryProcessServer(string friendlyName = null, string id = null, IPAddress ipAddress = null, string osType = null, string agentVersion = null, DateTimeOffset? lastHeartbeatReceivedOn = null, string versionStatus = null, IEnumerable<MobilityServiceUpdate> mobilityServiceUpdates = null, string hostId = null, string machineCount = null, string replicationPairCount = null, string systemLoad = null, string systemLoadStatus = null, string cpuLoad = null, string cpuLoadStatus = null, long? totalMemoryInBytes = null, long? availableMemoryInBytes = null, string memoryUsageStatus = null, long? totalSpaceInBytes = null, long? availableSpaceInBytes = null, string spaceUsageStatus = null, string psServiceStatus = null, DateTimeOffset? sslCertExpireOn = null, int? sslCertExpiryRemainingDays = null, string osVersion = null, IEnumerable<SiteRecoveryHealthError> healthErrors = null, DateTimeOffset? agentExpireOn = null, SiteRecoveryVersionDetails agentVersionDetails = null, SiteRecoveryProtectionHealth? health = null, DateTimeOffset? psStatsRefreshOn = null, long? throughputUploadPendingDataInBytes = null, long? throughputInMBps = null, long? throughputInBytes = null, string throughputStatus = null, string marsCommunicationStatus = null, string marsRegistrationStatus = null)
         {
             mobilityServiceUpdates ??= new List<MobilityServiceUpdate>();
             healthErrors ??= new List<SiteRecoveryHealthError>();
 
-            return new ProcessServer(friendlyName, id, ipAddress, osType, agentVersion, lastHeartbeat, versionStatus, mobilityServiceUpdates?.ToList(), hostId, machineCount, replicationPairCount, systemLoad, systemLoadStatus, cpuLoad, cpuLoadStatus, totalMemoryInBytes, availableMemoryInBytes, memoryUsageStatus, totalSpaceInBytes, availableSpaceInBytes, spaceUsageStatus, psServiceStatus, sslCertExpireOn, sslCertExpiryRemainingDays, osVersion, healthErrors?.ToList(), agentExpireOn, agentVersionDetails, health, psStatsRefreshOn, throughputUploadPendingDataInBytes, throughputInMBps, throughputInBytes, throughputStatus, marsCommunicationStatus, marsRegistrationStatus);
+            return new SiteRecoveryProcessServer(friendlyName, id, ipAddress, osType, agentVersion, lastHeartbeatReceivedOn, versionStatus, mobilityServiceUpdates?.ToList(), hostId, machineCount, replicationPairCount, systemLoad, systemLoadStatus, cpuLoad, cpuLoadStatus, totalMemoryInBytes, availableMemoryInBytes, memoryUsageStatus, totalSpaceInBytes, availableSpaceInBytes, spaceUsageStatus, psServiceStatus, sslCertExpireOn, sslCertExpiryRemainingDays, osVersion, healthErrors?.ToList(), agentExpireOn, agentVersionDetails, health, psStatsRefreshOn, throughputUploadPendingDataInBytes, throughputInMBps, throughputInBytes, throughputStatus, marsCommunicationStatus, marsRegistrationStatus);
         }
 
         /// <summary> Initializes a new instance of RecoveryPlanA2ADetails. </summary>
-        /// <param name="primaryZone">
-        /// The primary zone.
-        /// Serialized Name: RecoveryPlanA2ADetails.primaryZone
-        /// </param>
-        /// <param name="recoveryZone">
-        /// The recovery zone.
-        /// Serialized Name: RecoveryPlanA2ADetails.recoveryZone
-        /// </param>
-        /// <param name="primaryExtendedLocation">
-        /// The primary extended location.
-        /// Serialized Name: RecoveryPlanA2ADetails.primaryExtendedLocation
-        /// </param>
-        /// <param name="recoveryExtendedLocation">
-        /// The recovery extended location.
-        /// Serialized Name: RecoveryPlanA2ADetails.recoveryExtendedLocation
-        /// </param>
+        /// <param name="primaryZone"> The primary zone. </param>
+        /// <param name="recoveryZone"> The recovery zone. </param>
+        /// <param name="primaryExtendedLocation"> The primary extended location. </param>
+        /// <param name="recoveryExtendedLocation"> The recovery extended location. </param>
         /// <returns> A new <see cref="Models.RecoveryPlanA2ADetails"/> instance for mocking. </returns>
         public static RecoveryPlanA2ADetails RecoveryPlanA2ADetails(string primaryZone = null, string recoveryZone = null, SiteRecoveryExtendedLocation primaryExtendedLocation = null, SiteRecoveryExtendedLocation recoveryExtendedLocation = null)
         {
@@ -7182,22 +3084,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Initializes a new instance of RecoveryPlanGroupTaskDetails. </summary>
-        /// <param name="childTasks">
-        /// The child tasks.
-        /// Serialized Name: GroupTaskDetails.childTasks
-        /// </param>
-        /// <param name="name">
-        /// The name.
-        /// Serialized Name: RecoveryPlanGroupTaskDetails.name
-        /// </param>
-        /// <param name="groupId">
-        /// The group identifier.
-        /// Serialized Name: RecoveryPlanGroupTaskDetails.groupId
-        /// </param>
-        /// <param name="rpGroupType">
-        /// The group type.
-        /// Serialized Name: RecoveryPlanGroupTaskDetails.rpGroupType
-        /// </param>
+        /// <param name="childTasks"> The child tasks. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="groupId"> The group identifier. </param>
+        /// <param name="rpGroupType"> The group type. </param>
         /// <returns> A new <see cref="Models.RecoveryPlanGroupTaskDetails"/> instance for mocking. </returns>
         public static RecoveryPlanGroupTaskDetails RecoveryPlanGroupTaskDetails(IEnumerable<AsrTask> childTasks = null, string name = null, string groupId = null, string rpGroupType = null)
         {
@@ -7207,22 +3097,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Initializes a new instance of RecoveryPlanShutdownGroupTaskDetails. </summary>
-        /// <param name="childTasks">
-        /// The child tasks.
-        /// Serialized Name: GroupTaskDetails.childTasks
-        /// </param>
-        /// <param name="name">
-        /// The name.
-        /// Serialized Name: RecoveryPlanGroupTaskDetails.name
-        /// </param>
-        /// <param name="groupId">
-        /// The group identifier.
-        /// Serialized Name: RecoveryPlanGroupTaskDetails.groupId
-        /// </param>
-        /// <param name="rpGroupType">
-        /// The group type.
-        /// Serialized Name: RecoveryPlanGroupTaskDetails.rpGroupType
-        /// </param>
+        /// <param name="childTasks"> The child tasks. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="groupId"> The group identifier. </param>
+        /// <param name="rpGroupType"> The group type. </param>
         /// <returns> A new <see cref="Models.RecoveryPlanShutdownGroupTaskDetails"/> instance for mocking. </returns>
         public static RecoveryPlanShutdownGroupTaskDetails RecoveryPlanShutdownGroupTaskDetails(IEnumerable<AsrTask> childTasks = null, string name = null, string groupId = null, string rpGroupType = null)
         {
@@ -7231,38 +3109,20 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             return new RecoveryPlanShutdownGroupTaskDetails("RecoveryPlanShutdownGroupTaskDetails", childTasks?.ToList(), name, groupId, rpGroupType);
         }
 
-        /// <summary> Initializes a new instance of RunAsAccount. </summary>
-        /// <param name="accountId">
-        /// The CS RunAs account Id.
-        /// Serialized Name: RunAsAccount.accountId
-        /// </param>
-        /// <param name="accountName">
-        /// The CS RunAs account name.
-        /// Serialized Name: RunAsAccount.accountName
-        /// </param>
-        /// <returns> A new <see cref="Models.RunAsAccount"/> instance for mocking. </returns>
-        public static RunAsAccount RunAsAccount(string accountId = null, string accountName = null)
+        /// <summary> Initializes a new instance of SiteRecoveryRunAsAccount. </summary>
+        /// <param name="accountId"> The CS RunAs account Id. </param>
+        /// <param name="accountName"> The CS RunAs account name. </param>
+        /// <returns> A new <see cref="Models.SiteRecoveryRunAsAccount"/> instance for mocking. </returns>
+        public static SiteRecoveryRunAsAccount SiteRecoveryRunAsAccount(string accountId = null, string accountName = null)
         {
-            return new RunAsAccount(accountId, accountName);
+            return new SiteRecoveryRunAsAccount(accountId, accountName);
         }
 
         /// <summary> Initializes a new instance of ScriptActionTaskDetails. </summary>
-        /// <param name="name">
-        /// The name.
-        /// Serialized Name: ScriptActionTaskDetails.name
-        /// </param>
-        /// <param name="path">
-        /// The path.
-        /// Serialized Name: ScriptActionTaskDetails.path
-        /// </param>
-        /// <param name="output">
-        /// The output.
-        /// Serialized Name: ScriptActionTaskDetails.output
-        /// </param>
-        /// <param name="isPrimarySideScript">
-        /// A value indicating whether it is a primary side script or not.
-        /// Serialized Name: ScriptActionTaskDetails.isPrimarySideScript
-        /// </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="path"> The path. </param>
+        /// <param name="output"> The output. </param>
+        /// <param name="isPrimarySideScript"> A value indicating whether it is a primary side script or not. </param>
         /// <returns> A new <see cref="Models.ScriptActionTaskDetails"/> instance for mocking. </returns>
         public static ScriptActionTaskDetails ScriptActionTaskDetails(string name = null, string path = null, string output = null, bool? isPrimarySideScript = null)
         {
@@ -7270,16 +3130,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Initializes a new instance of SwitchProtectionJobDetails. </summary>
-        /// <param name="affectedObjectDetails">
-        /// The affected object properties like source server, source cloud, target server, target cloud etc. based on the workflow object details.
-        /// Serialized Name: JobDetails.affectedObjectDetails
-        /// </param>
-        /// <param name="newReplicationProtectedItemId">
-        /// ARM Id of the new replication protected item.
-        /// Serialized Name: SwitchProtectionJobDetails.newReplicationProtectedItemId
-        /// </param>
+        /// <param name="affectedObjectDetails"> The affected object properties like source server, source cloud, target server, target cloud etc. based on the workflow object details. </param>
+        /// <param name="newReplicationProtectedItemId"> ARM Id of the new replication protected item. </param>
         /// <returns> A new <see cref="Models.SwitchProtectionJobDetails"/> instance for mocking. </returns>
-        public static SwitchProtectionJobDetails SwitchProtectionJobDetails(IReadOnlyDictionary<string, string> affectedObjectDetails = null, string newReplicationProtectedItemId = null)
+        public static SwitchProtectionJobDetails SwitchProtectionJobDetails(IReadOnlyDictionary<string, string> affectedObjectDetails = null, ResourceIdentifier newReplicationProtectedItemId = null)
         {
             affectedObjectDetails ??= new Dictionary<string, string>();
 
@@ -7287,116 +3141,53 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Initializes a new instance of TestFailoverJobDetails. </summary>
-        /// <param name="affectedObjectDetails">
-        /// The affected object properties like source server, source cloud, target server, target cloud etc. based on the workflow object details.
-        /// Serialized Name: JobDetails.affectedObjectDetails
-        /// </param>
-        /// <param name="testFailoverStatus">
-        /// The test failover status.
-        /// Serialized Name: TestFailoverJobDetails.testFailoverStatus
-        /// </param>
-        /// <param name="comments">
-        /// The test failover comments.
-        /// Serialized Name: TestFailoverJobDetails.comments
-        /// </param>
-        /// <param name="networkName">
-        /// The test network name.
-        /// Serialized Name: TestFailoverJobDetails.networkName
-        /// </param>
-        /// <param name="networkFriendlyName">
-        /// The test network friendly name.
-        /// Serialized Name: TestFailoverJobDetails.networkFriendlyName
-        /// </param>
-        /// <param name="networkType">
-        /// The test network type (see TestFailoverInput enum for possible values).
-        /// Serialized Name: TestFailoverJobDetails.networkType
-        /// </param>
-        /// <param name="protectedItemDetails">
-        /// The test VM details.
-        /// Serialized Name: TestFailoverJobDetails.protectedItemDetails
-        /// </param>
+        /// <param name="affectedObjectDetails"> The affected object properties like source server, source cloud, target server, target cloud etc. based on the workflow object details. </param>
+        /// <param name="testFailoverStatus"> The test failover status. </param>
+        /// <param name="comments"> The test failover comments. </param>
+        /// <param name="networkName"> The test network name. </param>
+        /// <param name="networkFriendlyName"> The test network friendly name. </param>
+        /// <param name="networkType"> The test network type (see TestFailoverInput enum for possible values). </param>
+        /// <param name="protectedItemDetails"> The test VM details. </param>
         /// <returns> A new <see cref="Models.TestFailoverJobDetails"/> instance for mocking. </returns>
-        public static TestFailoverJobDetails TestFailoverJobDetails(IReadOnlyDictionary<string, string> affectedObjectDetails = null, string testFailoverStatus = null, string comments = null, string networkName = null, string networkFriendlyName = null, string networkType = null, IEnumerable<SiteRecoveryFailoverReplicationProtectedItemDetails> protectedItemDetails = null)
+        public static TestFailoverJobDetails TestFailoverJobDetails(IReadOnlyDictionary<string, string> affectedObjectDetails = null, string testFailoverStatus = null, string comments = null, string networkName = null, string networkFriendlyName = null, string networkType = null, IEnumerable<FailoverReplicationProtectedItemDetails> protectedItemDetails = null)
         {
             affectedObjectDetails ??= new Dictionary<string, string>();
-            protectedItemDetails ??= new List<SiteRecoveryFailoverReplicationProtectedItemDetails>();
+            protectedItemDetails ??= new List<FailoverReplicationProtectedItemDetails>();
 
             return new TestFailoverJobDetails("TestFailoverJobDetails", affectedObjectDetails, testFailoverStatus, comments, networkName, networkFriendlyName, networkType, protectedItemDetails?.ToList());
         }
 
-        /// <summary> Initializes a new instance of VirtualMachineTaskDetails. </summary>
-        /// <param name="jobTask">
-        /// The job entity.
-        /// Serialized Name: JobTaskDetails.jobTask
-        /// </param>
-        /// <param name="skippedReason">
-        /// The skipped reason.
-        /// Serialized Name: VirtualMachineTaskDetails.skippedReason
-        /// </param>
-        /// <param name="skippedReasonString">
-        /// The skipped reason string.
-        /// Serialized Name: VirtualMachineTaskDetails.skippedReasonString
-        /// </param>
-        /// <returns> A new <see cref="Models.VirtualMachineTaskDetails"/> instance for mocking. </returns>
-        public static VirtualMachineTaskDetails VirtualMachineTaskDetails(SiteRecoveryJobEntity jobTask = null, string skippedReason = null, string skippedReasonString = null)
+        /// <summary> Initializes a new instance of SiteRecoveryVmTaskDetails. </summary>
+        /// <param name="jobTask"> The job entity. </param>
+        /// <param name="skippedReason"> The skipped reason. </param>
+        /// <param name="skippedReasonString"> The skipped reason string. </param>
+        /// <returns> A new <see cref="Models.SiteRecoveryVmTaskDetails"/> instance for mocking. </returns>
+        public static SiteRecoveryVmTaskDetails SiteRecoveryVmTaskDetails(SiteRecoveryJobEntity jobTask = null, string skippedReason = null, string skippedReasonString = null)
         {
-            return new VirtualMachineTaskDetails("VirtualMachineTaskDetails", jobTask, skippedReason, skippedReasonString);
+            return new SiteRecoveryVmTaskDetails("VirtualMachineTaskDetails", jobTask, skippedReason, skippedReasonString);
         }
 
-        /// <summary> Initializes a new instance of VmmVirtualMachineDetails. </summary>
-        /// <param name="sourceItemId">
-        /// The source id of the object.
-        /// Serialized Name: HyperVVirtualMachineDetails.sourceItemId
-        /// </param>
-        /// <param name="generation">
-        /// The id of the object in fabric.
-        /// Serialized Name: HyperVVirtualMachineDetails.generation
-        /// </param>
-        /// <param name="osDetails">
-        /// The Last replication time.
-        /// Serialized Name: HyperVVirtualMachineDetails.osDetails
-        /// </param>
-        /// <param name="diskDetails">
-        /// The Last successful failover time.
-        /// Serialized Name: HyperVVirtualMachineDetails.diskDetails
-        /// </param>
-        /// <param name="hasPhysicalDisk">
-        /// A value indicating whether the VM has a physical disk attached. String value of SrsDataContract.PresenceStatus enum.
-        /// Serialized Name: HyperVVirtualMachineDetails.hasPhysicalDisk
-        /// </param>
-        /// <param name="hasFibreChannelAdapter">
-        /// A value indicating whether the VM has a fibre channel adapter attached. String value of SrsDataContract.PresenceStatus enum.
-        /// Serialized Name: HyperVVirtualMachineDetails.hasFibreChannelAdapter
-        /// </param>
-        /// <param name="hasSharedVhd">
-        /// A value indicating whether the VM has a shared VHD attached. String value of SrsDataContract.PresenceStatus enum.
-        /// Serialized Name: HyperVVirtualMachineDetails.hasSharedVhd
-        /// </param>
-        /// <param name="hyperVHostId">
-        /// The Id of the hyper-v host in fabric.
-        /// Serialized Name: HyperVVirtualMachineDetails.hyperVHostId
-        /// </param>
-        /// <returns> A new <see cref="Models.VmmVirtualMachineDetails"/> instance for mocking. </returns>
-        public static VmmVirtualMachineDetails VmmVirtualMachineDetails(string sourceItemId = null, string generation = null, OSDetails osDetails = null, IEnumerable<SiteRecoveryDiskDetails> diskDetails = null, PresenceStatus? hasPhysicalDisk = null, PresenceStatus? hasFibreChannelAdapter = null, PresenceStatus? hasSharedVhd = null, string hyperVHostId = null)
+        /// <summary> Initializes a new instance of VmmVmDetails. </summary>
+        /// <param name="sourceItemId"> The source id of the object. </param>
+        /// <param name="generation"> The id of the object in fabric. </param>
+        /// <param name="osDetails"> The Last replication time. </param>
+        /// <param name="diskDetails"> The Last successful failover time. </param>
+        /// <param name="hasPhysicalDisk"> A value indicating whether the VM has a physical disk attached. String value of SrsDataContract.PresenceStatus enum. </param>
+        /// <param name="hasFibreChannelAdapter"> A value indicating whether the VM has a fibre channel adapter attached. String value of SrsDataContract.PresenceStatus enum. </param>
+        /// <param name="hasSharedVhd"> A value indicating whether the VM has a shared VHD attached. String value of SrsDataContract.PresenceStatus enum. </param>
+        /// <param name="hyperVHostId"> The Id of the hyper-v host in fabric. </param>
+        /// <returns> A new <see cref="Models.VmmVmDetails"/> instance for mocking. </returns>
+        public static VmmVmDetails VmmVmDetails(string sourceItemId = null, string generation = null, SiteRecoveryOSDetails osDetails = null, IEnumerable<SiteRecoveryDiskDetails> diskDetails = null, HyperVVmDiskPresenceStatus? hasPhysicalDisk = null, HyperVVmDiskPresenceStatus? hasFibreChannelAdapter = null, HyperVVmDiskPresenceStatus? hasSharedVhd = null, string hyperVHostId = null)
         {
             diskDetails ??= new List<SiteRecoveryDiskDetails>();
 
-            return new VmmVirtualMachineDetails("VmmVirtualMachine", sourceItemId, generation, osDetails, diskDetails?.ToList(), hasPhysicalDisk, hasFibreChannelAdapter, hasSharedVhd, hyperVHostId);
+            return new VmmVmDetails("VmmVirtualMachine", sourceItemId, generation, osDetails, diskDetails?.ToList(), hasPhysicalDisk, hasFibreChannelAdapter, hasSharedVhd, hyperVHostId);
         }
 
         /// <summary> Initializes a new instance of VmNicUpdatesTaskDetails. </summary>
-        /// <param name="vmId">
-        /// Virtual machine Id.
-        /// Serialized Name: VmNicUpdatesTaskDetails.vmId
-        /// </param>
-        /// <param name="nicId">
-        /// Nic Id.
-        /// Serialized Name: VmNicUpdatesTaskDetails.nicId
-        /// </param>
-        /// <param name="name">
-        /// Name of the Nic.
-        /// Serialized Name: VmNicUpdatesTaskDetails.name
-        /// </param>
+        /// <param name="vmId"> Virtual machine Id. </param>
+        /// <param name="nicId"> Nic Id. </param>
+        /// <param name="name"> Name of the Nic. </param>
         /// <returns> A new <see cref="Models.VmNicUpdatesTaskDetails"/> instance for mocking. </returns>
         public static VmNicUpdatesTaskDetails VmNicUpdatesTaskDetails(string vmId = null, string nicId = null, string name = null)
         {
@@ -7404,10 +3195,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Initializes a new instance of VMwareCbtEventDetails. </summary>
-        /// <param name="migrationItemName">
-        /// The migration item name.
-        /// Serialized Name: VMwareCbtEventDetails.migrationItemName
-        /// </param>
+        /// <param name="migrationItemName"> The migration item name. </param>
         /// <returns> A new <see cref="Models.VMwareCbtEventDetails"/> instance for mocking. </returns>
         public static VMwareCbtEventDetails VMwareCbtEventDetails(string migrationItemName = null)
         {
@@ -7415,176 +3203,50 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Initializes a new instance of VMwareCbtMigrationDetails. </summary>
-        /// <param name="vmwareMachineId">
-        /// The ARM Id of the VM discovered in VMware.
-        /// Serialized Name: VMwareCbtMigrationDetails.vmwareMachineId
-        /// </param>
-        /// <param name="osType">
-        /// The type of the OS on the VM.
-        /// Serialized Name: VMwareCbtMigrationDetails.osType
-        /// </param>
-        /// <param name="osName">
-        /// The name of the OS on the VM.
-        /// Serialized Name: VMwareCbtMigrationDetails.osName
-        /// </param>
-        /// <param name="firmwareType">
-        /// The firmware type.
-        /// Serialized Name: VMwareCbtMigrationDetails.firmwareType
-        /// </param>
-        /// <param name="targetGeneration">
-        /// The target generation.
-        /// Serialized Name: VMwareCbtMigrationDetails.targetGeneration
-        /// </param>
-        /// <param name="licenseType">
-        /// License Type of the VM to be used.
-        /// Serialized Name: VMwareCbtMigrationDetails.licenseType
-        /// </param>
-        /// <param name="sqlServerLicenseType">
-        /// The SQL Server license type.
-        /// Serialized Name: VMwareCbtMigrationDetails.sqlServerLicenseType
-        /// </param>
-        /// <param name="dataMoverRunAsAccountId">
-        /// The data mover run as account Id.
-        /// Serialized Name: VMwareCbtMigrationDetails.dataMoverRunAsAccountId
-        /// </param>
-        /// <param name="snapshotRunAsAccountId">
-        /// The snapshot run as account Id.
-        /// Serialized Name: VMwareCbtMigrationDetails.snapshotRunAsAccountId
-        /// </param>
-        /// <param name="storageAccountId">
-        /// The replication storage account ARM Id. This is applicable only for the blob based replication test hook.
-        /// Serialized Name: VMwareCbtMigrationDetails.storageAccountId
-        /// </param>
-        /// <param name="targetVmName">
-        /// Target VM name.
-        /// Serialized Name: VMwareCbtMigrationDetails.targetVmName
-        /// </param>
-        /// <param name="targetVmSize">
-        /// The target VM size.
-        /// Serialized Name: VMwareCbtMigrationDetails.targetVmSize
-        /// </param>
-        /// <param name="targetLocation">
-        /// The target location.
-        /// Serialized Name: VMwareCbtMigrationDetails.targetLocation
-        /// </param>
-        /// <param name="targetResourceGroupId">
-        /// The target resource group Id.
-        /// Serialized Name: VMwareCbtMigrationDetails.targetResourceGroupId
-        /// </param>
-        /// <param name="targetAvailabilitySetId">
-        /// The target availability set Id.
-        /// Serialized Name: VMwareCbtMigrationDetails.targetAvailabilitySetId
-        /// </param>
-        /// <param name="targetAvailabilityZone">
-        /// The target availability zone.
-        /// Serialized Name: VMwareCbtMigrationDetails.targetAvailabilityZone
-        /// </param>
-        /// <param name="targetProximityPlacementGroupId">
-        /// The target proximity placement group Id.
-        /// Serialized Name: VMwareCbtMigrationDetails.targetProximityPlacementGroupId
-        /// </param>
-        /// <param name="confidentialVmKeyVaultId">
-        /// The confidential VM key vault Id for ADE installation.
-        /// Serialized Name: VMwareCbtMigrationDetails.confidentialVmKeyVaultId
-        /// </param>
-        /// <param name="targetVmSecurityProfile">
-        /// The target VM security profile.
-        /// Serialized Name: VMwareCbtMigrationDetails.targetVmSecurityProfile
-        /// </param>
-        /// <param name="targetBootDiagnosticsStorageAccountId">
-        /// The target boot diagnostics storage account ARM Id.
-        /// Serialized Name: VMwareCbtMigrationDetails.targetBootDiagnosticsStorageAccountId
-        /// </param>
-        /// <param name="targetVmTags">
-        /// The target VM tags.
-        /// Serialized Name: VMwareCbtMigrationDetails.targetVmTags
-        /// </param>
-        /// <param name="protectedDisks">
-        /// The list of protected disks.
-        /// Serialized Name: VMwareCbtMigrationDetails.protectedDisks
-        /// </param>
-        /// <param name="targetNetworkId">
-        /// The target network Id.
-        /// Serialized Name: VMwareCbtMigrationDetails.targetNetworkId
-        /// </param>
-        /// <param name="testNetworkId">
-        /// The test network Id.
-        /// Serialized Name: VMwareCbtMigrationDetails.testNetworkId
-        /// </param>
-        /// <param name="vmNics">
-        /// The network details.
-        /// Serialized Name: VMwareCbtMigrationDetails.vmNics
-        /// </param>
-        /// <param name="targetNicTags">
-        /// The tags for the target NICs.
-        /// Serialized Name: VMwareCbtMigrationDetails.targetNicTags
-        /// </param>
-        /// <param name="migrationRecoveryPointId">
-        /// The recovery point Id to which the VM was migrated.
-        /// Serialized Name: VMwareCbtMigrationDetails.migrationRecoveryPointId
-        /// </param>
-        /// <param name="lastRecoveryPointReceived">
-        /// The last recovery point received time.
-        /// Serialized Name: VMwareCbtMigrationDetails.lastRecoveryPointReceived
-        /// </param>
-        /// <param name="lastRecoveryPointId">
-        /// The last recovery point Id.
-        /// Serialized Name: VMwareCbtMigrationDetails.lastRecoveryPointId
-        /// </param>
-        /// <param name="initialSeedingProgressPercentage">
-        /// The initial seeding progress percentage.
-        /// Serialized Name: VMwareCbtMigrationDetails.initialSeedingProgressPercentage
-        /// </param>
-        /// <param name="migrationProgressPercentage">
-        /// The migration progress percentage.
-        /// Serialized Name: VMwareCbtMigrationDetails.migrationProgressPercentage
-        /// </param>
-        /// <param name="resyncProgressPercentage">
-        /// The resync progress percentage.
-        /// Serialized Name: VMwareCbtMigrationDetails.resyncProgressPercentage
-        /// </param>
-        /// <param name="resumeProgressPercentage">
-        /// The resume progress percentage.
-        /// Serialized Name: VMwareCbtMigrationDetails.resumeProgressPercentage
-        /// </param>
-        /// <param name="initialSeedingRetryCount">
-        /// The initial seeding retry count.
-        /// Serialized Name: VMwareCbtMigrationDetails.initialSeedingRetryCount
-        /// </param>
-        /// <param name="resyncRetryCount">
-        /// The resync retry count.
-        /// Serialized Name: VMwareCbtMigrationDetails.resyncRetryCount
-        /// </param>
-        /// <param name="resumeRetryCount">
-        /// The resume retry count.
-        /// Serialized Name: VMwareCbtMigrationDetails.resumeRetryCount
-        /// </param>
-        /// <param name="resyncRequired">
-        /// A value indicating whether resync is required.
-        /// Serialized Name: VMwareCbtMigrationDetails.resyncRequired
-        /// </param>
-        /// <param name="resyncState">
-        /// The resync state.
-        /// Serialized Name: VMwareCbtMigrationDetails.resyncState
-        /// </param>
-        /// <param name="performAutoResync">
-        /// A value indicating whether auto resync is to be done.
-        /// Serialized Name: VMwareCbtMigrationDetails.performAutoResync
-        /// </param>
-        /// <param name="seedDiskTags">
-        /// The tags for the seed disks.
-        /// Serialized Name: VMwareCbtMigrationDetails.seedDiskTags
-        /// </param>
-        /// <param name="targetDiskTags">
-        /// The tags for the target disks.
-        /// Serialized Name: VMwareCbtMigrationDetails.targetDiskTags
-        /// </param>
-        /// <param name="supportedOSVersions">
-        /// List of supported inplace OS Upgrade versions.
-        /// Serialized Name: VMwareCbtMigrationDetails.supportedOSVersions
-        /// </param>
+        /// <param name="vmwareMachineId"> The ARM Id of the VM discovered in VMware. </param>
+        /// <param name="osType"> The type of the OS on the VM. </param>
+        /// <param name="osName"> The name of the OS on the VM. </param>
+        /// <param name="firmwareType"> The firmware type. </param>
+        /// <param name="targetGeneration"> The target generation. </param>
+        /// <param name="licenseType"> License Type of the VM to be used. </param>
+        /// <param name="sqlServerLicenseType"> The SQL Server license type. </param>
+        /// <param name="dataMoverRunAsAccountId"> The data mover run as account Id. </param>
+        /// <param name="snapshotRunAsAccountId"> The snapshot run as account Id. </param>
+        /// <param name="storageAccountId"> The replication storage account ARM Id. This is applicable only for the blob based replication test hook. </param>
+        /// <param name="targetVmName"> Target VM name. </param>
+        /// <param name="targetVmSize"> The target VM size. </param>
+        /// <param name="targetLocation"> The target location. </param>
+        /// <param name="targetResourceGroupId"> The target resource group Id. </param>
+        /// <param name="targetAvailabilitySetId"> The target availability set Id. </param>
+        /// <param name="targetAvailabilityZone"> The target availability zone. </param>
+        /// <param name="targetProximityPlacementGroupId"> The target proximity placement group Id. </param>
+        /// <param name="confidentialVmKeyVaultId"> The confidential VM key vault Id for ADE installation. </param>
+        /// <param name="targetVmSecurityProfile"> The target VM security profile. </param>
+        /// <param name="targetBootDiagnosticsStorageAccountId"> The target boot diagnostics storage account ARM Id. </param>
+        /// <param name="targetVmTags"> The target VM tags. </param>
+        /// <param name="protectedDisks"> The list of protected disks. </param>
+        /// <param name="targetNetworkId"> The target network Id. </param>
+        /// <param name="testNetworkId"> The test network Id. </param>
+        /// <param name="vmNics"> The network details. </param>
+        /// <param name="targetNicTags"> The tags for the target NICs. </param>
+        /// <param name="migrationRecoveryPointId"> The recovery point Id to which the VM was migrated. </param>
+        /// <param name="lastRecoveryPointReceived"> The last recovery point received time. </param>
+        /// <param name="lastRecoveryPointId"> The last recovery point Id. </param>
+        /// <param name="initialSeedingProgressPercentage"> The initial seeding progress percentage. </param>
+        /// <param name="migrationProgressPercentage"> The migration progress percentage. </param>
+        /// <param name="resyncProgressPercentage"> The resync progress percentage. </param>
+        /// <param name="resumeProgressPercentage"> The resume progress percentage. </param>
+        /// <param name="initialSeedingRetryCount"> The initial seeding retry count. </param>
+        /// <param name="resyncRetryCount"> The resync retry count. </param>
+        /// <param name="resumeRetryCount"> The resume retry count. </param>
+        /// <param name="resyncRequired"> A value indicating whether resync is required. </param>
+        /// <param name="resyncState"> The resync state. </param>
+        /// <param name="performAutoResync"> A value indicating whether auto resync is to be done. </param>
+        /// <param name="seedDiskTags"> The tags for the seed disks. </param>
+        /// <param name="targetDiskTags"> The tags for the target disks. </param>
+        /// <param name="supportedOSVersions"> List of supported inplace OS Upgrade versions. </param>
         /// <returns> A new <see cref="Models.VMwareCbtMigrationDetails"/> instance for mocking. </returns>
-        public static VMwareCbtMigrationDetails VMwareCbtMigrationDetails(string vmwareMachineId = null, string osType = null, string osName = null, string firmwareType = null, string targetGeneration = null, string licenseType = null, string sqlServerLicenseType = null, string dataMoverRunAsAccountId = null, string snapshotRunAsAccountId = null, ResourceIdentifier storageAccountId = null, string targetVmName = null, string targetVmSize = null, string targetLocation = null, ResourceIdentifier targetResourceGroupId = null, ResourceIdentifier targetAvailabilitySetId = null, string targetAvailabilityZone = null, ResourceIdentifier targetProximityPlacementGroupId = null, ResourceIdentifier confidentialVmKeyVaultId = null, VMwareCbtSecurityProfileProperties targetVmSecurityProfile = null, ResourceIdentifier targetBootDiagnosticsStorageAccountId = null, IReadOnlyDictionary<string, string> targetVmTags = null, IEnumerable<VMwareCbtProtectedDiskDetails> protectedDisks = null, ResourceIdentifier targetNetworkId = null, ResourceIdentifier testNetworkId = null, IEnumerable<VMwareCbtNicDetails> vmNics = null, IReadOnlyDictionary<string, string> targetNicTags = null, ResourceIdentifier migrationRecoveryPointId = null, DateTimeOffset? lastRecoveryPointReceived = null, ResourceIdentifier lastRecoveryPointId = null, int? initialSeedingProgressPercentage = null, int? migrationProgressPercentage = null, int? resyncProgressPercentage = null, int? resumeProgressPercentage = null, long? initialSeedingRetryCount = null, long? resyncRetryCount = null, long? resumeRetryCount = null, string resyncRequired = null, ResyncState? resyncState = null, string performAutoResync = null, IReadOnlyDictionary<string, string> seedDiskTags = null, IReadOnlyDictionary<string, string> targetDiskTags = null, IEnumerable<string> supportedOSVersions = null)
+        public static VMwareCbtMigrationDetails VMwareCbtMigrationDetails(string vmwareMachineId = null, string osType = null, string osName = null, string firmwareType = null, string targetGeneration = null, string licenseType = null, string sqlServerLicenseType = null, string dataMoverRunAsAccountId = null, string snapshotRunAsAccountId = null, ResourceIdentifier storageAccountId = null, string targetVmName = null, string targetVmSize = null, string targetLocation = null, ResourceIdentifier targetResourceGroupId = null, ResourceIdentifier targetAvailabilitySetId = null, string targetAvailabilityZone = null, ResourceIdentifier targetProximityPlacementGroupId = null, ResourceIdentifier confidentialVmKeyVaultId = null, VMwareCbtSecurityProfileProperties targetVmSecurityProfile = null, ResourceIdentifier targetBootDiagnosticsStorageAccountId = null, IReadOnlyDictionary<string, string> targetVmTags = null, IEnumerable<VMwareCbtProtectedDiskDetails> protectedDisks = null, ResourceIdentifier targetNetworkId = null, ResourceIdentifier testNetworkId = null, IEnumerable<VMwareCbtNicDetails> vmNics = null, IReadOnlyDictionary<string, string> targetNicTags = null, ResourceIdentifier migrationRecoveryPointId = null, DateTimeOffset? lastRecoveryPointReceived = null, ResourceIdentifier lastRecoveryPointId = null, int? initialSeedingProgressPercentage = null, int? migrationProgressPercentage = null, int? resyncProgressPercentage = null, int? resumeProgressPercentage = null, long? initialSeedingRetryCount = null, long? resyncRetryCount = null, long? resumeRetryCount = null, string resyncRequired = null, SiteRecoveryResyncState? resyncState = null, string performAutoResync = null, IReadOnlyDictionary<string, string> seedDiskTags = null, IReadOnlyDictionary<string, string> targetDiskTags = null, IEnumerable<string> supportedOSVersions = null)
         {
             targetVmTags ??= new Dictionary<string, string>();
             protectedDisks ??= new List<VMwareCbtProtectedDiskDetails>();
@@ -7598,62 +3260,20 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Initializes a new instance of VMwareCbtProtectedDiskDetails. </summary>
-        /// <param name="diskId">
-        /// The disk id.
-        /// Serialized Name: VMwareCbtProtectedDiskDetails.diskId
-        /// </param>
-        /// <param name="diskName">
-        /// The disk name.
-        /// Serialized Name: VMwareCbtProtectedDiskDetails.diskName
-        /// </param>
-        /// <param name="diskType">
-        /// The disk type.
-        /// Serialized Name: VMwareCbtProtectedDiskDetails.diskType
-        /// </param>
-        /// <param name="diskPath">
-        /// The disk path.
-        /// Serialized Name: VMwareCbtProtectedDiskDetails.diskPath
-        /// </param>
-        /// <param name="isOSDisk">
-        /// A value indicating whether the disk is the OS disk.
-        /// Serialized Name: VMwareCbtProtectedDiskDetails.isOSDisk
-        /// </param>
-        /// <param name="capacityInBytes">
-        /// The disk capacity in bytes.
-        /// Serialized Name: VMwareCbtProtectedDiskDetails.capacityInBytes
-        /// </param>
-        /// <param name="logStorageAccountId">
-        /// The log storage account ARM Id.
-        /// Serialized Name: VMwareCbtProtectedDiskDetails.logStorageAccountId
-        /// </param>
-        /// <param name="logStorageAccountSasSecretName">
-        /// The key vault secret name of the log storage account.
-        /// Serialized Name: VMwareCbtProtectedDiskDetails.logStorageAccountSasSecretName
-        /// </param>
-        /// <param name="diskEncryptionSetId">
-        /// The DiskEncryptionSet ARM Id.
-        /// Serialized Name: VMwareCbtProtectedDiskDetails.diskEncryptionSetId
-        /// </param>
-        /// <param name="seedManagedDiskId">
-        /// The ARM Id of the seed managed disk.
-        /// Serialized Name: VMwareCbtProtectedDiskDetails.seedManagedDiskId
-        /// </param>
-        /// <param name="seedBlobUri">
-        /// The uri of the seed blob.
-        /// Serialized Name: VMwareCbtProtectedDiskDetails.seedBlobUri
-        /// </param>
-        /// <param name="targetManagedDiskId">
-        /// The ARM Id of the target managed disk.
-        /// Serialized Name: VMwareCbtProtectedDiskDetails.targetManagedDiskId
-        /// </param>
-        /// <param name="targetBlobUri">
-        /// The uri of the target blob.
-        /// Serialized Name: VMwareCbtProtectedDiskDetails.targetBlobUri
-        /// </param>
-        /// <param name="targetDiskName">
-        /// The name for the target managed disk.
-        /// Serialized Name: VMwareCbtProtectedDiskDetails.targetDiskName
-        /// </param>
+        /// <param name="diskId"> The disk id. </param>
+        /// <param name="diskName"> The disk name. </param>
+        /// <param name="diskType"> The disk type. </param>
+        /// <param name="diskPath"> The disk path. </param>
+        /// <param name="isOSDisk"> A value indicating whether the disk is the OS disk. </param>
+        /// <param name="capacityInBytes"> The disk capacity in bytes. </param>
+        /// <param name="logStorageAccountId"> The log storage account ARM Id. </param>
+        /// <param name="logStorageAccountSasSecretName"> The key vault secret name of the log storage account. </param>
+        /// <param name="diskEncryptionSetId"> The DiskEncryptionSet ARM Id. </param>
+        /// <param name="seedManagedDiskId"> The ARM Id of the seed managed disk. </param>
+        /// <param name="seedBlobUri"> The uri of the seed blob. </param>
+        /// <param name="targetManagedDiskId"> The ARM Id of the target managed disk. </param>
+        /// <param name="targetBlobUri"> The uri of the target blob. </param>
+        /// <param name="targetDiskName"> The name for the target managed disk. </param>
         /// <returns> A new <see cref="Models.VMwareCbtProtectedDiskDetails"/> instance for mocking. </returns>
         public static VMwareCbtProtectedDiskDetails VMwareCbtProtectedDiskDetails(string diskId = null, string diskName = null, SiteRecoveryDiskAccountType? diskType = null, string diskPath = null, string isOSDisk = null, long? capacityInBytes = null, ResourceIdentifier logStorageAccountId = null, string logStorageAccountSasSecretName = null, ResourceIdentifier diskEncryptionSetId = null, string seedManagedDiskId = null, Uri seedBlobUri = null, string targetManagedDiskId = null, Uri targetBlobUri = null, string targetDiskName = null)
         {
@@ -7661,62 +3281,20 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Initializes a new instance of VMwareCbtNicDetails. </summary>
-        /// <param name="nicId">
-        /// The NIC Id.
-        /// Serialized Name: VMwareCbtNicDetails.nicId
-        /// </param>
-        /// <param name="isPrimaryNic">
-        /// A value indicating whether this is the primary NIC.
-        /// Serialized Name: VMwareCbtNicDetails.isPrimaryNic
-        /// </param>
-        /// <param name="sourceIPAddress">
-        /// The source IP address.
-        /// Serialized Name: VMwareCbtNicDetails.sourceIPAddress
-        /// </param>
-        /// <param name="sourceIPAddressType">
-        /// The source IP address type.
-        /// Serialized Name: VMwareCbtNicDetails.sourceIPAddressType
-        /// </param>
-        /// <param name="sourceNetworkId">
-        /// Source network Id.
-        /// Serialized Name: VMwareCbtNicDetails.sourceNetworkId
-        /// </param>
-        /// <param name="targetIPAddress">
-        /// The target IP address.
-        /// Serialized Name: VMwareCbtNicDetails.targetIPAddress
-        /// </param>
-        /// <param name="targetIPAddressType">
-        /// The target IP address type.
-        /// Serialized Name: VMwareCbtNicDetails.targetIPAddressType
-        /// </param>
-        /// <param name="targetSubnetName">
-        /// Target subnet name.
-        /// Serialized Name: VMwareCbtNicDetails.targetSubnetName
-        /// </param>
-        /// <param name="testNetworkId">
-        /// Source network Id.
-        /// Serialized Name: VMwareCbtNicDetails.testNetworkId
-        /// </param>
-        /// <param name="testSubnetName">
-        /// Test subnet name.
-        /// Serialized Name: VMwareCbtNicDetails.testSubnetName
-        /// </param>
-        /// <param name="testIPAddress">
-        /// The test IP address.
-        /// Serialized Name: VMwareCbtNicDetails.testIPAddress
-        /// </param>
-        /// <param name="testIPAddressType">
-        /// The test IP address type.
-        /// Serialized Name: VMwareCbtNicDetails.testIPAddressType
-        /// </param>
-        /// <param name="targetNicName">
-        /// Target NIC name.
-        /// Serialized Name: VMwareCbtNicDetails.targetNicName
-        /// </param>
-        /// <param name="isSelectedForMigration">
-        /// A value indicating whether this NIC is selected for migration.
-        /// Serialized Name: VMwareCbtNicDetails.isSelectedForMigration
-        /// </param>
+        /// <param name="nicId"> The NIC Id. </param>
+        /// <param name="isPrimaryNic"> A value indicating whether this is the primary NIC. </param>
+        /// <param name="sourceIPAddress"> The source IP address. </param>
+        /// <param name="sourceIPAddressType"> The source IP address type. </param>
+        /// <param name="sourceNetworkId"> Source network Id. </param>
+        /// <param name="targetIPAddress"> The target IP address. </param>
+        /// <param name="targetIPAddressType"> The target IP address type. </param>
+        /// <param name="targetSubnetName"> Target subnet name. </param>
+        /// <param name="testNetworkId"> Source network Id. </param>
+        /// <param name="testSubnetName"> Test subnet name. </param>
+        /// <param name="testIPAddress"> The test IP address. </param>
+        /// <param name="testIPAddressType"> The test IP address type. </param>
+        /// <param name="targetNicName"> Target NIC name. </param>
+        /// <param name="isSelectedForMigration"> A value indicating whether this NIC is selected for migration. </param>
         /// <returns> A new <see cref="Models.VMwareCbtNicDetails"/> instance for mocking. </returns>
         public static VMwareCbtNicDetails VMwareCbtNicDetails(string nicId = null, string isPrimaryNic = null, IPAddress sourceIPAddress = null, SiteRecoveryEthernetAddressType? sourceIPAddressType = null, ResourceIdentifier sourceNetworkId = null, IPAddress targetIPAddress = null, SiteRecoveryEthernetAddressType? targetIPAddressType = null, string targetSubnetName = null, ResourceIdentifier testNetworkId = null, string testSubnetName = null, IPAddress testIPAddress = null, SiteRecoveryEthernetAddressType? testIPAddressType = null, string targetNicName = null, string isSelectedForMigration = null)
         {
@@ -7724,18 +3302,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Initializes a new instance of VMwareCbtPolicyDetails. </summary>
-        /// <param name="recoveryPointHistoryInMinutes">
-        /// The duration in minutes until which the recovery points need to be stored.
-        /// Serialized Name: VmwareCbtPolicyDetails.recoveryPointHistoryInMinutes
-        /// </param>
-        /// <param name="appConsistentFrequencyInMinutes">
-        /// The app consistent snapshot frequency in minutes.
-        /// Serialized Name: VmwareCbtPolicyDetails.appConsistentFrequencyInMinutes
-        /// </param>
-        /// <param name="crashConsistentFrequencyInMinutes">
-        /// The crash consistent snapshot frequency in minutes.
-        /// Serialized Name: VmwareCbtPolicyDetails.crashConsistentFrequencyInMinutes
-        /// </param>
+        /// <param name="recoveryPointHistoryInMinutes"> The duration in minutes until which the recovery points need to be stored. </param>
+        /// <param name="appConsistentFrequencyInMinutes"> The app consistent snapshot frequency in minutes. </param>
+        /// <param name="crashConsistentFrequencyInMinutes"> The crash consistent snapshot frequency in minutes. </param>
         /// <returns> A new <see cref="Models.VMwareCbtPolicyDetails"/> instance for mocking. </returns>
         public static VMwareCbtPolicyDetails VMwareCbtPolicyDetails(int? recoveryPointHistoryInMinutes = null, int? appConsistentFrequencyInMinutes = null, int? crashConsistentFrequencyInMinutes = null)
         {
@@ -7743,38 +3312,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Initializes a new instance of VMwareCbtProtectionContainerMappingDetails. </summary>
-        /// <param name="keyVaultId">
-        /// The target key vault ARM Id.
-        /// Serialized Name: VMwareCbtProtectionContainerMappingDetails.keyVaultId
-        /// </param>
-        /// <param name="keyVaultUri">
-        /// The target key vault URI.
-        /// Serialized Name: VMwareCbtProtectionContainerMappingDetails.keyVaultUri
-        /// </param>
-        /// <param name="storageAccountId">
-        /// The storage account ARM Id.
-        /// Serialized Name: VMwareCbtProtectionContainerMappingDetails.storageAccountId
-        /// </param>
-        /// <param name="storageAccountSasSecretName">
-        /// The secret name of the storage account.
-        /// Serialized Name: VMwareCbtProtectionContainerMappingDetails.storageAccountSasSecretName
-        /// </param>
-        /// <param name="serviceBusConnectionStringSecretName">
-        /// The secret name of the service bus connection string.
-        /// Serialized Name: VMwareCbtProtectionContainerMappingDetails.serviceBusConnectionStringSecretName
-        /// </param>
-        /// <param name="targetLocation">
-        /// The target location.
-        /// Serialized Name: VMwareCbtProtectionContainerMappingDetails.targetLocation
-        /// </param>
-        /// <param name="roleSizeToNicCountMap">
-        /// The role size to NIC count map.
-        /// Serialized Name: VMwareCbtProtectionContainerMappingDetails.roleSizeToNicCountMap
-        /// </param>
-        /// <param name="excludedSkus">
-        /// The SKUs to be excluded.
-        /// Serialized Name: VMwareCbtProtectionContainerMappingDetails.excludedSkus
-        /// </param>
+        /// <param name="keyVaultId"> The target key vault ARM Id. </param>
+        /// <param name="keyVaultUri"> The target key vault URI. </param>
+        /// <param name="storageAccountId"> The storage account ARM Id. </param>
+        /// <param name="storageAccountSasSecretName"> The secret name of the storage account. </param>
+        /// <param name="serviceBusConnectionStringSecretName"> The secret name of the service bus connection string. </param>
+        /// <param name="targetLocation"> The target location. </param>
+        /// <param name="roleSizeToNicCountMap"> The role size to NIC count map. </param>
+        /// <param name="excludedSkus"> The SKUs to be excluded. </param>
         /// <returns> A new <see cref="Models.VMwareCbtProtectionContainerMappingDetails"/> instance for mocking. </returns>
         public static VMwareCbtProtectionContainerMappingDetails VMwareCbtProtectionContainerMappingDetails(ResourceIdentifier keyVaultId = null, Uri keyVaultUri = null, ResourceIdentifier storageAccountId = null, string storageAccountSasSecretName = null, string serviceBusConnectionStringSecretName = null, string targetLocation = null, IReadOnlyDictionary<string, int> roleSizeToNicCountMap = null, IEnumerable<string> excludedSkus = null)
         {
@@ -7785,234 +3330,84 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Initializes a new instance of VMwareDetails. </summary>
-        /// <param name="processServers">
-        /// The list of Process Servers associated with the fabric.
-        /// Serialized Name: VMwareDetails.processServers
-        /// </param>
-        /// <param name="masterTargetServers">
-        /// The list of Master Target servers associated with the fabric.
-        /// Serialized Name: VMwareDetails.masterTargetServers
-        /// </param>
-        /// <param name="runAsAccounts">
-        /// The list of run as accounts created on the server.
-        /// Serialized Name: VMwareDetails.runAsAccounts
-        /// </param>
-        /// <param name="replicationPairCount">
-        /// The number of replication pairs configured in this CS.
-        /// Serialized Name: VMwareDetails.replicationPairCount
-        /// </param>
-        /// <param name="processServerCount">
-        /// The number of process servers.
-        /// Serialized Name: VMwareDetails.processServerCount
-        /// </param>
-        /// <param name="agentCount">
-        /// The number of source and target servers configured to talk to this CS.
-        /// Serialized Name: VMwareDetails.agentCount
-        /// </param>
-        /// <param name="protectedServers">
-        /// The number of protected servers.
-        /// Serialized Name: VMwareDetails.protectedServers
-        /// </param>
-        /// <param name="systemLoad">
-        /// The percentage of the system load.
-        /// Serialized Name: VMwareDetails.systemLoad
-        /// </param>
-        /// <param name="systemLoadStatus">
-        /// The system load status.
-        /// Serialized Name: VMwareDetails.systemLoadStatus
-        /// </param>
-        /// <param name="cpuLoad">
-        /// The percentage of the CPU load.
-        /// Serialized Name: VMwareDetails.cpuLoad
-        /// </param>
-        /// <param name="cpuLoadStatus">
-        /// The CPU load status.
-        /// Serialized Name: VMwareDetails.cpuLoadStatus
-        /// </param>
-        /// <param name="totalMemoryInBytes">
-        /// The total memory.
-        /// Serialized Name: VMwareDetails.totalMemoryInBytes
-        /// </param>
-        /// <param name="availableMemoryInBytes">
-        /// The available memory.
-        /// Serialized Name: VMwareDetails.availableMemoryInBytes
-        /// </param>
-        /// <param name="memoryUsageStatus">
-        /// The memory usage status.
-        /// Serialized Name: VMwareDetails.memoryUsageStatus
-        /// </param>
-        /// <param name="totalSpaceInBytes">
-        /// The total space.
-        /// Serialized Name: VMwareDetails.totalSpaceInBytes
-        /// </param>
-        /// <param name="availableSpaceInBytes">
-        /// The available space.
-        /// Serialized Name: VMwareDetails.availableSpaceInBytes
-        /// </param>
-        /// <param name="spaceUsageStatus">
-        /// The space usage status.
-        /// Serialized Name: VMwareDetails.spaceUsageStatus
-        /// </param>
-        /// <param name="webLoad">
-        /// The web load.
-        /// Serialized Name: VMwareDetails.webLoad
-        /// </param>
-        /// <param name="webLoadStatus">
-        /// The web load status.
-        /// Serialized Name: VMwareDetails.webLoadStatus
-        /// </param>
-        /// <param name="databaseServerLoad">
-        /// The database server load.
-        /// Serialized Name: VMwareDetails.databaseServerLoad
-        /// </param>
-        /// <param name="databaseServerLoadStatus">
-        /// The database server load status.
-        /// Serialized Name: VMwareDetails.databaseServerLoadStatus
-        /// </param>
-        /// <param name="csServiceStatus">
-        /// The CS service status.
-        /// Serialized Name: VMwareDetails.csServiceStatus
-        /// </param>
-        /// <param name="ipAddress">
-        /// The IP address.
-        /// Serialized Name: VMwareDetails.ipAddress
-        /// </param>
-        /// <param name="agentVersion">
-        /// The agent Version.
-        /// Serialized Name: VMwareDetails.agentVersion
-        /// </param>
-        /// <param name="hostName">
-        /// The host name.
-        /// Serialized Name: VMwareDetails.hostName
-        /// </param>
-        /// <param name="lastHeartbeat">
-        /// The last heartbeat received from CS server.
-        /// Serialized Name: VMwareDetails.lastHeartbeat
-        /// </param>
-        /// <param name="versionStatus">
-        /// Version status.
-        /// Serialized Name: VMwareDetails.versionStatus
-        /// </param>
-        /// <param name="sslCertExpireOn">
-        /// CS SSL cert expiry date.
-        /// Serialized Name: VMwareDetails.sslCertExpiryDate
-        /// </param>
-        /// <param name="sslCertExpiryRemainingDays">
-        /// CS SSL cert expiry date.
-        /// Serialized Name: VMwareDetails.sslCertExpiryRemainingDays
-        /// </param>
-        /// <param name="psTemplateVersion">
-        /// PS template version.
-        /// Serialized Name: VMwareDetails.psTemplateVersion
-        /// </param>
-        /// <param name="agentExpireOn">
-        /// Agent expiry date.
-        /// Serialized Name: VMwareDetails.agentExpiryDate
-        /// </param>
-        /// <param name="agentVersionDetails">
-        /// The agent version details.
-        /// Serialized Name: VMwareDetails.agentVersionDetails
-        /// </param>
-        /// <param name="switchProviderBlockingErrorDetails">
-        /// The switch provider blocking error information.
-        /// Serialized Name: VMwareDetails.switchProviderBlockingErrorDetails
-        /// </param>
+        /// <param name="processServers"> The list of Process Servers associated with the fabric. </param>
+        /// <param name="masterTargetServers"> The list of Master Target servers associated with the fabric. </param>
+        /// <param name="runAsAccounts"> The list of run as accounts created on the server. </param>
+        /// <param name="replicationPairCount"> The number of replication pairs configured in this CS. </param>
+        /// <param name="processServerCount"> The number of process servers. </param>
+        /// <param name="agentCount"> The number of source and target servers configured to talk to this CS. </param>
+        /// <param name="protectedServers"> The number of protected servers. </param>
+        /// <param name="systemLoad"> The percentage of the system load. </param>
+        /// <param name="systemLoadStatus"> The system load status. </param>
+        /// <param name="cpuLoad"> The percentage of the CPU load. </param>
+        /// <param name="cpuLoadStatus"> The CPU load status. </param>
+        /// <param name="totalMemoryInBytes"> The total memory. </param>
+        /// <param name="availableMemoryInBytes"> The available memory. </param>
+        /// <param name="memoryUsageStatus"> The memory usage status. </param>
+        /// <param name="totalSpaceInBytes"> The total space. </param>
+        /// <param name="availableSpaceInBytes"> The available space. </param>
+        /// <param name="spaceUsageStatus"> The space usage status. </param>
+        /// <param name="webLoad"> The web load. </param>
+        /// <param name="webLoadStatus"> The web load status. </param>
+        /// <param name="databaseServerLoad"> The database server load. </param>
+        /// <param name="databaseServerLoadStatus"> The database server load status. </param>
+        /// <param name="csServiceStatus"> The CS service status. </param>
+        /// <param name="ipAddress"> The IP address. </param>
+        /// <param name="agentVersion"> The agent Version. </param>
+        /// <param name="hostName"> The host name. </param>
+        /// <param name="lastHeartbeat"> The last heartbeat received from CS server. </param>
+        /// <param name="versionStatus"> Version status. </param>
+        /// <param name="sslCertExpireOn"> CS SSL cert expiry date. </param>
+        /// <param name="sslCertExpiryRemainingDays"> CS SSL cert expiry date. </param>
+        /// <param name="psTemplateVersion"> PS template version. </param>
+        /// <param name="agentExpireOn"> Agent expiry date. </param>
+        /// <param name="agentVersionDetails"> The agent version details. </param>
+        /// <param name="switchProviderBlockingErrorDetails"> The switch provider blocking error information. </param>
         /// <returns> A new <see cref="Models.VMwareDetails"/> instance for mocking. </returns>
-        public static VMwareDetails VMwareDetails(IEnumerable<ProcessServer> processServers = null, IEnumerable<MasterTargetServer> masterTargetServers = null, IEnumerable<RunAsAccount> runAsAccounts = null, string replicationPairCount = null, string processServerCount = null, string agentCount = null, string protectedServers = null, string systemLoad = null, string systemLoadStatus = null, string cpuLoad = null, string cpuLoadStatus = null, long? totalMemoryInBytes = null, long? availableMemoryInBytes = null, string memoryUsageStatus = null, long? totalSpaceInBytes = null, long? availableSpaceInBytes = null, string spaceUsageStatus = null, string webLoad = null, string webLoadStatus = null, string databaseServerLoad = null, string databaseServerLoadStatus = null, string csServiceStatus = null, IPAddress ipAddress = null, string agentVersion = null, string hostName = null, DateTimeOffset? lastHeartbeat = null, string versionStatus = null, DateTimeOffset? sslCertExpireOn = null, int? sslCertExpiryRemainingDays = null, string psTemplateVersion = null, DateTimeOffset? agentExpireOn = null, VersionDetails agentVersionDetails = null, IEnumerable<InMageFabricSwitchProviderBlockingErrorDetails> switchProviderBlockingErrorDetails = null)
+        public static VMwareDetails VMwareDetails(IEnumerable<SiteRecoveryProcessServer> processServers = null, IEnumerable<MasterTargetServer> masterTargetServers = null, IEnumerable<SiteRecoveryRunAsAccount> runAsAccounts = null, string replicationPairCount = null, string processServerCount = null, string agentCount = null, string protectedServers = null, string systemLoad = null, string systemLoadStatus = null, string cpuLoad = null, string cpuLoadStatus = null, long? totalMemoryInBytes = null, long? availableMemoryInBytes = null, string memoryUsageStatus = null, long? totalSpaceInBytes = null, long? availableSpaceInBytes = null, string spaceUsageStatus = null, string webLoad = null, string webLoadStatus = null, string databaseServerLoad = null, string databaseServerLoadStatus = null, string csServiceStatus = null, IPAddress ipAddress = null, string agentVersion = null, string hostName = null, DateTimeOffset? lastHeartbeat = null, string versionStatus = null, DateTimeOffset? sslCertExpireOn = null, int? sslCertExpiryRemainingDays = null, string psTemplateVersion = null, DateTimeOffset? agentExpireOn = null, SiteRecoveryVersionDetails agentVersionDetails = null, IEnumerable<InMageFabricSwitchProviderBlockingErrorDetails> switchProviderBlockingErrorDetails = null)
         {
-            processServers ??= new List<ProcessServer>();
+            processServers ??= new List<SiteRecoveryProcessServer>();
             masterTargetServers ??= new List<MasterTargetServer>();
-            runAsAccounts ??= new List<RunAsAccount>();
+            runAsAccounts ??= new List<SiteRecoveryRunAsAccount>();
             switchProviderBlockingErrorDetails ??= new List<InMageFabricSwitchProviderBlockingErrorDetails>();
 
             return new VMwareDetails("VMware", processServers?.ToList(), masterTargetServers?.ToList(), runAsAccounts?.ToList(), replicationPairCount, processServerCount, agentCount, protectedServers, systemLoad, systemLoadStatus, cpuLoad, cpuLoadStatus, totalMemoryInBytes, availableMemoryInBytes, memoryUsageStatus, totalSpaceInBytes, availableSpaceInBytes, spaceUsageStatus, webLoad, webLoadStatus, databaseServerLoad, databaseServerLoadStatus, csServiceStatus, ipAddress, agentVersion, hostName, lastHeartbeat, versionStatus, sslCertExpireOn, sslCertExpiryRemainingDays, psTemplateVersion, agentExpireOn, agentVersionDetails, switchProviderBlockingErrorDetails?.ToList());
         }
 
         /// <summary> Initializes a new instance of VMwareV2FabricSpecificDetails. </summary>
-        /// <param name="vmwareSiteId">
-        /// The ARM Id of the VMware site.
-        /// Serialized Name: VMwareV2FabricSpecificDetails.vmwareSiteId
-        /// </param>
-        /// <param name="physicalSiteId">
-        /// The ARM Id of the physical site.
-        /// Serialized Name: VMwareV2FabricSpecificDetails.physicalSiteId
-        /// </param>
-        /// <param name="migrationSolutionId">
-        /// The Migration solution ARM Id.
-        /// Serialized Name: VMwareV2FabricSpecificDetails.migrationSolutionId
-        /// </param>
-        /// <param name="serviceEndpoint">
-        /// The service endpoint.
-        /// Serialized Name: VMwareV2FabricSpecificDetails.serviceEndpoint
-        /// </param>
-        /// <param name="serviceResourceId">
-        /// The service resource Id.
-        /// Serialized Name: VMwareV2FabricSpecificDetails.serviceResourceId
-        /// </param>
-        /// <param name="serviceContainerId">
-        /// The service container Id.
-        /// Serialized Name: VMwareV2FabricSpecificDetails.serviceContainerId
-        /// </param>
-        /// <param name="processServers">
-        /// The list of process servers.
-        /// Serialized Name: VMwareV2FabricSpecificDetails.processServers
-        /// </param>
+        /// <param name="vmwareSiteId"> The ARM Id of the VMware site. </param>
+        /// <param name="physicalSiteId"> The ARM Id of the physical site. </param>
+        /// <param name="migrationSolutionId"> The Migration solution ARM Id. </param>
+        /// <param name="serviceEndpoint"> The service endpoint. </param>
+        /// <param name="serviceResourceId"> The service resource Id. </param>
+        /// <param name="serviceContainerId"> The service container Id. </param>
+        /// <param name="processServers"> The list of process servers. </param>
         /// <returns> A new <see cref="Models.VMwareV2FabricSpecificDetails"/> instance for mocking. </returns>
-        public static VMwareV2FabricSpecificDetails VMwareV2FabricSpecificDetails(string vmwareSiteId = null, string physicalSiteId = null, string migrationSolutionId = null, string serviceEndpoint = null, string serviceResourceId = null, string serviceContainerId = null, IEnumerable<ProcessServerDetails> processServers = null)
+        public static VMwareV2FabricSpecificDetails VMwareV2FabricSpecificDetails(ResourceIdentifier vmwareSiteId = null, ResourceIdentifier physicalSiteId = null, ResourceIdentifier migrationSolutionId = null, string serviceEndpoint = null, string serviceResourceId = null, string serviceContainerId = null, IEnumerable<SiteRecoveryProcessServerDetails> processServers = null)
         {
-            processServers ??= new List<ProcessServerDetails>();
+            processServers ??= new List<SiteRecoveryProcessServerDetails>();
 
             return new VMwareV2FabricSpecificDetails("VMwareV2", vmwareSiteId, physicalSiteId, migrationSolutionId, serviceEndpoint, serviceResourceId, serviceContainerId, processServers?.ToList());
         }
 
-        /// <summary> Initializes a new instance of VMwareVirtualMachineDetails. </summary>
-        /// <param name="agentGeneratedId">
-        /// The ID generated by the InMage agent after it gets installed on guest. This is the ID to be used during InMage CreateProtection.
-        /// Serialized Name: VMwareVirtualMachineDetails.agentGeneratedId
-        /// </param>
-        /// <param name="agentInstalled">
-        /// The value indicating if InMage scout agent is installed on guest.
-        /// Serialized Name: VMwareVirtualMachineDetails.agentInstalled
-        /// </param>
-        /// <param name="osType">
-        /// The OsType installed on VM.
-        /// Serialized Name: VMwareVirtualMachineDetails.osType
-        /// </param>
-        /// <param name="agentVersion">
-        /// The agent version.
-        /// Serialized Name: VMwareVirtualMachineDetails.agentVersion
-        /// </param>
-        /// <param name="ipAddress">
-        /// The IP address.
-        /// Serialized Name: VMwareVirtualMachineDetails.ipAddress
-        /// </param>
-        /// <param name="poweredOn">
-        /// The value indicating whether VM is powered on.
-        /// Serialized Name: VMwareVirtualMachineDetails.poweredOn
-        /// </param>
-        /// <param name="vCenterInfrastructureId">
-        /// The VCenter infrastructure Id.
-        /// Serialized Name: VMwareVirtualMachineDetails.vCenterInfrastructureId
-        /// </param>
-        /// <param name="discoveryType">
-        /// A value indicating the discovery type of the machine. Value can be vCenter or physical.
-        /// Serialized Name: VMwareVirtualMachineDetails.discoveryType
-        /// </param>
-        /// <param name="diskDetails">
-        /// The disk details.
-        /// Serialized Name: VMwareVirtualMachineDetails.diskDetails
-        /// </param>
-        /// <param name="validationErrors">
-        /// The validation errors.
-        /// Serialized Name: VMwareVirtualMachineDetails.validationErrors
-        /// </param>
-        /// <returns> A new <see cref="Models.VMwareVirtualMachineDetails"/> instance for mocking. </returns>
-        public static VMwareVirtualMachineDetails VMwareVirtualMachineDetails(string agentGeneratedId = null, string agentInstalled = null, string osType = null, string agentVersion = null, IPAddress ipAddress = null, string poweredOn = null, string vCenterInfrastructureId = null, string discoveryType = null, IEnumerable<InMageDiskDetails> diskDetails = null, IEnumerable<SiteRecoveryHealthError> validationErrors = null)
+        /// <summary> Initializes a new instance of VMwareVmDetails. </summary>
+        /// <param name="agentGeneratedId"> The ID generated by the InMage agent after it gets installed on guest. This is the ID to be used during InMage CreateProtection. </param>
+        /// <param name="agentInstalled"> The value indicating if InMage scout agent is installed on guest. </param>
+        /// <param name="osType"> The OsType installed on VM. </param>
+        /// <param name="agentVersion"> The agent version. </param>
+        /// <param name="ipAddress"> The IP address. </param>
+        /// <param name="poweredOn"> The value indicating whether VM is powered on. </param>
+        /// <param name="vCenterInfrastructureId"> The VCenter infrastructure Id. </param>
+        /// <param name="discoveryType"> A value indicating the discovery type of the machine. Value can be vCenter or physical. </param>
+        /// <param name="diskDetails"> The disk details. </param>
+        /// <param name="validationErrors"> The validation errors. </param>
+        /// <returns> A new <see cref="Models.VMwareVmDetails"/> instance for mocking. </returns>
+        public static VMwareVmDetails VMwareVmDetails(string agentGeneratedId = null, string agentInstalled = null, string osType = null, string agentVersion = null, IPAddress ipAddress = null, string poweredOn = null, string vCenterInfrastructureId = null, string discoveryType = null, IEnumerable<InMageDiskDetails> diskDetails = null, IEnumerable<SiteRecoveryHealthError> validationErrors = null)
         {
             diskDetails ??= new List<InMageDiskDetails>();
             validationErrors ??= new List<SiteRecoveryHealthError>();
 
-            return new VMwareVirtualMachineDetails("VMwareVirtualMachine", agentGeneratedId, agentInstalled, osType, agentVersion, ipAddress, poweredOn, vCenterInfrastructureId, discoveryType, diskDetails?.ToList(), validationErrors?.ToList());
+            return new VMwareVmDetails("VMwareVirtualMachine", agentGeneratedId, agentInstalled, osType, agentVersion, ipAddress, poweredOn, vCenterInfrastructureId, discoveryType, diskDetails?.ToList(), validationErrors?.ToList());
         }
     }
 }

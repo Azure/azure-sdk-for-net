@@ -9,10 +9,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary>
-    /// HvrA provider specific input for test failover.
-    /// Serialized Name: HyperVReplicaAzureTestFailoverInput
-    /// </summary>
+    /// <summary> HvrA provider specific input for test failover. </summary>
     public partial class HyperVReplicaAzureTestFailoverContent : TestFailoverProviderSpecificContent
     {
         /// <summary> Initializes a new instance of HyperVReplicaAzureTestFailoverContent. </summary>
@@ -21,20 +18,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             InstanceType = "HyperVReplicaAzure";
         }
 
-        /// <summary>
-        /// Primary kek certificate pfx.
-        /// Serialized Name: HyperVReplicaAzureTestFailoverInput.primaryKekCertificatePfx
-        /// </summary>
+        /// <summary> Primary kek certificate pfx. </summary>
         public string PrimaryKekCertificatePfx { get; set; }
-        /// <summary>
-        /// Secondary kek certificate pfx.
-        /// Serialized Name: HyperVReplicaAzureTestFailoverInput.secondaryKekCertificatePfx
-        /// </summary>
+        /// <summary> Secondary kek certificate pfx. </summary>
         public string SecondaryKekCertificatePfx { get; set; }
-        /// <summary>
-        /// The recovery point id to be passed to test failover to a particular recovery point. In case of latest recovery point, null should be passed.
-        /// Serialized Name: HyperVReplicaAzureTestFailoverInput.recoveryPointId
-        /// </summary>
+        /// <summary> The recovery point id to be passed to test failover to a particular recovery point. In case of latest recovery point, null should be passed. </summary>
         public ResourceIdentifier RecoveryPointId { get; set; }
     }
 }

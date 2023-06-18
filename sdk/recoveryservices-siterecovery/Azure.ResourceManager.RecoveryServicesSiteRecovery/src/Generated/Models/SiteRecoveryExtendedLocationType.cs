@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary>
-    /// The extended location type.
-    /// Serialized Name: ExtendedLocationType
-    /// </summary>
+    /// <summary> The extended location type. </summary>
     public readonly partial struct SiteRecoveryExtendedLocationType : IEquatable<SiteRecoveryExtendedLocationType>
     {
         private readonly string _value;
@@ -27,10 +24,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 
         private const string EdgeZoneValue = "EdgeZone";
 
-        /// <summary>
-        /// EdgeZone
-        /// Serialized Name: ExtendedLocationType.EdgeZone
-        /// </summary>
+        /// <summary> EdgeZone. </summary>
         public static SiteRecoveryExtendedLocationType EdgeZone { get; } = new SiteRecoveryExtendedLocationType(EdgeZoneValue);
         /// <summary> Determines if two <see cref="SiteRecoveryExtendedLocationType"/> values are the same. </summary>
         public static bool operator ==(SiteRecoveryExtendedLocationType left, SiteRecoveryExtendedLocationType right) => left.Equals(right);

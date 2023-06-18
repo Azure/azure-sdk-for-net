@@ -7,10 +7,7 @@
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary>
-    /// Replication group details. This will be used in case of San.
-    /// Serialized Name: ReplicationGroupDetails
-    /// </summary>
+    /// <summary> Replication group details. This will be used in case of San. </summary>
     public partial class ReplicationGroupDetails : SiteRecoveryReplicationProviderSettings
     {
         /// <summary> Initializes a new instance of ReplicationGroupDetails. </summary>
@@ -20,10 +17,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Initializes a new instance of ReplicationGroupDetails. </summary>
-        /// <param name="instanceType">
-        /// Gets the class type. Overridden in derived classes.
-        /// Serialized Name: ConfigurationSettings.instanceType
-        /// </param>
+        /// <param name="instanceType"> Gets the class type. Overridden in derived classes. </param>
         internal ReplicationGroupDetails(string instanceType) : base(instanceType)
         {
             InstanceType = instanceType ?? "ReplicationGroupDetails";

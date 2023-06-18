@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
             {
                 return null;
             }
-            Optional<RecoveryPointProperties> properties = default;
+            Optional<SiteRecoveryPointProperties> properties = default;
             Optional<AzureLocation> location = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
                     {
                         continue;
                     }
-                    properties = RecoveryPointProperties.DeserializeRecoveryPointProperties(property.Value);
+                    properties = SiteRecoveryPointProperties.DeserializeSiteRecoveryPointProperties(property.Value);
                     continue;
                 }
                 if (property.NameEquals("location"u8))

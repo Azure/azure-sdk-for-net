@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary>
-    /// A value indicating whether multi VM sync enabled VMs should use multi VM sync points for failover.
-    /// Serialized Name: MultiVmSyncPointOption
-    /// </summary>
+    /// <summary> A value indicating whether multi VM sync enabled VMs should use multi VM sync points for failover. </summary>
     public readonly partial struct MultiVmSyncPointOption : IEquatable<MultiVmSyncPointOption>
     {
         private readonly string _value;
@@ -28,15 +25,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         private const string UseMultiVmSyncRecoveryPointValue = "UseMultiVmSyncRecoveryPoint";
         private const string UsePerVmRecoveryPointValue = "UsePerVmRecoveryPoint";
 
-        /// <summary>
-        /// UseMultiVmSyncRecoveryPoint
-        /// Serialized Name: MultiVmSyncPointOption.UseMultiVmSyncRecoveryPoint
-        /// </summary>
+        /// <summary> UseMultiVmSyncRecoveryPoint. </summary>
         public static MultiVmSyncPointOption UseMultiVmSyncRecoveryPoint { get; } = new MultiVmSyncPointOption(UseMultiVmSyncRecoveryPointValue);
-        /// <summary>
-        /// UsePerVmRecoveryPoint
-        /// Serialized Name: MultiVmSyncPointOption.UsePerVmRecoveryPoint
-        /// </summary>
+        /// <summary> UsePerVmRecoveryPoint. </summary>
         public static MultiVmSyncPointOption UsePerVmRecoveryPoint { get; } = new MultiVmSyncPointOption(UsePerVmRecoveryPointValue);
         /// <summary> Determines if two <see cref="MultiVmSyncPointOption"/> values are the same. </summary>
         public static bool operator ==(MultiVmSyncPointOption left, MultiVmSyncPointOption right) => left.Equals(right);

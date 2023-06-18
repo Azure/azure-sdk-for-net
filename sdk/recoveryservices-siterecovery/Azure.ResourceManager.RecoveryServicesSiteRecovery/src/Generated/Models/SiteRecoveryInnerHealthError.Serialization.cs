@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Optional<string> recoveryProviderErrorMessage = default;
             Optional<string> entityId = default;
             Optional<string> errorId = default;
-            Optional<SiteRecoveryHealthErrorCustomerResolvability> customerResolvability = default;
+            Optional<HealthErrorCustomerResolvability> customerResolvability = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("errorSource"u8))
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    customerResolvability = new SiteRecoveryHealthErrorCustomerResolvability(property.Value.GetString());
+                    customerResolvability = new HealthErrorCustomerResolvability(property.Value.GetString());
                     continue;
                 }
             }

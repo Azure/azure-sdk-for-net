@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Samples
             // invoke the operation
             SiteRecoveryVCenterPatch patch = new SiteRecoveryVCenterPatch()
             {
-                Properties = new UpdateVCenterRequestProperties()
+                Properties = new SiteRecoveryUpdateVCenterProperties()
                 {
                     IPAddress = IPAddress.Parse("10.150.109.25"),
                 },

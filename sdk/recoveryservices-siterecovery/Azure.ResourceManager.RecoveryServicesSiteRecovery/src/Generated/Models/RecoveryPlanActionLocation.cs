@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary>
-    /// The fabric location.
-    /// Serialized Name: RecoveryPlanActionLocation
-    /// </summary>
+    /// <summary> The fabric location. </summary>
     public readonly partial struct RecoveryPlanActionLocation : IEquatable<RecoveryPlanActionLocation>
     {
         private readonly string _value;
@@ -28,15 +25,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         private const string PrimaryValue = "Primary";
         private const string RecoveryValue = "Recovery";
 
-        /// <summary>
-        /// Primary
-        /// Serialized Name: RecoveryPlanActionLocation.Primary
-        /// </summary>
+        /// <summary> Primary. </summary>
         public static RecoveryPlanActionLocation Primary { get; } = new RecoveryPlanActionLocation(PrimaryValue);
-        /// <summary>
-        /// Recovery
-        /// Serialized Name: RecoveryPlanActionLocation.Recovery
-        /// </summary>
+        /// <summary> Recovery. </summary>
         public static RecoveryPlanActionLocation Recovery { get; } = new RecoveryPlanActionLocation(RecoveryValue);
         /// <summary> Determines if two <see cref="RecoveryPlanActionLocation"/> values are the same. </summary>
         public static bool operator ==(RecoveryPlanActionLocation left, RecoveryPlanActionLocation right) => left.Equals(right);

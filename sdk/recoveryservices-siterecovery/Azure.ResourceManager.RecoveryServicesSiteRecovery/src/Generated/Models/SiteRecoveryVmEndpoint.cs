@@ -7,10 +7,7 @@
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary>
-    /// The SiteRecoveryVmEndpoint.
-    /// Serialized Name: InputEndpoint
-    /// </summary>
+    /// <summary> The SiteRecoveryVmEndpoint. </summary>
     public partial class SiteRecoveryVmEndpoint
     {
         /// <summary> Initializes a new instance of SiteRecoveryVmEndpoint. </summary>
@@ -19,10 +16,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Initializes a new instance of SiteRecoveryVmEndpoint. </summary>
-        /// <param name="endpointName"> Serialized Name: InputEndpoint.endpointName. </param>
-        /// <param name="privatePort"> Serialized Name: InputEndpoint.privatePort. </param>
-        /// <param name="publicPort"> Serialized Name: InputEndpoint.publicPort. </param>
-        /// <param name="protocol"> Serialized Name: InputEndpoint.protocol. </param>
+        /// <param name="endpointName"></param>
+        /// <param name="privatePort"></param>
+        /// <param name="publicPort"></param>
+        /// <param name="protocol"></param>
         internal SiteRecoveryVmEndpoint(string endpointName, int? privatePort, int? publicPort, string protocol)
         {
             EndpointName = endpointName;
@@ -31,13 +28,13 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Protocol = protocol;
         }
 
-        /// <summary> Serialized Name: InputEndpoint.endpointName. </summary>
+        /// <summary> Gets the endpoint name. </summary>
         public string EndpointName { get; }
-        /// <summary> Serialized Name: InputEndpoint.privatePort. </summary>
+        /// <summary> Gets the private port. </summary>
         public int? PrivatePort { get; }
-        /// <summary> Serialized Name: InputEndpoint.publicPort. </summary>
+        /// <summary> Gets the public port. </summary>
         public int? PublicPort { get; }
-        /// <summary> Serialized Name: InputEndpoint.protocol. </summary>
+        /// <summary> Gets the protocol. </summary>
         public string Protocol { get; }
     }
 }

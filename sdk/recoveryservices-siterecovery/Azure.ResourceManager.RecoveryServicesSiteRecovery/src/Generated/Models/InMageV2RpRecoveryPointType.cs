@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary>
-    /// The recovery point type.
-    /// Serialized Name: InMageV2RpRecoveryPointType
-    /// </summary>
+    /// <summary> The recovery point type. </summary>
     public readonly partial struct InMageV2RpRecoveryPointType : IEquatable<InMageV2RpRecoveryPointType>
     {
         private readonly string _value;
@@ -30,25 +27,13 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         private const string LatestCrashConsistentValue = "LatestCrashConsistent";
         private const string LatestProcessedValue = "LatestProcessed";
 
-        /// <summary>
-        /// Latest
-        /// Serialized Name: InMageV2RpRecoveryPointType.Latest
-        /// </summary>
+        /// <summary> Latest. </summary>
         public static InMageV2RpRecoveryPointType Latest { get; } = new InMageV2RpRecoveryPointType(LatestValue);
-        /// <summary>
-        /// LatestApplicationConsistent
-        /// Serialized Name: InMageV2RpRecoveryPointType.LatestApplicationConsistent
-        /// </summary>
+        /// <summary> LatestApplicationConsistent. </summary>
         public static InMageV2RpRecoveryPointType LatestApplicationConsistent { get; } = new InMageV2RpRecoveryPointType(LatestApplicationConsistentValue);
-        /// <summary>
-        /// LatestCrashConsistent
-        /// Serialized Name: InMageV2RpRecoveryPointType.LatestCrashConsistent
-        /// </summary>
+        /// <summary> LatestCrashConsistent. </summary>
         public static InMageV2RpRecoveryPointType LatestCrashConsistent { get; } = new InMageV2RpRecoveryPointType(LatestCrashConsistentValue);
-        /// <summary>
-        /// LatestProcessed
-        /// Serialized Name: InMageV2RpRecoveryPointType.LatestProcessed
-        /// </summary>
+        /// <summary> LatestProcessed. </summary>
         public static InMageV2RpRecoveryPointType LatestProcessed { get; } = new InMageV2RpRecoveryPointType(LatestProcessedValue);
         /// <summary> Determines if two <see cref="InMageV2RpRecoveryPointType"/> values are the same. </summary>
         public static bool operator ==(InMageV2RpRecoveryPointType left, InMageV2RpRecoveryPointType right) => left.Equals(right);

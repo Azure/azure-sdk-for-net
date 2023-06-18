@@ -7,10 +7,7 @@
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary>
-    /// VMware Cbt policy creation input.
-    /// Serialized Name: VMwareCbtPolicyCreationInput
-    /// </summary>
+    /// <summary> VMware Cbt policy creation input. </summary>
     public partial class VMwareCbtPolicyCreationContent : PolicyProviderSpecificContent
     {
         /// <summary> Initializes a new instance of VMwareCbtPolicyCreationContent. </summary>
@@ -19,20 +16,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             InstanceType = "VMwareCbt";
         }
 
-        /// <summary>
-        /// The duration in minutes until which the recovery points need to be stored.
-        /// Serialized Name: VMwareCbtPolicyCreationInput.recoveryPointHistoryInMinutes
-        /// </summary>
+        /// <summary> The duration in minutes until which the recovery points need to be stored. </summary>
         public int? RecoveryPointHistoryInMinutes { get; set; }
-        /// <summary>
-        /// The crash consistent snapshot frequency (in minutes).
-        /// Serialized Name: VMwareCbtPolicyCreationInput.crashConsistentFrequencyInMinutes
-        /// </summary>
+        /// <summary> The crash consistent snapshot frequency (in minutes). </summary>
         public int? CrashConsistentFrequencyInMinutes { get; set; }
-        /// <summary>
-        /// The app consistent snapshot frequency (in minutes).
-        /// Serialized Name: VMwareCbtPolicyCreationInput.appConsistentFrequencyInMinutes
-        /// </summary>
+        /// <summary> The app consistent snapshot frequency (in minutes). </summary>
         public int? AppConsistentFrequencyInMinutes { get; set; }
     }
 }

@@ -10,10 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary>
-    /// Azure to Azure VM synced configuration details.
-    /// Serialized Name: AzureToAzureVmSyncedConfigDetails
-    /// </summary>
+    /// <summary> Azure to Azure VM synced configuration details. </summary>
     public partial class A2AVmSyncedConfigDetails
     {
         /// <summary> Initializes a new instance of A2AVmSyncedConfigDetails. </summary>
@@ -24,29 +21,17 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Initializes a new instance of A2AVmSyncedConfigDetails. </summary>
-        /// <param name="tags">
-        /// The Azure VM tags.
-        /// Serialized Name: AzureToAzureVmSyncedConfigDetails.tags
-        /// </param>
-        /// <param name="vmEndpoints">
-        /// The Azure VM input endpoints.
-        /// Serialized Name: AzureToAzureVmSyncedConfigDetails.inputEndpoints
-        /// </param>
+        /// <param name="tags"> The Azure VM tags. </param>
+        /// <param name="vmEndpoints"> The Azure VM input endpoints. </param>
         internal A2AVmSyncedConfigDetails(IReadOnlyDictionary<string, string> tags, IReadOnlyList<SiteRecoveryVmEndpoint> vmEndpoints)
         {
             Tags = tags;
             VmEndpoints = vmEndpoints;
         }
 
-        /// <summary>
-        /// The Azure VM tags.
-        /// Serialized Name: AzureToAzureVmSyncedConfigDetails.tags
-        /// </summary>
+        /// <summary> The Azure VM tags. </summary>
         public IReadOnlyDictionary<string, string> Tags { get; }
-        /// <summary>
-        /// The Azure VM input endpoints.
-        /// Serialized Name: AzureToAzureVmSyncedConfigDetails.inputEndpoints
-        /// </summary>
+        /// <summary> The Azure VM input endpoints. </summary>
         public IReadOnlyList<SiteRecoveryVmEndpoint> VmEndpoints { get; }
     }
 }

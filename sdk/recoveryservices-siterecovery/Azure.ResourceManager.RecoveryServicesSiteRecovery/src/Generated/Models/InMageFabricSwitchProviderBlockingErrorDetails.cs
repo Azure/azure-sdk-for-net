@@ -10,10 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary>
-    /// InMageFabric switch provider blocking error details.
-    /// Serialized Name: InMageFabricSwitchProviderBlockingErrorDetails
-    /// </summary>
+    /// <summary> InMageFabric switch provider blocking error details. </summary>
     public partial class InMageFabricSwitchProviderBlockingErrorDetails
     {
         /// <summary> Initializes a new instance of InMageFabricSwitchProviderBlockingErrorDetails. </summary>
@@ -24,30 +21,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Initializes a new instance of InMageFabricSwitchProviderBlockingErrorDetails. </summary>
-        /// <param name="errorCode">
-        /// The error code.
-        /// Serialized Name: InMageFabricSwitchProviderBlockingErrorDetails.errorCode
-        /// </param>
-        /// <param name="errorMessage">
-        /// The error message.
-        /// Serialized Name: InMageFabricSwitchProviderBlockingErrorDetails.errorMessage
-        /// </param>
-        /// <param name="possibleCauses">
-        /// The possible causes.
-        /// Serialized Name: InMageFabricSwitchProviderBlockingErrorDetails.possibleCauses
-        /// </param>
-        /// <param name="recommendedAction">
-        /// The recommended action.
-        /// Serialized Name: InMageFabricSwitchProviderBlockingErrorDetails.recommendedAction
-        /// </param>
-        /// <param name="errorMessageParameters">
-        /// The error message parameters.
-        /// Serialized Name: InMageFabricSwitchProviderBlockingErrorDetails.errorMessageParameters
-        /// </param>
-        /// <param name="errorTags">
-        /// The error tags.
-        /// Serialized Name: InMageFabricSwitchProviderBlockingErrorDetails.errorTags
-        /// </param>
+        /// <param name="errorCode"> The error code. </param>
+        /// <param name="errorMessage"> The error message. </param>
+        /// <param name="possibleCauses"> The possible causes. </param>
+        /// <param name="recommendedAction"> The recommended action. </param>
+        /// <param name="errorMessageParameters"> The error message parameters. </param>
+        /// <param name="errorTags"> The error tags. </param>
         internal InMageFabricSwitchProviderBlockingErrorDetails(string errorCode, string errorMessage, string possibleCauses, string recommendedAction, IReadOnlyDictionary<string, string> errorMessageParameters, IReadOnlyDictionary<string, string> errorTags)
         {
             ErrorCode = errorCode;
@@ -58,35 +37,17 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             ErrorTags = errorTags;
         }
 
-        /// <summary>
-        /// The error code.
-        /// Serialized Name: InMageFabricSwitchProviderBlockingErrorDetails.errorCode
-        /// </summary>
+        /// <summary> The error code. </summary>
         public string ErrorCode { get; }
-        /// <summary>
-        /// The error message.
-        /// Serialized Name: InMageFabricSwitchProviderBlockingErrorDetails.errorMessage
-        /// </summary>
+        /// <summary> The error message. </summary>
         public string ErrorMessage { get; }
-        /// <summary>
-        /// The possible causes.
-        /// Serialized Name: InMageFabricSwitchProviderBlockingErrorDetails.possibleCauses
-        /// </summary>
+        /// <summary> The possible causes. </summary>
         public string PossibleCauses { get; }
-        /// <summary>
-        /// The recommended action.
-        /// Serialized Name: InMageFabricSwitchProviderBlockingErrorDetails.recommendedAction
-        /// </summary>
+        /// <summary> The recommended action. </summary>
         public string RecommendedAction { get; }
-        /// <summary>
-        /// The error message parameters.
-        /// Serialized Name: InMageFabricSwitchProviderBlockingErrorDetails.errorMessageParameters
-        /// </summary>
+        /// <summary> The error message parameters. </summary>
         public IReadOnlyDictionary<string, string> ErrorMessageParameters { get; }
-        /// <summary>
-        /// The error tags.
-        /// Serialized Name: InMageFabricSwitchProviderBlockingErrorDetails.errorTags
-        /// </summary>
+        /// <summary> The error tags. </summary>
         public IReadOnlyDictionary<string, string> ErrorTags { get; }
     }
 }

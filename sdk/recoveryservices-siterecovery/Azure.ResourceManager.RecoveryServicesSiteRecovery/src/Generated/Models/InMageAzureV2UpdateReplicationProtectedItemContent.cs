@@ -10,10 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary>
-    /// InMage Azure V2 input to update replication protected item.
-    /// Serialized Name: InMageAzureV2UpdateReplicationProtectedItemInput
-    /// </summary>
+    /// <summary> InMage Azure V2 input to update replication protected item. </summary>
     public partial class InMageAzureV2UpdateReplicationProtectedItemContent : UpdateReplicationProtectedItemProviderContent
     {
         /// <summary> Initializes a new instance of InMageAzureV2UpdateReplicationProtectedItemContent. </summary>
@@ -26,55 +23,25 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             InstanceType = "InMageAzureV2";
         }
 
-        /// <summary>
-        /// The recovery Azure resource group Id for classic deployment.
-        /// Serialized Name: InMageAzureV2UpdateReplicationProtectedItemInput.recoveryAzureV1ResourceGroupId
-        /// </summary>
+        /// <summary> The recovery Azure resource group Id for classic deployment. </summary>
         public ResourceIdentifier RecoveryAzureV1ResourceGroupId { get; set; }
-        /// <summary>
-        /// The recovery Azure resource group Id for resource manager deployment.
-        /// Serialized Name: InMageAzureV2UpdateReplicationProtectedItemInput.recoveryAzureV2ResourceGroupId
-        /// </summary>
+        /// <summary> The recovery Azure resource group Id for resource manager deployment. </summary>
         public ResourceIdentifier RecoveryAzureV2ResourceGroupId { get; set; }
-        /// <summary>
-        /// A value indicating whether managed disks should be used during failover.
-        /// Serialized Name: InMageAzureV2UpdateReplicationProtectedItemInput.useManagedDisks
-        /// </summary>
+        /// <summary> A value indicating whether managed disks should be used during failover. </summary>
         public string UseManagedDisks { get; set; }
-        /// <summary>
-        /// The target proximity placement group Id.
-        /// Serialized Name: InMageAzureV2UpdateReplicationProtectedItemInput.targetProximityPlacementGroupId
-        /// </summary>
+        /// <summary> The target proximity placement group Id. </summary>
         public ResourceIdentifier TargetProximityPlacementGroupId { get; set; }
-        /// <summary>
-        /// The target availability zone.
-        /// Serialized Name: InMageAzureV2UpdateReplicationProtectedItemInput.targetAvailabilityZone
-        /// </summary>
+        /// <summary> The target availability zone. </summary>
         public string TargetAvailabilityZone { get; set; }
-        /// <summary>
-        /// The target VM tags.
-        /// Serialized Name: InMageAzureV2UpdateReplicationProtectedItemInput.targetVmTags
-        /// </summary>
+        /// <summary> The target VM tags. </summary>
         public IDictionary<string, string> TargetVmTags { get; }
-        /// <summary>
-        /// The tags for the target managed disks.
-        /// Serialized Name: InMageAzureV2UpdateReplicationProtectedItemInput.targetManagedDiskTags
-        /// </summary>
+        /// <summary> The tags for the target managed disks. </summary>
         public IDictionary<string, string> TargetManagedDiskTags { get; }
-        /// <summary>
-        /// The tags for the target NICs.
-        /// Serialized Name: InMageAzureV2UpdateReplicationProtectedItemInput.targetNicTags
-        /// </summary>
+        /// <summary> The tags for the target NICs. </summary>
         public IDictionary<string, string> TargetNicTags { get; }
-        /// <summary>
-        /// The SQL Server license type.
-        /// Serialized Name: InMageAzureV2UpdateReplicationProtectedItemInput.sqlServerLicenseType
-        /// </summary>
-        public SqlServerLicenseType? SqlServerLicenseType { get; set; }
-        /// <summary>
-        /// The list of disk update properties.
-        /// Serialized Name: InMageAzureV2UpdateReplicationProtectedItemInput.vmDisks
-        /// </summary>
+        /// <summary> The SQL Server license type. </summary>
+        public SiteRecoverySqlServerLicenseType? SqlServerLicenseType { get; set; }
+        /// <summary> The list of disk update properties. </summary>
         public IList<UpdateDiskContent> VmDisks { get; }
     }
 }

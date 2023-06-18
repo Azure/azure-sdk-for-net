@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary>
-    /// A value indicating whether source site operations are required.
-    /// Serialized Name: SourceSiteOperations
-    /// </summary>
+    /// <summary> A value indicating whether source site operations are required. </summary>
     public readonly partial struct SourceSiteOperation : IEquatable<SourceSiteOperation>
     {
         private readonly string _value;
@@ -28,15 +25,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         private const string RequiredValue = "Required";
         private const string NotRequiredValue = "NotRequired";
 
-        /// <summary>
-        /// Required
-        /// Serialized Name: SourceSiteOperations.Required
-        /// </summary>
+        /// <summary> Required. </summary>
         public static SourceSiteOperation Required { get; } = new SourceSiteOperation(RequiredValue);
-        /// <summary>
-        /// NotRequired
-        /// Serialized Name: SourceSiteOperations.NotRequired
-        /// </summary>
+        /// <summary> NotRequired. </summary>
         public static SourceSiteOperation NotRequired { get; } = new SourceSiteOperation(NotRequiredValue);
         /// <summary> Determines if two <see cref="SourceSiteOperation"/> values are the same. </summary>
         public static bool operator ==(SourceSiteOperation left, SourceSiteOperation right) => left.Equals(right);

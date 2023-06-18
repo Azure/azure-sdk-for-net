@@ -11,10 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary>
-    /// The HyperVFailoverIPConfigDetails.
-    /// Serialized Name: IPConfigInputDetails
-    /// </summary>
+    /// <summary> The HyperVFailoverIPConfigDetails. </summary>
     public partial class HyperVFailoverIPConfigDetails
     {
         /// <summary> Initializes a new instance of HyperVFailoverIPConfigDetails. </summary>
@@ -24,27 +21,27 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             TfoLBBackendAddressPoolIds = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Serialized Name: IPConfigInputDetails.ipConfigName. </summary>
+        /// <summary> Gets or sets the ip config name. </summary>
         public string IPConfigName { get; set; }
-        /// <summary> Serialized Name: IPConfigInputDetails.isPrimary. </summary>
+        /// <summary> Gets or sets the is primary. </summary>
         public bool? IsPrimary { get; set; }
-        /// <summary> Serialized Name: IPConfigInputDetails.isSeletedForFailover. </summary>
+        /// <summary> Gets or sets the is seleted for failover. </summary>
         public bool? IsSeletedForFailover { get; set; }
-        /// <summary> Serialized Name: IPConfigInputDetails.recoverySubnetName. </summary>
+        /// <summary> Gets or sets the recovery subnet name. </summary>
         public string RecoverySubnetName { get; set; }
-        /// <summary> Serialized Name: IPConfigInputDetails.recoveryStaticIPAddress. </summary>
+        /// <summary> Gets or sets the recovery static ip address. </summary>
         public IPAddress RecoveryStaticIPAddress { get; set; }
-        /// <summary> Serialized Name: IPConfigInputDetails.recoveryPublicIPAddressId. </summary>
+        /// <summary> Gets or sets the recovery public ip address id. </summary>
         public ResourceIdentifier RecoveryPublicIPAddressId { get; set; }
-        /// <summary> Serialized Name: IPConfigInputDetails.recoveryLBBackendAddressPoolIds. </summary>
+        /// <summary> Gets the recovery lb backend address pool ids. </summary>
         public IList<string> RecoveryLBBackendAddressPoolIds { get; }
-        /// <summary> Serialized Name: IPConfigInputDetails.tfoSubnetName. </summary>
+        /// <summary> Gets or sets the tfo subnet name. </summary>
         public string TfoSubnetName { get; set; }
-        /// <summary> Serialized Name: IPConfigInputDetails.tfoStaticIPAddress. </summary>
+        /// <summary> Gets or sets the tfo static ip address. </summary>
         public IPAddress TfoStaticIPAddress { get; set; }
-        /// <summary> Serialized Name: IPConfigInputDetails.tfoPublicIPAddressId. </summary>
+        /// <summary> Gets or sets the tfo public ip address id. </summary>
         public ResourceIdentifier TfoPublicIPAddressId { get; set; }
-        /// <summary> Serialized Name: IPConfigInputDetails.tfoLBBackendAddressPoolIds. </summary>
+        /// <summary> Gets the tfo lb backend address pool ids. </summary>
         public IList<string> TfoLBBackendAddressPoolIds { get; }
     }
 }

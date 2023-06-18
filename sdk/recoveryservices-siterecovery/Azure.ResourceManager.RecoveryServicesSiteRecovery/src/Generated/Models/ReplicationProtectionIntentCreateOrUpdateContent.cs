@@ -7,10 +7,7 @@
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary>
-    /// Create protection intent input.
-    /// Serialized Name: CreateProtectionIntentInput
-    /// </summary>
+    /// <summary> Create protection intent input. </summary>
     public partial class ReplicationProtectionIntentCreateOrUpdateContent
     {
         /// <summary> Initializes a new instance of ReplicationProtectionIntentCreateOrUpdateContent. </summary>
@@ -18,24 +15,20 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         {
         }
 
-        /// <summary>
-        /// Create protection intent input properties.
-        /// Serialized Name: CreateProtectionIntentInput.properties
-        /// </summary>
-        internal ReplicationCreateProtectionIntentProperties Properties { get; set; }
+        /// <summary> Create protection intent input properties. </summary>
+        internal SiteRecoveryCreateProtectionIntentProperties Properties { get; set; }
         /// <summary>
         /// The ReplicationProviderInput. For A2A provider, it will be A2ACreateProtectionIntentInput object.
-        /// Serialized Name: CreateProtectionIntentProperties.providerSpecificDetails
-        /// Please note <see cref="ReplicationCreateProtectionIntentProviderDetail"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="SiteRecoveryCreateProtectionIntentProviderDetail"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="A2ACreateProtectionIntentContent"/>.
         /// </summary>
-        public ReplicationCreateProtectionIntentProviderDetail ReplicationCreateProtectionIntentProviderSpecificDetails
+        public SiteRecoveryCreateProtectionIntentProviderDetail SiteRecoveryCreateProtectionIntentProviderSpecificDetails
         {
             get => Properties is null ? default : Properties.ProviderSpecificDetails;
             set
             {
                 if (Properties is null)
-                    Properties = new ReplicationCreateProtectionIntentProperties();
+                    Properties = new SiteRecoveryCreateProtectionIntentProperties();
                 Properties.ProviderSpecificDetails = value;
             }
         }

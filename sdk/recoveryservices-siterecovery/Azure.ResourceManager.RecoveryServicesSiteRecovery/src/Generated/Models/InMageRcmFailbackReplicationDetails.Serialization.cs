@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Optional<long> resyncTransferredBytes = default;
             Optional<VmReplicationProgressHealth> resyncProgressHealth = default;
             Optional<string> resyncRequired = default;
-            Optional<ResyncState> resyncState = default;
+            Optional<SiteRecoveryResyncState> resyncState = default;
             Optional<IReadOnlyList<InMageRcmFailbackProtectedDiskDetails>> protectedDisks = default;
             Optional<InMageRcmFailbackMobilityAgentDetails> mobilityAgentDetails = default;
             Optional<IReadOnlyList<InMageRcmFailbackNicDetails>> vmNics = default;
@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    resyncState = new ResyncState(property.Value.GetString());
+                    resyncState = new SiteRecoveryResyncState(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("protectedDisks"u8))

@@ -10,25 +10,13 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary>
-    /// InMageRcm disk input.
-    /// Serialized Name: InMageRcmDiskInput
-    /// </summary>
+    /// <summary> InMageRcm disk input. </summary>
     public partial class InMageRcmDiskContent
     {
         /// <summary> Initializes a new instance of InMageRcmDiskContent. </summary>
-        /// <param name="diskId">
-        /// The disk Id.
-        /// Serialized Name: InMageRcmDiskInput.diskId
-        /// </param>
-        /// <param name="logStorageAccountId">
-        /// The log storage account ARM Id.
-        /// Serialized Name: InMageRcmDiskInput.logStorageAccountId
-        /// </param>
-        /// <param name="diskType">
-        /// The disk type.
-        /// Serialized Name: InMageRcmDiskInput.diskType
-        /// </param>
+        /// <param name="diskId"> The disk Id. </param>
+        /// <param name="logStorageAccountId"> The log storage account ARM Id. </param>
+        /// <param name="diskType"> The disk type. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="diskId"/> or <paramref name="logStorageAccountId"/> is null. </exception>
         public InMageRcmDiskContent(string diskId, ResourceIdentifier logStorageAccountId, SiteRecoveryDiskAccountType diskType)
         {
@@ -40,25 +28,13 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             DiskType = diskType;
         }
 
-        /// <summary>
-        /// The disk Id.
-        /// Serialized Name: InMageRcmDiskInput.diskId
-        /// </summary>
+        /// <summary> The disk Id. </summary>
         public string DiskId { get; }
-        /// <summary>
-        /// The log storage account ARM Id.
-        /// Serialized Name: InMageRcmDiskInput.logStorageAccountId
-        /// </summary>
+        /// <summary> The log storage account ARM Id. </summary>
         public ResourceIdentifier LogStorageAccountId { get; }
-        /// <summary>
-        /// The disk type.
-        /// Serialized Name: InMageRcmDiskInput.diskType
-        /// </summary>
+        /// <summary> The disk type. </summary>
         public SiteRecoveryDiskAccountType DiskType { get; }
-        /// <summary>
-        /// The DiskEncryptionSet ARM Id.
-        /// Serialized Name: InMageRcmDiskInput.diskEncryptionSetId
-        /// </summary>
+        /// <summary> The DiskEncryptionSet ARM Id. </summary>
         public ResourceIdentifier DiskEncryptionSetId { get; set; }
     }
 }

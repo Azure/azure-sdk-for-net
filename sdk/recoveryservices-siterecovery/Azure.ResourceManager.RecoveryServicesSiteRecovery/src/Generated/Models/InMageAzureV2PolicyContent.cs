@@ -7,47 +7,26 @@
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary>
-    /// VMWare Azure specific policy Input.
-    /// Serialized Name: InMageAzureV2PolicyInput
-    /// </summary>
+    /// <summary> VMWare Azure specific policy Input. </summary>
     public partial class InMageAzureV2PolicyContent : PolicyProviderSpecificContent
     {
         /// <summary> Initializes a new instance of InMageAzureV2PolicyContent. </summary>
-        /// <param name="multiVmSyncStatus">
-        /// A value indicating whether multi-VM sync has to be enabled. Value should be 'Enabled' or 'Disabled'.
-        /// Serialized Name: InMageAzureV2PolicyInput.multiVmSyncStatus
-        /// </param>
+        /// <param name="multiVmSyncStatus"> A value indicating whether multi-VM sync has to be enabled. Value should be 'Enabled' or 'Disabled'. </param>
         public InMageAzureV2PolicyContent(SetMultiVmSyncStatus multiVmSyncStatus)
         {
             MultiVmSyncStatus = multiVmSyncStatus;
             InstanceType = "InMageAzureV2";
         }
 
-        /// <summary>
-        /// The recovery point threshold in minutes.
-        /// Serialized Name: InMageAzureV2PolicyInput.recoveryPointThresholdInMinutes
-        /// </summary>
+        /// <summary> The recovery point threshold in minutes. </summary>
         public int? RecoveryPointThresholdInMinutes { get; set; }
-        /// <summary>
-        /// The duration in minutes until which the recovery points need to be stored.
-        /// Serialized Name: InMageAzureV2PolicyInput.recoveryPointHistory
-        /// </summary>
+        /// <summary> The duration in minutes until which the recovery points need to be stored. </summary>
         public int? RecoveryPointHistory { get; set; }
-        /// <summary>
-        /// The crash consistent snapshot frequency (in minutes).
-        /// Serialized Name: InMageAzureV2PolicyInput.crashConsistentFrequencyInMinutes
-        /// </summary>
+        /// <summary> The crash consistent snapshot frequency (in minutes). </summary>
         public int? CrashConsistentFrequencyInMinutes { get; set; }
-        /// <summary>
-        /// The app consistent snapshot frequency (in minutes).
-        /// Serialized Name: InMageAzureV2PolicyInput.appConsistentFrequencyInMinutes
-        /// </summary>
+        /// <summary> The app consistent snapshot frequency (in minutes). </summary>
         public int? AppConsistentFrequencyInMinutes { get; set; }
-        /// <summary>
-        /// A value indicating whether multi-VM sync has to be enabled. Value should be 'Enabled' or 'Disabled'.
-        /// Serialized Name: InMageAzureV2PolicyInput.multiVmSyncStatus
-        /// </summary>
+        /// <summary> A value indicating whether multi-VM sync has to be enabled. Value should be 'Enabled' or 'Disabled'. </summary>
         public SetMultiVmSyncStatus MultiVmSyncStatus { get; }
     }
 }

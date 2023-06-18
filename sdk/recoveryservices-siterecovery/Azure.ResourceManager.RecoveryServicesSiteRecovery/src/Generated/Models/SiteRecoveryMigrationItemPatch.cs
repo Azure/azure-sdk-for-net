@@ -7,10 +7,7 @@
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary>
-    /// Update migration item input.
-    /// Serialized Name: UpdateMigrationItemInput
-    /// </summary>
+    /// <summary> Update migration item input. </summary>
     public partial class SiteRecoveryMigrationItemPatch
     {
         /// <summary> Initializes a new instance of SiteRecoveryMigrationItemPatch. </summary>
@@ -18,21 +15,17 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         {
         }
 
-        /// <summary>
-        /// Update migration item input properties.
-        /// Serialized Name: UpdateMigrationItemInput.properties
-        /// </summary>
-        internal UpdateMigrationItemContentProperties Properties { get; set; }
+        /// <summary> Update migration item input properties. </summary>
+        internal UpdateMigrationItemProperties Properties { get; set; }
         /// <summary>
         /// The provider specific input to update migration item.
-        /// Serialized Name: UpdateMigrationItemInputProperties.providerSpecificDetails
         /// Please note <see cref="UpdateMigrationItemProviderSpecificContent"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="VMwareCbtUpdateMigrationItemContent"/>.
         /// </summary>
-        public UpdateMigrationItemProviderSpecificContent UpdateMigrationItemContentProviderSpecificDetails
+        public UpdateMigrationItemProviderSpecificContent UpdateMigrationItemProviderSpecificDetails
         {
             get => Properties is null ? default : Properties.ProviderSpecificDetails;
-            set => Properties = new UpdateMigrationItemContentProperties(value);
+            set => Properties = new UpdateMigrationItemProperties(value);
         }
     }
 }

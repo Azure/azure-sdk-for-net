@@ -10,37 +10,27 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary>
-    /// Input for test migrate.
-    /// Serialized Name: TestMigrateInput
-    /// </summary>
+    /// <summary> Input for test migrate. </summary>
     public partial class TestMigrateContent
     {
         /// <summary> Initializes a new instance of TestMigrateContent. </summary>
-        /// <param name="properties">
-        /// Test migrate input properties.
-        /// Serialized Name: TestMigrateInput.properties
-        /// </param>
+        /// <param name="properties"> Test migrate input properties. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
-        public TestMigrateContent(TestMigrateContentProperties properties)
+        public TestMigrateContent(TestMigrateProperties properties)
         {
             Argument.AssertNotNull(properties, nameof(properties));
 
             Properties = properties;
         }
 
-        /// <summary>
-        /// Test migrate input properties.
-        /// Serialized Name: TestMigrateInput.properties
-        /// </summary>
-        internal TestMigrateContentProperties Properties { get; }
+        /// <summary> Test migrate input properties. </summary>
+        internal TestMigrateProperties Properties { get; }
         /// <summary>
         /// The provider specific details.
-        /// Serialized Name: TestMigrateInputProperties.providerSpecificDetails
         /// Please note <see cref="TestMigrateProviderSpecificContent"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="VMwareCbtTestMigrateContent"/>.
         /// </summary>
-        public TestMigrateProviderSpecificContent TestMigrateContentProviderSpecificDetails
+        public TestMigrateProviderSpecificContent TestMigrateProviderSpecificDetails
         {
             get => Properties?.ProviderSpecificDetails;
         }

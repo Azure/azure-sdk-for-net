@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Optional<string> agentVersion = default;
             Optional<DateTimeOffset> lastHeartbeat = default;
             Optional<string> versionStatus = default;
-            Optional<IReadOnlyList<RetentionVolume>> retentionVolumes = default;
+            Optional<IReadOnlyList<SiteRecoveryRetentionVolume>> retentionVolumes = default;
             Optional<IReadOnlyList<SiteRecoveryDataStore>> dataStores = default;
             Optional<IReadOnlyList<SiteRecoveryHealthError>> validationErrors = default;
             Optional<IReadOnlyList<SiteRecoveryHealthError>> healthErrors = default;
@@ -37,8 +37,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Optional<DateTimeOffset> agentExpireOn = default;
             Optional<string> marsAgentVersion = default;
             Optional<DateTimeOffset> marsAgentExpireOn = default;
-            Optional<VersionDetails> agentVersionDetails = default;
-            Optional<VersionDetails> marsAgentVersionDetails = default;
+            Optional<SiteRecoveryVersionDetails> agentVersionDetails = default;
+            Optional<SiteRecoveryVersionDetails> marsAgentVersionDetails = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -90,10 +90,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    List<RetentionVolume> array = new List<RetentionVolume>();
+                    List<SiteRecoveryRetentionVolume> array = new List<SiteRecoveryRetentionVolume>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RetentionVolume.DeserializeRetentionVolume(item));
+                        array.Add(SiteRecoveryRetentionVolume.DeserializeSiteRecoveryRetentionVolume(item));
                     }
                     retentionVolumes = array;
                     continue;
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    agentVersionDetails = VersionDetails.DeserializeVersionDetails(property.Value);
+                    agentVersionDetails = SiteRecoveryVersionDetails.DeserializeSiteRecoveryVersionDetails(property.Value);
                     continue;
                 }
                 if (property.NameEquals("marsAgentVersionDetails"u8))
@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    marsAgentVersionDetails = VersionDetails.DeserializeVersionDetails(property.Value);
+                    marsAgentVersionDetails = SiteRecoveryVersionDetails.DeserializeSiteRecoveryVersionDetails(property.Value);
                     continue;
                 }
             }

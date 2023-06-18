@@ -148,15 +148,15 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Samples
 
             // invoke the operation
             string recoveryPlanName = "RPtest1";
-            SiteRecoveryRecoveryPlanCreateOrUpdateContent content = new SiteRecoveryRecoveryPlanCreateOrUpdateContent(new SiteRecoveryCreateRecoveryPlanProperties(new ResourceIdentifier("/Subscriptions/c183865e-6077-46f2-a3b1-deb0f4f4650a/resourceGroups/resourceGroupPS1/providers/Microsoft.RecoveryServices/vaults/vault1/replicationFabrics/cloud1"), new ResourceIdentifier("Microsoft Azure"), new RecoveryPlanGroup[]
+            SiteRecoveryRecoveryPlanCreateOrUpdateContent content = new SiteRecoveryRecoveryPlanCreateOrUpdateContent(new SiteRecoveryCreateRecoveryPlanProperties(new ResourceIdentifier("/Subscriptions/c183865e-6077-46f2-a3b1-deb0f4f4650a/resourceGroups/resourceGroupPS1/providers/Microsoft.RecoveryServices/vaults/vault1/replicationFabrics/cloud1"), new ResourceIdentifier("Microsoft Azure"), new SiteRecoveryRecoveryPlanGroup[]
             {
-new RecoveryPlanGroup(RecoveryPlanGroupType.Boot)
+new SiteRecoveryRecoveryPlanGroup(RecoveryPlanGroupType.Boot)
 {
 ReplicationProtectedItems =
 {
 new RecoveryPlanProtectedItem()
 {
-Id = "/Subscriptions/c183865e-6077-46f2-a3b1-deb0f4f4650a/resourceGroups/resourceGroupPS1/providers/Microsoft.RecoveryServices/vaults/vault1/replicationFabrics/cloud1/replicationProtectionContainers/cloud_6d224fc6-f326-5d35-96de-fbf51efb3179/replicationProtectedItems/f8491e4f-817a-40dd-a90c-af773978c75b",
+Id = new ResourceIdentifier("/Subscriptions/c183865e-6077-46f2-a3b1-deb0f4f4650a/resourceGroups/resourceGroupPS1/providers/Microsoft.RecoveryServices/vaults/vault1/replicationFabrics/cloud1/replicationProtectionContainers/cloud_6d224fc6-f326-5d35-96de-fbf51efb3179/replicationProtectedItems/f8491e4f-817a-40dd-a90c-af773978c75b"),
 VirtualMachineId = "f8491e4f-817a-40dd-a90c-af773978c75b",
 }
 },
@@ -169,7 +169,7 @@ EndGroupActions =
 }
             })
             {
-                FailoverDeploymentModel = SiteRecoveryFailoverDeploymentModel.ResourceManager,
+                FailoverDeploymentModel = FailoverDeploymentModel.ResourceManager,
             });
             ArmOperation<SiteRecoveryRecoveryPlanResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, recoveryPlanName, content);
             SiteRecoveryRecoveryPlanResource result = lro.Value;

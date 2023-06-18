@@ -7,10 +7,7 @@
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary>
-    /// VMwareCbt container creation input.
-    /// Serialized Name: VMwareCbtContainerCreationInput
-    /// </summary>
+    /// <summary> VMwareCbt container creation input. </summary>
     public partial class VMwareCbtContainerCreationContent : ReplicationProviderSpecificContainerCreationContent
     {
         /// <summary> Initializes a new instance of VMwareCbtContainerCreationContent. </summary>

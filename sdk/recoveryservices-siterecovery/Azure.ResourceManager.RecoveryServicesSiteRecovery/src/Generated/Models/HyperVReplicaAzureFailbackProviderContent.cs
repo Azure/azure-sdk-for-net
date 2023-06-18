@@ -7,10 +7,7 @@
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary>
-    /// HyperVReplicaAzureFailback specific planned failover input.
-    /// Serialized Name: HyperVReplicaAzureFailbackProviderInput
-    /// </summary>
+    /// <summary> HyperVReplicaAzureFailback specific planned failover input. </summary>
     public partial class HyperVReplicaAzureFailbackProviderContent : PlannedFailoverProviderSpecificFailoverContent
     {
         /// <summary> Initializes a new instance of HyperVReplicaAzureFailbackProviderContent. </summary>
@@ -19,20 +16,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             InstanceType = "HyperVReplicaAzureFailback";
         }
 
-        /// <summary>
-        /// Data sync option.
-        /// Serialized Name: HyperVReplicaAzureFailbackProviderInput.dataSyncOption
-        /// </summary>
+        /// <summary> Data sync option. </summary>
         public string DataSyncOption { get; set; }
-        /// <summary>
-        /// ALR options to create alternate recovery.
-        /// Serialized Name: HyperVReplicaAzureFailbackProviderInput.recoveryVmCreationOption
-        /// </summary>
+        /// <summary> ALR options to create alternate recovery. </summary>
         public string RecoveryVmCreationOption { get; set; }
-        /// <summary>
-        /// Provider Id for alternate location.
-        /// Serialized Name: HyperVReplicaAzureFailbackProviderInput.providerIdForAlternateRecovery
-        /// </summary>
+        /// <summary> Provider Id for alternate location. </summary>
         public string ProviderIdForAlternateRecovery { get; set; }
     }
 }

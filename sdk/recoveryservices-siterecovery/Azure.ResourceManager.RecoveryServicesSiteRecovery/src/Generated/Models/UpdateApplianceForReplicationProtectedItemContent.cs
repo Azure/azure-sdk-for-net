@@ -10,29 +10,20 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary>
-    /// Update appliance for replication protected item input.
-    /// Serialized Name: UpdateApplianceForReplicationProtectedItemInput
-    /// </summary>
+    /// <summary> Update appliance for replication protected item input. </summary>
     public partial class UpdateApplianceForReplicationProtectedItemContent
     {
         /// <summary> Initializes a new instance of UpdateApplianceForReplicationProtectedItemContent. </summary>
-        /// <param name="properties">
-        /// Update appliance replication protected item properties.
-        /// Serialized Name: UpdateApplianceForReplicationProtectedItemInput.properties
-        /// </param>
+        /// <param name="properties"> Update appliance replication protected item properties. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
-        public UpdateApplianceForReplicationProtectedItemContent(UpdateApplianceForReplicationProtectedItemContentProperties properties)
+        public UpdateApplianceForReplicationProtectedItemContent(UpdateApplianceForReplicationProtectedItemProperties properties)
         {
             Argument.AssertNotNull(properties, nameof(properties));
 
             Properties = properties;
         }
 
-        /// <summary>
-        /// Update appliance replication protected item properties.
-        /// Serialized Name: UpdateApplianceForReplicationProtectedItemInput.properties
-        /// </summary>
-        public UpdateApplianceForReplicationProtectedItemContentProperties Properties { get; }
+        /// <summary> Update appliance replication protected item properties. </summary>
+        public UpdateApplianceForReplicationProtectedItemProperties Properties { get; }
     }
 }

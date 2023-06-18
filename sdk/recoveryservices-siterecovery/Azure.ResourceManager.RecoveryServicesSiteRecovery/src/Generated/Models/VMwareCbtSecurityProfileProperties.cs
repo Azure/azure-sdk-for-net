@@ -7,10 +7,7 @@
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary>
-    /// VMwareCbt security profile input.
-    /// Serialized Name: VMwareCbtSecurityProfileProperties
-    /// </summary>
+    /// <summary> VMwareCbt security profile input. </summary>
     public partial class VMwareCbtSecurityProfileProperties
     {
         /// <summary> Initializes a new instance of VMwareCbtSecurityProfileProperties. </summary>
@@ -19,27 +16,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Initializes a new instance of VMwareCbtSecurityProfileProperties. </summary>
-        /// <param name="targetVmSecurityType">
-        /// The target VM security type.
-        /// Serialized Name: VMwareCbtSecurityProfileProperties.targetVmSecurityType
-        /// </param>
-        /// <param name="isTargetVmSecureBootEnabled">
-        /// A value indicating whether secure boot to be enabled.
-        /// Serialized Name: VMwareCbtSecurityProfileProperties.isTargetVmSecureBootEnabled
-        /// </param>
-        /// <param name="isTargetVmTpmEnabled">
-        /// A value indicating whether trusted platform module to be enabled.
-        /// Serialized Name: VMwareCbtSecurityProfileProperties.isTargetVmTpmEnabled
-        /// </param>
-        /// <param name="isTargetVmIntegrityMonitoringEnabled">
-        /// A value indicating whether integrity monitoring to be enabled.
-        /// Serialized Name: VMwareCbtSecurityProfileProperties.isTargetVmIntegrityMonitoringEnabled
-        /// </param>
-        /// <param name="isTargetVmConfidentialEncryptionEnabled">
-        /// A value indicating whether confidential compute encryption to be enabled.
-        /// Serialized Name: VMwareCbtSecurityProfileProperties.isTargetVmConfidentialEncryptionEnabled
-        /// </param>
-        internal VMwareCbtSecurityProfileProperties(VirtualMachineSecurityType? targetVmSecurityType, string isTargetVmSecureBootEnabled, string isTargetVmTpmEnabled, string isTargetVmIntegrityMonitoringEnabled, string isTargetVmConfidentialEncryptionEnabled)
+        /// <param name="targetVmSecurityType"> The target VM security type. </param>
+        /// <param name="isTargetVmSecureBootEnabled"> A value indicating whether secure boot to be enabled. </param>
+        /// <param name="isTargetVmTpmEnabled"> A value indicating whether trusted platform module to be enabled. </param>
+        /// <param name="isTargetVmIntegrityMonitoringEnabled"> A value indicating whether integrity monitoring to be enabled. </param>
+        /// <param name="isTargetVmConfidentialEncryptionEnabled"> A value indicating whether confidential compute encryption to be enabled. </param>
+        internal VMwareCbtSecurityProfileProperties(SiteRecoveryVmSecurityType? targetVmSecurityType, string isTargetVmSecureBootEnabled, string isTargetVmTpmEnabled, string isTargetVmIntegrityMonitoringEnabled, string isTargetVmConfidentialEncryptionEnabled)
         {
             TargetVmSecurityType = targetVmSecurityType;
             IsTargetVmSecureBootEnabled = isTargetVmSecureBootEnabled;
@@ -48,30 +30,15 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             IsTargetVmConfidentialEncryptionEnabled = isTargetVmConfidentialEncryptionEnabled;
         }
 
-        /// <summary>
-        /// The target VM security type.
-        /// Serialized Name: VMwareCbtSecurityProfileProperties.targetVmSecurityType
-        /// </summary>
-        public VirtualMachineSecurityType? TargetVmSecurityType { get; set; }
-        /// <summary>
-        /// A value indicating whether secure boot to be enabled.
-        /// Serialized Name: VMwareCbtSecurityProfileProperties.isTargetVmSecureBootEnabled
-        /// </summary>
+        /// <summary> The target VM security type. </summary>
+        public SiteRecoveryVmSecurityType? TargetVmSecurityType { get; set; }
+        /// <summary> A value indicating whether secure boot to be enabled. </summary>
         public string IsTargetVmSecureBootEnabled { get; set; }
-        /// <summary>
-        /// A value indicating whether trusted platform module to be enabled.
-        /// Serialized Name: VMwareCbtSecurityProfileProperties.isTargetVmTpmEnabled
-        /// </summary>
+        /// <summary> A value indicating whether trusted platform module to be enabled. </summary>
         public string IsTargetVmTpmEnabled { get; set; }
-        /// <summary>
-        /// A value indicating whether integrity monitoring to be enabled.
-        /// Serialized Name: VMwareCbtSecurityProfileProperties.isTargetVmIntegrityMonitoringEnabled
-        /// </summary>
+        /// <summary> A value indicating whether integrity monitoring to be enabled. </summary>
         public string IsTargetVmIntegrityMonitoringEnabled { get; set; }
-        /// <summary>
-        /// A value indicating whether confidential compute encryption to be enabled.
-        /// Serialized Name: VMwareCbtSecurityProfileProperties.isTargetVmConfidentialEncryptionEnabled
-        /// </summary>
+        /// <summary> A value indicating whether confidential compute encryption to be enabled. </summary>
         public string IsTargetVmConfidentialEncryptionEnabled { get; set; }
     }
 }

@@ -9,10 +9,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary>
-    /// Existing recovery proximity placement group input.
-    /// Serialized Name: ExistingRecoveryProximityPlacementGroup
-    /// </summary>
+    /// <summary> Existing recovery proximity placement group input. </summary>
     public partial class ExistingRecoveryProximityPlacementGroup : RecoveryProximityPlacementGroupCustomDetails
     {
         /// <summary> Initializes a new instance of ExistingRecoveryProximityPlacementGroup. </summary>
@@ -22,24 +19,15 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Initializes a new instance of ExistingRecoveryProximityPlacementGroup. </summary>
-        /// <param name="resourceType">
-        /// The class type.
-        /// Serialized Name: RecoveryProximityPlacementGroupCustomDetails.resourceType
-        /// </param>
-        /// <param name="recoveryProximityPlacementGroupId">
-        /// The recovery proximity placement group Id. Will throw error, if resource does not exist.
-        /// Serialized Name: ExistingRecoveryProximityPlacementGroup.recoveryProximityPlacementGroupId
-        /// </param>
+        /// <param name="resourceType"> The class type. </param>
+        /// <param name="recoveryProximityPlacementGroupId"> The recovery proximity placement group Id. Will throw error, if resource does not exist. </param>
         internal ExistingRecoveryProximityPlacementGroup(string resourceType, ResourceIdentifier recoveryProximityPlacementGroupId) : base(resourceType)
         {
             RecoveryProximityPlacementGroupId = recoveryProximityPlacementGroupId;
             ResourceType = resourceType ?? "Existing";
         }
 
-        /// <summary>
-        /// The recovery proximity placement group Id. Will throw error, if resource does not exist.
-        /// Serialized Name: ExistingRecoveryProximityPlacementGroup.recoveryProximityPlacementGroupId
-        /// </summary>
+        /// <summary> The recovery proximity placement group Id. Will throw error, if resource does not exist. </summary>
         public ResourceIdentifier RecoveryProximityPlacementGroupId { get; set; }
     }
 }

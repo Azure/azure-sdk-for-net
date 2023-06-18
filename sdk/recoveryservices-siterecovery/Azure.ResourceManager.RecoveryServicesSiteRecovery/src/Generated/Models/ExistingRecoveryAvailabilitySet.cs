@@ -9,10 +9,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary>
-    /// Existing recovery availability set input.
-    /// Serialized Name: ExistingRecoveryAvailabilitySet
-    /// </summary>
+    /// <summary> Existing recovery availability set input. </summary>
     public partial class ExistingRecoveryAvailabilitySet : RecoveryAvailabilitySetCustomDetails
     {
         /// <summary> Initializes a new instance of ExistingRecoveryAvailabilitySet. </summary>
@@ -22,24 +19,15 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Initializes a new instance of ExistingRecoveryAvailabilitySet. </summary>
-        /// <param name="resourceType">
-        /// The class type.
-        /// Serialized Name: RecoveryAvailabilitySetCustomDetails.resourceType
-        /// </param>
-        /// <param name="recoveryAvailabilitySetId">
-        /// The recovery availability set Id. Will throw error, if resource does not exist.
-        /// Serialized Name: ExistingRecoveryAvailabilitySet.recoveryAvailabilitySetId
-        /// </param>
+        /// <param name="resourceType"> The class type. </param>
+        /// <param name="recoveryAvailabilitySetId"> The recovery availability set Id. Will throw error, if resource does not exist. </param>
         internal ExistingRecoveryAvailabilitySet(string resourceType, ResourceIdentifier recoveryAvailabilitySetId) : base(resourceType)
         {
             RecoveryAvailabilitySetId = recoveryAvailabilitySetId;
             ResourceType = resourceType ?? "Existing";
         }
 
-        /// <summary>
-        /// The recovery availability set Id. Will throw error, if resource does not exist.
-        /// Serialized Name: ExistingRecoveryAvailabilitySet.recoveryAvailabilitySetId
-        /// </summary>
+        /// <summary> The recovery availability set Id. Will throw error, if resource does not exist. </summary>
         public ResourceIdentifier RecoveryAvailabilitySetId { get; set; }
     }
 }

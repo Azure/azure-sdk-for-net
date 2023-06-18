@@ -12,7 +12,6 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     /// <summary>
     /// This class represents the group task details when parent child relationship exists in the drill down.
-    /// Serialized Name: GroupTaskDetails
     /// Please note <see cref="SiteRecoveryGroupTaskDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="InlineWorkflowTaskDetails"/>, <see cref="RecoveryPlanGroupTaskDetails"/> and <see cref="RecoveryPlanShutdownGroupTaskDetails"/>.
     /// </summary>
@@ -25,29 +24,17 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Initializes a new instance of SiteRecoveryGroupTaskDetails. </summary>
-        /// <param name="instanceType">
-        /// The type of task details.
-        /// Serialized Name: GroupTaskDetails.instanceType
-        /// </param>
-        /// <param name="childTasks">
-        /// The child tasks.
-        /// Serialized Name: GroupTaskDetails.childTasks
-        /// </param>
+        /// <param name="instanceType"> The type of task details. </param>
+        /// <param name="childTasks"> The child tasks. </param>
         internal SiteRecoveryGroupTaskDetails(string instanceType, IReadOnlyList<AsrTask> childTasks)
         {
             InstanceType = instanceType;
             ChildTasks = childTasks;
         }
 
-        /// <summary>
-        /// The type of task details.
-        /// Serialized Name: GroupTaskDetails.instanceType
-        /// </summary>
+        /// <summary> The type of task details. </summary>
         internal string InstanceType { get; set; }
-        /// <summary>
-        /// The child tasks.
-        /// Serialized Name: GroupTaskDetails.childTasks
-        /// </summary>
+        /// <summary> The child tasks. </summary>
         public IReadOnlyList<AsrTask> ChildTasks { get; }
     }
 }

@@ -14,7 +14,6 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
     /// <summary>
     /// A class representing the ReplicationEligibilityResult data model.
     /// Replication eligibility results response model.
-    /// Serialized Name: ReplicationEligibilityResults
     /// </summary>
     public partial class ReplicationEligibilityResultData : ResourceData
     {
@@ -28,19 +27,13 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="properties">
-        /// Gets properties model for replication eligibility results API.
-        /// Serialized Name: ReplicationEligibilityResults.properties
-        /// </param>
-        internal ReplicationEligibilityResultData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ReplicationEligibilityResultsProperties properties) : base(id, name, resourceType, systemData)
+        /// <param name="properties"> Gets properties model for replication eligibility results API. </param>
+        internal ReplicationEligibilityResultData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ReplicationEligibilityResultProperties properties) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
         }
 
-        /// <summary>
-        /// Gets properties model for replication eligibility results API.
-        /// Serialized Name: ReplicationEligibilityResults.properties
-        /// </summary>
-        public ReplicationEligibilityResultsProperties Properties { get; }
+        /// <summary> Gets properties model for replication eligibility results API. </summary>
+        public ReplicationEligibilityResultProperties Properties { get; }
     }
 }

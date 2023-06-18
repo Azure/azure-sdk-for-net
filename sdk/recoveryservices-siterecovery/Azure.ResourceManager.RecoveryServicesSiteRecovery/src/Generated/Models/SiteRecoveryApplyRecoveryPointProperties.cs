@@ -10,16 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary>
-    /// Input properties to apply recovery point.
-    /// Serialized Name: ApplyRecoveryPointInputProperties
-    /// </summary>
+    /// <summary> Input properties to apply recovery point. </summary>
     public partial class SiteRecoveryApplyRecoveryPointProperties
     {
         /// <summary> Initializes a new instance of SiteRecoveryApplyRecoveryPointProperties. </summary>
         /// <param name="providerSpecificDetails">
         /// Provider specific input for applying recovery point.
-        /// Serialized Name: ApplyRecoveryPointInputProperties.providerSpecificDetails
         /// Please note <see cref="SiteRecoveryApplyRecoveryPointProviderSpecificContent"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="A2AApplyRecoveryPointContent"/>, <see cref="A2ACrossClusterMigrationApplyRecoveryPointContent"/>, <see cref="HyperVReplicaAzureApplyRecoveryPointContent"/>, <see cref="InMageAzureV2ApplyRecoveryPointContent"/> and <see cref="InMageRcmApplyRecoveryPointContent"/>.
         /// </param>
@@ -31,14 +27,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             ProviderSpecificDetails = providerSpecificDetails;
         }
 
-        /// <summary>
-        /// The recovery point Id.
-        /// Serialized Name: ApplyRecoveryPointInputProperties.recoveryPointId
-        /// </summary>
+        /// <summary> The recovery point Id. </summary>
         public ResourceIdentifier RecoveryPointId { get; set; }
         /// <summary>
         /// Provider specific input for applying recovery point.
-        /// Serialized Name: ApplyRecoveryPointInputProperties.providerSpecificDetails
         /// Please note <see cref="SiteRecoveryApplyRecoveryPointProviderSpecificContent"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="A2AApplyRecoveryPointContent"/>, <see cref="A2ACrossClusterMigrationApplyRecoveryPointContent"/>, <see cref="HyperVReplicaAzureApplyRecoveryPointContent"/>, <see cref="InMageAzureV2ApplyRecoveryPointContent"/> and <see cref="InMageRcmApplyRecoveryPointContent"/>.
         /// </summary>

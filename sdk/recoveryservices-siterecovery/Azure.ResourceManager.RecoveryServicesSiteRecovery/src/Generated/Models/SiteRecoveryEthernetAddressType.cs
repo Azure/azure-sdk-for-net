@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary>
-    /// The source IP address type.
-    /// Serialized Name: EthernetAddressType
-    /// </summary>
+    /// <summary> The source IP address type. </summary>
     public readonly partial struct SiteRecoveryEthernetAddressType : IEquatable<SiteRecoveryEthernetAddressType>
     {
         private readonly string _value;
@@ -28,15 +25,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         private const string DynamicValue = "Dynamic";
         private const string StaticValue = "Static";
 
-        /// <summary>
-        /// Dynamic
-        /// Serialized Name: EthernetAddressType.Dynamic
-        /// </summary>
+        /// <summary> Dynamic. </summary>
         public static SiteRecoveryEthernetAddressType Dynamic { get; } = new SiteRecoveryEthernetAddressType(DynamicValue);
-        /// <summary>
-        /// Static
-        /// Serialized Name: EthernetAddressType.Static
-        /// </summary>
+        /// <summary> Static. </summary>
         public static SiteRecoveryEthernetAddressType Static { get; } = new SiteRecoveryEthernetAddressType(StaticValue);
         /// <summary> Determines if two <see cref="SiteRecoveryEthernetAddressType"/> values are the same. </summary>
         public static bool operator ==(SiteRecoveryEthernetAddressType left, SiteRecoveryEthernetAddressType right) => left.Equals(right);

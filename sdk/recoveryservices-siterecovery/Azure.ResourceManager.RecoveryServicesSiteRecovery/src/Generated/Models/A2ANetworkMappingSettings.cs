@@ -9,10 +9,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary>
-    /// A2A Network Mapping fabric specific settings.
-    /// Serialized Name: AzureToAzureNetworkMappingSettings
-    /// </summary>
+    /// <summary> A2A Network Mapping fabric specific settings. </summary>
     public partial class A2ANetworkMappingSettings : NetworkMappingFabricSpecificSettings
     {
         /// <summary> Initializes a new instance of A2ANetworkMappingSettings. </summary>
@@ -22,18 +19,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Initializes a new instance of A2ANetworkMappingSettings. </summary>
-        /// <param name="instanceType">
-        /// Gets the Instance type.
-        /// Serialized Name: NetworkMappingFabricSpecificSettings.instanceType
-        /// </param>
-        /// <param name="primaryFabricLocation">
-        /// The primary fabric location.
-        /// Serialized Name: AzureToAzureNetworkMappingSettings.primaryFabricLocation
-        /// </param>
-        /// <param name="recoveryFabricLocation">
-        /// The recovery fabric location.
-        /// Serialized Name: AzureToAzureNetworkMappingSettings.recoveryFabricLocation
-        /// </param>
+        /// <param name="instanceType"> Gets the Instance type. </param>
+        /// <param name="primaryFabricLocation"> The primary fabric location. </param>
+        /// <param name="recoveryFabricLocation"> The recovery fabric location. </param>
         internal A2ANetworkMappingSettings(string instanceType, AzureLocation? primaryFabricLocation, AzureLocation? recoveryFabricLocation) : base(instanceType)
         {
             PrimaryFabricLocation = primaryFabricLocation;
@@ -41,15 +29,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             InstanceType = instanceType ?? "AzureToAzure";
         }
 
-        /// <summary>
-        /// The primary fabric location.
-        /// Serialized Name: AzureToAzureNetworkMappingSettings.primaryFabricLocation
-        /// </summary>
+        /// <summary> The primary fabric location. </summary>
         public AzureLocation? PrimaryFabricLocation { get; }
-        /// <summary>
-        /// The recovery fabric location.
-        /// Serialized Name: AzureToAzureNetworkMappingSettings.recoveryFabricLocation
-        /// </summary>
+        /// <summary> The recovery fabric location. </summary>
         public AzureLocation? RecoveryFabricLocation { get; }
     }
 }

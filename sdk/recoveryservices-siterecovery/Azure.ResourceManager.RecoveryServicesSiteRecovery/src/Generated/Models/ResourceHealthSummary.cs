@@ -10,53 +10,32 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary>
-    /// Base class to define the health summary of the resources contained under an Arm resource.
-    /// Serialized Name: ResourceHealthSummary
-    /// </summary>
+    /// <summary> Base class to define the health summary of the resources contained under an Arm resource. </summary>
     public partial class ResourceHealthSummary
     {
         /// <summary> Initializes a new instance of ResourceHealthSummary. </summary>
         internal ResourceHealthSummary()
         {
-            Issues = new ChangeTrackingList<SiteRecoveryHealthErrorSummary>();
+            Issues = new ChangeTrackingList<HealthErrorSummary>();
             CategorizedResourceCounts = new ChangeTrackingDictionary<string, int>();
         }
 
         /// <summary> Initializes a new instance of ResourceHealthSummary. </summary>
-        /// <param name="resourceCount">
-        /// The count of total resources under the container.
-        /// Serialized Name: ResourceHealthSummary.resourceCount
-        /// </param>
-        /// <param name="issues">
-        /// The list of summary of health errors across the resources under the container.
-        /// Serialized Name: ResourceHealthSummary.issues
-        /// </param>
-        /// <param name="categorizedResourceCounts">
-        /// The categorized resource counts.
-        /// Serialized Name: ResourceHealthSummary.categorizedResourceCounts
-        /// </param>
-        internal ResourceHealthSummary(int? resourceCount, IReadOnlyList<SiteRecoveryHealthErrorSummary> issues, IReadOnlyDictionary<string, int> categorizedResourceCounts)
+        /// <param name="resourceCount"> The count of total resources under the container. </param>
+        /// <param name="issues"> The list of summary of health errors across the resources under the container. </param>
+        /// <param name="categorizedResourceCounts"> The categorized resource counts. </param>
+        internal ResourceHealthSummary(int? resourceCount, IReadOnlyList<HealthErrorSummary> issues, IReadOnlyDictionary<string, int> categorizedResourceCounts)
         {
             ResourceCount = resourceCount;
             Issues = issues;
             CategorizedResourceCounts = categorizedResourceCounts;
         }
 
-        /// <summary>
-        /// The count of total resources under the container.
-        /// Serialized Name: ResourceHealthSummary.resourceCount
-        /// </summary>
+        /// <summary> The count of total resources under the container. </summary>
         public int? ResourceCount { get; }
-        /// <summary>
-        /// The list of summary of health errors across the resources under the container.
-        /// Serialized Name: ResourceHealthSummary.issues
-        /// </summary>
-        public IReadOnlyList<SiteRecoveryHealthErrorSummary> Issues { get; }
-        /// <summary>
-        /// The categorized resource counts.
-        /// Serialized Name: ResourceHealthSummary.categorizedResourceCounts
-        /// </summary>
+        /// <summary> The list of summary of health errors across the resources under the container. </summary>
+        public IReadOnlyList<HealthErrorSummary> Issues { get; }
+        /// <summary> The categorized resource counts. </summary>
         public IReadOnlyDictionary<string, int> CategorizedResourceCounts { get; }
     }
 }

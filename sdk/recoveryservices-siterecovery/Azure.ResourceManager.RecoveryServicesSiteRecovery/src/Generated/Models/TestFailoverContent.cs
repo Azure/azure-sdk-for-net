@@ -10,29 +10,20 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary>
-    /// Input definition for test failover.
-    /// Serialized Name: TestFailoverInput
-    /// </summary>
+    /// <summary> Input definition for test failover. </summary>
     public partial class TestFailoverContent
     {
         /// <summary> Initializes a new instance of TestFailoverContent. </summary>
-        /// <param name="properties">
-        /// Test failover input properties.
-        /// Serialized Name: TestFailoverInput.properties
-        /// </param>
+        /// <param name="properties"> Test failover input properties. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
-        public TestFailoverContent(TestFailoverContentProperties properties)
+        public TestFailoverContent(TestFailoverProperties properties)
         {
             Argument.AssertNotNull(properties, nameof(properties));
 
             Properties = properties;
         }
 
-        /// <summary>
-        /// Test failover input properties.
-        /// Serialized Name: TestFailoverInput.properties
-        /// </summary>
-        public TestFailoverContentProperties Properties { get; }
+        /// <summary> Test failover input properties. </summary>
+        public TestFailoverProperties Properties { get; }
     }
 }

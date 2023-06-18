@@ -10,17 +10,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary>
-    /// Azure VM unmanaged disk input details.
-    /// Serialized Name: A2AProtectionIntentDiskInputDetails
-    /// </summary>
+    /// <summary> Azure VM unmanaged disk input details. </summary>
     public partial class A2AProtectionIntentDiskDetails
     {
         /// <summary> Initializes a new instance of A2AProtectionIntentDiskDetails. </summary>
-        /// <param name="diskUri">
-        /// The disk Uri.
-        /// Serialized Name: A2AProtectionIntentDiskInputDetails.diskUri
-        /// </param>
+        /// <param name="diskUri"> The disk Uri. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="diskUri"/> is null. </exception>
         public A2AProtectionIntentDiskDetails(Uri diskUri)
         {
@@ -30,19 +24,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Initializes a new instance of A2AProtectionIntentDiskDetails. </summary>
-        /// <param name="diskUri">
-        /// The disk Uri.
-        /// Serialized Name: A2AProtectionIntentDiskInputDetails.diskUri
-        /// </param>
+        /// <param name="diskUri"> The disk Uri. </param>
         /// <param name="recoveryAzureStorageAccountCustomContent">
         /// The recovery VHD storage account input.
-        /// Serialized Name: A2AProtectionIntentDiskInputDetails.recoveryAzureStorageAccountCustomInput
         /// Please note <see cref="StorageAccountCustomDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="ExistingStorageAccount"/>.
         /// </param>
         /// <param name="primaryStagingStorageAccountCustomContent">
         /// The primary staging storage account input.
-        /// Serialized Name: A2AProtectionIntentDiskInputDetails.primaryStagingStorageAccountCustomInput
         /// Please note <see cref="StorageAccountCustomDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="ExistingStorageAccount"/>.
         /// </param>
@@ -53,21 +42,16 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             PrimaryStagingStorageAccountCustomContent = primaryStagingStorageAccountCustomContent;
         }
 
-        /// <summary>
-        /// The disk Uri.
-        /// Serialized Name: A2AProtectionIntentDiskInputDetails.diskUri
-        /// </summary>
+        /// <summary> The disk Uri. </summary>
         public Uri DiskUri { get; set; }
         /// <summary>
         /// The recovery VHD storage account input.
-        /// Serialized Name: A2AProtectionIntentDiskInputDetails.recoveryAzureStorageAccountCustomInput
         /// Please note <see cref="StorageAccountCustomDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="ExistingStorageAccount"/>.
         /// </summary>
         public StorageAccountCustomDetails RecoveryAzureStorageAccountCustomContent { get; set; }
         /// <summary>
         /// The primary staging storage account input.
-        /// Serialized Name: A2AProtectionIntentDiskInputDetails.primaryStagingStorageAccountCustomInput
         /// Please note <see cref="StorageAccountCustomDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="ExistingStorageAccount"/>.
         /// </summary>

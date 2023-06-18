@@ -10,21 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary>
-    /// InMageRcm disk input.
-    /// Serialized Name: InMageRcmDisksDefaultInput
-    /// </summary>
+    /// <summary> InMageRcm disk input. </summary>
     public partial class InMageRcmDisksDefaultContent
     {
         /// <summary> Initializes a new instance of InMageRcmDisksDefaultContent. </summary>
-        /// <param name="logStorageAccountId">
-        /// The log storage account ARM Id.
-        /// Serialized Name: InMageRcmDisksDefaultInput.logStorageAccountId
-        /// </param>
-        /// <param name="diskType">
-        /// The disk type.
-        /// Serialized Name: InMageRcmDisksDefaultInput.diskType
-        /// </param>
+        /// <param name="logStorageAccountId"> The log storage account ARM Id. </param>
+        /// <param name="diskType"> The disk type. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="logStorageAccountId"/> is null. </exception>
         public InMageRcmDisksDefaultContent(ResourceIdentifier logStorageAccountId, SiteRecoveryDiskAccountType diskType)
         {
@@ -34,20 +25,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             DiskType = diskType;
         }
 
-        /// <summary>
-        /// The log storage account ARM Id.
-        /// Serialized Name: InMageRcmDisksDefaultInput.logStorageAccountId
-        /// </summary>
+        /// <summary> The log storage account ARM Id. </summary>
         public ResourceIdentifier LogStorageAccountId { get; }
-        /// <summary>
-        /// The disk type.
-        /// Serialized Name: InMageRcmDisksDefaultInput.diskType
-        /// </summary>
+        /// <summary> The disk type. </summary>
         public SiteRecoveryDiskAccountType DiskType { get; }
-        /// <summary>
-        /// The DiskEncryptionSet ARM Id.
-        /// Serialized Name: InMageRcmDisksDefaultInput.diskEncryptionSetId
-        /// </summary>
+        /// <summary> The DiskEncryptionSet ARM Id. </summary>
         public ResourceIdentifier DiskEncryptionSetId { get; set; }
     }
 }

@@ -7,10 +7,7 @@
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary>
-    /// Container unpairing input.
-    /// Serialized Name: RemoveProtectionContainerMappingInput
-    /// </summary>
+    /// <summary> Container unpairing input. </summary>
     public partial class RemoveProtectionContainerMappingContent
     {
         /// <summary> Initializes a new instance of RemoveProtectionContainerMappingContent. </summary>
@@ -18,22 +15,16 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         {
         }
 
-        /// <summary>
-        /// Configure protection input properties.
-        /// Serialized Name: RemoveProtectionContainerMappingInput.properties
-        /// </summary>
-        internal RemoveProtectionContainerMappingContentProperties Properties { get; set; }
-        /// <summary>
-        /// The class type.
-        /// Serialized Name: ReplicationProviderContainerUnmappingInput.instanceType
-        /// </summary>
+        /// <summary> Configure protection input properties. </summary>
+        internal RemoveProtectionContainerMappingProperties Properties { get; set; }
+        /// <summary> The class type. </summary>
         public string ProviderSpecificContentInstanceType
         {
             get => Properties is null ? default : Properties.ProviderSpecificContentInstanceType;
             set
             {
                 if (Properties is null)
-                    Properties = new RemoveProtectionContainerMappingContentProperties();
+                    Properties = new RemoveProtectionContainerMappingProperties();
                 Properties.ProviderSpecificContentInstanceType = value;
             }
         }

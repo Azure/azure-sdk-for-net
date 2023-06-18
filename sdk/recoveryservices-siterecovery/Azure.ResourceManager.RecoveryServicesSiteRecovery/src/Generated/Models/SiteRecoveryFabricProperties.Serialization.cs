@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Optional<SiteRecoveryEncryptionDetails> rolloverEncryptionDetails = default;
             Optional<string> internalIdentifier = default;
             Optional<string> bcdrState = default;
-            Optional<SiteRecoveryFabricSpecificDetails> customDetails = default;
+            Optional<FabricSpecificDetails> customDetails = default;
             Optional<IReadOnlyList<SiteRecoveryHealthError>> healthErrorDetails = default;
             Optional<string> health = default;
             foreach (var property in element.EnumerateObject())
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    customDetails = SiteRecoveryFabricSpecificDetails.DeserializeSiteRecoveryFabricSpecificDetails(property.Value);
+                    customDetails = FabricSpecificDetails.DeserializeFabricSpecificDetails(property.Value);
                     continue;
                 }
                 if (property.NameEquals("healthErrorDetails"u8))

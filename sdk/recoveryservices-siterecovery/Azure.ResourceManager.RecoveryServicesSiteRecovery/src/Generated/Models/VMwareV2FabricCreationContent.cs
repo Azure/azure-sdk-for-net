@@ -10,19 +10,13 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary>
-    /// VMwareV2 fabric provider specific settings.
-    /// Serialized Name: VMwareV2FabricCreationInput
-    /// </summary>
-    public partial class VMwareV2FabricCreationContent : SiteRecoveryFabricSpecificCreationContent
+    /// <summary> VMwareV2 fabric provider specific settings. </summary>
+    public partial class VMwareV2FabricCreationContent : FabricSpecificCreationContent
     {
         /// <summary> Initializes a new instance of VMwareV2FabricCreationContent. </summary>
-        /// <param name="migrationSolutionId">
-        /// The ARM Id of the migration solution.
-        /// Serialized Name: VMwareV2FabricCreationInput.migrationSolutionId
-        /// </param>
+        /// <param name="migrationSolutionId"> The ARM Id of the migration solution. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="migrationSolutionId"/> is null. </exception>
-        public VMwareV2FabricCreationContent(string migrationSolutionId)
+        public VMwareV2FabricCreationContent(ResourceIdentifier migrationSolutionId)
         {
             Argument.AssertNotNull(migrationSolutionId, nameof(migrationSolutionId));
 
@@ -30,20 +24,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             InstanceType = "VMwareV2";
         }
 
-        /// <summary>
-        /// The ARM Id of the VMware site.
-        /// Serialized Name: VMwareV2FabricCreationInput.vmwareSiteId
-        /// </summary>
-        public string VMwareSiteId { get; set; }
-        /// <summary>
-        /// The ARM Id of the physical site.
-        /// Serialized Name: VMwareV2FabricCreationInput.physicalSiteId
-        /// </summary>
-        public string PhysicalSiteId { get; set; }
-        /// <summary>
-        /// The ARM Id of the migration solution.
-        /// Serialized Name: VMwareV2FabricCreationInput.migrationSolutionId
-        /// </summary>
-        public string MigrationSolutionId { get; }
+        /// <summary> The ARM Id of the VMware site. </summary>
+        public ResourceIdentifier VMwareSiteId { get; set; }
+        /// <summary> The ARM Id of the physical site. </summary>
+        public ResourceIdentifier PhysicalSiteId { get; set; }
+        /// <summary> The ARM Id of the migration solution. </summary>
+        public ResourceIdentifier MigrationSolutionId { get; }
     }
 }

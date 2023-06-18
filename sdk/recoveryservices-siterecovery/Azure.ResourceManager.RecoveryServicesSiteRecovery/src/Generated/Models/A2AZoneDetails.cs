@@ -7,10 +7,7 @@
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary>
-    /// Zone details data.
-    /// Serialized Name: A2AZoneDetails
-    /// </summary>
+    /// <summary> Zone details data. </summary>
     public partial class A2AZoneDetails
     {
         /// <summary> Initializes a new instance of A2AZoneDetails. </summary>
@@ -19,29 +16,17 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Initializes a new instance of A2AZoneDetails. </summary>
-        /// <param name="source">
-        /// Source zone info.
-        /// Serialized Name: A2AZoneDetails.source
-        /// </param>
-        /// <param name="target">
-        /// The target zone info.
-        /// Serialized Name: A2AZoneDetails.target
-        /// </param>
+        /// <param name="source"> Source zone info. </param>
+        /// <param name="target"> The target zone info. </param>
         internal A2AZoneDetails(string source, string target)
         {
             Source = source;
             Target = target;
         }
 
-        /// <summary>
-        /// Source zone info.
-        /// Serialized Name: A2AZoneDetails.source
-        /// </summary>
+        /// <summary> Source zone info. </summary>
         public string Source { get; }
-        /// <summary>
-        /// The target zone info.
-        /// Serialized Name: A2AZoneDetails.target
-        /// </summary>
+        /// <summary> The target zone info. </summary>
         public string Target { get; }
     }
 }

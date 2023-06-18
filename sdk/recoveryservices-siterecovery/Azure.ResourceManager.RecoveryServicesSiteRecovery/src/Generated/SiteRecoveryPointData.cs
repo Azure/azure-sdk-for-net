@@ -14,7 +14,6 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
     /// <summary>
     /// A class representing the SiteRecoveryPoint data model.
     /// Recovery point.
-    /// Serialized Name: RecoveryPoint
     /// </summary>
     public partial class SiteRecoveryPointData : ResourceData
     {
@@ -28,29 +27,17 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="properties">
-        /// The recovery point properties.
-        /// Serialized Name: RecoveryPoint.properties
-        /// </param>
-        /// <param name="location">
-        /// Resource Location
-        /// Serialized Name: Resource.location
-        /// </param>
-        internal SiteRecoveryPointData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, RecoveryPointProperties properties, AzureLocation? location) : base(id, name, resourceType, systemData)
+        /// <param name="properties"> The recovery point properties. </param>
+        /// <param name="location"> Resource Location. </param>
+        internal SiteRecoveryPointData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SiteRecoveryPointProperties properties, AzureLocation? location) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
             Location = location;
         }
 
-        /// <summary>
-        /// The recovery point properties.
-        /// Serialized Name: RecoveryPoint.properties
-        /// </summary>
-        public RecoveryPointProperties Properties { get; }
-        /// <summary>
-        /// Resource Location
-        /// Serialized Name: Resource.location
-        /// </summary>
+        /// <summary> The recovery point properties. </summary>
+        public SiteRecoveryPointProperties Properties { get; }
+        /// <summary> Resource Location. </summary>
         public AzureLocation? Location { get; }
     }
 }

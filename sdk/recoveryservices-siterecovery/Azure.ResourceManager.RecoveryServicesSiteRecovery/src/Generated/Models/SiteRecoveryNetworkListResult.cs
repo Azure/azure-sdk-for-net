@@ -11,10 +11,7 @@ using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary>
-    /// List of networks.
-    /// Serialized Name: NetworkCollection
-    /// </summary>
+    /// <summary> List of networks. </summary>
     internal partial class SiteRecoveryNetworkListResult
     {
         /// <summary> Initializes a new instance of SiteRecoveryNetworkListResult. </summary>
@@ -24,29 +21,17 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Initializes a new instance of SiteRecoveryNetworkListResult. </summary>
-        /// <param name="value">
-        /// The Networks list details.
-        /// Serialized Name: NetworkCollection.value
-        /// </param>
-        /// <param name="nextLink">
-        /// The value of next link.
-        /// Serialized Name: NetworkCollection.nextLink
-        /// </param>
+        /// <param name="value"> The Networks list details. </param>
+        /// <param name="nextLink"> The value of next link. </param>
         internal SiteRecoveryNetworkListResult(IReadOnlyList<SiteRecoveryNetworkData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
-        /// <summary>
-        /// The Networks list details.
-        /// Serialized Name: NetworkCollection.value
-        /// </summary>
+        /// <summary> The Networks list details. </summary>
         public IReadOnlyList<SiteRecoveryNetworkData> Value { get; }
-        /// <summary>
-        /// The value of next link.
-        /// Serialized Name: NetworkCollection.nextLink
-        /// </summary>
+        /// <summary> The value of next link. </summary>
         public string NextLink { get; }
     }
 }

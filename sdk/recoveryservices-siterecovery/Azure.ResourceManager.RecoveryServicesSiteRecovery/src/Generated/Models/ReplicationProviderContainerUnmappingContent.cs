@@ -7,10 +7,7 @@
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary>
-    /// Provider specific input for unpairing operations.
-    /// Serialized Name: ReplicationProviderContainerUnmappingInput
-    /// </summary>
+    /// <summary> Provider specific input for unpairing operations. </summary>
     internal partial class ReplicationProviderContainerUnmappingContent
     {
         /// <summary> Initializes a new instance of ReplicationProviderContainerUnmappingContent. </summary>
@@ -18,10 +15,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         {
         }
 
-        /// <summary>
-        /// The class type.
-        /// Serialized Name: ReplicationProviderContainerUnmappingInput.instanceType
-        /// </summary>
+        /// <summary> The class type. </summary>
         public string InstanceType { get; set; }
     }
 }

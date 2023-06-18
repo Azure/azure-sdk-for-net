@@ -10,17 +10,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary>
-    /// Create recovery plan input class.
-    /// Serialized Name: CreateRecoveryPlanInput
-    /// </summary>
+    /// <summary> Create recovery plan input class. </summary>
     public partial class SiteRecoveryRecoveryPlanCreateOrUpdateContent
     {
         /// <summary> Initializes a new instance of SiteRecoveryRecoveryPlanCreateOrUpdateContent. </summary>
-        /// <param name="properties">
-        /// Recovery plan creation properties.
-        /// Serialized Name: CreateRecoveryPlanInput.properties
-        /// </param>
+        /// <param name="properties"> Recovery plan creation properties. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
         public SiteRecoveryRecoveryPlanCreateOrUpdateContent(SiteRecoveryCreateRecoveryPlanProperties properties)
         {
@@ -29,10 +23,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Properties = properties;
         }
 
-        /// <summary>
-        /// Recovery plan creation properties.
-        /// Serialized Name: CreateRecoveryPlanInput.properties
-        /// </summary>
+        /// <summary> Recovery plan creation properties. </summary>
         public SiteRecoveryCreateRecoveryPlanProperties Properties { get; }
     }
 }

@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary>
-    /// This class represents details for export jobs workflow.
-    /// Serialized Name: ExportJobDetails
-    /// </summary>
+    /// <summary> This class represents details for export jobs workflow. </summary>
     public partial class ExportJobDetails : SiteRecoveryJobDetails
     {
         /// <summary> Initializes a new instance of ExportJobDetails. </summary>
@@ -23,22 +20,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Initializes a new instance of ExportJobDetails. </summary>
-        /// <param name="instanceType">
-        /// Gets the type of job details (see JobDetailsTypes enum for possible values).
-        /// Serialized Name: JobDetails.instanceType
-        /// </param>
-        /// <param name="affectedObjectDetails">
-        /// The affected object properties like source server, source cloud, target server, target cloud etc. based on the workflow object details.
-        /// Serialized Name: JobDetails.affectedObjectDetails
-        /// </param>
-        /// <param name="blobUri">
-        /// BlobUri of the exported jobs.
-        /// Serialized Name: ExportJobDetails.blobUri
-        /// </param>
-        /// <param name="sasToken">
-        /// The sas token to access blob.
-        /// Serialized Name: ExportJobDetails.sasToken
-        /// </param>
+        /// <param name="instanceType"> Gets the type of job details (see JobDetailsTypes enum for possible values). </param>
+        /// <param name="affectedObjectDetails"> The affected object properties like source server, source cloud, target server, target cloud etc. based on the workflow object details. </param>
+        /// <param name="blobUri"> BlobUri of the exported jobs. </param>
+        /// <param name="sasToken"> The sas token to access blob. </param>
         internal ExportJobDetails(string instanceType, IReadOnlyDictionary<string, string> affectedObjectDetails, Uri blobUri, string sasToken) : base(instanceType, affectedObjectDetails)
         {
             BlobUri = blobUri;
@@ -46,15 +31,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             InstanceType = instanceType ?? "ExportJobDetails";
         }
 
-        /// <summary>
-        /// BlobUri of the exported jobs.
-        /// Serialized Name: ExportJobDetails.blobUri
-        /// </summary>
+        /// <summary> BlobUri of the exported jobs. </summary>
         public Uri BlobUri { get; }
-        /// <summary>
-        /// The sas token to access blob.
-        /// Serialized Name: ExportJobDetails.sasToken
-        /// </summary>
+        /// <summary> The sas token to access blob. </summary>
         public string SasToken { get; }
     }
 }
