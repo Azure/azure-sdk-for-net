@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Net;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
@@ -110,31 +111,31 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Samples
             // invoke the operation
             ReplicationProtectedItemPatch patch = new ReplicationProtectedItemPatch()
             {
-                Properties = new UpdateReplicationProtectedItemInputProperties()
+                Properties = new UpdateReplicationProtectedItemContentProperties()
                 {
                     RecoveryAzureVmName = "vm1",
                     RecoveryAzureVmSize = "Basic_A0",
-                    SelectedRecoveryAzureNetworkId = "/subscriptions/c183865e-6077-46f2-a3b1-deb0f4f4650a/resourceGroups/siterecoveryProd1/providers/Microsoft.Network/virtualNetworks/vnetavrai",
+                    SelectedRecoveryAzureNetworkId = new ResourceIdentifier("/subscriptions/c183865e-6077-46f2-a3b1-deb0f4f4650a/resourceGroups/siterecoveryProd1/providers/Microsoft.Network/virtualNetworks/vnetavrai"),
                     VmNics =
 {
-new VmNicInputDetails()
+new VmNicContentDetails()
 {
 NicId = "TWljcm9zb2Z0OkY4NDkxRTRGLTgxN0EtNDBERC1BOTBDLUFGNzczOTc4Qzc1Qlw3NjAwMzMxRS03NDk4LTQ0QTQtQjdDNy0xQjY1NkJDREQ1MkQ=",
 IPConfigs =
 {
-new IPConfigInputDetails()
+new HyperVFailoverIPConfigDetails()
 {
 IPConfigName = "ipconfig1",
 IsPrimary = true,
 RecoverySubnetName = "subnet1",
-RecoveryStaticIPAddress = "10.0.2.46",
+RecoveryStaticIPAddress = IPAddress.Parse("10.0.2.46"),
 }
 },
 SelectionType = "SelectedByUser",
 }
 },
                     LicenseType = LicenseType.WindowsServer,
-                    ProviderSpecificDetails = new HyperVReplicaAzureUpdateReplicationProtectedItemInput(),
+                    ProviderSpecificDetails = new HyperVReplicaAzureUpdateReplicationProtectedItemContent(),
                 },
             };
             ArmOperation<ReplicationProtectedItemResource> lro = await replicationProtectedItem.UpdateAsync(WaitUntil.Completed, patch);
@@ -172,13 +173,13 @@ SelectionType = "SelectedByUser",
             ReplicationProtectedItemResource replicationProtectedItem = client.GetReplicationProtectedItemResource(replicationProtectedItemResourceId);
 
             // invoke the operation
-            AddDisksContent content = new AddDisksContent()
+            SiteRecoveryAddDisksContent content = new SiteRecoveryAddDisksContent()
             {
-                AddDisksInputProviderSpecificDetails = new A2AAddDisksInput()
+                SiteRecoveryAddDisksProviderSpecificDetails = new A2AAddDisksContent()
                 {
                     VmDisks =
 {
-new A2AVmDiskInputDetails(new Uri("https://vmstorage.blob.core.windows.net/vhds/datadisk1.vhd"),"/subscriptions/c183865e-6077-46f2-a3b1-deb0f4f4650a/resourcegroups/recoveryResource/providers/Microsoft.Storage/storageAccounts/recoverystorage","/subscriptions/c183865e-6077-46f2-a3b1-deb0f4f4650a/resourcegroups/primaryResource/providers/Microsoft.Storage/storageAccounts/vmcachestorage")
+new A2AVmDiskDetails(new Uri("https://vmstorage.blob.core.windows.net/vhds/datadisk1.vhd"),new ResourceIdentifier("/subscriptions/c183865e-6077-46f2-a3b1-deb0f4f4650a/resourcegroups/recoveryResource/providers/Microsoft.Storage/storageAccounts/recoverystorage"),new ResourceIdentifier("/subscriptions/c183865e-6077-46f2-a3b1-deb0f4f4650a/resourcegroups/primaryResource/providers/Microsoft.Storage/storageAccounts/vmcachestorage"))
 },
                 },
             };
@@ -217,9 +218,9 @@ new A2AVmDiskInputDetails(new Uri("https://vmstorage.blob.core.windows.net/vhds/
             ReplicationProtectedItemResource replicationProtectedItem = client.GetReplicationProtectedItemResource(replicationProtectedItemResourceId);
 
             // invoke the operation
-            ApplySiteRecoveryPointContent content = new ApplySiteRecoveryPointContent(new ApplySiteRecoveryPointProperties(new HyperVReplicaAzureApplyRecoveryPointInput())
+            SiteRecoveryApplyRecoveryPointContent content = new SiteRecoveryApplyRecoveryPointContent(new SiteRecoveryApplyRecoveryPointProperties(new HyperVReplicaAzureApplyRecoveryPointContent())
             {
-                RecoveryPointId = "/Subscriptions/c183865e-6077-46f2-a3b1-deb0f4f4650a/resourceGroups/resourceGroupPS1/providers/Microsoft.RecoveryServices/vaults/vault1/replicationFabrics/cloud1/replicationProtectionContainers/cloud_6d224fc6-f326-5d35-96de-fbf51efb3179/replicationProtectedItems/f8491e4f-817a-40dd-a90c-af773978c75b/recoveryPoints/e4d05fe9-5dfd-47be-b50b-aad306b2802d",
+                RecoveryPointId = new ResourceIdentifier("/Subscriptions/c183865e-6077-46f2-a3b1-deb0f4f4650a/resourceGroups/resourceGroupPS1/providers/Microsoft.RecoveryServices/vaults/vault1/replicationFabrics/cloud1/replicationProtectionContainers/cloud_6d224fc6-f326-5d35-96de-fbf51efb3179/replicationProtectedItems/f8491e4f-817a-40dd-a90c-af773978c75b/recoveryPoints/e4d05fe9-5dfd-47be-b50b-aad306b2802d"),
             });
             ArmOperation<ReplicationProtectedItemResource> lro = await replicationProtectedItem.ApplyRecoveryPointAsync(WaitUntil.Completed, content);
             ReplicationProtectedItemResource result = lro.Value;
@@ -328,10 +329,10 @@ new A2AVmDiskInputDetails(new Uri("https://vmstorage.blob.core.windows.net/vhds/
             // invoke the operation
             PlannedFailoverContent content = new PlannedFailoverContent()
             {
-                Properties = new PlannedFailoverInputProperties()
+                Properties = new PlannedFailoverContentProperties()
                 {
                     FailoverDirection = "PrimaryToRecovery",
-                    ProviderSpecificDetails = new HyperVReplicaAzurePlannedFailoverProviderInput(),
+                    ProviderSpecificDetails = new HyperVReplicaAzurePlannedFailoverProviderContent(),
                 },
             };
             ArmOperation<ReplicationProtectedItemResource> lro = await replicationProtectedItem.PlannedFailoverAsync(WaitUntil.Completed, content);
@@ -371,7 +372,7 @@ new A2AVmDiskInputDetails(new Uri("https://vmstorage.blob.core.windows.net/vhds/
             // invoke the operation
             RemoveDisksContent content = new RemoveDisksContent()
             {
-                RemoveDisksInputProviderSpecificDetails = new A2ARemoveDisksInput()
+                RemoveDisksContentProviderSpecificDetails = new A2ARemoveDisksContent()
                 {
                     VmDisksUris =
 {
@@ -451,10 +452,10 @@ new Uri("https://vmstorage.blob.core.windows.net/vhds/datadisk1.vhd")
             // invoke the operation
             ReverseReplicationContent content = new ReverseReplicationContent()
             {
-                Properties = new ReverseReplicationInputProperties()
+                Properties = new ReverseReplicationContentProperties()
                 {
                     FailoverDirection = "PrimaryToRecovery",
-                    ProviderSpecificDetails = new HyperVReplicaAzureReprotectInput(),
+                    ProviderSpecificDetails = new HyperVReplicaAzureReprotectContent(),
                 },
             };
             ArmOperation<ReplicationProtectedItemResource> lro = await replicationProtectedItem.ReprotectAsync(WaitUntil.Completed, content);
@@ -539,10 +540,10 @@ HealthErrorId = "3:8020",
             // invoke the operation
             SwitchProviderContent content = new SwitchProviderContent()
             {
-                Properties = new SwitchProviderInputProperties()
+                Properties = new SwitchProviderContentProperties()
                 {
                     TargetInstanceType = "InMageRcm",
-                    ProviderSpecificDetails = new InMageAzureV2SwitchProviderInput("/Subscriptions/c183865e-6077-46f2-a3b1-deb0f4f4650a/resourceGroups/resourceGroupPS1/providers/Microsoft.RecoveryServices/vaults/vault2", "/Subscriptions/c183865e-6077-46f2-a3b1-deb0f4f4650a/resourceGroups/resourceGroupPS1/providers/Microsoft.RecoveryServices/vaults/vault1/replicationFabrics/cloud2", "5efaa202-e958-435e-8171-706bf735fcc4"),
+                    ProviderSpecificDetails = new InMageAzureV2SwitchProviderContent(new ResourceIdentifier("/Subscriptions/c183865e-6077-46f2-a3b1-deb0f4f4650a/resourceGroups/resourceGroupPS1/providers/Microsoft.RecoveryServices/vaults/vault2"), new ResourceIdentifier("/Subscriptions/c183865e-6077-46f2-a3b1-deb0f4f4650a/resourceGroups/resourceGroupPS1/providers/Microsoft.RecoveryServices/vaults/vault1/replicationFabrics/cloud2"), "5efaa202-e958-435e-8171-706bf735fcc4"),
                 },
             };
             ArmOperation<ReplicationProtectedItemResource> lro = await replicationProtectedItem.SwitchProviderAsync(WaitUntil.Completed, content);
@@ -580,12 +581,12 @@ HealthErrorId = "3:8020",
             ReplicationProtectedItemResource replicationProtectedItem = client.GetReplicationProtectedItemResource(replicationProtectedItemResourceId);
 
             // invoke the operation
-            TestFailoverContent content = new TestFailoverContent(new TestFailoverInputProperties()
+            TestFailoverContent content = new TestFailoverContent(new TestFailoverContentProperties()
             {
                 FailoverDirection = "PrimaryToRecovery",
                 NetworkType = "VmNetworkAsInput",
-                NetworkId = "/subscriptions/c183865e-6077-46f2-a3b1-deb0f4f4650a/resourceGroups/siterecoveryProd1/providers/Microsoft.Network/virtualNetworks/vnetavrai",
-                ProviderSpecificDetails = new HyperVReplicaAzureTestFailoverInput(),
+                NetworkId = new ResourceIdentifier("/subscriptions/c183865e-6077-46f2-a3b1-deb0f4f4650a/resourceGroups/siterecoveryProd1/providers/Microsoft.Network/virtualNetworks/vnetavrai"),
+                ProviderSpecificDetails = new HyperVReplicaAzureTestFailoverContent(),
             });
             ArmOperation<ReplicationProtectedItemResource> lro = await replicationProtectedItem.TestFailoverAsync(WaitUntil.Completed, content);
             ReplicationProtectedItemResource result = lro.Value;
@@ -622,7 +623,7 @@ HealthErrorId = "3:8020",
             ReplicationProtectedItemResource replicationProtectedItem = client.GetReplicationProtectedItemResource(replicationProtectedItemResourceId);
 
             // invoke the operation
-            TestFailoverCleanupContent content = new TestFailoverCleanupContent(new TestFailoverCleanupInputProperties()
+            TestFailoverCleanupContent content = new TestFailoverCleanupContent(new TestFailoverCleanupContentProperties()
             {
                 Comments = "Test Failover Cleanup",
             });
@@ -661,11 +662,11 @@ HealthErrorId = "3:8020",
             ReplicationProtectedItemResource replicationProtectedItem = client.GetReplicationProtectedItemResource(replicationProtectedItemResourceId);
 
             // invoke the operation
-            UnplannedFailoverContent content = new UnplannedFailoverContent(new UnplannedFailoverInputProperties()
+            UnplannedFailoverContent content = new UnplannedFailoverContent(new UnplannedFailoverContentProperties()
             {
                 FailoverDirection = "PrimaryToRecovery",
                 SourceSiteOperations = "NotRequired",
-                ProviderSpecificDetails = new HyperVReplicaAzureUnplannedFailoverInput(),
+                ProviderSpecificDetails = new HyperVReplicaAzureUnplannedFailoverContent(),
             });
             ArmOperation<ReplicationProtectedItemResource> lro = await replicationProtectedItem.UnplannedFailoverAsync(WaitUntil.Completed, content);
             ReplicationProtectedItemResource result = lro.Value;
@@ -702,7 +703,7 @@ HealthErrorId = "3:8020",
             ReplicationProtectedItemResource replicationProtectedItem = client.GetReplicationProtectedItemResource(replicationProtectedItemResourceId);
 
             // invoke the operation
-            UpdateApplianceForReplicationProtectedItemContent content = new UpdateApplianceForReplicationProtectedItemContent(new UpdateApplianceForReplicationProtectedItemInputProperties("", new InMageRcmUpdateApplianceForReplicationProtectedItemInput()
+            UpdateApplianceForReplicationProtectedItemContent content = new UpdateApplianceForReplicationProtectedItemContent(new UpdateApplianceForReplicationProtectedItemContentProperties("", new InMageRcmUpdateApplianceForReplicationProtectedItemContent()
             {
                 RunAsAccountId = "",
             }));

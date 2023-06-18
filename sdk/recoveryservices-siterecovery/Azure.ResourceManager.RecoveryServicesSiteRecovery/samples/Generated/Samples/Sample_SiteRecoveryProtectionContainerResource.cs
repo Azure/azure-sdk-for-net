@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Net;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
@@ -81,7 +82,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Samples
                 Properties = new DiscoverProtectableItemRequestProperties()
                 {
                     FriendlyName = "Test",
-                    IPAddress = "10.150.2.3",
+                    IPAddress = IPAddress.Parse("10.150.2.3"),
                     OSType = "Windows",
                 },
             };
@@ -150,10 +151,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Samples
             // invoke the operation
             SwitchProtectionContent content = new SwitchProtectionContent()
             {
-                Properties = new SwitchProtectionInputProperties()
+                Properties = new SwitchProtectionContentProperties()
                 {
                     ReplicationProtectedItemName = "a2aSwapOsVm",
-                    ProviderSpecificDetails = new A2ASwitchProtectionInput(),
+                    ProviderSpecificDetails = new A2ASwitchProtectionContent(),
                 },
             };
             ArmOperation<SiteRecoveryProtectionContainerResource> lro = await siteRecoveryProtectionContainer.SwitchProtectionAsync(WaitUntil.Completed, content);

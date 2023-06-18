@@ -157,11 +157,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Samples
             string replicatedProtectedItemName = "f8491e4f-817a-40dd-a90c-af773978c75b";
             ReplicationProtectedItemCreateOrUpdateContent content = new ReplicationProtectedItemCreateOrUpdateContent()
             {
-                Properties = new EnableProtectionInputProperties()
+                Properties = new EnableProtectionProperties()
                 {
-                    PolicyId = "/Subscriptions/c183865e-6077-46f2-a3b1-deb0f4f4650a/resourceGroups/resourceGroupPS1/providers/Microsoft.RecoveryServices/vaults/vault1/replicationPolicies/protectionprofile1",
-                    ProtectableItemId = "/Subscriptions/c183865e-6077-46f2-a3b1-deb0f4f4650a/resourceGroups/resourceGroupPS1/providers/Microsoft.RecoveryServices/vaults/vault1/replicationFabrics/cloud1/replicationProtectionContainers/cloud_6d224fc6-f326-5d35-96de-fbf51efb3179/replicationProtectableItems/f8491e4f-817a-40dd-a90c-af773978c75b",
-                    ProviderSpecificDetails = new HyperVReplicaAzureEnableProtectionInput(),
+                    PolicyId = new ResourceIdentifier("/Subscriptions/c183865e-6077-46f2-a3b1-deb0f4f4650a/resourceGroups/resourceGroupPS1/providers/Microsoft.RecoveryServices/vaults/vault1/replicationPolicies/protectionprofile1"),
+                    ProtectableItemId = new ResourceIdentifier("/Subscriptions/c183865e-6077-46f2-a3b1-deb0f4f4650a/resourceGroups/resourceGroupPS1/providers/Microsoft.RecoveryServices/vaults/vault1/replicationFabrics/cloud1/replicationProtectionContainers/cloud_6d224fc6-f326-5d35-96de-fbf51efb3179/replicationProtectableItems/f8491e4f-817a-40dd-a90c-af773978c75b"),
+                    ProviderSpecificDetails = new HyperVReplicaAzureEnableProtectionContent(),
                 },
             };
             ArmOperation<ReplicationProtectedItemResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, replicatedProtectedItemName, content);

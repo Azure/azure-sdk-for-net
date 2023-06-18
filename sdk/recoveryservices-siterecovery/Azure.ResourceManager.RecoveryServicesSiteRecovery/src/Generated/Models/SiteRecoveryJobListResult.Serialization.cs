@@ -12,9 +12,9 @@ using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    internal partial class JobCollection
+    internal partial class SiteRecoveryJobListResult
     {
-        internal static JobCollection DeserializeJobCollection(JsonElement element)
+        internal static SiteRecoveryJobListResult DeserializeSiteRecoveryJobListResult(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     continue;
                 }
             }
-            return new JobCollection(Optional.ToList(value), nextLink.Value);
+            return new SiteRecoveryJobListResult(Optional.ToList(value), nextLink.Value);
         }
     }
 }

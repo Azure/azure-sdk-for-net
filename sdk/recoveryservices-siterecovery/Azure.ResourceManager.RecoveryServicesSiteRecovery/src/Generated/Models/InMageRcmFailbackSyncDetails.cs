@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// The start time.
         /// Serialized Name: InMageRcmFailbackSyncDetails.startTime
         /// </param>
-        /// <param name="lastRefreshOn">
+        /// <param name="lastRefreshedOn">
         /// The last refresh time.
         /// Serialized Name: InMageRcmFailbackSyncDetails.lastRefreshTime
         /// </param>
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// Progress in percentage. Progress percentage is calculated based on processed bytes.
         /// Serialized Name: InMageRcmFailbackSyncDetails.progressPercentage
         /// </param>
-        internal InMageRcmFailbackSyncDetails(SiteRecoveryDiskReplicationProgressHealth? progressHealth, long? transferredBytes, long? last15MinutesTransferredBytes, DateTimeOffset? lastDataTransferOn, long? processedBytes, DateTimeOffset? startOn, DateTimeOffset? lastRefreshOn, int? progressPercentage)
+        internal InMageRcmFailbackSyncDetails(SiteRecoveryDiskReplicationProgressHealth? progressHealth, long? transferredBytes, long? last15MinutesTransferredBytes, DateTimeOffset? lastDataTransferOn, long? processedBytes, DateTimeOffset? startOn, DateTimeOffset? lastRefreshedOn, int? progressPercentage)
         {
             ProgressHealth = progressHealth;
             TransferredBytes = transferredBytes;
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             LastDataTransferOn = lastDataTransferOn;
             ProcessedBytes = processedBytes;
             StartOn = startOn;
-            LastRefreshOn = lastRefreshOn;
+            LastRefreshedOn = lastRefreshedOn;
             ProgressPercentage = progressPercentage;
         }
 
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// The last refresh time.
         /// Serialized Name: InMageRcmFailbackSyncDetails.lastRefreshTime
         /// </summary>
-        public DateTimeOffset? LastRefreshOn { get; }
+        public DateTimeOffset? LastRefreshedOn { get; }
         /// <summary>
         /// Progress in percentage. Progress percentage is calculated based on processed bytes.
         /// Serialized Name: InMageRcmFailbackSyncDetails.progressPercentage

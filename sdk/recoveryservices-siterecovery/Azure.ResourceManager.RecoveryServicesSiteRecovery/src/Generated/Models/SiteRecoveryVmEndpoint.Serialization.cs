@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    public partial class ContentEndpoint
+    public partial class SiteRecoveryVmEndpoint
     {
-        internal static ContentEndpoint DeserializeContentEndpoint(JsonElement element)
+        internal static SiteRecoveryVmEndpoint DeserializeSiteRecoveryVmEndpoint(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     continue;
                 }
             }
-            return new ContentEndpoint(endpointName.Value, Optional.ToNullable(privatePort), Optional.ToNullable(publicPort), protocol.Value);
+            return new SiteRecoveryVmEndpoint(endpointName.Value, Optional.ToNullable(privatePort), Optional.ToNullable(publicPort), protocol.Value);
         }
     }
 }

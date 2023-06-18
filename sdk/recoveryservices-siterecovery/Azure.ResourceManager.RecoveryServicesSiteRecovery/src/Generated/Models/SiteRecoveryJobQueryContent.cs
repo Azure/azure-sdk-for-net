@@ -13,10 +13,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// Query parameter to enumerate jobs.
     /// Serialized Name: JobQueryParameter
     /// </summary>
-    public partial class JobQueryParameter
+    public partial class SiteRecoveryJobQueryContent
     {
-        /// <summary> Initializes a new instance of JobQueryParameter. </summary>
-        public JobQueryParameter()
+        /// <summary> Initializes a new instance of SiteRecoveryJobQueryContent. </summary>
+        public SiteRecoveryJobQueryContent()
         {
         }
 
@@ -24,12 +24,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// Date time to get jobs from.
         /// Serialized Name: JobQueryParameter.startTime
         /// </summary>
-        public string StartTime { get; set; }
+        public string StartOn { get; set; }
         /// <summary>
         /// Date time to get jobs upto.
         /// Serialized Name: JobQueryParameter.endTime
         /// </summary>
-        public string EndTime { get; set; }
+        public string EndOn { get; set; }
         /// <summary>
         /// The Id of the fabric to search jobs under.
         /// Serialized Name: JobQueryParameter.fabricId

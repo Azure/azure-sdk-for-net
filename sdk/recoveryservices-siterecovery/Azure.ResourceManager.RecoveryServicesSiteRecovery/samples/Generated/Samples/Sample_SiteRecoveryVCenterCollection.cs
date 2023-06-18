@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Net;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
@@ -153,10 +154,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Samples
             string vCenterName = "esx-78";
             SiteRecoveryVCenterCreateOrUpdateContent content = new SiteRecoveryVCenterCreateOrUpdateContent()
             {
-                Properties = new AddVCenterRequestProperties()
+                Properties = new SiteRecoveryAddVCenterRequestProperties()
                 {
                     FriendlyName = "esx-78",
-                    IPAddress = "inmtest78",
+                    IPAddress = IPAddress.Parse("inmtest78"),
                     ProcessServerId = "5A720CAB-39CB-F445-BD1662B0B33164B5",
                     Port = "443",
                     RunAsAccountId = "2",

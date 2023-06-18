@@ -152,44 +152,5 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Samples
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
-
-        // Exports the details of the Azure Site Recovery jobs of the vault.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Export_ExportsTheDetailsOfTheAzureSiteRecoveryJobsOfTheVault()
-        {
-            // Generated from example definition: specification/recoveryservicessiterecovery/resource-manager/Microsoft.RecoveryServices/stable/2023-02-01/examples/ReplicationJobs_Export.json
-            // this example is just showing the usage of "ReplicationJobs_Export" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this SiteRecoveryJobResource created on azure
-            // for more information of creating SiteRecoveryJobResource, please refer to the document of SiteRecoveryJobResource
-            string subscriptionId = "c183865e-6077-46f2-a3b1-deb0f4f4650a";
-            string resourceGroupName = "resourceGroupPS1";
-            string resourceName = "vault1";
-            ResourceIdentifier siteRecoveryJobResourceId = SiteRecoveryJobResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, resourceName);
-            SiteRecoveryJobResource siteRecoveryJob = client.GetSiteRecoveryJobResource(siteRecoveryJobResourceId);
-
-            // invoke the operation
-            JobQueryParameter jobQueryParameter = new JobQueryParameter()
-            {
-                StartTime = "2017-04-27T14:26:51.9161395Z",
-                EndTime = "2017-05-04T14:26:51.9161395Z",
-                AffectedObjectTypes = "",
-                JobStatus = "",
-            };
-            ArmOperation<SiteRecoveryJobResource> lro = await siteRecoveryJob.ExportAsync(WaitUntil.Completed, jobQueryParameter);
-            SiteRecoveryJobResource result = lro.Value;
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            SiteRecoveryJobData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
     }
 }

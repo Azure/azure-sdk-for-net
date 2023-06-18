@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <summary> Initializes a new instance of VmNicDetails. </summary>
         internal VmNicDetails()
         {
-            IPConfigs = new ChangeTrackingList<IPConfigDetails>();
+            IPConfigs = new ChangeTrackingList<HyperVIPConfigDetails>();
         }
 
         /// <summary> Initializes a new instance of VmNicDetails. </summary>
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// Target NIC name.
         /// Serialized Name: VMNicDetails.targetNicName
         /// </param>
-        internal VmNicDetails(string nicId, string replicaNicId, ResourceIdentifier sourceNicArmId, string vmNetworkName, ResourceIdentifier recoveryVmNetworkId, IReadOnlyList<IPConfigDetails> ipConfigs, string selectionType, string recoveryNetworkSecurityGroupId, bool? enableAcceleratedNetworkingOnRecovery, ResourceIdentifier tfoVmNetworkId, string tfoNetworkSecurityGroupId, bool? enableAcceleratedNetworkingOnTfo, string recoveryNicName, string recoveryNicResourceGroupName, bool? reuseExistingNic, string tfoRecoveryNicName, string tfoRecoveryNicResourceGroupName, bool? tfoReuseExistingNic, string targetNicName)
+        internal VmNicDetails(string nicId, string replicaNicId, ResourceIdentifier sourceNicArmId, string vmNetworkName, ResourceIdentifier recoveryVmNetworkId, IReadOnlyList<HyperVIPConfigDetails> ipConfigs, string selectionType, string recoveryNetworkSecurityGroupId, bool? enableAcceleratedNetworkingOnRecovery, ResourceIdentifier tfoVmNetworkId, string tfoNetworkSecurityGroupId, bool? enableAcceleratedNetworkingOnTfo, string recoveryNicName, string recoveryNicResourceGroupName, bool? reuseExistingNic, string tfoRecoveryNicName, string tfoRecoveryNicResourceGroupName, bool? tfoReuseExistingNic, string targetNicName)
         {
             NicId = nicId;
             ReplicaNicId = replicaNicId;
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// The IP configurations of the NIC.
         /// Serialized Name: VMNicDetails.ipConfigs
         /// </summary>
-        public IReadOnlyList<IPConfigDetails> IPConfigs { get; }
+        public IReadOnlyList<HyperVIPConfigDetails> IPConfigs { get; }
         /// <summary>
         /// Selection type for failover.
         /// Serialized Name: VMNicDetails.selectionType

@@ -110,10 +110,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Samples
             // invoke the operation
             SiteRecoveryProtectionContainerMappingPatch patch = new SiteRecoveryProtectionContainerMappingPatch()
             {
-                ProviderSpecificInput = new A2AUpdateContainerMappingInput()
+                ProviderSpecificContent = new A2AUpdateContainerMappingContent()
                 {
-                    AgentAutoUpdateStatus = AgentAutoUpdateStatus.Enabled,
-                    AutomationAccountArmId = "/subscriptions/c183865e-6077-46f2-a3b1-deb0f4f4650a/resourceGroups/automationrg1/providers/Microsoft.Automation/automationAccounts/automationaccount1",
+                    AgentAutoUpdateStatus = SiteRecoveryAgentAutoUpdateStatus.Enabled,
+                    AutomationAccountArmId = new ResourceIdentifier("/subscriptions/c183865e-6077-46f2-a3b1-deb0f4f4650a/resourceGroups/automationrg1/providers/Microsoft.Automation/automationAccounts/automationaccount1"),
                 },
             };
             ArmOperation<SiteRecoveryProtectionContainerMappingResource> lro = await siteRecoveryProtectionContainerMapping.UpdateAsync(WaitUntil.Completed, patch);

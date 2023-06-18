@@ -13,14 +13,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// This class contains the minimal job details required to navigate to the desired drill down.
     /// Serialized Name: JobEntity
     /// </summary>
-    public partial class JobEntity
+    public partial class SiteRecoveryJobEntity
     {
-        /// <summary> Initializes a new instance of JobEntity. </summary>
-        internal JobEntity()
+        /// <summary> Initializes a new instance of SiteRecoveryJobEntity. </summary>
+        internal SiteRecoveryJobEntity()
         {
         }
 
-        /// <summary> Initializes a new instance of JobEntity. </summary>
+        /// <summary> Initializes a new instance of SiteRecoveryJobEntity. </summary>
         /// <param name="jobId">
         /// The job id.
         /// Serialized Name: JobEntity.jobId
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// The job name. Enum type ScenarioName.
         /// Serialized Name: JobEntity.jobScenarioName
         /// </param>
-        internal JobEntity(ResourceIdentifier jobId, string jobFriendlyName, string targetObjectId, string targetObjectName, string targetInstanceType, string jobScenarioName)
+        internal SiteRecoveryJobEntity(ResourceIdentifier jobId, string jobFriendlyName, string targetObjectId, string targetObjectName, string targetInstanceType, string jobScenarioName)
         {
             JobId = jobId;
             JobFriendlyName = jobFriendlyName;

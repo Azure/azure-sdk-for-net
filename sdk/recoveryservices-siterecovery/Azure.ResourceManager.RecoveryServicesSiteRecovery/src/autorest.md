@@ -23,8 +23,6 @@ rename-mapping:
   AlertProperties: SiteRecoveryAlertProperties
   AlertCollection: SiteRecoveryAlertListResult
   Fabric: SiteRecoveryFabric
-  Job: SiteRecoveryJob
-  JobErrorDetails: SiteRecoveryJobErrorDetails
   LogicalNetwork: SiteRecoveryLogicalNetwork
   MigrationItem: SiteRecoveryMigrationItem
   MigrationItemCollection: SiteRecoveryMigrationItemListResult
@@ -67,6 +65,7 @@ rename-mapping:
   A2AProtectionIntentDiskInputDetails: A2AProtectionIntentDiskDetails
   A2AProtectionIntentManagedDiskInputDetails: A2AProtectionIntentManagedDiskDetails
   A2AVmDiskInputDetails: A2AVmDiskDetails
+  AzureToAzureVmSyncedConfigDetails.inputEndpoints: VmEndpoints
   AddDisksInput: SiteRecoveryAddDisksContent
   AddDisksInputProperties: SiteRecoveryAddDisksProperties
   AddDisksProviderSpecificInput: SiteRecoveryAddDisksProviderSpecificContent
@@ -140,6 +139,7 @@ rename-mapping:
   HyperVReplicaAzureEnableProtectionInput.targetAzureSubnetId: -|arm-id
   HyperVReplicaAzureReprotectInput.hvHostVmId: HyperVHostVmId
   HyperVReplicaAzureReprotectInput.vHDId: VhdId
+  HyperVVirtualMachineDetails: HyperVVmDetails
   IdentityProviderDetails: SiteRecoveryIdentityProviderDetails
   IdentityProviderInput: SiteRecoveryIdentityProviderContent
   InMageAzureV2DiskInputDetails: InMageAzureV2DiskDetails
@@ -159,8 +159,33 @@ rename-mapping:
   InMageRcmFailbackReplicationDetails.azureVirtualMachineId: -|arm-id
   InMageRcmFailbackSyncDetails.lastDataTransferTimeUtc: LastDataTransferOn|date-time
   InMageRcmFailbackSyncDetails.startTime: StartOn|date-time
-  InMageRcmFailbackSyncDetails.lastRefreshTime: LastRefreshOn|date-time
+  InMageRcmFailbackSyncDetails.lastRefreshTime: LastRefreshedOn|date-time
   InMageRcmMobilityAgentDetails.lastHeartbeatUtc: LastHeartbeatReceivedOn
+  InMageRcmSyncDetails.startTime: StaStartOn|date-time
+  InMageRcmSyncDetails.lastRefreshTime: LastRefreshedOn|date-time
+  InMageReplicationDetails.retentionWindowStart: RetentionWindowStartOn
+  InMageReplicationDetails.retentionWindowEnd: RetentionWindowEndOn
+  InMageReplicationDetails.lastHeartbeat: LastHeartbeatReceivedOn
+  InnerHealthError: SiteRecoveryInnerHealthError
+  InnerHealthError.creationTimeUtc: CreatedOn
+  InputEndpoint: SiteRecoveryVmEndpoint
+  IPConfigInputDetails: HyperVFailoverIPConfigDetails
+  IPConfigInputDetails.recoveryPublicIPAddressId: -|arm-id
+  IPConfigInputDetails.tfoPublicIPAddressId: -|arm-id
+  IPConfigDetails: HyperVIPConfigDetails
+  IPConfigDetails.recoveryPublicIPAddressId: -|arm-id
+  IPConfigDetails.tfoPublicIPAddressId: -|arm-id
+  Job: SiteRecoveryJob
+  JobCollection: SiteRecoveryJobListResult
+  JobErrorDetails: SiteRecoveryJobErrorDetails
+  JobDetails: SiteRecoveryJobDetails
+  JobEntity: SiteRecoveryJobEntity
+  JobProperties: SiteRecoveryJobProperties
+  JobQueryParameter: SiteRecoveryJobQueryContent
+  JobQueryParameter.startTime: StartOn
+  JobQueryParameter.endTime: EndOn
+  JobStatusEventDetails: SiteRecoveryJJobStatusEventDetails
+  JobTaskDetails: SiteRecoveryJJobTaskDetails
 
 format-by-name-rules:
   'tenantId': 'uuid'

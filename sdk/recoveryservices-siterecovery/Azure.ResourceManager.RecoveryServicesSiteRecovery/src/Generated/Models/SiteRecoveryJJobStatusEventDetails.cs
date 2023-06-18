@@ -13,15 +13,15 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// Model class for event details of a job status event.
     /// Serialized Name: JobStatusEventDetails
     /// </summary>
-    public partial class JobStatusEventDetails : SiteRecoveryEventSpecificDetails
+    public partial class SiteRecoveryJJobStatusEventDetails : SiteRecoveryEventSpecificDetails
     {
-        /// <summary> Initializes a new instance of JobStatusEventDetails. </summary>
-        internal JobStatusEventDetails()
+        /// <summary> Initializes a new instance of SiteRecoveryJJobStatusEventDetails. </summary>
+        internal SiteRecoveryJJobStatusEventDetails()
         {
             InstanceType = "JobStatus";
         }
 
-        /// <summary> Initializes a new instance of JobStatusEventDetails. </summary>
+        /// <summary> Initializes a new instance of SiteRecoveryJJobStatusEventDetails. </summary>
         /// <param name="instanceType">
         /// Gets the class type. Overridden in derived classes.
         /// Serialized Name: EventSpecificDetails.instanceType
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// AffectedObjectType for the event.
         /// Serialized Name: JobStatusEventDetails.affectedObjectType
         /// </param>
-        internal JobStatusEventDetails(string instanceType, ResourceIdentifier jobId, string jobFriendlyName, string jobStatus, string affectedObjectType) : base(instanceType)
+        internal SiteRecoveryJJobStatusEventDetails(string instanceType, ResourceIdentifier jobId, string jobFriendlyName, string jobStatus, string affectedObjectType) : base(instanceType)
         {
             JobId = jobId;
             JobFriendlyName = jobFriendlyName;

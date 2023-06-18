@@ -16,4 +16,6 @@ testgen:
     - ReplicationProtectionContainers_Create
     - ReplicationProtectedItems_Delete
     - ReplicationProtectionContainerMappings_Create
+    # Missing requried parameter
+    - ReplicationJobs_Export
 ```

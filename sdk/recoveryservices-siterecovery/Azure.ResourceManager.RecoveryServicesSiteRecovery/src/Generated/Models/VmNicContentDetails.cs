@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <summary> Initializes a new instance of VmNicContentDetails. </summary>
         public VmNicContentDetails()
         {
-            IPConfigs = new ChangeTrackingList<IPConfigContentDetails>();
+            IPConfigs = new ChangeTrackingList<HyperVFailoverIPConfigDetails>();
         }
 
         /// <summary>
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// The IP configurations to be used by NIC during test failover and failover.
         /// Serialized Name: VMNicInputDetails.ipConfigs
         /// </summary>
-        public IList<IPConfigContentDetails> IPConfigs { get; }
+        public IList<HyperVFailoverIPConfigDetails> IPConfigs { get; }
         /// <summary>
         /// Selection type for failover.
         /// Serialized Name: VMNicInputDetails.selectionType

@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         internal A2AVmSyncedConfigDetails()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
-            ContentEndpoints = new ChangeTrackingList<ContentEndpoint>();
+            VmEndpoints = new ChangeTrackingList<SiteRecoveryVmEndpoint>();
         }
 
         /// <summary> Initializes a new instance of A2AVmSyncedConfigDetails. </summary>
@@ -28,14 +28,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// The Azure VM tags.
         /// Serialized Name: AzureToAzureVmSyncedConfigDetails.tags
         /// </param>
-        /// <param name="contentEndpoints">
+        /// <param name="vmEndpoints">
         /// The Azure VM input endpoints.
         /// Serialized Name: AzureToAzureVmSyncedConfigDetails.inputEndpoints
         /// </param>
-        internal A2AVmSyncedConfigDetails(IReadOnlyDictionary<string, string> tags, IReadOnlyList<ContentEndpoint> contentEndpoints)
+        internal A2AVmSyncedConfigDetails(IReadOnlyDictionary<string, string> tags, IReadOnlyList<SiteRecoveryVmEndpoint> vmEndpoints)
         {
             Tags = tags;
-            ContentEndpoints = contentEndpoints;
+            VmEndpoints = vmEndpoints;
         }
 
         /// <summary>
@@ -47,6 +47,6 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// The Azure VM input endpoints.
         /// Serialized Name: AzureToAzureVmSyncedConfigDetails.inputEndpoints
         /// </summary>
-        public IReadOnlyList<ContentEndpoint> ContentEndpoints { get; }
+        public IReadOnlyList<SiteRecoveryVmEndpoint> VmEndpoints { get; }
     }
 }

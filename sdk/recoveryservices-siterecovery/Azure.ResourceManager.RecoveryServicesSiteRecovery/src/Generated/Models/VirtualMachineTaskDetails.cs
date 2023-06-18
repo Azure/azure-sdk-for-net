@@ -11,7 +11,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// This class represents the virtual machine task details.
     /// Serialized Name: VirtualMachineTaskDetails
     /// </summary>
-    public partial class VirtualMachineTaskDetails : JobTaskDetails
+    public partial class VirtualMachineTaskDetails : SiteRecoveryJJobTaskDetails
     {
         /// <summary> Initializes a new instance of VirtualMachineTaskDetails. </summary>
         internal VirtualMachineTaskDetails()
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// The skipped reason string.
         /// Serialized Name: VirtualMachineTaskDetails.skippedReasonString
         /// </param>
-        internal VirtualMachineTaskDetails(string instanceType, JobEntity jobTask, string skippedReason, string skippedReasonString) : base(instanceType, jobTask)
+        internal VirtualMachineTaskDetails(string instanceType, SiteRecoveryJobEntity jobTask, string skippedReason, string skippedReasonString) : base(instanceType, jobTask)
         {
             SkippedReason = skippedReason;
             SkippedReasonString = skippedReasonString;

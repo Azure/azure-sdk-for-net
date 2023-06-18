@@ -13,18 +13,18 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary>
     /// Job details based on specific job type.
     /// Serialized Name: JobDetails
-    /// Please note <see cref="JobDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+    /// Please note <see cref="SiteRecoveryJobDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="AsrJobDetails"/>, <see cref="ExportJobDetails"/>, <see cref="SiteRecoveryFailoverJobDetails"/>, <see cref="SwitchProtectionJobDetails"/> and <see cref="TestFailoverJobDetails"/>.
     /// </summary>
-    public abstract partial class JobDetails
+    public abstract partial class SiteRecoveryJobDetails
     {
-        /// <summary> Initializes a new instance of JobDetails. </summary>
-        protected JobDetails()
+        /// <summary> Initializes a new instance of SiteRecoveryJobDetails. </summary>
+        protected SiteRecoveryJobDetails()
         {
             AffectedObjectDetails = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of JobDetails. </summary>
+        /// <summary> Initializes a new instance of SiteRecoveryJobDetails. </summary>
         /// <param name="instanceType">
         /// Gets the type of job details (see JobDetailsTypes enum for possible values).
         /// Serialized Name: JobDetails.instanceType
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// The affected object properties like source server, source cloud, target server, target cloud etc. based on the workflow object details.
         /// Serialized Name: JobDetails.affectedObjectDetails
         /// </param>
-        internal JobDetails(string instanceType, IReadOnlyDictionary<string, string> affectedObjectDetails)
+        internal SiteRecoveryJobDetails(string instanceType, IReadOnlyDictionary<string, string> affectedObjectDetails)
         {
             InstanceType = instanceType;
             AffectedObjectDetails = affectedObjectDetails;

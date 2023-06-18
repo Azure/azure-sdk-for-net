@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<InnerHealthError>> innerHealthErrors = default;
+            Optional<IReadOnlyList<SiteRecoveryInnerHealthError>> innerHealthErrors = default;
             Optional<string> errorSource = default;
             Optional<string> errorType = default;
             Optional<string> errorLevel = default;
@@ -43,10 +43,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    List<InnerHealthError> array = new List<InnerHealthError>();
+                    List<SiteRecoveryInnerHealthError> array = new List<SiteRecoveryInnerHealthError>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(InnerHealthError.DeserializeInnerHealthError(item));
+                        array.Add(SiteRecoveryInnerHealthError.DeserializeSiteRecoveryInnerHealthError(item));
                     }
                     innerHealthErrors = array;
                     continue;

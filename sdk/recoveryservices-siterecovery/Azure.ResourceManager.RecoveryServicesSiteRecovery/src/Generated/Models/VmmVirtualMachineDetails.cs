@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// VMM fabric provider specific VM settings.
     /// Serialized Name: VmmVirtualMachineDetails
     /// </summary>
-    public partial class VmmVirtualMachineDetails : HyperVVirtualMachineDetails
+    public partial class VmmVirtualMachineDetails : HyperVVmDetails
     {
         /// <summary> Initializes a new instance of VmmVirtualMachineDetails. </summary>
         internal VmmVirtualMachineDetails()

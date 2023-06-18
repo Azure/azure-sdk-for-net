@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// This class represents job details based on specific job type.
     /// Serialized Name: AsrJobDetails
     /// </summary>
-    public partial class AsrJobDetails : JobDetails
+    public partial class AsrJobDetails : SiteRecoveryJobDetails
     {
         /// <summary> Initializes a new instance of AsrJobDetails. </summary>
         internal AsrJobDetails()

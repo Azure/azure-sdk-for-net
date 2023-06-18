@@ -9,9 +9,9 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    public partial class JobDetails
+    public partial class SiteRecoveryJobDetails
     {
-        internal static JobDetails DeserializeJobDetails(JsonElement element)
+        internal static SiteRecoveryJobDetails DeserializeSiteRecoveryJobDetails(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {

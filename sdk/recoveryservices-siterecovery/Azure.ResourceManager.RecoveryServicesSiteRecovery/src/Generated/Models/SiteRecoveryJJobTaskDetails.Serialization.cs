@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    public partial class JobTaskDetails
+    public partial class SiteRecoveryJJobTaskDetails
     {
-        internal static JobTaskDetails DeserializeJobTaskDetails(JsonElement element)
+        internal static SiteRecoveryJJobTaskDetails DeserializeSiteRecoveryJJobTaskDetails(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     case "VirtualMachineTaskDetails": return VirtualMachineTaskDetails.DeserializeVirtualMachineTaskDetails(element);
                 }
             }
-            Optional<JobEntity> jobTask = default;
+            Optional<SiteRecoveryJobEntity> jobTask = default;
             string instanceType = "JobTaskDetails";
             foreach (var property in element.EnumerateObject())
             {
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    jobTask = JobEntity.DeserializeJobEntity(property.Value);
+                    jobTask = SiteRecoveryJobEntity.DeserializeSiteRecoveryJobEntity(property.Value);
                     continue;
                 }
                 if (property.NameEquals("instanceType"u8))
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     continue;
                 }
             }
-            return new JobTaskDetails(instanceType, jobTask.Value);
+            return new SiteRecoveryJJobTaskDetails(instanceType, jobTask.Value);
         }
     }
 }

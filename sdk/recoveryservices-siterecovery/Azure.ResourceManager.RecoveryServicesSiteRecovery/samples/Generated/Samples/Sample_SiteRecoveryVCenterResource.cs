@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Net;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
@@ -109,7 +110,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Samples
             {
                 Properties = new UpdateVCenterRequestProperties()
                 {
-                    IPAddress = "10.150.109.25",
+                    IPAddress = IPAddress.Parse("10.150.109.25"),
                 },
             };
             ArmOperation<SiteRecoveryVCenterResource> lro = await siteRecoveryVCenter.UpdateAsync(WaitUntil.Completed, patch);

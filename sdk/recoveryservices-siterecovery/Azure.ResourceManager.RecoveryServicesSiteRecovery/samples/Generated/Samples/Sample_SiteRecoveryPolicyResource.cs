@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Samples
             // invoke the operation
             SiteRecoveryPolicyPatch patch = new SiteRecoveryPolicyPatch()
             {
-                UpdatePolicyInputReplicationProviderSettings = new HyperVReplicaAzurePolicyInput(),
+                UpdatePolicyContentReplicationProviderSettings = new HyperVReplicaAzurePolicyContent(),
             };
             ArmOperation<SiteRecoveryPolicyResource> lro = await siteRecoveryPolicy.UpdateAsync(WaitUntil.Completed, patch);
             SiteRecoveryPolicyResource result = lro.Value;

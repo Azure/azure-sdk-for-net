@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "JobStatus": return JobStatusEventDetails.DeserializeJobStatusEventDetails(element);
+                    case "JobStatus": return SiteRecoveryJJobStatusEventDetails.DeserializeSiteRecoveryJJobStatusEventDetails(element);
                 }
             }
             return UnknownEventSpecificDetails.DeserializeUnknownEventSpecificDetails(element);

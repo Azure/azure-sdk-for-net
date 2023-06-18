@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 return null;
             }
             Optional<IReadOnlyDictionary<string, string>> tags = default;
-            Optional<IReadOnlyList<ContentEndpoint>> contentEndpoints = default;
+            Optional<IReadOnlyList<SiteRecoveryVmEndpoint>> contentEndpoints = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"u8))
@@ -43,10 +43,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    List<ContentEndpoint> array = new List<ContentEndpoint>();
+                    List<SiteRecoveryVmEndpoint> array = new List<SiteRecoveryVmEndpoint>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ContentEndpoint.DeserializeContentEndpoint(item));
+                        array.Add(SiteRecoveryVmEndpoint.DeserializeSiteRecoveryVmEndpoint(item));
                     }
                     contentEndpoints = array;
                     continue;

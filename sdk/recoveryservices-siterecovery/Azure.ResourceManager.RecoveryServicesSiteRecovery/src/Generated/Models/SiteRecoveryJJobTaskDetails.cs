@@ -10,18 +10,18 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary>
     /// This class represents a task which is actually a workflow so that one can navigate to its individual drill down.
     /// Serialized Name: JobTaskDetails
-    /// Please note <see cref="JobTaskDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+    /// Please note <see cref="SiteRecoveryJJobTaskDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="SiteRecoveryFabricReplicationGroupTaskDetails"/> and <see cref="VirtualMachineTaskDetails"/>.
     /// </summary>
-    public partial class JobTaskDetails : TaskTypeDetails
+    public partial class SiteRecoveryJJobTaskDetails : TaskTypeDetails
     {
-        /// <summary> Initializes a new instance of JobTaskDetails. </summary>
-        internal JobTaskDetails()
+        /// <summary> Initializes a new instance of SiteRecoveryJJobTaskDetails. </summary>
+        internal SiteRecoveryJJobTaskDetails()
         {
             InstanceType = "JobTaskDetails";
         }
 
-        /// <summary> Initializes a new instance of JobTaskDetails. </summary>
+        /// <summary> Initializes a new instance of SiteRecoveryJJobTaskDetails. </summary>
         /// <param name="instanceType">
         /// The type of task details.
         /// Serialized Name: TaskTypeDetails.instanceType
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// The job entity.
         /// Serialized Name: JobTaskDetails.jobTask
         /// </param>
-        internal JobTaskDetails(string instanceType, JobEntity jobTask) : base(instanceType)
+        internal SiteRecoveryJJobTaskDetails(string instanceType, SiteRecoveryJobEntity jobTask) : base(instanceType)
         {
             JobTask = jobTask;
             InstanceType = instanceType ?? "JobTaskDetails";
@@ -40,6 +40,6 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// The job entity.
         /// Serialized Name: JobTaskDetails.jobTask
         /// </summary>
-        public JobEntity JobTask { get; }
+        public SiteRecoveryJobEntity JobTask { get; }
     }
 }

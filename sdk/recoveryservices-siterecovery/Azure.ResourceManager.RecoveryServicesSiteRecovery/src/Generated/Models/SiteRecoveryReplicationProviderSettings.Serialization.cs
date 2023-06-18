@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "HyperVVirtualMachine": return HyperVVirtualMachineDetails.DeserializeHyperVVirtualMachineDetails(element);
+                    case "HyperVVirtualMachine": return HyperVVmDetails.DeserializeHyperVVmDetails(element);
                     case "ReplicationGroupDetails": return ReplicationGroupDetails.DeserializeReplicationGroupDetails(element);
                     case "VMwareVirtualMachine": return VMwareVirtualMachineDetails.DeserializeVMwareVirtualMachineDetails(element);
                     case "VmmVirtualMachine": return VmmVirtualMachineDetails.DeserializeVmmVirtualMachineDetails(element);

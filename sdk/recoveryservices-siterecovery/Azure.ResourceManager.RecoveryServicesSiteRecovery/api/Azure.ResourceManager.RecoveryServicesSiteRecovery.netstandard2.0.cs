@@ -354,7 +354,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
     {
         internal SiteRecoveryJobData() { }
         public Azure.Core.AzureLocation? Location { get { throw null; } }
-        public Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.JobProperties Properties { get { throw null; } }
+        public Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.SiteRecoveryJobProperties Properties { get { throw null; } }
     }
     public partial class SiteRecoveryJobResource : Azure.ResourceManager.ArmResource
     {
@@ -365,8 +365,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.RecoveryServicesSiteRecovery.SiteRecoveryJobResource> Cancel(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.RecoveryServicesSiteRecovery.SiteRecoveryJobResource>> CancelAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string resourceName, string jobName) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.RecoveryServicesSiteRecovery.SiteRecoveryJobResource> Export(Azure.WaitUntil waitUntil, Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.JobQueryParameter jobQueryParameter, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.RecoveryServicesSiteRecovery.SiteRecoveryJobResource>> ExportAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.JobQueryParameter jobQueryParameter, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.RecoveryServicesSiteRecovery.SiteRecoveryJobResource> Export(Azure.WaitUntil waitUntil, Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.SiteRecoveryJobQueryContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.RecoveryServicesSiteRecovery.SiteRecoveryJobResource>> ExportAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.SiteRecoveryJobQueryContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.RecoveryServicesSiteRecovery.SiteRecoveryJobResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.RecoveryServicesSiteRecovery.SiteRecoveryJobResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.RecoveryServicesSiteRecovery.SiteRecoveryJobResource> Restart(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -1432,8 +1432,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     public partial class A2AVmSyncedConfigDetails
     {
         internal A2AVmSyncedConfigDetails() { }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.ContentEndpoint> ContentEndpoints { get { throw null; } }
         public System.Collections.Generic.IReadOnlyDictionary<string, string> Tags { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.SiteRecoveryVmEndpoint> VmEndpoints { get { throw null; } }
     }
     public partial class A2AZoneDetails
     {
@@ -1504,18 +1504,18 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         public static Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.A2AReplicationDetails A2AReplicationDetails(Azure.Core.ResourceIdentifier fabricObjectId = null, string initialPrimaryZone = null, Azure.Core.AzureLocation? initialPrimaryFabricLocation = default(Azure.Core.AzureLocation?), string initialRecoveryZone = null, Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.SiteRecoveryExtendedLocation initialPrimaryExtendedLocation = null, Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.SiteRecoveryExtendedLocation initialRecoveryExtendedLocation = null, Azure.Core.AzureLocation? initialRecoveryFabricLocation = default(Azure.Core.AzureLocation?), string multiVmGroupId = null, string multiVmGroupName = null, Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.MultiVmGroupCreateOption? multiVmGroupCreateOption = default(Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.MultiVmGroupCreateOption?), string managementId = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.A2AProtectedDiskDetails> protectedDisks = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.A2AUnprotectedDiskDetails> unprotectedDisks = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.A2AProtectedManagedDiskDetails> protectedManagedDisks = null, Azure.Core.ResourceIdentifier recoveryBootDiagStorageAccountId = null, Azure.Core.AzureLocation? primaryFabricLocation = default(Azure.Core.AzureLocation?), Azure.Core.AzureLocation? recoveryFabricLocation = default(Azure.Core.AzureLocation?), string osType = null, string recoveryAzureVmSize = null, string recoveryAzureVmName = null, Azure.Core.ResourceIdentifier recoveryAzureResourceGroupId = null, string recoveryCloudService = null, string recoveryAvailabilitySet = null, Azure.Core.ResourceIdentifier selectedRecoveryAzureNetworkId = null, Azure.Core.ResourceIdentifier selectedTfoAzureNetworkId = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.VmNicDetails> vmNics = null, Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.A2AVmSyncedConfigDetails vmSyncedConfigDetails = null, int? monitoringPercentageCompletion = default(int?), string monitoringJobType = null, System.DateTimeOffset? lastHeartbeat = default(System.DateTimeOffset?), string agentVersion = null, System.DateTimeOffset? agentExpireOn = default(System.DateTimeOffset?), bool? isReplicationAgentUpdateRequired = default(bool?), System.DateTimeOffset? agentCertificateExpireOn = default(System.DateTimeOffset?), bool? isReplicationAgentCertificateUpdateRequired = default(bool?), Azure.Core.ResourceIdentifier recoveryFabricObjectId = null, string vmProtectionState = null, string vmProtectionStateDescription = null, string lifecycleId = null, Azure.Core.ResourceIdentifier testFailoverRecoveryFabricObjectId = null, long? rpoInSeconds = default(long?), System.DateTimeOffset? lastRpoCalculatedOn = default(System.DateTimeOffset?), string primaryAvailabilityZone = null, string recoveryAvailabilityZone = null, Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.SiteRecoveryExtendedLocation primaryExtendedLocation = null, Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.SiteRecoveryExtendedLocation recoveryExtendedLocation = null, Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.VmEncryptionType? vmEncryptionType = default(Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.VmEncryptionType?), string tfoAzureVmName = null, string recoveryAzureGeneration = null, Azure.Core.ResourceIdentifier recoveryProximityPlacementGroupId = null, Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.AutoProtectionOfDataDisk? autoProtectionOfDataDisk = default(Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.AutoProtectionOfDataDisk?), Azure.Core.ResourceIdentifier recoveryVirtualMachineScaleSetId = null, Azure.Core.ResourceIdentifier recoveryCapacityReservationGroupId = null) { throw null; }
         public static Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.A2AReplicationIntentDetails A2AReplicationIntentDetails(Azure.Core.ResourceIdentifier fabricObjectId = null, Azure.Core.AzureLocation? primaryLocation = default(Azure.Core.AzureLocation?), Azure.Core.AzureLocation? recoveryLocation = default(Azure.Core.AzureLocation?), string recoverySubscriptionId = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.A2AProtectionIntentDiskDetails> vmDisks = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.A2AProtectionIntentManagedDiskDetails> vmManagedDisks = null, Azure.Core.ResourceIdentifier recoveryResourceGroupId = null, Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.ProtectionProfileCustomDetails protectionProfile = null, Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.StorageAccountCustomDetails primaryStagingStorageAccount = null, Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.RecoveryAvailabilitySetCustomDetails recoveryAvailabilitySet = null, Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.RecoveryVirtualNetworkCustomDetails recoveryVirtualNetwork = null, Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.RecoveryProximityPlacementGroupCustomDetails recoveryProximityPlacementGroup = null, Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.AutoProtectionOfDataDisk? autoProtectionOfDataDisk = default(Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.AutoProtectionOfDataDisk?), string multiVmGroupName = null, string multiVmGroupId = null, Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.StorageAccountCustomDetails recoveryBootDiagStorageAccount = null, Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.SiteRecoveryDiskEncryptionInfo diskEncryptionInfo = null, string recoveryAvailabilityZone = null, string recoveryAvailabilityType = null, Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.SiteRecoveryAgentAutoUpdateStatus? agentAutoUpdateStatus = default(Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.SiteRecoveryAgentAutoUpdateStatus?), Azure.Core.ResourceIdentifier automationAccountArmId = null, Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.AutomationAccountAuthenticationType? automationAccountAuthenticationType = default(Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.AutomationAccountAuthenticationType?)) { throw null; }
         public static Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.A2AUnprotectedDiskDetails A2AUnprotectedDiskDetails(int? diskLunId = default(int?), Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.AutoProtectionOfDataDisk? diskAutoProtectionStatus = default(Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.AutoProtectionOfDataDisk?)) { throw null; }
-        public static Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.A2AVmSyncedConfigDetails A2AVmSyncedConfigDetails(System.Collections.Generic.IReadOnlyDictionary<string, string> tags = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.ContentEndpoint> contentEndpoints = null) { throw null; }
+        public static Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.A2AVmSyncedConfigDetails A2AVmSyncedConfigDetails(System.Collections.Generic.IReadOnlyDictionary<string, string> tags = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.SiteRecoveryVmEndpoint> vmEndpoints = null) { throw null; }
         public static Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.A2AZoneDetails A2AZoneDetails(string source = null, string target = null) { throw null; }
         public static Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.AsrJobDetails AsrJobDetails(System.Collections.Generic.IReadOnlyDictionary<string, string> affectedObjectDetails = null) { throw null; }
         public static Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.AsrTask AsrTask(string taskId = null, string name = null, System.DateTimeOffset? startOn = default(System.DateTimeOffset?), System.DateTimeOffset? endOn = default(System.DateTimeOffset?), System.Collections.Generic.IEnumerable<string> allowedActions = null, string friendlyName = null, string state = null, string stateDescription = null, string taskType = null, Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.TaskTypeDetails customDetails = null, Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.SiteRecoveryGroupTaskDetails groupTaskCustomDetails = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.SiteRecoveryJobErrorDetails> errors = null) { throw null; }
         public static Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.AutomationRunbookTaskDetails AutomationRunbookTaskDetails(string name = null, string cloudServiceName = null, string subscriptionId = null, string accountName = null, string runbookId = null, string runbookName = null, Azure.Core.ResourceIdentifier jobId = null, string jobOutput = null, bool? isPrimarySideScript = default(bool?)) { throw null; }
         public static Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.ConsistencyCheckTaskDetails ConsistencyCheckTaskDetails(System.Collections.Generic.IEnumerable<Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.InconsistentVmDetails> vmDetails = null) { throw null; }
-        public static Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.ContentEndpoint ContentEndpoint(string endpointName = null, int? privatePort = default(int?), int? publicPort = default(int?), string protocol = null) { throw null; }
         public static Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.CriticalJobHistoryDetails CriticalJobHistoryDetails(string jobName = null, Azure.Core.ResourceIdentifier jobId = null, System.DateTimeOffset? startOn = default(System.DateTimeOffset?), string jobStatus = null) { throw null; }
         public static Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.CurrentJobDetails CurrentJobDetails(string jobName = null, Azure.Core.ResourceIdentifier jobId = null, System.DateTimeOffset? startOn = default(System.DateTimeOffset?)) { throw null; }
         public static Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.CurrentScenarioDetails CurrentScenarioDetails(string scenarioName = null, Azure.Core.ResourceIdentifier jobId = null, System.DateTimeOffset? startOn = default(System.DateTimeOffset?)) { throw null; }
         public static Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.ExportJobDetails ExportJobDetails(System.Collections.Generic.IReadOnlyDictionary<string, string> affectedObjectDetails = null, System.Uri blobUri = null, string sasToken = null) { throw null; }
         public static Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.HyperVHostDetails HyperVHostDetails(string id = null, string name = null, string marsAgentVersion = null) { throw null; }
+        public static Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.HyperVIPConfigDetails HyperVIPConfigDetails(string name = null, bool? isPrimary = default(bool?), string subnetName = null, System.Net.IPAddress staticIPAddress = null, string ipAddressType = null, bool? isSeletedForFailover = default(bool?), string recoverySubnetName = null, System.Net.IPAddress recoveryStaticIPAddress = null, string recoveryIPAddressType = null, Azure.Core.ResourceIdentifier recoveryPublicIPAddressId = null, System.Collections.Generic.IEnumerable<string> recoveryLBBackendAddressPoolIds = null, string tfoSubnetName = null, System.Net.IPAddress tfoStaticIPAddress = null, Azure.Core.ResourceIdentifier tfoPublicIPAddressId = null, System.Collections.Generic.IEnumerable<string> tfoLBBackendAddressPoolIds = null) { throw null; }
         public static Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.HyperVReplica2012EventDetails HyperVReplica2012EventDetails(string containerName = null, string fabricName = null, string remoteContainerName = null, string remoteFabricName = null) { throw null; }
         public static Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.HyperVReplica2012R2EventDetails HyperVReplica2012R2EventDetails(string containerName = null, string fabricName = null, string remoteContainerName = null, string remoteFabricName = null) { throw null; }
         public static Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.HyperVReplicaAzureEventDetails HyperVReplicaAzureEventDetails(string containerName = null, string fabricName = null, string remoteContainerName = null) { throw null; }
@@ -1530,7 +1530,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         public static Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.HyperVReplicaPolicyDetails HyperVReplicaPolicyDetails(int? recoveryPoints = default(int?), int? applicationConsistentSnapshotFrequencyInHours = default(int?), string compression = null, string initialReplicationMethod = null, string onlineReplicationStartTime = null, string offlineReplicationImportPath = null, string offlineReplicationExportPath = null, int? replicationPort = default(int?), int? allowedAuthenticationType = default(int?), string replicaDeletionOption = null) { throw null; }
         public static Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.HyperVReplicaReplicationDetails HyperVReplicaReplicationDetails(System.DateTimeOffset? lastReplicatedOn = default(System.DateTimeOffset?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.VmNicDetails> vmNics = null, string vmId = null, string vmProtectionState = null, string vmProtectionStateDescription = null, Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.InitialReplicationDetails initialReplicationDetails = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.SiteRecoveryDiskDetails> vmDiskDetails = null) { throw null; }
         public static Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.HyperVSiteDetails HyperVSiteDetails(System.Collections.Generic.IEnumerable<Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.HyperVHostDetails> hyperVHosts = null) { throw null; }
-        public static Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.HyperVVirtualMachineDetails HyperVVirtualMachineDetails(string sourceItemId = null, string generation = null, Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.OSDetails osDetails = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.SiteRecoveryDiskDetails> diskDetails = null, Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.PresenceStatus? hasPhysicalDisk = default(Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.PresenceStatus?), Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.PresenceStatus? hasFibreChannelAdapter = default(Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.PresenceStatus?), Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.PresenceStatus? hasSharedVhd = default(Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.PresenceStatus?), string hyperVHostId = null) { throw null; }
+        public static Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.HyperVVmDetails HyperVVmDetails(string sourceItemId = null, string generation = null, Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.OSDetails osDetails = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.SiteRecoveryDiskDetails> diskDetails = null, Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.PresenceStatus? hasPhysicalDisk = default(Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.PresenceStatus?), Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.PresenceStatus? hasFibreChannelAdapter = default(Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.PresenceStatus?), Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.PresenceStatus? hasSharedVhd = default(Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.PresenceStatus?), string hyperVHostId = null) { throw null; }
         public static Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.InconsistentVmDetails InconsistentVmDetails(string vmName = null, string cloudName = null, System.Collections.Generic.IEnumerable<string> details = null, System.Collections.Generic.IEnumerable<string> errorIds = null) { throw null; }
         public static Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.InitialReplicationDetails InitialReplicationDetails(string initialReplicationType = null, string initialReplicationProgressPercentage = null) { throw null; }
         public static Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.InlineWorkflowTaskDetails InlineWorkflowTaskDetails(System.Collections.Generic.IEnumerable<Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.AsrTask> childTasks = null, System.Collections.Generic.IEnumerable<string> workflowIds = null) { throw null; }
@@ -1562,7 +1562,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         public static Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.InMageRcmFailbackPolicyDetails InMageRcmFailbackPolicyDetails(int? appConsistentFrequencyInMinutes = default(int?), int? crashConsistentFrequencyInMinutes = default(int?)) { throw null; }
         public static Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.InMageRcmFailbackProtectedDiskDetails InMageRcmFailbackProtectedDiskDetails(string diskId = null, string diskName = null, string isOSDisk = null, long? capacityInBytes = default(long?), string diskUuid = null, double? dataPendingInLogDataStoreInMB = default(double?), double? dataPendingAtSourceAgentInMB = default(double?), string isInitialReplicationComplete = null, Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.InMageRcmFailbackSyncDetails irDetails = null, Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.InMageRcmFailbackSyncDetails resyncDetails = null, System.DateTimeOffset? lastSyncedOn = default(System.DateTimeOffset?)) { throw null; }
         public static Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.InMageRcmFailbackReplicationDetails InMageRcmFailbackReplicationDetails(string internalIdentifier = null, Azure.Core.ResourceIdentifier azureVirtualMachineId = null, string multiVmGroupName = null, string reprotectAgentId = null, string reprotectAgentName = null, string osType = null, Azure.Core.ResourceIdentifier logStorageAccountId = null, string targetVCenterId = null, string targetDataStoreName = null, string targetVmName = null, int? initialReplicationProgressPercentage = default(int?), long? initialReplicationProcessedBytes = default(long?), long? initialReplicationTransferredBytes = default(long?), Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.VmReplicationProgressHealth? initialReplicationProgressHealth = default(Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.VmReplicationProgressHealth?), int? resyncProgressPercentage = default(int?), long? resyncProcessedBytes = default(long?), long? resyncTransferredBytes = default(long?), Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.VmReplicationProgressHealth? resyncProgressHealth = default(Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.VmReplicationProgressHealth?), string resyncRequired = null, Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.ResyncState? resyncState = default(Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.ResyncState?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.InMageRcmFailbackProtectedDiskDetails> protectedDisks = null, Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.InMageRcmFailbackMobilityAgentDetails mobilityAgentDetails = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.InMageRcmFailbackNicDetails> vmNics = null, System.DateTimeOffset? lastPlannedFailoverStartOn = default(System.DateTimeOffset?), Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.PlannedFailoverStatus? lastPlannedFailoverStatus = default(Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.PlannedFailoverStatus?), Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.InMageRcmFailbackDiscoveredProtectedVmDetails discoveredVmDetails = null, Azure.Core.ResourceIdentifier lastUsedPolicyId = null, string lastUsedPolicyFriendlyName = null, bool? isAgentRegistrationSuccessfulAfterFailover = default(bool?)) { throw null; }
-        public static Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.InMageRcmFailbackSyncDetails InMageRcmFailbackSyncDetails(Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.SiteRecoveryDiskReplicationProgressHealth? progressHealth = default(Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.SiteRecoveryDiskReplicationProgressHealth?), long? transferredBytes = default(long?), long? last15MinutesTransferredBytes = default(long?), System.DateTimeOffset? lastDataTransferOn = default(System.DateTimeOffset?), long? processedBytes = default(long?), System.DateTimeOffset? startOn = default(System.DateTimeOffset?), System.DateTimeOffset? lastRefreshOn = default(System.DateTimeOffset?), int? progressPercentage = default(int?)) { throw null; }
+        public static Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.InMageRcmFailbackSyncDetails InMageRcmFailbackSyncDetails(Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.SiteRecoveryDiskReplicationProgressHealth? progressHealth = default(Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.SiteRecoveryDiskReplicationProgressHealth?), long? transferredBytes = default(long?), long? last15MinutesTransferredBytes = default(long?), System.DateTimeOffset? lastDataTransferOn = default(System.DateTimeOffset?), long? processedBytes = default(long?), System.DateTimeOffset? startOn = default(System.DateTimeOffset?), System.DateTimeOffset? lastRefreshedOn = default(System.DateTimeOffset?), int? progressPercentage = default(int?)) { throw null; }
         public static Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.InMageRcmLastAgentUpgradeErrorDetails InMageRcmLastAgentUpgradeErrorDetails(string errorCode = null, string errorMessage = null, string possibleCauses = null, string recommendedAction = null, System.Collections.Generic.IReadOnlyDictionary<string, string> errorMessageParameters = null, System.Collections.Generic.IReadOnlyDictionary<string, string> errorTags = null) { throw null; }
         public static Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.InMageRcmMobilityAgentDetails InMageRcmMobilityAgentDetails(string version = null, string latestVersion = null, string latestAgentReleaseDate = null, string driverVersion = null, string latestUpgradableVersionWithoutReboot = null, System.DateTimeOffset? agentVersionExpireOn = default(System.DateTimeOffset?), System.DateTimeOffset? driverVersionExpireOn = default(System.DateTimeOffset?), System.DateTimeOffset? lastHeartbeatReceivedOn = default(System.DateTimeOffset?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.AgentUpgradeBlockedReason> reasonsBlockingUpgrade = null, string isUpgradeable = null) { throw null; }
         public static Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.InMageRcmNicDetails InMageRcmNicDetails(string nicId = null, string isPrimaryNic = null, string isSelectedForFailover = null, System.Net.IPAddress sourceIPAddress = null, Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.SiteRecoveryEthernetAddressType? sourceIPAddressType = default(Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.SiteRecoveryEthernetAddressType?), Azure.Core.ResourceIdentifier sourceNetworkId = null, string sourceSubnetName = null, System.Net.IPAddress targetIPAddress = null, Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.SiteRecoveryEthernetAddressType? targetIPAddressType = default(Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.SiteRecoveryEthernetAddressType?), string targetSubnetName = null, string testSubnetName = null, System.Net.IPAddress testIPAddress = null, Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.SiteRecoveryEthernetAddressType? testIPAddressType = default(Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.SiteRecoveryEthernetAddressType?)) { throw null; }
@@ -1571,15 +1571,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         public static Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.InMageRcmProtectionContainerMappingDetails InMageRcmProtectionContainerMappingDetails(string enableAgentAutoUpgrade = null) { throw null; }
         public static Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.InMageRcmRecoveryPointDetails InMageRcmRecoveryPointDetails(string isMultiVmSyncPoint = null) { throw null; }
         public static Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.InMageRcmReplicationDetails InMageRcmReplicationDetails(string internalIdentifier = null, string fabricDiscoveryMachineId = null, string multiVmGroupName = null, string discoveryType = null, string processServerId = null, int? processorCoreCount = default(int?), double? allocatedMemoryInMB = default(double?), string processServerName = null, string runAsAccountId = null, string osType = null, string firmwareType = null, System.Net.IPAddress primaryNicIPAddress = null, string targetGeneration = null, string licenseType = null, Azure.Core.ResourceIdentifier storageAccountId = null, string targetVmName = null, string targetVmSize = null, Azure.Core.ResourceIdentifier targetResourceGroupId = null, string targetLocation = null, Azure.Core.ResourceIdentifier targetAvailabilitySetId = null, string targetAvailabilityZone = null, Azure.Core.ResourceIdentifier targetProximityPlacementGroupId = null, Azure.Core.ResourceIdentifier targetBootDiagnosticsStorageAccountId = null, Azure.Core.ResourceIdentifier targetNetworkId = null, Azure.Core.ResourceIdentifier testNetworkId = null, Azure.Core.ResourceIdentifier failoverRecoveryPointId = null, System.DateTimeOffset? lastRecoveryPointReceived = default(System.DateTimeOffset?), long? lastRpoInSeconds = default(long?), System.DateTimeOffset? lastRpoCalculatedOn = default(System.DateTimeOffset?), Azure.Core.ResourceIdentifier lastRecoveryPointId = null, int? initialReplicationProgressPercentage = default(int?), long? initialReplicationProcessedBytes = default(long?), long? initialReplicationTransferredBytes = default(long?), Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.VmReplicationProgressHealth? initialReplicationProgressHealth = default(Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.VmReplicationProgressHealth?), int? resyncProgressPercentage = default(int?), long? resyncProcessedBytes = default(long?), long? resyncTransferredBytes = default(long?), Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.VmReplicationProgressHealth? resyncProgressHealth = default(Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.VmReplicationProgressHealth?), string resyncRequired = null, Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.ResyncState? resyncState = default(Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.ResyncState?), Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.MobilityAgentUpgradeState? agentUpgradeState = default(Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.MobilityAgentUpgradeState?), string lastAgentUpgradeType = null, string agentUpgradeJobId = null, string agentUpgradeAttemptToVersion = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.InMageRcmProtectedDiskDetails> protectedDisks = null, string isLastUpgradeSuccessful = null, bool? isAgentRegistrationSuccessfulAfterFailover = default(bool?), Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.InMageRcmMobilityAgentDetails mobilityAgentDetails = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.InMageRcmLastAgentUpgradeErrorDetails> lastAgentUpgradeErrorDetails = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.InMageRcmAgentUpgradeBlockingErrorDetails> agentUpgradeBlockingErrorDetails = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.InMageRcmNicDetails> vmNics = null, Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.InMageRcmDiscoveredProtectedVmDetails discoveredVmDetails = null) { throw null; }
-        public static Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.InMageRcmSyncDetails InMageRcmSyncDetails(Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.SiteRecoveryDiskReplicationProgressHealth? progressHealth = default(Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.SiteRecoveryDiskReplicationProgressHealth?), long? transferredBytes = default(long?), long? last15MinutesTransferredBytes = default(long?), string lastDataTransferTimeUtc = null, long? processedBytes = default(long?), string startTime = null, string lastRefreshTime = null, int? progressPercentage = default(int?)) { throw null; }
-        public static Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.InMageReplicationDetails InMageReplicationDetails(string activeSiteType = null, int? sourceVmCpuCount = default(int?), int? sourceVmRamSizeInMB = default(int?), Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.OSDiskDetails osDetails = null, string protectionStage = null, string vmId = null, string vmProtectionState = null, string vmProtectionStateDescription = null, Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.InitialReplicationDetails resyncDetails = null, System.DateTimeOffset? retentionWindowStart = default(System.DateTimeOffset?), System.DateTimeOffset? retentionWindowEnd = default(System.DateTimeOffset?), double? compressedDataRateInMB = default(double?), double? uncompressedDataRateInMB = default(double?), long? rpoInSeconds = default(long?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.InMageProtectedDiskDetails> protectedDisks = null, System.Net.IPAddress ipAddress = null, System.DateTimeOffset? lastHeartbeat = default(System.DateTimeOffset?), string processServerId = null, string masterTargetId = null, System.Collections.Generic.IReadOnlyDictionary<string, System.DateTimeOffset> consistencyPoints = null, string diskResized = null, string rebootAfterUpdateStatus = null, string multiVmGroupId = null, string multiVmGroupName = null, string multiVmSyncStatus = null, Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.InMageAgentDetails agentDetails = null, string vCenterInfrastructureId = null, string infrastructureVmId = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.VmNicDetails> vmNics = null, string discoveryType = null, Azure.Core.ResourceIdentifier azureStorageAccountId = null, System.Collections.Generic.IEnumerable<string> datastores = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.SiteRecoveryHealthError> validationErrors = null, System.DateTimeOffset? lastRpoCalculatedOn = default(System.DateTimeOffset?), System.DateTimeOffset? lastUpdateReceivedOn = default(System.DateTimeOffset?), string replicaId = null, string osVersion = null, bool? isAdditionalStatsAvailable = default(bool?), long? totalDataTransferred = default(long?), string totalProgressHealth = null) { throw null; }
-        public static Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.InnerHealthError InnerHealthError(string errorSource = null, string errorType = null, string errorLevel = null, string errorCategory = null, string errorCode = null, string summaryMessage = null, string errorMessage = null, string possibleCauses = null, string recommendedAction = null, System.DateTimeOffset? creationTimeUtc = default(System.DateTimeOffset?), string recoveryProviderErrorMessage = null, string entityId = null, string errorId = null, Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.SiteRecoveryHealthErrorCustomerResolvability? customerResolvability = default(Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.SiteRecoveryHealthErrorCustomerResolvability?)) { throw null; }
-        public static Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.IPConfigDetails IPConfigDetails(string name = null, bool? isPrimary = default(bool?), string subnetName = null, System.Net.IPAddress staticIPAddress = null, string ipAddressType = null, bool? isSeletedForFailover = default(bool?), string recoverySubnetName = null, System.Net.IPAddress recoveryStaticIPAddress = null, string recoveryIPAddressType = null, string recoveryPublicIPAddressId = null, System.Collections.Generic.IEnumerable<string> recoveryLBBackendAddressPoolIds = null, string tfoSubnetName = null, System.Net.IPAddress tfoStaticIPAddress = null, string tfoPublicIPAddressId = null, System.Collections.Generic.IEnumerable<string> tfoLBBackendAddressPoolIds = null) { throw null; }
-        public static Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.JobDetails JobDetails(string instanceType = null, System.Collections.Generic.IReadOnlyDictionary<string, string> affectedObjectDetails = null) { throw null; }
-        public static Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.JobEntity JobEntity(Azure.Core.ResourceIdentifier jobId = null, string jobFriendlyName = null, string targetObjectId = null, string targetObjectName = null, string targetInstanceType = null, string jobScenarioName = null) { throw null; }
-        public static Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.JobProperties JobProperties(string activityId = null, string scenarioName = null, string friendlyName = null, string state = null, string stateDescription = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.AsrTask> tasks = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.SiteRecoveryJobErrorDetails> errors = null, System.DateTimeOffset? startOn = default(System.DateTimeOffset?), System.DateTimeOffset? endOn = default(System.DateTimeOffset?), System.Collections.Generic.IEnumerable<string> allowedActions = null, string targetObjectId = null, string targetObjectName = null, string targetInstanceType = null, Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.JobDetails customDetails = null) { throw null; }
-        public static Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.JobStatusEventDetails JobStatusEventDetails(Azure.Core.ResourceIdentifier jobId = null, string jobFriendlyName = null, string jobStatus = null, string affectedObjectType = null) { throw null; }
-        public static Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.JobTaskDetails JobTaskDetails(Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.JobEntity jobTask = null) { throw null; }
+        public static Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.InMageRcmSyncDetails InMageRcmSyncDetails(Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.SiteRecoveryDiskReplicationProgressHealth? progressHealth = default(Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.SiteRecoveryDiskReplicationProgressHealth?), long? transferredBytes = default(long?), long? last15MinutesTransferredBytes = default(long?), string lastDataTransferTimeUtc = null, long? processedBytes = default(long?), System.DateTimeOffset? staStartOn = default(System.DateTimeOffset?), System.DateTimeOffset? lastRefreshedOn = default(System.DateTimeOffset?), int? progressPercentage = default(int?)) { throw null; }
+        public static Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.InMageReplicationDetails InMageReplicationDetails(string activeSiteType = null, int? sourceVmCpuCount = default(int?), int? sourceVmRamSizeInMB = default(int?), Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.OSDiskDetails osDetails = null, string protectionStage = null, string vmId = null, string vmProtectionState = null, string vmProtectionStateDescription = null, Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.InitialReplicationDetails resyncDetails = null, System.DateTimeOffset? retentionWindowStartOn = default(System.DateTimeOffset?), System.DateTimeOffset? retentionWindowEndOn = default(System.DateTimeOffset?), double? compressedDataRateInMB = default(double?), double? uncompressedDataRateInMB = default(double?), long? rpoInSeconds = default(long?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.InMageProtectedDiskDetails> protectedDisks = null, System.Net.IPAddress ipAddress = null, System.DateTimeOffset? lastHeartbeatReceivedOn = default(System.DateTimeOffset?), string processServerId = null, string masterTargetId = null, System.Collections.Generic.IReadOnlyDictionary<string, System.DateTimeOffset> consistencyPoints = null, string diskResized = null, string rebootAfterUpdateStatus = null, string multiVmGroupId = null, string multiVmGroupName = null, string multiVmSyncStatus = null, Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.InMageAgentDetails agentDetails = null, string vCenterInfrastructureId = null, string infrastructureVmId = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.VmNicDetails> vmNics = null, string discoveryType = null, Azure.Core.ResourceIdentifier azureStorageAccountId = null, System.Collections.Generic.IEnumerable<string> datastores = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.SiteRecoveryHealthError> validationErrors = null, System.DateTimeOffset? lastRpoCalculatedOn = default(System.DateTimeOffset?), System.DateTimeOffset? lastUpdateReceivedOn = default(System.DateTimeOffset?), string replicaId = null, string osVersion = null, bool? isAdditionalStatsAvailable = default(bool?), long? totalDataTransferred = default(long?), string totalProgressHealth = null) { throw null; }
         public static Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.LogicalNetworkProperties LogicalNetworkProperties(string friendlyName = null, string networkVirtualizationStatus = null, string logicalNetworkUsage = null, string logicalNetworkDefinitionsStatus = null) { throw null; }
         public static Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.ManualActionTaskDetails ManualActionTaskDetails(string name = null, string instructions = null, string observation = null) { throw null; }
         public static Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.MarsAgentDetails MarsAgentDetails(string id = null, string name = null, string biosId = null, Azure.Core.ResourceIdentifier fabricObjectId = null, string fqdn = null, string version = null, System.DateTimeOffset? lastHeartbeatUtc = default(System.DateTimeOffset?), Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.ProtectionHealth? health = default(Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.ProtectionHealth?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.SiteRecoveryHealthError> healthErrors = null) { throw null; }
@@ -1634,15 +1627,21 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         public static Azure.ResourceManager.RecoveryServicesSiteRecovery.SiteRecoveryFabricData SiteRecoveryFabricData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.SiteRecoveryFabricProperties properties = null, Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?)) { throw null; }
         public static Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.SiteRecoveryFabricProperties SiteRecoveryFabricProperties(string friendlyName = null, Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.SiteRecoveryEncryptionDetails encryptionDetails = null, Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.SiteRecoveryEncryptionDetails rolloverEncryptionDetails = null, string internalIdentifier = null, string bcdrState = null, Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.SiteRecoveryFabricSpecificDetails customDetails = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.SiteRecoveryHealthError> healthErrorDetails = null, string health = null) { throw null; }
         public static Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.SiteRecoveryFabricProviderSpecificDetails SiteRecoveryFabricProviderSpecificDetails(Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?), System.Collections.Generic.IEnumerable<Azure.Core.ResourceIdentifier> containerIds = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.A2AZoneDetails> zones = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.A2AExtendedLocationDetails> extendedLocations = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.A2AFabricSpecificLocationDetails> locationDetails = null) { throw null; }
-        public static Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.SiteRecoveryFabricReplicationGroupTaskDetails SiteRecoveryFabricReplicationGroupTaskDetails(Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.JobEntity jobTask = null, string skippedReason = null, string skippedReasonString = null) { throw null; }
+        public static Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.SiteRecoveryFabricReplicationGroupTaskDetails SiteRecoveryFabricReplicationGroupTaskDetails(Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.SiteRecoveryJobEntity jobTask = null, string skippedReason = null, string skippedReasonString = null) { throw null; }
         public static Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.SiteRecoveryFailoverJobDetails SiteRecoveryFailoverJobDetails(System.Collections.Generic.IReadOnlyDictionary<string, string> affectedObjectDetails = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.SiteRecoveryFailoverReplicationProtectedItemDetails> protectedItemDetails = null) { throw null; }
         public static Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.SiteRecoveryFailoverReplicationProtectedItemDetails SiteRecoveryFailoverReplicationProtectedItemDetails(string name = null, string friendlyName = null, string testVmName = null, string testVmFriendlyName = null, string networkConnectionStatus = null, string networkFriendlyName = null, string subnet = null, Azure.Core.ResourceIdentifier recoveryPointId = null, System.DateTimeOffset? recoveryPointOn = default(System.DateTimeOffset?)) { throw null; }
         public static Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.SiteRecoveryGroupTaskDetails SiteRecoveryGroupTaskDetails(string instanceType = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.AsrTask> childTasks = null) { throw null; }
-        public static Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.SiteRecoveryHealthError SiteRecoveryHealthError(System.Collections.Generic.IEnumerable<Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.InnerHealthError> innerHealthErrors = null, string errorSource = null, string errorType = null, string errorLevel = null, string errorCategory = null, string errorCode = null, string summaryMessage = null, string errorMessage = null, string possibleCauses = null, string recommendedAction = null, System.DateTimeOffset? creationTimeUtc = default(System.DateTimeOffset?), string recoveryProviderErrorMessage = null, string entityId = null, string errorId = null, Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.SiteRecoveryHealthErrorCustomerResolvability? customerResolvability = default(Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.SiteRecoveryHealthErrorCustomerResolvability?)) { throw null; }
+        public static Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.SiteRecoveryHealthError SiteRecoveryHealthError(System.Collections.Generic.IEnumerable<Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.SiteRecoveryInnerHealthError> innerHealthErrors = null, string errorSource = null, string errorType = null, string errorLevel = null, string errorCategory = null, string errorCode = null, string summaryMessage = null, string errorMessage = null, string possibleCauses = null, string recommendedAction = null, System.DateTimeOffset? creationTimeUtc = default(System.DateTimeOffset?), string recoveryProviderErrorMessage = null, string entityId = null, string errorId = null, Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.SiteRecoveryHealthErrorCustomerResolvability? customerResolvability = default(Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.SiteRecoveryHealthErrorCustomerResolvability?)) { throw null; }
         public static Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.SiteRecoveryHealthErrorSummary SiteRecoveryHealthErrorSummary(string summaryCode = null, Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.SiteRecoveryHealthErrorCategory? category = default(Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.SiteRecoveryHealthErrorCategory?), Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.Severity? severity = default(Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.Severity?), string summaryMessage = null, string affectedResourceType = null, string affectedResourceSubtype = null, System.Collections.Generic.IEnumerable<string> affectedResourceCorrelationIds = null) { throw null; }
         public static Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.SiteRecoveryIdentityProviderDetails SiteRecoveryIdentityProviderDetails(System.Guid? tenantId = default(System.Guid?), string applicationId = null, string objectId = null, string audience = null, string aadAuthority = null) { throw null; }
-        public static Azure.ResourceManager.RecoveryServicesSiteRecovery.SiteRecoveryJobData SiteRecoveryJobData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.JobProperties properties = null, Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?)) { throw null; }
+        public static Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.SiteRecoveryInnerHealthError SiteRecoveryInnerHealthError(string errorSource = null, string errorType = null, string errorLevel = null, string errorCategory = null, string errorCode = null, string summaryMessage = null, string errorMessage = null, string possibleCauses = null, string recommendedAction = null, System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), string recoveryProviderErrorMessage = null, string entityId = null, string errorId = null, Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.SiteRecoveryHealthErrorCustomerResolvability? customerResolvability = default(Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.SiteRecoveryHealthErrorCustomerResolvability?)) { throw null; }
+        public static Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.SiteRecoveryJJobStatusEventDetails SiteRecoveryJJobStatusEventDetails(Azure.Core.ResourceIdentifier jobId = null, string jobFriendlyName = null, string jobStatus = null, string affectedObjectType = null) { throw null; }
+        public static Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.SiteRecoveryJJobTaskDetails SiteRecoveryJJobTaskDetails(Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.SiteRecoveryJobEntity jobTask = null) { throw null; }
+        public static Azure.ResourceManager.RecoveryServicesSiteRecovery.SiteRecoveryJobData SiteRecoveryJobData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.SiteRecoveryJobProperties properties = null, Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?)) { throw null; }
+        public static Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.SiteRecoveryJobDetails SiteRecoveryJobDetails(string instanceType = null, System.Collections.Generic.IReadOnlyDictionary<string, string> affectedObjectDetails = null) { throw null; }
+        public static Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.SiteRecoveryJobEntity SiteRecoveryJobEntity(Azure.Core.ResourceIdentifier jobId = null, string jobFriendlyName = null, string targetObjectId = null, string targetObjectName = null, string targetInstanceType = null, string jobScenarioName = null) { throw null; }
         public static Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.SiteRecoveryJobErrorDetails SiteRecoveryJobErrorDetails(Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.ServiceError serviceErrorDetails = null, Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.ProviderError providerErrorDetails = null, string errorLevel = null, System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), string taskId = null) { throw null; }
+        public static Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.SiteRecoveryJobProperties SiteRecoveryJobProperties(string activityId = null, string scenarioName = null, string friendlyName = null, string state = null, string stateDescription = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.AsrTask> tasks = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.SiteRecoveryJobErrorDetails> errors = null, System.DateTimeOffset? startOn = default(System.DateTimeOffset?), System.DateTimeOffset? endOn = default(System.DateTimeOffset?), System.Collections.Generic.IEnumerable<string> allowedActions = null, string targetObjectId = null, string targetObjectName = null, string targetInstanceType = null, Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.SiteRecoveryJobDetails customDetails = null) { throw null; }
         public static Azure.ResourceManager.RecoveryServicesSiteRecovery.SiteRecoveryLogicalNetworkData SiteRecoveryLogicalNetworkData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.LogicalNetworkProperties properties = null, Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?)) { throw null; }
         public static Azure.ResourceManager.RecoveryServicesSiteRecovery.SiteRecoveryMigrationItemData SiteRecoveryMigrationItemData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.SiteRecoveryMigrationItemProperties properties = null, Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?)) { throw null; }
         public static Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.SiteRecoveryMigrationItemProperties SiteRecoveryMigrationItemProperties(string machineName = null, Azure.Core.ResourceIdentifier policyId = null, string policyFriendlyName = null, string recoveryServicesProviderId = null, string replicationStatus = null, Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.MigrationState? migrationState = default(Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.MigrationState?), string migrationStateDescription = null, System.DateTimeOffset? lastTestMigrationOn = default(System.DateTimeOffset?), string lastTestMigrationStatus = null, System.DateTimeOffset? lastMigrationOn = default(System.DateTimeOffset?), string lastMigrationStatus = null, Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.TestMigrationState? testMigrateState = default(Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.TestMigrationState?), string testMigrateStateDescription = null, Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.ProtectionHealth? health = default(Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.ProtectionHealth?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.SiteRecoveryHealthError> healthErrors = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.MigrationItemOperation> allowedOperations = null, Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.CurrentJobDetails currentJob = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.CriticalJobHistoryDetails> criticalJobHistory = null, string eventCorrelationId = null, Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.MigrationProviderSpecificSettings providerSpecificDetails = null) { throw null; }
@@ -1663,6 +1662,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         public static Azure.ResourceManager.RecoveryServicesSiteRecovery.SiteRecoveryVaultSettingData SiteRecoveryVaultSettingData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.VaultSettingProperties properties = null, Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?)) { throw null; }
         public static Azure.ResourceManager.RecoveryServicesSiteRecovery.SiteRecoveryVCenterData SiteRecoveryVCenterData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.VCenterProperties properties = null, Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?)) { throw null; }
         public static Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.SiteRecoveryVmDiskDetails SiteRecoveryVmDiskDetails(string vhdType = null, string vhdId = null, string diskId = null, string vhdName = null, string maxSizeMB = null, string targetDiskLocation = null, string targetDiskName = null, string lunId = null, Azure.Core.ResourceIdentifier diskEncryptionSetId = null, string customTargetDiskName = null) { throw null; }
+        public static Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.SiteRecoveryVmEndpoint SiteRecoveryVmEndpoint(string endpointName = null, int? privatePort = default(int?), int? publicPort = default(int?), string protocol = null) { throw null; }
         public static Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.Subnet Subnet(string name = null, string friendlyName = null, System.Collections.Generic.IEnumerable<string> addressList = null) { throw null; }
         public static Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.SupportedOperatingSystems SupportedOperatingSystems(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.SupportedOSProperty> supportedOSList = null, Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?)) { throw null; }
         public static Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.SupportedOSDetails SupportedOSDetails(string osName = null, string osType = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.OSVersionWrapper> osVersions = null) { throw null; }
@@ -1676,9 +1676,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         public static Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.VaultSettingProperties VaultSettingProperties(string migrationSolutionId = null, string vmwareToAzureProviderType = null) { throw null; }
         public static Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.VCenterProperties VCenterProperties(string friendlyName = null, string internalId = null, System.DateTimeOffset? lastHeartbeat = default(System.DateTimeOffset?), string discoveryStatus = null, string processServerId = null, System.Net.IPAddress ipAddress = null, string infrastructureId = null, string port = null, string runAsAccountId = null, string fabricArmResourceName = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.SiteRecoveryHealthError> healthErrors = null) { throw null; }
         public static Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.VersionDetails VersionDetails(string version = null, System.DateTimeOffset? expireOn = default(System.DateTimeOffset?), Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.SiteRecoveryAgentVersionStatus? status = default(Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.SiteRecoveryAgentVersionStatus?)) { throw null; }
-        public static Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.VirtualMachineTaskDetails VirtualMachineTaskDetails(Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.JobEntity jobTask = null, string skippedReason = null, string skippedReasonString = null) { throw null; }
+        public static Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.VirtualMachineTaskDetails VirtualMachineTaskDetails(Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.SiteRecoveryJobEntity jobTask = null, string skippedReason = null, string skippedReasonString = null) { throw null; }
         public static Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.VmmVirtualMachineDetails VmmVirtualMachineDetails(string sourceItemId = null, string generation = null, Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.OSDetails osDetails = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.SiteRecoveryDiskDetails> diskDetails = null, Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.PresenceStatus? hasPhysicalDisk = default(Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.PresenceStatus?), Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.PresenceStatus? hasFibreChannelAdapter = default(Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.PresenceStatus?), Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.PresenceStatus? hasSharedVhd = default(Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.PresenceStatus?), string hyperVHostId = null) { throw null; }
-        public static Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.VmNicDetails VmNicDetails(string nicId = null, string replicaNicId = null, Azure.Core.ResourceIdentifier sourceNicArmId = null, string vmNetworkName = null, Azure.Core.ResourceIdentifier recoveryVmNetworkId = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.IPConfigDetails> ipConfigs = null, string selectionType = null, string recoveryNetworkSecurityGroupId = null, bool? enableAcceleratedNetworkingOnRecovery = default(bool?), Azure.Core.ResourceIdentifier tfoVmNetworkId = null, string tfoNetworkSecurityGroupId = null, bool? enableAcceleratedNetworkingOnTfo = default(bool?), string recoveryNicName = null, string recoveryNicResourceGroupName = null, bool? reuseExistingNic = default(bool?), string tfoRecoveryNicName = null, string tfoRecoveryNicResourceGroupName = null, bool? tfoReuseExistingNic = default(bool?), string targetNicName = null) { throw null; }
+        public static Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.VmNicDetails VmNicDetails(string nicId = null, string replicaNicId = null, Azure.Core.ResourceIdentifier sourceNicArmId = null, string vmNetworkName = null, Azure.Core.ResourceIdentifier recoveryVmNetworkId = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.HyperVIPConfigDetails> ipConfigs = null, string selectionType = null, string recoveryNetworkSecurityGroupId = null, bool? enableAcceleratedNetworkingOnRecovery = default(bool?), Azure.Core.ResourceIdentifier tfoVmNetworkId = null, string tfoNetworkSecurityGroupId = null, bool? enableAcceleratedNetworkingOnTfo = default(bool?), string recoveryNicName = null, string recoveryNicResourceGroupName = null, bool? reuseExistingNic = default(bool?), string tfoRecoveryNicName = null, string tfoRecoveryNicResourceGroupName = null, bool? tfoReuseExistingNic = default(bool?), string targetNicName = null) { throw null; }
         public static Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.VmNicUpdatesTaskDetails VmNicUpdatesTaskDetails(string vmId = null, string nicId = null, string name = null) { throw null; }
         public static Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.VMwareCbtEventDetails VMwareCbtEventDetails(string migrationItemName = null) { throw null; }
         public static Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.VMwareCbtMigrationDetails VMwareCbtMigrationDetails(string vmwareMachineId = null, string osType = null, string osName = null, string firmwareType = null, string targetGeneration = null, string licenseType = null, string sqlServerLicenseType = null, string dataMoverRunAsAccountId = null, string snapshotRunAsAccountId = null, Azure.Core.ResourceIdentifier storageAccountId = null, string targetVmName = null, string targetVmSize = null, string targetLocation = null, Azure.Core.ResourceIdentifier targetResourceGroupId = null, Azure.Core.ResourceIdentifier targetAvailabilitySetId = null, string targetAvailabilityZone = null, Azure.Core.ResourceIdentifier targetProximityPlacementGroupId = null, Azure.Core.ResourceIdentifier confidentialVmKeyVaultId = null, Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.VMwareCbtSecurityProfileProperties targetVmSecurityProfile = null, Azure.Core.ResourceIdentifier targetBootDiagnosticsStorageAccountId = null, System.Collections.Generic.IReadOnlyDictionary<string, string> targetVmTags = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.VMwareCbtProtectedDiskDetails> protectedDisks = null, Azure.Core.ResourceIdentifier targetNetworkId = null, Azure.Core.ResourceIdentifier testNetworkId = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.VMwareCbtNicDetails> vmNics = null, System.Collections.Generic.IReadOnlyDictionary<string, string> targetNicTags = null, Azure.Core.ResourceIdentifier migrationRecoveryPointId = null, System.DateTimeOffset? lastRecoveryPointReceived = default(System.DateTimeOffset?), Azure.Core.ResourceIdentifier lastRecoveryPointId = null, int? initialSeedingProgressPercentage = default(int?), int? migrationProgressPercentage = default(int?), int? resyncProgressPercentage = default(int?), int? resumeProgressPercentage = default(int?), long? initialSeedingRetryCount = default(long?), long? resyncRetryCount = default(long?), long? resumeRetryCount = default(long?), string resyncRequired = null, Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.ResyncState? resyncState = default(Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.ResyncState?), string performAutoResync = null, System.Collections.Generic.IReadOnlyDictionary<string, string> seedDiskTags = null, System.Collections.Generic.IReadOnlyDictionary<string, string> targetDiskTags = null, System.Collections.Generic.IEnumerable<string> supportedOSVersions = null) { throw null; }
@@ -1690,7 +1690,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         public static Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.VMwareV2FabricSpecificDetails VMwareV2FabricSpecificDetails(string vmwareSiteId = null, string physicalSiteId = null, string migrationSolutionId = null, string serviceEndpoint = null, string serviceResourceId = null, string serviceContainerId = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.ProcessServerDetails> processServers = null) { throw null; }
         public static Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.VMwareVirtualMachineDetails VMwareVirtualMachineDetails(string agentGeneratedId = null, string agentInstalled = null, string osType = null, string agentVersion = null, System.Net.IPAddress ipAddress = null, string poweredOn = null, string vCenterInfrastructureId = null, string discoveryType = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.InMageDiskDetails> diskDetails = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.SiteRecoveryHealthError> validationErrors = null) { throw null; }
     }
-    public partial class AsrJobDetails : Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.JobDetails
+    public partial class AsrJobDetails : Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.SiteRecoveryJobDetails
     {
         internal AsrJobDetails() { }
     }
@@ -1770,14 +1770,6 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     {
         internal ConsistencyCheckTaskDetails() { }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.InconsistentVmDetails> VmDetails { get { throw null; } }
-    }
-    public partial class ContentEndpoint
-    {
-        internal ContentEndpoint() { }
-        public string EndpointName { get { throw null; } }
-        public int? PrivatePort { get { throw null; } }
-        public string Protocol { get { throw null; } }
-        public int? PublicPort { get { throw null; } }
     }
     public partial class CriticalJobHistoryDetails
     {
@@ -1898,7 +1890,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         public ExistingStorageAccount(Azure.Core.ResourceIdentifier azureStorageAccountId) { }
         public Azure.Core.ResourceIdentifier AzureStorageAccountId { get { throw null; } set { } }
     }
-    public partial class ExportJobDetails : Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.JobDetails
+    public partial class ExportJobDetails : Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.SiteRecoveryJobDetails
     {
         internal ExportJobDetails() { }
         public System.Uri BlobUri { get { throw null; } }
@@ -1923,12 +1915,46 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         public static bool operator !=(Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.ExportJobOutputSerializationType left, Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.ExportJobOutputSerializationType right) { throw null; }
         public override string ToString() { throw null; }
     }
+    public partial class HyperVFailoverIPConfigDetails
+    {
+        public HyperVFailoverIPConfigDetails() { }
+        public string IPConfigName { get { throw null; } set { } }
+        public bool? IsPrimary { get { throw null; } set { } }
+        public bool? IsSeletedForFailover { get { throw null; } set { } }
+        public System.Collections.Generic.IList<string> RecoveryLBBackendAddressPoolIds { get { throw null; } }
+        public Azure.Core.ResourceIdentifier RecoveryPublicIPAddressId { get { throw null; } set { } }
+        public System.Net.IPAddress RecoveryStaticIPAddress { get { throw null; } set { } }
+        public string RecoverySubnetName { get { throw null; } set { } }
+        public System.Collections.Generic.IList<string> TfoLBBackendAddressPoolIds { get { throw null; } }
+        public Azure.Core.ResourceIdentifier TfoPublicIPAddressId { get { throw null; } set { } }
+        public System.Net.IPAddress TfoStaticIPAddress { get { throw null; } set { } }
+        public string TfoSubnetName { get { throw null; } set { } }
+    }
     public partial class HyperVHostDetails
     {
         internal HyperVHostDetails() { }
         public string Id { get { throw null; } }
         public string MarsAgentVersion { get { throw null; } }
         public string Name { get { throw null; } }
+    }
+    public partial class HyperVIPConfigDetails
+    {
+        internal HyperVIPConfigDetails() { }
+        public string IPAddressType { get { throw null; } }
+        public bool? IsPrimary { get { throw null; } }
+        public bool? IsSeletedForFailover { get { throw null; } }
+        public string Name { get { throw null; } }
+        public string RecoveryIPAddressType { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<string> RecoveryLBBackendAddressPoolIds { get { throw null; } }
+        public Azure.Core.ResourceIdentifier RecoveryPublicIPAddressId { get { throw null; } }
+        public System.Net.IPAddress RecoveryStaticIPAddress { get { throw null; } }
+        public string RecoverySubnetName { get { throw null; } }
+        public System.Net.IPAddress StaticIPAddress { get { throw null; } }
+        public string SubnetName { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<string> TfoLBBackendAddressPoolIds { get { throw null; } }
+        public Azure.Core.ResourceIdentifier TfoPublicIPAddressId { get { throw null; } }
+        public System.Net.IPAddress TfoStaticIPAddress { get { throw null; } }
+        public string TfoSubnetName { get { throw null; } }
     }
     public partial class HyperVReplica2012EventDetails : Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.SiteRecoveryEventProviderSpecificDetails
     {
@@ -2243,9 +2269,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         internal HyperVSiteDetails() { }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.HyperVHostDetails> HyperVHosts { get { throw null; } }
     }
-    public partial class HyperVVirtualMachineDetails : Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.SiteRecoveryReplicationProviderSettings
+    public partial class HyperVVmDetails : Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.SiteRecoveryReplicationProviderSettings
     {
-        internal HyperVVirtualMachineDetails() { }
+        internal HyperVVmDetails() { }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.SiteRecoveryDiskDetails> DiskDetails { get { throw null; } }
         public string Generation { get { throw null; } }
         public Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.PresenceStatus? HasFibreChannelAdapter { get { throw null; } }
@@ -2903,7 +2929,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         internal InMageRcmFailbackSyncDetails() { }
         public long? Last15MinutesTransferredBytes { get { throw null; } }
         public System.DateTimeOffset? LastDataTransferOn { get { throw null; } }
-        public System.DateTimeOffset? LastRefreshOn { get { throw null; } }
+        public System.DateTimeOffset? LastRefreshedOn { get { throw null; } }
         public long? ProcessedBytes { get { throw null; } }
         public Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.SiteRecoveryDiskReplicationProgressHealth? ProgressHealth { get { throw null; } }
         public int? ProgressPercentage { get { throw null; } }
@@ -3076,11 +3102,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         internal InMageRcmSyncDetails() { }
         public long? Last15MinutesTransferredBytes { get { throw null; } }
         public string LastDataTransferTimeUtc { get { throw null; } }
-        public string LastRefreshTime { get { throw null; } }
+        public System.DateTimeOffset? LastRefreshedOn { get { throw null; } }
         public long? ProcessedBytes { get { throw null; } }
         public Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.SiteRecoveryDiskReplicationProgressHealth? ProgressHealth { get { throw null; } }
         public int? ProgressPercentage { get { throw null; } }
-        public string StartTime { get { throw null; } }
+        public System.DateTimeOffset? StaStartOn { get { throw null; } }
         public long? TransferredBytes { get { throw null; } }
     }
     public partial class InMageRcmTestFailoverContent : Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.TestFailoverProviderSpecificContent
@@ -3134,7 +3160,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         public string InfrastructureVmId { get { throw null; } }
         public System.Net.IPAddress IPAddress { get { throw null; } }
         public bool? IsAdditionalStatsAvailable { get { throw null; } }
-        public System.DateTimeOffset? LastHeartbeat { get { throw null; } }
+        public System.DateTimeOffset? LastHeartbeatReceivedOn { get { throw null; } }
         public System.DateTimeOffset? LastRpoCalculatedOn { get { throw null; } }
         public System.DateTimeOffset? LastUpdateReceivedOn { get { throw null; } }
         public string MasterTargetId { get { throw null; } }
@@ -3149,8 +3175,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         public string RebootAfterUpdateStatus { get { throw null; } }
         public string ReplicaId { get { throw null; } }
         public Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.InitialReplicationDetails ResyncDetails { get { throw null; } }
-        public System.DateTimeOffset? RetentionWindowEnd { get { throw null; } }
-        public System.DateTimeOffset? RetentionWindowStart { get { throw null; } }
+        public System.DateTimeOffset? RetentionWindowEndOn { get { throw null; } }
+        public System.DateTimeOffset? RetentionWindowStartOn { get { throw null; } }
         public long? RpoInSeconds { get { throw null; } }
         public int? SourceVmCpuCount { get { throw null; } }
         public int? SourceVmRamSizeInMB { get { throw null; } }
@@ -3213,116 +3239,6 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         public InMageVolumeExclusionOptions() { }
         public string OnlyExcludeIfSingleVolume { get { throw null; } set { } }
         public string VolumeLabel { get { throw null; } set { } }
-    }
-    public partial class InnerHealthError
-    {
-        internal InnerHealthError() { }
-        public System.DateTimeOffset? CreationTimeUtc { get { throw null; } }
-        public Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.SiteRecoveryHealthErrorCustomerResolvability? CustomerResolvability { get { throw null; } }
-        public string EntityId { get { throw null; } }
-        public string ErrorCategory { get { throw null; } }
-        public string ErrorCode { get { throw null; } }
-        public string ErrorId { get { throw null; } }
-        public string ErrorLevel { get { throw null; } }
-        public string ErrorMessage { get { throw null; } }
-        public string ErrorSource { get { throw null; } }
-        public string ErrorType { get { throw null; } }
-        public string PossibleCauses { get { throw null; } }
-        public string RecommendedAction { get { throw null; } }
-        public string RecoveryProviderErrorMessage { get { throw null; } }
-        public string SummaryMessage { get { throw null; } }
-    }
-    public partial class IPConfigContentDetails
-    {
-        public IPConfigContentDetails() { }
-        public string IPConfigName { get { throw null; } set { } }
-        public bool? IsPrimary { get { throw null; } set { } }
-        public bool? IsSeletedForFailover { get { throw null; } set { } }
-        public System.Collections.Generic.IList<string> RecoveryLBBackendAddressPoolIds { get { throw null; } }
-        public string RecoveryPublicIPAddressId { get { throw null; } set { } }
-        public System.Net.IPAddress RecoveryStaticIPAddress { get { throw null; } set { } }
-        public string RecoverySubnetName { get { throw null; } set { } }
-        public System.Collections.Generic.IList<string> TfoLBBackendAddressPoolIds { get { throw null; } }
-        public string TfoPublicIPAddressId { get { throw null; } set { } }
-        public System.Net.IPAddress TfoStaticIPAddress { get { throw null; } set { } }
-        public string TfoSubnetName { get { throw null; } set { } }
-    }
-    public partial class IPConfigDetails
-    {
-        internal IPConfigDetails() { }
-        public string IPAddressType { get { throw null; } }
-        public bool? IsPrimary { get { throw null; } }
-        public bool? IsSeletedForFailover { get { throw null; } }
-        public string Name { get { throw null; } }
-        public string RecoveryIPAddressType { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<string> RecoveryLBBackendAddressPoolIds { get { throw null; } }
-        public string RecoveryPublicIPAddressId { get { throw null; } }
-        public System.Net.IPAddress RecoveryStaticIPAddress { get { throw null; } }
-        public string RecoverySubnetName { get { throw null; } }
-        public System.Net.IPAddress StaticIPAddress { get { throw null; } }
-        public string SubnetName { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<string> TfoLBBackendAddressPoolIds { get { throw null; } }
-        public string TfoPublicIPAddressId { get { throw null; } }
-        public System.Net.IPAddress TfoStaticIPAddress { get { throw null; } }
-        public string TfoSubnetName { get { throw null; } }
-    }
-    public abstract partial class JobDetails
-    {
-        protected JobDetails() { }
-        public System.Collections.Generic.IReadOnlyDictionary<string, string> AffectedObjectDetails { get { throw null; } }
-    }
-    public partial class JobEntity
-    {
-        internal JobEntity() { }
-        public string JobFriendlyName { get { throw null; } }
-        public Azure.Core.ResourceIdentifier JobId { get { throw null; } }
-        public string JobScenarioName { get { throw null; } }
-        public string TargetInstanceType { get { throw null; } }
-        public string TargetObjectId { get { throw null; } }
-        public string TargetObjectName { get { throw null; } }
-    }
-    public partial class JobProperties
-    {
-        internal JobProperties() { }
-        public string ActivityId { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<string> AllowedActions { get { throw null; } }
-        public Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.JobDetails CustomDetails { get { throw null; } }
-        public System.DateTimeOffset? EndOn { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.SiteRecoveryJobErrorDetails> Errors { get { throw null; } }
-        public string FriendlyName { get { throw null; } }
-        public string ScenarioName { get { throw null; } }
-        public System.DateTimeOffset? StartOn { get { throw null; } }
-        public string State { get { throw null; } }
-        public string StateDescription { get { throw null; } }
-        public string TargetInstanceType { get { throw null; } }
-        public string TargetObjectId { get { throw null; } }
-        public string TargetObjectName { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.AsrTask> Tasks { get { throw null; } }
-    }
-    public partial class JobQueryParameter
-    {
-        public JobQueryParameter() { }
-        public string AffectedObjectTypes { get { throw null; } set { } }
-        public string EndTime { get { throw null; } set { } }
-        public Azure.Core.ResourceIdentifier FabricId { get { throw null; } set { } }
-        public string JobName { get { throw null; } set { } }
-        public Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.ExportJobOutputSerializationType? JobOutputType { get { throw null; } set { } }
-        public string JobStatus { get { throw null; } set { } }
-        public string StartTime { get { throw null; } set { } }
-        public double? TimezoneOffset { get { throw null; } set { } }
-    }
-    public partial class JobStatusEventDetails : Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.SiteRecoveryEventSpecificDetails
-    {
-        internal JobStatusEventDetails() { }
-        public string AffectedObjectType { get { throw null; } }
-        public string JobFriendlyName { get { throw null; } }
-        public Azure.Core.ResourceIdentifier JobId { get { throw null; } }
-        public string JobStatus { get { throw null; } }
-    }
-    public partial class JobTaskDetails : Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.TaskTypeDetails
-    {
-        internal JobTaskDetails() { }
-        public Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.JobEntity JobTask { get { throw null; } }
     }
     public partial class KeyEncryptionKeyInfo
     {
@@ -4949,7 +4865,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.A2AFabricSpecificLocationDetails> LocationDetails { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.A2AZoneDetails> Zones { get { throw null; } }
     }
-    public partial class SiteRecoveryFabricReplicationGroupTaskDetails : Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.JobTaskDetails
+    public partial class SiteRecoveryFabricReplicationGroupTaskDetails : Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.SiteRecoveryJJobTaskDetails
     {
         internal SiteRecoveryFabricReplicationGroupTaskDetails() { }
         public string SkippedReason { get { throw null; } }
@@ -4990,7 +4906,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         public static bool operator !=(Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.SiteRecoveryFailoverDeploymentModel left, Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.SiteRecoveryFailoverDeploymentModel right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class SiteRecoveryFailoverJobDetails : Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.JobDetails
+    public partial class SiteRecoveryFailoverJobDetails : Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.SiteRecoveryJobDetails
     {
         internal SiteRecoveryFailoverJobDetails() { }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.SiteRecoveryFailoverReplicationProtectedItemDetails> ProtectedItemDetails { get { throw null; } }
@@ -5040,7 +4956,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         public string ErrorMessage { get { throw null; } }
         public string ErrorSource { get { throw null; } }
         public string ErrorType { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.InnerHealthError> InnerHealthErrors { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.SiteRecoveryInnerHealthError> InnerHealthErrors { get { throw null; } }
         public string PossibleCauses { get { throw null; } }
         public string RecommendedAction { get { throw null; } }
         public string RecoveryProviderErrorMessage { get { throw null; } }
@@ -5120,6 +5036,52 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         public string ObjectId { get { throw null; } }
         public System.Guid? TenantId { get { throw null; } }
     }
+    public partial class SiteRecoveryInnerHealthError
+    {
+        internal SiteRecoveryInnerHealthError() { }
+        public System.DateTimeOffset? CreatedOn { get { throw null; } }
+        public Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.SiteRecoveryHealthErrorCustomerResolvability? CustomerResolvability { get { throw null; } }
+        public string EntityId { get { throw null; } }
+        public string ErrorCategory { get { throw null; } }
+        public string ErrorCode { get { throw null; } }
+        public string ErrorId { get { throw null; } }
+        public string ErrorLevel { get { throw null; } }
+        public string ErrorMessage { get { throw null; } }
+        public string ErrorSource { get { throw null; } }
+        public string ErrorType { get { throw null; } }
+        public string PossibleCauses { get { throw null; } }
+        public string RecommendedAction { get { throw null; } }
+        public string RecoveryProviderErrorMessage { get { throw null; } }
+        public string SummaryMessage { get { throw null; } }
+    }
+    public partial class SiteRecoveryJJobStatusEventDetails : Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.SiteRecoveryEventSpecificDetails
+    {
+        internal SiteRecoveryJJobStatusEventDetails() { }
+        public string AffectedObjectType { get { throw null; } }
+        public string JobFriendlyName { get { throw null; } }
+        public Azure.Core.ResourceIdentifier JobId { get { throw null; } }
+        public string JobStatus { get { throw null; } }
+    }
+    public partial class SiteRecoveryJJobTaskDetails : Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.TaskTypeDetails
+    {
+        internal SiteRecoveryJJobTaskDetails() { }
+        public Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.SiteRecoveryJobEntity JobTask { get { throw null; } }
+    }
+    public abstract partial class SiteRecoveryJobDetails
+    {
+        protected SiteRecoveryJobDetails() { }
+        public System.Collections.Generic.IReadOnlyDictionary<string, string> AffectedObjectDetails { get { throw null; } }
+    }
+    public partial class SiteRecoveryJobEntity
+    {
+        internal SiteRecoveryJobEntity() { }
+        public string JobFriendlyName { get { throw null; } }
+        public Azure.Core.ResourceIdentifier JobId { get { throw null; } }
+        public string JobScenarioName { get { throw null; } }
+        public string TargetInstanceType { get { throw null; } }
+        public string TargetObjectId { get { throw null; } }
+        public string TargetObjectName { get { throw null; } }
+    }
     public partial class SiteRecoveryJobErrorDetails
     {
         internal SiteRecoveryJobErrorDetails() { }
@@ -5128,6 +5090,36 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         public Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.ProviderError ProviderErrorDetails { get { throw null; } }
         public Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.ServiceError ServiceErrorDetails { get { throw null; } }
         public string TaskId { get { throw null; } }
+    }
+    public partial class SiteRecoveryJobProperties
+    {
+        internal SiteRecoveryJobProperties() { }
+        public string ActivityId { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<string> AllowedActions { get { throw null; } }
+        public Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.SiteRecoveryJobDetails CustomDetails { get { throw null; } }
+        public System.DateTimeOffset? EndOn { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.SiteRecoveryJobErrorDetails> Errors { get { throw null; } }
+        public string FriendlyName { get { throw null; } }
+        public string ScenarioName { get { throw null; } }
+        public System.DateTimeOffset? StartOn { get { throw null; } }
+        public string State { get { throw null; } }
+        public string StateDescription { get { throw null; } }
+        public string TargetInstanceType { get { throw null; } }
+        public string TargetObjectId { get { throw null; } }
+        public string TargetObjectName { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.AsrTask> Tasks { get { throw null; } }
+    }
+    public partial class SiteRecoveryJobQueryContent
+    {
+        public SiteRecoveryJobQueryContent() { }
+        public string AffectedObjectTypes { get { throw null; } set { } }
+        public string EndOn { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier FabricId { get { throw null; } set { } }
+        public string JobName { get { throw null; } set { } }
+        public Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.ExportJobOutputSerializationType? JobOutputType { get { throw null; } set { } }
+        public string JobStatus { get { throw null; } set { } }
+        public string StartOn { get { throw null; } set { } }
+        public double? TimezoneOffset { get { throw null; } set { } }
     }
     public partial class SiteRecoveryMigrationItemCreateOrUpdateContent
     {
@@ -5265,6 +5257,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         public string VhdName { get { throw null; } }
         public string VhdType { get { throw null; } }
     }
+    public partial class SiteRecoveryVmEndpoint
+    {
+        internal SiteRecoveryVmEndpoint() { }
+        public string EndpointName { get { throw null; } }
+        public int? PrivatePort { get { throw null; } }
+        public string Protocol { get { throw null; } }
+        public int? PublicPort { get { throw null; } }
+    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct SourceSiteOperation : System.IEquatable<Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.SourceSiteOperation>
     {
@@ -5344,7 +5344,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         public Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.SwitchProtectionProviderSpecificContent ProviderSpecificDetails { get { throw null; } set { } }
         public string ReplicationProtectedItemName { get { throw null; } set { } }
     }
-    public partial class SwitchProtectionJobDetails : Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.JobDetails
+    public partial class SwitchProtectionJobDetails : Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.SiteRecoveryJobDetails
     {
         internal SwitchProtectionJobDetails() { }
         public string NewReplicationProtectedItemId { get { throw null; } }
@@ -5414,7 +5414,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         public string NetworkType { get { throw null; } set { } }
         public Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.TestFailoverProviderSpecificContent ProviderSpecificDetails { get { throw null; } set { } }
     }
-    public partial class TestFailoverJobDetails : Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.JobDetails
+    public partial class TestFailoverJobDetails : Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.SiteRecoveryJobDetails
     {
         internal TestFailoverJobDetails() { }
         public string Comments { get { throw null; } }
@@ -5622,7 +5622,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         public static bool operator !=(Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.VirtualMachineSecurityType left, Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.VirtualMachineSecurityType right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class VirtualMachineTaskDetails : Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.JobTaskDetails
+    public partial class VirtualMachineTaskDetails : Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.SiteRecoveryJJobTaskDetails
     {
         internal VirtualMachineTaskDetails() { }
         public string SkippedReason { get { throw null; } }
@@ -5675,7 +5675,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     {
         public VmmToVmmUpdateNetworkMappingContent() { }
     }
-    public partial class VmmVirtualMachineDetails : Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.HyperVVirtualMachineDetails
+    public partial class VmmVirtualMachineDetails : Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.HyperVVmDetails
     {
         internal VmmVirtualMachineDetails() { }
     }
@@ -5684,7 +5684,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         public VmNicContentDetails() { }
         public bool? EnableAcceleratedNetworkingOnRecovery { get { throw null; } set { } }
         public bool? EnableAcceleratedNetworkingOnTfo { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.IPConfigContentDetails> IPConfigs { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.HyperVFailoverIPConfigDetails> IPConfigs { get { throw null; } }
         public string NicId { get { throw null; } set { } }
         public string RecoveryNetworkSecurityGroupId { get { throw null; } set { } }
         public string RecoveryNicName { get { throw null; } set { } }
@@ -5702,7 +5702,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         internal VmNicDetails() { }
         public bool? EnableAcceleratedNetworkingOnRecovery { get { throw null; } }
         public bool? EnableAcceleratedNetworkingOnTfo { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.IPConfigDetails> IPConfigs { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.HyperVIPConfigDetails> IPConfigs { get { throw null; } }
         public string NicId { get { throw null; } }
         public string RecoveryNetworkSecurityGroupId { get { throw null; } }
         public string RecoveryNicName { get { throw null; } }

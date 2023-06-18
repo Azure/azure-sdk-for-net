@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Samples
             string policyName = "protectionprofile1";
             SiteRecoveryPolicyCreateOrUpdateContent content = new SiteRecoveryPolicyCreateOrUpdateContent()
             {
-                ProviderSpecificInput = new HyperVReplicaAzurePolicyInput(),
+                SiteRecoveryCreateProviderSpecificContent = new HyperVReplicaAzurePolicyContent(),
             };
             ArmOperation<SiteRecoveryPolicyResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, policyName, content);
             SiteRecoveryPolicyResource result = lro.Value;

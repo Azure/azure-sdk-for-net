@@ -8,22 +8,22 @@
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     /// <summary>
-    /// The ContentEndpoint.
+    /// The SiteRecoveryVmEndpoint.
     /// Serialized Name: InputEndpoint
     /// </summary>
-    public partial class ContentEndpoint
+    public partial class SiteRecoveryVmEndpoint
     {
-        /// <summary> Initializes a new instance of ContentEndpoint. </summary>
-        internal ContentEndpoint()
+        /// <summary> Initializes a new instance of SiteRecoveryVmEndpoint. </summary>
+        internal SiteRecoveryVmEndpoint()
         {
         }
 
-        /// <summary> Initializes a new instance of ContentEndpoint. </summary>
+        /// <summary> Initializes a new instance of SiteRecoveryVmEndpoint. </summary>
         /// <param name="endpointName"> Serialized Name: InputEndpoint.endpointName. </param>
         /// <param name="privatePort"> Serialized Name: InputEndpoint.privatePort. </param>
         /// <param name="publicPort"> Serialized Name: InputEndpoint.publicPort. </param>
         /// <param name="protocol"> Serialized Name: InputEndpoint.protocol. </param>
-        internal ContentEndpoint(string endpointName, int? privatePort, int? publicPort, string protocol)
+        internal SiteRecoveryVmEndpoint(string endpointName, int? privatePort, int? publicPort, string protocol)
         {
             EndpointName = endpointName;
             PrivatePort = privatePort;

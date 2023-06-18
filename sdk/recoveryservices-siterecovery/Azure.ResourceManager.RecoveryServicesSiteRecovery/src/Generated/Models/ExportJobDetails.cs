@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// This class represents details for export jobs workflow.
     /// Serialized Name: ExportJobDetails
     /// </summary>
-    public partial class ExportJobDetails : JobDetails
+    public partial class ExportJobDetails : SiteRecoveryJobDetails
     {
         /// <summary> Initializes a new instance of ExportJobDetails. </summary>
         internal ExportJobDetails()

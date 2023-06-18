@@ -12,13 +12,13 @@ using Azure.Core;
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     /// <summary>
-    /// The IPConfigContentDetails.
+    /// The HyperVFailoverIPConfigDetails.
     /// Serialized Name: IPConfigInputDetails
     /// </summary>
-    public partial class IPConfigContentDetails
+    public partial class HyperVFailoverIPConfigDetails
     {
-        /// <summary> Initializes a new instance of IPConfigContentDetails. </summary>
-        public IPConfigContentDetails()
+        /// <summary> Initializes a new instance of HyperVFailoverIPConfigDetails. </summary>
+        public HyperVFailoverIPConfigDetails()
         {
             RecoveryLBBackendAddressPoolIds = new ChangeTrackingList<string>();
             TfoLBBackendAddressPoolIds = new ChangeTrackingList<string>();
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <summary> Serialized Name: IPConfigInputDetails.recoveryStaticIPAddress. </summary>
         public IPAddress RecoveryStaticIPAddress { get; set; }
         /// <summary> Serialized Name: IPConfigInputDetails.recoveryPublicIPAddressId. </summary>
-        public string RecoveryPublicIPAddressId { get; set; }
+        public ResourceIdentifier RecoveryPublicIPAddressId { get; set; }
         /// <summary> Serialized Name: IPConfigInputDetails.recoveryLBBackendAddressPoolIds. </summary>
         public IList<string> RecoveryLBBackendAddressPoolIds { get; }
         /// <summary> Serialized Name: IPConfigInputDetails.tfoSubnetName. </summary>
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <summary> Serialized Name: IPConfigInputDetails.tfoStaticIPAddress. </summary>
         public IPAddress TfoStaticIPAddress { get; set; }
         /// <summary> Serialized Name: IPConfigInputDetails.tfoPublicIPAddressId. </summary>
-        public string TfoPublicIPAddressId { get; set; }
+        public ResourceIdentifier TfoPublicIPAddressId { get; set; }
         /// <summary> Serialized Name: IPConfigInputDetails.tfoLBBackendAddressPoolIds. </summary>
         public IList<string> TfoLBBackendAddressPoolIds { get; }
     }

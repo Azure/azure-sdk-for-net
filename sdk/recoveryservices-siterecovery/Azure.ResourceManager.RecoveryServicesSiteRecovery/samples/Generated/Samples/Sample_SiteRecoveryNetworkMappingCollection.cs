@@ -155,10 +155,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Samples
 
             // invoke the operation
             string networkMappingName = "corpe2amap";
-            SiteRecoveryNetworkMappingCreateOrUpdateContent content = new SiteRecoveryNetworkMappingCreateOrUpdateContent(new SiteRecoveryReplicationNetworkMappingCreationProperties("/subscriptions/c183865e-6077-46f2-a3b1-deb0f4f4650a/resourceGroups/siterecoveryProd1/providers/Microsoft.Network/virtualNetworks/vnetavrai")
+            SiteRecoveryNetworkMappingCreateOrUpdateContent content = new SiteRecoveryNetworkMappingCreateOrUpdateContent(new SiteRecoveryCreateReplicationNetworkMappingProperties(new ResourceIdentifier("/subscriptions/c183865e-6077-46f2-a3b1-deb0f4f4650a/resourceGroups/siterecoveryProd1/providers/Microsoft.Network/virtualNetworks/vnetavrai"))
             {
                 RecoveryFabricName = "Microsoft Azure",
-                FabricSpecificDetails = new VmmToAzureCreateNetworkMappingInput(),
+                FabricSpecificDetails = new VmmToAzureCreateNetworkMappingContent(),
             });
             ArmOperation<SiteRecoveryNetworkMappingResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, networkMappingName, content);
             SiteRecoveryNetworkMappingResource result = lro.Value;

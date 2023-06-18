@@ -134,9 +134,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Samples
             SiteRecoveryFabricResource siteRecoveryFabric = client.GetSiteRecoveryFabricResource(siteRecoveryFabricResourceId);
 
             // invoke the operation
-            FailoverProcessServerContent content = new FailoverProcessServerContent()
+            SiteRecoveryFailoverProcessServerContent content = new SiteRecoveryFailoverProcessServerContent()
             {
-                Properties = new FailoverProcessServerRequestProperties()
+                Properties = new SiteRecoveryFailoverProcessServerProperties()
                 {
                     ContainerName = "cloud_1f3c15af-2256-4568-9e06-e1ef4f728f75",
                     SourceProcessServerId = "AFA0EC54-1894-4E44-9CAB02DB8854B117",

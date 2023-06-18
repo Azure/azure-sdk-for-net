@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// This class represents details for switch protection job.
     /// Serialized Name: SwitchProtectionJobDetails
     /// </summary>
-    public partial class SwitchProtectionJobDetails : JobDetails
+    public partial class SwitchProtectionJobDetails : SiteRecoveryJobDetails
     {
         /// <summary> Initializes a new instance of SwitchProtectionJobDetails. </summary>
         internal SwitchProtectionJobDetails()

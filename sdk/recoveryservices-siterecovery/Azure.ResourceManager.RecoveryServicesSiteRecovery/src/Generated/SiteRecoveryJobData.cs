@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// Resource Location
         /// Serialized Name: Resource.location
         /// </param>
-        internal SiteRecoveryJobData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, JobProperties properties, AzureLocation? location) : base(id, name, resourceType, systemData)
+        internal SiteRecoveryJobData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SiteRecoveryJobProperties properties, AzureLocation? location) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
             Location = location;
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// The custom data.
         /// Serialized Name: Job.properties
         /// </summary>
-        public JobProperties Properties { get; }
+        public SiteRecoveryJobProperties Properties { get; }
         /// <summary>
         /// Resource Location
         /// Serialized Name: Resource.location

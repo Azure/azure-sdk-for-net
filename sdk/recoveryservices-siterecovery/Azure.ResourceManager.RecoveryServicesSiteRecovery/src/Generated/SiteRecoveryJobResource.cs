@@ -378,19 +378,19 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="jobQueryParameter"> job query filter. </param>
+        /// <param name="content"> job query filter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="jobQueryParameter"/> is null. </exception>
-        public virtual async Task<ArmOperation<SiteRecoveryJobResource>> ExportAsync(WaitUntil waitUntil, JobQueryParameter jobQueryParameter, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<ArmOperation<SiteRecoveryJobResource>> ExportAsync(WaitUntil waitUntil, SiteRecoveryJobQueryContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(jobQueryParameter, nameof(jobQueryParameter));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _siteRecoveryJobReplicationJobsClientDiagnostics.CreateScope("SiteRecoveryJobResource.Export");
             scope.Start();
             try
             {
-                var response = await _siteRecoveryJobReplicationJobsRestClient.ExportAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, jobQueryParameter, cancellationToken).ConfigureAwait(false);
-                var operation = new RecoveryServicesSiteRecoveryArmOperation<SiteRecoveryJobResource>(new SiteRecoveryJobOperationSource(Client), _siteRecoveryJobReplicationJobsClientDiagnostics, Pipeline, _siteRecoveryJobReplicationJobsRestClient.CreateExportRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, jobQueryParameter).Request, response, OperationFinalStateVia.Location);
+                var response = await _siteRecoveryJobReplicationJobsRestClient.ExportAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, content, cancellationToken).ConfigureAwait(false);
+                var operation = new RecoveryServicesSiteRecoveryArmOperation<SiteRecoveryJobResource>(new SiteRecoveryJobOperationSource(Client), _siteRecoveryJobReplicationJobsClientDiagnostics, Pipeline, _siteRecoveryJobReplicationJobsRestClient.CreateExportRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -416,19 +416,19 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="jobQueryParameter"> job query filter. </param>
+        /// <param name="content"> job query filter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="jobQueryParameter"/> is null. </exception>
-        public virtual ArmOperation<SiteRecoveryJobResource> Export(WaitUntil waitUntil, JobQueryParameter jobQueryParameter, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual ArmOperation<SiteRecoveryJobResource> Export(WaitUntil waitUntil, SiteRecoveryJobQueryContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(jobQueryParameter, nameof(jobQueryParameter));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _siteRecoveryJobReplicationJobsClientDiagnostics.CreateScope("SiteRecoveryJobResource.Export");
             scope.Start();
             try
             {
-                var response = _siteRecoveryJobReplicationJobsRestClient.Export(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, jobQueryParameter, cancellationToken);
-                var operation = new RecoveryServicesSiteRecoveryArmOperation<SiteRecoveryJobResource>(new SiteRecoveryJobOperationSource(Client), _siteRecoveryJobReplicationJobsClientDiagnostics, Pipeline, _siteRecoveryJobReplicationJobsRestClient.CreateExportRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, jobQueryParameter).Request, response, OperationFinalStateVia.Location);
+                var response = _siteRecoveryJobReplicationJobsRestClient.Export(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, content, cancellationToken);
+                var operation = new RecoveryServicesSiteRecoveryArmOperation<SiteRecoveryJobResource>(new SiteRecoveryJobOperationSource(Client), _siteRecoveryJobReplicationJobsClientDiagnostics, Pipeline, _siteRecoveryJobReplicationJobsRestClient.CreateExportRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

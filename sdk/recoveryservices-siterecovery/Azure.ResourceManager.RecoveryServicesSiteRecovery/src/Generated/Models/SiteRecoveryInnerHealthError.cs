@@ -13,14 +13,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// Implements InnerHealthError class. HealthError object has a list of InnerHealthErrors as child errors. InnerHealthError is used because this will prevent an infinite loop of structures when Hydra tries to auto-generate the contract. We are exposing the related health errors as inner health errors and all API consumers can utilize this in the same fashion as Exception -&gt; InnerException.
     /// Serialized Name: InnerHealthError
     /// </summary>
-    public partial class InnerHealthError
+    public partial class SiteRecoveryInnerHealthError
     {
-        /// <summary> Initializes a new instance of InnerHealthError. </summary>
-        internal InnerHealthError()
+        /// <summary> Initializes a new instance of SiteRecoveryInnerHealthError. </summary>
+        internal SiteRecoveryInnerHealthError()
         {
         }
 
-        /// <summary> Initializes a new instance of InnerHealthError. </summary>
+        /// <summary> Initializes a new instance of SiteRecoveryInnerHealthError. </summary>
         /// <param name="errorSource">
         /// Source of error.
         /// Serialized Name: InnerHealthError.errorSource
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// Recommended action to resolve error.
         /// Serialized Name: InnerHealthError.recommendedAction
         /// </param>
-        /// <param name="creationTimeUtc">
+        /// <param name="createdOn">
         /// Error creation time (UTC).
         /// Serialized Name: InnerHealthError.creationTimeUtc
         /// </param>
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// Value indicating whether the health error is customer resolvable.
         /// Serialized Name: InnerHealthError.customerResolvability
         /// </param>
-        internal InnerHealthError(string errorSource, string errorType, string errorLevel, string errorCategory, string errorCode, string summaryMessage, string errorMessage, string possibleCauses, string recommendedAction, DateTimeOffset? creationTimeUtc, string recoveryProviderErrorMessage, string entityId, string errorId, SiteRecoveryHealthErrorCustomerResolvability? customerResolvability)
+        internal SiteRecoveryInnerHealthError(string errorSource, string errorType, string errorLevel, string errorCategory, string errorCode, string summaryMessage, string errorMessage, string possibleCauses, string recommendedAction, DateTimeOffset? createdOn, string recoveryProviderErrorMessage, string entityId, string errorId, SiteRecoveryHealthErrorCustomerResolvability? customerResolvability)
         {
             ErrorSource = errorSource;
             ErrorType = errorType;
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             ErrorMessage = errorMessage;
             PossibleCauses = possibleCauses;
             RecommendedAction = recommendedAction;
-            CreationTimeUtc = creationTimeUtc;
+            CreatedOn = createdOn;
             RecoveryProviderErrorMessage = recoveryProviderErrorMessage;
             EntityId = entityId;
             ErrorId = errorId;
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// Error creation time (UTC).
         /// Serialized Name: InnerHealthError.creationTimeUtc
         /// </summary>
-        public DateTimeOffset? CreationTimeUtc { get; }
+        public DateTimeOffset? CreatedOn { get; }
         /// <summary>
         /// DRA error message.
         /// Serialized Name: InnerHealthError.recoveryProviderErrorMessage

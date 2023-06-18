@@ -70,11 +70,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// The resync details of the machine.
         /// Serialized Name: InMageReplicationDetails.resyncDetails
         /// </param>
-        /// <param name="retentionWindowStart">
+        /// <param name="retentionWindowStartOn">
         /// The retention window start time.
         /// Serialized Name: InMageReplicationDetails.retentionWindowStart
         /// </param>
-        /// <param name="retentionWindowEnd">
+        /// <param name="retentionWindowEndOn">
         /// The retention window end time.
         /// Serialized Name: InMageReplicationDetails.retentionWindowEnd
         /// </param>
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// The source IP address.
         /// Serialized Name: InMageReplicationDetails.ipAddress
         /// </param>
-        /// <param name="lastHeartbeat">
+        /// <param name="lastHeartbeatReceivedOn">
         /// The last heartbeat received from the source server.
         /// Serialized Name: InMageReplicationDetails.lastHeartbeat
         /// </param>
@@ -194,7 +194,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// The progress health.
         /// Serialized Name: InMageReplicationDetails.totalProgressHealth
         /// </param>
-        internal InMageReplicationDetails(string instanceType, string activeSiteType, int? sourceVmCpuCount, int? sourceVmRamSizeInMB, OSDiskDetails osDetails, string protectionStage, string vmId, string vmProtectionState, string vmProtectionStateDescription, InitialReplicationDetails resyncDetails, DateTimeOffset? retentionWindowStart, DateTimeOffset? retentionWindowEnd, double? compressedDataRateInMB, double? uncompressedDataRateInMB, long? rpoInSeconds, IReadOnlyList<InMageProtectedDiskDetails> protectedDisks, IPAddress ipAddress, DateTimeOffset? lastHeartbeat, string processServerId, string masterTargetId, IReadOnlyDictionary<string, DateTimeOffset> consistencyPoints, string diskResized, string rebootAfterUpdateStatus, string multiVmGroupId, string multiVmGroupName, string multiVmSyncStatus, InMageAgentDetails agentDetails, string vCenterInfrastructureId, string infrastructureVmId, IReadOnlyList<VmNicDetails> vmNics, string discoveryType, ResourceIdentifier azureStorageAccountId, IReadOnlyList<string> datastores, IReadOnlyList<SiteRecoveryHealthError> validationErrors, DateTimeOffset? lastRpoCalculatedOn, DateTimeOffset? lastUpdateReceivedOn, string replicaId, string osVersion, bool? isAdditionalStatsAvailable, long? totalDataTransferred, string totalProgressHealth) : base(instanceType)
+        internal InMageReplicationDetails(string instanceType, string activeSiteType, int? sourceVmCpuCount, int? sourceVmRamSizeInMB, OSDiskDetails osDetails, string protectionStage, string vmId, string vmProtectionState, string vmProtectionStateDescription, InitialReplicationDetails resyncDetails, DateTimeOffset? retentionWindowStartOn, DateTimeOffset? retentionWindowEndOn, double? compressedDataRateInMB, double? uncompressedDataRateInMB, long? rpoInSeconds, IReadOnlyList<InMageProtectedDiskDetails> protectedDisks, IPAddress ipAddress, DateTimeOffset? lastHeartbeatReceivedOn, string processServerId, string masterTargetId, IReadOnlyDictionary<string, DateTimeOffset> consistencyPoints, string diskResized, string rebootAfterUpdateStatus, string multiVmGroupId, string multiVmGroupName, string multiVmSyncStatus, InMageAgentDetails agentDetails, string vCenterInfrastructureId, string infrastructureVmId, IReadOnlyList<VmNicDetails> vmNics, string discoveryType, ResourceIdentifier azureStorageAccountId, IReadOnlyList<string> datastores, IReadOnlyList<SiteRecoveryHealthError> validationErrors, DateTimeOffset? lastRpoCalculatedOn, DateTimeOffset? lastUpdateReceivedOn, string replicaId, string osVersion, bool? isAdditionalStatsAvailable, long? totalDataTransferred, string totalProgressHealth) : base(instanceType)
         {
             ActiveSiteType = activeSiteType;
             SourceVmCpuCount = sourceVmCpuCount;
@@ -205,14 +205,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             VmProtectionState = vmProtectionState;
             VmProtectionStateDescription = vmProtectionStateDescription;
             ResyncDetails = resyncDetails;
-            RetentionWindowStart = retentionWindowStart;
-            RetentionWindowEnd = retentionWindowEnd;
+            RetentionWindowStartOn = retentionWindowStartOn;
+            RetentionWindowEndOn = retentionWindowEndOn;
             CompressedDataRateInMB = compressedDataRateInMB;
             UncompressedDataRateInMB = uncompressedDataRateInMB;
             RpoInSeconds = rpoInSeconds;
             ProtectedDisks = protectedDisks;
             IPAddress = ipAddress;
-            LastHeartbeat = lastHeartbeat;
+            LastHeartbeatReceivedOn = lastHeartbeatReceivedOn;
             ProcessServerId = processServerId;
             MasterTargetId = masterTargetId;
             ConsistencyPoints = consistencyPoints;
@@ -288,12 +288,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// The retention window start time.
         /// Serialized Name: InMageReplicationDetails.retentionWindowStart
         /// </summary>
-        public DateTimeOffset? RetentionWindowStart { get; }
+        public DateTimeOffset? RetentionWindowStartOn { get; }
         /// <summary>
         /// The retention window end time.
         /// Serialized Name: InMageReplicationDetails.retentionWindowEnd
         /// </summary>
-        public DateTimeOffset? RetentionWindowEnd { get; }
+        public DateTimeOffset? RetentionWindowEndOn { get; }
         /// <summary>
         /// The compressed data change rate in MB.
         /// Serialized Name: InMageReplicationDetails.compressedDataRateInMB
@@ -323,7 +323,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// The last heartbeat received from the source server.
         /// Serialized Name: InMageReplicationDetails.lastHeartbeat
         /// </summary>
-        public DateTimeOffset? LastHeartbeat { get; }
+        public DateTimeOffset? LastHeartbeatReceivedOn { get; }
         /// <summary>
         /// The process server Id.
         /// Serialized Name: InMageReplicationDetails.processServerId

@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Optional<ResourceIdentifier> sourceNicArmId = default;
             Optional<string> vmNetworkName = default;
             Optional<ResourceIdentifier> recoveryVmNetworkId = default;
-            Optional<IReadOnlyList<IPConfigDetails>> ipConfigs = default;
+            Optional<IReadOnlyList<HyperVIPConfigDetails>> ipConfigs = default;
             Optional<string> selectionType = default;
             Optional<string> recoveryNetworkSecurityGroupId = default;
             Optional<bool> enableAcceleratedNetworkingOnRecovery = default;
@@ -79,10 +79,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    List<IPConfigDetails> array = new List<IPConfigDetails>();
+                    List<HyperVIPConfigDetails> array = new List<HyperVIPConfigDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(IPConfigDetails.DeserializeIPConfigDetails(item));
+                        array.Add(HyperVIPConfigDetails.DeserializeHyperVIPConfigDetails(item));
                     }
                     ipConfigs = array;
                     continue;

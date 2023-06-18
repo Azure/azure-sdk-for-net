@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// The event specific settings.
         /// Serialized Name: EventProperties.eventSpecificDetails
         /// Please note <see cref="SiteRecoveryEventSpecificDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="JobStatusEventDetails"/>.
+        /// The available derived classes include <see cref="SiteRecoveryJJobStatusEventDetails"/>.
         /// </param>
         /// <param name="healthErrors">
         /// The list of errors / warnings capturing details associated with the issue(s).
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// The event specific settings.
         /// Serialized Name: EventProperties.eventSpecificDetails
         /// Please note <see cref="SiteRecoveryEventSpecificDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="JobStatusEventDetails"/>.
+        /// The available derived classes include <see cref="SiteRecoveryJJobStatusEventDetails"/>.
         /// </summary>
         public SiteRecoveryEventSpecificDetails EventSpecificDetails { get; }
         /// <summary>

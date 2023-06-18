@@ -11,7 +11,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// Model class for event specific details for an event.
     /// Serialized Name: EventSpecificDetails
     /// Please note <see cref="SiteRecoveryEventSpecificDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-    /// The available derived classes include <see cref="JobStatusEventDetails"/>.
+    /// The available derived classes include <see cref="SiteRecoveryJJobStatusEventDetails"/>.
     /// </summary>
     public abstract partial class SiteRecoveryEventSpecificDetails
     {

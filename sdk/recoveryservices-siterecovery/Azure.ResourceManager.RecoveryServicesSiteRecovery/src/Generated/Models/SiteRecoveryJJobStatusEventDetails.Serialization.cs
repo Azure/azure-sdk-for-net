@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    public partial class JobEntity
+    public partial class SiteRecoveryJJobStatusEventDetails
     {
-        internal static JobEntity DeserializeJobEntity(JsonElement element)
+        internal static SiteRecoveryJJobStatusEventDetails DeserializeSiteRecoveryJJobStatusEventDetails(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -20,10 +20,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
             Optional<ResourceIdentifier> jobId = default;
             Optional<string> jobFriendlyName = default;
-            Optional<string> targetObjectId = default;
-            Optional<string> targetObjectName = default;
-            Optional<string> targetInstanceType = default;
-            Optional<string> jobScenarioName = default;
+            Optional<string> jobStatus = default;
+            Optional<string> affectedObjectType = default;
+            string instanceType = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("jobId"u8))
@@ -40,28 +39,23 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     jobFriendlyName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("targetObjectId"u8))
+                if (property.NameEquals("jobStatus"u8))
                 {
-                    targetObjectId = property.Value.GetString();
+                    jobStatus = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("targetObjectName"u8))
+                if (property.NameEquals("affectedObjectType"u8))
                 {
-                    targetObjectName = property.Value.GetString();
+                    affectedObjectType = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("targetInstanceType"u8))
+                if (property.NameEquals("instanceType"u8))
                 {
-                    targetInstanceType = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("jobScenarioName"u8))
-                {
-                    jobScenarioName = property.Value.GetString();
+                    instanceType = property.Value.GetString();
                     continue;
                 }
             }
-            return new JobEntity(jobId.Value, jobFriendlyName.Value, targetObjectId.Value, targetObjectName.Value, targetInstanceType.Value, jobScenarioName.Value);
+            return new SiteRecoveryJJobStatusEventDetails(instanceType, jobId.Value, jobFriendlyName.Value, jobStatus.Value, affectedObjectType.Value);
         }
     }
 }

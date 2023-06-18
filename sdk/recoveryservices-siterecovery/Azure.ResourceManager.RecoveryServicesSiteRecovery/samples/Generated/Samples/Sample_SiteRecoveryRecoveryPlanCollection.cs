@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Samples
 
             // invoke the operation
             string recoveryPlanName = "RPtest1";
-            SiteRecoveryRecoveryPlanCreateOrUpdateContent content = new SiteRecoveryRecoveryPlanCreateOrUpdateContent(new CreateRecoveryPlanInputProperties("/Subscriptions/c183865e-6077-46f2-a3b1-deb0f4f4650a/resourceGroups/resourceGroupPS1/providers/Microsoft.RecoveryServices/vaults/vault1/replicationFabrics/cloud1", "Microsoft Azure", new RecoveryPlanGroup[]
+            SiteRecoveryRecoveryPlanCreateOrUpdateContent content = new SiteRecoveryRecoveryPlanCreateOrUpdateContent(new SiteRecoveryCreateRecoveryPlanProperties(new ResourceIdentifier("/Subscriptions/c183865e-6077-46f2-a3b1-deb0f4f4650a/resourceGroups/resourceGroupPS1/providers/Microsoft.RecoveryServices/vaults/vault1/replicationFabrics/cloud1"), new ResourceIdentifier("Microsoft Azure"), new RecoveryPlanGroup[]
             {
 new RecoveryPlanGroup(RecoveryPlanGroupType.Boot)
 {
@@ -169,7 +169,7 @@ EndGroupActions =
 }
             })
             {
-                FailoverDeploymentModel = FailoverDeploymentModel.ResourceManager,
+                FailoverDeploymentModel = SiteRecoveryFailoverDeploymentModel.ResourceManager,
             });
             ArmOperation<SiteRecoveryRecoveryPlanResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, recoveryPlanName, content);
             SiteRecoveryRecoveryPlanResource result = lro.Value;

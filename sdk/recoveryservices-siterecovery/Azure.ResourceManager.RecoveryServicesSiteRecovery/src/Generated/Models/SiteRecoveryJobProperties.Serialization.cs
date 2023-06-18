@@ -12,9 +12,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    public partial class JobProperties
+    public partial class SiteRecoveryJobProperties
     {
-        internal static JobProperties DeserializeJobProperties(JsonElement element)
+        internal static SiteRecoveryJobProperties DeserializeSiteRecoveryJobProperties(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Optional<string> targetObjectId = default;
             Optional<string> targetObjectName = default;
             Optional<string> targetInstanceType = default;
-            Optional<JobDetails> customDetails = default;
+            Optional<SiteRecoveryJobDetails> customDetails = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("activityId"u8))
@@ -142,11 +142,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    customDetails = JobDetails.DeserializeJobDetails(property.Value);
+                    customDetails = SiteRecoveryJobDetails.DeserializeSiteRecoveryJobDetails(property.Value);
                     continue;
                 }
             }
-            return new JobProperties(activityId.Value, scenarioName.Value, friendlyName.Value, state.Value, stateDescription.Value, Optional.ToList(tasks), Optional.ToList(errors), Optional.ToNullable(startTime), Optional.ToNullable(endTime), Optional.ToList(allowedActions), targetObjectId.Value, targetObjectName.Value, targetInstanceType.Value, customDetails.Value);
+            return new SiteRecoveryJobProperties(activityId.Value, scenarioName.Value, friendlyName.Value, state.Value, stateDescription.Value, Optional.ToList(tasks), Optional.ToList(errors), Optional.ToNullable(startTime), Optional.ToNullable(endTime), Optional.ToList(allowedActions), targetObjectId.Value, targetObjectName.Value, targetInstanceType.Value, customDetails.Value);
         }
     }
 }

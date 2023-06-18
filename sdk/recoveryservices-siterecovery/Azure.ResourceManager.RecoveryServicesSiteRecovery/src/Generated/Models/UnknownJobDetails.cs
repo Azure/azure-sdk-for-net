@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// The UnknownJobDetails.
     /// Serialized Name: UnknownJobDetails
     /// </summary>
-    internal partial class UnknownJobDetails : JobDetails
+    internal partial class UnknownJobDetails : SiteRecoveryJobDetails
     {
         /// <summary> Initializes a new instance of UnknownJobDetails. </summary>
         /// <param name="instanceType">

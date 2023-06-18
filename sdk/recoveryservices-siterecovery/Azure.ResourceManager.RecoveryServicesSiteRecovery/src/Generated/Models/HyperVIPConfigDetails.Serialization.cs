@@ -12,9 +12,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    public partial class IPConfigDetails
+    public partial class HyperVIPConfigDetails
     {
-        internal static IPConfigDetails DeserializeIPConfigDetails(JsonElement element)
+        internal static HyperVIPConfigDetails DeserializeHyperVIPConfigDetails(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -29,11 +29,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Optional<string> recoverySubnetName = default;
             Optional<IPAddress> recoveryStaticIPAddress = default;
             Optional<string> recoveryIPAddressType = default;
-            Optional<string> recoveryPublicIPAddressId = default;
+            Optional<ResourceIdentifier> recoveryPublicIPAddressId = default;
             Optional<IReadOnlyList<string>> recoveryLBBackendAddressPoolIds = default;
             Optional<string> tfoSubnetName = default;
             Optional<IPAddress> tfoStaticIPAddress = default;
-            Optional<string> tfoPublicIPAddressId = default;
+            Optional<ResourceIdentifier> tfoPublicIPAddressId = default;
             Optional<IReadOnlyList<string>> tfoLBBackendAddressPoolIds = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -100,7 +100,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 if (property.NameEquals("recoveryPublicIPAddressId"u8))
                 {
-                    recoveryPublicIPAddressId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    recoveryPublicIPAddressId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("recoveryLBBackendAddressPoolIds"u8))
@@ -133,7 +137,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 if (property.NameEquals("tfoPublicIPAddressId"u8))
                 {
-                    tfoPublicIPAddressId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    tfoPublicIPAddressId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("tfoLBBackendAddressPoolIds"u8))
@@ -151,7 +159,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     continue;
                 }
             }
-            return new IPConfigDetails(name.Value, Optional.ToNullable(isPrimary), subnetName.Value, staticIPAddress.Value, ipAddressType.Value, Optional.ToNullable(isSeletedForFailover), recoverySubnetName.Value, recoveryStaticIPAddress.Value, recoveryIPAddressType.Value, recoveryPublicIPAddressId.Value, Optional.ToList(recoveryLBBackendAddressPoolIds), tfoSubnetName.Value, tfoStaticIPAddress.Value, tfoPublicIPAddressId.Value, Optional.ToList(tfoLBBackendAddressPoolIds));
+            return new HyperVIPConfigDetails(name.Value, Optional.ToNullable(isPrimary), subnetName.Value, staticIPAddress.Value, ipAddressType.Value, Optional.ToNullable(isSeletedForFailover), recoverySubnetName.Value, recoveryStaticIPAddress.Value, recoveryIPAddressType.Value, recoveryPublicIPAddressId.Value, Optional.ToList(recoveryLBBackendAddressPoolIds), tfoSubnetName.Value, tfoStaticIPAddress.Value, tfoPublicIPAddressId.Value, Optional.ToList(tfoLBBackendAddressPoolIds));
         }
     }
 }

@@ -110,11 +110,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Samples
             // invoke the operation
             SiteRecoveryNetworkMappingPatch patch = new SiteRecoveryNetworkMappingPatch()
             {
-                Properties = new UpdateNetworkMappingInputProperties()
+                Properties = new UpdateNetworkMappingContentProperties()
                 {
                     RecoveryFabricName = "Microsoft Azure",
-                    RecoveryNetworkId = "/subscriptions/c183865e-6077-46f2-a3b1-deb0f4f4650a/resourceGroups/siterecoveryProd1/providers/Microsoft.Network/virtualNetworks/vnetavrai2",
-                    FabricSpecificDetails = new VmmToAzureUpdateNetworkMappingInput(),
+                    RecoveryNetworkId = new ResourceIdentifier("/subscriptions/c183865e-6077-46f2-a3b1-deb0f4f4650a/resourceGroups/siterecoveryProd1/providers/Microsoft.Network/virtualNetworks/vnetavrai2"),
+                    FabricSpecificDetails = new VmmToAzureUpdateNetworkMappingContent(),
                 },
             };
             ArmOperation<SiteRecoveryNetworkMappingResource> lro = await siteRecoveryNetworkMapping.UpdateAsync(WaitUntil.Completed, patch);

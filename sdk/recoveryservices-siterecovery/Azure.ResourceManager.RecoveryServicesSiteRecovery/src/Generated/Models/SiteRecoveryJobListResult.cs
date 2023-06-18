@@ -15,15 +15,15 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// Collection of jobs.
     /// Serialized Name: JobCollection
     /// </summary>
-    internal partial class JobCollection
+    internal partial class SiteRecoveryJobListResult
     {
-        /// <summary> Initializes a new instance of JobCollection. </summary>
-        internal JobCollection()
+        /// <summary> Initializes a new instance of SiteRecoveryJobListResult. </summary>
+        internal SiteRecoveryJobListResult()
         {
             Value = new ChangeTrackingList<SiteRecoveryJobData>();
         }
 
-        /// <summary> Initializes a new instance of JobCollection. </summary>
+        /// <summary> Initializes a new instance of SiteRecoveryJobListResult. </summary>
         /// <param name="value">
         /// The list of jobs.
         /// Serialized Name: JobCollection.value
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// The value of next link.
         /// Serialized Name: JobCollection.nextLink
         /// </param>
-        internal JobCollection(IReadOnlyList<SiteRecoveryJobData> value, string nextLink)
+        internal SiteRecoveryJobListResult(IReadOnlyList<SiteRecoveryJobData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;

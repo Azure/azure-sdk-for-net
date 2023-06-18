@@ -12,19 +12,19 @@ using Azure.Core;
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     /// <summary>
-    /// The IPConfigDetails.
+    /// The HyperVIPConfigDetails.
     /// Serialized Name: IPConfigDetails
     /// </summary>
-    public partial class IPConfigDetails
+    public partial class HyperVIPConfigDetails
     {
-        /// <summary> Initializes a new instance of IPConfigDetails. </summary>
-        internal IPConfigDetails()
+        /// <summary> Initializes a new instance of HyperVIPConfigDetails. </summary>
+        internal HyperVIPConfigDetails()
         {
             RecoveryLBBackendAddressPoolIds = new ChangeTrackingList<string>();
             TfoLBBackendAddressPoolIds = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of IPConfigDetails. </summary>
+        /// <summary> Initializes a new instance of HyperVIPConfigDetails. </summary>
         /// <param name="name"> Serialized Name: IPConfigDetails.name. </param>
         /// <param name="isPrimary"> Serialized Name: IPConfigDetails.isPrimary. </param>
         /// <param name="subnetName"> Serialized Name: IPConfigDetails.subnetName. </param>
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="tfoStaticIPAddress"> Serialized Name: IPConfigDetails.tfoStaticIPAddress. </param>
         /// <param name="tfoPublicIPAddressId"> Serialized Name: IPConfigDetails.tfoPublicIPAddressId. </param>
         /// <param name="tfoLBBackendAddressPoolIds"> Serialized Name: IPConfigDetails.tfoLBBackendAddressPoolIds. </param>
-        internal IPConfigDetails(string name, bool? isPrimary, string subnetName, IPAddress staticIPAddress, string ipAddressType, bool? isSeletedForFailover, string recoverySubnetName, IPAddress recoveryStaticIPAddress, string recoveryIPAddressType, string recoveryPublicIPAddressId, IReadOnlyList<string> recoveryLBBackendAddressPoolIds, string tfoSubnetName, IPAddress tfoStaticIPAddress, string tfoPublicIPAddressId, IReadOnlyList<string> tfoLBBackendAddressPoolIds)
+        internal HyperVIPConfigDetails(string name, bool? isPrimary, string subnetName, IPAddress staticIPAddress, string ipAddressType, bool? isSeletedForFailover, string recoverySubnetName, IPAddress recoveryStaticIPAddress, string recoveryIPAddressType, ResourceIdentifier recoveryPublicIPAddressId, IReadOnlyList<string> recoveryLBBackendAddressPoolIds, string tfoSubnetName, IPAddress tfoStaticIPAddress, ResourceIdentifier tfoPublicIPAddressId, IReadOnlyList<string> tfoLBBackendAddressPoolIds)
         {
             Name = name;
             IsPrimary = isPrimary;
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <summary> Serialized Name: IPConfigDetails.recoveryIPAddressType. </summary>
         public string RecoveryIPAddressType { get; }
         /// <summary> Serialized Name: IPConfigDetails.recoveryPublicIPAddressId. </summary>
-        public string RecoveryPublicIPAddressId { get; }
+        public ResourceIdentifier RecoveryPublicIPAddressId { get; }
         /// <summary> Serialized Name: IPConfigDetails.recoveryLBBackendAddressPoolIds. </summary>
         public IReadOnlyList<string> RecoveryLBBackendAddressPoolIds { get; }
         /// <summary> Serialized Name: IPConfigDetails.tfoSubnetName. </summary>
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <summary> Serialized Name: IPConfigDetails.tfoStaticIPAddress. </summary>
         public IPAddress TfoStaticIPAddress { get; }
         /// <summary> Serialized Name: IPConfigDetails.tfoPublicIPAddressId. </summary>
-        public string TfoPublicIPAddressId { get; }
+        public ResourceIdentifier TfoPublicIPAddressId { get; }
         /// <summary> Serialized Name: IPConfigDetails.tfoLBBackendAddressPoolIds. </summary>
         public IReadOnlyList<string> TfoLBBackendAddressPoolIds { get; }
     }

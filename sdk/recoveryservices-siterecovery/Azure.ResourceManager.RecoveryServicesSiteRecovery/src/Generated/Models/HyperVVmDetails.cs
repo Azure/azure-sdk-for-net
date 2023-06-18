@@ -13,19 +13,19 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary>
     /// Single Host fabric provider specific VM settings.
     /// Serialized Name: HyperVVirtualMachineDetails
-    /// Please note <see cref="HyperVVirtualMachineDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+    /// Please note <see cref="HyperVVmDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="VmmVirtualMachineDetails"/>.
     /// </summary>
-    public partial class HyperVVirtualMachineDetails : SiteRecoveryReplicationProviderSettings
+    public partial class HyperVVmDetails : SiteRecoveryReplicationProviderSettings
     {
-        /// <summary> Initializes a new instance of HyperVVirtualMachineDetails. </summary>
-        internal HyperVVirtualMachineDetails()
+        /// <summary> Initializes a new instance of HyperVVmDetails. </summary>
+        internal HyperVVmDetails()
         {
             DiskDetails = new ChangeTrackingList<SiteRecoveryDiskDetails>();
             InstanceType = "HyperVVirtualMachine";
         }
 
-        /// <summary> Initializes a new instance of HyperVVirtualMachineDetails. </summary>
+        /// <summary> Initializes a new instance of HyperVVmDetails. </summary>
         /// <param name="instanceType">
         /// Gets the class type. Overridden in derived classes.
         /// Serialized Name: ConfigurationSettings.instanceType
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// The Id of the hyper-v host in fabric.
         /// Serialized Name: HyperVVirtualMachineDetails.hyperVHostId
         /// </param>
-        internal HyperVVirtualMachineDetails(string instanceType, string sourceItemId, string generation, OSDetails osDetails, IReadOnlyList<SiteRecoveryDiskDetails> diskDetails, PresenceStatus? hasPhysicalDisk, PresenceStatus? hasFibreChannelAdapter, PresenceStatus? hasSharedVhd, string hyperVHostId) : base(instanceType)
+        internal HyperVVmDetails(string instanceType, string sourceItemId, string generation, OSDetails osDetails, IReadOnlyList<SiteRecoveryDiskDetails> diskDetails, PresenceStatus? hasPhysicalDisk, PresenceStatus? hasFibreChannelAdapter, PresenceStatus? hasSharedVhd, string hyperVHostId) : base(instanceType)
         {
             SourceItemId = sourceItemId;
             Generation = generation;

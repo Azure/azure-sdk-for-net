@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Samples
             // invoke the operation
             SiteRecoveryRecoveryPlanPatch patch = new SiteRecoveryRecoveryPlanPatch()
             {
-                UpdateRecoveryPlanInputGroups =
+                UpdateRecoveryPlanContentGroups =
 {
 new RecoveryPlanGroup(RecoveryPlanGroupType.Shutdown)
 {
@@ -261,11 +261,11 @@ EndGroupActions =
             SiteRecoveryRecoveryPlanResource siteRecoveryRecoveryPlan = client.GetSiteRecoveryRecoveryPlanResource(siteRecoveryRecoveryPlanResourceId);
 
             // invoke the operation
-            RecoveryPlanPlannedFailoverContent content = new RecoveryPlanPlannedFailoverContent(new RecoveryPlanPlannedFailoverInputProperties(PossibleOperationsDirection.PrimaryToRecovery)
+            RecoveryPlanPlannedFailoverContent content = new RecoveryPlanPlannedFailoverContent(new RecoveryPlanPlannedFailoverContentProperties(PossibleOperationsDirection.PrimaryToRecovery)
             {
                 ProviderSpecificDetails =
 {
-new RecoveryPlanHyperVReplicaAzureFailoverInput()
+new RecoveryPlanHyperVReplicaAzureFailoverContent()
 },
             });
             ArmOperation<SiteRecoveryRecoveryPlanResource> lro = await siteRecoveryRecoveryPlan.PlannedFailoverAsync(WaitUntil.Completed, content);
@@ -334,12 +334,12 @@ new RecoveryPlanHyperVReplicaAzureFailoverInput()
             SiteRecoveryRecoveryPlanResource siteRecoveryRecoveryPlan = client.GetSiteRecoveryRecoveryPlanResource(siteRecoveryRecoveryPlanResourceId);
 
             // invoke the operation
-            RecoveryPlanTestFailoverContent content = new RecoveryPlanTestFailoverContent(new RecoveryPlanTestFailoverInputProperties(PossibleOperationsDirection.PrimaryToRecovery, "VmNetworkAsInput")
+            RecoveryPlanTestFailoverContent content = new RecoveryPlanTestFailoverContent(new RecoveryPlanTestFailoverContentProperties(PossibleOperationsDirection.PrimaryToRecovery, "VmNetworkAsInput")
             {
-                NetworkId = "/subscriptions/c183865e-6077-46f2-a3b1-deb0f4f4650a/resourceGroups/siterecoveryProd1/providers/Microsoft.Network/virtualNetworks/vnetavrai",
+                NetworkId = new ResourceIdentifier("/subscriptions/c183865e-6077-46f2-a3b1-deb0f4f4650a/resourceGroups/siterecoveryProd1/providers/Microsoft.Network/virtualNetworks/vnetavrai"),
                 ProviderSpecificDetails =
 {
-new RecoveryPlanHyperVReplicaAzureFailoverInput()
+new RecoveryPlanHyperVReplicaAzureFailoverContent()
 },
             });
             ArmOperation<SiteRecoveryRecoveryPlanResource> lro = await siteRecoveryRecoveryPlan.TestFailoverAsync(WaitUntil.Completed, content);
@@ -375,7 +375,7 @@ new RecoveryPlanHyperVReplicaAzureFailoverInput()
             SiteRecoveryRecoveryPlanResource siteRecoveryRecoveryPlan = client.GetSiteRecoveryRecoveryPlanResource(siteRecoveryRecoveryPlanResourceId);
 
             // invoke the operation
-            RecoveryPlanTestFailoverCleanupContent content = new RecoveryPlanTestFailoverCleanupContent(new RecoveryPlanTestFailoverCleanupInputProperties()
+            RecoveryPlanTestFailoverCleanupContent content = new RecoveryPlanTestFailoverCleanupContent(new RecoveryPlanTestFailoverCleanupContentProperties()
             {
                 Comments = "Test Failover Cleanup",
             });
@@ -412,11 +412,11 @@ new RecoveryPlanHyperVReplicaAzureFailoverInput()
             SiteRecoveryRecoveryPlanResource siteRecoveryRecoveryPlan = client.GetSiteRecoveryRecoveryPlanResource(siteRecoveryRecoveryPlanResourceId);
 
             // invoke the operation
-            RecoveryPlanUnplannedFailoverContent content = new RecoveryPlanUnplannedFailoverContent(new RecoveryPlanUnplannedFailoverInputProperties(PossibleOperationsDirection.PrimaryToRecovery, SourceSiteOperation.Required)
+            RecoveryPlanUnplannedFailoverContent content = new RecoveryPlanUnplannedFailoverContent(new RecoveryPlanUnplannedFailoverContentProperties(PossibleOperationsDirection.PrimaryToRecovery, SourceSiteOperation.Required)
             {
                 ProviderSpecificDetails =
 {
-new RecoveryPlanHyperVReplicaAzureFailoverInput()
+new RecoveryPlanHyperVReplicaAzureFailoverContent()
 },
             });
             ArmOperation<SiteRecoveryRecoveryPlanResource> lro = await siteRecoveryRecoveryPlan.UnplannedFailoverAsync(WaitUntil.Completed, content);

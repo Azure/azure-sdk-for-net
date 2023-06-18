@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// This class represents the details for a test failover job.
     /// Serialized Name: TestFailoverJobDetails
     /// </summary>
-    public partial class TestFailoverJobDetails : JobDetails
+    public partial class TestFailoverJobDetails : SiteRecoveryJobDetails
     {
         /// <summary> Initializes a new instance of TestFailoverJobDetails. </summary>
         internal TestFailoverJobDetails()
