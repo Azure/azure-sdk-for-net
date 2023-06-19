@@ -75,6 +75,7 @@ namespace Azure.Core.Expressions.DataFactory
             }
             if (_kind == DataFactoryElementKind.KeyVaultSecretReference)
             {
+                // TODO should this include the version and the Reference name?
                 return ((DataFactoryKeyVaultSecretReference)Secret!).SecretName.ToString();
             }
 
@@ -101,12 +102,12 @@ namespace Azure.Core.Expressions.DataFactory
         /// <summary>
         /// Creates a new instance of <see cref="DataFactoryElement{T}"/> using the KeyVaultSecretReference value.
         /// </summary>
-        /// <param name="dataFactoryKeyVaultSecretReference"> The key vault secret reference value. </param>
+        /// <param name="keyVaultSecretReference"> The key vault secret reference value. </param>
 #pragma warning disable CA1000 // Do not declare static members on generic types
-        public static DataFactoryElement<string?> FromKeyVaultSecretReference(DataFactoryKeyVaultSecretReference dataFactoryKeyVaultSecretReference)
+        public static DataFactoryElement<string?> FromKeyVaultSecretReference(DataFactoryKeyVaultSecretReference keyVaultSecretReference)
 #pragma warning restore CA1000 // Do not declare static members on generic types
         {
-            return new DataFactoryElement<string?>(dataFactoryKeyVaultSecretReference, DataFactoryElementKind.KeyVaultSecretReference);
+            return new DataFactoryElement<string?>(keyVaultSecretReference, DataFactoryElementKind.KeyVaultSecretReference);
         }
 
         /// <summary>

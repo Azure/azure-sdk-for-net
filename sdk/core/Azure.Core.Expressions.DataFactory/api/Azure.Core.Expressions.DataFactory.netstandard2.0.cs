@@ -25,7 +25,7 @@ namespace Azure.Core.Expressions.DataFactory
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object? obj) { throw null; }
         public static Azure.Core.Expressions.DataFactory.DataFactoryElement<T> FromExpression(string expression) { throw null; }
-        public static Azure.Core.Expressions.DataFactory.DataFactoryElement<System.String?> FromKeyVaultSecretReference(Azure.Core.Expressions.DataFactory.DataFactoryKeyVaultSecretReference dataFactoryKeyVaultSecretReference) { throw null; }
+        public static Azure.Core.Expressions.DataFactory.DataFactoryElement<System.String?> FromKeyVaultSecretReference(Azure.Core.Expressions.DataFactory.DataFactoryKeyVaultSecretReference keyVaultSecretReference) { throw null; }
         public static Azure.Core.Expressions.DataFactory.DataFactoryElement<T> FromLiteral(T? literal) { throw null; }
         public static Azure.Core.Expressions.DataFactory.DataFactoryElement<System.String?> FromSecretString(Azure.Core.Expressions.DataFactory.DataFactorySecretString secretString) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
