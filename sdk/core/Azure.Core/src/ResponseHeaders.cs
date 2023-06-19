@@ -53,7 +53,7 @@ namespace Azure.Core
 
                 if (!int.TryParse(stringValue, NumberStyles.Integer, CultureInfo.InvariantCulture, out int intValue))
                 {
-                    throw new ContentLengthOverflowException($"Failed to parse value of 'Content-Length' header: '{stringValue}.  If value exceeds {int.MaxValue}, please use 'Response.Headers.ContentLengthLong' instead.'.");
+                    throw new ContentLengthOverflowException($"Failed to parse value of 'Content-Length' header: '{stringValue}'.  If value exceeds {int.MaxValue}, please use 'Response.Headers.ContentLengthLong' instead.");
                 }
 
                 return intValue;
