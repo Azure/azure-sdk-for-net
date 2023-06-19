@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="accessInfoType"> Access Information type (&apos;access&apos; or &apos;gitAccess&apos;). </param>
+        /// <param name="accessInfoType"> Access Information type ('access' or 'gitAccess'). </param>
         /// <param name="principalId"> Principal (User) Identifier. </param>
         /// <param name="isDirectAccessEnabled"> Determines whether direct access is enabled. </param>
         internal TenantAccessInfoData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string accessInfoType, string principalId, bool? isDirectAccessEnabled) : base(id, name, resourceType, systemData)
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.ApiManagement
             IsDirectAccessEnabled = isDirectAccessEnabled;
         }
 
-        /// <summary> Access Information type (&apos;access&apos; or &apos;gitAccess&apos;). </summary>
+        /// <summary> Access Information type ('access' or 'gitAccess'). </summary>
         public string AccessInfoType { get; set; }
         /// <summary> Principal (User) Identifier. </summary>
         public string PrincipalId { get; set; }

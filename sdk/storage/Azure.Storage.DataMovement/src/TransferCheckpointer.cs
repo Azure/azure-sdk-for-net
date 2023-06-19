@@ -173,25 +173,5 @@ namespace Azure.Storage.DataMovement
         /// </summary>
         /// <returns>The list of all the transfers contained in the checkpointer.</returns>
         public abstract Task<List<string>> GetStoredTransfersAsync(CancellationToken cancellationToken = default);
-
-        /// <summary>
-        /// Compares the job plan header with the inputted source and destination to
-        /// ensure the source and destination are the same, or else throw.
-        /// </summary>
-        public static void CheckInputWithHeader(
-            string transferId,
-            JobPartPlanHeader header)
-        {
-            string schemaVersion = header.Version;
-            if (!DataMovementConstants.PlanFile.SchemaVersion.Equals(schemaVersion))
-            {
-                throw Errors.MismatchSchemaVersionHeader(schemaVersion);
-            }
-
-            if (!header.TransferId.Equals(transferId))
-            {
-                throw Errors.MismatchTransferId(transferId, header.TransferId);
-            }
-        }
     }
 }

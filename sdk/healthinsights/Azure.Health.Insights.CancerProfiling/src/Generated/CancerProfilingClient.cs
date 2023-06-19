@@ -69,6 +69,7 @@ namespace Azure.Health.Insights.CancerProfiling
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="oncoPhenotypeData"/> is null. </exception>
         /// <remarks> Creates an Onco Phenotype job with the given request body. </remarks>
+        /// <include file="Docs/CancerProfilingClient.xml" path="doc/members/member[@name='InferCancerProfileAsync(WaitUntil,OncoPhenotypeData,string,DateTimeOffset?,CancellationToken)']/*" />
         public virtual async Task<Operation<OncoPhenotypeResult>> InferCancerProfileAsync(WaitUntil waitUntil, OncoPhenotypeData oncoPhenotypeData, string repeatabilityRequestId = null, DateTimeOffset? repeatabilityFirstSent = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(oncoPhenotypeData, nameof(oncoPhenotypeData));
@@ -86,6 +87,7 @@ namespace Azure.Health.Insights.CancerProfiling
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="oncoPhenotypeData"/> is null. </exception>
         /// <remarks> Creates an Onco Phenotype job with the given request body. </remarks>
+        /// <include file="Docs/CancerProfilingClient.xml" path="doc/members/member[@name='InferCancerProfile(WaitUntil,OncoPhenotypeData,string,DateTimeOffset?,CancellationToken)']/*" />
         public virtual Operation<OncoPhenotypeResult> InferCancerProfile(WaitUntil waitUntil, OncoPhenotypeData oncoPhenotypeData, string repeatabilityRequestId = null, DateTimeOffset? repeatabilityFirstSent = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(oncoPhenotypeData, nameof(oncoPhenotypeData));

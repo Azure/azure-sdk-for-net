@@ -48,7 +48,7 @@ namespace Azure.AI.TextAnalytics.Samples
 
             #region Snippet:SampleLROPolling_PollOperation
             // Perform the text analysis operation.
-            AnalyzeHealthcareEntitiesOperation operation = await client.StartAnalyzeHealthcareEntitiesAsync(batchedDocuments);
+            AnalyzeHealthcareEntitiesOperation operation = await client.AnalyzeHealthcareEntitiesAsync(WaitUntil.Started, batchedDocuments);
             TimeSpan pollingInterval = new(1000);
 
             while (true)

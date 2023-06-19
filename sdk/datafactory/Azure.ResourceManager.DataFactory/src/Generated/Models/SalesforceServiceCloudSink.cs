@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="disableMetricsCollection"> If true, disable data store metrics collection. Default is false. Type: boolean (or Expression with resultType boolean). </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
         /// <param name="writeBehavior"> The write behavior for the operation. Default is Insert. </param>
-        /// <param name="externalIdFieldName"> The name of the external ID field for upsert operation. Default value is &apos;Id&apos; column. Type: string (or Expression with resultType string). </param>
+        /// <param name="externalIdFieldName"> The name of the external ID field for upsert operation. Default value is 'Id' column. Type: string (or Expression with resultType string). </param>
         /// <param name="ignoreNullValues"> The flag indicating whether or not to ignore null values from input dataset (except key fields) during write operation. Default value is false. If set it to true, it means ADF will leave the data in the destination object unchanged when doing upsert/update operation and insert defined default value when doing insert operation, versus ADF will update the data in the destination object to NULL when doing upsert/update operation and insert NULL value when doing insert operation. Type: boolean (or Expression with resultType boolean). </param>
         internal SalesforceServiceCloudSink(string copySinkType, BinaryData writeBatchSize, BinaryData writeBatchTimeout, BinaryData sinkRetryCount, BinaryData sinkRetryWait, BinaryData maxConcurrentConnections, BinaryData disableMetricsCollection, IDictionary<string, BinaryData> additionalProperties, SalesforceSinkWriteBehavior? writeBehavior, BinaryData externalIdFieldName, BinaryData ignoreNullValues) : base(copySinkType, writeBatchSize, writeBatchTimeout, sinkRetryCount, sinkRetryWait, maxConcurrentConnections, disableMetricsCollection, additionalProperties)
         {
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> The write behavior for the operation. Default is Insert. </summary>
         public SalesforceSinkWriteBehavior? WriteBehavior { get; set; }
         /// <summary>
-        /// The name of the external ID field for upsert operation. Default value is &apos;Id&apos; column. Type: string (or Expression with resultType string).
+        /// The name of the external ID field for upsert operation. Default value is 'Id' column. Type: string (or Expression with resultType string).
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>

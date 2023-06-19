@@ -23,18 +23,7 @@ namespace Azure.Communication.JobRouter
             }
         }
 
-        /// <summary> Initializes a new instance of AzureFunctionRule. </summary>
-        /// <param name="functionAppUri"> URL for custom azure function. </param>
-        /// <param name="credential"> Access credentials to Azure function. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="functionAppUri"/> is null. </exception>
-        public FunctionRule(Uri functionAppUri, FunctionRuleCredential credential)
-            : this(null, functionAppUri, credential)
-        {
-            if (functionAppUri == null)
-            {
-                throw new ArgumentNullException(nameof(functionAppUri), "cannot be set to empty or null");
-            }
-        }
+        internal Uri FunctionUri { get; set; }
 
         internal static void ValidateUrl(string urlEndpoint)
         {

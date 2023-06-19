@@ -61,6 +61,12 @@ namespace Azure.Search.Documents.Models
         /// <c>null</c> if the <see cref="SearchOptions.QueryCaption"/> parameter was not specified or set to <see cref="QueryCaptionType.None"/>. </summary>
         public IList<CaptionResult> Captions { get; internal set; }
 
+        /// <summary> Reason that a partial response was returned for a semantic search request. </summary>
+        public SemanticPartialResponseReason? SemanticPartialResponseReason { get; internal set; }
+
+        /// <summary> Type of partial response that was returned for a semantic search request. </summary>
+        public SemanticPartialResponseType? SemanticPartialResponseType { get; internal set; }
+
         /// <summary>
         /// Gets the first (server side) page of search result values.
         /// </summary>
@@ -238,6 +244,16 @@ namespace Azure.Search.Documents.Models
                 {
                     results.NextOptions = SearchOptions.DeserializeSearchOptions(prop.Value);
                 }
+                else if (prop.NameEquals(Constants.SearchSemanticPartialResponseReasonKeyJson.EncodedUtf8Bytes) &&
+                    prop.Value.ValueKind != JsonValueKind.Null)
+                {
+                    results.SemanticPartialResponseReason = new SemanticPartialResponseReason(prop.Value.GetString());
+                }
+                else if (prop.NameEquals(Constants.SearchSemanticPartialResponseTypeKeyJson.EncodedUtf8Bytes) &&
+                    prop.Value.ValueKind != JsonValueKind.Null)
+                {
+                    results.SemanticPartialResponseType = new SemanticPartialResponseType(prop.Value.GetString());
+                }
                 else if (prop.NameEquals(Constants.SearchAnswersKeyJson.EncodedUtf8Bytes) &&
                     prop.Value.ValueKind != JsonValueKind.Null)
                 {
@@ -321,6 +337,12 @@ namespace Azure.Search.Documents.Models
         /// <see cref="SearchOptions.Facets"/>.
         /// </summary>
         public IDictionary<string, IList<FacetResult>> Facets => _results.Facets;
+
+        /// <summary> Reason that a partial response was returned for a semantic search request. </summary>
+        public SemanticPartialResponseReason? SemanticPartialResponseReason => _results.SemanticPartialResponseReason;
+
+        /// <summary> Type of partial response that was returned for a semantic search request. </summary>
+        public SemanticPartialResponseType? SemanticPartialResponseType => _results.SemanticPartialResponseType;
 
         /// <inheritdoc />
         public override IReadOnlyList<SearchResult<T>> Values =>

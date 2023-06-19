@@ -1,14 +1,35 @@
 # Release History
 
-## 1.0.0-beta.4 (Unreleased)
+## 1.0.0-beta.5 (Unreleased)
 
 ### Features Added
+
+* Added `SamplingRatio` property to customize the sampling rate in Azure Monitor Exporter.
+  ([#36972](https://github.com/Azure/azure-sdk-for-net/pull/36972))
 
 ### Breaking Changes
 
 ### Bugs Fixed
 
 ### Other Changes
+
+* Update OpenTelemetry dependencies
+  ([#36859](https://github.com/Azure/azure-sdk-for-net/pull/36859))
+  - OpenTelemetry 1.5.0
+  - OpenTelemetry.Extensions.Hosting 1.5.0
+  - OpenTelemetry.Instrumentation.AspNetCore 1.5.0-beta.1
+  - OpenTelemetry.Instrumentation.Http 1.5.0-beta.1
+  - OpenTelemetry.Instrumentation.SqlClient 1.5.0-beta.1
+
+* Removed reference to `OpenTelemetry.Extensions.AzureMonitor`.
+  ([#36972](https://github.com/Azure/azure-sdk-for-net/pull/36972))
+
+## 1.0.0-beta.4 (2023-05-09)
+
+### Features Added
+
+* Added ability to configure sampling percentage using `ApplicationInsightsSamplerOptions`.
+([#36111](https://github.com/Azure/azure-sdk-for-net/pull/3611))
 
 ## 1.0.0-beta.3 (2023-04-11)
 

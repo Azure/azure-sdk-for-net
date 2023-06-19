@@ -8,44 +8,91 @@ namespace Azure.Core.Json
 {
     internal struct MutableJsonChange
     {
-        public string Path { get; set; }
+        private JsonElement? _serializedValue;
+        private readonly JsonSerializerOptions _serializerOptions;
 
-        public int Index { get; set; }
-
-        public object? Value { get; set; }
-
-        /// <summary>
-        /// The change invalidates the existing node's JsonElement
-        /// due to changes in JsonValueKind or path structure.
-        /// If this is true, Value holds a new JsonElement.
-        /// </summary>
-        public bool ReplacesJsonElement { get; set; }
-
-        internal Utf8JsonReader GetReader()
+        public MutableJsonChange(string path,
+            int index,
+            object? value,
+            JsonSerializerOptions options,
+            MutableJsonChangeKind changeKind,
+            string? addedPropertyName)
         {
-            if (!ReplacesJsonElement)
+            Path = path;
+            Index = index;
+            Value = value;
+            _serializerOptions = options;
+            ChangeKind = changeKind;
+            AddedPropertyName = addedPropertyName;
+
+            if (value is JsonElement element)
             {
-                // This change doesn't represent a new node, so we shouldn't need a new reader.
-                throw new InvalidOperationException("Unable to get Utf8JsonReader for this change.");
+                _serializedValue = element;
             }
 
-            return MutableJsonElement.GetReaderForElement(AsJsonElement());
+            if (value is JsonDocument doc)
+            {
+                _serializedValue = doc.RootElement;
+            }
         }
 
-        internal JsonElement AsJsonElement()
+        public string Path { get; }
+
+        public int Index { get; }
+
+        public object? Value { get; }
+
+        public string? AddedPropertyName { get; }
+
+        public MutableJsonChangeKind ChangeKind { get; }
+
+        public JsonValueKind ValueKind => GetSerializedValue().ValueKind;
+
+        internal JsonElement GetSerializedValue()
         {
-            if (Value is JsonElement)
+            if (_serializedValue != null)
             {
-                return (JsonElement)Value;
+                return _serializedValue.Value;
             }
 
-            byte[] bytes = JsonSerializer.SerializeToUtf8Bytes(Value);
-            return JsonDocument.Parse(bytes).RootElement;
+            byte[] bytes = JsonSerializer.SerializeToUtf8Bytes(Value, _serializerOptions);
+            _serializedValue = JsonDocument.Parse(bytes).RootElement;
+            return _serializedValue.Value;
+        }
+
+        internal bool IsDescendant(string path)
+        {
+            if (path.Length > 0)
+            {
+                // Restrict matches (e.g. so we don't think 'a' is a parent of 'abc').
+                path += MutableJsonDocument.ChangeTracker.Delimiter;
+            }
+
+            return Path.StartsWith(path, StringComparison.Ordinal);
+        }
+
+        internal bool IsDirectDescendant(string path)
+        {
+            if (!IsDescendant(path))
+            {
+                return false;
+            }
+
+            string[] ancestorPath = path.Split(MutableJsonDocument.ChangeTracker.Delimiter);
+            int ancestorPathLength = string.IsNullOrEmpty(ancestorPath[0]) ? 0 : ancestorPath.Length;
+            int descendantPathLength = Path.Split(MutableJsonDocument.ChangeTracker.Delimiter).Length;
+
+            return ancestorPathLength == (descendantPathLength - 1);
+        }
+
+        internal string AsString()
+        {
+            return GetSerializedValue().ToString() ?? "null";
         }
 
         public override string ToString()
         {
-            return $"Path={Path}; Value={Value}; ReplacesJsonElement={ReplacesJsonElement}";
+            return $"Path={Path}; Value={Value}; Kind={ValueKind}; ChangeKind={ChangeKind}";
         }
     }
 }

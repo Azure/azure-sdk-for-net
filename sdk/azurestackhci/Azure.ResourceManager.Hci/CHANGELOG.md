@@ -10,6 +10,13 @@
 
 ### Other Changes
 
+## 1.0.2 (2023-05-31)
+
+### Feature Added
+
+- Upgraded API version to 2023-02-01.
+- Enable the model factory feature for model mocking, more information can be found [here](https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-mocking-factory-builder).
+
 ## 1.0.1 (2023-02-16)
 
 ### Other Changes

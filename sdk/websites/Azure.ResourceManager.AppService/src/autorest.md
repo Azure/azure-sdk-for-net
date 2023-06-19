@@ -8,7 +8,6 @@ Run `dotnet build /t:GenerateCode` to generate code.
 
 ``` yaml
 azure-arm: true
-generate-model-factory: false
 library-name: AppService
 namespace: Azure.ResourceManager.AppService
 require: https://github.com/Azure/azure-rest-api-specs/blob/35f8a4df47aedc1ce185c854595cba6b83fa6c71/specification/web/resource-manager/readme.md
@@ -17,6 +16,9 @@ clear-output-folder: true
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
+
+# mgmt-debug: 
+#  show-serialized-names: true
 
 list-exception:
 - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}/hybridConnectionNamespaces/{namespaceName}/relays/{relayName}
@@ -132,8 +134,6 @@ format-by-name-rules:
   '*Uri': 'Uri'
   '*Uris': 'Uri'
   'serverFarmId': 'arm-id'
-  'thumbprint': 'any'
-  '*Thumbprint': 'any'
 
 keep-plural-enums:
 - StackPreferredOS
@@ -548,6 +548,16 @@ rename-mapping:
   WebJobCollection: WebJobCListResult
   WorkerPoolCollection: AppServiceWorkerPoolListResult
   HybridConnection.properties.relayArmUri: relayArmId|arm-id
+  AzureActiveDirectoryRegistration.clientSecretCertificateThumbprint: ClientSecretCertificateThumbprintString 
+  Certificate.properties.thumbprint: ThumbprintString
+  CertificateDetails.thumbprint: ThumbprintString
+  CertificatePatchResource.properties.thumbprint: ThumbprintString
+  HostNameBinding.properties.thumbprint: ThumbprintString
+  HostNameSslState.thumbprint: ThumbprintString
+  PublicCertificate.properties.thumbprint: ThumbprintString
+  SiteAuthSettings.properties.clientSecretCertificateThumbprint: ClientSecretCertificateThumbprintString
+  VnetInfoResource.properties.certThumbprint: CertThumbprintString
+  VnetInfo.certThumbprint: CertThumbprintString
 
 prepend-rp-prefix:
   - ApiDefinitionInfo

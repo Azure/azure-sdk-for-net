@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Text.Json;
 using System.Threading.Tasks;
@@ -45,7 +46,7 @@ namespace Azure.Analytics.Purview.Workflows.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new PurviewWorkflowServiceClient(endpoint, credential);
 
-            Response response = client.GetWorkflow(Guid.NewGuid(), new RequestContext());
+            Response response = client.GetWorkflow(Guid.NewGuid());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("actionDag").ToString());
@@ -90,7 +91,7 @@ namespace Azure.Analytics.Purview.Workflows.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new PurviewWorkflowServiceClient(endpoint, credential);
 
-            Response response = await client.GetWorkflowAsync(Guid.NewGuid(), new RequestContext());
+            Response response = await client.GetWorkflowAsync(Guid.NewGuid());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("actionDag").ToString());
@@ -163,7 +164,7 @@ namespace Azure.Analytics.Purview.Workflows.Samples
                 actionDag = new { },
             };
 
-            Response response = client.CreateOrReplaceWorkflow(Guid.NewGuid(), RequestContent.Create(data), new RequestContext());
+            Response response = client.CreateOrReplaceWorkflow(Guid.NewGuid(), RequestContent.Create(data));
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("actionDag").ToString());
@@ -236,7 +237,7 @@ namespace Azure.Analytics.Purview.Workflows.Samples
                 actionDag = new { },
             };
 
-            Response response = await client.CreateOrReplaceWorkflowAsync(Guid.NewGuid(), RequestContent.Create(data), new RequestContext());
+            Response response = await client.CreateOrReplaceWorkflowAsync(Guid.NewGuid(), RequestContent.Create(data));
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("actionDag").ToString());
@@ -274,7 +275,7 @@ namespace Azure.Analytics.Purview.Workflows.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new PurviewWorkflowServiceClient(endpoint, credential);
 
-            Response response = client.DeleteWorkflow(Guid.NewGuid(), new RequestContext());
+            Response response = client.DeleteWorkflow(Guid.NewGuid());
             Console.WriteLine(response.Status);
         }
 
@@ -298,7 +299,7 @@ namespace Azure.Analytics.Purview.Workflows.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new PurviewWorkflowServiceClient(endpoint, credential);
 
-            Response response = await client.DeleteWorkflowAsync(Guid.NewGuid(), new RequestContext());
+            Response response = await client.DeleteWorkflowAsync(Guid.NewGuid());
             Console.WriteLine(response.Status);
         }
 
@@ -349,7 +350,7 @@ namespace Azure.Analytics.Purview.Workflows.Samples
                 comment = "<comment>",
             };
 
-            Response response = client.SubmitUserRequests(RequestContent.Create(data), new RequestContext());
+            Response response = client.SubmitUserRequests(RequestContent.Create(data));
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("requestId").ToString());
@@ -408,7 +409,7 @@ namespace Azure.Analytics.Purview.Workflows.Samples
                 comment = "<comment>",
             };
 
-            Response response = await client.SubmitUserRequestsAsync(RequestContent.Create(data), new RequestContext());
+            Response response = await client.SubmitUserRequestsAsync(RequestContent.Create(data));
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("requestId").ToString());
@@ -444,7 +445,7 @@ namespace Azure.Analytics.Purview.Workflows.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new PurviewWorkflowServiceClient(endpoint, credential);
 
-            Response response = client.GetWorkflowRun(Guid.NewGuid(), new RequestContext());
+            Response response = client.GetWorkflowRun(Guid.NewGuid());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("id").ToString());
@@ -488,7 +489,7 @@ namespace Azure.Analytics.Purview.Workflows.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new PurviewWorkflowServiceClient(endpoint, credential);
 
-            Response response = await client.GetWorkflowRunAsync(Guid.NewGuid(), new RequestContext());
+            Response response = await client.GetWorkflowRunAsync(Guid.NewGuid());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("id").ToString());
@@ -535,7 +536,7 @@ namespace Azure.Analytics.Purview.Workflows.Samples
                 comment = "<comment>",
             };
 
-            Response response = client.CancelWorkflowRun(Guid.NewGuid(), RequestContent.Create(data), new RequestContext());
+            Response response = client.CancelWorkflowRun(Guid.NewGuid(), RequestContent.Create(data));
             Console.WriteLine(response.Status);
         }
 
@@ -566,7 +567,7 @@ namespace Azure.Analytics.Purview.Workflows.Samples
                 comment = "<comment>",
             };
 
-            Response response = await client.CancelWorkflowRunAsync(Guid.NewGuid(), RequestContent.Create(data), new RequestContext());
+            Response response = await client.CancelWorkflowRunAsync(Guid.NewGuid(), RequestContent.Create(data));
             Console.WriteLine(response.Status);
         }
 
@@ -600,7 +601,7 @@ namespace Azure.Analytics.Purview.Workflows.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new PurviewWorkflowServiceClient(endpoint, credential);
 
-            Response response = client.GetWorkflowTask(Guid.NewGuid(), new RequestContext());
+            Response response = client.GetWorkflowTask(Guid.NewGuid());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("type").ToString());
@@ -654,7 +655,7 @@ namespace Azure.Analytics.Purview.Workflows.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new PurviewWorkflowServiceClient(endpoint, credential);
 
-            Response response = await client.GetWorkflowTaskAsync(Guid.NewGuid(), new RequestContext());
+            Response response = await client.GetWorkflowTaskAsync(Guid.NewGuid());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("type").ToString());
@@ -705,7 +706,7 @@ namespace Azure.Analytics.Purview.Workflows.Samples
                 comment = "<comment>",
             };
 
-            Response response = client.ApproveApprovalTask(Guid.NewGuid(), RequestContent.Create(data), new RequestContext());
+            Response response = client.ApproveApprovalTask(Guid.NewGuid(), RequestContent.Create(data));
             Console.WriteLine(response.Status);
         }
 
@@ -736,7 +737,7 @@ namespace Azure.Analytics.Purview.Workflows.Samples
                 comment = "<comment>",
             };
 
-            Response response = await client.ApproveApprovalTaskAsync(Guid.NewGuid(), RequestContent.Create(data), new RequestContext());
+            Response response = await client.ApproveApprovalTaskAsync(Guid.NewGuid(), RequestContent.Create(data));
             Console.WriteLine(response.Status);
         }
 
@@ -767,7 +768,7 @@ namespace Azure.Analytics.Purview.Workflows.Samples
                 comment = "<comment>",
             };
 
-            Response response = client.RejectApprovalTask(Guid.NewGuid(), RequestContent.Create(data), new RequestContext());
+            Response response = client.RejectApprovalTask(Guid.NewGuid(), RequestContent.Create(data));
             Console.WriteLine(response.Status);
         }
 
@@ -798,7 +799,7 @@ namespace Azure.Analytics.Purview.Workflows.Samples
                 comment = "<comment>",
             };
 
-            Response response = await client.RejectApprovalTaskAsync(Guid.NewGuid(), RequestContent.Create(data), new RequestContext());
+            Response response = await client.RejectApprovalTaskAsync(Guid.NewGuid(), RequestContent.Create(data));
             Console.WriteLine(response.Status);
         }
 
@@ -834,7 +835,7 @@ namespace Azure.Analytics.Purview.Workflows.Samples
     },
             };
 
-            Response response = client.ReassignWorkflowTask(Guid.NewGuid(), RequestContent.Create(data), new RequestContext());
+            Response response = client.ReassignWorkflowTask(Guid.NewGuid(), RequestContent.Create(data));
             Console.WriteLine(response.Status);
         }
 
@@ -870,7 +871,7 @@ namespace Azure.Analytics.Purview.Workflows.Samples
     },
             };
 
-            Response response = await client.ReassignWorkflowTaskAsync(Guid.NewGuid(), RequestContent.Create(data), new RequestContext());
+            Response response = await client.ReassignWorkflowTaskAsync(Guid.NewGuid(), RequestContent.Create(data));
             Console.WriteLine(response.Status);
         }
 
@@ -905,7 +906,7 @@ namespace Azure.Analytics.Purview.Workflows.Samples
                 comment = "<comment>",
             };
 
-            Response response = client.UpdateTaskStatus(Guid.NewGuid(), RequestContent.Create(data), new RequestContext());
+            Response response = client.UpdateTaskStatus(Guid.NewGuid(), RequestContent.Create(data));
             Console.WriteLine(response.Status);
         }
 
@@ -940,7 +941,7 @@ namespace Azure.Analytics.Purview.Workflows.Samples
                 comment = "<comment>",
             };
 
-            Response response = await client.UpdateTaskStatusAsync(Guid.NewGuid(), RequestContent.Create(data), new RequestContext());
+            Response response = await client.UpdateTaskStatusAsync(Guid.NewGuid(), RequestContent.Create(data));
             Console.WriteLine(response.Status);
         }
 
@@ -971,7 +972,7 @@ namespace Azure.Analytics.Purview.Workflows.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new PurviewWorkflowServiceClient(endpoint, credential);
 
-            foreach (var item in client.GetWorkflows(new RequestContext()))
+            foreach (var item in client.GetWorkflows())
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.GetProperty("id").ToString());
@@ -1016,7 +1017,7 @@ namespace Azure.Analytics.Purview.Workflows.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new PurviewWorkflowServiceClient(endpoint, credential);
 
-            await foreach (var item in client.GetWorkflowsAsync(new RequestContext()))
+            await foreach (var item in client.GetWorkflowsAsync())
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.GetProperty("id").ToString());
@@ -1063,7 +1064,7 @@ namespace Azure.Analytics.Purview.Workflows.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new PurviewWorkflowServiceClient(endpoint, credential);
 
-            foreach (var item in client.GetWorkflowRuns("<timeWindow>", "<orderby>", new string[] { "<runStatuses>" }, new string[] { "<workflowIds>" }, 1234, new RequestContext()))
+            foreach (var item in client.GetWorkflowRuns("<timeWindow>", "<orderby>", new string[] { "<runStatuses>" }, new string[] { "<workflowIds>" }, 1234))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.GetProperty("id").ToString());
@@ -1109,7 +1110,7 @@ namespace Azure.Analytics.Purview.Workflows.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new PurviewWorkflowServiceClient(endpoint, credential);
 
-            await foreach (var item in client.GetWorkflowRunsAsync("<timeWindow>", "<orderby>", new string[] { "<runStatuses>" }, new string[] { "<workflowIds>" }, 1234, new RequestContext()))
+            await foreach (var item in client.GetWorkflowRunsAsync("<timeWindow>", "<orderby>", new string[] { "<runStatuses>" }, new string[] { "<workflowIds>" }, 1234))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.GetProperty("id").ToString());
@@ -1157,7 +1158,7 @@ namespace Azure.Analytics.Purview.Workflows.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new PurviewWorkflowServiceClient(endpoint, credential);
 
-            foreach (var item in client.GetWorkflowTasks("<viewMode>", new string[] { "<workflowIds>" }, "<timeWindow>", 1234, "<orderby>", new string[] { "<taskTypes>" }, new string[] { "<taskStatuses>" }, "<workflowNameKeyword>", new RequestContext()))
+            foreach (var item in client.GetWorkflowTasks("<viewMode>", new string[] { "<workflowIds>" }, "<timeWindow>", 1234, "<orderby>", new string[] { "<taskTypes>" }, new string[] { "<taskStatuses>" }, "<workflowNameKeyword>"))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.GetProperty("type").ToString());
@@ -1213,7 +1214,7 @@ namespace Azure.Analytics.Purview.Workflows.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new PurviewWorkflowServiceClient(endpoint, credential);
 
-            await foreach (var item in client.GetWorkflowTasksAsync("<viewMode>", new string[] { "<workflowIds>" }, "<timeWindow>", 1234, "<orderby>", new string[] { "<taskTypes>" }, new string[] { "<taskStatuses>" }, "<workflowNameKeyword>", new RequestContext()))
+            await foreach (var item in client.GetWorkflowTasksAsync("<viewMode>", new string[] { "<workflowIds>" }, "<timeWindow>", 1234, "<orderby>", new string[] { "<taskTypes>" }, new string[] { "<taskStatuses>" }, "<workflowNameKeyword>"))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.GetProperty("type").ToString());

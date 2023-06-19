@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="displayName"> The display name of the policy assignment. </param>
         /// <param name="policyDefinitionId"> The ID of the policy definition or policy set definition being assigned. </param>
         /// <param name="scope"> The scope for the policy assignment. </param>
-        /// <param name="excludedScopes"> The policy&apos;s excluded scopes. </param>
+        /// <param name="excludedScopes"> The policy's excluded scopes. </param>
         /// <param name="parameters"> The parameter values for the assigned policy rule. The keys are the parameter names. </param>
         /// <param name="description"> This message will be part of response in case of policy violation. </param>
         /// <param name="metadata"> The policy assignment metadata. Metadata is an open ended object and is typically a collection of key value pairs. </param>
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Resources
         public string PolicyDefinitionId { get; set; }
         /// <summary> The scope for the policy assignment. </summary>
         public string Scope { get; }
-        /// <summary> The policy&apos;s excluded scopes. </summary>
+        /// <summary> The policy's excluded scopes. </summary>
         public IList<string> ExcludedScopes { get; }
         /// <summary> The parameter values for the assigned policy rule. The keys are the parameter names. </summary>
         public IDictionary<string, ArmPolicyParameterValue> Parameters { get; }

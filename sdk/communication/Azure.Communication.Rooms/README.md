@@ -3,7 +3,7 @@
 This package contains a C# SDK for the Rooms Service of Azure Communication Services.
 Azure Communication Services (ACS) Rooms is a set of APIs, used by Contoso server applications to create a server-managed conversation space with fixed set of lifetime and participants, pre-defining rules from server-tier both who and when can communicate (like scheduled meeting creation).
 
-With the preview release of ACS Rooms, Contoso will be able to:
+With the general availability release of ACS Rooms, Contoso will be able to:
 
     - Create a meeting space with known time coordinates (validFrom/validUntil)
     - Join voice/video calls within that meeting space using the ACS web calling SDK or native mobile calling SDKs
@@ -22,7 +22,7 @@ The main scenarios where Rooms can best be used:
 Install the Azure Communication Rooms client library for .NET with [NuGet][nuget]:
 
 ```PowerShell
-dotnet add package Azure.Communication.Rooms --prerelease
+dotnet add package Azure.Communication.Rooms
 ``` 
 
 ### Prerequisites
@@ -87,6 +87,16 @@ A created room can be retrieved by calling the `GetRoom` or `GetRoomAsync` funct
 ```C# Snippet:Azure_Communication_Rooms_Tests_Samples_GetRoomAsync
 Response<CommunicationRoom> getRoomResponse = await roomsClient.GetRoomAsync(createdRoomId);
 CommunicationRoom getCommunicationRoom = getRoomResponse.Value;
+```
+
+### Get all rooms
+All valid rooms created under an ACS resource can be retrieved by calling the `GetRooms` or `GetRoomsAsync` function from `RoomsClient`.
+```C# Snippet:Azure_Communication_Rooms_Tests_Samples_GetRoomsAsync
+AsyncPageable<CommunicationRoom> allRooms = roomsClient.GetRoomsAsync();
+await foreach (CommunicationRoom room in allRooms)
+{
+    Console.WriteLine($"Room with id {room.Id} is valid from {room.ValidFrom} to {room.ValidUntil}.");
+}
 ```
 
 ### Delete room

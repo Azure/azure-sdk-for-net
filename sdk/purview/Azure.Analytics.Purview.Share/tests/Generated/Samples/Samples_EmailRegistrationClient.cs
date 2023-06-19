@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Text.Json;
 using System.Threading.Tasks;
@@ -48,7 +49,7 @@ namespace Azure.Analytics.Purview.Share.Samples
                 },
             };
 
-            Response response = client.Activate(RequestContent.Create(data), "<repeatabilityRequestId>", new RequestContext());
+            Response response = client.Activate(RequestContent.Create(data), "<repeatabilityRequestId>");
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("properties").GetProperty("activationCode").ToString());
@@ -91,7 +92,7 @@ namespace Azure.Analytics.Purview.Share.Samples
                 },
             };
 
-            Response response = await client.ActivateAsync(RequestContent.Create(data), "<repeatabilityRequestId>", new RequestContext());
+            Response response = await client.ActivateAsync(RequestContent.Create(data), "<repeatabilityRequestId>");
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("properties").GetProperty("activationCode").ToString());
@@ -124,7 +125,7 @@ namespace Azure.Analytics.Purview.Share.Samples
             var credential = new DefaultAzureCredential();
             var client = new EmailRegistrationClient("<https://my-service.azure.com>", credential);
 
-            Response response = client.Register("<repeatabilityRequestId>", new RequestContext());
+            Response response = client.Register("<repeatabilityRequestId>");
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("properties").GetProperty("activationCode").ToString());
@@ -157,7 +158,7 @@ namespace Azure.Analytics.Purview.Share.Samples
             var credential = new DefaultAzureCredential();
             var client = new EmailRegistrationClient("<https://my-service.azure.com>", credential);
 
-            Response response = await client.RegisterAsync("<repeatabilityRequestId>", new RequestContext());
+            Response response = await client.RegisterAsync("<repeatabilityRequestId>");
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("properties").GetProperty("activationCode").ToString());

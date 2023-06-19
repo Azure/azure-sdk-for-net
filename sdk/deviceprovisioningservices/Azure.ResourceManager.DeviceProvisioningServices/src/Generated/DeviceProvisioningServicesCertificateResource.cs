@@ -376,7 +376,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         }
 
         /// <summary>
-        /// Verifies the certificate&apos;s private key possession by providing the leaf cert issued by the verifying pre uploaded certificate.
+        /// Verifies the certificate's private key possession by providing the leaf cert issued by the verifying pre uploaded certificate.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -410,7 +410,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         }
 
         /// <summary>
-        /// Verifies the certificate&apos;s private key possession by providing the leaf cert issued by the verifying pre uploaded certificate.
+        /// Verifies the certificate's private key possession by providing the leaf cert issued by the verifying pre uploaded certificate.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>

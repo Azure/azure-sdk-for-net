@@ -5,11 +5,8 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using NUnit.Framework;
-using Azure.Storage.DataMovement.Models;
-using Azure.Core.TestFramework;
 using Azure.Storage.DataMovement.Models.JobPlan;
 
 namespace Azure.Storage.DataMovement.Tests
@@ -648,6 +645,54 @@ namespace Azure.Storage.DataMovement.Tests
             Assert.IsTrue(transfers.Contains(transferId));
             Assert.IsTrue(transfers.Contains(transferId2));
             Assert.IsTrue(transfers.Contains(transferId3));
+        }
+
+        [Test]
+        public async Task GetStoredTransfersAsync_StoredJobs()
+        {
+            // Arrange - populate checkpointer directory with existing jobs
+            using DisposingLocalDirectory test = DisposingLocalDirectory.GetTestDirectory();
+
+            string transferId = GetNewTransferId();
+            string transferId2 = GetNewTransferId();
+            int numberOfParts = 2;
+
+            CreateStubJobPlanFileAsync(
+                checkpointerPath: test.DirectoryPath,
+                transferId: transferId,
+                partNumber: 0,
+                jobPartCount: numberOfParts);
+            CreateStubJobPlanFileAsync(
+                checkpointerPath: test.DirectoryPath,
+                transferId: transferId2,
+                partNumber: 0,
+                jobPartCount: numberOfParts);
+            TransferCheckpointer transferCheckpointer = new LocalTransferCheckpointer(test.DirectoryPath);
+
+            // Act
+            List<string> transfers = await transferCheckpointer.GetStoredTransfersAsync();
+
+            // Assert
+            Assert.AreEqual(2, transfers.Count);
+            Assert.IsTrue(transfers.Contains(transferId));
+            Assert.IsTrue(transfers.Contains(transferId2));
+
+            // Arrange - add more job to the checkpointer
+            string transferId3 = GetNewTransferId();
+            string transferId4 = GetNewTransferId();
+
+            await transferCheckpointer.AddNewJobAsync(transferId3);
+            await transferCheckpointer.AddNewJobAsync(transferId4);
+
+            // Act
+            List<string> transfersAfterAdditions = await transferCheckpointer.GetStoredTransfersAsync();
+
+            // Assert
+            Assert.AreEqual(4, transfersAfterAdditions.Count);
+            Assert.IsTrue(transfersAfterAdditions.Contains(transferId));
+            Assert.IsTrue(transfersAfterAdditions.Contains(transferId2));
+            Assert.IsTrue(transfersAfterAdditions.Contains(transferId3));
+            Assert.IsTrue(transfersAfterAdditions.Contains(transferId4));
         }
 
         [Test]

@@ -1,17 +1,31 @@
 # Release History
 
-## 1.32.0-beta.1 (Unreleased)
+## 1.34.0-beta.1 (Unreleased)
 
 ### Features Added
-
-- Added the `GetRawResponse` method to `RequestFailedException`.
-- Added overloads of `Operation<T>.WaitForCompletion` and `Operation.WaitForCompletionResponse` that take a `DelayStrategy`.
 
 ### Breaking Changes
 
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.33.0 (2023-06-16)
+
+### Features Added
+
+- Added `BinaryData.ToDynamicFromJson()` extension method to enable dynamic access to JSON.  See the [aka.ms/azsdk/net/dynamiccontent](https://aka.ms/azsdk/net/dynamiccontent) for further details.
+
+### Other Changes
+
+- Client redirects are now disabled by default and can be enabled by setting providing a custom transport in `ClientOptions'. Client Authors can also enable redirects by setting `HttpPipelineTransportOptions.IsClientRedirectEnabled` to `true` on the transport options passed to `HttpPipelineBuilder.Build`.
+
+## 1.32.0 (2023-05-09)
+
+### Features Added
+
+- Added the `GetRawResponse` method to `RequestFailedException`.
+- Added overloads of `Operation<T>.WaitForCompletion` and `Operation.WaitForCompletionResponse` that take a `DelayStrategy`.
 
 ## 1.31.0 (2023-04-10)
 
@@ -31,13 +45,13 @@
 
 ### Bugs Fixed
 
-- Fixed the issue with empty header names and values, caused by `ArrayBackedPropertyBag` keeping reference to the array after returning it to array pool [in (https://github.com/Azure/azure-sdk-for-net/pull/34800)  `Dispose` method]. 
+- Fixed the issue with empty header names and values, caused by `ArrayBackedPropertyBag` keeping reference to the array after returning it to array pool [in `Dispose` method](https://github.com/Azure/azure-sdk-for-net/pull/34800).
 
 ## 1.29.0 (2023-03-02)
 
 ### Features Added
 
-- `ActivitySource` activities that are used when using the [experimental OpenTelemetry support](https://devblogs.microsoft.com/azure-sdk/introducing-experimental-opentelemetry-support-in-the-azure-sdk-for-net/) will include the `az.schema_url` tag indicating the OpenTelemetry schema version. They will also include the attribute names specified [here](https://github.com/Azure/azure-sdk/blob/main/docs/tracing/distributed-tracing-conventions.yml). 
+- `ActivitySource` activities that are used when using the [experimental OpenTelemetry support](https://devblogs.microsoft.com/azure-sdk/introducing-experimental-opentelemetry-support-in-the-azure-sdk-for-net/) will include the `az.schema_url` tag indicating the OpenTelemetry schema version. They will also include the attribute names specified [here](https://github.com/Azure/azure-sdk/blob/main/docs/tracing/distributed-tracing-conventions.yml).
 - "West US 3", "Sweden Central" and "Qatar Central" locations are added to `Azure.Core.AzureLocation`
 
 ### Improvements

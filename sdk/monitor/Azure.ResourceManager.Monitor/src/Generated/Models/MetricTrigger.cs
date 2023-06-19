@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="timeAggregation"> time aggregation type. How the data that is collected should be combined over time. The default value is Average. </param>
         /// <param name="operator"> the operator that is used to compare the metric data and the threshold. </param>
         /// <param name="threshold"> the threshold of the metric that triggers the scale action. </param>
-        /// <param name="dimensions"> List of dimension conditions. For example: [{&quot;DimensionName&quot;:&quot;AppName&quot;,&quot;Operator&quot;:&quot;Equals&quot;,&quot;Values&quot;:[&quot;App1&quot;]},{&quot;DimensionName&quot;:&quot;Deployment&quot;,&quot;Operator&quot;:&quot;Equals&quot;,&quot;Values&quot;:[&quot;default&quot;]}]. </param>
+        /// <param name="dimensions"> List of dimension conditions. For example: [{"DimensionName":"AppName","Operator":"Equals","Values":["App1"]},{"DimensionName":"Deployment","Operator":"Equals","Values":["default"]}]. </param>
         /// <param name="isDividedPerInstance"> a value indicating whether metric should divide per instance. </param>
         internal MetricTrigger(string metricName, string metricNamespace, ResourceIdentifier metricResourceId, AzureLocation? metricResourceLocation, TimeSpan timeGrain, MetricStatisticType statistic, TimeSpan timeWindow, MetricTriggerTimeAggregationType timeAggregation, MetricTriggerComparisonOperation @operator, double threshold, IList<AutoscaleRuleMetricDimension> dimensions, bool? isDividedPerInstance)
         {
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Monitor.Models
         public MetricTriggerComparisonOperation Operator { get; set; }
         /// <summary> the threshold of the metric that triggers the scale action. </summary>
         public double Threshold { get; set; }
-        /// <summary> List of dimension conditions. For example: [{&quot;DimensionName&quot;:&quot;AppName&quot;,&quot;Operator&quot;:&quot;Equals&quot;,&quot;Values&quot;:[&quot;App1&quot;]},{&quot;DimensionName&quot;:&quot;Deployment&quot;,&quot;Operator&quot;:&quot;Equals&quot;,&quot;Values&quot;:[&quot;default&quot;]}]. </summary>
+        /// <summary> List of dimension conditions. For example: [{"DimensionName":"AppName","Operator":"Equals","Values":["App1"]},{"DimensionName":"Deployment","Operator":"Equals","Values":["default"]}]. </summary>
         public IList<AutoscaleRuleMetricDimension> Dimensions { get; set; }
         /// <summary> a value indicating whether metric should divide per instance. </summary>
         public bool? IsDividedPerInstance { get; set; }

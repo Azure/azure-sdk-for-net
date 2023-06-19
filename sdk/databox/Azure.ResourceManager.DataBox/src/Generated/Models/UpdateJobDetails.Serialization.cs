@@ -25,6 +25,16 @@ namespace Azure.ResourceManager.DataBox.Models
                 writer.WritePropertyName("shippingAddress"u8);
                 writer.WriteObjectValue(ShippingAddress);
             }
+            if (Optional.IsDefined(ReverseShippingDetails))
+            {
+                writer.WritePropertyName("reverseShippingDetails"u8);
+                writer.WriteObjectValue(ReverseShippingDetails);
+            }
+            if (Optional.IsDefined(Preferences))
+            {
+                writer.WritePropertyName("preferences"u8);
+                writer.WriteObjectValue(Preferences);
+            }
             if (Optional.IsDefined(KeyEncryptionKey))
             {
                 writer.WritePropertyName("keyEncryptionKey"u8);

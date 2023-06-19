@@ -17,13 +17,27 @@ namespace Azure.Communication.JobRouter.Models
         /// <summary> Initializes a new instance of RouterJob. </summary>
         internal RouterJob()
         {
-            _requestedWorkerSelectors = new ChangeTrackingList<WorkerSelector>();
-            AttachedWorkerSelectors = new ChangeTrackingList<WorkerSelector>();
+            AttachedWorkerSelectors = new ChangeTrackingList<RouterWorkerSelector>();
+            Assignments = new ChangeTrackingDictionary<string, RouterJobAssignment>();
+            _requestedWorkerSelectors = new ChangeTrackingList<RouterWorkerSelector>();
             _labels = new ChangeTrackingDictionary<string, object>();
-            Assignments = new ChangeTrackingDictionary<string, JobAssignment>();
             _tags = new ChangeTrackingDictionary<string, object>();
             _notes = new ChangeTrackingDictionary<string, string>();
         }
+
+        /// <summary>
+        /// A set of key/value pairs that are identifying attributes used by the rules engines to make decisions.
+        /// </summary>
+        public Dictionary<string, LabelValue> Labels { get; } = new Dictionary<string, LabelValue>();
+
+        /// <summary> A set of non-identifying attributes attached to this job. </summary>
+        public Dictionary<string, LabelValue> Tags { get; } = new Dictionary<string, LabelValue>();
+
+        /// <summary> A collection of manually specified label selectors, which a worker must satisfy in order to process this job. </summary>
+        public List<RouterWorkerSelector> RequestedWorkerSelectors { get; } = new List<RouterWorkerSelector>();
+
+        /// <summary> A collection of notes attached to a job. </summary>
+        public List<RouterJobNote> Notes { get; } = new List<RouterJobNote>();
 
         [CodeGenMember("Labels")]
         internal IDictionary<string, object> _labels
@@ -36,18 +50,15 @@ namespace Azure.Communication.JobRouter.Models
             }
             set
             {
-                Labels = value != null && value.Count != 0
-                    ? value.ToDictionary(x => x.Key, x => new LabelValue(x.Value))
-                    : new Dictionary<string, LabelValue>();
+                if (value != null && value.Count != 0)
+                {
+                    foreach (var label in value)
+                    {
+                        Labels[label.Key] = new LabelValue(label.Value);
+                    }
+                }
             }
         }
-
-        /// <summary>
-        /// A set of key/value pairs that are identifying attributes used by the rules engines to make decisions.
-        /// </summary>
-#pragma warning disable CA2227 // Collection properties should be read only
-        public IDictionary<string, LabelValue> Labels { get; set; }
-#pragma warning restore CA2227 // Collection properties should be read only
 
         [CodeGenMember("Tags")]
         internal IDictionary<string, object> _tags
@@ -55,22 +66,20 @@ namespace Azure.Communication.JobRouter.Models
             get
             {
                 return Tags != null && Tags.Count != 0
-                    ? Tags?.ToDictionary(x => x.Key,
-                        x => x.Value.Value)
+                    ? Tags?.ToDictionary(x => x.Key, x => x.Value.Value)
                     : new ChangeTrackingDictionary<string, object>();
             }
             set
             {
-                Tags = value != null && value.Count != 0
-                    ? value.ToDictionary(x => x.Key, x => new LabelValue(x.Value))
-                    : new Dictionary<string, LabelValue>();
+                if (value != null && value.Count != 0)
+                {
+                    foreach (var tag in value)
+                    {
+                        Tags[tag.Key] = new LabelValue(tag.Value);
+                    }
+                }
             }
         }
-
-        /// <summary> A set of non-identifying attributes attached to this job. </summary>
-#pragma warning disable CA2227 // Collection properties should be read only
-        public IDictionary<string, LabelValue> Tags { get; set; }
-#pragma warning restore CA2227 // Collection properties should be read only
 
         [CodeGenMember("Notes")]
         internal IDictionary<string, string> _notes
@@ -78,34 +87,36 @@ namespace Azure.Communication.JobRouter.Models
             get
             {
                 return Notes != null
-                    ? Notes?.ToDictionary(x => x.Key.ToUniversalTime().ToString("O", CultureInfo.InvariantCulture),
-                        x => x.Value)
+                    ? Notes?.ToDictionary(x => (x.AddedAtUtc ?? DateTimeOffset.UtcNow)
+                        .ToUniversalTime().ToString("O", CultureInfo.InvariantCulture), x => x.Message)
                     : new ChangeTrackingDictionary<string, string>();
             }
             set
             {
-                Notes = new SortedDictionary<DateTimeOffset, string>(
-                    value.ToDictionary(x => DateTimeOffsetParser.ParseAndGetDateTimeOffset(x.Key), x => x.Value));
+                foreach (var note in value.ToList())
+                {
+                    Notes.Add(new RouterJobNote
+                    {
+                        AddedAtUtc = DateTimeOffsetParser.ParseAndGetDateTimeOffset(note.Key),
+                        Message = note.Value
+                    });
+                }
             }
         }
 
-        /// <summary> Notes attached to a job, sorted by timestamp. </summary>
-#pragma warning disable CA2227 // Collection properties should be read only
-        public SortedDictionary<DateTimeOffset, string> Notes { get; set; }
-
-        /// <summary> A collection of manually specified label selectors, which a worker must satisfy in order to process this job. </summary>
-        public IList<WorkerSelector> RequestedWorkerSelectors { get; set; }
-
         [CodeGenMember("RequestedWorkerSelectors")]
-        internal IList<WorkerSelector> _requestedWorkerSelectors {
+        internal IList<RouterWorkerSelector> _requestedWorkerSelectors
+        {
             get
             {
-                return RequestedWorkerSelectors != null ? RequestedWorkerSelectors.ToList() : new ChangeTrackingList<WorkerSelector>();
+                return RequestedWorkerSelectors != null
+                    ? RequestedWorkerSelectors.ToList()
+                    : new ChangeTrackingList<RouterWorkerSelector>();
             }
             set
             {
-                RequestedWorkerSelectors = value;
-            } }
-#pragma warning restore CA2227 // Collection properties should be read only
+                RequestedWorkerSelectors.AddRange(value);
+            }
+        }
     }
 }
