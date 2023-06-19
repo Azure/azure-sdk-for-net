@@ -3,7 +3,6 @@
 
 using System;
 using System.Collections;
-using Azure.Core.Dynamic;
 using Azure.Core.Serialization;
 using NUnit.Framework;
 

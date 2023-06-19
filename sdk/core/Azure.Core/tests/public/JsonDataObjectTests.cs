@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using Azure.Core.Dynamic;
 using Azure.Core.Serialization;
 using Microsoft.CSharp.RuntimeBinder;
 using NUnit.Framework;
