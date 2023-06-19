@@ -1,14 +1,14 @@
 # Release History
 
-## 1.1.0-beta.2 (Unreleased)
+## 1.1.0-beta.2 (2023-06-21)
 
 ### Features Added
 
-### Breaking Changes
-
-### Bugs Fixed
+- Support ManagedCcf
 
 ### Other Changes
+
+- Upgraded API version to 2023-01-26-preview.
 
 ## 1.1.0-beta.1 (2023-05-29)
 
