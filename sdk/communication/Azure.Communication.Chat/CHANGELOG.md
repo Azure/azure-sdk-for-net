@@ -4,8 +4,6 @@
 
 ### Features Added
 - Optimized the logic for deserializing types derived from the `CommunicationIdentifier`.
-
-### Added
 - Added factory methods for `public` models in `ChatModelFactory`.
 
 ## 1.1.1 (2022-09-16)
