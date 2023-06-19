@@ -4,7 +4,7 @@
 
 ### Features Added
 
-- Support ManagedCcf
+- Support ManagedCcf preview.
 
 ### Other Changes
 
