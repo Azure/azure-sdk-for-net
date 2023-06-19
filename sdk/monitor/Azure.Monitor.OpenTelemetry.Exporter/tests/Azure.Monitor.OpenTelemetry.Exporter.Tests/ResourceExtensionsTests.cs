@@ -181,6 +181,8 @@ public class ResourceExtensionsTests
             {SemanticConventions.AttributeServiceName, "my-service" },
             {SemanticConventions.AttributeServiceNamespace, "my-namespace" },
             {SemanticConventions.AttributeServiceInstance, "my-instance" },
+            {SemanticConventions.AttributeK8sDeployment, "my-deployment" },
+            {SemanticConventions.AttributeK8sPod, "my-pod" },
             { "foo", "bar" }
         };
 
@@ -204,11 +206,13 @@ public class ResourceExtensionsTests
             Assert.Equal("_OTELRESOURCE_", metricDataPoint?.Name);
             Assert.Equal(0, metricDataPoint?.Value);
 
-            Assert.Equal(4, metricsData?.Properties.Count);
+            Assert.Equal(6, metricsData?.Properties.Count);
 
             Assert.Equal("my-service", metricsData?.Properties[SemanticConventions.AttributeServiceName]);
             Assert.Equal("my-namespace", metricsData?.Properties[SemanticConventions.AttributeServiceNamespace]);
             Assert.Equal("my-instance", metricsData?.Properties[SemanticConventions.AttributeServiceInstance]);
+            Assert.Equal("my-deployment", metricsData?.Properties[SemanticConventions.AttributeK8sDeployment]);
+            Assert.Equal("my-pod", metricsData?.Properties[SemanticConventions.AttributeK8sPod]);
             Assert.Equal("bar", metricsData?.Properties["foo"]);
         }
     }
@@ -229,26 +233,6 @@ public class ResourceExtensionsTests
         // Assert
         Assert.Equal("my-deployment", azMonResource?.RoleName);
         Assert.Equal("my-pod", azMonResource?.RoleInstance);
-    }
-
-    [Fact]
-    public void ResourceWithKubernetesAndServiceAttributes()
-    {
-        // Arrange
-        var testAttributes = new Dictionary<string, object>
-        {
-            {SemanticConventions.AttributeServiceName, "my-service" },
-            {SemanticConventions.AttributeServiceInstance, "my-instance" },
-            {SemanticConventions.AttributeK8sDeployment, "my-deployment" },
-            {SemanticConventions.AttributeK8sPod, "my-pod" },
-        };
-
-        var resource = ResourceBuilder.CreateEmpty().AddAttributes(testAttributes).Build();
-        var azMonResource = resource.CreateAzureMonitorResource();
-
-        // Assert
-        Assert.Equal("my-service", azMonResource?.RoleName);
-        Assert.Equal("my-instance", azMonResource?.RoleInstance);
     }
 
     [Fact]

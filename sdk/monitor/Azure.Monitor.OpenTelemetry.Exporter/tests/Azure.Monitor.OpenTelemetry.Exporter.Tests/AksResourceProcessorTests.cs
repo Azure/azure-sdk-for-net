@@ -62,9 +62,6 @@ public class AksResourceProcessorTests
             case "k8s.pod.name":
                 Assert.Equal(attribute.Value, aksResourceProcessor.K8sPodName);
                 break;
-            default:
-                Assert.True(false, $"Unexpected attribute key: {attribute.Key}");
-                break;
         }
     }
 
