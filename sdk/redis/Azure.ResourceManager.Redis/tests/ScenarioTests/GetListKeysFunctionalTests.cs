@@ -68,7 +68,6 @@ namespace Azure.ResourceManager.Redis.Tests
             var afterRegenerateResponse = (await redis.RegenerateKeyAsync(new RedisRegenerateKeyContent(RedisRegenerateKeyType.Primary))).Value;
 
             // Won't be equal when recording but might be equal in playback as all key values will be set to "Sanitized"
-            // Make sure to manually edit session records so tests pass
             Assert.AreEqual(response.PrimaryKey, afterRegenerateResponse.PrimaryKey);
             Assert.AreEqual(response.SecondaryKey, afterRegenerateResponse.SecondaryKey);
         }
