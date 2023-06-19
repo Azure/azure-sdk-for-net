@@ -1,6 +1,6 @@
 # Release History
 
-## 1.1.0-beta.2 (Unreleased)
+## 1.1.0-beta.2 (2023-06-21)
 
 ### Features Added
 - Support for deploying and managing Azure Managed CCF instances

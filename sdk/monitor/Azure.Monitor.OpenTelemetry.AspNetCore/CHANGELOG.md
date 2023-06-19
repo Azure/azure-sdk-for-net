@@ -13,6 +13,14 @@
 
 ### Other Changes
 
+* Update OpenTelemetry dependencies
+  ([#36859](https://github.com/Azure/azure-sdk-for-net/pull/36859))
+  - OpenTelemetry 1.5.0
+  - OpenTelemetry.Extensions.Hosting 1.5.0
+  - OpenTelemetry.Instrumentation.AspNetCore 1.5.0-beta.1
+  - OpenTelemetry.Instrumentation.Http 1.5.0-beta.1
+  - OpenTelemetry.Instrumentation.SqlClient 1.5.0-beta.1
+
 * Removed reference to `OpenTelemetry.Extensions.AzureMonitor`.
   ([#36972](https://github.com/Azure/azure-sdk-for-net/pull/36972))
 

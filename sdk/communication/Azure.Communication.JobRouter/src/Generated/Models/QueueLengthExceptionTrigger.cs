@@ -8,7 +8,7 @@
 namespace Azure.Communication.JobRouter
 {
     /// <summary> Trigger for an exception action on exceeding queue length. </summary>
-    public partial class QueueLengthExceptionTrigger : JobExceptionTrigger
+    public partial class QueueLengthExceptionTrigger : ExceptionTrigger
     {
 
         /// <summary> Initializes a new instance of QueueLengthExceptionTrigger. </summary>

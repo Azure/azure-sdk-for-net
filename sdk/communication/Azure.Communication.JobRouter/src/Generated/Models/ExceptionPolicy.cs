@@ -23,7 +23,7 @@ namespace Azure.Communication.JobRouter.Models
         {
             Id = id;
             Name = name;
-            ExceptionRules = exceptionRules;
+            _exceptionRules = exceptionRules;
         }
 
         /// <summary> The Id of the exception policy. </summary>

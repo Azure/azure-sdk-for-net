@@ -1,7 +1,7 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://myaccountname.purview.azure.com/share/receivedShares/5122c139-945e-4089-a2a0-4f50208ddda2?api-version=2023-02-15-preview",
+      "RequestUri": "https://myaccountname.purview.azure.com/share/receivedShares/098d6c8e-165f-4cf1-9653-79f6a7f99048?api-version=2023-05-30-preview",
       "RequestMethod": "DELETE",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -17,8 +17,8 @@
         "Content-Length": "138",
         "Content-Type": "application/json; charset=utf-8",
         "Date": "Fri, 24 Feb 2023 07:20:16 GMT",
-        "Operation-Id": "https://myaccountname.purview.azure.com/share/operationResults/ac59395b-5d10-4e46-a79a-562d4e547817?api-version=2023-02-15-preview",
-        "Operation-Location": "https://myaccountname.purview.azure.com/share/operationResults/ac59395b-5d10-4e46-a79a-562d4e547817?api-version=2023-02-15-preview",
+        "Operation-Id": "https://myaccountname.purview.azure.com/share/operationResults/ac59395b-5d10-4e46-a79a-562d4e547817?api-version=2023-05-30-preview",
+        "Operation-Location": "https://myaccountname.purview.azure.com/share/operationResults/ac59395b-5d10-4e46-a79a-562d4e547817?api-version=2023-05-30-preview",
         "Server": "Kestrel",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "x-ms-correlation-request-id": "27bf6caf-d36a-4027-afad-cb753a2d4a61"
@@ -32,7 +32,7 @@
       }
     },
     {
-      "RequestUri": "https://myaccountname.purview.azure.com/share/operationResults/ac59395b-5d10-4e46-a79a-562d4e547817?api-version=2023-02-15-preview",
+      "RequestUri": "https://myaccountname.purview.azure.com/share/operationResults/ac59395b-5d10-4e46-a79a-562d4e547817?api-version=2023-05-30-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -60,7 +60,7 @@
       }
     },
     {
-      "RequestUri": "https://myaccountname.purview.azure.com/share/operationResults/ac59395b-5d10-4e46-a79a-562d4e547817?api-version=2023-02-15-preview",
+      "RequestUri": "https://myaccountname.purview.azure.com/share/operationResults/ac59395b-5d10-4e46-a79a-562d4e547817?api-version=2023-05-30-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -88,7 +88,7 @@
       }
     },
     {
-      "RequestUri": "https://myaccountname.purview.azure.com/share/operationResults/ac59395b-5d10-4e46-a79a-562d4e547817?api-version=2023-02-15-preview",
+      "RequestUri": "https://myaccountname.purview.azure.com/share/operationResults/ac59395b-5d10-4e46-a79a-562d4e547817?api-version=2023-05-30-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -116,7 +116,7 @@
       }
     },
     {
-      "RequestUri": "https://myaccountname.purview.azure.com/share/operationResults/ac59395b-5d10-4e46-a79a-562d4e547817?api-version=2023-02-15-preview",
+      "RequestUri": "https://myaccountname.purview.azure.com/share/operationResults/ac59395b-5d10-4e46-a79a-562d4e547817?api-version=2023-05-30-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -144,7 +144,7 @@
       }
     },
     {
-      "RequestUri": "https://myaccountname.purview.azure.com/share/operationResults/ac59395b-5d10-4e46-a79a-562d4e547817?api-version=2023-02-15-preview",
+      "RequestUri": "https://myaccountname.purview.azure.com/share/operationResults/ac59395b-5d10-4e46-a79a-562d4e547817?api-version=2023-05-30-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -172,7 +172,7 @@
       }
     },
     {
-      "RequestUri": "https://myaccountname.purview.azure.com/share/operationResults/ac59395b-5d10-4e46-a79a-562d4e547817?api-version=2023-02-15-preview",
+      "RequestUri": "https://myaccountname.purview.azure.com/share/operationResults/ac59395b-5d10-4e46-a79a-562d4e547817?api-version=2023-05-30-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -200,7 +200,7 @@
       }
     },
     {
-      "RequestUri": "https://myaccountname.purview.azure.com/share/operationResults/ac59395b-5d10-4e46-a79a-562d4e547817?api-version=2023-02-15-preview",
+      "RequestUri": "https://myaccountname.purview.azure.com/share/operationResults/ac59395b-5d10-4e46-a79a-562d4e547817?api-version=2023-05-30-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -228,7 +228,7 @@
       }
     },
     {
-      "RequestUri": "https://myaccountname.purview.azure.com/share/operationResults/ac59395b-5d10-4e46-a79a-562d4e547817?api-version=2023-02-15-preview",
+      "RequestUri": "https://myaccountname.purview.azure.com/share/operationResults/ac59395b-5d10-4e46-a79a-562d4e547817?api-version=2023-05-30-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -256,7 +256,7 @@
       }
     },
     {
-      "RequestUri": "https://myaccountname.purview.azure.com/share/operationResults/ac59395b-5d10-4e46-a79a-562d4e547817?api-version=2023-02-15-preview",
+      "RequestUri": "https://myaccountname.purview.azure.com/share/operationResults/ac59395b-5d10-4e46-a79a-562d4e547817?api-version=2023-05-30-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -284,7 +284,7 @@
       }
     },
     {
-      "RequestUri": "https://myaccountname.purview.azure.com/share/operationResults/ac59395b-5d10-4e46-a79a-562d4e547817?api-version=2023-02-15-preview",
+      "RequestUri": "https://myaccountname.purview.azure.com/share/operationResults/ac59395b-5d10-4e46-a79a-562d4e547817?api-version=2023-05-30-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -312,7 +312,7 @@
       }
     },
     {
-      "RequestUri": "https://myaccountname.purview.azure.com/share/operationResults/ac59395b-5d10-4e46-a79a-562d4e547817?api-version=2023-02-15-preview",
+      "RequestUri": "https://myaccountname.purview.azure.com/share/operationResults/ac59395b-5d10-4e46-a79a-562d4e547817?api-version=2023-05-30-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -340,7 +340,7 @@
       }
     },
     {
-      "RequestUri": "https://myaccountname.purview.azure.com/share/operationResults/ac59395b-5d10-4e46-a79a-562d4e547817?api-version=2023-02-15-preview",
+      "RequestUri": "https://myaccountname.purview.azure.com/share/operationResults/ac59395b-5d10-4e46-a79a-562d4e547817?api-version=2023-05-30-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -368,7 +368,7 @@
       }
     },
     {
-      "RequestUri": "https://myaccountname.purview.azure.com/share/operationResults/ac59395b-5d10-4e46-a79a-562d4e547817?api-version=2023-02-15-preview",
+      "RequestUri": "https://myaccountname.purview.azure.com/share/operationResults/ac59395b-5d10-4e46-a79a-562d4e547817?api-version=2023-05-30-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -396,7 +396,7 @@
       }
     },
     {
-      "RequestUri": "https://myaccountname.purview.azure.com/share/operationResults/ac59395b-5d10-4e46-a79a-562d4e547817?api-version=2023-02-15-preview",
+      "RequestUri": "https://myaccountname.purview.azure.com/share/operationResults/ac59395b-5d10-4e46-a79a-562d4e547817?api-version=2023-05-30-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -424,7 +424,7 @@
       }
     },
     {
-      "RequestUri": "https://myaccountname.purview.azure.com/share/operationResults/ac59395b-5d10-4e46-a79a-562d4e547817?api-version=2023-02-15-preview",
+      "RequestUri": "https://myaccountname.purview.azure.com/share/operationResults/ac59395b-5d10-4e46-a79a-562d4e547817?api-version=2023-05-30-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -452,7 +452,7 @@
       }
     },
     {
-      "RequestUri": "https://myaccountname.purview.azure.com/share/operationResults/ac59395b-5d10-4e46-a79a-562d4e547817?api-version=2023-02-15-preview",
+      "RequestUri": "https://myaccountname.purview.azure.com/share/operationResults/ac59395b-5d10-4e46-a79a-562d4e547817?api-version=2023-05-30-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -480,7 +480,7 @@
       }
     },
     {
-      "RequestUri": "https://myaccountname.purview.azure.com/share/operationResults/ac59395b-5d10-4e46-a79a-562d4e547817?api-version=2023-02-15-preview",
+      "RequestUri": "https://myaccountname.purview.azure.com/share/operationResults/ac59395b-5d10-4e46-a79a-562d4e547817?api-version=2023-05-30-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -508,7 +508,7 @@
       }
     },
     {
-      "RequestUri": "https://myaccountname.purview.azure.com/share/operationResults/ac59395b-5d10-4e46-a79a-562d4e547817?api-version=2023-02-15-preview",
+      "RequestUri": "https://myaccountname.purview.azure.com/share/operationResults/ac59395b-5d10-4e46-a79a-562d4e547817?api-version=2023-05-30-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -536,7 +536,7 @@
       }
     },
     {
-      "RequestUri": "https://myaccountname.purview.azure.com/share/operationResults/ac59395b-5d10-4e46-a79a-562d4e547817?api-version=2023-02-15-preview",
+      "RequestUri": "https://myaccountname.purview.azure.com/share/operationResults/ac59395b-5d10-4e46-a79a-562d4e547817?api-version=2023-05-30-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -564,7 +564,7 @@
       }
     },
     {
-      "RequestUri": "https://myaccountname.purview.azure.com/share/operationResults/ac59395b-5d10-4e46-a79a-562d4e547817?api-version=2023-02-15-preview",
+      "RequestUri": "https://myaccountname.purview.azure.com/share/operationResults/ac59395b-5d10-4e46-a79a-562d4e547817?api-version=2023-05-30-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -592,7 +592,7 @@
       }
     },
     {
-      "RequestUri": "https://myaccountname.purview.azure.com/share/operationResults/ac59395b-5d10-4e46-a79a-562d4e547817?api-version=2023-02-15-preview",
+      "RequestUri": "https://myaccountname.purview.azure.com/share/operationResults/ac59395b-5d10-4e46-a79a-562d4e547817?api-version=2023-05-30-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -620,7 +620,7 @@
       }
     },
     {
-      "RequestUri": "https://myaccountname.purview.azure.com/share/operationResults/ac59395b-5d10-4e46-a79a-562d4e547817?api-version=2023-02-15-preview",
+      "RequestUri": "https://myaccountname.purview.azure.com/share/operationResults/ac59395b-5d10-4e46-a79a-562d4e547817?api-version=2023-05-30-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -648,7 +648,7 @@
       }
     },
     {
-      "RequestUri": "https://myaccountname.purview.azure.com/share/operationResults/ac59395b-5d10-4e46-a79a-562d4e547817?api-version=2023-02-15-preview",
+      "RequestUri": "https://myaccountname.purview.azure.com/share/operationResults/ac59395b-5d10-4e46-a79a-562d4e547817?api-version=2023-05-30-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -676,7 +676,7 @@
       }
     },
     {
-      "RequestUri": "https://myaccountname.purview.azure.com/share/operationResults/ac59395b-5d10-4e46-a79a-562d4e547817?api-version=2023-02-15-preview",
+      "RequestUri": "https://myaccountname.purview.azure.com/share/operationResults/ac59395b-5d10-4e46-a79a-562d4e547817?api-version=2023-05-30-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -704,7 +704,7 @@
       }
     },
     {
-      "RequestUri": "https://myaccountname.purview.azure.com/share/operationResults/ac59395b-5d10-4e46-a79a-562d4e547817?api-version=2023-02-15-preview",
+      "RequestUri": "https://myaccountname.purview.azure.com/share/operationResults/ac59395b-5d10-4e46-a79a-562d4e547817?api-version=2023-05-30-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -732,7 +732,7 @@
       }
     },
     {
-      "RequestUri": "https://myaccountname.purview.azure.com/share/operationResults/ac59395b-5d10-4e46-a79a-562d4e547817?api-version=2023-02-15-preview",
+      "RequestUri": "https://myaccountname.purview.azure.com/share/operationResults/ac59395b-5d10-4e46-a79a-562d4e547817?api-version=2023-05-30-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -760,7 +760,7 @@
       }
     },
     {
-      "RequestUri": "https://myaccountname.purview.azure.com/share/operationResults/ac59395b-5d10-4e46-a79a-562d4e547817?api-version=2023-02-15-preview",
+      "RequestUri": "https://myaccountname.purview.azure.com/share/operationResults/ac59395b-5d10-4e46-a79a-562d4e547817?api-version=2023-05-30-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -788,7 +788,7 @@
       }
     },
     {
-      "RequestUri": "https://myaccountname.purview.azure.com/share/operationResults/ac59395b-5d10-4e46-a79a-562d4e547817?api-version=2023-02-15-preview",
+      "RequestUri": "https://myaccountname.purview.azure.com/share/operationResults/ac59395b-5d10-4e46-a79a-562d4e547817?api-version=2023-05-30-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -816,7 +816,7 @@
       }
     },
     {
-      "RequestUri": "https://myaccountname.purview.azure.com/share/operationResults/ac59395b-5d10-4e46-a79a-562d4e547817?api-version=2023-02-15-preview",
+      "RequestUri": "https://myaccountname.purview.azure.com/share/operationResults/ac59395b-5d10-4e46-a79a-562d4e547817?api-version=2023-05-30-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -844,7 +844,7 @@
       }
     },
     {
-      "RequestUri": "https://myaccountname.purview.azure.com/share/operationResults/ac59395b-5d10-4e46-a79a-562d4e547817?api-version=2023-02-15-preview",
+      "RequestUri": "https://myaccountname.purview.azure.com/share/operationResults/ac59395b-5d10-4e46-a79a-562d4e547817?api-version=2023-05-30-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -872,7 +872,7 @@
       }
     },
     {
-      "RequestUri": "https://myaccountname.purview.azure.com/share/operationResults/ac59395b-5d10-4e46-a79a-562d4e547817?api-version=2023-02-15-preview",
+      "RequestUri": "https://myaccountname.purview.azure.com/share/operationResults/ac59395b-5d10-4e46-a79a-562d4e547817?api-version=2023-05-30-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -900,7 +900,7 @@
       }
     },
     {
-      "RequestUri": "https://myaccountname.purview.azure.com/share/operationResults/ac59395b-5d10-4e46-a79a-562d4e547817?api-version=2023-02-15-preview",
+      "RequestUri": "https://myaccountname.purview.azure.com/share/operationResults/ac59395b-5d10-4e46-a79a-562d4e547817?api-version=2023-05-30-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -928,7 +928,7 @@
       }
     },
     {
-      "RequestUri": "https://myaccountname.purview.azure.com/share/operationResults/ac59395b-5d10-4e46-a79a-562d4e547817?api-version=2023-02-15-preview",
+      "RequestUri": "https://myaccountname.purview.azure.com/share/operationResults/ac59395b-5d10-4e46-a79a-562d4e547817?api-version=2023-05-30-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -956,7 +956,7 @@
       }
     },
     {
-      "RequestUri": "https://myaccountname.purview.azure.com/share/operationResults/ac59395b-5d10-4e46-a79a-562d4e547817?api-version=2023-02-15-preview",
+      "RequestUri": "https://myaccountname.purview.azure.com/share/operationResults/ac59395b-5d10-4e46-a79a-562d4e547817?api-version=2023-05-30-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -984,7 +984,7 @@
       }
     },
     {
-      "RequestUri": "https://myaccountname.purview.azure.com/share/operationResults/ac59395b-5d10-4e46-a79a-562d4e547817?api-version=2023-02-15-preview",
+      "RequestUri": "https://myaccountname.purview.azure.com/share/operationResults/ac59395b-5d10-4e46-a79a-562d4e547817?api-version=2023-05-30-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -1012,7 +1012,7 @@
       }
     },
     {
-      "RequestUri": "https://myaccountname.purview.azure.com/share/operationResults/ac59395b-5d10-4e46-a79a-562d4e547817?api-version=2023-02-15-preview",
+      "RequestUri": "https://myaccountname.purview.azure.com/share/operationResults/ac59395b-5d10-4e46-a79a-562d4e547817?api-version=2023-05-30-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -1040,7 +1040,7 @@
       }
     },
     {
-      "RequestUri": "https://myaccountname.purview.azure.com/share/operationResults/ac59395b-5d10-4e46-a79a-562d4e547817?api-version=2023-02-15-preview",
+      "RequestUri": "https://myaccountname.purview.azure.com/share/operationResults/ac59395b-5d10-4e46-a79a-562d4e547817?api-version=2023-05-30-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -1068,7 +1068,7 @@
       }
     },
     {
-      "RequestUri": "https://myaccountname.purview.azure.com/share/operationResults/ac59395b-5d10-4e46-a79a-562d4e547817?api-version=2023-02-15-preview",
+      "RequestUri": "https://myaccountname.purview.azure.com/share/operationResults/ac59395b-5d10-4e46-a79a-562d4e547817?api-version=2023-05-30-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -1096,7 +1096,7 @@
       }
     },
     {
-      "RequestUri": "https://myaccountname.purview.azure.com/share/operationResults/ac59395b-5d10-4e46-a79a-562d4e547817?api-version=2023-02-15-preview",
+      "RequestUri": "https://myaccountname.purview.azure.com/share/operationResults/ac59395b-5d10-4e46-a79a-562d4e547817?api-version=2023-05-30-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -1124,7 +1124,7 @@
       }
     },
     {
-      "RequestUri": "https://myaccountname.purview.azure.com/share/operationResults/ac59395b-5d10-4e46-a79a-562d4e547817?api-version=2023-02-15-preview",
+      "RequestUri": "https://myaccountname.purview.azure.com/share/operationResults/ac59395b-5d10-4e46-a79a-562d4e547817?api-version=2023-05-30-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -1152,7 +1152,7 @@
       }
     },
     {
-      "RequestUri": "https://myaccountname.purview.azure.com/share/operationResults/ac59395b-5d10-4e46-a79a-562d4e547817?api-version=2023-02-15-preview",
+      "RequestUri": "https://myaccountname.purview.azure.com/share/operationResults/ac59395b-5d10-4e46-a79a-562d4e547817?api-version=2023-05-30-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -1180,7 +1180,7 @@
       }
     },
     {
-      "RequestUri": "https://myaccountname.purview.azure.com/share/operationResults/ac59395b-5d10-4e46-a79a-562d4e547817?api-version=2023-02-15-preview",
+      "RequestUri": "https://myaccountname.purview.azure.com/share/operationResults/ac59395b-5d10-4e46-a79a-562d4e547817?api-version=2023-05-30-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -1208,7 +1208,7 @@
       }
     },
     {
-      "RequestUri": "https://myaccountname.purview.azure.com/share/operationResults/ac59395b-5d10-4e46-a79a-562d4e547817?api-version=2023-02-15-preview",
+      "RequestUri": "https://myaccountname.purview.azure.com/share/operationResults/ac59395b-5d10-4e46-a79a-562d4e547817?api-version=2023-05-30-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -1236,7 +1236,7 @@
       }
     },
     {
-      "RequestUri": "https://myaccountname.purview.azure.com/share/operationResults/ac59395b-5d10-4e46-a79a-562d4e547817?api-version=2023-02-15-preview",
+      "RequestUri": "https://myaccountname.purview.azure.com/share/operationResults/ac59395b-5d10-4e46-a79a-562d4e547817?api-version=2023-05-30-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -1264,7 +1264,7 @@
       }
     },
     {
-      "RequestUri": "https://myaccountname.purview.azure.com/share/operationResults/ac59395b-5d10-4e46-a79a-562d4e547817?api-version=2023-02-15-preview",
+      "RequestUri": "https://myaccountname.purview.azure.com/share/operationResults/ac59395b-5d10-4e46-a79a-562d4e547817?api-version=2023-05-30-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -1292,7 +1292,7 @@
       }
     },
     {
-      "RequestUri": "https://myaccountname.purview.azure.com/share/operationResults/ac59395b-5d10-4e46-a79a-562d4e547817?api-version=2023-02-15-preview",
+      "RequestUri": "https://myaccountname.purview.azure.com/share/operationResults/ac59395b-5d10-4e46-a79a-562d4e547817?api-version=2023-05-30-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -1320,7 +1320,7 @@
       }
     },
     {
-      "RequestUri": "https://myaccountname.purview.azure.com/share/operationResults/ac59395b-5d10-4e46-a79a-562d4e547817?api-version=2023-02-15-preview",
+      "RequestUri": "https://myaccountname.purview.azure.com/share/operationResults/ac59395b-5d10-4e46-a79a-562d4e547817?api-version=2023-05-30-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -1348,7 +1348,7 @@
       }
     },
     {
-      "RequestUri": "https://myaccountname.purview.azure.com/share/operationResults/ac59395b-5d10-4e46-a79a-562d4e547817?api-version=2023-02-15-preview",
+      "RequestUri": "https://myaccountname.purview.azure.com/share/operationResults/ac59395b-5d10-4e46-a79a-562d4e547817?api-version=2023-05-30-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -1376,7 +1376,7 @@
       }
     },
     {
-      "RequestUri": "https://myaccountname.purview.azure.com/share/operationResults/ac59395b-5d10-4e46-a79a-562d4e547817?api-version=2023-02-15-preview",
+      "RequestUri": "https://myaccountname.purview.azure.com/share/operationResults/ac59395b-5d10-4e46-a79a-562d4e547817?api-version=2023-05-30-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -1404,7 +1404,7 @@
       }
     },
     {
-      "RequestUri": "https://myaccountname.purview.azure.com/share/operationResults/ac59395b-5d10-4e46-a79a-562d4e547817?api-version=2023-02-15-preview",
+      "RequestUri": "https://myaccountname.purview.azure.com/share/operationResults/ac59395b-5d10-4e46-a79a-562d4e547817?api-version=2023-05-30-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -1432,7 +1432,7 @@
       }
     },
     {
-      "RequestUri": "https://myaccountname.purview.azure.com/share/operationResults/ac59395b-5d10-4e46-a79a-562d4e547817?api-version=2023-02-15-preview",
+      "RequestUri": "https://myaccountname.purview.azure.com/share/operationResults/ac59395b-5d10-4e46-a79a-562d4e547817?api-version=2023-05-30-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -1460,7 +1460,7 @@
       }
     },
     {
-      "RequestUri": "https://myaccountname.purview.azure.com/share/operationResults/ac59395b-5d10-4e46-a79a-562d4e547817?api-version=2023-02-15-preview",
+      "RequestUri": "https://myaccountname.purview.azure.com/share/operationResults/ac59395b-5d10-4e46-a79a-562d4e547817?api-version=2023-05-30-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -1488,7 +1488,7 @@
       }
     },
     {
-      "RequestUri": "https://myaccountname.purview.azure.com/share/operationResults/ac59395b-5d10-4e46-a79a-562d4e547817?api-version=2023-02-15-preview",
+      "RequestUri": "https://myaccountname.purview.azure.com/share/operationResults/ac59395b-5d10-4e46-a79a-562d4e547817?api-version=2023-05-30-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -1516,7 +1516,7 @@
       }
     },
     {
-      "RequestUri": "https://myaccountname.purview.azure.com/share/operationResults/ac59395b-5d10-4e46-a79a-562d4e547817?api-version=2023-02-15-preview",
+      "RequestUri": "https://myaccountname.purview.azure.com/share/operationResults/ac59395b-5d10-4e46-a79a-562d4e547817?api-version=2023-05-30-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -1544,7 +1544,7 @@
       }
     },
     {
-      "RequestUri": "https://myaccountname.purview.azure.com/share/operationResults/ac59395b-5d10-4e46-a79a-562d4e547817?api-version=2023-02-15-preview",
+      "RequestUri": "https://myaccountname.purview.azure.com/share/operationResults/ac59395b-5d10-4e46-a79a-562d4e547817?api-version=2023-05-30-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -1572,7 +1572,7 @@
       }
     },
     {
-      "RequestUri": "https://myaccountname.purview.azure.com/share/operationResults/ac59395b-5d10-4e46-a79a-562d4e547817?api-version=2023-02-15-preview",
+      "RequestUri": "https://myaccountname.purview.azure.com/share/operationResults/ac59395b-5d10-4e46-a79a-562d4e547817?api-version=2023-05-30-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -1600,7 +1600,7 @@
       }
     },
     {
-      "RequestUri": "https://myaccountname.purview.azure.com/share/operationResults/ac59395b-5d10-4e46-a79a-562d4e547817?api-version=2023-02-15-preview",
+      "RequestUri": "https://myaccountname.purview.azure.com/share/operationResults/ac59395b-5d10-4e46-a79a-562d4e547817?api-version=2023-05-30-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -1628,7 +1628,7 @@
       }
     },
     {
-      "RequestUri": "https://myaccountname.purview.azure.com/share/operationResults/ac59395b-5d10-4e46-a79a-562d4e547817?api-version=2023-02-15-preview",
+      "RequestUri": "https://myaccountname.purview.azure.com/share/operationResults/ac59395b-5d10-4e46-a79a-562d4e547817?api-version=2023-05-30-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -1656,7 +1656,7 @@
       }
     },
     {
-      "RequestUri": "https://myaccountname.purview.azure.com/share/operationResults/ac59395b-5d10-4e46-a79a-562d4e547817?api-version=2023-02-15-preview",
+      "RequestUri": "https://myaccountname.purview.azure.com/share/operationResults/ac59395b-5d10-4e46-a79a-562d4e547817?api-version=2023-05-30-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -1684,7 +1684,7 @@
       }
     },
     {
-      "RequestUri": "https://myaccountname.purview.azure.com/share/operationResults/ac59395b-5d10-4e46-a79a-562d4e547817?api-version=2023-02-15-preview",
+      "RequestUri": "https://myaccountname.purview.azure.com/share/operationResults/ac59395b-5d10-4e46-a79a-562d4e547817?api-version=2023-05-30-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -1712,7 +1712,7 @@
       }
     },
     {
-      "RequestUri": "https://myaccountname.purview.azure.com/share/operationResults/ac59395b-5d10-4e46-a79a-562d4e547817?api-version=2023-02-15-preview",
+      "RequestUri": "https://myaccountname.purview.azure.com/share/operationResults/ac59395b-5d10-4e46-a79a-562d4e547817?api-version=2023-05-30-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -1740,7 +1740,7 @@
       }
     },
     {
-      "RequestUri": "https://myaccountname.purview.azure.com/share/operationResults/ac59395b-5d10-4e46-a79a-562d4e547817?api-version=2023-02-15-preview",
+      "RequestUri": "https://myaccountname.purview.azure.com/share/operationResults/ac59395b-5d10-4e46-a79a-562d4e547817?api-version=2023-05-30-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -1768,7 +1768,7 @@
       }
     },
     {
-      "RequestUri": "https://myaccountname.purview.azure.com/share/operationResults/ac59395b-5d10-4e46-a79a-562d4e547817?api-version=2023-02-15-preview",
+      "RequestUri": "https://myaccountname.purview.azure.com/share/operationResults/ac59395b-5d10-4e46-a79a-562d4e547817?api-version=2023-05-30-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -1796,7 +1796,7 @@
       }
     },
     {
-      "RequestUri": "https://myaccountname.purview.azure.com/share/operationResults/ac59395b-5d10-4e46-a79a-562d4e547817?api-version=2023-02-15-preview",
+      "RequestUri": "https://myaccountname.purview.azure.com/share/operationResults/ac59395b-5d10-4e46-a79a-562d4e547817?api-version=2023-05-30-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -1824,7 +1824,7 @@
       }
     },
     {
-      "RequestUri": "https://myaccountname.purview.azure.com/share/operationResults/ac59395b-5d10-4e46-a79a-562d4e547817?api-version=2023-02-15-preview",
+      "RequestUri": "https://myaccountname.purview.azure.com/share/operationResults/ac59395b-5d10-4e46-a79a-562d4e547817?api-version=2023-05-30-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -1852,7 +1852,7 @@
       }
     },
     {
-      "RequestUri": "https://myaccountname.purview.azure.com/share/operationResults/ac59395b-5d10-4e46-a79a-562d4e547817?api-version=2023-02-15-preview",
+      "RequestUri": "https://myaccountname.purview.azure.com/share/operationResults/ac59395b-5d10-4e46-a79a-562d4e547817?api-version=2023-05-30-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -1880,7 +1880,7 @@
       }
     },
     {
-      "RequestUri": "https://myaccountname.purview.azure.com/share/operationResults/ac59395b-5d10-4e46-a79a-562d4e547817?api-version=2023-02-15-preview",
+      "RequestUri": "https://myaccountname.purview.azure.com/share/operationResults/ac59395b-5d10-4e46-a79a-562d4e547817?api-version=2023-05-30-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -1908,7 +1908,7 @@
       }
     },
     {
-      "RequestUri": "https://myaccountname.purview.azure.com/share/operationResults/ac59395b-5d10-4e46-a79a-562d4e547817?api-version=2023-02-15-preview",
+      "RequestUri": "https://myaccountname.purview.azure.com/share/operationResults/ac59395b-5d10-4e46-a79a-562d4e547817?api-version=2023-05-30-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -1936,7 +1936,7 @@
       }
     },
     {
-      "RequestUri": "https://myaccountname.purview.azure.com/share/operationResults/ac59395b-5d10-4e46-a79a-562d4e547817?api-version=2023-02-15-preview",
+      "RequestUri": "https://myaccountname.purview.azure.com/share/operationResults/ac59395b-5d10-4e46-a79a-562d4e547817?api-version=2023-05-30-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -1964,7 +1964,7 @@
       }
     },
     {
-      "RequestUri": "https://myaccountname.purview.azure.com/share/operationResults/ac59395b-5d10-4e46-a79a-562d4e547817?api-version=2023-02-15-preview",
+      "RequestUri": "https://myaccountname.purview.azure.com/share/operationResults/ac59395b-5d10-4e46-a79a-562d4e547817?api-version=2023-05-30-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -1992,7 +1992,7 @@
       }
     },
     {
-      "RequestUri": "https://myaccountname.purview.azure.com/share/operationResults/ac59395b-5d10-4e46-a79a-562d4e547817?api-version=2023-02-15-preview",
+      "RequestUri": "https://myaccountname.purview.azure.com/share/operationResults/ac59395b-5d10-4e46-a79a-562d4e547817?api-version=2023-05-30-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -2020,7 +2020,7 @@
       }
     },
     {
-      "RequestUri": "https://myaccountname.purview.azure.com/share/operationResults/ac59395b-5d10-4e46-a79a-562d4e547817?api-version=2023-02-15-preview",
+      "RequestUri": "https://myaccountname.purview.azure.com/share/operationResults/ac59395b-5d10-4e46-a79a-562d4e547817?api-version=2023-05-30-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -2048,7 +2048,7 @@
       }
     },
     {
-      "RequestUri": "https://myaccountname.purview.azure.com/share/operationResults/ac59395b-5d10-4e46-a79a-562d4e547817?api-version=2023-02-15-preview",
+      "RequestUri": "https://myaccountname.purview.azure.com/share/operationResults/ac59395b-5d10-4e46-a79a-562d4e547817?api-version=2023-05-30-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -2076,7 +2076,7 @@
       }
     },
     {
-      "RequestUri": "https://myaccountname.purview.azure.com/share/operationResults/ac59395b-5d10-4e46-a79a-562d4e547817?api-version=2023-02-15-preview",
+      "RequestUri": "https://myaccountname.purview.azure.com/share/operationResults/ac59395b-5d10-4e46-a79a-562d4e547817?api-version=2023-05-30-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -2104,7 +2104,7 @@
       }
     },
     {
-      "RequestUri": "https://myaccountname.purview.azure.com/share/operationResults/ac59395b-5d10-4e46-a79a-562d4e547817?api-version=2023-02-15-preview",
+      "RequestUri": "https://myaccountname.purview.azure.com/share/operationResults/ac59395b-5d10-4e46-a79a-562d4e547817?api-version=2023-05-30-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -2132,7 +2132,7 @@
       }
     },
     {
-      "RequestUri": "https://myaccountname.purview.azure.com/share/operationResults/ac59395b-5d10-4e46-a79a-562d4e547817?api-version=2023-02-15-preview",
+      "RequestUri": "https://myaccountname.purview.azure.com/share/operationResults/ac59395b-5d10-4e46-a79a-562d4e547817?api-version=2023-05-30-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -2160,7 +2160,7 @@
       }
     },
     {
-      "RequestUri": "https://myaccountname.purview.azure.com/share/operationResults/ac59395b-5d10-4e46-a79a-562d4e547817?api-version=2023-02-15-preview",
+      "RequestUri": "https://myaccountname.purview.azure.com/share/operationResults/ac59395b-5d10-4e46-a79a-562d4e547817?api-version=2023-05-30-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -2188,7 +2188,7 @@
       }
     },
     {
-      "RequestUri": "https://myaccountname.purview.azure.com/share/operationResults/ac59395b-5d10-4e46-a79a-562d4e547817?api-version=2023-02-15-preview",
+      "RequestUri": "https://myaccountname.purview.azure.com/share/operationResults/ac59395b-5d10-4e46-a79a-562d4e547817?api-version=2023-05-30-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -2216,7 +2216,7 @@
       }
     },
     {
-      "RequestUri": "https://myaccountname.purview.azure.com/share/operationResults/ac59395b-5d10-4e46-a79a-562d4e547817?api-version=2023-02-15-preview",
+      "RequestUri": "https://myaccountname.purview.azure.com/share/operationResults/ac59395b-5d10-4e46-a79a-562d4e547817?api-version=2023-05-30-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -2244,7 +2244,7 @@
       }
     },
     {
-      "RequestUri": "https://myaccountname.purview.azure.com/share/operationResults/ac59395b-5d10-4e46-a79a-562d4e547817?api-version=2023-02-15-preview",
+      "RequestUri": "https://myaccountname.purview.azure.com/share/operationResults/ac59395b-5d10-4e46-a79a-562d4e547817?api-version=2023-05-30-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -2272,7 +2272,7 @@
       }
     },
     {
-      "RequestUri": "https://myaccountname.purview.azure.com/share/operationResults/ac59395b-5d10-4e46-a79a-562d4e547817?api-version=2023-02-15-preview",
+      "RequestUri": "https://myaccountname.purview.azure.com/share/operationResults/ac59395b-5d10-4e46-a79a-562d4e547817?api-version=2023-05-30-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -2300,7 +2300,7 @@
       }
     },
     {
-      "RequestUri": "https://myaccountname.purview.azure.com/share/operationResults/ac59395b-5d10-4e46-a79a-562d4e547817?api-version=2023-02-15-preview",
+      "RequestUri": "https://myaccountname.purview.azure.com/share/operationResults/ac59395b-5d10-4e46-a79a-562d4e547817?api-version=2023-05-30-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -2328,7 +2328,7 @@
       }
     },
     {
-      "RequestUri": "https://myaccountname.purview.azure.com/share/operationResults/ac59395b-5d10-4e46-a79a-562d4e547817?api-version=2023-02-15-preview",
+      "RequestUri": "https://myaccountname.purview.azure.com/share/operationResults/ac59395b-5d10-4e46-a79a-562d4e547817?api-version=2023-05-30-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -2356,7 +2356,7 @@
       }
     },
     {
-      "RequestUri": "https://myaccountname.purview.azure.com/share/operationResults/ac59395b-5d10-4e46-a79a-562d4e547817?api-version=2023-02-15-preview",
+      "RequestUri": "https://myaccountname.purview.azure.com/share/operationResults/ac59395b-5d10-4e46-a79a-562d4e547817?api-version=2023-05-30-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -2384,7 +2384,7 @@
       }
     },
     {
-      "RequestUri": "https://myaccountname.purview.azure.com/share/operationResults/ac59395b-5d10-4e46-a79a-562d4e547817?api-version=2023-02-15-preview",
+      "RequestUri": "https://myaccountname.purview.azure.com/share/operationResults/ac59395b-5d10-4e46-a79a-562d4e547817?api-version=2023-05-30-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -2412,7 +2412,7 @@
       }
     },
     {
-      "RequestUri": "https://myaccountname.purview.azure.com/share/operationResults/ac59395b-5d10-4e46-a79a-562d4e547817?api-version=2023-02-15-preview",
+      "RequestUri": "https://myaccountname.purview.azure.com/share/operationResults/ac59395b-5d10-4e46-a79a-562d4e547817?api-version=2023-05-30-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -2440,7 +2440,7 @@
       }
     },
     {
-      "RequestUri": "https://myaccountname.purview.azure.com/share/operationResults/ac59395b-5d10-4e46-a79a-562d4e547817?api-version=2023-02-15-preview",
+      "RequestUri": "https://myaccountname.purview.azure.com/share/operationResults/ac59395b-5d10-4e46-a79a-562d4e547817?api-version=2023-05-30-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -2468,7 +2468,7 @@
       }
     },
     {
-      "RequestUri": "https://myaccountname.purview.azure.com/share/operationResults/ac59395b-5d10-4e46-a79a-562d4e547817?api-version=2023-02-15-preview",
+      "RequestUri": "https://myaccountname.purview.azure.com/share/operationResults/ac59395b-5d10-4e46-a79a-562d4e547817?api-version=2023-05-30-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -2496,7 +2496,7 @@
       }
     },
     {
-      "RequestUri": "https://myaccountname.purview.azure.com/share/operationResults/ac59395b-5d10-4e46-a79a-562d4e547817?api-version=2023-02-15-preview",
+      "RequestUri": "https://myaccountname.purview.azure.com/share/operationResults/ac59395b-5d10-4e46-a79a-562d4e547817?api-version=2023-05-30-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -2524,7 +2524,7 @@
       }
     },
     {
-      "RequestUri": "https://myaccountname.purview.azure.com/share/operationResults/ac59395b-5d10-4e46-a79a-562d4e547817?api-version=2023-02-15-preview",
+      "RequestUri": "https://myaccountname.purview.azure.com/share/operationResults/ac59395b-5d10-4e46-a79a-562d4e547817?api-version=2023-05-30-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -2552,7 +2552,7 @@
       }
     },
     {
-      "RequestUri": "https://myaccountname.purview.azure.com/share/operationResults/ac59395b-5d10-4e46-a79a-562d4e547817?api-version=2023-02-15-preview",
+      "RequestUri": "https://myaccountname.purview.azure.com/share/operationResults/ac59395b-5d10-4e46-a79a-562d4e547817?api-version=2023-05-30-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -2580,7 +2580,7 @@
       }
     },
     {
-      "RequestUri": "https://myaccountname.purview.azure.com/share/operationResults/ac59395b-5d10-4e46-a79a-562d4e547817?api-version=2023-02-15-preview",
+      "RequestUri": "https://myaccountname.purview.azure.com/share/operationResults/ac59395b-5d10-4e46-a79a-562d4e547817?api-version=2023-05-30-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -2608,7 +2608,7 @@
       }
     },
     {
-      "RequestUri": "https://myaccountname.purview.azure.com/share/operationResults/ac59395b-5d10-4e46-a79a-562d4e547817?api-version=2023-02-15-preview",
+      "RequestUri": "https://myaccountname.purview.azure.com/share/operationResults/ac59395b-5d10-4e46-a79a-562d4e547817?api-version=2023-05-30-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -2636,7 +2636,7 @@
       }
     },
     {
-      "RequestUri": "https://myaccountname.purview.azure.com/share/operationResults/ac59395b-5d10-4e46-a79a-562d4e547817?api-version=2023-02-15-preview",
+      "RequestUri": "https://myaccountname.purview.azure.com/share/operationResults/ac59395b-5d10-4e46-a79a-562d4e547817?api-version=2023-05-30-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
