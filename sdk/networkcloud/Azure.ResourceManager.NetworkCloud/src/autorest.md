@@ -7,7 +7,7 @@ azure-arm: true
 csharp: true
 library-name: NetworkCloud
 namespace: Azure.ResourceManager.NetworkCloud
-require: https://github.com/Azure/azure-rest-api-specs/blob/7a92098c9b3cf46ec9158ae91dc8c5cdf87b6c12/specification/networkcloud/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/d283cd28c6396d18f704da7b2953d0ad2ddc89c6/specification/networkcloud/resource-manager/readme.md
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 skip-csproj: true
@@ -75,8 +75,6 @@ directive:
   # `delete` transformations are to remove APIs/methods that result in Access Denied for end users.
   - remove-operation: BareMetalMachines_CreateOrUpdate
   - remove-operation: BareMetalMachines_Delete
-  - remove-operation: HybridAksClusters_CreateOrUpdate
-  - remove-operation: HybridAksClusters_Delete
   - remove-operation: Racks_CreateOrUpdate
   - remove-operation: Racks_Delete
   - remove-operation: StorageAppliances_CreateOrUpdate
