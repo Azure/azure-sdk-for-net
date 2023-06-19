@@ -5,14 +5,6 @@
 ### Features Added
 - Support for deploying and managing Azure Managed CCF instances
 
-### Breaking Changes
-- None
-
-### Bugs Fixed
-- None
-
-### Other Changes
-- None
 
 ## 1.1.0-beta.1 (2023-05-29)
 
