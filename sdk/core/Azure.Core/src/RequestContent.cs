@@ -79,6 +79,11 @@ namespace Azure.Core
         /// <returns>An instance of <see cref="RequestContent"/> that wraps a <see cref="DynamicData"/>.</returns>
         public static RequestContent Create(DynamicData content) => new DynamicDataContent(content);
 
+        internal static RequestContent CreatePatch(DynamicData content)
+        {
+            throw new NotImplementedException();
+        }
+
         /// <summary>
         /// Creates an instance of <see cref="RequestContent"/> that wraps a serialized version of an object.
         /// </summary>
