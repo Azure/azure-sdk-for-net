@@ -10,18 +10,18 @@ using System.Threading.Tasks;
 
 namespace Azure.ResourceManager.Analysis.Tests
 {
-    public class AnaltsisManagementTestBase : ManagementRecordedTestBase<AnaltsisManagementTestEnvironment>
+    public class AnalysisManagementTestBase : ManagementRecordedTestBase<AnalysisManagementTestEnvironment>
     {
         protected ArmClient Client { get; private set; }
         protected AzureLocation DefaultLocation => TestEnvironment.Location;
         protected SubscriptionResource DefaultSubscription { get; private set; }
 
-        protected AnaltsisManagementTestBase(bool isAsync, RecordedTestMode mode)
+        protected AnalysisManagementTestBase(bool isAsync, RecordedTestMode mode)
         : base(isAsync, mode)
         {
         }
 
-        protected AnaltsisManagementTestBase(bool isAsync)
+        protected AnalysisManagementTestBase(bool isAsync)
             : base(isAsync)
         {
         }
