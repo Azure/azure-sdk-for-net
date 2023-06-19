@@ -23,12 +23,12 @@ namespace Azure.Core.Expressions.DataFactory
         public static DataFactoryElementKind Expression { get; } = new DataFactoryElementKind("Expression");
 
         /// <summary>
-        /// A SecureString element.
+        /// A Secret string element.
         /// </summary>
-        public static DataFactoryElementKind MaskedString { get; } = new DataFactoryElementKind("SecureString");
+        public static DataFactoryElementKind SecretString { get; } = new DataFactoryElementKind("SecureString");
 
         /// <summary>
-        /// A KeyVaultReference element.
+        /// A KeyVaultSecretReference element.
         /// </summary>
         public static DataFactoryElementKind KeyVaultSecretReference { get; } = new DataFactoryElementKind("AzureKeyVaultSecret");
 

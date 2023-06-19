@@ -294,7 +294,7 @@ namespace Azure.Core.Expressions.DataFactory.Tests
         public void CreateFromMaskedStringLiteral()
         {
             var dfe = DataFactoryElement<string?>.FromSecretString(SecretStringValue);
-            AssertStringDfe(dfe, SecretStringValue, DataFactoryElementKind.MaskedString);;
+            AssertStringDfe(dfe, SecretStringValue, DataFactoryElementKind.SecretString);;
             Assert.AreEqual(SecretStringValue, dfe.ToString());
         }
 
@@ -908,7 +908,7 @@ namespace Azure.Core.Expressions.DataFactory.Tests
             var doc = JsonDocument.Parse(SecureStringJson);
             var dfe = DataFactoryElementJsonConverter.Deserialize<string>(doc.RootElement)!;
             Assert.AreEqual(SecretStringValue, dfe.ToString());
-            AssertStringDfe(dfe, SecretStringValue, DataFactoryElementKind.MaskedString);
+            AssertStringDfe(dfe, SecretStringValue, DataFactoryElementKind.SecretString);
         }
 
         private static void AssertExpressionDfe(DataFactoryElement<string?> dfe)

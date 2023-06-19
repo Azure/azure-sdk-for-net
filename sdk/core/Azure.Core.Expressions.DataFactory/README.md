@@ -76,9 +76,9 @@ blobDataSet.FolderPath = "foo/bar";
 blobDataSet.FolderPath = DataFactoryElement<string>.FromExpression("foo/bar-@{pipeline().TriggerTime}");
 ```
 
-#### Secure String
+#### Secret String
 
-```C# Snippet:DataFactoryElementSecureString
+```C# Snippet:DataFactoryElementSecretString
 blobDataSet.FolderPath = DataFactoryElement<string>.FromSecretString("some/secret/path");
 ```
 

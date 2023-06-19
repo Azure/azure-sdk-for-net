@@ -69,7 +69,7 @@ namespace Azure.Core.Expressions.DataFactory
             {
                 return _literal?.ToString();
             }
-            if (_kind == DataFactoryElementKind.MaskedString)
+            if (_kind == DataFactoryElementKind.SecretString)
             {
                 return ((DataFactorySecretString)Secret!).Value;
             }
@@ -118,7 +118,7 @@ namespace Azure.Core.Expressions.DataFactory
         public static DataFactoryElement<string?> FromSecretString(DataFactorySecretString secretString)
 #pragma warning restore CA1000 // Do not declare static members on generic types
         {
-            return new DataFactoryElement<string?>(secretString, DataFactoryElementKind.MaskedString);
+            return new DataFactoryElement<string?>(secretString, DataFactoryElementKind.SecretString);
         }
 
         /// <summary>

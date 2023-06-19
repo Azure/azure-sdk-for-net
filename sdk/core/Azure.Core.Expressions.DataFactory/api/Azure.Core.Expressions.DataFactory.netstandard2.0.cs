@@ -9,7 +9,7 @@ namespace Azure.Core.Expressions.DataFactory
         public static Azure.Core.Expressions.DataFactory.DataFactoryElementKind Expression { get { throw null; } }
         public static Azure.Core.Expressions.DataFactory.DataFactoryElementKind KeyVaultSecretReference { get { throw null; } }
         public static Azure.Core.Expressions.DataFactory.DataFactoryElementKind Literal { get { throw null; } }
-        public static Azure.Core.Expressions.DataFactory.DataFactoryElementKind MaskedString { get { throw null; } }
+        public static Azure.Core.Expressions.DataFactory.DataFactoryElementKind SecretString { get { throw null; } }
         public bool Equals(Azure.Core.Expressions.DataFactory.DataFactoryElementKind other) { throw null; }
         public override bool Equals(object? obj) { throw null; }
         public override int GetHashCode() { throw null; }

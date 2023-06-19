@@ -256,7 +256,7 @@ namespace Azure.Core.Expressions.DataFactory
                 return new DataFactoryElement<IList<T?>?>(list);
             }
 
-            // Expression, SecureString, and AzureKeyVaultReference handling
+            // Expression, SecretString, and AzureKeyVaultReference handling
             if (TryGetNonLiteral(json, out DataFactoryElement<IList<T?>?>? element))
             {
                 return element!;
@@ -274,7 +274,7 @@ namespace Azure.Core.Expressions.DataFactory
                 return null;
             }
 
-            // Expression, SecureString, and AzureKeyVaultReference handling
+            // Expression, SecretString, and AzureKeyVaultReference handling
             if (TryGetNonLiteral(json, out DataFactoryElement<T?>? element))
             {
                 return element;
