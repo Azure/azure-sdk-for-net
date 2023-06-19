@@ -79,13 +79,16 @@ blobDataSet.FolderPath = DataFactoryElement<string>.FromExpression("foo/bar-@{pi
 #### Secure String
 
 ```C# Snippet:DataFactoryElementSecureString
-blobDataSet.FolderPath = DataFactoryElement<string>.FromMaskedString("some/secret/path");
+blobDataSet.FolderPath = DataFactoryElement<string>.FromSecretString("some/secret/path");
 ```
 
 #### Key Vault Secret Reference
 
 ```C# Snippet:DataFactoryElementKeyVaultSecretReference
-blobDataSet.FolderPath = DataFactoryElement<string>.FromKeyVaultSecretReference("@Microsoft.KeyVault(SecretUri=https://myvault.vault.azure.net/secrets/mysecret/)");
+var store = new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference,
+    "referenceName");
+var keyVaultReference = new DataFactoryKeyVaultSecretReference(store, "secretName");
+blobDataSet.FolderPath = DataFactoryElement<string>.FromKeyVaultSecretReference(keyVaultReference);
 ```
 
 In each case the library will be able to serialize and deserialize all scenarios appropriately allowing you to seamlessly use either according to your application's needs.

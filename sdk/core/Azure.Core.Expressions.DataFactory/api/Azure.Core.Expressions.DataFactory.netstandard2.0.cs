@@ -25,30 +25,53 @@ namespace Azure.Core.Expressions.DataFactory
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object? obj) { throw null; }
         public static Azure.Core.Expressions.DataFactory.DataFactoryElement<T> FromExpression(string expression) { throw null; }
-        public static Azure.Core.Expressions.DataFactory.DataFactoryElement<System.String?> FromKeyVaultSecretReference(string keyVaultSecretReference) { throw null; }
+        public static Azure.Core.Expressions.DataFactory.DataFactoryElement<System.String?> FromKeyVaultSecretReference(Azure.Core.Expressions.DataFactory.DataFactoryKeyVaultSecretReference dataFactoryKeyVaultSecretReference) { throw null; }
         public static Azure.Core.Expressions.DataFactory.DataFactoryElement<T> FromLiteral(T? literal) { throw null; }
-        public static Azure.Core.Expressions.DataFactory.DataFactoryElement<System.String?> FromMaskedString(Azure.Core.Expressions.DataFactory.DataFactoryMaskedString maskedString) { throw null; }
+        public static Azure.Core.Expressions.DataFactory.DataFactoryElement<System.String?> FromSecretString(Azure.Core.Expressions.DataFactory.DataFactorySecretString secretString) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static implicit operator Azure.Core.Expressions.DataFactory.DataFactoryElement<T> (T literal) { throw null; }
         public override string? ToString() { throw null; }
     }
-    public partial class DataFactoryMaskedString
+    public partial class DataFactoryKeyVaultSecretReference : Azure.Core.Expressions.DataFactory.DataFactorySecretBaseDefinition
     {
-        public DataFactoryMaskedString(bool value) { }
-        public DataFactoryMaskedString(System.DateTimeOffset value) { }
-        public DataFactoryMaskedString(double value) { }
-        public DataFactoryMaskedString(int value) { }
-        public DataFactoryMaskedString(string value) { }
-        public DataFactoryMaskedString(System.TimeSpan value) { }
-        public DataFactoryMaskedString(System.Uri value) { }
-        public string Value { get { throw null; } }
-        public static implicit operator Azure.Core.Expressions.DataFactory.DataFactoryMaskedString (bool literal) { throw null; }
-        public static implicit operator Azure.Core.Expressions.DataFactory.DataFactoryMaskedString (System.DateTimeOffset literal) { throw null; }
-        public static implicit operator Azure.Core.Expressions.DataFactory.DataFactoryMaskedString (double literal) { throw null; }
-        public static implicit operator Azure.Core.Expressions.DataFactory.DataFactoryMaskedString (int literal) { throw null; }
-        public static implicit operator Azure.Core.Expressions.DataFactory.DataFactoryMaskedString (string literal) { throw null; }
-        public static implicit operator Azure.Core.Expressions.DataFactory.DataFactoryMaskedString (System.TimeSpan literal) { throw null; }
-        public static implicit operator Azure.Core.Expressions.DataFactory.DataFactoryMaskedString (System.Uri literal) { throw null; }
+        public DataFactoryKeyVaultSecretReference(Azure.Core.Expressions.DataFactory.DataFactoryLinkedServiceReference store, Azure.Core.Expressions.DataFactory.DataFactoryElement<string> secretName) { }
+        public Azure.Core.Expressions.DataFactory.DataFactoryElement<string> SecretName { get { throw null; } set { } }
+        public Azure.Core.Expressions.DataFactory.DataFactoryElement<string> SecretVersion { get { throw null; } set { } }
+        public Azure.Core.Expressions.DataFactory.DataFactoryLinkedServiceReference Store { get { throw null; } set { } }
+    }
+    public partial class DataFactoryLinkedServiceReference
+    {
+        public DataFactoryLinkedServiceReference(Azure.Core.Expressions.DataFactory.DataFactoryLinkedServiceReferenceType referenceType, string referenceName) { }
+        public System.Collections.Generic.IDictionary<string, System.BinaryData?> Parameters { get { throw null; } }
+        public string? ReferenceName { get { throw null; } set { } }
+        public Azure.Core.Expressions.DataFactory.DataFactoryLinkedServiceReferenceType ReferenceType { get { throw null; } set { } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct DataFactoryLinkedServiceReferenceType : System.IEquatable<Azure.Core.Expressions.DataFactory.DataFactoryLinkedServiceReferenceType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public DataFactoryLinkedServiceReferenceType(string value) { throw null; }
+        public static Azure.Core.Expressions.DataFactory.DataFactoryLinkedServiceReferenceType LinkedServiceReference { get { throw null; } }
+        public bool Equals(Azure.Core.Expressions.DataFactory.DataFactoryLinkedServiceReferenceType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.Core.Expressions.DataFactory.DataFactoryLinkedServiceReferenceType left, Azure.Core.Expressions.DataFactory.DataFactoryLinkedServiceReferenceType right) { throw null; }
+        public static implicit operator Azure.Core.Expressions.DataFactory.DataFactoryLinkedServiceReferenceType (string value) { throw null; }
+        public static bool operator !=(Azure.Core.Expressions.DataFactory.DataFactoryLinkedServiceReferenceType left, Azure.Core.Expressions.DataFactory.DataFactoryLinkedServiceReferenceType right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public abstract partial class DataFactorySecretBaseDefinition
+    {
+        protected DataFactorySecretBaseDefinition() { }
+    }
+    public partial class DataFactorySecretString : Azure.Core.Expressions.DataFactory.DataFactorySecretBaseDefinition
+    {
+        public DataFactorySecretString(string value) { }
+        public string? Value { get { throw null; } set { } }
+        public static implicit operator Azure.Core.Expressions.DataFactory.DataFactorySecretString (string literal) { throw null; }
     }
 }

@@ -30,7 +30,7 @@ namespace Azure.Core.Expressions.DataFactory
         /// <summary>
         /// A KeyVaultReference element.
         /// </summary>
-        public static DataFactoryElementKind KeyVaultSecretReference { get; } = new DataFactoryElementKind("AzureKeyVaultSecretReference");
+        public static DataFactoryElementKind KeyVaultSecretReference { get; } = new DataFactoryElementKind("AzureKeyVaultSecret");
 
         /// <summary>
         /// Creates an instance of <see cref="DataFactoryElementKind"/>.
