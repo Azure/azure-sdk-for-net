@@ -17,9 +17,10 @@ namespace Azure.ResourceManager.DevTestLabs.Tests
         protected const string ResourceGroupNamePrefix = "DevTestLabRG";
         protected AzureLocation DefaultLocation = AzureLocation.EastUS;
         protected ResourceGroupResource TestResourceGroup { get; set; }
+        protected DevTestLabResource TestDevTestLab { get; set; }
 
         protected DevTestLabsManagementTestBase(bool isAsync, RecordedTestMode mode)
-        : base(isAsync, mode)
+            : base(isAsync, mode)
         {
         }
 
@@ -29,9 +30,11 @@ namespace Azure.ResourceManager.DevTestLabs.Tests
         }
 
         [SetUp]
-        public void CreateCommonClient()
+        public async void CreateCommonClient()
         {
             Client = GetArmClient();
+            TestResourceGroup = await CreateResourceGroup();
+            TestDevTestLab = await CreateDevTestLab(TestResourceGroup, Recording.GenerateAssetName("lab"));
         }
 
         [TearDown]

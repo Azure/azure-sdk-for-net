@@ -15,42 +15,53 @@ namespace Azure.ResourceManager.DevTestLabs.Tests
 {
     internal class DevTestLabTests : DevTestLabsManagementTestBase
     {
-        private DevTestLabCollection _devTestLabCollections = null;
+        private DevTestLabCollection _devTestLabCollections;
+        private string _labName;
+
         public DevTestLabTests(bool isAsync) : base(isAsync)
         {
         }
 
         [SetUp]
-        public async Task SetUp()
+        public void SetUp()
         {
-            TestResourceGroup = await CreateResourceGroup();
             _devTestLabCollections = TestResourceGroup.GetDevTestLabs();
+            _labName = TestDevTestLab.Data.Name;
         }
 
         [RecordedTest]
-        public async Task CreateOrUpdateExistGetGetAllDelete()
+        public void CreateOrUpdate()
         {
-            // CreateOrUpdate
-            string labName = Recording.GenerateAssetName("lab");
-            var lab = await CreateDevTestLab(TestResourceGroup, labName);
+            ValidateDevTestLab(TestDevTestLab.Data, _labName);
+        }
 
-            // Exist
-            var flag = await _devTestLabCollections.ExistsAsync(labName);
+        [RecordedTest]
+        public async Task Exist()
+        {
+            var flag = await _devTestLabCollections.ExistsAsync(_labName);
             Assert.IsTrue(flag);
+        }
 
-            // Get
-            var getlab = await _devTestLabCollections.GetAsync(labName);
-            ValidateDevTestLab(getlab.Value.Data, labName);
+        [RecordedTest]
+        public async Task Get()
+        {
+            var getlab = await _devTestLabCollections.GetAsync(_labName);
+            ValidateDevTestLab(getlab.Value.Data, _labName);
+        }
 
-            // GetAll
-            var list = await _devTestLabCollections.GetAllAsync().ToEnumerableAsync();
-            Assert.IsNotEmpty(list);
-            ValidateDevTestLab(list.FirstOrDefault().Data, labName);
+        [RecordedTest]
+        public async Task GetAll()
+        {
+            var first = (await _devTestLabCollections.GetAllAsync().ToEnumerableAsync()).FirstOrDefault();
+            ValidateDevTestLab(first.Data, _labName);
+        }
 
-            // Delete
+        [RecordedTest]
+        public async Task Delete()
+        {
             await DeleteAllLocks(TestResourceGroup);
-            await lab.DeleteAsync(WaitUntil.Completed);
-            flag = await _devTestLabCollections.ExistsAsync(labName);
+            await TestDevTestLab.DeleteAsync(WaitUntil.Completed);
+            bool flag = await _devTestLabCollections.ExistsAsync(_labName);
             Assert.IsFalse(flag);
         }
 
@@ -60,12 +71,12 @@ namespace Azure.ResourceManager.DevTestLabs.Tests
         public async Task AddRemoveTag(bool? useTagResource)
         {
             SetTagResourceUsage(Client, useTagResource);
-            string labName = Recording.GenerateAssetName("lab");
-            var lab = await CreateDevTestLab(TestResourceGroup, labName);
+            string _labName = Recording.GenerateAssetName("lab");
+            var lab = await CreateDevTestLab(TestResourceGroup, _labName);
 
             // AddTag
             await lab.AddTagAsync("addtagkey", "addtagvalue");
-            lab = await _devTestLabCollections.GetAsync(labName);
+            lab = await _devTestLabCollections.GetAsync(_labName);
             Assert.AreEqual(1, lab.Data.Tags.Count);
             KeyValuePair<string, string> tag = lab.Data.Tags.Where(tag => tag.Key == "addtagkey").FirstOrDefault();
             Assert.AreEqual("addtagkey", tag.Key);
@@ -73,7 +84,7 @@ namespace Azure.ResourceManager.DevTestLabs.Tests
 
             // RemoveTag
             await lab.RemoveTagAsync("addtagkey");
-            lab = await _devTestLabCollections.GetAsync(labName);
+            lab = await _devTestLabCollections.GetAsync(_labName);
             Assert.AreEqual(0, lab.Data.Tags.Count);
         }
 

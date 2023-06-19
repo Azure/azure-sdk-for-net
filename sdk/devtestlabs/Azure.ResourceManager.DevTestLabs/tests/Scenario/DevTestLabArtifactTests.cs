@@ -22,9 +22,7 @@ namespace Azure.ResourceManager.DevTestLabs.Tests
         [SetUp]
         public async Task SetUp()
         {
-            TestResourceGroup = await CreateResourceGroup();
-            var lab = await CreateDevTestLab(TestResourceGroup, Recording.GenerateAssetName("lab"));
-            var artifactSources = await lab.GetDevTestLabArtifactSources().GetAllAsync().ToEnumerableAsync();
+            var artifactSources = await TestDevTestLab.GetDevTestLabArtifactSources().GetAllAsync().ToEnumerableAsync();
             _artifactCollection = artifactSources[0].GetDevTestLabArtifacts();
         }
 

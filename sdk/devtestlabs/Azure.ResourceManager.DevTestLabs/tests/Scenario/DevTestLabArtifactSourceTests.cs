@@ -15,26 +15,18 @@ namespace Azure.ResourceManager.DevTestLabs.Tests
 {
     internal class DevTestLabArtifactSourceTests : DevTestLabsManagementTestBase
     {
-        private DevTestLabArtifactSourceCollection _artifactSourceCollection;
+        private DevTestLabArtifactSourceCollection _artifactSourceCollection => TestDevTestLab.GetDevTestLabArtifactSources();
         public DevTestLabArtifactSourceTests(bool isAsync) : base(isAsync)
         {
-        }
-
-        [SetUp]
-        public async Task SetUp()
-        {
-            TestResourceGroup = await CreateResourceGroup();
-            var lab = await CreateDevTestLab(TestResourceGroup, Recording.GenerateAssetName("lab"));
-            _artifactSourceCollection = lab.GetDevTestLabArtifactSources();
         }
 
         [RecordedTest]
         public async Task ExistGetGetAll()
         {
             // GetAll
-            var list = await _artifactSourceCollection.GetAllAsync().ToEnumerableAsync();
-            string artifactSourceName = list.FirstOrDefault().Data.Name;
-            ValidateDevTestLabArtifactSource(list.FirstOrDefault().Data, artifactSourceName);
+            var first = (await _artifactSourceCollection.GetAllAsync().ToEnumerableAsync()).FirstOrDefault();
+            string artifactSourceName = first.Data.Name;
+            ValidateDevTestLabArtifactSource(first.Data, artifactSourceName);
 
             // Exist
             bool flag = await _artifactSourceCollection.ExistsAsync(artifactSourceName);

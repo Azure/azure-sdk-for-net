@@ -22,9 +22,7 @@ namespace Azure.ResourceManager.DevTestLabs.Tests
         [SetUp]
         public async Task SetUp()
         {
-            TestResourceGroup = await CreateResourceGroup();
-            var lab = await CreateDevTestLab(TestResourceGroup, Recording.GenerateAssetName("lab"));
-            var artifactSources = await lab.GetDevTestLabArtifactSources().GetAllAsync().ToEnumerableAsync();
+            var artifactSources = await TestDevTestLab.GetDevTestLabArtifactSources().GetAllAsync().ToEnumerableAsync();
             _armTemplateCollection = artifactSources[1].GetDevTestLabArmTemplates();
         }
 
@@ -32,9 +30,9 @@ namespace Azure.ResourceManager.DevTestLabs.Tests
         public async Task ExistGetGetAll()
         {
             // GetAll
-            var list = await _armTemplateCollection.GetAllAsync().ToEnumerableAsync();
-            string templateName = list.FirstOrDefault().Id.Name;
-            ValidateDevTestLabArmTemplate(list.FirstOrDefault().Data, templateName);
+            var first = (await _armTemplateCollection.GetAllAsync().ToEnumerableAsync()).FirstOrDefault();
+            string templateName = first.Id.Name;
+            ValidateDevTestLabArmTemplate(first.Data, templateName);
 
             // Exist
             bool flag = await _armTemplateCollection.ExistsAsync(templateName);

@@ -14,19 +14,13 @@ namespace Azure.ResourceManager.DevTestLabs.Tests
 {
     internal class DevTestLabVirtualNetworkTests : DevTestLabsManagementTestBase
     {
-        private DevTestLabVirtualNetworkCollection _dtlVnetCollection;
+        private DevTestLabVirtualNetworkCollection _dtlVnetCollection => TestDevTestLab.GetDevTestLabVirtualNetworks();
+        private DevTestLabVirtualNetworkResource _dtlVnet;
         private const string _dtlVnetPrefixName = "dtlVnet";
+        private string _dtlVnetName;
 
         public DevTestLabVirtualNetworkTests(bool isAsync) : base(isAsync)
         {
-        }
-
-        [SetUp]
-        public async Task SetUp()
-        {
-            TestResourceGroup = await CreateResourceGroup();
-            var lab = await CreateDevTestLab(TestResourceGroup, Recording.GenerateAssetName("lab"));
-            _dtlVnetCollection = lab.GetDevTestLabVirtualNetworks();
         }
 
         private async Task<DevTestLabVirtualNetworkResource> CreateDevTestLabVnet(string vnetName)
@@ -36,38 +30,53 @@ namespace Azure.ResourceManager.DevTestLabs.Tests
             return dtlVnet.Value;
         }
 
-        [RecordedTest]
-        public async Task CreateOrUpdateExistGetGetAllDelete()
+        [SetUp]
+        public async Task SetUp()
         {
-            // CreateOrUpdate
-            string dtlVnetName = Recording.GenerateAssetName(_dtlVnetPrefixName);
-            var dtlVnet = await CreateDevTestLabVnet(dtlVnetName);
-            ValidateDevTestLabVirtualNetwork(dtlVnet.Data, dtlVnetName);
+            _dtlVnetName = Recording.GenerateAssetName(_dtlVnetPrefixName);
+            _dtlVnet = await CreateDevTestLabVnet(_dtlVnetName);
+        }
 
-            // Exist
-            var flag = await _dtlVnetCollection.ExistsAsync(dtlVnetName);
+        [RecordedTest]
+        public void CreateOrUpdate()
+        {
+            ValidateDevTestLabVirtualNetwork(_dtlVnet.Data, _dtlVnetName);
+        }
+
+        [RecordedTest]
+        public async Task Exist()
+        {
+            var flag = await _dtlVnetCollection.ExistsAsync(_dtlVnetName);
             Assert.IsTrue(flag);
+        }
 
-            // Get
-            var getdtlVnet = await _dtlVnetCollection.GetAsync(dtlVnetName);
-            ValidateDevTestLabVirtualNetwork(getdtlVnet.Value.Data, dtlVnetName);
+        [RecordedTest]
+        public async Task Get()
+        {
+            var getdtlVnet = await _dtlVnetCollection.GetAsync(_dtlVnetName);
+            ValidateDevTestLabVirtualNetwork(getdtlVnet.Value.Data, _dtlVnetName);
+        }
 
-            // GetAll
-            var list = await _dtlVnetCollection.GetAllAsync().ToEnumerableAsync();
-            Assert.IsNotEmpty(list);
-            ValidateDevTestLabVirtualNetwork(list.FirstOrDefault().Data, dtlVnetName);
+        [RecordedTest]
+        public async Task GetAll()
+        {
+            var first = (await _dtlVnetCollection.GetAllAsync().ToEnumerableAsync()).FirstOrDefault();
+            ValidateDevTestLabVirtualNetwork(first.Data, _dtlVnetName);
+        }
 
-            // Delete
-            await dtlVnet.DeleteAsync(WaitUntil.Completed);
-            flag = await _dtlVnetCollection.ExistsAsync(dtlVnetName);
+        [RecordedTest]
+        public async Task Delete()
+        {
+            await _dtlVnet.DeleteAsync(WaitUntil.Completed);
+            bool flag = await _dtlVnetCollection.ExistsAsync(_dtlVnetName);
             Assert.IsFalse(flag);
         }
 
-        private void ValidateDevTestLabVirtualNetwork(DevTestLabVirtualNetworkData dtlVnetData, string dtlVnetName)
+        private void ValidateDevTestLabVirtualNetwork(DevTestLabVirtualNetworkData dtlVnetData, string _dtlVnetName)
         {
             Assert.IsNotNull(dtlVnetData);
             Assert.IsNotEmpty(dtlVnetData.Id);
-            Assert.AreEqual(dtlVnetName, dtlVnetData.Name);
+            Assert.AreEqual(_dtlVnetName, dtlVnetData.Name);
             Assert.AreEqual("Succeeded", dtlVnetData.ProvisioningState);
         }
     }
