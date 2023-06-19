@@ -21,7 +21,7 @@ namespace Azure.Health.Insights.CancerProfiling
             }
             Optional<ClinicalNoteEvidence> patientDataEvidence = default;
             Optional<ClinicalCodedElement> patientInfoEvidence = default;
-            Optional<float?> importance = default;
+            Optional<float> importance = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("patientDataEvidence"u8))
@@ -46,7 +46,6 @@ namespace Azure.Health.Insights.CancerProfiling
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        importance = null;
                         continue;
                     }
                     importance = property.Value.GetSingle();

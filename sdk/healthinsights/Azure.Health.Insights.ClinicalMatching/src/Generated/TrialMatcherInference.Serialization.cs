@@ -23,10 +23,10 @@ namespace Azure.Health.Insights.ClinicalMatching
             TrialMatcherInferenceType type = default;
             string value = default;
             Optional<string> description = default;
-            Optional<float?> confidenceScore = default;
+            Optional<float> confidenceScore = default;
             Optional<IReadOnlyList<TrialMatcherInferenceEvidence>> evidence = default;
             Optional<string> id = default;
-            Optional<ClinicalTrialSource?> source = default;
+            Optional<ClinicalTrialSource> source = default;
             Optional<ClinicalTrialMetadata> metadata = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -49,7 +49,6 @@ namespace Azure.Health.Insights.ClinicalMatching
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        confidenceScore = null;
                         continue;
                     }
                     confidenceScore = property.Value.GetSingle();
@@ -78,7 +77,6 @@ namespace Azure.Health.Insights.ClinicalMatching
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        source = null;
                         continue;
                     }
                     source = new ClinicalTrialSource(property.Value.GetString());

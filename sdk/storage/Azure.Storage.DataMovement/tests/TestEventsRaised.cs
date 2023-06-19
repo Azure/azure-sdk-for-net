@@ -184,9 +184,11 @@ namespace Azure.Storage.DataMovement.Tests
             Assert.IsEmpty(SkippedEvents);
             // TODO: Reenable check:  https://github.com/Azure/azure-sdk-for-net/issues/35976
             // Assert.AreEqual(transferCount, SingleCompletedEvents.Count);
-            Assert.AreEqual(2, StatusEvents.Count);
-            Assert.AreEqual(StorageTransferStatus.InProgress, StatusEvents.First().StorageTransferStatus);
-            Assert.AreEqual(StorageTransferStatus.Completed, StatusEvents.ElementAt(1).StorageTransferStatus);
+            CollectionAssert.AreEqual(
+                new StorageTransferStatus[] {
+                    StorageTransferStatus.InProgress,
+                    StorageTransferStatus.Completed },
+                StatusEvents.Select(e => e.StorageTransferStatus));
         }
 
         /// <summary>
@@ -201,10 +203,12 @@ namespace Azure.Storage.DataMovement.Tests
         {
             Assert.AreEqual(expectedFailureCount, FailedEvents.Count);
             Assert.IsEmpty(SkippedEvents);
-            Assert.AreEqual(3, StatusEvents.Count);
-            Assert.AreEqual(StorageTransferStatus.InProgress, StatusEvents.First().StorageTransferStatus);
-            Assert.AreEqual(StorageTransferStatus.CancellationInProgress, StatusEvents.ElementAt(1).StorageTransferStatus);
-            Assert.AreEqual(StorageTransferStatus.CompletedWithFailedTransfers, StatusEvents.ElementAt(2).StorageTransferStatus);
+            CollectionAssert.AreEqual(
+                new StorageTransferStatus[] {
+                    StorageTransferStatus.InProgress,
+                    StorageTransferStatus.CancellationInProgress,
+                    StorageTransferStatus.CompletedWithFailedTransfers },
+                StatusEvents.Select(e => e.StorageTransferStatus));
         }
 
         /// <summary>
@@ -219,9 +223,11 @@ namespace Azure.Storage.DataMovement.Tests
         {
             Assert.AreEqual(expectedFailureCount, FailedEvents.Count);
             Assert.IsEmpty(SkippedEvents);
-            Assert.AreEqual(2, StatusEvents.Count);
-            Assert.AreEqual(StorageTransferStatus.InProgress, StatusEvents.First().StorageTransferStatus);
-            Assert.AreEqual(StorageTransferStatus.CompletedWithFailedTransfers, StatusEvents.ElementAt(1).StorageTransferStatus);
+            CollectionAssert.AreEqual(
+                new StorageTransferStatus[] {
+                    StorageTransferStatus.InProgress,
+                    StorageTransferStatus.CompletedWithFailedTransfers },
+                StatusEvents.Select(e => e.StorageTransferStatus));
         }
 
         /// <summary>
@@ -235,18 +241,22 @@ namespace Azure.Storage.DataMovement.Tests
         {
             AssertUnexpectedFailureCheck();
             Assert.AreEqual(expectedSkipCount, SkippedEvents.Count);
-            Assert.AreEqual(2, StatusEvents.Count);
-            Assert.AreEqual(StorageTransferStatus.InProgress, StatusEvents.First().StorageTransferStatus);
-            Assert.AreEqual(StorageTransferStatus.CompletedWithSkippedTransfers, StatusEvents.ElementAt(1).StorageTransferStatus);
+            CollectionAssert.AreEqual(
+                new StorageTransferStatus[] {
+                    StorageTransferStatus.InProgress,
+                    StorageTransferStatus.CompletedWithSkippedTransfers },
+                StatusEvents.Select(e => e.StorageTransferStatus));
         }
 
         public void AssertPausedCheck()
         {
             AssertUnexpectedFailureCheck();
             Assert.IsEmpty(SkippedEvents);
-            Assert.AreEqual(2, StatusEvents.Count);
-            Assert.AreEqual(StorageTransferStatus.InProgress, StatusEvents.First().StorageTransferStatus);
-            Assert.AreEqual(StorageTransferStatus.Paused, StatusEvents.ElementAt(1).StorageTransferStatus);
+            CollectionAssert.AreEqual(
+                new StorageTransferStatus[] {
+                    StorageTransferStatus.InProgress,
+                    StorageTransferStatus.Paused },
+                StatusEvents.Select(e => e.StorageTransferStatus));
         }
 
         /// <summary>

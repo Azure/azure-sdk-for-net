@@ -13,8 +13,6 @@ namespace Azure.Communication.CallAutomation.Tests.Events
 {
     public class CallAutomationEventParserTests
     {
-        //private static string DTMF_RESULT_JSON = "{\"recognizeResult\":{},\"collectTonesResult\":{\"tones\":[\"five\", \"six\", \"pound\"]},\"choiceResult\":{\"label\":null,\"recognizedPhrase\":null},\"recognitionType\":\"dtmf\",\"callConnectionId\":\"callConnectionId\",\"serverCallId\":\"serverCallId\",\"correlationId\":\"correlationId\",\"operationContext\":\"operationContext\",\"resultInformation\":{\"code\":200,\"subCode\":8531,\"message\":\"Action completed, max digits received\"}}";
-        //private static string CHIOCE_RESULT_JSON = "{\"recognizeResult\":{},\"collectTonesResult\":{\"tones\":[]},\"choiceResult\":{\"label\":\"testLabel\",\"recognizedPhrase\":\"testRecognizePhrase\"},\"recognitionType\":\"choices\",\"callConnectionId\":\"callConnectionId\",\"serverCallId\":\"serverCallId\",\"correlationId\":\"correlationId\",\"operationContext\":\"operationContext\",\"resultInformation\":{\"code\":200,\"subCode\":8531,\"message\":\"Action completed, max digits received\"}}";
         [Test]
         public void EventParserShouldParseEventWithEventDataAndType()
         {

@@ -338,30 +338,20 @@ namespace Azure.Core.Tests.Public
         public void EqualsNull()
         {
             dynamic value = JsonDataTestHelpers.CreateFromJson("""{ "foo": null }""");
-            Assert.IsTrue(value.foo.Equals(null));
+            Assert.AreEqual(null, value.foo);
             Assert.IsTrue(value.foo == null);
 
             string nullString = null;
             Assert.IsTrue(value.foo == nullString);
             Assert.IsTrue(nullString == value.foo);
 
-            // Because the DLR resolves `==` for nullable value types to take the non-nullable
-            // value on the right-hand side, we'll still require a cast for nullable primitives.
             int? nullInt = null;
             Assert.IsTrue(value.foo == nullInt);
-            Assert.IsTrue(nullInt == (int?)value.foo);
+            Assert.IsTrue(nullInt == value.foo);
 
             bool? nullBool = null;
             Assert.IsTrue(value.foo == nullBool);
-            Assert.IsTrue(nullBool == (bool?)value.foo);
-
-            // We cannot overload the equality operator with two nullable values, so
-            // the following is the consequence.
-            Assert.IsFalse(null == value.foo);
-
-            // However, this does give us a backdoor to differentiate between an
-            // absent property and a property whose JSON value is null, if we wanted to
-            // use it that way, although it's not really very nice.
+            Assert.IsTrue(nullBool == value.foo);
         }
 
         [Test]

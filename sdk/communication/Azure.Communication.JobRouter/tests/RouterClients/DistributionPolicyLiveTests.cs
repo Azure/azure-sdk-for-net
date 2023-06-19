@@ -6,7 +6,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Azure.Communication.JobRouter.Models;
 using Azure.Communication.JobRouter.Tests.Infrastructure;
+using Azure.Core;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
 
@@ -243,6 +245,38 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
         }
 
         #endregion round robin mode constructors
+
+        #region sanity checks
+
+        [Test]
+        public async Task CreateDistributionPolicyAndRemoveAProperty()
+        {
+            RouterAdministrationClient routerClient = CreateRouterAdministrationClientWithConnectionString();
+            // test best worker mode constructors
+
+            // --- default scoring rule
+            var bestWorkerModeDistributionPolicyId = GenerateUniqueId($"{nameof(CreateDistributionPolicyAndRemoveAProperty)}-Default-DistributionPolicy");
+            var bestWorkerModeDistributionPolicyName = $"{bestWorkerModeDistributionPolicyId}-Name";
+            var bestWorkerModeDistributionPolicyResponse = await routerClient.CreateDistributionPolicyAsync(
+                new CreateDistributionPolicyOptions(bestWorkerModeDistributionPolicyId, TimeSpan.FromSeconds(60), new BestWorkerMode())
+                {
+                    Name = bestWorkerModeDistributionPolicyName
+                });
+
+            AddForCleanup(new Task(async () => await routerClient.DeleteDistributionPolicyAsync(bestWorkerModeDistributionPolicyId)));
+
+            Assert.False(string.IsNullOrWhiteSpace(bestWorkerModeDistributionPolicyResponse.Value.Name));
+
+            var updatedDistributionPolicyResponse =
+                await routerClient.UpdateDistributionPolicyAsync(bestWorkerModeDistributionPolicyId,
+                    RequestContent.Create(new { Name = (string?)null }));
+
+            var retrievedPolicy = await routerClient.GetDistributionPolicyAsync(bestWorkerModeDistributionPolicyId);
+
+            Assert.True(string.IsNullOrWhiteSpace(retrievedPolicy.Value.Name));
+        }
+
+        #endregion sanity checks
 
         #endregion Distribution Policy Tests
     }

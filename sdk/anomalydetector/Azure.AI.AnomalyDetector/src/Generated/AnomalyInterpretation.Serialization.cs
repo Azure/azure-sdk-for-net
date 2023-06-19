@@ -20,7 +20,7 @@ namespace Azure.AI.AnomalyDetector
                 return null;
             }
             Optional<string> variable = default;
-            Optional<float?> contributionScore = default;
+            Optional<float> contributionScore = default;
             Optional<CorrelationChanges> correlationChanges = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -33,7 +33,6 @@ namespace Azure.AI.AnomalyDetector
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        contributionScore = null;
                         continue;
                     }
                     contributionScore = property.Value.GetSingle();
