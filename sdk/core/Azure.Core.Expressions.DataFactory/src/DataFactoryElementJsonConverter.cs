@@ -337,7 +337,7 @@ namespace Azure.Core.Expressions.DataFactory
                         // Expression should only have two properties: type and value
                         return false;
                     }
-                    var expressionValue = json.GetProperty("value").GetString()!;
+                    var expressionValue = json.GetProperty("value").GetString();
                     element = new DataFactoryElement<T?>(expressionValue, DataFactoryElementKind.Expression);
                 }
                 else
