@@ -1,0 +1,16 @@
+import "@azure-tools/cadl-dpg";
+import "./main.cadl";
+
+using Azure.DPG;
+
+@@convenienceAPI(AnomalyDetector.Multivariate.GetMultivariateBatchDetectionResult)
+@@convenienceAPI(AnomalyDetector.Multivariate.TrainMultivariateModel)
+@@convenienceAPI(AnomalyDetector.Multivariate.ListMultivariateModels)
+@@convenienceAPI(AnomalyDetector.Multivariate.DeleteMultivariateModel)
+@@convenienceAPI(AnomalyDetector.Multivariate.GetMultivariateModel)
+@@convenienceAPI(AnomalyDetector.Multivariate.DetectMultivariateBatchAnomaly)
+@@convenienceAPI(AnomalyDetector.Multivariate.DetectMultivariateLastAnomaly)
+
+@@convenienceAPI(AnomalyDetector.Univariate.DetectUnivariateEntireSeries)
+@@convenienceAPI(AnomalyDetector.Univariate.DetectUnivariateLastPoint)
+@@convenienceAPI(AnomalyDetector.Univariate.DetectUnivariateChangePoint)

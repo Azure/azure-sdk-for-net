@@ -1,0 +1,109 @@
+{
+  "operationId": "Multivariate_GetMultivariateBatchDetectionResult",
+  "title": "Get multivariate batch detection result",
+  "parameters": {
+    "Endpoint": "{Endpoint}",
+    "ApiVersion": "v1.1",
+    "Content-Type": "application/json",
+    "Ocp-Apim-Subscription-Key": "{API key}",
+    "resultId": "663884e6-b117-11ea-b3de-0242ac130004",
+    "body": {}
+  },
+  "responses": {
+    "200": {
+      "body": {
+        "resultId": "663884e6-b117-11ea-b3de-0242ac130004",
+        "summary": {
+          "status": "READY",
+          "errors": [],
+          "variableStates": [
+            {
+              "variable": "variable_1",
+              "filledNARatio": 0,
+              "effectiveCount": 30,
+              "firstTimestamp": "2021-01-01T00:00:00Z",
+              "lastTimestamp": "2021-01-01T00:29:00Z"
+            },
+            {
+              "variable": "variable_2",
+              "filledNARatio": 0,
+              "effectiveCount": 30,
+              "firstTimestamp": "2021-01-01T00:00:00Z",
+              "lastTimestamp": "2021-01-01T00:29:00Z"
+            },
+            {
+              "variable": "variable_3",
+              "filledNARatio": 0,
+              "effectiveCount": 30,
+              "firstTimestamp": "2021-01-01T00:00:00Z",
+              "lastTimestamp": "2021-01-01T00:29:00Z"
+            }
+          ],
+          "setupInfo": {
+            "dataSource": "https://multiadsample.blob.core.windows.net/data/sample_data_2_1000.csv",
+            "topContributorCount": 10,
+            "startTime": "2021-01-01T00:00:00Z",
+            "endTime": "2021-01-01T00:29:00Z"
+          }
+        },
+        "results": [
+          {
+            "timestamp": "2021-01-01T00:28:00Z",
+            "value": {
+              "isAnomaly": false,
+              "severity": 0,
+              "score": 0.6928471326828003
+            },
+            "errors": []
+          },
+          {
+            "timestamp": "2021-01-01T00:29:00Z",
+            "value": {
+              "isAnomaly": true,
+              "severity": 0.5337404608726501,
+              "score": 0.9171165823936462,
+              "interpretation": [
+                {
+                  "variable": "variable_2",
+                  "contributionScore": 0.5371576215,
+                  "correlationChanges": {
+                    "changedVariables": [
+                      "variable_1",
+                      "variable_3"
+                    ]
+                  }
+                },
+                {
+                  "variable": "variable_3",
+                  "contributionScore": 0.3324159383,
+                  "correlationChanges": {
+                    "changedVariables": [
+                      "variable_2"
+                    ]
+                  }
+                },
+                {
+                  "variable": "variable_1",
+                  "contributionScore": 0.1304264402,
+                  "correlationChanges": {
+                    "changedVariables": []
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    "default": {
+      "headers": {
+        "Content-Type": "application/json",
+        "x-ms-error-code": "Error Code"
+      },
+      "body": {
+        "code": "Error Code",
+        "message": "Error Message"
+      }
+    }
+  }
+}

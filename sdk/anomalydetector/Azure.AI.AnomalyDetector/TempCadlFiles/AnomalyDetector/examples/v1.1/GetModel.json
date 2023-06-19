@@ -1,0 +1,163 @@
+{
+  "operationId": "Multivariate_GetMultivariateModel",
+  "title": "Get a multivariate model",
+  "parameters": {
+    "Endpoint": "{Endpoint}",
+    "ApiVersion": "v1.1",
+    "Content-Type": "application/json",
+    "Ocp-Apim-Subscription-Key": "{API key}",
+    "modelId": "45aad126-aafd-11ea-b8fb-d89ef3400c5f",
+    "body": {}
+  },
+  "responses": {
+    "200": {
+      "body": {
+        "modelId": "45aad126-aafd-11ea-b8fb-d89ef3400c5f",
+        "createdTime": "2020-06-30T00:00:00Z",
+        "lastUpdatedTime": "2020-06-30T00:00:00Z",
+        "modelInfo": {
+          "slidingWindow": 20,
+          "alignPolicy": {
+            "alignMode": "Outer",
+            "fillNAMethod": "Linear",
+            "paddingValue": 0
+          },
+          "dataSource": "https://multiadsample.blob.core.windows.net/data/sample_data_2_1000.csv",
+          "dataSchema": "OneTable",
+          "startTime": "2019-04-01T00:00:00Z",
+          "endTime": "2019-04-02T00:00:00Z",
+          "displayName": "Devops-MultiAD",
+          "status": "READY",
+          "errors": [],
+          "diagnosticsInfo": {
+            "modelState": {
+              "epochIds": [
+                10,
+                20,
+                30,
+                40,
+                50,
+                60,
+                70,
+                80,
+                90,
+                100
+              ],
+              "trainLosses": [
+                0.6291328072547913,
+                0.1671326905488968,
+                0.12354248017072678,
+                0.10259664058685303,
+                0.09584927558898926,
+                0.09069952368736267,
+                0.08686016499996185,
+                0.08603022992610931,
+                0.08287354558706284,
+                0.08235538005828857
+              ],
+              "validationLosses": [
+                1.9232804775238037,
+                1.0645641088485718,
+                0.6031560301780701,
+                0.5302737951278687,
+                0.46980252861976624,
+                0.4395163357257843,
+                0.41829314827919006,
+                0.40579143166542053,
+                0.405649870634079,
+                0.38492488861083984
+              ],
+              "latenciesInSeconds": [
+                0.3398594856262207,
+                0.3659665584564209,
+                0.37360644340515137,
+                0.35134077072143555,
+                0.33703041076660156,
+                0.31876277923583984,
+                0.32833099365234375,
+                0.3503587245941162,
+                0.3080024719238281,
+                0.3327946662902832
+              ]
+            },
+            "variableStates": [
+              {
+                "variable": "ad_input",
+                "filledNARatio": 0,
+                "effectiveCount": 1441,
+                "firstTimestamp": "2019-04-01T00:00:00Z",
+                "lastTimestamp": "2019-04-02T00:00:00Z"
+              },
+              {
+                "variable": "ad_ontimer_output",
+                "filledNARatio": 0,
+                "effectiveCount": 1441,
+                "firstTimestamp": "2019-04-01T00:00:00Z",
+                "lastTimestamp": "2019-04-02T00:00:00Z"
+              },
+              {
+                "variable": "ingestion",
+                "filledNARatio": 0,
+                "effectiveCount": 1441,
+                "firstTimestamp": "2019-04-01T00:00:00Z",
+                "lastTimestamp": "2019-04-02T00:00:00Z"
+              },
+              {
+                "variable": "data_in_speed",
+                "filledNARatio": 0,
+                "effectiveCount": 1441,
+                "firstTimestamp": "2019-04-01T00:00:00Z",
+                "lastTimestamp": "2019-04-02T00:00:00Z"
+              },
+              {
+                "variable": "cpu",
+                "filledNARatio": 0,
+                "effectiveCount": 1441,
+                "firstTimestamp": "2019-04-01T00:00:00Z",
+                "lastTimestamp": "2019-04-02T00:00:00Z"
+              },
+              {
+                "variable": "ad_series_init",
+                "filledNARatio": 0,
+                "effectiveCount": 1441,
+                "firstTimestamp": "2019-04-01T00:00:00Z",
+                "lastTimestamp": "2019-04-02T00:00:00Z"
+              },
+              {
+                "variable": "flink_last_ckpt_duration",
+                "filledNARatio": 0,
+                "effectiveCount": 1441,
+                "firstTimestamp": "2019-04-01T00:00:00Z",
+                "lastTimestamp": "2019-04-02T00:00:00Z"
+              },
+              {
+                "variable": "data_out_speed",
+                "filledNARatio": 0,
+                "effectiveCount": 1441,
+                "firstTimestamp": "2019-04-01T00:00:00Z",
+                "lastTimestamp": "2019-04-02T00:00:00Z"
+              },
+              {
+                "variable": "ad_output",
+                "filledNARatio": 0,
+                "effectiveCount": 1441,
+                "firstTimestamp": "2019-04-01T00:00:00Z",
+                "lastTimestamp": "2019-04-02T00:00:00Z"
+              }
+            ]
+          }
+        }
+      }
+    },
+    "default": {
+      "headers": {
+        "Content-Type": "application/json",
+        "x-ms-error-code": "Error Code"
+      },
+      "body": {
+        "code": "Error Code",
+        "message": "Error Message"
+      }
+    }
+  }
+}

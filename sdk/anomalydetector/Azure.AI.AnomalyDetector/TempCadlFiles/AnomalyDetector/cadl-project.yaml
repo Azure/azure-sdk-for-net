@@ -1,0 +1,19 @@
+emitters:
+  "@azure-tools/cadl-autorest":
+    "output-file": "openapi.json"
+    "examples-directory": ./examples
+  "@azure-tools/cadl-python":
+    "basic-setup-py": true
+    "package-version": 3.0.0b6
+    "package-name": azure-ai-anomalydetector
+  #   "output-path":
+  # Uncomment this line and add "@azure-tools/cadl-java" to your package.json to generate Java code
+  # "@azure-tools/cadl-java": true
+  # Uncomment this line and add "@azure-tools/cadl-csharp" to your package.json to generate C# code
+  "@azure-tools/cadl-csharp":
+    save-inputs: false
+    clear-output-folder: true
+    namespace: Azure.AI.AnomalyDetector
+    model-namespace: false
+  # Uncomment this line and add "@azure-tools/cadl-typescript" to your package.json to generate Typescript code
+  # "@azure-tools/cadl-typescript": true
