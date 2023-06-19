@@ -50,6 +50,17 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
                 {
                     [ "key1" ] = "value1",
                     [ "key2" ] = "value2",
+                },
+                AttachedNetworkConfiguration = new AttachedNetworkConfiguration()
+                {
+                    L3Networks =
+                    {
+                        new L3NetworkAttachmentConfiguration(TestEnvironment.L3NAttachmentId)
+                        {
+                            IpamEnabled = L3NetworkConfigurationIpamEnabled.False,
+                            PluginType = KubernetesPluginType.Sriov,
+                        }
+                    }
                 }
             };
 
