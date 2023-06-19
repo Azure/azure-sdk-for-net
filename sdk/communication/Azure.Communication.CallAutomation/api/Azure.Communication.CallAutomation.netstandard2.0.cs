@@ -160,7 +160,6 @@ namespace Azure.Communication.CallAutomation
         public static Azure.Communication.CallAutomation.ContinuousDtmfRecognitionToneFailed ContinuousDtmfRecognitionToneFailed(string callConnectionId = null, string serverCallId = null, string correlationId = null, Azure.Communication.CallAutomation.ResultInformation resultInformation = null, string operationContext = null) { throw null; }
         public static Azure.Communication.CallAutomation.ContinuousDtmfRecognitionToneReceived ContinuousDtmfRecognitionToneReceived(Azure.Communication.CallAutomation.ToneInfo toneInfo = null, string callConnectionId = null, string serverCallId = null, string correlationId = null, Azure.Communication.CallAutomation.ResultInformation resultInformation = null, string operationContext = null) { throw null; }
         public static Azure.Communication.CallAutomation.CreateCallResult CreateCallResult(Azure.Communication.CallAutomation.CallConnection callConnection = null, Azure.Communication.CallAutomation.CallConnectionProperties callConnectionProperties = null) { throw null; }
-        public static Azure.Communication.CallAutomation.DialogStateResponse DialogStateResponse(string dialogId = null, Azure.Communication.CallAutomation.DialogOptionsInternal dialogOptions = null, Azure.Communication.CallAutomation.DialogInputType? dialogInputType = default(Azure.Communication.CallAutomation.DialogInputType?), string operationContext = null) { throw null; }
         public static Azure.Communication.CallAutomation.DtmfResult DtmfResult(System.Collections.Generic.IEnumerable<Azure.Communication.CallAutomation.DtmfTone> tones = null) { throw null; }
         public static Azure.Communication.CallAutomation.MuteParticipantsResponse MuteParticipantsResponse(string operationContext = null) { throw null; }
         public static Azure.Communication.CallAutomation.ParticipantsUpdated ParticipantsUpdated(string callConnectionId = null, string serverCallId = null, string correlationId = null, System.Collections.Generic.IEnumerable<Azure.Communication.CallAutomation.CallParticipant> participants = null, int sequenceNumber = 0) { throw null; }
@@ -552,15 +551,15 @@ namespace Azure.Communication.CallAutomation
     public partial class DialogEventResult
     {
         internal DialogEventResult() { }
-        public Azure.Communication.CallAutomation.DialogCompleted DialogCompletedSuccessEvent { get { throw null; } }
+        public Azure.Communication.CallAutomation.DialogCompleted DialogCompletedSuccessResult { get { throw null; } }
         public Azure.Communication.CallAutomation.DialogConsent DialogConsentSuccessEvent { get { throw null; } }
         public Azure.Communication.CallAutomation.DialogHangup DialogHangupSuccessEvent { get { throw null; } }
-        public Azure.Communication.CallAutomation.DialogLanguageChange DialogLanguageChange { get { throw null; } }
+        public Azure.Communication.CallAutomation.DialogLanguageChange DialogLanguageChangeEvent { get { throw null; } }
         public Azure.Communication.CallAutomation.DialogSensitivityUpdate DialogSensitivityUpdateEvent { get { throw null; } }
         public Azure.Communication.CallAutomation.DialogStarted DialogStartedSuccessEvent { get { throw null; } }
         public Azure.Communication.CallAutomation.DialogTransfer DialogTransferSuccessEvent { get { throw null; } }
-        public Azure.Communication.CallAutomation.DialogFailed FailureEvent { get { throw null; } }
-        public bool IsSuccessEvent { get { throw null; } }
+        public Azure.Communication.CallAutomation.DialogFailed FailureResult { get { throw null; } }
+        public bool IsSuccess { get { throw null; } }
     }
     public partial class DialogFailed : Azure.Communication.CallAutomation.CallAutomationEventBase
     {
@@ -603,9 +602,9 @@ namespace Azure.Communication.CallAutomation
         public string SelectedLanguage { get { throw null; } }
         public static Azure.Communication.CallAutomation.DialogLanguageChange Deserialize(string content) { throw null; }
     }
-    public partial class DialogOptionsInternal
+    public partial class DialogOptions
     {
-        public DialogOptionsInternal(string botAppId, System.Collections.Generic.IDictionary<string, object> dialogContext) { }
+        internal DialogOptions() { }
         public string BotAppId { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, object> DialogContext { get { throw null; } }
     }
@@ -630,14 +629,6 @@ namespace Azure.Communication.CallAutomation
         public string DialogId { get { throw null; } }
         public Azure.Communication.CallAutomation.DialogInputType? DialogInputType { get { throw null; } }
         public static Azure.Communication.CallAutomation.DialogStarted Deserialize(string content) { throw null; }
-    }
-    public partial class DialogStateResponse
-    {
-        internal DialogStateResponse() { }
-        public string DialogId { get { throw null; } }
-        public Azure.Communication.CallAutomation.DialogInputType? DialogInputType { get { throw null; } }
-        public Azure.Communication.CallAutomation.DialogOptionsInternal DialogOptions { get { throw null; } }
-        public string OperationContext { get { throw null; } }
     }
     public partial class DialogTransfer : Azure.Communication.CallAutomation.CallAutomationEventBase
     {
@@ -1263,12 +1254,6 @@ namespace Azure.Communication.CallAutomation
         public Azure.Communication.CallAutomation.TransferCallToParticipantEventResult WaitForEventProcessor(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public System.Threading.Tasks.Task<Azure.Communication.CallAutomation.TransferCallToParticipantEventResult> WaitForEventProcessorAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class TransferToExternalNumber
-    {
-        public TransferToExternalNumber() { }
-        public string TransferDestination { get { throw null; } set { } }
-        public string Type { get { throw null; } set { } }
-    }
     public partial class TransferToParticipantOptions
     {
         public TransferToParticipantOptions(Azure.Communication.CommunicationUserIdentifier targetIdentity, System.Collections.Generic.IDictionary<string, string> voipHeaders = null) { }
@@ -1293,6 +1278,17 @@ namespace Azure.Communication.CallAutomation
     public partial class UserConsent
     {
         internal UserConsent() { }
-        public int Recording { get { throw null; } set { } }
+        public int Recording { get { throw null; } }
+    }
+}
+namespace Azure.Communication.CallAutomation.Models
+{
+    public partial class DialogStateResponse
+    {
+        internal DialogStateResponse() { }
+        public string DialogId { get { throw null; } }
+        public Azure.Communication.CallAutomation.DialogInputType? DialogInputType { get { throw null; } }
+        public Azure.Communication.CallAutomation.DialogOptions DialogOptions { get { throw null; } }
+        public string OperationContext { get { throw null; } }
     }
 }
