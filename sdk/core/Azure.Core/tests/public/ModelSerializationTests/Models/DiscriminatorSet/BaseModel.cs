@@ -11,16 +11,16 @@ using Azure.Core.Serialization;
 
 namespace Azure.Core.Tests.Public.ModelSerializationTests.Models
 {
-    internal abstract class BaseModel : IUtf8JsonSerializable, IModelSerializable
+    internal abstract class BaseModel : IUtf8JsonSerializable, IJsonSerializableModel
     {
         private Dictionary<string, BinaryData> RawData { get; set; } = new Dictionary<string, BinaryData>();
 
         public string Kind { get; internal set; }
         public string Name { get; set; }
 
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelSerializable)this).Serialize(writer, new ModelSerializerOptions());
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonSerializableModel)this).Serialize(writer, new ModelSerializerOptions());
 
-        void IModelSerializable.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
+        void IJsonSerializableModel.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("kind"u8);

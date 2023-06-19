@@ -1,23 +1,20 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System.Text.Json;
-using Azure.Core.Serialization;
+using System.Xml;
 
 namespace Azure.Core.Serialization
 {
     /// <summary>
     /// TODO
     /// </summary>
-    public interface IModelSerializable
+    public interface IXmlSerializableModel
     {
         /// <summary>
         /// .
         /// </summary>
         /// <param name="writer"></param>
         /// <param name="options"></param>
-#pragma warning disable AZC0014 // Avoid using banned types in public API
-        void Serialize(Utf8JsonWriter writer, ModelSerializerOptions options);
-#pragma warning restore AZC0014 // Avoid using banned types in public API
+        void Serialize(XmlWriter writer, ModelSerializerOptions options);
     }
 }

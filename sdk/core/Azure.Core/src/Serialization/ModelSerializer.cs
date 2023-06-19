@@ -4,7 +4,9 @@
 using System;
 using System.IO;
 using System.Reflection;
+using System.Text;
 using System.Text.Json;
+using System.Xml;
 
 namespace Azure.Core.Serialization
 {
@@ -20,7 +22,7 @@ namespace Azure.Core.Serialization
         /// <param name="model"></param>
         /// <param name="options"></param>
         /// <returns></returns>
-        public static Stream Serialize<T>(T model, ModelSerializerOptions? options = default) where T : class, IModelSerializable
+        public static Stream Serialize<T>(T model, ModelSerializerOptions? options = default) where T : class, IJsonSerializableModel
         {
             // if options.Serializers is set and the model is in the dictionary, use the serializer
             if (options != null)
@@ -42,13 +44,46 @@ namespace Azure.Core.Serialization
         }
 
         /// <summary>
-        /// Deserialize a model.
+        /// Serialize a XML model. Todo: collapse this method when working - need compile check over runtime
         /// </summary>
         /// <typeparam name="T"></typeparam>
-        /// <param name="stream"></param>
+        /// <param name="model"></param>
         /// <param name="options"></param>
         /// <returns></returns>
-        public static T Deserialize<T>(Stream stream, ModelSerializerOptions? options = default) where T : class, IModelSerializable
+        public static Stream SerializeXml<T>(T model, ModelSerializerOptions? options = default) where T : class, IXmlSerializableModel
+        {
+            // if options.Serializers is set and the model is in the dictionary, use the serializer
+            if (options != null)
+            {
+                ObjectSerializer? serializer;
+
+                if (options.Serializers.TryGetValue(typeof(T), out serializer))
+                {
+                    BinaryData data = serializer.Serialize(model);
+                    return data.ToStream();
+                }
+            }
+            // else use default XmlWriter
+            Stream stream = new MemoryStream();
+            using var writer = XmlWriter.Create(stream, new XmlWriterSettings
+            {
+                Encoding = new UTF8Encoding(false),
+                OmitXmlDeclaration = true,
+                Indent = true
+            });
+
+            model.Serialize(writer, options ?? new ModelSerializerOptions());
+            writer.Flush();
+
+            stream.Position = 0;
+            return stream;
+        }
+
+        /// <summary>
+        /// Serialize a XML model. Todo: collapse this method when working - need compile check over runtime
+        /// </summary>
+        /// <returns></returns>
+        public static T DeserializeXml<T>(Stream stream, ModelSerializerOptions? options = default) where T : class, IXmlSerializableModel
         {
             if (options != null)
             {
@@ -56,7 +91,32 @@ namespace Azure.Core.Serialization
 
                 if (options.Serializers.TryGetValue(typeof(T), out serializer))
                 {
-                    var obj = serializer.Deserialize(stream, typeof(T), default); //problem here T is Envelope<T> and typeof(T) is Envelope<T> but we want typeof(T) to be DogListProperty
+                    var obj = serializer.Deserialize(stream, typeof(T), default);
+                    if (obj is null)
+                        throw new InvalidOperationException();
+                    else
+                        return (T)obj;
+                }
+            }
+
+            return DeserializeWithReflectionXml<T>(JsonDocument.Parse(stream).RootElement, options);
+        }
+        /// <summary>
+        /// Deserialize a model.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="stream"></param>
+        /// <param name="options"></param>
+        /// <returns></returns>
+        public static T Deserialize<T>(Stream stream, ModelSerializerOptions? options = default) where T : class, IJsonSerializableModel
+        {
+            if (options != null)
+            {
+                ObjectSerializer? serializer;
+
+                if (options.Serializers.TryGetValue(typeof(T), out serializer))
+                {
+                    var obj = serializer.Deserialize(stream, typeof(T), default);
                     if (obj is null)
                         throw new InvalidOperationException();
                     else
@@ -67,7 +127,19 @@ namespace Azure.Core.Serialization
             return DeserializeWithReflection<T>(JsonDocument.Parse(stream).RootElement, options);
         }
 
-        private static T DeserializeWithReflection<T>(JsonElement rootElement, ModelSerializerOptions? options) where T : class, IModelSerializable
+        private static T DeserializeWithReflection<T>(JsonElement rootElement, ModelSerializerOptions? options) where T : class, IJsonSerializableModel
+        {
+            Type typeToConvert = typeof(T);
+            options ??= new ModelSerializerOptions();
+
+            T? model = DeserializeObject(rootElement, typeToConvert, options) as T;
+            if (model is null)
+                throw new InvalidOperationException($"Unexpected error when deserializing {typeToConvert.Name}.");
+
+            return model;
+        }
+
+        private static T DeserializeWithReflectionXml<T>(JsonElement rootElement, ModelSerializerOptions? options) where T : class, IXmlSerializableModel
         {
             Type typeToConvert = typeof(T);
             options ??= new ModelSerializerOptions();
@@ -101,7 +173,7 @@ namespace Azure.Core.Serialization
         /// <param name="json"></param>
         /// <param name="options"></param>
         /// <returns></returns>
-        public static T Deserialize<T>(string json, ModelSerializerOptions? options = default) where T : class, IModelSerializable
+        public static T Deserialize<T>(string json, ModelSerializerOptions? options = default) where T : class, IJsonSerializableModel
         {
             using Stream stream = new MemoryStream();
             using StreamWriter writer = new StreamWriter(stream);

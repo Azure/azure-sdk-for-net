@@ -12,7 +12,7 @@ using Newtonsoft.Json.Linq;
 
 namespace Azure.Core.Tests.Public.ModelSerializationTests.Models
 {
-    internal class UnknownBaseModel : BaseModel, IUtf8JsonSerializable, IModelSerializable
+    internal class UnknownBaseModel : BaseModel, IUtf8JsonSerializable, IJsonSerializableModel
     {
         private Dictionary<string, BinaryData> RawData { get; set; } = new Dictionary<string, BinaryData>();
 
@@ -28,9 +28,9 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests.Models
             RawData = rawData;
         }
 
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelSerializable)this).Serialize(writer, new ModelSerializerOptions());
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonSerializableModel)this).Serialize(writer, new ModelSerializerOptions());
 
-        void IModelSerializable.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
+        void IJsonSerializableModel.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("kind"u8);

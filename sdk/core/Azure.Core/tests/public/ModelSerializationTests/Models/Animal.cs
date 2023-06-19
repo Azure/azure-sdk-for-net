@@ -10,7 +10,7 @@ using Azure.Core.Serialization;
 
 namespace Azure.Core.Tests.Public.ModelSerializationTests
 {
-    public class Animal : IUtf8JsonSerializable, IModelSerializable
+    public class Animal : IUtf8JsonSerializable, IJsonSerializableModel
     {
         private Dictionary<string, BinaryData> RawData { get; set; } = new Dictionary<string, BinaryData>();
 
@@ -46,9 +46,9 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
         }
 
         #region Serialization
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelSerializable)this).Serialize(writer, new ModelSerializerOptions());
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonSerializableModel)this).Serialize(writer, new ModelSerializerOptions());
 
-        void IModelSerializable.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
+        void IJsonSerializableModel.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
             writer.WriteStartObject();
             if (!options.IgnoreReadOnlyProperties)

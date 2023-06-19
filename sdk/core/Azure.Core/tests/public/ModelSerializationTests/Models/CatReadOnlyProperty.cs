@@ -9,7 +9,7 @@ using Azure.Core.Serialization;
 
 namespace Azure.Core.Tests.Public.ModelSerializationTests
 {
-    public class CatReadOnlyProperty : Animal, IModelSerializable, IUtf8JsonSerializable
+    public class CatReadOnlyProperty : Animal, IJsonSerializableModel, IUtf8JsonSerializable
     {
         private Dictionary<string, BinaryData> RawData { get; set; } = new Dictionary<string, BinaryData>();
 
@@ -30,9 +30,9 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
         public bool HasWhiskers { get; private set; } = true;
 
         #region Serialization
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)=> ((IModelSerializable)this).Serialize(writer, new ModelSerializerOptions());
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)=> ((IJsonSerializableModel)this).Serialize(writer, new ModelSerializerOptions());
 
-        void IModelSerializable.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
+        void IJsonSerializableModel.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
             writer.WriteStartObject();
             if (!options.IgnoreReadOnlyProperties)
