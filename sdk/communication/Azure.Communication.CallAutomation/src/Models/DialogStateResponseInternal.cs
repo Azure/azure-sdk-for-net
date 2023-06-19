@@ -5,8 +5,8 @@ using Azure.Core;
 
 namespace Azure.Communication.CallAutomation
 {
-    [CodeGenModel("DialogOptions")]
-    internal partial class DialogOptionsInternal
+    [CodeGenModel("DialogStateResponse")]
+    internal partial class DialogStateResponseInternal
     {
     }
 }

@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.Communication.CallAutomation
 {
-    public partial class DialogStateResponse
+    internal partial class DialogStateResponseInternal
     {
-        internal static DialogStateResponse DeserializeDialogStateResponse(JsonElement element)
+        internal static DialogStateResponseInternal DeserializeDialogStateResponseInternal(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -53,7 +53,7 @@ namespace Azure.Communication.CallAutomation
                     continue;
                 }
             }
-            return new DialogStateResponse(dialogId.Value, dialogOptions.Value, Optional.ToNullable(dialogInputType), operationContext.Value);
+            return new DialogStateResponseInternal(dialogId.Value, dialogOptions.Value, Optional.ToNullable(dialogInputType), operationContext.Value);
         }
     }
 }
