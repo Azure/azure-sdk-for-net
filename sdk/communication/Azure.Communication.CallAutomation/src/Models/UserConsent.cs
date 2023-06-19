@@ -16,6 +16,6 @@ namespace Azure.Communication.CallAutomation
         /// Recording
         /// </summary>
         [CodeGenMember("Recording")]
-        public int Recording { get; }
+        public int? Recording { get; }
     }
 }
