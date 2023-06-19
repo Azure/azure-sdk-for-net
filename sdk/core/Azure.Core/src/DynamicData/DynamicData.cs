@@ -209,10 +209,9 @@ namespace Azure.Core.Serialization
             }
         }
 
-        internal DynamicData GetPatch()
-        {
-
-        }
+        //internal DynamicData GetPatch()
+        //{
+        //}
 
         /// <inheritdoc/>
         public override string ToString()
