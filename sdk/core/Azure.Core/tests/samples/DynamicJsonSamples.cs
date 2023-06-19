@@ -42,17 +42,12 @@ namespace Azure.Core.Samples
         [Test]
         public void GetDynamicJsonPropertyPascalCase()
         {
+            WidgetsClient client = GetMockClient();
+
             #region Snippet:AzureCoreGetDynamicJsonPropertyPascalCase
-            WidgetsClientOptions options = new WidgetsClientOptions();
-            options.ProtocolMethods.ResponseContentPropertyNameFormat = PropertyNameFormat.CamelCase;
-
-            WidgetsClient client = new WidgetsClient(new Uri("https://example.azure.com"), new DefaultAzureCredential(), options);
-#if !SNIPPET
-            client = GetMockClient();
-#endif
-
             Response response = client.GetWidget();
-            dynamic widget = response.Content.ToDynamicFromJson();
+            dynamic widget = response.Content.ToDynamicFromJson(JsonPropertyNames.CamelCase);
+            // Retrieves `name` value from JSON `{ "name" : "Widget" }`
             string name = widget.Name;
             #endregion
 
@@ -66,7 +61,7 @@ namespace Azure.Core.Samples
 
             #region Snippet:AzureCoreSetDynamicJsonProperty
             Response response = client.GetWidget();
-            dynamic widget = response.Content.ToDynamicFromJson();
+            dynamic widget = response.Content.ToDynamicFromJson(JsonPropertyNames.CamelCase);
             widget.Name = "New Name";
             client.SetWidget(RequestContent.Create(widget));
             #endregion
@@ -81,7 +76,7 @@ namespace Azure.Core.Samples
 
             #region Snippet:AzureCoreGetDynamicJsonArrayValue
             Response response = client.GetWidget();
-            dynamic widget = response.Content.ToDynamicFromJson();
+            dynamic widget = response.Content.ToDynamicFromJson(JsonPropertyNames.CamelCase);
 #if !SNIPPET
             widget.Values = new int[] { 1, 2, 3 };
 #endif
@@ -104,7 +99,7 @@ namespace Azure.Core.Samples
 
             #region Snippet:AzureCoreGetDynamicJsonOptionalProperty
             Response response = client.GetWidget();
-            dynamic widget = response.Content.ToDynamicFromJson();
+            dynamic widget = response.Content.ToDynamicFromJson(JsonPropertyNames.CamelCase);
 
             // JSON is `{ "details" : { "color" : "blue", "size" : "small" } }`
 
@@ -124,7 +119,7 @@ namespace Azure.Core.Samples
             WidgetsClient client = GetMockClient();
 
             Response response = client.GetWidget();
-            dynamic widget = response.Content.ToDynamicFromJson();
+            dynamic widget = response.Content.ToDynamicFromJson(JsonPropertyNames.CamelCase);
 
             bool threw = false;
 
@@ -153,7 +148,7 @@ namespace Azure.Core.Samples
 
             #region Snippet:AzureCoreEnumerateDynamicJsonObject
             Response response = client.GetWidget();
-            dynamic widget = response.Content.ToDynamicFromJson();
+            dynamic widget = response.Content.ToDynamicFromJson(JsonPropertyNames.CamelCase);
 
             // JSON is `{ "details" : { "color" : "blue", "size" : "small" } }`
             foreach (dynamic property in widget.Details)
@@ -172,7 +167,7 @@ namespace Azure.Core.Samples
 
             #region Snippet:AzureCoreCastDynamicJsonToPOCO
             Response response = client.GetWidget();
-            dynamic content = response.Content.ToDynamicFromJson();
+            dynamic content = response.Content.ToDynamicFromJson(JsonPropertyNames.CamelCase);
 
             // JSON is `{ "id" : "123", "name" : "Widget" }`
             Widget widget = (Widget)content;
@@ -210,29 +205,13 @@ namespace Azure.Core.Samples
         }
 
         [Test]
-        public void SetPropertyWithoutCaseMappingPerInstance()
-        {
-            WidgetsClient client = GetMockClient();
-
-            #region Snippet:AzureCoreSetPropertyWithoutCaseMappingPerInstance
-            Response response = client.GetWidget();
-            dynamic widget = response.Content.ToDynamicFromJson(PropertyNameFormat.None);
-
-            widget.details.IPAddress = "127.0.0.1";
-            // JSON is `{ "details" : { "IPAddress" : "127.0.0.1" } }`
-            #endregion
-
-            Assert.IsTrue(widget.details.IPAddress == "127.0.0.1");
-            Assert.IsTrue(widget.details["IPAddress"] == "127.0.0.1");
-        }
-        [Test]
         public void SetPropertyWithoutCaseMappingPerProperty()
         {
             WidgetsClient client = GetMockClient();
 
             #region Snippet:AzureCoreSetPropertyWithoutCaseMappingPerProperty
             Response response = client.GetWidget();
-            dynamic widget = response.Content.ToDynamicFromJson(PropertyNameFormat.CamelCase);
+            dynamic widget = response.Content.ToDynamicFromJson(JsonPropertyNames.CamelCase);
 
             widget.details["IPAddress"] = "127.0.0.1";
             // JSON is `{ "details" : { "IPAddress" : "127.0.0.1" } }`
@@ -276,7 +255,7 @@ namespace Azure.Core.Samples
 
             #region Snippet:AzureCoreRoundTripDynamicJson
             Response response = client.GetWidget();
-            dynamic widget = response.Content.ToDynamicFromJson();
+            dynamic widget = response.Content.ToDynamicFromJson(JsonPropertyNames.CamelCase);
             widget.Name = "New Name";
             client.SetWidget(RequestContent.Create(widget));
             #endregion
@@ -290,7 +269,7 @@ namespace Azure.Core.Samples
 
             #region Snippet:AzureCoreDisposeDynamicJson
             Response response = client.GetLargeWidget();
-            using (dynamic widget = response.Content.ToDynamicFromJson())
+            using (dynamic widget = response.Content.ToDynamicFromJson(JsonPropertyNames.CamelCase))
             {
 #if !SNIPPET
                 details = widget.Details;
@@ -332,7 +311,6 @@ namespace Azure.Core.Samples
                     new MockResponse(200).SetContent(initial),
                     new MockResponse(200).SetContent(updated))
             };
-            options.ProtocolMethods.ResponseContentPropertyNameFormat = PropertyNameFormat.CamelCase;
             return new WidgetsClient(new Uri("https://example.azure.com"), new MockCredential(), options);
         }
     }

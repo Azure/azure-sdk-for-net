@@ -13,6 +13,9 @@
 
 ### Other Changes
 
+* Update OpenTelemetry dependencies
+  ([#36859](https://github.com/Azure/azure-sdk-for-net/pull/36859))
+  - OpenTelemetry 1.5.0
 * Remove metric namespace mapping.
   ([#36968](https://github.com/Azure/azure-sdk-for-net/pull/36968))
 
