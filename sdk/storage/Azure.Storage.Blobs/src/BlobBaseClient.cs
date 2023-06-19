@@ -650,7 +650,7 @@ namespace Azure.Storage.Blobs.Specialized
         protected static HttpAuthorization GetCopyAuthorizationHeader(
             BlobBaseClient client,
             CancellationToken cancellationToken = default)
-            => client.ClientConfiguration.OAuthTokenCredential?.ToHttpAuthorization(cancellationToken);
+            => client.ClientConfiguration?.OAuthTokenCredential?.ToHttpAuthorization(cancellationToken);
         #endregion internal static accessors for Azure.Storage.DataMovement.Blobs
 
         ///// <summary>
