@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <summary> Initializes a new instance of SiteRecoveryMigrateContent. </summary>
         /// <param name="properties"> Migrate input properties. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
-        public SiteRecoveryMigrateContent(SiteRecoveryMigratetProperties properties)
+        public SiteRecoveryMigrateContent(SiteRecoveryMigrateProperties properties)
         {
             Argument.AssertNotNull(properties, nameof(properties));
 
@@ -24,13 +24,13 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Migrate input properties. </summary>
-        internal SiteRecoveryMigratetProperties Properties { get; }
+        internal SiteRecoveryMigrateProperties Properties { get; }
         /// <summary>
         /// The provider specific details.
         /// Please note <see cref="MigrateProviderSpecificContent"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="VMwareCbtMigrateContent"/>.
         /// </summary>
-        public MigrateProviderSpecificContent SiteRecoveryMigratetProviderSpecificDetails
+        public MigrateProviderSpecificContent SiteRecoveryMigrateProviderSpecificDetails
         {
             get => Properties?.ProviderSpecificDetails;
         }

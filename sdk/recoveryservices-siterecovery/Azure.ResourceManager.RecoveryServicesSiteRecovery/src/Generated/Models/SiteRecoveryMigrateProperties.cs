@@ -11,16 +11,16 @@ using Azure.Core;
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     /// <summary> Migrate input properties. </summary>
-    public partial class SiteRecoveryMigratetProperties
+    public partial class SiteRecoveryMigrateProperties
     {
-        /// <summary> Initializes a new instance of SiteRecoveryMigratetProperties. </summary>
+        /// <summary> Initializes a new instance of SiteRecoveryMigrateProperties. </summary>
         /// <param name="providerSpecificDetails">
         /// The provider specific details.
         /// Please note <see cref="MigrateProviderSpecificContent"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="VMwareCbtMigrateContent"/>.
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="providerSpecificDetails"/> is null. </exception>
-        public SiteRecoveryMigratetProperties(MigrateProviderSpecificContent providerSpecificDetails)
+        public SiteRecoveryMigrateProperties(MigrateProviderSpecificContent providerSpecificDetails)
         {
             Argument.AssertNotNull(providerSpecificDetails, nameof(providerSpecificDetails));
 

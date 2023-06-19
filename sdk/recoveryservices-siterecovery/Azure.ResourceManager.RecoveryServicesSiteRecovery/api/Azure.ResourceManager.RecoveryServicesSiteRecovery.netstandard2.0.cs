@@ -4814,12 +4814,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     }
     public partial class SiteRecoveryMigrateContent
     {
-        public SiteRecoveryMigrateContent(Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.SiteRecoveryMigratetProperties properties) { }
-        public Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.MigrateProviderSpecificContent SiteRecoveryMigratetProviderSpecificDetails { get { throw null; } }
+        public SiteRecoveryMigrateContent(Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.SiteRecoveryMigrateProperties properties) { }
+        public Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.MigrateProviderSpecificContent SiteRecoveryMigrateProviderSpecificDetails { get { throw null; } }
     }
-    public partial class SiteRecoveryMigratetProperties
+    public partial class SiteRecoveryMigrateProperties
     {
-        public SiteRecoveryMigratetProperties(Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.MigrateProviderSpecificContent providerSpecificDetails) { }
+        public SiteRecoveryMigrateProperties(Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.MigrateProviderSpecificContent providerSpecificDetails) { }
         public Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.MigrateProviderSpecificContent ProviderSpecificDetails { get { throw null; } }
     }
     public partial class SiteRecoveryMigrationItemCreateOrUpdateContent

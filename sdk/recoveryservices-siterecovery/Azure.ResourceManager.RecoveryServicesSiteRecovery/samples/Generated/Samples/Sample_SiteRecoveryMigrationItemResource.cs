@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Samples
             SiteRecoveryMigrationItemResource siteRecoveryMigrationItem = client.GetSiteRecoveryMigrationItemResource(siteRecoveryMigrationItemResourceId);
 
             // invoke the operation
-            SiteRecoveryMigrateContent content = new SiteRecoveryMigrateContent(new SiteRecoveryMigratetProperties(new VMwareCbtMigrateContent("true")));
+            SiteRecoveryMigrateContent content = new SiteRecoveryMigrateContent(new SiteRecoveryMigrateProperties(new VMwareCbtMigrateContent("true")));
             ArmOperation<SiteRecoveryMigrationItemResource> lro = await siteRecoveryMigrationItem.MigrateAsync(WaitUntil.Completed, content);
             SiteRecoveryMigrationItemResource result = lro.Value;
 

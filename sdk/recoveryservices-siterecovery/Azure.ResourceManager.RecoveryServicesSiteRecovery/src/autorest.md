@@ -159,7 +159,7 @@ rename-mapping:
   MarsAgentDetails.lastHeartbeatUtc: LastHeartbeatReceivedOn
   MasterTargetServer.lastHeartbeat: LastHeartbeatReceivedOn
   MigrateInput: SiteRecoveryMigrateContent
-  MigrateInputProperties: SiteRecoveryMigratetProperties
+  MigrateInputProperties: SiteRecoveryMigrateProperties
   MigrationItem: SiteRecoveryMigrationItem
   MigrationItemCollection: SiteRecoveryMigrationItemListResult
   MigrationItemProperties: SiteRecoveryMigrationItemProperties
@@ -362,7 +362,7 @@ request-path-to-parent:
 directive:
   - remove-operation: Operations_List
   # Because can't rename the purge operation, so have to make this change to avoid compiling error.
-  # Issue filed here: https://github.com/Azure/autorest.csharp/issues/2743
+  # Issue filed here: https://github.com/Azure/autorest.csharp/issues/2742
   - remove-operation: ReplicationFabrics_Purge
   - remove-operation: ReplicationRecoveryServicesProviders_Purge
   # Why the `client` value can't be processing correctly but only `method`?
