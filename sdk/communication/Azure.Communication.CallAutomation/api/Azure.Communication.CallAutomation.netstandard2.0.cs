@@ -182,7 +182,7 @@ namespace Azure.Communication.CallAutomation
         public static Azure.Communication.CallAutomation.ToneInfo ToneInfo(int sequenceId = 0, Azure.Communication.CallAutomation.DtmfTone tone = default(Azure.Communication.CallAutomation.DtmfTone)) { throw null; }
         public static Azure.Communication.CallAutomation.TransferCallToParticipantResult TransferCallToParticipantResult(string operationContext = null) { throw null; }
         public static Azure.Communication.CallAutomation.UnmuteParticipantsResponse UnmuteParticipantsResponse(string operationContext = null) { throw null; }
-        public static Azure.Communication.CallAutomation.UserConsent UserConsent(int recording = 0) { throw null; }
+        public static Azure.Communication.CallAutomation.UserConsent UserConsent(int? recording = default(int?)) { throw null; }
     }
     public partial class CallConnected : Azure.Communication.CallAutomation.CallAutomationEventBase
     {
@@ -629,6 +629,14 @@ namespace Azure.Communication.CallAutomation
         public string DialogId { get { throw null; } }
         public Azure.Communication.CallAutomation.DialogInputType? DialogInputType { get { throw null; } }
         public static Azure.Communication.CallAutomation.DialogStarted Deserialize(string content) { throw null; }
+    }
+    public partial class DialogStateResponse
+    {
+        internal DialogStateResponse() { }
+        public string DialogId { get { throw null; } }
+        public Azure.Communication.CallAutomation.DialogInputType? DialogInputType { get { throw null; } }
+        public Azure.Communication.CallAutomation.DialogOptions DialogOptions { get { throw null; } }
+        public string OperationContext { get { throw null; } }
     }
     public partial class DialogTransfer : Azure.Communication.CallAutomation.CallAutomationEventBase
     {
@@ -1278,17 +1286,6 @@ namespace Azure.Communication.CallAutomation
     public partial class UserConsent
     {
         internal UserConsent() { }
-        public int Recording { get { throw null; } }
-    }
-}
-namespace Azure.Communication.CallAutomation.Models
-{
-    public partial class DialogStateResponse
-    {
-        internal DialogStateResponse() { }
-        public string DialogId { get { throw null; } }
-        public Azure.Communication.CallAutomation.DialogInputType? DialogInputType { get { throw null; } }
-        public Azure.Communication.CallAutomation.DialogOptions DialogOptions { get { throw null; } }
-        public string OperationContext { get { throw null; } }
+        public int? Recording { get { throw null; } }
     }
 }

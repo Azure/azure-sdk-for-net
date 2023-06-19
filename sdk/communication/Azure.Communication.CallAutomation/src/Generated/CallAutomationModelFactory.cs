@@ -217,7 +217,7 @@ namespace Azure.Communication.CallAutomation
         /// <summary> Initializes a new instance of UserConsent. </summary>
         /// <param name="recording"></param>
         /// <returns> A new <see cref="CallAutomation.UserConsent"/> instance for mocking. </returns>
-        public static UserConsent UserConsent(int recording = default)
+        public static UserConsent UserConsent(int? recording = null)
         {
             return new UserConsent(recording);
         }

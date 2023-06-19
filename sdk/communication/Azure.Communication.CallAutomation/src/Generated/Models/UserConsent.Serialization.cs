@@ -31,7 +31,7 @@ namespace Azure.Communication.CallAutomation
                     continue;
                 }
             }
-            return new UserConsent(recording);
+            return new UserConsent(Optional.ToNullable(recording));
         }
     }
 }
