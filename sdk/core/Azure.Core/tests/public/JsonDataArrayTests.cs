@@ -58,6 +58,7 @@ namespace Azure.Core.Tests.Public
         }
 
         [Test]
+        [Ignore("Disallowing POCO support in current version.")]
         public void CannotConvertArrayToModel()
         {
             dynamic data = JsonDataTestHelpers.CreateFromJson("[1, 2, 3]");
@@ -77,6 +78,7 @@ namespace Azure.Core.Tests.Public
         }
 
         [Test]
+        [Ignore("Disallowing POCO support in current version.")]
         public void CannotConvertArrayPropertyToModel()
         {
             dynamic data = JsonDataTestHelpers.CreateFromJson("""{ "value": [1, 2, 3] }""");

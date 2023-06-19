@@ -2,6 +2,8 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Text.Json;
 
 namespace Azure.Core.Json
@@ -43,7 +45,7 @@ namespace Azure.Core.Json
                         // Note: string is not included to let JsonElement handle escaping.
                 }
 
-                element = change.AsJsonElement();
+                element = change.GetSerializedValue();
                 highWaterMark = change.Index;
             }
 
@@ -74,9 +76,21 @@ namespace Azure.Core.Json
             foreach (JsonProperty property in element.EnumerateObject())
             {
                 string propertyPath = MutableJsonDocument.ChangeTracker.PushProperty(path, property.Name);
+                if (!Changes.WasRemoved(propertyPath, highWaterMark))
+                {
+                    writer.WritePropertyName(property.Name);
+                    WriteElement(propertyPath, highWaterMark, property.Value, writer);
+                }
+            }
 
-                writer.WritePropertyName(property.Name);
-                WriteElement(propertyPath, highWaterMark, property.Value, writer);
+            IEnumerable<MutableJsonChange> added = Changes.GetAddedProperties(path, highWaterMark);
+            foreach (MutableJsonChange property in added)
+            {
+                string propertyName = property.AddedPropertyName!;
+                string propertyPath = MutableJsonDocument.ChangeTracker.PushProperty(path, propertyName);
+
+                writer.WritePropertyName(propertyName);
+                WriteElement(propertyPath, highWaterMark, property.GetSerializedValue(), writer);
             }
 
             writer.WriteEndObject();

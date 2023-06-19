@@ -17,7 +17,7 @@ namespace Azure.Communication.ShortCodes.Models
 
         /// <summary> Initializes a new instance of MessageExample. </summary>
         /// <param name="direction"> Indicates whether the message example is supposed to be sent to or from the end user e.g. toUser. </param>
-        /// <param name="text"> Actual example text for the message e.g. &apos;Want me to notify you when package in the way?&apos;. </param>
+        /// <param name="text"> Actual example text for the message e.g. 'Want me to notify you when package in the way?'. </param>
         internal MessageExample(MessageDirection? direction, string text)
         {
             Direction = direction;
@@ -26,7 +26,7 @@ namespace Azure.Communication.ShortCodes.Models
 
         /// <summary> Indicates whether the message example is supposed to be sent to or from the end user e.g. toUser. </summary>
         public MessageDirection? Direction { get; set; }
-        /// <summary> Actual example text for the message e.g. &apos;Want me to notify you when package in the way?&apos;. </summary>
+        /// <summary> Actual example text for the message e.g. 'Want me to notify you when package in the way?'. </summary>
         public string Text { get; set; }
     }
 }

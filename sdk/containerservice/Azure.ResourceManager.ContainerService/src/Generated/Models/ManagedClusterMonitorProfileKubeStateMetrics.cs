@@ -16,17 +16,17 @@ namespace Azure.ResourceManager.ContainerService.Models
         }
 
         /// <summary> Initializes a new instance of ManagedClusterMonitorProfileKubeStateMetrics. </summary>
-        /// <param name="metricLabelsAllowlist"> Comma-separated list of Kubernetes annotations keys that will be used in the resource&apos;s labels metric. </param>
-        /// <param name="metricAnnotationsAllowList"> Comma-separated list of additional Kubernetes label keys that will be used in the resource&apos;s labels metric. </param>
+        /// <param name="metricLabelsAllowlist"> Comma-separated list of Kubernetes annotations keys that will be used in the resource's labels metric. </param>
+        /// <param name="metricAnnotationsAllowList"> Comma-separated list of additional Kubernetes label keys that will be used in the resource's labels metric. </param>
         internal ManagedClusterMonitorProfileKubeStateMetrics(string metricLabelsAllowlist, string metricAnnotationsAllowList)
         {
             MetricLabelsAllowlist = metricLabelsAllowlist;
             MetricAnnotationsAllowList = metricAnnotationsAllowList;
         }
 
-        /// <summary> Comma-separated list of Kubernetes annotations keys that will be used in the resource&apos;s labels metric. </summary>
+        /// <summary> Comma-separated list of Kubernetes annotations keys that will be used in the resource's labels metric. </summary>
         public string MetricLabelsAllowlist { get; set; }
-        /// <summary> Comma-separated list of additional Kubernetes label keys that will be used in the resource&apos;s labels metric. </summary>
+        /// <summary> Comma-separated list of additional Kubernetes label keys that will be used in the resource's labels metric. </summary>
         public string MetricAnnotationsAllowList { get; set; }
     }
 }

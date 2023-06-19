@@ -652,18 +652,24 @@ namespace Azure.Core.Tests
         }
 
         [Test]
-        public void ChangeToChildDocumentAppearsInParentDocument()
+        public void ChangeToChildDocumentDoesNotAppearInParentDocument()
         {
-            // This tests reference semantics.
+            // This tests value semantics.
 
             MutableJsonDocument mdoc = MutableJsonDocument.Parse("{}");
             MutableJsonDocument child = MutableJsonDocument.Parse("{}");
 
-            mdoc.RootElement.SetProperty("A", child);
-            child.RootElement.SetProperty("B", 2);
+            mdoc.RootElement.SetProperty("a", child);
+            Assert.AreEqual("""{"a":{}}""", mdoc.RootElement.ToString());
+            Assert.AreEqual("""{}""", child.RootElement.ToString());
 
-            string expected = """{ "A" : { "B" : 2 } }""";
-            ValidateWriteTo(expected, mdoc);
+            child.RootElement.SetProperty("b", 2);
+
+            Assert.AreEqual("""{"a":{}}""", mdoc.RootElement.ToString());
+            Assert.AreEqual("""{"b":2}""", child.RootElement.ToString());
+
+            ValidateWriteTo("""{"a":{}}""", mdoc);
+            ValidateWriteTo("""{"b":2}""", child);
         }
 
         [Test]
@@ -769,42 +775,39 @@ namespace Azure.Core.Tests
         {
             string json = """
                 [ {
-                  "Foo" : {
-                    "A": 6
+                  "foo" : {
+                    "a": 6
                     }
                 } ]
                 """;
 
             MutableJsonDocument mdoc = MutableJsonDocument.Parse(json);
 
-            // a's path points to "0.Foo.A"
-            var a = mdoc.RootElement.GetIndexElement(0).GetProperty("Foo").GetProperty("A");
+            // a's path points to "0.foo.a"
+            MutableJsonElement a = mdoc.RootElement.GetIndexElement(0).GetProperty("foo").GetProperty("a");
 
             // resets json to equivalent of "[ 5 ]"
             mdoc.RootElement.GetIndexElement(0).Set(5);
 
             Assert.AreEqual(5, mdoc.RootElement.GetIndexElement(0).GetInt32());
 
-            // a's path points to "0.Foo.A" so a.GetInt32() should throw since this
-            // in an invalid path.
+            // a's path points to "0.foo.a" so a.GetInt32() should throws since this now an invalid path.
             Assert.Throws<InvalidOperationException>(() => a.GetInt32());
 
-            // Setting json[0] to `a` should throw as well, as the element doesn't point
-            // to a valid path in the mutated JSON tree.
+            // Since a is invalid now, we can't set it on mdoc.
             Assert.Throws<InvalidOperationException>(() => mdoc.RootElement.GetIndexElement(0).Set(a));
 
             // Reset json[0] to an object
             mdoc.RootElement.GetIndexElement(0).Set(new
             {
-                Foo = new
+                foo = new
                 {
-                    A = 7
+                    a = 7
                 }
             });
 
-            // We should be able to get the value of A without being tripped up
-            // by earlier changes.
-            int aValue = mdoc.RootElement.GetIndexElement(0).GetProperty("Foo").GetProperty("A").GetInt32();
+            // We should be able to get the value of 0.foo.a without being tripped up by earlier changes.
+            int aValue = mdoc.RootElement.GetIndexElement(0).GetProperty("foo").GetProperty("a").GetInt32();
             Assert.AreEqual(7, aValue);
 
             // 3. Type round-trips correctly.
@@ -813,8 +816,8 @@ namespace Azure.Core.Tests
 
             string expected = """
                 [ {
-                  "Foo" : {
-                    "A": 7
+                  "foo" : {
+                    "a": 7
                     }
                 } ]
                 """;
@@ -1091,6 +1094,16 @@ namespace Azure.Core.Tests
             mdoc.Dispose();
 
             Assert.Throws<ObjectDisposedException>(() => { var foo = mdoc.RootElement.GetProperty("Foo"); });
+        }
+
+        [Test]
+        public void CanChangeRootElement()
+        {
+            string json = "1";
+            MutableJsonDocument mdoc = MutableJsonDocument.Parse(json);
+            mdoc.RootElement.Set(2);
+
+            Assert.AreEqual(2, mdoc.RootElement.GetInt32());
         }
 
         #region Helpers

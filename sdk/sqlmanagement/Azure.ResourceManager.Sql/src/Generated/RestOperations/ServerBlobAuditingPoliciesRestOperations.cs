@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.Sql
             return message;
         }
 
-        /// <summary> Gets a server&apos;s blob auditing policy. </summary>
+        /// <summary> Gets a server's blob auditing policy. </summary>
         /// <param name="subscriptionId"> The subscription ID that identifies an Azure subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
         /// <param name="serverName"> The name of the server. </param>
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        /// <summary> Gets a server&apos;s blob auditing policy. </summary>
+        /// <summary> Gets a server's blob auditing policy. </summary>
         /// <param name="subscriptionId"> The subscription ID that identifies an Azure subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
         /// <param name="serverName"> The name of the server. </param>
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.Sql
             return message;
         }
 
-        /// <summary> Creates or updates a server&apos;s blob auditing policy. </summary>
+        /// <summary> Creates or updates a server's blob auditing policy. </summary>
         /// <param name="subscriptionId"> The subscription ID that identifies an Azure subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
         /// <param name="serverName"> The name of the server. </param>
@@ -256,7 +256,7 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        /// <summary> Creates or updates a server&apos;s blob auditing policy. </summary>
+        /// <summary> Creates or updates a server's blob auditing policy. </summary>
         /// <param name="subscriptionId"> The subscription ID that identifies an Azure subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
         /// <param name="serverName"> The name of the server. </param>

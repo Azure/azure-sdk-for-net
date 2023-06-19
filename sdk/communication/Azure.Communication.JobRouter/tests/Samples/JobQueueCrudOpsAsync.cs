@@ -21,8 +21,8 @@ namespace Azure.Communication.JobRouter.Tests.Samples
         public async Task JobQueueCrud()
         {
             // create a client
-            RouterAdministrationClient routerAdministrationClient = new RouterAdministrationClient("<< CONNECTION STRING >>");
-            RouterClient routerClient = new RouterClient("<< CONNECTION STRING >>");
+            JobRouterAdministrationClient routerAdministrationClient = new JobRouterAdministrationClient("<< CONNECTION STRING >>");
+            JobRouterClient routerClient = new JobRouterClient("<< CONNECTION STRING >>");
 
             string distributionPolicyId = "distribution-policy-id";
             Response<DistributionPolicy> distributionPolicy = await routerAdministrationClient.CreateDistributionPolicyAsync(
@@ -33,7 +33,7 @@ namespace Azure.Communication.JobRouter.Tests.Samples
             // set `distributionPolicyId` to an existing distribution policy
             string jobQueueId = "job-queue-id";
 
-            Response<JobQueue> jobQueue = await routerAdministrationClient.CreateQueueAsync(
+            Response<Models.RouterQueue> jobQueue = await routerAdministrationClient.CreateQueueAsync(
                 options: new CreateQueueOptions(jobQueueId, distributionPolicyId)
                 {
                     Name = "My job queue"
@@ -45,7 +45,7 @@ namespace Azure.Communication.JobRouter.Tests.Samples
 
             #region Snippet:Azure_Communication_JobRouter_Tests_Samples_Crud_GetJobQueue_Async
 
-            Response<JobQueue> queriedJobQueue = await routerAdministrationClient.GetQueueAsync(jobQueueId);
+            Response<Models.RouterQueue> queriedJobQueue = await routerAdministrationClient.GetQueueAsync(jobQueueId);
 
             Console.WriteLine($"Successfully fetched queue with id: {queriedJobQueue.Value.Id}");
 
@@ -53,7 +53,7 @@ namespace Azure.Communication.JobRouter.Tests.Samples
 
             #region Snippet:Azure_Communication_JobRouter_Tests_Samples_Crud_GetJobQueueStat_Async
 
-            Response<QueueStatistics> queueStatistics = await routerClient.GetQueueStatisticsAsync(queueId: jobQueueId);
+            Response<RouterQueueStatistics> queueStatistics = await routerClient.GetQueueStatisticsAsync(queueId: jobQueueId);
 
             Console.WriteLine($"Queue statistics successfully retrieved for queue: {JsonSerializer.Serialize(queueStatistics.Value)}");
 
@@ -64,7 +64,7 @@ namespace Azure.Communication.JobRouter.Tests.Samples
             Response updatedJobQueueWithoutName = await routerAdministrationClient.UpdateQueueAsync(jobQueueId,
                 RequestContent.Create(new { Name = (string?)null }));
 
-            Response<JobQueue> queriedJobQueueWithoutName = await routerAdministrationClient.GetQueueAsync(jobQueueId);
+            Response<Models.RouterQueue> queriedJobQueueWithoutName = await routerAdministrationClient.GetQueueAsync(jobQueueId);
 
             Console.WriteLine($"Queue successfully updated: 'Name' has been removed. Status: {string.IsNullOrWhiteSpace(queriedJobQueueWithoutName.Value.Name)}");
 
@@ -72,25 +72,22 @@ namespace Azure.Communication.JobRouter.Tests.Samples
 
             #region Snippet:Azure_Communication_JobRouter_Tests_Samples_Crud_UpdateGetJobQueue_Async
 
-            Response<JobQueue> updatedJobQueue = await routerAdministrationClient.UpdateQueueAsync(
+            Response<Models.RouterQueue> updatedJobQueue = await routerAdministrationClient.UpdateQueueAsync(
                 options: new UpdateQueueOptions(jobQueueId)
                 {
-                    Labels = new Dictionary<string, LabelValue>()
-                    {
-                        ["Additional-Queue-Label"] = new LabelValue("ChatQueue")
-                    }
+                    Labels = { ["Additional-Queue-Label"] = new LabelValue("ChatQueue") }
                 });
 
             #endregion Snippet:Azure_Communication_JobRouter_Tests_Samples_Crud_UpdateGetJobQueue_Async
 
             #region Snippet:Azure_Communication_JobRouter_Tests_Samples_Crud_GetJobQueues_Async
 
-            AsyncPageable<JobQueueItem> jobQueues = routerAdministrationClient.GetQueuesAsync();
-            await foreach (Page<JobQueueItem> asPage in jobQueues.AsPages(pageSizeHint: 10))
+            AsyncPageable<Models.RouterQueueItem> jobQueues = routerAdministrationClient.GetQueuesAsync();
+            await foreach (Page<Models.RouterQueueItem> asPage in jobQueues.AsPages(pageSizeHint: 10))
             {
-                foreach (JobQueueItem? policy in asPage.Values)
+                foreach (Models.RouterQueueItem? policy in asPage.Values)
                 {
-                    Console.WriteLine($"Listing job queue with id: {policy.JobQueue.Id}");
+                    Console.WriteLine($"Listing job queue with id: {policy.Queue.Id}");
                 }
             }
 

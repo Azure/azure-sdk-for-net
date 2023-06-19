@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
-    /// <summary> Advertise Connected Subnets. Ex: &quot;True&quot; | &quot;False&quot;. </summary>
+    /// <summary> Advertise Connected Subnets. Ex: "True" | "False". </summary>
     public readonly partial struct RedistributeConnectedSubnet : IEquatable<RedistributeConnectedSubnet>
     {
         private readonly string _value;

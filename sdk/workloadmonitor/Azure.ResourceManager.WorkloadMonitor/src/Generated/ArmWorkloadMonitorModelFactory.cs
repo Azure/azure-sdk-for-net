@@ -26,11 +26,11 @@ namespace Azure.ResourceManager.WorkloadMonitor.Models
         /// <param name="parentMonitorName"> Name of the parent monitor. </param>
         /// <param name="previousMonitorState"> Previous health state of the monitor. </param>
         /// <param name="currentMonitorState"> Current health state of the monitor. </param>
-        /// <param name="evaluationTimestamp"> Timestamp of the monitor&apos;s last health evaluation. </param>
-        /// <param name="currentStateFirstObservedTimestamp"> Timestamp of the monitor&apos;s last health state change. </param>
-        /// <param name="lastReportedTimestamp"> Timestamp of the monitor&apos;s last reported health state. </param>
-        /// <param name="evidence"> Evidence validating the monitor&apos;s current health state. </param>
-        /// <param name="monitorConfiguration"> The configuration settings at the time of the monitor&apos;s health evaluation. </param>
+        /// <param name="evaluationTimestamp"> Timestamp of the monitor's last health evaluation. </param>
+        /// <param name="currentStateFirstObservedTimestamp"> Timestamp of the monitor's last health state change. </param>
+        /// <param name="lastReportedTimestamp"> Timestamp of the monitor's last reported health state. </param>
+        /// <param name="evidence"> Evidence validating the monitor's current health state. </param>
+        /// <param name="monitorConfiguration"> The configuration settings at the time of the monitor's health evaluation. </param>
         /// <returns> A new <see cref="WorkloadMonitor.HealthMonitorData"/> instance for mocking. </returns>
         public static HealthMonitorData HealthMonitorData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string monitorName = null, string monitorType = null, string monitoredObject = null, string parentMonitorName = null, HealthState? previousMonitorState = null, HealthState? currentMonitorState = null, string evaluationTimestamp = null, string currentStateFirstObservedTimestamp = null, string lastReportedTimestamp = null, BinaryData evidence = null, BinaryData monitorConfiguration = null)
         {
@@ -45,12 +45,12 @@ namespace Azure.ResourceManager.WorkloadMonitor.Models
         /// <param name="monitorName"> Human-readable name of the monitor. </param>
         /// <param name="monitorType"> Type of the monitor. </param>
         /// <param name="monitoredObject"> Dynamic monitored object of the monitor. </param>
-        /// <param name="evaluationTimestamp"> Timestamp of the monitor&apos;s last health evaluation. </param>
-        /// <param name="currentStateFirstObservedTimestamp"> Timestamp of the monitor&apos;s last health state change. </param>
+        /// <param name="evaluationTimestamp"> Timestamp of the monitor's last health evaluation. </param>
+        /// <param name="currentStateFirstObservedTimestamp"> Timestamp of the monitor's last health state change. </param>
         /// <param name="previousMonitorState"> Previous health state of the monitor. </param>
         /// <param name="currentMonitorState"> Current health state of the monitor. </param>
-        /// <param name="evidence"> Evidence validating the monitor&apos;s current health state. </param>
-        /// <param name="monitorConfiguration"> The configuration settings at the time of the monitor&apos;s health evaluation. </param>
+        /// <param name="evidence"> Evidence validating the monitor's current health state. </param>
+        /// <param name="monitorConfiguration"> The configuration settings at the time of the monitor's health evaluation. </param>
         /// <returns> A new <see cref="WorkloadMonitor.HealthMonitorStateChangeData"/> instance for mocking. </returns>
         public static HealthMonitorStateChangeData HealthMonitorStateChangeData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string monitorName = null, string monitorType = null, string monitoredObject = null, string evaluationTimestamp = null, string currentStateFirstObservedTimestamp = null, HealthState? previousMonitorState = null, HealthState? currentMonitorState = null, BinaryData evidence = null, BinaryData monitorConfiguration = null)
         {

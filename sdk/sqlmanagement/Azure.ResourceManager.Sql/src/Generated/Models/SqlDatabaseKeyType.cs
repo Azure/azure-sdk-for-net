@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Sql.Models
 {
-    /// <summary> The database key type. Only supported value is &apos;AzureKeyVault&apos;. </summary>
+    /// <summary> The database key type. Only supported value is 'AzureKeyVault'. </summary>
     public readonly partial struct SqlDatabaseKeyType : IEquatable<SqlDatabaseKeyType>
     {
         private readonly string _value;

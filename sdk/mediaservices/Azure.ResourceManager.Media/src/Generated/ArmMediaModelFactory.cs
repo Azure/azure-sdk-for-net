@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Media.Models
         /// <param name="publicNetworkAccess"> Whether or not public network access is allowed for resources under the Media Services account. </param>
         /// <param name="provisioningState"> Provisioning state of the Media Services account. </param>
         /// <param name="privateEndpointConnections"> The Private Endpoint Connections created for the Media Service account. </param>
-        /// <param name="minimumTlsVersion"> The minimum TLS version allowed for this account&apos;s requests. This is an optional property. If unspecified, a secure default value will be used. </param>
+        /// <param name="minimumTlsVersion"> The minimum TLS version allowed for this account's requests. This is an optional property. If unspecified, a secure default value will be used. </param>
         /// <returns> A new <see cref="Media.MediaServicesAccountData"/> instance for mocking. </returns>
         public static MediaServicesAccountData MediaServicesAccountData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ManagedServiceIdentity identity = null, Guid? mediaServicesAccountId = null, IEnumerable<MediaServicesStorageAccount> storageAccounts = null, MediaStorageAuthentication? storageAuthentication = null, AccountEncryption encryption = null, MediaAccessControl keyDeliveryAccessControl = null, MediaServicesPublicNetworkAccess? publicNetworkAccess = null, MediaServicesProvisioningState? provisioningState = null, IEnumerable<MediaServicesPrivateEndpointConnectionData> privateEndpointConnections = null, MediaServicesMinimumTlsVersion? minimumTlsVersion = null)
         {
@@ -306,9 +306,9 @@ namespace Azure.ResourceManager.Media.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="createdOn"> The UTC date and time when the Transform was created, in &apos;YYYY-MM-DDThh:mm:ssZ&apos; format. </param>
+        /// <param name="createdOn"> The UTC date and time when the Transform was created, in 'YYYY-MM-DDThh:mm:ssZ' format. </param>
         /// <param name="description"> An optional verbose description of the Transform. </param>
-        /// <param name="lastModifiedOn"> The UTC date and time when the Transform was last updated, in &apos;YYYY-MM-DDThh:mm:ssZ&apos; format. </param>
+        /// <param name="lastModifiedOn"> The UTC date and time when the Transform was last updated, in 'YYYY-MM-DDThh:mm:ssZ' format. </param>
         /// <param name="outputs"> An array of one or more TransformOutputs that the Transform should generate. </param>
         /// <returns> A new <see cref="Media.MediaTransformData"/> instance for mocking. </returns>
         public static MediaTransformData MediaTransformData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, DateTimeOffset? createdOn = null, string description = null, DateTimeOffset? lastModifiedOn = null, IEnumerable<MediaTransformOutput> outputs = null)
@@ -323,7 +323,7 @@ namespace Azure.ResourceManager.Media.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="createdOn"> The UTC date and time when the customer has created the Job, in &apos;YYYY-MM-DDThh:mm:ssZ&apos; format. </param>
+        /// <param name="createdOn"> The UTC date and time when the customer has created the Job, in 'YYYY-MM-DDThh:mm:ssZ' format. </param>
         /// <param name="state"> The current state of the job. </param>
         /// <param name="description"> Optional customer supplied description of the Job. </param>
         /// <param name="input">
@@ -331,7 +331,7 @@ namespace Azure.ResourceManager.Media.Models
         /// Please note <see cref="MediaJobInputBasicProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="MediaJobInputAsset"/>, <see cref="MediaJobInputClip"/>, <see cref="MediaJobInputHttp"/>, <see cref="MediaJobInputSequence"/> and <see cref="MediaJobInputs"/>.
         /// </param>
-        /// <param name="lastModifiedOn"> The UTC date and time when the customer has last updated the Job, in &apos;YYYY-MM-DDThh:mm:ssZ&apos; format. </param>
+        /// <param name="lastModifiedOn"> The UTC date and time when the customer has last updated the Job, in 'YYYY-MM-DDThh:mm:ssZ' format. </param>
         /// <param name="outputs">
         /// The outputs for the Job.
         /// Please note <see cref="MediaJobOutput"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
@@ -360,7 +360,7 @@ namespace Azure.ResourceManager.Media.Models
         /// </param>
         /// <param name="state"> Describes the state of the JobOutput. </param>
         /// <param name="progress"> If the JobOutput is in a Processing state, this contains the Job completion percentage. The value is an estimate and not intended to be used to predict Job completion times. To determine if the JobOutput is complete, use the State property. </param>
-        /// <param name="label"> A label that is assigned to a JobOutput in order to help uniquely identify it. This is useful when your Transform has more than one TransformOutput, whereby your Job has more than one JobOutput. In such cases, when you submit the Job, you will add two or more JobOutputs, in the same order as TransformOutputs in the Transform. Subsequently, when you retrieve the Job, either through events or on a GET request, you can use the label to easily identify the JobOutput. If a label is not provided, a default value of &apos;{presetName}_{outputIndex}&apos; will be used, where the preset name is the name of the preset in the corresponding TransformOutput and the output index is the relative index of the this JobOutput within the Job. Note that this index is the same as the relative index of the corresponding TransformOutput within its Transform. </param>
+        /// <param name="label"> A label that is assigned to a JobOutput in order to help uniquely identify it. This is useful when your Transform has more than one TransformOutput, whereby your Job has more than one JobOutput. In such cases, when you submit the Job, you will add two or more JobOutputs, in the same order as TransformOutputs in the Transform. Subsequently, when you retrieve the Job, either through events or on a GET request, you can use the label to easily identify the JobOutput. If a label is not provided, a default value of '{presetName}_{outputIndex}' will be used, where the preset name is the name of the preset in the corresponding TransformOutput and the output index is the relative index of the this JobOutput within the Job. Note that this index is the same as the relative index of the corresponding TransformOutput within its Transform. </param>
         /// <param name="startOn"> The UTC date and time at which this Job Output began processing. </param>
         /// <param name="endOn"> The UTC date and time at which this Job Output finished processing. </param>
         /// <returns> A new <see cref="Models.MediaJobOutput"/> instance for mocking. </returns>
@@ -419,7 +419,7 @@ namespace Azure.ResourceManager.Media.Models
         /// <param name="startOn"> The start time of the Streaming Locator. </param>
         /// <param name="endOn"> The end time of the Streaming Locator. </param>
         /// <param name="streamingLocatorId"> The StreamingLocatorId of the Streaming Locator. </param>
-        /// <param name="streamingPolicyName"> Name of the Streaming Policy used by this Streaming Locator. Either specify the name of Streaming Policy you created or use one of the predefined Streaming Policies. The predefined Streaming Policies available are: &apos;Predefined_DownloadOnly&apos;, &apos;Predefined_ClearStreamingOnly&apos;, &apos;Predefined_DownloadAndClearStreaming&apos;, &apos;Predefined_ClearKey&apos;, &apos;Predefined_MultiDrmCencStreaming&apos; and &apos;Predefined_MultiDrmStreaming&apos;. </param>
+        /// <param name="streamingPolicyName"> Name of the Streaming Policy used by this Streaming Locator. Either specify the name of Streaming Policy you created or use one of the predefined Streaming Policies. The predefined Streaming Policies available are: 'Predefined_DownloadOnly', 'Predefined_ClearStreamingOnly', 'Predefined_DownloadAndClearStreaming', 'Predefined_ClearKey', 'Predefined_MultiDrmCencStreaming' and 'Predefined_MultiDrmStreaming'. </param>
         /// <param name="defaultContentKeyPolicyName"> Name of the default ContentKeyPolicy used by this Streaming Locator. </param>
         /// <param name="contentKeys"> The ContentKeys used by this Streaming Locator. </param>
         /// <param name="alternativeMediaId"> Alternative Media ID of this Streaming Locator. </param>
@@ -489,7 +489,7 @@ namespace Azure.ResourceManager.Media.Models
         /// <param name="crossSiteAccessPolicies"> Live event cross site access policies. </param>
         /// <param name="useStaticHostname"> Specifies whether a static hostname would be assigned to the live event preview and ingest endpoints. This value can only be updated if the live event is in Standby state. </param>
         /// <param name="hostnamePrefix"> When useStaticHostname is set to true, the hostnamePrefix specifies the first part of the hostname assigned to the live event preview and ingest endpoints. The final hostname would be a combination of this prefix, the media service account name and a short code for the Azure Media Services data center. </param>
-        /// <param name="streamOptions"> The options to use for the LiveEvent. This value is specified at creation time and cannot be updated. The valid values for the array entry values are &apos;Default&apos; and &apos;LowLatency&apos;. </param>
+        /// <param name="streamOptions"> The options to use for the LiveEvent. This value is specified at creation time and cannot be updated. The valid values for the array entry values are 'Default' and 'LowLatency'. </param>
         /// <param name="createdOn"> The creation time for the live event. </param>
         /// <param name="lastModifiedOn"> The last modified time of the live event. </param>
         /// <returns> A new <see cref="Media.MediaLiveEventData"/> instance for mocking. </returns>
@@ -510,7 +510,7 @@ namespace Azure.ResourceManager.Media.Models
         /// <param name="description"> The description of the live output. </param>
         /// <param name="assetName"> The asset that the live output will write to. </param>
         /// <param name="archiveWindowLength"> ISO 8601 time between 1 minute to 25 hours to indicate the maximum content length that can be archived in the asset for this live output. This also sets the maximum content length for the rewind window. For example, use PT1H30M to indicate 1 hour and 30 minutes of archive window. </param>
-        /// <param name="rewindWindowLength"> ISO 8601 time between 1 minute to the duration of archiveWindowLength to control seek-able window length during Live. The service won&apos;t use this property once LiveOutput stops. The archived VOD will have full content with original ArchiveWindowLength. For example, use PT1H30M to indicate 1 hour and 30 minutes of rewind window length. Service will use implicit default value 30m only if Live Event enables LL. </param>
+        /// <param name="rewindWindowLength"> ISO 8601 time between 1 minute to the duration of archiveWindowLength to control seek-able window length during Live. The service won't use this property once LiveOutput stops. The archived VOD will have full content with original ArchiveWindowLength. For example, use PT1H30M to indicate 1 hour and 30 minutes of rewind window length. Service will use implicit default value 30m only if Live Event enables LL. </param>
         /// <param name="manifestName"> The manifest file name. If not provided, the service will generate one automatically. </param>
         /// <param name="hlsFragmentsPerTsSegment"> HTTP Live Streaming (HLS) packing setting for the live output. </param>
         /// <param name="outputSnapTime"> The initial timestamp that the live output will start at, any content before this value will not be archived. </param>
@@ -605,7 +605,7 @@ namespace Azure.ResourceManager.Media.Models
         /// <param name="fileName"> The file name to the source file. This file is located in the storage container of the asset. </param>
         /// <param name="displayName"> The display name of the text track on a video player. In HLS, this maps to the NAME attribute of EXT-X-MEDIA. </param>
         /// <param name="languageCode"> The RFC5646 language code for the text track. </param>
-        /// <param name="playerVisibility"> When PlayerVisibility is set to &quot;Visible&quot;, the text track will be present in the DASH manifest or HLS playlist when requested by a client. When the PlayerVisibility is set to &quot;Hidden&quot;, the text will not be available to the client. The default value is &quot;Visible&quot;. </param>
+        /// <param name="playerVisibility"> When PlayerVisibility is set to "Visible", the text track will be present in the DASH manifest or HLS playlist when requested by a client. When the PlayerVisibility is set to "Hidden", the text will not be available to the client. The default value is "Visible". </param>
         /// <param name="hlsSettings"> The HLS specific setting for the text track. </param>
         /// <returns> A new <see cref="Models.TextTrack"/> instance for mocking. </returns>
         public static TextTrack TextTrack(string fileName = null, string displayName = null, string languageCode = null, PlayerVisibility? playerVisibility = null, HlsSettings hlsSettings = null)
@@ -622,7 +622,7 @@ namespace Azure.ResourceManager.Media.Models
         /// </param>
         /// <param name="state"> Describes the state of the JobOutput. </param>
         /// <param name="progress"> If the JobOutput is in a Processing state, this contains the Job completion percentage. The value is an estimate and not intended to be used to predict Job completion times. To determine if the JobOutput is complete, use the State property. </param>
-        /// <param name="label"> A label that is assigned to a JobOutput in order to help uniquely identify it. This is useful when your Transform has more than one TransformOutput, whereby your Job has more than one JobOutput. In such cases, when you submit the Job, you will add two or more JobOutputs, in the same order as TransformOutputs in the Transform. Subsequently, when you retrieve the Job, either through events or on a GET request, you can use the label to easily identify the JobOutput. If a label is not provided, a default value of &apos;{presetName}_{outputIndex}&apos; will be used, where the preset name is the name of the preset in the corresponding TransformOutput and the output index is the relative index of the this JobOutput within the Job. Note that this index is the same as the relative index of the corresponding TransformOutput within its Transform. </param>
+        /// <param name="label"> A label that is assigned to a JobOutput in order to help uniquely identify it. This is useful when your Transform has more than one TransformOutput, whereby your Job has more than one JobOutput. In such cases, when you submit the Job, you will add two or more JobOutputs, in the same order as TransformOutputs in the Transform. Subsequently, when you retrieve the Job, either through events or on a GET request, you can use the label to easily identify the JobOutput. If a label is not provided, a default value of '{presetName}_{outputIndex}' will be used, where the preset name is the name of the preset in the corresponding TransformOutput and the output index is the relative index of the this JobOutput within the Job. Note that this index is the same as the relative index of the corresponding TransformOutput within its Transform. </param>
         /// <param name="startOn"> The UTC date and time at which this Job Output began processing. </param>
         /// <param name="endOn"> The UTC date and time at which this Job Output finished processing. </param>
         /// <param name="assetName"> The name of the output Asset. </param>

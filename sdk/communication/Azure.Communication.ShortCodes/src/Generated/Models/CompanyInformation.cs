@@ -20,7 +20,7 @@ namespace Azure.Communication.ShortCodes.Models
         /// <summary> Initializes a new instance of CompanyInformation. </summary>
         /// <param name="name"> Legal entity name for customer submitting Program Brief. </param>
         /// <param name="url"> Company URL for customer submitting Program Brief. </param>
-        /// <param name="address"> Company&apos;s address for the customer submitting the Program Brief. </param>
+        /// <param name="address"> Company's address for the customer submitting the Program Brief. </param>
         /// <param name="contactInformation"> Contact Information. </param>
         /// <param name="customerCareInformation"> Customer Care Information. </param>
         internal CompanyInformation(string name, Uri url, string address, ContactInformation contactInformation, CustomerCareInformation customerCareInformation)
@@ -36,7 +36,7 @@ namespace Azure.Communication.ShortCodes.Models
         public string Name { get; set; }
         /// <summary> Company URL for customer submitting Program Brief. </summary>
         public Uri Url { get; set; }
-        /// <summary> Company&apos;s address for the customer submitting the Program Brief. </summary>
+        /// <summary> Company's address for the customer submitting the Program Brief. </summary>
         public string Address { get; set; }
         /// <summary> Contact Information. </summary>
         public ContactInformation ContactInformation { get; set; }

@@ -7,7 +7,7 @@
 
 namespace Azure.Media.VideoAnalyzer.Edge.Models
 {
-    /// <summary> Class  representing the video&apos;s rate control. </summary>
+    /// <summary> Class  representing the video's rate control. </summary>
     public partial class RateControl
     {
         /// <summary> Initializes a new instance of RateControl. </summary>

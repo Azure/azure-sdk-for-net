@@ -6,7 +6,7 @@ using Microsoft.Azure.WebJobs;
 using Microsoft.Azure.WebJobs.Extensions.EventGrid;
 using Microsoft.Extensions.Logging;
 
-namespace Azure.Extensions.WebJobs.Sample
+namespace Microsoft.Azure.WebJobs.Extensions.EventGrid.Tests.Samples
 {
     #region Snippet:CloudEventTriggerFunction
     public static class CloudEventTriggerFunction

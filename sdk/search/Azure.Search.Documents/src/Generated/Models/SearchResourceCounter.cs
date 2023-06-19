@@ -7,7 +7,7 @@
 
 namespace Azure.Search.Documents.Indexes.Models
 {
-    /// <summary> Represents a resource&apos;s usage and quota. </summary>
+    /// <summary> Represents a resource's usage and quota. </summary>
     public partial class SearchResourceCounter
     {
         /// <summary> Initializes a new instance of SearchResourceCounter. </summary>

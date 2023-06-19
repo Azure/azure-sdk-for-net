@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.AppContainers
         /// <param name="staticIP"> Static IP of the Environment. </param>
         /// <param name="appLogsConfiguration">
         /// Cluster configuration which enables the log daemon to export
-        /// app logs to a destination. Currently only &quot;log-analytics&quot; is
+        /// app logs to a destination. Currently only "log-analytics" is
         /// supported
         /// </param>
         /// <param name="isZoneRedundant"> Whether or not this Managed Environment is zone-redundant. </param>
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.AppContainers
         public IPAddress StaticIP { get; }
         /// <summary>
         /// Cluster configuration which enables the log daemon to export
-        /// app logs to a destination. Currently only &quot;log-analytics&quot; is
+        /// app logs to a destination. Currently only "log-analytics" is
         /// supported
         /// </summary>
         public ContainerAppLogsConfiguration AppLogsConfiguration { get; set; }

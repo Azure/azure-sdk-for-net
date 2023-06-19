@@ -42,12 +42,12 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// <param name="sku"> The SKU to create, which affects price, performance, and features. </param>
         /// <param name="zones"> The Availability Zones where this cluster will be deployed. </param>
         /// <param name="identity"> The identity of the resource. </param>
-        /// <param name="minimumTlsVersion"> The minimum TLS version for the cluster to support, e.g. &apos;1.2&apos;. </param>
+        /// <param name="minimumTlsVersion"> The minimum TLS version for the cluster to support, e.g. '1.2'. </param>
         /// <param name="encryption"> Encryption-at-rest configuration for the cluster. </param>
         /// <param name="hostName"> DNS name of the cluster endpoint. </param>
         /// <param name="provisioningState"> Current provisioning status of the cluster. </param>
         /// <param name="resourceState"> Current resource status of the cluster. </param>
-        /// <param name="redisVersion"> Version of redis the cluster supports, e.g. &apos;6&apos;. </param>
+        /// <param name="redisVersion"> Version of redis the cluster supports, e.g. '6'. </param>
         /// <param name="privateEndpointConnections"> List of private endpoint connections associated with the specified RedisEnterprise cluster. </param>
         internal RedisEnterpriseClusterData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, RedisEnterpriseSku sku, IList<string> zones, ManagedServiceIdentity identity, RedisEnterpriseTlsVersion? minimumTlsVersion, ClusterPropertiesEncryption encryption, string hostName, RedisEnterpriseProvisioningStatus? provisioningState, RedisEnterpriseClusterResourceState? resourceState, string redisVersion, IReadOnlyList<RedisEnterprisePrivateEndpointConnectionData> privateEndpointConnections) : base(id, name, resourceType, systemData, tags, location)
         {
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.RedisEnterprise
         public IList<string> Zones { get; }
         /// <summary> The identity of the resource. </summary>
         public ManagedServiceIdentity Identity { get; set; }
-        /// <summary> The minimum TLS version for the cluster to support, e.g. &apos;1.2&apos;. </summary>
+        /// <summary> The minimum TLS version for the cluster to support, e.g. '1.2'. </summary>
         public RedisEnterpriseTlsVersion? MinimumTlsVersion { get; set; }
         /// <summary> Encryption-at-rest configuration for the cluster. </summary>
         internal ClusterPropertiesEncryption Encryption { get; set; }
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.RedisEnterprise
         public RedisEnterpriseProvisioningStatus? ProvisioningState { get; }
         /// <summary> Current resource status of the cluster. </summary>
         public RedisEnterpriseClusterResourceState? ResourceState { get; }
-        /// <summary> Version of redis the cluster supports, e.g. &apos;6&apos;. </summary>
+        /// <summary> Version of redis the cluster supports, e.g. '6'. </summary>
         public string RedisVersion { get; }
         /// <summary> List of private endpoint connections associated with the specified RedisEnterprise cluster. </summary>
         public IReadOnlyList<RedisEnterprisePrivateEndpointConnectionData> PrivateEndpointConnections { get; }

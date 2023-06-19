@@ -7,7 +7,7 @@
 
 namespace Azure.ResourceManager.Sql.Models
 {
-    /// <summary> Gets the status of availability of this advisor to customers. Possible values are &apos;GA&apos;, &apos;PublicPreview&apos;, &apos;LimitedPublicPreview&apos; and &apos;PrivatePreview&apos;. </summary>
+    /// <summary> Gets the status of availability of this advisor to customers. Possible values are 'GA', 'PublicPreview', 'LimitedPublicPreview' and 'PrivatePreview'. </summary>
     public enum SqlAdvisorStatus
     {
         /// <summary> GA. </summary>

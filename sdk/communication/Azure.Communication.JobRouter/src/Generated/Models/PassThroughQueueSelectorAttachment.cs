@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.Communication.JobRouter
 {
-    /// <summary> Attaches a label selector where the value is pass through from the job label with the same key. </summary>
+    /// <summary> Attaches a queue selector where the value is passed through from the job label with the same key. </summary>
     public partial class PassThroughQueueSelectorAttachment : QueueSelectorAttachment
     {
         /// <summary> Initializes a new instance of PassThroughQueueSelectorAttachment. </summary>
@@ -27,7 +27,7 @@ namespace Azure.Communication.JobRouter
         }
 
         /// <summary> Initializes a new instance of PassThroughQueueSelectorAttachment. </summary>
-        /// <param name="kind"> The type discriminator describing the type of label selector attachment. </param>
+        /// <param name="kind"> The type discriminator describing the type of queue selector attachment. </param>
         /// <param name="key"> The label key to query against. </param>
         /// <param name="labelOperator"> Describes how the value of the label is compared to the value pass through. </param>
         internal PassThroughQueueSelectorAttachment(string kind, string key, LabelOperator labelOperator) : base(kind)

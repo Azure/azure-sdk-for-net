@@ -365,7 +365,7 @@ namespace Azure.ResourceManager.StorageCache
         }
 
         /// <summary>
-        /// Tells the cache to write all dirty data to the Storage Target&apos;s backend storage. Client requests to this storage target&apos;s namespace will return errors until the flush operation completes.
+        /// Tells the cache to write all dirty data to the Storage Target's backend storage. Client requests to this storage target's namespace will return errors until the flush operation completes.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -399,7 +399,7 @@ namespace Azure.ResourceManager.StorageCache
         }
 
         /// <summary>
-        /// Tells the cache to write all dirty data to the Storage Target&apos;s backend storage. Client requests to this storage target&apos;s namespace will return errors until the flush operation completes.
+        /// Tells the cache to write all dirty data to the Storage Target's backend storage. Client requests to this storage target's namespace will return errors until the flush operation completes.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>

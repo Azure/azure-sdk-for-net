@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.IoT.TimeSeriesInsights
 {
-    /// <summary> Response of a single operation on a batch of time series types. Exactly one of &quot;get&quot;, &quot;put&quot; or &quot;delete&quot; will be set. </summary>
+    /// <summary> Response of a single operation on a batch of time series types. Exactly one of "get", "put" or "delete" will be set. </summary>
     internal partial class TypesBatchResponse
     {
         /// <summary> Initializes a new instance of TypesBatchResponse. </summary>
@@ -22,9 +22,9 @@ namespace Azure.IoT.TimeSeriesInsights
         }
 
         /// <summary> Initializes a new instance of TypesBatchResponse. </summary>
-        /// <param name="get"> List of types or error objects corresponding by position to the &quot;get&quot; array in the request. Type object is set when operation is successful and error object is set when operation is unsuccessful. </param>
-        /// <param name="put"> List of types or error objects corresponding by position to the &quot;put&quot; array in the request. Type object is set when operation is successful and error object is set when operation is unsuccessful. </param>
-        /// <param name="delete"> List of error objects corresponding by position to the &quot;delete&quot; array in the request - null when the operation is successful. </param>
+        /// <param name="get"> List of types or error objects corresponding by position to the "get" array in the request. Type object is set when operation is successful and error object is set when operation is unsuccessful. </param>
+        /// <param name="put"> List of types or error objects corresponding by position to the "put" array in the request. Type object is set when operation is successful and error object is set when operation is unsuccessful. </param>
+        /// <param name="delete"> List of error objects corresponding by position to the "delete" array in the request - null when the operation is successful. </param>
         internal TypesBatchResponse(IReadOnlyList<TimeSeriesTypeOperationResult> @get, IReadOnlyList<TimeSeriesTypeOperationResult> put, IReadOnlyList<TimeSeriesOperationError> delete)
         {
             Get = @get;
@@ -32,11 +32,11 @@ namespace Azure.IoT.TimeSeriesInsights
             Delete = delete;
         }
 
-        /// <summary> List of types or error objects corresponding by position to the &quot;get&quot; array in the request. Type object is set when operation is successful and error object is set when operation is unsuccessful. </summary>
+        /// <summary> List of types or error objects corresponding by position to the "get" array in the request. Type object is set when operation is successful and error object is set when operation is unsuccessful. </summary>
         public IReadOnlyList<TimeSeriesTypeOperationResult> Get { get; }
-        /// <summary> List of types or error objects corresponding by position to the &quot;put&quot; array in the request. Type object is set when operation is successful and error object is set when operation is unsuccessful. </summary>
+        /// <summary> List of types or error objects corresponding by position to the "put" array in the request. Type object is set when operation is successful and error object is set when operation is unsuccessful. </summary>
         public IReadOnlyList<TimeSeriesTypeOperationResult> Put { get; }
-        /// <summary> List of error objects corresponding by position to the &quot;delete&quot; array in the request - null when the operation is successful. </summary>
+        /// <summary> List of error objects corresponding by position to the "delete" array in the request - null when the operation is successful. </summary>
         public IReadOnlyList<TimeSeriesOperationError> Delete { get; }
     }
 }

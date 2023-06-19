@@ -221,7 +221,7 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="filter"> Specify $filter=&apos;CustomContextTag eq &lt;tag&gt;&apos; to filter on custom context tag property. </param>
+        /// <param name="filter"> Specify $filter='CustomContextTag eq &lt;tag&gt;' to filter on custom context tag property. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="DataBoxEdgeTriggerResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DataBoxEdgeTriggerResource> GetAllAsync(string filter = null, CancellationToken cancellationToken = default)
@@ -244,7 +244,7 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="filter"> Specify $filter=&apos;CustomContextTag eq &lt;tag&gt;&apos; to filter on custom context tag property. </param>
+        /// <param name="filter"> Specify $filter='CustomContextTag eq &lt;tag&gt;' to filter on custom context tag property. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="DataBoxEdgeTriggerResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DataBoxEdgeTriggerResource> GetAll(string filter = null, CancellationToken cancellationToken = default)
