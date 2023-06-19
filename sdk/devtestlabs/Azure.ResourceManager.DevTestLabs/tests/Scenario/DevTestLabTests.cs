@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.DevTestLabs.Tests
         private DevTestLabCollection _devTestLabCollections;
         private string _labName;
 
-        public DevTestLabTests(bool isAsync) : base(isAsync)
+        public DevTestLabTests(bool isAsync) : base(isAsync)//, RecordedTestMode.Record)
         {
         }
 

@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.DevTestLabs.Tests
         }
 
         [SetUp]
-        public async void CreateCommonClient()
+        public async Task CreateCommonClient()
         {
             Client = GetArmClient();
             TestResourceGroup = await CreateResourceGroup();

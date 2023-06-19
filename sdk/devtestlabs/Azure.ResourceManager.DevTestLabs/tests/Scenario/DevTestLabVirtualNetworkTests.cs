@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.DevTestLabs.Tests
         private const string _dtlVnetPrefixName = "dtlVnet";
         private string _dtlVnetName;
 
-        public DevTestLabVirtualNetworkTests(bool isAsync) : base(isAsync)
+        public DevTestLabVirtualNetworkTests(bool isAsync) : base(isAsync)//, RecordedTestMode.Record)
         {
         }
 
