@@ -772,12 +772,12 @@ namespace Azure.Containers.ContainerRegistry.Tests
         }
 
         [Test]
-        [LiveOnly]
+        //[LiveOnly]
         [IgnoreServiceError(404, "BLOB_UPLOAD_INVALID", Reason = "https://github.com/Azure/azure-sdk-for-net/issues/35322")]
         public async Task CanUploadAndDownloadLargeBlobStreaming()
         {
             long sizeInGiB = 3;
-            int uneven = 20;
+            long uneven = 20;
             long size = (1024 * 1024 * 1024 * sizeInGiB) + uneven;
 
             string repositoryId = Recording.Random.NewGuid().ToString();
@@ -804,8 +804,9 @@ namespace Azure.Containers.ContainerRegistry.Tests
 
             using FileStream downloadFs = File.OpenWrite(filePath);
             Response<DownloadRegistryBlobStreamingResult> response = await client.DownloadBlobStreamingAsync(uploadResult.Digest);
-            long blobSize = response.GetRawResponse().Headers.TryGetValue("Content-Length", out string value) ? long.Parse(value) : throw new Exception("No content-length header");
-            await CopyNetworkStream(response.Value.Content, downloadFs, blobSize);
+            using Stream contentStream = response.Value.Content;
+            long blobSize = response.GetRawResponse().Headers.ContentLengthLong.Value;
+            await CopyNetworkStream(contentStream, downloadFs, blobSize);
 
             // Content is validated by the client, so we only need to check length.
             Assert.IsTrue(File.Exists(filePath));
