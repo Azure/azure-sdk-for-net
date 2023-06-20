@@ -1,16 +1,16 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://smstestapp.communication.azure.com/availablePhoneNumbers/countries/US/offerings?api-version=2022-12-01",
+      "RequestUri": "https://smstestapp.communication.azure.com/availablePhoneNumbers/countries/US/offerings?phoneNumberType=tollFree\u0026assignmentType=application\u0026api-version=2022-12-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Accept-Language": "en-US",
         "Authorization": "Sanitized",
         "User-Agent": "azsdk-net-Communication.PhoneNumbers/1.2.0-alpha.20230620.1 (.NET 7.0.7; Microsoft Windows 10.0.22000)",
-        "x-ms-client-request-id": "3e88810a700d4db985db464876dddbe2",
+        "x-ms-client-request-id": "161f5ad42fa14527d07f58402f6880ea",
         "x-ms-content-sha256": "Sanitized",
-        "x-ms-date": "Tue, 20 Jun 2023 22:05:32 GMT",
+        "x-ms-date": "Tue, 20 Jun 2023 22:05:33 GMT",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -18,43 +18,17 @@
       "ResponseHeaders": {
         "api-supported-versions": "2021-03-07, 2022-12-01, 2022-12-02-preview2, 2023-05-01-preview",
         "Cache-Control": "max-age=21600, private, stale-while-revalidate=86400",
-        "Content-Length": "659",
+        "Content-Length": "256",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 20 Jun 2023 22:05:31 GMT",
-        "MS-CV": "mf47tQEV5Eql9rkrhn6BGA.0",
+        "Date": "Tue, 20 Jun 2023 22:05:32 GMT",
+        "MS-CV": "LPfeUG7Q10Gt56ILXgiJbA.0",
         "Strict-Transport-Security": "max-age=2592000",
-        "X-Azure-Ref": "0qyKSZAAAAAAGH9sbk6P/SoIdj6drEMM4V1NURURHRTAxMTUAOWZjN2I1MTktYThjYy00Zjg5LTkzNWUtYzkxNDhhZTA5ZTgx",
+        "X-Azure-Ref": "0rCKSZAAAAADF7nEffR49TZ79YocGjrOFV1NURURHRTAxMTUAOWZjN2I1MTktYThjYy00Zjg5LTkzNWUtYzkxNDhhZTA5ZTgx",
         "X-Cache": "CONFIG_NOCACHE",
-        "X-Processing-Time": "679ms"
+        "X-Processing-Time": "507ms"
       },
       "ResponseBody": {
         "phoneNumberOfferings": [
-          {
-            "phoneNumberType": "geographic",
-            "assignmentType": "person",
-            "availableCapabilities": {
-              "calling": "inbound\u002Boutbound",
-              "sms": "none"
-            },
-            "cost": {
-              "amount": 1.0,
-              "currencyCode": "USD",
-              "billingFrequency": "monthly"
-            }
-          },
-          {
-            "phoneNumberType": "geographic",
-            "assignmentType": "application",
-            "availableCapabilities": {
-              "calling": "inbound\u002Boutbound",
-              "sms": "none"
-            },
-            "cost": {
-              "amount": 1.0,
-              "currencyCode": "USD",
-              "billingFrequency": "monthly"
-            }
-          },
           {
             "phoneNumberType": "tollFree",
             "assignmentType": "application",
@@ -75,6 +49,6 @@
   ],
   "Variables": {
     "COMMUNICATION_LIVETEST_STATIC_CONNECTION_STRING": "endpoint=https://smstestapp.communication.azure.com/;accesskey=Kg==",
-    "RandomSeed": "1474426767"
+    "RandomSeed": "1600749573"
   }
 }

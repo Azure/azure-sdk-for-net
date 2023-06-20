@@ -5,36 +5,30 @@
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
+        "Accept-Language": "en-US",
         "Authorization": "Sanitized",
-        "User-Agent": "azsdk-net-Communication.PhoneNumbers/1.2.0-alpha.20230515.1 (.NET 7.0.5; Microsoft Windows 10.0.22621)",
-        "x-ms-client-request-id": "5f442a62b98e9ac50755a553b4177d30",
+        "User-Agent": "azsdk-net-Communication.PhoneNumbers/1.2.0-alpha.20230620.1 (.NET 7.0.7; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "83c50479db6b3eb1d36614d9c59b6c5a",
         "x-ms-content-sha256": "Sanitized",
-        "x-ms-date": "Mon, 15 May 2023 15:55:29 GMT",
+        "x-ms-date": "Tue, 20 Jun 2023 22:05:27 GMT",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "api-supported-versions": "2022-12-01, 2022-12-02-preview2",
+        "api-supported-versions": "2022-12-01, 2022-12-02-preview2, 2023-05-01-preview",
         "Cache-Control": "max-age=21600, private, stale-while-revalidate=86400",
-        "Content-Length": "10206",
+        "Content-Length": "10200",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 15 May 2023 15:55:30 GMT",
-        "MS-CV": "9XY4K\u002BxjakmFDvg92Z0qGQ.0",
+        "Date": "Tue, 20 Jun 2023 22:05:26 GMT",
+        "MS-CV": "83QMTy3FBE2av/yRoTSt2w.0",
         "Strict-Transport-Security": "max-age=2592000",
-        "X-Azure-Ref": "08lViZAAAAADzTNlhgaXoT4v1CZ8pVbGEU0FPMzFFREdFMTIxMgA5ZmM3YjUxOS1hOGNjLTRmODktOTM1ZS1jOTE0OGFlMDllODE=",
+        "X-Azure-Ref": "0piKSZAAAAAAybQ1i7/wfQr8kUTysxSmAV1NURURHRTAxMTUAOWZjN2I1MTktYThjYy00Zjg5LTkzNWUtYzkxNDhhZTA5ZTgx",
         "X-Cache": "CONFIG_NOCACHE",
-        "X-Processing-Time": "278ms"
+        "X-Processing-Time": "282ms"
       },
       "ResponseBody": {
         "phoneNumberLocalities": [
-          {
-            "localizedName": "Anchorage",
-            "administrativeDivision": {
-              "localizedName": "AK",
-              "abbreviatedName": "AK"
-            }
-          },
           {
             "localizedName": "Birmingham",
             "administrativeDivision": {
@@ -107,13 +101,6 @@
           },
           {
             "localizedName": "Concord",
-            "administrativeDivision": {
-              "localizedName": "CA",
-              "abbreviatedName": "CA"
-            }
-          },
-          {
-            "localizedName": "Escondido",
             "administrativeDivision": {
               "localizedName": "CA",
               "abbreviatedName": "CA"
@@ -323,13 +310,6 @@
             }
           },
           {
-            "localizedName": "St. Petersburg",
-            "administrativeDivision": {
-              "localizedName": "FL",
-              "abbreviatedName": "FL"
-            }
-          },
-          {
             "localizedName": "Tallahassee",
             "administrativeDivision": {
               "localizedName": "FL",
@@ -401,13 +381,6 @@
           },
           {
             "localizedName": "Davenport",
-            "administrativeDivision": {
-              "localizedName": "IA",
-              "abbreviatedName": "IA"
-            }
-          },
-          {
-            "localizedName": "Iowa City",
             "administrativeDivision": {
               "localizedName": "IA",
               "abbreviatedName": "IA"
@@ -727,41 +700,73 @@
               "localizedName": "MI",
               "abbreviatedName": "MI"
             }
+          },
+          {
+            "localizedName": "Sault Ste Marie",
+            "administrativeDivision": {
+              "localizedName": "MI",
+              "abbreviatedName": "MI"
+            }
+          },
+          {
+            "localizedName": "Troy",
+            "administrativeDivision": {
+              "localizedName": "MI",
+              "abbreviatedName": "MI"
+            }
+          },
+          {
+            "localizedName": "Warren",
+            "administrativeDivision": {
+              "localizedName": "MI",
+              "abbreviatedName": "MI"
+            }
+          },
+          {
+            "localizedName": "Alexandria",
+            "administrativeDivision": {
+              "localizedName": "MN",
+              "abbreviatedName": "MN"
+            }
           }
         ],
         "nextLink": "/availablePhoneNumbers/countries/US/localities?api-version=2022-12-01\u0026skip=100\u0026maxPageSize=100"
       }
     },
     {
-      "RequestUri": "https://smstestapp.communication.azure.com/availablePhoneNumbers/countries/US/areaCodes?phoneNumberType=geographic\u0026assignmentType=person\u0026locality=Anchorage\u0026administrativeDivision=AK\u0026api-version=2022-12-01",
+      "RequestUri": "https://smstestapp.communication.azure.com/availablePhoneNumbers/countries/US/areaCodes?phoneNumberType=geographic\u0026assignmentType=person\u0026locality=Birmingham\u0026administrativeDivision=AL\u0026api-version=2022-12-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
+        "Accept-Language": "en-US",
         "Authorization": "Sanitized",
-        "User-Agent": "azsdk-net-Communication.PhoneNumbers/1.2.0-alpha.20230515.1 (.NET 7.0.5; Microsoft Windows 10.0.22621)",
-        "x-ms-client-request-id": "ed27435af9ead536e8ae3e1968e85e09",
+        "User-Agent": "azsdk-net-Communication.PhoneNumbers/1.2.0-alpha.20230620.1 (.NET 7.0.7; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "db650e3160a9cdcece048da46acf62c2",
         "x-ms-content-sha256": "Sanitized",
-        "x-ms-date": "Mon, 15 May 2023 15:55:29 GMT",
+        "x-ms-date": "Tue, 20 Jun 2023 22:05:27 GMT",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "api-supported-versions": "2021-03-07, 2022-12-01, 2022-12-02-preview2",
+        "api-supported-versions": "2021-03-07, 2022-12-01, 2022-12-02-preview2, 2023-05-01-preview",
         "Cache-Control": "max-age=21600, private, stale-while-revalidate=86400",
-        "Content-Length": "50",
+        "Content-Length": "69",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 15 May 2023 15:55:32 GMT",
-        "MS-CV": "weHkk16t90ul9eFNdVKTkg.0",
+        "Date": "Tue, 20 Jun 2023 22:05:29 GMT",
+        "MS-CV": "pFBzOGUZK0OD9KcC1lPDiQ.0",
         "Strict-Transport-Security": "max-age=2592000",
-        "X-Azure-Ref": "081ViZAAAAACrUyMG5X1\u002BQ5Kt1sFBdE8jU0FPMzFFREdFMTIxMgA5ZmM3YjUxOS1hOGNjLTRmODktOTM1ZS1jOTE0OGFlMDllODE=",
+        "X-Azure-Ref": "0pyKSZAAAAADo9dLIin0fQJE0OApc6ubuV1NURURHRTAxMTUAOWZjN2I1MTktYThjYy00Zjg5LTkzNWUtYzkxNDhhZTA5ZTgx",
         "X-Cache": "CONFIG_NOCACHE",
-        "X-Processing-Time": "2065ms"
+        "X-Processing-Time": "3055ms"
       },
       "ResponseBody": {
         "areaCodes": [
           {
-            "areaCode": "907"
+            "areaCode": "205"
+          },
+          {
+            "areaCode": "659"
           }
         ],
         "nextLink": null
@@ -770,6 +775,6 @@
   ],
   "Variables": {
     "COMMUNICATION_LIVETEST_STATIC_CONNECTION_STRING": "endpoint=https://smstestapp.communication.azure.com/;accesskey=Kg==",
-    "RandomSeed": "1522722954"
+    "RandomSeed": "714767075"
   }
 }
