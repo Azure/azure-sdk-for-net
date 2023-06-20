@@ -229,7 +229,15 @@ namespace Azure.Core.Pipeline
                         linkTagsCollection.Add(tag.Key, tag.Value!);
                     }
 
-                    var context = ActivityContext.Parse(activity.ParentId!, activity.TraceStateString);
+                    ActivityContext context;
+                    if (_traceparent != null)
+                    {
+                        context = ActivityContext.Parse(_traceparent, _tracestate);
+                    }
+                    else
+                    {
+                        context = new ActivityContext();
+                    }
                     var link = new ActivityLink(context, linkTagsCollection);
                     linkCollection.Add(link);
                 }
@@ -350,7 +358,15 @@ namespace Azure.Core.Pipeline
 
             private Activity? StartActivitySourceActivity()
             {
-                var context = ActivityContext.Parse(_traceparent!, _tracestate);
+                ActivityContext context;
+                if (_traceparent != null)
+                {
+                    context = ActivityContext.Parse(_traceparent, _tracestate);
+                }
+                else
+                {
+                    context = new ActivityContext();
+                }
                 var activity = _activitySource.StartActivity(_activityName, _kind, context, _tagCollection, GetActivitySourceLinkCollection()!, _startTime);
                 return activity;
             }
