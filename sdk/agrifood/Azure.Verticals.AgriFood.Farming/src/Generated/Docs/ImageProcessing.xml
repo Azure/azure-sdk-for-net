@@ -8,7 +8,7 @@ This sample shows how to call GetRasterizeJobAsync with required parameters and 
 var credential = new DefaultAzureCredential();
 var client = new FarmBeatsClient(credential).GetImageProcessingClient("2022-11-01-preview");
 
-Response response = await client.GetRasterizeJobAsync("<jobId>", new RequestContext());
+Response response = await client.GetRasterizeJobAsync("<jobId>");
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("partyId").ToString());
@@ -38,7 +38,7 @@ This sample shows how to call GetRasterizeJob with required parameters and parse
 var credential = new DefaultAzureCredential();
 var client = new FarmBeatsClient(credential).GetImageProcessingClient("2022-11-01-preview");
 
-Response response = client.GetRasterizeJob("<jobId>", new RequestContext());
+Response response = client.GetRasterizeJob("<jobId>");
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("partyId").ToString());
@@ -102,7 +102,7 @@ var data = new {
     },
 };
 
-var operation = await client.CreateRasterizeJobAsync(WaitUntil.Completed, "<jobId>", RequestContent.Create(data), new RequestContext());
+var operation = await client.CreateRasterizeJobAsync(WaitUntil.Completed, "<jobId>", RequestContent.Create(data));
 
 BinaryData responseData = operation.Value;
 JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
@@ -167,7 +167,7 @@ var data = new {
     },
 };
 
-var operation = client.CreateRasterizeJob(WaitUntil.Completed, "<jobId>", RequestContent.Create(data), new RequestContext());
+var operation = client.CreateRasterizeJob(WaitUntil.Completed, "<jobId>", RequestContent.Create(data));
 
 BinaryData responseData = operation.Value;
 JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;

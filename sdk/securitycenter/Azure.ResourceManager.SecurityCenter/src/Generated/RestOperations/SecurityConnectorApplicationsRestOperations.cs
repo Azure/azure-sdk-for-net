@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.SecurityCenter
 
         /// <summary> Get a list of all relevant applications over a security connector level scope. </summary>
         /// <param name="subscriptionId"> Azure subscription ID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group within the user&apos;s subscription. The name is case insensitive. </param>
+        /// <param name="resourceGroupName"> The name of the resource group within the user's subscription. The name is case insensitive. </param>
         /// <param name="securityConnectorName"> The security connector name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="securityConnectorName"/> is null. </exception>
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.SecurityCenter
 
         /// <summary> Get a list of all relevant applications over a security connector level scope. </summary>
         /// <param name="subscriptionId"> Azure subscription ID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group within the user&apos;s subscription. The name is case insensitive. </param>
+        /// <param name="resourceGroupName"> The name of the resource group within the user's subscription. The name is case insensitive. </param>
         /// <param name="securityConnectorName"> The security connector name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="securityConnectorName"/> is null. </exception>
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.SecurityCenter
 
         /// <summary> Get a specific application for the requested scope by applicationId. </summary>
         /// <param name="subscriptionId"> Azure subscription ID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group within the user&apos;s subscription. The name is case insensitive. </param>
+        /// <param name="resourceGroupName"> The name of the resource group within the user's subscription. The name is case insensitive. </param>
         /// <param name="securityConnectorName"> The security connector name. </param>
         /// <param name="applicationId"> The security Application key - unique key for the standard application. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.SecurityCenter
 
         /// <summary> Get a specific application for the requested scope by applicationId. </summary>
         /// <param name="subscriptionId"> Azure subscription ID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group within the user&apos;s subscription. The name is case insensitive. </param>
+        /// <param name="resourceGroupName"> The name of the resource group within the user's subscription. The name is case insensitive. </param>
         /// <param name="securityConnectorName"> The security connector name. </param>
         /// <param name="applicationId"> The security Application key - unique key for the standard application. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -232,7 +232,7 @@ namespace Azure.ResourceManager.SecurityCenter
 
         /// <summary> Creates or update a security Application on the given security connector. </summary>
         /// <param name="subscriptionId"> Azure subscription ID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group within the user&apos;s subscription. The name is case insensitive. </param>
+        /// <param name="resourceGroupName"> The name of the resource group within the user's subscription. The name is case insensitive. </param>
         /// <param name="securityConnectorName"> The security connector name. </param>
         /// <param name="applicationId"> The security Application key - unique key for the standard application. </param>
         /// <param name="data"> Application over a subscription scope. </param>
@@ -266,7 +266,7 @@ namespace Azure.ResourceManager.SecurityCenter
 
         /// <summary> Creates or update a security Application on the given security connector. </summary>
         /// <param name="subscriptionId"> Azure subscription ID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group within the user&apos;s subscription. The name is case insensitive. </param>
+        /// <param name="resourceGroupName"> The name of the resource group within the user's subscription. The name is case insensitive. </param>
         /// <param name="securityConnectorName"> The security connector name. </param>
         /// <param name="applicationId"> The security Application key - unique key for the standard application. </param>
         /// <param name="data"> Application over a subscription scope. </param>
@@ -321,7 +321,7 @@ namespace Azure.ResourceManager.SecurityCenter
 
         /// <summary> Delete an Application over a given scope. </summary>
         /// <param name="subscriptionId"> Azure subscription ID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group within the user&apos;s subscription. The name is case insensitive. </param>
+        /// <param name="resourceGroupName"> The name of the resource group within the user's subscription. The name is case insensitive. </param>
         /// <param name="securityConnectorName"> The security connector name. </param>
         /// <param name="applicationId"> The security Application key - unique key for the standard application. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -348,7 +348,7 @@ namespace Azure.ResourceManager.SecurityCenter
 
         /// <summary> Delete an Application over a given scope. </summary>
         /// <param name="subscriptionId"> Azure subscription ID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group within the user&apos;s subscription. The name is case insensitive. </param>
+        /// <param name="resourceGroupName"> The name of the resource group within the user's subscription. The name is case insensitive. </param>
         /// <param name="securityConnectorName"> The security connector name. </param>
         /// <param name="applicationId"> The security Application key - unique key for the standard application. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -390,7 +390,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <summary> Get a list of all relevant applications over a security connector level scope. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> Azure subscription ID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group within the user&apos;s subscription. The name is case insensitive. </param>
+        /// <param name="resourceGroupName"> The name of the resource group within the user's subscription. The name is case insensitive. </param>
         /// <param name="securityConnectorName"> The security connector name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="securityConnectorName"/> is null. </exception>
@@ -421,7 +421,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <summary> Get a list of all relevant applications over a security connector level scope. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> Azure subscription ID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group within the user&apos;s subscription. The name is case insensitive. </param>
+        /// <param name="resourceGroupName"> The name of the resource group within the user's subscription. The name is case insensitive. </param>
         /// <param name="securityConnectorName"> The security connector name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="securityConnectorName"/> is null. </exception>

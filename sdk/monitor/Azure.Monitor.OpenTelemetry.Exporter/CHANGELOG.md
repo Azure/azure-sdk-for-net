@@ -1,5 +1,24 @@
 # Release History
 
+## 1.0.0-beta.13 (Unreleased)
+
+### Features Added
+
+* Added `ApplicationInsightsSampler` to the exporter, enabling users to customize the sampling rate using the `SamplingRatio` property.
+  ([#36972](https://github.com/Azure/azure-sdk-for-net/pull/36972))
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+* Update OpenTelemetry dependencies
+  ([#36859](https://github.com/Azure/azure-sdk-for-net/pull/36859))
+  - OpenTelemetry 1.5.0
+* Remove metric namespace mapping.
+  ([#36968](https://github.com/Azure/azure-sdk-for-net/pull/36968))
+
 ## 1.0.0-beta.12 (2023-06-06)
 
 ### Features Added

@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
         /// <param name="osName"> The Operating System running on the hybrid machine. </param>
         /// <param name="osVersion"> The version of Operating System running on the hybrid machine. </param>
         /// <param name="osType"> The type of Operating System (windows/linux). </param>
-        /// <param name="vmUuid"> Specifies the Arc Machine&apos;s unique SMBIOS ID. </param>
+        /// <param name="vmUuid"> Specifies the Arc Machine's unique SMBIOS ID. </param>
         /// <param name="osSku"> Specifies the Operating System product SKU. </param>
         /// <param name="domainName"> Specifies the Windows domain name. </param>
         /// <param name="adFqdn"> Specifies the AD fully qualified display name. </param>
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
         /// <summary> Initializes a new instance of MachineExtensionProperties. </summary>
         /// <param name="forceUpdateTag"> How the extension handler should be forced to update even if the extension configuration has not changed. </param>
         /// <param name="publisher"> The name of the extension handler publisher. </param>
-        /// <param name="machineExtensionPropertiesType"> Specifies the type of the extension; an example is &quot;CustomScriptExtension&quot;. </param>
+        /// <param name="machineExtensionPropertiesType"> Specifies the type of the extension; an example is "CustomScriptExtension". </param>
         /// <param name="typeHandlerVersion"> Specifies the version of the script handler. </param>
         /// <param name="enableAutomaticUpgrade"> Indicates whether the extension should be automatically upgraded by the platform if there is a newer version available. </param>
         /// <param name="autoUpgradeMinorVersion"> Indicates whether the extension should use a newer minor version if one is available at deployment time. Once deployed, however, the extension will not upgrade minor versions unless redeployed, even with this property set to true. </param>

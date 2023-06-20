@@ -8,14 +8,18 @@
 namespace Azure.Communication.CallAutomation
 {
     /// <summary> The UserConsent. </summary>
-    internal partial class UserConsent
+    public partial class UserConsent
     {
         /// <summary> Initializes a new instance of UserConsent. </summary>
         internal UserConsent()
         {
         }
 
-        /// <summary> Gets the recording. </summary>
-        public int? Recording { get; }
+        /// <summary> Initializes a new instance of UserConsent. </summary>
+        /// <param name="recording"></param>
+        internal UserConsent(int? recording)
+        {
+            Recording = recording;
+        }
     }
 }

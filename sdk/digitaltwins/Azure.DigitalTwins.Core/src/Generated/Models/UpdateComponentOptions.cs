@@ -14,7 +14,7 @@ namespace Azure.DigitalTwins.Core
         public UpdateComponentOptions()
         {
         }
-        /// <summary> Only perform the operation if the entity&apos;s etag matches one of the etags provided or * is provided. </summary>
+        /// <summary> Only perform the operation if the entity's etag matches one of the etags provided or * is provided. </summary>
         public string IfMatch { get; set; }
     }
 }

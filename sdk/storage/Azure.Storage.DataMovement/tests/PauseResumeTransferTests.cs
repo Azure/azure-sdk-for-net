@@ -155,15 +155,11 @@ namespace Azure.Storage.DataMovement.Tests
                 SourceResource ??= await CreateBlobSourceResourceAsync(size, GetNewBlobName(), sourceContainer);
                 DestinationResource ??= new LocalFileStorageResource(Path.Combine(localDirectory, GetNewBlobName()));
             }
-            else if (transferType == TransferType.SyncCopy || transferType == TransferType.AsyncCopy)
+            else if (transferType == TransferType.Copy)
             {
                 Argument.AssertNotNull(sourceContainer, nameof(sourceContainer));
                 Argument.AssertNotNull(destinationContainer, nameof(destinationContainer));
-                BlockBlobStorageResourceOptions options = new BlockBlobStorageResourceOptions()
-                {
-                    CopyMethod = transferType == TransferType.SyncCopy ? TransferCopyMethod.SyncCopy : TransferCopyMethod.AsyncCopy
-                };
-                SourceResource ??= await CreateBlobSourceResourceAsync(size, GetNewBlobName(), sourceContainer, options);
+                SourceResource ??= await CreateBlobSourceResourceAsync(size, GetNewBlobName(), sourceContainer);
                 DestinationResource ??= CreateBlobDestinationResource(destinationContainer);
             }
             else
@@ -180,7 +176,7 @@ namespace Azure.Storage.DataMovement.Tests
         /// <summary>
         /// Upload and verify the contents of the blob
         ///
-        /// By default in this function an event arguement will be added to the options event handler
+        /// By default in this function an event argument will be added to the options event handler
         /// to detect when the upload has finished.
         /// </summary>
         private async Task<DataTransfer> CreateSingleLongTransferAsync(
@@ -221,8 +217,7 @@ namespace Azure.Storage.DataMovement.Tests
         [RecordedTest]
         [TestCase(TransferType.Upload)]
         [TestCase(TransferType.Download)]
-        [TestCase(TransferType.AsyncCopy)]
-        [TestCase(TransferType.SyncCopy)]
+        [TestCase(TransferType.Copy)]
         public async Task TryPauseTransferAsync_Id(TransferType transferType)
         {
             // Arrange
@@ -270,8 +265,7 @@ namespace Azure.Storage.DataMovement.Tests
         [RecordedTest]
         [TestCase(TransferType.Upload)]
         [TestCase(TransferType.Download)]
-        [TestCase(TransferType.AsyncCopy)]
-        [TestCase(TransferType.SyncCopy)]
+        [TestCase(TransferType.Copy)]
         public async Task TryPauseTransferAsync_DataTransfer(TransferType transferType)
         {
             // Arrange
@@ -335,8 +329,7 @@ namespace Azure.Storage.DataMovement.Tests
         [RecordedTest]
         [TestCase(TransferType.Upload)]
         [TestCase(TransferType.Download)]
-        [TestCase(TransferType.AsyncCopy)]
-        [TestCase(TransferType.SyncCopy)]
+        [TestCase(TransferType.Copy)]
         public async Task TryPauseTransferAsync_AlreadyPaused(TransferType transferType)
         {
             // Arrange
@@ -389,8 +382,7 @@ namespace Azure.Storage.DataMovement.Tests
         [RecordedTest]
         [TestCase(TransferType.Upload)]
         [TestCase(TransferType.Download)]
-        [TestCase(TransferType.AsyncCopy)]
-        [TestCase(TransferType.SyncCopy)]
+        [TestCase(TransferType.Copy)]
         public async Task PauseThenResumeTransferAsync(TransferType transferType)
         {
             // Arrange
@@ -521,14 +513,13 @@ namespace Azure.Storage.DataMovement.Tests
                     container: sourceContainer);
                 DestinationResource ??= new LocalDirectoryStorageResourceContainer(destinationDirectoryPath);
             }
-            else if (transferType == TransferType.SyncCopy || transferType == TransferType.AsyncCopy)
+            else if (transferType == TransferType.Copy)
             {
                 Argument.AssertNotNull(sourceContainer, nameof(sourceContainer));
                 Argument.AssertNotNull(destinationContainer, nameof(destinationContainer));
                 BlobStorageResourceContainerOptions options = new BlobStorageResourceContainerOptions()
                 {
-                    CopyMethod = transferType == TransferType.SyncCopy ? TransferCopyMethod.SyncCopy : TransferCopyMethod.AsyncCopy,
-                    DirectoryPrefix = GetNewBlobDirectoryName()
+                    DirectoryPrefix = GetNewBlobDirectoryName(),
                 };
                 SourceResource ??= await CreateBlobDirectorySourceResourceAsync(
                     size: size,
@@ -559,7 +550,7 @@ namespace Azure.Storage.DataMovement.Tests
         /// <summary>
         /// Upload and verify the contents of the blob
         ///
-        /// By default in this function an event arguement will be added to the options event handler
+        /// By default in this function an event argument will be added to the options event handler
         /// to detect when the upload has finished.
         /// </summary>
         private async Task<DataTransfer> CreateDirectoryLongTransferAsync(
@@ -604,8 +595,7 @@ namespace Azure.Storage.DataMovement.Tests
         [RecordedTest]
         [TestCase(TransferType.Upload)]
         [TestCase(TransferType.Download)]
-        [TestCase(TransferType.AsyncCopy)]
-        [TestCase(TransferType.SyncCopy)]
+        [TestCase(TransferType.Copy)]
         public async Task TryPauseTransferAsync_Id_Directory(TransferType transferType)
         {
             // Arrange
@@ -650,8 +640,7 @@ namespace Azure.Storage.DataMovement.Tests
         [RecordedTest]
         [TestCase(TransferType.Upload)]
         [TestCase(TransferType.Download)]
-        [TestCase(TransferType.AsyncCopy)]
-        [TestCase(TransferType.SyncCopy)]
+        [TestCase(TransferType.Copy)]
         public async Task TryPauseTransferAsync_DataTransfer_Directory(TransferType transferType)
         {
             // Arrange
@@ -696,8 +685,7 @@ namespace Azure.Storage.DataMovement.Tests
         [RecordedTest]
         [TestCase(TransferType.Upload)]
         [TestCase(TransferType.Download)]
-        [TestCase(TransferType.AsyncCopy)]
-        [TestCase(TransferType.SyncCopy)]
+        [TestCase(TransferType.Copy)]
         public async Task TryPauseTransferAsync_AlreadyPaused_Directory(TransferType transferType)
         {
             // Arrange
@@ -748,8 +736,7 @@ namespace Azure.Storage.DataMovement.Tests
         [RecordedTest]
         [TestCase(TransferType.Upload)]
         [TestCase(TransferType.Download)]
-        [TestCase(TransferType.AsyncCopy)]
-        [TestCase(TransferType.SyncCopy)]
+        [TestCase(TransferType.Copy)]
         public async Task PauseThenResumeTransferAsync_Directory(TransferType transferType)
         {
             // Arrange

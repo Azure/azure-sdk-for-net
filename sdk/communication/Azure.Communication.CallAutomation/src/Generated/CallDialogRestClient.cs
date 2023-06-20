@@ -38,7 +38,7 @@ namespace Azure.Communication.CallAutomation
             _apiVersion = apiVersion ?? throw new ArgumentNullException(nameof(apiVersion));
         }
 
-        internal HttpMessage CreateStartDialogRequest(string callConnectionId, string dialogId, StartDialogRequest startDialogRequest)
+        internal HttpMessage CreateStartDialogRequest(string callConnectionId, string dialogId, StartDialogRequestInternal startDialogRequest)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -66,7 +66,7 @@ namespace Azure.Communication.CallAutomation
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/>, <paramref name="dialogId"/> or <paramref name="startDialogRequest"/> is null. </exception>
         /// <remarks> Start a dialog. </remarks>
-        public async Task<Response<DialogStateResponse>> StartDialogAsync(string callConnectionId, string dialogId, StartDialogRequest startDialogRequest, CancellationToken cancellationToken = default)
+        public async Task<Response<DialogStateResponseInternal>> StartDialogAsync(string callConnectionId, string dialogId, StartDialogRequestInternal startDialogRequest, CancellationToken cancellationToken = default)
         {
             if (callConnectionId == null)
             {
@@ -87,9 +87,9 @@ namespace Azure.Communication.CallAutomation
             {
                 case 201:
                     {
-                        DialogStateResponse value = default;
+                        DialogStateResponseInternal value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = DialogStateResponse.DeserializeDialogStateResponse(document.RootElement);
+                        value = DialogStateResponseInternal.DeserializeDialogStateResponseInternal(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -104,7 +104,7 @@ namespace Azure.Communication.CallAutomation
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/>, <paramref name="dialogId"/> or <paramref name="startDialogRequest"/> is null. </exception>
         /// <remarks> Start a dialog. </remarks>
-        public Response<DialogStateResponse> StartDialog(string callConnectionId, string dialogId, StartDialogRequest startDialogRequest, CancellationToken cancellationToken = default)
+        public Response<DialogStateResponseInternal> StartDialog(string callConnectionId, string dialogId, StartDialogRequestInternal startDialogRequest, CancellationToken cancellationToken = default)
         {
             if (callConnectionId == null)
             {
@@ -125,9 +125,9 @@ namespace Azure.Communication.CallAutomation
             {
                 case 201:
                     {
-                        DialogStateResponse value = default;
+                        DialogStateResponseInternal value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = DialogStateResponse.DeserializeDialogStateResponse(document.RootElement);
+                        value = DialogStateResponseInternal.DeserializeDialogStateResponseInternal(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

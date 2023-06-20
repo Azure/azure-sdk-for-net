@@ -28,10 +28,10 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="additionalProperties"> Additional Properties. </param>
         /// <param name="allowedGroups"> The groups containing all the users. Type: array of strings (or Expression with resultType array of strings). </param>
         /// <param name="userScopeFilterUri"> The user scope uri. Type: string (or Expression with resultType string). </param>
-        /// <param name="dateFilterColumn"> The Column to apply the &lt;paramref name=&quot;StartTime&quot;/&gt; and &lt;paramref name=&quot;EndTime&quot;/&gt;. Type: string (or Expression with resultType string). </param>
+        /// <param name="dateFilterColumn"> The Column to apply the &lt;paramref name="StartTime"/&gt; and &lt;paramref name="EndTime"/&gt;. Type: string (or Expression with resultType string). </param>
         /// <param name="startOn"> Start time of the requested range for this dataset. Type: string (or Expression with resultType string). </param>
         /// <param name="endOn"> End time of the requested range for this dataset. Type: string (or Expression with resultType string). </param>
-        /// <param name="outputColumns"> The columns to be read out from the Office 365 table. Type: array of objects (or Expression with resultType array of objects). Example: [ { &quot;name&quot;: &quot;Id&quot; }, { &quot;name&quot;: &quot;CreatedDateTime&quot; } ]. </param>
+        /// <param name="outputColumns"> The columns to be read out from the Office 365 table. Type: array of objects (or Expression with resultType array of objects). Example: [ { "name": "Id" }, { "name": "CreatedDateTime" } ]. </param>
         internal Office365Source(string copySourceType, BinaryData sourceRetryCount, BinaryData sourceRetryWait, BinaryData maxConcurrentConnections, BinaryData disableMetricsCollection, IDictionary<string, BinaryData> additionalProperties, BinaryData allowedGroups, BinaryData userScopeFilterUri, BinaryData dateFilterColumn, BinaryData startOn, BinaryData endOn, BinaryData outputColumns) : base(copySourceType, sourceRetryCount, sourceRetryWait, maxConcurrentConnections, disableMetricsCollection, additionalProperties)
         {
             AllowedGroups = allowedGroups;
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </summary>
         public BinaryData UserScopeFilterUri { get; set; }
         /// <summary>
-        /// The Column to apply the &lt;paramref name=&quot;StartTime&quot;/&gt; and &lt;paramref name=&quot;EndTime&quot;/&gt;. Type: string (or Expression with resultType string).
+        /// The Column to apply the &lt;paramref name="StartTime"/&gt; and &lt;paramref name="EndTime"/&gt;. Type: string (or Expression with resultType string).
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </summary>
         public BinaryData EndOn { get; set; }
         /// <summary>
-        /// The columns to be read out from the Office 365 table. Type: array of objects (or Expression with resultType array of objects). Example: [ { &quot;name&quot;: &quot;Id&quot; }, { &quot;name&quot;: &quot;CreatedDateTime&quot; } ]
+        /// The columns to be read out from the Office 365 table. Type: array of objects (or Expression with resultType array of objects). Example: [ { "name": "Id" }, { "name": "CreatedDateTime" } ]
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>

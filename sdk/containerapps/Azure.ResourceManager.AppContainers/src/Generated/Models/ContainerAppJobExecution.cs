@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// <param name="status"> Current running State of the job. </param>
         /// <param name="startOn"> Job execution start time. </param>
         /// <param name="endOn"> Job execution start time. </param>
-        /// <param name="template"> Job&apos;s execution container. </param>
+        /// <param name="template"> Job's execution container. </param>
         internal ContainerAppJobExecution(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, JobExecutionRunningState? status, DateTimeOffset? startOn, DateTimeOffset? endOn, ContainerAppJobExecutionTemplate template) : base(id, name, resourceType, systemData)
         {
             Status = status;
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.AppContainers.Models
         public DateTimeOffset? StartOn { get; }
         /// <summary> Job execution start time. </summary>
         public DateTimeOffset? EndOn { get; }
-        /// <summary> Job&apos;s execution container. </summary>
+        /// <summary> Job's execution container. </summary>
         public ContainerAppJobExecutionTemplate Template { get; }
     }
 }

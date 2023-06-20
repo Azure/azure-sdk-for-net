@@ -18,8 +18,8 @@ namespace Azure.AI.TextAnalytics.Models
         /// <summary> Initializes a new instance of HealthcareEntityInternal. </summary>
         /// <param name="text"> Entity text as appears in the request. </param>
         /// <param name="category"> Healthcare Entity Category. </param>
-        /// <param name="offset"> Start position for the entity text. Use of different &apos;stringIndexType&apos; values can affect the offset returned. </param>
-        /// <param name="length"> Length for the entity text. Use of different &apos;stringIndexType&apos; values can affect the length returned. </param>
+        /// <param name="offset"> Start position for the entity text. Use of different 'stringIndexType' values can affect the offset returned. </param>
+        /// <param name="length"> Length for the entity text. Use of different 'stringIndexType' values can affect the length returned. </param>
         /// <param name="confidenceScore"> Confidence score between 0 and 1 of the extracted entity. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="text"/> is null. </exception>
         public HealthcareEntityInternal(string text, HealthcareEntityCategory category, int offset, int length, double confidenceScore)
@@ -38,11 +38,11 @@ namespace Azure.AI.TextAnalytics.Models
         /// <param name="text"> Entity text as appears in the request. </param>
         /// <param name="category"> Healthcare Entity Category. </param>
         /// <param name="subcategory"> (Optional) Entity sub type. </param>
-        /// <param name="offset"> Start position for the entity text. Use of different &apos;stringIndexType&apos; values can affect the offset returned. </param>
-        /// <param name="length"> Length for the entity text. Use of different &apos;stringIndexType&apos; values can affect the length returned. </param>
+        /// <param name="offset"> Start position for the entity text. Use of different 'stringIndexType' values can affect the offset returned. </param>
+        /// <param name="length"> Length for the entity text. Use of different 'stringIndexType' values can affect the length returned. </param>
         /// <param name="confidenceScore"> Confidence score between 0 and 1 of the extracted entity. </param>
         /// <param name="assertion"></param>
-        /// <param name="name"> Preferred name for the entity. Example: &apos;histologically&apos; would have a &apos;name&apos; of &apos;histologic&apos;. </param>
+        /// <param name="name"> Preferred name for the entity. Example: 'histologically' would have a 'name' of 'histologic'. </param>
         /// <param name="links"> Entity references in known data sources. </param>
         internal HealthcareEntityInternal(string text, HealthcareEntityCategory category, string subcategory, int offset, int length, double confidenceScore, HealthcareEntityAssertion assertion, string name, IList<EntityDataSource> links)
         {
@@ -63,15 +63,15 @@ namespace Azure.AI.TextAnalytics.Models
         public HealthcareEntityCategory Category { get; set; }
         /// <summary> (Optional) Entity sub type. </summary>
         public string Subcategory { get; set; }
-        /// <summary> Start position for the entity text. Use of different &apos;stringIndexType&apos; values can affect the offset returned. </summary>
+        /// <summary> Start position for the entity text. Use of different 'stringIndexType' values can affect the offset returned. </summary>
         public int Offset { get; set; }
-        /// <summary> Length for the entity text. Use of different &apos;stringIndexType&apos; values can affect the length returned. </summary>
+        /// <summary> Length for the entity text. Use of different 'stringIndexType' values can affect the length returned. </summary>
         public int Length { get; set; }
         /// <summary> Confidence score between 0 and 1 of the extracted entity. </summary>
         public double ConfidenceScore { get; set; }
         /// <summary> Gets or sets the assertion. </summary>
         public HealthcareEntityAssertion Assertion { get; set; }
-        /// <summary> Preferred name for the entity. Example: &apos;histologically&apos; would have a &apos;name&apos; of &apos;histologic&apos;. </summary>
+        /// <summary> Preferred name for the entity. Example: 'histologically' would have a 'name' of 'histologic'. </summary>
         public string Name { get; set; }
         /// <summary> Entity references in known data sources. </summary>
         public IList<EntityDataSource> Links { get; }

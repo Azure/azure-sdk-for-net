@@ -84,7 +84,7 @@ namespace Azure.Communication.CallingServer
 
         [Test]
         /// This test tries to get a US stored document id from EU endpoint.
-        /// The backend server will redirect (respond with a 301) the request to a US endpoint
+        /// The backend server will redirect (respond with a 302) the request to a US endpoint
         /// and the SDK should be able to make the new request with no error.
         public async Task DownloadMetadataWithRedirection()
         {
