@@ -30,11 +30,11 @@ Operation<BinaryData> exportOperation = client.ExportProject(WaitUntil.Completed
 
 // Get the resultUrl from the response, which contains the exported project.
 dynamic result = exportOperation.Value.ToDynamicFromJson();
-string resultUrl = result.resultUrl;
+Uri resultUrl = result.resultUrl;
 
 // Use the client pipeline to create and send a request to download the raw URL.
 RequestUriBuilder builder = new RequestUriBuilder();
-builder.Reset(new Uri(resultUrl));
+builder.Reset(resultUrl);
 
 Request request = client.Pipeline.CreateRequest();
 request.Method = RequestMethod.Get;
@@ -55,11 +55,11 @@ Operation<BinaryData> exportOperation = await client.ExportProjectAsync(WaitUnti
 
 // Get the resultUrl from the response, which contains the exported project.
 dynamic result = exportOperation.Value.ToDynamicFromJson();
-string resultUrl = result.resultUrl;
+Uri resultUrl = result.resultUrl;
 
 // Use the client pipeline to create and send a request to download the raw URL.
 RequestUriBuilder builder = new RequestUriBuilder();
-builder.Reset(new Uri(resultUrl));
+builder.Reset(resultUrl);
 
 Request request = client.Pipeline.CreateRequest();
 request.Method = RequestMethod.Get;

@@ -170,10 +170,8 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
             Console.WriteLine("Import complete");
             #endregion
 
-            // TODO: Delete this line and uncomment the next when https://github.com/Azure/azure-sdk-for-net/issues/29140 is resolved.
-            using JsonDocument doc = await JsonDocument.ParseAsync(deployOperation.Value.ToStream());
-            // using JsonDocument doc = JsonDocument.Parse(deployOperation.Value);
-            Assert.False(doc.RootElement.TryGetProperty("errors", out JsonElement errors) && errors.ValueKind == JsonValueKind.Array && errors.GetArrayLength() > 0);
+            dynamic deployResult = deployOperation.Value.ToDynamicFromJson();
+            Assert.That(deployResult.Errors, Is.Null.Or.Empty);
         }
 
         [AsyncOnly]
@@ -294,10 +292,10 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
             Operation<BinaryData> deployOperation = await client.DeployProjectAsync(WaitUntil.Completed, projectName, "production", RequestContent.Create(deployData));
 
             Console.WriteLine("Import complete");
-#endregion
+            #endregion
 
-            using JsonDocument doc = JsonDocument.Parse(deployOperation.Value);
-            Assert.False(doc.RootElement.TryGetProperty("errors", out JsonElement errors) && errors.ValueKind == JsonValueKind.Array && errors.GetArrayLength() > 0);
+            dynamic deployResult = deployOperation.Value.ToDynamicFromJson();
+            Assert.That(deployResult.Errors, Is.Null.Or.Empty);
         }
 
         public override async Task StopTestRecordingAsync()

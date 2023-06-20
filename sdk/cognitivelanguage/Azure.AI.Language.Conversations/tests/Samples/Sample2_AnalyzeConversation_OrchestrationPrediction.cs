@@ -381,8 +381,8 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
                 Console.WriteLine($"LUIS Response: {luisResponse}");
             }
 
-            Assert.That(targetIntentResult.GetProperty("targetProjectKind").GetString(), Is.EqualTo("Luis"));
-            Assert.That(orchestrationPrediction.GetProperty("topIntent").GetString(), Is.EqualTo("RestaurantIntent"));
+            Assert.That(targetIntentResult.targetProjectKind?.ToString(), Is.EqualTo("Luis"));
+            Assert.That(orchestrationPrediction.TopIntent?.ToString(), Is.EqualTo("RestaurantIntent"));
         }
     }
 }
