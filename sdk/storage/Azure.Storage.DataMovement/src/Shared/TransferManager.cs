@@ -10,6 +10,7 @@ using System.Threading;
 using System.Threading.Channels;
 using System.Threading.Tasks;
 using Azure.Core;
+using Azure.Core.Pipeline;
 using Azure.Storage.DataMovement.Models;
 using Azure.Storage.DataMovement.Models.JobPlan;
 
@@ -89,6 +90,12 @@ namespace Azure.Storage.DataMovement
         private ArrayPool<byte> _arrayPool;
 
         /// <summary>
+        /// Diagnostics for the transfer manager.
+        /// </summary>
+        private ClientDiagnostics _diagnostics;
+        private DiagnosticScope _diagnosticScope;
+
+        /// <summary>
         /// Protected constructor for mocking.
         /// </summary>
         protected TransferManager()
@@ -126,6 +133,8 @@ namespace Azure.Storage.DataMovement
             _dataTransfers = new Dictionary<string, DataTransfer>();
             _arrayPool = ArrayPool<byte>.Shared;
             _errorHandling = options?.ErrorHandling != default ? options.ErrorHandling : ErrorHandlingOptions.StopOnAllFailures;
+            _diagnostics = new ClientDiagnostics(options?.ClientOptions ?? new TransferManagerOptions.TransferManagerClientOptions());
+            _diagnosticScope = _diagnostics.CreateScope(typeof(TransferManager).FullName);
         }
 
         #region Job Channel Management
@@ -742,6 +751,7 @@ namespace Azure.Storage.DataMovement
             {
                 _channelCancellationTokenSource.Cancel();
             }
+            _diagnosticScope.Dispose();
             GC.SuppressFinalize(this);
             return default;
         }

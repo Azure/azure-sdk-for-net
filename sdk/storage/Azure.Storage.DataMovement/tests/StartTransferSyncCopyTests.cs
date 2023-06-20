@@ -245,9 +245,7 @@ namespace Azure.Storage.DataMovement.Tests
                 waitTimeInSec: waitTimeInSec).ConfigureAwait(false);
         }
 
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/33003")]
-        [Test]
-        [LiveOnly]
+        [RecordedTest]
         [TestCase(2, 0, 30)]
         [TestCase(6, 0, 30)]
         [TestCase(2, 100, 30)]

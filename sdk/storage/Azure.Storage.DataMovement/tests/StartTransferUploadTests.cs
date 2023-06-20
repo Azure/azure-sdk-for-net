@@ -455,9 +455,7 @@ namespace Azure.Storage.DataMovement.Tests
                 transferManagerOptions: managerOptions);
         }
 
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/33003")]
-        [Test]
-        [LiveOnly]
+        [RecordedTest]
         [TestCase(2, 0, 30)]
         [TestCase(2, Constants.KB, 30)]
         [TestCase(6, Constants.KB, 30)]
@@ -853,9 +851,7 @@ namespace Azure.Storage.DataMovement.Tests
                 container: testContainer.Container);
         }
 
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/33003")]
-        [Test]
-        [LiveOnly]
+        [RecordedTest]
         [TestCase(2, Constants.KB, 10)]
         [TestCase(6, Constants.KB, 10)]
         [TestCase(2, 2 * Constants.KB, 10)]
@@ -1298,9 +1294,7 @@ namespace Azure.Storage.DataMovement.Tests
                 transferManagerOptions: managerOptions);
         }
 
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/33003")]
-        [Test]
-        [LiveOnly]
+        [RecordedTest]
         [TestCase(2, 0, 30)]
         [TestCase(6, 0, 30)]
         [TestCase(2, Constants.KB, 30)]
