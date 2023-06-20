@@ -7,6 +7,7 @@
 ### Breaking Changes
 
 ### Bugs Fixed
+- Fixed an issue with `TokenCachePersistenceOptions` where credentials in the same process would share the same cache, even if they had different configured names.
 
 ### Other Changes
 - All developer credentials in the `DefaultAzureCredential` credential chain will fall through to the next credential in the chain on any failure. Previously, some exceptions would throw `AuthenticationFailedException`, which stops further progress in the chain.
