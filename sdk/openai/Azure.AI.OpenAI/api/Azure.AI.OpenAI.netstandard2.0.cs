@@ -193,7 +193,7 @@ namespace Azure.AI.OpenAI
     public partial class StreamingChatChoice
     {
         internal StreamingChatChoice() { }
-        public Azure.AI.OpenAI.CompletionsFinishReason? FinishReason { get { throw null; } }
+        public Azure.AI.OpenAI.CompletionsFinishReason FinishReason { get { throw null; } }
         public int? Index { get { throw null; } }
         public System.Collections.Generic.IAsyncEnumerable<Azure.AI.OpenAI.ChatMessage> GetMessageStreaming([System.Runtime.CompilerServices.EnumeratorCancellationAttribute] System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
