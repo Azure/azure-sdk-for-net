@@ -12,6 +12,7 @@ using System.Text.Json;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
+using Azure.Developer.LoadTesting.Models;
 using Azure.Identity;
 using NUnit.Framework;
 
@@ -19,738 +20,6 @@ namespace Azure.Developer.LoadTesting.Samples
 {
     public class Samples_LoadTestRunClient
     {
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public void Example_GetTestRun()
-        {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new LoadTestRunClient(endpoint, credential);
-
-            Response response = client.GetTestRun("<testRunId>");
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public void Example_GetTestRun_AllParameters()
-        {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new LoadTestRunClient(endpoint, credential);
-
-            Response response = client.GetTestRun("<testRunId>", new RequestContext());
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<test>").GetProperty("clientMetric").ToString());
-            Console.WriteLine(result.GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<test>").GetProperty("aggregate").ToString());
-            Console.WriteLine(result.GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<test>").GetProperty("condition").ToString());
-            Console.WriteLine(result.GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<test>").GetProperty("requestName").ToString());
-            Console.WriteLine(result.GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<test>").GetProperty("value").ToString());
-            Console.WriteLine(result.GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<test>").GetProperty("action").ToString());
-            Console.WriteLine(result.GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<test>").GetProperty("actualValue").ToString());
-            Console.WriteLine(result.GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<test>").GetProperty("result").ToString());
-            Console.WriteLine(result.GetProperty("secrets").GetProperty("<test>").GetProperty("value").ToString());
-            Console.WriteLine(result.GetProperty("secrets").GetProperty("<test>").GetProperty("type").ToString());
-            Console.WriteLine(result.GetProperty("certificate").GetProperty("value").ToString());
-            Console.WriteLine(result.GetProperty("certificate").GetProperty("type").ToString());
-            Console.WriteLine(result.GetProperty("certificate").GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("environmentVariables").GetProperty("<test>").ToString());
-            Console.WriteLine(result.GetProperty("errorDetails")[0].GetProperty("message").ToString());
-            Console.WriteLine(result.GetProperty("testRunStatistics").GetProperty("<test>").GetProperty("transaction").ToString());
-            Console.WriteLine(result.GetProperty("testRunStatistics").GetProperty("<test>").GetProperty("sampleCount").ToString());
-            Console.WriteLine(result.GetProperty("testRunStatistics").GetProperty("<test>").GetProperty("errorCount").ToString());
-            Console.WriteLine(result.GetProperty("testRunStatistics").GetProperty("<test>").GetProperty("errorPct").ToString());
-            Console.WriteLine(result.GetProperty("testRunStatistics").GetProperty("<test>").GetProperty("meanResTime").ToString());
-            Console.WriteLine(result.GetProperty("testRunStatistics").GetProperty("<test>").GetProperty("medianResTime").ToString());
-            Console.WriteLine(result.GetProperty("testRunStatistics").GetProperty("<test>").GetProperty("maxResTime").ToString());
-            Console.WriteLine(result.GetProperty("testRunStatistics").GetProperty("<test>").GetProperty("minResTime").ToString());
-            Console.WriteLine(result.GetProperty("testRunStatistics").GetProperty("<test>").GetProperty("pct1ResTime").ToString());
-            Console.WriteLine(result.GetProperty("testRunStatistics").GetProperty("<test>").GetProperty("pct2ResTime").ToString());
-            Console.WriteLine(result.GetProperty("testRunStatistics").GetProperty("<test>").GetProperty("pct3ResTime").ToString());
-            Console.WriteLine(result.GetProperty("testRunStatistics").GetProperty("<test>").GetProperty("throughput").ToString());
-            Console.WriteLine(result.GetProperty("testRunStatistics").GetProperty("<test>").GetProperty("receivedKBytesPerSec").ToString());
-            Console.WriteLine(result.GetProperty("testRunStatistics").GetProperty("<test>").GetProperty("sentKBytesPerSec").ToString());
-            Console.WriteLine(result.GetProperty("loadTestConfiguration").GetProperty("engineInstances").ToString());
-            Console.WriteLine(result.GetProperty("loadTestConfiguration").GetProperty("splitAllCSVs").ToString());
-            Console.WriteLine(result.GetProperty("loadTestConfiguration").GetProperty("quickStartTest").ToString());
-            Console.WriteLine(result.GetProperty("loadTestConfiguration").GetProperty("optionalLoadTestConfig").GetProperty("endpointUrl").ToString());
-            Console.WriteLine(result.GetProperty("loadTestConfiguration").GetProperty("optionalLoadTestConfig").GetProperty("virtualUsers").ToString());
-            Console.WriteLine(result.GetProperty("loadTestConfiguration").GetProperty("optionalLoadTestConfig").GetProperty("rampUpTime").ToString());
-            Console.WriteLine(result.GetProperty("loadTestConfiguration").GetProperty("optionalLoadTestConfig").GetProperty("duration").ToString());
-            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("configFileInfo").GetProperty("url").ToString());
-            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("configFileInfo").GetProperty("fileName").ToString());
-            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("configFileInfo").GetProperty("fileType").ToString());
-            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("configFileInfo").GetProperty("expireDateTime").ToString());
-            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("configFileInfo").GetProperty("validationStatus").ToString());
-            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("configFileInfo").GetProperty("validationFailureDetails").ToString());
-            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("testScriptFileInfo").GetProperty("url").ToString());
-            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("testScriptFileInfo").GetProperty("fileName").ToString());
-            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("testScriptFileInfo").GetProperty("fileType").ToString());
-            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("testScriptFileInfo").GetProperty("expireDateTime").ToString());
-            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("testScriptFileInfo").GetProperty("validationStatus").ToString());
-            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("testScriptFileInfo").GetProperty("validationFailureDetails").ToString());
-            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("userPropFileInfo").GetProperty("url").ToString());
-            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("userPropFileInfo").GetProperty("fileName").ToString());
-            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("userPropFileInfo").GetProperty("fileType").ToString());
-            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("userPropFileInfo").GetProperty("expireDateTime").ToString());
-            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("userPropFileInfo").GetProperty("validationStatus").ToString());
-            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("userPropFileInfo").GetProperty("validationFailureDetails").ToString());
-            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("inputArtifactsZipFileInfo").GetProperty("url").ToString());
-            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("inputArtifactsZipFileInfo").GetProperty("fileName").ToString());
-            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("inputArtifactsZipFileInfo").GetProperty("fileType").ToString());
-            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("inputArtifactsZipFileInfo").GetProperty("expireDateTime").ToString());
-            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("inputArtifactsZipFileInfo").GetProperty("validationStatus").ToString());
-            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("inputArtifactsZipFileInfo").GetProperty("validationFailureDetails").ToString());
-            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("additionalFileInfo")[0].GetProperty("url").ToString());
-            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("additionalFileInfo")[0].GetProperty("fileName").ToString());
-            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("additionalFileInfo")[0].GetProperty("fileType").ToString());
-            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("additionalFileInfo")[0].GetProperty("expireDateTime").ToString());
-            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("additionalFileInfo")[0].GetProperty("validationStatus").ToString());
-            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("additionalFileInfo")[0].GetProperty("validationFailureDetails").ToString());
-            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("outputArtifacts").GetProperty("resultFileInfo").GetProperty("url").ToString());
-            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("outputArtifacts").GetProperty("resultFileInfo").GetProperty("fileName").ToString());
-            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("outputArtifacts").GetProperty("resultFileInfo").GetProperty("fileType").ToString());
-            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("outputArtifacts").GetProperty("resultFileInfo").GetProperty("expireDateTime").ToString());
-            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("outputArtifacts").GetProperty("resultFileInfo").GetProperty("validationStatus").ToString());
-            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("outputArtifacts").GetProperty("resultFileInfo").GetProperty("validationFailureDetails").ToString());
-            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("outputArtifacts").GetProperty("logsFileInfo").GetProperty("url").ToString());
-            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("outputArtifacts").GetProperty("logsFileInfo").GetProperty("fileName").ToString());
-            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("outputArtifacts").GetProperty("logsFileInfo").GetProperty("fileType").ToString());
-            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("outputArtifacts").GetProperty("logsFileInfo").GetProperty("expireDateTime").ToString());
-            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("outputArtifacts").GetProperty("logsFileInfo").GetProperty("validationStatus").ToString());
-            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("outputArtifacts").GetProperty("logsFileInfo").GetProperty("validationFailureDetails").ToString());
-            Console.WriteLine(result.GetProperty("testResult").ToString());
-            Console.WriteLine(result.GetProperty("virtualUsers").ToString());
-            Console.WriteLine(result.GetProperty("testRunId").ToString());
-            Console.WriteLine(result.GetProperty("displayName").ToString());
-            Console.WriteLine(result.GetProperty("testId").ToString());
-            Console.WriteLine(result.GetProperty("description").ToString());
-            Console.WriteLine(result.GetProperty("status").ToString());
-            Console.WriteLine(result.GetProperty("startDateTime").ToString());
-            Console.WriteLine(result.GetProperty("endDateTime").ToString());
-            Console.WriteLine(result.GetProperty("executedDateTime").ToString());
-            Console.WriteLine(result.GetProperty("portalUrl").ToString());
-            Console.WriteLine(result.GetProperty("duration").ToString());
-            Console.WriteLine(result.GetProperty("subnetId").ToString());
-            Console.WriteLine(result.GetProperty("createdDateTime").ToString());
-            Console.WriteLine(result.GetProperty("createdBy").ToString());
-            Console.WriteLine(result.GetProperty("lastModifiedDateTime").ToString());
-            Console.WriteLine(result.GetProperty("lastModifiedBy").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetTestRun_Async()
-        {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new LoadTestRunClient(endpoint, credential);
-
-            Response response = await client.GetTestRunAsync("<testRunId>");
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetTestRun_AllParameters_Async()
-        {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new LoadTestRunClient(endpoint, credential);
-
-            Response response = await client.GetTestRunAsync("<testRunId>", new RequestContext());
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<test>").GetProperty("clientMetric").ToString());
-            Console.WriteLine(result.GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<test>").GetProperty("aggregate").ToString());
-            Console.WriteLine(result.GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<test>").GetProperty("condition").ToString());
-            Console.WriteLine(result.GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<test>").GetProperty("requestName").ToString());
-            Console.WriteLine(result.GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<test>").GetProperty("value").ToString());
-            Console.WriteLine(result.GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<test>").GetProperty("action").ToString());
-            Console.WriteLine(result.GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<test>").GetProperty("actualValue").ToString());
-            Console.WriteLine(result.GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<test>").GetProperty("result").ToString());
-            Console.WriteLine(result.GetProperty("secrets").GetProperty("<test>").GetProperty("value").ToString());
-            Console.WriteLine(result.GetProperty("secrets").GetProperty("<test>").GetProperty("type").ToString());
-            Console.WriteLine(result.GetProperty("certificate").GetProperty("value").ToString());
-            Console.WriteLine(result.GetProperty("certificate").GetProperty("type").ToString());
-            Console.WriteLine(result.GetProperty("certificate").GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("environmentVariables").GetProperty("<test>").ToString());
-            Console.WriteLine(result.GetProperty("errorDetails")[0].GetProperty("message").ToString());
-            Console.WriteLine(result.GetProperty("testRunStatistics").GetProperty("<test>").GetProperty("transaction").ToString());
-            Console.WriteLine(result.GetProperty("testRunStatistics").GetProperty("<test>").GetProperty("sampleCount").ToString());
-            Console.WriteLine(result.GetProperty("testRunStatistics").GetProperty("<test>").GetProperty("errorCount").ToString());
-            Console.WriteLine(result.GetProperty("testRunStatistics").GetProperty("<test>").GetProperty("errorPct").ToString());
-            Console.WriteLine(result.GetProperty("testRunStatistics").GetProperty("<test>").GetProperty("meanResTime").ToString());
-            Console.WriteLine(result.GetProperty("testRunStatistics").GetProperty("<test>").GetProperty("medianResTime").ToString());
-            Console.WriteLine(result.GetProperty("testRunStatistics").GetProperty("<test>").GetProperty("maxResTime").ToString());
-            Console.WriteLine(result.GetProperty("testRunStatistics").GetProperty("<test>").GetProperty("minResTime").ToString());
-            Console.WriteLine(result.GetProperty("testRunStatistics").GetProperty("<test>").GetProperty("pct1ResTime").ToString());
-            Console.WriteLine(result.GetProperty("testRunStatistics").GetProperty("<test>").GetProperty("pct2ResTime").ToString());
-            Console.WriteLine(result.GetProperty("testRunStatistics").GetProperty("<test>").GetProperty("pct3ResTime").ToString());
-            Console.WriteLine(result.GetProperty("testRunStatistics").GetProperty("<test>").GetProperty("throughput").ToString());
-            Console.WriteLine(result.GetProperty("testRunStatistics").GetProperty("<test>").GetProperty("receivedKBytesPerSec").ToString());
-            Console.WriteLine(result.GetProperty("testRunStatistics").GetProperty("<test>").GetProperty("sentKBytesPerSec").ToString());
-            Console.WriteLine(result.GetProperty("loadTestConfiguration").GetProperty("engineInstances").ToString());
-            Console.WriteLine(result.GetProperty("loadTestConfiguration").GetProperty("splitAllCSVs").ToString());
-            Console.WriteLine(result.GetProperty("loadTestConfiguration").GetProperty("quickStartTest").ToString());
-            Console.WriteLine(result.GetProperty("loadTestConfiguration").GetProperty("optionalLoadTestConfig").GetProperty("endpointUrl").ToString());
-            Console.WriteLine(result.GetProperty("loadTestConfiguration").GetProperty("optionalLoadTestConfig").GetProperty("virtualUsers").ToString());
-            Console.WriteLine(result.GetProperty("loadTestConfiguration").GetProperty("optionalLoadTestConfig").GetProperty("rampUpTime").ToString());
-            Console.WriteLine(result.GetProperty("loadTestConfiguration").GetProperty("optionalLoadTestConfig").GetProperty("duration").ToString());
-            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("configFileInfo").GetProperty("url").ToString());
-            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("configFileInfo").GetProperty("fileName").ToString());
-            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("configFileInfo").GetProperty("fileType").ToString());
-            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("configFileInfo").GetProperty("expireDateTime").ToString());
-            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("configFileInfo").GetProperty("validationStatus").ToString());
-            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("configFileInfo").GetProperty("validationFailureDetails").ToString());
-            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("testScriptFileInfo").GetProperty("url").ToString());
-            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("testScriptFileInfo").GetProperty("fileName").ToString());
-            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("testScriptFileInfo").GetProperty("fileType").ToString());
-            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("testScriptFileInfo").GetProperty("expireDateTime").ToString());
-            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("testScriptFileInfo").GetProperty("validationStatus").ToString());
-            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("testScriptFileInfo").GetProperty("validationFailureDetails").ToString());
-            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("userPropFileInfo").GetProperty("url").ToString());
-            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("userPropFileInfo").GetProperty("fileName").ToString());
-            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("userPropFileInfo").GetProperty("fileType").ToString());
-            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("userPropFileInfo").GetProperty("expireDateTime").ToString());
-            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("userPropFileInfo").GetProperty("validationStatus").ToString());
-            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("userPropFileInfo").GetProperty("validationFailureDetails").ToString());
-            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("inputArtifactsZipFileInfo").GetProperty("url").ToString());
-            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("inputArtifactsZipFileInfo").GetProperty("fileName").ToString());
-            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("inputArtifactsZipFileInfo").GetProperty("fileType").ToString());
-            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("inputArtifactsZipFileInfo").GetProperty("expireDateTime").ToString());
-            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("inputArtifactsZipFileInfo").GetProperty("validationStatus").ToString());
-            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("inputArtifactsZipFileInfo").GetProperty("validationFailureDetails").ToString());
-            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("additionalFileInfo")[0].GetProperty("url").ToString());
-            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("additionalFileInfo")[0].GetProperty("fileName").ToString());
-            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("additionalFileInfo")[0].GetProperty("fileType").ToString());
-            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("additionalFileInfo")[0].GetProperty("expireDateTime").ToString());
-            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("additionalFileInfo")[0].GetProperty("validationStatus").ToString());
-            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("additionalFileInfo")[0].GetProperty("validationFailureDetails").ToString());
-            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("outputArtifacts").GetProperty("resultFileInfo").GetProperty("url").ToString());
-            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("outputArtifacts").GetProperty("resultFileInfo").GetProperty("fileName").ToString());
-            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("outputArtifacts").GetProperty("resultFileInfo").GetProperty("fileType").ToString());
-            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("outputArtifacts").GetProperty("resultFileInfo").GetProperty("expireDateTime").ToString());
-            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("outputArtifacts").GetProperty("resultFileInfo").GetProperty("validationStatus").ToString());
-            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("outputArtifacts").GetProperty("resultFileInfo").GetProperty("validationFailureDetails").ToString());
-            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("outputArtifacts").GetProperty("logsFileInfo").GetProperty("url").ToString());
-            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("outputArtifacts").GetProperty("logsFileInfo").GetProperty("fileName").ToString());
-            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("outputArtifacts").GetProperty("logsFileInfo").GetProperty("fileType").ToString());
-            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("outputArtifacts").GetProperty("logsFileInfo").GetProperty("expireDateTime").ToString());
-            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("outputArtifacts").GetProperty("logsFileInfo").GetProperty("validationStatus").ToString());
-            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("outputArtifacts").GetProperty("logsFileInfo").GetProperty("validationFailureDetails").ToString());
-            Console.WriteLine(result.GetProperty("testResult").ToString());
-            Console.WriteLine(result.GetProperty("virtualUsers").ToString());
-            Console.WriteLine(result.GetProperty("testRunId").ToString());
-            Console.WriteLine(result.GetProperty("displayName").ToString());
-            Console.WriteLine(result.GetProperty("testId").ToString());
-            Console.WriteLine(result.GetProperty("description").ToString());
-            Console.WriteLine(result.GetProperty("status").ToString());
-            Console.WriteLine(result.GetProperty("startDateTime").ToString());
-            Console.WriteLine(result.GetProperty("endDateTime").ToString());
-            Console.WriteLine(result.GetProperty("executedDateTime").ToString());
-            Console.WriteLine(result.GetProperty("portalUrl").ToString());
-            Console.WriteLine(result.GetProperty("duration").ToString());
-            Console.WriteLine(result.GetProperty("subnetId").ToString());
-            Console.WriteLine(result.GetProperty("createdDateTime").ToString());
-            Console.WriteLine(result.GetProperty("createdBy").ToString());
-            Console.WriteLine(result.GetProperty("lastModifiedDateTime").ToString());
-            Console.WriteLine(result.GetProperty("lastModifiedBy").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public void Example_DeleteTestRun()
-        {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new LoadTestRunClient(endpoint, credential);
-
-            Response response = client.DeleteTestRun("<testRunId>");
-            Console.WriteLine(response.Status);
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public void Example_DeleteTestRun_AllParameters()
-        {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new LoadTestRunClient(endpoint, credential);
-
-            Response response = client.DeleteTestRun("<testRunId>", new RequestContext());
-            Console.WriteLine(response.Status);
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_DeleteTestRun_Async()
-        {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new LoadTestRunClient(endpoint, credential);
-
-            Response response = await client.DeleteTestRunAsync("<testRunId>");
-            Console.WriteLine(response.Status);
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_DeleteTestRun_AllParameters_Async()
-        {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new LoadTestRunClient(endpoint, credential);
-
-            Response response = await client.DeleteTestRunAsync("<testRunId>", new RequestContext());
-            Console.WriteLine(response.Status);
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public void Example_GetTestRunFile()
-        {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new LoadTestRunClient(endpoint, credential);
-
-            Response response = client.GetTestRunFile("<testRunId>", "<fileName>");
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public void Example_GetTestRunFile_AllParameters()
-        {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new LoadTestRunClient(endpoint, credential);
-
-            Response response = client.GetTestRunFile("<testRunId>", "<fileName>", new RequestContext());
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("url").ToString());
-            Console.WriteLine(result.GetProperty("fileName").ToString());
-            Console.WriteLine(result.GetProperty("fileType").ToString());
-            Console.WriteLine(result.GetProperty("expireDateTime").ToString());
-            Console.WriteLine(result.GetProperty("validationStatus").ToString());
-            Console.WriteLine(result.GetProperty("validationFailureDetails").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetTestRunFile_Async()
-        {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new LoadTestRunClient(endpoint, credential);
-
-            Response response = await client.GetTestRunFileAsync("<testRunId>", "<fileName>");
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetTestRunFile_AllParameters_Async()
-        {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new LoadTestRunClient(endpoint, credential);
-
-            Response response = await client.GetTestRunFileAsync("<testRunId>", "<fileName>", new RequestContext());
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("url").ToString());
-            Console.WriteLine(result.GetProperty("fileName").ToString());
-            Console.WriteLine(result.GetProperty("fileType").ToString());
-            Console.WriteLine(result.GetProperty("expireDateTime").ToString());
-            Console.WriteLine(result.GetProperty("validationStatus").ToString());
-            Console.WriteLine(result.GetProperty("validationFailureDetails").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public void Example_StopTestRun()
-        {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new LoadTestRunClient(endpoint, credential);
-
-            Response response = client.StopTestRun("<testRunId>");
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public void Example_StopTestRun_AllParameters()
-        {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new LoadTestRunClient(endpoint, credential);
-
-            Response response = client.StopTestRun("<testRunId>", new RequestContext());
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<test>").GetProperty("clientMetric").ToString());
-            Console.WriteLine(result.GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<test>").GetProperty("aggregate").ToString());
-            Console.WriteLine(result.GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<test>").GetProperty("condition").ToString());
-            Console.WriteLine(result.GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<test>").GetProperty("requestName").ToString());
-            Console.WriteLine(result.GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<test>").GetProperty("value").ToString());
-            Console.WriteLine(result.GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<test>").GetProperty("action").ToString());
-            Console.WriteLine(result.GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<test>").GetProperty("actualValue").ToString());
-            Console.WriteLine(result.GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<test>").GetProperty("result").ToString());
-            Console.WriteLine(result.GetProperty("secrets").GetProperty("<test>").GetProperty("value").ToString());
-            Console.WriteLine(result.GetProperty("secrets").GetProperty("<test>").GetProperty("type").ToString());
-            Console.WriteLine(result.GetProperty("certificate").GetProperty("value").ToString());
-            Console.WriteLine(result.GetProperty("certificate").GetProperty("type").ToString());
-            Console.WriteLine(result.GetProperty("certificate").GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("environmentVariables").GetProperty("<test>").ToString());
-            Console.WriteLine(result.GetProperty("errorDetails")[0].GetProperty("message").ToString());
-            Console.WriteLine(result.GetProperty("testRunStatistics").GetProperty("<test>").GetProperty("transaction").ToString());
-            Console.WriteLine(result.GetProperty("testRunStatistics").GetProperty("<test>").GetProperty("sampleCount").ToString());
-            Console.WriteLine(result.GetProperty("testRunStatistics").GetProperty("<test>").GetProperty("errorCount").ToString());
-            Console.WriteLine(result.GetProperty("testRunStatistics").GetProperty("<test>").GetProperty("errorPct").ToString());
-            Console.WriteLine(result.GetProperty("testRunStatistics").GetProperty("<test>").GetProperty("meanResTime").ToString());
-            Console.WriteLine(result.GetProperty("testRunStatistics").GetProperty("<test>").GetProperty("medianResTime").ToString());
-            Console.WriteLine(result.GetProperty("testRunStatistics").GetProperty("<test>").GetProperty("maxResTime").ToString());
-            Console.WriteLine(result.GetProperty("testRunStatistics").GetProperty("<test>").GetProperty("minResTime").ToString());
-            Console.WriteLine(result.GetProperty("testRunStatistics").GetProperty("<test>").GetProperty("pct1ResTime").ToString());
-            Console.WriteLine(result.GetProperty("testRunStatistics").GetProperty("<test>").GetProperty("pct2ResTime").ToString());
-            Console.WriteLine(result.GetProperty("testRunStatistics").GetProperty("<test>").GetProperty("pct3ResTime").ToString());
-            Console.WriteLine(result.GetProperty("testRunStatistics").GetProperty("<test>").GetProperty("throughput").ToString());
-            Console.WriteLine(result.GetProperty("testRunStatistics").GetProperty("<test>").GetProperty("receivedKBytesPerSec").ToString());
-            Console.WriteLine(result.GetProperty("testRunStatistics").GetProperty("<test>").GetProperty("sentKBytesPerSec").ToString());
-            Console.WriteLine(result.GetProperty("loadTestConfiguration").GetProperty("engineInstances").ToString());
-            Console.WriteLine(result.GetProperty("loadTestConfiguration").GetProperty("splitAllCSVs").ToString());
-            Console.WriteLine(result.GetProperty("loadTestConfiguration").GetProperty("quickStartTest").ToString());
-            Console.WriteLine(result.GetProperty("loadTestConfiguration").GetProperty("optionalLoadTestConfig").GetProperty("endpointUrl").ToString());
-            Console.WriteLine(result.GetProperty("loadTestConfiguration").GetProperty("optionalLoadTestConfig").GetProperty("virtualUsers").ToString());
-            Console.WriteLine(result.GetProperty("loadTestConfiguration").GetProperty("optionalLoadTestConfig").GetProperty("rampUpTime").ToString());
-            Console.WriteLine(result.GetProperty("loadTestConfiguration").GetProperty("optionalLoadTestConfig").GetProperty("duration").ToString());
-            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("configFileInfo").GetProperty("url").ToString());
-            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("configFileInfo").GetProperty("fileName").ToString());
-            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("configFileInfo").GetProperty("fileType").ToString());
-            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("configFileInfo").GetProperty("expireDateTime").ToString());
-            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("configFileInfo").GetProperty("validationStatus").ToString());
-            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("configFileInfo").GetProperty("validationFailureDetails").ToString());
-            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("testScriptFileInfo").GetProperty("url").ToString());
-            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("testScriptFileInfo").GetProperty("fileName").ToString());
-            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("testScriptFileInfo").GetProperty("fileType").ToString());
-            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("testScriptFileInfo").GetProperty("expireDateTime").ToString());
-            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("testScriptFileInfo").GetProperty("validationStatus").ToString());
-            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("testScriptFileInfo").GetProperty("validationFailureDetails").ToString());
-            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("userPropFileInfo").GetProperty("url").ToString());
-            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("userPropFileInfo").GetProperty("fileName").ToString());
-            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("userPropFileInfo").GetProperty("fileType").ToString());
-            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("userPropFileInfo").GetProperty("expireDateTime").ToString());
-            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("userPropFileInfo").GetProperty("validationStatus").ToString());
-            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("userPropFileInfo").GetProperty("validationFailureDetails").ToString());
-            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("inputArtifactsZipFileInfo").GetProperty("url").ToString());
-            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("inputArtifactsZipFileInfo").GetProperty("fileName").ToString());
-            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("inputArtifactsZipFileInfo").GetProperty("fileType").ToString());
-            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("inputArtifactsZipFileInfo").GetProperty("expireDateTime").ToString());
-            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("inputArtifactsZipFileInfo").GetProperty("validationStatus").ToString());
-            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("inputArtifactsZipFileInfo").GetProperty("validationFailureDetails").ToString());
-            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("additionalFileInfo")[0].GetProperty("url").ToString());
-            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("additionalFileInfo")[0].GetProperty("fileName").ToString());
-            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("additionalFileInfo")[0].GetProperty("fileType").ToString());
-            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("additionalFileInfo")[0].GetProperty("expireDateTime").ToString());
-            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("additionalFileInfo")[0].GetProperty("validationStatus").ToString());
-            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("additionalFileInfo")[0].GetProperty("validationFailureDetails").ToString());
-            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("outputArtifacts").GetProperty("resultFileInfo").GetProperty("url").ToString());
-            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("outputArtifacts").GetProperty("resultFileInfo").GetProperty("fileName").ToString());
-            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("outputArtifacts").GetProperty("resultFileInfo").GetProperty("fileType").ToString());
-            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("outputArtifacts").GetProperty("resultFileInfo").GetProperty("expireDateTime").ToString());
-            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("outputArtifacts").GetProperty("resultFileInfo").GetProperty("validationStatus").ToString());
-            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("outputArtifacts").GetProperty("resultFileInfo").GetProperty("validationFailureDetails").ToString());
-            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("outputArtifacts").GetProperty("logsFileInfo").GetProperty("url").ToString());
-            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("outputArtifacts").GetProperty("logsFileInfo").GetProperty("fileName").ToString());
-            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("outputArtifacts").GetProperty("logsFileInfo").GetProperty("fileType").ToString());
-            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("outputArtifacts").GetProperty("logsFileInfo").GetProperty("expireDateTime").ToString());
-            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("outputArtifacts").GetProperty("logsFileInfo").GetProperty("validationStatus").ToString());
-            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("outputArtifacts").GetProperty("logsFileInfo").GetProperty("validationFailureDetails").ToString());
-            Console.WriteLine(result.GetProperty("testResult").ToString());
-            Console.WriteLine(result.GetProperty("virtualUsers").ToString());
-            Console.WriteLine(result.GetProperty("testRunId").ToString());
-            Console.WriteLine(result.GetProperty("displayName").ToString());
-            Console.WriteLine(result.GetProperty("testId").ToString());
-            Console.WriteLine(result.GetProperty("description").ToString());
-            Console.WriteLine(result.GetProperty("status").ToString());
-            Console.WriteLine(result.GetProperty("startDateTime").ToString());
-            Console.WriteLine(result.GetProperty("endDateTime").ToString());
-            Console.WriteLine(result.GetProperty("executedDateTime").ToString());
-            Console.WriteLine(result.GetProperty("portalUrl").ToString());
-            Console.WriteLine(result.GetProperty("duration").ToString());
-            Console.WriteLine(result.GetProperty("subnetId").ToString());
-            Console.WriteLine(result.GetProperty("createdDateTime").ToString());
-            Console.WriteLine(result.GetProperty("createdBy").ToString());
-            Console.WriteLine(result.GetProperty("lastModifiedDateTime").ToString());
-            Console.WriteLine(result.GetProperty("lastModifiedBy").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_StopTestRun_Async()
-        {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new LoadTestRunClient(endpoint, credential);
-
-            Response response = await client.StopTestRunAsync("<testRunId>");
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_StopTestRun_AllParameters_Async()
-        {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new LoadTestRunClient(endpoint, credential);
-
-            Response response = await client.StopTestRunAsync("<testRunId>", new RequestContext());
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<test>").GetProperty("clientMetric").ToString());
-            Console.WriteLine(result.GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<test>").GetProperty("aggregate").ToString());
-            Console.WriteLine(result.GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<test>").GetProperty("condition").ToString());
-            Console.WriteLine(result.GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<test>").GetProperty("requestName").ToString());
-            Console.WriteLine(result.GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<test>").GetProperty("value").ToString());
-            Console.WriteLine(result.GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<test>").GetProperty("action").ToString());
-            Console.WriteLine(result.GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<test>").GetProperty("actualValue").ToString());
-            Console.WriteLine(result.GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<test>").GetProperty("result").ToString());
-            Console.WriteLine(result.GetProperty("secrets").GetProperty("<test>").GetProperty("value").ToString());
-            Console.WriteLine(result.GetProperty("secrets").GetProperty("<test>").GetProperty("type").ToString());
-            Console.WriteLine(result.GetProperty("certificate").GetProperty("value").ToString());
-            Console.WriteLine(result.GetProperty("certificate").GetProperty("type").ToString());
-            Console.WriteLine(result.GetProperty("certificate").GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("environmentVariables").GetProperty("<test>").ToString());
-            Console.WriteLine(result.GetProperty("errorDetails")[0].GetProperty("message").ToString());
-            Console.WriteLine(result.GetProperty("testRunStatistics").GetProperty("<test>").GetProperty("transaction").ToString());
-            Console.WriteLine(result.GetProperty("testRunStatistics").GetProperty("<test>").GetProperty("sampleCount").ToString());
-            Console.WriteLine(result.GetProperty("testRunStatistics").GetProperty("<test>").GetProperty("errorCount").ToString());
-            Console.WriteLine(result.GetProperty("testRunStatistics").GetProperty("<test>").GetProperty("errorPct").ToString());
-            Console.WriteLine(result.GetProperty("testRunStatistics").GetProperty("<test>").GetProperty("meanResTime").ToString());
-            Console.WriteLine(result.GetProperty("testRunStatistics").GetProperty("<test>").GetProperty("medianResTime").ToString());
-            Console.WriteLine(result.GetProperty("testRunStatistics").GetProperty("<test>").GetProperty("maxResTime").ToString());
-            Console.WriteLine(result.GetProperty("testRunStatistics").GetProperty("<test>").GetProperty("minResTime").ToString());
-            Console.WriteLine(result.GetProperty("testRunStatistics").GetProperty("<test>").GetProperty("pct1ResTime").ToString());
-            Console.WriteLine(result.GetProperty("testRunStatistics").GetProperty("<test>").GetProperty("pct2ResTime").ToString());
-            Console.WriteLine(result.GetProperty("testRunStatistics").GetProperty("<test>").GetProperty("pct3ResTime").ToString());
-            Console.WriteLine(result.GetProperty("testRunStatistics").GetProperty("<test>").GetProperty("throughput").ToString());
-            Console.WriteLine(result.GetProperty("testRunStatistics").GetProperty("<test>").GetProperty("receivedKBytesPerSec").ToString());
-            Console.WriteLine(result.GetProperty("testRunStatistics").GetProperty("<test>").GetProperty("sentKBytesPerSec").ToString());
-            Console.WriteLine(result.GetProperty("loadTestConfiguration").GetProperty("engineInstances").ToString());
-            Console.WriteLine(result.GetProperty("loadTestConfiguration").GetProperty("splitAllCSVs").ToString());
-            Console.WriteLine(result.GetProperty("loadTestConfiguration").GetProperty("quickStartTest").ToString());
-            Console.WriteLine(result.GetProperty("loadTestConfiguration").GetProperty("optionalLoadTestConfig").GetProperty("endpointUrl").ToString());
-            Console.WriteLine(result.GetProperty("loadTestConfiguration").GetProperty("optionalLoadTestConfig").GetProperty("virtualUsers").ToString());
-            Console.WriteLine(result.GetProperty("loadTestConfiguration").GetProperty("optionalLoadTestConfig").GetProperty("rampUpTime").ToString());
-            Console.WriteLine(result.GetProperty("loadTestConfiguration").GetProperty("optionalLoadTestConfig").GetProperty("duration").ToString());
-            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("configFileInfo").GetProperty("url").ToString());
-            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("configFileInfo").GetProperty("fileName").ToString());
-            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("configFileInfo").GetProperty("fileType").ToString());
-            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("configFileInfo").GetProperty("expireDateTime").ToString());
-            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("configFileInfo").GetProperty("validationStatus").ToString());
-            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("configFileInfo").GetProperty("validationFailureDetails").ToString());
-            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("testScriptFileInfo").GetProperty("url").ToString());
-            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("testScriptFileInfo").GetProperty("fileName").ToString());
-            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("testScriptFileInfo").GetProperty("fileType").ToString());
-            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("testScriptFileInfo").GetProperty("expireDateTime").ToString());
-            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("testScriptFileInfo").GetProperty("validationStatus").ToString());
-            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("testScriptFileInfo").GetProperty("validationFailureDetails").ToString());
-            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("userPropFileInfo").GetProperty("url").ToString());
-            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("userPropFileInfo").GetProperty("fileName").ToString());
-            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("userPropFileInfo").GetProperty("fileType").ToString());
-            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("userPropFileInfo").GetProperty("expireDateTime").ToString());
-            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("userPropFileInfo").GetProperty("validationStatus").ToString());
-            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("userPropFileInfo").GetProperty("validationFailureDetails").ToString());
-            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("inputArtifactsZipFileInfo").GetProperty("url").ToString());
-            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("inputArtifactsZipFileInfo").GetProperty("fileName").ToString());
-            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("inputArtifactsZipFileInfo").GetProperty("fileType").ToString());
-            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("inputArtifactsZipFileInfo").GetProperty("expireDateTime").ToString());
-            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("inputArtifactsZipFileInfo").GetProperty("validationStatus").ToString());
-            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("inputArtifactsZipFileInfo").GetProperty("validationFailureDetails").ToString());
-            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("additionalFileInfo")[0].GetProperty("url").ToString());
-            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("additionalFileInfo")[0].GetProperty("fileName").ToString());
-            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("additionalFileInfo")[0].GetProperty("fileType").ToString());
-            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("additionalFileInfo")[0].GetProperty("expireDateTime").ToString());
-            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("additionalFileInfo")[0].GetProperty("validationStatus").ToString());
-            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("additionalFileInfo")[0].GetProperty("validationFailureDetails").ToString());
-            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("outputArtifacts").GetProperty("resultFileInfo").GetProperty("url").ToString());
-            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("outputArtifacts").GetProperty("resultFileInfo").GetProperty("fileName").ToString());
-            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("outputArtifacts").GetProperty("resultFileInfo").GetProperty("fileType").ToString());
-            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("outputArtifacts").GetProperty("resultFileInfo").GetProperty("expireDateTime").ToString());
-            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("outputArtifacts").GetProperty("resultFileInfo").GetProperty("validationStatus").ToString());
-            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("outputArtifacts").GetProperty("resultFileInfo").GetProperty("validationFailureDetails").ToString());
-            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("outputArtifacts").GetProperty("logsFileInfo").GetProperty("url").ToString());
-            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("outputArtifacts").GetProperty("logsFileInfo").GetProperty("fileName").ToString());
-            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("outputArtifacts").GetProperty("logsFileInfo").GetProperty("fileType").ToString());
-            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("outputArtifacts").GetProperty("logsFileInfo").GetProperty("expireDateTime").ToString());
-            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("outputArtifacts").GetProperty("logsFileInfo").GetProperty("validationStatus").ToString());
-            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("outputArtifacts").GetProperty("logsFileInfo").GetProperty("validationFailureDetails").ToString());
-            Console.WriteLine(result.GetProperty("testResult").ToString());
-            Console.WriteLine(result.GetProperty("virtualUsers").ToString());
-            Console.WriteLine(result.GetProperty("testRunId").ToString());
-            Console.WriteLine(result.GetProperty("displayName").ToString());
-            Console.WriteLine(result.GetProperty("testId").ToString());
-            Console.WriteLine(result.GetProperty("description").ToString());
-            Console.WriteLine(result.GetProperty("status").ToString());
-            Console.WriteLine(result.GetProperty("startDateTime").ToString());
-            Console.WriteLine(result.GetProperty("endDateTime").ToString());
-            Console.WriteLine(result.GetProperty("executedDateTime").ToString());
-            Console.WriteLine(result.GetProperty("portalUrl").ToString());
-            Console.WriteLine(result.GetProperty("duration").ToString());
-            Console.WriteLine(result.GetProperty("subnetId").ToString());
-            Console.WriteLine(result.GetProperty("createdDateTime").ToString());
-            Console.WriteLine(result.GetProperty("createdBy").ToString());
-            Console.WriteLine(result.GetProperty("lastModifiedDateTime").ToString());
-            Console.WriteLine(result.GetProperty("lastModifiedBy").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public void Example_GetMetricNamespaces()
-        {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new LoadTestRunClient(endpoint, credential);
-
-            Response response = client.GetMetricNamespaces("<testRunId>");
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("value")[0].ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public void Example_GetMetricNamespaces_AllParameters()
-        {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new LoadTestRunClient(endpoint, credential);
-
-            Response response = client.GetMetricNamespaces("<testRunId>", new RequestContext());
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("description").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("name").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetMetricNamespaces_Async()
-        {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new LoadTestRunClient(endpoint, credential);
-
-            Response response = await client.GetMetricNamespacesAsync("<testRunId>");
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("value")[0].ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetMetricNamespaces_AllParameters_Async()
-        {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new LoadTestRunClient(endpoint, credential);
-
-            Response response = await client.GetMetricNamespacesAsync("<testRunId>", new RequestContext());
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("description").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("name").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public void Example_GetMetricDefinitions()
-        {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new LoadTestRunClient(endpoint, credential);
-
-            Response response = client.GetMetricDefinitions("<testRunId>", "<metricNamespace>");
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("value")[0].ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public void Example_GetMetricDefinitions_AllParameters()
-        {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new LoadTestRunClient(endpoint, credential);
-
-            Response response = client.GetMetricDefinitions("<testRunId>", "<metricNamespace>", new RequestContext());
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("dimensions")[0].GetProperty("description").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("dimensions")[0].GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("description").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("namespace").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("primaryAggregationType").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("supportedAggregationTypes")[0].ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("unit").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("metricAvailabilities")[0].GetProperty("timeGrain").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetMetricDefinitions_Async()
-        {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new LoadTestRunClient(endpoint, credential);
-
-            Response response = await client.GetMetricDefinitionsAsync("<testRunId>", "<metricNamespace>");
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("value")[0].ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetMetricDefinitions_AllParameters_Async()
-        {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new LoadTestRunClient(endpoint, credential);
-
-            Response response = await client.GetMetricDefinitionsAsync("<testRunId>", "<metricNamespace>", new RequestContext());
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("dimensions")[0].GetProperty("description").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("dimensions")[0].GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("description").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("namespace").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("primaryAggregationType").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("supportedAggregationTypes")[0].ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("unit").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("metricAvailabilities")[0].GetProperty("timeGrain").ToString());
-        }
-
         [Test]
         [Ignore("Only validating compilation of examples")]
         public void Example_CreateOrUpdateAppComponents()
@@ -857,84 +126,6 @@ namespace Azure.Developer.LoadTesting.Samples
             };
 
             Response response = await client.CreateOrUpdateAppComponentsAsync("<testRunId>", RequestContent.Create(data), new RequestContext());
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("components").GetProperty("<test>").GetProperty("resourceId").ToString());
-            Console.WriteLine(result.GetProperty("components").GetProperty("<test>").GetProperty("resourceName").ToString());
-            Console.WriteLine(result.GetProperty("components").GetProperty("<test>").GetProperty("resourceType").ToString());
-            Console.WriteLine(result.GetProperty("components").GetProperty("<test>").GetProperty("displayName").ToString());
-            Console.WriteLine(result.GetProperty("components").GetProperty("<test>").GetProperty("resourceGroup").ToString());
-            Console.WriteLine(result.GetProperty("components").GetProperty("<test>").GetProperty("subscriptionId").ToString());
-            Console.WriteLine(result.GetProperty("components").GetProperty("<test>").GetProperty("kind").ToString());
-            Console.WriteLine(result.GetProperty("testRunId").ToString());
-            Console.WriteLine(result.GetProperty("createdDateTime").ToString());
-            Console.WriteLine(result.GetProperty("createdBy").ToString());
-            Console.WriteLine(result.GetProperty("lastModifiedDateTime").ToString());
-            Console.WriteLine(result.GetProperty("lastModifiedBy").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public void Example_GetAppComponents()
-        {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new LoadTestRunClient(endpoint, credential);
-
-            Response response = client.GetAppComponents("<testRunId>");
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("components").GetProperty("<test>").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public void Example_GetAppComponents_AllParameters()
-        {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new LoadTestRunClient(endpoint, credential);
-
-            Response response = client.GetAppComponents("<testRunId>", new RequestContext());
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("components").GetProperty("<test>").GetProperty("resourceId").ToString());
-            Console.WriteLine(result.GetProperty("components").GetProperty("<test>").GetProperty("resourceName").ToString());
-            Console.WriteLine(result.GetProperty("components").GetProperty("<test>").GetProperty("resourceType").ToString());
-            Console.WriteLine(result.GetProperty("components").GetProperty("<test>").GetProperty("displayName").ToString());
-            Console.WriteLine(result.GetProperty("components").GetProperty("<test>").GetProperty("resourceGroup").ToString());
-            Console.WriteLine(result.GetProperty("components").GetProperty("<test>").GetProperty("subscriptionId").ToString());
-            Console.WriteLine(result.GetProperty("components").GetProperty("<test>").GetProperty("kind").ToString());
-            Console.WriteLine(result.GetProperty("testRunId").ToString());
-            Console.WriteLine(result.GetProperty("createdDateTime").ToString());
-            Console.WriteLine(result.GetProperty("createdBy").ToString());
-            Console.WriteLine(result.GetProperty("lastModifiedDateTime").ToString());
-            Console.WriteLine(result.GetProperty("lastModifiedBy").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetAppComponents_Async()
-        {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new LoadTestRunClient(endpoint, credential);
-
-            Response response = await client.GetAppComponentsAsync("<testRunId>");
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("components").GetProperty("<test>").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetAppComponents_AllParameters_Async()
-        {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new LoadTestRunClient(endpoint, credential);
-
-            Response response = await client.GetAppComponentsAsync("<testRunId>", new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("components").GetProperty("<test>").GetProperty("resourceId").ToString());
@@ -1071,13 +262,150 @@ namespace Azure.Developer.LoadTesting.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public void Example_DeleteTestRun()
+        {
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new LoadTestRunClient(endpoint, credential);
+
+            Response response = client.DeleteTestRun("<testRunId>");
+            Console.WriteLine(response.Status);
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_DeleteTestRun_AllParameters()
+        {
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new LoadTestRunClient(endpoint, credential);
+
+            Response response = client.DeleteTestRun("<testRunId>", new RequestContext());
+            Console.WriteLine(response.Status);
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_DeleteTestRun_Async()
+        {
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new LoadTestRunClient(endpoint, credential);
+
+            Response response = await client.DeleteTestRunAsync("<testRunId>");
+            Console.WriteLine(response.Status);
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_DeleteTestRun_AllParameters_Async()
+        {
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new LoadTestRunClient(endpoint, credential);
+
+            Response response = await client.DeleteTestRunAsync("<testRunId>", new RequestContext());
+            Console.WriteLine(response.Status);
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_GetAppComponents()
+        {
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new LoadTestRunClient(endpoint, credential);
+
+            Response response = client.GetAppComponents("<testRunId>", new RequestContext());
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("components").GetProperty("<test>").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_GetAppComponents_AllParameters()
+        {
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new LoadTestRunClient(endpoint, credential);
+
+            Response response = client.GetAppComponents("<testRunId>", new RequestContext());
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("components").GetProperty("<test>").GetProperty("resourceId").ToString());
+            Console.WriteLine(result.GetProperty("components").GetProperty("<test>").GetProperty("resourceName").ToString());
+            Console.WriteLine(result.GetProperty("components").GetProperty("<test>").GetProperty("resourceType").ToString());
+            Console.WriteLine(result.GetProperty("components").GetProperty("<test>").GetProperty("displayName").ToString());
+            Console.WriteLine(result.GetProperty("components").GetProperty("<test>").GetProperty("resourceGroup").ToString());
+            Console.WriteLine(result.GetProperty("components").GetProperty("<test>").GetProperty("subscriptionId").ToString());
+            Console.WriteLine(result.GetProperty("components").GetProperty("<test>").GetProperty("kind").ToString());
+            Console.WriteLine(result.GetProperty("testRunId").ToString());
+            Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+            Console.WriteLine(result.GetProperty("createdBy").ToString());
+            Console.WriteLine(result.GetProperty("lastModifiedDateTime").ToString());
+            Console.WriteLine(result.GetProperty("lastModifiedBy").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_GetAppComponents_Async()
+        {
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new LoadTestRunClient(endpoint, credential);
+
+            Response response = await client.GetAppComponentsAsync("<testRunId>", new RequestContext());
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("components").GetProperty("<test>").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_GetAppComponents_AllParameters_Async()
+        {
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new LoadTestRunClient(endpoint, credential);
+
+            Response response = await client.GetAppComponentsAsync("<testRunId>", new RequestContext());
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("components").GetProperty("<test>").GetProperty("resourceId").ToString());
+            Console.WriteLine(result.GetProperty("components").GetProperty("<test>").GetProperty("resourceName").ToString());
+            Console.WriteLine(result.GetProperty("components").GetProperty("<test>").GetProperty("resourceType").ToString());
+            Console.WriteLine(result.GetProperty("components").GetProperty("<test>").GetProperty("displayName").ToString());
+            Console.WriteLine(result.GetProperty("components").GetProperty("<test>").GetProperty("resourceGroup").ToString());
+            Console.WriteLine(result.GetProperty("components").GetProperty("<test>").GetProperty("subscriptionId").ToString());
+            Console.WriteLine(result.GetProperty("components").GetProperty("<test>").GetProperty("kind").ToString());
+            Console.WriteLine(result.GetProperty("testRunId").ToString());
+            Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+            Console.WriteLine(result.GetProperty("createdBy").ToString());
+            Console.WriteLine(result.GetProperty("lastModifiedDateTime").ToString());
+            Console.WriteLine(result.GetProperty("lastModifiedBy").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_GetAppComponents_Convenience_Async()
+        {
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new LoadTestRunClient(endpoint, credential);
+
+            var result = await client.GetAppComponentsAsync("<testRunId>");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public void Example_GetServerMetricsConfig()
         {
             var credential = new DefaultAzureCredential();
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new LoadTestRunClient(endpoint, credential);
 
-            Response response = client.GetServerMetricsConfig("<testRunId>");
+            Response response = client.GetServerMetricsConfig("<testRunId>", new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -1117,7 +445,7 @@ namespace Azure.Developer.LoadTesting.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new LoadTestRunClient(endpoint, credential);
 
-            Response response = await client.GetServerMetricsConfigAsync("<testRunId>");
+            Response response = await client.GetServerMetricsConfigAsync("<testRunId>", new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -1151,6 +479,752 @@ namespace Azure.Developer.LoadTesting.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task Example_GetServerMetricsConfig_Convenience_Async()
+        {
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new LoadTestRunClient(endpoint, credential);
+
+            var result = await client.GetServerMetricsConfigAsync("<testRunId>");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_GetTestRun()
+        {
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new LoadTestRunClient(endpoint, credential);
+
+            Response response = client.GetTestRun("<testRunId>", new RequestContext());
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_GetTestRun_AllParameters()
+        {
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new LoadTestRunClient(endpoint, credential);
+
+            Response response = client.GetTestRun("<testRunId>", new RequestContext());
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<test>").GetProperty("clientMetric").ToString());
+            Console.WriteLine(result.GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<test>").GetProperty("aggregate").ToString());
+            Console.WriteLine(result.GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<test>").GetProperty("condition").ToString());
+            Console.WriteLine(result.GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<test>").GetProperty("requestName").ToString());
+            Console.WriteLine(result.GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<test>").GetProperty("value").ToString());
+            Console.WriteLine(result.GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<test>").GetProperty("action").ToString());
+            Console.WriteLine(result.GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<test>").GetProperty("actualValue").ToString());
+            Console.WriteLine(result.GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<test>").GetProperty("result").ToString());
+            Console.WriteLine(result.GetProperty("secrets").GetProperty("<test>").GetProperty("value").ToString());
+            Console.WriteLine(result.GetProperty("secrets").GetProperty("<test>").GetProperty("type").ToString());
+            Console.WriteLine(result.GetProperty("certificate").GetProperty("value").ToString());
+            Console.WriteLine(result.GetProperty("certificate").GetProperty("type").ToString());
+            Console.WriteLine(result.GetProperty("certificate").GetProperty("name").ToString());
+            Console.WriteLine(result.GetProperty("environmentVariables").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("errorDetails")[0].GetProperty("message").ToString());
+            Console.WriteLine(result.GetProperty("testRunStatistics").GetProperty("<test>").GetProperty("transaction").ToString());
+            Console.WriteLine(result.GetProperty("testRunStatistics").GetProperty("<test>").GetProperty("sampleCount").ToString());
+            Console.WriteLine(result.GetProperty("testRunStatistics").GetProperty("<test>").GetProperty("errorCount").ToString());
+            Console.WriteLine(result.GetProperty("testRunStatistics").GetProperty("<test>").GetProperty("errorPct").ToString());
+            Console.WriteLine(result.GetProperty("testRunStatistics").GetProperty("<test>").GetProperty("meanResTime").ToString());
+            Console.WriteLine(result.GetProperty("testRunStatistics").GetProperty("<test>").GetProperty("medianResTime").ToString());
+            Console.WriteLine(result.GetProperty("testRunStatistics").GetProperty("<test>").GetProperty("maxResTime").ToString());
+            Console.WriteLine(result.GetProperty("testRunStatistics").GetProperty("<test>").GetProperty("minResTime").ToString());
+            Console.WriteLine(result.GetProperty("testRunStatistics").GetProperty("<test>").GetProperty("pct1ResTime").ToString());
+            Console.WriteLine(result.GetProperty("testRunStatistics").GetProperty("<test>").GetProperty("pct2ResTime").ToString());
+            Console.WriteLine(result.GetProperty("testRunStatistics").GetProperty("<test>").GetProperty("pct3ResTime").ToString());
+            Console.WriteLine(result.GetProperty("testRunStatistics").GetProperty("<test>").GetProperty("throughput").ToString());
+            Console.WriteLine(result.GetProperty("testRunStatistics").GetProperty("<test>").GetProperty("receivedKBytesPerSec").ToString());
+            Console.WriteLine(result.GetProperty("testRunStatistics").GetProperty("<test>").GetProperty("sentKBytesPerSec").ToString());
+            Console.WriteLine(result.GetProperty("loadTestConfiguration").GetProperty("engineInstances").ToString());
+            Console.WriteLine(result.GetProperty("loadTestConfiguration").GetProperty("splitAllCSVs").ToString());
+            Console.WriteLine(result.GetProperty("loadTestConfiguration").GetProperty("quickStartTest").ToString());
+            Console.WriteLine(result.GetProperty("loadTestConfiguration").GetProperty("optionalLoadTestConfig").GetProperty("endpointUrl").ToString());
+            Console.WriteLine(result.GetProperty("loadTestConfiguration").GetProperty("optionalLoadTestConfig").GetProperty("virtualUsers").ToString());
+            Console.WriteLine(result.GetProperty("loadTestConfiguration").GetProperty("optionalLoadTestConfig").GetProperty("rampUpTime").ToString());
+            Console.WriteLine(result.GetProperty("loadTestConfiguration").GetProperty("optionalLoadTestConfig").GetProperty("duration").ToString());
+            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("configFileInfo").GetProperty("url").ToString());
+            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("configFileInfo").GetProperty("fileName").ToString());
+            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("configFileInfo").GetProperty("fileType").ToString());
+            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("configFileInfo").GetProperty("expireDateTime").ToString());
+            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("configFileInfo").GetProperty("validationStatus").ToString());
+            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("configFileInfo").GetProperty("validationFailureDetails").ToString());
+            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("testScriptFileInfo").GetProperty("url").ToString());
+            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("testScriptFileInfo").GetProperty("fileName").ToString());
+            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("testScriptFileInfo").GetProperty("fileType").ToString());
+            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("testScriptFileInfo").GetProperty("expireDateTime").ToString());
+            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("testScriptFileInfo").GetProperty("validationStatus").ToString());
+            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("testScriptFileInfo").GetProperty("validationFailureDetails").ToString());
+            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("userPropFileInfo").GetProperty("url").ToString());
+            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("userPropFileInfo").GetProperty("fileName").ToString());
+            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("userPropFileInfo").GetProperty("fileType").ToString());
+            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("userPropFileInfo").GetProperty("expireDateTime").ToString());
+            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("userPropFileInfo").GetProperty("validationStatus").ToString());
+            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("userPropFileInfo").GetProperty("validationFailureDetails").ToString());
+            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("inputArtifactsZipFileInfo").GetProperty("url").ToString());
+            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("inputArtifactsZipFileInfo").GetProperty("fileName").ToString());
+            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("inputArtifactsZipFileInfo").GetProperty("fileType").ToString());
+            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("inputArtifactsZipFileInfo").GetProperty("expireDateTime").ToString());
+            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("inputArtifactsZipFileInfo").GetProperty("validationStatus").ToString());
+            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("inputArtifactsZipFileInfo").GetProperty("validationFailureDetails").ToString());
+            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("additionalFileInfo")[0].GetProperty("url").ToString());
+            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("additionalFileInfo")[0].GetProperty("fileName").ToString());
+            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("additionalFileInfo")[0].GetProperty("fileType").ToString());
+            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("additionalFileInfo")[0].GetProperty("expireDateTime").ToString());
+            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("additionalFileInfo")[0].GetProperty("validationStatus").ToString());
+            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("additionalFileInfo")[0].GetProperty("validationFailureDetails").ToString());
+            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("outputArtifacts").GetProperty("resultFileInfo").GetProperty("url").ToString());
+            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("outputArtifacts").GetProperty("resultFileInfo").GetProperty("fileName").ToString());
+            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("outputArtifacts").GetProperty("resultFileInfo").GetProperty("fileType").ToString());
+            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("outputArtifacts").GetProperty("resultFileInfo").GetProperty("expireDateTime").ToString());
+            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("outputArtifacts").GetProperty("resultFileInfo").GetProperty("validationStatus").ToString());
+            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("outputArtifacts").GetProperty("resultFileInfo").GetProperty("validationFailureDetails").ToString());
+            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("outputArtifacts").GetProperty("logsFileInfo").GetProperty("url").ToString());
+            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("outputArtifacts").GetProperty("logsFileInfo").GetProperty("fileName").ToString());
+            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("outputArtifacts").GetProperty("logsFileInfo").GetProperty("fileType").ToString());
+            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("outputArtifacts").GetProperty("logsFileInfo").GetProperty("expireDateTime").ToString());
+            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("outputArtifacts").GetProperty("logsFileInfo").GetProperty("validationStatus").ToString());
+            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("outputArtifacts").GetProperty("logsFileInfo").GetProperty("validationFailureDetails").ToString());
+            Console.WriteLine(result.GetProperty("testResult").ToString());
+            Console.WriteLine(result.GetProperty("virtualUsers").ToString());
+            Console.WriteLine(result.GetProperty("displayName").ToString());
+            Console.WriteLine(result.GetProperty("testId").ToString());
+            Console.WriteLine(result.GetProperty("description").ToString());
+            Console.WriteLine(result.GetProperty("status").ToString());
+            Console.WriteLine(result.GetProperty("startDateTime").ToString());
+            Console.WriteLine(result.GetProperty("endDateTime").ToString());
+            Console.WriteLine(result.GetProperty("executedDateTime").ToString());
+            Console.WriteLine(result.GetProperty("portalUrl").ToString());
+            Console.WriteLine(result.GetProperty("duration").ToString());
+            Console.WriteLine(result.GetProperty("subnetId").ToString());
+            Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+            Console.WriteLine(result.GetProperty("createdBy").ToString());
+            Console.WriteLine(result.GetProperty("lastModifiedDateTime").ToString());
+            Console.WriteLine(result.GetProperty("lastModifiedBy").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_GetTestRun_Async()
+        {
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new LoadTestRunClient(endpoint, credential);
+
+            Response response = await client.GetTestRunAsync("<testRunId>", new RequestContext());
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_GetTestRun_AllParameters_Async()
+        {
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new LoadTestRunClient(endpoint, credential);
+
+            Response response = await client.GetTestRunAsync("<testRunId>", new RequestContext());
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<test>").GetProperty("clientMetric").ToString());
+            Console.WriteLine(result.GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<test>").GetProperty("aggregate").ToString());
+            Console.WriteLine(result.GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<test>").GetProperty("condition").ToString());
+            Console.WriteLine(result.GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<test>").GetProperty("requestName").ToString());
+            Console.WriteLine(result.GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<test>").GetProperty("value").ToString());
+            Console.WriteLine(result.GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<test>").GetProperty("action").ToString());
+            Console.WriteLine(result.GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<test>").GetProperty("actualValue").ToString());
+            Console.WriteLine(result.GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<test>").GetProperty("result").ToString());
+            Console.WriteLine(result.GetProperty("secrets").GetProperty("<test>").GetProperty("value").ToString());
+            Console.WriteLine(result.GetProperty("secrets").GetProperty("<test>").GetProperty("type").ToString());
+            Console.WriteLine(result.GetProperty("certificate").GetProperty("value").ToString());
+            Console.WriteLine(result.GetProperty("certificate").GetProperty("type").ToString());
+            Console.WriteLine(result.GetProperty("certificate").GetProperty("name").ToString());
+            Console.WriteLine(result.GetProperty("environmentVariables").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("errorDetails")[0].GetProperty("message").ToString());
+            Console.WriteLine(result.GetProperty("testRunStatistics").GetProperty("<test>").GetProperty("transaction").ToString());
+            Console.WriteLine(result.GetProperty("testRunStatistics").GetProperty("<test>").GetProperty("sampleCount").ToString());
+            Console.WriteLine(result.GetProperty("testRunStatistics").GetProperty("<test>").GetProperty("errorCount").ToString());
+            Console.WriteLine(result.GetProperty("testRunStatistics").GetProperty("<test>").GetProperty("errorPct").ToString());
+            Console.WriteLine(result.GetProperty("testRunStatistics").GetProperty("<test>").GetProperty("meanResTime").ToString());
+            Console.WriteLine(result.GetProperty("testRunStatistics").GetProperty("<test>").GetProperty("medianResTime").ToString());
+            Console.WriteLine(result.GetProperty("testRunStatistics").GetProperty("<test>").GetProperty("maxResTime").ToString());
+            Console.WriteLine(result.GetProperty("testRunStatistics").GetProperty("<test>").GetProperty("minResTime").ToString());
+            Console.WriteLine(result.GetProperty("testRunStatistics").GetProperty("<test>").GetProperty("pct1ResTime").ToString());
+            Console.WriteLine(result.GetProperty("testRunStatistics").GetProperty("<test>").GetProperty("pct2ResTime").ToString());
+            Console.WriteLine(result.GetProperty("testRunStatistics").GetProperty("<test>").GetProperty("pct3ResTime").ToString());
+            Console.WriteLine(result.GetProperty("testRunStatistics").GetProperty("<test>").GetProperty("throughput").ToString());
+            Console.WriteLine(result.GetProperty("testRunStatistics").GetProperty("<test>").GetProperty("receivedKBytesPerSec").ToString());
+            Console.WriteLine(result.GetProperty("testRunStatistics").GetProperty("<test>").GetProperty("sentKBytesPerSec").ToString());
+            Console.WriteLine(result.GetProperty("loadTestConfiguration").GetProperty("engineInstances").ToString());
+            Console.WriteLine(result.GetProperty("loadTestConfiguration").GetProperty("splitAllCSVs").ToString());
+            Console.WriteLine(result.GetProperty("loadTestConfiguration").GetProperty("quickStartTest").ToString());
+            Console.WriteLine(result.GetProperty("loadTestConfiguration").GetProperty("optionalLoadTestConfig").GetProperty("endpointUrl").ToString());
+            Console.WriteLine(result.GetProperty("loadTestConfiguration").GetProperty("optionalLoadTestConfig").GetProperty("virtualUsers").ToString());
+            Console.WriteLine(result.GetProperty("loadTestConfiguration").GetProperty("optionalLoadTestConfig").GetProperty("rampUpTime").ToString());
+            Console.WriteLine(result.GetProperty("loadTestConfiguration").GetProperty("optionalLoadTestConfig").GetProperty("duration").ToString());
+            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("configFileInfo").GetProperty("url").ToString());
+            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("configFileInfo").GetProperty("fileName").ToString());
+            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("configFileInfo").GetProperty("fileType").ToString());
+            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("configFileInfo").GetProperty("expireDateTime").ToString());
+            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("configFileInfo").GetProperty("validationStatus").ToString());
+            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("configFileInfo").GetProperty("validationFailureDetails").ToString());
+            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("testScriptFileInfo").GetProperty("url").ToString());
+            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("testScriptFileInfo").GetProperty("fileName").ToString());
+            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("testScriptFileInfo").GetProperty("fileType").ToString());
+            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("testScriptFileInfo").GetProperty("expireDateTime").ToString());
+            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("testScriptFileInfo").GetProperty("validationStatus").ToString());
+            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("testScriptFileInfo").GetProperty("validationFailureDetails").ToString());
+            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("userPropFileInfo").GetProperty("url").ToString());
+            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("userPropFileInfo").GetProperty("fileName").ToString());
+            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("userPropFileInfo").GetProperty("fileType").ToString());
+            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("userPropFileInfo").GetProperty("expireDateTime").ToString());
+            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("userPropFileInfo").GetProperty("validationStatus").ToString());
+            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("userPropFileInfo").GetProperty("validationFailureDetails").ToString());
+            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("inputArtifactsZipFileInfo").GetProperty("url").ToString());
+            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("inputArtifactsZipFileInfo").GetProperty("fileName").ToString());
+            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("inputArtifactsZipFileInfo").GetProperty("fileType").ToString());
+            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("inputArtifactsZipFileInfo").GetProperty("expireDateTime").ToString());
+            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("inputArtifactsZipFileInfo").GetProperty("validationStatus").ToString());
+            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("inputArtifactsZipFileInfo").GetProperty("validationFailureDetails").ToString());
+            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("additionalFileInfo")[0].GetProperty("url").ToString());
+            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("additionalFileInfo")[0].GetProperty("fileName").ToString());
+            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("additionalFileInfo")[0].GetProperty("fileType").ToString());
+            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("additionalFileInfo")[0].GetProperty("expireDateTime").ToString());
+            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("additionalFileInfo")[0].GetProperty("validationStatus").ToString());
+            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("additionalFileInfo")[0].GetProperty("validationFailureDetails").ToString());
+            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("outputArtifacts").GetProperty("resultFileInfo").GetProperty("url").ToString());
+            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("outputArtifacts").GetProperty("resultFileInfo").GetProperty("fileName").ToString());
+            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("outputArtifacts").GetProperty("resultFileInfo").GetProperty("fileType").ToString());
+            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("outputArtifacts").GetProperty("resultFileInfo").GetProperty("expireDateTime").ToString());
+            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("outputArtifacts").GetProperty("resultFileInfo").GetProperty("validationStatus").ToString());
+            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("outputArtifacts").GetProperty("resultFileInfo").GetProperty("validationFailureDetails").ToString());
+            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("outputArtifacts").GetProperty("logsFileInfo").GetProperty("url").ToString());
+            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("outputArtifacts").GetProperty("logsFileInfo").GetProperty("fileName").ToString());
+            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("outputArtifacts").GetProperty("logsFileInfo").GetProperty("fileType").ToString());
+            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("outputArtifacts").GetProperty("logsFileInfo").GetProperty("expireDateTime").ToString());
+            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("outputArtifacts").GetProperty("logsFileInfo").GetProperty("validationStatus").ToString());
+            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("outputArtifacts").GetProperty("logsFileInfo").GetProperty("validationFailureDetails").ToString());
+            Console.WriteLine(result.GetProperty("testResult").ToString());
+            Console.WriteLine(result.GetProperty("virtualUsers").ToString());
+            Console.WriteLine(result.GetProperty("displayName").ToString());
+            Console.WriteLine(result.GetProperty("testId").ToString());
+            Console.WriteLine(result.GetProperty("description").ToString());
+            Console.WriteLine(result.GetProperty("status").ToString());
+            Console.WriteLine(result.GetProperty("startDateTime").ToString());
+            Console.WriteLine(result.GetProperty("endDateTime").ToString());
+            Console.WriteLine(result.GetProperty("executedDateTime").ToString());
+            Console.WriteLine(result.GetProperty("portalUrl").ToString());
+            Console.WriteLine(result.GetProperty("duration").ToString());
+            Console.WriteLine(result.GetProperty("subnetId").ToString());
+            Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+            Console.WriteLine(result.GetProperty("createdBy").ToString());
+            Console.WriteLine(result.GetProperty("lastModifiedDateTime").ToString());
+            Console.WriteLine(result.GetProperty("lastModifiedBy").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_GetTestRun_Convenience_Async()
+        {
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new LoadTestRunClient(endpoint, credential);
+
+            var result = await client.GetTestRunAsync("<testRunId>");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_GetTestRunFile()
+        {
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new LoadTestRunClient(endpoint, credential);
+
+            Response response = client.GetTestRunFile("<testRunId>", "<fileName>", new RequestContext());
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_GetTestRunFile_AllParameters()
+        {
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new LoadTestRunClient(endpoint, credential);
+
+            Response response = client.GetTestRunFile("<testRunId>", "<fileName>", new RequestContext());
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("url").ToString());
+            Console.WriteLine(result.GetProperty("fileName").ToString());
+            Console.WriteLine(result.GetProperty("fileType").ToString());
+            Console.WriteLine(result.GetProperty("expireDateTime").ToString());
+            Console.WriteLine(result.GetProperty("validationStatus").ToString());
+            Console.WriteLine(result.GetProperty("validationFailureDetails").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_GetTestRunFile_Async()
+        {
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new LoadTestRunClient(endpoint, credential);
+
+            Response response = await client.GetTestRunFileAsync("<testRunId>", "<fileName>", new RequestContext());
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_GetTestRunFile_AllParameters_Async()
+        {
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new LoadTestRunClient(endpoint, credential);
+
+            Response response = await client.GetTestRunFileAsync("<testRunId>", "<fileName>", new RequestContext());
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("url").ToString());
+            Console.WriteLine(result.GetProperty("fileName").ToString());
+            Console.WriteLine(result.GetProperty("fileType").ToString());
+            Console.WriteLine(result.GetProperty("expireDateTime").ToString());
+            Console.WriteLine(result.GetProperty("validationStatus").ToString());
+            Console.WriteLine(result.GetProperty("validationFailureDetails").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_GetTestRunFile_Convenience_Async()
+        {
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new LoadTestRunClient(endpoint, credential);
+
+            var result = await client.GetTestRunFileAsync("<testRunId>", "<fileName>");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_GetMetricDefinitions()
+        {
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new LoadTestRunClient(endpoint, credential);
+
+            Response response = client.GetMetricDefinitions("<testRunId>", "<metricNamespace>", new RequestContext());
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("value")[0].ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_GetMetricDefinitions_AllParameters()
+        {
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new LoadTestRunClient(endpoint, credential);
+
+            Response response = client.GetMetricDefinitions("<testRunId>", "<metricNamespace>", new RequestContext());
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("dimensions")[0].GetProperty("description").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("dimensions")[0].GetProperty("name").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("description").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("name").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("namespace").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("primaryAggregationType").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("supportedAggregationTypes")[0].ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("unit").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("metricAvailabilities")[0].GetProperty("timeGrain").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_GetMetricDefinitions_Async()
+        {
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new LoadTestRunClient(endpoint, credential);
+
+            Response response = await client.GetMetricDefinitionsAsync("<testRunId>", "<metricNamespace>", new RequestContext());
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("value")[0].ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_GetMetricDefinitions_AllParameters_Async()
+        {
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new LoadTestRunClient(endpoint, credential);
+
+            Response response = await client.GetMetricDefinitionsAsync("<testRunId>", "<metricNamespace>", new RequestContext());
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("dimensions")[0].GetProperty("description").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("dimensions")[0].GetProperty("name").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("description").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("name").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("namespace").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("primaryAggregationType").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("supportedAggregationTypes")[0].ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("unit").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("metricAvailabilities")[0].GetProperty("timeGrain").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_GetMetricDefinitions_Convenience_Async()
+        {
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new LoadTestRunClient(endpoint, credential);
+
+            var result = await client.GetMetricDefinitionsAsync("<testRunId>", "<metricNamespace>");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_GetMetricNamespaces()
+        {
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new LoadTestRunClient(endpoint, credential);
+
+            Response response = client.GetMetricNamespaces("<testRunId>", new RequestContext());
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("value")[0].ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_GetMetricNamespaces_AllParameters()
+        {
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new LoadTestRunClient(endpoint, credential);
+
+            Response response = client.GetMetricNamespaces("<testRunId>", new RequestContext());
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("description").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("name").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_GetMetricNamespaces_Async()
+        {
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new LoadTestRunClient(endpoint, credential);
+
+            Response response = await client.GetMetricNamespacesAsync("<testRunId>", new RequestContext());
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("value")[0].ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_GetMetricNamespaces_AllParameters_Async()
+        {
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new LoadTestRunClient(endpoint, credential);
+
+            Response response = await client.GetMetricNamespacesAsync("<testRunId>", new RequestContext());
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("description").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("name").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_GetMetricNamespaces_Convenience_Async()
+        {
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new LoadTestRunClient(endpoint, credential);
+
+            var result = await client.GetMetricNamespacesAsync("<testRunId>");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_StopTestRun()
+        {
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new LoadTestRunClient(endpoint, credential);
+
+            Response response = client.StopTestRun("<testRunId>", new RequestContext());
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_StopTestRun_AllParameters()
+        {
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new LoadTestRunClient(endpoint, credential);
+
+            Response response = client.StopTestRun("<testRunId>", new RequestContext());
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<test>").GetProperty("clientMetric").ToString());
+            Console.WriteLine(result.GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<test>").GetProperty("aggregate").ToString());
+            Console.WriteLine(result.GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<test>").GetProperty("condition").ToString());
+            Console.WriteLine(result.GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<test>").GetProperty("requestName").ToString());
+            Console.WriteLine(result.GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<test>").GetProperty("value").ToString());
+            Console.WriteLine(result.GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<test>").GetProperty("action").ToString());
+            Console.WriteLine(result.GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<test>").GetProperty("actualValue").ToString());
+            Console.WriteLine(result.GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<test>").GetProperty("result").ToString());
+            Console.WriteLine(result.GetProperty("secrets").GetProperty("<test>").GetProperty("value").ToString());
+            Console.WriteLine(result.GetProperty("secrets").GetProperty("<test>").GetProperty("type").ToString());
+            Console.WriteLine(result.GetProperty("certificate").GetProperty("value").ToString());
+            Console.WriteLine(result.GetProperty("certificate").GetProperty("type").ToString());
+            Console.WriteLine(result.GetProperty("certificate").GetProperty("name").ToString());
+            Console.WriteLine(result.GetProperty("environmentVariables").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("errorDetails")[0].GetProperty("message").ToString());
+            Console.WriteLine(result.GetProperty("testRunStatistics").GetProperty("<test>").GetProperty("transaction").ToString());
+            Console.WriteLine(result.GetProperty("testRunStatistics").GetProperty("<test>").GetProperty("sampleCount").ToString());
+            Console.WriteLine(result.GetProperty("testRunStatistics").GetProperty("<test>").GetProperty("errorCount").ToString());
+            Console.WriteLine(result.GetProperty("testRunStatistics").GetProperty("<test>").GetProperty("errorPct").ToString());
+            Console.WriteLine(result.GetProperty("testRunStatistics").GetProperty("<test>").GetProperty("meanResTime").ToString());
+            Console.WriteLine(result.GetProperty("testRunStatistics").GetProperty("<test>").GetProperty("medianResTime").ToString());
+            Console.WriteLine(result.GetProperty("testRunStatistics").GetProperty("<test>").GetProperty("maxResTime").ToString());
+            Console.WriteLine(result.GetProperty("testRunStatistics").GetProperty("<test>").GetProperty("minResTime").ToString());
+            Console.WriteLine(result.GetProperty("testRunStatistics").GetProperty("<test>").GetProperty("pct1ResTime").ToString());
+            Console.WriteLine(result.GetProperty("testRunStatistics").GetProperty("<test>").GetProperty("pct2ResTime").ToString());
+            Console.WriteLine(result.GetProperty("testRunStatistics").GetProperty("<test>").GetProperty("pct3ResTime").ToString());
+            Console.WriteLine(result.GetProperty("testRunStatistics").GetProperty("<test>").GetProperty("throughput").ToString());
+            Console.WriteLine(result.GetProperty("testRunStatistics").GetProperty("<test>").GetProperty("receivedKBytesPerSec").ToString());
+            Console.WriteLine(result.GetProperty("testRunStatistics").GetProperty("<test>").GetProperty("sentKBytesPerSec").ToString());
+            Console.WriteLine(result.GetProperty("loadTestConfiguration").GetProperty("engineInstances").ToString());
+            Console.WriteLine(result.GetProperty("loadTestConfiguration").GetProperty("splitAllCSVs").ToString());
+            Console.WriteLine(result.GetProperty("loadTestConfiguration").GetProperty("quickStartTest").ToString());
+            Console.WriteLine(result.GetProperty("loadTestConfiguration").GetProperty("optionalLoadTestConfig").GetProperty("endpointUrl").ToString());
+            Console.WriteLine(result.GetProperty("loadTestConfiguration").GetProperty("optionalLoadTestConfig").GetProperty("virtualUsers").ToString());
+            Console.WriteLine(result.GetProperty("loadTestConfiguration").GetProperty("optionalLoadTestConfig").GetProperty("rampUpTime").ToString());
+            Console.WriteLine(result.GetProperty("loadTestConfiguration").GetProperty("optionalLoadTestConfig").GetProperty("duration").ToString());
+            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("configFileInfo").GetProperty("url").ToString());
+            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("configFileInfo").GetProperty("fileName").ToString());
+            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("configFileInfo").GetProperty("fileType").ToString());
+            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("configFileInfo").GetProperty("expireDateTime").ToString());
+            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("configFileInfo").GetProperty("validationStatus").ToString());
+            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("configFileInfo").GetProperty("validationFailureDetails").ToString());
+            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("testScriptFileInfo").GetProperty("url").ToString());
+            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("testScriptFileInfo").GetProperty("fileName").ToString());
+            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("testScriptFileInfo").GetProperty("fileType").ToString());
+            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("testScriptFileInfo").GetProperty("expireDateTime").ToString());
+            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("testScriptFileInfo").GetProperty("validationStatus").ToString());
+            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("testScriptFileInfo").GetProperty("validationFailureDetails").ToString());
+            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("userPropFileInfo").GetProperty("url").ToString());
+            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("userPropFileInfo").GetProperty("fileName").ToString());
+            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("userPropFileInfo").GetProperty("fileType").ToString());
+            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("userPropFileInfo").GetProperty("expireDateTime").ToString());
+            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("userPropFileInfo").GetProperty("validationStatus").ToString());
+            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("userPropFileInfo").GetProperty("validationFailureDetails").ToString());
+            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("inputArtifactsZipFileInfo").GetProperty("url").ToString());
+            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("inputArtifactsZipFileInfo").GetProperty("fileName").ToString());
+            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("inputArtifactsZipFileInfo").GetProperty("fileType").ToString());
+            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("inputArtifactsZipFileInfo").GetProperty("expireDateTime").ToString());
+            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("inputArtifactsZipFileInfo").GetProperty("validationStatus").ToString());
+            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("inputArtifactsZipFileInfo").GetProperty("validationFailureDetails").ToString());
+            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("additionalFileInfo")[0].GetProperty("url").ToString());
+            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("additionalFileInfo")[0].GetProperty("fileName").ToString());
+            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("additionalFileInfo")[0].GetProperty("fileType").ToString());
+            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("additionalFileInfo")[0].GetProperty("expireDateTime").ToString());
+            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("additionalFileInfo")[0].GetProperty("validationStatus").ToString());
+            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("additionalFileInfo")[0].GetProperty("validationFailureDetails").ToString());
+            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("outputArtifacts").GetProperty("resultFileInfo").GetProperty("url").ToString());
+            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("outputArtifacts").GetProperty("resultFileInfo").GetProperty("fileName").ToString());
+            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("outputArtifacts").GetProperty("resultFileInfo").GetProperty("fileType").ToString());
+            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("outputArtifacts").GetProperty("resultFileInfo").GetProperty("expireDateTime").ToString());
+            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("outputArtifacts").GetProperty("resultFileInfo").GetProperty("validationStatus").ToString());
+            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("outputArtifacts").GetProperty("resultFileInfo").GetProperty("validationFailureDetails").ToString());
+            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("outputArtifacts").GetProperty("logsFileInfo").GetProperty("url").ToString());
+            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("outputArtifacts").GetProperty("logsFileInfo").GetProperty("fileName").ToString());
+            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("outputArtifacts").GetProperty("logsFileInfo").GetProperty("fileType").ToString());
+            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("outputArtifacts").GetProperty("logsFileInfo").GetProperty("expireDateTime").ToString());
+            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("outputArtifacts").GetProperty("logsFileInfo").GetProperty("validationStatus").ToString());
+            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("outputArtifacts").GetProperty("logsFileInfo").GetProperty("validationFailureDetails").ToString());
+            Console.WriteLine(result.GetProperty("testResult").ToString());
+            Console.WriteLine(result.GetProperty("virtualUsers").ToString());
+            Console.WriteLine(result.GetProperty("displayName").ToString());
+            Console.WriteLine(result.GetProperty("testId").ToString());
+            Console.WriteLine(result.GetProperty("description").ToString());
+            Console.WriteLine(result.GetProperty("status").ToString());
+            Console.WriteLine(result.GetProperty("startDateTime").ToString());
+            Console.WriteLine(result.GetProperty("endDateTime").ToString());
+            Console.WriteLine(result.GetProperty("executedDateTime").ToString());
+            Console.WriteLine(result.GetProperty("portalUrl").ToString());
+            Console.WriteLine(result.GetProperty("duration").ToString());
+            Console.WriteLine(result.GetProperty("subnetId").ToString());
+            Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+            Console.WriteLine(result.GetProperty("createdBy").ToString());
+            Console.WriteLine(result.GetProperty("lastModifiedDateTime").ToString());
+            Console.WriteLine(result.GetProperty("lastModifiedBy").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_StopTestRun_Async()
+        {
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new LoadTestRunClient(endpoint, credential);
+
+            Response response = await client.StopTestRunAsync("<testRunId>", new RequestContext());
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_StopTestRun_AllParameters_Async()
+        {
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new LoadTestRunClient(endpoint, credential);
+
+            Response response = await client.StopTestRunAsync("<testRunId>", new RequestContext());
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<test>").GetProperty("clientMetric").ToString());
+            Console.WriteLine(result.GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<test>").GetProperty("aggregate").ToString());
+            Console.WriteLine(result.GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<test>").GetProperty("condition").ToString());
+            Console.WriteLine(result.GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<test>").GetProperty("requestName").ToString());
+            Console.WriteLine(result.GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<test>").GetProperty("value").ToString());
+            Console.WriteLine(result.GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<test>").GetProperty("action").ToString());
+            Console.WriteLine(result.GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<test>").GetProperty("actualValue").ToString());
+            Console.WriteLine(result.GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<test>").GetProperty("result").ToString());
+            Console.WriteLine(result.GetProperty("secrets").GetProperty("<test>").GetProperty("value").ToString());
+            Console.WriteLine(result.GetProperty("secrets").GetProperty("<test>").GetProperty("type").ToString());
+            Console.WriteLine(result.GetProperty("certificate").GetProperty("value").ToString());
+            Console.WriteLine(result.GetProperty("certificate").GetProperty("type").ToString());
+            Console.WriteLine(result.GetProperty("certificate").GetProperty("name").ToString());
+            Console.WriteLine(result.GetProperty("environmentVariables").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("errorDetails")[0].GetProperty("message").ToString());
+            Console.WriteLine(result.GetProperty("testRunStatistics").GetProperty("<test>").GetProperty("transaction").ToString());
+            Console.WriteLine(result.GetProperty("testRunStatistics").GetProperty("<test>").GetProperty("sampleCount").ToString());
+            Console.WriteLine(result.GetProperty("testRunStatistics").GetProperty("<test>").GetProperty("errorCount").ToString());
+            Console.WriteLine(result.GetProperty("testRunStatistics").GetProperty("<test>").GetProperty("errorPct").ToString());
+            Console.WriteLine(result.GetProperty("testRunStatistics").GetProperty("<test>").GetProperty("meanResTime").ToString());
+            Console.WriteLine(result.GetProperty("testRunStatistics").GetProperty("<test>").GetProperty("medianResTime").ToString());
+            Console.WriteLine(result.GetProperty("testRunStatistics").GetProperty("<test>").GetProperty("maxResTime").ToString());
+            Console.WriteLine(result.GetProperty("testRunStatistics").GetProperty("<test>").GetProperty("minResTime").ToString());
+            Console.WriteLine(result.GetProperty("testRunStatistics").GetProperty("<test>").GetProperty("pct1ResTime").ToString());
+            Console.WriteLine(result.GetProperty("testRunStatistics").GetProperty("<test>").GetProperty("pct2ResTime").ToString());
+            Console.WriteLine(result.GetProperty("testRunStatistics").GetProperty("<test>").GetProperty("pct3ResTime").ToString());
+            Console.WriteLine(result.GetProperty("testRunStatistics").GetProperty("<test>").GetProperty("throughput").ToString());
+            Console.WriteLine(result.GetProperty("testRunStatistics").GetProperty("<test>").GetProperty("receivedKBytesPerSec").ToString());
+            Console.WriteLine(result.GetProperty("testRunStatistics").GetProperty("<test>").GetProperty("sentKBytesPerSec").ToString());
+            Console.WriteLine(result.GetProperty("loadTestConfiguration").GetProperty("engineInstances").ToString());
+            Console.WriteLine(result.GetProperty("loadTestConfiguration").GetProperty("splitAllCSVs").ToString());
+            Console.WriteLine(result.GetProperty("loadTestConfiguration").GetProperty("quickStartTest").ToString());
+            Console.WriteLine(result.GetProperty("loadTestConfiguration").GetProperty("optionalLoadTestConfig").GetProperty("endpointUrl").ToString());
+            Console.WriteLine(result.GetProperty("loadTestConfiguration").GetProperty("optionalLoadTestConfig").GetProperty("virtualUsers").ToString());
+            Console.WriteLine(result.GetProperty("loadTestConfiguration").GetProperty("optionalLoadTestConfig").GetProperty("rampUpTime").ToString());
+            Console.WriteLine(result.GetProperty("loadTestConfiguration").GetProperty("optionalLoadTestConfig").GetProperty("duration").ToString());
+            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("configFileInfo").GetProperty("url").ToString());
+            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("configFileInfo").GetProperty("fileName").ToString());
+            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("configFileInfo").GetProperty("fileType").ToString());
+            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("configFileInfo").GetProperty("expireDateTime").ToString());
+            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("configFileInfo").GetProperty("validationStatus").ToString());
+            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("configFileInfo").GetProperty("validationFailureDetails").ToString());
+            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("testScriptFileInfo").GetProperty("url").ToString());
+            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("testScriptFileInfo").GetProperty("fileName").ToString());
+            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("testScriptFileInfo").GetProperty("fileType").ToString());
+            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("testScriptFileInfo").GetProperty("expireDateTime").ToString());
+            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("testScriptFileInfo").GetProperty("validationStatus").ToString());
+            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("testScriptFileInfo").GetProperty("validationFailureDetails").ToString());
+            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("userPropFileInfo").GetProperty("url").ToString());
+            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("userPropFileInfo").GetProperty("fileName").ToString());
+            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("userPropFileInfo").GetProperty("fileType").ToString());
+            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("userPropFileInfo").GetProperty("expireDateTime").ToString());
+            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("userPropFileInfo").GetProperty("validationStatus").ToString());
+            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("userPropFileInfo").GetProperty("validationFailureDetails").ToString());
+            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("inputArtifactsZipFileInfo").GetProperty("url").ToString());
+            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("inputArtifactsZipFileInfo").GetProperty("fileName").ToString());
+            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("inputArtifactsZipFileInfo").GetProperty("fileType").ToString());
+            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("inputArtifactsZipFileInfo").GetProperty("expireDateTime").ToString());
+            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("inputArtifactsZipFileInfo").GetProperty("validationStatus").ToString());
+            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("inputArtifactsZipFileInfo").GetProperty("validationFailureDetails").ToString());
+            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("additionalFileInfo")[0].GetProperty("url").ToString());
+            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("additionalFileInfo")[0].GetProperty("fileName").ToString());
+            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("additionalFileInfo")[0].GetProperty("fileType").ToString());
+            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("additionalFileInfo")[0].GetProperty("expireDateTime").ToString());
+            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("additionalFileInfo")[0].GetProperty("validationStatus").ToString());
+            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("additionalFileInfo")[0].GetProperty("validationFailureDetails").ToString());
+            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("outputArtifacts").GetProperty("resultFileInfo").GetProperty("url").ToString());
+            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("outputArtifacts").GetProperty("resultFileInfo").GetProperty("fileName").ToString());
+            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("outputArtifacts").GetProperty("resultFileInfo").GetProperty("fileType").ToString());
+            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("outputArtifacts").GetProperty("resultFileInfo").GetProperty("expireDateTime").ToString());
+            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("outputArtifacts").GetProperty("resultFileInfo").GetProperty("validationStatus").ToString());
+            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("outputArtifacts").GetProperty("resultFileInfo").GetProperty("validationFailureDetails").ToString());
+            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("outputArtifacts").GetProperty("logsFileInfo").GetProperty("url").ToString());
+            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("outputArtifacts").GetProperty("logsFileInfo").GetProperty("fileName").ToString());
+            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("outputArtifacts").GetProperty("logsFileInfo").GetProperty("fileType").ToString());
+            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("outputArtifacts").GetProperty("logsFileInfo").GetProperty("expireDateTime").ToString());
+            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("outputArtifacts").GetProperty("logsFileInfo").GetProperty("validationStatus").ToString());
+            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("outputArtifacts").GetProperty("logsFileInfo").GetProperty("validationFailureDetails").ToString());
+            Console.WriteLine(result.GetProperty("testResult").ToString());
+            Console.WriteLine(result.GetProperty("virtualUsers").ToString());
+            Console.WriteLine(result.GetProperty("displayName").ToString());
+            Console.WriteLine(result.GetProperty("testId").ToString());
+            Console.WriteLine(result.GetProperty("description").ToString());
+            Console.WriteLine(result.GetProperty("status").ToString());
+            Console.WriteLine(result.GetProperty("startDateTime").ToString());
+            Console.WriteLine(result.GetProperty("endDateTime").ToString());
+            Console.WriteLine(result.GetProperty("executedDateTime").ToString());
+            Console.WriteLine(result.GetProperty("portalUrl").ToString());
+            Console.WriteLine(result.GetProperty("duration").ToString());
+            Console.WriteLine(result.GetProperty("subnetId").ToString());
+            Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+            Console.WriteLine(result.GetProperty("createdBy").ToString());
+            Console.WriteLine(result.GetProperty("lastModifiedDateTime").ToString());
+            Console.WriteLine(result.GetProperty("lastModifiedBy").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_StopTestRun_Convenience_Async()
+        {
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new LoadTestRunClient(endpoint, credential);
+
+            var result = await client.StopTestRunAsync("<testRunId>");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public void Example_GetMetrics()
         {
             var credential = new DefaultAzureCredential();
@@ -1159,7 +1233,7 @@ namespace Azure.Developer.LoadTesting.Samples
 
             var data = new { };
 
-            foreach (var item in client.GetMetrics("<testRunId>", "<metricname>", "<metricNamespace>", "<timespan>", RequestContent.Create(data)))
+            foreach (var item in client.GetMetrics("<testRunId>", RequestContent.Create(data)))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.ToString());
@@ -1186,7 +1260,7 @@ namespace Azure.Developer.LoadTesting.Samples
     },
             };
 
-            foreach (var item in client.GetMetrics("<testRunId>", "<metricname>", "<metricNamespace>", "<timespan>", RequestContent.Create(data), "<aggregation>", "<interval>", new RequestContext()))
+            foreach (var item in client.GetMetrics("<testRunId>", RequestContent.Create(data), "<aggregation>", "<interval>", "<metricName>", "<metricNamespace>", "<timespan>", new RequestContext()))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.GetProperty("data")[0].GetProperty("timestamp").ToString());
@@ -1206,7 +1280,7 @@ namespace Azure.Developer.LoadTesting.Samples
 
             var data = new { };
 
-            await foreach (var item in client.GetMetricsAsync("<testRunId>", "<metricname>", "<metricNamespace>", "<timespan>", RequestContent.Create(data)))
+            await foreach (var item in client.GetMetricsAsync("<testRunId>", RequestContent.Create(data)))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.ToString());
@@ -1233,7 +1307,7 @@ namespace Azure.Developer.LoadTesting.Samples
     },
             };
 
-            await foreach (var item in client.GetMetricsAsync("<testRunId>", "<metricname>", "<metricNamespace>", "<timespan>", RequestContent.Create(data), "<aggregation>", "<interval>", new RequestContext()))
+            await foreach (var item in client.GetMetricsAsync("<testRunId>", RequestContent.Create(data), "<aggregation>", "<interval>", "<metricName>", "<metricNamespace>", "<timespan>", new RequestContext()))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.GetProperty("data")[0].GetProperty("timestamp").ToString());
@@ -1245,62 +1319,398 @@ namespace Azure.Developer.LoadTesting.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetMetricDimensionValues()
+        public async Task Example_GetMetrics_Convenience_Async()
         {
             var credential = new DefaultAzureCredential();
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new LoadTestRunClient(endpoint, credential);
 
-            foreach (var item in client.GetMetricDimensionValues("<testRunId>", "<name>", "<metricName>", "<metricNamespace>", "<timeInterval>"))
+            var body = new MetricRequestPayload()
             {
-                JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result.ToString());
+                Filters =
+{
+        new DimensionFilter()
+{
+            Name = "<Name>",
+            Values =
+{
+                "<null>"
+            },
+        }
+    },
+            };
+            await foreach (var item in client.GetMetricsAsync("<testRunId>", body, "<aggregation>", null, "<metricName>", "<metricNamespace>", "<timespan>"))
+            {
             }
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetMetricDimensionValues_AllParameters()
+        public async Task Example_GetTestRuns_Convenience_Async()
         {
             var credential = new DefaultAzureCredential();
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new LoadTestRunClient(endpoint, credential);
 
-            foreach (var item in client.GetMetricDimensionValues("<testRunId>", "<name>", "<metricName>", "<metricNamespace>", "<timeInterval>", "<interval>", new RequestContext()))
+            await foreach (var item in client.GetTestRunsAsync("<orderby>", "<search>", "<testId>", DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, "<status>", 1234))
             {
-                JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result.ToString());
             }
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetMetricDimensionValues_Async()
+        public void Example_TestRun()
         {
             var credential = new DefaultAzureCredential();
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new LoadTestRunClient(endpoint, credential);
 
-            await foreach (var item in client.GetMetricDimensionValuesAsync("<testRunId>", "<name>", "<metricName>", "<metricNamespace>", "<timeInterval>"))
-            {
-                JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result.ToString());
-            }
+            var data = new { };
+
+            var operation = client.TestRun(WaitUntil.Completed, "<testRunId>", RequestContent.Create(data));
+
+            BinaryData responseData = operation.Value;
+            JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
+            Console.WriteLine(result.ToString());
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetMetricDimensionValues_AllParameters_Async()
+        public void Example_TestRun_AllParameters()
         {
             var credential = new DefaultAzureCredential();
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new LoadTestRunClient(endpoint, credential);
 
-            await foreach (var item in client.GetMetricDimensionValuesAsync("<testRunId>", "<name>", "<metricName>", "<metricNamespace>", "<timeInterval>", "<interval>", new RequestContext()))
+            var data = new
             {
-                JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result.ToString());
-            }
+                passFailCriteria = new
+                {
+                    passFailMetrics = new
+                    {
+                        key = new
+                        {
+                            clientMetric = "response_time_ms",
+                            aggregate = "count",
+                            condition = "<condition>",
+                            requestName = "<requestName>",
+                            value = 123.45f,
+                            action = "continue",
+                        },
+                    },
+                },
+                secrets = new
+                {
+                    key = new
+                    {
+                        value = "<value>",
+                        type = "AKV_SECRET_URI",
+                    },
+                },
+                certificate = new
+                {
+                    value = "<value>",
+                    type = "AKV_CERT_URI",
+                    name = "<name>",
+                },
+                environmentVariables = new
+                {
+                    key = "<String>",
+                },
+                loadTestConfiguration = new
+                {
+                    engineInstances = 1234,
+                    splitAllCSVs = true,
+                    quickStartTest = true,
+                    optionalLoadTestConfig = new
+                    {
+                        endpointUrl = "<endpointUrl>",
+                        virtualUsers = 1234,
+                        rampUpTime = 1234,
+                        duration = 1234,
+                    },
+                },
+                displayName = "<displayName>",
+                testId = "<testId>",
+                description = "<description>",
+            };
+
+            var operation = client.TestRun(WaitUntil.Completed, "<testRunId>", RequestContent.Create(data), "<oldTestRunId>", new RequestContext());
+
+            BinaryData responseData = operation.Value;
+            JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
+            Console.WriteLine(result.GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<test>").GetProperty("clientMetric").ToString());
+            Console.WriteLine(result.GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<test>").GetProperty("aggregate").ToString());
+            Console.WriteLine(result.GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<test>").GetProperty("condition").ToString());
+            Console.WriteLine(result.GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<test>").GetProperty("requestName").ToString());
+            Console.WriteLine(result.GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<test>").GetProperty("value").ToString());
+            Console.WriteLine(result.GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<test>").GetProperty("action").ToString());
+            Console.WriteLine(result.GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<test>").GetProperty("actualValue").ToString());
+            Console.WriteLine(result.GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<test>").GetProperty("result").ToString());
+            Console.WriteLine(result.GetProperty("secrets").GetProperty("<test>").GetProperty("value").ToString());
+            Console.WriteLine(result.GetProperty("secrets").GetProperty("<test>").GetProperty("type").ToString());
+            Console.WriteLine(result.GetProperty("certificate").GetProperty("value").ToString());
+            Console.WriteLine(result.GetProperty("certificate").GetProperty("type").ToString());
+            Console.WriteLine(result.GetProperty("certificate").GetProperty("name").ToString());
+            Console.WriteLine(result.GetProperty("environmentVariables").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("errorDetails")[0].GetProperty("message").ToString());
+            Console.WriteLine(result.GetProperty("testRunStatistics").GetProperty("<test>").GetProperty("transaction").ToString());
+            Console.WriteLine(result.GetProperty("testRunStatistics").GetProperty("<test>").GetProperty("sampleCount").ToString());
+            Console.WriteLine(result.GetProperty("testRunStatistics").GetProperty("<test>").GetProperty("errorCount").ToString());
+            Console.WriteLine(result.GetProperty("testRunStatistics").GetProperty("<test>").GetProperty("errorPct").ToString());
+            Console.WriteLine(result.GetProperty("testRunStatistics").GetProperty("<test>").GetProperty("meanResTime").ToString());
+            Console.WriteLine(result.GetProperty("testRunStatistics").GetProperty("<test>").GetProperty("medianResTime").ToString());
+            Console.WriteLine(result.GetProperty("testRunStatistics").GetProperty("<test>").GetProperty("maxResTime").ToString());
+            Console.WriteLine(result.GetProperty("testRunStatistics").GetProperty("<test>").GetProperty("minResTime").ToString());
+            Console.WriteLine(result.GetProperty("testRunStatistics").GetProperty("<test>").GetProperty("pct1ResTime").ToString());
+            Console.WriteLine(result.GetProperty("testRunStatistics").GetProperty("<test>").GetProperty("pct2ResTime").ToString());
+            Console.WriteLine(result.GetProperty("testRunStatistics").GetProperty("<test>").GetProperty("pct3ResTime").ToString());
+            Console.WriteLine(result.GetProperty("testRunStatistics").GetProperty("<test>").GetProperty("throughput").ToString());
+            Console.WriteLine(result.GetProperty("testRunStatistics").GetProperty("<test>").GetProperty("receivedKBytesPerSec").ToString());
+            Console.WriteLine(result.GetProperty("testRunStatistics").GetProperty("<test>").GetProperty("sentKBytesPerSec").ToString());
+            Console.WriteLine(result.GetProperty("loadTestConfiguration").GetProperty("engineInstances").ToString());
+            Console.WriteLine(result.GetProperty("loadTestConfiguration").GetProperty("splitAllCSVs").ToString());
+            Console.WriteLine(result.GetProperty("loadTestConfiguration").GetProperty("quickStartTest").ToString());
+            Console.WriteLine(result.GetProperty("loadTestConfiguration").GetProperty("optionalLoadTestConfig").GetProperty("endpointUrl").ToString());
+            Console.WriteLine(result.GetProperty("loadTestConfiguration").GetProperty("optionalLoadTestConfig").GetProperty("virtualUsers").ToString());
+            Console.WriteLine(result.GetProperty("loadTestConfiguration").GetProperty("optionalLoadTestConfig").GetProperty("rampUpTime").ToString());
+            Console.WriteLine(result.GetProperty("loadTestConfiguration").GetProperty("optionalLoadTestConfig").GetProperty("duration").ToString());
+            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("configFileInfo").GetProperty("url").ToString());
+            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("configFileInfo").GetProperty("fileName").ToString());
+            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("configFileInfo").GetProperty("fileType").ToString());
+            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("configFileInfo").GetProperty("expireDateTime").ToString());
+            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("configFileInfo").GetProperty("validationStatus").ToString());
+            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("configFileInfo").GetProperty("validationFailureDetails").ToString());
+            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("testScriptFileInfo").GetProperty("url").ToString());
+            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("testScriptFileInfo").GetProperty("fileName").ToString());
+            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("testScriptFileInfo").GetProperty("fileType").ToString());
+            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("testScriptFileInfo").GetProperty("expireDateTime").ToString());
+            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("testScriptFileInfo").GetProperty("validationStatus").ToString());
+            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("testScriptFileInfo").GetProperty("validationFailureDetails").ToString());
+            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("userPropFileInfo").GetProperty("url").ToString());
+            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("userPropFileInfo").GetProperty("fileName").ToString());
+            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("userPropFileInfo").GetProperty("fileType").ToString());
+            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("userPropFileInfo").GetProperty("expireDateTime").ToString());
+            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("userPropFileInfo").GetProperty("validationStatus").ToString());
+            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("userPropFileInfo").GetProperty("validationFailureDetails").ToString());
+            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("inputArtifactsZipFileInfo").GetProperty("url").ToString());
+            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("inputArtifactsZipFileInfo").GetProperty("fileName").ToString());
+            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("inputArtifactsZipFileInfo").GetProperty("fileType").ToString());
+            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("inputArtifactsZipFileInfo").GetProperty("expireDateTime").ToString());
+            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("inputArtifactsZipFileInfo").GetProperty("validationStatus").ToString());
+            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("inputArtifactsZipFileInfo").GetProperty("validationFailureDetails").ToString());
+            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("additionalFileInfo")[0].GetProperty("url").ToString());
+            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("additionalFileInfo")[0].GetProperty("fileName").ToString());
+            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("additionalFileInfo")[0].GetProperty("fileType").ToString());
+            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("additionalFileInfo")[0].GetProperty("expireDateTime").ToString());
+            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("additionalFileInfo")[0].GetProperty("validationStatus").ToString());
+            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("additionalFileInfo")[0].GetProperty("validationFailureDetails").ToString());
+            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("outputArtifacts").GetProperty("resultFileInfo").GetProperty("url").ToString());
+            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("outputArtifacts").GetProperty("resultFileInfo").GetProperty("fileName").ToString());
+            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("outputArtifacts").GetProperty("resultFileInfo").GetProperty("fileType").ToString());
+            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("outputArtifacts").GetProperty("resultFileInfo").GetProperty("expireDateTime").ToString());
+            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("outputArtifacts").GetProperty("resultFileInfo").GetProperty("validationStatus").ToString());
+            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("outputArtifacts").GetProperty("resultFileInfo").GetProperty("validationFailureDetails").ToString());
+            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("outputArtifacts").GetProperty("logsFileInfo").GetProperty("url").ToString());
+            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("outputArtifacts").GetProperty("logsFileInfo").GetProperty("fileName").ToString());
+            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("outputArtifacts").GetProperty("logsFileInfo").GetProperty("fileType").ToString());
+            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("outputArtifacts").GetProperty("logsFileInfo").GetProperty("expireDateTime").ToString());
+            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("outputArtifacts").GetProperty("logsFileInfo").GetProperty("validationStatus").ToString());
+            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("outputArtifacts").GetProperty("logsFileInfo").GetProperty("validationFailureDetails").ToString());
+            Console.WriteLine(result.GetProperty("testResult").ToString());
+            Console.WriteLine(result.GetProperty("virtualUsers").ToString());
+            Console.WriteLine(result.GetProperty("displayName").ToString());
+            Console.WriteLine(result.GetProperty("testId").ToString());
+            Console.WriteLine(result.GetProperty("description").ToString());
+            Console.WriteLine(result.GetProperty("status").ToString());
+            Console.WriteLine(result.GetProperty("startDateTime").ToString());
+            Console.WriteLine(result.GetProperty("endDateTime").ToString());
+            Console.WriteLine(result.GetProperty("executedDateTime").ToString());
+            Console.WriteLine(result.GetProperty("portalUrl").ToString());
+            Console.WriteLine(result.GetProperty("duration").ToString());
+            Console.WriteLine(result.GetProperty("subnetId").ToString());
+            Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+            Console.WriteLine(result.GetProperty("createdBy").ToString());
+            Console.WriteLine(result.GetProperty("lastModifiedDateTime").ToString());
+            Console.WriteLine(result.GetProperty("lastModifiedBy").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_TestRun_Async()
+        {
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new LoadTestRunClient(endpoint, credential);
+
+            var data = new { };
+
+            var operation = await client.TestRunAsync(WaitUntil.Completed, "<testRunId>", RequestContent.Create(data));
+
+            BinaryData responseData = operation.Value;
+            JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
+            Console.WriteLine(result.ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_TestRun_AllParameters_Async()
+        {
+            var credential = new DefaultAzureCredential();
+            var endpoint = new Uri("<https://my-service.azure.com>");
+            var client = new LoadTestRunClient(endpoint, credential);
+
+            var data = new
+            {
+                passFailCriteria = new
+                {
+                    passFailMetrics = new
+                    {
+                        key = new
+                        {
+                            clientMetric = "response_time_ms",
+                            aggregate = "count",
+                            condition = "<condition>",
+                            requestName = "<requestName>",
+                            value = 123.45f,
+                            action = "continue",
+                        },
+                    },
+                },
+                secrets = new
+                {
+                    key = new
+                    {
+                        value = "<value>",
+                        type = "AKV_SECRET_URI",
+                    },
+                },
+                certificate = new
+                {
+                    value = "<value>",
+                    type = "AKV_CERT_URI",
+                    name = "<name>",
+                },
+                environmentVariables = new
+                {
+                    key = "<String>",
+                },
+                loadTestConfiguration = new
+                {
+                    engineInstances = 1234,
+                    splitAllCSVs = true,
+                    quickStartTest = true,
+                    optionalLoadTestConfig = new
+                    {
+                        endpointUrl = "<endpointUrl>",
+                        virtualUsers = 1234,
+                        rampUpTime = 1234,
+                        duration = 1234,
+                    },
+                },
+                displayName = "<displayName>",
+                testId = "<testId>",
+                description = "<description>",
+            };
+
+            var operation = await client.TestRunAsync(WaitUntil.Completed, "<testRunId>", RequestContent.Create(data), "<oldTestRunId>", new RequestContext());
+
+            BinaryData responseData = operation.Value;
+            JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
+            Console.WriteLine(result.GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<test>").GetProperty("clientMetric").ToString());
+            Console.WriteLine(result.GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<test>").GetProperty("aggregate").ToString());
+            Console.WriteLine(result.GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<test>").GetProperty("condition").ToString());
+            Console.WriteLine(result.GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<test>").GetProperty("requestName").ToString());
+            Console.WriteLine(result.GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<test>").GetProperty("value").ToString());
+            Console.WriteLine(result.GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<test>").GetProperty("action").ToString());
+            Console.WriteLine(result.GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<test>").GetProperty("actualValue").ToString());
+            Console.WriteLine(result.GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<test>").GetProperty("result").ToString());
+            Console.WriteLine(result.GetProperty("secrets").GetProperty("<test>").GetProperty("value").ToString());
+            Console.WriteLine(result.GetProperty("secrets").GetProperty("<test>").GetProperty("type").ToString());
+            Console.WriteLine(result.GetProperty("certificate").GetProperty("value").ToString());
+            Console.WriteLine(result.GetProperty("certificate").GetProperty("type").ToString());
+            Console.WriteLine(result.GetProperty("certificate").GetProperty("name").ToString());
+            Console.WriteLine(result.GetProperty("environmentVariables").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("errorDetails")[0].GetProperty("message").ToString());
+            Console.WriteLine(result.GetProperty("testRunStatistics").GetProperty("<test>").GetProperty("transaction").ToString());
+            Console.WriteLine(result.GetProperty("testRunStatistics").GetProperty("<test>").GetProperty("sampleCount").ToString());
+            Console.WriteLine(result.GetProperty("testRunStatistics").GetProperty("<test>").GetProperty("errorCount").ToString());
+            Console.WriteLine(result.GetProperty("testRunStatistics").GetProperty("<test>").GetProperty("errorPct").ToString());
+            Console.WriteLine(result.GetProperty("testRunStatistics").GetProperty("<test>").GetProperty("meanResTime").ToString());
+            Console.WriteLine(result.GetProperty("testRunStatistics").GetProperty("<test>").GetProperty("medianResTime").ToString());
+            Console.WriteLine(result.GetProperty("testRunStatistics").GetProperty("<test>").GetProperty("maxResTime").ToString());
+            Console.WriteLine(result.GetProperty("testRunStatistics").GetProperty("<test>").GetProperty("minResTime").ToString());
+            Console.WriteLine(result.GetProperty("testRunStatistics").GetProperty("<test>").GetProperty("pct1ResTime").ToString());
+            Console.WriteLine(result.GetProperty("testRunStatistics").GetProperty("<test>").GetProperty("pct2ResTime").ToString());
+            Console.WriteLine(result.GetProperty("testRunStatistics").GetProperty("<test>").GetProperty("pct3ResTime").ToString());
+            Console.WriteLine(result.GetProperty("testRunStatistics").GetProperty("<test>").GetProperty("throughput").ToString());
+            Console.WriteLine(result.GetProperty("testRunStatistics").GetProperty("<test>").GetProperty("receivedKBytesPerSec").ToString());
+            Console.WriteLine(result.GetProperty("testRunStatistics").GetProperty("<test>").GetProperty("sentKBytesPerSec").ToString());
+            Console.WriteLine(result.GetProperty("loadTestConfiguration").GetProperty("engineInstances").ToString());
+            Console.WriteLine(result.GetProperty("loadTestConfiguration").GetProperty("splitAllCSVs").ToString());
+            Console.WriteLine(result.GetProperty("loadTestConfiguration").GetProperty("quickStartTest").ToString());
+            Console.WriteLine(result.GetProperty("loadTestConfiguration").GetProperty("optionalLoadTestConfig").GetProperty("endpointUrl").ToString());
+            Console.WriteLine(result.GetProperty("loadTestConfiguration").GetProperty("optionalLoadTestConfig").GetProperty("virtualUsers").ToString());
+            Console.WriteLine(result.GetProperty("loadTestConfiguration").GetProperty("optionalLoadTestConfig").GetProperty("rampUpTime").ToString());
+            Console.WriteLine(result.GetProperty("loadTestConfiguration").GetProperty("optionalLoadTestConfig").GetProperty("duration").ToString());
+            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("configFileInfo").GetProperty("url").ToString());
+            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("configFileInfo").GetProperty("fileName").ToString());
+            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("configFileInfo").GetProperty("fileType").ToString());
+            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("configFileInfo").GetProperty("expireDateTime").ToString());
+            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("configFileInfo").GetProperty("validationStatus").ToString());
+            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("configFileInfo").GetProperty("validationFailureDetails").ToString());
+            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("testScriptFileInfo").GetProperty("url").ToString());
+            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("testScriptFileInfo").GetProperty("fileName").ToString());
+            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("testScriptFileInfo").GetProperty("fileType").ToString());
+            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("testScriptFileInfo").GetProperty("expireDateTime").ToString());
+            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("testScriptFileInfo").GetProperty("validationStatus").ToString());
+            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("testScriptFileInfo").GetProperty("validationFailureDetails").ToString());
+            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("userPropFileInfo").GetProperty("url").ToString());
+            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("userPropFileInfo").GetProperty("fileName").ToString());
+            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("userPropFileInfo").GetProperty("fileType").ToString());
+            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("userPropFileInfo").GetProperty("expireDateTime").ToString());
+            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("userPropFileInfo").GetProperty("validationStatus").ToString());
+            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("userPropFileInfo").GetProperty("validationFailureDetails").ToString());
+            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("inputArtifactsZipFileInfo").GetProperty("url").ToString());
+            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("inputArtifactsZipFileInfo").GetProperty("fileName").ToString());
+            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("inputArtifactsZipFileInfo").GetProperty("fileType").ToString());
+            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("inputArtifactsZipFileInfo").GetProperty("expireDateTime").ToString());
+            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("inputArtifactsZipFileInfo").GetProperty("validationStatus").ToString());
+            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("inputArtifactsZipFileInfo").GetProperty("validationFailureDetails").ToString());
+            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("additionalFileInfo")[0].GetProperty("url").ToString());
+            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("additionalFileInfo")[0].GetProperty("fileName").ToString());
+            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("additionalFileInfo")[0].GetProperty("fileType").ToString());
+            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("additionalFileInfo")[0].GetProperty("expireDateTime").ToString());
+            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("additionalFileInfo")[0].GetProperty("validationStatus").ToString());
+            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("inputArtifacts").GetProperty("additionalFileInfo")[0].GetProperty("validationFailureDetails").ToString());
+            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("outputArtifacts").GetProperty("resultFileInfo").GetProperty("url").ToString());
+            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("outputArtifacts").GetProperty("resultFileInfo").GetProperty("fileName").ToString());
+            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("outputArtifacts").GetProperty("resultFileInfo").GetProperty("fileType").ToString());
+            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("outputArtifacts").GetProperty("resultFileInfo").GetProperty("expireDateTime").ToString());
+            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("outputArtifacts").GetProperty("resultFileInfo").GetProperty("validationStatus").ToString());
+            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("outputArtifacts").GetProperty("resultFileInfo").GetProperty("validationFailureDetails").ToString());
+            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("outputArtifacts").GetProperty("logsFileInfo").GetProperty("url").ToString());
+            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("outputArtifacts").GetProperty("logsFileInfo").GetProperty("fileName").ToString());
+            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("outputArtifacts").GetProperty("logsFileInfo").GetProperty("fileType").ToString());
+            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("outputArtifacts").GetProperty("logsFileInfo").GetProperty("expireDateTime").ToString());
+            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("outputArtifacts").GetProperty("logsFileInfo").GetProperty("validationStatus").ToString());
+            Console.WriteLine(result.GetProperty("testArtifacts").GetProperty("outputArtifacts").GetProperty("logsFileInfo").GetProperty("validationFailureDetails").ToString());
+            Console.WriteLine(result.GetProperty("testResult").ToString());
+            Console.WriteLine(result.GetProperty("virtualUsers").ToString());
+            Console.WriteLine(result.GetProperty("displayName").ToString());
+            Console.WriteLine(result.GetProperty("testId").ToString());
+            Console.WriteLine(result.GetProperty("description").ToString());
+            Console.WriteLine(result.GetProperty("status").ToString());
+            Console.WriteLine(result.GetProperty("startDateTime").ToString());
+            Console.WriteLine(result.GetProperty("endDateTime").ToString());
+            Console.WriteLine(result.GetProperty("executedDateTime").ToString());
+            Console.WriteLine(result.GetProperty("portalUrl").ToString());
+            Console.WriteLine(result.GetProperty("duration").ToString());
+            Console.WriteLine(result.GetProperty("subnetId").ToString());
+            Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+            Console.WriteLine(result.GetProperty("createdBy").ToString());
+            Console.WriteLine(result.GetProperty("lastModifiedDateTime").ToString());
+            Console.WriteLine(result.GetProperty("lastModifiedBy").ToString());
         }
     }
 }
