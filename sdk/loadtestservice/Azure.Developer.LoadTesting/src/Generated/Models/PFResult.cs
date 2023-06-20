@@ -27,7 +27,7 @@ namespace Azure.Developer.LoadTesting.Models
 
         /// <summary> Given pass fail criteria metric has passed. </summary>
         public static PFResult Passed { get; } = new PFResult(PassedValue);
-        /// <summary> Given pass fail criteria metric couldn&apos;t determine. </summary>
+        /// <summary> Given pass fail criteria metric couldn't determine. </summary>
         public static PFResult Undetermined { get; } = new PFResult(UndeterminedValue);
         /// <summary> Given pass fail criteria metric has failed. </summary>
         public static PFResult Failed { get; } = new PFResult(FailedValue);

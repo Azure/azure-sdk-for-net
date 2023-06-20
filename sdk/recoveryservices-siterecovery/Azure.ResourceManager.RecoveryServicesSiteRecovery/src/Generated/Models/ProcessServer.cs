@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Initializes a new instance of ProcessServer. </summary>
-        /// <param name="friendlyName"> The Process Server&apos;s friendly name. </param>
+        /// <param name="friendlyName"> The Process Server's friendly name. </param>
         /// <param name="id"> The Process Server Id. </param>
         /// <param name="ipAddress"> The IP address of the server. </param>
         /// <param name="osType"> The OS type of the server. </param>
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             MarsRegistrationStatus = marsRegistrationStatus;
         }
 
-        /// <summary> The Process Server&apos;s friendly name. </summary>
+        /// <summary> The Process Server's friendly name. </summary>
         public string FriendlyName { get; }
         /// <summary> The Process Server Id. </summary>
         public string Id { get; }

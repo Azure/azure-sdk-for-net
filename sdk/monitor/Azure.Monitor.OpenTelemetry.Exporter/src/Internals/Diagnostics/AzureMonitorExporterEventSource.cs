@@ -8,7 +8,7 @@ using System.Runtime.CompilerServices;
 namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics
 {
     [EventSource(Name = EventSourceName)]
-    internal sealed class AzureMonitorExporterEventSource : EventSource
+    internal sealed partial class AzureMonitorExporterEventSource : EventSource
     {
         internal const string EventSourceName = "OpenTelemetry-AzureMonitor-Exporter";
 
@@ -55,7 +55,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics
         {
             if (IsEnabled(eventLevel))
             {
-                WriteEvent(eventId, name, exception.LogAsyncException()?.ToInvariantString());
+                WriteEvent(eventId, name, exception.FlattenException()?.ToInvariantString());
             }
         }
 

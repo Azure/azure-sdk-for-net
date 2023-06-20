@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Consumption.Models
         /// Serialized Name: LegacyUsageDetail.properties.meterId
         /// </param>
         /// <param name="meterDetails">
-        /// The details about the meter. By default this is not populated, unless it&apos;s specified in $expand.
+        /// The details about the meter. By default this is not populated, unless it's specified in $expand.
         /// Serialized Name: LegacyUsageDetail.properties.meterDetails
         /// </param>
         /// <param name="quantity">
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.Consumption.Models
         /// Serialized Name: LegacyUsageDetail.properties.quantity
         /// </param>
         /// <param name="effectivePrice">
-        /// Effective Price that&apos;s charged for the usage.
+        /// Effective Price that's charged for the usage.
         /// Serialized Name: LegacyUsageDetail.properties.effectivePrice
         /// </param>
         /// <param name="cost">
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.Consumption.Models
         /// Serialized Name: LegacyUsageDetail.properties.serviceInfo2
         /// </param>
         /// <param name="additionalInfo">
-        /// Additional details of this usage item. By default this is not populated, unless it&apos;s specified in $expand. Use this field to get usage line item specific details such as the actual VM Size (ServiceType) or the ratio in which the reservation discount is applied.
+        /// Additional details of this usage item. By default this is not populated, unless it's specified in $expand. Use this field to get usage line item specific details such as the actual VM Size (ServiceType) or the ratio in which the reservation discount is applied.
         /// Serialized Name: LegacyUsageDetail.properties.additionalInfo
         /// </param>
         /// <param name="invoiceSection">
@@ -348,7 +348,7 @@ namespace Azure.ResourceManager.Consumption.Models
         /// </summary>
         public Guid? MeterId { get; }
         /// <summary>
-        /// The details about the meter. By default this is not populated, unless it&apos;s specified in $expand.
+        /// The details about the meter. By default this is not populated, unless it's specified in $expand.
         /// Serialized Name: LegacyUsageDetail.properties.meterDetails
         /// </summary>
         public ConsumptionMeterDetailsInfo MeterDetails { get; }
@@ -358,7 +358,7 @@ namespace Azure.ResourceManager.Consumption.Models
         /// </summary>
         public decimal? Quantity { get; }
         /// <summary>
-        /// Effective Price that&apos;s charged for the usage.
+        /// Effective Price that's charged for the usage.
         /// Serialized Name: LegacyUsageDetail.properties.effectivePrice
         /// </summary>
         public decimal? EffectivePrice { get; }
@@ -408,7 +408,7 @@ namespace Azure.ResourceManager.Consumption.Models
         /// </summary>
         public string ServiceInfo2 { get; }
         /// <summary>
-        /// Additional details of this usage item. By default this is not populated, unless it&apos;s specified in $expand. Use this field to get usage line item specific details such as the actual VM Size (ServiceType) or the ratio in which the reservation discount is applied.
+        /// Additional details of this usage item. By default this is not populated, unless it's specified in $expand. Use this field to get usage line item specific details such as the actual VM Size (ServiceType) or the ratio in which the reservation discount is applied.
         /// Serialized Name: LegacyUsageDetail.properties.additionalInfo
         /// </summary>
         public string AdditionalInfo { get; }

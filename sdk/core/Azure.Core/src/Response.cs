@@ -6,7 +6,6 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using Azure.Core;
-using Azure.Core.Serialization;
 
 namespace Azure
 {
@@ -45,8 +44,6 @@ namespace Azure
         // TODO(matell): The .NET Framework team plans to add BinaryData.Empty in dotnet/runtime#49670, and we can use it then.
         private static readonly BinaryData s_EmptyBinaryData = new BinaryData(Array.Empty<byte>());
 
-        internal ProtocolMethodOptions ProtocolMethodOptions { get; set; } = new();
-
         /// <summary>
         /// Gets the contents of HTTP response, if it is available.
         /// </summary>
@@ -71,11 +68,11 @@ namespace Azure
 
                 if (memoryContent.TryGetBuffer(out ArraySegment<byte> segment))
                 {
-                    return new ResponseContent(segment.AsMemory(), ProtocolMethodOptions);
+                    return new BinaryData(segment.AsMemory());
                 }
                 else
                 {
-                    return new ResponseContent(memoryContent.ToArray(), ProtocolMethodOptions);
+                    return new BinaryData(memoryContent.ToArray());
                 }
             }
         }

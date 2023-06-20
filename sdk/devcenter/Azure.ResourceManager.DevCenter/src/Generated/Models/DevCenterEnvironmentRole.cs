@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DevCenter.Models
         }
 
         /// <summary> Initializes a new instance of DevCenterEnvironmentRole. </summary>
-        /// <param name="roleName"> The common name of the Role Assignment. This is a descriptive name such as &apos;AcrPush&apos;. </param>
+        /// <param name="roleName"> The common name of the Role Assignment. This is a descriptive name such as 'AcrPush'. </param>
         /// <param name="description"> This is a description of the Role Assignment. </param>
         internal DevCenterEnvironmentRole(string roleName, string description)
         {
@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.DevCenter.Models
             Description = description;
         }
 
-        /// <summary> The common name of the Role Assignment. This is a descriptive name such as &apos;AcrPush&apos;. </summary>
+        /// <summary> The common name of the Role Assignment. This is a descriptive name such as 'AcrPush'. </summary>
         public string RoleName { get; }
         /// <summary> This is a description of the Role Assignment. </summary>
         public string Description { get; }

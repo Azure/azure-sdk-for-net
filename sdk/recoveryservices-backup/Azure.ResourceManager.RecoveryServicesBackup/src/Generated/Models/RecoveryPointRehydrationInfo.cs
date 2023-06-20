@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <summary> Initializes a new instance of RecoveryPointRehydrationInfo. </summary>
         /// <param name="rehydrationRetentionDuration">
         /// How long the rehydrated RP should be kept
-        /// Should be ISO8601 Duration format e.g. &quot;P7D&quot;
+        /// Should be ISO8601 Duration format e.g. "P7D"
         /// </param>
         /// <param name="rehydrationPriority"> Rehydration Priority. </param>
         internal RecoveryPointRehydrationInfo(TimeSpan? rehydrationRetentionDuration, RehydrationPriority? rehydrationPriority)
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         /// <summary>
         /// How long the rehydrated RP should be kept
-        /// Should be ISO8601 Duration format e.g. &quot;P7D&quot;
+        /// Should be ISO8601 Duration format e.g. "P7D"
         /// </summary>
         public TimeSpan? RehydrationRetentionDuration { get; set; }
         /// <summary> Rehydration Priority. </summary>

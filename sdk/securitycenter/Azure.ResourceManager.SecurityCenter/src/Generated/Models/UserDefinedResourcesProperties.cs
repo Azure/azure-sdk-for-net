@@ -10,11 +10,11 @@ using System.Linq;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary> Properties of the IoT Security solution&apos;s user defined resources. </summary>
+    /// <summary> Properties of the IoT Security solution's user defined resources. </summary>
     public partial class UserDefinedResourcesProperties
     {
         /// <summary> Initializes a new instance of UserDefinedResourcesProperties. </summary>
-        /// <param name="query"> Azure Resource Graph query which represents the security solution&apos;s user defined resources. Required to start with &quot;where type != &quot;Microsoft.Devices/IotHubs&quot;&quot;. </param>
+        /// <param name="query"> Azure Resource Graph query which represents the security solution's user defined resources. Required to start with "where type != "Microsoft.Devices/IotHubs"". </param>
         /// <param name="querySubscriptions"> List of Azure subscription ids on which the user defined resources query should be executed. </param>
         public UserDefinedResourcesProperties(string query, IEnumerable<string> querySubscriptions)
         {
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         }
 
         /// <summary> Initializes a new instance of UserDefinedResourcesProperties. </summary>
-        /// <param name="query"> Azure Resource Graph query which represents the security solution&apos;s user defined resources. Required to start with &quot;where type != &quot;Microsoft.Devices/IotHubs&quot;&quot;. </param>
+        /// <param name="query"> Azure Resource Graph query which represents the security solution's user defined resources. Required to start with "where type != "Microsoft.Devices/IotHubs"". </param>
         /// <param name="querySubscriptions"> List of Azure subscription ids on which the user defined resources query should be executed. </param>
         internal UserDefinedResourcesProperties(string query, IList<string> querySubscriptions)
         {
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             QuerySubscriptions = querySubscriptions;
         }
 
-        /// <summary> Azure Resource Graph query which represents the security solution&apos;s user defined resources. Required to start with &quot;where type != &quot;Microsoft.Devices/IotHubs&quot;&quot;. </summary>
+        /// <summary> Azure Resource Graph query which represents the security solution's user defined resources. Required to start with "where type != "Microsoft.Devices/IotHubs"". </summary>
         public string Query { get; set; }
         /// <summary> List of Azure subscription ids on which the user defined resources query should be executed. </summary>
         public IList<string> QuerySubscriptions { get; set; }

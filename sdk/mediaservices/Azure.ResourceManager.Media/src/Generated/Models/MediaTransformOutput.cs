@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Media.Models
         }
 
         /// <summary> Initializes a new instance of MediaTransformOutput. </summary>
-        /// <param name="onError"> A Transform can define more than one outputs. This property defines what the service should do when one output fails - either continue to produce other outputs, or, stop the other outputs. The overall Job state will not reflect failures of outputs that are specified with &apos;ContinueJob&apos;. The default is &apos;StopProcessingJob&apos;. </param>
+        /// <param name="onError"> A Transform can define more than one outputs. This property defines what the service should do when one output fails - either continue to produce other outputs, or, stop the other outputs. The overall Job state will not reflect failures of outputs that are specified with 'ContinueJob'. The default is 'StopProcessingJob'. </param>
         /// <param name="relativePriority"> Sets the relative priority of the TransformOutputs within a Transform. This sets the priority that the service uses for processing TransformOutputs. The default priority is Normal. </param>
         /// <param name="preset">
         /// Preset that describes the operations that will be used to modify, transcode, or extract insights from the source file to generate the output.
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Media.Models
             Preset = preset;
         }
 
-        /// <summary> A Transform can define more than one outputs. This property defines what the service should do when one output fails - either continue to produce other outputs, or, stop the other outputs. The overall Job state will not reflect failures of outputs that are specified with &apos;ContinueJob&apos;. The default is &apos;StopProcessingJob&apos;. </summary>
+        /// <summary> A Transform can define more than one outputs. This property defines what the service should do when one output fails - either continue to produce other outputs, or, stop the other outputs. The overall Job state will not reflect failures of outputs that are specified with 'ContinueJob'. The default is 'StopProcessingJob'. </summary>
         public MediaTransformOnErrorType? OnError { get; set; }
         /// <summary> Sets the relative priority of the TransformOutputs within a Transform. This sets the priority that the service uses for processing TransformOutputs. The default priority is Normal. </summary>
         public MediaJobPriority? RelativePriority { get; set; }

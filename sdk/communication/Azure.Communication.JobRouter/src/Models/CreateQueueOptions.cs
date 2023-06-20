@@ -47,8 +47,6 @@ namespace Azure.Communication.JobRouter
         /// <summary>
         /// A set of key/value pairs that are identifying attributes used by the rules engines to make decisions.
         /// </summary>
-#pragma warning disable CA2227 // Collection properties should be read only
-        public IDictionary<string, LabelValue> Labels { get; set; } = new Dictionary<string, LabelValue>();
-#pragma warning restore CA2227 // Collection properties should be read only
+        public IDictionary<string, LabelValue> Labels { get; } = new Dictionary<string, LabelValue>();
     }
 }

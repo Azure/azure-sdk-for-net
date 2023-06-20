@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.PrivateDns.Models
         /// <param name="etag"> The ETag of the virtual network link. </param>
         /// <param name="virtualNetworkId"> The reference of the virtual network. </param>
         /// <param name="registrationEnabled"> Is auto-registration of virtual machine records in the virtual network in the Private DNS zone enabled?. </param>
-        /// <param name="virtualNetworkLinkState"> The status of the virtual network link to the Private DNS zone. Possible values are &apos;InProgress&apos; and &apos;Done&apos;. This is a read-only property and any attempt to set this value will be ignored. </param>
+        /// <param name="virtualNetworkLinkState"> The status of the virtual network link to the Private DNS zone. Possible values are 'InProgress' and 'Done'. This is a read-only property and any attempt to set this value will be ignored. </param>
         /// <param name="privateDnsProvisioningState"> The provisioning state of the resource. This is a read-only property and any attempt to set this value will be ignored. </param>
         /// <returns> A new <see cref="PrivateDns.VirtualNetworkLinkData"/> instance for mocking. </returns>
         public static VirtualNetworkLinkData VirtualNetworkLinkData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ETag? etag = null, ResourceIdentifier virtualNetworkId = null, bool? registrationEnabled = null, VirtualNetworkLinkState? virtualNetworkLinkState = null, PrivateDnsProvisioningState? privateDnsProvisioningState = null)

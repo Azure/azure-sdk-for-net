@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.ContainerService
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
         /// <param name="etag"> Resource Etag. </param>
-        /// <param name="hubProfile"> The FleetHubProfile configures the Fleet&apos;s hub. </param>
+        /// <param name="hubProfile"> The FleetHubProfile configures the Fleet's hub. </param>
         /// <param name="provisioningState"> The provisioning state of the last accepted operation. </param>
         internal ContainerServiceFleetData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, ContainerServiceFleetHubProfile hubProfile, ContainerServiceFleetProvisioningState? provisioningState) : base(id, name, resourceType, systemData, tags, location)
         {
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.ContainerService
 
         /// <summary> Resource Etag. </summary>
         public ETag? ETag { get; }
-        /// <summary> The FleetHubProfile configures the Fleet&apos;s hub. </summary>
+        /// <summary> The FleetHubProfile configures the Fleet's hub. </summary>
         public ContainerServiceFleetHubProfile HubProfile { get; set; }
         /// <summary> The provisioning state of the last accepted operation. </summary>
         public ContainerServiceFleetProvisioningState? ProvisioningState { get; }

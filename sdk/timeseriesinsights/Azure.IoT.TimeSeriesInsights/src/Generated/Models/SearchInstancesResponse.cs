@@ -22,7 +22,7 @@ namespace Azure.IoT.TimeSeriesInsights
         /// <summary> Initializes a new instance of SearchInstancesResponse. </summary>
         /// <param name="hits"> The list of instances matching the query based on the input. May be empty. </param>
         /// <param name="hitCount"> Total number of instances matching the query based on the input. </param>
-        /// <param name="continuationToken"> If returned, this means that current results represent a partial result. Continuation token allows to get the next page of results. To get the next page of query results, send the same request with continuation token parameter in &quot;x-ms-continuation&quot; HTTP header. </param>
+        /// <param name="continuationToken"> If returned, this means that current results represent a partial result. Continuation token allows to get the next page of results. To get the next page of query results, send the same request with continuation token parameter in "x-ms-continuation" HTTP header. </param>
         internal SearchInstancesResponse(IReadOnlyList<InstanceHit> hits, int? hitCount, string continuationToken)
         {
             Hits = hits;
@@ -34,7 +34,7 @@ namespace Azure.IoT.TimeSeriesInsights
         public IReadOnlyList<InstanceHit> Hits { get; }
         /// <summary> Total number of instances matching the query based on the input. </summary>
         public int? HitCount { get; }
-        /// <summary> If returned, this means that current results represent a partial result. Continuation token allows to get the next page of results. To get the next page of query results, send the same request with continuation token parameter in &quot;x-ms-continuation&quot; HTTP header. </summary>
+        /// <summary> If returned, this means that current results represent a partial result. Continuation token allows to get the next page of results. To get the next page of query results, send the same request with continuation token parameter in "x-ms-continuation" HTTP header. </summary>
         public string ContinuationToken { get; }
     }
 }

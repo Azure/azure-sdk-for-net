@@ -64,7 +64,7 @@ namespace Azure.Developer.LoadTesting.Samples
                 },
             };
 
-            Response response = client.CreateOrUpdateAppComponents("<testRunId>", RequestContent.Create(data), new RequestContext());
+            Response response = client.CreateOrUpdateAppComponents("<testRunId>", RequestContent.Create(data));
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("components").GetProperty("<test>").GetProperty("resourceId").ToString());
@@ -125,7 +125,7 @@ namespace Azure.Developer.LoadTesting.Samples
                 },
             };
 
-            Response response = await client.CreateOrUpdateAppComponentsAsync("<testRunId>", RequestContent.Create(data), new RequestContext());
+            Response response = await client.CreateOrUpdateAppComponentsAsync("<testRunId>", RequestContent.Create(data));
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("components").GetProperty("<test>").GetProperty("resourceId").ToString());
@@ -183,7 +183,7 @@ namespace Azure.Developer.LoadTesting.Samples
                 },
             };
 
-            Response response = client.CreateOrUpdateServerMetricsConfig("<testRunId>", RequestContent.Create(data), new RequestContext());
+            Response response = client.CreateOrUpdateServerMetricsConfig("<testRunId>", RequestContent.Create(data));
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("testRunId").ToString());
@@ -242,7 +242,7 @@ namespace Azure.Developer.LoadTesting.Samples
                 },
             };
 
-            Response response = await client.CreateOrUpdateServerMetricsConfigAsync("<testRunId>", RequestContent.Create(data), new RequestContext());
+            Response response = await client.CreateOrUpdateServerMetricsConfigAsync("<testRunId>", RequestContent.Create(data));
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("testRunId").ToString());
@@ -280,7 +280,7 @@ namespace Azure.Developer.LoadTesting.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new LoadTestRunClient(endpoint, credential);
 
-            Response response = client.DeleteTestRun("<testRunId>", new RequestContext());
+            Response response = client.DeleteTestRun("<testRunId>");
             Console.WriteLine(response.Status);
         }
 
@@ -304,7 +304,7 @@ namespace Azure.Developer.LoadTesting.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new LoadTestRunClient(endpoint, credential);
 
-            Response response = await client.DeleteTestRunAsync("<testRunId>", new RequestContext());
+            Response response = await client.DeleteTestRunAsync("<testRunId>");
             Console.WriteLine(response.Status);
         }
 
@@ -1260,7 +1260,7 @@ namespace Azure.Developer.LoadTesting.Samples
     },
             };
 
-            foreach (var item in client.GetMetrics("<testRunId>", RequestContent.Create(data), "<aggregation>", "<interval>", "<metricName>", "<metricNamespace>", "<timespan>", new RequestContext()))
+            foreach (var item in client.GetMetrics("<testRunId>", RequestContent.Create(data), "<aggregation>", "<interval>", "<metricName>", "<metricNamespace>", "<timespan>"))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.GetProperty("data")[0].GetProperty("timestamp").ToString());
@@ -1307,7 +1307,7 @@ namespace Azure.Developer.LoadTesting.Samples
     },
             };
 
-            await foreach (var item in client.GetMetricsAsync("<testRunId>", RequestContent.Create(data), "<aggregation>", "<interval>", "<metricName>", "<metricNamespace>", "<timespan>", new RequestContext()))
+            await foreach (var item in client.GetMetricsAsync("<testRunId>", RequestContent.Create(data), "<aggregation>", "<interval>", "<metricName>", "<metricNamespace>", "<timespan>"))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.GetProperty("data")[0].GetProperty("timestamp").ToString());
@@ -1435,7 +1435,7 @@ namespace Azure.Developer.LoadTesting.Samples
                 description = "<description>",
             };
 
-            var operation = client.TestRun(WaitUntil.Completed, "<testRunId>", RequestContent.Create(data), "<oldTestRunId>", new RequestContext());
+            var operation = client.TestRun(WaitUntil.Completed, "<testRunId>", RequestContent.Create(data), "<oldTestRunId>");
 
             BinaryData responseData = operation.Value;
             JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
@@ -1613,7 +1613,7 @@ namespace Azure.Developer.LoadTesting.Samples
                 description = "<description>",
             };
 
-            var operation = await client.TestRunAsync(WaitUntil.Completed, "<testRunId>", RequestContent.Create(data), "<oldTestRunId>", new RequestContext());
+            var operation = await client.TestRunAsync(WaitUntil.Completed, "<testRunId>", RequestContent.Create(data), "<oldTestRunId>");
 
             BinaryData responseData = operation.Value;
             JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;

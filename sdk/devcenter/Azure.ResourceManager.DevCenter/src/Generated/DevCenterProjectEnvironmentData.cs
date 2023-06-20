@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.DevCenter
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
         /// <param name="identity"> Managed identity properties. </param>
-        /// <param name="deploymentTargetId"> Id of a subscription that the environment type will be mapped to. The environment&apos;s resources will be deployed into this subscription. </param>
+        /// <param name="deploymentTargetId"> Id of a subscription that the environment type will be mapped to. The environment's resources will be deployed into this subscription. </param>
         /// <param name="status"> Defines whether this Environment Type can be used in this Project. </param>
         /// <param name="creatorRoleAssignment"> The role definition assigned to the environment creator on backing resources. </param>
         /// <param name="userRoleAssignments"> Role Assignments created on environment backing resources. This is a mapping from a user object ID to an object of role definition IDs. </param>
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.DevCenter
 
         /// <summary> Managed identity properties. </summary>
         public ManagedServiceIdentity Identity { get; set; }
-        /// <summary> Id of a subscription that the environment type will be mapped to. The environment&apos;s resources will be deployed into this subscription. </summary>
+        /// <summary> Id of a subscription that the environment type will be mapped to. The environment's resources will be deployed into this subscription. </summary>
         public ResourceIdentifier DeploymentTargetId { get; set; }
         /// <summary> Defines whether this Environment Type can be used in this Project. </summary>
         public EnvironmentTypeEnableStatus? Status { get; set; }

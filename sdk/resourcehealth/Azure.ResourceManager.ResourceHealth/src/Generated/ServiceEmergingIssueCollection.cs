@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.ResourceHealth
         }
 
         /// <summary>
-        /// Gets Azure services&apos; emerging issues.
+        /// Gets Azure services' emerging issues.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.ResourceHealth
         }
 
         /// <summary>
-        /// Gets Azure services&apos; emerging issues.
+        /// Gets Azure services' emerging issues.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.ResourceHealth
         }
 
         /// <summary>
-        /// Lists Azure services&apos; emerging issues.
+        /// Lists Azure services' emerging issues.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.ResourceHealth
         }
 
         /// <summary>
-        /// Lists Azure services&apos; emerging issues.
+        /// Lists Azure services' emerging issues.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>

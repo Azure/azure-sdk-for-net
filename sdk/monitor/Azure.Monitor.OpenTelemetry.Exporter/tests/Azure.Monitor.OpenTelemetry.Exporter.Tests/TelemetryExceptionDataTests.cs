@@ -188,7 +188,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             {
                 builder.AddOpenTelemetry(options =>
                 {
-                    options.ParseStateValues = true;
                     options.AddInMemoryExporter(logRecords);
                 });
                 builder.AddFilter(typeof(TelemetryExceptionDataTests).FullName, LogLevel.Trace);
@@ -205,14 +204,13 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         }
 
         [Fact]
-        public void ExceptionDataContainsExceptionDetailsofAllInnerExceptionsOfAggregateException()
+        public void ExceptionDataContainsExceptionDetailsOfAllInnerExceptionsOfAggregateException()
         {
             var logRecords = new List<LogRecord>();
             using var loggerFactory = LoggerFactory.Create(builder =>
             {
                 builder.AddOpenTelemetry(options =>
                 {
-                    options.ParseStateValues = true;
                     options.AddInMemoryExporter(logRecords);
                 });
                 builder.AddFilter(typeof(TelemetryExceptionDataTests).FullName, LogLevel.Trace);
@@ -248,7 +246,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             {
                 builder.AddOpenTelemetry(options =>
                 {
-                    options.ParseStateValues = true;
                     options.AddInMemoryExporter(logRecords);
                 });
                 builder.AddFilter(typeof(TelemetryExceptionDataTests).FullName, LogLevel.Trace);
@@ -282,7 +279,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             {
                 builder.AddOpenTelemetry(options =>
                 {
-                    options.ParseStateValues = true;
                     options.AddInMemoryExporter(logRecords);
                 });
                 builder.AddFilter(typeof(TelemetryExceptionDataTests).FullName, LogLevel.Trace);
@@ -311,7 +307,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             // The first exception is the AggregateException
             Assert.Equal("System.AggregateException", exceptionData.Exceptions[0].TypeName);
 
-#if NET462
+#if NETFRAMEWORK
             Assert.Equal("0", exceptionData.Exceptions[0].Message);
 #else
             Assert.Equal("0 (1) (2) (3) (4) (5) (6) (7) (8) (9) (10) (11) (12) (13) (14) (15)", exceptionData.Exceptions[0].Message);
@@ -351,7 +347,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             {
                 builder.AddOpenTelemetry(options =>
                 {
-                    options.ParseStateValues = true;
                     options.AddInMemoryExporter(logRecords);
                 });
                 builder.AddFilter(typeof(TelemetryExceptionDataTests).FullName, LogLevel.Trace);

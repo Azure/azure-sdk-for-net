@@ -67,7 +67,7 @@ var data = new {
     keyvaultReferenceIdentityId = "<keyvaultReferenceIdentityId>",
 };
 
-Response response = await client.CreateOrUpdateTestAsync("<testId>", RequestContent.Create(data), new RequestContext());
+Response response = await client.CreateOrUpdateTestAsync("<testId>", RequestContent.Create(data));
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<test>").GetProperty("clientMetric").ToString());
@@ -200,7 +200,7 @@ var data = new {
     keyvaultReferenceIdentityId = "<keyvaultReferenceIdentityId>",
 };
 
-Response response = client.CreateOrUpdateTest("<testId>", RequestContent.Create(data), new RequestContext());
+Response response = client.CreateOrUpdateTest("<testId>", RequestContent.Create(data));
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<test>").GetProperty("clientMetric").ToString());
@@ -286,7 +286,7 @@ var data = new {
     },
 };
 
-Response response = await client.CreateOrUpdateAppComponentsAsync("<testId>", RequestContent.Create(data), new RequestContext());
+Response response = await client.CreateOrUpdateAppComponentsAsync("<testId>", RequestContent.Create(data));
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("components").GetProperty("<test>").GetProperty("resourceId").ToString());
@@ -323,7 +323,7 @@ var data = new {
     },
 };
 
-Response response = client.CreateOrUpdateAppComponents("<testId>", RequestContent.Create(data), new RequestContext());
+Response response = client.CreateOrUpdateAppComponents("<testId>", RequestContent.Create(data));
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("components").GetProperty("<test>").GetProperty("resourceId").ToString());
@@ -376,7 +376,7 @@ var data = new {
     },
 };
 
-Response response = await client.CreateOrUpdateServerMetricsConfigAsync("<testId>", RequestContent.Create(data), new RequestContext());
+Response response = await client.CreateOrUpdateServerMetricsConfigAsync("<testId>", RequestContent.Create(data));
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("testId").ToString());
@@ -430,7 +430,7 @@ var data = new {
     },
 };
 
-Response response = client.CreateOrUpdateServerMetricsConfig("<testId>", RequestContent.Create(data), new RequestContext());
+Response response = client.CreateOrUpdateServerMetricsConfig("<testId>", RequestContent.Create(data));
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("testId").ToString());
@@ -890,7 +890,7 @@ var client = new LoadTestAdministrationClient(endpoint, credential);
 
 var data = new {};
 
-Response response = await client.UploadTestFileAsync("<testId>", "<fileName>", RequestContent.Create(data), "<fileType>", new RequestContext());
+Response response = await client.UploadTestFileAsync("<testId>", "<fileName>", RequestContent.Create(data), "<fileType>");
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("url").ToString());
@@ -925,7 +925,7 @@ var client = new LoadTestAdministrationClient(endpoint, credential);
 
 var data = new {};
 
-Response response = client.UploadTestFile("<testId>", "<fileName>", RequestContent.Create(data), "<fileType>", new RequestContext());
+Response response = client.UploadTestFile("<testId>", "<fileName>", RequestContent.Create(data), "<fileType>");
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("url").ToString());
@@ -945,7 +945,7 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new LoadTestAdministrationClient(endpoint, credential);
 
-Response response = await client.DeleteTestFileAsync("<testId>", "<fileName>", new RequestContext());
+Response response = await client.DeleteTestFileAsync("<testId>", "<fileName>");
 Console.WriteLine(response.Status);
 ]]></code>
 </example>
@@ -958,7 +958,7 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new LoadTestAdministrationClient(endpoint, credential);
 
-Response response = client.DeleteTestFile("<testId>", "<fileName>", new RequestContext());
+Response response = client.DeleteTestFile("<testId>", "<fileName>");
 Console.WriteLine(response.Status);
 ]]></code>
 </example>
@@ -971,7 +971,7 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new LoadTestAdministrationClient(endpoint, credential);
 
-Response response = await client.DeleteTestAsync("<testId>", new RequestContext());
+Response response = await client.DeleteTestAsync("<testId>");
 Console.WriteLine(response.Status);
 ]]></code>
 </example>
@@ -984,7 +984,7 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new LoadTestAdministrationClient(endpoint, credential);
 
-Response response = client.DeleteTest("<testId>", new RequestContext());
+Response response = client.DeleteTest("<testId>");
 Console.WriteLine(response.Status);
 ]]></code>
 </example>
