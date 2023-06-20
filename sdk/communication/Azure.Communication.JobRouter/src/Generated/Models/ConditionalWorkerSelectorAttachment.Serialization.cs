@@ -18,9 +18,9 @@ namespace Azure.Communication.JobRouter
             writer.WriteStartObject();
             writer.WritePropertyName("condition"u8);
             writer.WriteObjectValue(Condition);
-            writer.WritePropertyName("labelSelectors"u8);
+            writer.WritePropertyName("workerSelectors"u8);
             writer.WriteStartArray();
-            foreach (var item in LabelSelectors)
+            foreach (var item in WorkerSelectors)
             {
                 writer.WriteObjectValue(item);
             }
@@ -37,7 +37,7 @@ namespace Azure.Communication.JobRouter
                 return null;
             }
             RouterRule condition = default;
-            IList<WorkerSelector> labelSelectors = default;
+            IList<RouterWorkerSelector> workerSelectors = default;
             string kind = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -46,14 +46,14 @@ namespace Azure.Communication.JobRouter
                     condition = RouterRule.DeserializeRouterRule(property.Value);
                     continue;
                 }
-                if (property.NameEquals("labelSelectors"u8))
+                if (property.NameEquals("workerSelectors"u8))
                 {
-                    List<WorkerSelector> array = new List<WorkerSelector>();
+                    List<RouterWorkerSelector> array = new List<RouterWorkerSelector>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(WorkerSelector.DeserializeWorkerSelector(item));
+                        array.Add(RouterWorkerSelector.DeserializeRouterWorkerSelector(item));
                     }
-                    labelSelectors = array;
+                    workerSelectors = array;
                     continue;
                 }
                 if (property.NameEquals("kind"u8))
@@ -62,7 +62,7 @@ namespace Azure.Communication.JobRouter
                     continue;
                 }
             }
-            return new ConditionalWorkerSelectorAttachment(kind, condition, labelSelectors);
+            return new ConditionalWorkerSelectorAttachment(kind, condition, workerSelectors);
         }
     }
 }

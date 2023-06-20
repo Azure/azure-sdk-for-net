@@ -45,9 +45,9 @@ namespace Azure.Communication.JobRouter.Models
             Id = id;
             Name = name;
             FallbackQueueId = fallbackQueueId;
-            QueueSelectors = queueSelectors;
+            _queueSelectors = queueSelectors;
             PrioritizationRule = prioritizationRule;
-            WorkerSelectors = workerSelectors;
+            _workerSelectors = workerSelectors;
         }
 
         /// <summary> Unique identifier of this policy. </summary>

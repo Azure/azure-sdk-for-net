@@ -39,10 +39,10 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Listeners
             var logForwarder = serviceProvider.GetService<AzureEventSourceLogForwarder>();
             var options = serviceProvider.GetService<IOptions<EventHubOptions>>();
             var loggerFactory = serviceProvider.GetService<ILoggerFactory>();
-            var checkpointClientProvider = new CheckpointClientProvider(configuration, azureComponentFactory, logForwarder, loggerFactory.CreateLogger<BlobServiceClient>());
+            var checkpointClientProvider = new CheckpointClientProvider(configuration, hostComponentFactory, logForwarder, loggerFactory.CreateLogger<BlobServiceClient>());
             var nameResolver = serviceProvider.GetService<INameResolver>();
             var eventHubMetadata = JsonConvert.DeserializeObject<EventHubMetadata>(triggerMetadata.Metadata.ToString());
-            var factory = new EventHubClientFactory(configuration, hostComponentFactory, options, nameResolver, logForwarder, checkpointClientProvider);
+            var factory = new EventHubClientFactory(configuration, azureComponentFactory, options, nameResolver, logForwarder, checkpointClientProvider);
             eventHubMetadata.ResolveProperties(serviceProvider.GetService<INameResolver>());
             var eventHubConsumerClient = factory.GetEventHubConsumerClient(eventHubMetadata.EventHubName, eventHubMetadata.Connection, eventHubMetadata.ConsumerGroup);
             var checkpointStore = new BlobCheckpointStoreInternal(
