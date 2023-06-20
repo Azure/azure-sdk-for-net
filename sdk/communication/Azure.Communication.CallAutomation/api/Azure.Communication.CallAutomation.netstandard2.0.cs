@@ -602,12 +602,6 @@ namespace Azure.Communication.CallAutomation
         public string SelectedLanguage { get { throw null; } }
         public static Azure.Communication.CallAutomation.DialogLanguageChange Deserialize(string content) { throw null; }
     }
-    public partial class DialogOptions
-    {
-        internal DialogOptions() { }
-        public string BotAppId { get { throw null; } set { } }
-        public System.Collections.Generic.IDictionary<string, object> DialogContext { get { throw null; } }
-    }
     public partial class DialogResult
     {
         internal DialogResult() { }
@@ -629,14 +623,6 @@ namespace Azure.Communication.CallAutomation
         public string DialogId { get { throw null; } }
         public Azure.Communication.CallAutomation.DialogInputType? DialogInputType { get { throw null; } }
         public static Azure.Communication.CallAutomation.DialogStarted Deserialize(string content) { throw null; }
-    }
-    public partial class DialogStateResponse
-    {
-        internal DialogStateResponse() { }
-        public string DialogId { get { throw null; } }
-        public Azure.Communication.CallAutomation.DialogInputType? DialogInputType { get { throw null; } }
-        public Azure.Communication.CallAutomation.DialogOptions DialogOptions { get { throw null; } }
-        public string OperationContext { get { throw null; } }
     }
     public partial class DialogTransfer : Azure.Communication.CallAutomation.CallAutomationEventBase
     {
