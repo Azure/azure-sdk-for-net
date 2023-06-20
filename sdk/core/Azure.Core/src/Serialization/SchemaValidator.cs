@@ -10,10 +10,10 @@ namespace Azure.Core.Serialization
     /// objects against schemas.
     /// </summary>
     /// <remarks>
-    /// Defining both <see cref="GenerateSchema(Type)"/> and <see cref="Validate(object, Type, string)"/> is required. If you
+    /// Defining both <see cref="GenerateSchema(Type)"/> and <see cref="Validate(object, Type, T)"/> is required. If you
     /// do not wish to validate, then evaluate all schemas as valid.
     /// </remarks>
-    public abstract class SchemaValidator
+    public abstract class SchemaValidator<T>
     {
         /// <summary>
         /// Validates that <paramref name="data"/> is valid according to <paramref name="schemaDefinition"/>. If the object is not valid,
@@ -25,13 +25,13 @@ namespace Azure.Core.Serialization
         /// <param name="data">The data to use for serialization or the data that was deserialized.</param>
         /// <param name="dataType">The type of the data to serialize or the type of the deserialized data.</param>
         /// <param name="schemaDefinition">The schema definition to validate against.</param>
-        public abstract void Validate(Object data, Type dataType, string schemaDefinition);
+        public abstract void Validate(Object data, Type dataType, T schemaDefinition);
 
         /// <summary>
-        /// Generates a schema from <paramref name="dataType"/> and returns it as a string.
+        /// Generates a schema from <paramref name="dataType"/> and returns it as a type of <typeparamref name="T"/>.
         /// </summary>
         /// <param name="dataType">The type of the data to serialize.</param>
         /// <returns>The generated schema in string format.</returns>
-        public abstract string GenerateSchema(Type dataType);
+        public abstract T GenerateSchema(Type dataType);
     }
 }
