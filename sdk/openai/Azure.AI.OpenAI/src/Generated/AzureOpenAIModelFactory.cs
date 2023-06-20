@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -52,9 +53,19 @@ namespace Azure.AI.OpenAI
         /// <param name="index"> The ordered index associated with this completions choice. </param>
         /// <param name="logProbabilityModel"> The log probabilities model for tokens associated with this completions choice. </param>
         /// <param name="finishReason"> Reason for finishing. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="text"/> or <paramref name="logProbabilityModel"/> is null. </exception>
         /// <returns> A new <see cref="OpenAI.Choice"/> instance for mocking. </returns>
-        public static Choice Choice(string text = null, int index = default, CompletionsLogProbabilityModel logProbabilityModel = null, CompletionsFinishReason? finishReason = null)
+        public static Choice Choice(string text = null, int index = default, CompletionsLogProbabilityModel logProbabilityModel = null, CompletionsFinishReason finishReason = default)
         {
+            if (text == null)
+            {
+                throw new ArgumentNullException(nameof(text));
+            }
+            if (logProbabilityModel == null)
+            {
+                throw new ArgumentNullException(nameof(logProbabilityModel));
+            }
+
             return new Choice(text, index, logProbabilityModel, finishReason);
         }
 
