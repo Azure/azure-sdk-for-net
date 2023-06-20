@@ -1070,6 +1070,7 @@ namespace Azure.ResourceManager.Batch.Models
     }
     public partial class BatchVmContainerConfiguration
     {
+        public BatchVmContainerConfiguration() { }
         public BatchVmContainerConfiguration(Azure.ResourceManager.Batch.Models.BatchVmContainerType containerType) { }
         public System.Collections.Generic.IList<string> ContainerImageNames { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Batch.Models.BatchVmContainerRegistry> ContainerRegistries { get { throw null; } }
