@@ -120,11 +120,11 @@ var trainData = new
 Console.WriteLine($"Training project {projectName}...");
 Operation<BinaryData> trainOperation = client.Train(WaitUntil.Completed, projectName, RequestContent.Create(trainData));
 
-    // Deploy the model.
-    var deployData = new
-    {
-        trainedModelLabel = "Sample5",
-    };
+// Deploy the model.
+var deployData = new
+{
+    trainedModelLabel = "Sample5",
+};
 
 Console.WriteLine($"Deploying project {projectName} to production...");
 Operation<BinaryData> deployOperation = client.DeployProject(WaitUntil.Completed, projectName, "production", RequestContent.Create(deployData));
