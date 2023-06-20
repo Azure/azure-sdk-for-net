@@ -7,6 +7,7 @@
 ### Breaking Changes
 
 ### Bugs Fixed
+- ManagedIdentityCredential now ignores empty ClientId values. [#37100](https://github.com/Azure/azure-sdk-for-net/issues/37100)
 
 ### Other Changes
 - All developer credentials in the `DefaultAzureCredential` credential chain will fall through to the next credential in the chain on any failure. Previously, some exceptions would throw `AuthenticationFailedException`, which stops further progress in the chain.
