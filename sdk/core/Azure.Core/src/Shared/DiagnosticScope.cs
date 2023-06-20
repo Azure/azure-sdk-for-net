@@ -230,17 +230,15 @@ namespace Azure.Core.Pipeline
                         linkTagsCollection.Add(tag.Key, tag.Value!);
                     }
 
-                    ActivityContext context;
-                    if (activity.ParentId != null)
+                    try
                     {
-                        context = ActivityContext.Parse(activity.ParentId, activity.TraceStateString);
+                        var context = ActivityContext.Parse(activity.ParentId!, activity.TraceStateString);
+                        var link = new ActivityLink(context, linkTagsCollection);
+                        linkCollection.Add(link);
                     }
-                    else
+                    catch (Exception)
                     {
-                        context = new ActivityContext();
                     }
-                    var link = new ActivityLink(context, linkTagsCollection);
-                    linkCollection.Add(link);
                 }
 
                 return linkCollection;
