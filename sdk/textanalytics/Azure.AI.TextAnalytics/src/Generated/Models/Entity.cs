@@ -16,8 +16,8 @@ namespace Azure.AI.TextAnalytics.Models
         /// <summary> Initializes a new instance of Entity. </summary>
         /// <param name="text"> Entity text as appears in the request. </param>
         /// <param name="category"> Entity type. </param>
-        /// <param name="offset"> Start position for the entity text. Use of different &apos;stringIndexType&apos; values can affect the offset returned. </param>
-        /// <param name="length"> Length for the entity text. Use of different &apos;stringIndexType&apos; values can affect the length returned. </param>
+        /// <param name="offset"> Start position for the entity text. Use of different 'stringIndexType' values can affect the offset returned. </param>
+        /// <param name="length"> Length for the entity text. Use of different 'stringIndexType' values can affect the length returned. </param>
         /// <param name="confidenceScore"> Confidence score between 0 and 1 of the extracted entity. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="text"/> or <paramref name="category"/> is null. </exception>
         public Entity(string text, string category, int offset, int length, double confidenceScore)
@@ -36,8 +36,8 @@ namespace Azure.AI.TextAnalytics.Models
         /// <param name="text"> Entity text as appears in the request. </param>
         /// <param name="category"> Entity type. </param>
         /// <param name="subcategory"> (Optional) Entity sub type. </param>
-        /// <param name="offset"> Start position for the entity text. Use of different &apos;stringIndexType&apos; values can affect the offset returned. </param>
-        /// <param name="length"> Length for the entity text. Use of different &apos;stringIndexType&apos; values can affect the length returned. </param>
+        /// <param name="offset"> Start position for the entity text. Use of different 'stringIndexType' values can affect the offset returned. </param>
+        /// <param name="length"> Length for the entity text. Use of different 'stringIndexType' values can affect the length returned. </param>
         /// <param name="confidenceScore"> Confidence score between 0 and 1 of the extracted entity. </param>
         internal Entity(string text, string category, string subcategory, int offset, int length, double confidenceScore)
         {
@@ -55,9 +55,9 @@ namespace Azure.AI.TextAnalytics.Models
         public string Category { get; set; }
         /// <summary> (Optional) Entity sub type. </summary>
         public string Subcategory { get; set; }
-        /// <summary> Start position for the entity text. Use of different &apos;stringIndexType&apos; values can affect the offset returned. </summary>
+        /// <summary> Start position for the entity text. Use of different 'stringIndexType' values can affect the offset returned. </summary>
         public int Offset { get; set; }
-        /// <summary> Length for the entity text. Use of different &apos;stringIndexType&apos; values can affect the length returned. </summary>
+        /// <summary> Length for the entity text. Use of different 'stringIndexType' values can affect the length returned. </summary>
         public int Length { get; set; }
         /// <summary> Confidence score between 0 and 1 of the extracted entity. </summary>
         public double ConfidenceScore { get; set; }

@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Batch
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="thumbprintAlgorithm"> This must match the first portion of the certificate name. Currently required to be &apos;SHA1&apos;. </param>
+        /// <param name="thumbprintAlgorithm"> This must match the first portion of the certificate name. Currently required to be 'SHA1'. </param>
         /// <param name="thumbprintString"> This must match the thumbprint from the name. </param>
         /// <param name="format"> The format of the certificate - either Pfx or Cer. If omitted, the default is Pfx. </param>
         /// <param name="provisioningState"></param>
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Batch
         /// <param name="previousProvisioningState"> The previous provisioned state of the resource. </param>
         /// <param name="previousProvisioningStateTransitOn"> The time at which the certificate entered its previous state. </param>
         /// <param name="publicData"> The public key of the certificate. </param>
-        /// <param name="deleteCertificateError"> This is only returned when the certificate provisioningState is &apos;Failed&apos;. </param>
+        /// <param name="deleteCertificateError"> This is only returned when the certificate provisioningState is 'Failed'. </param>
         /// <param name="etag"> The ETag of the resource, used for concurrency statements. </param>
         internal BatchAccountCertificateData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string thumbprintAlgorithm, string thumbprintString, BatchAccountCertificateFormat? format, BatchAccountCertificateProvisioningState? provisioningState, DateTimeOffset? provisioningStateTransitOn, BatchAccountCertificateProvisioningState? previousProvisioningState, DateTimeOffset? previousProvisioningStateTransitOn, string publicData, ResponseError deleteCertificateError, ETag? etag) : base(id, name, resourceType, systemData)
         {
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Batch
             ETag = etag;
         }
 
-        /// <summary> This must match the first portion of the certificate name. Currently required to be &apos;SHA1&apos;. </summary>
+        /// <summary> This must match the first portion of the certificate name. Currently required to be 'SHA1'. </summary>
         public string ThumbprintAlgorithm { get; set; }
         /// <summary> This must match the thumbprint from the name. </summary>
         public string ThumbprintString { get; set; }
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Batch
         public DateTimeOffset? PreviousProvisioningStateTransitOn { get; }
         /// <summary> The public key of the certificate. </summary>
         public string PublicData { get; }
-        /// <summary> This is only returned when the certificate provisioningState is &apos;Failed&apos;. </summary>
+        /// <summary> This is only returned when the certificate provisioningState is 'Failed'. </summary>
         public ResponseError DeleteCertificateError { get; }
         /// <summary> The ETag of the resource, used for concurrency statements. </summary>
         public ETag? ETag { get; }

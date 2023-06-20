@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> Factory&apos;s GitHub repo information. </summary>
+    /// <summary> Factory's GitHub repo information. </summary>
     public partial class FactoryGitHubConfiguration : FactoryRepoConfiguration
     {
         /// <summary> Initializes a new instance of FactoryGitHubConfiguration. </summary>

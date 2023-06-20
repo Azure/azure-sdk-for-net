@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         /// <summary> Initializes a new instance of SecurityAutomationSource. </summary>
         /// <param name="eventSource"> A valid event source type. </param>
-        /// <param name="ruleSets"> A set of rules which evaluate upon event interception. A logical disjunction is applied between defined rule sets (logical &apos;or&apos;). </param>
+        /// <param name="ruleSets"> A set of rules which evaluate upon event interception. A logical disjunction is applied between defined rule sets (logical 'or'). </param>
         internal SecurityAutomationSource(SecurityEventSource? eventSource, IList<SecurityAutomationRuleSet> ruleSets)
         {
             EventSource = eventSource;
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         /// <summary> A valid event source type. </summary>
         public SecurityEventSource? EventSource { get; set; }
-        /// <summary> A set of rules which evaluate upon event interception. A logical disjunction is applied between defined rule sets (logical &apos;or&apos;). </summary>
+        /// <summary> A set of rules which evaluate upon event interception. A logical disjunction is applied between defined rule sets (logical 'or'). </summary>
         public IList<SecurityAutomationRuleSet> RuleSets { get; }
     }
 }

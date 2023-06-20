@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.HDInsight.Models
 
         /// <summary> Initializes a new instance of HDInsightSecurityProfile. </summary>
         /// <param name="directoryType"> The directory type. </param>
-        /// <param name="domain"> The organization&apos;s active directory domain. </param>
+        /// <param name="domain"> The organization's active directory domain. </param>
         /// <param name="organizationalUnitDN"> The organizational unit within the Active Directory to place the cluster and service accounts. </param>
         /// <param name="ldapUris"> The LDAPS protocol URLs to communicate with the Active Directory. </param>
         /// <param name="domainUsername"> The domain user account that will have admin privileges on the cluster. </param>
         /// <param name="domainUserPassword"> The domain admin password. </param>
         /// <param name="clusterUsersGroupDNs"> Optional. The Distinguished Names for cluster user groups. </param>
-        /// <param name="aaddsResourceId"> The resource ID of the user&apos;s Azure Active Directory Domain Service. </param>
-        /// <param name="msiResourceId"> User assigned identity that has permissions to read and create cluster-related artifacts in the user&apos;s AADDS. </param>
+        /// <param name="aaddsResourceId"> The resource ID of the user's Azure Active Directory Domain Service. </param>
+        /// <param name="msiResourceId"> User assigned identity that has permissions to read and create cluster-related artifacts in the user's AADDS. </param>
         internal HDInsightSecurityProfile(AuthenticationDirectoryType? directoryType, string domain, string organizationalUnitDN, IList<Uri> ldapUris, string domainUsername, string domainUserPassword, IList<string> clusterUsersGroupDNs, ResourceIdentifier aaddsResourceId, ResourceIdentifier msiResourceId)
         {
             DirectoryType = directoryType;
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.HDInsight.Models
 
         /// <summary> The directory type. </summary>
         public AuthenticationDirectoryType? DirectoryType { get; set; }
-        /// <summary> The organization&apos;s active directory domain. </summary>
+        /// <summary> The organization's active directory domain. </summary>
         public string Domain { get; set; }
         /// <summary> The organizational unit within the Active Directory to place the cluster and service accounts. </summary>
         public string OrganizationalUnitDN { get; set; }
@@ -58,9 +58,9 @@ namespace Azure.ResourceManager.HDInsight.Models
         public string DomainUserPassword { get; set; }
         /// <summary> Optional. The Distinguished Names for cluster user groups. </summary>
         public IList<string> ClusterUsersGroupDNs { get; }
-        /// <summary> The resource ID of the user&apos;s Azure Active Directory Domain Service. </summary>
+        /// <summary> The resource ID of the user's Azure Active Directory Domain Service. </summary>
         public ResourceIdentifier AaddsResourceId { get; set; }
-        /// <summary> User assigned identity that has permissions to read and create cluster-related artifacts in the user&apos;s AADDS. </summary>
+        /// <summary> User assigned identity that has permissions to read and create cluster-related artifacts in the user's AADDS. </summary>
         public ResourceIdentifier MsiResourceId { get; set; }
     }
 }

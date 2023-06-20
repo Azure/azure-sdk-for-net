@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Network.Models
         public ApplicationGatewayProtocol? Protocol { get; set; }
         /// <summary> Host name to send the probe to. </summary>
         public string Host { get; set; }
-        /// <summary> Relative path of probe. Valid path starts from &apos;/&apos;. Probe is sent to &lt;Protocol&gt;://&lt;host&gt;:&lt;port&gt;&lt;path&gt;. </summary>
+        /// <summary> Relative path of probe. Valid path starts from '/'. Probe is sent to &lt;Protocol&gt;://&lt;host&gt;:&lt;port&gt;&lt;path&gt;. </summary>
         public string Path { get; set; }
         /// <summary> The probe timeout in seconds. Probe marked as failed if valid response is not received with this timeout period. Acceptable values are from 1 second to 86400 seconds. </summary>
         public int? Timeout { get; set; }

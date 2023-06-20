@@ -24,11 +24,11 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="serializer"> Serializer. Type: string (or Expression with resultType string). </param>
         /// <param name="deserializer"> Deserializer. Type: string (or Expression with resultType string). </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        /// <param name="filePattern"> File pattern of JSON. To be more specific, the way of separating a collection of JSON objects. The default value is &apos;setOfObjects&apos;. It is case-sensitive. </param>
-        /// <param name="nestingSeparator"> The character used to separate nesting levels. Default value is &apos;.&apos; (dot). Type: string (or Expression with resultType string). </param>
-        /// <param name="encodingName"> The code page name of the preferred encoding. If not provided, the default value is &apos;utf-8&apos;, unless the byte order mark (BOM) denotes another Unicode encoding. The full list of supported values can be found in the &apos;Name&apos; column of the table of encodings in the following reference: https://go.microsoft.com/fwlink/?linkid=861078. Type: string (or Expression with resultType string). </param>
-        /// <param name="jsonNodeReference"> The JSONPath of the JSON array element to be flattened. Example: &quot;$.ArrayPath&quot;. Type: string (or Expression with resultType string). </param>
-        /// <param name="jsonPathDefinition"> The JSONPath definition for each column mapping with a customized column name to extract data from JSON file. For fields under root object, start with &quot;$&quot;; for fields inside the array chosen by jsonNodeReference property, start from the array element. Example: {&quot;Column1&quot;: &quot;$.Column1Path&quot;, &quot;Column2&quot;: &quot;Column2PathInArray&quot;}. Type: object (or Expression with resultType object). </param>
+        /// <param name="filePattern"> File pattern of JSON. To be more specific, the way of separating a collection of JSON objects. The default value is 'setOfObjects'. It is case-sensitive. </param>
+        /// <param name="nestingSeparator"> The character used to separate nesting levels. Default value is '.' (dot). Type: string (or Expression with resultType string). </param>
+        /// <param name="encodingName"> The code page name of the preferred encoding. If not provided, the default value is 'utf-8', unless the byte order mark (BOM) denotes another Unicode encoding. The full list of supported values can be found in the 'Name' column of the table of encodings in the following reference: https://go.microsoft.com/fwlink/?linkid=861078. Type: string (or Expression with resultType string). </param>
+        /// <param name="jsonNodeReference"> The JSONPath of the JSON array element to be flattened. Example: "$.ArrayPath". Type: string (or Expression with resultType string). </param>
+        /// <param name="jsonPathDefinition"> The JSONPath definition for each column mapping with a customized column name to extract data from JSON file. For fields under root object, start with "$"; for fields inside the array chosen by jsonNodeReference property, start from the array element. Example: {"Column1": "$.Column1Path", "Column2": "Column2PathInArray"}. Type: object (or Expression with resultType object). </param>
         internal DatasetJsonFormat(string datasetStorageFormatType, BinaryData serializer, BinaryData deserializer, IDictionary<string, BinaryData> additionalProperties, BinaryData filePattern, BinaryData nestingSeparator, BinaryData encodingName, BinaryData jsonNodeReference, BinaryData jsonPathDefinition) : base(datasetStorageFormatType, serializer, deserializer, additionalProperties)
         {
             FilePattern = filePattern;
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary>
-        /// File pattern of JSON. To be more specific, the way of separating a collection of JSON objects. The default value is &apos;setOfObjects&apos;. It is case-sensitive.
+        /// File pattern of JSON. To be more specific, the way of separating a collection of JSON objects. The default value is 'setOfObjects'. It is case-sensitive.
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </summary>
         public BinaryData FilePattern { get; set; }
         /// <summary>
-        /// The character used to separate nesting levels. Default value is &apos;.&apos; (dot). Type: string (or Expression with resultType string).
+        /// The character used to separate nesting levels. Default value is '.' (dot). Type: string (or Expression with resultType string).
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </summary>
         public BinaryData NestingSeparator { get; set; }
         /// <summary>
-        /// The code page name of the preferred encoding. If not provided, the default value is &apos;utf-8&apos;, unless the byte order mark (BOM) denotes another Unicode encoding. The full list of supported values can be found in the &apos;Name&apos; column of the table of encodings in the following reference: https://go.microsoft.com/fwlink/?linkid=861078. Type: string (or Expression with resultType string).
+        /// The code page name of the preferred encoding. If not provided, the default value is 'utf-8', unless the byte order mark (BOM) denotes another Unicode encoding. The full list of supported values can be found in the 'Name' column of the table of encodings in the following reference: https://go.microsoft.com/fwlink/?linkid=861078. Type: string (or Expression with resultType string).
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </summary>
         public BinaryData EncodingName { get; set; }
         /// <summary>
-        /// The JSONPath of the JSON array element to be flattened. Example: &quot;$.ArrayPath&quot;. Type: string (or Expression with resultType string).
+        /// The JSONPath of the JSON array element to be flattened. Example: "$.ArrayPath". Type: string (or Expression with resultType string).
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </summary>
         public BinaryData JsonNodeReference { get; set; }
         /// <summary>
-        /// The JSONPath definition for each column mapping with a customized column name to extract data from JSON file. For fields under root object, start with &quot;$&quot;; for fields inside the array chosen by jsonNodeReference property, start from the array element. Example: {&quot;Column1&quot;: &quot;$.Column1Path&quot;, &quot;Column2&quot;: &quot;Column2PathInArray&quot;}. Type: object (or Expression with resultType object).
+        /// The JSONPath definition for each column mapping with a customized column name to extract data from JSON file. For fields under root object, start with "$"; for fields inside the array chosen by jsonNodeReference property, start from the array element. Example: {"Column1": "$.Column1Path", "Column2": "Column2PathInArray"}. Type: object (or Expression with resultType object).
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>

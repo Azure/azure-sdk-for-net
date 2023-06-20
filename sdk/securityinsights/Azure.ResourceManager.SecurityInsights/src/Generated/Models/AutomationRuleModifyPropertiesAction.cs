@@ -7,7 +7,7 @@
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary> Describes an automation rule action to modify an object&apos;s properties. </summary>
+    /// <summary> Describes an automation rule action to modify an object's properties. </summary>
     public partial class AutomationRuleModifyPropertiesAction : SecurityInsightsAutomationRuleAction
     {
         /// <summary> Initializes a new instance of AutomationRuleModifyPropertiesAction. </summary>

@@ -999,7 +999,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="protectionState"> Backup state of this backup item. </param>
         /// <param name="protectedItemId"> Data Plane Service ID of the protected item. </param>
         /// <param name="sourceAssociations"> Loosely coupled (type, value) associations (example - parent of a protected item). </param>
-        /// <param name="fabricName"> Name of this backup item&apos;s fabric. </param>
+        /// <param name="fabricName"> Name of this backup item's fabric. </param>
         /// <returns> A new <see cref="Models.GenericProtectedItem"/> instance for mocking. </returns>
         public static GenericProtectedItem GenericProtectedItem(BackupManagementType? backupManagementType = null, BackupDataSourceType? workloadType = null, string containerName = null, ResourceIdentifier sourceResourceId = null, ResourceIdentifier policyId = null, DateTimeOffset? lastRecoverOn = null, string backupSetName = null, BackupCreateMode? createMode = null, DateTimeOffset? deferredDeletedOn = null, bool? isScheduledForDeferredDelete = null, string deferredDeleteTimeRemaining = null, bool? isDeferredDeleteScheduleUpcoming = null, bool? isRehydrate = null, IEnumerable<string> resourceGuardOperationRequests = null, bool? isArchiveEnabled = null, string policyName = null, int? softDeleteRetentionPeriod = null, string friendlyName = null, string policyState = null, BackupProtectionState? protectionState = null, long? protectedItemId = null, IDictionary<string, string> sourceAssociations = null, string fabricName = null)
         {

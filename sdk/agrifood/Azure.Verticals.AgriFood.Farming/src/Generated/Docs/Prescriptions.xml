@@ -8,7 +8,7 @@ This sample shows how to call GetPrescriptionAsync with required parameters and 
 var credential = new DefaultAzureCredential();
 var client = new FarmBeatsClient(credential).GetPrescriptionsClient("2022-11-01-preview");
 
-Response response = await client.GetPrescriptionAsync("<partyId>", "<prescriptionId>", new RequestContext());
+Response response = await client.GetPrescriptionAsync("<partyId>", "<prescriptionId>");
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("partyId").ToString());
@@ -39,7 +39,7 @@ This sample shows how to call GetPrescription with required parameters and parse
 var credential = new DefaultAzureCredential();
 var client = new FarmBeatsClient(credential).GetPrescriptionsClient("2022-11-01-preview");
 
-Response response = client.GetPrescription("<partyId>", "<prescriptionId>", new RequestContext());
+Response response = client.GetPrescription("<partyId>", "<prescriptionId>");
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("partyId").ToString());
@@ -102,7 +102,7 @@ var data = new {
     },
 };
 
-Response response = await client.CreateOrUpdateAsync("<partyId>", "<prescriptionId>", RequestContent.Create(data), new RequestContext());
+Response response = await client.CreateOrUpdateAsync("<partyId>", "<prescriptionId>", RequestContent.Create(data));
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("partyId").ToString());
@@ -165,7 +165,7 @@ var data = new {
     },
 };
 
-Response response = client.CreateOrUpdate("<partyId>", "<prescriptionId>", RequestContent.Create(data), new RequestContext());
+Response response = client.CreateOrUpdate("<partyId>", "<prescriptionId>", RequestContent.Create(data));
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("partyId").ToString());
@@ -196,7 +196,7 @@ This sample shows how to call DeleteAsync with required parameters.
 var credential = new DefaultAzureCredential();
 var client = new FarmBeatsClient(credential).GetPrescriptionsClient("2022-11-01-preview");
 
-Response response = await client.DeleteAsync("<partyId>", "<prescriptionId>", new RequestContext());
+Response response = await client.DeleteAsync("<partyId>", "<prescriptionId>");
 Console.WriteLine(response.Status);
 ]]></code>
 </example>
@@ -208,7 +208,7 @@ This sample shows how to call Delete with required parameters.
 var credential = new DefaultAzureCredential();
 var client = new FarmBeatsClient(credential).GetPrescriptionsClient("2022-11-01-preview");
 
-Response response = client.Delete("<partyId>", "<prescriptionId>", new RequestContext());
+Response response = client.Delete("<partyId>", "<prescriptionId>");
 Console.WriteLine(response.Status);
 ]]></code>
 </example>
@@ -220,7 +220,7 @@ This sample shows how to call GetCascadeDeleteJobDetailsAsync with required para
 var credential = new DefaultAzureCredential();
 var client = new FarmBeatsClient(credential).GetPrescriptionsClient("2022-11-01-preview");
 
-Response response = await client.GetCascadeDeleteJobDetailsAsync("<jobId>", new RequestContext());
+Response response = await client.GetCascadeDeleteJobDetailsAsync("<jobId>");
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("partyId").ToString());
@@ -245,7 +245,7 @@ This sample shows how to call GetCascadeDeleteJobDetails with required parameter
 var credential = new DefaultAzureCredential();
 var client = new FarmBeatsClient(credential).GetPrescriptionsClient("2022-11-01-preview");
 
-Response response = client.GetCascadeDeleteJobDetails("<jobId>", new RequestContext());
+Response response = client.GetCascadeDeleteJobDetails("<jobId>");
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("partyId").ToString());
@@ -281,7 +281,7 @@ This sample shows how to call GetPrescriptionsByPartyIdAsync with all parameters
 var credential = new DefaultAzureCredential();
 var client = new FarmBeatsClient(credential).GetPrescriptionsClient("2022-11-01-preview");
 
-await foreach (var item in client.GetPrescriptionsByPartyIdAsync("<partyId>", new String[]{"<prescriptionMapIds>"}, new String[]{"<types>"}, new String[]{"<productCodes>"}, new String[]{"<productNames>"}, new String[]{"<sources>"}, new String[]{"<ids>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>", new RequestContext()))
+await foreach (var item in client.GetPrescriptionsByPartyIdAsync("<partyId>", new String[]{"<prescriptionMapIds>"}, new String[]{"<types>"}, new String[]{"<productCodes>"}, new String[]{"<productNames>"}, new String[]{"<sources>"}, new String[]{"<ids>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>"))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("partyId").ToString());
@@ -324,7 +324,7 @@ This sample shows how to call GetPrescriptionsByPartyId with all parameters, and
 var credential = new DefaultAzureCredential();
 var client = new FarmBeatsClient(credential).GetPrescriptionsClient("2022-11-01-preview");
 
-foreach (var item in client.GetPrescriptionsByPartyId("<partyId>", new String[]{"<prescriptionMapIds>"}, new String[]{"<types>"}, new String[]{"<productCodes>"}, new String[]{"<productNames>"}, new String[]{"<sources>"}, new String[]{"<ids>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>", new RequestContext()))
+foreach (var item in client.GetPrescriptionsByPartyId("<partyId>", new String[]{"<prescriptionMapIds>"}, new String[]{"<types>"}, new String[]{"<productCodes>"}, new String[]{"<productNames>"}, new String[]{"<sources>"}, new String[]{"<ids>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>"))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("partyId").ToString());
@@ -367,7 +367,7 @@ This sample shows how to call GetPrescriptionsAsync with all parameters, and how
 var credential = new DefaultAzureCredential();
 var client = new FarmBeatsClient(credential).GetPrescriptionsClient("2022-11-01-preview");
 
-await foreach (var item in client.GetPrescriptionsAsync(new String[]{"<prescriptionMapIds>"}, new String[]{"<types>"}, new String[]{"<productCodes>"}, new String[]{"<productNames>"}, new String[]{"<sources>"}, new String[]{"<ids>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>", new RequestContext()))
+await foreach (var item in client.GetPrescriptionsAsync(new String[]{"<prescriptionMapIds>"}, new String[]{"<types>"}, new String[]{"<productCodes>"}, new String[]{"<productNames>"}, new String[]{"<sources>"}, new String[]{"<ids>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>"))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("partyId").ToString());
@@ -410,7 +410,7 @@ This sample shows how to call GetPrescriptions with all parameters, and how to p
 var credential = new DefaultAzureCredential();
 var client = new FarmBeatsClient(credential).GetPrescriptionsClient("2022-11-01-preview");
 
-foreach (var item in client.GetPrescriptions(new String[]{"<prescriptionMapIds>"}, new String[]{"<types>"}, new String[]{"<productCodes>"}, new String[]{"<productNames>"}, new String[]{"<sources>"}, new String[]{"<ids>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>", new RequestContext()))
+foreach (var item in client.GetPrescriptions(new String[]{"<prescriptionMapIds>"}, new String[]{"<types>"}, new String[]{"<productCodes>"}, new String[]{"<productNames>"}, new String[]{"<sources>"}, new String[]{"<ids>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>"))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("partyId").ToString());
@@ -442,7 +442,7 @@ This sample shows how to call CreateCascadeDeleteJobAsync with required paramete
 var credential = new DefaultAzureCredential();
 var client = new FarmBeatsClient(credential).GetPrescriptionsClient("2022-11-01-preview");
 
-var operation = await client.CreateCascadeDeleteJobAsync(WaitUntil.Completed, "<jobId>", "<partyId>", "<prescriptionId>", new RequestContext());
+var operation = await client.CreateCascadeDeleteJobAsync(WaitUntil.Completed, "<jobId>", "<partyId>", "<prescriptionId>");
 
 BinaryData responseData = operation.Value;
 JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
@@ -468,7 +468,7 @@ This sample shows how to call CreateCascadeDeleteJob with required parameters an
 var credential = new DefaultAzureCredential();
 var client = new FarmBeatsClient(credential).GetPrescriptionsClient("2022-11-01-preview");
 
-var operation = client.CreateCascadeDeleteJob(WaitUntil.Completed, "<jobId>", "<partyId>", "<prescriptionId>", new RequestContext());
+var operation = client.CreateCascadeDeleteJob(WaitUntil.Completed, "<jobId>", "<partyId>", "<prescriptionId>");
 
 BinaryData responseData = operation.Value;
 JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;

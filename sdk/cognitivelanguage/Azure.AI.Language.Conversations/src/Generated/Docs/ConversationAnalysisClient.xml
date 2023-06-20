@@ -72,7 +72,7 @@ var data = new {
     kind = "Conversation",
 };
 
-Response response = await client.AnalyzeConversationAsync(RequestContent.Create(data), new RequestContext());
+Response response = await client.AnalyzeConversationAsync(RequestContent.Create(data));
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("kind").ToString());
@@ -156,7 +156,7 @@ var data = new {
     kind = "Conversation",
 };
 
-Response response = client.AnalyzeConversation(RequestContent.Create(data), new RequestContext());
+Response response = client.AnalyzeConversation(RequestContent.Create(data));
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("kind").ToString());
@@ -191,7 +191,7 @@ var credential = new AzureKeyCredential("<key>");
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new ConversationAnalysisClient(endpoint, credential);
 
-Response response = await client.GetAnalyzeConversationJobStatusAsync(Guid.NewGuid(), true, new RequestContext());
+Response response = await client.GetAnalyzeConversationJobStatusAsync(Guid.NewGuid(), true);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("displayName").ToString());
@@ -220,7 +220,7 @@ Console.WriteLine(result.GetProperty("nextLink").ToString());
 <remarks>
 
 Additional information can be found in the service REST API documentation:
-https://learn.microsoft.com/rest/api/language/2023-04-01/conversation-analysis-runtime/job-status
+https://learn.microsoft.com/rest/api/language/2023-04-01/analyze-conversation/job-status
 
 </remarks>
     </member>
@@ -246,7 +246,7 @@ var credential = new AzureKeyCredential("<key>");
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new ConversationAnalysisClient(endpoint, credential);
 
-Response response = client.GetAnalyzeConversationJobStatus(Guid.NewGuid(), true, new RequestContext());
+Response response = client.GetAnalyzeConversationJobStatus(Guid.NewGuid(), true);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("displayName").ToString());
@@ -275,7 +275,7 @@ Console.WriteLine(result.GetProperty("nextLink").ToString());
 <remarks>
 
 Additional information can be found in the service REST API documentation:
-https://learn.microsoft.com/rest/api/language/2023-04-01/conversation-analysis-runtime/job-status
+https://learn.microsoft.com/rest/api/language/2023-04-01/analyze-conversation/job-status
 
 </remarks>
     </member>
@@ -363,7 +363,7 @@ var data = new {
     },
 };
 
-var operation = await client.AnalyzeConversationsAsync(WaitUntil.Completed, RequestContent.Create(data), new RequestContext());
+var operation = await client.AnalyzeConversationsAsync(WaitUntil.Completed, RequestContent.Create(data));
 
 BinaryData responseData = operation.Value;
 JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
@@ -393,7 +393,7 @@ Console.WriteLine(result.GetProperty("nextLink").ToString());
 <remarks>
 
 Additional information can be found in the service REST API documentation:
-https://learn.microsoft.com/rest/api/language/2023-04-01/conversation-analysis-runtime/submit-job
+https://learn.microsoft.com/rest/api/language/2023-04-01/analyze-conversation/submit-job
 
 </remarks>
     </member>
@@ -481,7 +481,7 @@ var data = new {
     },
 };
 
-var operation = client.AnalyzeConversations(WaitUntil.Completed, RequestContent.Create(data), new RequestContext());
+var operation = client.AnalyzeConversations(WaitUntil.Completed, RequestContent.Create(data));
 
 BinaryData responseData = operation.Value;
 JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
@@ -511,7 +511,7 @@ Console.WriteLine(result.GetProperty("nextLink").ToString());
 <remarks>
 
 Additional information can be found in the service REST API documentation:
-https://learn.microsoft.com/rest/api/language/2023-04-01/conversation-analysis-runtime/submit-job
+https://learn.microsoft.com/rest/api/language/2023-04-01/analyze-conversation/submit-job
 
 </remarks>
     </member>
@@ -523,7 +523,7 @@ var credential = new AzureKeyCredential("<key>");
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new ConversationAnalysisClient(endpoint, credential);
 
-var operation = await client.CancelAnalyzeConversationsAsync(WaitUntil.Completed, Guid.NewGuid(), new RequestContext());
+var operation = await client.CancelAnalyzeConversationsAsync(WaitUntil.Completed, Guid.NewGuid());
 
 Console.WriteLine(operation.GetRawResponse().Status);
 ]]></code>
@@ -531,7 +531,7 @@ Console.WriteLine(operation.GetRawResponse().Status);
 <remarks>
 
 Additional information can be found in the service REST API documentation:
-https://learn.microsoft.com/rest/api/language/2023-04-01/conversation-analysis-runtime/cancel-job
+https://learn.microsoft.com/rest/api/language/2023-04-01/analyze-conversation/cancel-job
 
 </remarks>
     </member>
@@ -543,7 +543,7 @@ var credential = new AzureKeyCredential("<key>");
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new ConversationAnalysisClient(endpoint, credential);
 
-var operation = client.CancelAnalyzeConversations(WaitUntil.Completed, Guid.NewGuid(), new RequestContext());
+var operation = client.CancelAnalyzeConversations(WaitUntil.Completed, Guid.NewGuid());
 
 Console.WriteLine(operation.GetRawResponse().Status);
 ]]></code>
@@ -551,7 +551,7 @@ Console.WriteLine(operation.GetRawResponse().Status);
 <remarks>
 
 Additional information can be found in the service REST API documentation:
-https://learn.microsoft.com/rest/api/language/2023-04-01/conversation-analysis-runtime/cancel-job
+https://learn.microsoft.com/rest/api/language/2023-04-01/analyze-conversation/cancel-job
 
 </remarks>
     </member>

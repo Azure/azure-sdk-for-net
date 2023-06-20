@@ -233,7 +233,7 @@ namespace Azure.ResourceManager.Batch
         /// </list>
         /// </summary>
         /// <param name="content"> Certificate entity to update. </param>
-        /// <param name="ifMatch"> The entity state (ETag) version of the certificate to update. This value can be omitted or set to &quot;*&quot; to apply the operation unconditionally. </param>
+        /// <param name="ifMatch"> The entity state (ETag) version of the certificate to update. This value can be omitted or set to "*" to apply the operation unconditionally. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<Response<BatchAccountCertificateResource>> UpdateAsync(BatchAccountCertificateCreateOrUpdateContent content, ETag? ifMatch = null, CancellationToken cancellationToken = default)
@@ -268,7 +268,7 @@ namespace Azure.ResourceManager.Batch
         /// </list>
         /// </summary>
         /// <param name="content"> Certificate entity to update. </param>
-        /// <param name="ifMatch"> The entity state (ETag) version of the certificate to update. This value can be omitted or set to &quot;*&quot; to apply the operation unconditionally. </param>
+        /// <param name="ifMatch"> The entity state (ETag) version of the certificate to update. This value can be omitted or set to "*" to apply the operation unconditionally. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual Response<BatchAccountCertificateResource> Update(BatchAccountCertificateCreateOrUpdateContent content, ETag? ifMatch = null, CancellationToken cancellationToken = default)

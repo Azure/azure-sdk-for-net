@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.ApplicationInsights.Models
 {
-    /// <summary> Used by the Application Insights system to determine what kind of flow this component was created by. This is to be set to &apos;Bluefield&apos; when creating/updating a component via the REST API. </summary>
+    /// <summary> Used by the Application Insights system to determine what kind of flow this component was created by. This is to be set to 'Bluefield' when creating/updating a component via the REST API. </summary>
     public readonly partial struct FlowType : IEquatable<FlowType>
     {
         private readonly string _value;

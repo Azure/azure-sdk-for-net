@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="kind"> Kind of encryption protector. This is metadata used for the Azure portal experience. </param>
         /// <param name="location"> Resource location. </param>
         /// <param name="subregion"> Subregion of the server key. </param>
-        /// <param name="serverKeyType"> The server key type like &apos;ServiceManaged&apos;, &apos;AzureKeyVault&apos;. </param>
+        /// <param name="serverKeyType"> The server key type like 'ServiceManaged', 'AzureKeyVault'. </param>
         /// <param name="uri"> The URI of the server key. If the ServerKeyType is AzureKeyVault, then the URI is required. </param>
         /// <param name="thumbprint"> Thumbprint of the server key. </param>
         /// <param name="createdOn"> The server key creation date. </param>
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Sql
         public AzureLocation? Location { get; }
         /// <summary> Subregion of the server key. </summary>
         public string Subregion { get; }
-        /// <summary> The server key type like &apos;ServiceManaged&apos;, &apos;AzureKeyVault&apos;. </summary>
+        /// <summary> The server key type like 'ServiceManaged', 'AzureKeyVault'. </summary>
         public SqlServerKeyType? ServerKeyType { get; set; }
         /// <summary> The URI of the server key. If the ServerKeyType is AzureKeyVault, then the URI is required. </summary>
         public Uri Uri { get; set; }

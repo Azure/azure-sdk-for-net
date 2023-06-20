@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="filter"> The runs filter to apply on the operation. Arithmetic operators are not supported. The allowed string function is &apos;contains&apos;. All logical operators except &apos;Not&apos;, &apos;Has&apos;, &apos;All&apos; are allowed. </param>
+        /// <param name="filter"> The runs filter to apply on the operation. Arithmetic operators are not supported. The allowed string function is 'contains'. All logical operators except 'Not', 'Has', 'All' are allowed. </param>
         /// <param name="top"> $top is supported for get list of runs, which limits the maximum number of runs to return. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ContainerRegistryRunResource" /> that may take multiple service requests to iterate over. </returns>
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="filter"> The runs filter to apply on the operation. Arithmetic operators are not supported. The allowed string function is &apos;contains&apos;. All logical operators except &apos;Not&apos;, &apos;Has&apos;, &apos;All&apos; are allowed. </param>
+        /// <param name="filter"> The runs filter to apply on the operation. Arithmetic operators are not supported. The allowed string function is 'contains'. All logical operators except 'Not', 'Has', 'All' are allowed. </param>
         /// <param name="top"> $top is supported for get list of runs, which limits the maximum number of runs to return. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ContainerRegistryRunResource" /> that may take multiple service requests to iterate over. </returns>

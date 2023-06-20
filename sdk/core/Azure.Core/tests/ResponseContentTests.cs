@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System.Threading.Tasks;
-using Azure.Core.Dynamic;
 using Azure.Core.Pipeline;
 using Azure.Core.Serialization;
 using Azure.Core.TestFramework;
@@ -13,31 +12,7 @@ namespace Azure.Core.Tests
     public class ResponseContentTests
     {
         [Test]
-        public async Task CanSetProtocolOptionsFromClientOptions()
-        {
-            MockClientOptions options = new MockClientOptions();
-            MockClient client = new MockClient(options);
-            Response response = await client.GetValueAsync();
-            ResponseContent content = response.Content as ResponseContent;
-
-            Assert.IsNotNull(content);
-            Assert.AreEqual(content.ProtocolOptions.ResponseContentConvention, PropertyNamingConvention.None);
-        }
-
-        [Test]
-        public async Task ProtocolOptionsSetDynamicOptionsNaming()
-        {
-            MockClientOptions options = new MockClientOptions();
-            options.ProtocolMethods.ResponseContentConvention = PropertyNamingConvention.CamelCase;
-            MockClient client = new MockClient(options);
-            Response response = await client.GetValueAsync();
-            ResponseContent content = response.Content as ResponseContent;
-            DynamicDataOptions dynamicOptions = content.ProtocolOptions.GetDynamicOptions();
-            Assert.AreEqual(PropertyNamingConvention.CamelCase, dynamicOptions.PropertyNamingConvention);
-        }
-
-        [Test]
-        public async Task DefaultProtocolOptionsUseStrictCasing()
+        public async Task DefaultOptionsUseStrictCasing()
         {
             MockClientOptions options = new MockClientOptions();
             MockClient client = new MockClient(options);
@@ -51,11 +26,9 @@ namespace Azure.Core.Tests
         public async Task UseCamelCaseOptionEnablesPropertyNameConversion()
         {
             MockClientOptions options = new MockClientOptions();
-            options.ProtocolMethods.ResponseContentConvention = PropertyNamingConvention.CamelCase;
-
             MockClient client = new MockClient(options);
             Response response = await client.GetValueAsync();
-            dynamic value = response.Content.ToDynamicFromJson();
+            dynamic value = response.Content.ToDynamicFromJson(JsonPropertyNames.CamelCase);
 
             Assert.AreEqual(1, (int)value.Foo);
             Assert.AreEqual(1, (int)value.foo);

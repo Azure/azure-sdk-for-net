@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.PostgreSql.Models
         public PostgreSqlSslEnforcementEnum? SslEnforcement { get; set; }
         /// <summary> Enforce a minimal Tls version for the server. </summary>
         public PostgreSqlMinimalTlsVersionEnum? MinimalTlsVersion { get; set; }
-        /// <summary> Whether or not public network access is allowed for this server. Value is optional but if passed in, must be &apos;Enabled&apos; or &apos;Disabled&apos;. </summary>
+        /// <summary> Whether or not public network access is allowed for this server. Value is optional but if passed in, must be 'Enabled' or 'Disabled'. </summary>
         public PostgreSqlPublicNetworkAccessEnum? PublicNetworkAccess { get; set; }
         /// <summary> The replication role of the server. </summary>
         public string ReplicationRole { get; set; }
