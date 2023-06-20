@@ -21,28 +21,28 @@ string deploymentName = "production";
 
 var data = new
 {
-    analysisInput = new
+    AnalysisInput = new
     {
-        conversationItem = new
+        ConversationItem = new
         {
-            text = "Send an email to Carol about tomorrow's demo",
-            id = "1",
-            participantId = "1",
+            Text = "Send an email to Carol about tomorrow's demo",
+            Id = "1",
+            ParticipantId = "1",
         }
     },
-    parameters = new
+    Parameters = new
     {
-        projectName,
-        deploymentName,
-        verbose = true,
+        ProjectName = projectName,
+        DeploymentName = deploymentName,
+        Verbose = true,
 
         // Use Utf16CodeUnit for strings in .NET.
-        stringIndexType = "Utf16CodeUnit",
+        StringIndexType = "Utf16CodeUnit",
     },
-    kind = "Conversation",
+    Kind = "Conversation",
 };
 
-Response response = client.AnalyzeConversation(RequestContent.Create(data));
+Response response = client.AnalyzeConversation(RequestContent.Create(data, JsonPropertyNames.CamelCase));
 ```
 
 ## Asynchronous
@@ -50,5 +50,5 @@ Response response = client.AnalyzeConversation(RequestContent.Create(data));
 Using the same `data` definition above, you can make an asynchronous request by calling `AnalyzeConversationAsync`:
 
 ```C# Snippet:ConversationAnalysis_AnalyzeConversationWithOptionsAsync
-Response response = await client.AnalyzeConversationAsync(RequestContent.Create(data));
+Response response = await client.AnalyzeConversationAsync(RequestContent.Create(data, JsonPropertyNames.CamelCase));
 ```

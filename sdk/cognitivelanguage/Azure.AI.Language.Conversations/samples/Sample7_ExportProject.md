@@ -6,6 +6,7 @@ Start by importing the namespace for the `ConversationAuthoringClient` and relat
 
 ```C# Snippet:ConversationAuthoringClient_Namespaces
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.AI.Language.Conversations.Authoring;
 ```
 
@@ -29,7 +30,7 @@ string projectName = "project-to-export";
 Operation<BinaryData> exportOperation = client.ExportProject(WaitUntil.Completed, projectName);
 
 // Get the resultUrl from the response, which contains the exported project.
-dynamic result = exportOperation.Value.ToDynamicFromJson();
+dynamic result = exportOperation.Value.ToDynamicFromJson(JsonPropertyNames.CamelCase);
 Uri resultUrl = result.resultUrl;
 
 // Use the client pipeline to create and send a request to download the raw URL.
@@ -54,7 +55,7 @@ string projectName = "project-to-export";
 Operation<BinaryData> exportOperation = await client.ExportProjectAsync(WaitUntil.Completed, projectName);
 
 // Get the resultUrl from the response, which contains the exported project.
-dynamic result = exportOperation.Value.ToDynamicFromJson();
+dynamic result = exportOperation.Value.ToDynamicFromJson(JsonPropertyNames.CamelCase);
 Uri resultUrl = result.resultUrl;
 
 // Use the client pipeline to create and send a request to download the raw URL.

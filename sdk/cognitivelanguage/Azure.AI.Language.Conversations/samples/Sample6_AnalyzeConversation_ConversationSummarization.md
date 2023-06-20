@@ -18,51 +18,51 @@ Once you have created a client, you can call synchronous or asynchronous methods
 ```C# Snippet:AnalyzeConversation_ConversationSummarization
 var data = new
 {
-    analysisInput = new
+    AnalysisInput = new
     {
-        conversations = new[]
+        Conversations = new[]
         {
             new
             {
-                conversationItems = new[]
+                ConversationItems = new[]
                 {
                     new
                     {
-                        text = "Hello, how can I help you?",
-                        id = "1",
-                        role = "Agent",
-                        participantId = "Agent_1",
+                        Text = "Hello, how can I help you?",
+                        Id = "1",
+                        Role = "Agent",
+                        ParticipantId = "Agent_1",
                     },
                     new
                     {
-                        text = "How to upgrade Office? I am getting error messages the whole day.",
-                        id = "2",
-                        role = "Customer",
-                        participantId = "Customer_1",
+                        Text = "How to upgrade Office? I am getting error messages the whole day.",
+                        Id = "2",
+                        Role = "Customer",
+                        ParticipantId = "Customer_1",
                     },
                     new
                     {
-                        text = "Press the upgrade button please. Then sign in and follow the instructions.",
-                        id = "3",
-                        role = "Agent",
-                        participantId = "Agent_1",
+                        Text = "Press the upgrade button please. Then sign in and follow the instructions.",
+                        Id = "3",
+                        Role = "Agent",
+                        ParticipantId = "Agent_1",
                     },
                 },
-                id = "1",
-                language = "en",
-                modality = "text",
+                Id = "1",
+                Language = "en",
+                Modality = "text",
             },
         }
     },
-    tasks = new[]
+    Tasks = new[]
     {
         new
         {
-            taskName = "Issue task",
-            kind = "ConversationalSummarizationTask",
-            parameters = new
+            TaskName = "Issue task",
+            Kind = "ConversationalSummarizationTask",
+            Parameters = new
             {
-                summaryAspects = new[]
+                SummaryAspects = new[]
                 {
                     "issue",
                 }
@@ -70,11 +70,11 @@ var data = new
         },
         new
         {
-            taskName = "Resolution task",
-            kind = "ConversationalSummarizationTask",
-            parameters = new
+            TaskName = "Resolution task",
+            Kind = "ConversationalSummarizationTask",
+            Parameters = new
             {
-                summaryAspects = new[]
+                SummaryAspects = new[]
                 {
                     "resolution",
                 }
@@ -83,21 +83,21 @@ var data = new
     },
 };
 
-Operation<BinaryData> analyzeConversationOperation = client.AnalyzeConversations(WaitUntil.Completed, RequestContent.Create(data));
+Operation<BinaryData> analyzeConversationOperation = client.AnalyzeConversations(WaitUntil.Completed, RequestContent.Create(data, JsonPropertyNames.CamelCase));
 
-dynamic jobResults = analyzeConversationOperation.Value.ToDynamicFromJson();
-foreach (dynamic task in jobResults.tasks.items)
+dynamic jobResults = analyzeConversationOperation.Value.ToDynamicFromJson(JsonPropertyNames.CamelCase);
+foreach (dynamic task in jobResults.Tasks.Items)
 {
-    Console.WriteLine($"Task name: {task.taskName}");
-    dynamic results = task.results;
-    foreach (dynamic conversation in results.conversations)
+    Console.WriteLine($"Task name: {task.TaskName}");
+    dynamic results = task.Results;
+    foreach (dynamic conversation in results.Conversations)
     {
-        Console.WriteLine($"Conversation: #{conversation.id}");
+        Console.WriteLine($"Conversation: #{conversation.Id}");
         Console.WriteLine("Summaries:");
-        foreach (dynamic summary in conversation.summaries)
+        foreach (dynamic summary in conversation.Summaries)
         {
-            Console.WriteLine($"Text: {summary.text}");
-            Console.WriteLine($"Aspect: {summary.aspect}");
+            Console.WriteLine($"Text: {summary.Text}");
+            Console.WriteLine($"Aspect: {summary.Aspect}");
         }
         Console.WriteLine();
     }
@@ -109,5 +109,5 @@ foreach (dynamic task in jobResults.tasks.items)
 Using the same `data` definition above, you can make an asynchronous request by calling `AnalyzeConversationAsync`:
 
 ```C# Snippet:AnalyzeConversationAsync_ConversationSummarization
-Operation<BinaryData> analyzeConversationOperation = await client.AnalyzeConversationsAsync(WaitUntil.Completed, RequestContent.Create(data));
+Operation<BinaryData> analyzeConversationOperation = await client.AnalyzeConversationsAsync(WaitUntil.Completed, RequestContent.Create(data, JsonPropertyNames.CamelCase));
 ```
