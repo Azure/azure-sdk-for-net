@@ -172,6 +172,9 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
 
             dynamic deployResult = deployOperation.Value.ToDynamicFromJson();
             Assert.That(deployResult.Errors, Is.Null.Or.Empty);
+
+            // Need to always await something for when SNIPPET is defined above.
+            await Task.Yield();
         }
 
         [AsyncOnly]
