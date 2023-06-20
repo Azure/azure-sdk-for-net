@@ -772,6 +772,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
         }
 
         [Test]
+        [LiveOnly]
         [IgnoreServiceError(404, "BLOB_UPLOAD_INVALID", Reason = "https://github.com/Azure/azure-sdk-for-net/issues/35322")]
         public async Task CanUploadAndDownloadLargeBlobStreaming()
         {
