@@ -772,13 +772,11 @@ namespace Azure.Containers.ContainerRegistry.Tests
         }
 
         [Test]
-        //[LiveOnly]
         [IgnoreServiceError(404, "BLOB_UPLOAD_INVALID", Reason = "https://github.com/Azure/azure-sdk-for-net/issues/35322")]
         public async Task CanUploadAndDownloadLargeBlobStreaming()
         {
-            long sizeInGiB = 3;
-            long uneven = 20;
-            long size = (1024 * 1024 * 1024 * sizeInGiB) + uneven;
+            long size = int.MaxValue;
+            size++; // Exceed max to exercise path that would throw with an int.
 
             string repositoryId = Recording.Random.NewGuid().ToString();
             ContainerRegistryContentClient client = CreateBlobClient(repositoryId);
