@@ -20,7 +20,7 @@ namespace Azure.Core.Pipeline
         private readonly DiagnosticListener? _source;
         private readonly bool _suppressNestedClientActivities;
 
-        private static readonly ConcurrentDictionary<string, ActivitySource> ActivitySources = new();
+        private static readonly ConcurrentDictionary<string, ActivitySource?> ActivitySources = new();
 
         public DiagnosticScopeFactory(string clientNamespace, string? resourceProviderNamespace, bool isActivityEnabled, bool suppressNestedClientActivities)
         {
@@ -74,8 +74,13 @@ namespace Azure.Core.Pipeline
         ///     name: BlobClient.DownloadTo
         ///     result Azure.Storage.Blobs.BlobClient
         /// </summary>
-        private static ActivitySource GetActivitySource(string ns, string name)
+        private static ActivitySource? GetActivitySource(string ns, string name)
         {
+            if (!ActivityExtensions.SupportsActivitySource())
+            {
+                return null;
+            }
+
             string clientName = ns;
             int indexOfDot = name.IndexOf(".", StringComparison.OrdinalIgnoreCase);
             if (indexOfDot != -1)

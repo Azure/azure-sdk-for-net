@@ -24,13 +24,14 @@ namespace Azure.Core.Pipeline
         private readonly ActivityAdapter? _activityAdapter;
         private readonly bool _suppressNestedClientActivities;
 
-        internal DiagnosticScope(string scopeName, DiagnosticListener source, object? diagnosticSourceArgs, ActivitySource activitySource, System.Diagnostics.ActivityKind kind, bool suppressNestedClientActivities)
+        internal DiagnosticScope(string scopeName, DiagnosticListener source, object? diagnosticSourceArgs, ActivitySource? activitySource, System.Diagnostics.ActivityKind kind, bool suppressNestedClientActivities)
         {
             // ActivityKind.Internal and Client both can represent public API calls depending on the SDK
             _suppressNestedClientActivities = (kind == System.Diagnostics.ActivityKind.Client || kind == System.Diagnostics.ActivityKind.Internal) ? suppressNestedClientActivities : false;
 
             // outer scope presence is enough to suppress any inner scope, regardless of inner scope configuation.
-            IsEnabled = source.IsEnabled() || activitySource.HasListeners();
+            var hasListeners = activitySource?.HasListeners() ?? false;
+            IsEnabled = source.IsEnabled() || hasListeners;
 
             if (_suppressNestedClientActivities)
             {
@@ -172,7 +173,7 @@ namespace Azure.Core.Pipeline
 
         private class ActivityAdapter : IDisposable
         {
-            private readonly ActivitySource _activitySource;
+            private readonly ActivitySource? _activitySource;
             private readonly DiagnosticSource _diagnosticSource;
             private readonly string _activityName;
             private readonly System.Diagnostics.ActivityKind _kind;
@@ -188,7 +189,7 @@ namespace Azure.Core.Pipeline
             private string? _tracestate;
             private string? _displayName;
 
-            public ActivityAdapter(ActivitySource activitySource, DiagnosticSource diagnosticSource, string activityName, System.Diagnostics.ActivityKind kind, object? diagnosticSourceArgs)
+            public ActivityAdapter(ActivitySource? activitySource, DiagnosticSource diagnosticSource, string activityName, System.Diagnostics.ActivityKind kind, object? diagnosticSourceArgs)
             {
                 _activitySource = activitySource;
                 _diagnosticSource = diagnosticSource;
@@ -230,9 +231,9 @@ namespace Azure.Core.Pipeline
                     }
 
                     ActivityContext context;
-                    if (_traceparent != null)
+                    if (activity.ParentId != null)
                     {
-                        context = ActivityContext.Parse(_traceparent, _tracestate);
+                        context = ActivityContext.Parse(activity.ParentId, activity.TraceStateString);
                     }
                     else
                     {
@@ -320,7 +321,7 @@ namespace Azure.Core.Pipeline
                     {
                         foreach (var tag in _tagCollection)
                         {
-                            _currentActivity.AddTag(tag.Key, tag.Value!);
+                            _currentActivity.AddTag(tag.Key, tag.Value);
                         }
                     }
 
@@ -358,6 +359,11 @@ namespace Azure.Core.Pipeline
 
             private Activity? StartActivitySourceActivity()
             {
+                if (_activitySource == null)
+                {
+                    return null;
+                }
+
                 ActivityContext context;
                 if (_traceparent != null)
                 {
@@ -415,6 +421,9 @@ namespace Azure.Core.Pipeline
                 if (activity is IDisposable disposable)
                 {
                     disposable.Dispose();
+                }
+                else
+                {
                     activity.Stop();
                 }
             }
