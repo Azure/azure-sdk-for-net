@@ -200,7 +200,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             {
                 if (disposing)
                 {
-                    AzureMonitorExporterEventSource.Log.WriteVerbose(name: nameof(AzureMonitorTransmitter), message: $"{nameof(AzureMonitorTransmitter)} has been disposed.");
+                    AzureMonitorExporterEventSource.Log.DisposedObject(nameof(AzureMonitorTransmitter));
                     _statsbeat?.Dispose();
                     var fileBlobProvider = _fileBlobProvider as FileBlobProvider;
                     if (fileBlobProvider != null)

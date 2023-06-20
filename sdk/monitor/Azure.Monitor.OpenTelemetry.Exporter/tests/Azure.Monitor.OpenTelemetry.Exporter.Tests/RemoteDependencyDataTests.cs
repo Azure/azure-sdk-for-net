@@ -58,7 +58,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         }
 
         [Fact]
-        public void DependencyTypeisSetToInProcForInternalSpan()
+        public void DependencyTypeIsSetToInProcForInternalSpan()
         {
             using ActivitySource activitySource = new ActivitySource(ActivitySourceName);
             using var activity = activitySource.StartActivity("Activity", ActivityKind.Internal);

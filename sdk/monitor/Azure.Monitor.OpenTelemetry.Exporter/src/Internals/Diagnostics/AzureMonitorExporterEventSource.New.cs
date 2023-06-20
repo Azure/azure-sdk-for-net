@@ -49,5 +49,38 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics
 
         [Event(8, Message = "{0} {1} {2}")]
         public void TransmissionFailed(string message, string retryDetails, string metaData) => WriteEvent(8, message, retryDetails, metaData);
+
+        [Event(9, Message = "{0} has been disposed.", Level = EventLevel.Informational)]
+        public void DisposedObject(string name)
+        {
+            if (IsEnabled(EventLevel.Informational))
+            {
+                WriteEvent(9, name);
+            }
+        }
+
+        [NonEvent]
+        public void VmMetadataFailed(Exception ex)
+        {
+            if (IsEnabled(EventLevel.Informational))
+            {
+                VmMetadataFailed(ex.FlattenException().ToInvariantString());
+            }
+        }
+
+        [Event(10, Message = "Failed to get Azure VM Metadata due to an exception. If not hosted in an Azure VM this can safely be ignored. {0}", Level = EventLevel.Informational)]
+        public void VmMetadataFailed(string exceptionMessage) => WriteEvent(10, exceptionMessage);
+
+        [NonEvent]
+        public void StatsbeatFailed(Exception ex)
+        {
+            if (IsEnabled(EventLevel.Informational))
+            {
+                StatsbeatFailed(ex.FlattenException().ToInvariantString());
+            }
+        }
+
+        [Event(11, Message = "Statsbeat failed to collect data due to an exception. This is only for internal telemetry and can safely be ignored. {0}", Level = EventLevel.Informational)]
+        public void StatsbeatFailed(string exceptionMessage) => WriteEvent(11, exceptionMessage);
     }
 }

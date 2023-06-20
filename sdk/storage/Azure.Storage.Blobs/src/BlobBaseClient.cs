@@ -4684,16 +4684,18 @@ namespace Azure.Storage.Blobs.Specialized
                         operationName)
                         .ConfigureAwait(false);
 
-                    if (BlobBaseClientExistsClassifier.IsResourceNotFoundResponse(response.GetRawResponse()))
+                    Response rawResponse = response.GetRawResponse();
+                    if (BlobBaseClientExistsClassifier.IsResourceNotFoundResponse(rawResponse))
                     {
-                        return Response.FromValue(false, default);
-                    }
-                    if (BlobBaseClientExistsClassifier.IsUsesCustomerSpecifiedEncryptionResponse(response.GetRawResponse()))
-                    {
-                        return Response.FromValue(true, default);
+                        return Response.FromValue(false, rawResponse);
                     }
 
-                    return Response.FromValue(true, response.GetRawResponse());
+                    if (BlobBaseClientExistsClassifier.IsUsesCustomerSpecifiedEncryptionResponse(rawResponse))
+                    {
+                        return Response.FromValue(true, rawResponse);
+                    }
+
+                    return Response.FromValue(true, rawResponse);
                 }
                 catch (Exception ex)
                 {
@@ -4898,7 +4900,7 @@ namespace Azure.Storage.Blobs.Specialized
             await GetPropertiesInternal(
                 conditions,
                 async: true,
-                new RequestContext() { CancellationToken = cancellationToken})
+                new RequestContext() { CancellationToken = cancellationToken })
                 .ConfigureAwait(false);
 
         /// <summary>
@@ -5511,7 +5513,7 @@ namespace Azure.Storage.Blobs.Specialized
 
                 // All BlobRequestConditions are valid.
                 conditions.ValidateConditionsNotPresent(
-                    invalidConditions:BlobRequestConditionProperty.None,
+                    invalidConditions: BlobRequestConditionProperty.None,
                     operationName: nameof(BlobBaseClient.CreateSnapshot),
                     parameterName: nameof(conditions));
 
