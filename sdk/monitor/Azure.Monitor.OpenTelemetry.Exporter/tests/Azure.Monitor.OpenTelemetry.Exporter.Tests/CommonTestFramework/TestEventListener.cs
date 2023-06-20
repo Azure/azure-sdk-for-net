@@ -38,9 +38,6 @@ internal class TestEventListener : EventListener
         };
     }
 
-    /// <summary>Gets or sets the handler for event source creation.</summary>
-    public Action<EventSource>? OnOnEventSourceCreated { get; set; }
-
     /// <summary>Gets or sets the handler for event source writes.</summary>
     public Action<EventWrittenEventArgs> OnOnEventWritten { get; set; }
 
@@ -74,14 +71,5 @@ internal class TestEventListener : EventListener
         {
             this.OnOnEventWritten(eventData);
         }
-    }
-
-    /// <summary>Handler for event source creation.</summary>
-    /// <param name="eventSource">The event source that was created.</param>
-    protected override void OnEventSourceCreated(EventSource eventSource)
-    {
-        // Check for null because this method is called by the base class constructor before we can initialize it
-        Action<EventSource>? callback = this.OnOnEventSourceCreated;
-        callback?.Invoke(eventSource);
     }
 }
