@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Network.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_GetFirewallPolicy()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2022-09-01/examples/FirewallPolicyGet.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2023-02-01/examples/FirewallPolicyGet.json
             // this example is just showing the usage of "FirewallPolicies_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Network.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Exists_GetFirewallPolicy()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2022-09-01/examples/FirewallPolicyGet.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2023-02-01/examples/FirewallPolicyGet.json
             // this example is just showing the usage of "FirewallPolicies_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Network.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task CreateOrUpdate_CreateFirewallPolicy()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2022-09-01/examples/FirewallPolicyPut.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2023-02-01/examples/FirewallPolicyPut.json
             // this example is just showing the usage of "FirewallPolicies_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -232,7 +232,7 @@ DestinationPorts =
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetAll_ListAllFirewallPoliciesForAGivenResourceGroup()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2022-09-01/examples/FirewallPolicyListByResourceGroup.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2023-02-01/examples/FirewallPolicyListByResourceGroup.json
             // this example is just showing the usage of "FirewallPolicies_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
