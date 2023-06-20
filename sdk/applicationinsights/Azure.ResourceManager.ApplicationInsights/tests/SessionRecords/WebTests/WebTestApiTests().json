@@ -1,0 +1,931 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c?api-version=2021-01-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Connection": "keep-alive",
+        "traceparent": "00-caca547db2ed624b8da15cb3e1f3c96f-3d4512ca2e343d4f-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.6.0 (.NET Framework 4.8.9166.0; Microsoft Windows 10.0.22621 )",
+        "x-ms-client-request-id": "c527043ae461287e82ced113b584c54a",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "748",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 20 Jun 2023 09:10:05 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "a48b7946-86d3-4407-84be-c959f2979e6f",
+        "x-ms-ratelimit-remaining-subscription-reads": "11999",
+        "x-ms-request-id": "a48b7946-86d3-4407-84be-c959f2979e6f",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20230620T091005Z:a48b7946-86d3-4407-84be-c959f2979e6f"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c",
+        "authorizationSource": "RoleBased",
+        "managedByTenants": [],
+        "tags": {
+          "TagKey-9823": "TagValue-1254",
+          "TagKey-3481": "TagValue-320",
+          "TagKey-4926": "TagValue-1187",
+          "TagKey-751": "TagValue-3921",
+          "TagKey-1866": "TagValue-8559",
+          "TagKey-3094": "TagValue-9190",
+          "TagKey-2449": "TagValue-9",
+          "TagKey-8379": "TagValue-164",
+          "TagKey-7470": "TagValue-2205",
+          "TagKey-4236": "TagValue-3698",
+          "TagKey-5316": "TagValue-2725"
+        },
+        "subscriptionId": "db1ab6f0-4769-4b27-930e-01e2ef9c123c",
+        "tenantId": "72f988bf-86f1-41af-91ab-2d7cd011db47",
+        "displayName": ".NET Mgmt SDK Test with TTL = 1 Day",
+        "state": "Enabled",
+        "subscriptionPolicies": {
+          "locationPlacementId": "Internal_2014-09-01",
+          "quotaId": "Internal_2014-09-01",
+          "spendingLimit": "Off"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/testRG-2516?api-version=**",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "43",
+        "Content-Type": "application/json",
+        "traceparent": "00-1ab3f1112c65404d99885f2391a6c920-82ca376728170a40-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.6.0 (.NET Framework 4.8.9166.0; Microsoft Windows 10.0.22621 )",
+        "x-ms-client-request-id": "196562c8c7ca1436e3e08ca01c86265c",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "tags": {
+          "test": "env"
+        },
+        "location": "eastus"
+      },
+      "StatusCode": 201,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "241",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 20 Jun 2023 09:10:08 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "b0352619-28eb-48d8-bf81-c6f62029b364",
+        "x-ms-ratelimit-remaining-subscription-writes": "1199",
+        "x-ms-request-id": "b0352619-28eb-48d8-bf81-c6f62029b364",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20230620T091008Z:b0352619-28eb-48d8-bf81-c6f62029b364"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-2516",
+        "name": "testRG-2516",
+        "type": "Microsoft.Resources/resourceGroups",
+        "location": "eastus",
+        "tags": {
+          "test": "env"
+        },
+        "properties": {
+          "provisioningState": "Succeeded"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-2516/providers/Microsoft.Insights/components/component4522?api-version=2020-02-02",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "144",
+        "Content-Type": "application/json",
+        "traceparent": "00-2352732260d34241bd9e02b050ebc23d-0dd0d54638c7f246-00",
+        "User-Agent": "azsdk-net-ResourceManager.ApplicationInsights/1.0.0-alpha.20230620.1 (.NET Framework 4.8.9166.0; Microsoft Windows 10.0.22621 )",
+        "x-ms-client-request-id": "f7377e7005b140e7f452175916beb75e",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "kind": "device",
+        "tags": {},
+        "location": "eastus",
+        "properties": {
+          "Application_Type": "web",
+          "Flow_Type": "Bluefield",
+          "Request_Source": ".NET SDK test"
+        }
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Access-Control-Expose-Headers": "Request-Context",
+        "Cache-Control": "no-cache",
+        "Content-Length": "1245",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 20 Jun 2023 09:10:16 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Request-Context": "appId=cid-v1:60b64f55-e716-48c8-8b96-83eb9c6a7a9b",
+        "Server": "Microsoft-IIS/10.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "66dda888-e21f-4b1e-98dd-ae28f5d6fb67",
+        "x-ms-ratelimit-remaining-subscription-writes": "1198",
+        "x-ms-request-id": "66dda888-e21f-4b1e-98dd-ae28f5d6fb67",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20230620T091016Z:66dda888-e21f-4b1e-98dd-ae28f5d6fb67",
+        "X-Powered-By": "ASP.NET"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-2516/providers/microsoft.insights/components/component4522",
+        "name": "component4522",
+        "type": "microsoft.insights/components",
+        "location": "eastus",
+        "tags": {},
+        "kind": "device",
+        "etag": "\u0022c107f4e8-0000-0100-0000-64916cf70000\u0022",
+        "properties": {
+          "ApplicationId": "component4522",
+          "AppId": "5671a859-6f89-4fb9-bd73-b17232e88beb",
+          "Application_Type": "web",
+          "Flow_Type": "Bluefield",
+          "Request_Source": ".NET SDK test",
+          "InstrumentationKey": "49e80941-1983-4b74-be98-14f46b84343b",
+          "ConnectionString": "InstrumentationKey=49e80941-1983-4b74-be98-14f46b84343b;IngestionEndpoint=https://eastus-3.in.applicationinsights.azure.com/;LiveEndpoint=https://eastus.livediagnostics.monitor.azure.com/",
+          "Name": "component4522",
+          "CreationDate": "2023-06-20T09:10:15.2554688\u002B00:00",
+          "TenantId": "db1ab6f0-4769-4b27-930e-01e2ef9c123c",
+          "provisioningState": "Succeeded",
+          "SamplingPercentage": null,
+          "RetentionInDays": 90,
+          "IngestionMode": "ApplicationInsights",
+          "publicNetworkAccessForIngestion": "Enabled",
+          "publicNetworkAccessForQuery": "Enabled",
+          "Ver": "v2"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-2516/providers/Microsoft.Insights/webtests/webtest8485?api-version=2022-06-15",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "1579",
+        "Content-Type": "application/json",
+        "traceparent": "00-fbc4304e6693354c921a968566fc3689-643d43fe3d5c2241-00",
+        "User-Agent": "azsdk-net-ResourceManager.ApplicationInsights/1.0.0-alpha.20230620.1 (.NET Framework 4.8.9166.0; Microsoft Windows 10.0.22621 )",
+        "x-ms-client-request-id": "3d6f9d1cb0f1047ef1886647abb75c13",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "kind": "ping",
+        "tags": {
+          "hidden-link:/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-2516/providers/Microsoft.Insights/components/component4522": "Resource"
+        },
+        "location": "eastus",
+        "properties": {
+          "SyntheticMonitorId": "my-webtest-my-component",
+          "Name": "webtest8485",
+          "Enabled": true,
+          "Frequency": 900,
+          "Timeout": 120,
+          "Kind": "ping",
+          "RetryEnabled": true,
+          "Locations": [
+            {
+              "Id": "us-fl-mia-edge"
+            }
+          ],
+          "Configuration": {
+            "WebTest": "\u003CWebTest Name=\u0022my-webtest\u0022 Id=\u0022678ddf96-1ab8-44c8-9274-123456789abc\u0022 Enabled=\u0022True\u0022 CssProjectStructure=\u0022\u0022 CssIteration=\u0022\u0022 Timeout=\u0022120\u0022 WorkItemIds=\u0022\u0022 xmlns=\u0022http://microsoft.com/schemas/VisualStudio/TeamTest/2010\u0022 Description=\u0022\u0022 CredentialUserName=\u0022\u0022 CredentialPassword=\u0022\u0022 PreAuthenticate=\u0022True\u0022 Proxy=\u0022default\u0022 StopOnError=\u0022False\u0022 RecordedResultFile=\u0022\u0022 ResultsLocale=\u0022\u0022 \u003E\u003CItems\u003E\u003CRequest Method=\u0022GET\u0022 Guid=\u0022a4162485-9114-fcfc-e086-123456789abc\u0022 Version=\u00221.1\u0022 Url=\u0022http://my-component.azurewebsites.net\u0022 ThinkTime=\u00220\u0022 Timeout=\u0022120\u0022 ParseDependentRequests=\u0022True\u0022 FollowRedirects=\u0022True\u0022 RecordResult=\u0022True\u0022 Cache=\u0022False\u0022 ResponseTimeGoal=\u00220\u0022 Encoding=\u0022utf-8\u0022 ExpectedHttpStatusCode=\u0022200\u0022 ExpectedResponseUrl=\u0022\u0022 ReportingName=\u0022\u0022 IgnoreHttpStatusCode=\u0022False\u0022 /\u003E\u003C/Items\u003E\u003C/WebTest\u003E"
+          }
+        }
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Access-Control-Expose-Headers": "Request-Context",
+        "Cache-Control": "no-cache",
+        "Content-Length": "1790",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 20 Jun 2023 09:10:22 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Request-Context": "appId=cid-v1:60b64f55-e716-48c8-8b96-83eb9c6a7a9b",
+        "Server": "Microsoft-IIS/10.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "6d205f2a-051f-44a6-aa70-4d660146ddb2",
+        "x-ms-ratelimit-remaining-subscription-writes": "1197",
+        "x-ms-request-id": "6d205f2a-051f-44a6-aa70-4d660146ddb2",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20230620T091022Z:6d205f2a-051f-44a6-aa70-4d660146ddb2",
+        "X-Powered-By": "ASP.NET"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-2516/providers/microsoft.insights/webtests/webtest8485",
+        "name": "webtest8485",
+        "type": "microsoft.insights/webtests",
+        "location": "eastus",
+        "tags": {
+          "hidden-link:/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-2516/providers/Microsoft.Insights/components/component4522": "Resource"
+        },
+        "kind": "ping",
+        "etag": "\u0022c10715e9-0000-0100-0000-64916cfc0000\u0022",
+        "properties": {
+          "SyntheticMonitorId": "webtest8485",
+          "Name": "webtest8485",
+          "Description": null,
+          "Enabled": true,
+          "Frequency": 900,
+          "Timeout": 120,
+          "Kind": "ping",
+          "RetryEnabled": true,
+          "Locations": [
+            {
+              "Id": "us-fl-mia-edge"
+            }
+          ],
+          "Configuration": {
+            "WebTest": "\u003CWebTest Name=\u0022my-webtest\u0022 Id=\u0022678ddf96-1ab8-44c8-9274-123456789abc\u0022 Enabled=\u0022True\u0022 CssProjectStructure=\u0022\u0022 CssIteration=\u0022\u0022 Timeout=\u0022120\u0022 WorkItemIds=\u0022\u0022 xmlns=\u0022http://microsoft.com/schemas/VisualStudio/TeamTest/2010\u0022 Description=\u0022\u0022 CredentialUserName=\u0022\u0022 CredentialPassword=\u0022\u0022 PreAuthenticate=\u0022True\u0022 Proxy=\u0022default\u0022 StopOnError=\u0022False\u0022 RecordedResultFile=\u0022\u0022 ResultsLocale=\u0022\u0022 \u003E\u003CItems\u003E\u003CRequest Method=\u0022GET\u0022 Guid=\u0022a4162485-9114-fcfc-e086-123456789abc\u0022 Version=\u00221.1\u0022 Url=\u0022http://my-component.azurewebsites.net\u0022 ThinkTime=\u00220\u0022 Timeout=\u0022120\u0022 ParseDependentRequests=\u0022True\u0022 FollowRedirects=\u0022True\u0022 RecordResult=\u0022True\u0022 Cache=\u0022False\u0022 ResponseTimeGoal=\u00220\u0022 Encoding=\u0022utf-8\u0022 ExpectedHttpStatusCode=\u0022200\u0022 ExpectedResponseUrl=\u0022\u0022 ReportingName=\u0022\u0022 IgnoreHttpStatusCode=\u0022False\u0022 /\u003E\u003C/Items\u003E\u003C/WebTest\u003E"
+          },
+          "Request": null,
+          "ValidationRules": null,
+          "provisioningState": "Succeeded"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-2516/providers/Microsoft.Insights/webtests/webtest8485?api-version=2022-06-15",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-8cfefece5b7e97499638c7b0887a76e3-38374f5da0e5f74e-00",
+        "User-Agent": "azsdk-net-ResourceManager.ApplicationInsights/1.0.0-alpha.20230620.1 (.NET Framework 4.8.9166.0; Microsoft Windows 10.0.22621 )",
+        "x-ms-client-request-id": "16de12477d5cd6d8741ebbcc22d54239",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Access-Control-Expose-Headers": "Request-Context",
+        "Cache-Control": "no-cache",
+        "Content-Length": "1790",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 20 Jun 2023 09:10:23 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Request-Context": "appId=cid-v1:60b64f55-e716-48c8-8b96-83eb9c6a7a9b",
+        "Server": "Microsoft-IIS/10.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "b1f9edbe-f041-4621-ba88-0178ac400e1e",
+        "x-ms-ratelimit-remaining-subscription-reads": "11998",
+        "x-ms-request-id": "b1f9edbe-f041-4621-ba88-0178ac400e1e",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20230620T091023Z:b1f9edbe-f041-4621-ba88-0178ac400e1e",
+        "X-Powered-By": "ASP.NET"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-2516/providers/microsoft.insights/webtests/webtest8485",
+        "name": "webtest8485",
+        "type": "microsoft.insights/webtests",
+        "location": "eastus",
+        "tags": {
+          "hidden-link:/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-2516/providers/Microsoft.Insights/components/component4522": "Resource"
+        },
+        "kind": "ping",
+        "etag": "\u0022c10715e9-0000-0100-0000-64916cfc0000\u0022",
+        "properties": {
+          "SyntheticMonitorId": "webtest8485",
+          "Name": "webtest8485",
+          "Description": null,
+          "Enabled": true,
+          "Frequency": 900,
+          "Timeout": 120,
+          "Kind": "ping",
+          "RetryEnabled": true,
+          "Locations": [
+            {
+              "Id": "us-fl-mia-edge"
+            }
+          ],
+          "Configuration": {
+            "WebTest": "\u003CWebTest Name=\u0022my-webtest\u0022 Id=\u0022678ddf96-1ab8-44c8-9274-123456789abc\u0022 Enabled=\u0022True\u0022 CssProjectStructure=\u0022\u0022 CssIteration=\u0022\u0022 Timeout=\u0022120\u0022 WorkItemIds=\u0022\u0022 xmlns=\u0022http://microsoft.com/schemas/VisualStudio/TeamTest/2010\u0022 Description=\u0022\u0022 CredentialUserName=\u0022\u0022 CredentialPassword=\u0022\u0022 PreAuthenticate=\u0022True\u0022 Proxy=\u0022default\u0022 StopOnError=\u0022False\u0022 RecordedResultFile=\u0022\u0022 ResultsLocale=\u0022\u0022 \u003E\u003CItems\u003E\u003CRequest Method=\u0022GET\u0022 Guid=\u0022a4162485-9114-fcfc-e086-123456789abc\u0022 Version=\u00221.1\u0022 Url=\u0022http://my-component.azurewebsites.net\u0022 ThinkTime=\u00220\u0022 Timeout=\u0022120\u0022 ParseDependentRequests=\u0022True\u0022 FollowRedirects=\u0022True\u0022 RecordResult=\u0022True\u0022 Cache=\u0022False\u0022 ResponseTimeGoal=\u00220\u0022 Encoding=\u0022utf-8\u0022 ExpectedHttpStatusCode=\u0022200\u0022 ExpectedResponseUrl=\u0022\u0022 ReportingName=\u0022\u0022 IgnoreHttpStatusCode=\u0022False\u0022 /\u003E\u003C/Items\u003E\u003C/WebTest\u003E"
+          },
+          "Request": null,
+          "ValidationRules": null,
+          "provisioningState": "Succeeded"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-2516/providers/Microsoft.Insights/webtests/webtest8485?api-version=2022-06-15",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "1579",
+        "Content-Type": "application/json",
+        "traceparent": "00-c164b8f361f2134486e3ae991fae32d5-50ed9a18b63aae4e-00",
+        "User-Agent": "azsdk-net-ResourceManager.ApplicationInsights/1.0.0-alpha.20230620.1 (.NET Framework 4.8.9166.0; Microsoft Windows 10.0.22621 )",
+        "x-ms-client-request-id": "bb3f9fb0410046463301f6b88d0a6ca2",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "kind": "ping",
+        "tags": {
+          "hidden-link:/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-2516/providers/Microsoft.Insights/components/component4522": "Resource"
+        },
+        "location": "eastus",
+        "properties": {
+          "SyntheticMonitorId": "my-webtest-my-component",
+          "Name": "webtest8485",
+          "Enabled": true,
+          "Frequency": 900,
+          "Timeout": 120,
+          "Kind": "ping",
+          "RetryEnabled": true,
+          "Locations": [
+            {
+              "Id": "us-fl-mia-edge"
+            }
+          ],
+          "Configuration": {
+            "WebTest": "\u003CWebTest Name=\u0022my-webtest\u0022 Id=\u0022678ddf96-1ab8-44c8-9274-123456789abc\u0022 Enabled=\u0022True\u0022 CssProjectStructure=\u0022\u0022 CssIteration=\u0022\u0022 Timeout=\u0022120\u0022 WorkItemIds=\u0022\u0022 xmlns=\u0022http://microsoft.com/schemas/VisualStudio/TeamTest/2010\u0022 Description=\u0022\u0022 CredentialUserName=\u0022\u0022 CredentialPassword=\u0022\u0022 PreAuthenticate=\u0022True\u0022 Proxy=\u0022default\u0022 StopOnError=\u0022False\u0022 RecordedResultFile=\u0022\u0022 ResultsLocale=\u0022\u0022 \u003E\u003CItems\u003E\u003CRequest Method=\u0022GET\u0022 Guid=\u0022a4162485-9114-fcfc-e086-123456789abc\u0022 Version=\u00221.1\u0022 Url=\u0022http://my-component.azurewebsites.net\u0022 ThinkTime=\u00220\u0022 Timeout=\u0022120\u0022 ParseDependentRequests=\u0022True\u0022 FollowRedirects=\u0022True\u0022 RecordResult=\u0022True\u0022 Cache=\u0022False\u0022 ResponseTimeGoal=\u00220\u0022 Encoding=\u0022utf-8\u0022 ExpectedHttpStatusCode=\u0022200\u0022 ExpectedResponseUrl=\u0022\u0022 ReportingName=\u0022\u0022 IgnoreHttpStatusCode=\u0022False\u0022 /\u003E\u003C/Items\u003E\u003C/WebTest\u003E"
+          }
+        }
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Access-Control-Expose-Headers": "Request-Context",
+        "Cache-Control": "no-cache",
+        "Content-Length": "1790",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 20 Jun 2023 09:10:23 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Request-Context": "appId=cid-v1:60b64f55-e716-48c8-8b96-83eb9c6a7a9b",
+        "Server": "Microsoft-IIS/10.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "182bb4a8-cf14-48c9-b036-aaf6983737df",
+        "x-ms-ratelimit-remaining-subscription-writes": "1196",
+        "x-ms-request-id": "182bb4a8-cf14-48c9-b036-aaf6983737df",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20230620T091024Z:182bb4a8-cf14-48c9-b036-aaf6983737df",
+        "X-Powered-By": "ASP.NET"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-2516/providers/microsoft.insights/webtests/webtest8485",
+        "name": "webtest8485",
+        "type": "microsoft.insights/webtests",
+        "location": "eastus",
+        "tags": {
+          "hidden-link:/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-2516/providers/Microsoft.Insights/components/component4522": "Resource"
+        },
+        "kind": "ping",
+        "etag": "\u0022c1072ae9-0000-0100-0000-64916d000000\u0022",
+        "properties": {
+          "SyntheticMonitorId": "webtest8485",
+          "Name": "webtest8485",
+          "Description": null,
+          "Enabled": true,
+          "Frequency": 900,
+          "Timeout": 120,
+          "Kind": "ping",
+          "RetryEnabled": true,
+          "Locations": [
+            {
+              "Id": "us-fl-mia-edge"
+            }
+          ],
+          "Configuration": {
+            "WebTest": "\u003CWebTest Name=\u0022my-webtest\u0022 Id=\u0022678ddf96-1ab8-44c8-9274-123456789abc\u0022 Enabled=\u0022True\u0022 CssProjectStructure=\u0022\u0022 CssIteration=\u0022\u0022 Timeout=\u0022120\u0022 WorkItemIds=\u0022\u0022 xmlns=\u0022http://microsoft.com/schemas/VisualStudio/TeamTest/2010\u0022 Description=\u0022\u0022 CredentialUserName=\u0022\u0022 CredentialPassword=\u0022\u0022 PreAuthenticate=\u0022True\u0022 Proxy=\u0022default\u0022 StopOnError=\u0022False\u0022 RecordedResultFile=\u0022\u0022 ResultsLocale=\u0022\u0022 \u003E\u003CItems\u003E\u003CRequest Method=\u0022GET\u0022 Guid=\u0022a4162485-9114-fcfc-e086-123456789abc\u0022 Version=\u00221.1\u0022 Url=\u0022http://my-component.azurewebsites.net\u0022 ThinkTime=\u00220\u0022 Timeout=\u0022120\u0022 ParseDependentRequests=\u0022True\u0022 FollowRedirects=\u0022True\u0022 RecordResult=\u0022True\u0022 Cache=\u0022False\u0022 ResponseTimeGoal=\u00220\u0022 Encoding=\u0022utf-8\u0022 ExpectedHttpStatusCode=\u0022200\u0022 ExpectedResponseUrl=\u0022\u0022 ReportingName=\u0022\u0022 IgnoreHttpStatusCode=\u0022False\u0022 /\u003E\u003C/Items\u003E\u003C/WebTest\u003E"
+          },
+          "Request": null,
+          "ValidationRules": null,
+          "provisioningState": "Succeeded"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-2516/providers/Microsoft.Insights/webtests/webtest8851?api-version=2022-06-15",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "1579",
+        "Content-Type": "application/json",
+        "traceparent": "00-e59626da4c3ed64fa4e6462ea8b917fe-7c3b59312ab35541-00",
+        "User-Agent": "azsdk-net-ResourceManager.ApplicationInsights/1.0.0-alpha.20230620.1 (.NET Framework 4.8.9166.0; Microsoft Windows 10.0.22621 )",
+        "x-ms-client-request-id": "4b6faababf049f2ac499c8d2f5b1e11c",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "kind": "ping",
+        "tags": {
+          "hidden-link:/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-2516/providers/Microsoft.Insights/components/component4522": "Resource"
+        },
+        "location": "eastus",
+        "properties": {
+          "SyntheticMonitorId": "my-webtest-my-component",
+          "Name": "webtest8485",
+          "Enabled": true,
+          "Frequency": 900,
+          "Timeout": 120,
+          "Kind": "ping",
+          "RetryEnabled": true,
+          "Locations": [
+            {
+              "Id": "us-fl-mia-edge"
+            }
+          ],
+          "Configuration": {
+            "WebTest": "\u003CWebTest Name=\u0022my-webtest\u0022 Id=\u0022678ddf96-1ab8-44c8-9274-123456789abc\u0022 Enabled=\u0022True\u0022 CssProjectStructure=\u0022\u0022 CssIteration=\u0022\u0022 Timeout=\u0022120\u0022 WorkItemIds=\u0022\u0022 xmlns=\u0022http://microsoft.com/schemas/VisualStudio/TeamTest/2010\u0022 Description=\u0022\u0022 CredentialUserName=\u0022\u0022 CredentialPassword=\u0022\u0022 PreAuthenticate=\u0022True\u0022 Proxy=\u0022default\u0022 StopOnError=\u0022False\u0022 RecordedResultFile=\u0022\u0022 ResultsLocale=\u0022\u0022 \u003E\u003CItems\u003E\u003CRequest Method=\u0022GET\u0022 Guid=\u0022a4162485-9114-fcfc-e086-123456789abc\u0022 Version=\u00221.1\u0022 Url=\u0022http://my-component.azurewebsites.net\u0022 ThinkTime=\u00220\u0022 Timeout=\u0022120\u0022 ParseDependentRequests=\u0022True\u0022 FollowRedirects=\u0022True\u0022 RecordResult=\u0022True\u0022 Cache=\u0022False\u0022 ResponseTimeGoal=\u00220\u0022 Encoding=\u0022utf-8\u0022 ExpectedHttpStatusCode=\u0022200\u0022 ExpectedResponseUrl=\u0022\u0022 ReportingName=\u0022\u0022 IgnoreHttpStatusCode=\u0022False\u0022 /\u003E\u003C/Items\u003E\u003C/WebTest\u003E"
+          }
+        }
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Access-Control-Expose-Headers": "Request-Context",
+        "Cache-Control": "no-cache",
+        "Content-Length": "1790",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 20 Jun 2023 09:10:28 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Request-Context": "appId=cid-v1:60b64f55-e716-48c8-8b96-83eb9c6a7a9b",
+        "Server": "Microsoft-IIS/10.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "c30d547c-ccff-4b57-84dc-5d5090472efc",
+        "x-ms-ratelimit-remaining-subscription-writes": "1195",
+        "x-ms-request-id": "c30d547c-ccff-4b57-84dc-5d5090472efc",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20230620T091029Z:c30d547c-ccff-4b57-84dc-5d5090472efc",
+        "X-Powered-By": "ASP.NET"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-2516/providers/microsoft.insights/webtests/webtest8851",
+        "name": "webtest8851",
+        "type": "microsoft.insights/webtests",
+        "location": "eastus",
+        "tags": {
+          "hidden-link:/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-2516/providers/Microsoft.Insights/components/component4522": "Resource"
+        },
+        "kind": "ping",
+        "etag": "\u0022c1073be9-0000-0100-0000-64916d030000\u0022",
+        "properties": {
+          "SyntheticMonitorId": "webtest8851",
+          "Name": "webtest8485",
+          "Description": null,
+          "Enabled": true,
+          "Frequency": 900,
+          "Timeout": 120,
+          "Kind": "ping",
+          "RetryEnabled": true,
+          "Locations": [
+            {
+              "Id": "us-fl-mia-edge"
+            }
+          ],
+          "Configuration": {
+            "WebTest": "\u003CWebTest Name=\u0022my-webtest\u0022 Id=\u0022678ddf96-1ab8-44c8-9274-123456789abc\u0022 Enabled=\u0022True\u0022 CssProjectStructure=\u0022\u0022 CssIteration=\u0022\u0022 Timeout=\u0022120\u0022 WorkItemIds=\u0022\u0022 xmlns=\u0022http://microsoft.com/schemas/VisualStudio/TeamTest/2010\u0022 Description=\u0022\u0022 CredentialUserName=\u0022\u0022 CredentialPassword=\u0022\u0022 PreAuthenticate=\u0022True\u0022 Proxy=\u0022default\u0022 StopOnError=\u0022False\u0022 RecordedResultFile=\u0022\u0022 ResultsLocale=\u0022\u0022 \u003E\u003CItems\u003E\u003CRequest Method=\u0022GET\u0022 Guid=\u0022a4162485-9114-fcfc-e086-123456789abc\u0022 Version=\u00221.1\u0022 Url=\u0022http://my-component.azurewebsites.net\u0022 ThinkTime=\u00220\u0022 Timeout=\u0022120\u0022 ParseDependentRequests=\u0022True\u0022 FollowRedirects=\u0022True\u0022 RecordResult=\u0022True\u0022 Cache=\u0022False\u0022 ResponseTimeGoal=\u00220\u0022 Encoding=\u0022utf-8\u0022 ExpectedHttpStatusCode=\u0022200\u0022 ExpectedResponseUrl=\u0022\u0022 ReportingName=\u0022\u0022 IgnoreHttpStatusCode=\u0022False\u0022 /\u003E\u003C/Items\u003E\u003C/WebTest\u003E"
+          },
+          "Request": null,
+          "ValidationRules": null,
+          "provisioningState": "Succeeded"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-2516/providers/Microsoft.Insights/webtests/webtest6930?api-version=2022-06-15",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "1579",
+        "Content-Type": "application/json",
+        "traceparent": "00-f5fdd7b3e670964ca456e20abf09085b-3aeb66393654124e-00",
+        "User-Agent": "azsdk-net-ResourceManager.ApplicationInsights/1.0.0-alpha.20230620.1 (.NET Framework 4.8.9166.0; Microsoft Windows 10.0.22621 )",
+        "x-ms-client-request-id": "0b962c45a0780613cc97e35a86204869",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "kind": "ping",
+        "tags": {
+          "hidden-link:/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-2516/providers/Microsoft.Insights/components/component4522": "Resource"
+        },
+        "location": "eastus",
+        "properties": {
+          "SyntheticMonitorId": "my-webtest-my-component",
+          "Name": "webtest8485",
+          "Enabled": true,
+          "Frequency": 900,
+          "Timeout": 120,
+          "Kind": "ping",
+          "RetryEnabled": true,
+          "Locations": [
+            {
+              "Id": "us-fl-mia-edge"
+            }
+          ],
+          "Configuration": {
+            "WebTest": "\u003CWebTest Name=\u0022my-webtest\u0022 Id=\u0022678ddf96-1ab8-44c8-9274-123456789abc\u0022 Enabled=\u0022True\u0022 CssProjectStructure=\u0022\u0022 CssIteration=\u0022\u0022 Timeout=\u0022120\u0022 WorkItemIds=\u0022\u0022 xmlns=\u0022http://microsoft.com/schemas/VisualStudio/TeamTest/2010\u0022 Description=\u0022\u0022 CredentialUserName=\u0022\u0022 CredentialPassword=\u0022\u0022 PreAuthenticate=\u0022True\u0022 Proxy=\u0022default\u0022 StopOnError=\u0022False\u0022 RecordedResultFile=\u0022\u0022 ResultsLocale=\u0022\u0022 \u003E\u003CItems\u003E\u003CRequest Method=\u0022GET\u0022 Guid=\u0022a4162485-9114-fcfc-e086-123456789abc\u0022 Version=\u00221.1\u0022 Url=\u0022http://my-component.azurewebsites.net\u0022 ThinkTime=\u00220\u0022 Timeout=\u0022120\u0022 ParseDependentRequests=\u0022True\u0022 FollowRedirects=\u0022True\u0022 RecordResult=\u0022True\u0022 Cache=\u0022False\u0022 ResponseTimeGoal=\u00220\u0022 Encoding=\u0022utf-8\u0022 ExpectedHttpStatusCode=\u0022200\u0022 ExpectedResponseUrl=\u0022\u0022 ReportingName=\u0022\u0022 IgnoreHttpStatusCode=\u0022False\u0022 /\u003E\u003C/Items\u003E\u003C/WebTest\u003E"
+          }
+        }
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Access-Control-Expose-Headers": "Request-Context",
+        "Cache-Control": "no-cache",
+        "Content-Length": "1790",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 20 Jun 2023 09:10:32 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Request-Context": "appId=cid-v1:60b64f55-e716-48c8-8b96-83eb9c6a7a9b",
+        "Server": "Microsoft-IIS/10.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "7208b99d-9c86-4c4f-96e1-d7fe74d32c70",
+        "x-ms-ratelimit-remaining-subscription-writes": "1194",
+        "x-ms-request-id": "7208b99d-9c86-4c4f-96e1-d7fe74d32c70",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20230620T091032Z:7208b99d-9c86-4c4f-96e1-d7fe74d32c70",
+        "X-Powered-By": "ASP.NET"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-2516/providers/microsoft.insights/webtests/webtest6930",
+        "name": "webtest6930",
+        "type": "microsoft.insights/webtests",
+        "location": "eastus",
+        "tags": {
+          "hidden-link:/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-2516/providers/Microsoft.Insights/components/component4522": "Resource"
+        },
+        "kind": "ping",
+        "etag": "\u0022c10754e9-0000-0100-0000-64916d070000\u0022",
+        "properties": {
+          "SyntheticMonitorId": "webtest6930",
+          "Name": "webtest8485",
+          "Description": null,
+          "Enabled": true,
+          "Frequency": 900,
+          "Timeout": 120,
+          "Kind": "ping",
+          "RetryEnabled": true,
+          "Locations": [
+            {
+              "Id": "us-fl-mia-edge"
+            }
+          ],
+          "Configuration": {
+            "WebTest": "\u003CWebTest Name=\u0022my-webtest\u0022 Id=\u0022678ddf96-1ab8-44c8-9274-123456789abc\u0022 Enabled=\u0022True\u0022 CssProjectStructure=\u0022\u0022 CssIteration=\u0022\u0022 Timeout=\u0022120\u0022 WorkItemIds=\u0022\u0022 xmlns=\u0022http://microsoft.com/schemas/VisualStudio/TeamTest/2010\u0022 Description=\u0022\u0022 CredentialUserName=\u0022\u0022 CredentialPassword=\u0022\u0022 PreAuthenticate=\u0022True\u0022 Proxy=\u0022default\u0022 StopOnError=\u0022False\u0022 RecordedResultFile=\u0022\u0022 ResultsLocale=\u0022\u0022 \u003E\u003CItems\u003E\u003CRequest Method=\u0022GET\u0022 Guid=\u0022a4162485-9114-fcfc-e086-123456789abc\u0022 Version=\u00221.1\u0022 Url=\u0022http://my-component.azurewebsites.net\u0022 ThinkTime=\u00220\u0022 Timeout=\u0022120\u0022 ParseDependentRequests=\u0022True\u0022 FollowRedirects=\u0022True\u0022 RecordResult=\u0022True\u0022 Cache=\u0022False\u0022 ResponseTimeGoal=\u00220\u0022 Encoding=\u0022utf-8\u0022 ExpectedHttpStatusCode=\u0022200\u0022 ExpectedResponseUrl=\u0022\u0022 ReportingName=\u0022\u0022 IgnoreHttpStatusCode=\u0022False\u0022 /\u003E\u003C/Items\u003E\u003C/WebTest\u003E"
+          },
+          "Request": null,
+          "ValidationRules": null,
+          "provisioningState": "Succeeded"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-2516/providers/Microsoft.Insights/webtests?api-version=2022-06-15",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-9f684ed3dafb4a4ab6d017697b139b23-84c2161c2985904a-00",
+        "User-Agent": "azsdk-net-ResourceManager.ApplicationInsights/1.0.0-alpha.20230620.1 (.NET Framework 4.8.9166.0; Microsoft Windows 10.0.22621 )",
+        "x-ms-client-request-id": "781118b1f665f135759ff66778735081",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Access-Control-Expose-Headers": "Request-Context",
+        "Cache-Control": "no-cache",
+        "Content-Length": "5806",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 20 Jun 2023 09:10:33 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Request-Context": "appId=cid-v1:60b64f55-e716-48c8-8b96-83eb9c6a7a9b",
+        "Server": "Microsoft-IIS/10.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "e61ab81e-8c37-46b8-bf75-a7df278d3293",
+        "x-ms-ratelimit-remaining-subscription-reads": "11997",
+        "x-ms-request-id": "e61ab81e-8c37-46b8-bf75-a7df278d3293",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20230620T091033Z:e61ab81e-8c37-46b8-bf75-a7df278d3293",
+        "X-Powered-By": "ASP.NET"
+      },
+      "ResponseBody": {
+        "value": [
+          {
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-2516/providers/microsoft.insights/webtests/webtest8485",
+            "name": "webtest8485",
+            "type": "microsoft.insights/webtests",
+            "location": "eastus",
+            "tags": {
+              "hidden-link:/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-2516/providers/Microsoft.Insights/components/component4522": "Resource"
+            },
+            "kind": "ping",
+            "etag": "\u0022c1072ae9-0000-0100-0000-64916d000000\u0022",
+            "properties": {
+              "SyntheticMonitorId": "webtest8485",
+              "Name": "webtest8485",
+              "Description": null,
+              "Enabled": true,
+              "Frequency": 900,
+              "Timeout": 120,
+              "Kind": "ping",
+              "RetryEnabled": true,
+              "Locations": [
+                {
+                  "Id": "us-fl-mia-edge"
+                }
+              ],
+              "Configuration": {
+                "WebTest": "\u003CWebTest Name=\u0022my-webtest\u0022 Id=\u0022678ddf96-1ab8-44c8-9274-123456789abc\u0022 Enabled=\u0022True\u0022 CssProjectStructure=\u0022\u0022 CssIteration=\u0022\u0022 Timeout=\u0022120\u0022 WorkItemIds=\u0022\u0022 xmlns=\u0022http://microsoft.com/schemas/VisualStudio/TeamTest/2010\u0022 Description=\u0022\u0022 CredentialUserName=\u0022\u0022 CredentialPassword=\u0022\u0022 PreAuthenticate=\u0022True\u0022 Proxy=\u0022default\u0022 StopOnError=\u0022False\u0022 RecordedResultFile=\u0022\u0022 ResultsLocale=\u0022\u0022 \u003E\u003CItems\u003E\u003CRequest Method=\u0022GET\u0022 Guid=\u0022a4162485-9114-fcfc-e086-123456789abc\u0022 Version=\u00221.1\u0022 Url=\u0022http://my-component.azurewebsites.net\u0022 ThinkTime=\u00220\u0022 Timeout=\u0022120\u0022 ParseDependentRequests=\u0022True\u0022 FollowRedirects=\u0022True\u0022 RecordResult=\u0022True\u0022 Cache=\u0022False\u0022 ResponseTimeGoal=\u00220\u0022 Encoding=\u0022utf-8\u0022 ExpectedHttpStatusCode=\u0022200\u0022 ExpectedResponseUrl=\u0022\u0022 ReportingName=\u0022\u0022 IgnoreHttpStatusCode=\u0022False\u0022 /\u003E\u003C/Items\u003E\u003C/WebTest\u003E"
+              },
+              "Request": null,
+              "ValidationRules": null,
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-2516/providers/microsoft.insights/webtests/webtest8851",
+            "name": "webtest8851",
+            "type": "microsoft.insights/webtests",
+            "location": "eastus",
+            "tags": {
+              "hidden-link:/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-2516/providers/Microsoft.Insights/components/component4522": "Resource"
+            },
+            "kind": "ping",
+            "etag": "\u0022c1073be9-0000-0100-0000-64916d030000\u0022",
+            "properties": {
+              "SyntheticMonitorId": "webtest8851",
+              "Name": "webtest8485",
+              "Description": null,
+              "Enabled": true,
+              "Frequency": 900,
+              "Timeout": 120,
+              "Kind": "ping",
+              "RetryEnabled": true,
+              "Locations": [
+                {
+                  "Id": "us-fl-mia-edge"
+                }
+              ],
+              "Configuration": {
+                "WebTest": "\u003CWebTest Name=\u0022my-webtest\u0022 Id=\u0022678ddf96-1ab8-44c8-9274-123456789abc\u0022 Enabled=\u0022True\u0022 CssProjectStructure=\u0022\u0022 CssIteration=\u0022\u0022 Timeout=\u0022120\u0022 WorkItemIds=\u0022\u0022 xmlns=\u0022http://microsoft.com/schemas/VisualStudio/TeamTest/2010\u0022 Description=\u0022\u0022 CredentialUserName=\u0022\u0022 CredentialPassword=\u0022\u0022 PreAuthenticate=\u0022True\u0022 Proxy=\u0022default\u0022 StopOnError=\u0022False\u0022 RecordedResultFile=\u0022\u0022 ResultsLocale=\u0022\u0022 \u003E\u003CItems\u003E\u003CRequest Method=\u0022GET\u0022 Guid=\u0022a4162485-9114-fcfc-e086-123456789abc\u0022 Version=\u00221.1\u0022 Url=\u0022http://my-component.azurewebsites.net\u0022 ThinkTime=\u00220\u0022 Timeout=\u0022120\u0022 ParseDependentRequests=\u0022True\u0022 FollowRedirects=\u0022True\u0022 RecordResult=\u0022True\u0022 Cache=\u0022False\u0022 ResponseTimeGoal=\u00220\u0022 Encoding=\u0022utf-8\u0022 ExpectedHttpStatusCode=\u0022200\u0022 ExpectedResponseUrl=\u0022\u0022 ReportingName=\u0022\u0022 IgnoreHttpStatusCode=\u0022False\u0022 /\u003E\u003C/Items\u003E\u003C/WebTest\u003E"
+              },
+              "Request": null,
+              "ValidationRules": null,
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-2516/providers/microsoft.insights/webtests/webtest6930",
+            "name": "webtest6930",
+            "type": "microsoft.insights/webtests",
+            "location": "eastus",
+            "tags": {
+              "hidden-link:/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-2516/providers/Microsoft.Insights/components/component4522": "Resource"
+            },
+            "kind": "ping",
+            "etag": "\u0022c10754e9-0000-0100-0000-64916d070000\u0022",
+            "properties": {
+              "SyntheticMonitorId": "webtest6930",
+              "Name": "webtest8485",
+              "Description": null,
+              "Enabled": true,
+              "Frequency": 900,
+              "Timeout": 120,
+              "Kind": "ping",
+              "RetryEnabled": true,
+              "Locations": [
+                {
+                  "Id": "us-fl-mia-edge"
+                }
+              ],
+              "Configuration": {
+                "WebTest": "\u003CWebTest Name=\u0022my-webtest\u0022 Id=\u0022678ddf96-1ab8-44c8-9274-123456789abc\u0022 Enabled=\u0022True\u0022 CssProjectStructure=\u0022\u0022 CssIteration=\u0022\u0022 Timeout=\u0022120\u0022 WorkItemIds=\u0022\u0022 xmlns=\u0022http://microsoft.com/schemas/VisualStudio/TeamTest/2010\u0022 Description=\u0022\u0022 CredentialUserName=\u0022\u0022 CredentialPassword=\u0022\u0022 PreAuthenticate=\u0022True\u0022 Proxy=\u0022default\u0022 StopOnError=\u0022False\u0022 RecordedResultFile=\u0022\u0022 ResultsLocale=\u0022\u0022 \u003E\u003CItems\u003E\u003CRequest Method=\u0022GET\u0022 Guid=\u0022a4162485-9114-fcfc-e086-123456789abc\u0022 Version=\u00221.1\u0022 Url=\u0022http://my-component.azurewebsites.net\u0022 ThinkTime=\u00220\u0022 Timeout=\u0022120\u0022 ParseDependentRequests=\u0022True\u0022 FollowRedirects=\u0022True\u0022 RecordResult=\u0022True\u0022 Cache=\u0022False\u0022 ResponseTimeGoal=\u00220\u0022 Encoding=\u0022utf-8\u0022 ExpectedHttpStatusCode=\u0022200\u0022 ExpectedResponseUrl=\u0022\u0022 ReportingName=\u0022\u0022 IgnoreHttpStatusCode=\u0022False\u0022 /\u003E\u003C/Items\u003E\u003C/WebTest\u003E"
+              },
+              "Request": null,
+              "ValidationRules": null,
+              "provisioningState": "Succeeded"
+            }
+          }
+        ],
+        "nextLink": null
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-2516/providers/Microsoft.Insights/webtests/webtest8485?api-version=2022-06-15",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-29d6067856e00d49bcd19cc7c8895e6b-ac631c0a66fa2542-00",
+        "User-Agent": "azsdk-net-ResourceManager.ApplicationInsights/1.0.0-alpha.20230620.1 (.NET Framework 4.8.9166.0; Microsoft Windows 10.0.22621 )",
+        "x-ms-client-request-id": "6072da1f61741a2996697f6cdbcf19a4",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Access-Control-Expose-Headers": "Request-Context",
+        "Cache-Control": "no-cache",
+        "Content-Length": "1790",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 20 Jun 2023 09:10:33 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Request-Context": "appId=cid-v1:60b64f55-e716-48c8-8b96-83eb9c6a7a9b",
+        "Server": "Microsoft-IIS/10.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "d8f46a3f-f62f-41ac-b070-5689a8275a7f",
+        "x-ms-ratelimit-remaining-subscription-reads": "11996",
+        "x-ms-request-id": "d8f46a3f-f62f-41ac-b070-5689a8275a7f",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20230620T091034Z:d8f46a3f-f62f-41ac-b070-5689a8275a7f",
+        "X-Powered-By": "ASP.NET"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-2516/providers/microsoft.insights/webtests/webtest8485",
+        "name": "webtest8485",
+        "type": "microsoft.insights/webtests",
+        "location": "eastus",
+        "tags": {
+          "hidden-link:/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-2516/providers/Microsoft.Insights/components/component4522": "Resource"
+        },
+        "kind": "ping",
+        "etag": "\u0022c1072ae9-0000-0100-0000-64916d000000\u0022",
+        "properties": {
+          "SyntheticMonitorId": "webtest8485",
+          "Name": "webtest8485",
+          "Description": null,
+          "Enabled": true,
+          "Frequency": 900,
+          "Timeout": 120,
+          "Kind": "ping",
+          "RetryEnabled": true,
+          "Locations": [
+            {
+              "Id": "us-fl-mia-edge"
+            }
+          ],
+          "Configuration": {
+            "WebTest": "\u003CWebTest Name=\u0022my-webtest\u0022 Id=\u0022678ddf96-1ab8-44c8-9274-123456789abc\u0022 Enabled=\u0022True\u0022 CssProjectStructure=\u0022\u0022 CssIteration=\u0022\u0022 Timeout=\u0022120\u0022 WorkItemIds=\u0022\u0022 xmlns=\u0022http://microsoft.com/schemas/VisualStudio/TeamTest/2010\u0022 Description=\u0022\u0022 CredentialUserName=\u0022\u0022 CredentialPassword=\u0022\u0022 PreAuthenticate=\u0022True\u0022 Proxy=\u0022default\u0022 StopOnError=\u0022False\u0022 RecordedResultFile=\u0022\u0022 ResultsLocale=\u0022\u0022 \u003E\u003CItems\u003E\u003CRequest Method=\u0022GET\u0022 Guid=\u0022a4162485-9114-fcfc-e086-123456789abc\u0022 Version=\u00221.1\u0022 Url=\u0022http://my-component.azurewebsites.net\u0022 ThinkTime=\u00220\u0022 Timeout=\u0022120\u0022 ParseDependentRequests=\u0022True\u0022 FollowRedirects=\u0022True\u0022 RecordResult=\u0022True\u0022 Cache=\u0022False\u0022 ResponseTimeGoal=\u00220\u0022 Encoding=\u0022utf-8\u0022 ExpectedHttpStatusCode=\u0022200\u0022 ExpectedResponseUrl=\u0022\u0022 ReportingName=\u0022\u0022 IgnoreHttpStatusCode=\u0022False\u0022 /\u003E\u003C/Items\u003E\u003C/WebTest\u003E"
+          },
+          "Request": null,
+          "ValidationRules": null,
+          "provisioningState": "Succeeded"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-2516/providers/Microsoft.Insights/webtests/webtest84851?api-version=2022-06-15",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-70cfb3f8b073af45ae3b942b8c73567b-ed5d77f5f0ab694f-00",
+        "User-Agent": "azsdk-net-ResourceManager.ApplicationInsights/1.0.0-alpha.20230620.1 (.NET Framework 4.8.9166.0; Microsoft Windows 10.0.22621 )",
+        "x-ms-client-request-id": "dc205e5169a04fb7f7a596d9a9ac8d58",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 404,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "223",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 20 Jun 2023 09:10:33 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "38abb640-3c46-4062-9ff0-8e07cb2c0b7e",
+        "x-ms-failure-cause": "gateway",
+        "x-ms-request-id": "38abb640-3c46-4062-9ff0-8e07cb2c0b7e",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20230620T091034Z:38abb640-3c46-4062-9ff0-8e07cb2c0b7e"
+      },
+      "ResponseBody": {
+        "error": {
+          "code": "ResourceNotFound",
+          "message": "The Resource \u0027Microsoft.Insights/webtests/webtest84851\u0027 under resource group \u0027testRG-2516\u0027 was not found. For more details please go to https://aka.ms/ARMResourceNotFoundFix"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-2516/providers/Microsoft.Insights/webtests/webtest8485?api-version=2022-06-15",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-c869376a1f27e94293dbb9ae13e9e454-25f049444ace7240-00",
+        "User-Agent": "azsdk-net-ResourceManager.ApplicationInsights/1.0.0-alpha.20230620.1 (.NET Framework 4.8.9166.0; Microsoft Windows 10.0.22621 )",
+        "x-ms-client-request-id": "ac3a6246e7ad50f5eff6e1fb77c815a5",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Access-Control-Expose-Headers": "Request-Context",
+        "Cache-Control": "no-cache",
+        "Content-Length": "1790",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 20 Jun 2023 09:10:34 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Request-Context": "appId=cid-v1:60b64f55-e716-48c8-8b96-83eb9c6a7a9b",
+        "Server": "Microsoft-IIS/10.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "0c1405cc-a9d9-4526-a730-3238afb6daa1",
+        "x-ms-ratelimit-remaining-subscription-reads": "11994",
+        "x-ms-request-id": "0c1405cc-a9d9-4526-a730-3238afb6daa1",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20230620T091035Z:0c1405cc-a9d9-4526-a730-3238afb6daa1",
+        "X-Powered-By": "ASP.NET"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-2516/providers/microsoft.insights/webtests/webtest8485",
+        "name": "webtest8485",
+        "type": "microsoft.insights/webtests",
+        "location": "eastus",
+        "tags": {
+          "hidden-link:/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-2516/providers/Microsoft.Insights/components/component4522": "Resource"
+        },
+        "kind": "ping",
+        "etag": "\u0022c1072ae9-0000-0100-0000-64916d000000\u0022",
+        "properties": {
+          "SyntheticMonitorId": "webtest8485",
+          "Name": "webtest8485",
+          "Description": null,
+          "Enabled": true,
+          "Frequency": 900,
+          "Timeout": 120,
+          "Kind": "ping",
+          "RetryEnabled": true,
+          "Locations": [
+            {
+              "Id": "us-fl-mia-edge"
+            }
+          ],
+          "Configuration": {
+            "WebTest": "\u003CWebTest Name=\u0022my-webtest\u0022 Id=\u0022678ddf96-1ab8-44c8-9274-123456789abc\u0022 Enabled=\u0022True\u0022 CssProjectStructure=\u0022\u0022 CssIteration=\u0022\u0022 Timeout=\u0022120\u0022 WorkItemIds=\u0022\u0022 xmlns=\u0022http://microsoft.com/schemas/VisualStudio/TeamTest/2010\u0022 Description=\u0022\u0022 CredentialUserName=\u0022\u0022 CredentialPassword=\u0022\u0022 PreAuthenticate=\u0022True\u0022 Proxy=\u0022default\u0022 StopOnError=\u0022False\u0022 RecordedResultFile=\u0022\u0022 ResultsLocale=\u0022\u0022 \u003E\u003CItems\u003E\u003CRequest Method=\u0022GET\u0022 Guid=\u0022a4162485-9114-fcfc-e086-123456789abc\u0022 Version=\u00221.1\u0022 Url=\u0022http://my-component.azurewebsites.net\u0022 ThinkTime=\u00220\u0022 Timeout=\u0022120\u0022 ParseDependentRequests=\u0022True\u0022 FollowRedirects=\u0022True\u0022 RecordResult=\u0022True\u0022 Cache=\u0022False\u0022 ResponseTimeGoal=\u00220\u0022 Encoding=\u0022utf-8\u0022 ExpectedHttpStatusCode=\u0022200\u0022 ExpectedResponseUrl=\u0022\u0022 ReportingName=\u0022\u0022 IgnoreHttpStatusCode=\u0022False\u0022 /\u003E\u003C/Items\u003E\u003C/WebTest\u003E"
+          },
+          "Request": null,
+          "ValidationRules": null,
+          "provisioningState": "Succeeded"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-2516/providers/Microsoft.Insights/webtests/webtest8485?api-version=2022-06-15",
+      "RequestMethod": "DELETE",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-808e0b84ef574d40b60d0c632409202f-06185ef20ed78844-00",
+        "User-Agent": "azsdk-net-ResourceManager.ApplicationInsights/1.0.0-alpha.20230620.1 (.NET Framework 4.8.9166.0; Microsoft Windows 10.0.22621 )",
+        "x-ms-client-request-id": "191551867452b6e0222369ceca5070ea",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Access-Control-Expose-Headers": "Request-Context",
+        "Cache-Control": "no-cache",
+        "Content-Length": "0",
+        "Date": "Tue, 20 Jun 2023 09:10:37 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Request-Context": "appId=cid-v1:60b64f55-e716-48c8-8b96-83eb9c6a7a9b",
+        "Server": "Microsoft-IIS/10.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "24d1473f-c0ca-43c9-b152-ef0d408994e6",
+        "x-ms-ratelimit-remaining-subscription-deletes": "14999",
+        "x-ms-request-id": "24d1473f-c0ca-43c9-b152-ef0d408994e6",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20230620T091037Z:24d1473f-c0ca-43c9-b152-ef0d408994e6",
+        "X-Powered-By": "ASP.NET"
+      },
+      "ResponseBody": null
+    }
+  ],
+  "Variables": {
+    "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com/",
+    "LOCATION": "EastUS",
+    "RandomSeed": "1891376832",
+    "RESOURCE_MANAGER_URL": null,
+    "SUBSCRIPTION_ID": "db1ab6f0-4769-4b27-930e-01e2ef9c123c"
+  }
+}

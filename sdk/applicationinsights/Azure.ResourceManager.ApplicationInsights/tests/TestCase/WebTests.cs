@@ -12,47 +12,53 @@ namespace Azure.ResourceManager.ApplicationInsights.Tests.TestCase
     public class WebTests : ApplicationInsightsManagementTestBase
     {
         public WebTests(bool isAsync)
-            : base(isAsync, RecordedTestMode.Record)
+            : base(isAsync)//, RecordedTestMode.Record)
         {
         }
 
-        private async Task<WebTestCollection> GetCredentialCollectionAsync()
+        private async Task<(WebTestCollection WebtestCollection, ApplicationInsightsComponentCollection ComponentCollection)> GetCredentialCollectionAsync()
         {
             var resourceGroup = await CreateResourceGroupAsync();
             var webtestCollection = resourceGroup.GetWebTests();
-            return webtestCollection;
+            var coponentCollection = resourceGroup.GetApplicationInsightsComponents();
+            return (webtestCollection, coponentCollection);
         }
 
         [TestCase]
         public async Task WebTestApiTests()
         {
+            //0.Prepare
+            (WebTestCollection WebtestCollection, ApplicationInsightsComponentCollection ComponentCollection) = await GetCredentialCollectionAsync();
+            var componentName = Recording.GenerateAssetName("component");
+            var componentInput = ResourceDataHelpers.GetComponentData(DefaultLocation);
+            var lroc = await ComponentCollection.CreateOrUpdateAsync(WaitUntil.Completed, componentName, componentInput);
+            ApplicationInsightsComponentResource component = lroc.Value;
             //1.CreateOrUpdate
-            var collection = await GetCredentialCollectionAsync();
             var name = Recording.GenerateAssetName("webtest");
             var name2 = Recording.GenerateAssetName("webtest");
             var name3 = Recording.GenerateAssetName("webtest");
-            var input = ResourceDataHelpers.GetWebTestData(DefaultLocation);
-            var lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, name, input);
+            var input = ResourceDataHelpers.GetWebTestData(DefaultLocation, ResourceGroupName, componentName, name);
+            var lro = await WebtestCollection.CreateOrUpdateAsync(WaitUntil.Completed, name, input);
             WebTestResource webtst = lro.Value;
             Assert.AreEqual(name, webtst.Data.Name);
             //2.Get
             WebTestResource webtest2 = await webtst.GetAsync();
             ResourceDataHelpers.AssertWebTestData(webtst.Data, webtest2.Data);
             //3.GetAll
-            _ = await collection.CreateOrUpdateAsync(WaitUntil.Completed, name, input);
-            _ = await collection.CreateOrUpdateAsync(WaitUntil.Completed, name2, input);
-            _ = await collection.CreateOrUpdateAsync(WaitUntil.Completed, name3, input);
+            _ = await WebtestCollection.CreateOrUpdateAsync(WaitUntil.Completed, name, input);
+            _ = await WebtestCollection.CreateOrUpdateAsync(WaitUntil.Completed, name2, input);
+            _ = await WebtestCollection.CreateOrUpdateAsync(WaitUntil.Completed, name3, input);
             int count = 0;
-            await foreach (var num in collection.GetAllAsync())
+            await foreach (var num in WebtestCollection.GetAllAsync())
             {
                 count++;
             }
             Assert.GreaterOrEqual(count, 3);
             //4.Exists
-            Assert.IsTrue(await collection.ExistsAsync(name));
-            Assert.IsFalse(await collection.ExistsAsync(name + "1"));
+            Assert.IsTrue(await WebtestCollection.ExistsAsync(name));
+            Assert.IsFalse(await WebtestCollection.ExistsAsync(name + "1"));
 
-            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await collection.ExistsAsync(null));
+            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await WebtestCollection.ExistsAsync(null));
             //Resource
             //5.Get
             WebTestResource webtest3 = await webtst.GetAsync();

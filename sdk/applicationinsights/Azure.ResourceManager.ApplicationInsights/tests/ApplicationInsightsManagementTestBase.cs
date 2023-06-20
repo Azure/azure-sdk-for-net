@@ -15,6 +15,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Tests
         protected ArmClient Client { get; private set; }
         protected AzureLocation DefaultLocation => TestEnvironment.Location;
         protected SubscriptionResource DefaultSubscription { get; private set; }
+        protected string ResourceGroupName { get; private set; }
 
         protected ApplicationInsightsManagementTestBase(bool isAsync, RecordedTestMode mode)
         : base(isAsync, mode)
@@ -36,6 +37,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Tests
         protected async Task<ResourceGroupResource> CreateResourceGroupAsync()
         {
             var resourceGroupName = Recording.GenerateAssetName("testRG-");
+            ResourceGroupName = resourceGroupName;
             var rgOp = await DefaultSubscription.GetResourceGroups().CreateOrUpdateAsync(
                 WaitUntil.Completed,
                 resourceGroupName,
