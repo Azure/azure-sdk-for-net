@@ -190,7 +190,7 @@ namespace Azure.Core.Tests
                 }
             };
 
-            using RequestContent content = RequestContent.Create(anon, PropertyNameFormat.CamelCase);
+            using RequestContent content = RequestContent.Create(anon, JsonPropertyNames.CamelCase);
             using MemoryStream destination = new();
             content.WriteTo(destination, default);
 

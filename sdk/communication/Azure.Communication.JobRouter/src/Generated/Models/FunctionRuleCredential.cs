@@ -27,18 +27,5 @@ namespace Azure.Communication.JobRouter
             AppKey = appKey;
             ClientId = clientId;
         }
-
-        /// <summary> (Optional) Access key scoped to a particular function. </summary>
-        public string FunctionKey { get; set; }
-        /// <summary>
-        /// (Optional) Access key scoped to a Azure Function app.
-        /// This key grants access to all functions under the app.
-        /// </summary>
-        public string AppKey { get; set; }
-        /// <summary>
-        /// (Optional) Client id, when AppKey is provided
-        /// In context of Azure function, this is usually the name of the key
-        /// </summary>
-        public string ClientId { get; set; }
     }
 }

@@ -188,7 +188,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         }
 
         [Fact]
-        public void AiLocationIpisSetAsHttpClientIpforHttpServerSpans()
+        public void AiLocationIpIsSetAsHttpClientIpForHttpServerSpans()
         {
             using ActivitySource activitySource = new ActivitySource(ActivitySourceName);
             using var activity = activitySource.StartActivity(
@@ -207,7 +207,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         }
 
         [Fact]
-        public void AiLocationIpisSetAsNetPeerIpForServerSpans()
+        public void AiLocationIpIsSetAsNetPeerIpForServerSpans()
         {
             using ActivitySource activitySource = new ActivitySource(ActivitySourceName);
             using var activity = activitySource.StartActivity(
@@ -226,7 +226,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         }
 
         [Fact]
-        public void AiUserAgentisSetAsHttpUserAgent()
+        public void AiUserAgentIsSetAsHttpUserAgent()
         {
             using ActivitySource activitySource = new ActivitySource(ActivitySourceName);
             using var activity = activitySource.StartActivity(
