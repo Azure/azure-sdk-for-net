@@ -229,8 +229,7 @@ namespace Azure.Core.Pipeline
                         linkTagsCollection.Add(tag.Key, tag.Value!);
                     }
 
-                    // TODO: not sure if these are the correct values here - need to fix
-                    var context = new ActivityContext(activity.TraceId, activity.SpanId, activity.ActivityTraceFlags, activity.TraceStateString);
+                    var context = ActivityContext.Parse(activity.ParentId!, activity.TraceStateString);
                     var link = new ActivityLink(context, linkTagsCollection);
                     linkCollection.Add(link);
                 }
@@ -330,7 +329,6 @@ namespace Azure.Core.Pipeline
                     _currentActivity.Start();
                 }
 
-                // TODO: work around this method here - is this for the "diagnostic source route?"
                 _diagnosticSource.Write(_activityName + ".Start", _diagnosticSourceArgs ?? _currentActivity);
 
                 if (_displayName != null)
@@ -352,7 +350,8 @@ namespace Azure.Core.Pipeline
 
             private Activity? StartActivitySourceActivity()
             {
-                var activity = _activitySource.StartActivity(_activityName, _kind, _traceparent!, _tagCollection, GetActivitySourceLinkCollection()!, _startTime);
+                var context = ActivityContext.Parse(_traceparent!, _tracestate);
+                var activity = _activitySource.StartActivity(_activityName, _kind, context, _tagCollection, GetActivitySourceLinkCollection()!, _startTime);
                 return activity;
             }
 
@@ -366,7 +365,6 @@ namespace Azure.Core.Pipeline
             {
                 if (exception != null)
                 {
-                    // TODO: work around this method
                     _diagnosticSource?.Write(_activityName + ".Exception", exception);
                 }
 
@@ -396,11 +394,11 @@ namespace Azure.Core.Pipeline
                 if (activity.Duration == TimeSpan.Zero)
                     activity.SetEndTime(DateTime.UtcNow);
 
-                // TODO: work around this method
                 _diagnosticSource.Write(_activityName + ".Stop", _diagnosticSourceArgs);
 
-                if (!activity.TryDispose())
+                if (activity is IDisposable disposable)
                 {
+                    disposable.Dispose();
                     activity.Stop();
                 }
             }
@@ -409,31 +407,15 @@ namespace Azure.Core.Pipeline
 
 #pragma warning disable SA1507 // File can not contain multiple types
     /// <summary>
-    /// Until we can reference the 5.0 of System.Diagnostics.DiagnosticSource
+    /// Until Activity Source is no longer considered experimental.
     /// </summary>
     internal static class ActivityExtensions
     {
-        static ActivityExtensions()
-        {
-            ResetFeatureSwitch();
-        }
-
         private static bool SupportsActivitySourceSwitch;
 
         public static bool SupportsActivitySource()
         {
             return SupportsActivitySourceSwitch;
-        }
-
-        public static bool TryDispose(this Activity activity)
-        {
-            if (activity is IDisposable disposable)
-            {
-                disposable.Dispose();
-                return true;
-            }
-
-            return false;
         }
 
         public static void ResetFeatureSwitch()

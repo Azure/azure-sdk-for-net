@@ -279,17 +279,9 @@ namespace Azure.Core.Tests
         }
 
 #if NET5_0_OR_GREATER
-        [SetUp]
-        [TearDown]
-        public void ResetFeatureSwitch()
-        {
-            ActivityExtensions.ResetFeatureSwitch();
-        }
-
         private static TestAppContextSwitch SetAppConfigSwitch()
         {
             var s = new TestAppContextSwitch("Azure.Experimental.EnableActivitySource", "true");
-            ActivityExtensions.ResetFeatureSwitch();
             return s;
         }
 
