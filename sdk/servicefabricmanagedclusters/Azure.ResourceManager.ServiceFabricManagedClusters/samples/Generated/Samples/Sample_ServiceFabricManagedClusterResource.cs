@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Samples
         // Az Resiliency status of Base Resources
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetManagedAzResiliencyStatu_AzResiliencyStatusOfBaseResources()
+        public async Task GetManagedAzResiliencyStatus_AzResiliencyStatusOfBaseResources()
         {
             // Generated from example definition: specification/servicefabricmanagedclusters/resource-manager/Microsoft.ServiceFabric/preview/2023-03-01-preview/examples/managedAzResiliencyStatusGet_example.json
             // this example is just showing the usage of "managedAzResiliencyStatus_Get" operation, for the dependent resources, they will have to be created separately.
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Samples
             ServiceFabricManagedClusterResource serviceFabricManagedCluster = client.GetServiceFabricManagedClusterResource(serviceFabricManagedClusterResourceId);
 
             // invoke the operation
-            ManagedAzResiliencyStatus result = await serviceFabricManagedCluster.GetManagedAzResiliencyStatuAsync();
+            ManagedAzResiliencyStatus result = await serviceFabricManagedCluster.GetManagedAzResiliencyStatusAsync();
 
             Console.WriteLine($"Succeeded: {result}");
         }

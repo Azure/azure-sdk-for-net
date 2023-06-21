@@ -466,9 +466,9 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<ManagedAzResiliencyStatus>> GetManagedAzResiliencyStatuAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ManagedAzResiliencyStatus>> GetManagedAzResiliencyStatusAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _managedAzResiliencyStatusClientDiagnostics.CreateScope("ServiceFabricManagedClusterResource.GetManagedAzResiliencyStatu");
+            using var scope = _managedAzResiliencyStatusClientDiagnostics.CreateScope("ServiceFabricManagedClusterResource.GetManagedAzResiliencyStatus");
             scope.Start();
             try
             {
@@ -496,9 +496,9 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ManagedAzResiliencyStatus> GetManagedAzResiliencyStatu(CancellationToken cancellationToken = default)
+        public virtual Response<ManagedAzResiliencyStatus> GetManagedAzResiliencyStatus(CancellationToken cancellationToken = default)
         {
-            using var scope = _managedAzResiliencyStatusClientDiagnostics.CreateScope("ServiceFabricManagedClusterResource.GetManagedAzResiliencyStatu");
+            using var scope = _managedAzResiliencyStatusClientDiagnostics.CreateScope("ServiceFabricManagedClusterResource.GetManagedAzResiliencyStatus");
             scope.Start();
             try
             {

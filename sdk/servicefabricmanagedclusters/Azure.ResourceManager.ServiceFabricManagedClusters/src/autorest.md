@@ -62,6 +62,7 @@ override-operation-name:
   managedUnsupportedVMSizes_Get: GetManagedUnsupportedVmSize
   managedUnsupportedVMSizes_List: GetManagedUnsupportedVmSizes
   ManagedClusterVersion_GetByEnvironment: GetManagedClusterVersionByEnvironment
+  managedAzResiliencyStatus_Get: GetManagedAzResiliencyStatus
 
 rename-mapping:
   ApplicationResource: ServiceFabricManagedApplication
