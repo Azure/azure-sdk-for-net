@@ -9,6 +9,9 @@ using Azure.Core.Serialization;
 using Azure.Core.TestFramework;
 using Azure.Data.SchemaRegistry.Serialization;
 using Azure.Messaging;
+using Azure.Messaging.EventHubs;
+using Azure.Messaging.EventHubs.Consumer;
+using Azure.Messaging.EventHubs.Producer;
 using NUnit.Framework;
 using TestSchema;
 
@@ -311,7 +314,7 @@ namespace Azure.Data.SchemaRegistry.Tests.Serialization
             }
         }
 
-        private class SampleJsonGenerator : SchemaValidator
+        private class SampleJsonGenerator : SchemaValidator<string>
         {
             public override string GenerateSchema(Type dataType)
             {
@@ -324,7 +327,7 @@ namespace Azure.Data.SchemaRegistry.Tests.Serialization
             }
         }
 
-        private class ValidateThrowsGenerator : SchemaValidator
+        private class ValidateThrowsGenerator : SchemaValidator<string>
         {
             public override string GenerateSchema(Type dataType)
             {
@@ -337,7 +340,7 @@ namespace Azure.Data.SchemaRegistry.Tests.Serialization
             }
         }
 
-        private class SampleCustomGenerator : SchemaValidator
+        private class SampleCustomGenerator : SchemaValidator<string>
         {
             public override string GenerateSchema(Type dataType)
             {

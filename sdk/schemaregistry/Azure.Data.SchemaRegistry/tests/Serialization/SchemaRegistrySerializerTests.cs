@@ -101,7 +101,7 @@ namespace Azure.Data.SchemaRegistry.Tests.Serialization
             }
         }
 
-        private class SampleCustomGenerator : SchemaValidator
+        private class SampleCustomGenerator : SchemaValidator<string>
         {
             public override string GenerateSchema(Type dataType)
             {
@@ -116,7 +116,7 @@ namespace Azure.Data.SchemaRegistry.Tests.Serialization
             }
         }
 
-        private class SampleJsonGenerator : SchemaValidator
+        private class SampleJsonGenerator : SchemaValidator<string>
         {
             public override string GenerateSchema(Type dataType)
             {

@@ -7,8 +7,10 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.Diagnostics;
+using Azure.Core.Serialization;
 using Azure.Core.TestFramework;
 using Azure.Data.SchemaRegistry.Serialization;
+using Azure.Messaging.EventHubs;
 using NUnit.Framework;
 using TestSchema;
 
@@ -108,7 +110,7 @@ namespace Azure.Data.SchemaRegistry.Tests.Serialization
             Assert.AreEqual(1448, events[1].Payload[1]);
         }
 
-        private class SampleJsonGenerator : SchemaValidator
+        private class SampleJsonGenerator : SchemaValidator<string>
         {
             public override string GenerateSchema(Type dataType)
             {

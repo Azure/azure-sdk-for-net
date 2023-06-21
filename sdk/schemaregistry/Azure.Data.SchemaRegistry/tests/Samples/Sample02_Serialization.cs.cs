@@ -10,6 +10,9 @@ using Azure.Core.TestFramework;
 using Azure.Data.SchemaRegistry.Serialization;
 using Azure.Data.SchemaRegistry.Tests.Serialization;
 using Azure.Messaging;
+using Azure.Messaging.EventHubs;
+using Azure.Messaging.EventHubs.Consumer;
+using Azure.Messaging.EventHubs.Producer;
 using NUnit.Framework;
 using TestSchema;
 
@@ -177,7 +180,7 @@ namespace Azure.Data.SchemaRegistry.Tests.Samples
         }
 
         #region Snippet:SampleSchemaRegistryJsonSchemaGeneratorImplementation
-        internal class SampleJsonValidator : SchemaValidator
+        internal class SampleJsonValidator : SchemaValidator<string>
         {
             public override void Validate(Object data, Type dataType, string schemaDefinition)
             {
