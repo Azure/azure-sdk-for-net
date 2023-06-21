@@ -321,13 +321,13 @@ namespace Azure.Storage.DataMovement
         /// <summary>
         /// Starts a transfer from the given single source resource to the given single destination resource.
         /// </summary>
-        /// <param name="sourceResource">A <see cref="StorageResource"/> representing the source.</param>
-        /// <param name="destinationResource">A <see cref="StorageResource"/> representing the destination.</param>
+        /// <param name="sourceResource">A <see cref="StorageResourceSingle"/> representing the source.</param>
+        /// <param name="destinationResource">A <see cref="StorageResourceSingle"/> representing the destination.</param>
         /// <param name="transferOptions">Options specific to this transfer.</param>
         /// <returns>Returns a <see cref="DataTransfer"/> for tracking this transfer.</returns>
         public virtual async Task<DataTransfer> StartTransferAsync(
-            StorageResource sourceResource,
-            StorageResource destinationResource,
+            StorageResourceSingle sourceResource,
+            StorageResourceSingle destinationResource,
             TransferOptions transferOptions = default)
         {
             if (sourceResource == default)
@@ -495,8 +495,8 @@ namespace Azure.Storage.DataMovement
         /// <summary>
         /// Starts a transfer from the given source resource container to the given destination resource container.
         /// </summary>
-        /// <param name="sourceResource">A <see cref="StorageResource"/> representing the source container.</param>
-        /// <param name="destinationResource">A <see cref="StorageResource"/> representing the destination container.</param>
+        /// <param name="sourceResource">A <see cref="StorageResourceSingle"/> representing the source container.</param>
+        /// <param name="destinationResource">A <see cref="StorageResourceSingle"/> representing the destination container.</param>
         /// <param name="transferOptions">Options specific to this transfer.</param>
         /// <returns>Returns a <see cref="DataTransfer"/> for tracking this transfer.</returns>
         public virtual async Task<DataTransfer> StartTransferAsync(

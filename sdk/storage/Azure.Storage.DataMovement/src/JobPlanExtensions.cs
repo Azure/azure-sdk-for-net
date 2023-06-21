@@ -15,8 +15,8 @@ namespace Azure.Storage.DataMovement
         public static async Task<StreamToUriJobPart> ToJobPartAsync(
             this StreamToUriTransferJob baseJob,
             Stream planFileStream,
-            StorageResource sourceResource,
-            StorageResource destinationResource)
+            StorageResourceSingle sourceResource,
+            StorageResourceSingle destinationResource)
         {
             // Convert stream to job plan header
             JobPartPlanHeader header = JobPartPlanHeader.Deserialize(planFileStream);
@@ -41,8 +41,8 @@ namespace Azure.Storage.DataMovement
         public static async Task<ServiceToServiceJobPart> ToJobPartAsync(
             this ServiceToServiceTransferJob baseJob,
             Stream planFileStream,
-            StorageResource sourceResource,
-            StorageResource destinationResource)
+            StorageResourceSingle sourceResource,
+            StorageResourceSingle destinationResource)
         {
             // Convert stream to job plan header
             JobPartPlanHeader header = JobPartPlanHeader.Deserialize(planFileStream);
@@ -67,8 +67,8 @@ namespace Azure.Storage.DataMovement
         public static async Task<UriToStreamJobPart> ToJobPartAsync(
             this UriToStreamTransferJob baseJob,
             Stream planFileStream,
-            StorageResource sourceResource,
-            StorageResource destinationResource)
+            StorageResourceSingle sourceResource,
+            StorageResourceSingle destinationResource)
         {
             // Convert stream to job plan header
             JobPartPlanHeader header = JobPartPlanHeader.Deserialize(planFileStream);

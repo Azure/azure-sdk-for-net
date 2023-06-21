@@ -38,9 +38,9 @@ namespace Azure.Storage.DataMovement.Tests
             BlobContainerClient sourceContainer,
             BlobContainerClient destinationContainer)
         {
-            await foreach (StorageResource childSourceResource in sourceResource.GetStorageResourcesAsync())
+            await foreach (StorageResourceSingle childSourceResource in sourceResource.GetStorageResourcesAsync())
             {
-                StorageResource childDestinationResource;
+                StorageResourceSingle childDestinationResource;
                 if (transferType == TransferType.Upload)
                 {
                     string destinationChildName = childSourceResource.Path.Substring(sourceResource.Path.Length + 1);
@@ -62,8 +62,8 @@ namespace Azure.Storage.DataMovement.Tests
 
         private async Task AssertSourceAndDestinationAsync(
             TransferType transferType,
-            StorageResource sourceResource,
-            StorageResource destinationResource,
+            StorageResourceSingle sourceResource,
+            StorageResourceSingle destinationResource,
             BlobContainerClient sourceContainer,
             BlobContainerClient destinationContainer)
         {
@@ -139,15 +139,15 @@ namespace Azure.Storage.DataMovement.Tests
             return new BlockBlobStorageResource(destinationClient, options);
         }
 
-        private async Task<(StorageResource SourceResource, StorageResource DestinationResource)> CreateStorageResourcesAsync(
+        private async Task<(StorageResourceSingle SourceResource, StorageResourceSingle DestinationResource)> CreateStorageResourcesAsync(
             TransferType transferType,
             long size,
             string localDirectory,
             BlobContainerClient sourceContainer,
             BlobContainerClient destinationContainer)
         {
-            StorageResource SourceResource = default;
-            StorageResource DestinationResource = default;
+            StorageResourceSingle SourceResource = default;
+            StorageResourceSingle DestinationResource = default;
             if (transferType == TransferType.Download)
             {
                 Argument.AssertNotNull(sourceContainer, nameof(sourceContainer));
@@ -185,15 +185,15 @@ namespace Azure.Storage.DataMovement.Tests
             string localDirectory = default,
             BlobContainerClient sourceContainer = default,
             BlobContainerClient destinationContainer = default,
-            StorageResource sourceResource = default,
-            StorageResource destinationResource = default,
+            StorageResourceSingle sourceResource = default,
+            StorageResourceSingle destinationResource = default,
             TransferOptions transferOptions = default,
             long size = Constants.KB * 100)
         {
             Argument.AssertNotNull(manager, nameof(manager));
             if (sourceResource == default && destinationResource == default)
             {
-                (StorageResource source, StorageResource dest) = await CreateStorageResourcesAsync(
+                (StorageResourceSingle source, StorageResourceSingle dest) = await CreateStorageResourcesAsync(
                     transferType: transferType,
                     size: size,
                     localDirectory: localDirectory,
@@ -401,14 +401,14 @@ namespace Azure.Storage.DataMovement.Tests
             TransferManager transferManager = new TransferManager(options);
             long size = Constants.KB * 100;
 
-            (StorageResource sResource, StorageResource dResource) = await CreateStorageResourcesAsync(
+            (StorageResourceSingle sResource, StorageResourceSingle dResource) = await CreateStorageResourcesAsync(
                 transferType: transferType,
                 size: size,
                 localDirectory: localDirectory.DirectoryPath,
                 sourceContainer: sourceContainer.Container,
                 destinationContainer: destinationContainer.Container);
-            StorageResource sourceResource = sResource;
-            StorageResource destinationResource = dResource;
+            StorageResourceSingle sourceResource = sResource;
+            StorageResourceSingle destinationResource = dResource;
 
             // Add long-running job to pause, if the job is not big enough
             // then the job might finish before we can pause it.
