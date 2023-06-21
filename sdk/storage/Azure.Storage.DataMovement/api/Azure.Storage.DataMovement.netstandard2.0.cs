@@ -145,6 +145,15 @@ namespace Azure.Storage.DataMovement
 }
 namespace Azure.Storage.DataMovement.Models
 {
+    public partial class DataTransferProperties
+    {
+        protected DataTransferProperties() { }
+        public Azure.Storage.DataMovement.Models.TransferCheckpointerOptions Checkpointer { get { throw null; } }
+        public string DestinationScheme { get { throw null; } }
+        public bool IsContainer { get { throw null; } }
+        public string SourceScheme { get { throw null; } }
+        public string TransferId { get { throw null; } }
+    }
     public partial class ProgressHandlerOptions
     {
         public ProgressHandlerOptions() { }
@@ -154,14 +163,6 @@ namespace Azure.Storage.DataMovement.Models
     {
         public ReadStreamStorageResourceResult(System.IO.Stream content) { }
         public ReadStreamStorageResourceResult(System.IO.Stream content, string contentRange, string acceptRanges, byte[] rangeContentHash, Azure.Storage.DataMovement.Models.StorageResourceProperties properties) { }
-    }
-    public partial class ResourceProperties
-    {
-        protected ResourceProperties() { }
-        public Azure.Storage.DataMovement.Models.TransferCheckpointerOptions Checkpointer { get { throw null; } set { } }
-        public string DestinationScheme { get { throw null; } set { } }
-        public string SourceScheme { get { throw null; } set { } }
-        public string TransferId { get { throw null; } set { } }
     }
     public enum ServiceCopyStatus
     {
