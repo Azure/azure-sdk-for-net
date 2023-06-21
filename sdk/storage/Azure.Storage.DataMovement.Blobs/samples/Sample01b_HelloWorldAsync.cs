@@ -913,6 +913,16 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
                     transferId: transferId,
                     isSource: false).ConfigureAwait(false);
 
+                // Rehydrate with source and destination specific calls
+                StorageResource rehydratedSource2 = await BlockBlobStorageResource.RehydrateSourceResource(
+                    checkpointer: checkpointer,
+                    transferId: transferId,
+                    credentials: new StorageTransferCredentials(
+                        new StorageSharedKeyCredential("sourceAccountName", "accountKey"))).ConfigureAwait(false);
+                StorageResource rehydratedDestination2 = await LocalFileStorageResource.RehydrateDestinationResource(
+                    checkpointer: checkpointer,
+                    transferId: transferId).ConfigureAwait(false);
+
                 // Resuming when you want to add updated credentials (e.g. a new SAS or something)
                 DataTransfer resumedTransfer = await transferManager.ResumeTransferAsync(
                     transferId: dataTransfer.Id,

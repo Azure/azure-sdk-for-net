@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -28,15 +29,36 @@ namespace Azure.Storage.DataMovement.Tests
             Local
         }
 
-        private void CreateJobPlanFileAsync(
-            string checkpointerPath,
+        private async Task AddJobPartToCheckpointer(
+            TransferCheckpointer checkpointer,
             string transferId,
             StorageResourceType sourceType,
-            string sourcePath,
+            List<string> sourcePaths,
             StorageResourceType destinatonType,
-            string destinationPath)
+            List<string> destinationPaths,
+            int partCount = 1)
         {
-            int partNumber = 1;
+            // Populate sourcePaths if not provided
+            if (sourcePaths == default)
+            {
+                string sourcePath = "sample-source";
+                sourcePaths = new List<string>();
+                for (int i = 0; i < partCount; i++)
+                {
+                    sourcePaths.Add(Path.Combine(sourcePath, $"file{i}"));
+                }
+            }
+            // Populate destPaths if not provided
+            if (destinationPaths == default)
+            {
+                string destPath = "sample-dest";
+                destinationPaths = new List<string>();
+                for (int i = 0; i < partCount; i++)
+                {
+                    destinationPaths.Add(Path.Combine(destPath, $"file{i}"));
+                }
+            }
+
             JobPlanOperation fromTo;
             if (sourceType == StorageResourceType.Local)
             {
@@ -51,14 +73,28 @@ namespace Azure.Storage.DataMovement.Tests
                 fromTo = JobPlanOperation.ServiceToService;
             }
 
-            CreateDefaultJobPartHeader(
-                transferId: transferId,
-                partNumber: partNumber,
-                sourcePath: sourcePath,
-                destinationPath: destinationPath,
-                fromTo: fromTo
-                );
-            ;
+            await checkpointer.AddNewJobAsync(transferId);
+
+            for (int currentPart = 0; currentPart < partCount; currentPart++)
+            {
+                JobPartPlanHeader header = CreateDefaultJobPartHeader(
+                    transferId: transferId,
+                    partNumber: currentPart,
+                    sourcePath: sourcePath,
+                    destinationPath: destinationPath,
+                    fromTo: fromTo);
+
+                using (Stream stream = new MemoryStream())
+                {
+                    header.Serialize(stream);
+
+                    await checkpointer.AddNewJobPartAsync(
+                        transferId: transferId,
+                        partNumber: currentPart,
+                        chunksTotal: 1,
+                        headerStream: stream);
+                }
+            }
         }
 
         [Test]

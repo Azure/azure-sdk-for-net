@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Storage.DataMovement.Models;
 using Azure.Storage.DataMovement.Models.JobPlan;
+using static Azure.Storage.Constants.Sas;
 
 namespace Azure.Storage.DataMovement
 {
@@ -290,6 +291,88 @@ namespace Azure.Storage.DataMovement
             int length = isSource ?
                 (DataMovementConstants.PlanFile.SourcePathLengthIndex - DataMovementConstants.PlanFile.SourcePathIndex) :
                 (DataMovementConstants.PlanFile.DestinationPathLengthIndex - DataMovementConstants.PlanFile.DestinationPathIndex);
+
+            using (Stream stream = await checkpointer.ReadableStreamAsync(
+                transferId: transferId,
+                partNumber: 0,
+                offset: offset,
+                readSize: length,
+                cancellationToken: cancellationToken).ConfigureAwait(false))
+            {
+                string storedPath = stream.ToString();
+                resource = new LocalFileStorageResource(storedPath);
+            }
+            return resource;
+        }
+
+        /// <summary>
+        /// Rehydrates from Checkpointer.
+        /// </summary>
+        /// <param name="checkpointer">
+        /// The checkpointer where the transfer state was saved to.
+        /// </param>
+        /// <param name="transferId">
+        /// Transfer Id where we want to rehydrate the resource from the job from.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Whether or not to cancel the operation.
+        /// </param>
+        /// <returns>
+        /// The <see cref="Task"/> to rehdyrate a <see cref="LocalFileStorageResource"/> from
+        /// a stored checkpointed transfer state.
+        /// </returns>
+        public static async Task<LocalFileStorageResource> RehydrateSourceResource(
+            TransferCheckpointer checkpointer,
+            string transferId,
+            CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(checkpointer, nameof(checkpointer));
+
+            LocalFileStorageResource resource;
+
+            int offset = DataMovementConstants.PlanFile.SourcePathIndex;
+            int length = DataMovementConstants.PlanFile.SourcePathLengthIndex - DataMovementConstants.PlanFile.SourcePathIndex;
+
+            using (Stream stream = await checkpointer.ReadableStreamAsync(
+                transferId: transferId,
+                partNumber: 0,
+                offset: offset,
+                readSize: length,
+                cancellationToken: cancellationToken).ConfigureAwait(false))
+            {
+                string storedPath = stream.ToString();
+                resource = new LocalFileStorageResource(storedPath);
+            }
+            return resource;
+        }
+
+        /// <summary>
+        /// Rehydrates from Checkpointer.
+        /// </summary>
+        /// <param name="checkpointer">
+        /// The checkpointer where the transfer state was saved to.
+        /// </param>
+        /// <param name="transferId">
+        /// Transfer Id where we want to rehydrate the resource from the job from.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Whether or not to cancel the operation.
+        /// </param>
+        /// <returns>
+        /// The <see cref="Task"/> to rehdyrate a <see cref="LocalFileStorageResource"/> from
+        /// a stored checkpointed transfer state.
+        /// </returns>
+        public static async Task<LocalFileStorageResource> RehydrateDestinationResource(
+            TransferCheckpointer checkpointer,
+            string transferId,
+            CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(checkpointer, nameof(checkpointer));
+
+            LocalFileStorageResource resource;
+
+            int offset = DataMovementConstants.PlanFile.DestinationPathIndex;
+            int length = DataMovementConstants.PlanFile.DestinationPathLengthIndex - DataMovementConstants.PlanFile.DestinationPathIndex;
 
             using (Stream stream = await checkpointer.ReadableStreamAsync(
                 transferId: transferId,
