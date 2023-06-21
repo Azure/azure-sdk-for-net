@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.Compute.Models
             string name = default;
             AzureLocation location = default;
             Optional<IDictionary<string, string>> tags = default;
-            Optional<ExtendedLocation> extendedLocation = default;
+            Optional<Resources.Models.ExtendedLocation> extendedLocation = default;
             Optional<ResourceIdentifier> id = default;
             Optional<PurchasePlan> plan = default;
             Optional<OSDiskImage> osDiskImage = default;
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    extendedLocation = JsonSerializer.Deserialize<ExtendedLocation>(property.Value.GetRawText());
+                    extendedLocation = JsonSerializer.Deserialize<Resources.Models.ExtendedLocation>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("id"u8))

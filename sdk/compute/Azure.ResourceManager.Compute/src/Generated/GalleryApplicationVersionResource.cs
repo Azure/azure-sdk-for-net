@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Compute
     /// from an instance of <see cref="ArmClient" /> using the GetGalleryApplicationVersionResource method.
     /// Otherwise you can get one from its parent resource <see cref="GalleryApplicationResource" /> using the GetGalleryApplicationVersion method.
     /// </summary>
-    public partial class GalleryApplicationVersionResource : ArmResource
+    public partial class GalleryApplicationVersionResource : ArmResource, ResourceManager.IResource
     {
         /// <summary> Generate the resource identifier of a <see cref="GalleryApplicationVersionResource"/> instance. </summary>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string galleryName, string galleryApplicationName, string galleryApplicationVersionName)

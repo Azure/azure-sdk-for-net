@@ -37,11 +37,8 @@ namespace Azure.ResourceManager.Compute
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
-        internal HttpMessage CreateGetRequest(string subscriptionId, AzureLocation location, string publisherName, string type, string version)
+        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, AzureLocation location, string publisherName, string type, string version)
         {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -55,7 +52,15 @@ namespace Azure.ResourceManager.Compute
             uri.AppendPath("/versions/", false);
             uri.AppendPath(version, true);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
+            return uri;
+        }
+
+        internal HttpMessage CreateGetRequest(string subscriptionId, AzureLocation location, string publisherName, string type, string version)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            request.Uri = CreateGetRequestUri(subscriptionId, location, publisherName, type, version);
             request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
@@ -129,11 +134,8 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
-        internal HttpMessage CreateListTypesRequest(string subscriptionId, AzureLocation location, string publisherName)
+        internal RequestUriBuilder CreateListTypesRequestUri(string subscriptionId, AzureLocation location, string publisherName)
         {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -144,7 +146,15 @@ namespace Azure.ResourceManager.Compute
             uri.AppendPath(publisherName, true);
             uri.AppendPath("/artifacttypes/vmextension/types", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
+            return uri;
+        }
+
+        internal HttpMessage CreateListTypesRequest(string subscriptionId, AzureLocation location, string publisherName)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            request.Uri = CreateListTypesRequestUri(subscriptionId, location, publisherName);
             request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
@@ -216,11 +226,8 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
-        internal HttpMessage CreateListVersionsRequest(string subscriptionId, AzureLocation location, string publisherName, string type, string filter, int? top, string orderby)
+        internal RequestUriBuilder CreateListVersionsRequestUri(string subscriptionId, AzureLocation location, string publisherName, string type, string filter, int? top, string orderby)
         {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -245,7 +252,15 @@ namespace Azure.ResourceManager.Compute
                 uri.AppendQuery("$orderby", orderby, true);
             }
             uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
+            return uri;
+        }
+
+        internal HttpMessage CreateListVersionsRequest(string subscriptionId, AzureLocation location, string publisherName, string type, string filter, int? top, string orderby)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            request.Uri = CreateListVersionsRequestUri(subscriptionId, location, publisherName, type, filter, top, orderby);
             request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;

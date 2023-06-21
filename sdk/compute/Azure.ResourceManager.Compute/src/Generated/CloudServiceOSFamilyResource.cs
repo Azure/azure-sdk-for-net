@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Compute
     /// from an instance of <see cref="ArmClient" /> using the GetCloudServiceOSFamilyResource method.
     /// Otherwise you can get one from its parent resource <see cref="SubscriptionResource" /> using the GetCloudServiceOSFamily method.
     /// </summary>
-    public partial class CloudServiceOSFamilyResource : ArmResource
+    public partial class CloudServiceOSFamilyResource : ArmResource, ResourceManager.IResource
     {
         /// <summary> Generate the resource identifier of a <see cref="CloudServiceOSFamilyResource"/> instance. </summary>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, AzureLocation location, string osFamilyName)

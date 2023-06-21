@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Compute
     /// Each <see cref="CommunityGalleryResource" /> in the collection will belong to the same instance of <see cref="SubscriptionResource" />.
     /// To get a <see cref="CommunityGalleryCollection" /> instance call the GetCommunityGalleries method from an instance of <see cref="SubscriptionResource" />.
     /// </summary>
-    public partial class CommunityGalleryCollection : ArmCollection
+    public partial class CommunityGalleryCollection : ArmCollection, ResourceManager.IResource
     {
         private readonly ClientDiagnostics _communityGalleryClientDiagnostics;
         private readonly CommunityGalleriesRestOperations _communityGalleryRestClient;

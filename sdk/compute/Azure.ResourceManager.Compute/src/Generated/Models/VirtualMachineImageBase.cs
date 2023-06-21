@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="location"> The supported Azure location of the resource. </param>
         /// <param name="tags"> Specifies the tags that are assigned to the virtual machine. For more information about using tags, see [Using tags to organize your Azure resources](https://docs.microsoft.com/azure/azure-resource-manager/resource-group-using-tags.md). </param>
         /// <param name="extendedLocation"> The extended location of the Virtual Machine. </param>
-        internal VirtualMachineImageBase(ResourceIdentifier id, string name, AzureLocation location, IDictionary<string, string> tags, ExtendedLocation extendedLocation) : base(id)
+        internal VirtualMachineImageBase(ResourceIdentifier id, string name, AzureLocation location, IDictionary<string, string> tags, Resources.Models.ExtendedLocation extendedLocation) : base(id)
         {
             Name = name;
             Location = location;
@@ -49,6 +49,6 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Specifies the tags that are assigned to the virtual machine. For more information about using tags, see [Using tags to organize your Azure resources](https://docs.microsoft.com/azure/azure-resource-manager/resource-group-using-tags.md). </summary>
         public IDictionary<string, string> Tags { get; }
         /// <summary> The extended location of the Virtual Machine. </summary>
-        public ExtendedLocation ExtendedLocation { get; set; }
+        public Resources.Models.ExtendedLocation ExtendedLocation { get; set; }
     }
 }

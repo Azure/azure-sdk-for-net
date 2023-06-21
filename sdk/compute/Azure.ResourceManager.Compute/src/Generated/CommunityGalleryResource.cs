@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Compute
     /// from an instance of <see cref="ArmClient" /> using the GetCommunityGalleryResource method.
     /// Otherwise you can get one from its parent resource <see cref="SubscriptionResource" /> using the GetCommunityGallery method.
     /// </summary>
-    public partial class CommunityGalleryResource : ArmResource
+    public partial class CommunityGalleryResource : ArmResource, ResourceManager.IResource
     {
         /// <summary> Generate the resource identifier of a <see cref="CommunityGalleryResource"/> instance. </summary>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, AzureLocation location, string publicGalleryName)

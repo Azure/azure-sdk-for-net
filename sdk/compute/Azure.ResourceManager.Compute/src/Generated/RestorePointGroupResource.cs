@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Compute
     /// from an instance of <see cref="ArmClient" /> using the GetRestorePointGroupResource method.
     /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetRestorePointGroup method.
     /// </summary>
-    public partial class RestorePointGroupResource : ArmResource
+    public partial class RestorePointGroupResource : ArmResource, ResourceManager.IResource
     {
         /// <summary> Generate the resource identifier of a <see cref="RestorePointGroupResource"/> instance. </summary>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string restorePointGroupName)
