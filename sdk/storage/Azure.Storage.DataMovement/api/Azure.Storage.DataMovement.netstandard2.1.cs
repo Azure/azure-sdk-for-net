@@ -146,6 +146,15 @@ namespace Azure.Storage.DataMovement
 }
 namespace Azure.Storage.DataMovement.Models
 {
+    public partial class DataTransferProperties
+    {
+        protected DataTransferProperties() { }
+        public Azure.Storage.DataMovement.Models.TransferCheckpointerOptions Checkpointer { get { throw null; } }
+        public string DestinationScheme { get { throw null; } }
+        public bool IsContainer { get { throw null; } }
+        public string SourceScheme { get { throw null; } }
+        public string TransferId { get { throw null; } }
+    }
     public partial class ProgressHandlerOptions
     {
         public ProgressHandlerOptions() { }
@@ -190,6 +199,7 @@ namespace Azure.Storage.DataMovement.Models
     public partial class TransferCheckpointerOptions
     {
         public TransferCheckpointerOptions(string localCheckpointerPath) { }
+        public string CheckpointerPath { get { throw null; } }
     }
     public enum TransferCopyMethod
     {
