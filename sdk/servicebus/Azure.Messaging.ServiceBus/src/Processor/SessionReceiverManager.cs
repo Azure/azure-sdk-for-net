@@ -309,17 +309,10 @@ namespace Azure.Messaging.ServiceBus
                         _receiveTimeout = true;
                         break;
                     }
-                    else if (isBatchProcessor)
+                    else
                     {
                         await ProcessMessagesWithinScopeAsync(
                             messages,
-                            DiagnosticProperty.ProcessSessionMessageActivityName,
-                            receiveAndProcessCancellationToken).ConfigureAwait(false);
-                    }
-                    else
-                    {
-                        await ProcessOneMessageWithinScopeAsync(
-                            messages[0],
                             DiagnosticProperty.ProcessSessionMessageActivityName,
                             receiveAndProcessCancellationToken).ConfigureAwait(false);
                     }
@@ -408,19 +401,23 @@ namespace Azure.Messaging.ServiceBus
             }
         }
 
-        protected override EventArgs ConstructEventArgs(ServiceBusReceivedMessage message, CancellationToken cancellationToken) =>
-            new ProcessSessionMessageEventArgs(
-                message,
-                this,
-                Processor.Identifier,
-                cancellationToken);
+        protected override EventArgs ConstructEventArgs(IReadOnlyList<ServiceBusReceivedMessage> messages, CancellationToken cancellationToken)
+        {
+            if (ProcessorOptions.BatchSize > 1)
+            {
+                return new ProcessSessionMessagesEventArgs(
+                    messages,
+                    this,
+                    Processor.Identifier,
+                    cancellationToken);
+            }
 
-        protected override EventArgs ConstructEventArgs(IReadOnlyList<ServiceBusReceivedMessage> messages, CancellationToken cancellationToken) =>
-            new ProcessSessionMessagesEventArgs(
-                messages,
+            return new ProcessSessionMessageEventArgs(
+                messages[0],
                 this,
                 Processor.Identifier,
                 cancellationToken);
+        }
 
         protected override async Task OnMessageHandler(EventArgs args) =>
             await _sessionProcessor.OnProcessSessionMessageAsync((ProcessSessionMessageEventArgs) args).ConfigureAwait(false);
