@@ -2,6 +2,8 @@
 
 This sample demonstrates how to import a project. To get started, you'll need to create a Cognitive Language service endpoint and an API key. See the [README](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/cognitivelanguage/Azure.AI.Language.Conversations/README.md) for links and instructions.
 
+You can work with request and response content more easily by using our [Dynamic JSON](https://aka.ms/azsdk/net/dynamiccontent) feature. This is illustrated in the following sample.
+
 Start by importing the namespace for the `ConversationAuthoringClient` and related classes:
 
 ```C# Snippet:ConversationAuthoringClient_Namespaces
