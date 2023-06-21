@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.HealthBot.Tests.TestCase
             HealthBotResource healthBot3 = await healthBot1.GetAsync();
 
             AssertData(healthBot1.Data, healthBot3.Data);
-            //2.Delete
+            //6.Delete
             await healthBot1.DeleteAsync(WaitUntil.Completed);
         }
     }
