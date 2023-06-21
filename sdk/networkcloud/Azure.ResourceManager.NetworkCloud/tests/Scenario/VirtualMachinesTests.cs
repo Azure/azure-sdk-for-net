@@ -87,6 +87,7 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
                 },
             };
             ArmOperation<VirtualMachineResource> createResult = await collection.CreateOrUpdateAsync(WaitUntil.Completed, virtualMachineName, createData);
+            Assert.AreEqual(createResult.Value.Data.Name, virtualMachineName);
 
             // Get
             VirtualMachineResource getResult = await virtualMachine.GetAsync();
