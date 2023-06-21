@@ -60,14 +60,14 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Tests.Scenario
                 VmImageSku = "2019-datacenter-gensecond",
                 VmImageVersion = "latest",
                 SecurityType = "TrustedLaunch",
-                SecureBootEnabled = true,
+                IsSecureBootEnabled = true,
             };
 
             var serviveFabricManagedClusterNodeType = (await nodeTypeCollection.CreateOrUpdateAsync(WaitUntil.Completed, nodeTypeName, nodeTypeData)).Value;
 
             var resourceData = serviveFabricManagedClusterNodeType.Data;
             Assert.AreEqual(nodeTypeData.SecurityType, resourceData.SecurityType);
-            Assert.AreEqual(nodeTypeData.SecureBootEnabled, resourceData.SecureBootEnabled);
+            Assert.AreEqual(nodeTypeData.IsSecureBootEnabled, resourceData.IsSecureBootEnabled);
         }
     }
 }

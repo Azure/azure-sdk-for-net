@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 return null;
             }
             Optional<string> resourceName = default;
-            Optional<string> resourceType = default;
+            Optional<ResourceType> resourceType = default;
             Optional<bool> isZoneResilient = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -30,7 +30,11 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 }
                 if (property.NameEquals("resourceType"u8))
                 {
-                    resourceType = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    resourceType = new ResourceType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("isZoneResilient"u8))
@@ -43,7 +47,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                     continue;
                 }
             }
-            return new ResourceAzStatus(resourceName.Value, resourceType.Value, Optional.ToNullable(isZoneResilient));
+            return new ResourceAzStatus(resourceName.Value, Optional.ToNullable(resourceType), Optional.ToNullable(isZoneResilient));
         }
     }
 }

@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Samples
             // invoke the operation
             NodeTypeActionContent content = new NodeTypeActionContent()
             {
-                UpdateType = UpdateType.ByUpgradeDomain,
+                UpdateType = ServiceFabricManagedClusterUpdateType.ByUpgradeDomain,
             };
             await serviceFabricManagedNodeType.ReimageAsync(WaitUntil.Completed, content);
 

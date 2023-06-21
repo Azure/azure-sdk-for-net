@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using System.Xml;
 using Azure;
 using Azure.Core;
 using Azure.Identity;
@@ -302,16 +303,16 @@ new NodeTypeVmssDataDisk(1,256,ServiceFabricManagedDataDiskType.StandardSsdLrs,"
                 IsOverProvisioningEnabled = false,
                 IsSpotVm = true,
                 UseEphemeralOSDisk = true,
-                SpotRestoreTimeout = "PT30M",
-                EvictionPolicy = EvictionPolicyType.Deallocate,
+                SpotRestoreTimeout = XmlConvert.ToTimeSpan("PT30M"),
+                EvictionPolicy = SpotNodeVmEvictionPolicyType.Deallocate,
                 SubnetId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/resRg/providers/Microsoft.Network/virtualNetworks/vnet1/subnets/subnet1"),
                 VmSetupActions =
 {
 VmSetupAction.EnableContainers,VmSetupAction.EnableHyperV
 },
-                SecurityType = SecurityType.TrustedLaunch,
-                SecureBootEnabled = true,
-                EnableNodePublicIP = true,
+                SecurityType = ServiceFabricManagedClusterSecurityType.TrustedLaunch,
+                IsSecureBootEnabled = true,
+                IsNodePublicIPEnabled = true,
                 NatGatewayId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/resRg/providers/Microsoft.Network/natGateways/myNatGateway"),
             };
             ArmOperation<ServiceFabricManagedNodeTypeResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, nodeTypeName, data);

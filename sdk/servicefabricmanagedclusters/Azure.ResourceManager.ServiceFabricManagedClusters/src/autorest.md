@@ -16,6 +16,9 @@ skip-csproj: true
 modelerfour:
   flatten-payloads: false
 
+#mgmt-debug:
+#  show-serialized-names: true
+
 request-path-is-non-resource:
 - /subscriptions/{subscriptionId}/providers/Microsoft.ServiceFabric/locations/{location}/environments/{environment}/managedClusterVersions/{clusterVersion}
 - /subscriptions/{subscriptionId}/providers/Microsoft.ServiceFabric/locations/{location}/managedClusterVersions/{clusterVersion}
@@ -145,6 +148,12 @@ rename-mapping:
   ServicePlacementPolicy: ManagedServicePlacementPolicy
   ManagedVMSize: ServiceFabricManagedUnsupportedVmSize
   AddRemoveIncrementalNamedPartitionScalingMechanism: NamedPartitionAddOrRemoveScalingMechanism
+  NodeType.properties.enableNodePublicIP: IsNodePublicIPEnabled
+  NodeType.properties.secureBootEnabled: IsSecureBootEnabled
+  EvictionPolicyType: SpotNodeVmEvictionPolicyType
+  ResourceAzStatus.resourceType: -|resource-type
+  SecurityType: ServiceFabricManagedClusterSecurityType
+  UpdateType: ServiceFabricManagedClusterUpdateType
 
 directive:
   - remove-operation: OperationStatus_Get
@@ -165,5 +174,9 @@ directive:
     where: $.definitions
     transform: >
       $.ManagedClusterVersionDetails.properties.supportExpiryUtc['format'] = 'date-time';
+  - from: nodetype.json
+    where: $.definitions
+    transform: >
+      $.NodeTypeProperties.properties.spotRestoreTimeout['format'] = 'duration';
 
 ```

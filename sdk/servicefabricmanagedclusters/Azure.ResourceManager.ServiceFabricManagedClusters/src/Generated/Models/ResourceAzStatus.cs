@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using Azure.Core;
+
 namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 {
     /// <summary> Describes Az Resiliency status of Base resources. </summary>
@@ -19,7 +21,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         /// <param name="resourceName"> VM Size properties. </param>
         /// <param name="resourceType"> VM Size id. </param>
         /// <param name="isZoneResilient"> VM Size name. </param>
-        internal ResourceAzStatus(string resourceName, string resourceType, bool? isZoneResilient)
+        internal ResourceAzStatus(string resourceName, ResourceType? resourceType, bool? isZoneResilient)
         {
             ResourceName = resourceName;
             ResourceType = resourceType;
@@ -29,7 +31,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         /// <summary> VM Size properties. </summary>
         public string ResourceName { get; }
         /// <summary> VM Size id. </summary>
-        public string ResourceType { get; }
+        public ResourceType? ResourceType { get; }
         /// <summary> VM Size name. </summary>
         public bool? IsZoneResilient { get; }
     }

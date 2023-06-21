@@ -24,6 +24,6 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         /// <summary> Force the action to go through. </summary>
         public bool? IsForced { get; set; }
         /// <summary> Specifies the way the operation will be performed. </summary>
-        public UpdateType? UpdateType { get; set; }
+        public ServiceFabricManagedClusterUpdateType? UpdateType { get; set; }
     }
 }
