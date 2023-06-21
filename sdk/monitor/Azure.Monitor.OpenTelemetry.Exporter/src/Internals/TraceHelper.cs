@@ -65,7 +65,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                 }
                 catch (Exception ex)
                 {
-                    AzureMonitorExporterEventSource.Log.WriteError("FailedToConvertActivity", ex);
+                    AzureMonitorExporterEventSource.Log.FailedToConvertActivity(activity.DisplayName, ex);
                 }
             }
 
@@ -111,7 +111,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                     {
                         if (MaxlinksAllowed < activity.Links.Count())
                         {
-                            AzureMonitorExporterEventSource.Log.WriteInformational("ActivityLinksIgnored", $"Max count of {MaxlinksAllowed} has reached.");
+                            AzureMonitorExporterEventSource.Log.ActivityLinksIgnored(MaxlinksAllowed, activity.DisplayName);
                         }
                         break;
                     }
@@ -200,7 +200,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                 }
                 catch (Exception ex)
                 {
-                    AzureMonitorExporterEventSource.Log.WriteError("FailedToExtractActivityEvent", ex);
+                    AzureMonitorExporterEventSource.Log.FailedToExtractActivityEvent(activity.DisplayName, ex);
                 }
             }
         }
@@ -340,7 +340,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             AzMonList.Add(ref UnMappedTags, new KeyValuePair<string, object?>(msLinks, linksJson.ToString()));
             if (MaxlinksAllowed < linksCount)
             {
-                AzureMonitorExporterEventSource.Log.WriteInformational("ActivityLinksIgnored", $"Max count of {MaxlinksAllowed} has reached.");
+                AzureMonitorExporterEventSource.Log.ActivityLinksIgnored(MaxlinksAllowed, activity.DisplayName);
             }
 
             if (isEnqueuedTimeCalculated)
