@@ -23,17 +23,21 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
             string resourceGroupName = TestEnvironment.ResourceGroup;
             string subscriptionId = TestEnvironment.SubscriptionId;
 
-            // Create Volume Resource and Volume Collection over Resource Group
+            // Create ResourceIds
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceIdentifier volumeResourceId = VolumeResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, volumeName);
-            VolumeResource volume = new VolumeResource(Client, volumeResourceId);
-            VolumeCollection collection = new VolumeCollection(Client, resourceGroupResourceId);
+
+            // Create Resource Group Object and Volume Collections Object
+            ResourceGroupResource resourceGroupResource = Client.GetResourceGroupResource(resourceGroupResourceId);
+            VolumeCollection collection = resourceGroupResource.GetVolumes();
 
             // Create Volume
             VolumeData createData = new VolumeData(TestEnvironment.Location, new ExtendedLocation(TestEnvironment.ClusterExtendedLocation, "CustomLocation"), 10);
             ArmOperation<VolumeResource> createResult = await collection.CreateOrUpdateAsync(WaitUntil.Completed, volumeName, createData);
+            Assert.AreEqual(createResult.Value.Data.Name, volumeName);
 
             // Get Volume
+            VolumeResource volume = Client.GetVolumeResource(volumeResourceId);
             VolumeResource getResult = await volume.GetAsync();
             Assert.AreEqual(volumeName, getResult.Data.Name);
 
@@ -49,7 +53,7 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
             Response<VolumeResource> updateResult = await volume.UpdateAsync(updateData);
             Assert.AreEqual(updateData.Tags, updateResult.Value.Data.Tags);
 
-            // // List Volumes by Resource Group
+            // List Volumes by Resource Group
             var listByResourceGroupResult = new List<VolumeResource>();
             await foreach (VolumeResource volumeResource in collection.GetAllAsync())
             {
@@ -57,7 +61,7 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
             }
             Assert.IsNotEmpty(listByResourceGroupResult);
 
-            // // List Volumes by Subscription
+            // List Volumes by Subscription
             var listBySubscriptionResult = new List<VolumeResource>();
             await foreach (VolumeResource volumeResource in SubscriptionResource.GetVolumesAsync())
             {
