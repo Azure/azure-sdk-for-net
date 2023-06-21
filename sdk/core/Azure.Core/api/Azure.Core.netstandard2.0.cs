@@ -692,6 +692,7 @@ namespace Azure.Core
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
         public int? ContentLength { get { throw null; } }
+        public long? ContentLengthLong { get { throw null; } }
         public string? ContentType { get { throw null; } }
         public System.DateTimeOffset? Date { get { throw null; } }
         public Azure.ETag? ETag { get { throw null; } }

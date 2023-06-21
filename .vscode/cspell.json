@@ -232,6 +232,12 @@
       ]
     },
     {
+      "filename": "**/sdk/confidentialledger/**/*.cs",
+      "words": [
+        "ccfs"
+      ]
+    },
+    {
       "filename": "**/sdk/cognitivelanguage/**/*",
       "words": [
         "apim",
