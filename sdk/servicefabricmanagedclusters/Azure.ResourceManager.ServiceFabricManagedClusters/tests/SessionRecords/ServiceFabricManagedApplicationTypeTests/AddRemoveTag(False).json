@@ -56,7 +56,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/ServiceFabricManagedClustersRG1111?api-version=**",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/testClusterRG-1111?api-version=**",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -69,7 +69,7 @@
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
-        "location": "eastus"
+        "location": "southcentralus"
       },
       "StatusCode": 201,
       "ResponseHeaders": {
@@ -87,17 +87,17 @@
         "x-ms-routing-request-id": "SOUTHEASTASIA:20230406T055420Z:b674d367-f95a-4c00-8fd0-ceba0bd04940"
       },
       "ResponseBody": {
-        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/ServiceFabricManagedClustersRG1111",
-        "name": "ServiceFabricManagedClustersRG1111",
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testClusterRG-1111",
+        "name": "testClusterRG-1111",
         "type": "Microsoft.Resources/resourceGroups",
-        "location": "eastus",
+        "location": "southcentralus",
         "properties": {
           "provisioningState": "Succeeded"
         }
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/ServiceFabricManagedClustersRG1111/providers/Microsoft.ServiceFabric/managedClusters/sfmctest9301?api-version=2022-01-01",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testClusterRG-1111/providers/Microsoft.ServiceFabric/managedClusters/sfmctest9301?api-version=2023-03-01-preview",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -114,7 +114,7 @@
           "name": "Standard"
         },
         "tags": {},
-        "location": "eastus",
+        "location": "southcentralus",
         "properties": {
           "dnsName": "sfmcnetsdk9482",
           "clientConnectionPort": 19000,
@@ -133,7 +133,7 @@
       },
       "StatusCode": 200,
       "ResponseHeaders": {
-        "Azure-AsyncOperation": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.ServiceFabric/locations/eastus/managedclusteroperations/70f00005-9b66-4378-8bf4-b8d4ac6ffcbe?api-version=2022-01-01",
+        "Azure-AsyncOperation": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.ServiceFabric/locations/eastus/managedclusteroperations/70f00005-9b66-4378-8bf4-b8d4ac6ffcbe?api-version=2023-03-01-preview",
         "Cache-Control": "no-cache",
         "Content-Length": "1342",
         "Content-Type": "application/json; charset=utf-8",
@@ -150,9 +150,9 @@
         "x-ms-routing-request-id": "SOUTHEASTASIA:20230406T055425Z:0a79ff4c-8fb3-4d72-ae0d-0bb16710d258"
       },
       "ResponseBody": {
-        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/ServiceFabricManagedClustersRG1111/providers/Microsoft.ServiceFabric/managedClusters/sfmctest9301",
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/testClusterRG-1111/providers/Microsoft.ServiceFabric/managedClusters/sfmctest9301",
         "type": "Microsoft.ServiceFabric/managedclusters",
-        "location": "eastus",
+        "location": "southcentralus",
         "name": "sfmctest9301",
         "tags": {},
         "systemData": {
@@ -190,7 +190,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.ServiceFabric/locations/eastus/managedclusteroperations/70f00005-9b66-4378-8bf4-b8d4ac6ffcbe?api-version=2022-01-01",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.ServiceFabric/locations/eastus/managedclusteroperations/70f00005-9b66-4378-8bf4-b8d4ac6ffcbe?api-version=2023-03-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -229,7 +229,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.ServiceFabric/locations/eastus/managedclusteroperations/70f00005-9b66-4378-8bf4-b8d4ac6ffcbe?api-version=2022-01-01",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.ServiceFabric/locations/eastus/managedclusteroperations/70f00005-9b66-4378-8bf4-b8d4ac6ffcbe?api-version=2023-03-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -268,7 +268,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.ServiceFabric/locations/eastus/managedclusteroperations/70f00005-9b66-4378-8bf4-b8d4ac6ffcbe?api-version=2022-01-01",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.ServiceFabric/locations/eastus/managedclusteroperations/70f00005-9b66-4378-8bf4-b8d4ac6ffcbe?api-version=2023-03-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -307,7 +307,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.ServiceFabric/locations/eastus/managedclusteroperations/70f00005-9b66-4378-8bf4-b8d4ac6ffcbe?api-version=2022-01-01",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.ServiceFabric/locations/eastus/managedclusteroperations/70f00005-9b66-4378-8bf4-b8d4ac6ffcbe?api-version=2023-03-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -346,7 +346,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.ServiceFabric/locations/eastus/managedclusteroperations/70f00005-9b66-4378-8bf4-b8d4ac6ffcbe?api-version=2022-01-01",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.ServiceFabric/locations/eastus/managedclusteroperations/70f00005-9b66-4378-8bf4-b8d4ac6ffcbe?api-version=2023-03-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -385,7 +385,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.ServiceFabric/locations/eastus/managedclusteroperations/70f00005-9b66-4378-8bf4-b8d4ac6ffcbe?api-version=2022-01-01",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.ServiceFabric/locations/eastus/managedclusteroperations/70f00005-9b66-4378-8bf4-b8d4ac6ffcbe?api-version=2023-03-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -424,7 +424,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.ServiceFabric/locations/eastus/managedclusteroperations/70f00005-9b66-4378-8bf4-b8d4ac6ffcbe?api-version=2022-01-01",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.ServiceFabric/locations/eastus/managedclusteroperations/70f00005-9b66-4378-8bf4-b8d4ac6ffcbe?api-version=2023-03-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -463,7 +463,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.ServiceFabric/locations/eastus/managedclusteroperations/70f00005-9b66-4378-8bf4-b8d4ac6ffcbe?api-version=2022-01-01",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.ServiceFabric/locations/eastus/managedclusteroperations/70f00005-9b66-4378-8bf4-b8d4ac6ffcbe?api-version=2023-03-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -502,7 +502,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.ServiceFabric/locations/eastus/managedclusteroperations/70f00005-9b66-4378-8bf4-b8d4ac6ffcbe?api-version=2022-01-01",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.ServiceFabric/locations/eastus/managedclusteroperations/70f00005-9b66-4378-8bf4-b8d4ac6ffcbe?api-version=2023-03-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -541,7 +541,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.ServiceFabric/locations/eastus/managedclusteroperations/70f00005-9b66-4378-8bf4-b8d4ac6ffcbe?api-version=2022-01-01",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.ServiceFabric/locations/eastus/managedclusteroperations/70f00005-9b66-4378-8bf4-b8d4ac6ffcbe?api-version=2023-03-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -580,7 +580,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.ServiceFabric/locations/eastus/managedclusteroperations/70f00005-9b66-4378-8bf4-b8d4ac6ffcbe?api-version=2022-01-01",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.ServiceFabric/locations/eastus/managedclusteroperations/70f00005-9b66-4378-8bf4-b8d4ac6ffcbe?api-version=2023-03-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -619,7 +619,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.ServiceFabric/locations/eastus/managedclusteroperations/70f00005-9b66-4378-8bf4-b8d4ac6ffcbe?api-version=2022-01-01",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.ServiceFabric/locations/eastus/managedclusteroperations/70f00005-9b66-4378-8bf4-b8d4ac6ffcbe?api-version=2023-03-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -658,7 +658,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.ServiceFabric/locations/eastus/managedclusteroperations/70f00005-9b66-4378-8bf4-b8d4ac6ffcbe?api-version=2022-01-01",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.ServiceFabric/locations/eastus/managedclusteroperations/70f00005-9b66-4378-8bf4-b8d4ac6ffcbe?api-version=2023-03-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -697,7 +697,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.ServiceFabric/locations/eastus/managedclusteroperations/70f00005-9b66-4378-8bf4-b8d4ac6ffcbe?api-version=2022-01-01",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.ServiceFabric/locations/eastus/managedclusteroperations/70f00005-9b66-4378-8bf4-b8d4ac6ffcbe?api-version=2023-03-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -736,7 +736,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.ServiceFabric/locations/eastus/managedclusteroperations/70f00005-9b66-4378-8bf4-b8d4ac6ffcbe?api-version=2022-01-01",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.ServiceFabric/locations/eastus/managedclusteroperations/70f00005-9b66-4378-8bf4-b8d4ac6ffcbe?api-version=2023-03-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -775,7 +775,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.ServiceFabric/locations/eastus/managedclusteroperations/70f00005-9b66-4378-8bf4-b8d4ac6ffcbe?api-version=2022-01-01",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.ServiceFabric/locations/eastus/managedclusteroperations/70f00005-9b66-4378-8bf4-b8d4ac6ffcbe?api-version=2023-03-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -814,7 +814,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.ServiceFabric/locations/eastus/managedclusteroperations/70f00005-9b66-4378-8bf4-b8d4ac6ffcbe?api-version=2022-01-01",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.ServiceFabric/locations/eastus/managedclusteroperations/70f00005-9b66-4378-8bf4-b8d4ac6ffcbe?api-version=2023-03-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -853,7 +853,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.ServiceFabric/locations/eastus/managedclusteroperations/70f00005-9b66-4378-8bf4-b8d4ac6ffcbe?api-version=2022-01-01",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.ServiceFabric/locations/eastus/managedclusteroperations/70f00005-9b66-4378-8bf4-b8d4ac6ffcbe?api-version=2023-03-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -892,7 +892,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.ServiceFabric/locations/eastus/managedclusteroperations/70f00005-9b66-4378-8bf4-b8d4ac6ffcbe?api-version=2022-01-01",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.ServiceFabric/locations/eastus/managedclusteroperations/70f00005-9b66-4378-8bf4-b8d4ac6ffcbe?api-version=2023-03-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -931,7 +931,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.ServiceFabric/locations/eastus/managedclusteroperations/70f00005-9b66-4378-8bf4-b8d4ac6ffcbe?api-version=2022-01-01",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.ServiceFabric/locations/eastus/managedclusteroperations/70f00005-9b66-4378-8bf4-b8d4ac6ffcbe?api-version=2023-03-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -970,7 +970,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.ServiceFabric/locations/eastus/managedclusteroperations/70f00005-9b66-4378-8bf4-b8d4ac6ffcbe?api-version=2022-01-01",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.ServiceFabric/locations/eastus/managedclusteroperations/70f00005-9b66-4378-8bf4-b8d4ac6ffcbe?api-version=2023-03-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -1009,7 +1009,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.ServiceFabric/locations/eastus/managedclusteroperations/70f00005-9b66-4378-8bf4-b8d4ac6ffcbe?api-version=2022-01-01",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.ServiceFabric/locations/eastus/managedclusteroperations/70f00005-9b66-4378-8bf4-b8d4ac6ffcbe?api-version=2023-03-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -1048,7 +1048,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.ServiceFabric/locations/eastus/managedclusteroperations/70f00005-9b66-4378-8bf4-b8d4ac6ffcbe?api-version=2022-01-01",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.ServiceFabric/locations/eastus/managedclusteroperations/70f00005-9b66-4378-8bf4-b8d4ac6ffcbe?api-version=2023-03-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -1087,7 +1087,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.ServiceFabric/locations/eastus/managedclusteroperations/70f00005-9b66-4378-8bf4-b8d4ac6ffcbe?api-version=2022-01-01",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.ServiceFabric/locations/eastus/managedclusteroperations/70f00005-9b66-4378-8bf4-b8d4ac6ffcbe?api-version=2023-03-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -1126,7 +1126,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.ServiceFabric/locations/eastus/managedclusteroperations/70f00005-9b66-4378-8bf4-b8d4ac6ffcbe?api-version=2022-01-01",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.ServiceFabric/locations/eastus/managedclusteroperations/70f00005-9b66-4378-8bf4-b8d4ac6ffcbe?api-version=2023-03-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -1165,7 +1165,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.ServiceFabric/locations/eastus/managedclusteroperations/70f00005-9b66-4378-8bf4-b8d4ac6ffcbe?api-version=2022-01-01",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.ServiceFabric/locations/eastus/managedclusteroperations/70f00005-9b66-4378-8bf4-b8d4ac6ffcbe?api-version=2023-03-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -1204,7 +1204,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.ServiceFabric/locations/eastus/managedclusteroperations/70f00005-9b66-4378-8bf4-b8d4ac6ffcbe?api-version=2022-01-01",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.ServiceFabric/locations/eastus/managedclusteroperations/70f00005-9b66-4378-8bf4-b8d4ac6ffcbe?api-version=2023-03-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -1243,7 +1243,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/ServiceFabricManagedClustersRG1111/providers/Microsoft.ServiceFabric/managedClusters/sfmctest9301?api-version=2022-01-01",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testClusterRG-1111/providers/Microsoft.ServiceFabric/managedClusters/sfmctest9301?api-version=2023-03-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -1274,9 +1274,9 @@
         "x-ms-routing-request-id": "SOUTHEASTASIA:20230406T060518Z:a8c9ea9e-580f-4066-a5bf-b64877a50fc3"
       },
       "ResponseBody": {
-        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/ServiceFabricManagedClustersRG1111/providers/Microsoft.ServiceFabric/managedClusters/sfmctest9301",
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/testClusterRG-1111/providers/Microsoft.ServiceFabric/managedClusters/sfmctest9301",
         "type": "Microsoft.ServiceFabric/managedclusters",
-        "location": "eastus",
+        "location": "southcentralus",
         "name": "sfmctest9301",
         "tags": {},
         "systemData": {
@@ -1319,7 +1319,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/ServiceFabricManagedClustersRG1111/providers/Microsoft.ServiceFabric/managedclusters/sfmctest9301/applicationTypes/appType5267?api-version=2022-01-01",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testClusterRG-1111/providers/Microsoft.ServiceFabric/managedclusters/sfmctest9301/applicationTypes/appType5267?api-version=2023-03-01-preview",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -1333,7 +1333,7 @@
       },
       "RequestBody": {
         "tags": {},
-        "location": "eastus",
+        "location": "southcentralus",
         "properties": {}
       },
       "StatusCode": 200,
@@ -1357,9 +1357,9 @@
         "x-ms-routing-request-id": "SOUTHEASTASIA:20230406T060519Z:2638fde1-dbc8-470e-8880-d6045e0dde3d"
       },
       "ResponseBody": {
-        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/ServiceFabricManagedClustersRG1111/providers/Microsoft.ServiceFabric/managedClusters/sfmctest9301/applicationTypes/appType5267",
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/testClusterRG-1111/providers/Microsoft.ServiceFabric/managedClusters/sfmctest9301/applicationTypes/appType5267",
         "type": "Microsoft.ServiceFabric/managedclusters/applicationTypes",
-        "location": "eastus",
+        "location": "southcentralus",
         "name": "appType5267",
         "tags": {},
         "systemData": {
@@ -1376,7 +1376,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/ServiceFabricManagedClustersRG1111/providers/Microsoft.ServiceFabric/managedclusters/sfmctest9301/applicationTypes/appType5267?api-version=2022-01-01",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testClusterRG-1111/providers/Microsoft.ServiceFabric/managedclusters/sfmctest9301/applicationTypes/appType5267?api-version=2023-03-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -1408,9 +1408,9 @@
         "x-ms-routing-request-id": "SOUTHEASTASIA:20230406T060520Z:7f50a65a-7a8b-4560-9b45-0dba42155b42"
       },
       "ResponseBody": {
-        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/ServiceFabricManagedClustersRG1111/providers/Microsoft.ServiceFabric/managedClusters/sfmctest9301/applicationTypes/appType5267",
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/testClusterRG-1111/providers/Microsoft.ServiceFabric/managedClusters/sfmctest9301/applicationTypes/appType5267",
         "type": "Microsoft.ServiceFabric/managedclusters/applicationTypes",
-        "location": "eastus",
+        "location": "southcentralus",
         "name": "appType5267",
         "tags": {},
         "systemData": {
@@ -1427,7 +1427,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/ServiceFabricManagedClustersRG1111/providers/Microsoft.ServiceFabric/managedclusters/sfmctest9301/applicationTypes/appType5267?api-version=2022-01-01",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testClusterRG-1111/providers/Microsoft.ServiceFabric/managedclusters/sfmctest9301/applicationTypes/appType5267?api-version=2023-03-01-preview",
       "RequestMethod": "PATCH",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -1465,9 +1465,9 @@
         "x-ms-routing-request-id": "SOUTHEASTASIA:20230406T060520Z:cbd483f8-ea00-4245-be00-4a058d62fee0"
       },
       "ResponseBody": {
-        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/ServiceFabricManagedClustersRG1111/providers/Microsoft.ServiceFabric/managedClusters/sfmctest9301/applicationTypes/appType5267",
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/testClusterRG-1111/providers/Microsoft.ServiceFabric/managedClusters/sfmctest9301/applicationTypes/appType5267",
         "type": "Microsoft.ServiceFabric/managedclusters/applicationTypes",
-        "location": "eastus",
+        "location": "southcentralus",
         "name": "appType5267",
         "tags": {
           "addtagkey": "addtagvalue"
@@ -1486,7 +1486,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/ServiceFabricManagedClustersRG1111/providers/Microsoft.ServiceFabric/managedclusters/sfmctest9301/applicationTypes/appType5267?api-version=2022-01-01",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testClusterRG-1111/providers/Microsoft.ServiceFabric/managedclusters/sfmctest9301/applicationTypes/appType5267?api-version=2023-03-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -1518,9 +1518,9 @@
         "x-ms-routing-request-id": "SOUTHEASTASIA:20230406T060521Z:cd2b9d3e-480e-40c7-a8c9-ce823b0aa2a2"
       },
       "ResponseBody": {
-        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/ServiceFabricManagedClustersRG1111/providers/Microsoft.ServiceFabric/managedClusters/sfmctest9301/applicationTypes/appType5267",
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/testClusterRG-1111/providers/Microsoft.ServiceFabric/managedClusters/sfmctest9301/applicationTypes/appType5267",
         "type": "Microsoft.ServiceFabric/managedclusters/applicationTypes",
-        "location": "eastus",
+        "location": "southcentralus",
         "name": "appType5267",
         "tags": {
           "addtagkey": "addtagvalue"
@@ -1539,7 +1539,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/ServiceFabricManagedClustersRG1111/providers/Microsoft.ServiceFabric/managedclusters/sfmctest9301/applicationTypes/appType5267?api-version=2022-01-01",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testClusterRG-1111/providers/Microsoft.ServiceFabric/managedclusters/sfmctest9301/applicationTypes/appType5267?api-version=2023-03-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -1571,9 +1571,9 @@
         "x-ms-routing-request-id": "SOUTHEASTASIA:20230406T060521Z:fdb72861-3b76-4c42-bce0-a159288f5642"
       },
       "ResponseBody": {
-        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/ServiceFabricManagedClustersRG1111/providers/Microsoft.ServiceFabric/managedClusters/sfmctest9301/applicationTypes/appType5267",
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/testClusterRG-1111/providers/Microsoft.ServiceFabric/managedClusters/sfmctest9301/applicationTypes/appType5267",
         "type": "Microsoft.ServiceFabric/managedclusters/applicationTypes",
-        "location": "eastus",
+        "location": "southcentralus",
         "name": "appType5267",
         "tags": {
           "addtagkey": "addtagvalue"
@@ -1592,7 +1592,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/ServiceFabricManagedClustersRG1111/providers/Microsoft.ServiceFabric/managedclusters/sfmctest9301/applicationTypes/appType5267?api-version=2022-01-01",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testClusterRG-1111/providers/Microsoft.ServiceFabric/managedclusters/sfmctest9301/applicationTypes/appType5267?api-version=2023-03-01-preview",
       "RequestMethod": "PATCH",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -1628,9 +1628,9 @@
         "x-ms-routing-request-id": "SOUTHEASTASIA:20230406T060522Z:56d33f9b-5ee4-4938-a91d-0a5ea5c77581"
       },
       "ResponseBody": {
-        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/ServiceFabricManagedClustersRG1111/providers/Microsoft.ServiceFabric/managedClusters/sfmctest9301/applicationTypes/appType5267",
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/testClusterRG-1111/providers/Microsoft.ServiceFabric/managedClusters/sfmctest9301/applicationTypes/appType5267",
         "type": "Microsoft.ServiceFabric/managedclusters/applicationTypes",
-        "location": "eastus",
+        "location": "southcentralus",
         "name": "appType5267",
         "tags": {},
         "systemData": {
@@ -1647,7 +1647,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/ServiceFabricManagedClustersRG1111/providers/Microsoft.ServiceFabric/managedclusters/sfmctest9301/applicationTypes/appType5267?api-version=2022-01-01",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testClusterRG-1111/providers/Microsoft.ServiceFabric/managedclusters/sfmctest9301/applicationTypes/appType5267?api-version=2023-03-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -1679,9 +1679,9 @@
         "x-ms-routing-request-id": "SOUTHEASTASIA:20230406T060522Z:6e1406b2-9faf-4519-b199-214b925aa5d1"
       },
       "ResponseBody": {
-        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/ServiceFabricManagedClustersRG1111/providers/Microsoft.ServiceFabric/managedClusters/sfmctest9301/applicationTypes/appType5267",
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/testClusterRG-1111/providers/Microsoft.ServiceFabric/managedClusters/sfmctest9301/applicationTypes/appType5267",
         "type": "Microsoft.ServiceFabric/managedclusters/applicationTypes",
-        "location": "eastus",
+        "location": "southcentralus",
         "name": "appType5267",
         "tags": {},
         "systemData": {
