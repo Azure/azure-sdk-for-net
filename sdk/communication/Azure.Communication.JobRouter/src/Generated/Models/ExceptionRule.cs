@@ -17,9 +17,9 @@ namespace Azure.Communication.JobRouter
 
         /// <summary>
         /// The trigger for this exception rule
-        /// Please note <see cref="JobExceptionTrigger"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="ExceptionTrigger"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="QueueLengthExceptionTrigger"/> and <see cref="WaitTimeExceptionTrigger"/>.
         /// </summary>
-        public JobExceptionTrigger Trigger { get; set; }
+        public ExceptionTrigger Trigger { get; set; }
     }
 }

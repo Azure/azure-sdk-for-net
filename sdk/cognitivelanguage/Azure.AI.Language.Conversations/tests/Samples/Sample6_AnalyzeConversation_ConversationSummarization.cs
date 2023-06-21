@@ -3,12 +3,9 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text.Json;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
-using Castle.Core.Internal;
 using NUnit.Framework;
 
 namespace Azure.AI.Language.Conversations.Tests.Samples
@@ -17,7 +14,7 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
     {
         [SyncOnly]
         [RecordedTest]
-        [ServiceVersion(Min = ConversationsClientOptions.ServiceVersion.V2022_05_15_Preview)]
+        [ServiceVersion(Min = ConversationsClientOptions.ServiceVersion.V2023_04_01)]
         public void AnalyzeConversation_ConversationSummarization()
         {
             ConversationAnalysisClient client = Client;
@@ -91,24 +88,23 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
                 },
             };
 
-            Operation<BinaryData> analyzeConversationOperation = client.AnalyzeConversation(WaitUntil.Completed, RequestContent.Create(data));
+            Operation<BinaryData> analyzeConversationOperation = client.AnalyzeConversations(WaitUntil.Completed, RequestContent.Create(data));
 
-            using JsonDocument result = JsonDocument.Parse(analyzeConversationOperation.Value.ToStream());
-            JsonElement jobResults = result.RootElement;
-            foreach (JsonElement task in jobResults.GetProperty("tasks").GetProperty("items").EnumerateArray())
+            dynamic jobResults = analyzeConversationOperation.Value.ToDynamicFromJson();
+            foreach (dynamic task in jobResults.tasks.items)
             {
-                Console.WriteLine($"Task name: {task.GetProperty("taskName").GetString()}");
-                JsonElement results = task.GetProperty("results");
-                foreach (JsonElement conversation in results.GetProperty("conversations").EnumerateArray())
+                Console.WriteLine($"Task name: {task.taskName}");
+                dynamic results = task.results;
+                foreach (dynamic conversation in results.conversations)
                 {
-                    Console.WriteLine($"Conversation: #{conversation.GetProperty("id").GetString()}");
+                    Console.WriteLine($"Conversation: #{conversation.id}");
                     Console.WriteLine("Summaries:");
-                    foreach (JsonElement summary in conversation.GetProperty("summaries").EnumerateArray())
+                    foreach (dynamic summary in conversation.summaries)
                     {
-                        Console.WriteLine($"Text: {summary.GetProperty("text").GetString()}");
-                        Console.WriteLine($"Aspect: {summary.GetProperty("aspect").GetString()}");
+                        Console.WriteLine($"Text: {summary.text}");
+                        Console.WriteLine($"Aspect: {summary.aspect}");
 #if !SNIPPET
-                        aspects.Add(summary.GetProperty("aspect").GetString());
+                        aspects.Add(summary.aspect);
 #endif
                     }
                     Console.WriteLine();
@@ -122,7 +118,7 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
 
         [AsyncOnly]
         [RecordedTest]
-        [ServiceVersion(Min = ConversationsClientOptions.ServiceVersion.V2022_05_15_Preview)]
+        [ServiceVersion(Min = ConversationsClientOptions.ServiceVersion.V2023_04_01)]
         public async Task AnalyzeConversationAsync_ConversationSummarization()
         {
             ConversationAnalysisClient client = Client;
@@ -196,25 +192,24 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
             };
 
             #region Snippet:AnalyzeConversationAsync_ConversationSummarization
-            Operation<BinaryData> analyzeConversationOperation = await client.AnalyzeConversationAsync(WaitUntil.Completed, RequestContent.Create(data));
+            Operation<BinaryData> analyzeConversationOperation = await client.AnalyzeConversationsAsync(WaitUntil.Completed, RequestContent.Create(data));
             #endregion
 
-            using JsonDocument result = JsonDocument.Parse(analyzeConversationOperation.Value.ToStream());
-            JsonElement jobResults = result.RootElement;
-            foreach (JsonElement task in jobResults.GetProperty("tasks").GetProperty("items").EnumerateArray())
+            dynamic jobResults = analyzeConversationOperation.Value.ToDynamicFromJson();
+            foreach (dynamic task in jobResults.tasks.items)
             {
-                Console.WriteLine($"Task name: {task.GetProperty("taskName").GetString()}");
-                JsonElement results = task.GetProperty("results");
-                foreach (JsonElement conversation in results.GetProperty("conversations").EnumerateArray())
+                Console.WriteLine($"Task name: {task.taskName}");
+                dynamic results = task.results;
+                foreach (dynamic conversation in results.conversations)
                 {
-                    Console.WriteLine($"Conversation: #{conversation.GetProperty("id").GetString()}");
+                    Console.WriteLine($"Conversation: #{conversation.id}");
                     Console.WriteLine("Summaries:");
-                    foreach (JsonElement summary in conversation.GetProperty("summaries").EnumerateArray())
+                    foreach (dynamic summary in conversation.summaries)
                     {
-                        Console.WriteLine($"Text: {summary.GetProperty("text").GetString()}");
-                        Console.WriteLine($"Aspect: {summary.GetProperty("aspect").GetString()}");
+                        Console.WriteLine($"Text: {summary.text}");
+                        Console.WriteLine($"Aspect: {summary.aspect}");
 #if !SNIPPET
-                        aspects.Add(summary.GetProperty("aspect").GetString());
+                        aspects.Add(summary.aspect);
 #endif
                     }
                     Console.WriteLine();

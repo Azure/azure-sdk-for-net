@@ -1,6 +1,21 @@
 # Release History
 
-## 1.2.0-beta.1 (2023-04-11)
+## 1.3.0-beta.1 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+## 1.2.0 (2023-05-22)
+
+### Bugs Fixed
+- `QueryResourceAsync<T>` method was not returning the correct value.
+
+## 1.2.0-beta.1 (2023-05-09)
 ### Features Added
 - Added Client Builder Extension methods for `LogsQueryClient` and `MetricsQueryClient`
 - Added the `QueryResource` method to `LogsQueryClient` to allow users to query Azure resources directly without the context of a workspace.

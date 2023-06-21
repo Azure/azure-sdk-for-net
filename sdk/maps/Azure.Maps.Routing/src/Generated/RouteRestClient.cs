@@ -109,7 +109,7 @@ namespace Azure.Maps.Routing
             {
                 uri.AppendQuery("travelMode", travelMode.Value.ToString(), true);
             }
-            if (avoid != null)
+            if (avoid != null && Optional.IsCollectionDefined(avoid))
             {
                 foreach (var param in avoid)
                 {
@@ -145,13 +145,13 @@ namespace Azure.Maps.Routing
         /// 
         /// **Applies to**: see pricing [tiers](https://aka.ms/AzureMapsPricingTier).
         /// 
-        /// The Matrix Routing service allows calculation of a matrix of route summaries for a set of routes defined by origin and destination locations by using an asynchronous (async) or synchronous (sync) POST request. For every given origin, the service calculates the cost of routing from that origin to every given destination. The set of origins and the set of destinations can be thought of as the column and row headers of a table and each cell in the table contains the costs of routing from the origin to the destination for that cell. As an example, let&apos;s say a food delivery company has 20 drivers and they need to find the closest driver to pick up the delivery from the restaurant. To solve this use case, they can call Matrix Route API.
+        /// The Matrix Routing service allows calculation of a matrix of route summaries for a set of routes defined by origin and destination locations by using an asynchronous (async) or synchronous (sync) POST request. For every given origin, the service calculates the cost of routing from that origin to every given destination. The set of origins and the set of destinations can be thought of as the column and row headers of a table and each cell in the table contains the costs of routing from the origin to the destination for that cell. As an example, let's say a food delivery company has 20 drivers and they need to find the closest driver to pick up the delivery from the restaurant. To solve this use case, they can call Matrix Route API.
         /// 
         /// 
         /// For each route, the travel times and distances are returned. You can use the computed costs to determine which detailed routes to calculate using the Route Directions API.
         /// 
         /// 
-        /// The maximum size of a matrix for async request is **700** and for sync request it&apos;s **100** (the number of origins multiplied by the number of destinations).
+        /// The maximum size of a matrix for async request is **700** and for sync request it's **100** (the number of origins multiplied by the number of destinations).
         /// 
         /// 
         /// 
@@ -178,7 +178,7 @@ namespace Azure.Maps.Routing
         /// POST https://atlas.microsoft.com/route/matrix/json?api-version=1.0&amp;subscription-key={subscription-key}
         /// ```
         /// 
-        /// Here&apos;s a typical sequence of asynchronous operations:
+        /// Here's a typical sequence of asynchronous operations:
         /// 1. Client sends a Route Matrix POST request to Azure Maps
         /// 
         /// 2. The server will respond with one of the following:
@@ -233,8 +233,8 @@ namespace Azure.Maps.Routing
         /// <param name="vehicleWeight"> Weight of the vehicle in kilograms. </param>
         /// <param name="windingness"> Level of turns for thrilling route. This parameter can only be used in conjunction with `routeType`=thrilling. </param>
         /// <param name="inclineLevel"> Degree of hilliness for thrilling route. This parameter can only be used in conjunction with `routeType`=thrilling. </param>
-        /// <param name="travelMode"> The mode of travel for the requested route. If not defined, default is &apos;car&apos;. Note that the requested travelMode may not be available for the entire route. Where the requested travelMode is not available for a particular section, the travelMode element of the response for that section will be &quot;other&quot;. Note that travel modes bus, motorcycle, taxi and van are BETA functionality. Full restriction data is not available in all areas. In **calculateReachableRange** requests, the values bicycle and pedestrian must not be used. </param>
-        /// <param name="avoid"> Specifies something that the route calculation should try to avoid when determining the route. Can be specified multiple times in one request, for example, &apos;&amp;avoid=motorways&amp;avoid=tollRoads&amp;avoid=ferries&apos;. In calculateReachableRange requests, the value alreadyUsedRoads must not be used. </param>
+        /// <param name="travelMode"> The mode of travel for the requested route. If not defined, default is 'car'. Note that the requested travelMode may not be available for the entire route. Where the requested travelMode is not available for a particular section, the travelMode element of the response for that section will be "other". Note that travel modes bus, motorcycle, taxi and van are BETA functionality. Full restriction data is not available in all areas. In **calculateReachableRange** requests, the values bicycle and pedestrian must not be used. </param>
+        /// <param name="avoid"> Specifies something that the route calculation should try to avoid when determining the route. Can be specified multiple times in one request, for example, '&amp;avoid=motorways&amp;avoid=tollRoads&amp;avoid=ferries'. In calculateReachableRange requests, the value alreadyUsedRoads must not be used. </param>
         /// <param name="useTrafficData">
         /// Possible values: 
         ///   * true - Do consider all available traffic information during routing
@@ -270,13 +270,13 @@ namespace Azure.Maps.Routing
         /// 
         /// **Applies to**: see pricing [tiers](https://aka.ms/AzureMapsPricingTier).
         /// 
-        /// The Matrix Routing service allows calculation of a matrix of route summaries for a set of routes defined by origin and destination locations by using an asynchronous (async) or synchronous (sync) POST request. For every given origin, the service calculates the cost of routing from that origin to every given destination. The set of origins and the set of destinations can be thought of as the column and row headers of a table and each cell in the table contains the costs of routing from the origin to the destination for that cell. As an example, let&apos;s say a food delivery company has 20 drivers and they need to find the closest driver to pick up the delivery from the restaurant. To solve this use case, they can call Matrix Route API.
+        /// The Matrix Routing service allows calculation of a matrix of route summaries for a set of routes defined by origin and destination locations by using an asynchronous (async) or synchronous (sync) POST request. For every given origin, the service calculates the cost of routing from that origin to every given destination. The set of origins and the set of destinations can be thought of as the column and row headers of a table and each cell in the table contains the costs of routing from the origin to the destination for that cell. As an example, let's say a food delivery company has 20 drivers and they need to find the closest driver to pick up the delivery from the restaurant. To solve this use case, they can call Matrix Route API.
         /// 
         /// 
         /// For each route, the travel times and distances are returned. You can use the computed costs to determine which detailed routes to calculate using the Route Directions API.
         /// 
         /// 
-        /// The maximum size of a matrix for async request is **700** and for sync request it&apos;s **100** (the number of origins multiplied by the number of destinations).
+        /// The maximum size of a matrix for async request is **700** and for sync request it's **100** (the number of origins multiplied by the number of destinations).
         /// 
         /// 
         /// 
@@ -303,7 +303,7 @@ namespace Azure.Maps.Routing
         /// POST https://atlas.microsoft.com/route/matrix/json?api-version=1.0&amp;subscription-key={subscription-key}
         /// ```
         /// 
-        /// Here&apos;s a typical sequence of asynchronous operations:
+        /// Here's a typical sequence of asynchronous operations:
         /// 1. Client sends a Route Matrix POST request to Azure Maps
         /// 
         /// 2. The server will respond with one of the following:
@@ -358,8 +358,8 @@ namespace Azure.Maps.Routing
         /// <param name="vehicleWeight"> Weight of the vehicle in kilograms. </param>
         /// <param name="windingness"> Level of turns for thrilling route. This parameter can only be used in conjunction with `routeType`=thrilling. </param>
         /// <param name="inclineLevel"> Degree of hilliness for thrilling route. This parameter can only be used in conjunction with `routeType`=thrilling. </param>
-        /// <param name="travelMode"> The mode of travel for the requested route. If not defined, default is &apos;car&apos;. Note that the requested travelMode may not be available for the entire route. Where the requested travelMode is not available for a particular section, the travelMode element of the response for that section will be &quot;other&quot;. Note that travel modes bus, motorcycle, taxi and van are BETA functionality. Full restriction data is not available in all areas. In **calculateReachableRange** requests, the values bicycle and pedestrian must not be used. </param>
-        /// <param name="avoid"> Specifies something that the route calculation should try to avoid when determining the route. Can be specified multiple times in one request, for example, &apos;&amp;avoid=motorways&amp;avoid=tollRoads&amp;avoid=ferries&apos;. In calculateReachableRange requests, the value alreadyUsedRoads must not be used. </param>
+        /// <param name="travelMode"> The mode of travel for the requested route. If not defined, default is 'car'. Note that the requested travelMode may not be available for the entire route. Where the requested travelMode is not available for a particular section, the travelMode element of the response for that section will be "other". Note that travel modes bus, motorcycle, taxi and van are BETA functionality. Full restriction data is not available in all areas. In **calculateReachableRange** requests, the values bicycle and pedestrian must not be used. </param>
+        /// <param name="avoid"> Specifies something that the route calculation should try to avoid when determining the route. Can be specified multiple times in one request, for example, '&amp;avoid=motorways&amp;avoid=tollRoads&amp;avoid=ferries'. In calculateReachableRange requests, the value alreadyUsedRoads must not be used. </param>
         /// <param name="useTrafficData">
         /// Possible values: 
         ///   * true - Do consider all available traffic information during routing
@@ -576,7 +576,7 @@ namespace Azure.Maps.Routing
             {
                 uri.AppendQuery("travelMode", travelMode.Value.ToString(), true);
             }
-            if (avoid != null)
+            if (avoid != null && Optional.IsCollectionDefined(avoid))
             {
                 foreach (var param in avoid)
                 {
@@ -612,13 +612,13 @@ namespace Azure.Maps.Routing
         /// 
         /// **Applies to**: see pricing [tiers](https://aka.ms/AzureMapsPricingTier).
         /// 
-        /// The Matrix Routing service allows calculation of a matrix of route summaries for a set of routes defined by origin and destination locations by using an asynchronous (async) or synchronous (sync) POST request. For every given origin, the service calculates the cost of routing from that origin to every given destination. The set of origins and the set of destinations can be thought of as the column and row headers of a table and each cell in the table contains the costs of routing from the origin to the destination for that cell. As an example, let&apos;s say a food delivery company has 20 drivers and they need to find the closest driver to pick up the delivery from the restaurant. To solve this use case, they can call Matrix Route API.
+        /// The Matrix Routing service allows calculation of a matrix of route summaries for a set of routes defined by origin and destination locations by using an asynchronous (async) or synchronous (sync) POST request. For every given origin, the service calculates the cost of routing from that origin to every given destination. The set of origins and the set of destinations can be thought of as the column and row headers of a table and each cell in the table contains the costs of routing from the origin to the destination for that cell. As an example, let's say a food delivery company has 20 drivers and they need to find the closest driver to pick up the delivery from the restaurant. To solve this use case, they can call Matrix Route API.
         /// 
         /// 
         /// For each route, the travel times and distances are returned. You can use the computed costs to determine which detailed routes to calculate using the Route Directions API.
         /// 
         /// 
-        /// The maximum size of a matrix for async request is **700** and for sync request it&apos;s **100** (the number of origins multiplied by the number of destinations).
+        /// The maximum size of a matrix for async request is **700** and for sync request it's **100** (the number of origins multiplied by the number of destinations).
         /// 
         /// 
         /// 
@@ -645,7 +645,7 @@ namespace Azure.Maps.Routing
         /// POST https://atlas.microsoft.com/route/matrix/json?api-version=1.0&amp;subscription-key={subscription-key}
         /// ```
         /// 
-        /// Here&apos;s a typical sequence of asynchronous operations:
+        /// Here's a typical sequence of asynchronous operations:
         /// 1. Client sends a Route Matrix POST request to Azure Maps
         /// 
         /// 2. The server will respond with one of the following:
@@ -700,8 +700,8 @@ namespace Azure.Maps.Routing
         /// <param name="vehicleWeight"> Weight of the vehicle in kilograms. </param>
         /// <param name="windingness"> Level of turns for thrilling route. This parameter can only be used in conjunction with `routeType`=thrilling. </param>
         /// <param name="inclineLevel"> Degree of hilliness for thrilling route. This parameter can only be used in conjunction with `routeType`=thrilling. </param>
-        /// <param name="travelMode"> The mode of travel for the requested route. If not defined, default is &apos;car&apos;. Note that the requested travelMode may not be available for the entire route. Where the requested travelMode is not available for a particular section, the travelMode element of the response for that section will be &quot;other&quot;. Note that travel modes bus, motorcycle, taxi and van are BETA functionality. Full restriction data is not available in all areas. In **calculateReachableRange** requests, the values bicycle and pedestrian must not be used. </param>
-        /// <param name="avoid"> Specifies something that the route calculation should try to avoid when determining the route. Can be specified multiple times in one request, for example, &apos;&amp;avoid=motorways&amp;avoid=tollRoads&amp;avoid=ferries&apos;. In calculateReachableRange requests, the value alreadyUsedRoads must not be used. </param>
+        /// <param name="travelMode"> The mode of travel for the requested route. If not defined, default is 'car'. Note that the requested travelMode may not be available for the entire route. Where the requested travelMode is not available for a particular section, the travelMode element of the response for that section will be "other". Note that travel modes bus, motorcycle, taxi and van are BETA functionality. Full restriction data is not available in all areas. In **calculateReachableRange** requests, the values bicycle and pedestrian must not be used. </param>
+        /// <param name="avoid"> Specifies something that the route calculation should try to avoid when determining the route. Can be specified multiple times in one request, for example, '&amp;avoid=motorways&amp;avoid=tollRoads&amp;avoid=ferries'. In calculateReachableRange requests, the value alreadyUsedRoads must not be used. </param>
         /// <param name="useTrafficData">
         /// Possible values: 
         ///   * true - Do consider all available traffic information during routing
@@ -740,13 +740,13 @@ namespace Azure.Maps.Routing
         /// 
         /// **Applies to**: see pricing [tiers](https://aka.ms/AzureMapsPricingTier).
         /// 
-        /// The Matrix Routing service allows calculation of a matrix of route summaries for a set of routes defined by origin and destination locations by using an asynchronous (async) or synchronous (sync) POST request. For every given origin, the service calculates the cost of routing from that origin to every given destination. The set of origins and the set of destinations can be thought of as the column and row headers of a table and each cell in the table contains the costs of routing from the origin to the destination for that cell. As an example, let&apos;s say a food delivery company has 20 drivers and they need to find the closest driver to pick up the delivery from the restaurant. To solve this use case, they can call Matrix Route API.
+        /// The Matrix Routing service allows calculation of a matrix of route summaries for a set of routes defined by origin and destination locations by using an asynchronous (async) or synchronous (sync) POST request. For every given origin, the service calculates the cost of routing from that origin to every given destination. The set of origins and the set of destinations can be thought of as the column and row headers of a table and each cell in the table contains the costs of routing from the origin to the destination for that cell. As an example, let's say a food delivery company has 20 drivers and they need to find the closest driver to pick up the delivery from the restaurant. To solve this use case, they can call Matrix Route API.
         /// 
         /// 
         /// For each route, the travel times and distances are returned. You can use the computed costs to determine which detailed routes to calculate using the Route Directions API.
         /// 
         /// 
-        /// The maximum size of a matrix for async request is **700** and for sync request it&apos;s **100** (the number of origins multiplied by the number of destinations).
+        /// The maximum size of a matrix for async request is **700** and for sync request it's **100** (the number of origins multiplied by the number of destinations).
         /// 
         /// 
         /// 
@@ -773,7 +773,7 @@ namespace Azure.Maps.Routing
         /// POST https://atlas.microsoft.com/route/matrix/json?api-version=1.0&amp;subscription-key={subscription-key}
         /// ```
         /// 
-        /// Here&apos;s a typical sequence of asynchronous operations:
+        /// Here's a typical sequence of asynchronous operations:
         /// 1. Client sends a Route Matrix POST request to Azure Maps
         /// 
         /// 2. The server will respond with one of the following:
@@ -828,8 +828,8 @@ namespace Azure.Maps.Routing
         /// <param name="vehicleWeight"> Weight of the vehicle in kilograms. </param>
         /// <param name="windingness"> Level of turns for thrilling route. This parameter can only be used in conjunction with `routeType`=thrilling. </param>
         /// <param name="inclineLevel"> Degree of hilliness for thrilling route. This parameter can only be used in conjunction with `routeType`=thrilling. </param>
-        /// <param name="travelMode"> The mode of travel for the requested route. If not defined, default is &apos;car&apos;. Note that the requested travelMode may not be available for the entire route. Where the requested travelMode is not available for a particular section, the travelMode element of the response for that section will be &quot;other&quot;. Note that travel modes bus, motorcycle, taxi and van are BETA functionality. Full restriction data is not available in all areas. In **calculateReachableRange** requests, the values bicycle and pedestrian must not be used. </param>
-        /// <param name="avoid"> Specifies something that the route calculation should try to avoid when determining the route. Can be specified multiple times in one request, for example, &apos;&amp;avoid=motorways&amp;avoid=tollRoads&amp;avoid=ferries&apos;. In calculateReachableRange requests, the value alreadyUsedRoads must not be used. </param>
+        /// <param name="travelMode"> The mode of travel for the requested route. If not defined, default is 'car'. Note that the requested travelMode may not be available for the entire route. Where the requested travelMode is not available for a particular section, the travelMode element of the response for that section will be "other". Note that travel modes bus, motorcycle, taxi and van are BETA functionality. Full restriction data is not available in all areas. In **calculateReachableRange** requests, the values bicycle and pedestrian must not be used. </param>
+        /// <param name="avoid"> Specifies something that the route calculation should try to avoid when determining the route. Can be specified multiple times in one request, for example, '&amp;avoid=motorways&amp;avoid=tollRoads&amp;avoid=ferries'. In calculateReachableRange requests, the value alreadyUsedRoads must not be used. </param>
         /// <param name="useTrafficData">
         /// Possible values: 
         ///   * true - Do consider all available traffic information during routing
@@ -971,7 +971,7 @@ namespace Azure.Maps.Routing
             {
                 uri.AppendQuery("travelMode", travelMode.Value.ToString(), true);
             }
-            if (avoid != null)
+            if (avoid != null && Optional.IsCollectionDefined(avoid))
             {
                 foreach (var param in avoid)
                 {
@@ -1125,8 +1125,8 @@ namespace Azure.Maps.Routing
         /// <param name="isCommercialVehicle"> Whether the vehicle is used for commercial purposes. Commercial vehicles may not be allowed to drive on some roads. </param>
         /// <param name="windingness"> Level of turns for thrilling route. This parameter can only be used in conjunction with `routeType`=thrilling. </param>
         /// <param name="inclineLevel"> Degree of hilliness for thrilling route. This parameter can only be used in conjunction with `routeType`=thrilling. </param>
-        /// <param name="travelMode"> The mode of travel for the requested route. If not defined, default is &apos;car&apos;. Note that the requested travelMode may not be available for the entire route. Where the requested travelMode is not available for a particular section, the travelMode element of the response for that section will be &quot;other&quot;. Note that travel modes bus, motorcycle, taxi and van are BETA functionality. Full restriction data is not available in all areas. In **calculateReachableRange** requests, the values bicycle and pedestrian must not be used. </param>
-        /// <param name="avoid"> Specifies something that the route calculation should try to avoid when determining the route. Can be specified multiple times in one request, for example, &apos;&amp;avoid=motorways&amp;avoid=tollRoads&amp;avoid=ferries&apos;. In calculateReachableRange requests, the value alreadyUsedRoads must not be used. </param>
+        /// <param name="travelMode"> The mode of travel for the requested route. If not defined, default is 'car'. Note that the requested travelMode may not be available for the entire route. Where the requested travelMode is not available for a particular section, the travelMode element of the response for that section will be "other". Note that travel modes bus, motorcycle, taxi and van are BETA functionality. Full restriction data is not available in all areas. In **calculateReachableRange** requests, the values bicycle and pedestrian must not be used. </param>
+        /// <param name="avoid"> Specifies something that the route calculation should try to avoid when determining the route. Can be specified multiple times in one request, for example, '&amp;avoid=motorways&amp;avoid=tollRoads&amp;avoid=ferries'. In calculateReachableRange requests, the value alreadyUsedRoads must not be used. </param>
         /// <param name="useTrafficData">
         /// Possible values: 
         ///   * true - Do consider all available traffic information during routing
@@ -1244,7 +1244,7 @@ namespace Azure.Maps.Routing
         /// Sensible Values : 43
         /// </param>
         /// <param name="maxChargeInKwH">
-        /// Specifies the maximum electric energy supply in kilowatt hours (kWh) that may be stored in the vehicle&apos;s battery.
+        /// Specifies the maximum electric energy supply in kilowatt hours (kWh) that may be stored in the vehicle's battery.
         /// 
         /// This parameter co-exists with **currentChargeInkWh** parameter.
         /// 
@@ -1359,8 +1359,8 @@ namespace Azure.Maps.Routing
         /// <param name="isCommercialVehicle"> Whether the vehicle is used for commercial purposes. Commercial vehicles may not be allowed to drive on some roads. </param>
         /// <param name="windingness"> Level of turns for thrilling route. This parameter can only be used in conjunction with `routeType`=thrilling. </param>
         /// <param name="inclineLevel"> Degree of hilliness for thrilling route. This parameter can only be used in conjunction with `routeType`=thrilling. </param>
-        /// <param name="travelMode"> The mode of travel for the requested route. If not defined, default is &apos;car&apos;. Note that the requested travelMode may not be available for the entire route. Where the requested travelMode is not available for a particular section, the travelMode element of the response for that section will be &quot;other&quot;. Note that travel modes bus, motorcycle, taxi and van are BETA functionality. Full restriction data is not available in all areas. In **calculateReachableRange** requests, the values bicycle and pedestrian must not be used. </param>
-        /// <param name="avoid"> Specifies something that the route calculation should try to avoid when determining the route. Can be specified multiple times in one request, for example, &apos;&amp;avoid=motorways&amp;avoid=tollRoads&amp;avoid=ferries&apos;. In calculateReachableRange requests, the value alreadyUsedRoads must not be used. </param>
+        /// <param name="travelMode"> The mode of travel for the requested route. If not defined, default is 'car'. Note that the requested travelMode may not be available for the entire route. Where the requested travelMode is not available for a particular section, the travelMode element of the response for that section will be "other". Note that travel modes bus, motorcycle, taxi and van are BETA functionality. Full restriction data is not available in all areas. In **calculateReachableRange** requests, the values bicycle and pedestrian must not be used. </param>
+        /// <param name="avoid"> Specifies something that the route calculation should try to avoid when determining the route. Can be specified multiple times in one request, for example, '&amp;avoid=motorways&amp;avoid=tollRoads&amp;avoid=ferries'. In calculateReachableRange requests, the value alreadyUsedRoads must not be used. </param>
         /// <param name="useTrafficData">
         /// Possible values: 
         ///   * true - Do consider all available traffic information during routing
@@ -1478,7 +1478,7 @@ namespace Azure.Maps.Routing
         /// Sensible Values : 43
         /// </param>
         /// <param name="maxChargeInKwH">
-        /// Specifies the maximum electric energy supply in kilowatt hours (kWh) that may be stored in the vehicle&apos;s battery.
+        /// Specifies the maximum electric energy supply in kilowatt hours (kWh) that may be stored in the vehicle's battery.
         /// 
         /// This parameter co-exists with **currentChargeInkWh** parameter.
         /// 
@@ -1626,7 +1626,7 @@ namespace Azure.Maps.Routing
             {
                 uri.AppendQuery("travelMode", travelMode.Value.ToString(), true);
             }
-            if (avoid != null)
+            if (avoid != null && Optional.IsCollectionDefined(avoid))
             {
                 foreach (var param in avoid)
                 {
@@ -1791,8 +1791,8 @@ namespace Azure.Maps.Routing
         /// <param name="isCommercialVehicle"> Whether the vehicle is used for commercial purposes. Commercial vehicles may not be allowed to drive on some roads. </param>
         /// <param name="windingness"> Level of turns for thrilling route. This parameter can only be used in conjunction with `routeType`=thrilling. </param>
         /// <param name="inclineLevel"> Degree of hilliness for thrilling route. This parameter can only be used in conjunction with `routeType`=thrilling. </param>
-        /// <param name="travelMode"> The mode of travel for the requested route. If not defined, default is &apos;car&apos;. Note that the requested travelMode may not be available for the entire route. Where the requested travelMode is not available for a particular section, the travelMode element of the response for that section will be &quot;other&quot;. Note that travel modes bus, motorcycle, taxi and van are BETA functionality. Full restriction data is not available in all areas. In **calculateReachableRange** requests, the values bicycle and pedestrian must not be used. </param>
-        /// <param name="avoid"> Specifies something that the route calculation should try to avoid when determining the route. Can be specified multiple times in one request, for example, &apos;&amp;avoid=motorways&amp;avoid=tollRoads&amp;avoid=ferries&apos;. In calculateReachableRange requests, the value alreadyUsedRoads must not be used. </param>
+        /// <param name="travelMode"> The mode of travel for the requested route. If not defined, default is 'car'. Note that the requested travelMode may not be available for the entire route. Where the requested travelMode is not available for a particular section, the travelMode element of the response for that section will be "other". Note that travel modes bus, motorcycle, taxi and van are BETA functionality. Full restriction data is not available in all areas. In **calculateReachableRange** requests, the values bicycle and pedestrian must not be used. </param>
+        /// <param name="avoid"> Specifies something that the route calculation should try to avoid when determining the route. Can be specified multiple times in one request, for example, '&amp;avoid=motorways&amp;avoid=tollRoads&amp;avoid=ferries'. In calculateReachableRange requests, the value alreadyUsedRoads must not be used. </param>
         /// <param name="useTrafficData">
         /// Possible values: 
         ///   * true - Do consider all available traffic information during routing
@@ -1910,7 +1910,7 @@ namespace Azure.Maps.Routing
         /// Sensible Values : 43
         /// </param>
         /// <param name="maxChargeInKwH">
-        /// Specifies the maximum electric energy supply in kilowatt hours (kWh) that may be stored in the vehicle&apos;s battery.
+        /// Specifies the maximum electric energy supply in kilowatt hours (kWh) that may be stored in the vehicle's battery.
         /// 
         /// This parameter co-exists with **currentChargeInkWh** parameter.
         /// 
@@ -2036,8 +2036,8 @@ namespace Azure.Maps.Routing
         /// <param name="isCommercialVehicle"> Whether the vehicle is used for commercial purposes. Commercial vehicles may not be allowed to drive on some roads. </param>
         /// <param name="windingness"> Level of turns for thrilling route. This parameter can only be used in conjunction with `routeType`=thrilling. </param>
         /// <param name="inclineLevel"> Degree of hilliness for thrilling route. This parameter can only be used in conjunction with `routeType`=thrilling. </param>
-        /// <param name="travelMode"> The mode of travel for the requested route. If not defined, default is &apos;car&apos;. Note that the requested travelMode may not be available for the entire route. Where the requested travelMode is not available for a particular section, the travelMode element of the response for that section will be &quot;other&quot;. Note that travel modes bus, motorcycle, taxi and van are BETA functionality. Full restriction data is not available in all areas. In **calculateReachableRange** requests, the values bicycle and pedestrian must not be used. </param>
-        /// <param name="avoid"> Specifies something that the route calculation should try to avoid when determining the route. Can be specified multiple times in one request, for example, &apos;&amp;avoid=motorways&amp;avoid=tollRoads&amp;avoid=ferries&apos;. In calculateReachableRange requests, the value alreadyUsedRoads must not be used. </param>
+        /// <param name="travelMode"> The mode of travel for the requested route. If not defined, default is 'car'. Note that the requested travelMode may not be available for the entire route. Where the requested travelMode is not available for a particular section, the travelMode element of the response for that section will be "other". Note that travel modes bus, motorcycle, taxi and van are BETA functionality. Full restriction data is not available in all areas. In **calculateReachableRange** requests, the values bicycle and pedestrian must not be used. </param>
+        /// <param name="avoid"> Specifies something that the route calculation should try to avoid when determining the route. Can be specified multiple times in one request, for example, '&amp;avoid=motorways&amp;avoid=tollRoads&amp;avoid=ferries'. In calculateReachableRange requests, the value alreadyUsedRoads must not be used. </param>
         /// <param name="useTrafficData">
         /// Possible values: 
         ///   * true - Do consider all available traffic information during routing
@@ -2155,7 +2155,7 @@ namespace Azure.Maps.Routing
         /// Sensible Values : 43
         /// </param>
         /// <param name="maxChargeInKwH">
-        /// Specifies the maximum electric energy supply in kilowatt hours (kWh) that may be stored in the vehicle&apos;s battery.
+        /// Specifies the maximum electric energy supply in kilowatt hours (kWh) that may be stored in the vehicle's battery.
         /// 
         /// This parameter co-exists with **currentChargeInkWh** parameter.
         /// 
@@ -2210,7 +2210,10 @@ namespace Azure.Maps.Routing
             uri.AppendPath("/route/range/", false);
             uri.AppendPath(format.Value.ToString(), true);
             uri.AppendQuery("api-version", _apiVersion, true);
-            uri.AppendQueryDelimited("query", query, ",", true);
+            if (query != null && Optional.IsCollectionDefined(query))
+            {
+                uri.AppendQueryDelimited("query", query, ",", true);
+            }
             if (fuelBudgetInLiters != null)
             {
                 uri.AppendQuery("fuelBudgetInLiters", fuelBudgetInLiters.Value, true);
@@ -2239,7 +2242,7 @@ namespace Azure.Maps.Routing
             {
                 uri.AppendQuery("traffic", useTrafficData.Value, true);
             }
-            if (avoid != null)
+            if (avoid != null && Optional.IsCollectionDefined(avoid))
             {
                 foreach (var param in avoid)
                 {
@@ -2375,8 +2378,8 @@ namespace Azure.Maps.Routing
         ///   * false - Ignore current traffic data during routing. Note that although the current traffic data is ignored 
         ///   during routing, the effect of historic traffic on effective road speeds is still incorporated.
         /// </param>
-        /// <param name="avoid"> Specifies something that the route calculation should try to avoid when determining the route. Can be specified multiple times in one request, for example, &apos;&amp;avoid=motorways&amp;avoid=tollRoads&amp;avoid=ferries&apos;. In calculateReachableRange requests, the value alreadyUsedRoads must not be used. </param>
-        /// <param name="travelMode"> The mode of travel for the requested route. If not defined, default is &apos;car&apos;. Note that the requested travelMode may not be available for the entire route. Where the requested travelMode is not available for a particular section, the travelMode element of the response for that section will be &quot;other&quot;. Note that travel modes bus, motorcycle, taxi and van are BETA functionality. Full restriction data is not available in all areas. In **calculateReachableRange** requests, the values bicycle and pedestrian must not be used. </param>
+        /// <param name="avoid"> Specifies something that the route calculation should try to avoid when determining the route. Can be specified multiple times in one request, for example, '&amp;avoid=motorways&amp;avoid=tollRoads&amp;avoid=ferries'. In calculateReachableRange requests, the value alreadyUsedRoads must not be used. </param>
+        /// <param name="travelMode"> The mode of travel for the requested route. If not defined, default is 'car'. Note that the requested travelMode may not be available for the entire route. Where the requested travelMode is not available for a particular section, the travelMode element of the response for that section will be "other". Note that travel modes bus, motorcycle, taxi and van are BETA functionality. Full restriction data is not available in all areas. In **calculateReachableRange** requests, the values bicycle and pedestrian must not be used. </param>
         /// <param name="inclineLevel"> Degree of hilliness for thrilling route. This parameter can only be used in conjunction with `routeType`=thrilling. </param>
         /// <param name="windingness"> Level of turns for thrilling route. This parameter can only be used in conjunction with `routeType`=thrilling. </param>
         /// <param name="vehicleAxleWeight"> Weight per axle of the vehicle in kg. A value of 0 means that weight restrictions per axle are not considered. </param>
@@ -2514,7 +2517,7 @@ namespace Azure.Maps.Routing
         /// Sensible Values : 43
         /// </param>
         /// <param name="maxChargeInKwH">
-        /// Specifies the maximum electric energy supply in kilowatt hours (kWh) that may be stored in the vehicle&apos;s battery.
+        /// Specifies the maximum electric energy supply in kilowatt hours (kWh) that may be stored in the vehicle's battery.
         /// 
         /// This parameter co-exists with **currentChargeInkWh** parameter.
         /// 
@@ -2579,8 +2582,8 @@ namespace Azure.Maps.Routing
         ///   * false - Ignore current traffic data during routing. Note that although the current traffic data is ignored 
         ///   during routing, the effect of historic traffic on effective road speeds is still incorporated.
         /// </param>
-        /// <param name="avoid"> Specifies something that the route calculation should try to avoid when determining the route. Can be specified multiple times in one request, for example, &apos;&amp;avoid=motorways&amp;avoid=tollRoads&amp;avoid=ferries&apos;. In calculateReachableRange requests, the value alreadyUsedRoads must not be used. </param>
-        /// <param name="travelMode"> The mode of travel for the requested route. If not defined, default is &apos;car&apos;. Note that the requested travelMode may not be available for the entire route. Where the requested travelMode is not available for a particular section, the travelMode element of the response for that section will be &quot;other&quot;. Note that travel modes bus, motorcycle, taxi and van are BETA functionality. Full restriction data is not available in all areas. In **calculateReachableRange** requests, the values bicycle and pedestrian must not be used. </param>
+        /// <param name="avoid"> Specifies something that the route calculation should try to avoid when determining the route. Can be specified multiple times in one request, for example, '&amp;avoid=motorways&amp;avoid=tollRoads&amp;avoid=ferries'. In calculateReachableRange requests, the value alreadyUsedRoads must not be used. </param>
+        /// <param name="travelMode"> The mode of travel for the requested route. If not defined, default is 'car'. Note that the requested travelMode may not be available for the entire route. Where the requested travelMode is not available for a particular section, the travelMode element of the response for that section will be "other". Note that travel modes bus, motorcycle, taxi and van are BETA functionality. Full restriction data is not available in all areas. In **calculateReachableRange** requests, the values bicycle and pedestrian must not be used. </param>
         /// <param name="inclineLevel"> Degree of hilliness for thrilling route. This parameter can only be used in conjunction with `routeType`=thrilling. </param>
         /// <param name="windingness"> Level of turns for thrilling route. This parameter can only be used in conjunction with `routeType`=thrilling. </param>
         /// <param name="vehicleAxleWeight"> Weight per axle of the vehicle in kg. A value of 0 means that weight restrictions per axle are not considered. </param>
@@ -2718,7 +2721,7 @@ namespace Azure.Maps.Routing
         /// Sensible Values : 43
         /// </param>
         /// <param name="maxChargeInKwH">
-        /// Specifies the maximum electric energy supply in kilowatt hours (kWh) that may be stored in the vehicle&apos;s battery.
+        /// Specifies the maximum electric energy supply in kilowatt hours (kWh) that may be stored in the vehicle's battery.
         /// 
         /// This parameter co-exists with **currentChargeInkWh** parameter.
         /// 
@@ -2800,7 +2803,7 @@ namespace Azure.Maps.Routing
         /// When you make a request by using async request, by default the service returns a 202 response code along a redirect URL in the Location field of the response header. This URL should be checked periodically until the response data or error information is available.
         /// The asynchronous responses are stored for **14** days. The redirect URL returns a 404 response if used after the expiration period.
         /// 
-        /// Please note that asynchronous batch request is a long-running request. Here&apos;s a typical sequence of operations:
+        /// Please note that asynchronous batch request is a long-running request. Here's a typical sequence of operations:
         /// 1. Client sends a Route Directions Batch `POST` request to Azure Maps
         /// 2. The server will respond with one of the following:
         /// 
@@ -2816,20 +2819,20 @@ namespace Azure.Maps.Routing
         /// 4. Client issues a `GET` request on the _download URL_ obtained in Step 3 to download the batch results.
         /// 
         /// ### POST Body for Batch Request
-        /// To send the _route directions_ queries you will use a `POST` request where the request body will contain the `batchItems` array in `json` format and the `Content-Type` header will be set to `application/json`. Here&apos;s a sample request body containing 3 _route directions_ queries:
+        /// To send the _route directions_ queries you will use a `POST` request where the request body will contain the `batchItems` array in `json` format and the `Content-Type` header will be set to `application/json`. Here's a sample request body containing 3 _route directions_ queries:
         /// 
         /// 
         /// ```json
         /// {
-        ///     &quot;batchItems&quot;: [
-        ///         { &quot;query&quot;: &quot;?query=47.620659,-122.348934:47.610101,-122.342015&amp;travelMode=bicycle&amp;routeType=eco&amp;traffic=false&quot; },
-        ///         { &quot;query&quot;: &quot;?query=40.759856,-73.985108:40.771136,-73.973506&amp;travelMode=pedestrian&amp;routeType=shortest&quot; },
-        ///         { &quot;query&quot;: &quot;?query=48.923159,-122.557362:32.621279,-116.840362&quot; }
+        ///     "batchItems": [
+        ///         { "query": "?query=47.620659,-122.348934:47.610101,-122.342015&amp;travelMode=bicycle&amp;routeType=eco&amp;traffic=false" },
+        ///         { "query": "?query=40.759856,-73.985108:40.771136,-73.973506&amp;travelMode=pedestrian&amp;routeType=shortest" },
+        ///         { "query": "?query=48.923159,-122.557362:32.621279,-116.840362" }
         ///     ]
         /// }
         /// ```
         /// 
-        /// A _route directions_ query in a batch is just a partial URL _without_ the protocol, base URL, path, api-version and subscription-key. It can accept any of the supported _route directions_ [URI parameters](https://docs.microsoft.com/rest/api/maps/route/getroutedirections#uri-parameters). The string values in the _route directions_ query must be properly escaped (e.g. &quot; character should be escaped with \\ ) and it should also be properly URL-encoded.
+        /// A _route directions_ query in a batch is just a partial URL _without_ the protocol, base URL, path, api-version and subscription-key. It can accept any of the supported _route directions_ [URI parameters](https://docs.microsoft.com/rest/api/maps/route/getroutedirections#uri-parameters). The string values in the _route directions_ query must be properly escaped (e.g. " character should be escaped with \\ ) and it should also be properly URL-encoded.
         /// 
         /// 
         /// The async API allows caller to batch up to **700** queries and sync API up to **100** queries, and the batch should contain at least **1** query.
@@ -2841,7 +2844,7 @@ namespace Azure.Maps.Routing
         /// ```
         /// https://atlas.microsoft.com/route/directions/batch/{batch-id}?api-version=1.0&amp;subscription-key={subscription-key}
         /// ```
-        /// Here&apos;s the typical sequence of operations for downloading the batch results:
+        /// Here's the typical sequence of operations for downloading the batch results:
         /// 1. Client sends a `GET` request using the _download URL_.
         /// 2. The server will respond with one of the following:
         ///     
@@ -2859,59 +2862,59 @@ namespace Azure.Maps.Routing
         ///   - `Error` - If the query failed. The response will contain a `code` and a `message` in this case.
         /// 
         /// 
-        /// Here&apos;s a sample Batch Response with 1 _successful_ and 1 _failed_ result:
+        /// Here's a sample Batch Response with 1 _successful_ and 1 _failed_ result:
         /// 
         /// 
         /// ```json
         /// {
-        ///     &quot;summary&quot;: {
-        ///         &quot;successfulRequests&quot;: 1,
-        ///         &quot;totalRequests&quot;: 2
+        ///     "summary": {
+        ///         "successfulRequests": 1,
+        ///         "totalRequests": 2
         ///     },
-        ///     &quot;batchItems&quot;: [
+        ///     "batchItems": [
         ///         {
-        ///             &quot;statusCode&quot;: 200,
-        ///             &quot;response&quot;: {
-        ///                 &quot;routes&quot;: [
+        ///             "statusCode": 200,
+        ///             "response": {
+        ///                 "routes": [
         ///                     {
-        ///                         &quot;summary&quot;: {
-        ///                             &quot;lengthInMeters&quot;: 1758,
-        ///                             &quot;travelTimeInSeconds&quot;: 387,
-        ///                             &quot;trafficDelayInSeconds&quot;: 0,
-        ///                             &quot;departureTime&quot;: &quot;2018-07-17T00:49:56+00:00&quot;,
-        ///                             &quot;arrivalTime&quot;: &quot;2018-07-17T00:56:22+00:00&quot;
+        ///                         "summary": {
+        ///                             "lengthInMeters": 1758,
+        ///                             "travelTimeInSeconds": 387,
+        ///                             "trafficDelayInSeconds": 0,
+        ///                             "departureTime": "2018-07-17T00:49:56+00:00",
+        ///                             "arrivalTime": "2018-07-17T00:56:22+00:00"
         ///                         },
-        ///                         &quot;legs&quot;: [
+        ///                         "legs": [
         ///                             {
-        ///                                 &quot;summary&quot;: {
-        ///                                     &quot;lengthInMeters&quot;: 1758,
-        ///                                     &quot;travelTimeInSeconds&quot;: 387,
-        ///                                     &quot;trafficDelayInSeconds&quot;: 0,
-        ///                                     &quot;departureTime&quot;: &quot;2018-07-17T00:49:56+00:00&quot;,
-        ///                                     &quot;arrivalTime&quot;: &quot;2018-07-17T00:56:22+00:00&quot;
+        ///                                 "summary": {
+        ///                                     "lengthInMeters": 1758,
+        ///                                     "travelTimeInSeconds": 387,
+        ///                                     "trafficDelayInSeconds": 0,
+        ///                                     "departureTime": "2018-07-17T00:49:56+00:00",
+        ///                                     "arrivalTime": "2018-07-17T00:56:22+00:00"
         ///                                 },
-        ///                                 &quot;points&quot;: [
+        ///                                 "points": [
         ///                                     {
-        ///                                         &quot;latitude&quot;: 47.62094,
-        ///                                         &quot;longitude&quot;: -122.34892
+        ///                                         "latitude": 47.62094,
+        ///                                         "longitude": -122.34892
         ///                                     },
         ///                                     {
-        ///                                         &quot;latitude&quot;: 47.62094,
-        ///                                         &quot;longitude&quot;: -122.3485
+        ///                                         "latitude": 47.62094,
+        ///                                         "longitude": -122.3485
         ///                                     },
         ///                                     {
-        ///                                         &quot;latitude&quot;: 47.62095,
-        ///                                         &quot;longitude&quot;: -122.3476
+        ///                                         "latitude": 47.62095,
+        ///                                         "longitude": -122.3476
         ///                                     }
         ///                                 ]
         ///                             }
         ///                         ],
-        ///                         &quot;sections&quot;: [
+        ///                         "sections": [
         ///                             {
-        ///                                 &quot;startPointIndex&quot;: 0,
-        ///                                 &quot;endPointIndex&quot;: 40,
-        ///                                 &quot;sectionType&quot;: &quot;TRAVEL_MODE&quot;,
-        ///                                 &quot;travelMode&quot;: &quot;bicycle&quot;
+        ///                                 "startPointIndex": 0,
+        ///                                 "endPointIndex": 40,
+        ///                                 "sectionType": "TRAVEL_MODE",
+        ///                                 "travelMode": "bicycle"
         ///                             }
         ///                         ]
         ///                     }
@@ -2919,13 +2922,13 @@ namespace Azure.Maps.Routing
         ///             }
         ///         },
         ///         {
-        ///             &quot;statusCode&quot;: 400,
-        ///             &quot;response&quot;:
+        ///             "statusCode": 400,
+        ///             "response":
         ///             {
-        ///                 &quot;error&quot;:
+        ///                 "error":
         ///                 {
-        ///                     &quot;code&quot;: &quot;400 BadRequest&quot;,
-        ///                     &quot;message&quot;: &quot;Bad request: one or more parameters were incorrectly specified or are mutually exclusive.&quot;
+        ///                     "code": "400 BadRequest",
+        ///                     "message": "Bad request: one or more parameters were incorrectly specified or are mutually exclusive."
         ///                 }
         ///             }
         ///         }
@@ -2976,7 +2979,7 @@ namespace Azure.Maps.Routing
         /// When you make a request by using async request, by default the service returns a 202 response code along a redirect URL in the Location field of the response header. This URL should be checked periodically until the response data or error information is available.
         /// The asynchronous responses are stored for **14** days. The redirect URL returns a 404 response if used after the expiration period.
         /// 
-        /// Please note that asynchronous batch request is a long-running request. Here&apos;s a typical sequence of operations:
+        /// Please note that asynchronous batch request is a long-running request. Here's a typical sequence of operations:
         /// 1. Client sends a Route Directions Batch `POST` request to Azure Maps
         /// 2. The server will respond with one of the following:
         /// 
@@ -2992,20 +2995,20 @@ namespace Azure.Maps.Routing
         /// 4. Client issues a `GET` request on the _download URL_ obtained in Step 3 to download the batch results.
         /// 
         /// ### POST Body for Batch Request
-        /// To send the _route directions_ queries you will use a `POST` request where the request body will contain the `batchItems` array in `json` format and the `Content-Type` header will be set to `application/json`. Here&apos;s a sample request body containing 3 _route directions_ queries:
+        /// To send the _route directions_ queries you will use a `POST` request where the request body will contain the `batchItems` array in `json` format and the `Content-Type` header will be set to `application/json`. Here's a sample request body containing 3 _route directions_ queries:
         /// 
         /// 
         /// ```json
         /// {
-        ///     &quot;batchItems&quot;: [
-        ///         { &quot;query&quot;: &quot;?query=47.620659,-122.348934:47.610101,-122.342015&amp;travelMode=bicycle&amp;routeType=eco&amp;traffic=false&quot; },
-        ///         { &quot;query&quot;: &quot;?query=40.759856,-73.985108:40.771136,-73.973506&amp;travelMode=pedestrian&amp;routeType=shortest&quot; },
-        ///         { &quot;query&quot;: &quot;?query=48.923159,-122.557362:32.621279,-116.840362&quot; }
+        ///     "batchItems": [
+        ///         { "query": "?query=47.620659,-122.348934:47.610101,-122.342015&amp;travelMode=bicycle&amp;routeType=eco&amp;traffic=false" },
+        ///         { "query": "?query=40.759856,-73.985108:40.771136,-73.973506&amp;travelMode=pedestrian&amp;routeType=shortest" },
+        ///         { "query": "?query=48.923159,-122.557362:32.621279,-116.840362" }
         ///     ]
         /// }
         /// ```
         /// 
-        /// A _route directions_ query in a batch is just a partial URL _without_ the protocol, base URL, path, api-version and subscription-key. It can accept any of the supported _route directions_ [URI parameters](https://docs.microsoft.com/rest/api/maps/route/getroutedirections#uri-parameters). The string values in the _route directions_ query must be properly escaped (e.g. &quot; character should be escaped with \\ ) and it should also be properly URL-encoded.
+        /// A _route directions_ query in a batch is just a partial URL _without_ the protocol, base URL, path, api-version and subscription-key. It can accept any of the supported _route directions_ [URI parameters](https://docs.microsoft.com/rest/api/maps/route/getroutedirections#uri-parameters). The string values in the _route directions_ query must be properly escaped (e.g. " character should be escaped with \\ ) and it should also be properly URL-encoded.
         /// 
         /// 
         /// The async API allows caller to batch up to **700** queries and sync API up to **100** queries, and the batch should contain at least **1** query.
@@ -3017,7 +3020,7 @@ namespace Azure.Maps.Routing
         /// ```
         /// https://atlas.microsoft.com/route/directions/batch/{batch-id}?api-version=1.0&amp;subscription-key={subscription-key}
         /// ```
-        /// Here&apos;s the typical sequence of operations for downloading the batch results:
+        /// Here's the typical sequence of operations for downloading the batch results:
         /// 1. Client sends a `GET` request using the _download URL_.
         /// 2. The server will respond with one of the following:
         ///     
@@ -3035,59 +3038,59 @@ namespace Azure.Maps.Routing
         ///   - `Error` - If the query failed. The response will contain a `code` and a `message` in this case.
         /// 
         /// 
-        /// Here&apos;s a sample Batch Response with 1 _successful_ and 1 _failed_ result:
+        /// Here's a sample Batch Response with 1 _successful_ and 1 _failed_ result:
         /// 
         /// 
         /// ```json
         /// {
-        ///     &quot;summary&quot;: {
-        ///         &quot;successfulRequests&quot;: 1,
-        ///         &quot;totalRequests&quot;: 2
+        ///     "summary": {
+        ///         "successfulRequests": 1,
+        ///         "totalRequests": 2
         ///     },
-        ///     &quot;batchItems&quot;: [
+        ///     "batchItems": [
         ///         {
-        ///             &quot;statusCode&quot;: 200,
-        ///             &quot;response&quot;: {
-        ///                 &quot;routes&quot;: [
+        ///             "statusCode": 200,
+        ///             "response": {
+        ///                 "routes": [
         ///                     {
-        ///                         &quot;summary&quot;: {
-        ///                             &quot;lengthInMeters&quot;: 1758,
-        ///                             &quot;travelTimeInSeconds&quot;: 387,
-        ///                             &quot;trafficDelayInSeconds&quot;: 0,
-        ///                             &quot;departureTime&quot;: &quot;2018-07-17T00:49:56+00:00&quot;,
-        ///                             &quot;arrivalTime&quot;: &quot;2018-07-17T00:56:22+00:00&quot;
+        ///                         "summary": {
+        ///                             "lengthInMeters": 1758,
+        ///                             "travelTimeInSeconds": 387,
+        ///                             "trafficDelayInSeconds": 0,
+        ///                             "departureTime": "2018-07-17T00:49:56+00:00",
+        ///                             "arrivalTime": "2018-07-17T00:56:22+00:00"
         ///                         },
-        ///                         &quot;legs&quot;: [
+        ///                         "legs": [
         ///                             {
-        ///                                 &quot;summary&quot;: {
-        ///                                     &quot;lengthInMeters&quot;: 1758,
-        ///                                     &quot;travelTimeInSeconds&quot;: 387,
-        ///                                     &quot;trafficDelayInSeconds&quot;: 0,
-        ///                                     &quot;departureTime&quot;: &quot;2018-07-17T00:49:56+00:00&quot;,
-        ///                                     &quot;arrivalTime&quot;: &quot;2018-07-17T00:56:22+00:00&quot;
+        ///                                 "summary": {
+        ///                                     "lengthInMeters": 1758,
+        ///                                     "travelTimeInSeconds": 387,
+        ///                                     "trafficDelayInSeconds": 0,
+        ///                                     "departureTime": "2018-07-17T00:49:56+00:00",
+        ///                                     "arrivalTime": "2018-07-17T00:56:22+00:00"
         ///                                 },
-        ///                                 &quot;points&quot;: [
+        ///                                 "points": [
         ///                                     {
-        ///                                         &quot;latitude&quot;: 47.62094,
-        ///                                         &quot;longitude&quot;: -122.34892
+        ///                                         "latitude": 47.62094,
+        ///                                         "longitude": -122.34892
         ///                                     },
         ///                                     {
-        ///                                         &quot;latitude&quot;: 47.62094,
-        ///                                         &quot;longitude&quot;: -122.3485
+        ///                                         "latitude": 47.62094,
+        ///                                         "longitude": -122.3485
         ///                                     },
         ///                                     {
-        ///                                         &quot;latitude&quot;: 47.62095,
-        ///                                         &quot;longitude&quot;: -122.3476
+        ///                                         "latitude": 47.62095,
+        ///                                         "longitude": -122.3476
         ///                                     }
         ///                                 ]
         ///                             }
         ///                         ],
-        ///                         &quot;sections&quot;: [
+        ///                         "sections": [
         ///                             {
-        ///                                 &quot;startPointIndex&quot;: 0,
-        ///                                 &quot;endPointIndex&quot;: 40,
-        ///                                 &quot;sectionType&quot;: &quot;TRAVEL_MODE&quot;,
-        ///                                 &quot;travelMode&quot;: &quot;bicycle&quot;
+        ///                                 "startPointIndex": 0,
+        ///                                 "endPointIndex": 40,
+        ///                                 "sectionType": "TRAVEL_MODE",
+        ///                                 "travelMode": "bicycle"
         ///                             }
         ///                         ]
         ///                     }
@@ -3095,13 +3098,13 @@ namespace Azure.Maps.Routing
         ///             }
         ///         },
         ///         {
-        ///             &quot;statusCode&quot;: 400,
-        ///             &quot;response&quot;:
+        ///             "statusCode": 400,
+        ///             "response":
         ///             {
-        ///                 &quot;error&quot;:
+        ///                 "error":
         ///                 {
-        ///                     &quot;code&quot;: &quot;400 BadRequest&quot;,
-        ///                     &quot;message&quot;: &quot;Bad request: one or more parameters were incorrectly specified or are mutually exclusive.&quot;
+        ///                     "code": "400 BadRequest",
+        ///                     "message": "Bad request: one or more parameters were incorrectly specified or are mutually exclusive."
         ///                 }
         ///             }
         ///         }
@@ -3162,7 +3165,7 @@ namespace Azure.Maps.Routing
         /// ```
         /// https://atlas.microsoft.com/route/directions/batch/{batch-id}?api-version=1.0&amp;subscription-key={subscription-key}
         /// ```
-        /// Here&apos;s the typical sequence of operations for downloading the batch results:
+        /// Here's the typical sequence of operations for downloading the batch results:
         /// 1. Client sends a `GET` request using the _download URL_.
         /// 2. The server will respond with one of the following:
         ///     
@@ -3180,59 +3183,59 @@ namespace Azure.Maps.Routing
         ///   - `Error` - If the query failed. The response will contain a `code` and a `message` in this case.
         /// 
         /// 
-        /// Here&apos;s a sample Batch Response with 1 _successful_ and 1 _failed_ result:
+        /// Here's a sample Batch Response with 1 _successful_ and 1 _failed_ result:
         /// 
         /// 
         /// ```json
         /// {
-        ///     &quot;summary&quot;: {
-        ///         &quot;successfulRequests&quot;: 1,
-        ///         &quot;totalRequests&quot;: 2
+        ///     "summary": {
+        ///         "successfulRequests": 1,
+        ///         "totalRequests": 2
         ///     },
-        ///     &quot;batchItems&quot;: [
+        ///     "batchItems": [
         ///         {
-        ///             &quot;statusCode&quot;: 200,
-        ///             &quot;response&quot;: {
-        ///                 &quot;routes&quot;: [
+        ///             "statusCode": 200,
+        ///             "response": {
+        ///                 "routes": [
         ///                     {
-        ///                         &quot;summary&quot;: {
-        ///                             &quot;lengthInMeters&quot;: 1758,
-        ///                             &quot;travelTimeInSeconds&quot;: 387,
-        ///                             &quot;trafficDelayInSeconds&quot;: 0,
-        ///                             &quot;departureTime&quot;: &quot;2018-07-17T00:49:56+00:00&quot;,
-        ///                             &quot;arrivalTime&quot;: &quot;2018-07-17T00:56:22+00:00&quot;
+        ///                         "summary": {
+        ///                             "lengthInMeters": 1758,
+        ///                             "travelTimeInSeconds": 387,
+        ///                             "trafficDelayInSeconds": 0,
+        ///                             "departureTime": "2018-07-17T00:49:56+00:00",
+        ///                             "arrivalTime": "2018-07-17T00:56:22+00:00"
         ///                         },
-        ///                         &quot;legs&quot;: [
+        ///                         "legs": [
         ///                             {
-        ///                                 &quot;summary&quot;: {
-        ///                                     &quot;lengthInMeters&quot;: 1758,
-        ///                                     &quot;travelTimeInSeconds&quot;: 387,
-        ///                                     &quot;trafficDelayInSeconds&quot;: 0,
-        ///                                     &quot;departureTime&quot;: &quot;2018-07-17T00:49:56+00:00&quot;,
-        ///                                     &quot;arrivalTime&quot;: &quot;2018-07-17T00:56:22+00:00&quot;
+        ///                                 "summary": {
+        ///                                     "lengthInMeters": 1758,
+        ///                                     "travelTimeInSeconds": 387,
+        ///                                     "trafficDelayInSeconds": 0,
+        ///                                     "departureTime": "2018-07-17T00:49:56+00:00",
+        ///                                     "arrivalTime": "2018-07-17T00:56:22+00:00"
         ///                                 },
-        ///                                 &quot;points&quot;: [
+        ///                                 "points": [
         ///                                     {
-        ///                                         &quot;latitude&quot;: 47.62094,
-        ///                                         &quot;longitude&quot;: -122.34892
+        ///                                         "latitude": 47.62094,
+        ///                                         "longitude": -122.34892
         ///                                     },
         ///                                     {
-        ///                                         &quot;latitude&quot;: 47.62094,
-        ///                                         &quot;longitude&quot;: -122.3485
+        ///                                         "latitude": 47.62094,
+        ///                                         "longitude": -122.3485
         ///                                     },
         ///                                     {
-        ///                                         &quot;latitude&quot;: 47.62095,
-        ///                                         &quot;longitude&quot;: -122.3476
+        ///                                         "latitude": 47.62095,
+        ///                                         "longitude": -122.3476
         ///                                     }
         ///                                 ]
         ///                             }
         ///                         ],
-        ///                         &quot;sections&quot;: [
+        ///                         "sections": [
         ///                             {
-        ///                                 &quot;startPointIndex&quot;: 0,
-        ///                                 &quot;endPointIndex&quot;: 40,
-        ///                                 &quot;sectionType&quot;: &quot;TRAVEL_MODE&quot;,
-        ///                                 &quot;travelMode&quot;: &quot;bicycle&quot;
+        ///                                 "startPointIndex": 0,
+        ///                                 "endPointIndex": 40,
+        ///                                 "sectionType": "TRAVEL_MODE",
+        ///                                 "travelMode": "bicycle"
         ///                             }
         ///                         ]
         ///                     }
@@ -3240,13 +3243,13 @@ namespace Azure.Maps.Routing
         ///             }
         ///         },
         ///         {
-        ///             &quot;statusCode&quot;: 400,
-        ///             &quot;response&quot;:
+        ///             "statusCode": 400,
+        ///             "response":
         ///             {
-        ///                 &quot;error&quot;:
+        ///                 "error":
         ///                 {
-        ///                     &quot;code&quot;: &quot;400 BadRequest&quot;,
-        ///                     &quot;message&quot;: &quot;Bad request: one or more parameters were incorrectly specified or are mutually exclusive.&quot;
+        ///                     "code": "400 BadRequest",
+        ///                     "message": "Bad request: one or more parameters were incorrectly specified or are mutually exclusive."
         ///                 }
         ///             }
         ///         }
@@ -3286,7 +3289,7 @@ namespace Azure.Maps.Routing
         /// ```
         /// https://atlas.microsoft.com/route/directions/batch/{batch-id}?api-version=1.0&amp;subscription-key={subscription-key}
         /// ```
-        /// Here&apos;s the typical sequence of operations for downloading the batch results:
+        /// Here's the typical sequence of operations for downloading the batch results:
         /// 1. Client sends a `GET` request using the _download URL_.
         /// 2. The server will respond with one of the following:
         ///     
@@ -3304,59 +3307,59 @@ namespace Azure.Maps.Routing
         ///   - `Error` - If the query failed. The response will contain a `code` and a `message` in this case.
         /// 
         /// 
-        /// Here&apos;s a sample Batch Response with 1 _successful_ and 1 _failed_ result:
+        /// Here's a sample Batch Response with 1 _successful_ and 1 _failed_ result:
         /// 
         /// 
         /// ```json
         /// {
-        ///     &quot;summary&quot;: {
-        ///         &quot;successfulRequests&quot;: 1,
-        ///         &quot;totalRequests&quot;: 2
+        ///     "summary": {
+        ///         "successfulRequests": 1,
+        ///         "totalRequests": 2
         ///     },
-        ///     &quot;batchItems&quot;: [
+        ///     "batchItems": [
         ///         {
-        ///             &quot;statusCode&quot;: 200,
-        ///             &quot;response&quot;: {
-        ///                 &quot;routes&quot;: [
+        ///             "statusCode": 200,
+        ///             "response": {
+        ///                 "routes": [
         ///                     {
-        ///                         &quot;summary&quot;: {
-        ///                             &quot;lengthInMeters&quot;: 1758,
-        ///                             &quot;travelTimeInSeconds&quot;: 387,
-        ///                             &quot;trafficDelayInSeconds&quot;: 0,
-        ///                             &quot;departureTime&quot;: &quot;2018-07-17T00:49:56+00:00&quot;,
-        ///                             &quot;arrivalTime&quot;: &quot;2018-07-17T00:56:22+00:00&quot;
+        ///                         "summary": {
+        ///                             "lengthInMeters": 1758,
+        ///                             "travelTimeInSeconds": 387,
+        ///                             "trafficDelayInSeconds": 0,
+        ///                             "departureTime": "2018-07-17T00:49:56+00:00",
+        ///                             "arrivalTime": "2018-07-17T00:56:22+00:00"
         ///                         },
-        ///                         &quot;legs&quot;: [
+        ///                         "legs": [
         ///                             {
-        ///                                 &quot;summary&quot;: {
-        ///                                     &quot;lengthInMeters&quot;: 1758,
-        ///                                     &quot;travelTimeInSeconds&quot;: 387,
-        ///                                     &quot;trafficDelayInSeconds&quot;: 0,
-        ///                                     &quot;departureTime&quot;: &quot;2018-07-17T00:49:56+00:00&quot;,
-        ///                                     &quot;arrivalTime&quot;: &quot;2018-07-17T00:56:22+00:00&quot;
+        ///                                 "summary": {
+        ///                                     "lengthInMeters": 1758,
+        ///                                     "travelTimeInSeconds": 387,
+        ///                                     "trafficDelayInSeconds": 0,
+        ///                                     "departureTime": "2018-07-17T00:49:56+00:00",
+        ///                                     "arrivalTime": "2018-07-17T00:56:22+00:00"
         ///                                 },
-        ///                                 &quot;points&quot;: [
+        ///                                 "points": [
         ///                                     {
-        ///                                         &quot;latitude&quot;: 47.62094,
-        ///                                         &quot;longitude&quot;: -122.34892
+        ///                                         "latitude": 47.62094,
+        ///                                         "longitude": -122.34892
         ///                                     },
         ///                                     {
-        ///                                         &quot;latitude&quot;: 47.62094,
-        ///                                         &quot;longitude&quot;: -122.3485
+        ///                                         "latitude": 47.62094,
+        ///                                         "longitude": -122.3485
         ///                                     },
         ///                                     {
-        ///                                         &quot;latitude&quot;: 47.62095,
-        ///                                         &quot;longitude&quot;: -122.3476
+        ///                                         "latitude": 47.62095,
+        ///                                         "longitude": -122.3476
         ///                                     }
         ///                                 ]
         ///                             }
         ///                         ],
-        ///                         &quot;sections&quot;: [
+        ///                         "sections": [
         ///                             {
-        ///                                 &quot;startPointIndex&quot;: 0,
-        ///                                 &quot;endPointIndex&quot;: 40,
-        ///                                 &quot;sectionType&quot;: &quot;TRAVEL_MODE&quot;,
-        ///                                 &quot;travelMode&quot;: &quot;bicycle&quot;
+        ///                                 "startPointIndex": 0,
+        ///                                 "endPointIndex": 40,
+        ///                                 "sectionType": "TRAVEL_MODE",
+        ///                                 "travelMode": "bicycle"
         ///                             }
         ///                         ]
         ///                     }
@@ -3364,13 +3367,13 @@ namespace Azure.Maps.Routing
         ///             }
         ///         },
         ///         {
-        ///             &quot;statusCode&quot;: 400,
-        ///             &quot;response&quot;:
+        ///             "statusCode": 400,
+        ///             "response":
         ///             {
-        ///                 &quot;error&quot;:
+        ///                 "error":
         ///                 {
-        ///                     &quot;code&quot;: &quot;400 BadRequest&quot;,
-        ///                     &quot;message&quot;: &quot;Bad request: one or more parameters were incorrectly specified or are mutually exclusive.&quot;
+        ///                     "code": "400 BadRequest",
+        ///                     "message": "Bad request: one or more parameters were incorrectly specified or are mutually exclusive."
         ///                 }
         ///             }
         ///         }
@@ -3446,59 +3449,59 @@ namespace Azure.Maps.Routing
         ///   - `Error` - If the query failed. The response will contain a `code` and a `message` in this case.
         /// 
         /// 
-        /// Here&apos;s a sample Batch Response with 1 _successful_ and 1 _failed_ result:
+        /// Here's a sample Batch Response with 1 _successful_ and 1 _failed_ result:
         /// 
         /// 
         /// ```json
         /// {
-        ///     &quot;summary&quot;: {
-        ///         &quot;successfulRequests&quot;: 1,
-        ///         &quot;totalRequests&quot;: 2
+        ///     "summary": {
+        ///         "successfulRequests": 1,
+        ///         "totalRequests": 2
         ///     },
-        ///     &quot;batchItems&quot;: [
+        ///     "batchItems": [
         ///         {
-        ///             &quot;statusCode&quot;: 200,
-        ///             &quot;response&quot;: {
-        ///                 &quot;routes&quot;: [
+        ///             "statusCode": 200,
+        ///             "response": {
+        ///                 "routes": [
         ///                     {
-        ///                         &quot;summary&quot;: {
-        ///                             &quot;lengthInMeters&quot;: 1758,
-        ///                             &quot;travelTimeInSeconds&quot;: 387,
-        ///                             &quot;trafficDelayInSeconds&quot;: 0,
-        ///                             &quot;departureTime&quot;: &quot;2018-07-17T00:49:56+00:00&quot;,
-        ///                             &quot;arrivalTime&quot;: &quot;2018-07-17T00:56:22+00:00&quot;
+        ///                         "summary": {
+        ///                             "lengthInMeters": 1758,
+        ///                             "travelTimeInSeconds": 387,
+        ///                             "trafficDelayInSeconds": 0,
+        ///                             "departureTime": "2018-07-17T00:49:56+00:00",
+        ///                             "arrivalTime": "2018-07-17T00:56:22+00:00"
         ///                         },
-        ///                         &quot;legs&quot;: [
+        ///                         "legs": [
         ///                             {
-        ///                                 &quot;summary&quot;: {
-        ///                                     &quot;lengthInMeters&quot;: 1758,
-        ///                                     &quot;travelTimeInSeconds&quot;: 387,
-        ///                                     &quot;trafficDelayInSeconds&quot;: 0,
-        ///                                     &quot;departureTime&quot;: &quot;2018-07-17T00:49:56+00:00&quot;,
-        ///                                     &quot;arrivalTime&quot;: &quot;2018-07-17T00:56:22+00:00&quot;
+        ///                                 "summary": {
+        ///                                     "lengthInMeters": 1758,
+        ///                                     "travelTimeInSeconds": 387,
+        ///                                     "trafficDelayInSeconds": 0,
+        ///                                     "departureTime": "2018-07-17T00:49:56+00:00",
+        ///                                     "arrivalTime": "2018-07-17T00:56:22+00:00"
         ///                                 },
-        ///                                 &quot;points&quot;: [
+        ///                                 "points": [
         ///                                     {
-        ///                                         &quot;latitude&quot;: 47.62094,
-        ///                                         &quot;longitude&quot;: -122.34892
+        ///                                         "latitude": 47.62094,
+        ///                                         "longitude": -122.34892
         ///                                     },
         ///                                     {
-        ///                                         &quot;latitude&quot;: 47.62094,
-        ///                                         &quot;longitude&quot;: -122.3485
+        ///                                         "latitude": 47.62094,
+        ///                                         "longitude": -122.3485
         ///                                     },
         ///                                     {
-        ///                                         &quot;latitude&quot;: 47.62095,
-        ///                                         &quot;longitude&quot;: -122.3476
+        ///                                         "latitude": 47.62095,
+        ///                                         "longitude": -122.3476
         ///                                     }
         ///                                 ]
         ///                             }
         ///                         ],
-        ///                         &quot;sections&quot;: [
+        ///                         "sections": [
         ///                             {
-        ///                                 &quot;startPointIndex&quot;: 0,
-        ///                                 &quot;endPointIndex&quot;: 40,
-        ///                                 &quot;sectionType&quot;: &quot;TRAVEL_MODE&quot;,
-        ///                                 &quot;travelMode&quot;: &quot;bicycle&quot;
+        ///                                 "startPointIndex": 0,
+        ///                                 "endPointIndex": 40,
+        ///                                 "sectionType": "TRAVEL_MODE",
+        ///                                 "travelMode": "bicycle"
         ///                             }
         ///                         ]
         ///                     }
@@ -3506,13 +3509,13 @@ namespace Azure.Maps.Routing
         ///             }
         ///         },
         ///         {
-        ///             &quot;statusCode&quot;: 400,
-        ///             &quot;response&quot;:
+        ///             "statusCode": 400,
+        ///             "response":
         ///             {
-        ///                 &quot;error&quot;:
+        ///                 "error":
         ///                 {
-        ///                     &quot;code&quot;: &quot;400 BadRequest&quot;,
-        ///                     &quot;message&quot;: &quot;Bad request: one or more parameters were incorrectly specified or are mutually exclusive.&quot;
+        ///                     "code": "400 BadRequest",
+        ///                     "message": "Bad request: one or more parameters were incorrectly specified or are mutually exclusive."
         ///                 }
         ///             }
         ///         }
@@ -3570,59 +3573,59 @@ namespace Azure.Maps.Routing
         ///   - `Error` - If the query failed. The response will contain a `code` and a `message` in this case.
         /// 
         /// 
-        /// Here&apos;s a sample Batch Response with 1 _successful_ and 1 _failed_ result:
+        /// Here's a sample Batch Response with 1 _successful_ and 1 _failed_ result:
         /// 
         /// 
         /// ```json
         /// {
-        ///     &quot;summary&quot;: {
-        ///         &quot;successfulRequests&quot;: 1,
-        ///         &quot;totalRequests&quot;: 2
+        ///     "summary": {
+        ///         "successfulRequests": 1,
+        ///         "totalRequests": 2
         ///     },
-        ///     &quot;batchItems&quot;: [
+        ///     "batchItems": [
         ///         {
-        ///             &quot;statusCode&quot;: 200,
-        ///             &quot;response&quot;: {
-        ///                 &quot;routes&quot;: [
+        ///             "statusCode": 200,
+        ///             "response": {
+        ///                 "routes": [
         ///                     {
-        ///                         &quot;summary&quot;: {
-        ///                             &quot;lengthInMeters&quot;: 1758,
-        ///                             &quot;travelTimeInSeconds&quot;: 387,
-        ///                             &quot;trafficDelayInSeconds&quot;: 0,
-        ///                             &quot;departureTime&quot;: &quot;2018-07-17T00:49:56+00:00&quot;,
-        ///                             &quot;arrivalTime&quot;: &quot;2018-07-17T00:56:22+00:00&quot;
+        ///                         "summary": {
+        ///                             "lengthInMeters": 1758,
+        ///                             "travelTimeInSeconds": 387,
+        ///                             "trafficDelayInSeconds": 0,
+        ///                             "departureTime": "2018-07-17T00:49:56+00:00",
+        ///                             "arrivalTime": "2018-07-17T00:56:22+00:00"
         ///                         },
-        ///                         &quot;legs&quot;: [
+        ///                         "legs": [
         ///                             {
-        ///                                 &quot;summary&quot;: {
-        ///                                     &quot;lengthInMeters&quot;: 1758,
-        ///                                     &quot;travelTimeInSeconds&quot;: 387,
-        ///                                     &quot;trafficDelayInSeconds&quot;: 0,
-        ///                                     &quot;departureTime&quot;: &quot;2018-07-17T00:49:56+00:00&quot;,
-        ///                                     &quot;arrivalTime&quot;: &quot;2018-07-17T00:56:22+00:00&quot;
+        ///                                 "summary": {
+        ///                                     "lengthInMeters": 1758,
+        ///                                     "travelTimeInSeconds": 387,
+        ///                                     "trafficDelayInSeconds": 0,
+        ///                                     "departureTime": "2018-07-17T00:49:56+00:00",
+        ///                                     "arrivalTime": "2018-07-17T00:56:22+00:00"
         ///                                 },
-        ///                                 &quot;points&quot;: [
+        ///                                 "points": [
         ///                                     {
-        ///                                         &quot;latitude&quot;: 47.62094,
-        ///                                         &quot;longitude&quot;: -122.34892
+        ///                                         "latitude": 47.62094,
+        ///                                         "longitude": -122.34892
         ///                                     },
         ///                                     {
-        ///                                         &quot;latitude&quot;: 47.62094,
-        ///                                         &quot;longitude&quot;: -122.3485
+        ///                                         "latitude": 47.62094,
+        ///                                         "longitude": -122.3485
         ///                                     },
         ///                                     {
-        ///                                         &quot;latitude&quot;: 47.62095,
-        ///                                         &quot;longitude&quot;: -122.3476
+        ///                                         "latitude": 47.62095,
+        ///                                         "longitude": -122.3476
         ///                                     }
         ///                                 ]
         ///                             }
         ///                         ],
-        ///                         &quot;sections&quot;: [
+        ///                         "sections": [
         ///                             {
-        ///                                 &quot;startPointIndex&quot;: 0,
-        ///                                 &quot;endPointIndex&quot;: 40,
-        ///                                 &quot;sectionType&quot;: &quot;TRAVEL_MODE&quot;,
-        ///                                 &quot;travelMode&quot;: &quot;bicycle&quot;
+        ///                                 "startPointIndex": 0,
+        ///                                 "endPointIndex": 40,
+        ///                                 "sectionType": "TRAVEL_MODE",
+        ///                                 "travelMode": "bicycle"
         ///                             }
         ///                         ]
         ///                     }
@@ -3630,13 +3633,13 @@ namespace Azure.Maps.Routing
         ///             }
         ///         },
         ///         {
-        ///             &quot;statusCode&quot;: 400,
-        ///             &quot;response&quot;:
+        ///             "statusCode": 400,
+        ///             "response":
         ///             {
-        ///                 &quot;error&quot;:
+        ///                 "error":
         ///                 {
-        ///                     &quot;code&quot;: &quot;400 BadRequest&quot;,
-        ///                     &quot;message&quot;: &quot;Bad request: one or more parameters were incorrectly specified or are mutually exclusive.&quot;
+        ///                     "code": "400 BadRequest",
+        ///                     "message": "Bad request: one or more parameters were incorrectly specified or are mutually exclusive."
         ///                 }
         ///             }
         ///         }

@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using Azure.Core.Serialization;
 using Microsoft.CSharp.RuntimeBinder;
 using NUnit.Framework;
 
@@ -23,37 +24,19 @@ namespace Azure.Core.Tests.Public
         }
 
         [Test]
+        [Ignore("Disallowing POCO support in current version.")]
         public void CanConvertObjectToModel()
         {
-            dynamic data = JsonDataTestHelpers.CreateFromJson("""
+            dynamic data = BinaryData.FromString(
+                """
                 {
-                    "Message": "Hi",
-                    "Number" : 5
+                    "message": "Hi",
+                    "number" : 5
                 }
-                """);
+                """).ToDynamicFromJson(JsonPropertyNames.CamelCase);
 
             Assert.AreEqual(new SampleModel("Hi", 5), (SampleModel)data);
         }
-
-        [Test]
-        public void CanConvertObjectToModelWithExtraProperties()
-        {
-            // TODO: this is just how JsonSerializer works - change this
-            // test to do something useful.
-            dynamic data = JsonDataTestHelpers.CreateFromJson("""
-                {
-                    "Message": "Hi",
-                    "Number" : 5,
-                    "Invalid" : "Not on SampleModel"
-                }
-                """);
-
-            SampleModel model = data;
-
-            Assert.AreEqual("Hi", model.Message);
-            Assert.AreEqual(5, model.Number);
-        }
-
         #endregion
 
         #region GetMember tests
@@ -123,11 +106,24 @@ namespace Azure.Core.Tests.Public
             var expectedValues = new[] { 1, 2 };
 
             int i = 0;
-            foreach (var pair in data)
+            foreach (dynamic property in data)
             {
-                Assert.AreEqual(expectedNames[i], pair.Name);
-                Assert.AreEqual(expectedValues[i], (int)pair.Value);
+                Assert.AreEqual(expectedNames[i], property.Name);
+                Assert.AreEqual(expectedValues[i], (int)property.Value);
                 i++;
+            }
+
+            Assert.AreEqual(2, i);
+        }
+
+        [Test]
+        public void UnsupportedPropertyAccessThrow()
+        {
+            dynamic data = JsonDataTestHelpers.CreateFromJson("""{ "first": 1, "second": 2 }""");
+
+            foreach (dynamic property in data)
+            {
+                Assert.Throws<ArgumentException>(() => { var value = property.InvalidName; });
             }
         }
 
@@ -137,6 +133,23 @@ namespace Azure.Core.Tests.Public
             dynamic data = JsonDataTestHelpers.CreateFromJson("""{ "first": 1, "second": 2 }""");
 
             Assert.Throws<RuntimeBinderException>(() => data.Get("first"));
+        }
+
+        [Test]
+        public void CannotGetArrayLength()
+        {
+            dynamic data = JsonDataTestHelpers.CreateFromJson("""{ "first": 1, "second": 2 }""");
+
+            Assert.IsNull(data.Length);
+        }
+
+        [Test]
+        public void CanGetPropertyCalledLength()
+        {
+            dynamic data = JsonDataTestHelpers.CreateFromJson("""{ "Foo": 1, "Length": 2 }""");
+            int length = data.Length;
+
+            Assert.AreEqual(2, length);
         }
     }
 }

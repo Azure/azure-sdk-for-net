@@ -12,4 +12,9 @@ testgen:
   sample: true
   skipped-operations:
   - Events_ListBySingleResource
+  - ChildResources_List
+  - AvailabilityStatuses_GetByResource
+  - AvailabilityStatuses_List
+  - ChildAvailabilityStatuses_GetByResource
+  - ChildAvailabilityStatuses_List
 ```

@@ -12,7 +12,6 @@ input-file:
 generation1-convenience-client: true
 modelerfour:
     lenient-model-deduplication: true
-    seal-single-value-enum-by-default: true
 ```
 
 ### Remove metadata operations
@@ -74,6 +73,23 @@ directive:
 directive:
 - from: swagger-document
   where: $.parameters.ResourceIdParameter
-  transform: 
+  transform:
     $["x-ms-format"] = "arm-id"
+```
+
+### Keep previous constant behavior
+
+Adding these two properties into required keeps the generator to generate the assignment of this property in ctor.
+
+Adding the `x-ms-constant` extension prevents the generator from wrapping the type into an extensible enum
+
+``` yaml
+directive:
+- from: swagger-document
+  where: $.definitions.batchQueryRequest
+  transform: >
+    $.required.push("path");
+    $.required.push("method");
+    $.properties.path["x-ms-constant"] = true;
+    $.properties.method["x-ms-constant"] = true;
 ```

@@ -10,6 +10,11 @@ namespace Azure.Communication.JobRouter
     [JsonConverter(typeof(PolymorphicWriteOnlyJsonConverter<DistributionMode>))]
     public abstract partial class DistributionMode
     {
+        internal DistributionMode(string kind)
+        {
+            Kind = kind;
+        }
+
         /// <summary>
         /// (Optional)
         ///

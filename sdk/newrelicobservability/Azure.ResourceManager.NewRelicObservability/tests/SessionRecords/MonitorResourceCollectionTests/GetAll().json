@@ -1,0 +1,671 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/272c26cb-7026-4b37-b190-7cb7b2abecb0?api-version=2021-01-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-44a6be91641c9e641ea2de33f599305c-d3656f088a1b619a-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.6.0 (.NET 6.0.16; Microsoft Windows 10.0.19045)",
+        "x-ms-client-request-id": "d15ecf82d883fff9eb590a55ae079502",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "393",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 05 Jun 2023 06:25:32 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "e57e7e46-4fd0-4889-9b4b-5198f2289eb9",
+        "x-ms-ratelimit-remaining-subscription-reads": "11988",
+        "x-ms-request-id": "e57e7e46-4fd0-4889-9b4b-5198f2289eb9",
+        "x-ms-routing-request-id": "JIOINDIACENTRAL:20230605T062533Z:e57e7e46-4fd0-4889-9b4b-5198f2289eb9"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/272c26cb-7026-4b37-b190-7cb7b2abecb0",
+        "authorizationSource": "RoleBased",
+        "managedByTenants": [],
+        "subscriptionId": "272c26cb-7026-4b37-b190-7cb7b2abecb0",
+        "tenantId": "888d76fa-54b2-4ced-8ee5-aac1585adee7",
+        "displayName": "NewRelic-PayG",
+        "state": "Enabled",
+        "subscriptionPolicies": {
+          "locationPlacementId": "Public_2014-09-01",
+          "quotaId": "PayAsYouGo_2014-09-01",
+          "spendingLimit": "Off"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/272c26cb-7026-4b37-b190-7cb7b2abecb0/resourcegroups/SDKTestNRRG-2222?api-version=**",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "28",
+        "Content-Type": "application/json",
+        "traceparent": "00-02e0dd7d94a8ac870dbe9840941550d9-a092550d10f478d5-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.6.0 (.NET 6.0.16; Microsoft Windows 10.0.19045)",
+        "x-ms-client-request-id": "1fd60c1f0ee79534a6e91d2143b6ba00",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "location": "centraluseuap"
+      },
+      "StatusCode": 201,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "236",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 05 Jun 2023 06:25:32 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "f3a58973-33ef-4d8b-8924-40fe471b9e85",
+        "x-ms-ratelimit-remaining-subscription-writes": "1191",
+        "x-ms-request-id": "f3a58973-33ef-4d8b-8924-40fe471b9e85",
+        "x-ms-routing-request-id": "JIOINDIACENTRAL:20230605T062533Z:f3a58973-33ef-4d8b-8924-40fe471b9e85"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/272c26cb-7026-4b37-b190-7cb7b2abecb0/resourceGroups/SDKTestNRRG-2222",
+        "name": "SDKTestNRRG-2222",
+        "type": "Microsoft.Resources/resourceGroups",
+        "location": "centraluseuap",
+        "properties": {
+          "provisioningState": "Succeeded"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/272c26cb-7026-4b37-b190-7cb7b2abecb0/resourceGroups/SDKTestNRRG-2222/providers/NewRelic.Observability/monitors/testNR-6804?api-version=2022-07-01",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "408",
+        "Content-Type": "application/json",
+        "traceparent": "00-c41db54179a026b71f1f7bc2ff0c16e1-17233739e0cd7524-00",
+        "User-Agent": "azsdk-net-ResourceManager.NewRelicObservability/1.0.0-alpha.20230605.1 (.NET 6.0.16; Microsoft Windows 10.0.19045)",
+        "x-ms-client-request-id": "a931ea8ab41ff571b5e25670306daf69",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "tags": {},
+        "location": "centraluseuap",
+        "properties": {
+          "userInfo": {
+            "firstName": "vipray",
+            "lastName": "jain",
+            "emailAddress": "viprayjain@microsoft.com",
+            "phoneNumber": "1234567890",
+            "country": "IN"
+          },
+          "planData": {
+            "usageType": "PAYG",
+            "billingCycle": "MONTHLY",
+            "planDetails": "newrelic-pay-as-you-go-free-live@TIDgmz7xq9ge3py@PUBIDnewrelicinc1635200720692.newrelic_liftr_payg",
+            "effectiveDate": "2022-09-28T07:12:30.0000000Z"
+          }
+        }
+      },
+      "StatusCode": 201,
+      "ResponseHeaders": {
+        "Azure-AsyncOperation": "https://management.azure.com/providers/NewRelic.Observability/locations/CENTRALUSEUAP/operationStatuses/d2d4ccb7-b85d-4207-9589-78fcd5a7faf1*36223D4346DDEBDC74B273D2C09B18D37C50F8D2561D3B134AFE91895695B92F?api-version=2022-07-01",
+        "Cache-Control": "no-cache",
+        "Content-Length": "1182",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 05 Jun 2023 06:25:43 GMT",
+        "ETag": "\u00220500a3fe-0000-3300-0000-647d7fe60000\u0022",
+        "Expires": "-1",
+        "Location": "https://management.azure.com/providers/NewRelic.Observability/locations/CENTRALUSEUAP/operationStatuses/d2d4ccb7-b85d-4207-9589-78fcd5a7faf1*36223D4346DDEBDC74B273D2C09B18D37C50F8D2561D3B134AFE91895695B92F?api-version=2022-07-01",
+        "mise-correlation-id": "2c0f7ce5-7498-4ba1-843b-dcd1dc102fc3",
+        "Pragma": "no-cache",
+        "Request-Context": "appId=cid-v1:99558bd9-e2af-4edd-b8b9-dfc879de6669",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "a931ea8ab41ff571b5e25670306daf69",
+        "x-ms-correlation-request-id": "7bd70d3d-4397-4e40-9072-2950b8b0aa22",
+        "x-ms-providerhub-traffic": "True",
+        "x-ms-ratelimit-remaining-subscription-writes": "1190",
+        "x-ms-request-id": "d2d4ccb7-b85d-4207-9589-78fcd5a7faf1",
+        "x-ms-routing-request-id": "JIOINDIACENTRAL:20230605T062543Z:7bd70d3d-4397-4e40-9072-2950b8b0aa22"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/272c26cb-7026-4b37-b190-7cb7b2abecb0/resourceGroups/SDKTestNRRG-2222/providers/NewRelic.Observability/monitors/testNR-6804",
+        "name": "testNR-6804",
+        "type": "newrelic.observability/monitors",
+        "location": "centraluseuap",
+        "tags": {},
+        "systemData": {
+          "createdBy": "09a13a20-12be-4fda-a11e-a6895d6b321b",
+          "createdByType": "Application",
+          "createdAt": "2023-06-05T06:25:37.420688Z",
+          "lastModifiedBy": "09a13a20-12be-4fda-a11e-a6895d6b321b",
+          "lastModifiedByType": "Application",
+          "lastModifiedAt": "2023-06-05T06:25:37.420688Z"
+        },
+        "properties": {
+          "orgCreationSource": "LIFTR",
+          "accountCreationSource": "LIFTR",
+          "provisioningState": "Accepted",
+          "monitoringStatus": "Enabled",
+          "marketplaceSubscriptionStatus": "Active",
+          "newRelicAccountProperties": {
+            "userId": null,
+            "accountInfo": null,
+            "organizationInfo": null
+          },
+          "userInfo": {
+            "firstName": "vipray",
+            "lastName": "jain",
+            "emailAddress": "viprayjain@microsoft.com",
+            "phoneNumber": "1234567890"
+          },
+          "planData": {
+            "usageType": "PAYG",
+            "billingCycle": "MONTHLY",
+            "planDetails": "newrelic-pay-as-you-go-free-live@TIDgmz7xq9ge3py@PUBIDnewrelicinc1635200720692.newrelic_liftr_payg",
+            "effectiveDate": "2022-09-28T07:12:30Z"
+          },
+          "liftrResourceCategory": "MonitorLogs",
+          "liftrResourcePreference": 0
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/providers/NewRelic.Observability/locations/CENTRALUSEUAP/operationStatuses/d2d4ccb7-b85d-4207-9589-78fcd5a7faf1*36223D4346DDEBDC74B273D2C09B18D37C50F8D2561D3B134AFE91895695B92F?api-version=2022-07-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-c41db54179a026b71f1f7bc2ff0c16e1-33540a3104a10c9f-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.6.0 (.NET 6.0.16; Microsoft Windows 10.0.19045)",
+        "x-ms-client-request-id": "ab7d2154ecd058006429312cdd25757c",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "512",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 05 Jun 2023 06:25:44 GMT",
+        "ETag": "\u002201004aba-0000-3300-0000-647d7fe50000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "ab7d2154ecd058006429312cdd25757c",
+        "x-ms-correlation-request-id": "43b1b5a4-a5c1-4be1-8d06-e4faae11390c",
+        "x-ms-ratelimit-remaining-tenant-reads": "11941",
+        "x-ms-request-id": "9240a27a-3b80-417a-bf3b-991ba0b4e6a6",
+        "x-ms-routing-request-id": "JIOINDIACENTRAL:20230605T062544Z:43b1b5a4-a5c1-4be1-8d06-e4faae11390c"
+      },
+      "ResponseBody": {
+        "id": "/providers/NewRelic.Observability/locations/CENTRALUSEUAP/operationStatuses/d2d4ccb7-b85d-4207-9589-78fcd5a7faf1*36223D4346DDEBDC74B273D2C09B18D37C50F8D2561D3B134AFE91895695B92F",
+        "name": "d2d4ccb7-b85d-4207-9589-78fcd5a7faf1*36223D4346DDEBDC74B273D2C09B18D37C50F8D2561D3B134AFE91895695B92F",
+        "resourceId": "/subscriptions/272c26cb-7026-4b37-b190-7cb7b2abecb0/resourceGroups/SDKTestNRRG-2222/providers/NewRelic.Observability/monitors/testNR-6804",
+        "status": "Accepted",
+        "startTime": "2023-06-05T06:25:41.529829Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/providers/NewRelic.Observability/locations/CENTRALUSEUAP/operationStatuses/d2d4ccb7-b85d-4207-9589-78fcd5a7faf1*36223D4346DDEBDC74B273D2C09B18D37C50F8D2561D3B134AFE91895695B92F?api-version=2022-07-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-c41db54179a026b71f1f7bc2ff0c16e1-3e4e96f2007cee77-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.6.0 (.NET 6.0.16; Microsoft Windows 10.0.19045)",
+        "x-ms-client-request-id": "3883b76e7991ef0a28076d41c695170e",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "512",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 05 Jun 2023 06:25:45 GMT",
+        "ETag": "\u002201004aba-0000-3300-0000-647d7fe50000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "3883b76e7991ef0a28076d41c695170e",
+        "x-ms-correlation-request-id": "1fc7c8b1-0873-4bed-aa4e-67424e046b00",
+        "x-ms-ratelimit-remaining-tenant-reads": "11940",
+        "x-ms-request-id": "9edceb3f-1f0c-44df-8986-797db4d2468e",
+        "x-ms-routing-request-id": "JIOINDIACENTRAL:20230605T062545Z:1fc7c8b1-0873-4bed-aa4e-67424e046b00"
+      },
+      "ResponseBody": {
+        "id": "/providers/NewRelic.Observability/locations/CENTRALUSEUAP/operationStatuses/d2d4ccb7-b85d-4207-9589-78fcd5a7faf1*36223D4346DDEBDC74B273D2C09B18D37C50F8D2561D3B134AFE91895695B92F",
+        "name": "d2d4ccb7-b85d-4207-9589-78fcd5a7faf1*36223D4346DDEBDC74B273D2C09B18D37C50F8D2561D3B134AFE91895695B92F",
+        "resourceId": "/subscriptions/272c26cb-7026-4b37-b190-7cb7b2abecb0/resourceGroups/SDKTestNRRG-2222/providers/NewRelic.Observability/monitors/testNR-6804",
+        "status": "Accepted",
+        "startTime": "2023-06-05T06:25:41.529829Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/providers/NewRelic.Observability/locations/CENTRALUSEUAP/operationStatuses/d2d4ccb7-b85d-4207-9589-78fcd5a7faf1*36223D4346DDEBDC74B273D2C09B18D37C50F8D2561D3B134AFE91895695B92F?api-version=2022-07-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-c41db54179a026b71f1f7bc2ff0c16e1-61661ac8f04d987a-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.6.0 (.NET 6.0.16; Microsoft Windows 10.0.19045)",
+        "x-ms-client-request-id": "0e1b073f03f0d3997ed1225969954c16",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "512",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 05 Jun 2023 06:25:46 GMT",
+        "ETag": "\u002201004aba-0000-3300-0000-647d7fe50000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "0e1b073f03f0d3997ed1225969954c16",
+        "x-ms-correlation-request-id": "e39c3f9e-3b35-4a19-ae94-c72070e63511",
+        "x-ms-ratelimit-remaining-tenant-reads": "11939",
+        "x-ms-request-id": "f5419f7c-289c-4bdf-8281-76e929708de7",
+        "x-ms-routing-request-id": "JIOINDIACENTRAL:20230605T062546Z:e39c3f9e-3b35-4a19-ae94-c72070e63511"
+      },
+      "ResponseBody": {
+        "id": "/providers/NewRelic.Observability/locations/CENTRALUSEUAP/operationStatuses/d2d4ccb7-b85d-4207-9589-78fcd5a7faf1*36223D4346DDEBDC74B273D2C09B18D37C50F8D2561D3B134AFE91895695B92F",
+        "name": "d2d4ccb7-b85d-4207-9589-78fcd5a7faf1*36223D4346DDEBDC74B273D2C09B18D37C50F8D2561D3B134AFE91895695B92F",
+        "resourceId": "/subscriptions/272c26cb-7026-4b37-b190-7cb7b2abecb0/resourceGroups/SDKTestNRRG-2222/providers/NewRelic.Observability/monitors/testNR-6804",
+        "status": "Accepted",
+        "startTime": "2023-06-05T06:25:41.529829Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/providers/NewRelic.Observability/locations/CENTRALUSEUAP/operationStatuses/d2d4ccb7-b85d-4207-9589-78fcd5a7faf1*36223D4346DDEBDC74B273D2C09B18D37C50F8D2561D3B134AFE91895695B92F?api-version=2022-07-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-c41db54179a026b71f1f7bc2ff0c16e1-5b76a60074574350-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.6.0 (.NET 6.0.16; Microsoft Windows 10.0.19045)",
+        "x-ms-client-request-id": "266d71676a24dbbe168e82c87fbe91cf",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "512",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 05 Jun 2023 06:25:47 GMT",
+        "ETag": "\u002201004aba-0000-3300-0000-647d7fe50000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "266d71676a24dbbe168e82c87fbe91cf",
+        "x-ms-correlation-request-id": "75f01dd8-8dbb-49fd-b9c1-d72dc4144c59",
+        "x-ms-ratelimit-remaining-tenant-reads": "11938",
+        "x-ms-request-id": "c458f9c0-943a-4898-95c6-5c258659dfd5",
+        "x-ms-routing-request-id": "JIOINDIACENTRAL:20230605T062548Z:75f01dd8-8dbb-49fd-b9c1-d72dc4144c59"
+      },
+      "ResponseBody": {
+        "id": "/providers/NewRelic.Observability/locations/CENTRALUSEUAP/operationStatuses/d2d4ccb7-b85d-4207-9589-78fcd5a7faf1*36223D4346DDEBDC74B273D2C09B18D37C50F8D2561D3B134AFE91895695B92F",
+        "name": "d2d4ccb7-b85d-4207-9589-78fcd5a7faf1*36223D4346DDEBDC74B273D2C09B18D37C50F8D2561D3B134AFE91895695B92F",
+        "resourceId": "/subscriptions/272c26cb-7026-4b37-b190-7cb7b2abecb0/resourceGroups/SDKTestNRRG-2222/providers/NewRelic.Observability/monitors/testNR-6804",
+        "status": "Accepted",
+        "startTime": "2023-06-05T06:25:41.529829Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/providers/NewRelic.Observability/locations/CENTRALUSEUAP/operationStatuses/d2d4ccb7-b85d-4207-9589-78fcd5a7faf1*36223D4346DDEBDC74B273D2C09B18D37C50F8D2561D3B134AFE91895695B92F?api-version=2022-07-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-c41db54179a026b71f1f7bc2ff0c16e1-c9ae5208b5fd680b-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.6.0 (.NET 6.0.16; Microsoft Windows 10.0.19045)",
+        "x-ms-client-request-id": "d6ec2312660a6a8c1dafb9bf56b18593",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "512",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 05 Jun 2023 06:25:50 GMT",
+        "ETag": "\u002201004aba-0000-3300-0000-647d7fe50000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "d6ec2312660a6a8c1dafb9bf56b18593",
+        "x-ms-correlation-request-id": "e3ea0cc9-b6e6-4f09-9e9f-ff435c1b7f13",
+        "x-ms-ratelimit-remaining-tenant-reads": "11937",
+        "x-ms-request-id": "bc5e1beb-d581-4222-a59c-0587aaa52514",
+        "x-ms-routing-request-id": "JIOINDIACENTRAL:20230605T062550Z:e3ea0cc9-b6e6-4f09-9e9f-ff435c1b7f13"
+      },
+      "ResponseBody": {
+        "id": "/providers/NewRelic.Observability/locations/CENTRALUSEUAP/operationStatuses/d2d4ccb7-b85d-4207-9589-78fcd5a7faf1*36223D4346DDEBDC74B273D2C09B18D37C50F8D2561D3B134AFE91895695B92F",
+        "name": "d2d4ccb7-b85d-4207-9589-78fcd5a7faf1*36223D4346DDEBDC74B273D2C09B18D37C50F8D2561D3B134AFE91895695B92F",
+        "resourceId": "/subscriptions/272c26cb-7026-4b37-b190-7cb7b2abecb0/resourceGroups/SDKTestNRRG-2222/providers/NewRelic.Observability/monitors/testNR-6804",
+        "status": "Accepted",
+        "startTime": "2023-06-05T06:25:41.529829Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/providers/NewRelic.Observability/locations/CENTRALUSEUAP/operationStatuses/d2d4ccb7-b85d-4207-9589-78fcd5a7faf1*36223D4346DDEBDC74B273D2C09B18D37C50F8D2561D3B134AFE91895695B92F?api-version=2022-07-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-c41db54179a026b71f1f7bc2ff0c16e1-a88cd60f67db1c7d-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.6.0 (.NET 6.0.16; Microsoft Windows 10.0.19045)",
+        "x-ms-client-request-id": "54d957bbf128d4e9493ff86281d154c0",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "512",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 05 Jun 2023 06:25:54 GMT",
+        "ETag": "\u002201004aba-0000-3300-0000-647d7fe50000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "54d957bbf128d4e9493ff86281d154c0",
+        "x-ms-correlation-request-id": "47e3d6b8-54fa-456c-957a-5be1b48cf771",
+        "x-ms-ratelimit-remaining-tenant-reads": "11936",
+        "x-ms-request-id": "d308b469-527f-4503-bff6-ea4c20a0542f",
+        "x-ms-routing-request-id": "JIOINDIACENTRAL:20230605T062554Z:47e3d6b8-54fa-456c-957a-5be1b48cf771"
+      },
+      "ResponseBody": {
+        "id": "/providers/NewRelic.Observability/locations/CENTRALUSEUAP/operationStatuses/d2d4ccb7-b85d-4207-9589-78fcd5a7faf1*36223D4346DDEBDC74B273D2C09B18D37C50F8D2561D3B134AFE91895695B92F",
+        "name": "d2d4ccb7-b85d-4207-9589-78fcd5a7faf1*36223D4346DDEBDC74B273D2C09B18D37C50F8D2561D3B134AFE91895695B92F",
+        "resourceId": "/subscriptions/272c26cb-7026-4b37-b190-7cb7b2abecb0/resourceGroups/SDKTestNRRG-2222/providers/NewRelic.Observability/monitors/testNR-6804",
+        "status": "Accepted",
+        "startTime": "2023-06-05T06:25:41.529829Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/providers/NewRelic.Observability/locations/CENTRALUSEUAP/operationStatuses/d2d4ccb7-b85d-4207-9589-78fcd5a7faf1*36223D4346DDEBDC74B273D2C09B18D37C50F8D2561D3B134AFE91895695B92F?api-version=2022-07-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-c41db54179a026b71f1f7bc2ff0c16e1-9da719a7b17bad1e-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.6.0 (.NET 6.0.16; Microsoft Windows 10.0.19045)",
+        "x-ms-client-request-id": "4646533f76a8010ce5020874b1fe8564",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "512",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 05 Jun 2023 06:26:02 GMT",
+        "ETag": "\u002201004aba-0000-3300-0000-647d7fe50000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "4646533f76a8010ce5020874b1fe8564",
+        "x-ms-correlation-request-id": "649231b3-004d-4064-b8e4-a6840a70e66a",
+        "x-ms-ratelimit-remaining-tenant-reads": "11935",
+        "x-ms-request-id": "c3d6d41f-1295-41ae-b2dd-818cbb383e5f",
+        "x-ms-routing-request-id": "JIOINDIACENTRAL:20230605T062603Z:649231b3-004d-4064-b8e4-a6840a70e66a"
+      },
+      "ResponseBody": {
+        "id": "/providers/NewRelic.Observability/locations/CENTRALUSEUAP/operationStatuses/d2d4ccb7-b85d-4207-9589-78fcd5a7faf1*36223D4346DDEBDC74B273D2C09B18D37C50F8D2561D3B134AFE91895695B92F",
+        "name": "d2d4ccb7-b85d-4207-9589-78fcd5a7faf1*36223D4346DDEBDC74B273D2C09B18D37C50F8D2561D3B134AFE91895695B92F",
+        "resourceId": "/subscriptions/272c26cb-7026-4b37-b190-7cb7b2abecb0/resourceGroups/SDKTestNRRG-2222/providers/NewRelic.Observability/monitors/testNR-6804",
+        "status": "Accepted",
+        "startTime": "2023-06-05T06:25:41.529829Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/providers/NewRelic.Observability/locations/CENTRALUSEUAP/operationStatuses/d2d4ccb7-b85d-4207-9589-78fcd5a7faf1*36223D4346DDEBDC74B273D2C09B18D37C50F8D2561D3B134AFE91895695B92F?api-version=2022-07-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-c41db54179a026b71f1f7bc2ff0c16e1-cc3028f36a705420-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.6.0 (.NET 6.0.16; Microsoft Windows 10.0.19045)",
+        "x-ms-client-request-id": "280def083de420a739188cca6e2ae94c",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "512",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 05 Jun 2023 06:26:19 GMT",
+        "ETag": "\u002201004aba-0000-3300-0000-647d7fe50000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "280def083de420a739188cca6e2ae94c",
+        "x-ms-correlation-request-id": "cec536f3-822e-41fb-acac-bc2ab3f1e8e9",
+        "x-ms-ratelimit-remaining-tenant-reads": "11934",
+        "x-ms-request-id": "2a4e1538-4dd1-4072-9e27-4d40ee010389",
+        "x-ms-routing-request-id": "JIOINDIACENTRAL:20230605T062620Z:cec536f3-822e-41fb-acac-bc2ab3f1e8e9"
+      },
+      "ResponseBody": {
+        "id": "/providers/NewRelic.Observability/locations/CENTRALUSEUAP/operationStatuses/d2d4ccb7-b85d-4207-9589-78fcd5a7faf1*36223D4346DDEBDC74B273D2C09B18D37C50F8D2561D3B134AFE91895695B92F",
+        "name": "d2d4ccb7-b85d-4207-9589-78fcd5a7faf1*36223D4346DDEBDC74B273D2C09B18D37C50F8D2561D3B134AFE91895695B92F",
+        "resourceId": "/subscriptions/272c26cb-7026-4b37-b190-7cb7b2abecb0/resourceGroups/SDKTestNRRG-2222/providers/NewRelic.Observability/monitors/testNR-6804",
+        "status": "Accepted",
+        "startTime": "2023-06-05T06:25:41.529829Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/providers/NewRelic.Observability/locations/CENTRALUSEUAP/operationStatuses/d2d4ccb7-b85d-4207-9589-78fcd5a7faf1*36223D4346DDEBDC74B273D2C09B18D37C50F8D2561D3B134AFE91895695B92F?api-version=2022-07-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-c41db54179a026b71f1f7bc2ff0c16e1-c1db73d76da5fd10-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.6.0 (.NET 6.0.16; Microsoft Windows 10.0.19045)",
+        "x-ms-client-request-id": "037ff95b3f6a44ea4ad86f25e875234a",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "583",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 05 Jun 2023 06:26:52 GMT",
+        "ETag": "\u0022010051ba-0000-3300-0000-647d80120000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "037ff95b3f6a44ea4ad86f25e875234a",
+        "x-ms-correlation-request-id": "4959a99a-0149-409f-8c16-cc613bdbbcf1",
+        "x-ms-ratelimit-remaining-tenant-reads": "11933",
+        "x-ms-request-id": "8afa6a86-c5f7-45a8-813d-776ea1138650",
+        "x-ms-routing-request-id": "JIOINDIACENTRAL:20230605T062652Z:4959a99a-0149-409f-8c16-cc613bdbbcf1"
+      },
+      "ResponseBody": {
+        "id": "/providers/NewRelic.Observability/locations/CENTRALUSEUAP/operationStatuses/d2d4ccb7-b85d-4207-9589-78fcd5a7faf1*36223D4346DDEBDC74B273D2C09B18D37C50F8D2561D3B134AFE91895695B92F",
+        "name": "d2d4ccb7-b85d-4207-9589-78fcd5a7faf1*36223D4346DDEBDC74B273D2C09B18D37C50F8D2561D3B134AFE91895695B92F",
+        "resourceId": "/subscriptions/272c26cb-7026-4b37-b190-7cb7b2abecb0/resourceGroups/SDKTestNRRG-2222/providers/NewRelic.Observability/monitors/testNR-6804",
+        "status": "Succeeded",
+        "startTime": "2023-06-05T06:25:41.529829Z",
+        "endTime": "2023-06-05T06:26:26.0699323Z",
+        "error": {},
+        "properties": null
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/272c26cb-7026-4b37-b190-7cb7b2abecb0/resourceGroups/SDKTestNRRG-2222/providers/NewRelic.Observability/monitors/testNR-6804?api-version=2022-07-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-c41db54179a026b71f1f7bc2ff0c16e1-579e207ab6985622-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.6.0 (.NET 6.0.16; Microsoft Windows 10.0.19045)",
+        "x-ms-client-request-id": "915993ba2cc302dcac250c90e94192bb",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "1242",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 05 Jun 2023 06:26:53 GMT",
+        "ETag": "\u00220500d3fe-0000-3300-0000-647d80120000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "915993ba2cc302dcac250c90e94192bb",
+        "x-ms-correlation-request-id": "9f8de953-75a0-4111-aea1-22965ede8a00",
+        "x-ms-providerhub-traffic": "True",
+        "x-ms-ratelimit-remaining-subscription-reads": "11987",
+        "x-ms-request-id": "c0cdf9fe-f5f0-4814-864e-995a35d0ce0d",
+        "x-ms-routing-request-id": "JIOINDIACENTRAL:20230605T062653Z:9f8de953-75a0-4111-aea1-22965ede8a00"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/272c26cb-7026-4b37-b190-7cb7b2abecb0/resourceGroups/SDKTestNRRG-2222/providers/NewRelic.Observability/monitors/testNR-6804",
+        "name": "testNR-6804",
+        "type": "newrelic.observability/monitors",
+        "location": "centraluseuap",
+        "tags": {},
+        "systemData": {
+          "createdBy": "09a13a20-12be-4fda-a11e-a6895d6b321b",
+          "createdByType": "Application",
+          "createdAt": "2023-06-05T06:25:37.420688Z",
+          "lastModifiedBy": "09a13a20-12be-4fda-a11e-a6895d6b321b",
+          "lastModifiedByType": "Application",
+          "lastModifiedAt": "2023-06-05T06:25:37.420688Z"
+        },
+        "properties": {
+          "orgCreationSource": "LIFTR",
+          "accountCreationSource": "LIFTR",
+          "provisioningState": "Succeeded",
+          "monitoringStatus": "Enabled",
+          "marketplaceSubscriptionStatus": "Active",
+          "newRelicAccountProperties": {
+            "accountInfo": {
+              "accountId": "11843587"
+            },
+            "organizationInfo": {
+              "organizationId": "78652fd8-7894-4295-8f93-da36926c834a"
+            }
+          },
+          "userInfo": {
+            "firstName": "vipray",
+            "lastName": "jain",
+            "emailAddress": "viprayjain@microsoft.com",
+            "phoneNumber": "1234567890"
+          },
+          "planData": {
+            "usageType": "PAYG",
+            "billingCycle": "MONTHLY",
+            "planDetails": "newrelic-pay-as-you-go-free-live@TIDgmz7xq9ge3py@PUBIDnewrelicinc1635200720692.newrelic_liftr_payg",
+            "effectiveDate": "2022-09-28T07:12:30Z"
+          },
+          "liftrResourceCategory": "MonitorLogs",
+          "liftrResourcePreference": 0
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/272c26cb-7026-4b37-b190-7cb7b2abecb0/resourceGroups/SDKTestNRRG-2222/providers/NewRelic.Observability/monitors?api-version=2022-07-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-4452ffe61a426a625f0927dd0319ce90-aa4cf1d0f0286fb9-00",
+        "User-Agent": "azsdk-net-ResourceManager.NewRelicObservability/1.0.0-alpha.20230605.1 (.NET 6.0.16; Microsoft Windows 10.0.19045)",
+        "x-ms-client-request-id": "b719bc19827ec9f904c8dd0bcd8138c4",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "1254",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 05 Jun 2023 06:26:54 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "190a6365-f2e6-4acc-b0a0-4437f45037fd",
+        "x-ms-original-request-ids": [
+          "b86c8bd1-7d9c-42ce-b1d8-5575de7d3545",
+          "c724c953-2698-4636-bce8-cfeefa661628",
+          "b30e8a64-d525-4deb-92a7-9e06b30ac303"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": "11986",
+        "x-ms-request-id": "190a6365-f2e6-4acc-b0a0-4437f45037fd",
+        "x-ms-routing-request-id": "JIOINDIACENTRAL:20230605T062654Z:190a6365-f2e6-4acc-b0a0-4437f45037fd"
+      },
+      "ResponseBody": {
+        "value": [
+          {
+            "id": "/subscriptions/272c26cb-7026-4b37-b190-7cb7b2abecb0/resourceGroups/SDKTestNRRG-2222/providers/NewRelic.Observability/monitors/testNR-6804",
+            "name": "testNR-6804",
+            "type": "newrelic.observability/monitors",
+            "location": "centraluseuap",
+            "tags": {},
+            "systemData": {
+              "createdBy": "09a13a20-12be-4fda-a11e-a6895d6b321b",
+              "createdByType": "Application",
+              "createdAt": "2023-06-05T06:25:37.420688Z",
+              "lastModifiedBy": "09a13a20-12be-4fda-a11e-a6895d6b321b",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-06-05T06:25:37.420688Z"
+            },
+            "properties": {
+              "orgCreationSource": "LIFTR",
+              "accountCreationSource": "LIFTR",
+              "provisioningState": "Succeeded",
+              "monitoringStatus": "Enabled",
+              "marketplaceSubscriptionStatus": "Active",
+              "newRelicAccountProperties": {
+                "accountInfo": {
+                  "accountId": "11843587"
+                },
+                "organizationInfo": {
+                  "organizationId": "78652fd8-7894-4295-8f93-da36926c834a"
+                }
+              },
+              "userInfo": {
+                "firstName": "vipray",
+                "lastName": "jain",
+                "emailAddress": "viprayjain@microsoft.com",
+                "phoneNumber": "1234567890"
+              },
+              "planData": {
+                "usageType": "PAYG",
+                "billingCycle": "MONTHLY",
+                "planDetails": "newrelic-pay-as-you-go-free-live@TIDgmz7xq9ge3py@PUBIDnewrelicinc1635200720692.newrelic_liftr_payg",
+                "effectiveDate": "2022-09-28T07:12:30Z"
+              },
+              "liftrResourceCategory": "MonitorLogs",
+              "liftrResourcePreference": 0
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "Variables": {
+    "AZURE_AUTHORITY_HOST": null,
+    "RandomSeed": "915189153",
+    "RESOURCE_MANAGER_URL": null,
+    "SUBSCRIPTION_ID": "272c26cb-7026-4b37-b190-7cb7b2abecb0"
+  }
+}

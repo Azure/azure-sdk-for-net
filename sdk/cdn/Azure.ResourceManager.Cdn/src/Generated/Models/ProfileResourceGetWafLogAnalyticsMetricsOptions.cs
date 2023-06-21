@@ -43,12 +43,10 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <summary> The WafGranularity to use. </summary>
         public WafGranularity Granularity { get; }
         /// <summary> The ArrayOfWafAction to use. </summary>
-        public IList<WafAction> Actions { get; } = null;
-
+        public IList<WafAction> Actions { get; }
         /// <summary> The ArrayOfWafRankingGroupBy to use. </summary>
-        public IList<WafRankingGroupBy> GroupBy { get; } = null;
-
+        public IList<WafRankingGroupBy> GroupBy { get; }
         /// <summary> The ArrayOfWafRuleType to use. </summary>
-        public IList<WafRuleType> RuleTypes { get; } = null;
+        public IList<WafRuleType> RuleTypes { get; }
     }
 }

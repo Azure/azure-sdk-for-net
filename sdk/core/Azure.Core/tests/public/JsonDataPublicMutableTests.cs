@@ -51,9 +51,9 @@ namespace Azure.Core.Tests.Public
         public void NewObjectPropertiesCanBeAssignedWithArrays()
         {
             dynamic json = JsonDataTestHelpers.CreateEmpty();
-            json.a = new object[] { 1, 2, null, "string" };
+            json.a = new string[] { "a", null, "string" };
 
-            Assert.AreEqual(json.ToString(), "{\"a\":[1,2,null,\"string\"]}");
+            Assert.AreEqual(json.ToString(), "{\"a\":[\"a\",null,\"string\"]}");
         }
 
         [Test]
@@ -70,13 +70,23 @@ namespace Azure.Core.Tests.Public
         {
             dynamic json = JsonDataTestHelpers.CreateEmpty();
             dynamic anotherJson = JsonDataTestHelpers.CreateEmpty();
+
             json.a = anotherJson;
+
+            // DynamicData uses value semantics, so this has no effect on the parent
             anotherJson.b = 2;
 
-            Assert.AreEqual(json.ToString(), "{\"a\":{\"b\":2}}");
+            Assert.AreEqual("{\"a\":{}}", json.ToString());
+            Assert.AreEqual("{\"b\":2}", anotherJson.ToString());
+
+            // Value can still be updated on the object directly
+            json.a.b = 2;
+
+            Assert.AreEqual("{\"a\":{\"b\":2}}", json.ToString());
         }
 
         [Test]
+        [Ignore("Currently unsupported type.")]
         public void NewObjectPropertiesCanBeAssignedWithSerializedObject()
         {
             var json = JsonDataTestHelpers.CreateEmpty();

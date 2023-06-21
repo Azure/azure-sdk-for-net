@@ -30,9 +30,14 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
         public const string AttributeFaasInstance = "faas.instance";
 
         public const string AttributeK8sCluster = "k8s.cluster.name";
+        public const string AttributeK8sCronJob = "k8s.cronjob.name";
+        public const string AttributeK8sDaemonSet = "k8s.daemonset.name";
+        public const string AttributeK8sDeployment = "k8s.deployment.name";
+        public const string AttributeK8sJob = "k8s.job.name";
         public const string AttributeK8sNamespace = "k8s.namespace.name";
         public const string AttributeK8sPod = "k8s.pod.name";
-        public const string AttributeK8sDeployment = "k8s.deployment.name";
+        public const string AttributeK8sReplicaSet = "k8s.replicaset.name";
+        public const string AttributeK8sStatefulSet = "k8s.statefulset.name";
 
         public const string AttributeHostHostname = "host.hostname";
         public const string AttributeHostId = "host.id";

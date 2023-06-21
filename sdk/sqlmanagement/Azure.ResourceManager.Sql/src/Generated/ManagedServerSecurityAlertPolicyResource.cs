@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary>
-        /// Get a managed server&apos;s threat detection policy.
+        /// Get a managed server's threat detection policy.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary>
-        /// Get a managed server&apos;s threat detection policy.
+        /// Get a managed server's threat detection policy.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>

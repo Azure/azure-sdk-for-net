@@ -17,6 +17,8 @@ using Azure.ResourceManager.Network;
 using Azure.ResourceManager.Network.Models;
 using Polly.Contrib.WaitAndRetry;
 using Polly;
+using NUnit.Framework.Constraints;
+using System.Collections;
 
 namespace Azure.ResourceManager.NetApp.Tests.Helpers
 {
@@ -194,10 +196,11 @@ namespace Azure.ResourceManager.NetApp.Tests.Helpers
                 Assert.AreEqual(DefaultLocation, volume.Data.Location);
 
                 Assert.NotNull(volume.Data.Tags);
-                Assert.AreEqual(DefaultTags.Count, volume.Data.Tags.Count);
-                foreach (var tag in volume.Data.Tags)
+                //we cannot assert on count as a policy might add addional tags
+                //Assert.AreEqual(DefaultTags.Count, volume.Data.Tags.Count);
+                foreach (KeyValuePair<string, string> tag in DefaultTags)
                 {
-                    Assert.AreEqual(DefaultTags[tag.Key], tag.Value);
+                    Assert.That(volume.Data.Tags, new DictionaryContainsKeyValuePairConstraint(tag.Key, tag.Value));
                 }
                 Assert.AreEqual(_defaultUsageThreshold, volume.Data.UsageThreshold);
                 Assert.AreEqual(DefaultSubnetId, volume.Data.SubnetId);

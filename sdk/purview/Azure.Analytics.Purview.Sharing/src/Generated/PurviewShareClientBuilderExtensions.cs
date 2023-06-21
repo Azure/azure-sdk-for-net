@@ -5,18 +5,19 @@
 
 #nullable disable
 
+using System;
 using Azure.Analytics.Purview.Sharing;
 using Azure.Core.Extensions;
 
 namespace Microsoft.Extensions.Azure
 {
-    /// <summary> Extension methods to add <see cref="ReceivedSharesClient"/>, <see cref="SentSharesClient"/> to client builder. </summary>
+    /// <summary> Extension methods to add <see cref="ReceivedSharesClient"/>, <see cref="SentSharesClient"/>, <see cref="ShareResourcesClient"/> to client builder. </summary>
     public static partial class PurviewShareClientBuilderExtensions
     {
         /// <summary> Registers a <see cref="ReceivedSharesClient"/> instance. </summary>
         /// <param name="builder"> The builder to register with. </param>
         /// <param name="endpoint"> The sharing endpoint of your purview account. Example: https://{accountName}.purview.azure.com/share. </param>
-        public static IAzureClientBuilder<ReceivedSharesClient, PurviewShareClientOptions> AddReceivedSharesClient<TBuilder>(this TBuilder builder, string endpoint)
+        public static IAzureClientBuilder<ReceivedSharesClient, PurviewShareClientOptions> AddReceivedSharesClient<TBuilder>(this TBuilder builder, Uri endpoint)
         where TBuilder : IAzureClientFactoryBuilderWithCredential
         {
             return builder.RegisterClientFactory<ReceivedSharesClient, PurviewShareClientOptions>((options, cred) => new ReceivedSharesClient(endpoint, cred, options));
@@ -25,10 +26,19 @@ namespace Microsoft.Extensions.Azure
         /// <summary> Registers a <see cref="SentSharesClient"/> instance. </summary>
         /// <param name="builder"> The builder to register with. </param>
         /// <param name="endpoint"> The sharing endpoint of your purview account. Example: https://{accountName}.purview.azure.com/share. </param>
-        public static IAzureClientBuilder<SentSharesClient, PurviewShareClientOptions> AddSentSharesClient<TBuilder>(this TBuilder builder, string endpoint)
+        public static IAzureClientBuilder<SentSharesClient, PurviewShareClientOptions> AddSentSharesClient<TBuilder>(this TBuilder builder, Uri endpoint)
         where TBuilder : IAzureClientFactoryBuilderWithCredential
         {
             return builder.RegisterClientFactory<SentSharesClient, PurviewShareClientOptions>((options, cred) => new SentSharesClient(endpoint, cred, options));
+        }
+
+        /// <summary> Registers a <see cref="ShareResourcesClient"/> instance. </summary>
+        /// <param name="builder"> The builder to register with. </param>
+        /// <param name="endpoint"> The sharing endpoint of your purview account. Example: https://{accountName}.purview.azure.com/share. </param>
+        public static IAzureClientBuilder<ShareResourcesClient, PurviewShareClientOptions> AddShareResourcesClient<TBuilder>(this TBuilder builder, Uri endpoint)
+        where TBuilder : IAzureClientFactoryBuilderWithCredential
+        {
+            return builder.RegisterClientFactory<ShareResourcesClient, PurviewShareClientOptions>((options, cred) => new ShareResourcesClient(endpoint, cred, options));
         }
 
         /// <summary> Registers a <see cref="ReceivedSharesClient"/> instance. </summary>
@@ -46,6 +56,14 @@ namespace Microsoft.Extensions.Azure
         where TBuilder : IAzureClientFactoryBuilderWithConfiguration<TConfiguration>
         {
             return builder.RegisterClientFactory<SentSharesClient, PurviewShareClientOptions>(configuration);
+        }
+        /// <summary> Registers a <see cref="ShareResourcesClient"/> instance. </summary>
+        /// <param name="builder"> The builder to register with. </param>
+        /// <param name="configuration"> The configuration values. </param>
+        public static IAzureClientBuilder<ShareResourcesClient, PurviewShareClientOptions> AddShareResourcesClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration)
+        where TBuilder : IAzureClientFactoryBuilderWithConfiguration<TConfiguration>
+        {
+            return builder.RegisterClientFactory<ShareResourcesClient, PurviewShareClientOptions>(configuration);
         }
     }
 }

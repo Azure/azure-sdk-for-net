@@ -2,8 +2,8 @@
   "Entries": [],
   "Variables": {
     "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com",
-    "RandomSeed": "756288714",
+    "RandomSeed": "1271800783",
     "RESOURCE_MANAGER_URL": null,
-    "SUBSCRIPTION_ID": "db1ab6f0-4769-4b27-930e-01e2ef9c123c"
+    "SUBSCRIPTION_ID": "01b6a57a-5aef-40e2-8af7-562a2f81462e"
   }
 }

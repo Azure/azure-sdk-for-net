@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.VoiceServices
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<CommunicationsGatewayListResult>> ListBySubscriptionAsync(string subscriptionId, CancellationToken cancellationToken = default)
+        public async Task<Response<VoiceServicesCommunicationsGatewayListResult>> ListBySubscriptionAsync(string subscriptionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
@@ -69,9 +69,9 @@ namespace Azure.ResourceManager.VoiceServices
             {
                 case 200:
                     {
-                        CommunicationsGatewayListResult value = default;
+                        VoiceServicesCommunicationsGatewayListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = CommunicationsGatewayListResult.DeserializeCommunicationsGatewayListResult(document.RootElement);
+                        value = VoiceServicesCommunicationsGatewayListResult.DeserializeVoiceServicesCommunicationsGatewayListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.VoiceServices
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<CommunicationsGatewayListResult> ListBySubscription(string subscriptionId, CancellationToken cancellationToken = default)
+        public Response<VoiceServicesCommunicationsGatewayListResult> ListBySubscription(string subscriptionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
@@ -94,9 +94,9 @@ namespace Azure.ResourceManager.VoiceServices
             {
                 case 200:
                     {
-                        CommunicationsGatewayListResult value = default;
+                        VoiceServicesCommunicationsGatewayListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = CommunicationsGatewayListResult.DeserializeCommunicationsGatewayListResult(document.RootElement);
+                        value = VoiceServicesCommunicationsGatewayListResult.DeserializeVoiceServicesCommunicationsGatewayListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.VoiceServices
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<CommunicationsGatewayListResult>> ListByResourceGroupAsync(string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
+        public async Task<Response<VoiceServicesCommunicationsGatewayListResult>> ListByResourceGroupAsync(string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -140,9 +140,9 @@ namespace Azure.ResourceManager.VoiceServices
             {
                 case 200:
                     {
-                        CommunicationsGatewayListResult value = default;
+                        VoiceServicesCommunicationsGatewayListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = CommunicationsGatewayListResult.DeserializeCommunicationsGatewayListResult(document.RootElement);
+                        value = VoiceServicesCommunicationsGatewayListResult.DeserializeVoiceServicesCommunicationsGatewayListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.VoiceServices
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<CommunicationsGatewayListResult> ListByResourceGroup(string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
+        public Response<VoiceServicesCommunicationsGatewayListResult> ListByResourceGroup(string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -167,9 +167,9 @@ namespace Azure.ResourceManager.VoiceServices
             {
                 case 200:
                     {
-                        CommunicationsGatewayListResult value = default;
+                        VoiceServicesCommunicationsGatewayListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = CommunicationsGatewayListResult.DeserializeCommunicationsGatewayListResult(document.RootElement);
+                        value = VoiceServicesCommunicationsGatewayListResult.DeserializeVoiceServicesCommunicationsGatewayListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.VoiceServices
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="communicationsGatewayName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="communicationsGatewayName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<CommunicationsGatewayData>> GetAsync(string subscriptionId, string resourceGroupName, string communicationsGatewayName, CancellationToken cancellationToken = default)
+        public async Task<Response<VoiceServicesCommunicationsGatewayData>> GetAsync(string subscriptionId, string resourceGroupName, string communicationsGatewayName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -216,13 +216,13 @@ namespace Azure.ResourceManager.VoiceServices
             {
                 case 200:
                     {
-                        CommunicationsGatewayData value = default;
+                        VoiceServicesCommunicationsGatewayData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = CommunicationsGatewayData.DeserializeCommunicationsGatewayData(document.RootElement);
+                        value = VoiceServicesCommunicationsGatewayData.DeserializeVoiceServicesCommunicationsGatewayData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((CommunicationsGatewayData)null, message.Response);
+                    return Response.FromValue((VoiceServicesCommunicationsGatewayData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -235,7 +235,7 @@ namespace Azure.ResourceManager.VoiceServices
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="communicationsGatewayName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="communicationsGatewayName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<CommunicationsGatewayData> Get(string subscriptionId, string resourceGroupName, string communicationsGatewayName, CancellationToken cancellationToken = default)
+        public Response<VoiceServicesCommunicationsGatewayData> Get(string subscriptionId, string resourceGroupName, string communicationsGatewayName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -247,19 +247,19 @@ namespace Azure.ResourceManager.VoiceServices
             {
                 case 200:
                     {
-                        CommunicationsGatewayData value = default;
+                        VoiceServicesCommunicationsGatewayData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = CommunicationsGatewayData.DeserializeCommunicationsGatewayData(document.RootElement);
+                        value = VoiceServicesCommunicationsGatewayData.DeserializeVoiceServicesCommunicationsGatewayData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((CommunicationsGatewayData)null, message.Response);
+                    return Response.FromValue((VoiceServicesCommunicationsGatewayData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string communicationsGatewayName, CommunicationsGatewayData data)
+        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string communicationsGatewayName, VoiceServicesCommunicationsGatewayData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -291,7 +291,7 @@ namespace Azure.ResourceManager.VoiceServices
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="communicationsGatewayName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="communicationsGatewayName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string communicationsGatewayName, CommunicationsGatewayData data, CancellationToken cancellationToken = default)
+        public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string communicationsGatewayName, VoiceServicesCommunicationsGatewayData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -318,7 +318,7 @@ namespace Azure.ResourceManager.VoiceServices
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="communicationsGatewayName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="communicationsGatewayName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response CreateOrUpdate(string subscriptionId, string resourceGroupName, string communicationsGatewayName, CommunicationsGatewayData data, CancellationToken cancellationToken = default)
+        public Response CreateOrUpdate(string subscriptionId, string resourceGroupName, string communicationsGatewayName, VoiceServicesCommunicationsGatewayData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -409,7 +409,7 @@ namespace Azure.ResourceManager.VoiceServices
             }
         }
 
-        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string communicationsGatewayName, CommunicationsGatewayPatch patch)
+        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string communicationsGatewayName, VoiceServicesCommunicationsGatewayPatch patch)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -441,7 +441,7 @@ namespace Azure.ResourceManager.VoiceServices
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="communicationsGatewayName"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="communicationsGatewayName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<CommunicationsGatewayData>> UpdateAsync(string subscriptionId, string resourceGroupName, string communicationsGatewayName, CommunicationsGatewayPatch patch, CancellationToken cancellationToken = default)
+        public async Task<Response<VoiceServicesCommunicationsGatewayData>> UpdateAsync(string subscriptionId, string resourceGroupName, string communicationsGatewayName, VoiceServicesCommunicationsGatewayPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -454,9 +454,9 @@ namespace Azure.ResourceManager.VoiceServices
             {
                 case 200:
                     {
-                        CommunicationsGatewayData value = default;
+                        VoiceServicesCommunicationsGatewayData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = CommunicationsGatewayData.DeserializeCommunicationsGatewayData(document.RootElement);
+                        value = VoiceServicesCommunicationsGatewayData.DeserializeVoiceServicesCommunicationsGatewayData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -472,7 +472,7 @@ namespace Azure.ResourceManager.VoiceServices
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="communicationsGatewayName"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="communicationsGatewayName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<CommunicationsGatewayData> Update(string subscriptionId, string resourceGroupName, string communicationsGatewayName, CommunicationsGatewayPatch patch, CancellationToken cancellationToken = default)
+        public Response<VoiceServicesCommunicationsGatewayData> Update(string subscriptionId, string resourceGroupName, string communicationsGatewayName, VoiceServicesCommunicationsGatewayPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -485,9 +485,9 @@ namespace Azure.ResourceManager.VoiceServices
             {
                 case 200:
                     {
-                        CommunicationsGatewayData value = default;
+                        VoiceServicesCommunicationsGatewayData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = CommunicationsGatewayData.DeserializeCommunicationsGatewayData(document.RootElement);
+                        value = VoiceServicesCommunicationsGatewayData.DeserializeVoiceServicesCommunicationsGatewayData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -515,7 +515,7 @@ namespace Azure.ResourceManager.VoiceServices
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<CommunicationsGatewayListResult>> ListBySubscriptionNextPageAsync(string nextLink, string subscriptionId, CancellationToken cancellationToken = default)
+        public async Task<Response<VoiceServicesCommunicationsGatewayListResult>> ListBySubscriptionNextPageAsync(string nextLink, string subscriptionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -526,9 +526,9 @@ namespace Azure.ResourceManager.VoiceServices
             {
                 case 200:
                     {
-                        CommunicationsGatewayListResult value = default;
+                        VoiceServicesCommunicationsGatewayListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = CommunicationsGatewayListResult.DeserializeCommunicationsGatewayListResult(document.RootElement);
+                        value = VoiceServicesCommunicationsGatewayListResult.DeserializeVoiceServicesCommunicationsGatewayListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -542,7 +542,7 @@ namespace Azure.ResourceManager.VoiceServices
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<CommunicationsGatewayListResult> ListBySubscriptionNextPage(string nextLink, string subscriptionId, CancellationToken cancellationToken = default)
+        public Response<VoiceServicesCommunicationsGatewayListResult> ListBySubscriptionNextPage(string nextLink, string subscriptionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -553,9 +553,9 @@ namespace Azure.ResourceManager.VoiceServices
             {
                 case 200:
                     {
-                        CommunicationsGatewayListResult value = default;
+                        VoiceServicesCommunicationsGatewayListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = CommunicationsGatewayListResult.DeserializeCommunicationsGatewayListResult(document.RootElement);
+                        value = VoiceServicesCommunicationsGatewayListResult.DeserializeVoiceServicesCommunicationsGatewayListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -584,7 +584,7 @@ namespace Azure.ResourceManager.VoiceServices
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<CommunicationsGatewayListResult>> ListByResourceGroupNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
+        public async Task<Response<VoiceServicesCommunicationsGatewayListResult>> ListByResourceGroupNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -596,9 +596,9 @@ namespace Azure.ResourceManager.VoiceServices
             {
                 case 200:
                     {
-                        CommunicationsGatewayListResult value = default;
+                        VoiceServicesCommunicationsGatewayListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = CommunicationsGatewayListResult.DeserializeCommunicationsGatewayListResult(document.RootElement);
+                        value = VoiceServicesCommunicationsGatewayListResult.DeserializeVoiceServicesCommunicationsGatewayListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -613,7 +613,7 @@ namespace Azure.ResourceManager.VoiceServices
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<CommunicationsGatewayListResult> ListByResourceGroupNextPage(string nextLink, string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
+        public Response<VoiceServicesCommunicationsGatewayListResult> ListByResourceGroupNextPage(string nextLink, string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -625,9 +625,9 @@ namespace Azure.ResourceManager.VoiceServices
             {
                 case 200:
                     {
-                        CommunicationsGatewayListResult value = default;
+                        VoiceServicesCommunicationsGatewayListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = CommunicationsGatewayListResult.DeserializeCommunicationsGatewayListResult(document.RootElement);
+                        value = VoiceServicesCommunicationsGatewayListResult.DeserializeVoiceServicesCommunicationsGatewayListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

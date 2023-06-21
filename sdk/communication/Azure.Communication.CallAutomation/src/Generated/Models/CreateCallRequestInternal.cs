@@ -32,14 +32,14 @@ namespace Azure.Communication.CallAutomation
         /// <summary> The targets of the call. </summary>
         public IList<CommunicationIdentifierModel> Targets { get; }
         /// <summary>
-        /// The source caller Id, a phone number, that&apos;s shown to the PSTN participant being invited.
+        /// The source caller Id, a phone number, that's shown to the PSTN participant being invited.
         /// Required only when calling a PSTN callee.
         /// </summary>
         public PhoneNumberIdentifierModel SourceCallerIdNumber { get; set; }
         /// <summary> Display name of the call if dialing out to a pstn number. </summary>
         public string SourceDisplayName { get; set; }
         /// <summary> The identifier of the source of the call. </summary>
-        public CommunicationIdentifierModel SourceIdentity { get; set; }
+        public CommunicationUserIdentifierModel SourceIdentity { get; set; }
         /// <summary> A customer set value used to track the answering of a call. </summary>
         public string OperationContext { get; set; }
         /// <summary> The callback URI. </summary>

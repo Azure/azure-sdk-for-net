@@ -44,6 +44,10 @@ namespace Azure.Search.Documents.Indexes.Models
         [CodeGenMember("EdmComplexType")]
         public static SearchFieldDataType Complex { get; } = new SearchFieldDataType(ComplexValue);
 
+        /// <summary>A single type.</summary>
+        [CodeGenMember("EdmSingle")]
+        public static SearchFieldDataType Single { get; } = new SearchFieldDataType(SingleValue);
+
         /// <summary>
         /// Gets a <see cref="SearchFieldDataType"/> representing a collection of <paramref name="type"/>.
         /// </summary>

@@ -55,6 +55,11 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 }
                 writer.WriteEndArray();
             }
+            if (Optional.IsDefined(SecurityContext))
+            {
+                writer.WritePropertyName("securityContext"u8);
+                writer.WriteObjectValue(SecurityContext);
+            }
             writer.WriteEndObject();
             writer.WriteEndObject();
         }
@@ -71,6 +76,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             Optional<IList<ContainerEnvironmentVariable>> environmentVariables = default;
             Optional<InitContainerPropertiesDefinitionInstanceView> instanceView = default;
             Optional<IList<ContainerVolumeMount>> volumeMounts = default;
+            Optional<ContainerSecurityContextDefinition> securityContext = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -143,11 +149,20 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                             volumeMounts = array;
                             continue;
                         }
+                        if (property0.NameEquals("securityContext"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            securityContext = ContainerSecurityContextDefinition.DeserializeContainerSecurityContextDefinition(property0.Value);
+                            continue;
+                        }
                     }
                     continue;
                 }
             }
-            return new InitContainerDefinitionContent(name, image.Value, Optional.ToList(command), Optional.ToList(environmentVariables), instanceView.Value, Optional.ToList(volumeMounts));
+            return new InitContainerDefinitionContent(name, image.Value, Optional.ToList(command), Optional.ToList(environmentVariables), instanceView.Value, Optional.ToList(volumeMounts), securityContext.Value);
         }
     }
 }

@@ -2,13 +2,14 @@
 // Licensed under the MIT License.
 
 using System;
-using System.IO;
-using Azure.Core.Buffers;
-using System.Threading.Tasks;
-using System.Threading;
 using System.Buffers;
-using Azure.Core.Serialization;
+using System.IO;
 using System.Text;
+using System.Text.Json;
+using System.Threading;
+using System.Threading.Tasks;
+using Azure.Core.Buffers;
+using Azure.Core.Serialization;
 
 namespace Azure.Core
 {
@@ -82,9 +83,35 @@ namespace Azure.Core
         /// Creates an instance of <see cref="RequestContent"/> that wraps a serialized version of an object.
         /// </summary>
         /// <param name="serializable">The <see cref="object"/> to serialize.</param>
+        /// <returns>An instance of <see cref="RequestContent"/> that wraps a serialized version of the object.</returns>
+        public static RequestContent Create(object serializable) => Create(serializable, JsonObjectSerializer.Default);
+
+        /// <summary>
+        /// Creates an instance of <see cref="RequestContent"/> that wraps a serialized version of an object.
+        /// </summary>
+        /// <param name="serializable">The <see cref="object"/> to serialize.</param>
         /// <param name="serializer">The <see cref="ObjectSerializer"/> to use to convert the object to bytes. If not provided, <see cref="JsonObjectSerializer"/> is used.</param>
         /// <returns>An instance of <see cref="RequestContent"/> that wraps a serialized version of the object.</returns>
-        public static RequestContent Create(object serializable, ObjectSerializer? serializer = null) => Create((serializer ?? JsonObjectSerializer.Default).Serialize(serializable));
+        public static RequestContent Create(object serializable, ObjectSerializer? serializer) => Create((serializer ?? JsonObjectSerializer.Default).Serialize(serializable));
+
+        /// <summary>
+        /// Creates an instance of <see cref="RequestContent"/> that wraps a serialized version of an object.
+        /// </summary>
+        /// <param name="serializable">The <see cref="object"/> to serialize.</param>
+        /// <param name="propertyNameFormat">The format to use for property names in the serialized content.</param>
+        /// <param name="dateTimeFormat">The format to use for DateTime and DateTimeOffset values in the serialized content.</param>
+        /// <returns>An instance of <see cref="RequestContent"/> that wraps a serialized version of the object.</returns>
+        public static RequestContent Create(object serializable, JsonPropertyNames propertyNameFormat, string dateTimeFormat = DynamicData.RoundTripFormat)
+        {
+            DynamicDataOptions options = new()
+            {
+                PropertyNameFormat = propertyNameFormat,
+                DateTimeFormat = dateTimeFormat
+            };
+            JsonSerializerOptions serializerOptions = DynamicDataOptions.ToSerializerOptions(options);
+            ObjectSerializer serializer = new JsonObjectSerializer(serializerOptions);
+            return Create(serializer.Serialize(serializable));
+        }
 
         /// <summary>
         /// Creates a RequestContent representing the UTF-8 Encoding of the given <see cref="string"/>.
@@ -97,6 +124,12 @@ namespace Azure.Core
         /// </summary>
         /// <param name="content">The <see cref="BinaryData"/> to use.</param>
         public static implicit operator RequestContent(BinaryData content) => Create(content);
+
+        /// <summary>
+        /// Creates a RequestContent that wraps a <see cref="DynamicData"/>.
+        /// </summary>
+        /// <param name="content">The <see cref="DynamicData"/> to use.</param>
+        public static implicit operator RequestContent(DynamicData content) => Create(content);
 
         /// <summary>
         /// Writes contents of this object to an instance of <see cref="Stream"/>.
@@ -151,7 +184,8 @@ namespace Azure.Core
                     {
                         CancellationHelper.ThrowIfCancellationRequested(cancellationToken);
                         var read = _stream.Read(buffer, 0, buffer.Length);
-                        if (read == 0) { break; }
+                        if (read == 0)
+                        { break; }
                         CancellationHelper.ThrowIfCancellationRequested(cancellationToken);
                         stream.Write(buffer, 0, read);
                     }

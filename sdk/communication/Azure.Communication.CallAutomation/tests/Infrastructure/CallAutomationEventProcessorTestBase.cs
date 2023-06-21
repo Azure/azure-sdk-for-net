@@ -76,7 +76,7 @@ namespace Azure.Communication.CallAutomation.Tests.Infrastructure
 
         protected CallConnection CreateMoakCallConnection(string? callConnectionId = default)
         {
-            CallConnection callconn = new CallConnection(callConnectionId == default ? CallConnectionId : callConnectionId, null, null, null, null);
+            CallConnection callconn = new CallConnection(callConnectionId == default ? CallConnectionId : callConnectionId, null, null, null, null, null);
 
             return callconn;
         }
@@ -100,9 +100,9 @@ namespace Azure.Communication.CallAutomation.Tests.Infrastructure
 
         protected void SendAndProcessEvent(
             CallAutomationEventProcessor eventProcessor,
-            CallAutomationEventData eventToBeSent)
+            CallAutomationEventBase eventToBeSent)
         {
-            eventProcessor.ProcessEvents(new List<CallAutomationEventData>() { eventToBeSent });
+            eventProcessor.ProcessEvents(new List<CallAutomationEventBase>() { eventToBeSent });
         }
     }
 }

@@ -52,81 +52,6 @@ Console.WriteLine(result.GetProperty("tags").GetProperty("<test>").ToString());
 Console.WriteLine(result.GetProperty("type").ToString());
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the response payload.
-
-Response Body:
-
-Schema for <c>Account</c>:
-<code>{
-  id: string, # Optional. Gets or sets the identifier.
-  identity: {
-    principalId: string, # Optional. Service principal object Id
-    tenantId: string, # Optional. Tenant Id
-    type: &quot;SystemAssigned&quot;, # Optional. Identity Type
-  }, # Optional. Identity Info on the tracked resource
-  location: string, # Optional. Gets or sets the location.
-  name: string, # Optional. Gets or sets the name.
-  properties: {
-    cloudConnectors: {
-      awsExternalId: string, # Optional. AWS external identifier.
-Configured in AWS to allow use of the role arn used for scanning
-    }, # Optional. Cloud connectors.
-External cloud identifier used as part of scanning configuration.
-    createdAt: string (ISO 8601 Format), # Optional. Gets the time at which the entity was created.
-    createdBy: string, # Optional. Gets the creator of the entity.
-    createdByObjectId: string, # Optional. Gets the creators of the entity&apos;s object id.
-    endpoints: {
-      catalog: string, # Optional. Gets the catalog endpoint.
-      guardian: string, # Optional. Gets the guardian endpoint.
-      scan: string, # Optional. Gets the scan endpoint.
-    }, # Optional. The URIs that are the public endpoints of the account.
-    friendlyName: string, # Optional. Gets or sets the friendly name.
-    managedResourceGroupName: string, # Optional. Gets or sets the managed resource group name
-    managedResources: {
-      eventHubNamespace: string, # Optional. Gets the managed event hub namespace resource identifier.
-      resourceGroup: string, # Optional. Gets the managed resource group resource identifier. This resource group will host resource dependencies for the account.
-      storageAccount: string, # Optional. Gets the managed storage account resource identifier.
-    }, # Optional. Gets the resource identifiers of the managed resources.
-    privateEndpointConnections: [
-      {
-        id: string, # Optional. Gets or sets the identifier.
-        name: string, # Optional. Gets or sets the name.
-        properties: {
-          privateEndpoint: {
-            id: string, # Optional. The private endpoint identifier.
-          }, # Optional. The private endpoint information.
-          privateLinkServiceConnectionState: {
-            actionsRequired: string, # Optional. The required actions.
-            description: string, # Optional. The description.
-            status: &quot;Unknown&quot; | &quot;Pending&quot; | &quot;Approved&quot; | &quot;Rejected&quot; | &quot;Disconnected&quot;, # Optional. The status.
-          }, # Optional. The private link service connection state.
-          provisioningState: string, # Optional. The provisioning state.
-        }, # Optional. The connection identifier.
-        type: string, # Optional. Gets or sets the type.
-      }
-    ], # Optional. Gets the private endpoint connections information.
-    provisioningState: &quot;Unknown&quot; | &quot;Creating&quot; | &quot;Moving&quot; | &quot;Deleting&quot; | &quot;SoftDeleting&quot; | &quot;SoftDeleted&quot; | &quot;Failed&quot; | &quot;Succeeded&quot; | &quot;Canceled&quot;, # Optional. Gets or sets the state of the provisioning.
-    publicNetworkAccess: &quot;NotSpecified&quot; | &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional. Gets or sets the public network access.
-  }, # Optional. Gets or sets the properties.
-  sku: {
-    capacity: number, # Optional. Gets or sets the sku capacity. Possible values include: 4, 16
-    name: &quot;Standard&quot;, # Optional. Gets or sets the sku name.
-  }, # Optional. Gets or sets the Sku.
-  systemData: {
-    createdAt: string (ISO 8601 Format), # Optional. The timestamp of resource creation (UTC).
-    createdBy: string, # Optional. The identity that created the resource.
-    createdByType: &quot;User&quot; | &quot;Application&quot; | &quot;ManagedIdentity&quot; | &quot;Key&quot;, # Optional. The type of identity that created the resource.
-    lastModifiedAt: string (ISO 8601 Format), # Optional. The timestamp of the last modification the resource (UTC).
-    lastModifiedBy: string, # Optional. The identity that last modified the resource.
-    lastModifiedByType: &quot;User&quot; | &quot;Application&quot; | &quot;ManagedIdentity&quot; | &quot;Key&quot;, # Optional. The type of identity that last modified the resource.
-  }, # Optional. Metadata pertaining to creation and last modification of the resource.
-  tags: Dictionary&lt;string, string&gt;, # Optional. Tags on the azure resource.
-  type: string, # Optional. Gets or sets the type.
-}
-</code>
-
-</remarks>
     </member>
     <member name="GetAccountProperties(RequestContext)">
 <example>
@@ -179,81 +104,6 @@ Console.WriteLine(result.GetProperty("tags").GetProperty("<test>").ToString());
 Console.WriteLine(result.GetProperty("type").ToString());
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the response payload.
-
-Response Body:
-
-Schema for <c>Account</c>:
-<code>{
-  id: string, # Optional. Gets or sets the identifier.
-  identity: {
-    principalId: string, # Optional. Service principal object Id
-    tenantId: string, # Optional. Tenant Id
-    type: &quot;SystemAssigned&quot;, # Optional. Identity Type
-  }, # Optional. Identity Info on the tracked resource
-  location: string, # Optional. Gets or sets the location.
-  name: string, # Optional. Gets or sets the name.
-  properties: {
-    cloudConnectors: {
-      awsExternalId: string, # Optional. AWS external identifier.
-Configured in AWS to allow use of the role arn used for scanning
-    }, # Optional. Cloud connectors.
-External cloud identifier used as part of scanning configuration.
-    createdAt: string (ISO 8601 Format), # Optional. Gets the time at which the entity was created.
-    createdBy: string, # Optional. Gets the creator of the entity.
-    createdByObjectId: string, # Optional. Gets the creators of the entity&apos;s object id.
-    endpoints: {
-      catalog: string, # Optional. Gets the catalog endpoint.
-      guardian: string, # Optional. Gets the guardian endpoint.
-      scan: string, # Optional. Gets the scan endpoint.
-    }, # Optional. The URIs that are the public endpoints of the account.
-    friendlyName: string, # Optional. Gets or sets the friendly name.
-    managedResourceGroupName: string, # Optional. Gets or sets the managed resource group name
-    managedResources: {
-      eventHubNamespace: string, # Optional. Gets the managed event hub namespace resource identifier.
-      resourceGroup: string, # Optional. Gets the managed resource group resource identifier. This resource group will host resource dependencies for the account.
-      storageAccount: string, # Optional. Gets the managed storage account resource identifier.
-    }, # Optional. Gets the resource identifiers of the managed resources.
-    privateEndpointConnections: [
-      {
-        id: string, # Optional. Gets or sets the identifier.
-        name: string, # Optional. Gets or sets the name.
-        properties: {
-          privateEndpoint: {
-            id: string, # Optional. The private endpoint identifier.
-          }, # Optional. The private endpoint information.
-          privateLinkServiceConnectionState: {
-            actionsRequired: string, # Optional. The required actions.
-            description: string, # Optional. The description.
-            status: &quot;Unknown&quot; | &quot;Pending&quot; | &quot;Approved&quot; | &quot;Rejected&quot; | &quot;Disconnected&quot;, # Optional. The status.
-          }, # Optional. The private link service connection state.
-          provisioningState: string, # Optional. The provisioning state.
-        }, # Optional. The connection identifier.
-        type: string, # Optional. Gets or sets the type.
-      }
-    ], # Optional. Gets the private endpoint connections information.
-    provisioningState: &quot;Unknown&quot; | &quot;Creating&quot; | &quot;Moving&quot; | &quot;Deleting&quot; | &quot;SoftDeleting&quot; | &quot;SoftDeleted&quot; | &quot;Failed&quot; | &quot;Succeeded&quot; | &quot;Canceled&quot;, # Optional. Gets or sets the state of the provisioning.
-    publicNetworkAccess: &quot;NotSpecified&quot; | &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional. Gets or sets the public network access.
-  }, # Optional. Gets or sets the properties.
-  sku: {
-    capacity: number, # Optional. Gets or sets the sku capacity. Possible values include: 4, 16
-    name: &quot;Standard&quot;, # Optional. Gets or sets the sku name.
-  }, # Optional. Gets or sets the Sku.
-  systemData: {
-    createdAt: string (ISO 8601 Format), # Optional. The timestamp of resource creation (UTC).
-    createdBy: string, # Optional. The identity that created the resource.
-    createdByType: &quot;User&quot; | &quot;Application&quot; | &quot;ManagedIdentity&quot; | &quot;Key&quot;, # Optional. The type of identity that created the resource.
-    lastModifiedAt: string (ISO 8601 Format), # Optional. The timestamp of the last modification the resource (UTC).
-    lastModifiedBy: string, # Optional. The identity that last modified the resource.
-    lastModifiedByType: &quot;User&quot; | &quot;Application&quot; | &quot;ManagedIdentity&quot; | &quot;Key&quot;, # Optional. The type of identity that last modified the resource.
-  }, # Optional. Metadata pertaining to creation and last modification of the resource.
-  tags: Dictionary&lt;string, string&gt;, # Optional. Tags on the azure resource.
-  type: string, # Optional. Gets or sets the type.
-}
-</code>
-
-</remarks>
     </member>
     <member name="UpdateAccountPropertiesAsync(RequestContent,RequestContext)">
 <example>
@@ -323,89 +173,6 @@ Console.WriteLine(result.GetProperty("tags").GetProperty("<test>").ToString());
 Console.WriteLine(result.GetProperty("type").ToString());
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the request and response payloads.
-
-Request Body:
-
-Schema for <c>DataPlaneAccountUpdateParameters</c>:
-<code>{
-  friendlyName: string, # Optional. The friendly name for the azure resource.
-}
-</code>
-
-Response Body:
-
-Schema for <c>Account</c>:
-<code>{
-  id: string, # Optional. Gets or sets the identifier.
-  identity: {
-    principalId: string, # Optional. Service principal object Id
-    tenantId: string, # Optional. Tenant Id
-    type: &quot;SystemAssigned&quot;, # Optional. Identity Type
-  }, # Optional. Identity Info on the tracked resource
-  location: string, # Optional. Gets or sets the location.
-  name: string, # Optional. Gets or sets the name.
-  properties: {
-    cloudConnectors: {
-      awsExternalId: string, # Optional. AWS external identifier.
-Configured in AWS to allow use of the role arn used for scanning
-    }, # Optional. Cloud connectors.
-External cloud identifier used as part of scanning configuration.
-    createdAt: string (ISO 8601 Format), # Optional. Gets the time at which the entity was created.
-    createdBy: string, # Optional. Gets the creator of the entity.
-    createdByObjectId: string, # Optional. Gets the creators of the entity&apos;s object id.
-    endpoints: {
-      catalog: string, # Optional. Gets the catalog endpoint.
-      guardian: string, # Optional. Gets the guardian endpoint.
-      scan: string, # Optional. Gets the scan endpoint.
-    }, # Optional. The URIs that are the public endpoints of the account.
-    friendlyName: string, # Optional. Gets or sets the friendly name.
-    managedResourceGroupName: string, # Optional. Gets or sets the managed resource group name
-    managedResources: {
-      eventHubNamespace: string, # Optional. Gets the managed event hub namespace resource identifier.
-      resourceGroup: string, # Optional. Gets the managed resource group resource identifier. This resource group will host resource dependencies for the account.
-      storageAccount: string, # Optional. Gets the managed storage account resource identifier.
-    }, # Optional. Gets the resource identifiers of the managed resources.
-    privateEndpointConnections: [
-      {
-        id: string, # Optional. Gets or sets the identifier.
-        name: string, # Optional. Gets or sets the name.
-        properties: {
-          privateEndpoint: {
-            id: string, # Optional. The private endpoint identifier.
-          }, # Optional. The private endpoint information.
-          privateLinkServiceConnectionState: {
-            actionsRequired: string, # Optional. The required actions.
-            description: string, # Optional. The description.
-            status: &quot;Unknown&quot; | &quot;Pending&quot; | &quot;Approved&quot; | &quot;Rejected&quot; | &quot;Disconnected&quot;, # Optional. The status.
-          }, # Optional. The private link service connection state.
-          provisioningState: string, # Optional. The provisioning state.
-        }, # Optional. The connection identifier.
-        type: string, # Optional. Gets or sets the type.
-      }
-    ], # Optional. Gets the private endpoint connections information.
-    provisioningState: &quot;Unknown&quot; | &quot;Creating&quot; | &quot;Moving&quot; | &quot;Deleting&quot; | &quot;SoftDeleting&quot; | &quot;SoftDeleted&quot; | &quot;Failed&quot; | &quot;Succeeded&quot; | &quot;Canceled&quot;, # Optional. Gets or sets the state of the provisioning.
-    publicNetworkAccess: &quot;NotSpecified&quot; | &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional. Gets or sets the public network access.
-  }, # Optional. Gets or sets the properties.
-  sku: {
-    capacity: number, # Optional. Gets or sets the sku capacity. Possible values include: 4, 16
-    name: &quot;Standard&quot;, # Optional. Gets or sets the sku name.
-  }, # Optional. Gets or sets the Sku.
-  systemData: {
-    createdAt: string (ISO 8601 Format), # Optional. The timestamp of resource creation (UTC).
-    createdBy: string, # Optional. The identity that created the resource.
-    createdByType: &quot;User&quot; | &quot;Application&quot; | &quot;ManagedIdentity&quot; | &quot;Key&quot;, # Optional. The type of identity that created the resource.
-    lastModifiedAt: string (ISO 8601 Format), # Optional. The timestamp of the last modification the resource (UTC).
-    lastModifiedBy: string, # Optional. The identity that last modified the resource.
-    lastModifiedByType: &quot;User&quot; | &quot;Application&quot; | &quot;ManagedIdentity&quot; | &quot;Key&quot;, # Optional. The type of identity that last modified the resource.
-  }, # Optional. Metadata pertaining to creation and last modification of the resource.
-  tags: Dictionary&lt;string, string&gt;, # Optional. Tags on the azure resource.
-  type: string, # Optional. Gets or sets the type.
-}
-</code>
-
-</remarks>
     </member>
     <member name="UpdateAccountProperties(RequestContent,RequestContext)">
 <example>
@@ -475,89 +242,6 @@ Console.WriteLine(result.GetProperty("tags").GetProperty("<test>").ToString());
 Console.WriteLine(result.GetProperty("type").ToString());
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the request and response payloads.
-
-Request Body:
-
-Schema for <c>DataPlaneAccountUpdateParameters</c>:
-<code>{
-  friendlyName: string, # Optional. The friendly name for the azure resource.
-}
-</code>
-
-Response Body:
-
-Schema for <c>Account</c>:
-<code>{
-  id: string, # Optional. Gets or sets the identifier.
-  identity: {
-    principalId: string, # Optional. Service principal object Id
-    tenantId: string, # Optional. Tenant Id
-    type: &quot;SystemAssigned&quot;, # Optional. Identity Type
-  }, # Optional. Identity Info on the tracked resource
-  location: string, # Optional. Gets or sets the location.
-  name: string, # Optional. Gets or sets the name.
-  properties: {
-    cloudConnectors: {
-      awsExternalId: string, # Optional. AWS external identifier.
-Configured in AWS to allow use of the role arn used for scanning
-    }, # Optional. Cloud connectors.
-External cloud identifier used as part of scanning configuration.
-    createdAt: string (ISO 8601 Format), # Optional. Gets the time at which the entity was created.
-    createdBy: string, # Optional. Gets the creator of the entity.
-    createdByObjectId: string, # Optional. Gets the creators of the entity&apos;s object id.
-    endpoints: {
-      catalog: string, # Optional. Gets the catalog endpoint.
-      guardian: string, # Optional. Gets the guardian endpoint.
-      scan: string, # Optional. Gets the scan endpoint.
-    }, # Optional. The URIs that are the public endpoints of the account.
-    friendlyName: string, # Optional. Gets or sets the friendly name.
-    managedResourceGroupName: string, # Optional. Gets or sets the managed resource group name
-    managedResources: {
-      eventHubNamespace: string, # Optional. Gets the managed event hub namespace resource identifier.
-      resourceGroup: string, # Optional. Gets the managed resource group resource identifier. This resource group will host resource dependencies for the account.
-      storageAccount: string, # Optional. Gets the managed storage account resource identifier.
-    }, # Optional. Gets the resource identifiers of the managed resources.
-    privateEndpointConnections: [
-      {
-        id: string, # Optional. Gets or sets the identifier.
-        name: string, # Optional. Gets or sets the name.
-        properties: {
-          privateEndpoint: {
-            id: string, # Optional. The private endpoint identifier.
-          }, # Optional. The private endpoint information.
-          privateLinkServiceConnectionState: {
-            actionsRequired: string, # Optional. The required actions.
-            description: string, # Optional. The description.
-            status: &quot;Unknown&quot; | &quot;Pending&quot; | &quot;Approved&quot; | &quot;Rejected&quot; | &quot;Disconnected&quot;, # Optional. The status.
-          }, # Optional. The private link service connection state.
-          provisioningState: string, # Optional. The provisioning state.
-        }, # Optional. The connection identifier.
-        type: string, # Optional. Gets or sets the type.
-      }
-    ], # Optional. Gets the private endpoint connections information.
-    provisioningState: &quot;Unknown&quot; | &quot;Creating&quot; | &quot;Moving&quot; | &quot;Deleting&quot; | &quot;SoftDeleting&quot; | &quot;SoftDeleted&quot; | &quot;Failed&quot; | &quot;Succeeded&quot; | &quot;Canceled&quot;, # Optional. Gets or sets the state of the provisioning.
-    publicNetworkAccess: &quot;NotSpecified&quot; | &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional. Gets or sets the public network access.
-  }, # Optional. Gets or sets the properties.
-  sku: {
-    capacity: number, # Optional. Gets or sets the sku capacity. Possible values include: 4, 16
-    name: &quot;Standard&quot;, # Optional. Gets or sets the sku name.
-  }, # Optional. Gets or sets the Sku.
-  systemData: {
-    createdAt: string (ISO 8601 Format), # Optional. The timestamp of resource creation (UTC).
-    createdBy: string, # Optional. The identity that created the resource.
-    createdByType: &quot;User&quot; | &quot;Application&quot; | &quot;ManagedIdentity&quot; | &quot;Key&quot;, # Optional. The type of identity that created the resource.
-    lastModifiedAt: string (ISO 8601 Format), # Optional. The timestamp of the last modification the resource (UTC).
-    lastModifiedBy: string, # Optional. The identity that last modified the resource.
-    lastModifiedByType: &quot;User&quot; | &quot;Application&quot; | &quot;ManagedIdentity&quot; | &quot;Key&quot;, # Optional. The type of identity that last modified the resource.
-  }, # Optional. Metadata pertaining to creation and last modification of the resource.
-  tags: Dictionary&lt;string, string&gt;, # Optional. Tags on the azure resource.
-  type: string, # Optional. Gets or sets the type.
-}
-</code>
-
-</remarks>
     </member>
     <member name="GetAccessKeysAsync(RequestContext)">
 <example>
@@ -574,19 +258,6 @@ Console.WriteLine(result.GetProperty("atlasKafkaPrimaryEndpoint").ToString());
 Console.WriteLine(result.GetProperty("atlasKafkaSecondaryEndpoint").ToString());
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the response payload.
-
-Response Body:
-
-Schema for <c>AccessKeys</c>:
-<code>{
-  atlasKafkaPrimaryEndpoint: string, # Optional. Gets or sets the primary connection string.
-  atlasKafkaSecondaryEndpoint: string, # Optional. Gets or sets the secondary connection string.
-}
-</code>
-
-</remarks>
     </member>
     <member name="GetAccessKeys(RequestContext)">
 <example>
@@ -603,19 +274,6 @@ Console.WriteLine(result.GetProperty("atlasKafkaPrimaryEndpoint").ToString());
 Console.WriteLine(result.GetProperty("atlasKafkaSecondaryEndpoint").ToString());
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the response payload.
-
-Response Body:
-
-Schema for <c>AccessKeys</c>:
-<code>{
-  atlasKafkaPrimaryEndpoint: string, # Optional. Gets or sets the primary connection string.
-  atlasKafkaSecondaryEndpoint: string, # Optional. Gets or sets the secondary connection string.
-}
-</code>
-
-</remarks>
     </member>
     <member name="RegenerateAccessKeyAsync(RequestContent,RequestContext)">
 <example>
@@ -649,27 +307,6 @@ Console.WriteLine(result.GetProperty("atlasKafkaPrimaryEndpoint").ToString());
 Console.WriteLine(result.GetProperty("atlasKafkaSecondaryEndpoint").ToString());
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the request and response payloads.
-
-Request Body:
-
-Schema for <c>AccessKeyOptions</c>:
-<code>{
-  keyType: &quot;PrimaryAtlasKafkaKey&quot; | &quot;SecondaryAtlasKafkaKey&quot;, # Optional. The access key type.
-}
-</code>
-
-Response Body:
-
-Schema for <c>AccessKeys</c>:
-<code>{
-  atlasKafkaPrimaryEndpoint: string, # Optional. Gets or sets the primary connection string.
-  atlasKafkaSecondaryEndpoint: string, # Optional. Gets or sets the secondary connection string.
-}
-</code>
-
-</remarks>
     </member>
     <member name="RegenerateAccessKey(RequestContent,RequestContext)">
 <example>
@@ -703,29 +340,8 @@ Console.WriteLine(result.GetProperty("atlasKafkaPrimaryEndpoint").ToString());
 Console.WriteLine(result.GetProperty("atlasKafkaSecondaryEndpoint").ToString());
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the request and response payloads.
-
-Request Body:
-
-Schema for <c>AccessKeyOptions</c>:
-<code>{
-  keyType: &quot;PrimaryAtlasKafkaKey&quot; | &quot;SecondaryAtlasKafkaKey&quot;, # Optional. The access key type.
-}
-</code>
-
-Response Body:
-
-Schema for <c>AccessKeys</c>:
-<code>{
-  atlasKafkaPrimaryEndpoint: string, # Optional. Gets or sets the primary connection string.
-  atlasKafkaSecondaryEndpoint: string, # Optional. Gets or sets the secondary connection string.
-}
-</code>
-
-</remarks>
     </member>
-    <member name="GetCollectionsAsync(String,RequestContext)">
+    <member name="GetCollectionsAsync(string,RequestContext)">
 <example>
 This sample shows how to call GetCollectionsAsync and parse the result.
 <code><![CDATA[
@@ -733,9 +349,9 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new PurviewAccountClient(endpoint, credential);
 
-await foreach (var data in client.GetCollectionsAsync())
+await foreach (var item in client.GetCollectionsAsync())
 {
-    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.ToString());
 }
 ]]></code>
@@ -745,9 +361,9 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new PurviewAccountClient(endpoint, credential);
 
-await foreach (var data in client.GetCollectionsAsync("<skipToken>"))
+await foreach (var item in client.GetCollectionsAsync("<skipToken>"))
 {
-    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("collectionProvisioningState").ToString());
     Console.WriteLine(result.GetProperty("description").ToString());
     Console.WriteLine(result.GetProperty("friendlyName").ToString());
@@ -763,35 +379,8 @@ await foreach (var data in client.GetCollectionsAsync("<skipToken>"))
 }
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for one item in the pageable response.
-
-Response Body:
-
-Schema for <c>CollectionListValue</c>:
-<code>{
-  collectionProvisioningState: &quot;Unknown&quot; | &quot;Creating&quot; | &quot;Moving&quot; | &quot;Deleting&quot; | &quot;Failed&quot; | &quot;Succeeded&quot;, # Optional. Gets the state of the provisioning.
-  description: string, # Optional. Gets or sets the description.
-  friendlyName: string, # Optional. Gets or sets the friendly name of the collection.
-  name: string, # Optional. Gets the name.
-  parentCollection: {
-    referenceName: string, # Optional. Gets or sets the reference name.
-    type: string, # Optional. Gets the reference type property.
-  }, # Optional. Gets or sets the parent collection reference.
-  systemData: {
-    createdAt: string (ISO 8601 Format), # Optional. The timestamp of resource creation (UTC).
-    createdBy: string, # Optional. The identity that created the resource.
-    createdByType: &quot;User&quot; | &quot;Application&quot; | &quot;ManagedIdentity&quot; | &quot;Key&quot;, # Optional. The type of identity that created the resource.
-    lastModifiedAt: string (ISO 8601 Format), # Optional. The timestamp of the last modification the resource (UTC).
-    lastModifiedBy: string, # Optional. The identity that last modified the resource.
-    lastModifiedByType: &quot;User&quot; | &quot;Application&quot; | &quot;ManagedIdentity&quot; | &quot;Key&quot;, # Optional. The type of identity that last modified the resource.
-  }, # Optional. Gets the system data that contains information about who and when created and updated the resource.
-}
-</code>
-
-</remarks>
     </member>
-    <member name="GetCollections(String,RequestContext)">
+    <member name="GetCollections(string,RequestContext)">
 <example>
 This sample shows how to call GetCollections and parse the result.
 <code><![CDATA[
@@ -799,9 +388,9 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new PurviewAccountClient(endpoint, credential);
 
-foreach (var data in client.GetCollections())
+foreach (var item in client.GetCollections())
 {
-    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.ToString());
 }
 ]]></code>
@@ -811,9 +400,9 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new PurviewAccountClient(endpoint, credential);
 
-foreach (var data in client.GetCollections("<skipToken>"))
+foreach (var item in client.GetCollections("<skipToken>"))
 {
-    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("collectionProvisioningState").ToString());
     Console.WriteLine(result.GetProperty("description").ToString());
     Console.WriteLine(result.GetProperty("friendlyName").ToString());
@@ -829,35 +418,8 @@ foreach (var data in client.GetCollections("<skipToken>"))
 }
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for one item in the pageable response.
-
-Response Body:
-
-Schema for <c>CollectionListValue</c>:
-<code>{
-  collectionProvisioningState: &quot;Unknown&quot; | &quot;Creating&quot; | &quot;Moving&quot; | &quot;Deleting&quot; | &quot;Failed&quot; | &quot;Succeeded&quot;, # Optional. Gets the state of the provisioning.
-  description: string, # Optional. Gets or sets the description.
-  friendlyName: string, # Optional. Gets or sets the friendly name of the collection.
-  name: string, # Optional. Gets the name.
-  parentCollection: {
-    referenceName: string, # Optional. Gets or sets the reference name.
-    type: string, # Optional. Gets the reference type property.
-  }, # Optional. Gets or sets the parent collection reference.
-  systemData: {
-    createdAt: string (ISO 8601 Format), # Optional. The timestamp of resource creation (UTC).
-    createdBy: string, # Optional. The identity that created the resource.
-    createdByType: &quot;User&quot; | &quot;Application&quot; | &quot;ManagedIdentity&quot; | &quot;Key&quot;, # Optional. The type of identity that created the resource.
-    lastModifiedAt: string (ISO 8601 Format), # Optional. The timestamp of the last modification the resource (UTC).
-    lastModifiedBy: string, # Optional. The identity that last modified the resource.
-    lastModifiedByType: &quot;User&quot; | &quot;Application&quot; | &quot;ManagedIdentity&quot; | &quot;Key&quot;, # Optional. The type of identity that last modified the resource.
-  }, # Optional. Gets the system data that contains information about who and when created and updated the resource.
-}
-</code>
-
-</remarks>
     </member>
-    <member name="GetResourceSetRulesAsync(String,RequestContext)">
+    <member name="GetResourceSetRulesAsync(string,RequestContext)">
 <example>
 This sample shows how to call GetResourceSetRulesAsync and parse the result.
 <code><![CDATA[
@@ -865,9 +427,9 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new PurviewAccountClient(endpoint, credential);
 
-await foreach (var data in client.GetResourceSetRulesAsync())
+await foreach (var item in client.GetResourceSetRulesAsync())
 {
-    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.ToString());
 }
 ]]></code>
@@ -877,9 +439,9 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new PurviewAccountClient(endpoint, credential);
 
-await foreach (var data in client.GetResourceSetRulesAsync("<skipToken>"))
+await foreach (var item in client.GetResourceSetRulesAsync("<skipToken>"))
 {
-    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("advancedResourceSet").GetProperty("modifiedAt").ToString());
     Console.WriteLine(result.GetProperty("advancedResourceSet").GetProperty("resourceSetProcessing").ToString());
     Console.WriteLine(result.GetProperty("name").ToString());
@@ -968,109 +530,8 @@ await foreach (var data in client.GetResourceSetRulesAsync("<skipToken>"))
 }
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for one item in the pageable response.
-
-Response Body:
-
-Schema for <c>ResourceSetRuleConfigListValue</c>:
-<code>{
-  advancedResourceSet: {
-    modifiedAt: string (ISO 8601 Format), # Optional. Date at which ResourceSetProcessing property of the account is updated.
-    resourceSetProcessing: &quot;Default&quot; | &quot;Advanced&quot;, # Optional. The advanced resource property of the account.
-  }, # Optional. Gets or sets the advanced resource set property of the account.
-  name: string, # Optional. The name of the rule
-  pathPatternConfig: {
-    acceptedPatterns: [
-      {
-        createdBy: string, # Optional.
-        filterType: &quot;Pattern&quot; | &quot;Regex&quot;, # Optional.
-        lastUpdatedTimestamp: number, # Optional.
-        modifiedBy: string, # Optional.
-        name: string, # Required.
-        path: string, # Required.
-      }
-    ], # Optional.
-    complexReplacers: [
-      {
-        createdBy: string, # Optional.
-        description: string, # Optional.
-        disabled: boolean, # Optional.
-        disableRecursiveReplacerApplication: boolean, # Optional.
-        lastUpdatedTimestamp: number, # Optional.
-        modifiedBy: string, # Optional.
-        name: string, # Optional.
-        typeName: string, # Optional.
-      }
-    ], # Optional.
-    createdBy: string, # Required.
-    enableDefaultPatterns: boolean, # Required.
-    lastUpdatedTimestamp: number, # Optional.
-    modifiedBy: string, # Optional.
-    normalizationRules: [
-      {
-        description: string, # Optional.
-        disabled: boolean, # Optional.
-        dynamicReplacement: boolean, # Optional.
-        entityTypes: [string], # Optional.
-        lastUpdatedTimestamp: number, # Optional.
-        name: string, # Optional.
-        regex: {
-          maxDigits: number, # Optional.
-          maxLetters: number, # Optional.
-          minDashes: number, # Optional.
-          minDigits: number, # Optional.
-          minDigitsOrLetters: number, # Optional.
-          minDots: number, # Optional.
-          minHex: number, # Optional.
-          minLetters: number, # Optional.
-          minUnderscores: number, # Optional.
-          options: number, # Optional.
-          regexStr: string, # Optional.
-        }, # Optional.
-        replaceWith: string, # Optional.
-        version: number, # Optional.
-      }
-    ], # Optional.
-    regexReplacers: [
-      {
-        condition: string, # Optional.
-        createdBy: string, # Optional.
-        description: string, # Optional.
-        disabled: boolean, # Required.
-        disableRecursiveReplacerApplication: boolean, # Optional.
-        doNotReplaceRegex: FastRegex, # Optional.
-        lastUpdatedTimestamp: number, # Optional.
-        modifiedBy: string, # Optional.
-        name: string, # Required.
-        regex: FastRegex, # Optional.
-        replaceWith: string, # Optional.
-      }
-    ], # Optional.
-    rejectedPatterns: [Filter], # Optional.
-    scopedRules: [
-      {
-        bindingUrl: string, # Required.
-        rules: [
-          {
-            displayName: string, # Optional.
-            isResourceSet: boolean, # Optional.
-            lastUpdatedTimestamp: number, # Optional.
-            name: string, # Optional.
-            qualifiedName: string, # Required.
-          }
-        ], # Optional.
-        storeType: string, # Required.
-      }
-    ], # Optional.
-    version: number, # Optional.
-  }, # Optional. The configuration rules for path pattern extraction.
-}
-</code>
-
-</remarks>
     </member>
-    <member name="GetResourceSetRules(String,RequestContext)">
+    <member name="GetResourceSetRules(string,RequestContext)">
 <example>
 This sample shows how to call GetResourceSetRules and parse the result.
 <code><![CDATA[
@@ -1078,9 +539,9 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new PurviewAccountClient(endpoint, credential);
 
-foreach (var data in client.GetResourceSetRules())
+foreach (var item in client.GetResourceSetRules())
 {
-    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.ToString());
 }
 ]]></code>
@@ -1090,9 +551,9 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new PurviewAccountClient(endpoint, credential);
 
-foreach (var data in client.GetResourceSetRules("<skipToken>"))
+foreach (var item in client.GetResourceSetRules("<skipToken>"))
 {
-    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("advancedResourceSet").GetProperty("modifiedAt").ToString());
     Console.WriteLine(result.GetProperty("advancedResourceSet").GetProperty("resourceSetProcessing").ToString());
     Console.WriteLine(result.GetProperty("name").ToString());
@@ -1181,107 +642,6 @@ foreach (var data in client.GetResourceSetRules("<skipToken>"))
 }
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for one item in the pageable response.
-
-Response Body:
-
-Schema for <c>ResourceSetRuleConfigListValue</c>:
-<code>{
-  advancedResourceSet: {
-    modifiedAt: string (ISO 8601 Format), # Optional. Date at which ResourceSetProcessing property of the account is updated.
-    resourceSetProcessing: &quot;Default&quot; | &quot;Advanced&quot;, # Optional. The advanced resource property of the account.
-  }, # Optional. Gets or sets the advanced resource set property of the account.
-  name: string, # Optional. The name of the rule
-  pathPatternConfig: {
-    acceptedPatterns: [
-      {
-        createdBy: string, # Optional.
-        filterType: &quot;Pattern&quot; | &quot;Regex&quot;, # Optional.
-        lastUpdatedTimestamp: number, # Optional.
-        modifiedBy: string, # Optional.
-        name: string, # Required.
-        path: string, # Required.
-      }
-    ], # Optional.
-    complexReplacers: [
-      {
-        createdBy: string, # Optional.
-        description: string, # Optional.
-        disabled: boolean, # Optional.
-        disableRecursiveReplacerApplication: boolean, # Optional.
-        lastUpdatedTimestamp: number, # Optional.
-        modifiedBy: string, # Optional.
-        name: string, # Optional.
-        typeName: string, # Optional.
-      }
-    ], # Optional.
-    createdBy: string, # Required.
-    enableDefaultPatterns: boolean, # Required.
-    lastUpdatedTimestamp: number, # Optional.
-    modifiedBy: string, # Optional.
-    normalizationRules: [
-      {
-        description: string, # Optional.
-        disabled: boolean, # Optional.
-        dynamicReplacement: boolean, # Optional.
-        entityTypes: [string], # Optional.
-        lastUpdatedTimestamp: number, # Optional.
-        name: string, # Optional.
-        regex: {
-          maxDigits: number, # Optional.
-          maxLetters: number, # Optional.
-          minDashes: number, # Optional.
-          minDigits: number, # Optional.
-          minDigitsOrLetters: number, # Optional.
-          minDots: number, # Optional.
-          minHex: number, # Optional.
-          minLetters: number, # Optional.
-          minUnderscores: number, # Optional.
-          options: number, # Optional.
-          regexStr: string, # Optional.
-        }, # Optional.
-        replaceWith: string, # Optional.
-        version: number, # Optional.
-      }
-    ], # Optional.
-    regexReplacers: [
-      {
-        condition: string, # Optional.
-        createdBy: string, # Optional.
-        description: string, # Optional.
-        disabled: boolean, # Required.
-        disableRecursiveReplacerApplication: boolean, # Optional.
-        doNotReplaceRegex: FastRegex, # Optional.
-        lastUpdatedTimestamp: number, # Optional.
-        modifiedBy: string, # Optional.
-        name: string, # Required.
-        regex: FastRegex, # Optional.
-        replaceWith: string, # Optional.
-      }
-    ], # Optional.
-    rejectedPatterns: [Filter], # Optional.
-    scopedRules: [
-      {
-        bindingUrl: string, # Required.
-        rules: [
-          {
-            displayName: string, # Optional.
-            isResourceSet: boolean, # Optional.
-            lastUpdatedTimestamp: number, # Optional.
-            name: string, # Optional.
-            qualifiedName: string, # Required.
-          }
-        ], # Optional.
-        storeType: string, # Required.
-      }
-    ], # Optional.
-    version: number, # Optional.
-  }, # Optional. The configuration rules for path pattern extraction.
-}
-</code>
-
-</remarks>
     </member>
   </members>
 </doc>

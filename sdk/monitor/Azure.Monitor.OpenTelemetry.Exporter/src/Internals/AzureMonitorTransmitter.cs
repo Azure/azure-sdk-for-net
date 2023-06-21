@@ -7,6 +7,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.Pipeline;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.ConnectionString;
+using Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.PersistentStorage;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.Platform;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.Statsbeat;
@@ -50,7 +51,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 
             if (_fileBlobProvider != null)
             {
-                _transmitFromStorageHandler = new TransmitFromStorageHandler(_applicationInsightsRestClient, _fileBlobProvider, _transmissionStateManager);
+                _transmitFromStorageHandler = new TransmitFromStorageHandler(_applicationInsightsRestClient, _fileBlobProvider, _transmissionStateManager, _connectionVars);
             }
 
             _statsbeat = InitializeStatsbeat(options, _connectionVars, platform);
@@ -176,7 +177,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                 if (result == ExportResult.Failure && _fileBlobProvider != null)
                 {
                     _transmissionStateManager.EnableBackOff(httpMessage.Response);
-                    result = HttpPipelineHelper.HandleFailures(httpMessage, _fileBlobProvider);
+                    result = HttpPipelineHelper.HandleFailures(httpMessage, _fileBlobProvider, _connectionVars);
                 }
                 else
                 {
@@ -199,7 +200,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             {
                 if (disposing)
                 {
-                    AzureMonitorExporterEventSource.Log.WriteVerbose(name: nameof(AzureMonitorTransmitter), message: $"{nameof(AzureMonitorTransmitter)} has been disposed.");
+                    AzureMonitorExporterEventSource.Log.DisposedObject(nameof(AzureMonitorTransmitter));
                     _statsbeat?.Dispose();
                     var fileBlobProvider = _fileBlobProvider as FileBlobProvider;
                     if (fileBlobProvider != null)

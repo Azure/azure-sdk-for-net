@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="connectorOffer"> The cassandra connector offer type for the Cosmos DB database C* account. </param>
         /// <param name="disableKeyBasedMetadataWriteAccess"> Disable write operations on metadata resources (databases, containers, throughput) via account keys. </param>
         /// <param name="keyVaultKeyUri"> The URI of the key vault. </param>
-        /// <param name="defaultIdentity"> The default identity for accessing key vault used in features like customer managed keys. The default identity needs to be explicitly set by the users. It can be &quot;FirstPartyIdentity&quot;, &quot;SystemAssignedIdentity&quot; and more. </param>
+        /// <param name="defaultIdentity"> The default identity for accessing key vault used in features like customer managed keys. The default identity needs to be explicitly set by the users. It can be "FirstPartyIdentity", "SystemAssignedIdentity" and more. </param>
         /// <param name="publicNetworkAccess"> Whether requests from Public Network are allowed. </param>
         /// <param name="isFreeTierEnabled"> Flag to indicate whether Free Tier is enabled. </param>
         /// <param name="apiProperties"> API specific properties. Currently, supported only for MongoDB API. </param>
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="keysMetadata"> This property is ignored during the update/create operation, as the metadata is read-only. The object represents the metadata for the Account Keys of the Cosmos DB account. </param>
         /// <param name="enablePartitionMerge"> Flag to indicate enabling/disabling of Partition Merge feature on the account. </param>
         /// <param name="enableBurstCapacity"> Flag to indicate enabling/disabling of Burst Capacity Preview feature on the account. </param>
-        /// <param name="minimalTlsVersion"> Indicates the minimum allowed Tls version. The default is Tls 1.0, except for Cassandra and Mongo API&apos;s, which only work with Tls 1.2. </param>
+        /// <param name="minimalTlsVersion"> Indicates the minimum allowed Tls version. The default is Tls 1.0, except for Cassandra and Mongo API's, which only work with Tls 1.2. </param>
         /// <param name="identity"> Identity for the resource. </param>
         internal CosmosDBAccountCreateOrUpdateContent(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, CosmosDBAccountKind? kind, ConsistencyPolicy consistencyPolicy, IList<CosmosDBAccountLocation> locations, CosmosDBAccountOfferType databaseAccountOfferType, IList<CosmosDBIPAddressOrRange> ipRules, bool? isVirtualNetworkFilterEnabled, bool? enableAutomaticFailover, IList<CosmosDBAccountCapability> capabilities, IList<CosmosDBVirtualNetworkRule> virtualNetworkRules, bool? enableMultipleWriteLocations, bool? enableCassandraConnector, ConnectorOffer? connectorOffer, bool? disableKeyBasedMetadataWriteAccess, Uri keyVaultKeyUri, string defaultIdentity, CosmosDBPublicNetworkAccess? publicNetworkAccess, bool? isFreeTierEnabled, ApiProperties apiProperties, bool? isAnalyticalStorageEnabled, AnalyticalStorageConfiguration analyticalStorageConfiguration, CosmosDBAccountCreateMode? createMode, CosmosDBAccountBackupPolicy backupPolicy, IList<CosmosDBAccountCorsPolicy> cors, NetworkAclBypass? networkAclBypass, IList<ResourceIdentifier> networkAclBypassResourceIds, DiagnosticLogSettings diagnosticLogSettings, bool? disableLocalAuth, CosmosDBAccountRestoreParameters restoreParameters, CosmosDBAccountCapacity capacity, bool? enableMaterializedViews, DatabaseAccountKeysMetadata keysMetadata, bool? enablePartitionMerge, bool? enableBurstCapacity, CosmosDBMinimalTlsVersion? minimalTlsVersion, ManagedServiceIdentity identity) : base(id, name, resourceType, systemData, tags, location)
         {
@@ -124,8 +124,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public ConsistencyPolicy ConsistencyPolicy { get; set; }
         /// <summary> An array that contains the georeplication locations enabled for the Cosmos DB account. </summary>
         public IList<CosmosDBAccountLocation> Locations { get; }
-        /// <summary> The offer type for the database. </summary>
-        public CosmosDBAccountOfferType DatabaseAccountOfferType { get; set; }
         /// <summary> List of IpRules. </summary>
         public IList<CosmosDBIPAddressOrRange> IPRules { get; }
         /// <summary> Flag to indicate whether to enable/disable Virtual Network ACL rules. </summary>
@@ -146,7 +144,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public bool? DisableKeyBasedMetadataWriteAccess { get; set; }
         /// <summary> The URI of the key vault. </summary>
         public Uri KeyVaultKeyUri { get; set; }
-        /// <summary> The default identity for accessing key vault used in features like customer managed keys. The default identity needs to be explicitly set by the users. It can be &quot;FirstPartyIdentity&quot;, &quot;SystemAssignedIdentity&quot; and more. </summary>
+        /// <summary> The default identity for accessing key vault used in features like customer managed keys. The default identity needs to be explicitly set by the users. It can be "FirstPartyIdentity", "SystemAssignedIdentity" and more. </summary>
         public string DefaultIdentity { get; set; }
         /// <summary> Whether requests from Public Network are allowed. </summary>
         public CosmosDBPublicNetworkAccess? PublicNetworkAccess { get; set; }
@@ -236,7 +234,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public bool? EnablePartitionMerge { get; set; }
         /// <summary> Flag to indicate enabling/disabling of Burst Capacity Preview feature on the account. </summary>
         public bool? EnableBurstCapacity { get; set; }
-        /// <summary> Indicates the minimum allowed Tls version. The default is Tls 1.0, except for Cassandra and Mongo API&apos;s, which only work with Tls 1.2. </summary>
+        /// <summary> Indicates the minimum allowed Tls version. The default is Tls 1.0, except for Cassandra and Mongo API's, which only work with Tls 1.2. </summary>
         public CosmosDBMinimalTlsVersion? MinimalTlsVersion { get; set; }
         /// <summary> Identity for the resource. </summary>
         public ManagedServiceIdentity Identity { get; set; }

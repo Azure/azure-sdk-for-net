@@ -17,20 +17,20 @@ namespace Azure.ResourceManager.DevCenter.Models
         /// <summary> Initializes a new instance of EnvironmentTypeListResult. </summary>
         internal EnvironmentTypeListResult()
         {
-            Value = new ChangeTrackingList<EnvironmentTypeData>();
+            Value = new ChangeTrackingList<DevCenterEnvironmentTypeData>();
         }
 
         /// <summary> Initializes a new instance of EnvironmentTypeListResult. </summary>
         /// <param name="value"> Current page of results. </param>
         /// <param name="nextLink"> URL to get the next set of results if there are any. </param>
-        internal EnvironmentTypeListResult(IReadOnlyList<EnvironmentTypeData> value, string nextLink)
+        internal EnvironmentTypeListResult(IReadOnlyList<DevCenterEnvironmentTypeData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> Current page of results. </summary>
-        public IReadOnlyList<EnvironmentTypeData> Value { get; }
+        public IReadOnlyList<DevCenterEnvironmentTypeData> Value { get; }
         /// <summary> URL to get the next set of results if there are any. </summary>
         public string NextLink { get; }
     }

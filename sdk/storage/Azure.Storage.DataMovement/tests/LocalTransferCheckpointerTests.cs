@@ -5,11 +5,8 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using NUnit.Framework;
-using Azure.Storage.DataMovement.Models;
-using Azure.Core.TestFramework;
 using Azure.Storage.DataMovement.Models.JobPlan;
 
 namespace Azure.Storage.DataMovement.Tests
@@ -84,8 +81,7 @@ namespace Azure.Storage.DataMovement.Tests
         [Test]
         public void Ctor_CustomPath()
         {
-            string customPath = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString());
-            DisposingLocalDirectory test = GetTestLocalDirectory(customPath);
+            using DisposingLocalDirectory test = DisposingLocalDirectory.GetTestDirectory(Guid.NewGuid().ToString());
             TransferCheckpointer transferCheckpointer = new LocalTransferCheckpointer(test.DirectoryPath);
 
             Assert.NotNull(transferCheckpointer);
@@ -102,7 +98,7 @@ namespace Azure.Storage.DataMovement.Tests
         [Test]
         public async Task AddNewJobAsync()
         {
-            using DisposingLocalDirectory test = GetTestLocalDirectory();
+            using DisposingLocalDirectory test = DisposingLocalDirectory.GetTestDirectory();
 
             // Arrange
             string transferId = GetNewTransferId();
@@ -120,7 +116,7 @@ namespace Azure.Storage.DataMovement.Tests
         [Test]
         public async Task AddNewJobAsync_Error()
         {
-            using DisposingLocalDirectory test = GetTestLocalDirectory();
+            using DisposingLocalDirectory test = DisposingLocalDirectory.GetTestDirectory();
             // Arrange
             TransferCheckpointer transferCheckpointer = new LocalTransferCheckpointer(test.DirectoryPath);
 
@@ -135,7 +131,7 @@ namespace Azure.Storage.DataMovement.Tests
         [Test]
         public async Task AddNewJobAsync_Multiple()
         {
-            using DisposingLocalDirectory test = GetTestLocalDirectory();
+            using DisposingLocalDirectory test = DisposingLocalDirectory.GetTestDirectory();
 
             // Arrange
             TransferCheckpointer transferCheckpointer = new LocalTransferCheckpointer(test.DirectoryPath);
@@ -159,7 +155,7 @@ namespace Azure.Storage.DataMovement.Tests
         [Test]
         public async Task AddNewJobAsync_AddAfterRemove()
         {
-            using DisposingLocalDirectory test = GetTestLocalDirectory();
+            using DisposingLocalDirectory test = DisposingLocalDirectory.GetTestDirectory();
 
             // Arrange
             TransferCheckpointer transferCheckpointer = new LocalTransferCheckpointer(test.DirectoryPath);
@@ -180,7 +176,7 @@ namespace Azure.Storage.DataMovement.Tests
         [Test]
         public async Task AddNewJobPartAsync()
         {
-            using DisposingLocalDirectory test = GetTestLocalDirectory();
+            using DisposingLocalDirectory test = DisposingLocalDirectory.GetTestDirectory();
 
             // Arrange
             string transferId = GetNewTransferId();
@@ -228,7 +224,7 @@ namespace Azure.Storage.DataMovement.Tests
         [Test]
         public async Task AddNewJobPartAsync_Error()
         {
-            using DisposingLocalDirectory test = GetTestLocalDirectory();
+            using DisposingLocalDirectory test = DisposingLocalDirectory.GetTestDirectory();
 
             string transferId = GetNewTransferId();
             int partNumber = 0;
@@ -272,7 +268,7 @@ namespace Azure.Storage.DataMovement.Tests
         [Test]
         public async Task AddNewJobPartAsync_MultipleParts()
         {
-            using DisposingLocalDirectory test = GetTestLocalDirectory();
+            using DisposingLocalDirectory test = DisposingLocalDirectory.GetTestDirectory();
 
             // Add multiple parts for the same job
             string transferId = GetNewTransferId();
@@ -384,7 +380,7 @@ namespace Azure.Storage.DataMovement.Tests
         [Test]
         public async Task AddNewJobPartAsync_AddAfterRemove()
         {
-            using DisposingLocalDirectory test = GetTestLocalDirectory();
+            using DisposingLocalDirectory test = DisposingLocalDirectory.GetTestDirectory();
             string transferId = GetNewTransferId();
             JobPartPlanHeader header = CreateDefaultJobPartHeader(
                     transferId: transferId,
@@ -436,7 +432,7 @@ namespace Azure.Storage.DataMovement.Tests
         [Test]
         public async Task TryRemoveStoredTransferAsync()
         {
-            using DisposingLocalDirectory test = GetTestLocalDirectory();
+            using DisposingLocalDirectory test = DisposingLocalDirectory.GetTestDirectory();
             TransferCheckpointer transferCheckpointer = new LocalTransferCheckpointer(test.DirectoryPath);
 
             string transferId = GetNewTransferId();
@@ -450,7 +446,7 @@ namespace Azure.Storage.DataMovement.Tests
         [Test]
         public async Task TryRemoveStoredTransferAsync_Error()
         {
-            using DisposingLocalDirectory test = GetTestLocalDirectory();
+            using DisposingLocalDirectory test = DisposingLocalDirectory.GetTestDirectory();
             TransferCheckpointer transferCheckpointer = new LocalTransferCheckpointer(test.DirectoryPath);
 
             string transferId = GetNewTransferId();
@@ -462,7 +458,7 @@ namespace Azure.Storage.DataMovement.Tests
         [Test]
         public async Task AddExistingJobAsync()
         {
-            using DisposingLocalDirectory test = GetTestLocalDirectory();
+            using DisposingLocalDirectory test = DisposingLocalDirectory.GetTestDirectory();
 
             string transferId = GetNewTransferId();
             int numberOfParts = 2;
@@ -487,7 +483,7 @@ namespace Azure.Storage.DataMovement.Tests
         public async Task AddExistingJobAsync_Error()
 #pragma warning restore CS1998 // Async method lacks 'await' operators and will run synchronously
         {
-            using DisposingLocalDirectory test = GetTestLocalDirectory();
+            using DisposingLocalDirectory test = DisposingLocalDirectory.GetTestDirectory();
             TransferCheckpointer transferCheckpointer = new LocalTransferCheckpointer(test.DirectoryPath);
 
             string transferId = GetNewTransferId();
@@ -500,7 +496,7 @@ namespace Azure.Storage.DataMovement.Tests
         [Test]
         public async Task AddExistingJobAsync_InvalidHeaderError()
         {
-            using DisposingLocalDirectory test = GetTestLocalDirectory();
+            using DisposingLocalDirectory test = DisposingLocalDirectory.GetTestDirectory();
             TransferCheckpointer transferCheckpointer = new LocalTransferCheckpointer(test.DirectoryPath);
 
             string transferId = GetNewTransferId();
@@ -529,7 +525,7 @@ namespace Azure.Storage.DataMovement.Tests
         [Test]
         public async Task AddExistingJobAsync_Multiple()
         {
-            using DisposingLocalDirectory test = GetTestLocalDirectory();
+            using DisposingLocalDirectory test = DisposingLocalDirectory.GetTestDirectory();
             TransferCheckpointer transferCheckpointer = new LocalTransferCheckpointer(test.DirectoryPath);
 
             string transferId1 = GetNewTransferId();
@@ -561,7 +557,7 @@ namespace Azure.Storage.DataMovement.Tests
         [Test]
         public async Task AddExistingJobAsync_AddAfterRemove()
         {
-            using DisposingLocalDirectory test = GetTestLocalDirectory();
+            using DisposingLocalDirectory test = DisposingLocalDirectory.GetTestDirectory();
             TransferCheckpointer transferCheckpointer = new LocalTransferCheckpointer(test.DirectoryPath);
 
             string transferId = GetNewTransferId();
@@ -589,7 +585,7 @@ namespace Azure.Storage.DataMovement.Tests
         [Test]
         public async Task GetStoredTransfersAsync_Empty()
         {
-            using DisposingLocalDirectory test = GetTestLocalDirectory();
+            using DisposingLocalDirectory test = DisposingLocalDirectory.GetTestDirectory();
 
             // Arrange
             TransferCheckpointer transferCheckpointer = new LocalTransferCheckpointer(test.DirectoryPath);
@@ -610,7 +606,7 @@ namespace Azure.Storage.DataMovement.Tests
         public async Task GetStoredTransfersAsync_OneJob()
         {
             // Arrange - add 1 job
-            using DisposingLocalDirectory test = GetTestLocalDirectory();
+            using DisposingLocalDirectory test = DisposingLocalDirectory.GetTestDirectory();
 
             // Arrange
             TransferCheckpointer transferCheckpointer = new LocalTransferCheckpointer(test.DirectoryPath);
@@ -629,7 +625,7 @@ namespace Azure.Storage.DataMovement.Tests
         public async Task GetStoredTransfersAsync_MultipleJobs()
         {
             // Arrange - add 1 job
-            using DisposingLocalDirectory test = GetTestLocalDirectory();
+            using DisposingLocalDirectory test = DisposingLocalDirectory.GetTestDirectory();
 
             // Arrange
             TransferCheckpointer transferCheckpointer = new LocalTransferCheckpointer(test.DirectoryPath);
@@ -652,9 +648,57 @@ namespace Azure.Storage.DataMovement.Tests
         }
 
         [Test]
+        public async Task GetStoredTransfersAsync_StoredJobs()
+        {
+            // Arrange - populate checkpointer directory with existing jobs
+            using DisposingLocalDirectory test = DisposingLocalDirectory.GetTestDirectory();
+
+            string transferId = GetNewTransferId();
+            string transferId2 = GetNewTransferId();
+            int numberOfParts = 2;
+
+            CreateStubJobPlanFileAsync(
+                checkpointerPath: test.DirectoryPath,
+                transferId: transferId,
+                partNumber: 0,
+                jobPartCount: numberOfParts);
+            CreateStubJobPlanFileAsync(
+                checkpointerPath: test.DirectoryPath,
+                transferId: transferId2,
+                partNumber: 0,
+                jobPartCount: numberOfParts);
+            TransferCheckpointer transferCheckpointer = new LocalTransferCheckpointer(test.DirectoryPath);
+
+            // Act
+            List<string> transfers = await transferCheckpointer.GetStoredTransfersAsync();
+
+            // Assert
+            Assert.AreEqual(2, transfers.Count);
+            Assert.IsTrue(transfers.Contains(transferId));
+            Assert.IsTrue(transfers.Contains(transferId2));
+
+            // Arrange - add more job to the checkpointer
+            string transferId3 = GetNewTransferId();
+            string transferId4 = GetNewTransferId();
+
+            await transferCheckpointer.AddNewJobAsync(transferId3);
+            await transferCheckpointer.AddNewJobAsync(transferId4);
+
+            // Act
+            List<string> transfersAfterAdditions = await transferCheckpointer.GetStoredTransfersAsync();
+
+            // Assert
+            Assert.AreEqual(4, transfersAfterAdditions.Count);
+            Assert.IsTrue(transfersAfterAdditions.Contains(transferId));
+            Assert.IsTrue(transfersAfterAdditions.Contains(transferId2));
+            Assert.IsTrue(transfersAfterAdditions.Contains(transferId3));
+            Assert.IsTrue(transfersAfterAdditions.Contains(transferId4));
+        }
+
+        [Test]
         public async Task CurrentJobPartCountAsync_Empty()
         {
-            using DisposingLocalDirectory test = GetTestLocalDirectory();
+            using DisposingLocalDirectory test = DisposingLocalDirectory.GetTestDirectory();
 
             // Arrange
             string transferId = GetNewTransferId();
@@ -673,7 +717,7 @@ namespace Azure.Storage.DataMovement.Tests
         [Test]
         public async Task CurrentJobPartCountAsync_OneJob()
         {
-            using DisposingLocalDirectory test = GetTestLocalDirectory();
+            using DisposingLocalDirectory test = DisposingLocalDirectory.GetTestDirectory();
 
             // Arrange
             string transferId = GetNewTransferId();
@@ -708,7 +752,7 @@ namespace Azure.Storage.DataMovement.Tests
         [Test]
         public async Task CurrentJobPartCountAsync_MultipleJobs()
         {
-            using DisposingLocalDirectory test = GetTestLocalDirectory();
+            using DisposingLocalDirectory test = DisposingLocalDirectory.GetTestDirectory();
 
             // Arrange
             string transferId = GetNewTransferId();
@@ -781,7 +825,7 @@ namespace Azure.Storage.DataMovement.Tests
         [Test]
         public void CurrentJobPartCountAsync_Error()
         {
-            using DisposingLocalDirectory test = GetTestLocalDirectory();
+            using DisposingLocalDirectory test = DisposingLocalDirectory.GetTestDirectory();
 
             // Arrange
             string transferId = GetNewTransferId();
@@ -796,7 +840,7 @@ namespace Azure.Storage.DataMovement.Tests
         [Test]
         public async Task ReadableStreamAsync()
         {
-            using DisposingLocalDirectory test = GetTestLocalDirectory();
+            using DisposingLocalDirectory test = DisposingLocalDirectory.GetTestDirectory();
 
             // Arrange
             string transferId = GetNewTransferId();
@@ -835,7 +879,7 @@ namespace Azure.Storage.DataMovement.Tests
         [Test]
         public void ReadableStreamAsync_Error()
         {
-            using DisposingLocalDirectory test = GetTestLocalDirectory();
+            using DisposingLocalDirectory test = DisposingLocalDirectory.GetTestDirectory();
 
             // Arrange
             string transferId = GetNewTransferId();
@@ -855,7 +899,7 @@ namespace Azure.Storage.DataMovement.Tests
         [Test]
         public async Task SetJobTransferStatusAsync()
         {
-            using DisposingLocalDirectory test = GetTestLocalDirectory();
+            using DisposingLocalDirectory test = DisposingLocalDirectory.GetTestDirectory();
 
             // Arrange
             string transferId = GetNewTransferId();
@@ -898,7 +942,7 @@ namespace Azure.Storage.DataMovement.Tests
         [Test]
         public async Task SetJobTransferStatusAsync_MultipleParts()
         {
-            using DisposingLocalDirectory test = GetTestLocalDirectory();
+            using DisposingLocalDirectory test = DisposingLocalDirectory.GetTestDirectory();
 
             // Arrange
             string transferId = GetNewTransferId();
@@ -1007,7 +1051,7 @@ namespace Azure.Storage.DataMovement.Tests
         [Test]
         public void SetJobTransferStatusAsync_Error()
         {
-            using DisposingLocalDirectory test = GetTestLocalDirectory();
+            using DisposingLocalDirectory test = DisposingLocalDirectory.GetTestDirectory();
 
             // Arrange
             string transferId = GetNewTransferId();
@@ -1027,7 +1071,7 @@ namespace Azure.Storage.DataMovement.Tests
         [Test]
         public async Task SetJobPartTransferStatusAsync()
         {
-            using DisposingLocalDirectory test = GetTestLocalDirectory();
+            using DisposingLocalDirectory test = DisposingLocalDirectory.GetTestDirectory();
 
             // Arrange
             string transferId = GetNewTransferId();
@@ -1071,7 +1115,7 @@ namespace Azure.Storage.DataMovement.Tests
         [Test]
         public void SetJobPartTransferStatusAsync_Error()
         {
-            using DisposingLocalDirectory test = GetTestLocalDirectory();
+            using DisposingLocalDirectory test = DisposingLocalDirectory.GetTestDirectory();
 
             // Arrange
             string transferId = GetNewTransferId();

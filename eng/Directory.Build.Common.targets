@@ -99,9 +99,9 @@
     <None Condition="Exists('$(MSBuildProjectDirectory)/../CHANGELOG.md')" Include="$(MSBuildProjectDirectory)/../CHANGELOG.md" Pack="true" PackagePath=""/>
   </ItemGroup>
 
-  <!-- Add App.config to enable server GC in net461 perf and stress projects -->
-  <ItemGroup Condition="('$(IsPerfProject)' == 'true' or '$(IsStressProject)' == 'true') and '$(TargetFramework)' == 'net461'">
-    <None Include="$(RepoRoot)/common/PerfStressShared/App.config" />
+  <!-- Add App.config to enable server GC in net462 perf and stress projects -->
+  <ItemGroup Condition="('$(IsPerfProject)' == 'true' or '$(IsStressProject)' == 'true') and '$(TargetFramework)' == 'net462'">
+    <None Include="$(RepoRoot)/common/Perf/App.config" />
   </ItemGroup>
 
   <!-- Add StyleCop Analyzers -->

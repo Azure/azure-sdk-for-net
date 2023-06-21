@@ -12,21 +12,21 @@ namespace Azure.Communication.CallAutomation
         public bool IsSuccess { get; internal set; }
 
         /// <summary>
-        /// <see cref="RemoveParticipantSucceededEventData"/> event will be returned when the participant was removed from the call successfully.
+        /// <see cref="RemoveParticipantSucceeded"/> event will be returned when the participant was removed from the call successfully.
         /// </summary>
-        public RemoveParticipantSucceededEventData SuccessResult { get; }
+        public RemoveParticipantSucceeded SuccessResult { get; }
 
         /// <summary>
-        /// <see cref="RemoveParticipantFailedEventData"/> event will be returned when the participant could not be removed from the call.
+        /// <see cref="RemoveParticipantFailed"/> event will be returned when the participant could not be removed from the call.
         /// </summary>
-        public RemoveParticipantFailedEventData FailureResult { get; }
+        public RemoveParticipantFailed FailureResult { get; }
 
         /// <summary>
         /// <see cref="CommunicationIdentifier"/> Participant that was removed from the call.
         /// </summary>
         public CommunicationIdentifier Participant { get; }
 
-        internal RemoveParticipantEventResult(bool isSuccess, RemoveParticipantSucceededEventData successResult, RemoveParticipantFailedEventData failureResult, CommunicationIdentifier participant)
+        internal RemoveParticipantEventResult(bool isSuccess, RemoveParticipantSucceeded successResult, RemoveParticipantFailed failureResult, CommunicationIdentifier participant)
         {
             IsSuccess = isSuccess;
             SuccessResult = successResult;

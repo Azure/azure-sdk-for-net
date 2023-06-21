@@ -15,7 +15,7 @@ API reference documentation |
 Install the client library from [NuGet]:
 
 ```dotnetcli
-dotnet add package Microsoft.Azure.Functions.Worker.Extensions.WebPubSub
+dotnet add package Microsoft.Azure.Functions.Worker.Extensions.WebPubSub --prerelease
 ```
 
 ### Prerequisites
@@ -155,12 +155,10 @@ additional questions or comments.
 ![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net%2Fsdk%2Fsearch%2FMicrosoft.Azure.Functions.Worker.Extensions.WebPubSub%2FREADME.png)
 
 <!-- LINKS -->
-<!-- TODO: update to sdk main branch after initial merge -->
-[source]: https://github.com/JialinXin/azure-sdk-for-net/tree/awps/isolated-func/sdk/webpubsub/Microsoft.Azure.Functions.Worker.Extensions.WebPubSub/src
+[source]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/webpubsub/Microsoft.Azure.Functions.Worker.Extensions.WebPubSub/src
 <!-- [package] TODO: add after initial release -->
 <!-- [api_docs] TODO: add after initial release -->
-<!-- TODO: update to sdk main branch after initial merge -->
-[samples]: https://github.com/JialinXin/azure-sdk-for-net/tree/awps/isolated-func/sdk/webpubsub/Microsoft.Azure.Functions.Worker.Extensions.WebPubSub/samples
+[samples]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/webpubsub/Microsoft.Azure.Functions.Worker.Extensions.WebPubSub/samples
 [nuget]: https://www.nuget.org/
 [free_subs]: https://azure.microsoft.com/free/dotnet/
 [portal]: https://portal.azure.com/

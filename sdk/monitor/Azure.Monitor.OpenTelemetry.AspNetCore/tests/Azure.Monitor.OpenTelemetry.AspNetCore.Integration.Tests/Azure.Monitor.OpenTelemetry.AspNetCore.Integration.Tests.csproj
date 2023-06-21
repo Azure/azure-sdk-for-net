@@ -17,4 +17,8 @@
     <Compile Include="$(AzureCoreSharedSources)\HttpPipelineMessageHandler.cs" LinkBase="Shared" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="SessionRecords\" />
+  </ItemGroup>
+
 </Project>

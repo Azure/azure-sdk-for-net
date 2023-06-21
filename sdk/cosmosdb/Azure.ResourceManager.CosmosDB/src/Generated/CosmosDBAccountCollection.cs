@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary>
-        /// Creates or updates an Azure Cosmos DB database account. The &quot;Update&quot; method is preferred when performing updates on an account.
+        /// Creates or updates an Azure Cosmos DB database account. The "Update" method is preferred when performing updates on an account.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary>
-        /// Creates or updates an Azure Cosmos DB database account. The &quot;Update&quot; method is preferred when performing updates on an account.
+        /// Creates or updates an Azure Cosmos DB database account. The "Update" method is preferred when performing updates on an account.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>

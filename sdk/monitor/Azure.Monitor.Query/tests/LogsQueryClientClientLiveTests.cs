@@ -676,137 +676,159 @@ namespace Azure.Monitor.Query.Tests
             Assert.True(response.Value.Single());
         }
 
-        [LiveOnly]
         [Test]
-        public async Task CanQueryResource()
+        public async Task CanQueryResourceGenericPrimaryWorkspace()
         {
+            var timespan = TimeSpan.FromSeconds(5);
+
             var client = CreateClient();
+            // Empty check
+            var results = await client.QueryResourceAsync<DateTimeOffset>(
+                new ResourceIdentifier(TestEnvironment.WorkspacePrimaryResourceId),
+                $"{_logsTestData.TableAName} | distinct * | project {LogsTestData.TimeGeneratedColumnName}",
+                timespan);
 
-            var results = await client.QueryResourceAsync(new ResourceIdentifier(TestEnvironment.StorageAccountId),
-                "search *",
-                _logsTestData.DataTimeRange);
+            Assert.AreEqual(0, results.Value.Count);
 
-            Assert.AreEqual(LogsQueryResultStatus.Success, results.Value.Status);
-            var resultTable = results.Value.Table;
-            CollectionAssert.IsNotEmpty(resultTable.Rows);
-            CollectionAssert.IsNotEmpty(resultTable.Columns);
+            // Check if all rows in table were uploaded
+            // Get the time of the third event and add a bit of buffer to it (events are 2d apart)
+            var maxOffset = (DateTimeOffset)_logsTestData.TableA[2][LogsTestData.TimeGeneratedColumnNameSent];
+            timespan = Recording.UtcNow - maxOffset;
+            timespan = timespan.Add(TimeSpan.FromDays(7));
 
-            bool verifyRow = false;
-            bool verifyColumn1 = false;
-            bool verifyColumn2 = false;
-            foreach (LogsTableRow rows in resultTable.Rows)
-            {
-                foreach (var row in rows)
-                {
-                    if ((row != null) && row.ToString().Contains("Create/Update Storage Account"))
-                    {
-                        verifyRow = true;
-                    }
-                }
-            }
+            // Make sure there is some data in the range specified
+            results = await client.QueryResourceAsync<DateTimeOffset>(
+                new ResourceIdentifier(TestEnvironment.WorkspacePrimaryResourceId),
+                $"{_logsTestData.TableAName} | distinct * | project {LogsTestData.TimeGeneratedColumnName}",
+                timespan);
 
-            foreach (LogsTableColumn columns in resultTable.Columns)
-            {
-                if (columns.Name == "SubscriptionId" && columns.Type == LogsColumnType.StringTypeValue)
-                    verifyColumn1 = true;
-
-                if (columns.Name == "TimeGenerated" && columns.Type == LogsColumnType.DatetimeTypeValue)
-                    verifyColumn2 = true;
-            }
-
-            Assert.IsTrue(verifyRow);
-            Assert.IsTrue(verifyColumn1 && verifyColumn2);
+            Assert.GreaterOrEqual(results.Value.Count, 3);
         }
 
-        [LiveOnly]
         [Test]
-        public async Task CanQueryResourceCheckNoBackslash()
+        public async Task CanQueryResourcePrimaryWorkspace()
         {
+            var timespan = TimeSpan.FromSeconds(5);
+
             var client = CreateClient();
+            // Empty check
+            Response<LogsQueryResult> results = await client.QueryResourceAsync(
+                new ResourceIdentifier(TestEnvironment.WorkspacePrimaryResourceId),
+                $"{_logsTestData.TableAName} | distinct * | project {LogsTestData.TimeGeneratedColumnName}",
+                timespan);
 
-            var results = await client.QueryResourceAsync(new ResourceIdentifier(TestEnvironment.StorageAccountId.Substring(1)),
-                "search *",
-                _logsTestData.DataTimeRange);
+            Assert.AreEqual(0, results.Value.Table.Rows.Count);
 
-            Assert.AreEqual(LogsQueryResultStatus.Success, results.Value.Status);
-            var resultTable = results.Value.Table;
-            CollectionAssert.IsNotEmpty(resultTable.Rows);
-            CollectionAssert.IsNotEmpty(resultTable.Columns);
+            // Check if all rows in table were uploaded
+            // Get the time of the third event and add a bit of buffer to it (events are 2d apart)
+            var maxOffset = (DateTimeOffset)_logsTestData.TableA[2][LogsTestData.TimeGeneratedColumnNameSent];
+            timespan = Recording.UtcNow - maxOffset;
+            timespan = timespan.Add(TimeSpan.FromDays(7));
 
-            bool verifyRow = false;
-            bool verifyColumn1 = false;
-            bool verifyColumn2 = false;
-            foreach (LogsTableRow rows in resultTable.Rows)
-            {
-                foreach (var row in rows)
-                {
-                    if ((row != null) && row.ToString().Contains("Create/Update Storage Account"))
-                    {
-                        verifyRow = true;
-                    }
-                }
-            }
+            // Make sure there is some data in the range specified
+            results = await client.QueryResourceAsync(
+                new ResourceIdentifier(TestEnvironment.WorkspacePrimaryResourceId),
+                $"{_logsTestData.TableAName} | distinct * | project {LogsTestData.TimeGeneratedColumnName}",
+                timespan);
 
-            foreach (LogsTableColumn columns in resultTable.Columns)
-            {
-                if (columns.Name == "SubscriptionId" && columns.Type == LogsColumnType.StringTypeValue)
-                    verifyColumn1 = true;
-
-                if (columns.Name == "TimeGenerated" && columns.Type == LogsColumnType.DatetimeTypeValue)
-                    verifyColumn2 = true;
-            }
-
-            Assert.IsTrue(verifyRow);
-            Assert.IsTrue(verifyColumn1 && verifyColumn2);
+            Assert.GreaterOrEqual(results.Value.Table.Rows.Count, 3);
         }
 
-        [LiveOnly]
         [Test]
-        public async Task CanQueryResourceCheckMultipleBackslash()
+        public async Task CanQueryResourceSecondaryWorkspace()
+        {
+            var timespan = TimeSpan.FromSeconds(5);
+
+            var client = CreateClient();
+            // Empty check
+            Response<LogsQueryResult> results = await client.QueryResourceAsync(
+                new ResourceIdentifier(TestEnvironment.WorkspaceSecondaryResourceId),
+                $"{_logsTestData.TableAName} | distinct * | project {LogsTestData.TimeGeneratedColumnName}",
+                timespan);
+
+            Assert.AreEqual(0, results.Value.Table.Rows.Count);
+
+            // Check if all rows in table were uploaded
+            // Get the time of the third event and add a bit of buffer to it (events are 2d apart)
+            var maxOffset = (DateTimeOffset)_logsTestData.TableA[2][LogsTestData.TimeGeneratedColumnNameSent];
+            timespan = Recording.UtcNow - maxOffset;
+            timespan = timespan.Add(TimeSpan.FromDays(7));
+
+            // Make sure there is some data in the range specified
+            results = await client.QueryResourceAsync(
+                new ResourceIdentifier(TestEnvironment.WorkspaceSecondaryResourceId),
+                $"{_logsTestData.TableAName} | distinct * | project {LogsTestData.TimeGeneratedColumnName}",
+                timespan);
+
+            Assert.GreaterOrEqual(results.Value.Table.Rows.Count, 3);
+        }
+
+        [Test]
+        public void VerifyInvalidQueryResourceCheckNoBackslash()
+        {
+            var client = CreateClient();
+            var exception = Assert.ThrowsAsync<FormatException>(() => client.QueryResourceAsync(
+                new ResourceIdentifier(TestEnvironment.SecondaryWorkspaceId.Substring(1)),
+                "search *",
+                _logsTestData.DataTimeRange));
+
+            StringAssert.StartsWith("The ResourceIdentifier must start with /subscriptions/ or /providers/.", exception.Message);
+        }
+
+        [Test]
+        public async Task CanQueryResourceGenericSecondaryWorkspace()
+        {
+            var timespan = TimeSpan.FromSeconds(5);
+
+            var client = CreateClient();
+            // Empty check
+            var results = await client.QueryResourceAsync<DateTimeOffset>(
+                new ResourceIdentifier(TestEnvironment.WorkspaceSecondaryResourceId),
+                $"{_logsTestData.TableAName} | distinct * | project {LogsTestData.TimeGeneratedColumnName}",
+                timespan);
+
+            Assert.AreEqual(0, results.Value.Count);
+
+            // Check if all rows in table were uploaded
+            // Get the time of the third event and add a bit of buffer to it (events are 2d apart)
+            var maxOffset = (DateTimeOffset)_logsTestData.TableA[2][LogsTestData.TimeGeneratedColumnNameSent];
+            timespan = Recording.UtcNow - maxOffset;
+            timespan = timespan.Add(TimeSpan.FromDays(7));
+
+            // Make sure there is some data in the range specified
+            results = await client.QueryResourceAsync<DateTimeOffset>(
+                new ResourceIdentifier(TestEnvironment.WorkspaceSecondaryResourceId),
+                $"{_logsTestData.TableAName} | distinct * | project {LogsTestData.TimeGeneratedColumnName}",
+                timespan);
+
+            Assert.GreaterOrEqual(results.Value.Count, 3);
+        }
+
+        [Test]
+        public void VerifyInvalidQueryResourceCheckMultipleBackslash()
         {
             var client = CreateClient();
             LogsQueryOptions options = new LogsQueryOptions();
             options.IncludeStatistics = true;
-            var resourceId = new ResourceIdentifier("///" + TestEnvironment.StorageAccountId);
-            var results = await client.QueryResourceAsync(
+            var resourceId = new ResourceIdentifier("///" + TestEnvironment.WorkspacePrimaryResourceId);
+            var exception = Assert.ThrowsAsync<FormatException>(() => client.QueryResourceAsync(
                 resourceId,
                 "search *",
                 _logsTestData.DataTimeRange,
-                options);
+                options));
 
-            Assert.AreEqual(LogsQueryResultStatus.Success, results.Value.Status);
-            var resultTable = results.Value.Table;
-            CollectionAssert.IsNotEmpty(resultTable.Rows);
-            CollectionAssert.IsNotEmpty(resultTable.Columns);
+            StringAssert.StartsWith("The ResourceIdentifier must start with /subscriptions/ or /providers/.", exception.Message);
+        }
 
-            bool verifyRow = false;
-            bool verifyColumn1 = false;
-            bool verifyColumn2 = false;
-            foreach (LogsTableRow rows in resultTable.Rows)
-            {
-                foreach (var row in rows)
-                {
-                    if ((row != null) && row.ToString().Contains("Create/Update Storage Account"))
-                    {
-                        verifyRow = true;
-                    }
-                }
-            }
+        [Test]
+        public void VerifyQueryResourceInvalidId()
+        {
+            var client = CreateClient();
+            var exception = Assert.ThrowsAsync<FormatException>(() => client.QueryResourceAsync(new ResourceIdentifier(TestEnvironment.WorkspacePrimaryResourceId.Remove(15, 36)),
+                "search *",
+                _logsTestData.DataTimeRange));
 
-            foreach (LogsTableColumn columns in resultTable.Columns)
-            {
-                if (columns.Name == "SubscriptionId" && columns.Type == LogsColumnType.StringTypeValue)
-                    verifyColumn1 = true;
-
-                if (columns.Name == "TimeGenerated" && columns.Type == LogsColumnType.DatetimeTypeValue)
-                    verifyColumn2 = true;
-            }
-
-            Assert.IsTrue(verifyRow);
-            Assert.IsTrue(verifyColumn1 && verifyColumn2);
-            Assert.IsNotNull(results.Value.GetStatistics());
-            Assert.IsNull(results.Value.Error);
-            Assert.IsNull(results.Value.GetVisualization());
+            StringAssert.StartsWith("The ResourceIdentifier is missing the key for subscriptions.", exception.Message);
         }
 
         public static IEnumerable<FormattableStringWrapper> Queries

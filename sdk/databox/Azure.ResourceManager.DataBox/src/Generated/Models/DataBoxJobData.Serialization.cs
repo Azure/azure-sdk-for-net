@@ -81,6 +81,8 @@ namespace Azure.ResourceManager.DataBox
             Optional<bool> isCancellable = default;
             Optional<bool> isDeletable = default;
             Optional<bool> isShippingAddressEditable = default;
+            Optional<ReverseShippingDetailsEditStatus> reverseShippingDetailsUpdate = default;
+            Optional<ReverseTransportPreferenceEditStatus> reverseTransportPreferenceUpdate = default;
             Optional<bool> isPrepareToShipEnabled = default;
             Optional<DataBoxStageName> status = default;
             Optional<DateTimeOffset> startTime = default;
@@ -190,6 +192,24 @@ namespace Azure.ResourceManager.DataBox
                             isShippingAddressEditable = property0.Value.GetBoolean();
                             continue;
                         }
+                        if (property0.NameEquals("reverseShippingDetailsUpdate"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            reverseShippingDetailsUpdate = property0.Value.GetString().ToReverseShippingDetailsEditStatus();
+                            continue;
+                        }
+                        if (property0.NameEquals("reverseTransportPreferenceUpdate"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            reverseTransportPreferenceUpdate = property0.Value.GetString().ToReverseTransportPreferenceEditStatus();
+                            continue;
+                        }
                         if (property0.NameEquals("isPrepareToShipEnabled"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -271,7 +291,7 @@ namespace Azure.ResourceManager.DataBox
                     continue;
                 }
             }
-            return new DataBoxJobData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, transferType, Optional.ToNullable(isCancellable), Optional.ToNullable(isDeletable), Optional.ToNullable(isShippingAddressEditable), Optional.ToNullable(isPrepareToShipEnabled), Optional.ToNullable(status), Optional.ToNullable(startTime), error.Value, details.Value, cancellationReason.Value, Optional.ToNullable(deliveryType), deliveryInfo.Value, Optional.ToNullable(isCancellableWithoutFee), sku, identity);
+            return new DataBoxJobData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, transferType, Optional.ToNullable(isCancellable), Optional.ToNullable(isDeletable), Optional.ToNullable(isShippingAddressEditable), Optional.ToNullable(reverseShippingDetailsUpdate), Optional.ToNullable(reverseTransportPreferenceUpdate), Optional.ToNullable(isPrepareToShipEnabled), Optional.ToNullable(status), Optional.ToNullable(startTime), error.Value, details.Value, cancellationReason.Value, Optional.ToNullable(deliveryType), deliveryInfo.Value, Optional.ToNullable(isCancellableWithoutFee), sku, identity);
         }
     }
 }

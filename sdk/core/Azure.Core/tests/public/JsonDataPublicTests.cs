@@ -47,11 +47,11 @@ namespace Azure.Core.Tests.Public
         public void DynamicCanConvertToNullAsNullableBool() => Assert.AreEqual(null, JsonDataTestHelpers.JsonAsType<bool?>("null"));
 
         [Test]
-        public void DynamicCanConvertToIEnumerableDynamic()
+        public void CanForeachOverHeterogenousArrayValues()
         {
             dynamic jsonData = new BinaryData("[1, null, \"s\"]").ToDynamicFromJson();
             int i = 0;
-            foreach (var dynamicItem in jsonData)
+            foreach (dynamic dynamicItem in jsonData)
             {
                 switch (i)
                 {
@@ -75,7 +75,7 @@ namespace Azure.Core.Tests.Public
         }
 
         [Test]
-        public void DynamicCanConvertToIEnumerableInt()
+        public void CanForeachOverIntArrayValues()
         {
             dynamic jsonData = new BinaryData("[0, 1, 2, 3]").ToDynamicFromJson();
             int i = 0;
@@ -170,10 +170,10 @@ namespace Azure.Core.Tests.Public
         {
             var json = new BinaryData("5.5").ToDynamicFromJson();
             dynamic jsonData = json;
-            Assert.Throws<FormatException>(() => _ = (int)json);
-            Assert.Throws<FormatException>(() => _ = (int)jsonData);
-            Assert.Throws<FormatException>(() => _ = (long)json);
-            Assert.Throws<FormatException>(() => _ = (long)jsonData);
+            Assert.Throws<InvalidCastException>(() => _ = (int)json);
+            Assert.Throws<InvalidCastException>(() => _ = (int)jsonData);
+            Assert.Throws<InvalidCastException>(() => _ = (long)json);
+            Assert.Throws<InvalidCastException>(() => _ = (long)jsonData);
         }
 
         [Test]
@@ -203,8 +203,8 @@ namespace Azure.Core.Tests.Public
             dynamic jsonData = json;
             Assert.AreEqual(34028234663852885981170418348451692544000d, (double)jsonData);
             Assert.AreEqual(34028234663852885981170418348451692544000d, (double)json);
-            Assert.Throws<FormatException>(() => _ = (float)json);
-            Assert.Throws<FormatException>(() => _ = (float)jsonData);
+            Assert.Throws<InvalidCastException>(() => _ = (float)json);
+            Assert.Throws<InvalidCastException>(() => _ = (float)jsonData);
         }
 
         [Test]
@@ -212,8 +212,8 @@ namespace Azure.Core.Tests.Public
         {
             var json = new BinaryData("3402823466385288598").ToDynamicFromJson();
             dynamic jsonData = json;
-            Assert.Throws<FormatException>(() => _ = (int)json);
-            Assert.Throws<FormatException>(() => _ = (int)jsonData);
+            Assert.Throws<InvalidCastException>(() => _ = (int)json);
+            Assert.Throws<InvalidCastException>(() => _ = (int)jsonData);
             Assert.AreEqual(3402823466385288598L, (long)jsonData);
             Assert.AreEqual(3402823466385288598L, (long)json);
             Assert.AreEqual(3402823466385288598D, (double)jsonData);
@@ -232,8 +232,8 @@ namespace Azure.Core.Tests.Public
             var doc = JsonDocument.Parse("-34028234663852885981170418348451692544000");
             doc.RootElement.GetSingle();
 
-            Assert.Throws<FormatException>(() => _ = (float)json);
-            Assert.Throws<FormatException>(() => _ = (float)jsonData);
+            Assert.Throws<InvalidCastException>(() => _ = (float)json);
+            Assert.Throws<InvalidCastException>(() => _ = (float)jsonData);
             Assert.AreEqual(-34028234663852885981170418348451692544000d, (double)jsonData);
             Assert.AreEqual(-34028234663852885981170418348451692544000d, (double)json);
         }
@@ -243,8 +243,8 @@ namespace Azure.Core.Tests.Public
         {
             var json = new BinaryData("-3402823466385288598").ToDynamicFromJson();
             dynamic jsonData = json;
-            Assert.Throws<FormatException>(() => _ = (int)json);
-            Assert.Throws<FormatException>(() => _ = (int)jsonData);
+            Assert.Throws<InvalidCastException>(() => _ = (int)json);
+            Assert.Throws<InvalidCastException>(() => _ = (int)jsonData);
             Assert.AreEqual(-3402823466385288598L, (long)jsonData);
             Assert.AreEqual(-3402823466385288598L, (long)json);
             Assert.AreEqual(-3402823466385288598D, (double)jsonData);
@@ -263,6 +263,7 @@ namespace Azure.Core.Tests.Public
         }
 
         [Test]
+        [Ignore("Disallowing POCO support in current version.")]
         public void RoundtripObjects()
         {
             var model = new SampleModel("Hello World", 5);
@@ -286,6 +287,7 @@ namespace Azure.Core.Tests.Public
         }
 
         [Test]
+        [Ignore("Disallowing general IEnumerable support in current version.")]
         public void CanCastToIEnumerableOfT()
         {
             dynamic data = new BinaryData("{ \"array\": [ 1, 2, 3] }").ToDynamicFromJson();
@@ -338,30 +340,20 @@ namespace Azure.Core.Tests.Public
         public void EqualsNull()
         {
             dynamic value = JsonDataTestHelpers.CreateFromJson("""{ "foo": null }""");
-            Assert.IsTrue(value.foo.Equals(null));
+            Assert.AreEqual(null, value.foo);
             Assert.IsTrue(value.foo == null);
 
             string nullString = null;
             Assert.IsTrue(value.foo == nullString);
             Assert.IsTrue(nullString == value.foo);
 
-            // Because the DLR resolves `==` for nullable value types to take the non-nullable
-            // value on the right-hand side, we'll still require a cast for nullable primitives.
             int? nullInt = null;
             Assert.IsTrue(value.foo == nullInt);
-            Assert.IsTrue(nullInt == (int?)value.foo);
+            Assert.IsTrue(nullInt == value.foo);
 
             bool? nullBool = null;
             Assert.IsTrue(value.foo == nullBool);
-            Assert.IsTrue(nullBool == (bool?)value.foo);
-
-            // We cannot overload the equality operator with two nullable values, so
-            // the following is the consequence.
-            Assert.IsFalse(null == value.foo);
-
-            // However, this does give us a backdoor to differentiate between an
-            // absent property and a property whose JSON value is null, if we wanted to
-            // use it that way, although it's not really very nice.
+            Assert.IsTrue(nullBool == value.foo);
         }
 
         [Test]

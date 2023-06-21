@@ -165,9 +165,7 @@ namespace Azure.AI.FormRecognizer.Models
             }
             else if (status == OperationStatus.Failed)
             {
-                RequestFailedException requestFailedException = await ClientCommon
-                    .CreateExceptionForFailedOperationAsync(async, _diagnostics, rawResponse, response.Value.AnalyzeResult.Errors)
-                    .ConfigureAwait(false);
+                RequestFailedException requestFailedException = ClientCommon.CreateExceptionForFailedOperation(rawResponse, response.Value.AnalyzeResult.Errors);
 
                 return OperationState<FormPageCollection>.Failure(rawResponse, requestFailedException);
             }

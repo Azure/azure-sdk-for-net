@@ -8,6 +8,7 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading;
+using Azure.Core;
 using Azure.Storage.DataMovement.Models;
 
 namespace Azure.Storage.DataMovement
@@ -40,6 +41,7 @@ namespace Azure.Storage.DataMovement
         /// <param name="path"></param>
         public LocalDirectoryStorageResourceContainer(string path)
         {
+            Argument.AssertNotNullOrWhiteSpace(path, nameof(path));
             _path = path;
         }
 
@@ -52,15 +54,6 @@ namespace Azure.Storage.DataMovement
         {
             string concatPath = System.IO.Path.Combine(Path, childPath);
             return new LocalFileStorageResource(concatPath);
-        }
-
-        /// <summary>
-        /// Gets the parent directory path by one level.
-        /// </summary>
-        /// <returns></returns>
-        public override StorageResourceContainer GetParentStorageResourceContainer()
-        {
-            return new LocalDirectoryStorageResourceContainer(_path.Substring(0, _path.LastIndexOf('/')));
         }
 
         /// <summary>

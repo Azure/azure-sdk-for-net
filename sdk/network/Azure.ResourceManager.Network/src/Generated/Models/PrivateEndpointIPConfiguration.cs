@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="groupId"> The ID of a group obtained from the remote resource that this private endpoint should connect to. </param>
         /// <param name="memberName"> The member name of a group obtained from the remote resource that this private endpoint should connect to. </param>
-        /// <param name="privateIPAddress"> A private ip address obtained from the private endpoint&apos;s subnet. </param>
+        /// <param name="privateIPAddress"> A private ip address obtained from the private endpoint's subnet. </param>
         internal PrivateEndpointIPConfiguration(string name, string privateEndpointIPConfigurationType, ETag? etag, string groupId, string memberName, IPAddress privateIPAddress)
         {
             Name = name;
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Network.Models
         public string GroupId { get; set; }
         /// <summary> The member name of a group obtained from the remote resource that this private endpoint should connect to. </summary>
         public string MemberName { get; set; }
-        /// <summary> A private ip address obtained from the private endpoint&apos;s subnet. </summary>
+        /// <summary> A private ip address obtained from the private endpoint's subnet. </summary>
         public IPAddress PrivateIPAddress { get; set; }
     }
 }

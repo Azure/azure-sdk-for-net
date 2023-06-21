@@ -18,6 +18,13 @@ namespace Azure.Storage.DataMovement.Tests
     /// </summary>
     public abstract class DataMovementTestBase : StorageTestBase<StorageTestEnvironment>
     {
+        public enum TransferType
+        {
+            Upload,
+            Download,
+            Copy,
+        }
+
         public DataMovementTestBase(bool async, RecordedTestMode? mode = null)
             : base(async, mode /* RecordedTestMode.Record /* to re-record */)
         {
@@ -78,16 +85,6 @@ namespace Azure.Storage.DataMovement.Tests
                 }
             }
             return files;
-        }
-
-        public static DisposingLocalDirectory GetTestLocalDirectory(string directoryPath = default)
-        {
-            if (string.IsNullOrEmpty(directoryPath))
-            {
-                directoryPath = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString());
-            }
-            Directory.CreateDirectory(directoryPath);
-            return new DisposingLocalDirectory(directoryPath);
         }
 
         public Dictionary<string, string> BuildTags()

@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFrameworks>$(RequiredTargetFrameworks);netstandard2.1;net6.0</TargetFrameworks>
     <IncludeGeneratorSharedCode>true</IncludeGeneratorSharedCode>
@@ -26,7 +26,8 @@
     <Compile Include="$(AzureStorageSharedSources)AesGcm\**\*.cs" LinkBase="Shared\Storage" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Azure.Storage.Blobs" />
+    <!--<PackageReference Include="Azure.Storage.Blobs" />-->
+    <ProjectReference Include="$(MSBuildThisFileDirectory)..\..\Azure.Storage.Blobs\src\Azure.Storage.Blobs.csproj" />
     <PackageReference Include="System.Threading.Channels" />
   </ItemGroup>
   <ItemGroup>
@@ -97,6 +98,7 @@
     <Compile Include="$(AzureStorageDataMovementSharedSources)ProgressMultipleParititonedStream.cs" LinkBase="Shared\DataMovement" />
     <Compile Include="$(AzureStorageDataMovementSharedSources)PathScanner.cs" LinkBase="Shared\DataMovement" />
     <Compile Include="$(AzureStorageDataMovementSharedSources)PathScannerFactory.cs" LinkBase="Shared\DataMovement" />
+    <Compile Include="$(AzureStorageDataMovementSharedSources)ResponseExtensions.cs" LinkBase="Shared\DataMovement" />
     <Compile Include="$(AzureStorageDataMovementSharedSources)StorageManagerTransferStatus.cs" LinkBase="Shared\DataMovement" />
   </ItemGroup>
   <ItemGroup>

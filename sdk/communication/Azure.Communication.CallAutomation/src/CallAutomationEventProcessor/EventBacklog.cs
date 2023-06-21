@@ -19,12 +19,12 @@ namespace Azure.Communication.CallAutomation
 
         private TimeSpan _expiringTimeout;
 
-        private ConcurrentDictionary<string, (CallAutomationEventData, Timer)> _eventBacklog;
+        private ConcurrentDictionary<string, (CallAutomationEventBase, Timer)> _eventBacklog;
 
         internal EventBacklog(TimeSpan defaultExpiringTimeout = default)
         {
             _expiringTimeout = defaultExpiringTimeout == default ? TimeSpan.FromSeconds(DEFAULT_TIMEOUT) : defaultExpiringTimeout;
-            _eventBacklog = new ConcurrentDictionary<string, (CallAutomationEventData, Timer)>();
+            _eventBacklog = new ConcurrentDictionary<string, (CallAutomationEventBase, Timer)>();
         }
 
         /// <summary>
@@ -33,7 +33,7 @@ namespace Azure.Communication.CallAutomation
         /// <param name="backlogEventId">Internally used id for tracking the saved event.</param>
         /// <param name="eventsToBeSaved">Incoming Event to be saved.</param>
         /// <returns>Returns True if adding event is successful. False otherwise.</returns>
-        internal bool TryAddEvent(string backlogEventId, CallAutomationEventData eventsToBeSaved)
+        internal bool TryAddEvent(string backlogEventId, CallAutomationEventBase eventsToBeSaved)
         {
             if (_eventBacklog.Count < MAXIMUM_EVENTBACKLOGS_AT_ONCE)
             {
@@ -48,7 +48,7 @@ namespace Azure.Communication.CallAutomation
             }
         }
 
-        internal bool TryGetAndRemoveEvent(Func<CallAutomationEventData, bool> predicate, out KeyValuePair<string, CallAutomationEventData> matchingEvent)
+        internal bool TryGetAndRemoveEvent(Func<CallAutomationEventBase, bool> predicate, out KeyValuePair<string, CallAutomationEventBase> matchingEvent)
         {
             // Match any event that matches in the events backlog
             var matchingKvp = _eventBacklog.FirstOrDefault(kvp => predicate(kvp.Value.Item1));
@@ -56,7 +56,7 @@ namespace Azure.Communication.CallAutomation
             // Try remove the item - if successful, return it as keyValuePair
             if (matchingKvp.Key != default && _eventBacklog.TryRemove(matchingKvp.Key, out var returnedValue))
             {
-                matchingEvent = new KeyValuePair<string, CallAutomationEventData>(matchingEvent.Key, returnedValue.Item1);
+                matchingEvent = new KeyValuePair<string, CallAutomationEventBase>(matchingEvent.Key, returnedValue.Item1);
                 return true;
             }
             else

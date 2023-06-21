@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <doc>
   <members>
-    <member name="UploadAsync(String,String,RequestContent,String,RequestContext)">
+    <member name="UploadAsync(string,string,RequestContent,string,RequestContext)">
 <example>
 This sample shows how to call UploadAsync with required parameters and request content.
 <code><![CDATA[
@@ -30,11 +30,8 @@ Response response = await client.UploadAsync("<ruleId>", "<streamName>", Request
 Console.WriteLine(response.Status);
 ]]></code>
 </example>
-<remarks>
-See error response code and error response message for more detail.
-</remarks>
     </member>
-    <member name="Upload(String,String,RequestContent,String,RequestContext)">
+    <member name="Upload(string,string,RequestContent,string,RequestContext)">
 <example>
 This sample shows how to call Upload with required parameters and request content.
 <code><![CDATA[
@@ -63,9 +60,6 @@ Response response = client.Upload("<ruleId>", "<streamName>", RequestContent.Cre
 Console.WriteLine(response.Status);
 ]]></code>
 </example>
-<remarks>
-See error response code and error response message for more detail.
-</remarks>
     </member>
   </members>
 </doc>

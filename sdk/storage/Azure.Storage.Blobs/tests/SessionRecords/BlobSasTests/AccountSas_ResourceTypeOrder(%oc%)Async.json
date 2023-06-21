@@ -67,7 +67,7 @@
       "ResponseBody": null
     },
     {
-      "RequestUri": "https://seancanaryversioning.blob.core.windows.net/test-container-c85ff06a-cea3-f49f-b6f4-26e705a8fdcc/test-blob-34645f61-c4f8-6cc0-8b82-bc106687e2e8?sv=2022-11-02\u0026ss=bqtf\u0026srt=oc\u0026se=2022-07-15T15%3A21%3A27Z\u0026sp=rwdylacuptfi\u0026sig=Sanitized",
+      "RequestUri": "https://seancanaryversioning.blob.core.windows.net/test-container-c85ff06a-cea3-f49f-b6f4-26e705a8fdcc/test-blob-34645f61-c4f8-6cc0-8b82-bc106687e2e8?sv=2023-01-03\u0026ss=bqtf\u0026srt=oc\u0026se=2022-07-15T15%3A21%3A27Z\u0026sp=rwdylacuptfi\u0026sig=Sanitized",
       "RequestMethod": "HEAD",
       "RequestHeaders": {
         "Accept": "application/xml",

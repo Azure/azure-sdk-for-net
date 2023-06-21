@@ -229,14 +229,7 @@ namespace Azure.Storage.Blobs.Test
 
         private async Task<Response> InvokeDownloadToAsync(PartitionedDownloader downloader, Stream stream)
         {
-            if (_async)
-            {
-                return await downloader.DownloadToAsync(stream, s_conditions, s_cancellationToken);
-            }
-            else
-            {
-                return downloader.DownloadTo(stream, s_conditions, s_cancellationToken);
-            }
+            return await downloader.DownloadToInternal(stream, s_conditions, _async, s_cancellationToken);
         }
 
         private class MockDataSource

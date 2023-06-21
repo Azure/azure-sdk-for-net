@@ -2,10 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -36,11 +33,6 @@ namespace Azure.Storage.DataMovement
         public override ProduceUriType CanProduceUri => ProduceUriType.NoUri;
 
         /// <summary>
-        /// Cannot perform service to service copies. This respective resource is a local resource.
-        /// </summary>
-        public override TransferCopyMethod ServiceCopyMethod => TransferCopyMethod.None;
-
-        /// <summary>
         /// Defines the recommended Transfer Type of the resource
         /// </summary>
         public override TransferType TransferType => TransferType.Sequential;
@@ -64,6 +56,7 @@ namespace Azure.Storage.DataMovement
         /// <param name="path"></param>
         public LocalFileStorageResource(string path)
         {
+            Argument.AssertNotNullOrWhiteSpace(path, nameof(path));
             _path = path;
         }
 
@@ -229,7 +222,7 @@ namespace Azure.Storage.DataMovement
         /// If the transfer requires client-side encryption, necessary
         /// operations will occur here.
         /// </summary>
-        public override Task CompleteTransferAsync(CancellationToken cancellationToken = default)
+        public override Task CompleteTransferAsync(bool overwrite, CancellationToken cancellationToken = default)
         {
             if (File.Exists(_path))
             {
