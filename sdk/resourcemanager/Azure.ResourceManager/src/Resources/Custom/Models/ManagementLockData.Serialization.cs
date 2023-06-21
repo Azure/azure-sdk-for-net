@@ -10,75 +10,20 @@ using System.Buffers;
 using System.IO;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Resources
 {
-    public partial class ManagementLockData : ISerializable
+    public partial class ManagementLockData : IModelSerializable
     {
         /// <summary> Initializes a new instance of ManagementLockData. </summary>
         public ManagementLockData()
         {
         }
-
-        bool ISerializable.TryDeserialize(ReadOnlySpan<byte> data, out int bytesConsumed, StandardFormat format)
+        void IModelSerializable.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
-            using var document = JsonDocument.Parse(BinaryData.FromBytes(data.ToArray()).ToString());
-            var model = ManagementLockData.DeserializeManagementLockData(document.RootElement);
-            bytesConsumed = data.Length;
-            return true;
-        }
-
-        bool ISerializable.TrySerialize(Span<byte> buffer, out int bytesWritten, StandardFormat format)
-        {
-            var writer = new Utf8JsonWriter(new MemoryStream(buffer.ToArray()));
             ((IUtf8JsonSerializable)this).Write(writer);
-            bytesWritten = buffer.Length;
-            return true;
-        }
-
-        /// <summary> Deserializes a <see cref="JsonElement"/> to an instance of <see cref="ManagementLockData"/>. </summary>
-        private new void Deserialize(JsonElement element)
-        {
-            base.Deserialize(element);
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("properties"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    foreach (var property0 in property.Value.EnumerateObject())
-                    {
-                        if (property0.NameEquals("level"))
-                        {
-                            Level = new ManagementLockLevel(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("notes"))
-                        {
-                            Notes = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("owners"))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                property0.ThrowNonNullablePropertyIsNull();
-                                continue;
-                            }
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                Owners.Add(ManagementLockOwner.DeserializeManagementLockOwner(item));
-                            }
-                            continue;
-                        }
-                    }
-                    continue;
-                }
-            }
         }
     }
 }

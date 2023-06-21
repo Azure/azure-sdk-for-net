@@ -5,22 +5,17 @@
 
 #nullable disable
 
-using System;
-using System.Buffers;
-using System.IO;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.Resources.Models;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.ManagementGroups
 {
-    public partial class ManagementGroupData : ISerializable
+    public partial class ManagementGroupData : IModelSerializable
     {
-        bool ISerializable.TryDeserialize(ReadOnlySpan<byte> data, out int bytesConsumed, StandardFormat format) 
-            => throw new NotImplementedException();
-
-        
-        bool ISerializable.TrySerialize(Span<byte> buffer, out int bytesWritten, StandardFormat format)
-            => throw new NotImplementedException();
+        void IModelSerializable.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
+        {
+            ((IUtf8JsonSerializable)this).Write(writer);
+        }
     }
 }

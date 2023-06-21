@@ -5,15 +5,15 @@
 
 #nullable disable
 
-using System;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Resources.Models
 {
     public partial class ResourceGroupExportResult : IModelSerializable
     {
-        void IModelSerializable.Serialize(Utf8JsonWriter writer, SerializableOptions options)
+        void IModelSerializable.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
             ((IUtf8JsonSerializable)this).Write(writer);
         }

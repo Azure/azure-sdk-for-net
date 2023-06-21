@@ -7,6 +7,7 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Resources
 {
@@ -17,7 +18,7 @@ namespace Azure.ResourceManager.Resources
         {
         }
 
-        void IModelSerializable.Serialize(Utf8JsonWriter writer, SerializableOptions options)
+        void IModelSerializable.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
             ((IUtf8JsonSerializable)this).Write(writer);
         }
