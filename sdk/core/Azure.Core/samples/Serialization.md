@@ -180,7 +180,7 @@ Envelope<ModelT> model = ModelSerializer.Deserialize<Envelope<ModelT>>(new Memor
 ```
 
 ## XmlModel Example
-By using the SerializeXml and DeserializeXml methods we can serialize and deserialize Xml Models using the XmlSerializer. Future work includes combining ModelSerializer Serialize/Deserialize methods with XmlSerializer models to have a single method for both Json and Xml.
+By using the SerializeXml and DeserializeXml methods we can serialize and deserialize Xml Models using the XmlSerializer. Next steps include combining ModelSerializer Serialize/Deserialize methods with XmlSerializer models to have a single method for both Json and Xml.
 
 Serialization
 ```C# Snippet:XmlModelSerialize
