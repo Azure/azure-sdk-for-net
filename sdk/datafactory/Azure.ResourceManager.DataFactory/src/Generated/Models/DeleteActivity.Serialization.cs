@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -36,6 +37,16 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
+            if (Optional.IsDefined(State))
+            {
+                writer.WritePropertyName("state"u8);
+                writer.WriteStringValue(State.Value.ToString());
+            }
+            if (Optional.IsDefined(OnInactiveMarkAs))
+            {
+                writer.WritePropertyName("onInactiveMarkAs"u8);
+                writer.WriteStringValue(OnInactiveMarkAs.Value.ToString());
+            }
             if (Optional.IsCollectionDefined(DependsOn))
             {
                 writer.WritePropertyName("dependsOn"u8);
@@ -61,11 +72,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(Recursive))
             {
                 writer.WritePropertyName("recursive"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(Recursive);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(Recursive.ToString()).RootElement);
-#endif
+                JsonSerializer.Serialize(writer, Recursive);
             }
             if (Optional.IsDefined(MaxConcurrentConnections))
             {
@@ -75,11 +82,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(EnableLogging))
             {
                 writer.WritePropertyName("enableLogging"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(EnableLogging);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(EnableLogging.ToString()).RootElement);
-#endif
+                JsonSerializer.Serialize(writer, EnableLogging);
             }
             if (Optional.IsDefined(LogStorageSettings))
             {
@@ -112,16 +115,18 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            Optional<FactoryLinkedServiceReference> linkedServiceName = default;
+            Optional<DataFactoryLinkedServiceReference> linkedServiceName = default;
             Optional<ActivityPolicy> policy = default;
             string name = default;
             string type = default;
             Optional<string> description = default;
+            Optional<ActivityState> state = default;
+            Optional<ActivityOnInactiveMarkA> onInactiveMarkAs = default;
             Optional<IList<ActivityDependency>> dependsOn = default;
             Optional<IList<ActivityUserProperty>> userProperties = default;
-            Optional<BinaryData> recursive = default;
+            Optional<DataFactoryElement<bool>> recursive = default;
             Optional<int> maxConcurrentConnections = default;
-            Optional<BinaryData> enableLogging = default;
+            Optional<DataFactoryElement<bool>> enableLogging = default;
             Optional<LogStorageSettings> logStorageSettings = default;
             DatasetReference dataset = default;
             Optional<StoreReadSettings> storeSettings = default;
@@ -135,7 +140,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    linkedServiceName = FactoryLinkedServiceReference.DeserializeFactoryLinkedServiceReference(property.Value);
+                    linkedServiceName = DataFactoryLinkedServiceReference.DeserializeDataFactoryLinkedServiceReference(property.Value);
                     continue;
                 }
                 if (property.NameEquals("policy"u8))
@@ -160,6 +165,24 @@ namespace Azure.ResourceManager.DataFactory.Models
                 if (property.NameEquals("description"u8))
                 {
                     description = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("state"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    state = new ActivityState(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("onInactiveMarkAs"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    onInactiveMarkAs = new ActivityOnInactiveMarkA(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("dependsOn"u8))
@@ -205,7 +228,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            recursive = BinaryData.FromString(property0.Value.GetRawText());
+                            recursive = JsonSerializer.Deserialize<DataFactoryElement<bool>>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("maxConcurrentConnections"u8))
@@ -223,7 +246,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            enableLogging = BinaryData.FromString(property0.Value.GetRawText());
+                            enableLogging = JsonSerializer.Deserialize<DataFactoryElement<bool>>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("logStorageSettings"u8))
@@ -255,7 +278,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new DeleteActivity(name, type, description.Value, Optional.ToList(dependsOn), Optional.ToList(userProperties), additionalProperties, linkedServiceName.Value, policy.Value, recursive.Value, Optional.ToNullable(maxConcurrentConnections), enableLogging.Value, logStorageSettings.Value, dataset, storeSettings.Value);
+            return new DeleteActivity(name, type, description.Value, Optional.ToNullable(state), Optional.ToNullable(onInactiveMarkAs), Optional.ToList(dependsOn), Optional.ToList(userProperties), additionalProperties, linkedServiceName.Value, policy.Value, recursive.Value, Optional.ToNullable(maxConcurrentConnections), enableLogging.Value, logStorageSettings.Value, dataset, storeSettings.Value);
         }
     }
 }
