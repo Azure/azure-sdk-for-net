@@ -17,6 +17,9 @@ namespace Azure.ResourceManager.NetworkCloud.Tests
         public string ClusterRG => GetRecordedVariable("CLUSTER_RG");
         public System.DateTimeOffset DayFromNow => System.DateTimeOffset.Parse(GetRecordedVariable("DAY_FROM_NOW"));
         public string DefaultCniNetworkName => GetRecordedVariable("DEFAULT_CNI_NETWORK_NAME");
+        public string KubernetesClusterName => GetRecordedVariable("KUBERNETES_CLUSTER_NAME");
+        public ResourceIdentifier KubernetesClusterId => new ResourceIdentifier(GetRecordedVariable("KUBERNETES_CLUSTER_ID"));
+        public string KubernetesClusterRG => GetRecordedVariable("KUBERNETES_CLUSTER_RG");
         public string L2IsolationDomainId => GetRecordedVariable("L2_ISOLATION_DOMAIN_ID");
         public string L2NetworkName => GetRecordedVariable("L2_NETWORK_NAME");
         public string L3Ipv4Prefix => GetRecordedVariable("L3_IPV4_PREFIX");
@@ -33,11 +36,12 @@ namespace Azure.ResourceManager.NetworkCloud.Tests
         public string CSNAttachmentName => GetRecordedVariable("CSN_ATTACHMENT_NAME");
         public string L3NAttachmentId => GetRecordedVariable("L3_ATTACHMENT_ID");
         public string L3NAttachmentName => GetRecordedVariable("L3_ATTACHMENT_NAME");
+        public ResourceIdentifier VMId => new ResourceIdentifier(GetRecordedVariable("VM_ID"));
         public string VMImage => GetRecordedVariable("VM_IMAGE");
         public string VMImageRepoPwd => GetRecordedVariable("VM_IMAGE_REPO_PWD", options => options.IsSecret());
         public string VMImageRepoUri => GetRecordedVariable("VM_IMAGE_REPO_URI");
         public string VMImageRepoUser => GetRecordedVariable("VM_IMAGE_REPO_USER");
-
+        public string VMName => GetRecordedVariable("VIRTUAL_MACHINE_NAME");
         // Support using the Default Credential created by Azure CLI so
         // that we don't have to support creating a service principal, etc. to run these tests.
         public override TokenCredential Credential
