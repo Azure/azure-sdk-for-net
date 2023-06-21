@@ -57,11 +57,11 @@ namespace Azure.ResourceManager.DataFactory.Models
                 return null;
             }
             Optional<string> script = default;
-            Optional<FactoryLinkedServiceReference> schemaLinkedService = default;
+            Optional<DataFactoryLinkedServiceReference> schemaLinkedService = default;
             string name = default;
             Optional<string> description = default;
             Optional<DatasetReference> dataset = default;
-            Optional<FactoryLinkedServiceReference> linkedService = default;
+            Optional<DataFactoryLinkedServiceReference> linkedService = default;
             Optional<DataFlowReference> flowlet = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    schemaLinkedService = FactoryLinkedServiceReference.DeserializeFactoryLinkedServiceReference(property.Value);
+                    schemaLinkedService = DataFactoryLinkedServiceReference.DeserializeDataFactoryLinkedServiceReference(property.Value);
                     continue;
                 }
                 if (property.NameEquals("name"u8))
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    linkedService = FactoryLinkedServiceReference.DeserializeFactoryLinkedServiceReference(property.Value);
+                    linkedService = DataFactoryLinkedServiceReference.DeserializeDataFactoryLinkedServiceReference(property.Value);
                     continue;
                 }
                 if (property.NameEquals("flowlet"u8))

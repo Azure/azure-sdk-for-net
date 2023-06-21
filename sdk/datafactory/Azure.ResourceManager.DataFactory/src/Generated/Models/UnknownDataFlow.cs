@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> The UnknownDataFlow. </summary>
-    internal partial class UnknownDataFlow : FactoryDataFlowDefinition
+    internal partial class UnknownDataFlow : DataFactoryDataFlowDefinition
     {
         /// <summary> Initializes a new instance of UnknownDataFlow. </summary>
         /// <param name="dataFlowType"> Type of data flow. </param>

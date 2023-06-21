@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             string name = default;
             Optional<string> description = default;
             Optional<DatasetReference> dataset = default;
-            Optional<FactoryLinkedServiceReference> linkedService = default;
+            Optional<DataFactoryLinkedServiceReference> linkedService = default;
             Optional<DataFlowReference> flowlet = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    linkedService = FactoryLinkedServiceReference.DeserializeFactoryLinkedServiceReference(property.Value);
+                    linkedService = DataFactoryLinkedServiceReference.DeserializeDataFactoryLinkedServiceReference(property.Value);
                     continue;
                 }
                 if (property.NameEquals("flowlet"u8))

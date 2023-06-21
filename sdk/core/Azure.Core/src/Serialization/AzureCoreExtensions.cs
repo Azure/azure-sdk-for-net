@@ -6,7 +6,6 @@ using System.Collections.Generic;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.Core.Dynamic;
 using Azure.Core.Json;
 using Azure.Core.Serialization;
 
@@ -65,10 +64,7 @@ namespace Azure
         /// </summary>
         public static dynamic ToDynamicFromJson(this BinaryData utf8Json)
         {
-            DynamicDataOptions options = utf8Json is ResponseContent content ?
-                content.ProtocolOptions.GetDynamicOptions() :
-                new DynamicDataOptions();
-
+            DynamicDataOptions options = new DynamicDataOptions();
             return utf8Json.ToDynamicFromJson(options);
         }
 
@@ -78,16 +74,18 @@ namespace Azure
         /// This value indicates to the dynamic type that it can convert property names on the returned value to this format in the underlying JSON.
         /// Please see https://aka.ms/azsdk/net/dynamiccontent#use-c-naming-conventions for details.
         /// </paramref>
-        /// <paramref name="dateTimeFormat">The format of DateTime values in the JSON content.</paramref>
+        /// <paramref name="dateTimeFormat">The standard format specifier to pass when serializing DateTime and DateTimeOffset values in the JSON content.
+        /// To serialize to unix time, pass the value <code>"x"</code> and
+        /// see <see href="https://learn.microsoft.com/dotnet/standard/base-types/standard-date-and-time-format-strings">https://learn.microsoft.com/dotnet/standard/base-types/standard-date-and-time-format-strings#table-of-format-specifiers</see> for other well known values.
+        /// </paramref>
         /// </summary>
-        public static dynamic ToDynamicFromJson(this BinaryData utf8Json, PropertyNameFormat propertyNameFormat, string dateTimeFormat = DynamicData.RoundTripFormat)
+        public static dynamic ToDynamicFromJson(this BinaryData utf8Json, JsonPropertyNames propertyNameFormat, string dateTimeFormat = DynamicData.RoundTripFormat)
         {
-            DynamicDataOptions options = utf8Json is ResponseContent content ?
-                new DynamicDataOptions(content.ProtocolOptions.GetDynamicOptions()) :
-                new DynamicDataOptions();
-
-            options.PropertyNameFormat = propertyNameFormat;
-            options.DateTimeFormat = dateTimeFormat;
+            DynamicDataOptions options = new DynamicDataOptions()
+            {
+                PropertyNameFormat = propertyNameFormat,
+                DateTimeFormat = dateTimeFormat
+            };
 
             return utf8Json.ToDynamicFromJson(options);
         }

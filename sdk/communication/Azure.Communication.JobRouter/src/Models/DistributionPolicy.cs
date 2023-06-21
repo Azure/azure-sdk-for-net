@@ -14,27 +14,29 @@ namespace Azure.Communication.JobRouter.Models
         internal DistributionPolicy()
         {
         }
+
         /// <summary> Initializes a new instance of DistributionPolicy. </summary>
-        /// <param name="offerTtl"> The expiry time of any offers created under this policy will be governed by the offer time to live. </param>
+        /// <param name="offerExpiresAfter"> The expiry time of any offers created under this policy will be governed by the offer time to live. </param>
         /// <param name="mode"> Abstract base class for defining a distribution mode. </param>
-        internal DistributionPolicy(TimeSpan? offerTtl, DistributionMode mode)
+        internal DistributionPolicy(TimeSpan? offerExpiresAfter, DistributionMode mode)
         {
-            OfferTtl = offerTtl;
+            OfferExpiresAfter = offerExpiresAfter;
             Mode = mode;
         }
 
         /// <summary> The expiry time of any offers created under this policy will be governed by the offer time to live. </summary>
-        public TimeSpan? OfferTtl { get; set; }
+        public TimeSpan? OfferExpiresAfter { get; set; }
 
-        [CodeGenMember("OfferTtlSeconds")]
-        internal double? _offerTtlSeconds {
+        [CodeGenMember("OfferExpiresAfterSeconds")]
+        internal double? _offerExpiresAfterSeconds
+        {
             get
             {
-                return OfferTtl?.TotalSeconds is null or 0 ? null : OfferTtl?.TotalSeconds;
+                return OfferExpiresAfter?.TotalSeconds is null or 0 ? null : OfferExpiresAfter?.TotalSeconds;
             }
             set
             {
-                OfferTtl = value != null ? TimeSpan.FromSeconds(value.Value) : null;
+                OfferExpiresAfter = value != null ? TimeSpan.FromSeconds(value.Value) : null;
             }
         }
     }

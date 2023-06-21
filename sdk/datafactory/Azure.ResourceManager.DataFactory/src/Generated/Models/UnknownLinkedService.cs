@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> The UnknownLinkedService. </summary>
-    internal partial class UnknownLinkedService : FactoryLinkedServiceDefinition
+    internal partial class UnknownLinkedService : DataFactoryLinkedServiceDefinition
     {
         /// <summary> Initializes a new instance of UnknownLinkedService. </summary>
         /// <param name="linkedServiceType"> Type of linked service. </param>

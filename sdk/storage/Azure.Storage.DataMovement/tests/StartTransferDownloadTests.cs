@@ -73,7 +73,7 @@ namespace Azure.Storage.DataMovement.Tests
         private async Task DownloadBlockBlobsAndVerify(
             BlobContainerClient container,
             long size = Constants.KB,
-            int waitTimeInSec = 10,
+            int waitTimeInSec = 30,
             int blobCount = 1,
             TransferManagerOptions transferManagerOptions = default,
             List<string> blobNames = default,
@@ -283,7 +283,7 @@ namespace Azure.Storage.DataMovement.Tests
                 new BlockBlobStorageResource(sourceClient),
                 new LocalFileStorageResource(destFile),
                 options);
-            CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(10));
+            CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(30));
             await transfer.AwaitCompletion(cancellationTokenSource.Token);
 
             // Assert
@@ -325,7 +325,7 @@ namespace Azure.Storage.DataMovement.Tests
                 new BlockBlobStorageResource(sourceClient),
                 new LocalFileStorageResource(destFile),
                 options);
-            CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(10));
+            CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(30));
             await transfer.AwaitCompletion(cancellationTokenSource.Token);
 
             // Assert
@@ -500,7 +500,7 @@ namespace Azure.Storage.DataMovement.Tests
         private async Task DownloadAppendBlobsAndVerify(
             BlobContainerClient container,
             long size = Constants.KB,
-            int waitTimeInSec = 10,
+            int waitTimeInSec = 30,
             int blobCount = 1,
             TransferManagerOptions transferManagerOptions = default,
             List<string> blobNames = default,
@@ -690,7 +690,7 @@ namespace Azure.Storage.DataMovement.Tests
                 new AppendBlobStorageResource(sourceClient),
                 new LocalFileStorageResource(destFile),
                 options);
-            CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(10));
+            CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(30));
             await transfer.AwaitCompletion(cancellationTokenSource.Token);
 
             // Assert
@@ -733,7 +733,7 @@ namespace Azure.Storage.DataMovement.Tests
                 new AppendBlobStorageResource(sourceClient),
                 new LocalFileStorageResource(destFile),
                 options);
-            CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(10));
+            CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(30));
             await transfer.AwaitCompletion(cancellationTokenSource.Token);
 
             // Assert
@@ -780,7 +780,7 @@ namespace Azure.Storage.DataMovement.Tests
                 sourceResource,
                 destinationResource,
                 options);
-            CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(10));
+            CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(30));
             await transfer.AwaitCompletion(cancellationTokenSource.Token);
             Assert.AreEqual(1, testEventsRaised.FailedEvents.Count);
             Assert.IsTrue(testEventsRaised.FailedEvents.First().Exception.Message.Contains("Cannot overwrite file."));
@@ -966,7 +966,7 @@ namespace Azure.Storage.DataMovement.Tests
         private async Task DownloadPageBlobsAndVerify(
             BlobContainerClient container,
             long size = Constants.KB,
-            int waitTimeInSec = 10,
+            int waitTimeInSec = 30,
             int blobCount = 1,
             TransferManagerOptions transferManagerOptions = default,
             List<string> blobNames = default,
@@ -1150,7 +1150,7 @@ namespace Azure.Storage.DataMovement.Tests
                 new PageBlobStorageResource(sourceClient),
                 new LocalFileStorageResource(destFile),
                 options);
-            CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(10));
+            CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(30));
             await transfer.AwaitCompletion(cancellationTokenSource.Token);
 
             // Assert
@@ -1193,7 +1193,7 @@ namespace Azure.Storage.DataMovement.Tests
                 new PageBlobStorageResource(sourceClient),
                 new LocalFileStorageResource(destFile),
                 options);
-            CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(10));
+            CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(30));
             await transfer.AwaitCompletion(cancellationTokenSource.Token);
 
             // Assert

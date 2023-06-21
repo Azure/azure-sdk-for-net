@@ -1,14 +1,20 @@
 # Release History
 
-## 1.33.0-beta.1 (Unreleased)
+## 1.34.0-beta.1 (Unreleased)
 
 ### Features Added
-
-- Added `BinaryData.ToDynamicFromJson()` extension method to enable dynamic access to JSON.  See the [aka.ms/azsdk/net/dynamiccontent](https://aka.ms/azsdk/net/dynamiccontent) for further details.
 
 ### Breaking Changes
 
 ### Bugs Fixed
+
+### Other Changes
+
+## 1.33.0 (2023-06-16)
+
+### Features Added
+
+- Added `BinaryData.ToDynamicFromJson()` extension method to enable dynamic access to JSON.  See the [aka.ms/azsdk/net/dynamiccontent](https://aka.ms/azsdk/net/dynamiccontent) for further details.
 
 ### Other Changes
 

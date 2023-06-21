@@ -4662,16 +4662,18 @@ namespace Azure.Storage.Blobs.Specialized
                         operationName)
                         .ConfigureAwait(false);
 
-                    if (BlobBaseClientExistsClassifier.IsResourceNotFoundResponse(response.GetRawResponse()))
+                    Response rawResponse = response.GetRawResponse();
+                    if (BlobBaseClientExistsClassifier.IsResourceNotFoundResponse(rawResponse))
                     {
-                        return Response.FromValue(false, default);
-                    }
-                    if (BlobBaseClientExistsClassifier.IsUsesCustomerSpecifiedEncryptionResponse(response.GetRawResponse()))
-                    {
-                        return Response.FromValue(true, default);
+                        return Response.FromValue(false, rawResponse);
                     }
 
-                    return Response.FromValue(true, response.GetRawResponse());
+                    if (BlobBaseClientExistsClassifier.IsUsesCustomerSpecifiedEncryptionResponse(rawResponse))
+                    {
+                        return Response.FromValue(true, rawResponse);
+                    }
+
+                    return Response.FromValue(true, rawResponse);
                 }
                 catch (Exception ex)
                 {
