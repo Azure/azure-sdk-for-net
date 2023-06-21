@@ -63,7 +63,6 @@ namespace Azure.Data.SchemaRegistry.Tests.Samples
 #endif
 
             // Construct a publisher and publish the events to our event hub
-
 #if SNIPPET
             var fullyQualifiedNamespace = "<< FULLY-QUALIFIED EVENT HUBS NAMESPACE (like something.servicebus.windows.net) >>";
             var eventHubName = "<< NAME OF THE EVENT HUB >>";
@@ -77,7 +76,6 @@ namespace Azure.Data.SchemaRegistry.Tests.Samples
             // It is recommended that you cache the Event Hubs clients for the lifetime of your
             // application, closing or disposing when application ends.  This example disposes
             // after the immediate scope for simplicity.
-
             await using var producer = new EventHubProducerClient(fullyQualifiedNamespace, eventHubName, credential);
             await producer.SendAsync(new EventData[] { eventData });
             #endregion
@@ -88,7 +86,6 @@ namespace Azure.Data.SchemaRegistry.Tests.Samples
             // It is recommended that you cache the Event Hubs clients for the lifetime of your
             // application, closing or disposing when application ends.  This example disposes
             // after the immediate scope for simplicity.
-
             await using var consumer = new EventHubConsumerClient(EventHubConsumerClient.DefaultConsumerGroupName, fullyQualifiedNamespace, eventHubName, credential);
             await foreach (PartitionEvent receivedEvent in consumer.ReadEventsAsync())
             {
@@ -187,11 +184,11 @@ namespace Azure.Data.SchemaRegistry.Tests.Samples
         #region Snippet:SampleSchemaRegistryJsonSchemaGeneratorImplementation
         internal class SampleJsonValidator : SchemaValidator<string>
         {
-            public override void Validate(Object data, Type dataType, string schemaDefinition)
+            public override void Validate(object data, Type dataType, string schemaDefinition)
             {
-                // Your implementation using the third-party library of your choice goes here. This method throws
-                // an exception if the data argument is not valid according to the schemaDefinition.
+                // This method throws an exception if the data argument is not valid according to the schemaDefinition.
 
+                // Your implementation using the third-party library of your choice goes here.
                 List<Exception> validationErrors = SampleValidationClass.SampleValidationMethod(schemaDefinition, data, dataType);
 
                 if (validationErrors.Count  > 0)
@@ -206,7 +203,6 @@ namespace Azure.Data.SchemaRegistry.Tests.Samples
             {
 #if SNIPPET
                 // Your implementation using the third-party library of your choice goes here.
-
                 return "<< SCHEMA GENERATED FROM DATATYPE PARAMETER >>";
 #else
                 return "{\r\n  \"$schema\": \"http://json-schema.org/draft-04/schema#\",\r\n  \"title\": \"Employee\",\r\n  \"type\": \"object\",\r\n  \"additionalProperties\": false,\r\n  \"properties\": {\r\n    \"Age\": {\r\n      \"type\": \"integer\",\r\n      \"format\": \"int32\"\r\n    },\r\n    \"Name\": {\r\n      \"type\": [\r\n        \"null\",\r\n        \"string\"\r\n      ]\r\n    }\r\n  }\r\n}";

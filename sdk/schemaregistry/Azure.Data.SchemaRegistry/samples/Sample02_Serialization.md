@@ -19,11 +19,11 @@ The following is an outline of how an implemented `SchemaValidator` may look:
 ```C# Snippet:SampleSchemaRegistryJsonSchemaGeneratorImplementation
 internal class SampleJsonValidator : SchemaValidator<string>
 {
-    public override void Validate(Object data, Type dataType, string schemaDefinition)
+    public override void Validate(object data, Type dataType, string schemaDefinition)
     {
-        // Your implementation using the third-party library of your choice goes here. This method throws
-        // an exception if the data argument is not valid according to the schemaDefinition.
+        // This method throws an exception if the data argument is not valid according to the schemaDefinition.
 
+        // Your implementation using the third-party library of your choice goes here.
         List<Exception> validationErrors = SampleValidationClass.SampleValidationMethod(schemaDefinition, data, dataType);
 
         if (validationErrors.Count  > 0)
@@ -37,7 +37,6 @@ internal class SampleJsonValidator : SchemaValidator<string>
     public override string GenerateSchema(Type dataType)
     {
         // Your implementation using the third-party library of your choice goes here.
-
         return "<< SCHEMA GENERATED FROM DATATYPE PARAMETER >>";
     }
 }
@@ -91,7 +90,6 @@ Console.WriteLine(eventData.ContentType);
 Console.WriteLine(eventData.EventBody);
 
 // Construct a publisher and publish the events to our event hub
-
 var fullyQualifiedNamespace = "<< FULLY-QUALIFIED EVENT HUBS NAMESPACE (like something.servicebus.windows.net) >>";
 var eventHubName = "<< NAME OF THE EVENT HUB >>";
 var credential = new DefaultAzureCredential();
@@ -99,7 +97,6 @@ var credential = new DefaultAzureCredential();
 // It is recommended that you cache the Event Hubs clients for the lifetime of your
 // application, closing or disposing when application ends.  This example disposes
 // after the immediate scope for simplicity.
-
 await using var producer = new EventHubProducerClient(fullyQualifiedNamespace, eventHubName, credential);
 await producer.SendAsync(new EventData[] { eventData });
 ```
@@ -112,7 +109,6 @@ To deserialize an `EventData` event that you are consuming:
 // It is recommended that you cache the Event Hubs clients for the lifetime of your
 // application, closing or disposing when application ends.  This example disposes
 // after the immediate scope for simplicity.
-
 await using var consumer = new EventHubConsumerClient(EventHubConsumerClient.DefaultConsumerGroupName, fullyQualifiedNamespace, eventHubName, credential);
 await foreach (PartitionEvent receivedEvent in consumer.ReadEventsAsync())
 {
