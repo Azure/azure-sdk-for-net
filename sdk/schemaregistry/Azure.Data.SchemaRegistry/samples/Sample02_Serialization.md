@@ -4,7 +4,7 @@ The following shows how to use the `SchemaRegistrySerializer` to serialize and d
 
 ## Table of contents
 - [Implementing `SchemaValidator`](#implementing-schemavalidator)
-- [Serialize and deserialize JSON data using the Event Hub EventData model](#serialize-and-deserialize-json-data-using-the-event-hub-eventdata-model)
+- [Serialize and deserialize JSON data using the Event Hubs `EventData` type](#serialize-and-deserialize-json-data-using-the-event-hubs-eventdata-type)
 - [Serialize and deserialize JSON data using `MessageContent` directly](#serialize-and-deserialize-json-data-using-messagecontent-directly)
 - [Pluggable object serialization](#pluggable-object-serialization)
 - [Troubleshooting](#troubleshooting)
@@ -73,7 +73,7 @@ internal class SampleJsonValidator : SchemaValidator
 }
 ```
 
-## Serialize and deserialize JSON data using the Event Hub EventData model
+## Serialize and deserialize JSON data using the Event Hubs `EventData` type
 
 In order to serialize an `EventData` instance with JSON information, you can do the following:
 
