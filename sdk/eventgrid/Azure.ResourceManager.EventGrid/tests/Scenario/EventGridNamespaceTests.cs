@@ -480,15 +480,11 @@ namespace Azure.ResourceManager.EventGrid.Tests
             var clientCollection = createNamespaceResponse.GetClients();
             string clientName1 = "clientName1";
             string clientName2 = "clientName2";
-            List<string> allowedThumbprints = new List<string>();
-            allowedThumbprints.Add("934367bf1c97033f877db0f15cb1b586957d313");
-            var Attribute1 = new Dictionary<string, object>();
-            Attribute1.Add("testType", "synthetics");
             var clientCertificateAuthentication = new ClientCertificateAuthentication()
             {
                 ValidationScheme = ClientCertificateValidationScheme.ThumbprintMatch,
-                AllowedThumbprints = allowedThumbprints
             };
+            clientCertificateAuthentication.AllowedThumbprints.Add("934367bf1c97033f877db0f15cb1b586957d313");
             ClientData clientData = new ClientData()
             {
                 ClientCertificateAuthentication = clientCertificateAuthentication,
@@ -569,12 +565,8 @@ namespace Azure.ResourceManager.EventGrid.Tests
             var topicSpacesCollection = createNamespaceResponse.GetTopicSpaces();
             var topicSpaceName1 = "topicSpace1";
             var topicSpaceName2 = "topicSpace2";
-            var topicTemplates =new List<string>();
-            topicTemplates.Add("testTopicTemplate1");
-            TopicSpaceData topicSpaceData = new TopicSpaceData()
-            {
-                TopicTemplates = topicTemplates
-            };
+            TopicSpaceData topicSpaceData = new TopicSpaceData();
+            topicSpaceData.TopicTemplates.Add("testTopicTemplate1");
             var topicSpaceResponse1 = (await topicSpacesCollection.CreateOrUpdateAsync(WaitUntil.Completed, topicSpaceName1, topicSpaceData)).Value;
             Assert.IsNotNull(topicSpaceResponse1);
             Assert.AreEqual(topicSpaceResponse1.Data.ProvisioningState, TopicSpaceProvisioningState.Succeeded);
@@ -592,11 +584,9 @@ namespace Azure.ResourceManager.EventGrid.Tests
             Assert.AreEqual(getTopicSpaceResponse1.Data.TopicTemplates.Count, 1);
 
             // update topic spaces
-            topicTemplates.Add("testTopicTemplate2");
-            TopicSpaceData updateTopicSpaceData = new TopicSpaceData()
-            {
-                TopicTemplates = topicTemplates
-            };
+            TopicSpaceData updateTopicSpaceData = new TopicSpaceData();
+            updateTopicSpaceData.TopicTemplates.Add("testTopicTemplate1");
+            updateTopicSpaceData.TopicTemplates.Add("testTopicTemplate2");
             var updateTopicSpaceResponse = (await getTopicSpaceResponse1.UpdateAsync(WaitUntil.Completed, updateTopicSpaceData)).Value;
             Assert.IsNotNull(updateTopicSpaceResponse);
             Assert.AreEqual(updateTopicSpaceResponse.Data.ProvisioningState, TopicSpaceProvisioningState.Succeeded);
