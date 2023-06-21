@@ -11,7 +11,6 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
 {
     internal class ModelXmlTests
     {
-
         [Test]
         public void CanRoundTripFutureVersionWithoutLoss()
         {
