@@ -1,6 +1,9 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+// Copied from: https://github.com/open-telemetry/opentelemetry-dotnet/blob/main/test/OpenTelemetry.Tests/Shared/EventSourceTestHelper.cs
+// Which was copied from: https://github.com/microsoft/ApplicationInsights-dotnet/blob/main/BASE/Test/TestFramework/Shared/EventSourceTest.cs
+
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.Tracing;
