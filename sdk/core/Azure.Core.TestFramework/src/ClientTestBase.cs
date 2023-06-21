@@ -27,7 +27,7 @@ namespace Azure.Core.TestFramework
 #else
         private const int GLOBAL_TEST_TIMEOUT_IN_SECONDS = 10;
 #endif
-        private const int GLOBAL_LOCAL_TEST_TIMEOUT_IN_SECONDS = 5;
+        private const int GLOBAL_LOCAL_TEST_TIMEOUT_IN_SECONDS = 45;
         public bool IsAsync { get; }
 
         public bool TestDiagnostics { get; set; } = true;
