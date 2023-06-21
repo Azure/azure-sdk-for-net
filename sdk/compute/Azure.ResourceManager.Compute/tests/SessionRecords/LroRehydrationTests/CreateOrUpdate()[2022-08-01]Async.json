@@ -10825,7 +10825,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-2289/providers/Microsoft.Compute/virtualMachineScaleSets/testVMSS-4505?api-version=2022-11-01",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-2289/providers/Microsoft.Compute/virtualMachineScaleSets/testVMSS-4505?api-version=2023-03-01",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -10925,7 +10925,7 @@
       "StatusCode": 201,
       "ResponseHeaders": {
         "Azure-AsyncNotification": "Enabled",
-        "Azure-AsyncOperation": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Compute/locations/eastus/operations/7aa2524d-9ca0-4297-843b-78604060f0b1?p=6a5473bf-f845-44a5-b675-411600120563\u0026api-version=2022-11-01",
+        "Azure-AsyncOperation": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Compute/locations/eastus/operations/7aa2524d-9ca0-4297-843b-78604060f0b1?p=6a5473bf-f845-44a5-b675-411600120563\u0026api-version=2023-03-01",
         "Cache-Control": "no-cache",
         "Content-Length": "3367",
         "Content-Type": "application/json; charset=utf-8",
@@ -11058,7 +11058,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Compute/locations/eastus/operations/7aa2524d-9ca0-4297-843b-78604060f0b1?p=6a5473bf-f845-44a5-b675-411600120563\u0026api-version=2022-11-01",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Compute/locations/eastus/operations/7aa2524d-9ca0-4297-843b-78604060f0b1?p=6a5473bf-f845-44a5-b675-411600120563\u0026api-version=2023-03-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -11096,7 +11096,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Compute/locations/eastus/operations/7aa2524d-9ca0-4297-843b-78604060f0b1?p=6a5473bf-f845-44a5-b675-411600120563\u0026api-version=2022-11-01",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Compute/locations/eastus/operations/7aa2524d-9ca0-4297-843b-78604060f0b1?p=6a5473bf-f845-44a5-b675-411600120563\u0026api-version=2023-03-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -11134,7 +11134,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-2289/providers/Microsoft.Compute/virtualMachineScaleSets/testVMSS-4505?api-version=2022-11-01",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-2289/providers/Microsoft.Compute/virtualMachineScaleSets/testVMSS-4505?api-version=2023-03-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -11275,7 +11275,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Compute/locations/eastus/operations/7aa2524d-9ca0-4297-843b-78604060f0b1?p=6a5473bf-f845-44a5-b675-411600120563\u0026api-version=2022-11-01",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Compute/locations/eastus/operations/7aa2524d-9ca0-4297-843b-78604060f0b1?p=6a5473bf-f845-44a5-b675-411600120563\u0026api-version=2023-03-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -11313,7 +11313,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-2289/providers/Microsoft.Compute/virtualMachineScaleSets/testVMSS-4505?api-version=2022-11-01",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-2289/providers/Microsoft.Compute/virtualMachineScaleSets/testVMSS-4505?api-version=2023-03-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",

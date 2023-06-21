@@ -6,6 +6,8 @@
 #nullable disable
 
 using System;
+using System.Linq;
+using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -23,7 +25,7 @@ namespace Azure.ResourceManager
         public ArmOperation(ArmClient client, string id)
         {
             Argument.AssertNotNullOrEmpty(id, nameof(id));
-            var obj = Activator.CreateInstance(typeof(T));
+            var obj = Activator.CreateInstance(typeof(T), BindingFlags.NonPublic | BindingFlags.Instance, null, null, null);
             var iserializable = obj as IModelSerializable;
             if (iserializable is not null)
             {
@@ -35,8 +37,7 @@ namespace Azure.ResourceManager
             }
             else
             {
-                var resource = obj as IResource;
-                if (resource is null)
+                if (typeof(T).GetInterface(nameof(IResource)) is null)
                 {
                     throw new InvalidOperationException("The type needs to be model or resource. ");
                 }
