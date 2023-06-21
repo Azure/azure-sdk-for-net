@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
         /// <summary> Initializes a new instance of ApplicationInsightsComponentFavorite. </summary>
         /// <param name="name"> The user-defined name of the favorite. </param>
         /// <param name="config"> Configuration of this particular favorite, which are driven by the Azure portal UX. Configuration data is a string containing valid JSON. </param>
-        /// <param name="version"> This instance&apos;s version of the data model. This can change as new features are added that can be marked favorite. Current examples include MetricsExplorer (ME) and Search. </param>
+        /// <param name="version"> This instance's version of the data model. This can change as new features are added that can be marked favorite. Current examples include MetricsExplorer (ME) and Search. </param>
         /// <param name="favoriteId"> Internally assigned unique id of the favorite definition. </param>
         /// <param name="favoriteType"> Enum indicating if this favorite definition is owned by a specific user or is shared between all users with access to the Application Insights component. </param>
         /// <param name="sourceType"> The source of the favorite definition. </param>
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
         public string Name { get; set; }
         /// <summary> Configuration of this particular favorite, which are driven by the Azure portal UX. Configuration data is a string containing valid JSON. </summary>
         public string Config { get; set; }
-        /// <summary> This instance&apos;s version of the data model. This can change as new features are added that can be marked favorite. Current examples include MetricsExplorer (ME) and Search. </summary>
+        /// <summary> This instance's version of the data model. This can change as new features are added that can be marked favorite. Current examples include MetricsExplorer (ME) and Search. </summary>
         public string Version { get; set; }
         /// <summary> Internally assigned unique id of the favorite definition. </summary>
         public string FavoriteId { get; }

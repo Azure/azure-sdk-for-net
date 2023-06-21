@@ -23,7 +23,7 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
         [Test]
         public async Task CreateQueueTest()
         {
-            RouterAdministrationClient routerClient = CreateRouterAdministrationClientWithConnectionString();
+            JobRouterAdministrationClient routerClient = CreateRouterAdministrationClientWithConnectionString();
             var createDistributionPolicyResponse = await CreateDistributionPolicy(nameof(CreateQueueTest));
             var queueId = GenerateUniqueId(IdPrefix, nameof(CreateQueueTest));
             var queueName = "DefaultQueueWithLabels" + queueId;
@@ -33,7 +33,7 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
                     createDistributionPolicyResponse.Value.Id)
                 {
                     Name = queueName,
-                    Labels = queueLabels
+                    Labels = { ["Label_1"] = new LabelValue("Value_1") }
                 });
 
             AddForCleanup(new Task(async () => await routerClient.DeleteQueueAsync(createQueueResponse.Value.Id)));
@@ -44,7 +44,7 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
         [Ignore(reason: "Known bug: fix required for update queue")]
         public async Task UpdateQueueTest()
         {
-            RouterAdministrationClient routerClient = CreateRouterAdministrationClientWithConnectionString();
+            JobRouterAdministrationClient routerClient = CreateRouterAdministrationClientWithConnectionString();
             var createDistributionPolicyResponse = await CreateDistributionPolicy(nameof(CreateQueueTest));
             var queueId = GenerateUniqueId(IdPrefix, nameof(CreateQueueTest));
             var queueName = "DefaultQueueWithLabels" + queueId;
@@ -54,17 +54,20 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
                     createDistributionPolicyResponse.Value.Id)
                 {
                     Name = queueName,
-                    Labels = queueLabels
+                    Labels = { ["Label_1"] = new LabelValue("Value_1") }
                 });
             AddForCleanup(new Task(async () => await routerClient.DeleteQueueAsync(createQueueResponse.Value.Id)));
             AssertQueueResponseIsEqual(createQueueResponse, queueId, createDistributionPolicyResponse.Value.Id, queueName, queueLabels);
 
-            var updatedLabels =
-                new Dictionary<string, LabelValue>(createQueueResponse.Value.Labels.ToDictionary(x => x.Key, x => x.Value));
-            updatedLabels["Label2"] = new LabelValue("Value2");
+            var updatedLabels = new Dictionary<string, LabelValue>(createQueueResponse.Value.Labels.ToDictionary(x => x.Key, x => x.Value))
+            {
+                ["Label2"] = new("Value2")
+            };
 
-            var updatedQueueResponse =
-                await routerClient.UpdateQueueAsync(new UpdateQueueOptions(queueId) { Labels = updatedLabels, });
+            var updateOptions = new UpdateQueueOptions(queueId);
+            updateOptions.Labels.Append(updatedLabels);
+
+            var updatedQueueResponse = await routerClient.UpdateQueueAsync(updateOptions);
 
             AssertQueueResponseIsEqual(updatedQueueResponse, queueId, createDistributionPolicyResponse.Value.Id, queueName, updatedLabels);
         }
@@ -72,17 +75,16 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
         [Test]
         public async Task CreateQueueAndRemoveProperty()
         {
-            RouterAdministrationClient routerClient = CreateRouterAdministrationClientWithConnectionString();
+            JobRouterAdministrationClient routerClient = CreateRouterAdministrationClientWithConnectionString();
             var createDistributionPolicyResponse = await CreateDistributionPolicy(nameof(CreateQueueAndRemoveProperty));
             var queueId = GenerateUniqueId(IdPrefix, nameof(CreateQueueAndRemoveProperty));
             var queueName = "DefaultQueueWithLabels" + queueId;
-            var queueLabels = new Dictionary<string, LabelValue>() { ["Label_1"] = new LabelValue("Value_1") };
             var createQueueResponse = await routerClient.CreateQueueAsync(
                 new CreateQueueOptions(queueId,
                     createDistributionPolicyResponse.Value.Id)
                 {
                     Name = queueName,
-                    Labels = queueLabels
+                    Labels = { ["Label_1"] = new LabelValue("Value_1") }
                 });
             AddForCleanup(new Task(async () => await routerClient.DeleteQueueAsync(createQueueResponse.Value.Id)));
 

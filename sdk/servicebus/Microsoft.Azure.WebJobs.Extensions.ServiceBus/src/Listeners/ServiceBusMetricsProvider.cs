@@ -96,13 +96,13 @@ namespace Microsoft.Azure.WebJobs.Extensions.ServiceBus.Listeners
             {
                 if (TimeToLogWarning())
                 {
-                    _logger.LogWarning($"Connection string does not have 'Manage Claim' for {entityName} '{_entityPath}'. Unable to determine active message count.", ex);
+                    _logger.LogWarning(ex, $"Connection string does not have 'Manage Claim' for {entityName} '{_entityPath}'. Unable to determine active message count.");
                 }
                 throw ex;
             }
             catch (Exception e)
             {
-                _logger.LogWarning($"Error querying for Service Bus {entityName} scale status: {e.Message}");
+                _logger.LogWarning(e, $"Error querying for Service Bus {entityName} scale");
             }
 
             long totalNewMessageCount = 0;

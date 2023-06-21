@@ -39,12 +39,12 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             _dataFactory = await Client.GetDataFactoryResource(_dataFactoryIdentifier).GetAsync();
         }
 
-        private async Task<FactoryGlobalParameterResource> CreateOrUpdateGlobalParameter(DataFactoryResource dataFactory)
+        private async Task<DataFactoryGlobalParameterResource> CreateOrUpdateGlobalParameter(DataFactoryResource dataFactory)
         {
-            var parameters = new Dictionary<string, FactoryGlobalParameterSpecification>();
-            parameters.Add("test", new FactoryGlobalParameterSpecification(FactoryGlobalParameterType.Int, new BinaryData("5")));
-            FactoryGlobalParameterData data = new FactoryGlobalParameterData(parameters);
-            var globalParameters = await dataFactory.GetFactoryGlobalParameters().CreateOrUpdateAsync(WaitUntil.Completed, _globalParameterName, data);
+            var parameters = new Dictionary<string, DataFactoryGlobalParameterSpecification>();
+            parameters.Add("test", new DataFactoryGlobalParameterSpecification(DataFactoryGlobalParameterType.Int, new BinaryData("5")));
+            DataFactoryGlobalParameterData data = new DataFactoryGlobalParameterData(parameters);
+            var globalParameters = await dataFactory.GetDataFactoryGlobalParameters().CreateOrUpdateAsync(WaitUntil.Completed, _globalParameterName, data);
             return globalParameters.Value;
         }
 
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
         public async Task Exist()
         {
             await CreateOrUpdateGlobalParameter(_dataFactory);
-            bool flag = await _dataFactory.GetFactoryGlobalParameters().ExistsAsync(_globalParameterName);
+            bool flag = await _dataFactory.GetDataFactoryGlobalParameters().ExistsAsync(_globalParameterName);
             Assert.IsTrue(flag);
         }
 
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
         public async Task Get()
         {
             await CreateOrUpdateGlobalParameter(_dataFactory);
-            var globalParameters = await _dataFactory.GetFactoryGlobalParameters().GetAsync(_globalParameterName);
+            var globalParameters = await _dataFactory.GetDataFactoryGlobalParameters().GetAsync(_globalParameterName);
             Assert.IsNotNull(globalParameters);
             Assert.AreEqual(_globalParameterName, globalParameters.Value.Data.Name);
         }
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
         public async Task GetAll()
         {
             await CreateOrUpdateGlobalParameter(_dataFactory);
-            var list = await _dataFactory.GetFactoryGlobalParameters().GetAllAsync().ToEnumerableAsync();
+            var list = await _dataFactory.GetDataFactoryGlobalParameters().GetAllAsync().ToEnumerableAsync();
             Assert.IsNotEmpty(list);
             Assert.AreEqual(_globalParameterName,list.FirstOrDefault().Data.Name);
         }
@@ -91,11 +91,11 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
         public async Task Delete()
         {
             var globalParameters = await CreateOrUpdateGlobalParameter(_dataFactory);
-            bool flag = await _dataFactory.GetFactoryGlobalParameters().ExistsAsync(_globalParameterName);
+            bool flag = await _dataFactory.GetDataFactoryGlobalParameters().ExistsAsync(_globalParameterName);
             Assert.IsTrue(flag);
 
             await globalParameters.DeleteAsync(WaitUntil.Completed);
-            flag = await _dataFactory.GetFactoryGlobalParameters().ExistsAsync(_globalParameterName);
+            flag = await _dataFactory.GetDataFactoryGlobalParameters().ExistsAsync(_globalParameterName);
             Assert.IsFalse(flag);
         }
     }

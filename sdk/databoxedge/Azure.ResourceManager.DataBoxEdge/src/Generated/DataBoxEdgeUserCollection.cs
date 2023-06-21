@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.DataBoxEdge
         }
 
         /// <summary>
-        /// Creates a new user or updates an existing user&apos;s information on a Data Box Edge/Data Box Gateway device.
+        /// Creates a new user or updates an existing user's information on a Data Box Edge/Data Box Gateway device.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.DataBoxEdge
         }
 
         /// <summary>
-        /// Creates a new user or updates an existing user&apos;s information on a Data Box Edge/Data Box Gateway device.
+        /// Creates a new user or updates an existing user's information on a Data Box Edge/Data Box Gateway device.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -221,7 +221,7 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="filter"> Specify $filter=&apos;Type eq &lt;type&gt;&apos; to filter on user type property. </param>
+        /// <param name="filter"> Specify $filter='Type eq &lt;type&gt;' to filter on user type property. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="DataBoxEdgeUserResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DataBoxEdgeUserResource> GetAllAsync(string filter = null, CancellationToken cancellationToken = default)
@@ -244,7 +244,7 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="filter"> Specify $filter=&apos;Type eq &lt;type&gt;&apos; to filter on user type property. </param>
+        /// <param name="filter"> Specify $filter='Type eq &lt;type&gt;' to filter on user type property. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="DataBoxEdgeUserResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DataBoxEdgeUserResource> GetAll(string filter = null, CancellationToken cancellationToken = default)

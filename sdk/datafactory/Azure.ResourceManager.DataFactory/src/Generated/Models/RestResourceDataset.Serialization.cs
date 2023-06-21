@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -27,20 +28,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(Structure))
             {
                 writer.WritePropertyName("structure"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(Structure);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(Structure.ToString()).RootElement);
-#endif
+                JsonSerializer.Serialize(writer, Structure);
             }
             if (Optional.IsDefined(Schema))
             {
                 writer.WritePropertyName("schema"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(Schema);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(Schema.ToString()).RootElement);
-#endif
+                JsonSerializer.Serialize(writer, Schema);
             }
             writer.WritePropertyName("linkedServiceName"u8);
             writer.WriteObjectValue(LinkedServiceName);
@@ -84,47 +77,57 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(RelativeUri))
             {
                 writer.WritePropertyName("relativeUrl"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(RelativeUri);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(RelativeUri.ToString()).RootElement);
-#endif
+                JsonSerializer.Serialize(writer, RelativeUri);
             }
             if (Optional.IsDefined(RequestMethod))
             {
                 writer.WritePropertyName("requestMethod"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(RequestMethod);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(RequestMethod.ToString()).RootElement);
-#endif
+                JsonSerializer.Serialize(writer, RequestMethod);
             }
             if (Optional.IsDefined(RequestBody))
             {
                 writer.WritePropertyName("requestBody"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(RequestBody);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(RequestBody.ToString()).RootElement);
-#endif
+                JsonSerializer.Serialize(writer, RequestBody);
             }
-            if (Optional.IsDefined(AdditionalHeaders))
+            if (Optional.IsCollectionDefined(AdditionalHeaders))
             {
                 writer.WritePropertyName("additionalHeaders"u8);
+                writer.WriteStartObject();
+                foreach (var item in AdditionalHeaders)
+                {
+                    writer.WritePropertyName(item.Key);
+                    if (item.Value == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(AdditionalHeaders);
+				writer.WriteRawValue(item.Value);
 #else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(AdditionalHeaders.ToString()).RootElement);
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(item.Value.ToString()).RootElement);
 #endif
+                }
+                writer.WriteEndObject();
             }
-            if (Optional.IsDefined(PaginationRules))
+            if (Optional.IsCollectionDefined(PaginationRules))
             {
                 writer.WritePropertyName("paginationRules"u8);
+                writer.WriteStartObject();
+                foreach (var item in PaginationRules)
+                {
+                    writer.WritePropertyName(item.Key);
+                    if (item.Value == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(PaginationRules);
+				writer.WriteRawValue(item.Value);
 #else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(PaginationRules.ToString()).RootElement);
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(item.Value.ToString()).RootElement);
 #endif
+                }
+                writer.WriteEndObject();
             }
             writer.WriteEndObject();
             foreach (var item in AdditionalProperties)
@@ -147,17 +150,17 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             string type = default;
             Optional<string> description = default;
-            Optional<BinaryData> structure = default;
-            Optional<BinaryData> schema = default;
-            FactoryLinkedServiceReference linkedServiceName = default;
+            Optional<DataFactoryElement<IList<DatasetDataElement>>> structure = default;
+            Optional<DataFactoryElement<IList<DatasetSchemaDataElement>>> schema = default;
+            DataFactoryLinkedServiceReference linkedServiceName = default;
             Optional<IDictionary<string, EntityParameterSpecification>> parameters = default;
             Optional<IList<BinaryData>> annotations = default;
             Optional<DatasetFolder> folder = default;
-            Optional<BinaryData> relativeUrl = default;
-            Optional<BinaryData> requestMethod = default;
-            Optional<BinaryData> requestBody = default;
-            Optional<BinaryData> additionalHeaders = default;
-            Optional<BinaryData> paginationRules = default;
+            Optional<DataFactoryElement<string>> relativeUrl = default;
+            Optional<DataFactoryElement<string>> requestMethod = default;
+            Optional<DataFactoryElement<string>> requestBody = default;
+            Optional<IDictionary<string, BinaryData>> additionalHeaders = default;
+            Optional<IDictionary<string, BinaryData>> paginationRules = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -178,7 +181,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    structure = BinaryData.FromString(property.Value.GetRawText());
+                    structure = JsonSerializer.Deserialize<DataFactoryElement<IList<DatasetDataElement>>>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("schema"u8))
@@ -187,12 +190,12 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    schema = BinaryData.FromString(property.Value.GetRawText());
+                    schema = JsonSerializer.Deserialize<DataFactoryElement<IList<DatasetSchemaDataElement>>>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("linkedServiceName"u8))
                 {
-                    linkedServiceName = FactoryLinkedServiceReference.DeserializeFactoryLinkedServiceReference(property.Value);
+                    linkedServiceName = DataFactoryLinkedServiceReference.DeserializeDataFactoryLinkedServiceReference(property.Value);
                     continue;
                 }
                 if (property.NameEquals("parameters"u8))
@@ -254,7 +257,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            relativeUrl = BinaryData.FromString(property0.Value.GetRawText());
+                            relativeUrl = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("requestMethod"u8))
@@ -263,7 +266,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            requestMethod = BinaryData.FromString(property0.Value.GetRawText());
+                            requestMethod = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("requestBody"u8))
@@ -272,7 +275,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            requestBody = BinaryData.FromString(property0.Value.GetRawText());
+                            requestBody = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("additionalHeaders"u8))
@@ -281,7 +284,19 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            additionalHeaders = BinaryData.FromString(property0.Value.GetRawText());
+                            Dictionary<string, BinaryData> dictionary = new Dictionary<string, BinaryData>();
+                            foreach (var property1 in property0.Value.EnumerateObject())
+                            {
+                                if (property1.Value.ValueKind == JsonValueKind.Null)
+                                {
+                                    dictionary.Add(property1.Name, null);
+                                }
+                                else
+                                {
+                                    dictionary.Add(property1.Name, BinaryData.FromString(property1.Value.GetRawText()));
+                                }
+                            }
+                            additionalHeaders = dictionary;
                             continue;
                         }
                         if (property0.NameEquals("paginationRules"u8))
@@ -290,7 +305,19 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            paginationRules = BinaryData.FromString(property0.Value.GetRawText());
+                            Dictionary<string, BinaryData> dictionary = new Dictionary<string, BinaryData>();
+                            foreach (var property1 in property0.Value.EnumerateObject())
+                            {
+                                if (property1.Value.ValueKind == JsonValueKind.Null)
+                                {
+                                    dictionary.Add(property1.Name, null);
+                                }
+                                else
+                                {
+                                    dictionary.Add(property1.Name, BinaryData.FromString(property1.Value.GetRawText()));
+                                }
+                            }
+                            paginationRules = dictionary;
                             continue;
                         }
                     }
@@ -299,7 +326,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new RestResourceDataset(type, description.Value, structure.Value, schema.Value, linkedServiceName, Optional.ToDictionary(parameters), Optional.ToList(annotations), folder.Value, additionalProperties, relativeUrl.Value, requestMethod.Value, requestBody.Value, additionalHeaders.Value, paginationRules.Value);
+            return new RestResourceDataset(type, description.Value, structure.Value, schema.Value, linkedServiceName, Optional.ToDictionary(parameters), Optional.ToList(annotations), folder.Value, additionalProperties, relativeUrl.Value, requestMethod.Value, requestBody.Value, Optional.ToDictionary(additionalHeaders), Optional.ToDictionary(paginationRules));
         }
     }
 }

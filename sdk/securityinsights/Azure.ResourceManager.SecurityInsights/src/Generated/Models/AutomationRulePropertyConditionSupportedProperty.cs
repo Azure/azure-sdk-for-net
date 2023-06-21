@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         public static AutomationRulePropertyConditionSupportedProperty HostNTDomain { get; } = new AutomationRulePropertyConditionSupportedProperty(HostNTDomainValue);
         /// <summary> The host operating system. </summary>
         public static AutomationRulePropertyConditionSupportedProperty HostOSVersion { get; } = new AutomationRulePropertyConditionSupportedProperty(HostOSVersionValue);
-        /// <summary> &quot;The IoT device id. </summary>
+        /// <summary> "The IoT device id. </summary>
         public static AutomationRulePropertyConditionSupportedProperty IotDeviceId { get; } = new AutomationRulePropertyConditionSupportedProperty(IotDeviceIdValue);
         /// <summary> The IoT device name. </summary>
         public static AutomationRulePropertyConditionSupportedProperty IotDeviceName { get; } = new AutomationRulePropertyConditionSupportedProperty(IotDeviceNameValue);

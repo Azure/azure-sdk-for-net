@@ -7,7 +7,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
-
+using Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics;
 using Azure.Monitor.OpenTelemetry.Exporter.Models;
 
 using OpenTelemetry;
@@ -95,7 +95,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
         internal static void AddActivityLinksToProperties(Activity activity, ref AzMonList UnMappedTags)
         {
             string msLinks = "_MS.links";
-            // max number of links that can fit in this json formatted string is 107. it is based on assumption that traceid and spanid will be of fixed length.
+            // max number of links that can fit in this json formatted string is 107. it is based on assumption that TraceId and SpanId will be of fixed length.
             // Keeping max at 100 for now.
             int maxLinks = MaxlinksAllowed;
 
@@ -173,26 +173,26 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 
         private static void AddTelemetryFromActivityEvents(Activity activity, TelemetryItem telemetryItem, List<TelemetryItem> telemetryItems)
         {
-            foreach (ref readonly var evnt in activity.EnumerateEvents())
+            foreach (ref readonly var @event in activity.EnumerateEvents())
             {
                 try
                 {
-                    if (evnt.Name == SemanticConventions.AttributeExceptionEventName)
+                    if (@event.Name == SemanticConventions.AttributeExceptionEventName)
                     {
-                        var exceptionData = GetExceptionDataDetailsOnTelemetryItem(evnt);
+                        var exceptionData = GetExceptionDataDetailsOnTelemetryItem(@event);
                         if (exceptionData != null)
                         {
-                            var exceptionTelemetryItem = new TelemetryItem("Exception", telemetryItem, activity.SpanId, activity.Kind, evnt.Timestamp);
+                            var exceptionTelemetryItem = new TelemetryItem("Exception", telemetryItem, activity.SpanId, activity.Kind, @event.Timestamp);
                             exceptionTelemetryItem.Data = exceptionData;
                             telemetryItems.Add(exceptionTelemetryItem);
                         }
                     }
                     else
                     {
-                        var messageData = GetTraceTelemetryData(evnt);
+                        var messageData = GetTraceTelemetryData(@event);
                         if (messageData != null)
                         {
-                            var traceTelemetryItem = new TelemetryItem("Message", telemetryItem, activity.SpanId, activity.Kind, evnt.Timestamp);
+                            var traceTelemetryItem = new TelemetryItem("Message", telemetryItem, activity.SpanId, activity.Kind, @event.Timestamp);
                             traceTelemetryItem.Data = messageData;
                             telemetryItems.Add(traceTelemetryItem);
                         }

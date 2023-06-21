@@ -28,13 +28,13 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            FactorySecretString key = default;
+            DataFactorySecretString key = default;
             string authorizationType = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("key"u8))
                 {
-                    key = FactorySecretString.DeserializeFactorySecretString(property.Value);
+                    key = DataFactorySecretString.DeserializeDataFactorySecretString(property.Value);
                     continue;
                 }
                 if (property.NameEquals("authorizationType"u8))

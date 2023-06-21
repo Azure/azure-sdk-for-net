@@ -28,9 +28,9 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         /// <summary> All the traces emitted by trace policies will be sent to the logger attached to this diagnostic instance. </summary>
         public static TraceVerbosityLevel Verbose { get; } = new TraceVerbosityLevel(VerboseValue);
-        /// <summary> Traces with &apos;severity&apos; set to &apos;information&apos; and &apos;error&apos; will be sent to the logger attached to this diagnostic instance. </summary>
+        /// <summary> Traces with 'severity' set to 'information' and 'error' will be sent to the logger attached to this diagnostic instance. </summary>
         public static TraceVerbosityLevel Information { get; } = new TraceVerbosityLevel(InformationValue);
-        /// <summary> Only traces with &apos;severity&apos; set to &apos;error&apos; will be sent to the logger attached to this diagnostic instance. </summary>
+        /// <summary> Only traces with 'severity' set to 'error' will be sent to the logger attached to this diagnostic instance. </summary>
         public static TraceVerbosityLevel Error { get; } = new TraceVerbosityLevel(ErrorValue);
         /// <summary> Determines if two <see cref="TraceVerbosityLevel"/> values are the same. </summary>
         public static bool operator ==(TraceVerbosityLevel left, TraceVerbosityLevel right) => left.Equals(right);

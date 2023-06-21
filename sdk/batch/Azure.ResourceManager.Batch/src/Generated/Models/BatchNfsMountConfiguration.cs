@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Batch.Models
         /// <summary> Initializes a new instance of BatchNfsMountConfiguration. </summary>
         /// <param name="source"> The URI of the file system to mount. </param>
         /// <param name="relativeMountPath"> All file systems are mounted relative to the Batch mounts directory, accessible via the AZ_BATCH_NODE_MOUNTS_DIR environment variable. </param>
-        /// <param name="mountOptions"> These are &apos;net use&apos; options in Windows and &apos;mount&apos; options in Linux. </param>
+        /// <param name="mountOptions"> These are 'net use' options in Windows and 'mount' options in Linux. </param>
         internal BatchNfsMountConfiguration(string source, string relativeMountPath, string mountOptions)
         {
             Source = source;
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Batch.Models
         public string Source { get; set; }
         /// <summary> All file systems are mounted relative to the Batch mounts directory, accessible via the AZ_BATCH_NODE_MOUNTS_DIR environment variable. </summary>
         public string RelativeMountPath { get; set; }
-        /// <summary> These are &apos;net use&apos; options in Windows and &apos;mount&apos; options in Linux. </summary>
+        /// <summary> These are 'net use' options in Windows and 'mount' options in Linux. </summary>
         public string MountOptions { get; set; }
     }
 }

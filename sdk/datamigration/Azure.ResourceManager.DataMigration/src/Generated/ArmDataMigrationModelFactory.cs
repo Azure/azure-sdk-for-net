@@ -396,7 +396,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         }
 
         /// <summary> Initializes a new instance of ODataError. </summary>
-        /// <param name="code"> The machine-readable description of the error, such as &apos;InvalidRequest&apos; or &apos;InternalServerError&apos;. </param>
+        /// <param name="code"> The machine-readable description of the error, such as 'InvalidRequest' or 'InternalServerError'. </param>
         /// <param name="message"> The human-readable description of the error. </param>
         /// <param name="details"> Inner errors that caused this error. </param>
         /// <returns> A new <see cref="Models.ODataError"/> instance for mocking. </returns>
@@ -415,9 +415,9 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
         /// <param name="etag"> HTTP strong entity tag value. Ignored if submitted. </param>
-        /// <param name="kind"> The resource kind. Only &apos;vm&apos; (the default) is supported. </param>
+        /// <param name="kind"> The resource kind. Only 'vm' (the default) is supported. </param>
         /// <param name="sku"> Service SKU. </param>
-        /// <param name="provisioningState"> The resource&apos;s provisioning state. </param>
+        /// <param name="provisioningState"> The resource's provisioning state. </param>
         /// <param name="publicKey"> The public key of the service, used to encrypt secrets sent to the service. </param>
         /// <param name="virtualSubnetId"> The ID of the Microsoft.Network/virtualNetworks/subnets resource to which the service should be joined. </param>
         /// <param name="virtualNicId"> The ID of the Microsoft.Network/networkInterfaces resource which the service have. </param>
@@ -434,8 +434,8 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <summary> Initializes a new instance of DataMigrationServiceStatusResponse. </summary>
         /// <param name="agentVersion"> The DMS instance agent version. </param>
         /// <param name="agentConfiguration"> Agent Configuration. </param>
-        /// <param name="status"> The machine-readable status, such as &apos;Initializing&apos;, &apos;Offline&apos;, &apos;Online&apos;, &apos;Deploying&apos;, &apos;Deleting&apos;, &apos;Stopped&apos;, &apos;Stopping&apos;, &apos;Starting&apos;, &apos;FailedToStart&apos;, &apos;FailedToStop&apos; or &apos;Failed&apos;. </param>
-        /// <param name="vmSize"> The services virtual machine size, such as &apos;Standard_D2_v2&apos;. </param>
+        /// <param name="status"> The machine-readable status, such as 'Initializing', 'Offline', 'Online', 'Deploying', 'Deleting', 'Stopped', 'Stopping', 'Starting', 'FailedToStart', 'FailedToStop' or 'Failed'. </param>
+        /// <param name="vmSize"> The services virtual machine size, such as 'Standard_D2_v2'. </param>
         /// <param name="supportedTaskTypes"> The list of supported task types. </param>
         /// <returns> A new <see cref="Models.DataMigrationServiceStatusResponse"/> instance for mocking. </returns>
         public static DataMigrationServiceStatusResponse DataMigrationServiceStatusResponse(string agentVersion = null, BinaryData agentConfiguration = null, string status = null, string vmSize = null, IEnumerable<string> supportedTaskTypes = null)
@@ -459,7 +459,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="name"> The name of the SKU. </param>
         /// <param name="family"> SKU family. </param>
         /// <param name="size"> SKU size. </param>
-        /// <param name="tier"> The tier of the SKU, such as &quot;Basic&quot;, &quot;General Purpose&quot;, or &quot;Business Critical&quot;. </param>
+        /// <param name="tier"> The tier of the SKU, such as "Basic", "General Purpose", or "Business Critical". </param>
         /// <returns> A new <see cref="Models.AvailableServiceSkuSku"/> instance for mocking. </returns>
         public static AvailableServiceSkuSku AvailableServiceSkuSku(string name = null, string family = null, string size = null, string tier = null)
         {
@@ -527,7 +527,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         }
 
         /// <summary> Initializes a new instance of NameAvailabilityResponse. </summary>
-        /// <param name="nameAvailable"> If true, the name is valid and available. If false, &apos;reason&apos; describes why not. </param>
+        /// <param name="nameAvailable"> If true, the name is valid and available. If false, 'reason' describes why not. </param>
         /// <param name="reason"> The reason why the name is not available, if nameAvailable is false. </param>
         /// <param name="message"> The localized reason why the name is not available, if nameAvailable is false. </param>
         /// <returns> A new <see cref="Models.NameAvailabilityResponse"/> instance for mocking. </returns>
@@ -559,7 +559,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// The available derived classes include <see cref="MISqlConnectionInfo"/>, <see cref="MongoDBConnectionInfo"/>, <see cref="MySqlConnectionInfo"/>, <see cref="OracleConnectionInfo"/>, <see cref="PostgreSqlConnectionInfo"/> and <see cref="SqlConnectionInfo"/>.
         /// </param>
         /// <param name="databasesInfo"> List of DatabaseInfo. </param>
-        /// <param name="provisioningState"> The project&apos;s provisioning state. </param>
+        /// <param name="provisioningState"> The project's provisioning state. </param>
         /// <returns> A new <see cref="DataMigration.ProjectData"/> instance for mocking. </returns>
         public static ProjectData ProjectData(ResourceIdentifier id = null, string name = null, Core.ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ETag? etag = null, ProjectSourcePlatform? sourcePlatform = null, AzureActiveDirectoryApp azureAuthenticationInfo = null, ProjectTargetPlatform? targetPlatform = null, DateTimeOffset? createdOn = null, ConnectionInfo sourceConnectionInfo = null, ConnectionInfo targetConnectionInfo = null, IEnumerable<DatabaseInfo> databasesInfo = null, ProjectProvisioningState? provisioningState = null)
         {
@@ -1554,7 +1554,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         }
 
         /// <summary> Initializes a new instance of QueryAnalysisValidationResult. </summary>
-        /// <param name="queryResults"> List of queries executed and it&apos;s execution results in source and target. </param>
+        /// <param name="queryResults"> List of queries executed and it's execution results in source and target. </param>
         /// <param name="validationErrors"> Errors that are part of the execution. </param>
         /// <returns> A new <see cref="Models.QueryAnalysisValidationResult"/> instance for mocking. </returns>
         public static QueryAnalysisValidationResult QueryAnalysisValidationResult(QueryExecutionResult queryResults = null, ValidationError validationErrors = null)
@@ -2211,7 +2211,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="driverSize"> The size in bytes of the driver package. </param>
         /// <param name="archiveChecksum"> The MD5 Base64 encoded checksum for the driver package. </param>
         /// <param name="oracleChecksum"> The checksum for the driver package provided by Oracle. </param>
-        /// <param name="assemblyVersion"> Version listed in the OCI assembly &apos;oci.dll&apos;. </param>
+        /// <param name="assemblyVersion"> Version listed in the OCI assembly 'oci.dll'. </param>
         /// <param name="supportedOracleVersions"> List of Oracle database versions supported by this driver. Only major minor of the version is listed. </param>
         /// <returns> A new <see cref="Models.OracleOciDriverInfo"/> instance for mocking. </returns>
         public static OracleOciDriverInfo OracleOciDriverInfo(string driverName = null, string driverSize = null, string archiveChecksum = null, string oracleChecksum = null, string assemblyVersion = null, IEnumerable<string> supportedOracleVersions = null)

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -45,17 +46,6 @@ namespace Azure.AI.OpenAI
         public static EmbeddingsUsage EmbeddingsUsage(int promptTokens = default, int totalTokens = default)
         {
             return new EmbeddingsUsage(promptTokens, totalTokens);
-        }
-
-        /// <summary> Initializes a new instance of Choice. </summary>
-        /// <param name="text"> The generated text for a given completions prompt. </param>
-        /// <param name="index"> The ordered index associated with this completions choice. </param>
-        /// <param name="logProbabilityModel"> The log probabilities model for tokens associated with this completions choice. </param>
-        /// <param name="finishReason"> Reason for finishing. </param>
-        /// <returns> A new <see cref="OpenAI.Choice"/> instance for mocking. </returns>
-        public static Choice Choice(string text = null, int index = default, CompletionsLogProbabilityModel logProbabilityModel = null, CompletionsFinishReason? finishReason = null)
-        {
-            return new Choice(text, index, logProbabilityModel, finishReason);
         }
 
         /// <summary> Initializes a new instance of CompletionsLogProbabilityModel. </summary>

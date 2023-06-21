@@ -297,7 +297,7 @@ namespace Azure.ResourceManager.Billing
         }
 
         /// <summary>
-        /// Moves a subscription&apos;s charges to a new invoice section. This operation is supported for billing accounts with agreement type Microsoft Customer Agreement.
+        /// Moves a subscription's charges to a new invoice section. This operation is supported for billing accounts with agreement type Microsoft Customer Agreement.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -335,7 +335,7 @@ namespace Azure.ResourceManager.Billing
         }
 
         /// <summary>
-        /// Moves a subscription&apos;s charges to a new invoice section. This operation is supported for billing accounts with agreement type Microsoft Customer Agreement.
+        /// Moves a subscription's charges to a new invoice section. This operation is supported for billing accounts with agreement type Microsoft Customer Agreement.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -373,7 +373,7 @@ namespace Azure.ResourceManager.Billing
         }
 
         /// <summary>
-        /// Validates if a subscription&apos;s charges can be moved to a new invoice section. This operation is supported for billing accounts with agreement type Microsoft Customer Agreement.
+        /// Validates if a subscription's charges can be moved to a new invoice section. This operation is supported for billing accounts with agreement type Microsoft Customer Agreement.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -407,7 +407,7 @@ namespace Azure.ResourceManager.Billing
         }
 
         /// <summary>
-        /// Validates if a subscription&apos;s charges can be moved to a new invoice section. This operation is supported for billing accounts with agreement type Microsoft Customer Agreement.
+        /// Validates if a subscription's charges can be moved to a new invoice section. This operation is supported for billing accounts with agreement type Microsoft Customer Agreement.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>

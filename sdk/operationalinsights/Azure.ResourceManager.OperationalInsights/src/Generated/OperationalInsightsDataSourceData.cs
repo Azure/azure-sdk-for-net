@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.OperationalInsights
     public partial class OperationalInsightsDataSourceData : ResourceData
     {
         /// <summary> Initializes a new instance of OperationalInsightsDataSourceData. </summary>
-        /// <param name="properties"> The data source properties in raw json format, each kind of data source have it&apos;s own schema. </param>
+        /// <param name="properties"> The data source properties in raw json format, each kind of data source have it's own schema. </param>
         /// <param name="kind"> The kind of the DataSource. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
         public OperationalInsightsDataSourceData(BinaryData properties, OperationalInsightsDataSourceKind kind)
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="properties"> The data source properties in raw json format, each kind of data source have it&apos;s own schema. </param>
+        /// <param name="properties"> The data source properties in raw json format, each kind of data source have it's own schema. </param>
         /// <param name="etag"> The ETag of the data source. </param>
         /// <param name="kind"> The kind of the DataSource. </param>
         /// <param name="tags"> Resource tags. </param>
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.OperationalInsights
         }
 
         /// <summary>
-        /// The data source properties in raw json format, each kind of data source have it&apos;s own schema.
+        /// The data source properties in raw json format, each kind of data source have it's own schema.
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>

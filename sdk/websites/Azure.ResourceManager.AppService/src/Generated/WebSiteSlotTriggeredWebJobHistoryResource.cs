@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Gets a triggered web job&apos;s history by its ID for an app, , or a deployment slot.
+        /// Description for Gets a triggered web job's history by its ID for an app, , or a deployment slot.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Gets a triggered web job&apos;s history by its ID for an app, , or a deployment slot.
+        /// Description for Gets a triggered web job's history by its ID for an app, , or a deployment slot.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
