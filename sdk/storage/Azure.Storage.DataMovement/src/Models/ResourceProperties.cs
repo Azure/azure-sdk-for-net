@@ -1,0 +1,41 @@
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+using System;
+using System.Collections.Generic;
+using System.Security.Cryptography;
+using System.Text;
+
+namespace Azure.Storage.DataMovement.Models
+{
+    /// <summary>
+    /// Storage Resource Item properties returned by <see cref="TransferManager.GetTransfersAsync(StorageTransferStatus[])"/>
+    /// </summary>
+    public class ResourceProperties
+    {
+        /// <summary>
+        /// Contains the checkpointer information to rehydrate the StorageResource from.
+        /// </summary>
+        public TransferCheckpointerOptions Checkpointer { get; set; }
+
+        /// <summary>
+        /// Contains the transfer ID which to rehydrate the StorageResource from.
+        /// </summary>
+        public string TransferId { get; set; }
+
+        /// <summary>
+        /// Contains the Source Scheme of the Storage Resource to rehydrate the StorageResource from.
+        /// </summary>
+        public string SourceScheme { get; set; }
+
+        /// <summary>
+        /// Contains the Destination Scheme of the Storage Resource to rehydrate the StorageResource from.
+        /// </summary>
+        public string DestinationScheme { get; set; }
+
+        /// <summary>
+        /// For mocking.
+        /// </summary>
+        protected ResourceProperties() { }
+    }
+}
