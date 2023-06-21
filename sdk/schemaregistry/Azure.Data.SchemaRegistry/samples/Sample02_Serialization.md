@@ -208,16 +208,9 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 [object_serializer]: https://docs.microsoft.com/dotnet/api/azure.core.serialization.objectserializer?view=azure-dotnet
 [json_serializer]: https://docs.microsoft.com/dotnet/api/azure.core.serialization.jsonobjectserializer?view=azure-dotnet
 [newtonsoft_serializer]: https://docs.microsoft.com/dotnet/api/azure.core.serialization.newtonsoftjsonobjectserializer?view=azure-dotnet
-[azure_powershell]: https://docs.microsoft.com/powershell/azure/
-[create_event_hubs_namespace]: https://docs.microsoft.com/azure/event-hubs/event-hubs-quickstart-powershell#create-an-event-hubs-namespace
-[quickstart_guide]: https://github.com/Azure/azure-sdk-for-net/blob/main/doc/dev/mgmt_quickstart.md
-[schema_registry_client]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/schemaregistry/Azure.Data.SchemaRegistry/src/SchemaRegistryClient.cs
-[azure_portal]: https://ms.portal.azure.com/
-[azure_identity]: https://www.nuget.org/packages/Azure.Identity
 [cla]: https://cla.microsoft.com
 [code_of_conduct]: https://opensource.microsoft.com/codeofconduct/
 [code_of_conduct_faq]: https://opensource.microsoft.com/codeofconduct/faq/
 [email_opencode]: mailto:opencode@microsoft.com
-[azure_sub]: https://azure.microsoft.com/free/dotnet/
 [azure_schema_registry]: https://aka.ms/schemaregistry
 [request_failed_exception]: https://docs.microsoft.com/dotnet/api/azure.requestfailedexception?view=azure-dotnet
