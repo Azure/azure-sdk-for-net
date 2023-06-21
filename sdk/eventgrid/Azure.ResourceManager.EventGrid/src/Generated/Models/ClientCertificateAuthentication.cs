@@ -31,6 +31,6 @@ namespace Azure.ResourceManager.EventGrid.Models
         /// <summary> The validation scheme used to authenticate the client. Default value is SubjectMatchesAuthenticationName. </summary>
         public ClientCertificateValidationScheme? ValidationScheme { get; set; }
         /// <summary> The list of thumbprints that are allowed during client authentication. This property is required only if the validationScheme is &apos;ThumbprintMatch&apos;. </summary>
-        public IList<string> AllowedThumbprints { get; }
+        public IList<string> AllowedThumbprints { get; set; }
     }
 }

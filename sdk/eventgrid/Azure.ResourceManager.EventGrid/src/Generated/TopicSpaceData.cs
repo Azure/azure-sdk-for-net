@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.EventGrid
         ///               &quot;devices/topic1/+&quot;,
         ///               &quot;devices/${principal.name}/${principal.attributes.keyName}&quot; ].
         /// </summary>
-        public IList<string> TopicTemplates { get; }
+        public IList<string> TopicTemplates { get; set; }
         /// <summary> Provisioning state of the TopicSpace resource. </summary>
         public TopicSpaceProvisioningState? ProvisioningState { get; }
     }

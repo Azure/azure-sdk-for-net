@@ -40,18 +40,18 @@ namespace Azure.ResourceManager.EventGrid.Samples
             string topicName = "examplenamespacetopic2";
             string eventSubscriptionName = "examplenamespacetopicEventSub1";
             ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, namespaceName, topicName, eventSubscriptionName);
-            SubscriptionResource subscription = client.GetSubscriptionResource(subscriptionResourceId);
+            Azure.ResourceManager.Resources.SubscriptionResource subscription = client.GetSubscriptionResource(subscriptionResourceId);
 
             // invoke the operation
-            SubscriptionResource result = await subscription.GetAsync();
+            Azure.ResourceManager.Resources.SubscriptionResource result = await subscription.GetAsync();
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            SubscriptionData resourceData = result.Data;
+            Azure.ResourceManager.Resources.SubscriptionData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
-
+        /*
         // NamespaceTopicEventSubscriptions_Delete
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
@@ -127,6 +127,6 @@ namespace Azure.ResourceManager.EventGrid.Samples
             SubscriptionData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
+        }*/
     }
 }

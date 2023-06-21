@@ -166,8 +166,8 @@ namespace Azure.ResourceManager.EventGrid.Samples
             NamespaceTopicResource namespaceTopic = client.GetNamespaceTopicResource(namespaceTopicResourceId);
 
             // invoke the operation
-            TopicRegenerateKeyRequest regenerateKeyRequest = new TopicRegenerateKeyRequest("key1");
-            ArmOperation<TopicSharedAccessKeys> lro = await namespaceTopic.RegenerateKeyAsync(WaitUntil.Completed, regenerateKeyRequest);
+            TopicRegenerateKeyContent content = new TopicRegenerateKeyContent("key1");
+            ArmOperation<TopicSharedAccessKeys> lro = await namespaceTopic.RegenerateKeyAsync(WaitUntil.Completed, content);
             TopicSharedAccessKeys result = lro.Value;
 
             Console.WriteLine($"Succeeded: {result}");

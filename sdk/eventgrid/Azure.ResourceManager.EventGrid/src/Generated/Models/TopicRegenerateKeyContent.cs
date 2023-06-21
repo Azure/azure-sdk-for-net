@@ -11,12 +11,12 @@ using Azure.Core;
 namespace Azure.ResourceManager.EventGrid.Models
 {
     /// <summary> Topic regenerate share access key request. </summary>
-    public partial class TopicRegenerateKeyRequest
+    public partial class TopicRegenerateKeyContent
     {
-        /// <summary> Initializes a new instance of TopicRegenerateKeyRequest. </summary>
+        /// <summary> Initializes a new instance of TopicRegenerateKeyContent. </summary>
         /// <param name="keyName"> Key name to regenerate key1 or key2. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="keyName"/> is null. </exception>
-        public TopicRegenerateKeyRequest(string keyName)
+        public TopicRegenerateKeyContent(string keyName)
         {
             Argument.AssertNotNull(keyName, nameof(keyName));
 

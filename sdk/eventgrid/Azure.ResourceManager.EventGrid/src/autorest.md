@@ -100,6 +100,7 @@ rename-mapping:
   SystemTopic.properties.source: -|arm-id
   SystemTopic.properties.metricResourceId: -|uuid
   Topic: EventGridTopic
+  TopicRegenerateKeyRequest: TopicRegenerateKeyContent
   Topic.properties.disableLocalAuth: IsLocalAuthDisabled
   Topic.properties.endpoint: Endpoint|Uri
   TopicUpdateParameters.properties.disableLocalAuth: IsLocalAuthDisabled
