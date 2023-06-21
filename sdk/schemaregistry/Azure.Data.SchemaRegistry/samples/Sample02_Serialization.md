@@ -17,7 +17,7 @@ The `SchemaValidator` is an abstract class that must be implemented and passed i
 
 The following is an outline of how an implemented `SchemaValidator` may look:
 ```C# Snippet:SampleSchemaRegistryJsonSchemaGeneratorImplementation
-internal class SampleJsonValidator : SchemaValidator
+internal class SampleJsonValidator : SchemaValidator<string>
 {
     public override void Validate(Object data, Type dataType, string schemaDefinition)
     {

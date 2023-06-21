@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.Serialization;
 using Azure.Core.TestFramework;
@@ -22,11 +23,12 @@ namespace Azure.Data.SchemaRegistry.Tests.Samples
     {
 #pragma warning disable IDE1006 // Naming Styles
         private SchemaRegistryClient schemaRegistryClient;
+        private static readonly string s_schema = "{\r\n  \"$schema\": \"http://json-schema.org/draft-04/schema#\",\r\n  \"title\": \"Employee\",\r\n  \"type\": \"object\",\r\n  \"additionalProperties\": false,\r\n  \"properties\": {\r\n    \"Age\": {\r\n      \"type\": \"integer\",\r\n      \"format\": \"int32\"\r\n    },\r\n    \"Name\": {\r\n      \"type\": [\r\n        \"null\",\r\n        \"string\"\r\n      ]\r\n    }\r\n  }\r\n}";
 
 #pragma warning restore IDE1006 // Naming Styles
 
         [Test, Order(0)]
-        public void CreateSchemaRegistryClient()
+        public async Task CreateSchemaRegistryClient()
         {
             string fullyQualifiedNamespace = TestEnvironment.SchemaRegistryEndpoint;
             // Create a new SchemaRegistry client using the default credential from Azure.Identity using environment variables previously set,
@@ -34,6 +36,9 @@ namespace Azure.Data.SchemaRegistry.Tests.Samples
             // For more information on Azure.Identity usage, see: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/identity/Azure.Identity/README.md
             var schemaRegistryClient = new SchemaRegistryClient(fullyQualifiedNamespace: fullyQualifiedNamespace, credential: new DefaultAzureCredential());
             this.schemaRegistryClient = schemaRegistryClient;
+            var groupName = TestEnvironment.SchemaRegistryGroup;
+
+            await schemaRegistryClient.RegisterSchemaAsync(groupName, (typeof(Employee)).Name, s_schema, SchemaFormat.Json, CancellationToken.None).ConfigureAwait(false);
         }
 
         [Test]
