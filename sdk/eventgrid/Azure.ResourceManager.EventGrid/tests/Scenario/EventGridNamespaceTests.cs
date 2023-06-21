@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.EventGrid.Tests
     public class EventGridNamespaceTests : EventGridManagementTestBase
     {
         public EventGridNamespaceTests(bool isAsync)
-            : base(isAsync, RecordedTestMode.Record)
+            : base(isAsync)//, RecordedTestMode.Record)
         {
         }
 
