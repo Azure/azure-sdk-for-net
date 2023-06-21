@@ -26,9 +26,9 @@ namespace Azure.ResourceManager.Compute
         {
         }
 
-        internal ComputeArmOperation(Response<T> response)
+        internal ComputeArmOperation(Response<T> response, string operationId)
         {
-            _operation = OperationInternal<T>.Succeeded(response.GetRawResponse(), response.Value);
+            _operation = OperationInternal<T>.Succeeded(response.GetRawResponse(), response.Value, operationId);
         }
 
         internal ComputeArmOperation(IOperationSource<T> source, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response, OperationFinalStateVia finalStateVia, bool skipApiVersionOverride = false, string apiVersionOverrideValue = null)
