@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using Azure.Core.TestFramework;
-using Azure.Data.SchemaRegistry;
 
 namespace Azure.Data.SchemaRegistry.Tests.Serialization
 {

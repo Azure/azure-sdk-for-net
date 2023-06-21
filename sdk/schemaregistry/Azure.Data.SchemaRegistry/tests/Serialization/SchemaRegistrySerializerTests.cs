@@ -2,17 +2,15 @@
 // Licensed under the MIT License.
 
 using System;
+using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
+using Azure.Core.Serialization;
 using Azure.Core.TestFramework;
-using Azure.Data.SchemaRegistry;
+using Azure.Data.SchemaRegistry.Serialization;
 using Moq;
 using NUnit.Framework;
 using TestSchema;
-using Azure.Core.Serialization;
-using Azure.Data.SchemaRegistry.Serialization;
-using System.IO;
 
 namespace Azure.Data.SchemaRegistry.Tests.Serialization
 {

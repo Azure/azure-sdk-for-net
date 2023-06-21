@@ -7,11 +7,8 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.Diagnostics;
-using Azure.Core.Serialization;
 using Azure.Core.TestFramework;
-using Azure.Data.SchemaRegistry;
 using Azure.Data.SchemaRegistry.Serialization;
-using Azure.Messaging.EventHubs;
 using NUnit.Framework;
 using TestSchema;
 

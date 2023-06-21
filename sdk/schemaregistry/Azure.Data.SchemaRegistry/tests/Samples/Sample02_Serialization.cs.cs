@@ -2,23 +2,16 @@
 // Licensed under the MIT License.
 
 using System;
-using Azure.Core.TestFramework;
-using Azure.Data.SchemaRegistry;
-using Azure.Identity;
-using NUnit.Framework;
-using Azure.Messaging.EventHubs;
-using TestSchema;
-using System.Threading.Tasks;
-using Azure.Messaging.EventHubs.Producer;
 using System.Collections.Generic;
-using Azure.Messaging.EventHubs.Consumer;
-using Azure.Messaging;
-using Azure.Core.Serialization;
 using System.Text.Json;
-using Azure.Data.SchemaRegistry.Tests.Serialization;
+using System.Threading.Tasks;
+using Azure.Core.Serialization;
+using Azure.Core.TestFramework;
 using Azure.Data.SchemaRegistry.Serialization;
-using System.IO;
-using System.Threading;
+using Azure.Data.SchemaRegistry.Tests.Serialization;
+using Azure.Messaging;
+using NUnit.Framework;
+using TestSchema;
 
 namespace Azure.Data.SchemaRegistry.Tests.Samples
 {

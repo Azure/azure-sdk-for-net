@@ -17,17 +17,15 @@ namespace Azure.Data.SchemaRegistry.Serialization
 {
     /// <summary>
     /// The Schema Registry serializer serializes and deserializes payloads using the <see cref="SchemaRegistrySerializerOptions.Serializer"/>.
-    /// By default, this is a JSON object serializer. It uses an implemented <see cref="SchemaValidator"/> and a <see cref="SchemaRegistryClient"/>
+    /// By default, this is a JSON object serializer. It uses an implemented <see cref="SchemaValidator{T}"/> and a <see cref="SchemaRegistryClient"/>
     /// to enrich messages inheriting from <see cref="MessageContent"/> with a Schema Id.
     /// </summary>
-    /// <remarks>
-    /// See <see cref="SchemaValidator"/> for additional information.
-    /// </remarks>
+    /// <seealso cref="SchemaValidator{T}"/>
     public class SchemaRegistrySerializer
     {
         private readonly SchemaRegistryClient _client;
         private readonly string _groupName;
-        private readonly SchemaValidator _schemaGenerator;
+        private readonly SchemaValidator<String> _schemaValidator;
         private readonly SchemaRegistrySerializerOptions _serializerOptions;
         private const string JsonMimeType = "application/json";
         private const string CustomMimeType = "text/plain";
@@ -39,10 +37,9 @@ namespace Azure.Data.SchemaRegistry.Serialization
         /// one of the constructors that have a <c>groupName</c> parameter.
         /// </summary>
         /// <param name="client">The <see cref="SchemaRegistryClient"/> instance to use for looking up schemas.</param>
-        /// <param name="jsonSchemaGenerator">The instance inherited from <see cref="SchemaValidator"/> to use to generate and validate JSON schemas.</param>
-        /// <exception cref="ArgumentNullException"></exception>
-        public SchemaRegistrySerializer(SchemaRegistryClient client, SchemaValidator jsonSchemaGenerator)
-            : this(client, null, jsonSchemaGenerator)
+        /// <param name="schemaValidator">The instance inherited from <see cref="SchemaValidator{T}"/> to use to generate and validate schemas.</param>
+        public SchemaRegistrySerializer(SchemaRegistryClient client, SchemaValidator<string> schemaValidator)
+            : this(client, null, schemaValidator)
         {
         }
 
@@ -52,11 +49,10 @@ namespace Azure.Data.SchemaRegistry.Serialization
         /// one of the constructors that have a <c>groupName</c> parameter.
         /// </summary>
         /// <param name="client">The <see cref="SchemaRegistryClient"/> instance to use for looking up schemas.</param>
-        /// <param name="jsonSchemaGenerator">The instance inherited from <see cref="SchemaValidator"/> to use to generate and validate JSON schemas.</param>
+        /// <param name="schemaValidator">The instance inherited from <see cref="SchemaValidator{T}"/> to use to generate and validate schemas.</param>
         /// <param name="serializerOptions">The set of <see cref="SchemaRegistrySerializerOptions"/> to use when configuring the serializer.</param>
-        /// <exception cref="ArgumentNullException"></exception>
-        public SchemaRegistrySerializer(SchemaRegistryClient client, SchemaValidator jsonSchemaGenerator, SchemaRegistrySerializerOptions serializerOptions)
-            : this(client, null, jsonSchemaGenerator, serializerOptions)
+        public SchemaRegistrySerializer(SchemaRegistryClient client, SchemaValidator<string> schemaValidator, SchemaRegistrySerializerOptions serializerOptions)
+            : this(client, null, schemaValidator, serializerOptions)
         {
         }
 
@@ -66,10 +62,9 @@ namespace Azure.Data.SchemaRegistry.Serialization
         /// </summary>
         /// <param name="client">The <see cref="SchemaRegistryClient"/> instance to use for looking up schemas.</param>
         /// <param name="groupName">The Schema Registry group name that contains the schemas that will be used to serialize.</param>
-        /// <param name="jsonSchemaGenerator">The instance inherited from <see cref="SchemaValidator"/> to use to generate and validate JSON schemas.</param>
-        /// <exception cref="ArgumentNullException"></exception>
-        public SchemaRegistrySerializer(SchemaRegistryClient client, string groupName, SchemaValidator jsonSchemaGenerator)
-            : this(client, groupName, jsonSchemaGenerator, default)
+        /// <param name="schemaValidator">The instance inherited from <see cref="SchemaValidator{T}"/> to use to generate and validate schemas.</param>
+        public SchemaRegistrySerializer(SchemaRegistryClient client, string groupName, SchemaValidator<string> schemaValidator)
+            : this(client, groupName, schemaValidator, default)
         {
         }
 
@@ -79,14 +74,13 @@ namespace Azure.Data.SchemaRegistry.Serialization
         /// </summary>
         /// <param name="client">The <see cref="SchemaRegistryClient"/> instance to use for looking up schemas.</param>
         /// <param name="groupName">The Schema Registry group name that contains the schemas that will be used to serialize.</param>
-        /// <param name="schemaGenerator">The instance inherited from <see cref="SchemaValidator"/> to use to generate and validate JSON schemas.</param>
+        /// <param name="schemaValidator">The instance inherited from <see cref="SchemaValidator{T}"/> to use to generate and validate schemas.</param>
         /// <param name="serializerOptions">The set of <see cref="SchemaRegistrySerializerOptions"/> to use when configuring the serializer.</param>
-        /// <exception cref="ArgumentNullException"></exception>
-        public SchemaRegistrySerializer(SchemaRegistryClient client, string groupName, SchemaValidator schemaGenerator, SchemaRegistrySerializerOptions serializerOptions)
+        public SchemaRegistrySerializer(SchemaRegistryClient client, string groupName, SchemaValidator<string> schemaValidator, SchemaRegistrySerializerOptions serializerOptions)
         {
             _client = client ?? throw new ArgumentNullException(nameof(client));
             _groupName = groupName;
-            _schemaGenerator = schemaGenerator ?? throw new ArgumentNullException(nameof(schemaGenerator));
+            _schemaValidator = schemaValidator ?? throw new ArgumentNullException(nameof(schemaValidator));
             _serializerOptions = serializerOptions?.Clone() ?? new SchemaRegistrySerializerOptions();
         }
 
@@ -123,8 +117,8 @@ namespace Azure.Data.SchemaRegistry.Serialization
         ///   does not exist in the registry.
         /// </exception>
         /// <exception cref="Exception">
-        ///   The data did not adhere to the JSON schema, or the schema itself was invalid.
-        ///   The <see cref="Exception.InnerException"/> will contain the underlying exception from the <see cref="SchemaValidator"/> class.
+        ///   The data did not adhere to the specified schema, or the schema itself was invalid.
+        ///   The <see cref="Exception.InnerException"/> will contain the underlying exception from the <see cref="SchemaValidator{T}"/> class.
         /// </exception>
         public TMessage Serialize<TMessage, TData>(
             TData data,
@@ -149,8 +143,8 @@ namespace Azure.Data.SchemaRegistry.Serialization
         ///   does not exist in the registry.
         /// </exception>
         /// <exception cref="Exception">
-        ///   The data did not adhere to the JSON schema, or the schema itself was invalid.
-        ///   The <see cref="Exception.InnerException"/> will contain the underlying exception from the <see cref="SchemaValidator"/> class.
+        ///   The data did not adhere to the specified schema, or the schema itself was invalid.
+        ///   The <see cref="Exception.InnerException"/> will contain the underlying exception from the <see cref="SchemaValidator{T}"/> class.
         /// </exception>
         public async ValueTask<TMessage> SerializeAsync<TMessage, TData>(
             TData data,
@@ -178,8 +172,8 @@ namespace Azure.Data.SchemaRegistry.Serialization
         ///   does not exist in the registry.
         /// </exception>
         /// <exception cref="Exception">
-        ///   The data did not adhere to the JSON schema, or the schema itself was invalid.
-        ///   The <see cref="Exception.InnerException"/> will contain the underlying exception from the <see cref="SchemaValidator"/> class.
+        ///   The data did not adhere to the specified schema, or the schema itself was invalid.
+        ///   The <see cref="Exception.InnerException"/> will contain the underlying exception from the <see cref="SchemaValidator{T}"/> class.
         /// </exception>
         public MessageContent Serialize(
             object data,
@@ -209,8 +203,8 @@ namespace Azure.Data.SchemaRegistry.Serialization
         ///   does not exist in the registry.
         /// </exception>
         /// <exception cref="Exception">
-        ///   The data did not adhere to the JSON schema, or the schema itself was invalid.
-        ///   The <see cref="Exception.InnerException"/> will contain the underlying exception from the <see cref="SchemaValidator"/> class.
+        ///   The data did not adhere to the specified schema, or the schema itself was invalid.
+        ///   The <see cref="Exception.InnerException"/> will contain the underlying exception from the <see cref="SchemaValidator{T}"/> class.
         /// </exception>
         public async ValueTask<MessageContent> SerializeAsync(
             object data,
@@ -281,7 +275,7 @@ namespace Azure.Data.SchemaRegistry.Serialization
                 data = BinaryData.FromStream(stream);
 
                 // Generate the schema from the type
-                schemaString = _schemaGenerator.GenerateSchema(dataType);
+                schemaString = _schemaValidator.GenerateSchema(dataType);
             }
             catch (Exception ex)
             {
@@ -291,7 +285,7 @@ namespace Azure.Data.SchemaRegistry.Serialization
             try
             {
                 // Attempt to validate
-                _schemaGenerator.Validate(value, dataType, schemaString);
+                _schemaValidator.Validate(value, dataType, schemaString);
             }
             catch (Exception ex)
             {
@@ -359,7 +353,7 @@ namespace Azure.Data.SchemaRegistry.Serialization
         /// </exception>
         /// <exception cref="Exception">
         ///   The schema from <typeparamref name="TData"/> was not compatible with the schema used to serialize the data, or the schema itself was invalid.
-        ///   The <see cref="Exception.InnerException"/> will contain the underlying exception from the <see cref="SchemaValidator"/> class.
+        ///   The <see cref="Exception.InnerException"/> will contain the underlying exception from the <see cref="SchemaValidator{T}"/> class.
         /// </exception>
         public TData Deserialize<TData>(
             MessageContent content,
@@ -383,7 +377,7 @@ namespace Azure.Data.SchemaRegistry.Serialization
         /// </exception>
         /// <exception cref="Exception">
         ///   The schema from <typeparamref name="TData"/> was not compatible with the schema used to serialize the data, or the schema itself was invalid.
-        ///   The <see cref="Exception.InnerException"/> will contain the underlying exception from the <see cref="SchemaValidator"/> class.
+        ///   The <see cref="Exception.InnerException"/> will contain the underlying exception from the <see cref="SchemaValidator{T}"/> class.
         /// </exception>
         public async ValueTask<TData> DeserializeAsync<TData>(
             MessageContent content,
@@ -407,7 +401,7 @@ namespace Azure.Data.SchemaRegistry.Serialization
         /// </exception>
         /// <exception cref="Exception">
         ///   The schema from <paramref name="dataType"/> was not compatible with the schema used to serialize the data, or the schema itself was invalid.
-        ///   The <see cref="Exception.InnerException"/> will contain the underlying exception from the <see cref="SchemaValidator"/> class.
+        ///   The <see cref="Exception.InnerException"/> will contain the underlying exception from the <see cref="SchemaValidator{T}"/> class.
         /// </exception>
         public object Deserialize(
             MessageContent content,
@@ -432,7 +426,7 @@ namespace Azure.Data.SchemaRegistry.Serialization
         /// </exception>
         /// <exception cref="Exception">
         ///   The schema from <paramref name="dataType"/> was not compatible with the schema used to serialize the data, or the schema itself was invalid.
-        ///   The <see cref="Exception.InnerException"/> will contain the underlying exception from the <see cref="SchemaValidator"/> class.
+        ///   The <see cref="Exception.InnerException"/> will contain the underlying exception from the <see cref="SchemaValidator{T}"/> class.
         /// </exception>
         public async ValueTask<object> DeserializeAsync(
             MessageContent content,
@@ -521,7 +515,7 @@ namespace Azure.Data.SchemaRegistry.Serialization
             try
             {
                 // Attempt to validate the object against the schema definition
-                _schemaGenerator.Validate(objectToReturn, dataType, schemaDefinition);
+                _schemaValidator.Validate(objectToReturn, dataType, schemaDefinition);
             }
             catch (Exception ex)
             {

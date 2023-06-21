@@ -1134,6 +1134,12 @@ namespace Azure.Core.Serialization
         public abstract System.Threading.Tasks.ValueTask SerializeAsync(System.IO.Stream stream, object? value, System.Type inputType, System.Threading.CancellationToken cancellationToken);
         public virtual System.Threading.Tasks.ValueTask<System.BinaryData> SerializeAsync(object? value, System.Type? inputType = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
+    public abstract partial class SchemaValidator<T>
+    {
+        protected SchemaValidator() { }
+        public abstract T GenerateSchema(System.Type dataType);
+        public abstract void Validate(object data, System.Type dataType, T schemaDefinition);
+    }
 }
 namespace Azure.Messaging
 {

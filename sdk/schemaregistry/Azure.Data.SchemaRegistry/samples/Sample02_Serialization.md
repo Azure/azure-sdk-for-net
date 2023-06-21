@@ -43,7 +43,7 @@ internal class SampleJsonValidator : SchemaValidator
 }
 ```
 
-The following is a sample implementation using `Newtonsoft.Json.Schema`:
+The following is a sample implementation:
 
 **This is for illustration only**
 ```C#
