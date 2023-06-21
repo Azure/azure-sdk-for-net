@@ -8,6 +8,9 @@ namespace Azure.AI.OpenAI
         public static Azure.AI.OpenAI.EmbeddingItem EmbeddingItem(System.Collections.Generic.IEnumerable<float> embedding = null, int index = 0) { throw null; }
         public static Azure.AI.OpenAI.Embeddings Embeddings(System.Collections.Generic.IEnumerable<Azure.AI.OpenAI.EmbeddingItem> data = null, Azure.AI.OpenAI.EmbeddingsUsage usage = null) { throw null; }
         public static Azure.AI.OpenAI.EmbeddingsUsage EmbeddingsUsage(int promptTokens = 0, int totalTokens = 0) { throw null; }
+        public static Azure.AI.OpenAI.ImageLocation ImageLocation(System.Uri url = null, Azure.ResponseError error = null) { throw null; }
+        public static Azure.AI.OpenAI.ImageOperationResponse ImageOperationResponse(string id = null, long created = (long)0, long? expires = default(long?), Azure.AI.OpenAI.ImageResponse result = null, Azure.AI.OpenAI.State status = default(Azure.AI.OpenAI.State), Azure.ResponseError error = null) { throw null; }
+        public static Azure.AI.OpenAI.ImageResponse ImageResponse(long created = (long)0, System.Collections.Generic.IEnumerable<Azure.AI.OpenAI.ImageLocation> data = null) { throw null; }
     }
     public partial class ChatChoice
     {
@@ -158,6 +161,55 @@ namespace Azure.AI.OpenAI
         public int PromptTokens { get { throw null; } }
         public int TotalTokens { get { throw null; } }
     }
+    public partial class ImageGenerationOptions
+    {
+        public ImageGenerationOptions(string prompt) { }
+        public int? N { get { throw null; } set { } }
+        public string Prompt { get { throw null; } }
+        public Azure.AI.OpenAI.ImageSize? Size { get { throw null; } set { } }
+        public string User { get { throw null; } set { } }
+    }
+    public partial class ImageLocation
+    {
+        internal ImageLocation() { }
+        public Azure.ResponseError Error { get { throw null; } }
+        public System.Uri Url { get { throw null; } }
+    }
+    public partial class ImageOperationResponse
+    {
+        internal ImageOperationResponse() { }
+        public long Created { get { throw null; } }
+        public Azure.ResponseError Error { get { throw null; } }
+        public long? Expires { get { throw null; } }
+        public string Id { get { throw null; } }
+        public Azure.AI.OpenAI.ImageResponse Result { get { throw null; } }
+        public Azure.AI.OpenAI.State Status { get { throw null; } }
+    }
+    public partial class ImageResponse
+    {
+        internal ImageResponse() { }
+        public long Created { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.AI.OpenAI.ImageLocation> Data { get { throw null; } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct ImageSize : System.IEquatable<Azure.AI.OpenAI.ImageSize>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public ImageSize(string value) { throw null; }
+        public static Azure.AI.OpenAI.ImageSize Size1024x1024 { get { throw null; } }
+        public static Azure.AI.OpenAI.ImageSize Size256x256 { get { throw null; } }
+        public static Azure.AI.OpenAI.ImageSize Size512x512 { get { throw null; } }
+        public bool Equals(Azure.AI.OpenAI.ImageSize other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.AI.OpenAI.ImageSize left, Azure.AI.OpenAI.ImageSize right) { throw null; }
+        public static implicit operator Azure.AI.OpenAI.ImageSize (string value) { throw null; }
+        public static bool operator !=(Azure.AI.OpenAI.ImageSize left, Azure.AI.OpenAI.ImageSize right) { throw null; }
+        public override string ToString() { throw null; }
+    }
     public partial class OpenAIClient
     {
         protected OpenAIClient() { }
@@ -180,15 +232,42 @@ namespace Azure.AI.OpenAI
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.OpenAI.StreamingCompletions>> GetCompletionsStreamingAsync(string deploymentOrModelName, Azure.AI.OpenAI.CompletionsOptions completionsOptions, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.AI.OpenAI.Embeddings> GetEmbeddings(string deploymentOrModelName, Azure.AI.OpenAI.EmbeddingsOptions embeddingsOptions, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.OpenAI.Embeddings>> GetEmbeddingsAsync(string deploymentOrModelName, Azure.AI.OpenAI.EmbeddingsOptions embeddingsOptions, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Operation<Azure.AI.OpenAI.ImageOperationResponse> StartGenerateImage(Azure.WaitUntil waitUntil, Azure.AI.OpenAI.ImageGenerationOptions imageGenerationOptions, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Operation<System.BinaryData> StartGenerateImage(Azure.WaitUntil waitUntil, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Operation<Azure.AI.OpenAI.ImageOperationResponse>> StartGenerateImageAsync(Azure.WaitUntil waitUntil, Azure.AI.OpenAI.ImageGenerationOptions imageGenerationOptions, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Operation<System.BinaryData>> StartGenerateImageAsync(Azure.WaitUntil waitUntil, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
     }
     public partial class OpenAIClientOptions : Azure.Core.ClientOptions
     {
-        public OpenAIClientOptions(Azure.AI.OpenAI.OpenAIClientOptions.ServiceVersion version = Azure.AI.OpenAI.OpenAIClientOptions.ServiceVersion.V2023_03_15_Preview) { }
+        public OpenAIClientOptions(Azure.AI.OpenAI.OpenAIClientOptions.ServiceVersion version = Azure.AI.OpenAI.OpenAIClientOptions.ServiceVersion.V2023_06_01_Preview) { }
         public enum ServiceVersion
         {
             V2022_12_01 = 1,
-            V2023_03_15_Preview = 2,
+            V2023_05_15 = 2,
+            V2023_06_01_Preview = 3,
         }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct State : System.IEquatable<Azure.AI.OpenAI.State>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public State(string value) { throw null; }
+        public static Azure.AI.OpenAI.State Canceled { get { throw null; } }
+        public static Azure.AI.OpenAI.State Deleted { get { throw null; } }
+        public static Azure.AI.OpenAI.State Failed { get { throw null; } }
+        public static Azure.AI.OpenAI.State NotRunning { get { throw null; } }
+        public static Azure.AI.OpenAI.State Running { get { throw null; } }
+        public static Azure.AI.OpenAI.State Succeeded { get { throw null; } }
+        public bool Equals(Azure.AI.OpenAI.State other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.AI.OpenAI.State left, Azure.AI.OpenAI.State right) { throw null; }
+        public static implicit operator Azure.AI.OpenAI.State (string value) { throw null; }
+        public static bool operator !=(Azure.AI.OpenAI.State left, Azure.AI.OpenAI.State right) { throw null; }
+        public override string ToString() { throw null; }
     }
     public partial class StreamingChatChoice
     {

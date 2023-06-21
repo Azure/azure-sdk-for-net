@@ -92,5 +92,128 @@ namespace Azure.AI.OpenAI.Samples
             };
             var result = await client.GetChatCompletionsAsync("<deploymentId>", chatCompletionsOptions);
         }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_StartGenerateImage()
+        {
+            var client = new OpenAIClient("<openAIApiKey>");
+
+            var data = new
+            {
+                prompt = "<prompt>",
+            };
+
+            var operation = client.StartGenerateImage(WaitUntil.Completed, RequestContent.Create(data));
+
+            BinaryData responseData = operation.Value;
+            JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
+            Console.WriteLine(result.GetProperty("id").ToString());
+            Console.WriteLine(result.GetProperty("created").ToString());
+            Console.WriteLine(result.GetProperty("status").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_StartGenerateImage_AllParameters()
+        {
+            var client = new OpenAIClient("<openAIApiKey>");
+
+            var data = new
+            {
+                prompt = "<prompt>",
+                n = 1234,
+                size = "256x256",
+                user = "<user>",
+            };
+
+            var operation = client.StartGenerateImage(WaitUntil.Completed, RequestContent.Create(data));
+
+            BinaryData responseData = operation.Value;
+            JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
+            Console.WriteLine(result.GetProperty("id").ToString());
+            Console.WriteLine(result.GetProperty("created").ToString());
+            Console.WriteLine(result.GetProperty("expires").ToString());
+            Console.WriteLine(result.GetProperty("result").GetProperty("created").ToString());
+            Console.WriteLine(result.GetProperty("result").GetProperty("data")[0].GetProperty("url").ToString());
+            Console.WriteLine(result.GetProperty("result").GetProperty("data")[0].GetProperty("error").GetProperty("code").ToString());
+            Console.WriteLine(result.GetProperty("result").GetProperty("data")[0].GetProperty("error").GetProperty("message").ToString());
+            Console.WriteLine(result.GetProperty("result").GetProperty("data")[0].GetProperty("error").GetProperty("target").ToString());
+            Console.WriteLine(result.GetProperty("result").GetProperty("data")[0].GetProperty("error").GetProperty("innererror").GetProperty("code").ToString());
+            Console.WriteLine(result.GetProperty("status").ToString());
+            Console.WriteLine(result.GetProperty("error").GetProperty("code").ToString());
+            Console.WriteLine(result.GetProperty("error").GetProperty("message").ToString());
+            Console.WriteLine(result.GetProperty("error").GetProperty("target").ToString());
+            Console.WriteLine(result.GetProperty("error").GetProperty("innererror").GetProperty("code").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_StartGenerateImage_Async()
+        {
+            var client = new OpenAIClient("<openAIApiKey>");
+
+            var data = new
+            {
+                prompt = "<prompt>",
+            };
+
+            var operation = await client.StartGenerateImageAsync(WaitUntil.Completed, RequestContent.Create(data));
+
+            BinaryData responseData = operation.Value;
+            JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
+            Console.WriteLine(result.GetProperty("id").ToString());
+            Console.WriteLine(result.GetProperty("created").ToString());
+            Console.WriteLine(result.GetProperty("status").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_StartGenerateImage_AllParameters_Async()
+        {
+            var client = new OpenAIClient("<openAIApiKey>");
+
+            var data = new
+            {
+                prompt = "<prompt>",
+                n = 1234,
+                size = "256x256",
+                user = "<user>",
+            };
+
+            var operation = await client.StartGenerateImageAsync(WaitUntil.Completed, RequestContent.Create(data));
+
+            BinaryData responseData = operation.Value;
+            JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
+            Console.WriteLine(result.GetProperty("id").ToString());
+            Console.WriteLine(result.GetProperty("created").ToString());
+            Console.WriteLine(result.GetProperty("expires").ToString());
+            Console.WriteLine(result.GetProperty("result").GetProperty("created").ToString());
+            Console.WriteLine(result.GetProperty("result").GetProperty("data")[0].GetProperty("url").ToString());
+            Console.WriteLine(result.GetProperty("result").GetProperty("data")[0].GetProperty("error").GetProperty("code").ToString());
+            Console.WriteLine(result.GetProperty("result").GetProperty("data")[0].GetProperty("error").GetProperty("message").ToString());
+            Console.WriteLine(result.GetProperty("result").GetProperty("data")[0].GetProperty("error").GetProperty("target").ToString());
+            Console.WriteLine(result.GetProperty("result").GetProperty("data")[0].GetProperty("error").GetProperty("innererror").GetProperty("code").ToString());
+            Console.WriteLine(result.GetProperty("status").ToString());
+            Console.WriteLine(result.GetProperty("error").GetProperty("code").ToString());
+            Console.WriteLine(result.GetProperty("error").GetProperty("message").ToString());
+            Console.WriteLine(result.GetProperty("error").GetProperty("target").ToString());
+            Console.WriteLine(result.GetProperty("error").GetProperty("innererror").GetProperty("code").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_StartGenerateImage_Convenience_Async()
+        {
+            var client = new OpenAIClient("<openAIApiKey>");
+
+            var imageGenerationOptions = new ImageGenerationOptions("<prompt>")
+            {
+                N = 1234,
+                Size = ImageSize.Size256x256,
+                User = "<User>",
+            };
+            var operation = await client.StartGenerateImageAsync(WaitUntil.Completed, imageGenerationOptions);
+        }
     }
 }
