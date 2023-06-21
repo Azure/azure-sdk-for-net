@@ -21,10 +21,6 @@
     <PackageReference Include="Microsoft.AspNetCore.Http" />
     <PackageReference Include="System.IO.Pipelines" />
   </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\..\Azure.Core\src\Azure.Core.csproj" />
-  </ItemGroup>
   
   <!-- Import Azure.Core shared source -->
   <ItemGroup>
