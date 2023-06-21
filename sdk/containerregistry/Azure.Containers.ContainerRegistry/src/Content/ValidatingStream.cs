@@ -13,14 +13,14 @@ namespace Azure.Containers.ContainerRegistry
     {
         private Stream _stream;
         private SHA256 _sha256;
-        private readonly int _contentLength;
+        private readonly long _contentLength;
         private readonly string _digest;
 
-        private int _received;
+        private long _received;
         private bool _validated;
         private bool _disposed;
 
-        public ValidatingStream(Stream stream, int contentLength, string digest)
+        public ValidatingStream(Stream stream, long contentLength, string digest)
         {
             _stream = stream ?? throw new InvalidOperationException("The response content stream does not have any data.");
             _sha256 = SHA256.Create();

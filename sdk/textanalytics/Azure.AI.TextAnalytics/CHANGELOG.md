@@ -1,6 +1,16 @@
 # Release History
 
-## 5.3.0-beta.4 (Unreleased)
+## 5.4.0-beta.1 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+## 5.3.0 (2023-06-19)
 
 ### Features Added
 
@@ -48,8 +58,6 @@
   - Removed the following methods: `TextAnalyticsClient.DynamicClassifyBatch` and `TextAnalyticsClient.DynamicClassifyBatchAsync`.
   - Removed the `DynamicClassifyDocumentResultCollection` class.
   - Removed the `ClassificationType` enum.
-
-### Bugs Fixed
 
 ### Other Changes
 
