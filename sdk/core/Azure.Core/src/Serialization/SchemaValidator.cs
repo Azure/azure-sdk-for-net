@@ -25,7 +25,7 @@ namespace Azure.Core.Serialization
         /// <param name="data">The data to use for serialization or the data that was deserialized.</param>
         /// <param name="dataType">The type of the data to serialize or the type of the deserialized data.</param>
         /// <param name="schemaDefinition">The schema definition to validate against.</param>
-        public abstract void Validate(Object data, Type dataType, T schemaDefinition);
+        public abstract void Validate(object data, Type dataType, T schemaDefinition);
 
         /// <summary>
         /// Generates a schema from <paramref name="dataType"/> and returns it as a type of <typeparamref name="T"/>.
