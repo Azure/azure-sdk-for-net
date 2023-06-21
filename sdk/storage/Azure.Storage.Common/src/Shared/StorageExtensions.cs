@@ -60,7 +60,7 @@ namespace Azure.Storage.Shared
             return Convert.ToBase64String(id);
         }
 
-        public static HttpAuthorization ToHttpAuthorization(
+        public static HttpAuthorization GetCopyAuthorizationHeader(
             this TokenCredential tokenCredential,
             CancellationToken cancellationToken = default)
         {
