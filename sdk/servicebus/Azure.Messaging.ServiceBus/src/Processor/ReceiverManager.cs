@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
@@ -302,17 +303,15 @@ namespace Azure.Messaging.ServiceBus
             {
                 errorSource = ServiceBusErrorSource.ProcessMessageCallback;
 
-                // TODO resolve for batch
-                var triggerMessage = triggerMessages[0];
                 try
                 {
-                    ServiceBusEventSource.Log.ProcessorMessageHandlerStart(Processor.Identifier, triggerMessage.SequenceNumber, triggerMessage.LockTokenGuid);
+                    LogProcessorMessageHandlerStart(triggerMessages);
                     await OnMessagesHandler(args).ConfigureAwait(false);
-                    ServiceBusEventSource.Log.ProcessorMessageHandlerComplete(Processor.Identifier, triggerMessage.SequenceNumber, triggerMessage.LockTokenGuid);
+                    LogProcessorMessageHandlerComplete(triggerMessages);
                 }
                 catch (Exception ex)
                 {
-                    ServiceBusEventSource.Log.ProcessorMessageHandlerException(Processor.Identifier, triggerMessage.SequenceNumber, ex.ToString(), triggerMessage.LockTokenGuid);
+                    LogProcessorMessageHandlerException(triggerMessages, ex);
                     throw;
                 }
 
@@ -393,6 +392,30 @@ namespace Azure.Messaging.ServiceBus
                 {
                     await processMessageEventArgs.CancelMessageLockRenewalAsync().ConfigureAwait(false);
                 }
+            }
+        }
+
+        private void LogProcessorMessageHandlerStart(IReadOnlyList<ServiceBusReceivedMessage> triggerMessages)
+        {
+            foreach (ServiceBusReceivedMessage triggerMessage in triggerMessages)
+            {
+                ServiceBusEventSource.Log.ProcessorMessageHandlerStart(Processor.Identifier, triggerMessage.SequenceNumber, triggerMessage.LockTokenGuid);
+            }
+        }
+
+        private void LogProcessorMessageHandlerComplete(IReadOnlyList<ServiceBusReceivedMessage> triggerMessages)
+        {
+            foreach (ServiceBusReceivedMessage triggerMessage in triggerMessages)
+            {
+                ServiceBusEventSource.Log.ProcessorMessageHandlerComplete(Processor.Identifier, triggerMessage.SequenceNumber, triggerMessage.LockTokenGuid);
+            }
+        }
+
+        private void LogProcessorMessageHandlerException(IReadOnlyList<ServiceBusReceivedMessage> triggerMessages, Exception ex)
+        {
+            foreach (ServiceBusReceivedMessage triggerMessage in triggerMessages)
+            {
+                ServiceBusEventSource.Log.ProcessorMessageHandlerException(Processor.Identifier, triggerMessage.SequenceNumber, ex.ToString(), triggerMessage.LockTokenGuid);
             }
         }
 
