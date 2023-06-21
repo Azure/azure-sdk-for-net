@@ -39,6 +39,20 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
         }
 
         [Test]
+        public void MustSetBatchMessageHandler()
+        {
+            var processor = new ServiceBusSessionProcessor(
+                ServiceBusTestUtilities.GetMockedReceiverConnection(),
+                "entityPath",
+                new ServiceBusSessionProcessorOptions()
+                {
+                    BatchSize = 2
+                });
+
+            Assert.That(async () => await processor.StartProcessingAsync(), Throws.InstanceOf<InvalidOperationException>());
+        }
+
+        [Test]
         public void MustSetErrorHandler()
         {
             var processor = new ServiceBusSessionProcessor(
@@ -384,6 +398,42 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
         }
 
         [Test]
+        public async Task CanRaiseBatchEventsOnMockSessionProcessor()
+        {
+            var mockProcessor = new MockSessionProcessor();
+            var mockReceiver = new Mock<ServiceBusSessionReceiver>();
+            mockReceiver.Setup(r => r.SessionId).Returns("sessionId");
+            mockReceiver.Setup(r => r.FullyQualifiedNamespace).Returns("namespace");
+            mockReceiver.Setup(r => r.EntityPath).Returns("entityPath");
+            bool processMessagesCalled = false;
+
+            var processArgs = new ProcessSessionMessagesEventArgs(
+                new List<ServiceBusReceivedMessage>
+                {
+                    ServiceBusModelFactory.ServiceBusReceivedMessage(messageId: "1", sessionId: "sessionId"),
+                    ServiceBusModelFactory.ServiceBusReceivedMessage(messageId: "2", sessionId: "sessionId")
+                },
+                mockReceiver.Object,
+                CancellationToken.None);
+
+            mockProcessor.ProcessMessagesAsync += args =>
+            {
+                processMessagesCalled = true;
+                Assert.AreEqual(2, args.Messages.Count);
+                Assert.AreEqual("1", args.Messages[0].MessageId);
+                Assert.AreEqual("2", args.Messages[1].MessageId);
+                Assert.AreEqual("sessionId", args.SessionId);
+                Assert.AreEqual("namespace", args.FullyQualifiedNamespace);
+                Assert.AreEqual("entityPath", args.EntityPath);
+                return Task.CompletedTask;
+            };
+
+            await mockProcessor.OnProcessSessionMessagesAsync(processArgs);
+
+            Assert.IsTrue(processMessagesCalled);
+        }
+
+        [Test]
         public async Task CloseRespectsCancellationToken()
         {
             var mockProcessor = new Mock<ServiceBusProcessor>() {CallBase = true};
@@ -416,6 +466,11 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
         protected internal override async Task OnProcessSessionMessageAsync(ProcessSessionMessageEventArgs args)
         {
             await base.OnProcessSessionMessageAsync(args);
+        }
+
+        protected internal override async Task OnProcessSessionMessagesAsync(ProcessSessionMessagesEventArgs args)
+        {
+            await base.OnProcessSessionMessagesAsync(args);
         }
 
         protected internal override async Task OnProcessErrorAsync(ProcessErrorEventArgs args)

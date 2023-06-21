@@ -42,6 +42,21 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
         }
 
         [Test]
+        public void MustSetBatchMessageHandler()
+        {
+            var processor = new ServiceBusProcessor(
+                ServiceBusTestUtilities.GetMockedReceiverConnection(),
+                "entityPath",
+                false,
+                new ServiceBusProcessorOptions
+                {
+                    BatchSize = 2
+                });
+
+            Assert.That(async () => await processor.StartProcessingAsync(), Throws.InstanceOf<InvalidOperationException>());
+        }
+
+        [Test]
         public void MustSetErrorHandler()
         {
             var processor = new ServiceBusProcessor(
@@ -368,6 +383,40 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
         }
 
         [Test]
+        public async Task CanRaiseBatchEventsOnMockProcessor()
+        {
+            var mockProcessor = new MockProcessor();
+            bool processMessagesCalled = false;
+            var mockReceiver = new Mock<ServiceBusReceiver>();
+            mockReceiver.Setup(r => r.FullyQualifiedNamespace).Returns("namespace");
+            mockReceiver.Setup(r => r.EntityPath).Returns("entityPath");
+
+            var processArgs = new ProcessMessagesEventArgs(
+                new List<ServiceBusReceivedMessage>()
+                {
+                    ServiceBusModelFactory.ServiceBusReceivedMessage(messageId: "1"),
+                    ServiceBusModelFactory.ServiceBusReceivedMessage(messageId: "2")
+                },
+                mockReceiver.Object,
+                CancellationToken.None);
+
+            mockProcessor.ProcessMessagesAsync += args =>
+            {
+                processMessagesCalled = true;
+                Assert.AreEqual(2, args.Messages.Count);
+                Assert.AreEqual("1", args.Messages[0].MessageId);
+                Assert.AreEqual("2", args.Messages[1].MessageId);
+                Assert.AreEqual("namespace", args.FullyQualifiedNamespace);
+                Assert.AreEqual("entityPath", args.EntityPath);
+                return Task.CompletedTask;
+            };
+
+            await mockProcessor.OnProcessMessagesAsync(processArgs);
+
+            Assert.IsTrue(processMessagesCalled);
+        }
+
+        [Test]
         public async Task CannotStartProcessorWhenProcessorIsDisposed()
         {
             var mockConnection = ServiceBusTestUtilities.GetMockedReceiverConnection();
@@ -451,6 +500,11 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
         protected internal override async Task OnProcessMessageAsync(ProcessMessageEventArgs args)
         {
             await base.OnProcessMessageAsync(args);
+        }
+
+        protected internal override async Task OnProcessMessagesAsync(ProcessMessagesEventArgs args)
+        {
+            await base.OnProcessMessagesAsync(args);
         }
 
         protected internal override async Task OnProcessErrorAsync(ProcessErrorEventArgs args)
