@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.NetworkCloud.Tests
         public string CSNAttachmentName => GetRecordedVariable("CSN_ATTACHMENT_NAME");
         public string L3NAttachmentId => GetRecordedVariable("L3_ATTACHMENT_ID");
         public string L3NAttachmentName => GetRecordedVariable("L3_ATTACHMENT_NAME");
-        public ResourceIdentifier VMId => new ResourceIdentifier(GetRecordedVariable("VM_ID"));
+        public ResourceIdentifier VMId => new ResourceIdentifier(GetRecordedVariable("VIRTUAL_MACHINE_ID"));
         public string VMImage => GetRecordedVariable("VM_IMAGE");
         public string VMImageRepoPwd => GetRecordedVariable("VM_IMAGE_REPO_PWD", options => options.IsSecret());
         public string VMImageRepoUri => GetRecordedVariable("VM_IMAGE_REPO_URI");

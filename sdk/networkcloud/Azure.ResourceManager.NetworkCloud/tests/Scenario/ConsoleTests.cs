@@ -59,6 +59,9 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
             // Update
             ConsolePatch patch = new ConsolePatch()
             {
+                Enabled = ConsoleEnabled.False,
+                Expiration = DateTimeOffset.UtcNow.AddDays(2),
+                KeyData = "ssh-rsa AAtsE3njSONzDYRIZv/WLjVuMfrUSByHp+jfaaOLHTIIB4fJvo6dQUZxE20w2iDHV3tEkmnTo84eba97VMueQD6OzJPEyWZMRpz8UYWOd0IXeRqiFu1lawNblZhwNT/ojNZfpB3af/YDzwQCZgTcTRyNNhL4o/blKUmug0daSsSXISTRnIDpcf5qytjs1Xo+yYyJMvzLL59mhAyb3p/cD+Y3/s3WhAx+l0XOKpzXnblrv9d3q4c2tWmm/SyFqthaqd0= fake-public-key",
                 Tags =
                 {
                     ["key1"] = "newvalue1",
