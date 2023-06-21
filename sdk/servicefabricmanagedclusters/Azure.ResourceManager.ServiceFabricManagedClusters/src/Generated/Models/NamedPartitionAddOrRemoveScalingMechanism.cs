@@ -7,7 +7,7 @@
 
 namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 {
-    /// <summary> Represents a scaling mechanism for adding or removing named partitions of a stateless service. Partition names are in the format &apos;0&apos;,&apos;1&apos;...&apos;N-1&apos;. </summary>
+    /// <summary> Represents a scaling mechanism for adding or removing named partitions of a stateless service. Partition names are in the format '0','1'...'N-1'. </summary>
     public partial class NamedPartitionAddOrRemoveScalingMechanism : ManagedServiceScalingMechanism
     {
         /// <summary> Initializes a new instance of NamedPartitionAddOrRemoveScalingMechanism. </summary>

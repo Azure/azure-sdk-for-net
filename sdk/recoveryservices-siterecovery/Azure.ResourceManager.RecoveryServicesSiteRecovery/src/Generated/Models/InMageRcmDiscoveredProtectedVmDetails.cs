@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="vmwareToolsStatus"> The VMware tools status. </param>
         /// <param name="powerStatus"> The VM power status. </param>
         /// <param name="vmFqdn"> The VM fqdn. </param>
-        /// <param name="osName"> The VM&apos;s OS name. </param>
+        /// <param name="osName"> The VM's OS name. </param>
         /// <param name="createdTimestamp"> The SDS created timestamp. </param>
         /// <param name="updatedTimestamp"> The SDS updated timestamp. </param>
         /// <param name="isDeleted"> A value indicating whether the VM is deleted. </param>
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         public string PowerStatus { get; }
         /// <summary> The VM fqdn. </summary>
         public string VmFqdn { get; }
-        /// <summary> The VM&apos;s OS name. </summary>
+        /// <summary> The VM's OS name. </summary>
         public string OSName { get; }
         /// <summary> The SDS created timestamp. </summary>
         public DateTimeOffset? CreatedTimestamp { get; }

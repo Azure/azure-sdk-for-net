@@ -5,6 +5,16 @@
   "Properties": [
     {
       "Key": {
+        "Type": "string",
+        "Name": "Type",
+        "SummaryComment": "The container technology to be used.",
+        "BoundAccess": "read",
+        "UnboundAccess": "read,write"
+      },
+      "Value": null
+    },
+    {
+      "Key": {
         "Type": "IList<string>",
         "Name": "ContainerImageNames",
         "SummaryComment": "The collection of container images.",

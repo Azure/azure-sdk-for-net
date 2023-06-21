@@ -28,6 +28,7 @@ namespace Azure.ResourceManager.TrafficManager.Models
         private const string DisabledValue = "Disabled";
         private const string InactiveValue = "Inactive";
         private const string StoppedValue = "Stopped";
+        private const string UnmonitoredValue = "Unmonitored";
 
         /// <summary> CheckingEndpoint. </summary>
         public static TrafficManagerEndpointMonitorStatus CheckingEndpoint { get; } = new TrafficManagerEndpointMonitorStatus(CheckingEndpointValue);
@@ -41,6 +42,8 @@ namespace Azure.ResourceManager.TrafficManager.Models
         public static TrafficManagerEndpointMonitorStatus Inactive { get; } = new TrafficManagerEndpointMonitorStatus(InactiveValue);
         /// <summary> Stopped. </summary>
         public static TrafficManagerEndpointMonitorStatus Stopped { get; } = new TrafficManagerEndpointMonitorStatus(StoppedValue);
+        /// <summary> Unmonitored. </summary>
+        public static TrafficManagerEndpointMonitorStatus Unmonitored { get; } = new TrafficManagerEndpointMonitorStatus(UnmonitoredValue);
         /// <summary> Determines if two <see cref="TrafficManagerEndpointMonitorStatus"/> values are the same. </summary>
         public static bool operator ==(TrafficManagerEndpointMonitorStatus left, TrafficManagerEndpointMonitorStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="TrafficManagerEndpointMonitorStatus"/> values are not the same. </summary>

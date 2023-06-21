@@ -26,10 +26,10 @@ namespace Azure.ResourceManager.Quota.Models
                 writer.WritePropertyName("name"u8);
                 writer.WriteObjectValue(Name);
             }
-            if (Optional.IsDefined(ResourceType))
+            if (Optional.IsDefined(ResourceTypeName))
             {
                 writer.WritePropertyName("resourceType"u8);
-                writer.WriteStringValue(ResourceType);
+                writer.WriteStringValue(ResourceTypeName);
             }
             if (Optional.IsDefined(Properties))
             {
@@ -49,11 +49,11 @@ namespace Azure.ResourceManager.Quota.Models
             {
                 return null;
             }
-            Optional<LimitJsonObject> limit = default;
+            Optional<QuotaLimitJsonObject> limit = default;
             Optional<string> unit = default;
-            Optional<ResourceName> name = default;
+            Optional<QuotaRequestResourceName> name = default;
             Optional<string> resourceType = default;
-            Optional<string> quotaPeriod = default;
+            Optional<TimeSpan> quotaPeriod = default;
             Optional<bool> isQuotaApplicable = default;
             Optional<BinaryData> properties = default;
             foreach (var property in element.EnumerateObject())
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Quota.Models
                     {
                         continue;
                     }
-                    limit = LimitJsonObject.DeserializeLimitJsonObject(property.Value);
+                    limit = QuotaLimitJsonObject.DeserializeQuotaLimitJsonObject(property.Value);
                     continue;
                 }
                 if (property.NameEquals("unit"u8))
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Quota.Models
                     {
                         continue;
                     }
-                    name = ResourceName.DeserializeResourceName(property.Value);
+                    name = QuotaRequestResourceName.DeserializeQuotaRequestResourceName(property.Value);
                     continue;
                 }
                 if (property.NameEquals("resourceType"u8))
@@ -88,7 +88,11 @@ namespace Azure.ResourceManager.Quota.Models
                 }
                 if (property.NameEquals("quotaPeriod"u8))
                 {
-                    quotaPeriod = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    quotaPeriod = property.Value.GetTimeSpan("P");
                     continue;
                 }
                 if (property.NameEquals("isQuotaApplicable"u8))
@@ -110,7 +114,7 @@ namespace Azure.ResourceManager.Quota.Models
                     continue;
                 }
             }
-            return new QuotaProperties(limit.Value, unit.Value, name.Value, resourceType.Value, quotaPeriod.Value, Optional.ToNullable(isQuotaApplicable), properties.Value);
+            return new QuotaProperties(limit.Value, unit.Value, name.Value, resourceType.Value, Optional.ToNullable(quotaPeriod), Optional.ToNullable(isQuotaApplicable), properties.Value);
         }
     }
 }

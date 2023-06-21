@@ -27,7 +27,7 @@ namespace Azure.Identity
         private readonly bool _allowUnencryptedStorage;
         private readonly string _name;
         private readonly bool _persistToDisk;
-        private static AsyncLockWithValue<MsalCacheHelperWrapper> cacheHelperLock = new AsyncLockWithValue<MsalCacheHelperWrapper>();
+        private AsyncLockWithValue<MsalCacheHelperWrapper> cacheHelperLock = new AsyncLockWithValue<MsalCacheHelperWrapper>();
         private readonly MsalCacheHelperWrapper _cacheHelperWrapper;
 
         /// <summary>
@@ -124,15 +124,6 @@ namespace Azure.Identity
                     _lock.Release();
                 }
             }
-        }
-
-        /// <summary>
-        /// Resets the <see cref="cacheHelperLock"/> so that tests can validate multiple calls to <see cref="RegisterCache"/>
-        /// This should only be used for testing.
-        /// </summary>
-        internal static void ResetWrapperCache()
-        {
-            cacheHelperLock = new AsyncLockWithValue<MsalCacheHelperWrapper>();
         }
 
         private async Task OnBeforeCacheAccessAsync(TokenCacheNotificationArgs args)

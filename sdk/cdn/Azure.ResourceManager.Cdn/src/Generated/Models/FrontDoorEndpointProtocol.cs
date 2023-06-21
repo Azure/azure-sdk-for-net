@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary> Supported protocols for the customer&apos;s endpoint. </summary>
+    /// <summary> Supported protocols for the customer's endpoint. </summary>
     public readonly partial struct FrontDoorEndpointProtocol : IEquatable<FrontDoorEndpointProtocol>
     {
         private readonly string _value;

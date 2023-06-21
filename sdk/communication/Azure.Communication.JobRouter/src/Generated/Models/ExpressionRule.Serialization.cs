@@ -15,8 +15,11 @@ namespace Azure.Communication.JobRouter
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("language"u8);
-            writer.WriteStringValue(Language);
+            if (Optional.IsDefined(Language))
+            {
+                writer.WritePropertyName("language"u8);
+                writer.WriteStringValue(Language);
+            }
             writer.WritePropertyName("expression"u8);
             writer.WriteStringValue(Expression);
             writer.WritePropertyName("kind"u8);
@@ -30,7 +33,7 @@ namespace Azure.Communication.JobRouter
             {
                 return null;
             }
-            string language = default;
+            Optional<string> language = default;
             string expression = default;
             string kind = default;
             foreach (var property in element.EnumerateObject())
@@ -51,7 +54,7 @@ namespace Azure.Communication.JobRouter
                     continue;
                 }
             }
-            return new ExpressionRule(kind, language, expression);
+            return new ExpressionRule(kind, language.Value, expression);
         }
     }
 }

@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.SelfHelp
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2023-01-01-preview";
+            _apiVersion = apiVersion ?? "2023-06-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -64,11 +64,11 @@ namespace Azure.ResourceManager.SelfHelp
 
         /// <summary> Solutions Discovery is the initial point of entry within Help API, which helps you identify the relevant solutions for your Azure issue.&lt;br/&gt;&lt;br/&gt; You can discover solutions using resourceUri OR resourceUri + problemClassificationId.&lt;br/&gt;&lt;br/&gt;We will do our best in returning relevant diagnostics for your Azure issue.&lt;br/&gt;&lt;br/&gt; Get the problemClassificationId(s) using this [reference](https://learn.microsoft.com/rest/api/support/problem-classifications/list?tabs=HTTP).&lt;br/&gt;&lt;br/&gt; &lt;b&gt;Note: &lt;/b&gt; ‘requiredParameterSets’ from Solutions Discovery API response must be passed via ‘additionalParameters’ as an input to Diagnostics API. </summary>
         /// <param name="scope"> This is an extension resource provider and only resource level extension is supported at the moment. </param>
-        /// <param name="filter"> Can be used to filter solutionIds by &apos;ProblemClassificationId&apos;. The filter supports only &apos;and&apos; and &apos;eq&apos; operators. Example: $filter=ProblemClassificationId eq &apos;1ddda5b4-cf6c-4d4f-91ad-bc38ab0e811e&apos; and ProblemClassificationId eq &apos;0a9673c2-7af6-4e19-90d3-4ee2461076d9&apos;. </param>
+        /// <param name="filter"> Can be used to filter solutionIds by 'ProblemClassificationId'. The filter supports only 'and' and 'eq' operators. Example: $filter=ProblemClassificationId eq '1ddda5b4-cf6c-4d4f-91ad-bc38ab0e811e' and ProblemClassificationId eq '0a9673c2-7af6-4e19-90d3-4ee2461076d9'. </param>
         /// <param name="skiptoken"> Skiptoken is only used if a previous operation returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skiptoken parameter that specifies a starting point to use for subsequent calls. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
-        public async Task<Response<DiscoveryResponse>> ListAsync(string scope, string filter = null, string skiptoken = null, CancellationToken cancellationToken = default)
+        public async Task<Response<SelfHelpDiscoverySolutionResult>> ListAsync(string scope, string filter = null, string skiptoken = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(scope, nameof(scope));
 
@@ -78,9 +78,9 @@ namespace Azure.ResourceManager.SelfHelp
             {
                 case 200:
                     {
-                        DiscoveryResponse value = default;
+                        SelfHelpDiscoverySolutionResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = DiscoveryResponse.DeserializeDiscoveryResponse(document.RootElement);
+                        value = SelfHelpDiscoverySolutionResult.DeserializeSelfHelpDiscoverySolutionResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -90,11 +90,11 @@ namespace Azure.ResourceManager.SelfHelp
 
         /// <summary> Solutions Discovery is the initial point of entry within Help API, which helps you identify the relevant solutions for your Azure issue.&lt;br/&gt;&lt;br/&gt; You can discover solutions using resourceUri OR resourceUri + problemClassificationId.&lt;br/&gt;&lt;br/&gt;We will do our best in returning relevant diagnostics for your Azure issue.&lt;br/&gt;&lt;br/&gt; Get the problemClassificationId(s) using this [reference](https://learn.microsoft.com/rest/api/support/problem-classifications/list?tabs=HTTP).&lt;br/&gt;&lt;br/&gt; &lt;b&gt;Note: &lt;/b&gt; ‘requiredParameterSets’ from Solutions Discovery API response must be passed via ‘additionalParameters’ as an input to Diagnostics API. </summary>
         /// <param name="scope"> This is an extension resource provider and only resource level extension is supported at the moment. </param>
-        /// <param name="filter"> Can be used to filter solutionIds by &apos;ProblemClassificationId&apos;. The filter supports only &apos;and&apos; and &apos;eq&apos; operators. Example: $filter=ProblemClassificationId eq &apos;1ddda5b4-cf6c-4d4f-91ad-bc38ab0e811e&apos; and ProblemClassificationId eq &apos;0a9673c2-7af6-4e19-90d3-4ee2461076d9&apos;. </param>
+        /// <param name="filter"> Can be used to filter solutionIds by 'ProblemClassificationId'. The filter supports only 'and' and 'eq' operators. Example: $filter=ProblemClassificationId eq '1ddda5b4-cf6c-4d4f-91ad-bc38ab0e811e' and ProblemClassificationId eq '0a9673c2-7af6-4e19-90d3-4ee2461076d9'. </param>
         /// <param name="skiptoken"> Skiptoken is only used if a previous operation returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skiptoken parameter that specifies a starting point to use for subsequent calls. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
-        public Response<DiscoveryResponse> List(string scope, string filter = null, string skiptoken = null, CancellationToken cancellationToken = default)
+        public Response<SelfHelpDiscoverySolutionResult> List(string scope, string filter = null, string skiptoken = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(scope, nameof(scope));
 
@@ -104,9 +104,9 @@ namespace Azure.ResourceManager.SelfHelp
             {
                 case 200:
                     {
-                        DiscoveryResponse value = default;
+                        SelfHelpDiscoverySolutionResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = DiscoveryResponse.DeserializeDiscoveryResponse(document.RootElement);
+                        value = SelfHelpDiscoverySolutionResult.DeserializeSelfHelpDiscoverySolutionResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -131,11 +131,11 @@ namespace Azure.ResourceManager.SelfHelp
         /// <summary> Solutions Discovery is the initial point of entry within Help API, which helps you identify the relevant solutions for your Azure issue.&lt;br/&gt;&lt;br/&gt; You can discover solutions using resourceUri OR resourceUri + problemClassificationId.&lt;br/&gt;&lt;br/&gt;We will do our best in returning relevant diagnostics for your Azure issue.&lt;br/&gt;&lt;br/&gt; Get the problemClassificationId(s) using this [reference](https://learn.microsoft.com/rest/api/support/problem-classifications/list?tabs=HTTP).&lt;br/&gt;&lt;br/&gt; &lt;b&gt;Note: &lt;/b&gt; ‘requiredParameterSets’ from Solutions Discovery API response must be passed via ‘additionalParameters’ as an input to Diagnostics API. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="scope"> This is an extension resource provider and only resource level extension is supported at the moment. </param>
-        /// <param name="filter"> Can be used to filter solutionIds by &apos;ProblemClassificationId&apos;. The filter supports only &apos;and&apos; and &apos;eq&apos; operators. Example: $filter=ProblemClassificationId eq &apos;1ddda5b4-cf6c-4d4f-91ad-bc38ab0e811e&apos; and ProblemClassificationId eq &apos;0a9673c2-7af6-4e19-90d3-4ee2461076d9&apos;. </param>
+        /// <param name="filter"> Can be used to filter solutionIds by 'ProblemClassificationId'. The filter supports only 'and' and 'eq' operators. Example: $filter=ProblemClassificationId eq '1ddda5b4-cf6c-4d4f-91ad-bc38ab0e811e' and ProblemClassificationId eq '0a9673c2-7af6-4e19-90d3-4ee2461076d9'. </param>
         /// <param name="skiptoken"> Skiptoken is only used if a previous operation returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skiptoken parameter that specifies a starting point to use for subsequent calls. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="scope"/> is null. </exception>
-        public async Task<Response<DiscoveryResponse>> ListNextPageAsync(string nextLink, string scope, string filter = null, string skiptoken = null, CancellationToken cancellationToken = default)
+        public async Task<Response<SelfHelpDiscoverySolutionResult>> ListNextPageAsync(string nextLink, string scope, string filter = null, string skiptoken = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNull(scope, nameof(scope));
@@ -146,9 +146,9 @@ namespace Azure.ResourceManager.SelfHelp
             {
                 case 200:
                     {
-                        DiscoveryResponse value = default;
+                        SelfHelpDiscoverySolutionResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = DiscoveryResponse.DeserializeDiscoveryResponse(document.RootElement);
+                        value = SelfHelpDiscoverySolutionResult.DeserializeSelfHelpDiscoverySolutionResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -159,11 +159,11 @@ namespace Azure.ResourceManager.SelfHelp
         /// <summary> Solutions Discovery is the initial point of entry within Help API, which helps you identify the relevant solutions for your Azure issue.&lt;br/&gt;&lt;br/&gt; You can discover solutions using resourceUri OR resourceUri + problemClassificationId.&lt;br/&gt;&lt;br/&gt;We will do our best in returning relevant diagnostics for your Azure issue.&lt;br/&gt;&lt;br/&gt; Get the problemClassificationId(s) using this [reference](https://learn.microsoft.com/rest/api/support/problem-classifications/list?tabs=HTTP).&lt;br/&gt;&lt;br/&gt; &lt;b&gt;Note: &lt;/b&gt; ‘requiredParameterSets’ from Solutions Discovery API response must be passed via ‘additionalParameters’ as an input to Diagnostics API. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="scope"> This is an extension resource provider and only resource level extension is supported at the moment. </param>
-        /// <param name="filter"> Can be used to filter solutionIds by &apos;ProblemClassificationId&apos;. The filter supports only &apos;and&apos; and &apos;eq&apos; operators. Example: $filter=ProblemClassificationId eq &apos;1ddda5b4-cf6c-4d4f-91ad-bc38ab0e811e&apos; and ProblemClassificationId eq &apos;0a9673c2-7af6-4e19-90d3-4ee2461076d9&apos;. </param>
+        /// <param name="filter"> Can be used to filter solutionIds by 'ProblemClassificationId'. The filter supports only 'and' and 'eq' operators. Example: $filter=ProblemClassificationId eq '1ddda5b4-cf6c-4d4f-91ad-bc38ab0e811e' and ProblemClassificationId eq '0a9673c2-7af6-4e19-90d3-4ee2461076d9'. </param>
         /// <param name="skiptoken"> Skiptoken is only used if a previous operation returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skiptoken parameter that specifies a starting point to use for subsequent calls. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="scope"/> is null. </exception>
-        public Response<DiscoveryResponse> ListNextPage(string nextLink, string scope, string filter = null, string skiptoken = null, CancellationToken cancellationToken = default)
+        public Response<SelfHelpDiscoverySolutionResult> ListNextPage(string nextLink, string scope, string filter = null, string skiptoken = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNull(scope, nameof(scope));
@@ -174,9 +174,9 @@ namespace Azure.ResourceManager.SelfHelp
             {
                 case 200:
                     {
-                        DiscoveryResponse value = default;
+                        SelfHelpDiscoverySolutionResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = DiscoveryResponse.DeserializeDiscoveryResponse(document.RootElement);
+                        value = SelfHelpDiscoverySolutionResult.DeserializeSelfHelpDiscoverySolutionResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

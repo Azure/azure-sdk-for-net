@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="defaultAction"> Default Action for Network Rule Set. </param>
         /// <param name="virtualNetworkRules"> List VirtualNetwork Rules. </param>
         /// <param name="ipRules"> List of IpRules. </param>
-        /// <param name="publicNetworkAccess"> This determines if traffic is allowed over public network. By default it is enabled. If value is SecuredByPerimeter then Inbound and Outbound communication is controlled by the network security perimeter and profile&apos;s access rules. </param>
+        /// <param name="publicNetworkAccess"> This determines if traffic is allowed over public network. By default it is enabled. If value is SecuredByPerimeter then Inbound and Outbound communication is controlled by the network security perimeter and profile's access rules. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         internal EventHubsNetworkRuleSetData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, bool? trustedServiceAccessEnabled, EventHubsNetworkRuleSetDefaultAction? defaultAction, IList<EventHubsNetworkRuleSetVirtualNetworkRules> virtualNetworkRules, IList<EventHubsNetworkRuleSetIPRules> ipRules, EventHubsPublicNetworkAccessFlag? publicNetworkAccess, AzureLocation? location) : base(id, name, resourceType, systemData)
         {
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.EventHubs
         public IList<EventHubsNetworkRuleSetVirtualNetworkRules> VirtualNetworkRules { get; }
         /// <summary> List of IpRules. </summary>
         public IList<EventHubsNetworkRuleSetIPRules> IPRules { get; }
-        /// <summary> This determines if traffic is allowed over public network. By default it is enabled. If value is SecuredByPerimeter then Inbound and Outbound communication is controlled by the network security perimeter and profile&apos;s access rules. </summary>
+        /// <summary> This determines if traffic is allowed over public network. By default it is enabled. If value is SecuredByPerimeter then Inbound and Outbound communication is controlled by the network security perimeter and profile's access rules. </summary>
         public EventHubsPublicNetworkAccessFlag? PublicNetworkAccess { get; set; }
         /// <summary> The geo-location where the resource lives. </summary>
         public AzureLocation? Location { get; }

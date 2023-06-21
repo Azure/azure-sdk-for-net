@@ -676,7 +676,7 @@ namespace Azure.ResourceManager.ContainerService
         /// </list>
         /// </summary>
         /// <param name="serverFqdn"> server fqdn type for credentials to be returned. </param>
-        /// <param name="format"> Only apply to AAD clusters, specifies the format of returned kubeconfig. Format &apos;azure&apos; will return azure auth-provider kubeconfig; format &apos;exec&apos; will return exec format kubeconfig, which requires kubelogin binary in the path. </param>
+        /// <param name="format"> Only apply to AAD clusters, specifies the format of returned kubeconfig. Format 'azure' will return azure auth-provider kubeconfig; format 'exec' will return exec format kubeconfig, which requires kubelogin binary in the path. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<ManagedClusterCredentials>> GetClusterUserCredentialsAsync(string serverFqdn = null, KubeConfigFormat? format = null, CancellationToken cancellationToken = default)
         {
@@ -708,7 +708,7 @@ namespace Azure.ResourceManager.ContainerService
         /// </list>
         /// </summary>
         /// <param name="serverFqdn"> server fqdn type for credentials to be returned. </param>
-        /// <param name="format"> Only apply to AAD clusters, specifies the format of returned kubeconfig. Format &apos;azure&apos; will return azure auth-provider kubeconfig; format &apos;exec&apos; will return exec format kubeconfig, which requires kubelogin binary in the path. </param>
+        /// <param name="format"> Only apply to AAD clusters, specifies the format of returned kubeconfig. Format 'azure' will return azure auth-provider kubeconfig; format 'exec' will return exec format kubeconfig, which requires kubelogin binary in the path. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<ManagedClusterCredentials> GetClusterUserCredentials(string serverFqdn = null, KubeConfigFormat? format = null, CancellationToken cancellationToken = default)
         {

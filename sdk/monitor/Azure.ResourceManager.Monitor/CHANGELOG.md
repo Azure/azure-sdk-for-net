@@ -1,5 +1,21 @@
 # Release History
 
+## 1.3.0-beta.3 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+## 1.3.0-beta.2 (2023-06-13)
+
+### Features Added
+
+- Added azure monitor workspaces APIs (version `2023-04-03`)
+
 ## 1.3.0-beta.1 (2023-05-30)
 
 ### Features Added

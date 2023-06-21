@@ -23,7 +23,6 @@ namespace Azure.Storage.DataMovement
         public override string Path { get { throw null; } }
         public override System.Uri Uri { get { throw null; } }
         public override Azure.Storage.DataMovement.StorageResource GetChildStorageResource(string childPath) { throw null; }
-        public override Azure.Storage.DataMovement.StorageResourceContainer GetParentStorageResourceContainer() { throw null; }
         public override System.Collections.Generic.IAsyncEnumerable<Azure.Storage.DataMovement.StorageResourceBase> GetStorageResourcesAsync([System.Runtime.CompilerServices.EnumeratorCancellationAttribute] System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class LocalFileStorageResource : Azure.Storage.DataMovement.StorageResource
@@ -33,10 +32,9 @@ namespace Azure.Storage.DataMovement
         public override long? Length { get { throw null; } }
         public override long MaxChunkSize { get { throw null; } }
         public override string Path { get { throw null; } }
-        public override Azure.Storage.DataMovement.Models.TransferCopyMethod ServiceCopyMethod { get { throw null; } }
         public override Azure.Storage.DataMovement.TransferType TransferType { get { throw null; } }
         public override System.Uri Uri { get { throw null; } }
-        public override System.Threading.Tasks.Task CompleteTransferAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public override System.Threading.Tasks.Task CompleteTransferAsync(bool overwrite, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public override System.Threading.Tasks.Task CopyBlockFromUriAsync(Azure.Storage.DataMovement.StorageResource sourceResource, Azure.HttpRange range, bool overwrite, long completeLength = (long)0, Azure.Storage.DataMovement.Models.StorageResourceCopyFromUriOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public override System.Threading.Tasks.Task CopyFromUriAsync(Azure.Storage.DataMovement.StorageResource sourceResource, bool overwrite, long completeLength, Azure.Storage.DataMovement.Models.StorageResourceCopyFromUriOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public override System.Threading.Tasks.Task<bool> DeleteIfExistsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -56,9 +54,8 @@ namespace Azure.Storage.DataMovement
         public override bool IsContainer { get { throw null; } }
         public abstract long? Length { get; }
         public abstract long MaxChunkSize { get; }
-        public abstract Azure.Storage.DataMovement.Models.TransferCopyMethod ServiceCopyMethod { get; }
         public abstract Azure.Storage.DataMovement.TransferType TransferType { get; }
-        public abstract System.Threading.Tasks.Task CompleteTransferAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        public abstract System.Threading.Tasks.Task CompleteTransferAsync(bool overwrite, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
         public abstract System.Threading.Tasks.Task CopyBlockFromUriAsync(Azure.Storage.DataMovement.StorageResource sourceResource, Azure.HttpRange range, bool overwrite, long completeLength = (long)0, Azure.Storage.DataMovement.Models.StorageResourceCopyFromUriOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
         public abstract System.Threading.Tasks.Task CopyFromUriAsync(Azure.Storage.DataMovement.StorageResource sourceResource, bool overwrite, long completeLength, Azure.Storage.DataMovement.Models.StorageResourceCopyFromUriOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
         public abstract System.Threading.Tasks.Task<bool> DeleteIfExistsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
@@ -79,7 +76,6 @@ namespace Azure.Storage.DataMovement
         protected StorageResourceContainer() { }
         public override bool IsContainer { get { throw null; } }
         public abstract Azure.Storage.DataMovement.StorageResource GetChildStorageResource(string path);
-        public abstract Azure.Storage.DataMovement.StorageResourceContainer GetParentStorageResourceContainer();
         public abstract System.Collections.Generic.IAsyncEnumerable<Azure.Storage.DataMovement.StorageResourceBase> GetStorageResourcesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
     }
     public enum StorageResourceCreateMode
@@ -100,6 +96,16 @@ namespace Azure.Storage.DataMovement
     {
         protected StorageTransferEventArgs(string transferId, bool isRunningSynchronously, System.Threading.CancellationToken cancellationToken) : base (default(bool), default(System.Threading.CancellationToken)) { }
         public string TransferId { get { throw null; } }
+    }
+    public partial class StorageTransferProgress
+    {
+        public StorageTransferProgress() { }
+        public long? BytesTransferred { get { throw null; } }
+        public long CompletedCount { get { throw null; } }
+        public long FailedCount { get { throw null; } }
+        public long InProgressCount { get { throw null; } }
+        public long QueuedCount { get { throw null; } }
+        public long SkippedCount { get { throw null; } }
     }
     public enum StorageTransferStatus
     {
@@ -139,6 +145,20 @@ namespace Azure.Storage.DataMovement
 }
 namespace Azure.Storage.DataMovement.Models
 {
+    public partial class DataTransferProperties
+    {
+        protected DataTransferProperties() { }
+        public Azure.Storage.DataMovement.Models.TransferCheckpointerOptions Checkpointer { get { throw null; } }
+        public string DestinationScheme { get { throw null; } }
+        public bool IsContainer { get { throw null; } }
+        public string SourceScheme { get { throw null; } }
+        public string TransferId { get { throw null; } }
+    }
+    public partial class ProgressHandlerOptions
+    {
+        public ProgressHandlerOptions() { }
+        public bool TrackBytesTransferred { get { throw null; } set { } }
+    }
     public partial class ReadStreamStorageResourceResult
     {
         public ReadStreamStorageResourceResult(System.IO.Stream content) { }
@@ -178,6 +198,7 @@ namespace Azure.Storage.DataMovement.Models
     public partial class TransferCheckpointerOptions
     {
         public TransferCheckpointerOptions(string localCheckpointerPath) { }
+        public string CheckpointerPath { get { throw null; } }
     }
     public enum TransferCopyMethod
     {
@@ -198,6 +219,8 @@ namespace Azure.Storage.DataMovement.Models
         public Azure.Storage.DataMovement.StorageResourceCreateMode CreateMode { get { throw null; } set { } }
         public long? InitialTransferSize { get { throw null; } set { } }
         public long? MaximumTransferChunkSize { get { throw null; } set { } }
+        public System.IProgress<Azure.Storage.DataMovement.StorageTransferProgress> ProgressHandler { get { throw null; } set { } }
+        public Azure.Storage.DataMovement.Models.ProgressHandlerOptions ProgressHandlerOptions { get { throw null; } set { } }
         public string ResumeFromCheckpointId { get { throw null; } set { } }
         public event Azure.Core.SyncAsyncEventHandler<Azure.Storage.DataMovement.Models.SingleTransferCompletedEventArgs> SingleTransferCompleted { add { } remove { } }
         public event Azure.Core.SyncAsyncEventHandler<Azure.Storage.DataMovement.Models.TransferFailedEventArgs> TransferFailed { add { } remove { } }

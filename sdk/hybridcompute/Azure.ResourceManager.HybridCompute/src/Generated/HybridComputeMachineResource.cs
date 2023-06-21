@@ -430,7 +430,7 @@ namespace Azure.ResourceManager.HybridCompute
         }
 
         /// <summary>
-        /// Returns a Azure Arc PrivateLinkScope&apos;s validation details for a given machine.
+        /// Returns a Azure Arc PrivateLinkScope's validation details for a given machine.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -460,7 +460,7 @@ namespace Azure.ResourceManager.HybridCompute
         }
 
         /// <summary>
-        /// Returns a Azure Arc PrivateLinkScope&apos;s validation details for a given machine.
+        /// Returns a Azure Arc PrivateLinkScope's validation details for a given machine.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>

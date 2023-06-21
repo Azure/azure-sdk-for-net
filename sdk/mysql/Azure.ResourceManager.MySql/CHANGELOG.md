@@ -1,5 +1,21 @@
 # Release History
 
+## 1.1.0-beta.3 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+## 1.1.0-beta.2 (2023-06-07)
+
+### Features Added
+
+- Upgraded the Flexible Server API version to `2022-09-30-preview`.
+
 ## 1.1.0-beta.1 (2023-05-30)
 
 ### Features Added

@@ -222,7 +222,7 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary>
-        /// Updates an application security group&apos;s tags.
+        /// Updates an application security group's tags.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -256,7 +256,7 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary>
-        /// Updates an application security group&apos;s tags.
+        /// Updates an application security group's tags.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>

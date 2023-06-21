@@ -12,5 +12,13 @@ namespace Azure.ResourceManager.Batch.Models
     {
         /// <summary> The container technology to be used. </summary>
         public BatchVmContainerType ContainerType { get; [EditorBrowsable(EditorBrowsableState.Never)] set; }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="BatchVmContainerConfiguration"/> class.
+        /// </summary>
+        public BatchVmContainerConfiguration()
+        {
+            ContainerType = BatchVmContainerType.DockerCompatible;
+        }
     }
 }

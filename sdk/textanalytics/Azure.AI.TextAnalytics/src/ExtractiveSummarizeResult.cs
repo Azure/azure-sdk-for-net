@@ -12,7 +12,7 @@ namespace Azure.AI.TextAnalytics
     /// </summary>
     public partial class ExtractiveSummarizeResult : TextAnalyticsResult
     {
-        private readonly IReadOnlyCollection<SummarySentence> _sentences;
+        private readonly IReadOnlyCollection<ExtractiveSummarySentence> _sentences;
 
         /// <summary>
         /// Initializes a successful <see cref="ExtractiveSummarizeResult"/>.
@@ -20,16 +20,13 @@ namespace Azure.AI.TextAnalytics
         internal ExtractiveSummarizeResult(
             string id,
             TextDocumentStatistics statistics,
-            IList<SummarySentence> sentences,
-            DetectedLanguage? detectedLanguage,
+            IList<ExtractiveSummarySentence> sentences,
             IList<TextAnalyticsWarning> warnings)
             : base(id, statistics)
         {
             _sentences = (sentences is not null)
-                ? new ReadOnlyCollection<SummarySentence>(sentences)
-                : new List<SummarySentence>();
-
-            DetectedLanguage = detectedLanguage;
+                ? new ReadOnlyCollection<ExtractiveSummarySentence>(sentences)
+                : new List<ExtractiveSummarySentence>();
 
             Warnings = (warnings is not null)
                 ? new ReadOnlyCollection<TextAnalyticsWarning>(warnings)
@@ -47,15 +44,9 @@ namespace Azure.AI.TextAnalytics
         public IReadOnlyCollection<TextAnalyticsWarning> Warnings { get; } = new List<TextAnalyticsWarning>();
 
         /// <summary>
-        /// The language of the input document as detected by the service when requested to perform automatic language
-        /// detection, which is possible by specifying "auto" as the language of the input document.
-        /// </summary>
-        public DetectedLanguage? DetectedLanguage { get; }
-
-        /// <summary>
         /// The collection of summary sentences extracted from the input document.
         /// </summary>
-        public IReadOnlyCollection<SummarySentence> Sentences
+        public IReadOnlyCollection<ExtractiveSummarySentence> Sentences
         {
             get
             {
