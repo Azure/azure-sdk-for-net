@@ -160,10 +160,8 @@ Serialization
 Envelope<ModelT> envelope = new Envelope<ModelT>();
 envelope.ModelA = new CatReadOnlyProperty();
 envelope.ModelT = new ModelT { Name = "Fluffy", Age = 10 };
-
 ModelSerializerOptions options = new ModelSerializerOptions();
 options.Serializers.Add(typeof(ModelT), new NewtonsoftJsonObjectSerializer());
-
 Stream stream = ModelSerializer.Serialize(envelope, options);
 ```
 
@@ -179,4 +177,26 @@ ModelSerializerOptions options = new ModelSerializerOptions();
 options.Serializers.Add(typeof(ModelT), new NewtonsoftJsonObjectSerializer());
 
 Envelope<ModelT> model = ModelSerializer.Deserialize<Envelope<ModelT>>(new MemoryStream(Encoding.UTF8.GetBytes(serviceResponse)), options: options);
+```
+
+## XmlModel Example
+By using the SerializeXml and DeserializeXml methods we can serialize and deserialize Xml Models using the XmlSerializer. Future work includes combining ModelSerializer Serialize/Deserialize methods with XmlSerializer models to have a single method for both Json and Xml.
+
+Serialization
+```C# Snippet:XmlModelSerialize
+ModelXml modelXml = new ModelXml("Color", "Red");
+var stream = ModelSerializer.SerializeXml<ModelXml>(modelXml);
+stream.Position = 0;
+string roundTrip = new StreamReader(stream).ReadToEnd();
+```
+
+Deserialization
+```C# Snippet:XmlModelDeserialize
+string serviceResponse =
+    "<Tag>" +
+    "<Key>Color</Key>" +
+    "<Value>Red</Value>" +
+    "</Tag>";
+
+ModelXml model = ModelSerializer.DeserializeXml<ModelXml>(new MemoryStream(Encoding.UTF8.GetBytes(serviceResponse)));
 ```

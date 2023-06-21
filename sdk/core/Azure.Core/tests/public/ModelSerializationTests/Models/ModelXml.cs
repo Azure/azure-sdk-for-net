@@ -6,9 +6,11 @@ using System.Xml.Linq;
 using System.Xml;
 using Azure.Core.Serialization;
 using NUnit.Framework;
+using System.Xml.Serialization;
 
 namespace Azure.Core.Tests.Public.ModelSerializationTests.Models
 {
+    [XmlRoot("Tag")]
     internal class ModelXml : IXmlSerializable, IXmlSerializableModel
     {
         /// <summary> Initializes a new instance of ModelXml for testing. </summary>
@@ -25,13 +27,15 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests.Models
         }
 
         /// <summary> Gets or sets the key. </summary>
+        [XmlElement("Key")]
         public string Key { get; set; }
         /// <summary> Gets or sets the value. </summary>
+        [XmlElement("Value")]
         public string Value { get; set; }
 
         void IXmlSerializable.Write(XmlWriter writer, string nameHint) => ((IXmlSerializableModel)this).Serialize(writer, new ModelSerializerOptions() {NameHint = nameHint});
 
-        internal static ModelXml DeserializeModelXml(XElement element)
+        internal static ModelXml DeserializeModelXml(XElement element, ModelSerializerOptions options = default)
         {
             string key = default;
             string value = default;

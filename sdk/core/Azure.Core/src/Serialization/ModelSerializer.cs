@@ -7,6 +7,7 @@ using System.Reflection;
 using System.Text;
 using System.Text.Json;
 using System.Xml;
+using System.Xml.Linq;
 
 namespace Azure.Core.Serialization
 {
@@ -99,7 +100,7 @@ namespace Azure.Core.Serialization
                 }
             }
 
-            return DeserializeWithReflectionXml<T>(JsonDocument.Parse(stream).RootElement, options);
+            return DeserializeWithReflectionXml<T>(XElement.Load(stream), options);
         }
         /// <summary>
         /// Deserialize a model.
@@ -139,12 +140,12 @@ namespace Azure.Core.Serialization
             return model;
         }
 
-        private static T DeserializeWithReflectionXml<T>(JsonElement rootElement, ModelSerializerOptions? options) where T : class, IXmlSerializableModel
+        private static T DeserializeWithReflectionXml<T>(XElement xmlElement, ModelSerializerOptions? options) where T : class, IXmlSerializableModel
         {
             Type typeToConvert = typeof(T);
             options ??= new ModelSerializerOptions();
 
-            T? model = DeserializeObject(rootElement, typeToConvert, options) as T;
+            T? model = DeserializeObjectXml(xmlElement, typeToConvert, options) as T;
             if (model is null)
                 throw new InvalidOperationException($"Unexpected error when deserializing {typeToConvert.Name}.");
 
@@ -164,6 +165,21 @@ namespace Azure.Core.Serialization
                 throw new NotSupportedException($"{typeToConvert.Name} does not have a deserialize method defined.");
 
             return method.Invoke(null, new object[] { rootElement, options });
+        }
+
+        internal static object? DeserializeObjectXml(XElement xmlElement, Type typeToConvert, ModelSerializerOptions options)
+        {
+            var classNameInMethod = typeToConvert.Name.AsSpan();
+            int backtickIndex = classNameInMethod.IndexOf('`');
+            if (backtickIndex != -1)
+                classNameInMethod = classNameInMethod.Slice(0, backtickIndex);
+            var methodName = $"Deserialize{classNameInMethod.ToString()}";
+
+            var method = typeToConvert.GetMethod(methodName, BindingFlags.NonPublic | BindingFlags.Static);
+            if (method is null)
+                throw new NotSupportedException($"{typeToConvert.Name} does not have a deserialize method defined.");
+
+            return method.Invoke(null, new object[] { xmlElement, options });
         }
 
         /// <summary>
