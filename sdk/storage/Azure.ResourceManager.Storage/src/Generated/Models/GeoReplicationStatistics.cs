@@ -9,7 +9,7 @@ using System;
 
 namespace Azure.ResourceManager.Storage.Models
 {
-    /// <summary> Statistics related to replication for storage account&apos;s Blob, Table, Queue and File services. It is only available when geo-redundant replication is enabled for the storage account. </summary>
+    /// <summary> Statistics related to replication for storage account's Blob, Table, Queue and File services. It is only available when geo-redundant replication is enabled for the storage account. </summary>
     public partial class GeoReplicationStatistics
     {
         /// <summary> Initializes a new instance of GeoReplicationStatistics. </summary>

@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         }
 
         /// <summary> Initializes a new instance of StatefulServiceProperties. </summary>
-        /// <param name="placementConstraints"> The placement constraints as a string. Placement constraints are boolean expressions on node properties and allow for restricting a service to particular nodes based on the service requirements. For example, to place a service on nodes where NodeType is blue specify the following: &quot;NodeColor == blue)&quot;. </param>
+        /// <param name="placementConstraints"> The placement constraints as a string. Placement constraints are boolean expressions on node properties and allow for restricting a service to particular nodes based on the service requirements. For example, to place a service on nodes where NodeType is blue specify the following: "NodeColor == blue)". </param>
         /// <param name="correlationScheme"> A list that describes the correlation of the service with other services. </param>
         /// <param name="serviceLoadMetrics"> The service load metrics is given as an array of ServiceLoadMetric objects. </param>
         /// <param name="servicePlacementPolicies">
@@ -59,10 +59,10 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         /// <param name="hasPersistedState"> A flag indicating whether this is a persistent service which stores states on the local disk. If it is then the value of this property is true, if not it is false. </param>
         /// <param name="targetReplicaSetSize"> The target replica set size as a number. </param>
         /// <param name="minReplicaSetSize"> The minimum replica set size as a number. </param>
-        /// <param name="replicaRestartWaitDuration"> The duration between when a replica goes down and when a new replica is created, represented in ISO 8601 format &quot;hh:mm:ss&quot;. </param>
-        /// <param name="quorumLossWaitDuration"> The maximum duration for which a partition is allowed to be in a state of quorum loss, represented in ISO 8601 format &quot;hh:mm:ss&quot;. </param>
-        /// <param name="standByReplicaKeepDuration"> The definition on how long StandBy replicas should be maintained before being removed, represented in ISO 8601 format &quot;hh:mm:ss&quot;. </param>
-        /// <param name="servicePlacementTimeLimit"> The duration for which replicas can stay InBuild before reporting that build is stuck, represented in ISO 8601 format &quot;hh:mm:ss&quot;. </param>
+        /// <param name="replicaRestartWaitDuration"> The duration between when a replica goes down and when a new replica is created, represented in ISO 8601 format "hh:mm:ss". </param>
+        /// <param name="quorumLossWaitDuration"> The maximum duration for which a partition is allowed to be in a state of quorum loss, represented in ISO 8601 format "hh:mm:ss". </param>
+        /// <param name="standByReplicaKeepDuration"> The definition on how long StandBy replicas should be maintained before being removed, represented in ISO 8601 format "hh:mm:ss". </param>
+        /// <param name="servicePlacementTimeLimit"> The duration for which replicas can stay InBuild before reporting that build is stuck, represented in ISO 8601 format "hh:mm:ss". </param>
         internal StatefulServiceProperties(string placementConstraints, IList<ManagedServiceCorrelation> correlationScheme, IList<ManagedServiceLoadMetric> serviceLoadMetrics, IList<ManagedServicePlacementPolicy> servicePlacementPolicies, ServiceFabricManagedServiceMoveCost? defaultMoveCost, IList<ManagedServiceScalingPolicy> scalingPolicies, string provisioningState, ServiceKind serviceKind, string serviceTypeName, ManagedServicePartitionScheme partitionDescription, ManagedServicePackageActivationMode? servicePackageActivationMode, string serviceDnsName, bool? hasPersistedState, int? targetReplicaSetSize, int? minReplicaSetSize, TimeSpan? replicaRestartWaitDuration, TimeSpan? quorumLossWaitDuration, TimeSpan? standByReplicaKeepDuration, TimeSpan? servicePlacementTimeLimit) : base(placementConstraints, correlationScheme, serviceLoadMetrics, servicePlacementPolicies, defaultMoveCost, scalingPolicies, provisioningState, serviceKind, serviceTypeName, partitionDescription, servicePackageActivationMode, serviceDnsName)
         {
             HasPersistedState = hasPersistedState;
@@ -81,13 +81,13 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         public int? TargetReplicaSetSize { get; set; }
         /// <summary> The minimum replica set size as a number. </summary>
         public int? MinReplicaSetSize { get; set; }
-        /// <summary> The duration between when a replica goes down and when a new replica is created, represented in ISO 8601 format &quot;hh:mm:ss&quot;. </summary>
+        /// <summary> The duration between when a replica goes down and when a new replica is created, represented in ISO 8601 format "hh:mm:ss". </summary>
         public TimeSpan? ReplicaRestartWaitDuration { get; set; }
-        /// <summary> The maximum duration for which a partition is allowed to be in a state of quorum loss, represented in ISO 8601 format &quot;hh:mm:ss&quot;. </summary>
+        /// <summary> The maximum duration for which a partition is allowed to be in a state of quorum loss, represented in ISO 8601 format "hh:mm:ss". </summary>
         public TimeSpan? QuorumLossWaitDuration { get; set; }
-        /// <summary> The definition on how long StandBy replicas should be maintained before being removed, represented in ISO 8601 format &quot;hh:mm:ss&quot;. </summary>
+        /// <summary> The definition on how long StandBy replicas should be maintained before being removed, represented in ISO 8601 format "hh:mm:ss". </summary>
         public TimeSpan? StandByReplicaKeepDuration { get; set; }
-        /// <summary> The duration for which replicas can stay InBuild before reporting that build is stuck, represented in ISO 8601 format &quot;hh:mm:ss&quot;. </summary>
+        /// <summary> The duration for which replicas can stay InBuild before reporting that build is stuck, represented in ISO 8601 format "hh:mm:ss". </summary>
         public TimeSpan? ServicePlacementTimeLimit { get; set; }
     }
 }

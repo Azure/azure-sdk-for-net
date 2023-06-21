@@ -19,15 +19,6 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             Nodes = new ChangeTrackingList<string>();
         }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="NodeTypeActionContent"/> class.
-        /// </summary>
-        /// <param name="nodes"></param>
-        public NodeTypeActionContent(IEnumerable<string> nodes)
-        {
-            Nodes = (IList<string>)nodes;
-        }
-
         /// <summary> List of node names from the node type. </summary>
         public IList<string> Nodes { get; }
         /// <summary> Force the action to go through. </summary>

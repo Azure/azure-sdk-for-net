@@ -21,7 +21,7 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="credentialsInternal"> Credentials for the datasource. </param>
         /// <param name="container"> The data container for the datasource. </param>
         /// <param name="identity">
-        /// An explicit managed identity to use for this datasource. If not specified and the connection string is a managed identity, the system-assigned managed identity is used. If not specified, the value remains unchanged. If &quot;none&quot; is specified, the value of this property is cleared.
+        /// An explicit managed identity to use for this datasource. If not specified and the connection string is a managed identity, the system-assigned managed identity is used. If not specified, the value remains unchanged. If "none" is specified, the value of this property is cleared.
         /// Please note <see cref="SearchIndexerDataIdentity"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="SearchIndexerDataNoneIdentity"/> and <see cref="SearchIndexerDataUserAssignedIdentity"/>.
         /// </param>
@@ -60,7 +60,7 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <summary> The data container for the datasource. </summary>
         public SearchIndexerDataContainer Container { get; set; }
         /// <summary>
-        /// An explicit managed identity to use for this datasource. If not specified and the connection string is a managed identity, the system-assigned managed identity is used. If not specified, the value remains unchanged. If &quot;none&quot; is specified, the value of this property is cleared.
+        /// An explicit managed identity to use for this datasource. If not specified and the connection string is a managed identity, the system-assigned managed identity is used. If not specified, the value remains unchanged. If "none" is specified, the value of this property is cleared.
         /// Please note <see cref="SearchIndexerDataIdentity"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="SearchIndexerDataNoneIdentity"/> and <see cref="SearchIndexerDataUserAssignedIdentity"/>.
         /// </summary>

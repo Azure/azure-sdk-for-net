@@ -7,7 +7,7 @@ using System.Linq;
 using System.Reflection;
 using Azure.Core.Json;
 
-namespace Azure.Core.Dynamic
+namespace Azure.Core.Serialization
 {
     public partial class DynamicData
     {
@@ -277,12 +277,12 @@ namespace Azure.Core.Dynamic
         {
             try
             {
-                return value._options.DateTimeHandling switch
+                if (value._options.DateTimeFormat.Equals(UnixFormat, StringComparison.InvariantCultureIgnoreCase))
                 {
-                    DynamicDateTimeHandling.UnixTime => value.ConvertTo<DateTime>(),
-                    DynamicDateTimeHandling.Rfc3339 => value._element.GetDateTime(),
-                    _ => value._element.GetDateTime(),
-                };
+                    return value.ConvertTo<DateTime>();
+                }
+
+                return value._element.GetDateTime();
             }
             catch (InvalidOperationException e)
             {
@@ -302,12 +302,12 @@ namespace Azure.Core.Dynamic
         {
             try
             {
-                return value._options.DateTimeHandling switch
+                if (value._options.DateTimeFormat.Equals(UnixFormat, StringComparison.InvariantCultureIgnoreCase))
                 {
-                    DynamicDateTimeHandling.UnixTime => value.ConvertTo<DateTimeOffset>(),
-                    DynamicDateTimeHandling.Rfc3339 => value._element.GetDateTimeOffset(),
-                    _ => value._element.GetDateTimeOffset(),
-                };
+                    return value.ConvertTo<DateTimeOffset>();
+                }
+
+                return value._element.GetDateTimeOffset();
             }
             catch (InvalidOperationException e)
             {

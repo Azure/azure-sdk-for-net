@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// <param name="vmImagePublisher"> The publisher of the Azure Virtual Machines Marketplace image. For example, Canonical or MicrosoftWindowsServer. </param>
         /// <param name="vmImageOffer"> The offer type of the Azure Virtual Machines Marketplace image. For example, UbuntuServer or WindowsServer. </param>
         /// <param name="vmImageSku"> The SKU of the Azure Virtual Machines Marketplace image. For example, 14.04.0-LTS or 2012-R2-Datacenter. </param>
-        /// <param name="vmImageVersion"> The version of the Azure Virtual Machines Marketplace image. A value of &apos;latest&apos; can be specified to select the latest version of an image. If omitted, the default is &apos;latest&apos;. </param>
+        /// <param name="vmImageVersion"> The version of the Azure Virtual Machines Marketplace image. A value of 'latest' can be specified to select the latest version of an image. If omitted, the default is 'latest'. </param>
         /// <param name="vmSecrets"> The secrets to install in the virtual machines. </param>
         /// <param name="vmExtensions"> Set of extensions that should be installed onto the virtual machines. </param>
         /// <param name="vmManagedIdentity"> Identities to assign to the virtual machine scale set under the node type. </param>
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// <param name="isEncryptionAtHostEnabled"> Enable or disable the Host Encryption for the virtual machines on the node type. This will enable the encryption for all the disks including Resource/Temp disk at host itself. Default: The Encryption at host will be disabled unless this property is set to true for the resource. </param>
         /// <param name="provisioningState"> The provisioning state of the node type resource. </param>
         /// <param name="isAcceleratedNetworkingEnabled"> Specifies whether the network interface is accelerated networking-enabled. </param>
-        /// <param name="useDefaultPublicLoadBalancer"> Specifies whether the use public load balancer. If not specified and the node type doesn&apos;t have its own frontend configuration, it will be attached to the default load balancer. If the node type uses its own Load balancer and useDefaultPublicLoadBalancer is true, then the frontend has to be an Internal Load Balancer. If the node type uses its own Load balancer and useDefaultPublicLoadBalancer is false or not set, then the custom load balancer must include a public load balancer to provide outbound connectivity. </param>
+        /// <param name="useDefaultPublicLoadBalancer"> Specifies whether the use public load balancer. If not specified and the node type doesn't have its own frontend configuration, it will be attached to the default load balancer. If the node type uses its own Load balancer and useDefaultPublicLoadBalancer is true, then the frontend has to be an Internal Load Balancer. If the node type uses its own Load balancer and useDefaultPublicLoadBalancer is false or not set, then the custom load balancer must include a public load balancer to provide outbound connectivity. </param>
         /// <param name="useTempDataDisk"> Specifies whether to use the temporary disk for the service fabric data root, in which case no managed data disk will be attached and the temporary disk will be used. It is only allowed for stateless node types. </param>
         /// <param name="isOverProvisioningEnabled"> Specifies whether the node type should be overprovisioned. It is only allowed for stateless node types. </param>
         /// <param name="zones"> Specifies the availability zones where the node type would span across. If the cluster is not spanning across availability zones, initiates az migration for the cluster. </param>
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         public string VmImageOffer { get; set; }
         /// <summary> The SKU of the Azure Virtual Machines Marketplace image. For example, 14.04.0-LTS or 2012-R2-Datacenter. </summary>
         public string VmImageSku { get; set; }
-        /// <summary> The version of the Azure Virtual Machines Marketplace image. A value of &apos;latest&apos; can be specified to select the latest version of an image. If omitted, the default is &apos;latest&apos;. </summary>
+        /// <summary> The version of the Azure Virtual Machines Marketplace image. A value of 'latest' can be specified to select the latest version of an image. If omitted, the default is 'latest'. </summary>
         public string VmImageVersion { get; set; }
         /// <summary> The secrets to install in the virtual machines. </summary>
         public IList<NodeTypeVaultSecretGroup> VmSecrets { get; }
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         public IList<NodeTypeVmssExtension> VmExtensions { get; }
         /// <summary> Identities to assign to the virtual machine scale set under the node type. </summary>
         internal VmManagedIdentity VmManagedIdentity { get; set; }
-        /// <summary> The list of user identities associated with the virtual machine scale set under the node type. Each entry will be an ARM resource ids in the form: &apos;/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{identityName}&apos;. </summary>
+        /// <summary> The list of user identities associated with the virtual machine scale set under the node type. Each entry will be an ARM resource ids in the form: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{identityName}'. </summary>
         public IList<ResourceIdentifier> UserAssignedIdentities
         {
             get
@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         public ServiceFabricManagedResourceProvisioningState? ProvisioningState { get; }
         /// <summary> Specifies whether the network interface is accelerated networking-enabled. </summary>
         public bool? IsAcceleratedNetworkingEnabled { get; set; }
-        /// <summary> Specifies whether the use public load balancer. If not specified and the node type doesn&apos;t have its own frontend configuration, it will be attached to the default load balancer. If the node type uses its own Load balancer and useDefaultPublicLoadBalancer is true, then the frontend has to be an Internal Load Balancer. If the node type uses its own Load balancer and useDefaultPublicLoadBalancer is false or not set, then the custom load balancer must include a public load balancer to provide outbound connectivity. </summary>
+        /// <summary> Specifies whether the use public load balancer. If not specified and the node type doesn't have its own frontend configuration, it will be attached to the default load balancer. If the node type uses its own Load balancer and useDefaultPublicLoadBalancer is true, then the frontend has to be an Internal Load Balancer. If the node type uses its own Load balancer and useDefaultPublicLoadBalancer is false or not set, then the custom load balancer must include a public load balancer to provide outbound connectivity. </summary>
         public bool? UseDefaultPublicLoadBalancer { get; set; }
         /// <summary> Specifies whether to use the temporary disk for the service fabric data root, in which case no managed data disk will be attached and the temporary disk will be used. It is only allowed for stateless node types. </summary>
         public bool? UseTempDataDisk { get; set; }

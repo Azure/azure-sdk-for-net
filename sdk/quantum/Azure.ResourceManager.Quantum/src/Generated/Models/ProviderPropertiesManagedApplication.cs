@@ -7,7 +7,7 @@
 
 namespace Azure.ResourceManager.Quantum.Models
 {
-    /// <summary> Provider&apos;s Managed-Application info. </summary>
+    /// <summary> Provider's Managed-Application info. </summary>
     public partial class ProviderPropertiesManagedApplication
     {
         /// <summary> Initializes a new instance of ProviderPropertiesManagedApplication. </summary>
@@ -16,17 +16,17 @@ namespace Azure.ResourceManager.Quantum.Models
         }
 
         /// <summary> Initializes a new instance of ProviderPropertiesManagedApplication. </summary>
-        /// <param name="publisherId"> Provider&apos;s publisher id. </param>
-        /// <param name="offerId"> Provider&apos;s offer id. </param>
+        /// <param name="publisherId"> Provider's publisher id. </param>
+        /// <param name="offerId"> Provider's offer id. </param>
         internal ProviderPropertiesManagedApplication(string publisherId, string offerId)
         {
             PublisherId = publisherId;
             OfferId = offerId;
         }
 
-        /// <summary> Provider&apos;s publisher id. </summary>
+        /// <summary> Provider's publisher id. </summary>
         public string PublisherId { get; }
-        /// <summary> Provider&apos;s offer id. </summary>
+        /// <summary> Provider's offer id. </summary>
         public string OfferId { get; }
     }
 }

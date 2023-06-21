@@ -23,8 +23,8 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <summary> Initializes a new instance of NetAppVolumeMountTarget. </summary>
         /// <param name="mountTargetId"> UUID v4 used to identify the MountTarget. </param>
         /// <param name="fileSystemId"> UUID v4 used to identify the MountTarget. </param>
-        /// <param name="ipAddress"> The mount target&apos;s IPv4 address. </param>
-        /// <param name="smbServerFqdn"> The SMB server&apos;s Fully Qualified Domain Name, FQDN. </param>
+        /// <param name="ipAddress"> The mount target's IPv4 address. </param>
+        /// <param name="smbServerFqdn"> The SMB server's Fully Qualified Domain Name, FQDN. </param>
         internal NetAppVolumeMountTarget(Guid? mountTargetId, Guid fileSystemId, IPAddress ipAddress, string smbServerFqdn)
         {
             MountTargetId = mountTargetId;
@@ -37,9 +37,9 @@ namespace Azure.ResourceManager.NetApp.Models
         public Guid? MountTargetId { get; }
         /// <summary> UUID v4 used to identify the MountTarget. </summary>
         public Guid FileSystemId { get; }
-        /// <summary> The mount target&apos;s IPv4 address. </summary>
+        /// <summary> The mount target's IPv4 address. </summary>
         public IPAddress IPAddress { get; }
-        /// <summary> The SMB server&apos;s Fully Qualified Domain Name, FQDN. </summary>
+        /// <summary> The SMB server's Fully Qualified Domain Name, FQDN. </summary>
         public string SmbServerFqdn { get; }
     }
 }

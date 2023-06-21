@@ -44,14 +44,14 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         /// <param name="azureActiveDirectory"> The AAD authentication settings of the cluster. </param>
         /// <param name="fabricSettings"> The list of custom fabric settings to configure the cluster. </param>
         /// <param name="provisioningState"> The provisioning state of the managed cluster resource. </param>
-        /// <param name="clusterCodeVersion"> The Service Fabric runtime version of the cluster. This property is required when **clusterUpgradeMode** is set to &apos;Manual&apos;. To get list of available Service Fabric versions for new clusters use [ClusterVersion API](./ClusterVersion.md). To get the list of available version for existing clusters use **availableClusterVersions**. </param>
+        /// <param name="clusterCodeVersion"> The Service Fabric runtime version of the cluster. This property is required when **clusterUpgradeMode** is set to 'Manual'. To get list of available Service Fabric versions for new clusters use [ClusterVersion API](./ClusterVersion.md). To get the list of available version for existing clusters use **availableClusterVersions**. </param>
         /// <param name="clusterUpgradeMode">
         /// The upgrade mode of the cluster when new Service Fabric runtime version is available.
         /// 
         /// </param>
-        /// <param name="clusterUpgradeCadence"> Indicates when new cluster runtime version upgrades will be applied after they are released. By default is Wave0. Only applies when **clusterUpgradeMode** is set to &apos;Automatic&apos;. </param>
+        /// <param name="clusterUpgradeCadence"> Indicates when new cluster runtime version upgrades will be applied after they are released. By default is Wave0. Only applies when **clusterUpgradeMode** is set to 'Automatic'. </param>
         /// <param name="addOnFeatures"> List of add-on features to enable on the cluster. </param>
-        /// <param name="isAutoOSUpgradeEnabled"> Setting this to true enables automatic OS upgrade for the node types that are created using any platform OS image with version &apos;latest&apos;. The default value for this setting is false. </param>
+        /// <param name="isAutoOSUpgradeEnabled"> Setting this to true enables automatic OS upgrade for the node types that are created using any platform OS image with version 'latest'. The default value for this setting is false. </param>
         /// <param name="hasZoneResiliency"> Indicates if the cluster has zone resiliency. </param>
         /// <param name="maxUnusedVersionsToKeep"> The policy used to clean up unused versions. </param>
         /// <param name="isIPv6Enabled"> Setting this to true creates IPv6 address space for the default VNet used by the cluster. This setting cannot be changed once the cluster is created. The default value for this setting is false. </param>
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         /// <param name="vmImagePublisher"> The publisher of the Azure Virtual Machines Marketplace image. For example, Canonical or MicrosoftWindowsServer. </param>
         /// <param name="vmImageOffer"> The offer type of the Azure Virtual Machines Marketplace image. For example, UbuntuServer or WindowsServer. </param>
         /// <param name="vmImageSku"> The SKU of the Azure Virtual Machines Marketplace image. For example, 14.04.0-LTS or 2012-R2-Datacenter. </param>
-        /// <param name="vmImageVersion"> The version of the Azure Virtual Machines Marketplace image. A value of &apos;latest&apos; can be specified to select the latest version of an image. If omitted, the default is &apos;latest&apos;. </param>
+        /// <param name="vmImageVersion"> The version of the Azure Virtual Machines Marketplace image. A value of 'latest' can be specified to select the latest version of an image. If omitted, the default is 'latest'. </param>
         /// <param name="vmSecrets"> The secrets to install in the virtual machines. </param>
         /// <param name="vmExtensions"> Set of extensions that should be installed onto the virtual machines. </param>
         /// <param name="userAssignedIdentities"> Identities to assign to the virtual machine scale set under the node type. </param>
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         /// <param name="isEncryptionAtHostEnabled"> Enable or disable the Host Encryption for the virtual machines on the node type. This will enable the encryption for all the disks including Resource/Temp disk at host itself. Default: The Encryption at host will be disabled unless this property is set to true for the resource. </param>
         /// <param name="provisioningState"> The provisioning state of the node type resource. </param>
         /// <param name="isAcceleratedNetworkingEnabled"> Specifies whether the network interface is accelerated networking-enabled. </param>
-        /// <param name="useDefaultPublicLoadBalancer"> Specifies whether the use public load balancer. If not specified and the node type doesn&apos;t have its own frontend configuration, it will be attached to the default load balancer. If the node type uses its own Load balancer and useDefaultPublicLoadBalancer is true, then the frontend has to be an Internal Load Balancer. If the node type uses its own Load balancer and useDefaultPublicLoadBalancer is false or not set, then the custom load balancer must include a public load balancer to provide outbound connectivity. </param>
+        /// <param name="useDefaultPublicLoadBalancer"> Specifies whether the use public load balancer. If not specified and the node type doesn't have its own frontend configuration, it will be attached to the default load balancer. If the node type uses its own Load balancer and useDefaultPublicLoadBalancer is true, then the frontend has to be an Internal Load Balancer. If the node type uses its own Load balancer and useDefaultPublicLoadBalancer is false or not set, then the custom load balancer must include a public load balancer to provide outbound connectivity. </param>
         /// <param name="useTempDataDisk"> Specifies whether to use the temporary disk for the service fabric data root, in which case no managed data disk will be attached and the temporary disk will be used. It is only allowed for stateless node types. </param>
         /// <param name="isOverProvisioningEnabled"> Specifies whether the node type should be overprovisioned. It is only allowed for stateless node types. </param>
         /// <param name="zones"> Specifies the availability zones where the node type would span across. If the cluster is not spanning across availability zones, initiates az migration for the cluster. </param>
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         /// <summary> Initializes a new instance of NodeTypeVmssExtension. </summary>
         /// <param name="name"> The name of the extension. </param>
         /// <param name="publisher"> The name of the extension handler publisher. </param>
-        /// <param name="vmssExtensionPropertiesType"> Specifies the type of the extension; an example is &quot;CustomScriptExtension&quot;. </param>
+        /// <param name="vmssExtensionPropertiesType"> Specifies the type of the extension; an example is "CustomScriptExtension". </param>
         /// <param name="typeHandlerVersion"> Specifies the version of the script handler. </param>
         /// <param name="autoUpgradeMinorVersion"> Indicates whether the extension should use a newer minor version if one is available at deployment time. Once deployed, however, the extension will not upgrade minor versions unless redeployed, even with this property set to true. </param>
         /// <param name="settings"> Json formatted public settings for the extension. </param>
@@ -328,7 +328,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         }
 
         /// <summary> Initializes a new instance of ManagedServiceProperties. </summary>
-        /// <param name="placementConstraints"> The placement constraints as a string. Placement constraints are boolean expressions on node properties and allow for restricting a service to particular nodes based on the service requirements. For example, to place a service on nodes where NodeType is blue specify the following: &quot;NodeColor == blue)&quot;. </param>
+        /// <param name="placementConstraints"> The placement constraints as a string. Placement constraints are boolean expressions on node properties and allow for restricting a service to particular nodes based on the service requirements. For example, to place a service on nodes where NodeType is blue specify the following: "NodeColor == blue)". </param>
         /// <param name="correlationScheme"> A list that describes the correlation of the service with other services. </param>
         /// <param name="serviceLoadMetrics"> The service load metrics is given as an array of ServiceLoadMetric objects. </param>
         /// <param name="servicePlacementPolicies">
@@ -365,7 +365,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         }
 
         /// <summary> Initializes a new instance of StatefulServiceProperties. </summary>
-        /// <param name="placementConstraints"> The placement constraints as a string. Placement constraints are boolean expressions on node properties and allow for restricting a service to particular nodes based on the service requirements. For example, to place a service on nodes where NodeType is blue specify the following: &quot;NodeColor == blue)&quot;. </param>
+        /// <param name="placementConstraints"> The placement constraints as a string. Placement constraints are boolean expressions on node properties and allow for restricting a service to particular nodes based on the service requirements. For example, to place a service on nodes where NodeType is blue specify the following: "NodeColor == blue)". </param>
         /// <param name="correlationScheme"> A list that describes the correlation of the service with other services. </param>
         /// <param name="serviceLoadMetrics"> The service load metrics is given as an array of ServiceLoadMetric objects. </param>
         /// <param name="servicePlacementPolicies">
@@ -392,10 +392,10 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         /// <param name="hasPersistedState"> A flag indicating whether this is a persistent service which stores states on the local disk. If it is then the value of this property is true, if not it is false. </param>
         /// <param name="targetReplicaSetSize"> The target replica set size as a number. </param>
         /// <param name="minReplicaSetSize"> The minimum replica set size as a number. </param>
-        /// <param name="replicaRestartWaitDuration"> The duration between when a replica goes down and when a new replica is created, represented in ISO 8601 format &quot;hh:mm:ss&quot;. </param>
-        /// <param name="quorumLossWaitDuration"> The maximum duration for which a partition is allowed to be in a state of quorum loss, represented in ISO 8601 format &quot;hh:mm:ss&quot;. </param>
-        /// <param name="standByReplicaKeepDuration"> The definition on how long StandBy replicas should be maintained before being removed, represented in ISO 8601 format &quot;hh:mm:ss&quot;. </param>
-        /// <param name="servicePlacementTimeLimit"> The duration for which replicas can stay InBuild before reporting that build is stuck, represented in ISO 8601 format &quot;hh:mm:ss&quot;. </param>
+        /// <param name="replicaRestartWaitDuration"> The duration between when a replica goes down and when a new replica is created, represented in ISO 8601 format "hh:mm:ss". </param>
+        /// <param name="quorumLossWaitDuration"> The maximum duration for which a partition is allowed to be in a state of quorum loss, represented in ISO 8601 format "hh:mm:ss". </param>
+        /// <param name="standByReplicaKeepDuration"> The definition on how long StandBy replicas should be maintained before being removed, represented in ISO 8601 format "hh:mm:ss". </param>
+        /// <param name="servicePlacementTimeLimit"> The duration for which replicas can stay InBuild before reporting that build is stuck, represented in ISO 8601 format "hh:mm:ss". </param>
         /// <returns> A new <see cref="Models.StatefulServiceProperties"/> instance for mocking. </returns>
         public static StatefulServiceProperties StatefulServiceProperties(string placementConstraints = null, IEnumerable<ManagedServiceCorrelation> correlationScheme = null, IEnumerable<ManagedServiceLoadMetric> serviceLoadMetrics = null, IEnumerable<ManagedServicePlacementPolicy> servicePlacementPolicies = null, ServiceFabricManagedServiceMoveCost? defaultMoveCost = null, IEnumerable<ManagedServiceScalingPolicy> scalingPolicies = null, string provisioningState = null, string serviceTypeName = null, ManagedServicePartitionScheme partitionDescription = null, ManagedServicePackageActivationMode? servicePackageActivationMode = null, string serviceDnsName = null, bool? hasPersistedState = null, int? targetReplicaSetSize = null, int? minReplicaSetSize = null, TimeSpan? replicaRestartWaitDuration = null, TimeSpan? quorumLossWaitDuration = null, TimeSpan? standByReplicaKeepDuration = null, TimeSpan? servicePlacementTimeLimit = null)
         {
@@ -408,7 +408,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         }
 
         /// <summary> Initializes a new instance of StatelessServiceProperties. </summary>
-        /// <param name="placementConstraints"> The placement constraints as a string. Placement constraints are boolean expressions on node properties and allow for restricting a service to particular nodes based on the service requirements. For example, to place a service on nodes where NodeType is blue specify the following: &quot;NodeColor == blue)&quot;. </param>
+        /// <param name="placementConstraints"> The placement constraints as a string. Placement constraints are boolean expressions on node properties and allow for restricting a service to particular nodes based on the service requirements. For example, to place a service on nodes where NodeType is blue specify the following: "NodeColor == blue)". </param>
         /// <param name="correlationScheme"> A list that describes the correlation of the service with other services. </param>
         /// <param name="serviceLoadMetrics"> The service load metrics is given as an array of ServiceLoadMetric objects. </param>
         /// <param name="servicePlacementPolicies">

@@ -149,7 +149,6 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
     }
     public partial class ServiceFabricManagedClusterData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public ServiceFabricManagedClusterData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
         public ServiceFabricManagedClusterData(Azure.Core.AzureLocation location, Azure.ResourceManager.ServiceFabricManagedClusters.Models.ServiceFabricManagedClustersSku sku) : base (default(Azure.Core.AzureLocation)) { }
         public System.Collections.Generic.IList<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ManagedClusterAddOnFeature> AddOnFeatures { get { throw null; } }
         public string AdminPassword { get { throw null; } set { } }
@@ -804,7 +803,6 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
     public partial class NodeTypeActionContent
     {
         public NodeTypeActionContent() { }
-        public NodeTypeActionContent(System.Collections.Generic.IEnumerable<string> nodes) { }
         public bool? IsForced { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> Nodes { get { throw null; } }
         public Azure.ResourceManager.ServiceFabricManagedClusters.Models.UpdateType? UpdateType { get { throw null; } set { } }

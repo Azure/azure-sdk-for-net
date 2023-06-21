@@ -7,7 +7,7 @@
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    /// <summary> Holds configuration customizations for IPVS. May only be specified if &apos;mode&apos; is set to &apos;IPVS&apos;. </summary>
+    /// <summary> Holds configuration customizations for IPVS. May only be specified if 'mode' is set to 'IPVS'. </summary>
     public partial class ContainerServiceNetworkProfileKubeProxyIPVSConfig
     {
         /// <summary> Initializes a new instance of ContainerServiceNetworkProfileKubeProxyIPVSConfig. </summary>

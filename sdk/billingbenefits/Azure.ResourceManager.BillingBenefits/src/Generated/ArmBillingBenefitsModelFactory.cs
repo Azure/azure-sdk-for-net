@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
 
         /// <summary> Initializes a new instance of BillingBenefitsSavingsPlanUtilization. </summary>
         /// <param name="trend"> The number of days trend for a savings plan. </param>
-        /// <param name="aggregates"> The array of aggregates of a savings plan&apos;s utilization. </param>
+        /// <param name="aggregates"> The array of aggregates of a savings plan's utilization. </param>
         /// <returns> A new <see cref="Models.BillingBenefitsSavingsPlanUtilization"/> instance for mocking. </returns>
         public static BillingBenefitsSavingsPlanUtilization BillingBenefitsSavingsPlanUtilization(string trend = null, IEnumerable<BillingBenefitsSavingsPlanUtilizationAggregate> aggregates = null)
         {

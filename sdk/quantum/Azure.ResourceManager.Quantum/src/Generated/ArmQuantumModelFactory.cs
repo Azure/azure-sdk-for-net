@@ -40,8 +40,8 @@ namespace Azure.ResourceManager.Quantum.Models
         }
 
         /// <summary> Initializes a new instance of ProviderDescription. </summary>
-        /// <param name="id"> Unique provider&apos;s id. </param>
-        /// <param name="name"> Provider&apos;s display name. </param>
+        /// <param name="id"> Unique provider's id. </param>
+        /// <param name="name"> Provider's display name. </param>
         /// <param name="properties"> A list of provider-specific properties. </param>
         /// <returns> A new <see cref="Models.ProviderDescription"/> instance for mocking. </returns>
         public static ProviderDescription ProviderDescription(string id = null, string name = null, ProviderProperties properties = null)
@@ -53,9 +53,9 @@ namespace Azure.ResourceManager.Quantum.Models
         /// <param name="description"> A description about this provider. </param>
         /// <param name="providerType"> Provider type. </param>
         /// <param name="company"> Company name. </param>
-        /// <param name="defaultEndpoint"> Provider&apos;s default endpoint. </param>
+        /// <param name="defaultEndpoint"> Provider's default endpoint. </param>
         /// <param name="aad"> Azure Active Directory info. </param>
-        /// <param name="managedApplication"> Provider&apos;s Managed-Application info. </param>
+        /// <param name="managedApplication"> Provider's Managed-Application info. </param>
         /// <param name="targets"> The list of targets available from this provider. </param>
         /// <param name="skus"> The list of skus available from this provider. </param>
         /// <param name="quotaDimensions"> The list of quota dimensions from the provider. </param>
@@ -72,8 +72,8 @@ namespace Azure.ResourceManager.Quantum.Models
         }
 
         /// <summary> Initializes a new instance of ProviderPropertiesAad. </summary>
-        /// <param name="applicationId"> Provider&apos;s application id. </param>
-        /// <param name="tenantId"> Provider&apos;s tenant id. </param>
+        /// <param name="applicationId"> Provider's application id. </param>
+        /// <param name="tenantId"> Provider's tenant id. </param>
         /// <returns> A new <see cref="Models.ProviderPropertiesAad"/> instance for mocking. </returns>
         public static ProviderPropertiesAad ProviderPropertiesAad(string applicationId = null, Guid? tenantId = null)
         {
@@ -81,8 +81,8 @@ namespace Azure.ResourceManager.Quantum.Models
         }
 
         /// <summary> Initializes a new instance of ProviderPropertiesManagedApplication. </summary>
-        /// <param name="publisherId"> Provider&apos;s publisher id. </param>
-        /// <param name="offerId"> Provider&apos;s offer id. </param>
+        /// <param name="publisherId"> Provider's publisher id. </param>
+        /// <param name="offerId"> Provider's offer id. </param>
         /// <returns> A new <see cref="Models.ProviderPropertiesManagedApplication"/> instance for mocking. </returns>
         public static ProviderPropertiesManagedApplication ProviderPropertiesManagedApplication(string publisherId = null, string offerId = null)
         {
