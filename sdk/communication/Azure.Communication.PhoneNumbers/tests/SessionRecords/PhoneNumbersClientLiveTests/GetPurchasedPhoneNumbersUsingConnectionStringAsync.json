@@ -7,23 +7,23 @@
         "Accept": "application/json",
         "Authorization": "Sanitized",
         "User-Agent": "azsdk-net-Communication.PhoneNumbers/1.2.0-alpha.20230620.1 (.NET 7.0.7; Microsoft Windows 10.0.22000)",
-        "x-ms-client-request-id": "71d3173f7e5874089fbd3784ef8e4467",
+        "x-ms-client-request-id": "825535f68e34ef9787a570ad4584a1d1",
         "x-ms-content-sha256": "Sanitized",
-        "x-ms-date": "Tue, 20 Jun 2023 22:04:53 GMT",
+        "x-ms-date": "Wed, 21 Jun 2023 01:17:09 GMT",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
         "api-supported-versions": "2021-03-07, 2022-01-11-preview2, 2022-06-01-preview, 2022-12-01, 2022-12-02-preview2, 2023-05-01-preview",
-        "Content-Length": "26732",
+        "Content-Length": "25778",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 20 Jun 2023 22:04:54 GMT",
-        "MS-CV": "bBzsdnp\u002B00292I0j5TK5bQ.0",
+        "Date": "Wed, 21 Jun 2023 01:17:09 GMT",
+        "MS-CV": "rSXMnwDwD0uvrfTlUO\u002BvDg.0",
         "Strict-Transport-Security": "max-age=2592000",
-        "X-Azure-Ref": "0hCKSZAAAAABr1uLT2873R4J4lAdrJsK5V1NURURHRTAxMTUAOWZjN2I1MTktYThjYy00Zjg5LTkzNWUtYzkxNDhhZTA5ZTgx",
+        "X-Azure-Ref": "0lE\u002BSZAAAAACpYerb/2/vSY9mxjNC/S5HV1NURURHRTAxMDkAOWZjN2I1MTktYThjYy00Zjg5LTkzNWUtYzkxNDhhZTA5ZTgx",
         "X-Cache": "CONFIG_NOCACHE",
-        "X-Processing-Time": "2528ms"
+        "X-Processing-Time": "1992ms"
       },
       "ResponseBody": {
         "phoneNumbers": [
@@ -1420,57 +1420,6 @@
               "currencyCode": "USD",
               "billingFrequency": "monthly"
             }
-          },
-          {
-            "id": "Sanitized",
-            "phoneNumber": "Sanitized",
-            "countryCode": "US",
-            "phoneNumberType": "tollFree",
-            "capabilities": {
-              "calling": "inbound\u002Boutbound",
-              "sms": "inbound\u002Boutbound"
-            },
-            "assignmentType": "application",
-            "purchaseDate": "2021-06-24T00:30:13.3981412\u002B00:00",
-            "cost": {
-              "amount": 2.0,
-              "currencyCode": "USD",
-              "billingFrequency": "monthly"
-            }
-          },
-          {
-            "id": "Sanitized",
-            "phoneNumber": "Sanitized",
-            "countryCode": "US",
-            "phoneNumberType": "tollFree",
-            "capabilities": {
-              "calling": "inbound\u002Boutbound",
-              "sms": "inbound\u002Boutbound"
-            },
-            "assignmentType": "application",
-            "purchaseDate": "2021-06-24T00:36:12.1300788\u002B00:00",
-            "cost": {
-              "amount": 2.0,
-              "currencyCode": "USD",
-              "billingFrequency": "monthly"
-            }
-          },
-          {
-            "id": "Sanitized",
-            "phoneNumber": "Sanitized",
-            "countryCode": "US",
-            "phoneNumberType": "tollFree",
-            "capabilities": {
-              "calling": "inbound\u002Boutbound",
-              "sms": "inbound\u002Boutbound"
-            },
-            "assignmentType": "application",
-            "purchaseDate": "2021-06-24T00:36:43.3727213\u002B00:00",
-            "cost": {
-              "amount": 2.0,
-              "currencyCode": "USD",
-              "billingFrequency": "monthly"
-            }
           }
         ]
       }
@@ -1478,6 +1427,6 @@
   ],
   "Variables": {
     "COMMUNICATION_LIVETEST_STATIC_CONNECTION_STRING": "endpoint=https://smstestapp.communication.azure.com/;accesskey=Kg==",
-    "RandomSeed": "864818735"
+    "RandomSeed": "1879559689"
   }
 }
