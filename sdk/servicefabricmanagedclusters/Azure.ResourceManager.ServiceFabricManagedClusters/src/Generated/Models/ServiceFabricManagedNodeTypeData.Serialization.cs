@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -237,7 +236,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
             if (Optional.IsDefined(SpotRestoreTimeout))
             {
                 writer.WritePropertyName("spotRestoreTimeout"u8);
-                writer.WriteStringValue(SpotRestoreTimeout.Value, "P");
+                writer.WriteStringValue(SpotRestoreTimeout);
             }
             if (Optional.IsDefined(EvictionPolicy))
             {
@@ -342,7 +341,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
             Optional<bool> isSpotVm = default;
             Optional<string> hostGroupId = default;
             Optional<bool> useEphemeralOSDisk = default;
-            Optional<TimeSpan> spotRestoreTimeout = default;
+            Optional<string> spotRestoreTimeout = default;
             Optional<SpotNodeVmEvictionPolicyType> evictionPolicy = default;
             Optional<ResourceIdentifier> vmImageResourceId = default;
             Optional<ResourceIdentifier> subnetId = default;
@@ -713,11 +712,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                         }
                         if (property0.NameEquals("spotRestoreTimeout"u8))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            spotRestoreTimeout = property0.Value.GetTimeSpan("P");
+                            spotRestoreTimeout = property0.Value.GetString();
                             continue;
                         }
                         if (property0.NameEquals("evictionPolicy"u8))
@@ -819,7 +814,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                     continue;
                 }
             }
-            return new ServiceFabricManagedNodeTypeData(id, name, type, systemData.Value, sku.Value, Optional.ToNullable(isPrimary), Optional.ToNullable(vmInstanceCount), Optional.ToNullable(dataDiskSizeGB), Optional.ToNullable(dataDiskType), dataDiskLetter.Value, Optional.ToDictionary(placementProperties), Optional.ToDictionary(capacities), applicationPorts.Value, ephemeralPorts.Value, vmSize.Value, vmImagePublisher.Value, vmImageOffer.Value, vmImageSku.Value, vmImageVersion.Value, Optional.ToList(vmSecrets), Optional.ToList(vmExtensions), vmManagedIdentity.Value, Optional.ToNullable(isStateless), Optional.ToNullable(multiplePlacementGroups), Optional.ToList(frontendConfigurations), Optional.ToList(networkSecurityRules), Optional.ToList(additionalDataDisks), Optional.ToNullable(enableEncryptionAtHost), Optional.ToNullable(provisioningState), Optional.ToNullable(enableAcceleratedNetworking), Optional.ToNullable(useDefaultPublicLoadBalancer), Optional.ToNullable(useTempDataDisk), Optional.ToNullable(enableOverProvisioning), Optional.ToList(zones), Optional.ToNullable(isSpotVm), hostGroupId.Value, Optional.ToNullable(useEphemeralOSDisk), Optional.ToNullable(spotRestoreTimeout), Optional.ToNullable(evictionPolicy), vmImageResourceId.Value, subnetId.Value, Optional.ToList(vmSetupActions), Optional.ToNullable(securityType), Optional.ToNullable(secureBootEnabled), Optional.ToNullable(enableNodePublicIP), vmSharedGalleryImageId.Value, natGatewayId.Value, vmImagePlan.Value, Optional.ToDictionary(tags));
+            return new ServiceFabricManagedNodeTypeData(id, name, type, systemData.Value, sku.Value, Optional.ToNullable(isPrimary), Optional.ToNullable(vmInstanceCount), Optional.ToNullable(dataDiskSizeGB), Optional.ToNullable(dataDiskType), dataDiskLetter.Value, Optional.ToDictionary(placementProperties), Optional.ToDictionary(capacities), applicationPorts.Value, ephemeralPorts.Value, vmSize.Value, vmImagePublisher.Value, vmImageOffer.Value, vmImageSku.Value, vmImageVersion.Value, Optional.ToList(vmSecrets), Optional.ToList(vmExtensions), vmManagedIdentity.Value, Optional.ToNullable(isStateless), Optional.ToNullable(multiplePlacementGroups), Optional.ToList(frontendConfigurations), Optional.ToList(networkSecurityRules), Optional.ToList(additionalDataDisks), Optional.ToNullable(enableEncryptionAtHost), Optional.ToNullable(provisioningState), Optional.ToNullable(enableAcceleratedNetworking), Optional.ToNullable(useDefaultPublicLoadBalancer), Optional.ToNullable(useTempDataDisk), Optional.ToNullable(enableOverProvisioning), Optional.ToList(zones), Optional.ToNullable(isSpotVm), hostGroupId.Value, Optional.ToNullable(useEphemeralOSDisk), spotRestoreTimeout.Value, Optional.ToNullable(evictionPolicy), vmImageResourceId.Value, subnetId.Value, Optional.ToList(vmSetupActions), Optional.ToNullable(securityType), Optional.ToNullable(secureBootEnabled), Optional.ToNullable(enableNodePublicIP), vmSharedGalleryImageId.Value, natGatewayId.Value, vmImagePlan.Value, Optional.ToDictionary(tags));
         }
     }
 }

@@ -174,9 +174,5 @@ directive:
     where: $.definitions
     transform: >
       $.ManagedClusterVersionDetails.properties.supportExpiryUtc['format'] = 'date-time';
-  - from: nodetype.json
-    where: $.definitions
-    transform: >
-      $.NodeTypeProperties.properties.spotRestoreTimeout['format'] = 'duration';
 
 ```

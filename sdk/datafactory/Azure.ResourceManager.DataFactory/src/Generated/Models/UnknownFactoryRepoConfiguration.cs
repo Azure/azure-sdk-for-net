@@ -17,7 +17,8 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="collaborationBranch"> Collaboration branch. </param>
         /// <param name="rootFolder"> Root folder. </param>
         /// <param name="lastCommitId"> Last commit id. </param>
-        internal UnknownFactoryRepoConfiguration(string factoryRepoConfigurationType, string accountName, string repositoryName, string collaborationBranch, string rootFolder, string lastCommitId) : base(factoryRepoConfigurationType, accountName, repositoryName, collaborationBranch, rootFolder, lastCommitId)
+        /// <param name="disablePublish"> Disable manual publish operation in ADF studio to favor automated publish. </param>
+        internal UnknownFactoryRepoConfiguration(string factoryRepoConfigurationType, string accountName, string repositoryName, string collaborationBranch, string rootFolder, string lastCommitId, bool? disablePublish) : base(factoryRepoConfigurationType, accountName, repositoryName, collaborationBranch, rootFolder, lastCommitId, disablePublish)
         {
             FactoryRepoConfigurationType = factoryRepoConfigurationType ?? "Unknown";
         }

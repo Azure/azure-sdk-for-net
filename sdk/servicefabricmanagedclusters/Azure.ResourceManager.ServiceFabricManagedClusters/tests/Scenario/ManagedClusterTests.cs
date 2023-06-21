@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Tests
         [RecordedTest]
         public async Task BasicClusterTestAsync()
         {
-            resourceGroupResource = await CreateResourceGroupAsync();
+            resourceGroupResource = await CreateResourceGroupWithTag();
 
             clusterName = Recording.GenerateAssetName("sfmctestcluster");
             clusterCollection = resourceGroupResource.GetServiceFabricManagedClusters();
