@@ -29,10 +29,12 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
             virtualMachine = await virtualMachine.GetAsync();
             ConsoleCollection collection = virtualMachine.GetConsoles();
 
+            DateTime expiration = DateTime.Parse("2023-07-01T01:27:03.008Z");
+
             ConsoleData data = new ConsoleData
             (TestEnvironment.Location, new ExtendedLocation(TestEnvironment.ManagerExtendedLocation, "CustomLocation"), ConsoleEnabled.True, new SshPublicKey("ssh-rsa AAtsE3njSONzDYRIZv/WLjVuMfrUSByHp+jfaaOLHTIIB4fJvo6dQUZxE20w2iDHV3tEkmnTo84eba97VMueQD6OzJPEyWZMRpz8UYWOd0IXeRqiFu1lawNblZhwNT/ojNZfpB3af/YDzwQCZgTcTRyNNhL4o/blKUmug0daSsSXISTRnIDpcf5qytjs1Xo+yYyJMvzLL59mhAyb3p/cD+Y3/s3WhAx+l0XOKpzXnblrv9d3q4c2tWmm/SyFqthaqd0= fake-public-key"))
             {
-                Expiration = DateTimeOffset.UtcNow.AddDays(1),
+                Expiration = expiration,
                 Tags =
                 {
                     [ "key1" ] = "value1",
@@ -41,8 +43,8 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
             };
 
             // Create
-            ArmOperation<ConsoleResource> createOperation = await collection.CreateOrUpdateAsync(WaitUntil.Completed, ConsoleName, data);
-            Assert.AreEqual(ConsoleName, createOperation.Value.Data.Name);
+            ArmOperation<ConsoleResource> createResult = await collection.CreateOrUpdateAsync(WaitUntil.Completed, ConsoleName, data);
+            Assert.AreEqual(ConsoleName, createResult.Value.Data.Name);
 
             // Get
             var getResult = await console.GetAsync();
@@ -60,7 +62,7 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
             ConsolePatch patch = new ConsolePatch()
             {
                 Enabled = ConsoleEnabled.False,
-                Expiration = DateTimeOffset.UtcNow.AddDays(2),
+                Expiration = expiration,
                 KeyData = "ssh-rsa AAtsE3njSONzDYRIZv/WLjVuMfrUSByHp+jfaaOLHTIIB4fJvo6dQUZxE20w2iDHV3tEkmnTo84eba97VMueQD6OzJPEyWZMRpz8UYWOd0IXeRqiFu1lawNblZhwNT/ojNZfpB3af/YDzwQCZgTcTRyNNhL4o/blKUmug0daSsSXISTRnIDpcf5qytjs1Xo+yYyJMvzLL59mhAyb3p/cD+Y3/s3WhAx+l0XOKpzXnblrv9d3q4c2tWmm/SyFqthaqd0= fake-public-key",
                 Tags =
                 {
