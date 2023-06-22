@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ModelListResult>> ListAsync(string subscriptionId, AzureLocation location, CancellationToken cancellationToken = default)
+        public async Task<Response<CognitiveServicesModelListResult>> ListAsync(string subscriptionId, AzureLocation location, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
@@ -72,9 +72,9 @@ namespace Azure.ResourceManager.CognitiveServices
             {
                 case 200:
                     {
-                        ModelListResult value = default;
+                        CognitiveServicesModelListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ModelListResult.DeserializeModelListResult(document.RootElement);
+                        value = CognitiveServicesModelListResult.DeserializeCognitiveServicesModelListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ModelListResult> List(string subscriptionId, AzureLocation location, CancellationToken cancellationToken = default)
+        public Response<CognitiveServicesModelListResult> List(string subscriptionId, AzureLocation location, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
@@ -98,9 +98,9 @@ namespace Azure.ResourceManager.CognitiveServices
             {
                 case 200:
                     {
-                        ModelListResult value = default;
+                        CognitiveServicesModelListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ModelListResult.DeserializeModelListResult(document.RootElement);
+                        value = CognitiveServicesModelListResult.DeserializeCognitiveServicesModelListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ModelListResult>> ListNextPageAsync(string nextLink, string subscriptionId, AzureLocation location, CancellationToken cancellationToken = default)
+        public async Task<Response<CognitiveServicesModelListResult>> ListNextPageAsync(string nextLink, string subscriptionId, AzureLocation location, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -140,9 +140,9 @@ namespace Azure.ResourceManager.CognitiveServices
             {
                 case 200:
                     {
-                        ModelListResult value = default;
+                        CognitiveServicesModelListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ModelListResult.DeserializeModelListResult(document.RootElement);
+                        value = CognitiveServicesModelListResult.DeserializeCognitiveServicesModelListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ModelListResult> ListNextPage(string nextLink, string subscriptionId, AzureLocation location, CancellationToken cancellationToken = default)
+        public Response<CognitiveServicesModelListResult> ListNextPage(string nextLink, string subscriptionId, AzureLocation location, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -168,9 +168,9 @@ namespace Azure.ResourceManager.CognitiveServices
             {
                 case 200:
                     {
-                        ModelListResult value = default;
+                        CognitiveServicesModelListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ModelListResult.DeserializeModelListResult(document.RootElement);
+                        value = CognitiveServicesModelListResult.DeserializeCognitiveServicesModelListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

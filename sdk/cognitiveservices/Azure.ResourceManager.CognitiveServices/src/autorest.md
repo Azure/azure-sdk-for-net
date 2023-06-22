@@ -76,6 +76,10 @@ rename-mapping:
   CommitmentPlanProperties.commitmentPlanGuid: -|uuid
   CommitmentPlanAssociation.commitmentPlanId: -|arm-id
   KeyVaultProperties: CognitiveServicesKeyVaultProperties
+  ModelListResult: CognitiveServicesModelListResult
+  Model: CognitiveServicesModel
+  ModelSku: CognitiveServicesModelSku
+  CapacityConfig: CognitiveServicesCapacityConfig
 
 prepend-rp-prefix:
   - Account

@@ -11,16 +11,16 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
-    internal partial class ModelListResult
+    internal partial class CognitiveServicesModelListResult
     {
-        internal static ModelListResult DeserializeModelListResult(JsonElement element)
+        internal static CognitiveServicesModelListResult DeserializeCognitiveServicesModelListResult(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<string> nextLink = default;
-            Optional<IReadOnlyList<Model>> value = default;
+            Optional<IReadOnlyList<CognitiveServicesModel>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("nextLink"u8))
@@ -34,16 +34,16 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     {
                         continue;
                     }
-                    List<Model> array = new List<Model>();
+                    List<CognitiveServicesModel> array = new List<CognitiveServicesModel>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Model.DeserializeModel(item));
+                        array.Add(CognitiveServicesModel.DeserializeCognitiveServicesModel(item));
                     }
                     value = array;
                     continue;
                 }
             }
-            return new ModelListResult(nextLink.Value, Optional.ToList(value));
+            return new CognitiveServicesModelListResult(nextLink.Value, Optional.ToList(value));
         }
     }
 }

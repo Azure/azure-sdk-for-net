@@ -11,18 +11,18 @@ using Azure.Core;
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
     /// <summary> The list of cognitive services models. </summary>
-    internal partial class ModelListResult
+    internal partial class CognitiveServicesModelListResult
     {
-        /// <summary> Initializes a new instance of ModelListResult. </summary>
-        internal ModelListResult()
+        /// <summary> Initializes a new instance of CognitiveServicesModelListResult. </summary>
+        internal CognitiveServicesModelListResult()
         {
-            Value = new ChangeTrackingList<Model>();
+            Value = new ChangeTrackingList<CognitiveServicesModel>();
         }
 
-        /// <summary> Initializes a new instance of ModelListResult. </summary>
+        /// <summary> Initializes a new instance of CognitiveServicesModelListResult. </summary>
         /// <param name="nextLink"> The link used to get the next page of Model. </param>
         /// <param name="value"> Gets the list of Cognitive Services accounts Model and their properties. </param>
-        internal ModelListResult(string nextLink, IReadOnlyList<Model> value)
+        internal CognitiveServicesModelListResult(string nextLink, IReadOnlyList<CognitiveServicesModel> value)
         {
             NextLink = nextLink;
             Value = value;
@@ -31,6 +31,6 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <summary> The link used to get the next page of Model. </summary>
         public string NextLink { get; }
         /// <summary> Gets the list of Cognitive Services accounts Model and their properties. </summary>
-        public IReadOnlyList<Model> Value { get; }
+        public IReadOnlyList<CognitiveServicesModel> Value { get; }
     }
 }

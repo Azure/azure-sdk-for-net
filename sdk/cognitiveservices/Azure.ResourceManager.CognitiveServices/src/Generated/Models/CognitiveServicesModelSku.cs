@@ -12,21 +12,21 @@ using Azure.Core;
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
     /// <summary> Describes an available Cognitive Services Model SKU. </summary>
-    public partial class ModelSku
+    public partial class CognitiveServicesModelSku
     {
-        /// <summary> Initializes a new instance of ModelSku. </summary>
-        public ModelSku()
+        /// <summary> Initializes a new instance of CognitiveServicesModelSku. </summary>
+        public CognitiveServicesModelSku()
         {
             RateLimits = new ChangeTrackingList<ServiceAccountCallRateLimit>();
         }
 
-        /// <summary> Initializes a new instance of ModelSku. </summary>
+        /// <summary> Initializes a new instance of CognitiveServicesModelSku. </summary>
         /// <param name="name"> The name of the model SKU. </param>
         /// <param name="usageName"> The usage name of the model SKU. </param>
         /// <param name="deprecationOn"> The datetime of deprecation of the model SKU. </param>
         /// <param name="capacity"> The capacity configuration. </param>
         /// <param name="rateLimits"> The list of rateLimit. </param>
-        internal ModelSku(string name, string usageName, DateTimeOffset? deprecationOn, CapacityConfig capacity, IReadOnlyList<ServiceAccountCallRateLimit> rateLimits)
+        internal CognitiveServicesModelSku(string name, string usageName, DateTimeOffset? deprecationOn, CognitiveServicesCapacityConfig capacity, IReadOnlyList<ServiceAccountCallRateLimit> rateLimits)
         {
             Name = name;
             UsageName = usageName;
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <summary> The datetime of deprecation of the model SKU. </summary>
         public DateTimeOffset? DeprecationOn { get; set; }
         /// <summary> The capacity configuration. </summary>
-        public CapacityConfig Capacity { get; set; }
+        public CognitiveServicesCapacityConfig Capacity { get; set; }
         /// <summary> The list of rateLimit. </summary>
         public IReadOnlyList<ServiceAccountCallRateLimit> RateLimits { get; }
     }

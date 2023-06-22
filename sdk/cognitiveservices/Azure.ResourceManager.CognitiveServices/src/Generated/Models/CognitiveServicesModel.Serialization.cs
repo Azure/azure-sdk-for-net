@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
-    public partial class Model
+    public partial class CognitiveServicesModel
     {
-        internal static Model DeserializeModel(JsonElement element)
+        internal static CognitiveServicesModel DeserializeCognitiveServicesModel(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     continue;
                 }
             }
-            return new Model(model.Value, kind.Value, skuName.Value);
+            return new CognitiveServicesModel(model.Value, kind.Value, skuName.Value);
         }
     }
 }

@@ -12,7 +12,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
-    public partial class ModelSku : IUtf8JsonSerializable
+    public partial class CognitiveServicesModelSku : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             writer.WriteEndObject();
         }
 
-        internal static ModelSku DeserializeModelSku(JsonElement element)
+        internal static CognitiveServicesModelSku DeserializeCognitiveServicesModelSku(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             Optional<string> name = default;
             Optional<string> usageName = default;
             Optional<DateTimeOffset> deprecationDate = default;
-            Optional<CapacityConfig> capacity = default;
+            Optional<CognitiveServicesCapacityConfig> capacity = default;
             Optional<IReadOnlyList<ServiceAccountCallRateLimit>> rateLimits = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     {
                         continue;
                     }
-                    capacity = CapacityConfig.DeserializeCapacityConfig(property.Value);
+                    capacity = CognitiveServicesCapacityConfig.DeserializeCognitiveServicesCapacityConfig(property.Value);
                     continue;
                 }
                 if (property.NameEquals("rateLimits"u8))
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     continue;
                 }
             }
-            return new ModelSku(name.Value, usageName.Value, Optional.ToNullable(deprecationDate), capacity.Value, Optional.ToList(rateLimits));
+            return new CognitiveServicesModelSku(name.Value, usageName.Value, Optional.ToNullable(deprecationDate), capacity.Value, Optional.ToList(rateLimits));
         }
     }
 }

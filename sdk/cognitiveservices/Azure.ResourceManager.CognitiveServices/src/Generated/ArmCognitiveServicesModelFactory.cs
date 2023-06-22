@@ -282,9 +282,9 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <param name="lifecycleStatus"> Model lifecycle status. </param>
         /// <param name="systemData"> Metadata pertaining to creation and last modification of the resource. </param>
         /// <returns> A new <see cref="Models.CognitiveServicesAccountModel"/> instance for mocking. </returns>
-        public static CognitiveServicesAccountModel CognitiveServicesAccountModel(string format = null, string name = null, string version = null, string source = null, ServiceAccountCallRateLimit callRateLimit = null, CognitiveServicesAccountDeploymentModel baseModel = null, bool? isDefaultVersion = null, IEnumerable<ModelSku> skus = null, int? maxCapacity = null, IDictionary<string, string> capabilities = null, IDictionary<string, string> finetuneCapabilities = null, ServiceAccountModelDeprecationInfo deprecation = null, ModelLifecycleStatus? lifecycleStatus = null, SystemData systemData = null)
+        public static CognitiveServicesAccountModel CognitiveServicesAccountModel(string format = null, string name = null, string version = null, string source = null, ServiceAccountCallRateLimit callRateLimit = null, CognitiveServicesAccountDeploymentModel baseModel = null, bool? isDefaultVersion = null, IEnumerable<CognitiveServicesModelSku> skus = null, int? maxCapacity = null, IDictionary<string, string> capabilities = null, IDictionary<string, string> finetuneCapabilities = null, ServiceAccountModelDeprecationInfo deprecation = null, ModelLifecycleStatus? lifecycleStatus = null, SystemData systemData = null)
         {
-            skus ??= new List<ModelSku>();
+            skus ??= new List<CognitiveServicesModelSku>();
             capabilities ??= new Dictionary<string, string>();
             finetuneCapabilities ??= new Dictionary<string, string>();
 
@@ -303,18 +303,18 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             return new CognitiveServicesAccountDeploymentModel(format, name, version, source, callRateLimit);
         }
 
-        /// <summary> Initializes a new instance of ModelSku. </summary>
+        /// <summary> Initializes a new instance of CognitiveServicesModelSku. </summary>
         /// <param name="name"> The name of the model SKU. </param>
         /// <param name="usageName"> The usage name of the model SKU. </param>
         /// <param name="deprecationOn"> The datetime of deprecation of the model SKU. </param>
         /// <param name="capacity"> The capacity configuration. </param>
         /// <param name="rateLimits"> The list of rateLimit. </param>
-        /// <returns> A new <see cref="Models.ModelSku"/> instance for mocking. </returns>
-        public static ModelSku ModelSku(string name = null, string usageName = null, DateTimeOffset? deprecationOn = null, CapacityConfig capacity = null, IEnumerable<ServiceAccountCallRateLimit> rateLimits = null)
+        /// <returns> A new <see cref="Models.CognitiveServicesModelSku"/> instance for mocking. </returns>
+        public static CognitiveServicesModelSku CognitiveServicesModelSku(string name = null, string usageName = null, DateTimeOffset? deprecationOn = null, CognitiveServicesCapacityConfig capacity = null, IEnumerable<ServiceAccountCallRateLimit> rateLimits = null)
         {
             rateLimits ??= new List<ServiceAccountCallRateLimit>();
 
-            return new ModelSku(name, usageName, deprecationOn, capacity, rateLimits?.ToList());
+            return new CognitiveServicesModelSku(name, usageName, deprecationOn, capacity, rateLimits?.ToList());
         }
 
         /// <summary> Initializes a new instance of CognitiveServicesSkuAvailabilityList. </summary>
@@ -363,14 +363,14 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             return new CommitmentCost(commitmentMeterId, overageMeterId);
         }
 
-        /// <summary> Initializes a new instance of Model. </summary>
-        /// <param name="modelValue"> Model Metadata. </param>
+        /// <summary> Initializes a new instance of CognitiveServicesModel. </summary>
+        /// <param name="model"> Model Metadata. </param>
         /// <param name="kind"> The Kind of the Model. </param>
         /// <param name="skuName"> The SKU of the Model. </param>
-        /// <returns> A new <see cref="Models.Model"/> instance for mocking. </returns>
-        public static Model Model(CognitiveServicesAccountModel modelValue = null, string kind = null, string skuName = null)
+        /// <returns> A new <see cref="Models.CognitiveServicesModel"/> instance for mocking. </returns>
+        public static CognitiveServicesModel CognitiveServicesModel(CognitiveServicesAccountModel model = null, string kind = null, string skuName = null)
         {
-            return new Model(modelValue, kind, skuName);
+            return new CognitiveServicesModel(model, kind, skuName);
         }
 
         /// <summary> Initializes a new instance of CognitiveServicesDomainAvailabilityList. </summary>

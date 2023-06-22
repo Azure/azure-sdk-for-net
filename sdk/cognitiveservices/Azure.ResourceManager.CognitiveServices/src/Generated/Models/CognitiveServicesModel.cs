@@ -8,26 +8,26 @@
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
     /// <summary> Cognitive Services Model. </summary>
-    public partial class Model
+    public partial class CognitiveServicesModel
     {
-        /// <summary> Initializes a new instance of Model. </summary>
-        internal Model()
+        /// <summary> Initializes a new instance of CognitiveServicesModel. </summary>
+        internal CognitiveServicesModel()
         {
         }
 
-        /// <summary> Initializes a new instance of Model. </summary>
-        /// <param name="modelValue"> Model Metadata. </param>
+        /// <summary> Initializes a new instance of CognitiveServicesModel. </summary>
+        /// <param name="model"> Model Metadata. </param>
         /// <param name="kind"> The Kind of the Model. </param>
         /// <param name="skuName"> The SKU of the Model. </param>
-        internal Model(CognitiveServicesAccountModel modelValue, string kind, string skuName)
+        internal CognitiveServicesModel(CognitiveServicesAccountModel model, string kind, string skuName)
         {
-            ModelValue = modelValue;
+            Model = model;
             Kind = kind;
             SkuName = skuName;
         }
 
         /// <summary> Model Metadata. </summary>
-        public CognitiveServicesAccountModel ModelValue { get; }
+        public CognitiveServicesAccountModel Model { get; }
         /// <summary> The Kind of the Model. </summary>
         public string Kind { get; }
         /// <summary> The SKU of the Model. </summary>

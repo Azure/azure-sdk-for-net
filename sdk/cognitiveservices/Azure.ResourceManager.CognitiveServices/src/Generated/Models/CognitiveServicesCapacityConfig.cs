@@ -8,19 +8,19 @@
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
     /// <summary> The capacity configuration. </summary>
-    public partial class CapacityConfig
+    public partial class CognitiveServicesCapacityConfig
     {
-        /// <summary> Initializes a new instance of CapacityConfig. </summary>
-        public CapacityConfig()
+        /// <summary> Initializes a new instance of CognitiveServicesCapacityConfig. </summary>
+        public CognitiveServicesCapacityConfig()
         {
         }
 
-        /// <summary> Initializes a new instance of CapacityConfig. </summary>
+        /// <summary> Initializes a new instance of CognitiveServicesCapacityConfig. </summary>
         /// <param name="minimum"> The minimum capacity. </param>
         /// <param name="maximum"> The maximum capacity. </param>
         /// <param name="step"> The minimal incremental between allowed values for capacity. </param>
         /// <param name="default"> The default capacity. </param>
-        internal CapacityConfig(int? minimum, int? maximum, int? step, int? @default)
+        internal CognitiveServicesCapacityConfig(int? minimum, int? maximum, int? step, int? @default)
         {
             Minimum = minimum;
             Maximum = maximum;

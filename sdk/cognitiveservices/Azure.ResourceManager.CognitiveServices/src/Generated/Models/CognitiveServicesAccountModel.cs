@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <summary> Initializes a new instance of CognitiveServicesAccountModel. </summary>
         public CognitiveServicesAccountModel()
         {
-            Skus = new ChangeTrackingList<ModelSku>();
+            Skus = new ChangeTrackingList<CognitiveServicesModelSku>();
             Capabilities = new ChangeTrackingDictionary<string, string>();
             FinetuneCapabilities = new ChangeTrackingDictionary<string, string>();
         }
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <param name="deprecation"> Cognitive Services account ModelDeprecationInfo. </param>
         /// <param name="lifecycleStatus"> Model lifecycle status. </param>
         /// <param name="systemData"> Metadata pertaining to creation and last modification of the resource. </param>
-        internal CognitiveServicesAccountModel(string format, string name, string version, string source, ServiceAccountCallRateLimit callRateLimit, CognitiveServicesAccountDeploymentModel baseModel, bool? isDefaultVersion, IList<ModelSku> skus, int? maxCapacity, IDictionary<string, string> capabilities, IDictionary<string, string> finetuneCapabilities, ServiceAccountModelDeprecationInfo deprecation, ModelLifecycleStatus? lifecycleStatus, SystemData systemData) : base(format, name, version, source, callRateLimit)
+        internal CognitiveServicesAccountModel(string format, string name, string version, string source, ServiceAccountCallRateLimit callRateLimit, CognitiveServicesAccountDeploymentModel baseModel, bool? isDefaultVersion, IList<CognitiveServicesModelSku> skus, int? maxCapacity, IDictionary<string, string> capabilities, IDictionary<string, string> finetuneCapabilities, ServiceAccountModelDeprecationInfo deprecation, ModelLifecycleStatus? lifecycleStatus, SystemData systemData) : base(format, name, version, source, callRateLimit)
         {
             BaseModel = baseModel;
             IsDefaultVersion = isDefaultVersion;
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <summary> If the model is default version. </summary>
         public bool? IsDefaultVersion { get; set; }
         /// <summary> The list of Model Sku. </summary>
-        public IList<ModelSku> Skus { get; }
+        public IList<CognitiveServicesModelSku> Skus { get; }
         /// <summary> The max capacity. </summary>
         public int? MaxCapacity { get; set; }
         /// <summary> The capabilities. </summary>

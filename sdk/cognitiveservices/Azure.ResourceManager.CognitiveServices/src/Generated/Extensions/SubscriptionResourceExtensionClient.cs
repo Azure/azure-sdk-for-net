@@ -427,12 +427,12 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </summary>
         /// <param name="location"> Resource location. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="Model" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<Model> GetModelsAsync(AzureLocation location, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="CognitiveServicesModel" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<CognitiveServicesModel> GetModelsAsync(AzureLocation location, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ModelsRestClient.CreateListRequest(Id.SubscriptionId, location);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ModelsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, location);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, Model.DeserializeModel, ModelsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetModels", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, CognitiveServicesModel.DeserializeCognitiveServicesModel, ModelsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetModels", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -450,12 +450,12 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </summary>
         /// <param name="location"> Resource location. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="Model" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<Model> GetModels(AzureLocation location, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="CognitiveServicesModel" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<CognitiveServicesModel> GetModels(AzureLocation location, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ModelsRestClient.CreateListRequest(Id.SubscriptionId, location);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ModelsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, location);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, Model.DeserializeModel, ModelsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetModels", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, CognitiveServicesModel.DeserializeCognitiveServicesModel, ModelsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetModels", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

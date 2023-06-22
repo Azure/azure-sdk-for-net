@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             }
             Optional<CognitiveServicesAccountDeploymentModel> baseModel = default;
             Optional<bool> isDefaultVersion = default;
-            Optional<IList<ModelSku>> skus = default;
+            Optional<IList<CognitiveServicesModelSku>> skus = default;
             Optional<int> maxCapacity = default;
             Optional<IDictionary<string, string>> capabilities = default;
             Optional<IDictionary<string, string>> finetuneCapabilities = default;
@@ -143,10 +143,10 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     {
                         continue;
                     }
-                    List<ModelSku> array = new List<ModelSku>();
+                    List<CognitiveServicesModelSku> array = new List<CognitiveServicesModelSku>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ModelSku.DeserializeModelSku(item));
+                        array.Add(CognitiveServicesModelSku.DeserializeCognitiveServicesModelSku(item));
                     }
                     skus = array;
                     continue;
