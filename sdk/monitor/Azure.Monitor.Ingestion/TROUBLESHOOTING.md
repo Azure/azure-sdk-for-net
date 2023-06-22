@@ -6,7 +6,6 @@ This troubleshooting guide contains instructions to diagnose frequently encounte
 
 * [General troubleshooting](#general-troubleshooting)
     * [Enable client logging](#enable-client-logging)
-    * [Enable HTTP request/response logging](#enable-http-requestresponse-logging)
     * [Troubleshooting authentication issues](#authentication-errors)
     * [Troubleshooting NoSuchMethodError or NoClassDefFoundError](#dependency-conflicts)
 * [Troubleshooting logs ingestion](#troubleshooting-logs-ingestion)
