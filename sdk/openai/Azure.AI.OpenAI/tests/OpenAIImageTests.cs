@@ -4,7 +4,6 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Text;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
@@ -21,18 +20,18 @@ namespace Azure.AI.OpenAI.Tests
         [RecordedTest]
         [TestCase(OpenAIClientServiceTarget.Azure)]
         [TestCase(OpenAIClientServiceTarget.NonAzure)]
-        public async Task CanGenerateSimpleImage(OpenAIClientServiceTarget serviceTarget)
+        public async Task CanGenerateImages(OpenAIClientServiceTarget serviceTarget)
         {
-            // OpenAIClient client = GetTestClient(serviceTarget);
-            OpenAIClient client = GetAzureClientWithToken();
-
-            string deploymentOrModelName = GetDeploymentOrModelName(serviceTarget, OpenAIClientScenario.Completions);
+            OpenAIClient client = GetTestClient(serviceTarget);
             Assert.That(client, Is.InstanceOf<OpenAIClient>());
+
             const string prompt = "a simplistic picture of a cyberpunk money dreaming of electric bananas";
             ImageGenerationOptions requestOptions = new ImageGenerationOptions()
             {
                 Prompt = prompt,
-                Size = ImageSize.Size256x256
+                Size = ImageSize.Size256x256,
+                N = 2,
+                User = "placeholder",
             };
             Assert.That(requestOptions, Is.InstanceOf<ImageGenerationOptions>());
 
@@ -46,7 +45,7 @@ namespace Azure.AI.OpenAI.Tests
             IReadOnlyList<ImageReference> images = imagesResponse.Value;
             Assert.That(images, Is.InstanceOf<IReadOnlyList<ImageReference>>());
             Assert.That(images, Is.Not.Null.Or.Empty);
-            Assert.That(images.Count, Is.EqualTo(1));
+            Assert.That(images.Count, Is.EqualTo(requestOptions.N));
 
             ImageReference image = images[0];
             Assert.That(image, Is.Not.Null);
@@ -58,6 +57,11 @@ namespace Azure.AI.OpenAI.Tests
             imageStream.CopyTo(copyStream);
 
             Assert.That(copyStream.Length, Is.GreaterThan(0));
+
+            Assert.That(images[1], Is.Not.Null);
+            Assert.That(images[1].Created, Is.GreaterThan(new DateTimeOffset(new DateTime(2023, 1, 1))));
+            Assert.That(images[1].DownloadUrl, Is.Not.Null.Or.Empty);
+            Assert.That(images[1].DownloadUrl.ToString(), Is.Not.EquivalentTo(images[0].DownloadUrl.ToString()));
         }
     }
 }

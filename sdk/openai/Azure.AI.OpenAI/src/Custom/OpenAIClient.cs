@@ -609,15 +609,34 @@ namespace Azure.AI.OpenAI
 
             try
             {
-                Operation<ImageOperationResponse> imagesOperation = StartGenerateImage(
-                    WaitUntil.Completed,
-                    imageGenerationOptions,
-                    cancellationToken);
-                ImageOperationResponse response = imagesOperation.Value;
-                Response rawResponse = imagesOperation.GetRawResponse();
+                ImageResponse response = default;
+                Response rawResponse = default;
+
+                if (_isConfiguredForAzureOpenAI)
+                {
+                    Operation<ImageOperationResponse> imagesOperation = StartGenerateImage(
+                        WaitUntil.Completed,
+                        imageGenerationOptions,
+                        cancellationToken);
+
+                    rawResponse = imagesOperation.GetRawResponse();
+                    response = imagesOperation.Value.Result;
+                }
+                else
+                {
+                    RequestContent content = imageGenerationOptions.ToRequestContent();
+
+                    HttpMessage message = CreatePostRequestMessage(
+                        string.Empty,
+                        "images/generations",
+                        content,
+                        context);
+                    rawResponse = _pipeline.ProcessMessage(message, context, cancellationToken);
+                    response = ImageResponse.FromResponse(rawResponse);
+                }
 
                 return Response.FromValue(
-                    ImageReference.RangeFromResponse(response.Result, _pipeline),
+                    ImageReference.RangeFromResponse(response, _pipeline),
                     rawResponse);
             }
             catch (Exception e)
