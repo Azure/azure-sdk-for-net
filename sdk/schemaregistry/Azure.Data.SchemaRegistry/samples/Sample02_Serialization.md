@@ -54,10 +54,10 @@ internal class SampleJsonValidator : SchemaValidator
         JObject jsonObject = JObject.FromObject(data);
 
         bool isValid = jsonObject.IsValid(schema, out IList<ValidationError> messages);
-        IEnumerable<Exception> ex = messages.Select((i => new Exception(i.Message)));
 
         if (!isValid)
         {
+            IEnumerable<Exception> ex = messages.Select((i => new Exception(i.Message)));
             throw new AggregateException(ex);
         }
     }
