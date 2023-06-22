@@ -13,7 +13,7 @@ namespace Azure.Storage.DataMovement
     /// <summary>
     /// Local File Storage Resource
     /// </summary>
-    public class LocalFileStorageResource : StorageResource
+    public class LocalFileStorageResource : StorageResourceSingle
     {
         private string _path;
 
@@ -166,7 +166,7 @@ namespace Azure.Storage.DataMovement
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
         public override Task CopyFromUriAsync(
-            StorageResource sourceResource,
+            StorageResourceSingle sourceResource,
             bool overwrite,
             long completeLength,
             StorageResourceCopyFromUriOptions options = default,
@@ -190,7 +190,7 @@ namespace Azure.Storage.DataMovement
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
         public override Task CopyBlockFromUriAsync(
-            StorageResource sourceResource,
+            StorageResourceSingle sourceResource,
             HttpRange range,
             bool overwrite,
             long completeLength = 0,
