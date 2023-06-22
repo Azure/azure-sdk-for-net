@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="location"> The location of the data masking rule. </param>
         /// <param name="kind"> The kind of Data Masking Rule. Metadata, used for Azure portal. </param>
         /// <param name="aliasName"> The alias name. This is a legacy parameter and is no longer used. </param>
-        /// <param name="ruleState"> The rule state. Used to delete a rule. To delete an existing rule, specify the schemaName, tableName, columnName, maskingFunction, and specify ruleState as disabled. However, if the rule doesn&apos;t already exist, the rule will be created with ruleState set to enabled, regardless of the provided value of ruleState. </param>
+        /// <param name="ruleState"> The rule state. Used to delete a rule. To delete an existing rule, specify the schemaName, tableName, columnName, maskingFunction, and specify ruleState as disabled. However, if the rule doesn't already exist, the rule will be created with ruleState set to enabled, regardless of the provided value of ruleState. </param>
         /// <param name="schemaName"> The schema name on which the data masking rule is applied. </param>
         /// <param name="tableName"> The table name on which the data masking rule is applied. </param>
         /// <param name="columnName"> The column name on which the data masking rule is applied. </param>
@@ -129,15 +129,15 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> Initializes a new instance of SqlMetricDefinition. </summary>
         /// <param name="name"> The name information for the metric. </param>
         /// <param name="primaryAggregationType"> The primary aggregation type defining how metric values are displayed. </param>
-        /// <param name="resourceUri"> The resource uri of the database. </param>
+        /// <param name="resourceUriString"> The resource uri of the database. </param>
         /// <param name="unit"> The unit of the metric. </param>
         /// <param name="metricAvailabilities"> The list of database metric availabilities for the metric. </param>
         /// <returns> A new <see cref="Models.SqlMetricDefinition"/> instance for mocking. </returns>
-        public static SqlMetricDefinition SqlMetricDefinition(SqlMetricName name = null, SqlMetricPrimaryAggregationType? primaryAggregationType = null, Uri resourceUri = null, SqlMetricDefinitionUnitType? unit = null, IEnumerable<SqlMetricAvailability> metricAvailabilities = null)
+        public static SqlMetricDefinition SqlMetricDefinition(SqlMetricName name = null, SqlMetricPrimaryAggregationType? primaryAggregationType = null, string resourceUriString = null, SqlMetricDefinitionUnitType? unit = null, IEnumerable<SqlMetricAvailability> metricAvailabilities = null)
         {
             metricAvailabilities ??= new List<SqlMetricAvailability>();
 
-            return new SqlMetricDefinition(name, primaryAggregationType, resourceUri, unit, metricAvailabilities?.ToList());
+            return new SqlMetricDefinition(name, primaryAggregationType, resourceUriString, unit, metricAvailabilities?.ToList());
         }
 
         /// <summary> Initializes a new instance of SqlMetricAvailability. </summary>
@@ -260,10 +260,10 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="systemData"> The systemData. </param>
         /// <param name="kind"> Resource kind. </param>
         /// <param name="location"> Resource location. </param>
-        /// <param name="advisorStatus"> Gets the status of availability of this advisor to customers. Possible values are &apos;GA&apos;, &apos;PublicPreview&apos;, &apos;LimitedPublicPreview&apos; and &apos;PrivatePreview&apos;. </param>
-        /// <param name="autoExecuteStatus"> Gets the auto-execute status (whether to let the system execute the recommendations) of this advisor. Possible values are &apos;Enabled&apos; and &apos;Disabled&apos;. </param>
-        /// <param name="autoExecuteStatusInheritedFrom"> Gets the resource from which current value of auto-execute status is inherited. Auto-execute status can be set on (and inherited from) different levels in the resource hierarchy. Possible values are &apos;Subscription&apos;, &apos;Server&apos;, &apos;ElasticPool&apos;, &apos;Database&apos; and &apos;Default&apos; (when status is not explicitly set on any level). </param>
-        /// <param name="recommendationsStatus"> Gets that status of recommendations for this advisor and reason for not having any recommendations. Possible values include, but are not limited to, &apos;Ok&apos; (Recommendations available),LowActivity (not enough workload to analyze), &apos;DbSeemsTuned&apos; (Database is doing well), etc. </param>
+        /// <param name="advisorStatus"> Gets the status of availability of this advisor to customers. Possible values are 'GA', 'PublicPreview', 'LimitedPublicPreview' and 'PrivatePreview'. </param>
+        /// <param name="autoExecuteStatus"> Gets the auto-execute status (whether to let the system execute the recommendations) of this advisor. Possible values are 'Enabled' and 'Disabled'. </param>
+        /// <param name="autoExecuteStatusInheritedFrom"> Gets the resource from which current value of auto-execute status is inherited. Auto-execute status can be set on (and inherited from) different levels in the resource hierarchy. Possible values are 'Subscription', 'Server', 'ElasticPool', 'Database' and 'Default' (when status is not explicitly set on any level). </param>
+        /// <param name="recommendationsStatus"> Gets that status of recommendations for this advisor and reason for not having any recommendations. Possible values include, but are not limited to, 'Ok' (Recommendations available),LowActivity (not enough workload to analyze), 'DbSeemsTuned' (Database is doing well), etc. </param>
         /// <param name="lastCheckedOn"> Gets the time when the current resource was analyzed for recommendations by this advisor. </param>
         /// <param name="recommendedActions"> Gets the recommended actions for this advisor. </param>
         /// <returns> A new <see cref="Sql.SqlAdvisorData"/> instance for mocking. </returns>
@@ -318,7 +318,7 @@ namespace Azure.ResourceManager.Sql.Models
 
         /// <summary> Initializes a new instance of RecommendedActionStateInfo. </summary>
         /// <param name="currentValue"> Current state the recommended action is in. Some commonly used states are: Active      -&gt; recommended action is active and no action has been taken yet. Pending     -&gt; recommended action is approved for and is awaiting execution. Executing   -&gt; recommended action is being applied on the user database. Verifying   -&gt; recommended action was applied and is being verified of its usefulness by the system. Success     -&gt; recommended action was applied and improvement found during verification. Pending Revert  -&gt; verification found little or no improvement so recommended action is queued for revert or user has manually reverted. Reverting   -&gt; changes made while applying recommended action are being reverted on the user database. Reverted    -&gt; successfully reverted the changes made by recommended action on user database. Ignored     -&gt; user explicitly ignored/discarded the recommended action. </param>
-        /// <param name="actionInitiatedBy"> Gets who initiated the execution of this recommended action. Possible Value are: User    -&gt; When user explicity notified system to apply the recommended action. System  -&gt; When auto-execute status of this advisor was set to &apos;Enabled&apos;, in which case the system applied it. </param>
+        /// <param name="actionInitiatedBy"> Gets who initiated the execution of this recommended action. Possible Value are: User    -&gt; When user explicity notified system to apply the recommended action. System  -&gt; When auto-execute status of this advisor was set to 'Enabled', in which case the system applied it. </param>
         /// <param name="lastModified"> Gets the time when the state was last modified. </param>
         /// <returns> A new <see cref="Models.RecommendedActionStateInfo"/> instance for mocking. </returns>
         public static RecommendedActionStateInfo RecommendedActionStateInfo(RecommendedActionCurrentState currentValue = default, RecommendedActionInitiatedBy? actionInitiatedBy = null, DateTimeOffset? lastModified = null)
@@ -475,9 +475,9 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="storageContainerPath"> A blob storage container path to hold the scan results (e.g. https://myStorage.blob.core.windows.net/VaScans/).  It is required if server level vulnerability assessment policy doesn&apos;t set. </param>
-        /// <param name="storageContainerSasKey"> A shared access signature (SAS Key) that has write access to the blob container specified in &apos;storageContainerPath&apos; parameter. If &apos;storageAccountAccessKey&apos; isn&apos;t specified, StorageContainerSasKey is required. </param>
-        /// <param name="storageAccountAccessKey"> Specifies the identifier key of the storage account for vulnerability assessment scan results. If &apos;StorageContainerSasKey&apos; isn&apos;t specified, storageAccountAccessKey is required. </param>
+        /// <param name="storageContainerPath"> A blob storage container path to hold the scan results (e.g. https://myStorage.blob.core.windows.net/VaScans/).  It is required if server level vulnerability assessment policy doesn't set. </param>
+        /// <param name="storageContainerSasKey"> A shared access signature (SAS Key) that has write access to the blob container specified in 'storageContainerPath' parameter. If 'storageAccountAccessKey' isn't specified, StorageContainerSasKey is required. </param>
+        /// <param name="storageAccountAccessKey"> Specifies the identifier key of the storage account for vulnerability assessment scan results. If 'StorageContainerSasKey' isn't specified, storageAccountAccessKey is required. </param>
         /// <param name="recurringScans"> The recurring scans settings. </param>
         /// <returns> A new <see cref="Sql.DatabaseVulnerabilityAssessmentData"/> instance for mocking. </returns>
         public static DatabaseVulnerabilityAssessmentData DatabaseVulnerabilityAssessmentData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string storageContainerPath = null, string storageContainerSasKey = null, string storageAccountAccessKey = null, VulnerabilityAssessmentRecurringScansProperties recurringScans = null)
@@ -588,7 +588,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="location"> Resource location. </param>
         /// <param name="subregion"> Subregion of the encryption protector. </param>
         /// <param name="serverKeyName"> The name of the server key. </param>
-        /// <param name="serverKeyType"> The encryption protector type like &apos;ServiceManaged&apos;, &apos;AzureKeyVault&apos;. </param>
+        /// <param name="serverKeyType"> The encryption protector type like 'ServiceManaged', 'AzureKeyVault'. </param>
         /// <param name="uri"> The URI of the server key. </param>
         /// <param name="thumbprint"> Thumbprint of the server key. </param>
         /// <param name="isAutoRotationEnabled"> Key auto rotation opt-in flag. Either true or false. </param>
@@ -635,8 +635,8 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>
-        /// <param name="startIPAddress"> The start IP address of the firewall rule. Must be IPv4 format. Use value &apos;0.0.0.0&apos; for all Azure-internal IP addresses. </param>
-        /// <param name="endIPAddress"> The end IP address of the firewall rule. Must be IPv4 format. Must be greater than or equal to startIpAddress. Use value &apos;0.0.0.0&apos; for all Azure-internal IP addresses. </param>
+        /// <param name="startIPAddress"> The start IP address of the firewall rule. Must be IPv4 format. Use value '0.0.0.0' for all Azure-internal IP addresses. </param>
+        /// <param name="endIPAddress"> The end IP address of the firewall rule. Must be IPv4 format. Must be greater than or equal to startIpAddress. Use value '0.0.0.0' for all Azure-internal IP addresses. </param>
         /// <returns> A new <see cref="Sql.SqlFirewallRuleData"/> instance for mocking. </returns>
         public static SqlFirewallRuleData SqlFirewallRuleData(ResourceIdentifier id = null, string name = null, ResourceType? resourceType = null, string startIPAddress = null, string endIPAddress = null)
         {
@@ -673,7 +673,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="sku"> The name and tier of the SKU. </param>
         /// <param name="subnetId"> Resource ID of the subnet to place this instance pool in. </param>
         /// <param name="vCores"> Count of vCores belonging to this instance pool. </param>
-        /// <param name="licenseType"> The license type. Possible values are &apos;LicenseIncluded&apos; (price for SQL license is included) and &apos;BasePrice&apos; (without SQL license price). </param>
+        /// <param name="licenseType"> The license type. Possible values are 'LicenseIncluded' (price for SQL license is included) and 'BasePrice' (without SQL license price). </param>
         /// <returns> A new <see cref="Sql.InstancePoolData"/> instance for mocking. </returns>
         public static InstancePoolData InstancePoolData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, SqlSku sku = null, ResourceIdentifier subnetId = null, int? vCores = null, InstancePoolLicenseType? licenseType = null)
         {
@@ -766,7 +766,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="stepId"> The job step&apos;s index within the job. If not specified when creating the job step, it will be created as the last step. If not specified when updating the job step, the step id is not modified. </param>
+        /// <param name="stepId"> The job step's index within the job. If not specified when creating the job step, it will be created as the last step. If not specified when updating the job step, the step id is not modified. </param>
         /// <param name="targetGroup"> The resource ID of the target group that the job step will be executed on. </param>
         /// <param name="credential"> The resource ID of the job credential that will be used to connect to the targets. </param>
         /// <param name="action"> The action payload of the job step. </param>
@@ -890,7 +890,7 @@ namespace Azure.ResourceManager.Sql.Models
         }
 
         /// <summary> Initializes a new instance of MaxSizeCapability. </summary>
-        /// <param name="limit"> The maximum size limit (see &apos;unit&apos; for the units). </param>
+        /// <param name="limit"> The maximum size limit (see 'unit' for the units). </param>
         /// <param name="unit"> The units that the limit is expressed in. </param>
         /// <returns> A new <see cref="Models.MaxSizeCapability"/> instance for mocking. </returns>
         public static MaxSizeCapability MaxSizeCapability(int? limit = null, MaxSizeUnit? unit = null)
@@ -899,7 +899,7 @@ namespace Azure.ResourceManager.Sql.Models
         }
 
         /// <summary> Initializes a new instance of LogSizeCapability. </summary>
-        /// <param name="limit"> The log size limit (see &apos;unit&apos; for the units). </param>
+        /// <param name="limit"> The log size limit (see 'unit' for the units). </param>
         /// <param name="unit"> The units that the limit is expressed in. </param>
         /// <returns> A new <see cref="Models.LogSizeCapability"/> instance for mocking. </returns>
         public static LogSizeCapability LogSizeCapability(int? limit = null, LogSizeUnit? unit = null)
@@ -971,7 +971,7 @@ namespace Azure.ResourceManager.Sql.Models
         }
 
         /// <summary> Initializes a new instance of StorageCapability. </summary>
-        /// <param name="storageAccountType"> The storage account type for the database&apos;s backups. </param>
+        /// <param name="storageAccountType"> The storage account type for the database's backups. </param>
         /// <param name="status"> The status of the capability. </param>
         /// <param name="reason"> The reason for the capability not being available. </param>
         /// <returns> A new <see cref="Models.StorageCapability"/> instance for mocking. </returns>
@@ -1396,7 +1396,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="systemData"> The systemData. </param>
         /// <param name="kind"> Kind of encryption protector. This is metadata used for the Azure portal experience. </param>
         /// <param name="serverKeyName"> The name of the managed instance key. </param>
-        /// <param name="serverKeyType"> The encryption protector type like &apos;ServiceManaged&apos;, &apos;AzureKeyVault&apos;. </param>
+        /// <param name="serverKeyType"> The encryption protector type like 'ServiceManaged', 'AzureKeyVault'. </param>
         /// <param name="uri"> The URI of the server key. </param>
         /// <param name="thumbprint"> Thumbprint of the server key. </param>
         /// <param name="isAutoRotationEnabled"> Key auto rotation opt-in flag. Either true or false. </param>
@@ -1412,7 +1412,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="kind"> Kind of encryption protector. This is metadata used for the Azure portal experience. </param>
-        /// <param name="serverKeyType"> The key type like &apos;ServiceManaged&apos;, &apos;AzureKeyVault&apos;. </param>
+        /// <param name="serverKeyType"> The key type like 'ServiceManaged', 'AzureKeyVault'. </param>
         /// <param name="uri"> The URI of the key. If the ServerKeyType is AzureKeyVault, then the URI is required. </param>
         /// <param name="thumbprint"> Thumbprint of the key. </param>
         /// <param name="createdOn"> The key creation date. </param>
@@ -1582,8 +1582,8 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="storageContainerPath"> A blob storage container path to hold the scan results (e.g. https://myStorage.blob.core.windows.net/VaScans/). </param>
-        /// <param name="storageContainerSasKey"> A shared access signature (SAS Key) that has write access to the blob container specified in &apos;storageContainerPath&apos; parameter. If &apos;storageAccountAccessKey&apos; isn&apos;t specified, StorageContainerSasKey is required. Applies only if the storage account is not behind a Vnet or a firewall. </param>
-        /// <param name="storageAccountAccessKey"> Specifies the identifier key of the storage account for vulnerability assessment scan results. If &apos;StorageContainerSasKey&apos; isn&apos;t specified, storageAccountAccessKey is required. Applies only if the storage account is not behind a Vnet or a firewall. </param>
+        /// <param name="storageContainerSasKey"> A shared access signature (SAS Key) that has write access to the blob container specified in 'storageContainerPath' parameter. If 'storageAccountAccessKey' isn't specified, StorageContainerSasKey is required. Applies only if the storage account is not behind a Vnet or a firewall. </param>
+        /// <param name="storageAccountAccessKey"> Specifies the identifier key of the storage account for vulnerability assessment scan results. If 'StorageContainerSasKey' isn't specified, storageAccountAccessKey is required. Applies only if the storage account is not behind a Vnet or a firewall. </param>
         /// <param name="recurringScans"> The recurring scans settings. </param>
         /// <returns> A new <see cref="Sql.ManagedInstanceVulnerabilityAssessmentData"/> instance for mocking. </returns>
         public static ManagedInstanceVulnerabilityAssessmentData ManagedInstanceVulnerabilityAssessmentData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string storageContainerPath = null, string storageContainerSasKey = null, string storageAccountAccessKey = null, VulnerabilityAssessmentRecurringScansProperties recurringScans = null)
@@ -1752,9 +1752,9 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="systemData"> The systemData. </param>
         /// <param name="isAzureMonitorTargetEnabled">
         /// Specifies whether DevOps audit events are sent to Azure Monitor. 
-        /// In order to send the events to Azure Monitor, specify &apos;State&apos; as &apos;Enabled&apos; and &apos;IsAzureMonitorTargetEnabled&apos; as true.
+        /// In order to send the events to Azure Monitor, specify 'State' as 'Enabled' and 'IsAzureMonitorTargetEnabled' as true.
         /// 
-        /// When using REST API to configure DevOps audit, Diagnostic Settings with &apos;DevOpsOperationsAudit&apos; diagnostic logs category on the master database should be also created.
+        /// When using REST API to configure DevOps audit, Diagnostic Settings with 'DevOpsOperationsAudit' diagnostic logs category on the master database should be also created.
         /// 
         /// Diagnostic Settings URI format:
         /// PUT https://management.azure.com/subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.Sql/servers/{serverName}/databases/master/providers/microsoft.insights/diagnosticSettings/{settingsName}?api-version=2017-05-01-preview
@@ -1771,7 +1771,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// If state is Enabled and storageEndpoint is specified, not specifying the storageAccountAccessKey will use SQL server system-assigned managed identity to access the storage.
         /// Prerequisites for using managed identity authentication:
         /// 1. Assign SQL Server a system-assigned managed identity in Azure Active Directory (AAD).
-        /// 2. Grant SQL Server identity access to the storage account by adding &apos;Storage Blob Data Contributor&apos; RBAC role to the server identity.
+        /// 2. Grant SQL Server identity access to the storage account by adding 'Storage Blob Data Contributor' RBAC role to the server identity.
         /// For more information, see [Auditing to storage using Managed Identity authentication](https://go.microsoft.com/fwlink/?linkid=2114355)
         /// </param>
         /// <param name="storageAccountSubscriptionId"> Specifies the blob storage subscription Id. </param>
@@ -1801,7 +1801,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="kind"> Kind of encryption protector. This is metadata used for the Azure portal experience. </param>
         /// <param name="location"> Resource location. </param>
         /// <param name="subregion"> Subregion of the server key. </param>
-        /// <param name="serverKeyType"> The server key type like &apos;ServiceManaged&apos;, &apos;AzureKeyVault&apos;. </param>
+        /// <param name="serverKeyType"> The server key type like 'ServiceManaged', 'AzureKeyVault'. </param>
         /// <param name="uri"> The URI of the server key. If the ServerKeyType is AzureKeyVault, then the URI is required. </param>
         /// <param name="thumbprint"> Thumbprint of the server key. </param>
         /// <param name="createdOn"> The server key creation date. </param>
@@ -1880,8 +1880,8 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="storageContainerPath"> A blob storage container path to hold the scan results (e.g. https://myStorage.blob.core.windows.net/VaScans/). </param>
-        /// <param name="storageContainerSasKey"> A shared access signature (SAS Key) that has write access to the blob container specified in &apos;storageContainerPath&apos; parameter. If &apos;storageAccountAccessKey&apos; isn&apos;t specified, StorageContainerSasKey is required. Applies only if the storage account is not behind a Vnet or a firewall. </param>
-        /// <param name="storageAccountAccessKey"> Specifies the identifier key of the storage account for vulnerability assessment scan results. If &apos;StorageContainerSasKey&apos; isn&apos;t specified, storageAccountAccessKey is required. Applies only if the storage account is not behind a Vnet or a firewall. </param>
+        /// <param name="storageContainerSasKey"> A shared access signature (SAS Key) that has write access to the blob container specified in 'storageContainerPath' parameter. If 'storageAccountAccessKey' isn't specified, StorageContainerSasKey is required. Applies only if the storage account is not behind a Vnet or a firewall. </param>
+        /// <param name="storageAccountAccessKey"> Specifies the identifier key of the storage account for vulnerability assessment scan results. If 'StorageContainerSasKey' isn't specified, storageAccountAccessKey is required. Applies only if the storage account is not behind a Vnet or a firewall. </param>
         /// <param name="recurringScans"> The recurring scans settings. </param>
         /// <returns> A new <see cref="Sql.SqlServerVulnerabilityAssessmentData"/> instance for mocking. </returns>
         public static SqlServerVulnerabilityAssessmentData SqlServerVulnerabilityAssessmentData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string storageContainerPath = null, string storageContainerSasKey = null, string storageAccountAccessKey = null, VulnerabilityAssessmentRecurringScansProperties recurringScans = null)
@@ -2344,7 +2344,7 @@ namespace Azure.ResourceManager.Sql.Models
         }
 
         /// <summary> Initializes a new instance of SqlDatabaseKey. </summary>
-        /// <param name="keyType"> The database key type. Only supported value is &apos;AzureKeyVault&apos;. </param>
+        /// <param name="keyType"> The database key type. Only supported value is 'AzureKeyVault'. </param>
         /// <param name="thumbprint"> Thumbprint of the database key. </param>
         /// <param name="createdOn"> The database key creation date. </param>
         /// <param name="subregion"> Subregion of the server key. </param>
@@ -2539,9 +2539,9 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="systemData"> The systemData. </param>
         /// <param name="isDevopsAuditEnabled">
         /// Specifies the state of devops audit. If state is Enabled, devops logs will be sent to Azure Monitor.
-        /// In order to send the events to Azure Monitor, specify &apos;State&apos; as &apos;Enabled&apos;, &apos;IsAzureMonitorTargetEnabled&apos; as true and &apos;IsDevopsAuditEnabled&apos; as true
+        /// In order to send the events to Azure Monitor, specify 'State' as 'Enabled', 'IsAzureMonitorTargetEnabled' as true and 'IsDevopsAuditEnabled' as true
         /// 
-        /// When using REST API to configure auditing, Diagnostic Settings with &apos;DevOpsOperationsAudit&apos; diagnostic logs category on the master database should also be created.
+        /// When using REST API to configure auditing, Diagnostic Settings with 'DevOpsOperationsAudit' diagnostic logs category on the master database should also be created.
         /// 
         /// Diagnostic Settings URI format:
         /// PUT https://management.azure.com/subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.Sql/servers/{serverName}/databases/master/providers/microsoft.insights/diagnosticSettings/{settingsName}?api-version=2017-05-01-preview
@@ -2614,13 +2614,13 @@ namespace Azure.ResourceManager.Sql.Models
         /// 
         /// For more information, see [Database-Level Audit Actions](https://docs.microsoft.com/en-us/sql/relational-databases/security/auditing/sql-server-audit-action-groups-and-actions#database-level-audit-actions)
         /// </param>
-        /// <param name="isStorageSecondaryKeyInUse"> Specifies whether storageAccountAccessKey value is the storage&apos;s secondary key. </param>
+        /// <param name="isStorageSecondaryKeyInUse"> Specifies whether storageAccountAccessKey value is the storage's secondary key. </param>
         /// <param name="isAzureMonitorTargetEnabled">
         /// Specifies whether audit events are sent to Azure Monitor. 
-        /// In order to send the events to Azure Monitor, specify &apos;State&apos; as &apos;Enabled&apos; and &apos;IsAzureMonitorTargetEnabled&apos; as true.
+        /// In order to send the events to Azure Monitor, specify 'State' as 'Enabled' and 'IsAzureMonitorTargetEnabled' as true.
         /// 
-        /// When using REST API to configure auditing, Diagnostic Settings with &apos;SQLSecurityAuditEvents&apos; diagnostic logs category on the database should be also created.
-        /// Note that for server level audit you should use the &apos;master&apos; database as {databaseName}.
+        /// When using REST API to configure auditing, Diagnostic Settings with 'SQLSecurityAuditEvents' diagnostic logs category on the database should be also created.
+        /// Note that for server level audit you should use the 'master' database as {databaseName}.
         /// 
         /// Diagnostic Settings URI format:
         /// PUT https://management.azure.com/subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/providers/microsoft.insights/diagnosticSettings/{settingsName}?api-version=2017-05-01-preview
@@ -2641,7 +2641,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// If state is Enabled and storageEndpoint is specified, not specifying the storageAccountAccessKey will use SQL server system-assigned managed identity to access the storage.
         /// Prerequisites for using managed identity authentication:
         /// 1. Assign SQL Server a system-assigned managed identity in Azure Active Directory (AAD).
-        /// 2. Grant SQL Server identity access to the storage account by adding &apos;Storage Blob Data Contributor&apos; RBAC role to the server identity.
+        /// 2. Grant SQL Server identity access to the storage account by adding 'Storage Blob Data Contributor' RBAC role to the server identity.
         /// For more information, see [Auditing to storage using Managed Identity authentication](https://go.microsoft.com/fwlink/?linkid=2114355)
         /// </param>
         /// <param name="storageAccountSubscriptionId"> Specifies the blob storage subscription Id. </param>
@@ -2723,13 +2723,13 @@ namespace Azure.ResourceManager.Sql.Models
         /// 
         /// For more information, see [Database-Level Audit Actions](https://docs.microsoft.com/en-us/sql/relational-databases/security/auditing/sql-server-audit-action-groups-and-actions#database-level-audit-actions)
         /// </param>
-        /// <param name="isStorageSecondaryKeyInUse"> Specifies whether storageAccountAccessKey value is the storage&apos;s secondary key. </param>
+        /// <param name="isStorageSecondaryKeyInUse"> Specifies whether storageAccountAccessKey value is the storage's secondary key. </param>
         /// <param name="isAzureMonitorTargetEnabled">
         /// Specifies whether audit events are sent to Azure Monitor. 
-        /// In order to send the events to Azure Monitor, specify &apos;State&apos; as &apos;Enabled&apos; and &apos;IsAzureMonitorTargetEnabled&apos; as true.
+        /// In order to send the events to Azure Monitor, specify 'State' as 'Enabled' and 'IsAzureMonitorTargetEnabled' as true.
         /// 
-        /// When using REST API to configure auditing, Diagnostic Settings with &apos;SQLSecurityAuditEvents&apos; diagnostic logs category on the database should be also created.
-        /// Note that for server level audit you should use the &apos;master&apos; database as {databaseName}.
+        /// When using REST API to configure auditing, Diagnostic Settings with 'SQLSecurityAuditEvents' diagnostic logs category on the database should be also created.
+        /// Note that for server level audit you should use the 'master' database as {databaseName}.
         /// 
         /// Diagnostic Settings URI format:
         /// PUT https://management.azure.com/subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/providers/microsoft.insights/diagnosticSettings/{settingsName}?api-version=2017-05-01-preview
@@ -2750,7 +2750,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// If state is Enabled and storageEndpoint is specified, not specifying the storageAccountAccessKey will use SQL server system-assigned managed identity to access the storage.
         /// Prerequisites for using managed identity authentication:
         /// 1. Assign SQL Server a system-assigned managed identity in Azure Active Directory (AAD).
-        /// 2. Grant SQL Server identity access to the storage account by adding &apos;Storage Blob Data Contributor&apos; RBAC role to the server identity.
+        /// 2. Grant SQL Server identity access to the storage account by adding 'Storage Blob Data Contributor' RBAC role to the server identity.
         /// For more information, see [Auditing to storage using Managed Identity authentication](https://go.microsoft.com/fwlink/?linkid=2114355)
         /// </param>
         /// <param name="storageAccountSubscriptionId"> Specifies the blob storage subscription Id. </param>
@@ -2832,13 +2832,13 @@ namespace Azure.ResourceManager.Sql.Models
         /// 
         /// For more information, see [Database-Level Audit Actions](https://docs.microsoft.com/en-us/sql/relational-databases/security/auditing/sql-server-audit-action-groups-and-actions#database-level-audit-actions)
         /// </param>
-        /// <param name="isStorageSecondaryKeyInUse"> Specifies whether storageAccountAccessKey value is the storage&apos;s secondary key. </param>
+        /// <param name="isStorageSecondaryKeyInUse"> Specifies whether storageAccountAccessKey value is the storage's secondary key. </param>
         /// <param name="isAzureMonitorTargetEnabled">
         /// Specifies whether audit events are sent to Azure Monitor. 
-        /// In order to send the events to Azure Monitor, specify &apos;State&apos; as &apos;Enabled&apos; and &apos;IsAzureMonitorTargetEnabled&apos; as true.
+        /// In order to send the events to Azure Monitor, specify 'State' as 'Enabled' and 'IsAzureMonitorTargetEnabled' as true.
         /// 
-        /// When using REST API to configure auditing, Diagnostic Settings with &apos;SQLSecurityAuditEvents&apos; diagnostic logs category on the database should be also created.
-        /// Note that for server level audit you should use the &apos;master&apos; database as {databaseName}.
+        /// When using REST API to configure auditing, Diagnostic Settings with 'SQLSecurityAuditEvents' diagnostic logs category on the database should be also created.
+        /// Note that for server level audit you should use the 'master' database as {databaseName}.
         /// 
         /// Diagnostic Settings URI format:
         /// PUT https://management.azure.com/subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/providers/microsoft.insights/diagnosticSettings/{settingsName}?api-version=2017-05-01-preview
@@ -2859,7 +2859,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// If state is Enabled and storageEndpoint is specified, not specifying the storageAccountAccessKey will use SQL server system-assigned managed identity to access the storage.
         /// Prerequisites for using managed identity authentication:
         /// 1. Assign SQL Server a system-assigned managed identity in Azure Active Directory (AAD).
-        /// 2. Grant SQL Server identity access to the storage account by adding &apos;Storage Blob Data Contributor&apos; RBAC role to the server identity.
+        /// 2. Grant SQL Server identity access to the storage account by adding 'Storage Blob Data Contributor' RBAC role to the server identity.
         /// For more information, see [Auditing to storage using Managed Identity authentication](https://go.microsoft.com/fwlink/?linkid=2114355)
         /// </param>
         /// <param name="storageAccountSubscriptionId"> Specifies the blob storage subscription Id. </param>
@@ -2878,9 +2878,9 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="systemData"> The systemData. </param>
         /// <param name="isDevopsAuditEnabled">
         /// Specifies the state of devops audit. If state is Enabled, devops logs will be sent to Azure Monitor.
-        /// In order to send the events to Azure Monitor, specify &apos;State&apos; as &apos;Enabled&apos;, &apos;IsAzureMonitorTargetEnabled&apos; as true and &apos;IsDevopsAuditEnabled&apos; as true
+        /// In order to send the events to Azure Monitor, specify 'State' as 'Enabled', 'IsAzureMonitorTargetEnabled' as true and 'IsDevopsAuditEnabled' as true
         /// 
-        /// When using REST API to configure auditing, Diagnostic Settings with &apos;DevOpsOperationsAudit&apos; diagnostic logs category on the master database should also be created.
+        /// When using REST API to configure auditing, Diagnostic Settings with 'DevOpsOperationsAudit' diagnostic logs category on the master database should also be created.
         /// 
         /// Diagnostic Settings URI format:
         /// PUT https://management.azure.com/subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.Sql/servers/{serverName}/databases/master/providers/microsoft.insights/diagnosticSettings/{settingsName}?api-version=2017-05-01-preview
@@ -2954,13 +2954,13 @@ namespace Azure.ResourceManager.Sql.Models
         /// 
         /// For more information, see [Database-Level Audit Actions](https://docs.microsoft.com/en-us/sql/relational-databases/security/auditing/sql-server-audit-action-groups-and-actions#database-level-audit-actions)
         /// </param>
-        /// <param name="isStorageSecondaryKeyInUse"> Specifies whether storageAccountAccessKey value is the storage&apos;s secondary key. </param>
+        /// <param name="isStorageSecondaryKeyInUse"> Specifies whether storageAccountAccessKey value is the storage's secondary key. </param>
         /// <param name="isAzureMonitorTargetEnabled">
         /// Specifies whether audit events are sent to Azure Monitor. 
-        /// In order to send the events to Azure Monitor, specify &apos;State&apos; as &apos;Enabled&apos; and &apos;IsAzureMonitorTargetEnabled&apos; as true.
+        /// In order to send the events to Azure Monitor, specify 'State' as 'Enabled' and 'IsAzureMonitorTargetEnabled' as true.
         /// 
-        /// When using REST API to configure auditing, Diagnostic Settings with &apos;SQLSecurityAuditEvents&apos; diagnostic logs category on the database should be also created.
-        /// Note that for server level audit you should use the &apos;master&apos; database as {databaseName}.
+        /// When using REST API to configure auditing, Diagnostic Settings with 'SQLSecurityAuditEvents' diagnostic logs category on the database should be also created.
+        /// Note that for server level audit you should use the 'master' database as {databaseName}.
         /// 
         /// Diagnostic Settings URI format:
         /// PUT https://management.azure.com/subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/providers/microsoft.insights/diagnosticSettings/{settingsName}?api-version=2017-05-01-preview
@@ -2981,7 +2981,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// If state is Enabled and storageEndpoint is specified, not specifying the storageAccountAccessKey will use SQL server system-assigned managed identity to access the storage.
         /// Prerequisites for using managed identity authentication:
         /// 1. Assign SQL Server a system-assigned managed identity in Azure Active Directory (AAD).
-        /// 2. Grant SQL Server identity access to the storage account by adding &apos;Storage Blob Data Contributor&apos; RBAC role to the server identity.
+        /// 2. Grant SQL Server identity access to the storage account by adding 'Storage Blob Data Contributor' RBAC role to the server identity.
         /// For more information, see [Auditing to storage using Managed Identity authentication](https://go.microsoft.com/fwlink/?linkid=2114355)
         /// </param>
         /// <param name="storageAccountSubscriptionId"> Specifies the blob storage subscription Id. </param>
@@ -3355,7 +3355,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="secondaryType"> Type of the geo-secondary instance. Set &apos;Standby&apos; if the instance is used as a DR option only. </param>
+        /// <param name="secondaryType"> Type of the geo-secondary instance. Set 'Standby' if the instance is used as a DR option only. </param>
         /// <param name="readWriteEndpoint"> Read-write endpoint of the failover group instance. </param>
         /// <param name="readOnlyEndpointFailoverPolicy"> Read-only endpoint of the failover group instance. </param>
         /// <param name="replicationRole"> Local replication role of the failover group instance. </param>
@@ -3459,7 +3459,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="crossSubscriptionSourceDatabaseId"> The resource identifier of the cross-subscription source database associated with create operation of this database. </param>
         /// <param name="restorableDroppedDatabaseId"> The restorable dropped database resource id to restore when creating this database. </param>
         /// <param name="crossSubscriptionRestorableDroppedDatabaseId"> The restorable cross-subscription dropped database resource id to restore when creating this database. </param>
-        /// <param name="storageContainerIdentity"> Conditional. If createMode is RestoreExternalBackup, this value is used. Specifies the identity used for storage container authentication. Can be &apos;SharedAccessSignature&apos; or &apos;ManagedIdentity&apos;; if not specified &apos;SharedAccessSignature&apos; is assumed. </param>
+        /// <param name="storageContainerIdentity"> Conditional. If createMode is RestoreExternalBackup, this value is used. Specifies the identity used for storage container authentication. Can be 'SharedAccessSignature' or 'ManagedIdentity'; if not specified 'SharedAccessSignature' is assumed. </param>
         /// <param name="storageContainerSasToken"> Conditional. If createMode is RestoreExternalBackup and storageContainerIdentity is not ManagedIdentity, this value is required. Specifies the storage container sas token. </param>
         /// <param name="failoverGroupId"> Instance Failover Group resource identifier that this managed database belongs to. </param>
         /// <param name="recoverableDatabaseId"> The resource identifier of the recoverable database associated with create operation of this database. </param>
@@ -3497,7 +3497,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="administratorLoginPassword"> The administrator login password (required for managed instance creation). </param>
         /// <param name="subnetId"> Subnet resource ID for the managed instance. </param>
         /// <param name="state"> The state of the managed instance. </param>
-        /// <param name="licenseType"> The license type. Possible values are &apos;LicenseIncluded&apos; (regular price inclusive of a new SQL license) and &apos;BasePrice&apos; (discounted AHB price for bringing your own SQL licenses). </param>
+        /// <param name="licenseType"> The license type. Possible values are 'LicenseIncluded' (regular price inclusive of a new SQL license) and 'BasePrice' (discounted AHB price for bringing your own SQL licenses). </param>
         /// <param name="vCores"> The number of vCores. Allowed values: 8, 16, 24, 32, 40, 64, 80. </param>
         /// <param name="storageSizeInGB"> Storage size in GB. Minimum value: 32. Maximum value: 16384. Increments of 32 GB allowed only. Maximum value depends on the selected hardware family and number of vCores. </param>
         /// <param name="collation"> Collation of the managed instance. </param>
@@ -3513,19 +3513,19 @@ namespace Azure.ResourceManager.Sql.Models
         /// KEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Time Zones.
         /// You can get those registry values via SQL Server by querying SELECT name AS timezone_id FROM sys.time_zone_info.
         /// List of Ids can also be obtained by executing [System.TimeZoneInfo]::GetSystemTimeZones() in PowerShell.
-        /// An example of valid timezone id is &quot;Pacific Standard Time&quot; or &quot;W. Europe Standard Time&quot;.
+        /// An example of valid timezone id is "Pacific Standard Time" or "W. Europe Standard Time".
         /// </param>
         /// <param name="instancePoolId"> The Id of the instance pool this managed server belongs to. </param>
         /// <param name="maintenanceConfigurationId"> Specifies maintenance configuration id to apply to this managed instance. </param>
         /// <param name="privateEndpointConnections"> List of private endpoint connections on a managed instance. </param>
-        /// <param name="minimalTlsVersion"> Minimal TLS version. Allowed values: &apos;None&apos;, &apos;1.0&apos;, &apos;1.1&apos;, &apos;1.2&apos;. </param>
+        /// <param name="minimalTlsVersion"> Minimal TLS version. Allowed values: 'None', '1.0', '1.1', '1.2'. </param>
         /// <param name="currentBackupStorageRedundancy"> The storage account type used to store backups for this instance. The options are Local (LocallyRedundantStorage), Zone (ZoneRedundantStorage), Geo (GeoRedundantStorage) and GeoZone(GeoZoneRedundantStorage). </param>
         /// <param name="requestedBackupStorageRedundancy"> The storage account type to be used to store backups for this instance. The options are Local (LocallyRedundantStorage), Zone (ZoneRedundantStorage), Geo (GeoRedundantStorage) and GeoZone(GeoZoneRedundantStorage). </param>
         /// <param name="isZoneRedundant"> Whether or not the multi-az is enabled. </param>
         /// <param name="primaryUserAssignedIdentityId"> The resource id of a user assigned identity to be used by default. </param>
         /// <param name="keyId"> A CMK URI of the key to use for encryption. </param>
         /// <param name="administrators"> The Azure Active Directory administrator of the instance. This can only be used at instance create time. If used for instance update, it will be ignored or it will result in an error. For updates individual APIs will need to be used. </param>
-        /// <param name="servicePrincipal"> The managed instance&apos;s service principal. </param>
+        /// <param name="servicePrincipal"> The managed instance's service principal. </param>
         /// <returns> A new <see cref="Sql.ManagedInstanceData"/> instance for mocking. </returns>
         public static ManagedInstanceData ManagedInstanceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ManagedServiceIdentity identity = null, SqlSku sku = null, ManagedInstancePropertiesProvisioningState? provisioningState = null, ManagedServerCreateMode? managedInstanceCreateMode = null, string fullyQualifiedDomainName = null, string administratorLogin = null, string administratorLoginPassword = null, ResourceIdentifier subnetId = null, string state = null, ManagedInstanceLicenseType? licenseType = null, int? vCores = null, int? storageSizeInGB = null, string collation = null, string dnsZone = null, string dnsZonePartner = null, bool? isPublicDataEndpointEnabled = null, ResourceIdentifier sourceManagedInstanceId = null, DateTimeOffset? restorePointInTime = null, ManagedInstanceProxyOverride? proxyOverride = null, string timezoneId = null, ResourceIdentifier instancePoolId = null, ResourceIdentifier maintenanceConfigurationId = null, IEnumerable<ManagedInstancePecProperty> privateEndpointConnections = null, string minimalTlsVersion = null, SqlBackupStorageRedundancy? currentBackupStorageRedundancy = null, SqlBackupStorageRedundancy? requestedBackupStorageRedundancy = null, bool? isZoneRedundant = null, ResourceIdentifier primaryUserAssignedIdentityId = null, Uri keyId = null, ManagedInstanceExternalAdministrator administrators = null, SqlServicePrincipal servicePrincipal = null)
         {
@@ -3651,7 +3651,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// 
         /// Recovery: Creates a database by restoring a geo-replicated backup. sourceDatabaseId must be specified as the recoverable database resource ID to restore.
         /// 
-        /// Restore: Creates a database by restoring a backup of a deleted database. sourceDatabaseId must be specified. If sourceDatabaseId is the database&apos;s original resource ID, then sourceDatabaseDeletionDate must be specified. Otherwise sourceDatabaseId must be the restorable dropped database resource ID and sourceDatabaseDeletionDate is ignored. restorePointInTime may also be specified to restore from an earlier point in time.
+        /// Restore: Creates a database by restoring a backup of a deleted database. sourceDatabaseId must be specified. If sourceDatabaseId is the database's original resource ID, then sourceDatabaseDeletionDate must be specified. Otherwise sourceDatabaseId must be the restorable dropped database resource ID and sourceDatabaseDeletionDate is ignored. restorePointInTime may also be specified to restore from an earlier point in time.
         /// 
         /// RestoreLongTermRetentionBackup: Creates a database by restoring from a long term retention vault. recoveryServicesRecoveryPointResourceId must be specified as the recovery point resource ID.
         /// 
@@ -3695,7 +3695,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="isInfraEncryptionEnabled"> Infra encryption is enabled for this database. </param>
         /// <param name="federatedClientId"> The Client id used for cross tenant per database CMK scenario. </param>
         /// <param name="keys"> The resource ids of the user assigned identities to use. </param>
-        /// <param name="encryptionProtector"> The azure key vault URI of the database if it&apos;s configured with per Database Customer Managed Keys. </param>
+        /// <param name="encryptionProtector"> The azure key vault URI of the database if it's configured with per Database Customer Managed Keys. </param>
         /// <param name="preferredEnclaveType"> Type of enclave requested on the database i.e. Default or VBS enclaves. </param>
         /// <param name="sourceResourceId">
         /// The resource identifier of the source associated with the create operation of this database.
@@ -3719,12 +3719,12 @@ namespace Azure.ResourceManager.Sql.Models
         /// 
         /// When manualCutover is specified, the scaling operation will wait for user input to trigger cutover to Hyperscale database.
         /// 
-        /// To trigger cutover, please provide &apos;performCutover&apos; parameter when the Scaling operation is in Waiting state.
+        /// To trigger cutover, please provide 'performCutover' parameter when the Scaling operation is in Waiting state.
         /// </param>
         /// <param name="performCutover">
         /// To trigger customer controlled manual cutover during the wait state while Scaling operation is in progress.
         /// 
-        /// This property parameter is only applicable for scaling operations that are initiated along with &apos;manualCutover&apos; parameter.
+        /// This property parameter is only applicable for scaling operations that are initiated along with 'manualCutover' parameter.
         /// 
         /// This property is only applicable when scaling database from Business Critical/General Purpose/Premium/Standard tier to Hyperscale tier is already in progress.
         /// 
@@ -3824,14 +3824,14 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="state"> The state of the server. </param>
         /// <param name="fullyQualifiedDomainName"> The fully qualified domain name of the server. </param>
         /// <param name="privateEndpointConnections"> List of private endpoint connections on a server. </param>
-        /// <param name="minimalTlsVersion"> Minimal TLS version. Allowed values: &apos;1.0&apos;, &apos;1.1&apos;, &apos;1.2&apos;. </param>
-        /// <param name="publicNetworkAccess"> Whether or not public endpoint access is allowed for this server.  Value is optional but if passed in, must be &apos;Enabled&apos; or &apos;Disabled&apos; or &apos;SecuredByPerimeter&apos;. </param>
+        /// <param name="minimalTlsVersion"> Minimal TLS version. Allowed values: '1.0', '1.1', '1.2'. </param>
+        /// <param name="publicNetworkAccess"> Whether or not public endpoint access is allowed for this server.  Value is optional but if passed in, must be 'Enabled' or 'Disabled' or 'SecuredByPerimeter'. </param>
         /// <param name="workspaceFeature"> Whether or not existing server has a workspace created and if it allows connection from workspace. </param>
         /// <param name="primaryUserAssignedIdentityId"> The resource id of a user assigned identity to be used by default. </param>
         /// <param name="federatedClientId"> The Client id used for cross tenant CMK scenario. </param>
         /// <param name="keyId"> A CMK URI of the key to use for encryption. </param>
         /// <param name="administrators"> The Azure Active Directory administrator of the server. This can only be used at server create time. If used for server update, it will be ignored or it will result in an error. For updates individual APIs will need to be used. </param>
-        /// <param name="restrictOutboundNetworkAccess"> Whether or not to restrict outbound network access for this server.  Value is optional but if passed in, must be &apos;Enabled&apos; or &apos;Disabled&apos;. </param>
+        /// <param name="restrictOutboundNetworkAccess"> Whether or not to restrict outbound network access for this server.  Value is optional but if passed in, must be 'Enabled' or 'Disabled'. </param>
         /// <param name="externalGovernanceStatus"> Status of external governance. </param>
         /// <returns> A new <see cref="Sql.SqlServerData"/> instance for mocking. </returns>
         public static SqlServerData SqlServerData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ManagedServiceIdentity identity = null, string kind = null, string administratorLogin = null, string administratorLoginPassword = null, string version = null, string state = null, string fullyQualifiedDomainName = null, IEnumerable<SqlServerPrivateEndpointConnection> privateEndpointConnections = null, string minimalTlsVersion = null, ServerNetworkAccessFlag? publicNetworkAccess = null, ServerWorkspaceFeature? workspaceFeature = null, ResourceIdentifier primaryUserAssignedIdentityId = null, Guid? federatedClientId = null, Uri keyId = null, ServerExternalAdministrator administrators = null, ServerNetworkAccessFlag? restrictOutboundNetworkAccess = null, ExternalGovernanceStatus? externalGovernanceStatus = null)

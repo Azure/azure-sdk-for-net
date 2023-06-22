@@ -27,7 +27,7 @@ namespace Microsoft.Azure.Management.Maintenance
             /// Get configuration assignment
             /// </summary>
             /// <remarks>
-            /// Get configuration for resource.
+            /// Get configuration assignment for resource..
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -62,7 +62,7 @@ namespace Microsoft.Azure.Management.Maintenance
             /// Get configuration assignment
             /// </summary>
             /// <remarks>
-            /// Get configuration for resource.
+            /// Get configuration assignment for resource..
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -261,7 +261,7 @@ namespace Microsoft.Azure.Management.Maintenance
             /// Get configuration assignment
             /// </summary>
             /// <remarks>
-            /// Get configuration for resource.
+            /// Get configuration assignment for resource..
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -290,7 +290,7 @@ namespace Microsoft.Azure.Management.Maintenance
             /// Get configuration assignment
             /// </summary>
             /// <remarks>
-            /// Get configuration for resource.
+            /// Get configuration assignment for resource..
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.

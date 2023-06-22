@@ -297,20 +297,55 @@ namespace Azure.ResourceManager.SecurityCenter
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.SecurityCenter.GovernanceAssignmentResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.SecurityCenter.GovernanceAssignmentData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.SecurityCenter.GovernanceAssignmentResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.SecurityCenter.GovernanceAssignmentData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
+    public partial class GovernanceRuleCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.SecurityCenter.GovernanceRuleResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.SecurityCenter.GovernanceRuleResource>, System.Collections.IEnumerable
+    {
+        protected GovernanceRuleCollection() { }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.SecurityCenter.GovernanceRuleResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string ruleId, Azure.ResourceManager.SecurityCenter.GovernanceRuleData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.SecurityCenter.GovernanceRuleResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string ruleId, Azure.ResourceManager.SecurityCenter.GovernanceRuleData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<bool> Exists(string ruleId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string ruleId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.SecurityCenter.GovernanceRuleResource> Get(string ruleId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.SecurityCenter.GovernanceRuleResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.SecurityCenter.GovernanceRuleResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SecurityCenter.GovernanceRuleResource>> GetAsync(string ruleId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.SecurityCenter.GovernanceRuleResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.SecurityCenter.GovernanceRuleResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
+        System.Collections.Generic.IEnumerator<Azure.ResourceManager.SecurityCenter.GovernanceRuleResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.SecurityCenter.GovernanceRuleResource>.GetEnumerator() { throw null; }
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
+    }
     public partial class GovernanceRuleData : Azure.ResourceManager.Models.ResourceData
     {
         public GovernanceRuleData() { }
         public System.Collections.Generic.IList<System.BinaryData> ConditionSets { get { throw null; } }
         public string Description { get { throw null; } set { } }
         public string DisplayName { get { throw null; } set { } }
+        public System.Collections.Generic.IList<string> ExcludedScopes { get { throw null; } }
         public Azure.ResourceManager.SecurityCenter.Models.GovernanceRuleEmailNotification GovernanceEmailNotification { get { throw null; } set { } }
+        public bool? IncludeMemberScopes { get { throw null; } set { } }
         public bool? IsDisabled { get { throw null; } set { } }
         public bool? IsGracePeriod { get { throw null; } set { } }
+        public Azure.ResourceManager.SecurityCenter.Models.GovernanceRuleMetadata Metadata { get { throw null; } set { } }
         public Azure.ResourceManager.SecurityCenter.Models.GovernanceRuleOwnerSource OwnerSource { get { throw null; } set { } }
         public string RemediationTimeframe { get { throw null; } set { } }
         public int? RulePriority { get { throw null; } set { } }
         public Azure.ResourceManager.SecurityCenter.Models.GovernanceRuleType? RuleType { get { throw null; } set { } }
         public Azure.ResourceManager.SecurityCenter.Models.GovernanceRuleSourceResourceType? SourceResourceType { get { throw null; } set { } }
+        public System.Guid? TenantId { get { throw null; } }
+    }
+    public partial class GovernanceRuleResource : Azure.ResourceManager.ArmResource
+    {
+        public static readonly Azure.Core.ResourceType ResourceType;
+        protected GovernanceRuleResource() { }
+        public virtual Azure.ResourceManager.SecurityCenter.GovernanceRuleData Data { get { throw null; } }
+        public virtual bool HasData { get { throw null; } }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string scope, string ruleId) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation Execute(Azure.WaitUntil waitUntil, Azure.ResourceManager.SecurityCenter.Models.ExecuteGovernanceRuleParams executeGovernanceRuleParams = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> ExecuteAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.SecurityCenter.Models.ExecuteGovernanceRuleParams executeGovernanceRuleParams = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.SecurityCenter.GovernanceRuleResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SecurityCenter.GovernanceRuleResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.SecurityCenter.GovernanceRuleResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.SecurityCenter.GovernanceRuleData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.SecurityCenter.GovernanceRuleResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.SecurityCenter.GovernanceRuleData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class IngestionSettingCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.SecurityCenter.IngestionSettingResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.SecurityCenter.IngestionSettingResource>, System.Collections.IEnumerable
     {
@@ -987,6 +1022,10 @@ namespace Azure.ResourceManager.SecurityCenter
         public static Azure.Pageable<Azure.ResourceManager.SecurityCenter.Models.ExternalSecuritySolution> GetExternalSecuritySolutions(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.AsyncPageable<Azure.ResourceManager.SecurityCenter.Models.ExternalSecuritySolution> GetExternalSecuritySolutionsAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.SecurityCenter.GovernanceAssignmentResource GetGovernanceAssignmentResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.Response<Azure.ResourceManager.SecurityCenter.GovernanceRuleResource> GetGovernanceRule(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope, string ruleId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SecurityCenter.GovernanceRuleResource>> GetGovernanceRuleAsync(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope, string ruleId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.ResourceManager.SecurityCenter.GovernanceRuleResource GetGovernanceRuleResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.SecurityCenter.GovernanceRuleCollection GetGovernanceRules(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope) { throw null; }
         public static Azure.Pageable<Azure.ResourceManager.SecurityCenter.Models.InformationProtectionPolicy> GetInformationProtectionPolicies(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.AsyncPageable<Azure.ResourceManager.SecurityCenter.Models.InformationProtectionPolicy> GetInformationProtectionPoliciesAsync(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Response<Azure.ResourceManager.SecurityCenter.IngestionSettingResource> GetIngestionSetting(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string ingestionSettingName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -1073,6 +1112,8 @@ namespace Azure.ResourceManager.SecurityCenter
         public static Azure.Response<Azure.ResourceManager.SecurityCenter.SecurityConnectorResource> GetSecurityConnector(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string securityConnectorName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.SecurityCenter.SecurityConnectorApplicationResource GetSecurityConnectorApplicationResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SecurityCenter.SecurityConnectorResource>> GetSecurityConnectorAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string securityConnectorName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        [System.ObsoleteAttribute("This method is obsolete and will be removed in a future release.", false)]
         public static Azure.ResourceManager.SecurityCenter.SecurityConnectorGovernanceRuleResource GetSecurityConnectorGovernanceRuleResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.SecurityCenter.SecurityConnectorResource GetSecurityConnectorResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.SecurityCenter.SecurityConnectorCollection GetSecurityConnectors(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource) { throw null; }
@@ -1118,9 +1159,17 @@ namespace Azure.ResourceManager.SecurityCenter
         public static Azure.Response<Azure.ResourceManager.SecurityCenter.SubscriptionAssessmentMetadataResource> GetSubscriptionAssessmentMetadata(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string assessmentMetadataName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SecurityCenter.SubscriptionAssessmentMetadataResource>> GetSubscriptionAssessmentMetadataAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string assessmentMetadataName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.SecurityCenter.SubscriptionAssessmentMetadataResource GetSubscriptionAssessmentMetadataResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        [System.ObsoleteAttribute("This method is obsolete and will be removed in a future release.", false)]
         public static Azure.Response<Azure.ResourceManager.SecurityCenter.SubscriptionGovernanceRuleResource> GetSubscriptionGovernanceRule(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string ruleId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        [System.ObsoleteAttribute("This method is obsolete and will be removed in a future release.", false)]
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SecurityCenter.SubscriptionGovernanceRuleResource>> GetSubscriptionGovernanceRuleAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string ruleId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        [System.ObsoleteAttribute("This method is obsolete and will be removed in a future release. Please use GetGovernanceRuleResource.", false)]
         public static Azure.ResourceManager.SecurityCenter.SubscriptionGovernanceRuleResource GetSubscriptionGovernanceRuleResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        [System.ObsoleteAttribute("This method is obsolete and will be removed in a future release.", false)]
         public static Azure.ResourceManager.SecurityCenter.SubscriptionGovernanceRuleCollection GetSubscriptionGovernanceRules(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource) { throw null; }
         public static Azure.ResourceManager.SecurityCenter.SubscriptionSecurityAlertResource GetSubscriptionSecurityAlertResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.Response<Azure.ResourceManager.SecurityCenter.SubscriptionSecurityApplicationResource> GetSubscriptionSecurityApplication(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string applicationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -1343,6 +1392,8 @@ namespace Azure.ResourceManager.SecurityCenter
         public string Kind { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.SecurityCenter.Models.SecurityCenterCloudOffering> Offerings { get { throw null; } }
     }
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+    [System.ObsoleteAttribute("This class is obsolete and will be removed in a future release.", false)]
     public partial class SecurityConnectorGovernanceRuleCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.SecurityCenter.SecurityConnectorGovernanceRuleResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.SecurityCenter.SecurityConnectorGovernanceRuleResource>, System.Collections.IEnumerable
     {
         protected SecurityConnectorGovernanceRuleCollection() { }
@@ -1358,6 +1409,8 @@ namespace Azure.ResourceManager.SecurityCenter
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.SecurityCenter.SecurityConnectorGovernanceRuleResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.SecurityCenter.SecurityConnectorGovernanceRuleResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+    [System.ObsoleteAttribute("This class is obsolete and will be removed in a future release.", false)]
     public partial class SecurityConnectorGovernanceRuleResource : Azure.ResourceManager.ArmResource
     {
         public static readonly Azure.Core.ResourceType ResourceType;
@@ -1392,8 +1445,14 @@ namespace Azure.ResourceManager.SecurityCenter
         public virtual Azure.Response<Azure.ResourceManager.SecurityCenter.SecurityConnectorApplicationResource> GetSecurityConnectorApplication(string applicationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SecurityCenter.SecurityConnectorApplicationResource>> GetSecurityConnectorApplicationAsync(string applicationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.SecurityCenter.SecurityConnectorApplicationCollection GetSecurityConnectorApplications() { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        [System.ObsoleteAttribute("This class is obsolete and will be removed in a future release.", false)]
         public virtual Azure.Response<Azure.ResourceManager.SecurityCenter.SecurityConnectorGovernanceRuleResource> GetSecurityConnectorGovernanceRule(string ruleId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        [System.ObsoleteAttribute("This class is obsolete and will be removed in a future release.", false)]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SecurityCenter.SecurityConnectorGovernanceRuleResource>> GetSecurityConnectorGovernanceRuleAsync(string ruleId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        [System.ObsoleteAttribute("This class is obsolete and will be removed in a future release.", false)]
         public virtual Azure.ResourceManager.SecurityCenter.SecurityConnectorGovernanceRuleCollection GetSecurityConnectorGovernanceRules() { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.SecurityCenter.SecurityConnectorResource> RemoveTag(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SecurityCenter.SecurityConnectorResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -1718,6 +1777,8 @@ namespace Azure.ResourceManager.SecurityCenter
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.SecurityCenter.SubscriptionAssessmentMetadataResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.SecurityCenter.SecurityAssessmentMetadataData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.SecurityCenter.SubscriptionAssessmentMetadataResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.SecurityCenter.SecurityAssessmentMetadataData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+    [System.ObsoleteAttribute("This class is obsolete and will be removed in a future release. Please use GovernanceRuleCollection.", false)]
     public partial class SubscriptionGovernanceRuleCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.SecurityCenter.SubscriptionGovernanceRuleResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.SecurityCenter.SubscriptionGovernanceRuleResource>, System.Collections.IEnumerable
     {
         protected SubscriptionGovernanceRuleCollection() { }
@@ -1733,6 +1794,8 @@ namespace Azure.ResourceManager.SecurityCenter
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.SecurityCenter.SubscriptionGovernanceRuleResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.SecurityCenter.SubscriptionGovernanceRuleResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+    [System.ObsoleteAttribute("This class is obsolete and will be removed in a future release. Please use GovernanceRuleResource.", false)]
     public partial class SubscriptionGovernanceRuleResource : Azure.ResourceManager.ArmResource
     {
         public static readonly Azure.Core.ResourceType ResourceType;
@@ -2095,14 +2158,14 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public static Azure.ResourceManager.SecurityCenter.DeviceSecurityGroupData DeviceSecurityGroupData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.SecurityCenter.Models.ThresholdCustomAlertRule> thresholdRules = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.SecurityCenter.Models.TimeWindowCustomAlertRule> timeWindowRules = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.SecurityCenter.Models.AllowlistCustomAlertRule> allowlistRules = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.SecurityCenter.Models.DenylistCustomAlertRule> denylistRules = null) { throw null; }
         public static Azure.ResourceManager.SecurityCenter.Models.DirectMethodInvokesNotInAllowedRange DirectMethodInvokesNotInAllowedRange(string displayName = null, string description = null, bool isEnabled = false, int minThreshold = 0, int maxThreshold = 0, System.TimeSpan timeWindowSize = default(System.TimeSpan)) { throw null; }
         public static Azure.ResourceManager.SecurityCenter.Models.DiscoveredSecuritySolution DiscoveredSecuritySolution(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.SecurityCenter.Models.SecurityFamily securityFamily = default(Azure.ResourceManager.SecurityCenter.Models.SecurityFamily), string offer = null, string publisher = null, string sku = null, Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?)) { throw null; }
-        public static Azure.ResourceManager.SecurityCenter.Models.ExecuteRuleStatus ExecuteRuleStatus(string operationId = null) { throw null; }
         public static Azure.ResourceManager.SecurityCenter.Models.ExternalSecuritySolution ExternalSecuritySolution(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string kind = "Unknown", Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?)) { throw null; }
         public static Azure.ResourceManager.SecurityCenter.Models.FailedLocalLoginsNotInAllowedRange FailedLocalLoginsNotInAllowedRange(string displayName = null, string description = null, bool isEnabled = false, int minThreshold = 0, int maxThreshold = 0, System.TimeSpan timeWindowSize = default(System.TimeSpan)) { throw null; }
         public static Azure.ResourceManager.SecurityCenter.Models.FileUploadsNotInAllowedRange FileUploadsNotInAllowedRange(string displayName = null, string description = null, bool isEnabled = false, int minThreshold = 0, int maxThreshold = 0, System.TimeSpan timeWindowSize = default(System.TimeSpan)) { throw null; }
         public static Azure.ResourceManager.SecurityCenter.Models.GcpCredentialsDetailsProperties GcpCredentialsDetailsProperties(Azure.ResourceManager.SecurityCenter.Models.AuthenticationProvisioningState? authenticationProvisioningState = default(Azure.ResourceManager.SecurityCenter.Models.AuthenticationProvisioningState?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.SecurityCenter.Models.SecurityCenterCloudPermission> grantedPermissions = null, string organizationId = null, string gcpCredentialType = null, string projectId = null, string privateKeyId = null, string privateKey = null, string clientEmail = null, string clientId = null, System.Uri authUri = null, System.Uri tokenUri = null, System.Uri authProviderX509CertUri = null, System.Uri clientX509CertUri = null) { throw null; }
         public static Azure.ResourceManager.SecurityCenter.Models.GcpProjectDetails GcpProjectDetails(string projectNumber = null, string projectId = null, string workloadIdentityPoolId = null) { throw null; }
         public static Azure.ResourceManager.SecurityCenter.GovernanceAssignmentData GovernanceAssignmentData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string owner = null, System.DateTimeOffset? remediationDueOn = default(System.DateTimeOffset?), Azure.ResourceManager.SecurityCenter.Models.RemediationEta remediationEta = null, bool? isGracePeriod = default(bool?), Azure.ResourceManager.SecurityCenter.Models.GovernanceEmailNotification governanceEmailNotification = null, Azure.ResourceManager.SecurityCenter.Models.GovernanceAssignmentAdditionalInfo additionalData = null) { throw null; }
-        public static Azure.ResourceManager.SecurityCenter.GovernanceRuleData GovernanceRuleData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string displayName = null, string description = null, string remediationTimeframe = null, bool? isGracePeriod = default(bool?), int? rulePriority = default(int?), bool? isDisabled = default(bool?), Azure.ResourceManager.SecurityCenter.Models.GovernanceRuleType? ruleType = default(Azure.ResourceManager.SecurityCenter.Models.GovernanceRuleType?), Azure.ResourceManager.SecurityCenter.Models.GovernanceRuleSourceResourceType? sourceResourceType = default(Azure.ResourceManager.SecurityCenter.Models.GovernanceRuleSourceResourceType?), System.Collections.Generic.IEnumerable<System.BinaryData> conditionSets = null, Azure.ResourceManager.SecurityCenter.Models.GovernanceRuleOwnerSource ownerSource = null, Azure.ResourceManager.SecurityCenter.Models.GovernanceRuleEmailNotification governanceEmailNotification = null) { throw null; }
+        public static Azure.ResourceManager.SecurityCenter.GovernanceRuleData GovernanceRuleData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Guid? tenantId = default(System.Guid?), string displayName = null, string description = null, string remediationTimeframe = null, bool? isGracePeriod = default(bool?), int? rulePriority = default(int?), bool? isDisabled = default(bool?), Azure.ResourceManager.SecurityCenter.Models.GovernanceRuleType? ruleType = default(Azure.ResourceManager.SecurityCenter.Models.GovernanceRuleType?), Azure.ResourceManager.SecurityCenter.Models.GovernanceRuleSourceResourceType? sourceResourceType = default(Azure.ResourceManager.SecurityCenter.Models.GovernanceRuleSourceResourceType?), System.Collections.Generic.IEnumerable<string> excludedScopes = null, System.Collections.Generic.IEnumerable<System.BinaryData> conditionSets = null, bool? includeMemberScopes = default(bool?), Azure.ResourceManager.SecurityCenter.Models.GovernanceRuleOwnerSource ownerSource = null, Azure.ResourceManager.SecurityCenter.Models.GovernanceRuleEmailNotification governanceEmailNotification = null, Azure.ResourceManager.SecurityCenter.Models.GovernanceRuleMetadata metadata = null) { throw null; }
+        public static Azure.ResourceManager.SecurityCenter.Models.GovernanceRuleMetadata GovernanceRuleMetadata(string createdBy = null, System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), string updatedBy = null, System.DateTimeOffset? updatedOn = default(System.DateTimeOffset?)) { throw null; }
         public static Azure.ResourceManager.SecurityCenter.Models.HttpC2DMessagesNotInAllowedRange HttpC2DMessagesNotInAllowedRange(string displayName = null, string description = null, bool isEnabled = false, int minThreshold = 0, int maxThreshold = 0, System.TimeSpan timeWindowSize = default(System.TimeSpan)) { throw null; }
         public static Azure.ResourceManager.SecurityCenter.Models.HttpC2DRejectedMessagesNotInAllowedRange HttpC2DRejectedMessagesNotInAllowedRange(string displayName = null, string description = null, bool isEnabled = false, int minThreshold = 0, int maxThreshold = 0, System.TimeSpan timeWindowSize = default(System.TimeSpan)) { throw null; }
         public static Azure.ResourceManager.SecurityCenter.Models.HttpD2CMessagesNotInAllowedRange HttpD2CMessagesNotInAllowedRange(string displayName = null, string description = null, bool isEnabled = false, int minThreshold = 0, int maxThreshold = 0, System.TimeSpan timeWindowSize = default(System.TimeSpan)) { throw null; }
@@ -2850,6 +2913,14 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public GovernanceRuleEmailNotification() { }
         public bool? IsManagerEmailNotificationDisabled { get { throw null; } set { } }
         public bool? IsOwnerEmailNotificationDisabled { get { throw null; } set { } }
+    }
+    public partial class GovernanceRuleMetadata
+    {
+        public GovernanceRuleMetadata() { }
+        public string CreatedBy { get { throw null; } }
+        public System.DateTimeOffset? CreatedOn { get { throw null; } }
+        public string UpdatedBy { get { throw null; } }
+        public System.DateTimeOffset? UpdatedOn { get { throw null; } }
     }
     public partial class GovernanceRuleOwnerSource
     {
@@ -4662,6 +4733,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public System.DateTimeOffset? EndOn { get { throw null; } set { } }
         public int? HighSeverityFailedRulesCount { get { throw null; } set { } }
         public bool? IsBaselineApplied { get { throw null; } set { } }
+        public System.DateTimeOffset? LastScanOn { get { throw null; } set { } }
         public int? LowSeverityFailedRulesCount { get { throw null; } set { } }
         public int? MediumSeverityFailedRulesCount { get { throw null; } set { } }
         public string Server { get { throw null; } set { } }

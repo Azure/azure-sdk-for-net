@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.DevCenter
         /// </list>
         /// </summary>
         /// <param name="scheduleName"> The name of the schedule that uniquely identifies it. </param>
-        /// <param name="top"> The maximum number of resources to return from the operation. Example: &apos;$top=10&apos;. </param>
+        /// <param name="top"> The maximum number of resources to return from the operation. Example: '$top=10'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="scheduleName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="scheduleName"/> is null. </exception>
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.DevCenter
         /// </list>
         /// </summary>
         /// <param name="scheduleName"> The name of the schedule that uniquely identifies it. </param>
-        /// <param name="top"> The maximum number of resources to return from the operation. Example: &apos;$top=10&apos;. </param>
+        /// <param name="top"> The maximum number of resources to return from the operation. Example: '$top=10'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="scheduleName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="scheduleName"/> is null. </exception>

@@ -208,7 +208,7 @@ namespace Azure.ResourceManager.SecurityCenter
             return message;
         }
 
-        /// <summary> Update existing rule or create new rule if it doesn&apos;t exist. </summary>
+        /// <summary> Update existing rule or create new rule if it doesn't exist. </summary>
         /// <param name="subscriptionId"> Azure subscription ID. </param>
         /// <param name="alertsSuppressionRuleName"> The unique name of the suppression alert rule. </param>
         /// <param name="data"> Suppression rule object. </param>
@@ -237,7 +237,7 @@ namespace Azure.ResourceManager.SecurityCenter
             }
         }
 
-        /// <summary> Update existing rule or create new rule if it doesn&apos;t exist. </summary>
+        /// <summary> Update existing rule or create new rule if it doesn't exist. </summary>
         /// <param name="subscriptionId"> Azure subscription ID. </param>
         /// <param name="alertsSuppressionRuleName"> The unique name of the suppression alert rule. </param>
         /// <param name="data"> Suppression rule object. </param>

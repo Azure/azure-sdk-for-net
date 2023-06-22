@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -36,6 +37,16 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
+            if (Optional.IsDefined(State))
+            {
+                writer.WritePropertyName("state"u8);
+                writer.WriteStringValue(State.Value.ToString());
+            }
+            if (Optional.IsDefined(OnInactiveMarkAs))
+            {
+                writer.WritePropertyName("onInactiveMarkAs"u8);
+                writer.WriteStringValue(OnInactiveMarkAs.Value.ToString());
+            }
             if (Optional.IsCollectionDefined(DependsOn))
             {
                 writer.WritePropertyName("dependsOn"u8);
@@ -61,28 +72,16 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WritePropertyName("method"u8);
             writer.WriteStringValue(Method.ToString());
             writer.WritePropertyName("url"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(Uri);
-#else
-            JsonSerializer.Serialize(writer, JsonDocument.Parse(Uri.ToString()).RootElement);
-#endif
+            JsonSerializer.Serialize(writer, Uri);
             if (Optional.IsDefined(Headers))
             {
                 writer.WritePropertyName("headers"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(Headers);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(Headers.ToString()).RootElement);
-#endif
+                JsonSerializer.Serialize(writer, Headers);
             }
             if (Optional.IsDefined(Body))
             {
                 writer.WritePropertyName("body"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(Body);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(Body.ToString()).RootElement);
-#endif
+                JsonSerializer.Serialize(writer, Body);
             }
             if (Optional.IsDefined(Authentication))
             {
@@ -138,21 +137,23 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            Optional<FactoryLinkedServiceReference> linkedServiceName = default;
+            Optional<DataFactoryLinkedServiceReference> linkedServiceName = default;
             Optional<ActivityPolicy> policy = default;
             string name = default;
             string type = default;
             Optional<string> description = default;
+            Optional<ActivityState> state = default;
+            Optional<ActivityOnInactiveMarkA> onInactiveMarkAs = default;
             Optional<IList<ActivityDependency>> dependsOn = default;
             Optional<IList<ActivityUserProperty>> userProperties = default;
             WebActivityMethod method = default;
-            BinaryData url = default;
-            Optional<BinaryData> headers = default;
-            Optional<BinaryData> body = default;
+            DataFactoryElement<string> url = default;
+            Optional<DataFactoryElement<string>> headers = default;
+            Optional<DataFactoryElement<string>> body = default;
             Optional<WebActivityAuthentication> authentication = default;
             Optional<bool> disableCertValidation = default;
             Optional<IList<DatasetReference>> datasets = default;
-            Optional<IList<FactoryLinkedServiceReference>> linkedServices = default;
+            Optional<IList<DataFactoryLinkedServiceReference>> linkedServices = default;
             Optional<IntegrationRuntimeReference> connectVia = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -164,7 +165,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    linkedServiceName = FactoryLinkedServiceReference.DeserializeFactoryLinkedServiceReference(property.Value);
+                    linkedServiceName = DataFactoryLinkedServiceReference.DeserializeDataFactoryLinkedServiceReference(property.Value);
                     continue;
                 }
                 if (property.NameEquals("policy"u8))
@@ -189,6 +190,24 @@ namespace Azure.ResourceManager.DataFactory.Models
                 if (property.NameEquals("description"u8))
                 {
                     description = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("state"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    state = new ActivityState(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("onInactiveMarkAs"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    onInactiveMarkAs = new ActivityOnInactiveMarkA(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("dependsOn"u8))
@@ -235,7 +254,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                         }
                         if (property0.NameEquals("url"u8))
                         {
-                            url = BinaryData.FromString(property0.Value.GetRawText());
+                            url = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("headers"u8))
@@ -244,7 +263,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            headers = BinaryData.FromString(property0.Value.GetRawText());
+                            headers = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("body"u8))
@@ -253,7 +272,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            body = BinaryData.FromString(property0.Value.GetRawText());
+                            body = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("authentication"u8))
@@ -294,10 +313,10 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            List<FactoryLinkedServiceReference> array = new List<FactoryLinkedServiceReference>();
+                            List<DataFactoryLinkedServiceReference> array = new List<DataFactoryLinkedServiceReference>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(FactoryLinkedServiceReference.DeserializeFactoryLinkedServiceReference(item));
+                                array.Add(DataFactoryLinkedServiceReference.DeserializeDataFactoryLinkedServiceReference(item));
                             }
                             linkedServices = array;
                             continue;
@@ -317,7 +336,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new WebActivity(name, type, description.Value, Optional.ToList(dependsOn), Optional.ToList(userProperties), additionalProperties, linkedServiceName.Value, policy.Value, method, url, headers.Value, body.Value, authentication.Value, Optional.ToNullable(disableCertValidation), Optional.ToList(datasets), Optional.ToList(linkedServices), connectVia.Value);
+            return new WebActivity(name, type, description.Value, Optional.ToNullable(state), Optional.ToNullable(onInactiveMarkAs), Optional.ToList(dependsOn), Optional.ToList(userProperties), additionalProperties, linkedServiceName.Value, policy.Value, method, url, headers.Value, body.Value, authentication.Value, Optional.ToNullable(disableCertValidation), Optional.ToList(datasets), Optional.ToList(linkedServices), connectVia.Value);
         }
     }
 }

@@ -25,13 +25,6 @@ namespace Azure.Storage.DataMovement
         protected StorageResource() { }
 
         /// <summary>
-        /// If applicable, returns the preferred method of how to perform service to service
-        /// transfers. See <see cref="TransferCopyMethod"/>. This value can be set when specifying
-        /// the options bag for service related storage resources.
-        /// </summary>
-        public abstract TransferCopyMethod ServiceCopyMethod { get; }
-
-        /// <summary>
         /// Defines the transfer type of the storage resource.
         /// </summary>
         public abstract TransferType TransferType { get; }
@@ -151,7 +144,7 @@ namespace Azure.Storage.DataMovement
         /// If the operation requires any ending transfers (e.g. Committing a block list, flushing crypto streams)
         /// </summary>
         /// <returns>The Task which Commits the list of ids</returns>
-        public abstract Task CompleteTransferAsync(CancellationToken cancellationToken = default);
+        public abstract Task CompleteTransferAsync(bool overwrite, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Deletes the respective storage resource.

@@ -5,9 +5,9 @@
 
 #nullable disable
 
-using System;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -17,17 +17,9 @@ namespace Azure.ResourceManager.DataFactory.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("domain"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(Domain);
-#else
-            JsonSerializer.Serialize(writer, JsonDocument.Parse(Domain.ToString()).RootElement);
-#endif
+            JsonSerializer.Serialize(writer, Domain);
             writer.WritePropertyName("userName"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(UserName);
-#else
-            JsonSerializer.Serialize(writer, JsonDocument.Parse(UserName.ToString()).RootElement);
-#endif
+            JsonSerializer.Serialize(writer, UserName);
             writer.WritePropertyName("password"u8);
             writer.WriteObjectValue(Password);
             writer.WriteEndObject();
@@ -39,24 +31,24 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            BinaryData domain = default;
-            BinaryData userName = default;
-            FactorySecretBaseDefinition password = default;
+            DataFactoryElement<string> domain = default;
+            DataFactoryElement<string> userName = default;
+            DataFactorySecretBaseDefinition password = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("domain"u8))
                 {
-                    domain = BinaryData.FromString(property.Value.GetRawText());
+                    domain = JsonSerializer.Deserialize<DataFactoryElement<string>>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("userName"u8))
                 {
-                    userName = BinaryData.FromString(property.Value.GetRawText());
+                    userName = JsonSerializer.Deserialize<DataFactoryElement<string>>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("password"u8))
                 {
-                    password = FactorySecretBaseDefinition.DeserializeFactorySecretBaseDefinition(property.Value);
+                    password = DataFactorySecretBaseDefinition.DeserializeDataFactorySecretBaseDefinition(property.Value);
                     continue;
                 }
             }

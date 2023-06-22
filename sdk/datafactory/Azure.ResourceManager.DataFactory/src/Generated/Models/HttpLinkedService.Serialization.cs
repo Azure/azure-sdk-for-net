@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -62,11 +63,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WritePropertyName("typeProperties"u8);
             writer.WriteStartObject();
             writer.WritePropertyName("url"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(Uri);
-#else
-            JsonSerializer.Serialize(writer, JsonDocument.Parse(Uri.ToString()).RootElement);
-#endif
+            JsonSerializer.Serialize(writer, Uri);
             if (Optional.IsDefined(AuthenticationType))
             {
                 writer.WritePropertyName("authenticationType"u8);
@@ -75,11 +72,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(UserName))
             {
                 writer.WritePropertyName("userName"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(UserName);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(UserName.ToString()).RootElement);
-#endif
+                JsonSerializer.Serialize(writer, UserName);
             }
             if (Optional.IsDefined(Password))
             {
@@ -89,29 +82,17 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(AuthHeaders))
             {
                 writer.WritePropertyName("authHeaders"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(AuthHeaders);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(AuthHeaders.ToString()).RootElement);
-#endif
+                JsonSerializer.Serialize(writer, AuthHeaders);
             }
             if (Optional.IsDefined(EmbeddedCertData))
             {
                 writer.WritePropertyName("embeddedCertData"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(EmbeddedCertData);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(EmbeddedCertData.ToString()).RootElement);
-#endif
+                JsonSerializer.Serialize(writer, EmbeddedCertData);
             }
             if (Optional.IsDefined(CertThumbprint))
             {
                 writer.WritePropertyName("certThumbprint"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(CertThumbprint);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(CertThumbprint.ToString()).RootElement);
-#endif
+                JsonSerializer.Serialize(writer, CertThumbprint);
             }
             if (Optional.IsDefined(EncryptedCredential))
             {
@@ -125,11 +106,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(EnableServerCertificateValidation))
             {
                 writer.WritePropertyName("enableServerCertificateValidation"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(EnableServerCertificateValidation);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(EnableServerCertificateValidation.ToString()).RootElement);
-#endif
+                JsonSerializer.Serialize(writer, EnableServerCertificateValidation);
             }
             writer.WriteEndObject();
             foreach (var item in AdditionalProperties)
@@ -155,15 +132,15 @@ namespace Azure.ResourceManager.DataFactory.Models
             Optional<string> description = default;
             Optional<IDictionary<string, EntityParameterSpecification>> parameters = default;
             Optional<IList<BinaryData>> annotations = default;
-            BinaryData url = default;
+            DataFactoryElement<string> url = default;
             Optional<HttpAuthenticationType> authenticationType = default;
-            Optional<BinaryData> userName = default;
-            Optional<FactorySecretBaseDefinition> password = default;
-            Optional<BinaryData> authHeaders = default;
-            Optional<BinaryData> embeddedCertData = default;
-            Optional<BinaryData> certThumbprint = default;
+            Optional<DataFactoryElement<string>> userName = default;
+            Optional<DataFactorySecretBaseDefinition> password = default;
+            Optional<DataFactoryElement<BinaryData>> authHeaders = default;
+            Optional<DataFactoryElement<string>> embeddedCertData = default;
+            Optional<DataFactoryElement<string>> certThumbprint = default;
             Optional<BinaryData> encryptedCredential = default;
-            Optional<BinaryData> enableServerCertificateValidation = default;
+            Optional<DataFactoryElement<bool>> enableServerCertificateValidation = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -233,7 +210,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         if (property0.NameEquals("url"u8))
                         {
-                            url = BinaryData.FromString(property0.Value.GetRawText());
+                            url = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("authenticationType"u8))
@@ -251,7 +228,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            userName = BinaryData.FromString(property0.Value.GetRawText());
+                            userName = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("password"u8))
@@ -260,7 +237,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            password = FactorySecretBaseDefinition.DeserializeFactorySecretBaseDefinition(property0.Value);
+                            password = DataFactorySecretBaseDefinition.DeserializeDataFactorySecretBaseDefinition(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("authHeaders"u8))
@@ -269,7 +246,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            authHeaders = BinaryData.FromString(property0.Value.GetRawText());
+                            authHeaders = JsonSerializer.Deserialize<DataFactoryElement<BinaryData>>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("embeddedCertData"u8))
@@ -278,7 +255,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            embeddedCertData = BinaryData.FromString(property0.Value.GetRawText());
+                            embeddedCertData = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("certThumbprint"u8))
@@ -287,7 +264,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            certThumbprint = BinaryData.FromString(property0.Value.GetRawText());
+                            certThumbprint = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("encryptedCredential"u8))
@@ -305,7 +282,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            enableServerCertificateValidation = BinaryData.FromString(property0.Value.GetRawText());
+                            enableServerCertificateValidation = JsonSerializer.Deserialize<DataFactoryElement<bool>>(property0.Value.GetRawText());
                             continue;
                         }
                     }

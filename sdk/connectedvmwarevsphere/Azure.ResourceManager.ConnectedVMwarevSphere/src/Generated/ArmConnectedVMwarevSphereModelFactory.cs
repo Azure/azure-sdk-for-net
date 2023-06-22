@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
         /// <summary> Initializes a new instance of ResourceStatus. </summary>
         /// <param name="resourceStatusType"> The type of the condition. </param>
         /// <param name="status"> Status of the condition. </param>
-        /// <param name="reason"> The reason for the condition&apos;s status. </param>
+        /// <param name="reason"> The reason for the condition's status. </param>
         /// <param name="message"> A human readable message indicating details about the status. </param>
         /// <param name="severity"> Severity with which to treat failures of this type of condition. </param>
         /// <param name="lastUpdatedOn"> The last update time for this condition. </param>
@@ -359,7 +359,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
         }
 
         /// <summary> Initializes a new instance of GuestAgentProfile. </summary>
-        /// <param name="vmUuid"> Specifies the VM&apos;s unique SMBIOS ID. </param>
+        /// <param name="vmUuid"> Specifies the VM's unique SMBIOS ID. </param>
         /// <param name="status"> The status of the hybrid machine agent. </param>
         /// <param name="lastStatusChange"> The time of the last status change. </param>
         /// <param name="agentVersion"> The hybrid machine agent full version. </param>
@@ -467,7 +467,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
         /// <param name="location"> The location. </param>
         /// <param name="forceUpdateTag"> How the extension handler should be forced to update even if the extension configuration has not changed. </param>
         /// <param name="publisher"> The name of the extension handler publisher. </param>
-        /// <param name="machineExtensionType"> Specifies the type of the extension; an example is &quot;CustomScriptExtension&quot;. </param>
+        /// <param name="machineExtensionType"> Specifies the type of the extension; an example is "CustomScriptExtension". </param>
         /// <param name="typeHandlerVersion"> Specifies the version of the script handler. </param>
         /// <param name="autoUpgradeMinorVersion"> Indicates whether the extension should use a newer minor version if one is available at deployment time. Once deployed, however, the extension will not upgrade minor versions unless redeployed, even with this property set to true. </param>
         /// <param name="settings"> Json formatted public settings for the extension. </param>
@@ -484,7 +484,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
 
         /// <summary> Initializes a new instance of MachineExtensionPropertiesInstanceView. </summary>
         /// <param name="name"> The machine extension name. </param>
-        /// <param name="machineExtensionInstanceViewType"> Specifies the type of the extension; an example is &quot;CustomScriptExtension&quot;. </param>
+        /// <param name="machineExtensionInstanceViewType"> Specifies the type of the extension; an example is "CustomScriptExtension". </param>
         /// <param name="typeHandlerVersion"> Specifies the version of the script handler. </param>
         /// <param name="status"> Instance view status. </param>
         /// <returns> A new <see cref="Models.MachineExtensionPropertiesInstanceView"/> instance for mocking. </returns>
@@ -495,7 +495,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
 
         /// <summary> Initializes a new instance of MachineExtensionInstanceView. </summary>
         /// <param name="name"> The machine extension name. </param>
-        /// <param name="machineExtensionInstanceViewType"> Specifies the type of the extension; an example is &quot;CustomScriptExtension&quot;. </param>
+        /// <param name="machineExtensionInstanceViewType"> Specifies the type of the extension; an example is "CustomScriptExtension". </param>
         /// <param name="typeHandlerVersion"> Specifies the version of the script handler. </param>
         /// <param name="status"> Instance view status. </param>
         /// <returns> A new <see cref="Models.MachineExtensionInstanceView"/> instance for mocking. </returns>

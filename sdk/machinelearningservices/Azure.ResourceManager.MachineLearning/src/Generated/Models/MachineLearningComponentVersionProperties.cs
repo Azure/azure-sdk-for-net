@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="isArchived"> Is the asset archived?. </param>
         /// <param name="componentSpec">
         /// Defines Component definition details.
-        /// &lt;see href=&quot;https://docs.microsoft.com/en-us/azure/machine-learning/reference-yaml-component-command&quot; /&gt;
+        /// &lt;see href="https://docs.microsoft.com/en-us/azure/machine-learning/reference-yaml-component-command" /&gt;
         /// </param>
         internal MachineLearningComponentVersionProperties(string description, IDictionary<string, string> properties, IDictionary<string, string> tags, bool? isAnonymous, bool? isArchived, BinaryData componentSpec) : base(description, properties, tags, isAnonymous, isArchived)
         {
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary>
         /// Defines Component definition details.
-        /// &lt;see href=&quot;https://docs.microsoft.com/en-us/azure/machine-learning/reference-yaml-component-command&quot; /&gt;
+        /// &lt;see href="https://docs.microsoft.com/en-us/azure/machine-learning/reference-yaml-component-command" /&gt;
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>

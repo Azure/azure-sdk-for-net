@@ -22,7 +22,7 @@ namespace Azure.Maps.Search.Models
 
         /// <summary> Initializes a new instance of ReverseSearchAddressItem. </summary>
         /// <param name="address"> The address of the result. </param>
-        /// <param name="position"> Position property in the form of &quot;{latitude},{longitude}&quot;. </param>
+        /// <param name="position"> Position property in the form of "{latitude},{longitude}". </param>
         /// <param name="roadUse"></param>
         /// <param name="matchType">
         /// Information on the type of match.
@@ -42,7 +42,7 @@ namespace Azure.Maps.Search.Models
 
         /// <summary> The address of the result. </summary>
         public MapsAddress Address { get; }
-        /// <summary> Position property in the form of &quot;{latitude},{longitude}&quot;. </summary>
+        /// <summary> Position property in the form of "{latitude},{longitude}". </summary>
         public string Position { get; }
         /// <summary> Gets the road use. </summary>
         public IReadOnlyList<RoadKind> RoadUse { get; }

@@ -63,8 +63,7 @@ namespace Azure.AI.TextAnalytics.Samples
             };
 
             // Perform the text analysis operation.
-            AbstractiveSummarizeOperation operation = client.StartAbstractiveSummarize(batchedDocuments);
-            operation.WaitForCompletion();
+            AbstractiveSummarizeOperation operation = client.AbstractiveSummarize(WaitUntil.Completed, batchedDocuments);
 
             Console.WriteLine($"The operation has completed.");
             Console.WriteLine();
@@ -101,7 +100,7 @@ namespace Azure.AI.TextAnalytics.Samples
                         Console.WriteLine($"  Text: {summary.Text.Replace("\n", " ")}");
                         Console.WriteLine($"  Contexts:");
 
-                        foreach (SummaryContext context in summary.Contexts)
+                        foreach (AbstractiveSummaryContext context in summary.Contexts)
                         {
                             Console.WriteLine($"    Offset: {context.Offset}");
                             Console.WriteLine($"    Length: {context.Length}");

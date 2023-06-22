@@ -40,7 +40,7 @@ namespace Azure.Analytics.Purview.Share.Samples
             var credential = new DefaultAzureCredential();
             var client = new AcceptedSentSharesClient("<https://my-service.azure.com>", credential);
 
-            Response response = client.GetAcceptedSentShare("<sentShareName>", "<acceptedSentShareName>", new RequestContext());
+            Response response = client.GetAcceptedSentShare("<sentShareName>", "<acceptedSentShareName>");
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("shareKind").ToString());
@@ -70,7 +70,7 @@ namespace Azure.Analytics.Purview.Share.Samples
             var credential = new DefaultAzureCredential();
             var client = new AcceptedSentSharesClient("<https://my-service.azure.com>", credential);
 
-            Response response = await client.GetAcceptedSentShareAsync("<sentShareName>", "<acceptedSentShareName>", new RequestContext());
+            Response response = await client.GetAcceptedSentShareAsync("<sentShareName>", "<acceptedSentShareName>");
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("shareKind").ToString());
@@ -101,7 +101,7 @@ namespace Azure.Analytics.Purview.Share.Samples
             var credential = new DefaultAzureCredential();
             var client = new AcceptedSentSharesClient("<https://my-service.azure.com>", credential);
 
-            foreach (var item in client.GetAcceptedSentShares("<sentShareName>", "<skipToken>", new RequestContext()))
+            foreach (var item in client.GetAcceptedSentShares("<sentShareName>", "<skipToken>"))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.GetProperty("shareKind").ToString());
@@ -133,7 +133,7 @@ namespace Azure.Analytics.Purview.Share.Samples
             var credential = new DefaultAzureCredential();
             var client = new AcceptedSentSharesClient("<https://my-service.azure.com>", credential);
 
-            await foreach (var item in client.GetAcceptedSentSharesAsync("<sentShareName>", "<skipToken>", new RequestContext()))
+            await foreach (var item in client.GetAcceptedSentSharesAsync("<sentShareName>", "<skipToken>"))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.GetProperty("shareKind").ToString());
@@ -180,7 +180,7 @@ namespace Azure.Analytics.Purview.Share.Samples
                 shareKind = "InPlace",
             };
 
-            var operation = client.Reinstate(WaitUntil.Completed, "<sentShareName>", "<acceptedSentShareName>", RequestContent.Create(data), "<repeatabilityRequestId>", new RequestContext());
+            var operation = client.Reinstate(WaitUntil.Completed, "<sentShareName>", "<acceptedSentShareName>", RequestContent.Create(data), "<repeatabilityRequestId>");
 
             BinaryData responseData = operation.Value;
             JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
@@ -227,7 +227,7 @@ namespace Azure.Analytics.Purview.Share.Samples
                 shareKind = "InPlace",
             };
 
-            var operation = await client.ReinstateAsync(WaitUntil.Completed, "<sentShareName>", "<acceptedSentShareName>", RequestContent.Create(data), "<repeatabilityRequestId>", new RequestContext());
+            var operation = await client.ReinstateAsync(WaitUntil.Completed, "<sentShareName>", "<acceptedSentShareName>", RequestContent.Create(data), "<repeatabilityRequestId>");
 
             BinaryData responseData = operation.Value;
             JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
@@ -259,7 +259,7 @@ namespace Azure.Analytics.Purview.Share.Samples
             var credential = new DefaultAzureCredential();
             var client = new AcceptedSentSharesClient("<https://my-service.azure.com>", credential);
 
-            var operation = client.Revoke(WaitUntil.Completed, "<sentShareName>", "<acceptedSentShareName>", "<repeatabilityRequestId>", new RequestContext());
+            var operation = client.Revoke(WaitUntil.Completed, "<sentShareName>", "<acceptedSentShareName>", "<repeatabilityRequestId>");
 
             BinaryData responseData = operation.Value;
             JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
@@ -291,7 +291,7 @@ namespace Azure.Analytics.Purview.Share.Samples
             var credential = new DefaultAzureCredential();
             var client = new AcceptedSentSharesClient("<https://my-service.azure.com>", credential);
 
-            var operation = await client.RevokeAsync(WaitUntil.Completed, "<sentShareName>", "<acceptedSentShareName>", "<repeatabilityRequestId>", new RequestContext());
+            var operation = await client.RevokeAsync(WaitUntil.Completed, "<sentShareName>", "<acceptedSentShareName>", "<repeatabilityRequestId>");
 
             BinaryData responseData = operation.Value;
             JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
@@ -338,7 +338,7 @@ namespace Azure.Analytics.Purview.Share.Samples
                 shareKind = "InPlace",
             };
 
-            var operation = client.UpdateExpiration(WaitUntil.Completed, "<sentShareName>", "<acceptedSentShareName>", RequestContent.Create(data), "<repeatabilityRequestId>", new RequestContext());
+            var operation = client.UpdateExpiration(WaitUntil.Completed, "<sentShareName>", "<acceptedSentShareName>", RequestContent.Create(data), "<repeatabilityRequestId>");
 
             BinaryData responseData = operation.Value;
             JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
@@ -385,7 +385,7 @@ namespace Azure.Analytics.Purview.Share.Samples
                 shareKind = "InPlace",
             };
 
-            var operation = await client.UpdateExpirationAsync(WaitUntil.Completed, "<sentShareName>", "<acceptedSentShareName>", RequestContent.Create(data), "<repeatabilityRequestId>", new RequestContext());
+            var operation = await client.UpdateExpirationAsync(WaitUntil.Completed, "<sentShareName>", "<acceptedSentShareName>", RequestContent.Create(data), "<repeatabilityRequestId>");
 
             BinaryData responseData = operation.Value;
             JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;

@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// <param name="replicaTimeout"> Maximum number of seconds a replica is allowed to run. </param>
         /// <param name="replicaRetryLimit"> Maximum number of retries before failing the job. </param>
         /// <param name="manualTriggerConfig"> Manual trigger configuration for a single execution job. Properties replicaCompletionCount and parallelism would be set to 1 by default. </param>
-        /// <param name="scheduleTriggerConfig"> Cron formatted repeating trigger schedule (&quot;* * * * *&quot;) for cronjobs. Properties completions and parallelism would be set to 1 by default. </param>
+        /// <param name="scheduleTriggerConfig"> Cron formatted repeating trigger schedule ("* * * * *") for cronjobs. Properties completions and parallelism would be set to 1 by default. </param>
         /// <param name="registries"> Collection of private container registry credentials used by a Container apps job. </param>
         internal ContainerAppJobConfiguration(IList<ContainerAppWritableSecret> secrets, ContainerAppJobTriggerType triggerType, int replicaTimeout, int? replicaRetryLimit, JobConfigurationManualTriggerConfig manualTriggerConfig, JobConfigurationScheduleTriggerConfig scheduleTriggerConfig, IList<ContainerAppRegistryCredentials> registries)
         {
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.AppContainers.Models
         public int? ReplicaRetryLimit { get; set; }
         /// <summary> Manual trigger configuration for a single execution job. Properties replicaCompletionCount and parallelism would be set to 1 by default. </summary>
         public JobConfigurationManualTriggerConfig ManualTriggerConfig { get; set; }
-        /// <summary> Cron formatted repeating trigger schedule (&quot;* * * * *&quot;) for cronjobs. Properties completions and parallelism would be set to 1 by default. </summary>
+        /// <summary> Cron formatted repeating trigger schedule ("* * * * *") for cronjobs. Properties completions and parallelism would be set to 1 by default. </summary>
         public JobConfigurationScheduleTriggerConfig ScheduleTriggerConfig { get; set; }
         /// <summary> Collection of private container registry credentials used by a Container apps job. </summary>
         public IList<ContainerAppRegistryCredentials> Registries { get; }

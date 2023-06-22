@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <param name="availableUpgradeVersions"> The list of cluster runtime version upgrades available for this cluster. </param>
         /// <param name="clusterCapacity"> The capacity supported by this cluster. </param>
         /// <param name="clusterConnectionStatus"> The latest heartbeat status between the cluster manager and the cluster. </param>
-        /// <param name="clusterExtendedLocation"> The extended location (custom location) that represents the cluster&apos;s control plane location. This extended location is used to route the requests of child objects of the cluster that are handled by the platform operator. </param>
+        /// <param name="clusterExtendedLocation"> The extended location (custom location) that represents the cluster's control plane location. This extended location is used to route the requests of child objects of the cluster that are handled by the platform operator. </param>
         /// <param name="clusterLocation"> The customer-provided location information to identify where the cluster resides. </param>
         /// <param name="clusterManagerConnectionStatus"> The latest connectivity status between cluster manager and the cluster. </param>
         /// <param name="clusterManagerId"> The resource ID of the cluster manager that manages this cluster. This is set by the Cluster Manager when the cluster is created. </param>
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.NetworkCloud
         public ClusterCapacity ClusterCapacity { get; }
         /// <summary> The latest heartbeat status between the cluster manager and the cluster. </summary>
         public ClusterConnectionStatus? ClusterConnectionStatus { get; }
-        /// <summary> The extended location (custom location) that represents the cluster&apos;s control plane location. This extended location is used to route the requests of child objects of the cluster that are handled by the platform operator. </summary>
+        /// <summary> The extended location (custom location) that represents the cluster's control plane location. This extended location is used to route the requests of child objects of the cluster that are handled by the platform operator. </summary>
         public ExtendedLocation ClusterExtendedLocation { get; }
         /// <summary> The customer-provided location information to identify where the cluster resides. </summary>
         public string ClusterLocation { get; set; }

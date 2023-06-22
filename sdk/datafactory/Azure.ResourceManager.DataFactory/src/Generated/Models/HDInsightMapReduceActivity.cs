@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -19,13 +20,13 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="className"> Class name. Type: string (or Expression with resultType string). </param>
         /// <param name="jarFilePath"> Jar path. Type: string (or Expression with resultType string). </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="className"/> or <paramref name="jarFilePath"/> is null. </exception>
-        public HDInsightMapReduceActivity(string name, BinaryData className, BinaryData jarFilePath) : base(name)
+        public HDInsightMapReduceActivity(string name, DataFactoryElement<string> className, DataFactoryElement<string> jarFilePath) : base(name)
         {
             Argument.AssertNotNull(name, nameof(name));
             Argument.AssertNotNull(className, nameof(className));
             Argument.AssertNotNull(jarFilePath, nameof(jarFilePath));
 
-            StorageLinkedServices = new ChangeTrackingList<FactoryLinkedServiceReference>();
+            StorageLinkedServices = new ChangeTrackingList<DataFactoryLinkedServiceReference>();
             Arguments = new ChangeTrackingList<BinaryData>();
             ClassName = className;
             JarFilePath = jarFilePath;
@@ -38,6 +39,8 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="name"> Activity name. </param>
         /// <param name="activityType"> Type of activity. </param>
         /// <param name="description"> Activity description. </param>
+        /// <param name="state"> Activity state. This is an optional property and if not provided, the state will be Active by default. </param>
+        /// <param name="onInactiveMarkAs"> Status result of the activity when the state is set to Inactive. This is an optional property and if not provided when the activity is inactive, the status will be Succeeded by default. </param>
         /// <param name="dependsOn"> Activity depends on condition. </param>
         /// <param name="userProperties"> Activity user properties. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
@@ -51,7 +54,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="jarLinkedService"> Jar linked service reference. </param>
         /// <param name="jarLibs"> Jar libs. </param>
         /// <param name="defines"> Allows user to specify defines for the MapReduce job request. </param>
-        internal HDInsightMapReduceActivity(string name, string activityType, string description, IList<ActivityDependency> dependsOn, IList<ActivityUserProperty> userProperties, IDictionary<string, BinaryData> additionalProperties, FactoryLinkedServiceReference linkedServiceName, ActivityPolicy policy, IList<FactoryLinkedServiceReference> storageLinkedServices, IList<BinaryData> arguments, HDInsightActivityDebugInfoOptionSetting? getDebugInfo, BinaryData className, BinaryData jarFilePath, FactoryLinkedServiceReference jarLinkedService, IList<BinaryData> jarLibs, IDictionary<string, BinaryData> defines) : base(name, activityType, description, dependsOn, userProperties, additionalProperties, linkedServiceName, policy)
+        internal HDInsightMapReduceActivity(string name, string activityType, string description, ActivityState? state, ActivityOnInactiveMarkA? onInactiveMarkAs, IList<ActivityDependency> dependsOn, IList<ActivityUserProperty> userProperties, IDictionary<string, BinaryData> additionalProperties, DataFactoryLinkedServiceReference linkedServiceName, ActivityPolicy policy, IList<DataFactoryLinkedServiceReference> storageLinkedServices, IList<BinaryData> arguments, HDInsightActivityDebugInfoOptionSetting? getDebugInfo, DataFactoryElement<string> className, DataFactoryElement<string> jarFilePath, DataFactoryLinkedServiceReference jarLinkedService, IList<BinaryData> jarLibs, IDictionary<string, BinaryData> defines) : base(name, activityType, description, state, onInactiveMarkAs, dependsOn, userProperties, additionalProperties, linkedServiceName, policy)
         {
             StorageLinkedServices = storageLinkedServices;
             Arguments = arguments;
@@ -65,7 +68,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Storage linked service references. </summary>
-        public IList<FactoryLinkedServiceReference> StorageLinkedServices { get; }
+        public IList<DataFactoryLinkedServiceReference> StorageLinkedServices { get; }
         /// <summary>
         /// User specified arguments to HDInsightActivity.
         /// <para>
@@ -99,70 +102,12 @@ namespace Azure.ResourceManager.DataFactory.Models
         public IList<BinaryData> Arguments { get; }
         /// <summary> Debug info option. </summary>
         public HDInsightActivityDebugInfoOptionSetting? GetDebugInfo { get; set; }
-        /// <summary>
-        /// Class name. Type: string (or Expression with resultType string).
-        /// <para>
-        /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        public BinaryData ClassName { get; set; }
-        /// <summary>
-        /// Jar path. Type: string (or Expression with resultType string).
-        /// <para>
-        /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        public BinaryData JarFilePath { get; set; }
+        /// <summary> Class name. Type: string (or Expression with resultType string). </summary>
+        public DataFactoryElement<string> ClassName { get; set; }
+        /// <summary> Jar path. Type: string (or Expression with resultType string). </summary>
+        public DataFactoryElement<string> JarFilePath { get; set; }
         /// <summary> Jar linked service reference. </summary>
-        public FactoryLinkedServiceReference JarLinkedService { get; set; }
+        public DataFactoryLinkedServiceReference JarLinkedService { get; set; }
         /// <summary>
         /// Jar libs.
         /// <para>
