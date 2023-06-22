@@ -1,6 +1,6 @@
 namespace Azure.Health.Insights.CancerProfiling
 {
-    public static partial class AzureHealthInsightsModelFactory
+    public static partial class AzureHealthInsightsCancerProfilingModelFactory
     {
         public static Azure.Health.Insights.CancerProfiling.ClinicalNoteEvidence ClinicalNoteEvidence(string id = null, string text = null, int offset = 0, int length = 0) { throw null; }
         public static Azure.Health.Insights.CancerProfiling.InferenceEvidence InferenceEvidence(Azure.Health.Insights.CancerProfiling.ClinicalNoteEvidence patientDataEvidence = null, Azure.Health.Insights.CancerProfiling.ClinicalCodedElement patientInfoEvidence = null, float? importance = default(float?)) { throw null; }
@@ -257,7 +257,7 @@ namespace Azure.Health.Insights.CancerProfiling
 }
 namespace Microsoft.Extensions.Azure
 {
-    public static partial class AzureHealthInsightsClientBuilderExtensions
+    public static partial class AzureHealthInsightsCancerProfilingClientBuilderExtensions
     {
         public static Azure.Core.Extensions.IAzureClientBuilder<Azure.Health.Insights.CancerProfiling.CancerProfilingClient, Azure.Health.Insights.CancerProfiling.CancerProfilingClientOptions> AddCancerProfilingClient<TBuilder>(this TBuilder builder, System.Uri endpoint, Azure.AzureKeyCredential credential) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilder { throw null; }
         public static Azure.Core.Extensions.IAzureClientBuilder<Azure.Health.Insights.CancerProfiling.CancerProfilingClient, Azure.Health.Insights.CancerProfiling.CancerProfilingClientOptions> AddCancerProfilingClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilderWithConfiguration<TConfiguration> { throw null; }
