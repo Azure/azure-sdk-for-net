@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             Optional<string> annotation = default;
             Optional<RedistributeConnectedSubnet> redistributeConnectedSubnets = default;
             Optional<RedistributeStaticRoute> redistributeStaticRoutes = default;
-            Optional<L3IsolationDomainPatchPropertiesAggregateRouteConfiguration> aggregateRouteConfiguration = default;
+            Optional<AggregateRouteConfiguration> aggregateRouteConfiguration = default;
             Optional<string> description = default;
             Optional<L3IsolationDomainPatchPropertiesConnectedSubnetRoutePolicy> connectedSubnetRoutePolicy = default;
             Optional<string> networkFabricId = default;
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                             {
                                 continue;
                             }
-                            aggregateRouteConfiguration = L3IsolationDomainPatchPropertiesAggregateRouteConfiguration.DeserializeL3IsolationDomainPatchPropertiesAggregateRouteConfiguration(property0.Value);
+                            aggregateRouteConfiguration = AggregateRouteConfiguration.DeserializeAggregateRouteConfiguration(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("description"u8))

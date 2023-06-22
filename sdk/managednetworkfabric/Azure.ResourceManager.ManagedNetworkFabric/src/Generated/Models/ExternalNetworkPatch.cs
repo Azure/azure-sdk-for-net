@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <summary> option B properties object. </summary>
         public OptionBProperties OptionBProperties { get; set; }
         /// <summary> option A properties object. </summary>
-        public OptionAProperties OptionAProperties { get; set; }
+        public Layer3OptionAProperties OptionAProperties { get; set; }
         /// <summary> ARM resource ID of importRoutePolicy. </summary>
         public string ImportRoutePolicyId { get; set; }
         /// <summary> ARM resource ID of exportRoutePolicy. </summary>
