@@ -41,6 +41,8 @@ namespace Azure.ResourceManager.Sphere.Tests.Scenario
             var catalog = await _resourceGroup.GetCatalogs().CreateOrUpdateAsync(WaitUntil.Completed, catalogName, data);
             Assert.IsNotNull(catalog);
             Assert.AreEqual(catalogName, catalog.Value.Data.Name);
+
+            await catalog.Value.DeleteAsync(WaitUntil.Completed);
         }
 
         [Test]
@@ -51,6 +53,8 @@ namespace Azure.ResourceManager.Sphere.Tests.Scenario
             var catalog = await CreateCatalog(_resourceGroup, catalogName);
             bool flag = await _resourceGroup.GetCatalogs().ExistsAsync(catalogName);
             Assert.IsTrue(flag);
+
+            await catalog.DeleteAsync(WaitUntil.Completed);
         }
 
         [Test]
@@ -62,6 +66,8 @@ namespace Azure.ResourceManager.Sphere.Tests.Scenario
             var catalog = await _resourceGroup.GetCatalogs().GetAsync(catalogName);
             Assert.IsNotNull(catalog);
             Assert.AreEqual(catalogName, catalog.Value.Data.Name);
+
+            await catalog.Value.DeleteAsync(WaitUntil.Completed);
         }
 
         [Test]
@@ -69,9 +75,11 @@ namespace Azure.ResourceManager.Sphere.Tests.Scenario
         public async Task GetAll()
         {
             string catalogName = Recording.GenerateAssetName("catalog-");
-            await CreateCatalog(_resourceGroup, catalogName);
+            var catalog = await CreateCatalog(_resourceGroup, catalogName);
             var list = await _resourceGroup.GetCatalogs().GetAllAsync().ToEnumerableAsync();
             Assert.IsNotEmpty(list);
+
+            await catalog.DeleteAsync(WaitUntil.Completed);
         }
 
         [Test]
