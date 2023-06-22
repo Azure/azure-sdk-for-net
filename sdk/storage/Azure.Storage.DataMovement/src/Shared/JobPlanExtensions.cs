@@ -4,6 +4,7 @@
 using System;
 using System.IO;
 using System.IO.MemoryMappedFiles;
+using System.Linq;
 using System.Runtime.InteropServices.ComTypes;
 using System.Text;
 using System.Threading;
@@ -71,12 +72,12 @@ namespace Azure.Storage.DataMovement
             bool isSource,
             CancellationToken cancellationToken)
         {
-            int pathIndex = isSource ?
-                DataMovementConstants.PlanFile.SourcePathIndex :
-                DataMovementConstants.PlanFile.DestinationPathIndex;
-            int pathLength = isSource ?
-                (DataMovementConstants.PlanFile.SourcePathLengthIndex - DataMovementConstants.PlanFile.SourcePathIndex) :
-                (DataMovementConstants.PlanFile.DestinationPathLengthIndex - DataMovementConstants.PlanFile.DestinationPathIndex);
+            int startPathIndex = isSource ?
+                DataMovementConstants.PlanFile.SourcePathLengthIndex :
+                DataMovementConstants.PlanFile.DestinationPathLengthIndex;
+            int readLength = isSource ?
+                (DataMovementConstants.PlanFile.SourceExtraQueryLengthIndex - DataMovementConstants.PlanFile.SourcePathLengthIndex) :
+                (DataMovementConstants.PlanFile.DestinationExtraQueryLengthIndex - DataMovementConstants.PlanFile.DestinationPathLengthIndex);
 
             int partCount = await checkpointer.CurrentJobPartCountAsync(transferId).ConfigureAwait(false);
             string storedPath = default;
@@ -85,21 +86,33 @@ namespace Azure.Storage.DataMovement
                 using (Stream stream = await checkpointer.ReadableStreamAsync(
                     transferId: transferId,
                     partNumber: i,
-                    offset: pathIndex,
-                    readSize: pathLength,
+                    offset: startPathIndex,
+                    readSize: readLength,
                     cancellationToken: cancellationToken).ConfigureAwait(false))
                 {
+                    BinaryReader reader = new BinaryReader(stream);
+
+                    // Read Path Length
+                    byte[] pathLengthBuffer = reader.ReadBytes(DataMovementConstants.PlanFile.UShortSizeInBytes);
+                    ushort pathLength = pathLengthBuffer.ToUShort();
+
+                    // Read Path
+                    byte[] pathBuffer = reader.ReadBytes(DataMovementConstants.PlanFile.PathStrNumBytes);
+                    string path = pathBuffer.ToString(pathLength);
+
                     if (string.IsNullOrEmpty(storedPath))
                     {
-                        storedPath = stream.ToString();
+                        // If we currently don't have a path
+                        storedPath = path;
                     }
                     else
                     {
-                        string currentPath = stream.ToString();
-                        int length = Math.Min(storedPath.Length, currentPath.Length);
+                        // if there's already an existing path, let's compare the two paths
+                        // and find the common parent path.
+                        int length = Math.Min(storedPath.Length, path.Length);
                         int index = 0;
 
-                        while (index < length && storedPath[index] == currentPath[index])
+                        while (index < length && storedPath[index] == path[index])
                         {
                             index++;
                         }
@@ -108,7 +121,7 @@ namespace Azure.Storage.DataMovement
                     }
                 }
             }
-            return storedPath;
+            return storedPath.TrimEnd('\\');
         }
     }
 }

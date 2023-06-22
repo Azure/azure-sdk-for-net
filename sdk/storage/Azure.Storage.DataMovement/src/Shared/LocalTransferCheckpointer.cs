@@ -55,7 +55,7 @@ namespace Azure.Storage.DataMovement
         }
 
         /// <inheritdoc/>
-        internal override Task AddNewJobAsync(
+        public override Task AddNewJobAsync(
             string transferId,
             CancellationToken cancellationToken = default)
         {
@@ -73,7 +73,7 @@ namespace Azure.Storage.DataMovement
         }
 
         /// <inheritdoc/>
-        internal override async Task AddNewJobPartAsync(
+        public override async Task AddNewJobPartAsync(
             string transferId,
             int partNumber,
             int chunksTotal,
@@ -111,7 +111,7 @@ namespace Azure.Storage.DataMovement
         }
 
         /// <inheritdoc/>
-        internal override Task AddExistingJobAsync(
+        public override Task AddExistingJobAsync(
             string transferId,
             CancellationToken cancellationToken = default)
         {
@@ -173,7 +173,6 @@ namespace Azure.Storage.DataMovement
         }
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
         public override async Task<Stream> ReadableStreamAsync(
             string transferId,
             int partNumber,
@@ -211,7 +210,7 @@ namespace Azure.Storage.DataMovement
         }
 
         /// <inheritdoc/>
-        internal override async Task WriteToCheckpointAsync(
+        public override async Task WriteToCheckpointAsync(
             string transferId,
             int partNumber,
             long chunkIndex,
@@ -263,7 +262,7 @@ namespace Azure.Storage.DataMovement
         }
 
         /// <inheritdoc/>
-        internal override Task<bool> TryRemoveStoredTransferAsync(string transferId, CancellationToken cancellationToken = default)
+        public override Task<bool> TryRemoveStoredTransferAsync(string transferId, CancellationToken cancellationToken = default)
         {
             bool result = true;
             Argument.AssertNotNullOrWhiteSpace(transferId, nameof(transferId));
@@ -296,13 +295,13 @@ namespace Azure.Storage.DataMovement
         }
 
         /// <inheritdoc/>
-        internal override Task<List<string>> GetStoredTransfersAsync(CancellationToken cancellationToken = default)
+        public override Task<List<string>> GetStoredTransfersAsync(CancellationToken cancellationToken = default)
         {
             return Task.FromResult(_transferStates.Keys.ToList());
         }
 
         /// <inheritdoc/>
-        internal override async Task SetJobTransferStatusAsync(
+        public override async Task SetJobTransferStatusAsync(
             string transferId,
             StorageTransferStatus status,
             CancellationToken cancellationToken = default)
@@ -344,7 +343,7 @@ namespace Azure.Storage.DataMovement
         }
 
         /// <inheritdoc/>
-        internal override async Task SetJobPartTransferStatusAsync(
+        public override async Task SetJobPartTransferStatusAsync(
             string transferId,
             int partNumber,
             StorageTransferStatus status,

@@ -107,6 +107,7 @@ namespace Azure.Storage.DataMovement.Tests
             string transferId = GetNewTransferId();
             string sourcePath = GetNewString(20);
             string destinationPath = GetNewString(15);
+            string originalPath = isSource ? sourcePath : destinationPath;
 
             StorageResourceType sourceType = isSource ? StorageResourceType.BlockBlob : StorageResourceType.Local;
             StorageResourceType destinationType = !isSource ? StorageResourceType.BlockBlob : StorageResourceType.Local;
@@ -122,7 +123,49 @@ namespace Azure.Storage.DataMovement.Tests
             LocalFileStorageResource storageResource = await LocalFileStorageResource.RehydrateResource(
                 checkpointer,
                 transferId,
-                false);
+                isSource);
+
+            Assert.AreEqual(originalPath, storageResource.Path);
+        }
+        [Test]
+        [TestCase(true)]
+        [TestCase(false)]
+        public async Task RehydrateLocalDirectory(bool isSource)
+        {
+            using DisposingLocalDirectory test = DisposingLocalDirectory.GetTestDirectory(Guid.NewGuid().ToString());
+            TransferCheckpointer checkpointer = new LocalTransferCheckpointer(test.DirectoryPath);
+            string transferId = GetNewTransferId();
+            string sourceParentPath = GetNewString(20);
+            List<string> sourcePaths = new List<string>();
+            string destinationParentPath = GetNewString(15);
+            List<string> destinationPaths = new List<string>();
+            int jobPartCount = 10;
+            for (int i = 0; i< jobPartCount; i++)
+            {
+                string childPath = GetNewString(5);
+                sourcePaths.Add(Path.Combine(sourceParentPath, childPath));
+                destinationPaths.Add(Path.Combine(destinationParentPath, childPath));
+            }
+            string originalPath = isSource ? sourceParentPath : destinationParentPath;
+
+            StorageResourceType sourceType = isSource ? StorageResourceType.BlockBlob : StorageResourceType.Local;
+            StorageResourceType destinationType = !isSource ? StorageResourceType.BlockBlob : StorageResourceType.Local;
+
+            await AddJobPartToCheckpointer(
+                checkpointer,
+                transferId,
+                sourceType,
+                sourcePaths,
+                destinationType,
+                destinationPaths,
+                jobPartCount);
+
+            LocalDirectoryStorageResourceContainer storageResource = await LocalDirectoryStorageResourceContainer.RehydrateResource(
+                checkpointer,
+                transferId,
+                isSource);
+
+            Assert.AreEqual(originalPath, storageResource.Path);
         }
     }
 }

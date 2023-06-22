@@ -30,7 +30,7 @@ namespace Azure.Storage.DataMovement
         /// Optional <see cref="CancellationToken"/> to propagate
         /// notifications that the operation should be canceled.
         /// </param>
-        internal abstract Task AddNewJobAsync(
+        public abstract Task AddNewJobAsync(
             string transferId,
             CancellationToken cancellationToken = default);
 
@@ -47,7 +47,7 @@ namespace Azure.Storage.DataMovement
         /// Optional <see cref="CancellationToken"/> to propagate
         /// notifications that the operation should be canceled.
         /// </param>
-        internal abstract Task AddNewJobPartAsync(
+        public abstract Task AddNewJobPartAsync(
             string transferId,
             int partNumber,
             int chunksTotal,
@@ -64,7 +64,7 @@ namespace Azure.Storage.DataMovement
         /// Optional <see cref="CancellationToken"/> to propagate
         /// notifications that the operation should be canceled.
         /// </param>
-        internal abstract Task AddExistingJobAsync(
+        public abstract Task AddExistingJobAsync(
             string transferId,
             CancellationToken cancellationToken = default);
 
@@ -119,7 +119,7 @@ namespace Azure.Storage.DataMovement
         /// notifications that the operation should be canceled.
         /// </param>
         /// <returns></returns>
-        internal abstract Task WriteToCheckpointAsync(
+        public abstract Task WriteToCheckpointAsync(
             string transferId,
             int partNumber,
             long offset,
@@ -135,7 +135,7 @@ namespace Azure.Storage.DataMovement
         /// Optional <see cref="CancellationToken"/> to propagate
         /// notifications that the operation should be canceled.
         /// </param>
-        internal abstract Task SetJobTransferStatusAsync(
+        public abstract Task SetJobTransferStatusAsync(
             string transferId,
             StorageTransferStatus status,
             CancellationToken cancellationToken = default);
@@ -150,7 +150,7 @@ namespace Azure.Storage.DataMovement
         /// Optional <see cref="CancellationToken"/> to propagate
         /// notifications that the operation should be canceled.
         /// </param>
-        internal abstract Task SetJobPartTransferStatusAsync(
+        public abstract Task SetJobPartTransferStatusAsync(
             string transferId,
             int partNumber,
             StorageTransferStatus status,
@@ -165,7 +165,7 @@ namespace Azure.Storage.DataMovement
         /// notifications that the operation should be canceled.
         /// </param>
         /// <returns>Returns a bool that is true if operation is successful, otherwise is false.</returns>
-        internal abstract Task<bool> TryRemoveStoredTransferAsync(
+        public abstract Task<bool> TryRemoveStoredTransferAsync(
             string transferId,
             CancellationToken cancellationToken = default);
 
@@ -173,6 +173,6 @@ namespace Azure.Storage.DataMovement
         /// Lists all the transfers contained in the checkpointer.
         /// </summary>
         /// <returns>The list of all the transfers contained in the checkpointer.</returns>
-        internal abstract Task<List<string>> GetStoredTransfersAsync(CancellationToken cancellationToken = default);
+        public abstract Task<List<string>> GetStoredTransfersAsync(CancellationToken cancellationToken = default);
     }
 }

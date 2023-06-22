@@ -105,11 +105,12 @@ namespace Azure.Storage.DataMovement.Tests
             using DisposingLocalDirectory test = DisposingLocalDirectory.GetTestDirectory(Guid.NewGuid().ToString());
             TransferCheckpointer checkpointer = new LocalTransferCheckpointer(test.DirectoryPath);
             string transferId = GetNewTransferId();
-            string sourcePath = GetNewString(20);
-            string destinationPath = GetNewString(15);
+            string sourcePath = "https://storageaccount.blob.core.windows.net/container/blobsource";
+            string destinationPath = "https://storageaccount.blob.core.windows.net/container/blobdest";
+            string originalPath = isSource ? sourcePath : destinationPath;
 
-            StorageResourceType sourceType = isSource ? StorageResourceType.BlockBlob : StorageResourceType.Local;
-            StorageResourceType destinationType = !isSource ? StorageResourceType.BlockBlob : StorageResourceType.Local;
+            StorageResourceType sourceType = isSource ? StorageResourceType.Local : StorageResourceType.BlockBlob;
+            StorageResourceType destinationType = !isSource ? StorageResourceType.Local : StorageResourceType.BlockBlob;
 
             await AddJobPartToCheckpointer(
                 checkpointer,
@@ -122,8 +123,71 @@ namespace Azure.Storage.DataMovement.Tests
             BlockBlobStorageResource storageResource = await BlockBlobStorageResource.RehydrateResource(
                 checkpointer,
                 transferId,
-                false,
-                new StorageSharedKeyCredential("accountName", "accountKey"));
+                isSource);
+
+            Assert.AreEqual(originalPath, storageResource.Uri.AbsoluteUri);
+        }
+
+        [Test]
+        [TestCase(true)]
+        [TestCase(false)]
+        public async Task RehydratePageBlob(bool isSource)
+        {
+            using DisposingLocalDirectory test = DisposingLocalDirectory.GetTestDirectory(Guid.NewGuid().ToString());
+            TransferCheckpointer checkpointer = new LocalTransferCheckpointer(test.DirectoryPath);
+            string transferId = GetNewTransferId();
+            string sourcePath = "https://storageaccount.blob.core.windows.net/container/blobsource";
+            string destinationPath = "https://storageaccount.blob.core.windows.net/container/blobdest";
+            string originalPath = isSource ? sourcePath : destinationPath;
+
+            StorageResourceType sourceType = isSource ? StorageResourceType.Local : StorageResourceType.BlockBlob;
+            StorageResourceType destinationType = !isSource ? StorageResourceType.Local : StorageResourceType.BlockBlob;
+
+            await AddJobPartToCheckpointer(
+                checkpointer,
+                transferId,
+                sourceType,
+                new List<string>() { sourcePath },
+                destinationType,
+                new List<string>() { destinationPath });
+
+            PageBlobStorageResource storageResource = await PageBlobStorageResource.RehydrateResource(
+                checkpointer,
+                transferId,
+                isSource);
+
+            Assert.AreEqual(originalPath, storageResource.Uri.AbsoluteUri);
+        }
+
+        [Test]
+        [TestCase(true)]
+        [TestCase(false)]
+        public async Task RehydrateAppendBlob(bool isSource)
+        {
+            using DisposingLocalDirectory test = DisposingLocalDirectory.GetTestDirectory(Guid.NewGuid().ToString());
+            TransferCheckpointer checkpointer = new LocalTransferCheckpointer(test.DirectoryPath);
+            string transferId = GetNewTransferId();
+            string sourcePath = "https://storageaccount.blob.core.windows.net/container/blobsource";
+            string destinationPath = "https://storageaccount.blob.core.windows.net/container/blobdest";
+            string originalPath = isSource ? sourcePath : destinationPath;
+
+            StorageResourceType sourceType = isSource ? StorageResourceType.Local : StorageResourceType.BlockBlob;
+            StorageResourceType destinationType = !isSource ? StorageResourceType.Local : StorageResourceType.BlockBlob;
+
+            await AddJobPartToCheckpointer(
+                checkpointer,
+                transferId,
+                sourceType,
+                new List<string>() { sourcePath },
+                destinationType,
+                new List<string>() { destinationPath });
+
+            PageBlobStorageResource storageResource = await PageBlobStorageResource.RehydrateResource(
+                checkpointer,
+                transferId,
+                isSource);
+
+            Assert.AreEqual(originalPath, storageResource.Uri.AbsoluteUri);
         }
     }
 }

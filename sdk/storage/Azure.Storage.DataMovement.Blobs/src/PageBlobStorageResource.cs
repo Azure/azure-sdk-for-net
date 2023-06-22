@@ -286,6 +286,154 @@ namespace Azure.Storage.DataMovement.Blobs
             return await BlobClient.DeleteIfExistsAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
         }
 
+        /// <summary>
+        /// Rehydrates from Checkpointer.
+        /// </summary>
+        /// <param name="checkpointer">
+        /// The checkpointer where the transfer state was saved to.
+        /// </param>
+        /// <param name="transferId">
+        /// Transfer Id where we want to rehydrate the resource from the job from.
+        /// </param>
+        /// <param name="isSource">
+        /// Whether or not we are rehydrating the source or destination. True if the source, false if the destination.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Whether or not to cancel the operation.
+        /// </param>
+        /// <returns>
+        /// The <see cref="Task"/> to rehdyrate a <see cref="LocalFileStorageResource"/> from
+        /// a stored checkpointed transfer state.
+        /// </returns>
+        internal static async Task<PageBlobStorageResource> RehydrateResource(
+            TransferCheckpointer checkpointer,
+            string transferId,
+            bool isSource,
+            CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(checkpointer, nameof(checkpointer));
+
+            string storedPath = await checkpointer.GetPathFromCheckpointer(transferId, isSource, cancellationToken).ConfigureAwait(false);
+            // TODO: get options PageBlobStorageResourceOptions from stored file
+
+            return new PageBlobStorageResource(new PageBlobClient(new Uri(storedPath)));
+        }
+
+        /// <summary>
+        /// Rehydrates from Checkpointer.
+        /// </summary>
+        /// <param name="checkpointer">
+        /// The checkpointer where the transfer state was saved to.
+        /// </param>
+        /// <param name="transferId">
+        /// Transfer Id where we want to rehydrate the resource from the job from.
+        /// </param>
+        /// <param name="isSource">
+        /// Whether or not we are rehydrating the source or destination. True if the source, false if the destination.
+        /// </param>
+        /// <param name="sharedKeyCredential">
+        /// Credentials which allows the storage resource to authenticate during the transfer.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Whether or not to cancel the operation.
+        /// </param>
+        /// <returns>
+        /// The <see cref="Task"/> to rehdyrate a <see cref="LocalFileStorageResource"/> from
+        /// a stored checkpointed transfer state.
+        /// </returns>
+        internal static async Task<PageBlobStorageResource> RehydrateResource(
+            TransferCheckpointer checkpointer,
+            string transferId,
+            bool isSource,
+            StorageSharedKeyCredential sharedKeyCredential,
+            CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(checkpointer, nameof(checkpointer));
+
+            string storedPath = await checkpointer.GetPathFromCheckpointer(transferId, isSource, cancellationToken).ConfigureAwait(false);
+            // TODO: get options PageBlobStorageResourceOptions from stored file
+
+            return new PageBlobStorageResource(new PageBlobClient(
+                new Uri(storedPath),
+                sharedKeyCredential));
+        }
+
+        /// <summary>
+        /// Rehydrates from Checkpointer.
+        /// </summary>
+        /// <param name="checkpointer">
+        /// The checkpointer where the transfer state was saved to.
+        /// </param>
+        /// <param name="transferId">
+        /// Transfer Id where we want to rehydrate the resource from the job from.
+        /// </param>
+        /// <param name="isSource">
+        /// Whether or not we are rehydrating the source or destination. True if the source, false if the destination.
+        /// </param>
+        /// <param name="tokenCredential">
+        /// Credentials which allows the storage resource to authenticate during the transfer.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Whether or not to cancel the operation.
+        /// </param>
+        /// <returns>
+        /// The <see cref="Task"/> to rehdyrate a <see cref="LocalFileStorageResource"/> from
+        /// a stored checkpointed transfer state.
+        /// </returns>
+        internal static async Task<PageBlobStorageResource> RehydrateResource(
+            TransferCheckpointer checkpointer,
+            string transferId,
+            bool isSource,
+            TokenCredential tokenCredential,
+            CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(checkpointer, nameof(checkpointer));
+
+            string storedPath = await checkpointer.GetPathFromCheckpointer(transferId, isSource, cancellationToken).ConfigureAwait(false);
+            // TODO: get options PageBlobStorageResourceOptions from stored file
+            return new PageBlobStorageResource(new PageBlobClient(
+                new Uri(storedPath),
+                tokenCredential));
+        }
+
+        /// <summary>
+        /// Rehydrates from Checkpointer.
+        /// </summary>
+        /// <param name="checkpointer">
+        /// The checkpointer where the transfer state was saved to.
+        /// </param>
+        /// <param name="transferId">
+        /// Transfer Id where we want to rehydrate the resource from the job from.
+        /// </param>
+        /// <param name="isSource">
+        /// Whether or not we are rehydrating the source or destination. True if the source, false if the destination.
+        /// </param>
+        /// <param name="sasCredential">
+        /// Credentials which allows the storage resource to authenticate during the transfer.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Whether or not to cancel the operation.
+        /// </param>
+        /// <returns>
+        /// The <see cref="Task"/> to rehdyrate a <see cref="LocalFileStorageResource"/> from
+        /// a stored checkpointed transfer state.
+        /// </returns>
+        internal static async Task<PageBlobStorageResource> RehydrateResource(
+            TransferCheckpointer checkpointer,
+            string transferId,
+            bool isSource,
+            AzureSasCredential sasCredential,
+            CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(checkpointer, nameof(checkpointer));
+
+            string storedPath = await checkpointer.GetPathFromCheckpointer(transferId, isSource, cancellationToken).ConfigureAwait(false);
+            // TODO: get options PageBlobStorageResourceOptions from stored file
+            return new PageBlobStorageResource(new PageBlobClient(
+                new Uri(storedPath),
+                sasCredential));
+        }
+
         private void GrabEtag(Response response)
         {
             if (_etagDownloadLock == default && response.TryExtractStorageEtag(out ETag etag))
