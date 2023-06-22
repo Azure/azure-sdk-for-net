@@ -45,8 +45,6 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Bindings
 
         public async Task<IValueProvider> BindAsync(BindingContext context)
         {
-            context.CancellationToken.ThrowIfCancellationRequested();
-
             string boundQueueName = _path.Bind(context.BindingData);
             var messageSender = _messagingProvider.CreateMessageSender(_clientFactory.CreateClientFromSetting(_attribute.Connection), boundQueueName);
 
