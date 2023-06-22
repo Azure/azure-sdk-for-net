@@ -272,11 +272,11 @@ namespace Azure.Storage.DataMovement
         /// </param>
         /// <returns></returns>
         public virtual async IAsyncEnumerable<DataTransfer> GetTransfersAsync(
-            StorageTransferStatus[] filterByStatus = default)
+            params StorageTransferStatus[] filterByStatus)
         {
             await SetDataTransfers().ConfigureAwait(false);
             IEnumerable<DataTransfer> totalTransfers;
-            if (filterByStatus == default)
+            if (filterByStatus == default || filterByStatus.Length == 0)
             {
                 totalTransfers = _dataTransfers.Select(d => d.Value);
             }
