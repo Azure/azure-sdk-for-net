@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.Sphere.Tests.Scenario
         [OneTimeSetUp]
         public async Task GlobalSetUp()
         {
-            string rgName = SessionRecording.GenerateAssetName("Sphere-RG-");
-            var rgLro = await GlobalClient.GetDefaultSubscriptionAsync().Result.GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Completed, rgName, new ResourceGroupData(AzureLocation.WestUS2));
+            string rgName = "sdkTestRG";
+            var rgLro = await GlobalClient.GetDefaultSubscriptionAsync().Result.GetResourceGroupAsync(rgName);
             _resourceGroupIdentifier = rgLro.Value.Id;
             await StopSessionRecordingAsync();
         }
@@ -37,10 +37,54 @@ namespace Azure.ResourceManager.Sphere.Tests.Scenario
         public async Task CreateOrUpdate()
         {
             string catalogName = Recording.GenerateAssetName("catalog-");
-            CatalogData data = new CatalogData(_resourceGroup.Data.Location);
+            CatalogData data = new CatalogData("global");
             var catalog = await _resourceGroup.GetCatalogs().CreateOrUpdateAsync(WaitUntil.Completed, catalogName, data);
             Assert.IsNotNull(catalog);
             Assert.AreEqual(catalogName, catalog.Value.Data.Name);
+        }
+
+        [Test]
+        [RecordedTest]
+        public async Task Exist()
+        {
+            string catalogName = Recording.GenerateAssetName("catalog-");
+            var catalog = await CreateCatalog(_resourceGroup, catalogName);
+            bool flag = await _resourceGroup.GetCatalogs().ExistsAsync(catalogName);
+            Assert.IsTrue(flag);
+        }
+
+        [Test]
+        [RecordedTest]
+        public async Task Get()
+        {
+            string catalogName = Recording.GenerateAssetName("catalog-");
+            await CreateCatalog(_resourceGroup, catalogName);
+            var catalog = await _resourceGroup.GetCatalogs().GetAsync(catalogName);
+            Assert.IsNotNull(catalog);
+            Assert.AreEqual(catalogName, catalog.Value.Data.Name);
+        }
+
+        [Test]
+        [RecordedTest]
+        public async Task GetAll()
+        {
+            string catalogName = Recording.GenerateAssetName("catalog-");
+            await CreateCatalog(_resourceGroup, catalogName);
+            var list = await _resourceGroup.GetCatalogs().GetAllAsync().ToEnumerableAsync();
+            Assert.IsNotEmpty(list);
+        }
+
+        [Test]
+        [RecordedTest]
+        public async Task Delete()
+        {
+            string catalogName = Recording.GenerateAssetName("catalog-");
+            var catalog = await CreateCatalog(_resourceGroup, catalogName);
+            bool flag = await _resourceGroup.GetCatalogs().ExistsAsync(catalogName);
+            Assert.IsTrue(flag);
+            await catalog.DeleteAsync(WaitUntil.Completed);
+            flag = await _resourceGroup.GetCatalogs().ExistsAsync(catalogName);
+            Assert.IsFalse(flag);
         }
     }
 }
