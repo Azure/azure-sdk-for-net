@@ -13,7 +13,7 @@ namespace Azure.Storage.DataMovement
     /// Base Checkpointer class to create the checkpointing logic
     /// to resume from.
     /// </summary>
-    public abstract class TransferCheckpointer
+    internal abstract class TransferCheckpointer
     {
         /// <summary>
         /// The protected constructor for the abstract TransferCheckpointer class (to allow for mocking).

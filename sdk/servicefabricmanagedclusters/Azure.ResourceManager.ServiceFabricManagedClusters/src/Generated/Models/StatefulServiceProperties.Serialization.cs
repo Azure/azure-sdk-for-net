@@ -63,6 +63,11 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 writer.WritePropertyName("servicePackageActivationMode"u8);
                 writer.WriteStringValue(ServicePackageActivationMode.Value.ToString());
             }
+            if (Optional.IsDefined(ServiceDnsName))
+            {
+                writer.WritePropertyName("serviceDnsName"u8);
+                writer.WriteStringValue(ServiceDnsName);
+            }
             if (Optional.IsDefined(PlacementConstraints))
             {
                 writer.WritePropertyName("placementConstraints"u8);
@@ -134,6 +139,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             string serviceTypeName = default;
             ManagedServicePartitionScheme partitionDescription = default;
             Optional<ManagedServicePackageActivationMode> servicePackageActivationMode = default;
+            Optional<string> serviceDnsName = default;
             Optional<string> placementConstraints = default;
             Optional<IList<ManagedServiceCorrelation>> correlationScheme = default;
             Optional<IList<ManagedServiceLoadMetric>> serviceLoadMetrics = default;
@@ -234,6 +240,11 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                     servicePackageActivationMode = new ManagedServicePackageActivationMode(property.Value.GetString());
                     continue;
                 }
+                if (property.NameEquals("serviceDnsName"u8))
+                {
+                    serviceDnsName = property.Value.GetString();
+                    continue;
+                }
                 if (property.NameEquals("placementConstraints"u8))
                 {
                     placementConstraints = property.Value.GetString();
@@ -305,7 +316,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                     continue;
                 }
             }
-            return new StatefulServiceProperties(placementConstraints.Value, Optional.ToList(correlationScheme), Optional.ToList(serviceLoadMetrics), Optional.ToList(servicePlacementPolicies), Optional.ToNullable(defaultMoveCost), Optional.ToList(scalingPolicies), provisioningState.Value, serviceKind, serviceTypeName, partitionDescription, Optional.ToNullable(servicePackageActivationMode), Optional.ToNullable(hasPersistedState), Optional.ToNullable(targetReplicaSetSize), Optional.ToNullable(minReplicaSetSize), Optional.ToNullable(replicaRestartWaitDuration), Optional.ToNullable(quorumLossWaitDuration), Optional.ToNullable(standByReplicaKeepDuration), Optional.ToNullable(servicePlacementTimeLimit));
+            return new StatefulServiceProperties(placementConstraints.Value, Optional.ToList(correlationScheme), Optional.ToList(serviceLoadMetrics), Optional.ToList(servicePlacementPolicies), Optional.ToNullable(defaultMoveCost), Optional.ToList(scalingPolicies), provisioningState.Value, serviceKind, serviceTypeName, partitionDescription, Optional.ToNullable(servicePackageActivationMode), serviceDnsName.Value, Optional.ToNullable(hasPersistedState), Optional.ToNullable(targetReplicaSetSize), Optional.ToNullable(minReplicaSetSize), Optional.ToNullable(replicaRestartWaitDuration), Optional.ToNullable(quorumLossWaitDuration), Optional.ToNullable(standByReplicaKeepDuration), Optional.ToNullable(servicePlacementTimeLimit));
         }
     }
 }

@@ -401,7 +401,7 @@ namespace Azure.Storage.DataMovement.Blobs
         /// a stored checkpointed transfer state.
         /// </returns>
         public static async Task<BlockBlobStorageResource> RehydrateSourceResource(
-            TransferCheckpointer checkpointer,
+            TransferCheckpointerOptions checkpointer,
             string transferId,
             StorageTransferCredentials credentials,
             CancellationToken cancellationToken = default)
@@ -412,9 +412,10 @@ namespace Azure.Storage.DataMovement.Blobs
 
             int offset = DataMovementConstants.PlanFile.SourcePathIndex;
             int length = DataMovementConstants.PlanFile.SourcePathLengthIndex - DataMovementConstants.PlanFile.SourcePathIndex;
+            TransferCheckpointer transferCheckpointer = checkpointer.GetCheckpointer();
 
             string storedPath;
-            using (Stream stream = await checkpointer.ReadableStreamAsync(
+            using (Stream stream = await transferCheckpointer.ReadableStreamAsync(
                 transferId: transferId,
                 partNumber: 0,
                 offset: offset,
@@ -470,7 +471,7 @@ namespace Azure.Storage.DataMovement.Blobs
         /// a stored checkpointed transfer state.
         /// </returns>
         public static async Task<BlockBlobStorageResource> RehydrateDestinationResource(
-            TransferCheckpointer checkpointer,
+            TransferCheckpointerOptions checkpointer,
             string transferId,
             StorageTransferCredentials credentials,
             CancellationToken cancellationToken = default)
@@ -482,8 +483,9 @@ namespace Azure.Storage.DataMovement.Blobs
             int offset = DataMovementConstants.PlanFile.DestinationPathIndex;
             int length = DataMovementConstants.PlanFile.DestinationPathLengthIndex - DataMovementConstants.PlanFile.DestinationPathIndex;
 
+            TransferCheckpointer transferCheckpointer = checkpointer.GetCheckpointer();
             string storedPath;
-            using (Stream stream = await checkpointer.ReadableStreamAsync(
+            using (Stream stream = await transferCheckpointer.ReadableStreamAsync(
                 transferId: transferId,
                 partNumber: 0,
                 offset: offset,
@@ -536,7 +538,7 @@ namespace Azure.Storage.DataMovement.Blobs
         /// a stored checkpointed transfer state.
         /// </returns>
         public static async Task<BlockBlobStorageResource> RehydrateSourceResource(
-            TransferCheckpointer checkpointer,
+            TransferCheckpointerOptions checkpointer,
             string transferId,
             CancellationToken cancellationToken = default)
         {
@@ -548,7 +550,8 @@ namespace Azure.Storage.DataMovement.Blobs
             int length = DataMovementConstants.PlanFile.SourcePathLengthIndex - DataMovementConstants.PlanFile.SourcePathIndex;
 
             string storedPath;
-            using (Stream stream = await checkpointer.ReadableStreamAsync(
+            TransferCheckpointer transferCheckpointer = checkpointer.GetCheckpointer();
+            using (Stream stream = await transferCheckpointer.ReadableStreamAsync(
                 transferId: transferId,
                 partNumber: 0,
                 offset: offset,
@@ -581,7 +584,7 @@ namespace Azure.Storage.DataMovement.Blobs
         /// a stored checkpointed transfer state.
         /// </returns>
         public static async Task<BlockBlobStorageResource> RehydrateSourceResource(
-            TransferCheckpointer checkpointer,
+            TransferCheckpointerOptions checkpointer,
             string transferId,
             StorageSharedKeyCredential sharedKeyCredential,
             CancellationToken cancellationToken = default)
@@ -594,7 +597,8 @@ namespace Azure.Storage.DataMovement.Blobs
             int length = DataMovementConstants.PlanFile.SourcePathLengthIndex - DataMovementConstants.PlanFile.SourcePathIndex;
 
             string storedPath;
-            using (Stream stream = await checkpointer.ReadableStreamAsync(
+            TransferCheckpointer transferCheckpointer = checkpointer.GetCheckpointer();
+            using (Stream stream = await transferCheckpointer.ReadableStreamAsync(
                 transferId: transferId,
                 partNumber: 0,
                 offset: offset,
@@ -629,7 +633,7 @@ namespace Azure.Storage.DataMovement.Blobs
         /// a stored checkpointed transfer state.
         /// </returns>
         public static async Task<BlockBlobStorageResource> RehydrateSourceResource(
-            TransferCheckpointer checkpointer,
+            TransferCheckpointerOptions checkpointer,
             string transferId,
             TokenCredential tokenCredential,
             CancellationToken cancellationToken = default)
@@ -642,7 +646,8 @@ namespace Azure.Storage.DataMovement.Blobs
             int length = DataMovementConstants.PlanFile.SourcePathLengthIndex - DataMovementConstants.PlanFile.SourcePathIndex;
 
             string storedPath;
-            using (Stream stream = await checkpointer.ReadableStreamAsync(
+            TransferCheckpointer transferCheckpointer = checkpointer.GetCheckpointer();
+            using (Stream stream = await transferCheckpointer.ReadableStreamAsync(
                 transferId: transferId,
                 partNumber: 0,
                 offset: offset,
@@ -677,7 +682,7 @@ namespace Azure.Storage.DataMovement.Blobs
         /// a stored checkpointed transfer state.
         /// </returns>
         public static async Task<BlockBlobStorageResource> RehydrateSourceResource(
-            TransferCheckpointer checkpointer,
+            TransferCheckpointerOptions checkpointer,
             string transferId,
             AzureSasCredential sasCredential,
             CancellationToken cancellationToken = default)
@@ -690,7 +695,8 @@ namespace Azure.Storage.DataMovement.Blobs
             int length = DataMovementConstants.PlanFile.SourcePathLengthIndex - DataMovementConstants.PlanFile.SourcePathIndex;
 
             string storedPath;
-            using (Stream stream = await checkpointer.ReadableStreamAsync(
+            TransferCheckpointer transferCheckpointer = checkpointer.GetCheckpointer();
+            using (Stream stream = await transferCheckpointer.ReadableStreamAsync(
                 transferId: transferId,
                 partNumber: 0,
                 offset: offset,
@@ -722,7 +728,7 @@ namespace Azure.Storage.DataMovement.Blobs
         /// a stored checkpointed transfer state.
         /// </returns>
         public static async Task<BlockBlobStorageResource> RehydrateDestinationResource(
-            TransferCheckpointer checkpointer,
+            TransferCheckpointerOptions checkpointer,
             string transferId,
             CancellationToken cancellationToken = default)
         {
@@ -734,7 +740,8 @@ namespace Azure.Storage.DataMovement.Blobs
             int length = DataMovementConstants.PlanFile.SourcePathLengthIndex - DataMovementConstants.PlanFile.SourcePathIndex;
 
             string storedPath;
-            using (Stream stream = await checkpointer.ReadableStreamAsync(
+            TransferCheckpointer transferCheckpointer = checkpointer.GetCheckpointer();
+            using (Stream stream = await transferCheckpointer.ReadableStreamAsync(
                 transferId: transferId,
                 partNumber: 0,
                 offset: offset,
@@ -767,7 +774,7 @@ namespace Azure.Storage.DataMovement.Blobs
         /// a stored checkpointed transfer state.
         /// </returns>
         public static async Task<BlockBlobStorageResource> RehydrateDestinationResource(
-            TransferCheckpointer checkpointer,
+            TransferCheckpointerOptions checkpointer,
             string transferId,
             StorageSharedKeyCredential sharedKeyCredential,
             CancellationToken cancellationToken = default)
@@ -780,7 +787,8 @@ namespace Azure.Storage.DataMovement.Blobs
             int length = DataMovementConstants.PlanFile.SourcePathLengthIndex - DataMovementConstants.PlanFile.SourcePathIndex;
 
             string storedPath;
-            using (Stream stream = await checkpointer.ReadableStreamAsync(
+            TransferCheckpointer transferCheckpointer = checkpointer.GetCheckpointer();
+            using (Stream stream = await transferCheckpointer.ReadableStreamAsync(
                 transferId: transferId,
                 partNumber: 0,
                 offset: offset,
@@ -815,7 +823,7 @@ namespace Azure.Storage.DataMovement.Blobs
         /// a stored checkpointed transfer state.
         /// </returns>
         public static async Task<BlockBlobStorageResource> RehydrateDestinationResource(
-            TransferCheckpointer checkpointer,
+            TransferCheckpointerOptions checkpointer,
             string transferId,
             TokenCredential tokenCredential,
             CancellationToken cancellationToken = default)
@@ -828,7 +836,8 @@ namespace Azure.Storage.DataMovement.Blobs
             int length = DataMovementConstants.PlanFile.SourcePathLengthIndex - DataMovementConstants.PlanFile.SourcePathIndex;
 
             string storedPath;
-            using (Stream stream = await checkpointer.ReadableStreamAsync(
+            TransferCheckpointer transferCheckpointer = checkpointer.GetCheckpointer();
+            using (Stream stream = await transferCheckpointer.ReadableStreamAsync(
                 transferId: transferId,
                 partNumber: 0,
                 offset: offset,
@@ -863,7 +872,7 @@ namespace Azure.Storage.DataMovement.Blobs
         /// a stored checkpointed transfer state.
         /// </returns>
         public static async Task<BlockBlobStorageResource> RehydrateDestinationResource(
-            TransferCheckpointer checkpointer,
+            TransferCheckpointerOptions checkpointer,
             string transferId,
             AzureSasCredential sasCredential,
             CancellationToken cancellationToken = default)
@@ -876,7 +885,8 @@ namespace Azure.Storage.DataMovement.Blobs
             int length = DataMovementConstants.PlanFile.SourcePathLengthIndex - DataMovementConstants.PlanFile.SourcePathIndex;
 
             string storedPath;
-            using (Stream stream = await checkpointer.ReadableStreamAsync(
+            TransferCheckpointer transferCheckpointer = checkpointer.GetCheckpointer();
+            using (Stream stream = await transferCheckpointer.ReadableStreamAsync(
                 transferId: transferId,
                 partNumber: 0,
                 offset: offset,

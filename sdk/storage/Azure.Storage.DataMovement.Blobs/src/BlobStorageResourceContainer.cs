@@ -164,7 +164,7 @@ namespace Azure.Storage.DataMovement.Blobs
         /// a stored checkpointed transfer state.
         /// </returns>
         public static async Task<BlobStorageResourceContainer> RehydrateStorageResource(
-            TransferCheckpointer checkpointer,
+            TransferCheckpointerOptions checkpointer,
             string transferId,
             bool isSource,
             StorageTransferCredentials credentials,
@@ -181,11 +181,12 @@ namespace Azure.Storage.DataMovement.Blobs
                 (DataMovementConstants.PlanFile.SourcePathLengthIndex - DataMovementConstants.PlanFile.SourcePathIndex) :
                 (DataMovementConstants.PlanFile.DestinationPathLengthIndex - DataMovementConstants.PlanFile.DestinationPathIndex);
 
-            int partCount = await checkpointer.CurrentJobPartCountAsync(transferId).ConfigureAwait(false);
+            TransferCheckpointer transferCheckpointer = checkpointer.GetCheckpointer();
+            int partCount = await transferCheckpointer.CurrentJobPartCountAsync(transferId).ConfigureAwait(false);
             string storedPath = default;
             for (int i = 0; i < partCount; i++)
             {
-                using (Stream stream = await checkpointer.ReadableStreamAsync(
+                using (Stream stream = await transferCheckpointer.ReadableStreamAsync(
                 transferId: transferId,
                 partNumber: 0,
                 offset: pathIndex,
@@ -258,7 +259,7 @@ namespace Azure.Storage.DataMovement.Blobs
         /// a stored checkpointed transfer state.
         /// </returns>
         public static async Task<BlobStorageResourceContainer> RehydrateSourceResource(
-            TransferCheckpointer checkpointer,
+            TransferCheckpointerOptions checkpointer,
             string transferId,
             StorageTransferCredentials credentials,
             CancellationToken cancellationToken = default)
@@ -270,11 +271,12 @@ namespace Azure.Storage.DataMovement.Blobs
             int pathIndex = DataMovementConstants.PlanFile.SourcePathIndex;
             int pathLength = DataMovementConstants.PlanFile.SourcePathLengthIndex - DataMovementConstants.PlanFile.SourcePathIndex;
 
-            int partCount = await checkpointer.CurrentJobPartCountAsync(transferId).ConfigureAwait(false);
+            TransferCheckpointer transferCheckpointer = checkpointer.GetCheckpointer();
+            int partCount = await transferCheckpointer.CurrentJobPartCountAsync(transferId).ConfigureAwait(false);
             string storedPath = default;
             for (int i = 0; i < partCount; i++)
             {
-                using (Stream stream = await checkpointer.ReadableStreamAsync(
+                using (Stream stream = await transferCheckpointer.ReadableStreamAsync(
                 transferId: transferId,
                 partNumber: 0,
                 offset: pathIndex,
@@ -347,7 +349,7 @@ namespace Azure.Storage.DataMovement.Blobs
         /// a stored checkpointed transfer state.
         /// </returns>
         public static async Task<BlobStorageResourceContainer> RehydrateDestinationResource(
-            TransferCheckpointer checkpointer,
+            TransferCheckpointerOptions checkpointer,
             string transferId,
             StorageTransferCredentials credentials,
             CancellationToken cancellationToken = default)
@@ -358,11 +360,12 @@ namespace Azure.Storage.DataMovement.Blobs
             int pathIndex = DataMovementConstants.PlanFile.DestinationPathIndex;
             int pathLength = DataMovementConstants.PlanFile.DestinationPathLengthIndex - DataMovementConstants.PlanFile.DestinationPathIndex;
 
-            int partCount = await checkpointer.CurrentJobPartCountAsync(transferId).ConfigureAwait(false);
+            TransferCheckpointer transferCheckpointer = checkpointer.GetCheckpointer();
+            int partCount = await transferCheckpointer.CurrentJobPartCountAsync(transferId).ConfigureAwait(false);
             string storedPath = default;
             for (int i = 0; i < partCount; i++)
             {
-                using (Stream stream = await checkpointer.ReadableStreamAsync(
+                using (Stream stream = await transferCheckpointer.ReadableStreamAsync(
                 transferId: transferId,
                 partNumber: 0,
                 offset: pathIndex,

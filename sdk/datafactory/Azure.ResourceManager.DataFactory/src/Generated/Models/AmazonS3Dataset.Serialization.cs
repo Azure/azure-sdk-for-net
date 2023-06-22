@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -27,20 +28,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(Structure))
             {
                 writer.WritePropertyName("structure"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(Structure);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(Structure.ToString()).RootElement);
-#endif
+                JsonSerializer.Serialize(writer, Structure);
             }
             if (Optional.IsDefined(Schema))
             {
                 writer.WritePropertyName("schema"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(Schema);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(Schema.ToString()).RootElement);
-#endif
+                JsonSerializer.Serialize(writer, Schema);
             }
             writer.WritePropertyName("linkedServiceName"u8);
             writer.WriteObjectValue(LinkedServiceName);
@@ -82,55 +75,31 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WritePropertyName("typeProperties"u8);
             writer.WriteStartObject();
             writer.WritePropertyName("bucketName"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(BucketName);
-#else
-            JsonSerializer.Serialize(writer, JsonDocument.Parse(BucketName.ToString()).RootElement);
-#endif
+            JsonSerializer.Serialize(writer, BucketName);
             if (Optional.IsDefined(Key))
             {
                 writer.WritePropertyName("key"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(Key);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(Key.ToString()).RootElement);
-#endif
+                JsonSerializer.Serialize(writer, Key);
             }
             if (Optional.IsDefined(Prefix))
             {
                 writer.WritePropertyName("prefix"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(Prefix);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(Prefix.ToString()).RootElement);
-#endif
+                JsonSerializer.Serialize(writer, Prefix);
             }
             if (Optional.IsDefined(Version))
             {
                 writer.WritePropertyName("version"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(Version);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(Version.ToString()).RootElement);
-#endif
+                JsonSerializer.Serialize(writer, Version);
             }
             if (Optional.IsDefined(ModifiedDatetimeStart))
             {
                 writer.WritePropertyName("modifiedDatetimeStart"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(ModifiedDatetimeStart);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(ModifiedDatetimeStart.ToString()).RootElement);
-#endif
+                JsonSerializer.Serialize(writer, ModifiedDatetimeStart);
             }
             if (Optional.IsDefined(ModifiedDatetimeEnd))
             {
                 writer.WritePropertyName("modifiedDatetimeEnd"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(ModifiedDatetimeEnd);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(ModifiedDatetimeEnd.ToString()).RootElement);
-#endif
+                JsonSerializer.Serialize(writer, ModifiedDatetimeEnd);
             }
             if (Optional.IsDefined(Format))
             {
@@ -163,18 +132,18 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             string type = default;
             Optional<string> description = default;
-            Optional<BinaryData> structure = default;
-            Optional<BinaryData> schema = default;
-            FactoryLinkedServiceReference linkedServiceName = default;
+            Optional<DataFactoryElement<IList<DatasetDataElement>>> structure = default;
+            Optional<DataFactoryElement<IList<DatasetSchemaDataElement>>> schema = default;
+            DataFactoryLinkedServiceReference linkedServiceName = default;
             Optional<IDictionary<string, EntityParameterSpecification>> parameters = default;
             Optional<IList<BinaryData>> annotations = default;
             Optional<DatasetFolder> folder = default;
-            BinaryData bucketName = default;
-            Optional<BinaryData> key = default;
-            Optional<BinaryData> prefix = default;
-            Optional<BinaryData> version = default;
-            Optional<BinaryData> modifiedDatetimeStart = default;
-            Optional<BinaryData> modifiedDatetimeEnd = default;
+            DataFactoryElement<string> bucketName = default;
+            Optional<DataFactoryElement<string>> key = default;
+            Optional<DataFactoryElement<string>> prefix = default;
+            Optional<DataFactoryElement<string>> version = default;
+            Optional<DataFactoryElement<string>> modifiedDatetimeStart = default;
+            Optional<DataFactoryElement<string>> modifiedDatetimeEnd = default;
             Optional<DatasetStorageFormat> format = default;
             Optional<DatasetCompression> compression = default;
             IDictionary<string, BinaryData> additionalProperties = default;
@@ -197,7 +166,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    structure = BinaryData.FromString(property.Value.GetRawText());
+                    structure = JsonSerializer.Deserialize<DataFactoryElement<IList<DatasetDataElement>>>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("schema"u8))
@@ -206,12 +175,12 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    schema = BinaryData.FromString(property.Value.GetRawText());
+                    schema = JsonSerializer.Deserialize<DataFactoryElement<IList<DatasetSchemaDataElement>>>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("linkedServiceName"u8))
                 {
-                    linkedServiceName = FactoryLinkedServiceReference.DeserializeFactoryLinkedServiceReference(property.Value);
+                    linkedServiceName = DataFactoryLinkedServiceReference.DeserializeDataFactoryLinkedServiceReference(property.Value);
                     continue;
                 }
                 if (property.NameEquals("parameters"u8))
@@ -269,7 +238,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         if (property0.NameEquals("bucketName"u8))
                         {
-                            bucketName = BinaryData.FromString(property0.Value.GetRawText());
+                            bucketName = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("key"u8))
@@ -278,7 +247,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            key = BinaryData.FromString(property0.Value.GetRawText());
+                            key = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("prefix"u8))
@@ -287,7 +256,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            prefix = BinaryData.FromString(property0.Value.GetRawText());
+                            prefix = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("version"u8))
@@ -296,7 +265,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            version = BinaryData.FromString(property0.Value.GetRawText());
+                            version = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("modifiedDatetimeStart"u8))
@@ -305,7 +274,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            modifiedDatetimeStart = BinaryData.FromString(property0.Value.GetRawText());
+                            modifiedDatetimeStart = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("modifiedDatetimeEnd"u8))
@@ -314,7 +283,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            modifiedDatetimeEnd = BinaryData.FromString(property0.Value.GetRawText());
+                            modifiedDatetimeEnd = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("format"u8))
