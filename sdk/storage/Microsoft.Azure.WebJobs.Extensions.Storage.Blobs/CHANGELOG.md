@@ -2,6 +2,7 @@
 
 ## 5.2.0-beta.1 (Unreleased)
 - Fixed bug where the blob container would scan from the beginning due not correctly updating the latest scan time. (#35145)
+- Loosen parameter binding data parsing and validation to allow binding BlobContainerClient without blob name. (#37124)
 
 ## 5.1.1 (2023-03-24)
 - Bumped Azure.Core dependency from 1.28 and 1.30, fixing issue with headers being non-resilient to double dispose of the request.
