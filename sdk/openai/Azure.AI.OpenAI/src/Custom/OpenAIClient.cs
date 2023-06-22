@@ -4,9 +4,7 @@
 #nullable disable
 
 using System;
-using System.Collections.Specialized;
-using System.IO;
-using System.Text.Json;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -96,7 +94,14 @@ namespace Azure.AI.OpenAI
 
             ClientDiagnostics = new ClientDiagnostics(options, true);
             _tokenCredential = tokenCredential;
-            _pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>(), new HttpPipelinePolicy[] { new BearerTokenAuthenticationPolicy(_tokenCredential, AuthorizationScopes) }, new ResponseClassifier());
+            _pipeline = HttpPipelineBuilder.Build(
+                options,
+                Array.Empty<HttpPipelinePolicy>(),
+                new HttpPipelinePolicy[]
+                {
+                    new SkippableBearerTokenAuthenticationPolicy(_tokenCredential, AuthorizationScopes)
+                },
+                new ResponseClassifier());
             _endpoint = endpoint;
             _apiVersion = options.Version;
         }
@@ -565,6 +570,88 @@ namespace Azure.AI.OpenAI
                 Response response = await _pipeline.ProcessMessageAsync(message, context, cancellationToken)
                     .ConfigureAwait(false);
                 return Response.FromValue(Embeddings.FromResponse(response), response);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        public virtual Response<IReadOnlyList<ImageReference>> GetImages(
+            ImageGenerationOptions imageGenerationOptions,
+            CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(imageGenerationOptions, nameof(imageGenerationOptions));
+
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("OpenAIClient.GetImages");
+            scope.Start();
+
+            RequestContext context = FromCancellationToken(cancellationToken);
+
+            try
+            {
+                Operation<ImageOperationResponse> imagesOperation = StartGenerateImage(
+                    WaitUntil.Completed,
+                    imageGenerationOptions,
+                    cancellationToken);
+                ImageOperationResponse response = imagesOperation.Value;
+                Response rawResponse = imagesOperation.GetRawResponse();
+
+                return Response.FromValue(
+                    ImageReference.RangeFromResponse(response.Result, _pipeline),
+                    rawResponse);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        public virtual async Task<Response<IReadOnlyList<ImageReference>>> GetImagesAsync(
+            ImageGenerationOptions imageGenerationOptions,
+            CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(imageGenerationOptions, nameof(imageGenerationOptions));
+
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("OpenAIClient.GetImages");
+            scope.Start();
+
+            RequestContext context = FromCancellationToken(cancellationToken);
+
+            try
+            {
+                ImageResponse response = default;
+                Response rawResponse = default;
+
+                if (_isConfiguredForAzureOpenAI)
+                {
+                    Operation<ImageOperationResponse> imagesOperation = await StartGenerateImageAsync(
+                        WaitUntil.Completed,
+                        imageGenerationOptions,
+                        cancellationToken).ConfigureAwait(false);
+
+                    rawResponse = imagesOperation.GetRawResponse();
+                    response = imagesOperation.Value.Result;
+                }
+                else
+                {
+                    RequestContent content = imageGenerationOptions.ToRequestContent();
+
+                    HttpMessage message = CreatePostRequestMessage(
+                        string.Empty,
+                        "images/generations",
+                        content,
+                        context);
+                    rawResponse = await _pipeline.ProcessMessageAsync(message, context, cancellationToken)
+                        .ConfigureAwait(false);
+                    response = ImageResponse.FromResponse(rawResponse);
+                }
+
+                return Response.FromValue(
+                    ImageReference.RangeFromResponse(response, _pipeline),
+                    rawResponse);
             }
             catch (Exception e)
             {

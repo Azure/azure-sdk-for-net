@@ -1,16 +1,16 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://sdk8428.openai.azure.com/openai/deployments/text-davinci-002/completions?api-version=2023-03-15-preview",
+      "RequestUri": "https://sdk8428.openai.azure.com/openai/deployments/text-davinci-002/completions?api-version=2023-06-01-preview",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
         "api-key": "***********",
         "Content-Length": "44",
         "Content-Type": "application/json",
-        "traceparent": "00-9bcd82267d3419fc9c9acb33f9cbe58d-6d704d4db1c87bf4-00",
-        "User-Agent": "azsdk-net-AI.OpenAI/1.0.0-alpha.20230320.1 (.NET 7.0.4; Microsoft Windows 10.0.25300)",
-        "x-ms-client-request-id": "876a17ff0fd9025bffd2c69193e1ab31",
+        "traceparent": "00-e1eac51fd41d019c7a2c3f70f7e4fb44-432eaca746d52959-00",
+        "User-Agent": "azsdk-net-AI.OpenAI/1.0.0-alpha.20230620.1 (.NET 6.0.16; Microsoft Windows 10.0.25393)",
+        "x-ms-client-request-id": "da60b7016facdd478f50a9b89a30fff9",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -22,45 +22,87 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Access-Control-Allow-Origin": "*",
-        "apim-request-id": "1e0e22f4-3d23-40c0-97cd-d62ba4c64a20",
+        "apim-request-id": "900d1624-1d25-4786-a014-a22fdb4fb9bb",
         "Cache-Control": "must-revalidate, no-cache",
-        "Content-Length": "261",
+        "Content-Length": "786",
         "Content-Type": "application/json",
-        "Date": "Tue, 21 Mar 2023 00:37:57 GMT",
-        "openai-model": "text-davinci-002",
-        "openai-processing-ms": "357.0431",
+        "Date": "Tue, 20 Jun 2023 15:33:28 GMT",
+        "Openai-Model": "text-davinci-002",
+        "Openai-Processing-Ms": "485.3361",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
-        "x-accel-buffering": "no",
+        "X-Accel-Buffering": "no",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-client-request-id": "876a17ff0fd9025bffd2c69193e1ab31",
+        "X-Ms-Client-Request-Id": "da60b7016facdd478f50a9b89a30fff9",
         "x-ms-region": "East US",
-        "X-Request-ID": "28e01b6b-5ca3-41b9-b81f-56482fa5d37c"
+        "X-Request-ID": "591356e1-adfe-4d80-b2c6-e87a7115fc5e"
       },
       "ResponseBody": {
-        "id": "cmpl-6wKIfF0h9jrPrgi1dvVLOQPaqP5I6",
+        "id": "cmpl-7TXeCjVWjNv1F874QmXzK2qyxjPnp",
         "object": "text_completion",
-        "created": 1679359077,
+        "created": 1687275208,
         "model": "text-davinci-002",
+        "prompt_annotations": [
+          {
+            "prompt_index": 0,
+            "content_filter_results": {
+              "hate": {
+                "filtered": false,
+                "severity": "safe"
+              },
+              "self_harm": {
+                "filtered": false,
+                "severity": "safe"
+              },
+              "sexual": {
+                "filtered": false,
+                "severity": "safe"
+              },
+              "violence": {
+                "filtered": false,
+                "severity": "safe"
+              }
+            }
+          }
+        ],
         "choices": [
           {
-            "text": "\n",
+            "text": "\nMy name is Neal Gattey.\nI hope you have a great day!",
             "index": 0,
             "finish_reason": "stop",
-            "logprobs": null
+            "logprobs": null,
+            "content_filter_results": {
+              "hate": {
+                "filtered": false,
+                "severity": "safe"
+              },
+              "self_harm": {
+                "filtered": false,
+                "severity": "safe"
+              },
+              "sexual": {
+                "filtered": false,
+                "severity": "safe"
+              },
+              "violence": {
+                "filtered": false,
+                "severity": "safe"
+              }
+            }
           }
         ],
         "usage": {
-          "completion_tokens": 1,
+          "completion_tokens": 18,
           "prompt_tokens": 3,
-          "total_tokens": 4
+          "total_tokens": 21
         }
       }
     }
   ],
   "Variables": {
+    "OPENAI_CHAT_COMPLETIONS_DEPLOYMENT_ID": null,
     "OPENAI_DEPLOYMENT_ID": "text-davinci-002",
     "OPENAI_EMBEDDINGS_DEPLOYMENT_ID": "text-similarity-curie-001",
     "OPENAI_ENDPOINT": "https://sdk8428.openai.azure.com/",
-    "RandomSeed": "1084724302"
+    "RandomSeed": "1202503856"
   }
 }

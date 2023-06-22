@@ -8,9 +8,9 @@
         "Authorization": "Sanitized",
         "Content-Length": "88",
         "Content-Type": "application/json",
-        "traceparent": "00-7bfdc68cb56a243925fcd331f9dc5637-a7667a2fd27fe654-00",
-        "User-Agent": "azsdk-net-AI.OpenAI/1.0.0-alpha.20230320.1 (.NET 7.0.4; Microsoft Windows 10.0.25300)",
-        "x-ms-client-request-id": "a4304411a49de4a571d1e1540e0410d9",
+        "traceparent": "00-f70775d2c95b750883df70aa7f8bb50e-8ea532da05c5b528-00",
+        "User-Agent": "azsdk-net-AI.OpenAI/1.0.0-alpha.20230621.1 (.NET 6.0.18; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "fb9761595a2fbcb0c5cd7175987d1850",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -23,38 +23,42 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Access-Control-Allow-Origin": "*",
+        "Alt-Svc": "h3=\u0022:443\u0022",
         "Cache-Control": "must-revalidate, no-cache",
+        "CF-Cache-Status": "DYNAMIC",
+        "CF-RAY": "7db0c31d0810eca0-SEA",
         "Connection": "keep-alive",
-        "Content-Length": "393",
         "Content-Type": "application/json",
-        "Date": "Tue, 21 Mar 2023 00:36:52 GMT",
-        "Openai-Model": "text-davinci-002",
-        "Openai-Organization": "msft-finetuning-2",
-        "Openai-Processing-Ms": "380",
-        "Openai-Version": "2020-10-01",
+        "Date": "Thu, 22 Jun 2023 01:36:46 GMT",
+        "openai-model": "text-davinci-002",
+        "openai-organization": "msft-finetuning-2",
+        "openai-processing-ms": "375",
+        "openai-version": "2020-10-01",
+        "Server": "cloudflare",
         "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
-        "X-Ratelimit-Limit-Requests": "3000",
-        "X-Ratelimit-Limit-Tokens": "250000",
-        "X-Ratelimit-Remaining-Requests": "2999",
-        "X-Ratelimit-Remaining-Tokens": "249968",
-        "X-Ratelimit-Reset-Requests": "20ms",
-        "X-Ratelimit-Reset-Tokens": "7ms",
-        "X-Request-ID": "9ca6c89faf6ef192bd97b3b8c1e098dc"
+        "Transfer-Encoding": "chunked",
+        "x-ratelimit-limit-requests": "3000",
+        "x-ratelimit-limit-tokens": "250000",
+        "x-ratelimit-remaining-requests": "2999",
+        "x-ratelimit-remaining-tokens": "249968",
+        "x-ratelimit-reset-requests": "20ms",
+        "x-ratelimit-reset-tokens": "7ms",
+        "X-Request-ID": "9130717888706a7808d612dd26176f92"
       },
       "ResponseBody": {
-        "id": "cmpl-6wKHcQqiuJ6BQwfgHlrdhLnDAv6zV",
+        "id": "cmpl-7U3XZhk9ZL6noGRA0phh1Dj79nZek",
         "object": "text_completion",
-        "created": 1679359012,
+        "created": 1687397805,
         "model": "text-davinci-002",
         "choices": [
           {
-            "text": "\n\nhow are you?",
+            "text": "\n\nmy name is Rimsha Nawaz. I am a web developer.",
             "index": 0,
             "logprobs": null,
-            "finish_reason": "stop"
+            "finish_reason": "length"
           },
           {
-            "text": ", ranting,\n\nmudslinging, and wearing our emotion on",
+            "text": " as Andrew MacLean and Jason Latour\u2019s Head Lopper and others",
             "index": 1,
             "logprobs": null,
             "finish_reason": "length"
@@ -62,16 +66,88 @@
         ],
         "usage": {
           "prompt_tokens": 8,
-          "completion_tokens": 22,
-          "total_tokens": 30
+          "completion_tokens": 32,
+          "total_tokens": 40
+        }
+      }
+    },
+    {
+      "RequestUri": "https://api.openai.com/v1/completions",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "88",
+        "Content-Type": "application/json",
+        "traceparent": "00-f70775d2c95b750883df70aa7f8bb50e-8ea532da05c5b528-00",
+        "User-Agent": "azsdk-net-AI.OpenAI/1.0.0-alpha.20230621.1 (.NET 6.0.18; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "fb9761595a2fbcb0c5cd7175987d1850",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "prompt": [
+          "Hello world",
+          "running over the same old ground"
+        ],
+        "model": "text-davinci-002"
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Access-Control-Allow-Origin": "*",
+        "Alt-Svc": "h3=\u0022:443\u0022",
+        "Cache-Control": "must-revalidate, no-cache",
+        "CF-Cache-Status": "DYNAMIC",
+        "CF-RAY": "7db0c320fca2eca0-SEA",
+        "Connection": "keep-alive",
+        "Content-Type": "application/json",
+        "Date": "Thu, 22 Jun 2023 01:36:46 GMT",
+        "openai-model": "text-davinci-002",
+        "openai-organization": "msft-finetuning-2",
+        "openai-processing-ms": "350",
+        "openai-version": "2020-10-01",
+        "Server": "cloudflare",
+        "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
+        "Transfer-Encoding": "chunked",
+        "x-ratelimit-limit-requests": "3000",
+        "x-ratelimit-limit-tokens": "250000",
+        "x-ratelimit-remaining-requests": "2999",
+        "x-ratelimit-remaining-tokens": "249968",
+        "x-ratelimit-reset-requests": "20ms",
+        "x-ratelimit-reset-tokens": "7ms",
+        "X-Request-ID": "ccf3df9802c3e89152cbc442a593a04e"
+      },
+      "ResponseBody": {
+        "id": "cmpl-7U3Xas287dCAeOuT5oF24KPFFZWL8",
+        "object": "text_completion",
+        "created": 1687397806,
+        "model": "text-davinci-002",
+        "choices": [
+          {
+            "text": "!\u0022 );\n    }\n}",
+            "index": 0,
+            "logprobs": null,
+            "finish_reason": "stop"
+          },
+          {
+            "text": "...\u3011\n\n\n\n\u3010Just when...\u3011\n\n\n\n\u5B66\u751F",
+            "index": 1,
+            "logprobs": null,
+            "finish_reason": "length"
+          }
+        ],
+        "usage": {
+          "prompt_tokens": 8,
+          "completion_tokens": 23,
+          "total_tokens": 31
         }
       }
     }
   ],
   "Variables": {
+    "OPENAI_CHAT_COMPLETIONS_DEPLOYMENT_ID": null,
     "OPENAI_DEPLOYMENT_ID": "text-davinci-002",
     "OPENAI_EMBEDDINGS_DEPLOYMENT_ID": "text-similarity-curie-001",
     "OPENAI_ENDPOINT": "https://sdk8428.openai.azure.com/",
-    "RandomSeed": "270520"
+    "RandomSeed": "1235208706"
   }
 }

@@ -167,5 +167,13 @@ var result = client.GetChatCompletions("<deploymentId>", chatCompletionsOptions)
     </member>
     <member name="GetChatCompletions(string,RequestContent,RequestContext)">
     </member>
+    <member name="StartGenerateImageAsync(WaitUntil,ImageGenerationOptions,CancellationToken)">
+    </member>
+    <member name="StartGenerateImage(WaitUntil,ImageGenerationOptions,CancellationToken)">
+    </member>
+    <member name="StartGenerateImageAsync(WaitUntil,RequestContent,RequestContext)">
+    </member>
+    <member name="StartGenerateImage(WaitUntil,RequestContent,RequestContext)">
+    </member>
   </members>
 </doc>

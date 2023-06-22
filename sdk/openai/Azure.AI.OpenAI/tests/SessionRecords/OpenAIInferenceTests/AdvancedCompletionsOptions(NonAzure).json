@@ -8,9 +8,9 @@
         "Authorization": "Sanitized",
         "Content-Length": "246",
         "Content-Type": "application/json",
-        "traceparent": "00-4e07aa8b35f5316ec4fa086f214457de-3e1732d8ed752a1c-00",
-        "User-Agent": "azsdk-net-AI.OpenAI/1.0.0-alpha.20230404.1 (.NET 6.0.15; Microsoft Windows 10.0.25324)",
-        "x-ms-client-request-id": "f7b3eee40ec61fd16ac4d0c73705369e",
+        "traceparent": "00-826108dd93d92a899f134d56842a9036-29f951b847709c6f-00",
+        "User-Agent": "azsdk-net-AI.OpenAI/1.0.0-alpha.20230621.1 (.NET 6.0.18; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "a2f9a30dd7bd2e23a8d9ec623e9c7fef",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -34,20 +34,17 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Access-Control-Allow-Origin": "*",
-        "Alt-Svc": [
-          "h3=\u0022:443\u0022",
-          "h3-29=\u0022:443\u0022"
-        ],
+        "Alt-Svc": "h3=\u0022:443\u0022",
         "Cache-Control": "must-revalidate, no-cache",
         "CF-Cache-Status": "DYNAMIC",
-        "CF-RAY": "7b2b42914997c4a2-SEA",
+        "CF-RAY": "7db0c188cb59eca0-SEA",
         "Connection": "keep-alive",
-        "Content-Length": "3283",
+        "Content-Length": "5357",
         "Content-Type": "application/json",
-        "Date": "Tue, 04 Apr 2023 17:27:07 GMT",
+        "Date": "Thu, 22 Jun 2023 01:35:43 GMT",
         "openai-model": "text-davinci-002",
         "openai-organization": "msft-finetuning-2",
-        "openai-processing-ms": "2555",
+        "openai-processing-ms": "2111",
         "openai-version": "2020-10-01",
         "Server": "cloudflare",
         "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
@@ -57,16 +54,345 @@
         "x-ratelimit-remaining-tokens": "247951",
         "x-ratelimit-reset-requests": "20ms",
         "x-ratelimit-reset-tokens": "491ms",
-        "X-Request-ID": "4eec75766ffa63ac6c22601bf916b327"
+        "X-Request-ID": "e0176107b6e70a559c93ee4ce871507a"
       },
       "ResponseBody": {
-        "id": "cmpl-71eivSNVcEd9EnMkkISsB4rqhr3oc",
+        "id": "cmpl-7U3WXmRc6uBYSXSY4AJGt7cS7JDmj",
         "object": "text_completion",
-        "created": 1680629225,
+        "created": 1687397741,
         "model": "text-davinci-002",
         "choices": [
           {
-            "text": "Are bananas especially radioactive?\n\nThere is no such thing as \u0022especially radioactive.\u0022 All matter is made up of atoms, which are electrically neutral. However, the nucleus of an atom can be either positive or negative. The positive or negative charge of an atom is called an \u0022ion.\u0022",
+            "text": "Are bananas especially radioactive?\n\nBanana\u0027s are not particularly radioactive, but they are a source of potassium. Potassium is a radioactive element with a half-life of 1.3 billion years.",
+            "index": 0,
+            "logprobs": {
+              "tokens": [
+                "Are",
+                " bananas",
+                " especially",
+                " radioactive",
+                "?",
+                "\n",
+                "\n",
+                "Ban",
+                "ana",
+                "\u0027s",
+                " are",
+                " not",
+                " particularly",
+                " radioactive",
+                ",",
+                " but",
+                " they",
+                " are",
+                " a",
+                " source",
+                " of",
+                " potassium",
+                ".",
+                " Pot",
+                "assium",
+                " is",
+                " a",
+                " radioactive",
+                " element",
+                " with",
+                " a",
+                " half",
+                "-",
+                "life",
+                " of",
+                " 1",
+                ".",
+                "3",
+                " billion",
+                " years",
+                "."
+              ],
+              "token_logprobs": [
+                null,
+                -14.243486,
+                -11.102837,
+                -6.3913608,
+                -0.064153925,
+                -0.00042043283,
+                -8.176345e-6,
+                -1.7517134,
+                -0.0007286473,
+                -1.4762557,
+                -0.057699453,
+                -0.009439916,
+                -2.9805455,
+                -0.0025569287,
+                -0.00695356,
+                -0.110482804,
+                -0.04097006,
+                -0.93492985,
+                -0.1411352,
+                -0.29371136,
+                -3.076318e-7,
+                -0.08365337,
+                -0.8279303,
+                -0.23805107,
+                -2.2159093e-6,
+                -0.0021138024,
+                -0.106349654,
+                -0.2148056,
+                -0.358211,
+                -0.07394064,
+                -4.0040345e-6,
+                -0.16827823,
+                -0.0076866164,
+                -0.00002987608,
+                -6.9861335e-6,
+                -0.041506357,
+                -0.000014616429,
+                -0.020014796,
+                -0.00033462982,
+                -3.529076e-6,
+                -0.000012588937
+              ],
+              "top_logprobs": [
+                null,
+                {
+                  " you": -0.5484283
+                },
+                {
+                  " good": -1.2691917
+                },
+                {
+                  " good": -0.6970006
+                },
+                {
+                  "?": -0.064153925
+                },
+                {
+                  "\n": -0.00042043283
+                },
+                {
+                  "\n": -8.176345e-6
+                },
+                {
+                  "There": -0.7803828
+                },
+                {
+                  "ana": -0.0007286473
+                },
+                {
+                  " equivalent": -0.93594205
+                },
+                {
+                  " are": -0.057699453
+                },
+                {
+                  " not": -0.009439916
+                },
+                {
+                  " especially": -0.6519839
+                },
+                {
+                  " radioactive": -0.0025569287
+                },
+                {
+                  ",": -0.00695356
+                },
+                {
+                  " but": -0.110482804
+                },
+                {
+                  " they": -0.04097006
+                },
+                {
+                  " can": -0.50754255
+                },
+                {
+                  " a": -0.1411352
+                },
+                {
+                  " source": -0.29371136
+                },
+                {
+                  " of": -3.076318e-7
+                },
+                {
+                  " potassium": -0.08365337
+                },
+                {
+                  "-": -0.7608831
+                },
+                {
+                  " Pot": -0.23805107
+                },
+                {
+                  "assium": -2.2159093e-6
+                },
+                {
+                  " is": -0.0021138024
+                },
+                {
+                  " a": -0.106349654
+                },
+                {
+                  " radioactive": -0.2148056
+                },
+                {
+                  " element": -0.358211
+                },
+                {
+                  " with": -0.07394064
+                },
+                {
+                  " a": -4.0040345e-6
+                },
+                {
+                  " half": -0.16827823
+                },
+                {
+                  "-": -0.0076866164
+                },
+                {
+                  "life": -0.00002987608
+                },
+                {
+                  " of": -6.9861335e-6
+                },
+                {
+                  " 1": -0.041506357
+                },
+                {
+                  ".": -0.000014616429
+                },
+                {
+                  "3": -0.020014796
+                },
+                {
+                  " billion": -0.00033462982
+                },
+                {
+                  " years": -3.529076e-6
+                },
+                {
+                  ".": -0.000012588937
+                }
+              ],
+              "text_offset": [
+                0,
+                3,
+                11,
+                22,
+                34,
+                35,
+                36,
+                37,
+                40,
+                43,
+                45,
+                49,
+                53,
+                66,
+                78,
+                79,
+                83,
+                88,
+                92,
+                94,
+                101,
+                104,
+                114,
+                115,
+                119,
+                125,
+                128,
+                130,
+                142,
+                150,
+                155,
+                157,
+                162,
+                163,
+                167,
+                170,
+                172,
+                173,
+                174,
+                182,
+                188
+              ]
+            },
+            "finish_reason": "stop"
+          }
+        ],
+        "usage": {
+          "prompt_tokens": 5,
+          "completion_tokens": 74,
+          "total_tokens": 79
+        }
+      }
+    },
+    {
+      "RequestUri": "https://api.openai.com/v1/completions",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "246",
+        "Content-Type": "application/json",
+        "traceparent": "00-826108dd93d92a899f134d56842a9036-29f951b847709c6f-00",
+        "User-Agent": "azsdk-net-AI.OpenAI/1.0.0-alpha.20230621.1 (.NET 6.0.18; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "a2f9a30dd7bd2e23a8d9ec623e9c7fef",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "prompt": [
+          "Are bananas especially radioactive?"
+        ],
+        "max_tokens": 512,
+        "temperature": 0.75,
+        "logit_bias": {
+          "25996": -100,
+          "35484": -100,
+          "40058": -100,
+          "15991": -100
+        },
+        "user": "AzureSDKOpenAITests",
+        "logprobs": 1,
+        "echo": true,
+        "best_of": 3,
+        "model": "text-davinci-002"
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Access-Control-Allow-Origin": "*",
+        "Alt-Svc": "h3=\u0022:443\u0022",
+        "Cache-Control": "must-revalidate, no-cache",
+        "CF-Cache-Status": "DYNAMIC",
+        "CF-RAY": "7db0c199b818eca0-SEA",
+        "Connection": "keep-alive",
+        "Content-Length": "6790",
+        "Content-Type": "application/json",
+        "Date": "Thu, 22 Jun 2023 01:35:44 GMT",
+        "openai-model": "text-davinci-002",
+        "openai-organization": "msft-finetuning-2",
+        "openai-processing-ms": "1091",
+        "openai-version": "2020-10-01",
+        "Server": "cloudflare",
+        "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
+        "x-ratelimit-limit-requests": "3000",
+        "x-ratelimit-limit-tokens": "250000",
+        "x-ratelimit-remaining-requests": "2999",
+        "x-ratelimit-remaining-tokens": "247951",
+        "x-ratelimit-reset-requests": "20ms",
+        "x-ratelimit-reset-tokens": "491ms",
+        "X-Request-ID": "3f0f7a13aa814b9f5df1c991f4b6df1e"
+      },
+      "ResponseBody": {
+        "id": "cmpl-7U3Waqsa6KFW4GvPGso9RRsUynDj2",
+        "object": "text_completion",
+        "created": 1687397744,
+        "model": "text-davinci-002",
+        "choices": [
+          {
+            "text": "Are bananas especially radioactive?\n\nThere is no evidence that suggests that any fruit, including Banans, are radioactive. While some foods may contain small amounts of naturally-occurring radioactive elements, the levels are typically too low to pose any significant health risk.",
             "index": 0,
             "logprobs": {
               "tokens": [
@@ -80,292 +406,257 @@
                 "There",
                 " is",
                 " no",
-                " such",
-                " thing",
-                " as",
-                " \u0022",
-                "especially",
-                " radioactive",
-                ".\u0022",
-                " All",
-                " matter",
-                " is",
-                " made",
-                " up",
-                " of",
-                " atoms",
+                " evidence",
+                " that",
+                " suggests",
+                " that",
+                " any",
+                " fruit",
                 ",",
-                " which",
+                " including",
+                " Ban",
+                "ans",
+                ",",
                 " are",
-                " electr",
-                "ically",
-                " neutral",
+                " radioactive",
                 ".",
-                " However",
+                " While",
+                " some",
+                " foods",
+                " may",
+                " contain",
+                " small",
+                " amounts",
+                " of",
+                " naturally",
+                "-",
+                "occ",
+                "urring",
+                " radioactive",
+                " elements",
                 ",",
                 " the",
-                " nucleus",
-                " of",
-                " an",
-                " atom",
-                " can",
-                " be",
-                " either",
-                " positive",
-                " or",
-                " negative",
-                ".",
-                " The",
-                " positive",
-                " or",
-                " negative",
-                " charge",
-                " of",
-                " an",
-                " atom",
-                " is",
-                " called",
-                " an",
-                " \u0022",
-                "ion",
-                ".\u0022"
+                " levels",
+                " are",
+                " typically",
+                " too",
+                " low",
+                " to",
+                " pose",
+                " any",
+                " significant",
+                " health",
+                " risk",
+                "."
               ],
               "token_logprobs": [
                 null,
-                -14.245208,
-                -11.109661,
-                -6.388697,
-                -0.06369275,
-                -0.00041995506,
-                -8.4157e-6,
-                -0.7773478,
-                -0.000713794,
-                -0.0006728154,
-                -2.2327306,
-                -0.00009174727,
-                -9.012677e-6,
-                -0.45209846,
-                -0.4959718,
-                -0.011229955,
-                -0.045018822,
-                -0.6075512,
-                -0.23713131,
-                -0.045325,
-                -0.040718287,
-                -0.022432948,
-                -1.5006569e-6,
-                -0.0016909376,
-                -8.653179e-6,
-                -0.23506118,
-                -0.54537225,
-                -3.0396936,
-                0.0,
-                -0.0029234888,
-                -0.581757,
-                -0.23802635,
-                0.0,
-                -0.29595867,
-                -0.2528686,
-                -0.000053716885,
-                -0.040603507,
-                -0.00011988616,
-                -0.5815135,
-                -0.37264356,
-                -0.14055008,
-                -1.2132705,
-                -0.00083446794,
-                -0.0005064818,
-                -0.03809624,
-                -0.047369886,
-                -0.7475171,
-                -0.2663985,
-                -0.0000720769,
-                -0.049950294,
-                -0.017079026,
-                -0.1288744,
-                -0.0027178093,
-                -0.0016946406,
-                -0.42686474,
-                -0.71531075,
-                -0.011099581,
-                -0.05029203,
-                -0.00042210176
+                -14.245232,
+                -11.10254,
+                -6.379263,
+                -0.06396252,
+                -0.00041458878,
+                -8.176345e-6,
+                -0.7835463,
+                -0.0007095007,
+                -0.00067746826,
+                -2.0358002,
+                -0.3514015,
+                -0.17791073,
+                -0.000056460554,
+                -0.17616145,
+                -0.26924556,
+                -0.095684424,
+                -0.0023476782,
+                -0.2324006,
+                -0.9870794,
+                -0.0015281307,
+                -0.008417551,
+                -0.089341864,
+                -5.460492e-7,
+                -1.6764363,
+                -0.030889535,
+                -1.3168648,
+                -0.08004909,
+                -0.105051346,
+                -0.4412314,
+                -0.038490187,
+                -2.5744682e-6,
+                -0.2417964,
+                -0.57325345,
+                -0.00035490093,
+                -0.006119923,
+                -0.36254796,
+                -1.5851806,
+                -0.00006766711,
+                -0.011438114,
+                -0.017603442,
+                -0.00039819148,
+                -1.1663231,
+                -0.023430448,
+                -0.00013025544,
+                -1.8841804e-7,
+                -0.005736065,
+                -0.9304961,
+                -0.34498993,
+                -0.0006078664,
+                -0.083345465,
+                -4.2433903e-6
               ],
               "top_logprobs": [
                 null,
                 {
-                  " you": -0.5478915
+                  " you": -0.5480664
                 },
                 {
-                  " good": -1.2678344
+                  " good": -1.269671
                 },
                 {
-                  " good": -0.69891167
+                  " good": -0.699367
                 },
                 {
-                  "?": -0.06369275
+                  "?": -0.06396252
                 },
                 {
-                  "\n": -0.00041995506
+                  "\n": -0.00041458878
                 },
                 {
-                  "\n": -8.4157e-6
+                  "\n": -8.176345e-6
                 },
                 {
-                  "There": -0.7773478
+                  "There": -0.7835463
                 },
                 {
-                  " is": -0.000713794
+                  " is": -0.0007095007
                 },
                 {
-                  " no": -0.0006728154
+                  " no": -0.00067746826
                 },
                 {
-                  " scientific": -0.51687986
+                  " scientific": -0.51459444
                 },
                 {
-                  " thing": -0.00009174727
+                  " that": -0.3514015
                 },
                 {
-                  " as": -9.012677e-6
+                  " suggests": -0.17791073
                 },
                 {
-                  " \u0022": -0.45209846
+                  " that": -0.000056460554
                 },
                 {
-                  "especially": -0.4959718
+                  " any": -0.17616145
                 },
                 {
-                  " radioactive": -0.011229955
+                  " fruit": -0.26924556
                 },
                 {
-                  ".\u0022": -0.045018822
+                  ",": -0.095684424
                 },
                 {
-                  " All": -0.6075512
+                  " including": -0.0023476782
                 },
                 {
-                  " matter": -0.23713131
+                  " Ban": -0.2324006
                 },
                 {
-                  " is": -0.045325
+                  "an": -0.7543885
                 },
                 {
-                  " made": -0.040718287
+                  ",": -0.0015281307
                 },
                 {
-                  " up": -0.022432948
+                  " are": -0.008417551
                 },
                 {
-                  " of": -1.5006569e-6
+                  " radioactive": -0.089341864
                 },
                 {
-                  " atoms": -0.0016909376
+                  ".": -5.460492e-7
                 },
                 {
-                  ",": -8.653179e-6
+                  "\u003C|endoftext|\u003E": -0.30318642
                 },
                 {
-                  " which": -0.23506118
+                  " some": -0.030889535
                 },
                 {
-                  " are": -0.54537225
+                  " fruits": -0.45032975
                 },
                 {
-                  " in": -1.3746164
+                  " may": -0.08004909
                 },
                 {
-                  "ically": 0.0
+                  " contain": -0.105051346
                 },
                 {
-                  " neutral": -0.0029234888
+                  " small": -0.4412314
                 },
                 {
-                  ".": -0.581757
+                  " amounts": -0.038490187
                 },
                 {
-                  " However": -0.23802635
+                  " of": -2.5744682e-6
                 },
                 {
-                  ",": 0.0
+                  " naturally": -0.2417964
                 },
                 {
-                  " the": -0.29595867
+                  "-": -0.57325345
                 },
                 {
-                  " nucleus": -0.2528686
+                  "occ": -0.00035490093
                 },
                 {
-                  " of": -0.000053716885
+                  "urring": -0.006119923
                 },
                 {
-                  " an": -0.040603507
+                  " radioactive": -0.36254796
                 },
                 {
-                  " atom": -0.00011988616
+                  " isot": -0.6819538
                 },
                 {
-                  " can": -0.5815135
+                  ",": -0.00006766711
                 },
                 {
-                  " be": -0.37264356
+                  " the": -0.011438114
                 },
                 {
-                  " either": -0.14055008
+                  " levels": -0.017603442
                 },
                 {
-                  " positively": -0.47303614
+                  " are": -0.00039819148
                 },
                 {
-                  " or": -0.00083446794
+                  " generally": -0.6773169
                 },
                 {
-                  " negative": -0.0005064818
+                  " too": -0.023430448
                 },
                 {
-                  ".": -0.03809624
+                  " low": -0.00013025544
                 },
                 {
-                  " The": -0.047369886
+                  " to": -1.8841804e-7
                 },
                 {
-                  " positive": -0.7475171
+                  " pose": -0.005736065
                 },
                 {
-                  " or": -0.2663985
+                  " a": -0.5014971
                 },
                 {
-                  " negative": -0.0000720769
+                  " significant": -0.34498993
                 },
                 {
-                  " charge": -0.049950294
+                  " health": -0.0006078664
                 },
                 {
-                  " of": -0.017079026
+                  " risk": -0.083345465
                 },
                 {
-                  " an": -0.1288744
-                },
-                {
-                  " atom": -0.0027178093
-                },
-                {
-                  " is": -0.0016946406
-                },
-                {
-                  " called": -0.42686474
-                },
-                {
-                  " its": -0.69043714
-                },
-                {
-                  " \u0022": -0.011099581
-                },
-                {
-                  "ion": -0.05029203
-                },
-                {
-                  ".\u0022": -0.00042210176
+                  ".": -4.2433903e-6
                 }
               ],
               "text_offset": [
@@ -380,54 +671,47 @@
                 42,
                 45,
                 48,
-                53,
-                59,
+                57,
                 62,
-                64,
-                74,
+                71,
+                76,
+                80,
                 86,
-                88,
-                92,
-                99,
-                102,
-                107,
-                110,
-                113,
-                119,
-                120,
-                126,
-                130,
-                137,
+                87,
+                97,
+                101,
+                104,
+                105,
+                109,
+                121,
+                122,
+                128,
+                133,
+                139,
                 143,
                 151,
-                152,
-                160,
-                161,
+                157,
                 165,
-                173,
-                176,
+                168,
+                178,
                 179,
-                184,
+                182,
                 188,
-                191,
-                198,
-                207,
+                200,
+                209,
                 210,
-                219,
-                220,
-                224,
-                233,
-                236,
-                245,
-                252,
+                214,
+                221,
+                225,
+                235,
+                239,
+                243,
+                246,
+                251,
                 255,
-                258,
-                263,
-                266,
-                273,
-                276,
-                278,
-                281
+                267,
+                274,
+                279
               ]
             },
             "finish_reason": "stop"
@@ -435,8 +719,8 @@
         ],
         "usage": {
           "prompt_tokens": 5,
-          "completion_tokens": 95,
-          "total_tokens": 100
+          "completion_tokens": 123,
+          "total_tokens": 128
         }
       }
     }
@@ -447,7 +731,7 @@
     "OPENAI_DEPLOYMENT_ID": "text-davinci-002",
     "OPENAI_EMBEDDINGS_DEPLOYMENT_ID": "text-similarity-curie-001",
     "OPENAI_ENDPOINT": "https://sdk8428.openai.azure.com/",
-    "RandomSeed": "1964224400",
+    "RandomSeed": "1892932772",
     "SUBSCRIPTION_ID": "e72e5254-f265-4e95-9bd2-9ee8e7329051"
   }
 }
