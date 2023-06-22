@@ -129,35 +129,35 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics
         public void FailedToConvertMetricPoint(string meterName, string instrumentName, string exceptionMessage) => WriteEvent(15, meterName, instrumentName, exceptionMessage);
 
         [NonEvent]
-        public void FailedToConvertActivity(string activityDisplayName, Exception ex)
+        public void FailedToConvertActivity(string activitySourceName, string activityDisplayName, Exception ex)
         {
             if (IsEnabled(EventLevel.Error))
             {
-                FailedToConvertActivity(activityDisplayName, ex.FlattenException().ToInvariantString());
+                FailedToConvertActivity(activitySourceName, activityDisplayName, ex.FlattenException().ToInvariantString());
             }
         }
 
-        [Event(16, Message = "Failed to convert Activity due to an exception. Activity: {0}. {1}", Level = EventLevel.Error)]
-        public void FailedToConvertActivity(string activityDisplayName, string exceptionMessage) => WriteEvent(16, activityDisplayName, exceptionMessage);
+        [Event(16, Message = "Failed to convert Activity due to an exception. ActivitySource: {0}. Activity: {1}. {2}", Level = EventLevel.Error)]
+        public void FailedToConvertActivity(string activitySourceName, string activityDisplayName, string exceptionMessage) => WriteEvent(16, activitySourceName, activityDisplayName, exceptionMessage);
 
         [NonEvent]
-        public void FailedToExtractActivityEvent(string activityDisplayName, Exception ex)
+        public void FailedToExtractActivityEvent(string activitySourceName, string activityDisplayName, Exception ex)
         {
             if (IsEnabled(EventLevel.Error))
             {
-                FailedToExtractActivityEvent(activityDisplayName, ex.FlattenException().ToInvariantString());
+                FailedToExtractActivityEvent(activitySourceName, activityDisplayName, ex.FlattenException().ToInvariantString());
             }
         }
 
-        [Event(17, Message = "Failed to extract Activity Event due to an exception. Activity: {0}. {1}", Level = EventLevel.Error)]
-        public void FailedToExtractActivityEvent(string activityDisplayName, string exceptionMessage) => WriteEvent(17, activityDisplayName, exceptionMessage);
+        [Event(17, Message = "Failed to extract Activity Event due to an exception. ActivitySource: {0}. Activity: {1}. {2}", Level = EventLevel.Error)]
+        public void FailedToExtractActivityEvent(string activitySourceName, string activityDisplayName, string exceptionMessage) => WriteEvent(17, activitySourceName, activityDisplayName, exceptionMessage);
 
-        [Event(18, Message = "Maximum count of {0} Activity Links reached. Excess Links are dropped. Activity: {1}. ", Level = EventLevel.Warning)]
-        public void ActivityLinksIgnored(int maxLinksAllowed, string activityDisplayName)
+        [Event(18, Message = "Maximum count of {0} Activity Links reached. Excess Links are dropped. ActivitySource: {1}. Activity: {2}.", Level = EventLevel.Warning)]
+        public void ActivityLinksIgnored(int maxLinksAllowed, string activitySourceName, string activityDisplayName)
         {
             if (IsEnabled(EventLevel.Warning))
             {
-                WriteEvent(18, maxLinksAllowed, activityDisplayName);
+                WriteEvent(18, maxLinksAllowed, activitySourceName, activityDisplayName);
             }
         }
     }
