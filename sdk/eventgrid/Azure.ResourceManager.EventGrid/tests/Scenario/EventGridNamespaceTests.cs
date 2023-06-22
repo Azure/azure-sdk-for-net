@@ -137,10 +137,6 @@ namespace Azure.ResourceManager.EventGrid.Tests
             var namespaceExists = await NamespaceCollection.ExistsAsync(namespaceName3);
             Assert.True(namespaceExists);
 
-            // check pagination ===> check how this works
-            /*var namespaceListOnPage1 = await NamespaceCollection.GetAllAsync().AsPages(null, 2).ToEnumerableAsync();
-            Assert.AreEqual(namespacesInResourceGroup.Count, 2);*/
-
             // Delete namespace3
             await getNamespace3Response.DeleteAsync(WaitUntil.Completed);
 
