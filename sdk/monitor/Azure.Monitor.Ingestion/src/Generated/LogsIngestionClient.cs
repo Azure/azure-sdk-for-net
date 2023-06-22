@@ -68,7 +68,7 @@ namespace Azure.Monitor.Ingestion
         /// <param name="ruleId"> The immutable Id of the Data Collection Rule resource. </param>
         /// <param name="streamName"> The streamDeclaration name as defined in the Data Collection Rule. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="contentEncoding"> If content is already gzipped, put &quot;gzip&quot;. Default behavior is to gzip all input. </param>
+        /// <param name="contentEncoding"> If content is already gzipped, put "gzip". Default behavior is to gzip all input. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="ruleId"/>, <paramref name="streamName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="ruleId"/> or <paramref name="streamName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -108,7 +108,7 @@ namespace Azure.Monitor.Ingestion
         /// <param name="ruleId"> The immutable Id of the Data Collection Rule resource. </param>
         /// <param name="streamName"> The streamDeclaration name as defined in the Data Collection Rule. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="contentEncoding"> If content is already gzipped, put &quot;gzip&quot;. Default behavior is to gzip all input. </param>
+        /// <param name="contentEncoding"> If content is already gzipped, put "gzip". Default behavior is to gzip all input. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="ruleId"/>, <paramref name="streamName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="ruleId"/> or <paramref name="streamName"/> is an empty string, and was expected to be non-empty. </exception>

@@ -7,7 +7,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
-
+using Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics;
 using Azure.Monitor.OpenTelemetry.Exporter.Models;
 
 using OpenTelemetry;
@@ -95,7 +95,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
         internal static void AddActivityLinksToProperties(Activity activity, ref AzMonList UnMappedTags)
         {
             string msLinks = "_MS.links";
-            // max number of links that can fit in this json formatted string is 107. it is based on assumption that traceid and spanid will be of fixed length.
+            // max number of links that can fit in this json formatted string is 107. it is based on assumption that TraceId and SpanId will be of fixed length.
             // Keeping max at 100 for now.
             int maxLinks = MaxlinksAllowed;
 
@@ -105,20 +105,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                 linksJson.Append('[');
                 foreach (ref readonly var link in activity.EnumerateLinks())
                 {
-                    linksJson
-                        .Append('{')
-                        .Append("\"operation_Id\":")
-                        .Append('\"')
-                        .Append(link.Context.TraceId.ToHexString())
-                        .Append('\"')
-                        .Append(',');
-                    linksJson
-                        .Append("\"id\":")
-                        .Append('\"')
-                        .Append(link.Context.SpanId.ToHexString())
-                        .Append('\"');
-                    linksJson.Append("},");
-
+                    AddContextToMSLinks(linksJson, link);
                     maxLinks--;
                     if (maxLinks == 0)
                     {
@@ -186,26 +173,26 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 
         private static void AddTelemetryFromActivityEvents(Activity activity, TelemetryItem telemetryItem, List<TelemetryItem> telemetryItems)
         {
-            foreach (ref readonly var evnt in activity.EnumerateEvents())
+            foreach (ref readonly var @event in activity.EnumerateEvents())
             {
                 try
                 {
-                    if (evnt.Name == SemanticConventions.AttributeExceptionEventName)
+                    if (@event.Name == SemanticConventions.AttributeExceptionEventName)
                     {
-                        var exceptionData = GetExceptionDataDetailsOnTelemetryItem(evnt);
+                        var exceptionData = GetExceptionDataDetailsOnTelemetryItem(@event);
                         if (exceptionData != null)
                         {
-                            var exceptionTelemetryItem = new TelemetryItem("Exception", telemetryItem, activity.SpanId, activity.Kind, evnt.Timestamp);
+                            var exceptionTelemetryItem = new TelemetryItem("Exception", telemetryItem, activity.SpanId, activity.Kind, @event.Timestamp);
                             exceptionTelemetryItem.Data = exceptionData;
                             telemetryItems.Add(exceptionTelemetryItem);
                         }
                     }
                     else
                     {
-                        var messageData = GetTraceTelemetryData(evnt);
+                        var messageData = GetTraceTelemetryData(@event);
                         if (messageData != null)
                         {
-                            var traceTelemetryItem = new TelemetryItem("Message", telemetryItem, activity.SpanId, activity.Kind, evnt.Timestamp);
+                            var traceTelemetryItem = new TelemetryItem("Message", telemetryItem, activity.SpanId, activity.Kind, @event.Timestamp);
                             traceTelemetryItem.Data = messageData;
                             telemetryItems.Add(traceTelemetryItem);
                         }
@@ -299,6 +286,108 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                 BaseType = "ExceptionData",
                 BaseData = exceptionData,
             };
+        }
+
+        internal static void AddEnqueuedTimeToMeasurementsAndLinksToProperties(Activity activity, IDictionary<string, double> measurements, ref AzMonList UnMappedTags)
+        {
+            if (activity.Links != null && activity.Links.Any())
+            {
+                if (TryGetAverageQueueTimeWithLinks(activity, ref UnMappedTags, out long enqueuedTime))
+                {
+                    measurements["timeSinceEnqueued"] = enqueuedTime;
+                }
+            }
+        }
+
+        private static bool TryGetAverageQueueTimeWithLinks(Activity activity, ref AzMonList UnMappedTags, out long avgTimeInQueue)
+        {
+            avgTimeInQueue = 0;
+            var linksCount = 0;
+            DateTimeOffset startTime = activity.StartTimeUtc;
+            long startEpochTime = startTime.ToUnixTimeMilliseconds();
+            bool isEnqueuedTimeCalculated = true;
+
+            string msLinks = "_MS.links";
+            var linksJson = new StringBuilder();
+            linksJson.Append('[');
+            foreach (ref readonly var link in activity.EnumerateLinks())
+            {
+                long msgEnqueuedTime = 0;
+                if (isEnqueuedTimeCalculated && !TryGetEnqueuedTime(link, out msgEnqueuedTime))
+                {
+                    // instrumentation does not consistently report enqueued time, ignoring whole span
+                    isEnqueuedTimeCalculated = false;
+                }
+                if (isEnqueuedTimeCalculated)
+                {
+                    avgTimeInQueue += Math.Max(startEpochTime - msgEnqueuedTime, 0);
+                }
+
+                linksCount++;
+
+                if (linksCount <= MaxlinksAllowed)
+                {
+                    AddContextToMSLinks(linksJson, link);
+                }
+            }
+
+            if (linksJson.Length > 0)
+            {
+                // trim trailing comma - json does not support it
+                linksJson.Remove(linksJson.Length - 1, 1);
+            }
+            linksJson.Append(']');
+            AzMonList.Add(ref UnMappedTags, new KeyValuePair<string, object?>(msLinks, linksJson.ToString()));
+            if (MaxlinksAllowed < linksCount)
+            {
+                AzureMonitorExporterEventSource.Log.WriteInformational("ActivityLinksIgnored", $"Max count of {MaxlinksAllowed} has reached.");
+            }
+
+            if (isEnqueuedTimeCalculated)
+            {
+                avgTimeInQueue /= linksCount;
+            }
+            else
+            {
+                avgTimeInQueue = 0;
+                return false;
+            }
+
+            return true;
+        }
+
+        private static bool TryGetEnqueuedTime(ActivityLink link, out long enqueuedTime)
+        {
+            enqueuedTime = 0;
+
+            foreach (ref readonly var attribute in link.EnumerateTagObjects())
+            {
+                if (attribute.Key == "enqueuedTime")
+                {
+                    return long.TryParse(attribute.Value?.ToString(), out enqueuedTime);
+                }
+            }
+
+            return false;
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private static void AddContextToMSLinks(StringBuilder linksJson, ActivityLink link)
+        {
+            linksJson
+                .Append('{')
+                .Append("\"operation_Id\":")
+                .Append('\"')
+                .Append(link.Context.TraceId.ToHexString())
+                .Append('\"')
+                .Append(',');
+            linksJson
+                .Append("\"id\":")
+                .Append('\"')
+                .Append(link.Context.SpanId.ToHexString())
+                .Append('\"');
+            linksJson
+                .Append("},");
         }
     }
 }

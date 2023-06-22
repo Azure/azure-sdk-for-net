@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
     public partial class RedisEnterpriseModule
     {
         /// <summary> Initializes a new instance of RedisEnterpriseModule. </summary>
-        /// <param name="name"> The name of the module, e.g. &apos;RedisBloom&apos;, &apos;RediSearch&apos;, &apos;RedisTimeSeries&apos;. </param>
+        /// <param name="name"> The name of the module, e.g. 'RedisBloom', 'RediSearch', 'RedisTimeSeries'. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public RedisEnterpriseModule(string name)
         {
@@ -24,9 +24,9 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
         }
 
         /// <summary> Initializes a new instance of RedisEnterpriseModule. </summary>
-        /// <param name="name"> The name of the module, e.g. &apos;RedisBloom&apos;, &apos;RediSearch&apos;, &apos;RedisTimeSeries&apos;. </param>
-        /// <param name="args"> Configuration options for the module, e.g. &apos;ERROR_RATE 0.01 INITIAL_SIZE 400&apos;. </param>
-        /// <param name="version"> The version of the module, e.g. &apos;1.0&apos;. </param>
+        /// <param name="name"> The name of the module, e.g. 'RedisBloom', 'RediSearch', 'RedisTimeSeries'. </param>
+        /// <param name="args"> Configuration options for the module, e.g. 'ERROR_RATE 0.01 INITIAL_SIZE 400'. </param>
+        /// <param name="version"> The version of the module, e.g. '1.0'. </param>
         internal RedisEnterpriseModule(string name, string args, string version)
         {
             Name = name;
@@ -34,11 +34,11 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
             Version = version;
         }
 
-        /// <summary> The name of the module, e.g. &apos;RedisBloom&apos;, &apos;RediSearch&apos;, &apos;RedisTimeSeries&apos;. </summary>
+        /// <summary> The name of the module, e.g. 'RedisBloom', 'RediSearch', 'RedisTimeSeries'. </summary>
         public string Name { get; set; }
-        /// <summary> Configuration options for the module, e.g. &apos;ERROR_RATE 0.01 INITIAL_SIZE 400&apos;. </summary>
+        /// <summary> Configuration options for the module, e.g. 'ERROR_RATE 0.01 INITIAL_SIZE 400'. </summary>
         public string Args { get; set; }
-        /// <summary> The version of the module, e.g. &apos;1.0&apos;. </summary>
+        /// <summary> The version of the module, e.g. '1.0'. </summary>
         public string Version { get; }
     }
 }

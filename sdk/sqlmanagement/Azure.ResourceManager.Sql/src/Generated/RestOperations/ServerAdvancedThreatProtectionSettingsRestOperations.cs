@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Sql
             return message;
         }
 
-        /// <summary> Get a list of the server&apos;s Advanced Threat Protection states. </summary>
+        /// <summary> Get a list of the server's Advanced Threat Protection states. </summary>
         /// <param name="subscriptionId"> The subscription ID that identifies an Azure subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
         /// <param name="serverName"> The name of the server. </param>
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        /// <summary> Get a list of the server&apos;s Advanced Threat Protection states. </summary>
+        /// <summary> Get a list of the server's Advanced Threat Protection states. </summary>
         /// <param name="subscriptionId"> The subscription ID that identifies an Azure subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
         /// <param name="serverName"> The name of the server. </param>
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.Sql
             return message;
         }
 
-        /// <summary> Get a server&apos;s Advanced Threat Protection state. </summary>
+        /// <summary> Get a server's Advanced Threat Protection state. </summary>
         /// <param name="subscriptionId"> The subscription ID that identifies an Azure subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
         /// <param name="serverName"> The name of the server. </param>
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        /// <summary> Get a server&apos;s Advanced Threat Protection state. </summary>
+        /// <summary> Get a server's Advanced Threat Protection state. </summary>
         /// <param name="subscriptionId"> The subscription ID that identifies an Azure subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
         /// <param name="serverName"> The name of the server. </param>
@@ -298,7 +298,7 @@ namespace Azure.ResourceManager.Sql
             return message;
         }
 
-        /// <summary> Get a list of the server&apos;s Advanced Threat Protection states. </summary>
+        /// <summary> Get a list of the server's Advanced Threat Protection states. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> The subscription ID that identifies an Azure subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
@@ -329,7 +329,7 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        /// <summary> Get a list of the server&apos;s Advanced Threat Protection states. </summary>
+        /// <summary> Get a list of the server's Advanced Threat Protection states. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> The subscription ID that identifies an Azure subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>

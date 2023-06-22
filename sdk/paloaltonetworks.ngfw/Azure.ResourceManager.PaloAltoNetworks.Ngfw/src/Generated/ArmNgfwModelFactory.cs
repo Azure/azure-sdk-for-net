@@ -190,9 +190,9 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
         /// <param name="description"> rule description. </param>
         /// <param name="ruleState"> state of this rule. </param>
         /// <param name="source"> source address. </param>
-        /// <param name="negateSource"> cidr should not be &apos;any&apos;. </param>
+        /// <param name="negateSource"> cidr should not be 'any'. </param>
         /// <param name="destination"> destination address. </param>
-        /// <param name="negateDestination"> cidr should not be &apos;any&apos;. </param>
+        /// <param name="negateDestination"> cidr should not be 'any'. </param>
         /// <param name="applications"> array of rule applications. </param>
         /// <param name="category"> rule category. </param>
         /// <param name="protocol"> any, application-default, TCP:number, UDP:number. </param>
@@ -327,9 +327,9 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
         /// <param name="description"> rule description. </param>
         /// <param name="ruleState"> state of this rule. </param>
         /// <param name="source"> source address. </param>
-        /// <param name="negateSource"> cidr should not be &apos;any&apos;. </param>
+        /// <param name="negateSource"> cidr should not be 'any'. </param>
         /// <param name="destination"> destination address. </param>
-        /// <param name="negateDestination"> cidr should not be &apos;any&apos;. </param>
+        /// <param name="negateDestination"> cidr should not be 'any'. </param>
         /// <param name="applications"> array of rule applications. </param>
         /// <param name="category"> rule category. </param>
         /// <param name="protocol"> any, application-default, TCP:number, UDP:number. </param>
@@ -520,9 +520,9 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
         /// <param name="description"> rule description. </param>
         /// <param name="ruleState"> state of this rule. </param>
         /// <param name="source"> source address. </param>
-        /// <param name="negateSource"> cidr should not be &apos;any&apos;. </param>
+        /// <param name="negateSource"> cidr should not be 'any'. </param>
         /// <param name="destination"> destination address. </param>
-        /// <param name="negateDestination"> cidr should not be &apos;any&apos;. </param>
+        /// <param name="negateDestination"> cidr should not be 'any'. </param>
         /// <param name="applications"> array of rule applications. </param>
         /// <param name="category"> rule category. </param>
         /// <param name="protocol"> any, application-default, TCP:number, UDP:number. </param>

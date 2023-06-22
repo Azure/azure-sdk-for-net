@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary>
-        /// Creates a VirtualHubBgpConnection resource if it doesn&apos;t exist else updates the existing VirtualHubBgpConnection.
+        /// Creates a VirtualHubBgpConnection resource if it doesn't exist else updates the existing VirtualHubBgpConnection.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -263,7 +263,7 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary>
-        /// Creates a VirtualHubBgpConnection resource if it doesn&apos;t exist else updates the existing VirtualHubBgpConnection.
+        /// Creates a VirtualHubBgpConnection resource if it doesn't exist else updates the existing VirtualHubBgpConnection.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>

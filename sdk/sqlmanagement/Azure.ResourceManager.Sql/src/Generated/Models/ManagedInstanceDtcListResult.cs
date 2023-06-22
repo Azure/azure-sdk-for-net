@@ -11,7 +11,7 @@ using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
 {
-    /// <summary> A list of managed instance&apos;s DTCs. </summary>
+    /// <summary> A list of managed instance's DTCs. </summary>
     internal partial class ManagedInstanceDtcListResult
     {
         /// <summary> Initializes a new instance of ManagedInstanceDtcListResult. </summary>

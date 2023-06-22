@@ -20,7 +20,7 @@ namespace Azure.IoT.TimeSeriesInsights
         }
 
         /// <summary> Initializes a new instance of TimeSeriesModelSettings. </summary>
-        /// <param name="name"> Time series model display name which is shown in the UX. Examples: &quot;Temperature Sensors&quot;, &quot;MyDevices&quot;. </param>
+        /// <param name="name"> Time series model display name which is shown in the UX. Examples: "Temperature Sensors", "MyDevices". </param>
         /// <param name="timeSeriesIdProperties"> Time series ID properties defined during environment creation. </param>
         /// <param name="defaultTypeId"> Default type ID of the model that new time series instances will automatically belong to. </param>
         internal TimeSeriesModelSettings(string name, IReadOnlyList<TimeSeriesIdProperty> timeSeriesIdProperties, string defaultTypeId)
@@ -30,7 +30,7 @@ namespace Azure.IoT.TimeSeriesInsights
             DefaultTypeId = defaultTypeId;
         }
 
-        /// <summary> Time series model display name which is shown in the UX. Examples: &quot;Temperature Sensors&quot;, &quot;MyDevices&quot;. </summary>
+        /// <summary> Time series model display name which is shown in the UX. Examples: "Temperature Sensors", "MyDevices". </summary>
         public string Name { get; }
         /// <summary> Time series ID properties defined during environment creation. </summary>
         public IReadOnlyList<TimeSeriesIdProperty> TimeSeriesIdProperties { get; }

@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Redis.Models
         /// <param name="aofStorageConnectionString0"> First storage account connection string. </param>
         /// <param name="aofStorageConnectionString1"> Second storage account connection string. </param>
         /// <param name="maxFragmentationMemoryReserved"> Value in megabytes reserved for fragmentation per shard. </param>
-        /// <param name="maxMemoryPolicy"> The eviction strategy used when your data won&apos;t fit within its memory limit. </param>
+        /// <param name="maxMemoryPolicy"> The eviction strategy used when your data won't fit within its memory limit. </param>
         /// <param name="maxMemoryReserved"> Value in megabytes reserved for non-cache usage per shard e.g. failover. </param>
         /// <param name="maxMemoryDelta"> Value in megabytes reserved for non-cache usage per shard e.g. failover. </param>
         /// <param name="maxClients"> The max clients config. </param>
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Redis.Models
         public string AofStorageConnectionString1 { get; set; }
         /// <summary> Value in megabytes reserved for fragmentation per shard. </summary>
         public string MaxFragmentationMemoryReserved { get; set; }
-        /// <summary> The eviction strategy used when your data won&apos;t fit within its memory limit. </summary>
+        /// <summary> The eviction strategy used when your data won't fit within its memory limit. </summary>
         public string MaxMemoryPolicy { get; set; }
         /// <summary> Value in megabytes reserved for non-cache usage per shard e.g. failover. </summary>
         public string MaxMemoryReserved { get; set; }

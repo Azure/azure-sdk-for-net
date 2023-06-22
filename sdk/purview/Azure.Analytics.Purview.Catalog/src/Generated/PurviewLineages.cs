@@ -60,7 +60,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// </list>
         /// </summary>
         /// <param name="guid"> The globally unique identifier of the entity. </param>
-        /// <param name="direction"> The direction of the lineage, which could be INPUT, OUTPUT or BOTH. Allowed values: &quot;BOTH&quot; | &quot;INPUT&quot; | &quot;OUTPUT&quot;. </param>
+        /// <param name="direction"> The direction of the lineage, which could be INPUT, OUTPUT or BOTH. Allowed values: "BOTH" | "INPUT" | "OUTPUT". </param>
         /// <param name="depth"> The number of hops for lineage. </param>
         /// <param name="width"> The number of max expanding width in lineage. </param>
         /// <param name="includeParent"> True to include the parent chain in the response. </param>
@@ -101,7 +101,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// </list>
         /// </summary>
         /// <param name="guid"> The globally unique identifier of the entity. </param>
-        /// <param name="direction"> The direction of the lineage, which could be INPUT, OUTPUT or BOTH. Allowed values: &quot;BOTH&quot; | &quot;INPUT&quot; | &quot;OUTPUT&quot;. </param>
+        /// <param name="direction"> The direction of the lineage, which could be INPUT, OUTPUT or BOTH. Allowed values: "BOTH" | "INPUT" | "OUTPUT". </param>
         /// <param name="depth"> The number of hops for lineage. </param>
         /// <param name="width"> The number of max expanding width in lineage. </param>
         /// <param name="includeParent"> True to include the parent chain in the response. </param>
@@ -142,7 +142,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// </list>
         /// </summary>
         /// <param name="guid"> The globally unique identifier of the entity. </param>
-        /// <param name="direction"> The direction of the lineage, which could be INPUT, OUTPUT or BOTH. Allowed values: &quot;BOTH&quot; | &quot;INPUT&quot; | &quot;OUTPUT&quot;. </param>
+        /// <param name="direction"> The direction of the lineage, which could be INPUT, OUTPUT or BOTH. Allowed values: "BOTH" | "INPUT" | "OUTPUT". </param>
         /// <param name="getDerivedLineage"> True to include derived lineage in the response. </param>
         /// <param name="offset"> The offset for pagination purpose. </param>
         /// <param name="limit"> The page size - by default there is no paging. </param>
@@ -182,7 +182,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// </list>
         /// </summary>
         /// <param name="guid"> The globally unique identifier of the entity. </param>
-        /// <param name="direction"> The direction of the lineage, which could be INPUT, OUTPUT or BOTH. Allowed values: &quot;BOTH&quot; | &quot;INPUT&quot; | &quot;OUTPUT&quot;. </param>
+        /// <param name="direction"> The direction of the lineage, which could be INPUT, OUTPUT or BOTH. Allowed values: "BOTH" | "INPUT" | "OUTPUT". </param>
         /// <param name="getDerivedLineage"> True to include derived lineage in the response. </param>
         /// <param name="offset"> The offset for pagination purpose. </param>
         /// <param name="limit"> The page size - by default there is no paging. </param>
@@ -228,7 +228,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// </list>
         /// </summary>
         /// <param name="typeName"> The name of the type. </param>
-        /// <param name="direction"> The direction of the lineage, which could be INPUT, OUTPUT or BOTH. Allowed values: &quot;BOTH&quot; | &quot;INPUT&quot; | &quot;OUTPUT&quot;. </param>
+        /// <param name="direction"> The direction of the lineage, which could be INPUT, OUTPUT or BOTH. Allowed values: "BOTH" | "INPUT" | "OUTPUT". </param>
         /// <param name="depth"> The number of hops for lineage. </param>
         /// <param name="width"> The number of max expanding width in lineage. </param>
         /// <param name="includeParent"> True to include the parent chain in the response. </param>
@@ -275,7 +275,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// </list>
         /// </summary>
         /// <param name="typeName"> The name of the type. </param>
-        /// <param name="direction"> The direction of the lineage, which could be INPUT, OUTPUT or BOTH. Allowed values: &quot;BOTH&quot; | &quot;INPUT&quot; | &quot;OUTPUT&quot;. </param>
+        /// <param name="direction"> The direction of the lineage, which could be INPUT, OUTPUT or BOTH. Allowed values: "BOTH" | "INPUT" | "OUTPUT". </param>
         /// <param name="depth"> The number of hops for lineage. </param>
         /// <param name="width"> The number of max expanding width in lineage. </param>
         /// <param name="includeParent"> True to include the parent chain in the response. </param>

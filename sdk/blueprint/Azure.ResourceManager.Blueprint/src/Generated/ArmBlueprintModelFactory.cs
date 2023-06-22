@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Blueprint.Models
         /// <param name="displayName"> One-liner string explain this resource. </param>
         /// <param name="description"> Multi-line explain this resource. </param>
         /// <param name="blueprintId"> ID of the published version of a blueprint definition. </param>
-        /// <param name="scope"> The target subscription scope of the blueprint assignment (format: &apos;/subscriptions/{subscriptionId}&apos;). For management group level assignments, the property is required. </param>
+        /// <param name="scope"> The target subscription scope of the blueprint assignment (format: '/subscriptions/{subscriptionId}'). For management group level assignments, the property is required. </param>
         /// <param name="parameters"> Blueprint assignment parameter values. </param>
         /// <param name="resourceGroups"> Names and locations of resource group placeholders. </param>
         /// <param name="status"> Status of blueprint assignment. This field is readonly. </param>

@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.Consumption.Models
         /// Serialized Name: Marketplace.properties.costCenter
         /// </param>
         /// <param name="additionalProperties">
-        /// Additional details of this usage item. By default this is not populated, unless it&apos;s specified in $expand.
+        /// Additional details of this usage item. By default this is not populated, unless it's specified in $expand.
         /// Serialized Name: Marketplace.properties.additionalProperties
         /// </param>
         /// <param name="publisherName">
@@ -1020,7 +1020,7 @@ namespace Azure.ResourceManager.Consumption.Models
         /// Serialized Name: PriceSheetProperties.meterId
         /// </param>
         /// <param name="meterDetails">
-        /// The details about the meter. By default this is not populated, unless it&apos;s specified in $expand.
+        /// The details about the meter. By default this is not populated, unless it's specified in $expand.
         /// Serialized Name: PriceSheetProperties.meterDetails
         /// </param>
         /// <param name="unitOfMeasure">
@@ -1059,15 +1059,15 @@ namespace Azure.ResourceManager.Consumption.Models
         /// Serialized Name: MeterDetails.meterName
         /// </param>
         /// <param name="meterCategory">
-        /// The category of the meter, for example, &apos;Cloud services&apos;, &apos;Networking&apos;, etc..
+        /// The category of the meter, for example, 'Cloud services', 'Networking', etc..
         /// Serialized Name: MeterDetails.meterCategory
         /// </param>
         /// <param name="meterSubCategory">
-        /// The subcategory of the meter, for example, &apos;A6 Cloud services&apos;, &apos;ExpressRoute (IXP)&apos;, etc..
+        /// The subcategory of the meter, for example, 'A6 Cloud services', 'ExpressRoute (IXP)', etc..
         /// Serialized Name: MeterDetails.meterSubCategory
         /// </param>
         /// <param name="unit">
-        /// The unit in which the meter consumption is charged, for example, &apos;Hours&apos;, &apos;GB&apos;, etc.
+        /// The unit in which the meter consumption is charged, for example, 'Hours', 'GB', etc.
         /// Serialized Name: MeterDetails.unit
         /// </param>
         /// <param name="meterLocation">
@@ -1413,7 +1413,7 @@ namespace Azure.ResourceManager.Consumption.Models
         /// Serialized Name: CreditSummary.properties.billingCurrency
         /// </param>
         /// <param name="reseller">
-        /// Credit&apos;s reseller.
+        /// Credit's reseller.
         /// Serialized Name: CreditSummary.properties.reseller
         /// </param>
         /// <param name="etag">
@@ -1515,7 +1515,7 @@ namespace Azure.ResourceManager.Consumption.Models
         /// Serialized Name: LegacyUsageDetail.properties.meterId
         /// </param>
         /// <param name="meterDetails">
-        /// The details about the meter. By default this is not populated, unless it&apos;s specified in $expand.
+        /// The details about the meter. By default this is not populated, unless it's specified in $expand.
         /// Serialized Name: LegacyUsageDetail.properties.meterDetails
         /// </param>
         /// <param name="quantity">
@@ -1523,7 +1523,7 @@ namespace Azure.ResourceManager.Consumption.Models
         /// Serialized Name: LegacyUsageDetail.properties.quantity
         /// </param>
         /// <param name="effectivePrice">
-        /// Effective Price that&apos;s charged for the usage.
+        /// Effective Price that's charged for the usage.
         /// Serialized Name: LegacyUsageDetail.properties.effectivePrice
         /// </param>
         /// <param name="cost">
@@ -1563,7 +1563,7 @@ namespace Azure.ResourceManager.Consumption.Models
         /// Serialized Name: LegacyUsageDetail.properties.serviceInfo2
         /// </param>
         /// <param name="additionalInfo">
-        /// Additional details of this usage item. By default this is not populated, unless it&apos;s specified in $expand. Use this field to get usage line item specific details such as the actual VM Size (ServiceType) or the ratio in which the reservation discount is applied.
+        /// Additional details of this usage item. By default this is not populated, unless it's specified in $expand. Use this field to get usage line item specific details such as the actual VM Size (ServiceType) or the ratio in which the reservation discount is applied.
         /// Serialized Name: LegacyUsageDetail.properties.additionalInfo
         /// </param>
         /// <param name="invoiceSection">
@@ -1656,15 +1656,15 @@ namespace Azure.ResourceManager.Consumption.Models
         /// Serialized Name: MeterDetailsResponse.meterName
         /// </param>
         /// <param name="meterCategory">
-        /// The category of the meter, for example, &apos;Cloud services&apos;, &apos;Networking&apos;, etc..
+        /// The category of the meter, for example, 'Cloud services', 'Networking', etc..
         /// Serialized Name: MeterDetailsResponse.meterCategory
         /// </param>
         /// <param name="meterSubCategory">
-        /// The subcategory of the meter, for example, &apos;A6 Cloud services&apos;, &apos;ExpressRoute (IXP)&apos;, etc..
+        /// The subcategory of the meter, for example, 'A6 Cloud services', 'ExpressRoute (IXP)', etc..
         /// Serialized Name: MeterDetailsResponse.meterSubCategory
         /// </param>
         /// <param name="unitOfMeasure">
-        /// The unit in which the meter consumption is charged, for example, &apos;Hours&apos;, &apos;GB&apos;, etc.
+        /// The unit in which the meter consumption is charged, for example, 'Hours', 'GB', etc.
         /// Serialized Name: MeterDetailsResponse.unitOfMeasure
         /// </param>
         /// <param name="serviceFamily">
@@ -1695,7 +1695,7 @@ namespace Azure.ResourceManager.Consumption.Models
         /// Serialized Name: ModernUsageDetail.properties.billingAccountId
         /// </param>
         /// <param name="effectivePrice">
-        /// Effective Price that&apos;s charged for the usage.
+        /// Effective Price that's charged for the usage.
         /// Serialized Name: ModernUsageDetail.properties.effectivePrice
         /// </param>
         /// <param name="pricingModel">
@@ -1907,19 +1907,19 @@ namespace Azure.ResourceManager.Consumption.Models
         /// Serialized Name: ModernUsageDetail.properties.servicePeriodEndDate
         /// </param>
         /// <param name="customerTenantId">
-        /// Identifier of the customer&apos;s AAD tenant.
+        /// Identifier of the customer's AAD tenant.
         /// Serialized Name: ModernUsageDetail.properties.customerTenantId
         /// </param>
         /// <param name="customerName">
-        /// Name of the customer&apos;s AAD tenant.
+        /// Name of the customer's AAD tenant.
         /// Serialized Name: ModernUsageDetail.properties.customerName
         /// </param>
         /// <param name="partnerTenantId">
-        /// Identifier for the partner&apos;s AAD tenant.
+        /// Identifier for the partner's AAD tenant.
         /// Serialized Name: ModernUsageDetail.properties.partnerTenantId
         /// </param>
         /// <param name="partnerName">
-        /// Name of the partner&apos; AAD tenant.
+        /// Name of the partner' AAD tenant.
         /// Serialized Name: ModernUsageDetail.properties.partnerName
         /// </param>
         /// <param name="resellerMpnId">
@@ -1935,7 +1935,7 @@ namespace Azure.ResourceManager.Consumption.Models
         /// Serialized Name: ModernUsageDetail.properties.publisherId
         /// </param>
         /// <param name="marketPrice">
-        /// Market Price that&apos;s charged for the usage.
+        /// Market Price that's charged for the usage.
         /// Serialized Name: ModernUsageDetail.properties.marketPrice
         /// </param>
         /// <param name="exchangeRatePricingToBilling">

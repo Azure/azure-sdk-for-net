@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// </param>
         /// <param name="datastoreType"> [Required] Storage type backing the datastore. </param>
         /// <param name="isDefault"> Readonly property to indicate if datastore is the workspace default datastore. </param>
-        /// <param name="serviceDataAccessAuthIdentity"> Indicates which identity to use to authenticate service data access to customer&apos;s storage. </param>
+        /// <param name="serviceDataAccessAuthIdentity"> Indicates which identity to use to authenticate service data access to customer's storage. </param>
         /// <param name="storeName"> [Required] Azure Data Lake store name. </param>
         internal MachineLearningAzureDataLakeGen1Datastore(string description, IDictionary<string, string> properties, IDictionary<string, string> tags, MachineLearningDatastoreCredentials credentials, DatastoreType datastoreType, bool? isDefault, MachineLearningServiceDataAccessAuthIdentity? serviceDataAccessAuthIdentity, string storeName) : base(description, properties, tags, credentials, datastoreType, isDefault)
         {
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             DatastoreType = datastoreType;
         }
 
-        /// <summary> Indicates which identity to use to authenticate service data access to customer&apos;s storage. </summary>
+        /// <summary> Indicates which identity to use to authenticate service data access to customer's storage. </summary>
         public MachineLearningServiceDataAccessAuthIdentity? ServiceDataAccessAuthIdentity { get; set; }
         /// <summary> [Required] Azure Data Lake store name. </summary>
         public string StoreName { get; set; }

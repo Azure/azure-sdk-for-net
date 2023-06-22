@@ -81,7 +81,7 @@ namespace Azure.Storage.DataMovement
                             job: this,
                             partNumber: partNumber,
                             isFinalPart: true).ConfigureAwait(false);
-                        _jobParts.Add(part);
+                        AppendJobPart(part);
                     }
                     catch (Exception ex)
                     {
@@ -191,7 +191,7 @@ namespace Azure.Storage.DataMovement
                                 sourceResource: (StorageResource)lastResource,
                                 destinationResource: _destinationResourceContainer.GetChildStorageResource(sourceName),
                                 isFinalPart: false).ConfigureAwait(false);
-                            _jobParts.Add(part);
+                            AppendJobPart(part);
                         }
                         catch (Exception ex)
                         {
@@ -223,7 +223,7 @@ namespace Azure.Storage.DataMovement
                             sourceResource: (StorageResource)lastResource,
                             destinationResource: _destinationResourceContainer.GetChildStorageResource(lastSourceName),
                             isFinalPart: true).ConfigureAwait(false);
-                    _jobParts.Add(lastPart);
+                    AppendJobPart(lastPart);
                 }
                 catch (Exception ex)
                 {

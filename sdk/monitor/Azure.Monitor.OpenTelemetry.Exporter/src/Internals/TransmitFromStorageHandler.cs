@@ -5,6 +5,7 @@ using System;
 using System.Threading;
 using System.Timers;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.ConnectionString;
+using Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics;
 using OpenTelemetry;
 using OpenTelemetry.PersistentStorage.Abstractions;
 
@@ -34,7 +35,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 
         internal void TransmitFromStorage(object? sender, ElapsedEventArgs? e)
         {
-            // Only proces 10 files at a time so that we don't end up taking lot of cpu
+            // Only process 10 files at a time so that we don't end up taking lot of cpu
             // if the number of files are large.
             int fileCount = 10;
             while (fileCount > 0)

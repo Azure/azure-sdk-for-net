@@ -47,7 +47,7 @@ namespace Azure.AI.OpenAI
                     continue;
                 }
             }
-            return new ChatMessage(role, content);
+            return new ChatMessage(role, content.Value);
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>

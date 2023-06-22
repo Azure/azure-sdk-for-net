@@ -38,13 +38,13 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="channels"> List of channels that this recommendation can apply. </param>
         /// <param name="categoryTags"> The list of category tags that this recommendation belongs to. </param>
         /// <param name="actionName"> Name of action recommended by this object. </param>
-        /// <param name="enabled"> True if this recommendation is still valid (i.e. &quot;actionable&quot;). False if it is invalid. </param>
-        /// <param name="states"> The list of states of this recommendation. If it&apos;s null then it should be considered &quot;Active&quot;. </param>
+        /// <param name="enabled"> True if this recommendation is still valid (i.e. "actionable"). False if it is invalid. </param>
+        /// <param name="states"> The list of states of this recommendation. If it's null then it should be considered "Active". </param>
         /// <param name="startOn"> The beginning time in UTC of a range that the recommendation refers to. </param>
         /// <param name="endOn"> The end time in UTC of a range that the recommendation refers to. </param>
         /// <param name="nextNotificationOn"> When to notify this recommendation next in UTC. Null means that this will never be notified anymore. </param>
         /// <param name="notificationExpirationOn"> Date and time in UTC when this notification expires. </param>
-        /// <param name="notifiedOn"> Last timestamp in UTC this instance was actually notified. Null means that this recommendation hasn&apos;t been notified yet. </param>
+        /// <param name="notifiedOn"> Last timestamp in UTC this instance was actually notified. Null means that this recommendation hasn't been notified yet. </param>
         /// <param name="score"> A metric value measured by the rule. </param>
         /// <param name="isDynamic"> True if this is associated with a dynamically added rule. </param>
         /// <param name="extensionName"> Extension name of the portal if exists. </param>
@@ -101,9 +101,9 @@ namespace Azure.ResourceManager.AppService.Models
         public IReadOnlyList<string> CategoryTags { get; }
         /// <summary> Name of action recommended by this object. </summary>
         public string ActionName { get; set; }
-        /// <summary> True if this recommendation is still valid (i.e. &quot;actionable&quot;). False if it is invalid. </summary>
+        /// <summary> True if this recommendation is still valid (i.e. "actionable"). False if it is invalid. </summary>
         public int? Enabled { get; set; }
-        /// <summary> The list of states of this recommendation. If it&apos;s null then it should be considered &quot;Active&quot;. </summary>
+        /// <summary> The list of states of this recommendation. If it's null then it should be considered "Active". </summary>
         public IList<string> States { get; }
         /// <summary> The beginning time in UTC of a range that the recommendation refers to. </summary>
         public DateTimeOffset? StartOn { get; set; }
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.AppService.Models
         public DateTimeOffset? NextNotificationOn { get; set; }
         /// <summary> Date and time in UTC when this notification expires. </summary>
         public DateTimeOffset? NotificationExpirationOn { get; set; }
-        /// <summary> Last timestamp in UTC this instance was actually notified. Null means that this recommendation hasn&apos;t been notified yet. </summary>
+        /// <summary> Last timestamp in UTC this instance was actually notified. Null means that this recommendation hasn't been notified yet. </summary>
         public DateTimeOffset? NotifiedOn { get; set; }
         /// <summary> A metric value measured by the rule. </summary>
         public double? Score { get; set; }

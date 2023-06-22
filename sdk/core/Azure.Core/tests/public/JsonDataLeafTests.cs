@@ -89,6 +89,7 @@ namespace Azure.Core.Tests.Public
         }
 
         [Test]
+        [Ignore("Disallowing POCO support in current version.")]
         public void CannotConvertIntLeafToModel()
         {
             dynamic data = JsonDataTestHelpers.CreateFromJson("5");
@@ -98,6 +99,7 @@ namespace Azure.Core.Tests.Public
         }
 
         [Test]
+        [Ignore("Disallowing POCO support in current version.")]
         public void CannotConvertIntLeafPropertyToModel()
         {
             dynamic data = JsonDataTestHelpers.CreateFromJson("""{ "value": 5 }""");

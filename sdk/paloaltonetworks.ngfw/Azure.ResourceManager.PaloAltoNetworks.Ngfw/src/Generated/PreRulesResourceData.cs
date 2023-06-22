@@ -44,9 +44,9 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <param name="description"> rule description. </param>
         /// <param name="ruleState"> state of this rule. </param>
         /// <param name="source"> source address. </param>
-        /// <param name="negateSource"> cidr should not be &apos;any&apos;. </param>
+        /// <param name="negateSource"> cidr should not be 'any'. </param>
         /// <param name="destination"> destination address. </param>
-        /// <param name="negateDestination"> cidr should not be &apos;any&apos;. </param>
+        /// <param name="negateDestination"> cidr should not be 'any'. </param>
         /// <param name="applications"> array of rule applications. </param>
         /// <param name="category"> rule category. </param>
         /// <param name="protocol"> any, application-default, TCP:number, UDP:number. </param>
@@ -94,11 +94,11 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         public StateEnum? RuleState { get; set; }
         /// <summary> source address. </summary>
         public SourceAddr Source { get; set; }
-        /// <summary> cidr should not be &apos;any&apos;. </summary>
+        /// <summary> cidr should not be 'any'. </summary>
         public BooleanEnum? NegateSource { get; set; }
         /// <summary> destination address. </summary>
         public DestinationAddr Destination { get; set; }
-        /// <summary> cidr should not be &apos;any&apos;. </summary>
+        /// <summary> cidr should not be 'any'. </summary>
         public BooleanEnum? NegateDestination { get; set; }
         /// <summary> array of rule applications. </summary>
         public IList<string> Applications { get; }

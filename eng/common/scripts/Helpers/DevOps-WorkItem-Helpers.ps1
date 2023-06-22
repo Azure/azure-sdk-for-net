@@ -836,6 +836,15 @@ function UpdatePackageVersions($pkgWorkItem, $plannedVersions, $shippedVersions)
       $shippedVersionSet[$version.Version] = $version
       $updateShipped = $true
     }
+    else
+    {
+      # Check for any date update, general case would from be previous Unknown to date
+      if ($shippedVersionSet[$version.Version].Date -ne $version.Date)
+      {
+        $shippedVersionSet[$version.Version] = $version
+        $updateShipped = $true
+      }
+    }
   }
 
   $versionSet = @{}
@@ -889,11 +898,11 @@ function UpdatePackageVersions($pkgWorkItem, $plannedVersions, $shippedVersions)
     # If we shipped a version after we set "In Release" state then reset the state to "Next Release Unknown"
     if ($pkgWorkItem.fields["System.State"] -eq "In Release")
     {
-      $lastShippedDate = [DateTime]$newShippedVersions[0].Date
+      $lastShippedDate = $newShippedVersions[0].Date -as [DateTime]
       $markedInReleaseDate = ([DateTime]$pkgWorkItem.fields["Microsoft.VSTS.Common.StateChangeDate"])
 
       # We just shipped so lets set the state to "Next Release Unknown"
-      if ($markedInReleaseDate -le $lastShippedDate)
+      if ($lastShippedDate -and $markedInReleaseDate -le $lastShippedDate)
       {
         $fieldUpdates += @'
 {
