@@ -13,6 +13,8 @@
   <ItemGroup>
     <!--<PackageReference Include="Azure.Core" />-->
     <ProjectReference Include="..\..\..\core\Azure.Core\src\Azure.Core.csproj" />
+    <!-- Temporary, until we move SchemaValidator into core.-->
+    <ProjectReference Include="..\..\..\core\Azure.Core.Experimental\src\Azure.Core.Experimental.csproj" />
   </ItemGroup>
 
   <!-- Shared source from Azure.Core -->

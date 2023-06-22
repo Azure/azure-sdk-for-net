@@ -73,10 +73,10 @@ namespace Azure.Data.SchemaRegistry.Serialization
     public partial class SchemaRegistrySerializer
     {
         protected SchemaRegistrySerializer() { }
-        public SchemaRegistrySerializer(Azure.Data.SchemaRegistry.SchemaRegistryClient client, Azure.Core.Serialization.SchemaValidator<string> schemaValidator) { }
-        public SchemaRegistrySerializer(Azure.Data.SchemaRegistry.SchemaRegistryClient client, Azure.Core.Serialization.SchemaValidator<string> schemaValidator, Azure.Data.SchemaRegistry.Serialization.SchemaRegistrySerializerOptions serializerOptions) { }
-        public SchemaRegistrySerializer(Azure.Data.SchemaRegistry.SchemaRegistryClient client, string groupName, Azure.Core.Serialization.SchemaValidator<string> schemaValidator) { }
-        public SchemaRegistrySerializer(Azure.Data.SchemaRegistry.SchemaRegistryClient client, string groupName, Azure.Core.Serialization.SchemaValidator<string> schemaValidator, Azure.Data.SchemaRegistry.Serialization.SchemaRegistrySerializerOptions serializerOptions) { }
+        public SchemaRegistrySerializer(Azure.Data.SchemaRegistry.SchemaRegistryClient client, Azure.Core.Experimental.SchemaValidator.SchemaValidator schemaValidator) { }
+        public SchemaRegistrySerializer(Azure.Data.SchemaRegistry.SchemaRegistryClient client, Azure.Core.Experimental.SchemaValidator.SchemaValidator schemaValidator, Azure.Data.SchemaRegistry.Serialization.SchemaRegistrySerializerOptions serializerOptions) { }
+        public SchemaRegistrySerializer(Azure.Data.SchemaRegistry.SchemaRegistryClient client, string groupName, Azure.Core.Experimental.SchemaValidator.SchemaValidator schemaValidator) { }
+        public SchemaRegistrySerializer(Azure.Data.SchemaRegistry.SchemaRegistryClient client, string groupName, Azure.Core.Experimental.SchemaValidator.SchemaValidator schemaValidator, Azure.Data.SchemaRegistry.Serialization.SchemaRegistrySerializerOptions serializerOptions) { }
         public object Deserialize(Azure.Messaging.MessageContent content, System.Type dataType, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public System.Threading.Tasks.ValueTask<object> DeserializeAsync(Azure.Messaging.MessageContent content, System.Type dataType, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public System.Threading.Tasks.ValueTask<TData> DeserializeAsync<TData>(Azure.Messaging.MessageContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }

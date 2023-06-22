@@ -106,3 +106,12 @@ namespace Azure
         [System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]public bool TryGetValue<T>(out T value) { throw null; }
     }
 }
+namespace Azure.Core.Experimental.SchemaValidator
+{
+    public abstract partial class SchemaValidator
+    {
+        protected SchemaValidator() { }
+        public abstract string GenerateSchema(System.Type dataType);
+        public abstract bool IsValid(object data, System.Type dataType, string schemaDefinition);
+    }
+}

@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core.Experimental.SchemaValidator;
 using Azure.Core.Serialization;
 using Azure.Core.TestFramework;
 using Azure.Data.SchemaRegistry.Serialization;
@@ -182,9 +183,9 @@ namespace Azure.Data.SchemaRegistry.Tests.Samples
         }
 
         #region Snippet:SampleSchemaRegistryJsonSchemaGeneratorImplementation
-        internal class SampleJsonValidator : SchemaValidator<string>
+        internal class SampleJsonValidator : SchemaValidator
         {
-            public override void Validate(object data, Type dataType, string schemaDefinition)
+            public override bool IsValid(object data, Type dataType, string schemaDefinition)
             {
                 // This method throws an exception if the data argument is not valid according to the schemaDefinition.
 
@@ -196,7 +197,7 @@ namespace Azure.Data.SchemaRegistry.Tests.Samples
                     throw new AggregateException(validationErrors);
                 }
 
-                return;
+                return true;
             }
 
             public override string GenerateSchema(Type dataType)

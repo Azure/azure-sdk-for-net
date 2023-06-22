@@ -7,6 +7,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.Diagnostics;
+using Azure.Core.Experimental.SchemaValidator;
 using Azure.Core.Serialization;
 using Azure.Core.TestFramework;
 using Azure.Data.SchemaRegistry.Serialization;
@@ -110,7 +111,7 @@ namespace Azure.Data.SchemaRegistry.Tests.Serialization
             Assert.AreEqual(1448, events[1].Payload[1]);
         }
 
-        private class SampleJsonGenerator : SchemaValidator<string>
+        private class SampleJsonGenerator : SchemaValidator
         {
             public override string GenerateSchema(Type dataType)
             {
@@ -121,9 +122,9 @@ namespace Azure.Data.SchemaRegistry.Tests.Serialization
                 return _schemaV2;
             }
 
-            public override void Validate(object data, Type dataType, string schemaDefinition)
+            public override bool IsValid(object data, Type dataType, string schemaDefinition)
             {
-                return;
+                return true;
             }
         }
     }

@@ -5,6 +5,7 @@ using System;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core.Experimental.SchemaValidator;
 using Azure.Core.Serialization;
 using Azure.Core.TestFramework;
 using Azure.Data.SchemaRegistry.Serialization;
@@ -101,31 +102,33 @@ namespace Azure.Data.SchemaRegistry.Tests.Serialization
             }
         }
 
-        private class SampleCustomGenerator : SchemaValidator<string>
+        private class SampleCustomGenerator : SchemaValidator
         {
             public override string GenerateSchema(Type dataType)
             {
                 return s_customSchema;
             }
 
-            public override void Validate(object data, Type dataType, string schemaDefinition)
+            public override bool IsValid(object data, Type dataType, string schemaDefinition)
             {
                 Assert.That(data, Is.TypeOf<Employee>());
                 Assert.AreEqual(dataType.Name, "Employee");
                 Assert.AreEqual(schemaDefinition, s_customSchema);
+
+                return true;
             }
         }
 
-        private class SampleJsonGenerator : SchemaValidator<string>
+        private class SampleJsonGenerator : SchemaValidator
         {
             public override string GenerateSchema(Type dataType)
             {
                 return s_schema;
             }
 
-            public override void Validate(object data, Type dataType, string schemaDefinition)
+            public override bool IsValid(object data, Type dataType, string schemaDefinition)
             {
-                return;
+                return true;
             }
         }
     }
