@@ -16,13 +16,13 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         }
 
         /// <summary> Initializes a new instance of EncryptionPreferences. </summary>
-        /// <param name="doubleEncryptionStatus"> Double encryption status as entered by the customer. It is compulsory to give this parameter if the &apos;Deny&apos; or &apos;Disabled&apos; policy is configured. </param>
+        /// <param name="doubleEncryptionStatus"> Double encryption status as entered by the customer. It is compulsory to give this parameter if the 'Deny' or 'Disabled' policy is configured. </param>
         internal EncryptionPreferences(DoubleEncryptionStatus? doubleEncryptionStatus)
         {
             DoubleEncryptionStatus = doubleEncryptionStatus;
         }
 
-        /// <summary> Double encryption status as entered by the customer. It is compulsory to give this parameter if the &apos;Deny&apos; or &apos;Disabled&apos; policy is configured. </summary>
+        /// <summary> Double encryption status as entered by the customer. It is compulsory to give this parameter if the 'Deny' or 'Disabled' policy is configured. </summary>
         public DoubleEncryptionStatus? DoubleEncryptionStatus { get; set; }
     }
 }

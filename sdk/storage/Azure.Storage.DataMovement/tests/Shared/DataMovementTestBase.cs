@@ -22,8 +22,7 @@ namespace Azure.Storage.DataMovement.Tests
         {
             Upload,
             Download,
-            AsyncCopy,
-            SyncCopy
+            Copy,
         }
 
         public DataMovementTestBase(bool async, RecordedTestMode? mode = null)

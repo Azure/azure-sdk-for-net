@@ -23,7 +23,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore
 
         /// <summary>
         /// Get or sets the value of <see cref="TokenCredential" />.
-        /// If <see cref="TokenCredential" /> is not set, AAD authenication is disabled
+        /// If <see cref="TokenCredential" /> is not set, AAD authentication is disabled
         /// and Instrumentation Key from the Connection String will be used.
         /// </summary>
         /// <remarks>
@@ -37,6 +37,13 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore
         public bool DisableOfflineStorage { get; set; }
 
         /// <summary>
+        /// Gets or sets the ratio of telemetry items to be sampled. The value must be between 0.0F and 1.0F, inclusive.
+        /// For example, specifying 0.4 means that 40% of traces are sampled and 60% are dropped.
+        /// The default value is 1.0F, indicating that all telemetry items are sampled.
+        /// </summary>
+        public float SamplingRatio { get; set; } = 1.0F;
+
+        /// <summary>
         /// Override the default directory for offline storage.
         /// </summary>
         public string StorageDirectory { get; set; }
@@ -46,6 +53,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore
             exporterOptions.ConnectionString = ConnectionString;
             exporterOptions.Credential = Credential;
             exporterOptions.DisableOfflineStorage = DisableOfflineStorage;
+            exporterOptions.SamplingRatio = SamplingRatio;
             exporterOptions.StorageDirectory = StorageDirectory;
             if (Transport != null)
             {

@@ -41,7 +41,7 @@ namespace Azure.Analytics.Purview.Scanning.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new PurviewScanClient(endpoint, "<dataSourceName>", "<scanName>", credential);
 
-            Response response = client.GetFilter(new RequestContext());
+            Response response = client.GetFilter();
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("properties").GetProperty("excludeUriPrefixes")[0].ToString());
@@ -72,7 +72,7 @@ namespace Azure.Analytics.Purview.Scanning.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new PurviewScanClient(endpoint, "<dataSourceName>", "<scanName>", credential);
 
-            Response response = await client.GetFilterAsync(new RequestContext());
+            Response response = await client.GetFilterAsync();
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("properties").GetProperty("excludeUriPrefixes")[0].ToString());
@@ -118,7 +118,7 @@ namespace Azure.Analytics.Purview.Scanning.Samples
                 },
             };
 
-            Response response = client.CreateOrUpdateFilter(RequestContent.Create(data), new RequestContext());
+            Response response = client.CreateOrUpdateFilter(RequestContent.Create(data));
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("properties").GetProperty("excludeUriPrefixes")[0].ToString());
@@ -164,7 +164,7 @@ namespace Azure.Analytics.Purview.Scanning.Samples
                 },
             };
 
-            Response response = await client.CreateOrUpdateFilterAsync(RequestContent.Create(data), new RequestContext());
+            Response response = await client.CreateOrUpdateFilterAsync(RequestContent.Create(data));
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("properties").GetProperty("excludeUriPrefixes")[0].ToString());
@@ -375,7 +375,7 @@ namespace Azure.Analytics.Purview.Scanning.Samples
                 kind = "AzureSubscriptionCredential",
             };
 
-            Response response = client.CreateOrUpdate(RequestContent.Create(data), new RequestContext());
+            Response response = client.CreateOrUpdate(RequestContent.Create(data));
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("kind").ToString());
@@ -610,7 +610,7 @@ namespace Azure.Analytics.Purview.Scanning.Samples
                 kind = "AzureSubscriptionCredential",
             };
 
-            Response response = await client.CreateOrUpdateAsync(RequestContent.Create(data), new RequestContext());
+            Response response = await client.CreateOrUpdateAsync(RequestContent.Create(data));
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("kind").ToString());
@@ -666,7 +666,7 @@ namespace Azure.Analytics.Purview.Scanning.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new PurviewScanClient(endpoint, "<dataSourceName>", "<scanName>", credential);
 
-            Response response = client.GetProperties(new RequestContext());
+            Response response = client.GetProperties();
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("kind").ToString());
@@ -722,7 +722,7 @@ namespace Azure.Analytics.Purview.Scanning.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new PurviewScanClient(endpoint, "<dataSourceName>", "<scanName>", credential);
 
-            Response response = await client.GetPropertiesAsync(new RequestContext());
+            Response response = await client.GetPropertiesAsync();
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("kind").ToString());
@@ -778,7 +778,7 @@ namespace Azure.Analytics.Purview.Scanning.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new PurviewScanClient(endpoint, "<dataSourceName>", "<scanName>", credential);
 
-            Response response = client.Delete(new RequestContext());
+            Response response = client.Delete();
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("kind").ToString());
@@ -834,7 +834,7 @@ namespace Azure.Analytics.Purview.Scanning.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new PurviewScanClient(endpoint, "<dataSourceName>", "<scanName>", credential);
 
-            Response response = await client.DeleteAsync(new RequestContext());
+            Response response = await client.DeleteAsync();
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("kind").ToString());
@@ -889,7 +889,7 @@ namespace Azure.Analytics.Purview.Scanning.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new PurviewScanClient(endpoint, "<dataSourceName>", "<scanName>", credential);
 
-            Response response = client.RunScan("<runId>", "<scanLevel>", new RequestContext());
+            Response response = client.RunScan("<runId>", "<scanLevel>");
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("scanResultId").ToString());
@@ -926,7 +926,7 @@ namespace Azure.Analytics.Purview.Scanning.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new PurviewScanClient(endpoint, "<dataSourceName>", "<scanName>", credential);
 
-            Response response = await client.RunScanAsync("<runId>", "<scanLevel>", new RequestContext());
+            Response response = await client.RunScanAsync("<runId>", "<scanLevel>");
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("scanResultId").ToString());
@@ -963,7 +963,7 @@ namespace Azure.Analytics.Purview.Scanning.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new PurviewScanClient(endpoint, "<dataSourceName>", "<scanName>", credential);
 
-            Response response = client.CancelScan("<runId>", new RequestContext());
+            Response response = client.CancelScan("<runId>");
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("scanResultId").ToString());
@@ -1000,7 +1000,7 @@ namespace Azure.Analytics.Purview.Scanning.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new PurviewScanClient(endpoint, "<dataSourceName>", "<scanName>", credential);
 
-            Response response = await client.CancelScanAsync("<runId>", new RequestContext());
+            Response response = await client.CancelScanAsync("<runId>");
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("scanResultId").ToString());
@@ -1037,7 +1037,7 @@ namespace Azure.Analytics.Purview.Scanning.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new PurviewScanClient(endpoint, "<dataSourceName>", "<scanName>", credential);
 
-            Response response = client.GetTrigger(new RequestContext());
+            Response response = client.GetTrigger();
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("frequency").ToString());
@@ -1085,7 +1085,7 @@ namespace Azure.Analytics.Purview.Scanning.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new PurviewScanClient(endpoint, "<dataSourceName>", "<scanName>", credential);
 
-            Response response = await client.GetTriggerAsync(new RequestContext());
+            Response response = await client.GetTriggerAsync();
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("frequency").ToString());
@@ -1181,7 +1181,7 @@ namespace Azure.Analytics.Purview.Scanning.Samples
                 },
             };
 
-            Response response = client.CreateOrUpdateTrigger(RequestContent.Create(data), new RequestContext());
+            Response response = client.CreateOrUpdateTrigger(RequestContent.Create(data));
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("frequency").ToString());
@@ -1277,7 +1277,7 @@ namespace Azure.Analytics.Purview.Scanning.Samples
                 },
             };
 
-            Response response = await client.CreateOrUpdateTriggerAsync(RequestContent.Create(data), new RequestContext());
+            Response response = await client.CreateOrUpdateTriggerAsync(RequestContent.Create(data));
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("frequency").ToString());
@@ -1325,7 +1325,7 @@ namespace Azure.Analytics.Purview.Scanning.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new PurviewScanClient(endpoint, "<dataSourceName>", "<scanName>", credential);
 
-            Response response = client.DeleteTrigger(new RequestContext());
+            Response response = client.DeleteTrigger();
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("frequency").ToString());
@@ -1373,7 +1373,7 @@ namespace Azure.Analytics.Purview.Scanning.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new PurviewScanClient(endpoint, "<dataSourceName>", "<scanName>", credential);
 
-            Response response = await client.DeleteTriggerAsync(new RequestContext());
+            Response response = await client.DeleteTriggerAsync();
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("frequency").ToString());
@@ -1422,7 +1422,7 @@ namespace Azure.Analytics.Purview.Scanning.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new PurviewScanClient(endpoint, "<dataSourceName>", "<scanName>", credential);
 
-            foreach (var item in client.GetRuns(new RequestContext()))
+            foreach (var item in client.GetRuns())
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.GetProperty("parentId").ToString());
@@ -1476,7 +1476,7 @@ namespace Azure.Analytics.Purview.Scanning.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new PurviewScanClient(endpoint, "<dataSourceName>", "<scanName>", credential);
 
-            await foreach (var item in client.GetRunsAsync(new RequestContext()))
+            await foreach (var item in client.GetRunsAsync())
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.GetProperty("parentId").ToString());

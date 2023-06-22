@@ -1,0 +1,147 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://management.azure.com/tenants?api-version=2021-01-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-9835fbabb99c0793feba8d38cca3e2c0-e737484221fdad6c-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET 7.0.3; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "a0383b2ff2792a5734d17223da928e78",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "140",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 15 Mar 2023 09:12:17 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "850c2022-144d-4c38-aee8-dd9cb7f154bd",
+        "x-ms-ratelimit-remaining-tenant-reads": "11697",
+        "x-ms-request-id": "850c2022-144d-4c38-aee8-dd9cb7f154bd",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20230315T091217Z:850c2022-144d-4c38-aee8-dd9cb7f154bd"
+      },
+      "ResponseBody": {
+        "value": [
+          {
+            "id": "/tenants/72f988bf-86f1-41af-91ab-2d7cd011db47",
+            "tenantId": "72f988bf-86f1-41af-91ab-2d7cd011db47",
+            "tenantCategory": "Home"
+          }
+        ]
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c?api-version=2021-01-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-a5735727463e72fd39cf2cd5362e8378-05a4fb731f34c5d5-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET 7.0.3; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "78f9fe2bae7c5dd14d81a4900c8c751d",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "748",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 15 Mar 2023 09:12:17 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "2aed39ca-52e7-450b-a6d0-8ff510d88c1a",
+        "x-ms-ratelimit-remaining-subscription-reads": "11999",
+        "x-ms-request-id": "2aed39ca-52e7-450b-a6d0-8ff510d88c1a",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20230315T091217Z:2aed39ca-52e7-450b-a6d0-8ff510d88c1a"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c",
+        "authorizationSource": "RoleBased",
+        "managedByTenants": [],
+        "tags": {
+          "TagKey-9823": "TagValue-1254",
+          "TagKey-3481": "TagValue-320",
+          "TagKey-4926": "TagValue-1187",
+          "TagKey-751": "TagValue-3921",
+          "TagKey-1866": "TagValue-8559",
+          "TagKey-3094": "TagValue-9190",
+          "TagKey-2449": "TagValue-9",
+          "TagKey-8379": "TagValue-164",
+          "TagKey-7470": "TagValue-2205",
+          "TagKey-4236": "TagValue-3698",
+          "TagKey-5316": "TagValue-2725"
+        },
+        "subscriptionId": "db1ab6f0-4769-4b27-930e-01e2ef9c123c",
+        "tenantId": "72f988bf-86f1-41af-91ab-2d7cd011db47",
+        "displayName": ".NET Mgmt SDK Test with TTL = 1 Day",
+        "state": "Enabled",
+        "subscriptionPolicies": {
+          "locationPlacementId": "Internal_2014-09-01",
+          "quotaId": "Internal_2014-09-01",
+          "spendingLimit": "Off"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/providers/Microsoft.PolicyInsights/policyMetadata/NZISM_Security_Benchmark_v1.1_SS-2?api-version=2019-10-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-e0d43f42a499176474f746ff5fc751ca-fedd7d76267d45f0-00",
+        "User-Agent": "azsdk-net-ResourceManager.PolicyInsights/1.2.0-alpha.20230315.1 (.NET 7.0.3; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "3e5a852ce32b35f665823f094751decc",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "1827",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 15 Mar 2023 09:12:18 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": "Kestrel",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "f6f19b6e-4140-46b0-9ed7-57c71ddea183",
+        "x-ms-ratelimit-remaining-policy-insights-requests": "149",
+        "x-ms-ratelimit-remaining-tenant-reads": "11696",
+        "x-ms-request-id": "f6f19b6e-4140-46b0-9ed7-57c71ddea183",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20230315T091218Z:f6f19b6e-4140-46b0-9ed7-57c71ddea183"
+      },
+      "ResponseBody": {
+        "properties": {
+          "metadataId": "NZISM Security Benchmark SS-2",
+          "category": "Software security",
+          "title": "14.1.8 Developing hardened SOEs",
+          "owner": "Customer",
+          "description": "Antivirus and anti-malware software, while an important defensive measure, can be defeated by malicious code that has yet to be identified by antivirus vendors. This can include targeted attacks, where a new virus is engineered or an existing one modified to defeat the signature-based detection schemes.\nThe use of antivirus and anti-malware software, while adding value to the defence of workstations, cannot be relied solely upon to protect the workstation. As such agencies still need to deploy appropriately hardened SOEs to assist with the protection of workstations against a broader range of security risks.",
+          "requirements": "Agencies SHOULD develop a hardened SOE for workstations and servers, covering:\n\nremoval of unneeded software and operating system components;\nremoval or disabling of unneeded services, ports and BIOS settings;\ndisabling of unused or undesired functionality in software and operating systems;\nimplementation of access controls on relevant objects to limit system users and programs to the minimum access required;\ninstallation of antivirus and anti-malware software;\ninstallation of software-based firewalls limiting inbound and outbound network connections; \nconfiguration of either remote logging or the transfer of local event logs to a central server; and\nprotection of audit and other logs through the use of a one way pipe to reduce likelihood of compromise key transaction records.",
+          "additionalContentUrl": "7",
+          "metadata": {}
+        },
+        "id": "/providers/Microsoft.PolicyInsights/policyMetadata/NZISM_Security_Benchmark_v1.1_SS-2",
+        "name": "NZISM_Security_Benchmark_v1.1_SS-2",
+        "type": "Microsoft.PolicyInsights/policyMetadata"
+      }
+    }
+  ],
+  "Variables": {
+    "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com",
+    "RandomSeed": "939396455",
+    "RESOURCE_MANAGER_URL": null,
+    "SUBSCRIPTION_ID": "db1ab6f0-4769-4b27-930e-01e2ef9c123c"
+  }
+}

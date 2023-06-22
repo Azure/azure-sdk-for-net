@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary>
-        /// Lists a job&apos;s executions.
+        /// Lists a job's executions.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -220,7 +220,7 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary>
-        /// Lists a job&apos;s executions.
+        /// Lists a job's executions.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>

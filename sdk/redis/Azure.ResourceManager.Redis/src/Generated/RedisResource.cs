@@ -556,7 +556,7 @@ namespace Azure.ResourceManager.Redis
         }
 
         /// <summary>
-        /// Retrieve a Redis cache&apos;s access keys. This operation requires write permission to the cache resource.
+        /// Retrieve a Redis cache's access keys. This operation requires write permission to the cache resource.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -586,7 +586,7 @@ namespace Azure.ResourceManager.Redis
         }
 
         /// <summary>
-        /// Retrieve a Redis cache&apos;s access keys. This operation requires write permission to the cache resource.
+        /// Retrieve a Redis cache's access keys. This operation requires write permission to the cache resource.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -616,7 +616,7 @@ namespace Azure.ResourceManager.Redis
         }
 
         /// <summary>
-        /// Regenerate Redis cache&apos;s access keys. This operation requires write permission to the cache resource.
+        /// Regenerate Redis cache's access keys. This operation requires write permission to the cache resource.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -650,7 +650,7 @@ namespace Azure.ResourceManager.Redis
         }
 
         /// <summary>
-        /// Regenerate Redis cache&apos;s access keys. This operation requires write permission to the cache resource.
+        /// Regenerate Redis cache's access keys. This operation requires write permission to the cache resource.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>

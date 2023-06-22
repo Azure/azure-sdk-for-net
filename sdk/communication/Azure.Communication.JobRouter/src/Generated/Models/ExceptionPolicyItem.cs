@@ -21,12 +21,10 @@ namespace Azure.Communication.JobRouter.Models
         internal ExceptionPolicyItem(ExceptionPolicy exceptionPolicy, string etag)
         {
             ExceptionPolicy = exceptionPolicy;
-            Etag = etag;
+            _etag = etag;
         }
 
         /// <summary> A policy that defines actions to execute when exception are triggered. </summary>
         public ExceptionPolicy ExceptionPolicy { get; }
-        /// <summary> (Optional) The Concurrency Token. </summary>
-        public string Etag { get; }
     }
 }

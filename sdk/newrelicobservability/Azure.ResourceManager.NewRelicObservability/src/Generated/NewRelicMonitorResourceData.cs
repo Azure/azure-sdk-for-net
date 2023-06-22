@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.NewRelicObservability
         /// <param name="liftrResourcePreference"> Liftr resource preference. The priority of the resource. </param>
         /// <param name="orgCreationSource"> Source of org creation. </param>
         /// <param name="accountCreationSource"> Source of account creation. </param>
-        internal NewRelicMonitorResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, NewrelicProvisioningState? provisioningState, MonitoringStatus? monitoringStatus, MarketplaceSubscriptionStatus? marketplaceSubscriptionStatus, string marketplaceSubscriptionId, NewRelicAccountProperties newRelicAccountProperties, UserInfo userInfo, PlanData planData, LiftrResourceCategory? liftrResourceCategory, int? liftrResourcePreference, OrgCreationSource? orgCreationSource, AccountCreationSource? accountCreationSource) : base(id, name, resourceType, systemData, tags, location)
+        internal NewRelicMonitorResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, NewRelicProvisioningState? provisioningState, NewRelicObservabilityMonitoringStatus? monitoringStatus, NewRelicObservabilityMarketplaceSubscriptionStatus? marketplaceSubscriptionStatus, string marketplaceSubscriptionId, NewRelicAccountProperties newRelicAccountProperties, NewRelicObservabilityUserInfo userInfo, NewRelicPlanDetails planData, NewRelicLiftrResourceCategory? liftrResourceCategory, int? liftrResourcePreference, NewRelicObservabilityOrgCreationSource? orgCreationSource, NewRelicObservabilityAccountCreationSource? accountCreationSource) : base(id, name, resourceType, systemData, tags, location)
         {
             Identity = identity;
             ProvisioningState = provisioningState;
@@ -62,26 +62,26 @@ namespace Azure.ResourceManager.NewRelicObservability
         /// <summary> The managed service identities assigned to this resource. </summary>
         public ManagedServiceIdentity Identity { get; set; }
         /// <summary> Provisioning State of the resource. </summary>
-        public NewrelicProvisioningState? ProvisioningState { get; }
+        public NewRelicProvisioningState? ProvisioningState { get; }
         /// <summary> MonitoringStatus of the resource. </summary>
-        public MonitoringStatus? MonitoringStatus { get; }
+        public NewRelicObservabilityMonitoringStatus? MonitoringStatus { get; }
         /// <summary> NewRelic Organization properties of the resource. </summary>
-        public MarketplaceSubscriptionStatus? MarketplaceSubscriptionStatus { get; }
+        public NewRelicObservabilityMarketplaceSubscriptionStatus? MarketplaceSubscriptionStatus { get; }
         /// <summary> Marketplace Subscription Id. </summary>
         public string MarketplaceSubscriptionId { get; }
         /// <summary> MarketplaceSubscriptionStatus of the resource. </summary>
         public NewRelicAccountProperties NewRelicAccountProperties { get; set; }
         /// <summary> User Info. </summary>
-        public UserInfo UserInfo { get; set; }
+        public NewRelicObservabilityUserInfo UserInfo { get; set; }
         /// <summary> Plan details. </summary>
-        public PlanData PlanData { get; set; }
+        public NewRelicPlanDetails PlanData { get; set; }
         /// <summary> Liftr resource category. </summary>
-        public LiftrResourceCategory? LiftrResourceCategory { get; }
+        public NewRelicLiftrResourceCategory? LiftrResourceCategory { get; }
         /// <summary> Liftr resource preference. The priority of the resource. </summary>
         public int? LiftrResourcePreference { get; }
         /// <summary> Source of org creation. </summary>
-        public OrgCreationSource? OrgCreationSource { get; set; }
+        public NewRelicObservabilityOrgCreationSource? OrgCreationSource { get; set; }
         /// <summary> Source of account creation. </summary>
-        public AccountCreationSource? AccountCreationSource { get; set; }
+        public NewRelicObservabilityAccountCreationSource? AccountCreationSource { get; set; }
     }
 }
