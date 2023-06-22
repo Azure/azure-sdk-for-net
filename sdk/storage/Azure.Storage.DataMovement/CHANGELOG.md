@@ -11,6 +11,8 @@
 - [BREAKING CHANGE] Altered API signatures on `TransferManager` and `DataTransfer` for pausing.
 - [BREAKING CHANGE] `StorageResouceContainer.GetParentStorageResourceContainer()` removed.
 - [BREAKING CHANGE] Updated `StorageResource.CompleteTransferAsync` to have an added overwrite parameter: `StorageResource.CompleteTransferAsync(bool overwrite, CancellationToken cancellationToken = default)`.
+- [BREAKING CHANGE] Renamed `StorageResource` to `StorageResourceSingle` and `StorageResourceBase` to `StorageResouce`.
+- [BREAKING CHANGE] Combined both `TransferManager.StartTransferAsync` methods into one that accepts single or container resources. All existing calls should continue to work due to inheritence.
 
 ### Bugs Fixed
 - Fix to prevent empty strings or null to be passed as paths for `LocalFileStorageResource` and `LocalDirectoryStorageResourceContainer`.

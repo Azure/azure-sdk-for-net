@@ -1,10 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -13,16 +10,16 @@ using Azure.Storage.DataMovement.Models;
 namespace Azure.Storage.DataMovement
 {
     /// <summary>
-    /// Represents abstract Storage Resource
+    /// Abstract class for a single storage resource.
     /// </summary>
-    public abstract class StorageResource : StorageResourceBase
+    public abstract class StorageResourceSingle : StorageResource
     {
         internal TokenCredential _tokenCredential;
 
         /// <summary>
         /// For Mocking.
         /// </summary>
-        protected StorageResource() { }
+        protected StorageResourceSingle() { }
 
         /// <summary>
         /// Defines the transfer type of the storage resource.
@@ -104,7 +101,7 @@ namespace Azure.Storage.DataMovement
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
         public abstract Task CopyFromUriAsync(
-            StorageResource sourceResource,
+            StorageResourceSingle sourceResource,
             bool overwrite,
             long completeLength,
             StorageResourceCopyFromUriOptions options = default,
@@ -125,7 +122,7 @@ namespace Azure.Storage.DataMovement
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
         public abstract Task CopyBlockFromUriAsync(
-            StorageResource sourceResource,
+            StorageResourceSingle sourceResource,
             HttpRange range,
             bool overwrite,
             long completeLength = 0,

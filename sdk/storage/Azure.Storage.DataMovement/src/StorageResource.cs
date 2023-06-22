@@ -2,25 +2,18 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Concurrent;
-using System.Collections.Generic;
-using System.IO;
-using System.Threading;
-using System.Threading.Tasks;
-using Azure.Core;
-using Azure.Storage.DataMovement.Models;
 
 namespace Azure.Storage.DataMovement
 {
     /// <summary>
-    /// The abstract class StorageResourceBase.
+    /// The base class for all storage resources.
     /// </summary>
-    public abstract class StorageResourceBase
+    public abstract class StorageResource
     {
         /// <summary>
-        /// The protected constructor for the abstract StorageResourceBase class (to allow for mocking).
+        /// The protected constructor for the abstract StorageResource class (to allow for mocking).
         /// </summary>
-        protected StorageResourceBase() { }
+        protected StorageResource() { }
 
         /// <summary>
         /// Defines whether we can produce a Uri.

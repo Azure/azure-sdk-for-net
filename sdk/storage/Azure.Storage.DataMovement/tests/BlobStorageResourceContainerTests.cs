@@ -85,9 +85,9 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             BlobStorageResourceContainer storageResourceContainer =
                 new BlobStorageResourceContainer(test.Container, new() { DirectoryPrefix = folderName });
 
-            var resources = new List<StorageResourceBase>();
+            var resources = new List<StorageResource>();
 
-            await foreach (StorageResourceBase resource in storageResourceContainer.GetStorageResourcesAsync())
+            await foreach (StorageResource resource in storageResourceContainer.GetStorageResourcesAsync())
             {
                 resources.Add(resource);
             }
@@ -107,7 +107,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             StorageResourceContainer containerResource =
                 new BlobStorageResourceContainer(test.Container, new() { DirectoryPrefix = prefix });
 
-            StorageResource resource = containerResource.GetChildStorageResource("bar");
+            StorageResourceSingle resource = containerResource.GetChildStorageResource("bar");
 
             // Assert
             StorageResourceProperties properties = await resource.GetPropertiesAsync();
