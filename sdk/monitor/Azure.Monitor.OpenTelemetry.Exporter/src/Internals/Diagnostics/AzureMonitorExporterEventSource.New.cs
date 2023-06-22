@@ -37,7 +37,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics
         public void TransmissionFailed(bool fromStorage, int statusCode, ConnectionVars connectionVars, string? requestEndpoint, bool willRetry)
         {
             // TODO: INCLUDE EXACT ERROR MESSAGE FROM INGESTION
-            if (IsEnabled(EventLevel.Warning))
+            if (IsEnabled(EventLevel.Error))
             {
                 TransmissionFailed(
                     message: fromStorage ? "Transmission from storage failed." : "Transmission failed.",
@@ -47,7 +47,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics
             }
         }
 
-        [Event(8, Message = "{0} {1} {2}", Level = EventLevel.Warning)]
+        [Event(8, Message = "{0} {1} {2}", Level = EventLevel.Error)]
         public void TransmissionFailed(string message, string retryDetails, string metaData) => WriteEvent(8, message, retryDetails, metaData);
 
         [Event(9, Message = "{0} has been disposed.", Level = EventLevel.Informational)]
@@ -152,10 +152,10 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics
         [Event(17, Message = "Failed to extract Activity Event due to an exception. Activity: {0}. {1}", Level = EventLevel.Error)]
         public void FailedToExtractActivityEvent(string activityDisplayName, string exceptionMessage) => WriteEvent(17, activityDisplayName, exceptionMessage);
 
-        [Event(18, Message = "Maximum count of {0} Activity Links reached. Activity: {1}. ", Level = EventLevel.Informational)]
+        [Event(18, Message = "Maximum count of {0} Activity Links reached. Excess Links are dropped. Activity: {1}. ", Level = EventLevel.Warning)]
         public void ActivityLinksIgnored(int maxLinksAllowed, string activityDisplayName)
         {
-            if (IsEnabled(EventLevel.Informational))
+            if (IsEnabled(EventLevel.Warning))
             {
                 WriteEvent(18, maxLinksAllowed, activityDisplayName);
             }
