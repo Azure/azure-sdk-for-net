@@ -10,6 +10,17 @@
 
 - Updated validation to ensure access to storage account while enabling persistence.
 
+## 1.2.0-beta.2 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+
 ## 1.2.0-beta.1 (2023-05-31)
 
 ### Features Added
