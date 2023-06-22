@@ -330,10 +330,6 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Config
                     switch (blobItem.Properties.BlobType)
                     {
                         case BlobType.Block:
-                            if (typeof(T) == typeof(ParameterBindingData))
-                            {
-                                src = blobContainerClient.GetBlobClient(blobItem.Name);
-                            }
                             if (typeof(T) == typeof(BlobClient))
                             {
                                 // BlobClient is simplified version of BlockBlobClient, i.e. upload results in creation of block blob.
