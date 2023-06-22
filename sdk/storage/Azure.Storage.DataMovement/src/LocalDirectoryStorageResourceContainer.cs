@@ -89,7 +89,7 @@ namespace Azure.Storage.DataMovement
         /// Transfer Id where we want to rehydrate the resource from the job from.
         /// </param>
         /// <param name="isSource">
-        /// Whether or not we are rehydrating the source or destination.
+        /// Whether or not we are rehydrating the source or destination. True if the source, false if the destination.
         /// </param>
         /// <param name="cancellationToken">
         /// Whether or not to cancel the operation.
@@ -98,7 +98,7 @@ namespace Azure.Storage.DataMovement
         /// The <see cref="Task"/> to rehdyrate a <see cref="LocalFileStorageResource"/> from
         /// a stored checkpointed transfer state.
         /// </returns>
-        public static async Task<LocalDirectoryStorageResourceContainer> RehydrateStorageResource(
+        internal static async Task<LocalDirectoryStorageResourceContainer> RehydrateResource(
             TransferCheckpointer checkpointer,
             string transferId,
             bool isSource,
@@ -106,173 +106,8 @@ namespace Azure.Storage.DataMovement
         {
             Argument.AssertNotNull(checkpointer, nameof(checkpointer));
 
-            LocalDirectoryStorageResourceContainer resource;
-
-            int pathIndex = isSource ?
-                DataMovementConstants.PlanFile.SourcePathIndex :
-                DataMovementConstants.PlanFile.DestinationPathIndex;
-            int pathLength = isSource ?
-                (DataMovementConstants.PlanFile.SourcePathLengthIndex - DataMovementConstants.PlanFile.SourcePathIndex) :
-                (DataMovementConstants.PlanFile.DestinationPathLengthIndex - DataMovementConstants.PlanFile.DestinationPathIndex);
-
-            int partCount = await checkpointer.CurrentJobPartCountAsync(transferId).ConfigureAwait(false);
-            string storedPath = default;
-            for (int i = 0; i < partCount; i++)
-            {
-                using (Stream stream = await checkpointer.ReadableStreamAsync(
-                    transferId: transferId,
-                    partNumber: i,
-                    offset: pathIndex,
-                    readSize: pathLength,
-                    cancellationToken: cancellationToken).ConfigureAwait(false))
-                {
-                    if (string.IsNullOrEmpty(storedPath))
-                    {
-                        storedPath = stream.ToString();
-                    }
-                    else
-                    {
-                        string currentPath = stream.ToString();
-                        int length = Math.Min(storedPath.Length, currentPath.Length);
-                        int index = 0;
-
-                        while (index < length && storedPath[index] == currentPath[index])
-                        {
-                            index++;
-                        }
-
-                        storedPath = storedPath.Substring(0, index);
-                    }
-                }
-            }
-            resource = new LocalDirectoryStorageResourceContainer(storedPath);
-            return resource;
-        }
-
-        /// <summary>
-        /// Rehydrates from Checkpointer.
-        /// </summary>
-        /// <param name="checkpointer">
-        /// The checkpointer where the transfer state was saved to.
-        /// </param>
-        /// <param name="transferId">
-        /// Transfer Id where we want to rehydrate the resource from the job from.
-        /// </param>
-        /// <param name="cancellationToken">
-        /// Whether or not to cancel the operation.
-        /// </param>
-        /// <returns>
-        /// The <see cref="Task"/> to rehdyrate a <see cref="LocalFileStorageResource"/> from
-        /// a stored checkpointed transfer state.
-        /// </returns>
-        public static async Task<LocalDirectoryStorageResourceContainer> RehydrateSourceResource(
-            TransferCheckpointerOptions checkpointer,
-            string transferId,
-            CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(checkpointer, nameof(checkpointer));
-
-            LocalDirectoryStorageResourceContainer resource;
-
-            int pathIndex = DataMovementConstants.PlanFile.SourcePathIndex;
-            int pathLength = DataMovementConstants.PlanFile.SourcePathLengthIndex - DataMovementConstants.PlanFile.SourcePathIndex;
-
-            TransferCheckpointer transferCheckpointer = checkpointer.GetCheckpointer();
-            int partCount = await transferCheckpointer.CurrentJobPartCountAsync(transferId).ConfigureAwait(false);
-            string storedPath = default;
-            for (int i = 0; i < partCount; i++)
-            {
-                using (Stream stream = await transferCheckpointer.ReadableStreamAsync(
-                    transferId: transferId,
-                    partNumber: i,
-                    offset: pathIndex,
-                    readSize: pathLength,
-                    cancellationToken: cancellationToken).ConfigureAwait(false))
-                {
-                    if (string.IsNullOrEmpty(storedPath))
-                    {
-                        storedPath = stream.ToString();
-                    }
-                    else
-                    {
-                        string currentPath = stream.ToString();
-                        int length = Math.Min(storedPath.Length, currentPath.Length);
-                        int index = 0;
-
-                        while (index < length && storedPath[index] == currentPath[index])
-                        {
-                            index++;
-                        }
-
-                        storedPath = storedPath.Substring(0, index);
-                    }
-                }
-            }
-            resource = new LocalDirectoryStorageResourceContainer(storedPath);
-            return resource;
-        }
-
-        /// <summary>
-        /// Rehydrates from Checkpointer.
-        /// </summary>
-        /// <param name="checkpointer">
-        /// The checkpointer where the transfer state was saved to.
-        /// </param>
-        /// <param name="transferId">
-        /// Transfer Id where we want to rehydrate the resource from the job from.
-        /// </param>
-        /// <param name="cancellationToken">
-        /// Whether or not to cancel the operation.
-        /// </param>
-        /// <returns>
-        /// The <see cref="Task"/> to rehdyrate a <see cref="LocalFileStorageResource"/> from
-        /// a stored checkpointed transfer state.
-        /// </returns>
-        public static async Task<LocalDirectoryStorageResourceContainer> RehydrateDestinationResource(
-            TransferCheckpointerOptions checkpointer,
-            string transferId,
-            CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(checkpointer, nameof(checkpointer));
-
-            LocalDirectoryStorageResourceContainer resource;
-
-            int pathIndex = DataMovementConstants.PlanFile.DestinationPathIndex;
-            int pathLength = DataMovementConstants.PlanFile.DestinationPathLengthIndex - DataMovementConstants.PlanFile.DestinationPathIndex;
-
-            TransferCheckpointer transferCheckpointer = checkpointer.GetCheckpointer();
-            int partCount = await transferCheckpointer.CurrentJobPartCountAsync(transferId).ConfigureAwait(false);
-            string storedPath = default;
-            for (int i = 0; i < partCount; i++)
-            {
-                using (Stream stream = await transferCheckpointer.ReadableStreamAsync(
-                    transferId: transferId,
-                    partNumber: i,
-                    offset: pathIndex,
-                    readSize: pathLength,
-                    cancellationToken: cancellationToken).ConfigureAwait(false))
-                {
-                    if (string.IsNullOrEmpty(storedPath))
-                    {
-                        storedPath = stream.ToString();
-                    }
-                    else
-                    {
-                        string currentPath = stream.ToString();
-                        int length = Math.Min(storedPath.Length, currentPath.Length);
-                        int index = 0;
-
-                        while (index < length && storedPath[index] == currentPath[index])
-                        {
-                            index++;
-                        }
-
-                        storedPath = storedPath.Substring(0, index);
-                    }
-                }
-            }
-            resource = new LocalDirectoryStorageResourceContainer(storedPath);
-            return resource;
+            string storedPath = await checkpointer.GetPathFromCheckpointer(transferId, isSource, cancellationToken).ConfigureAwait(false);
+            return new LocalDirectoryStorageResourceContainer(storedPath);
         }
     }
 }

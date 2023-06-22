@@ -72,7 +72,7 @@ namespace Azure.Storage.DataMovement.Tests
 
             TransferManagerOptions managerOptions = new TransferManagerOptions()
             {
-                Checkpointer = new LocalTransferCheckpointer(disposingLocalDirectory.DirectoryPath)
+                CheckpointerOptions = new TransferCheckpointerOptions(disposingLocalDirectory.DirectoryPath)
             };
             TransferManager transferManager = new TransferManager(managerOptions);
 
@@ -132,7 +132,7 @@ namespace Azure.Storage.DataMovement.Tests
 
             TransferManagerOptions managerOptions = new TransferManagerOptions()
             {
-                Checkpointer = new LocalTransferCheckpointer(disposingLocalDirectory.DirectoryPath)
+                CheckpointerOptions = new TransferCheckpointerOptions(disposingLocalDirectory.DirectoryPath)
             };
             TransferManager transferManager = new TransferManager(managerOptions);
 
@@ -191,7 +191,7 @@ namespace Azure.Storage.DataMovement.Tests
 
             TransferManagerOptions managerOptions = new TransferManagerOptions()
             {
-                Checkpointer = new LocalTransferCheckpointer(disposingLocalDirectory.DirectoryPath)
+                CheckpointerOptions = new TransferCheckpointerOptions(disposingLocalDirectory.DirectoryPath)
             };
             TransferManager transferManager = new TransferManager(managerOptions);
 
@@ -250,7 +250,7 @@ namespace Azure.Storage.DataMovement.Tests
 
             TransferManagerOptions managerOptions = new TransferManagerOptions()
             {
-                Checkpointer = new LocalTransferCheckpointer(disposingLocalDirectory.DirectoryPath)
+                CheckpointerOptions = new TransferCheckpointerOptions(disposingLocalDirectory.DirectoryPath)
             };
             TransferManager transferManager = new TransferManager(managerOptions);
 

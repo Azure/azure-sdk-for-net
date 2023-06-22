@@ -122,7 +122,7 @@ namespace Azure.Storage.DataMovement
             _currentTaskIsProcessingJobPart = Task.Run(() => NotifyOfPendingJobPartProcessing());
             _currentTaskIsProcessingJobChunk = Task.Run(() => NotifyOfPendingJobChunkProcessing());
             _maxJobChunkTasks = options?.MaximumConcurrency ?? DataMovementConstants.MaxJobChunkTasks;
-            _checkpointer = options?.Checkpointer != default ? options.Checkpointer : CreateDefaultCheckpointer();
+            _checkpointer = options?.CheckpointerOptions != default ? options.CheckpointerOptions.GetCheckpointer() : CreateDefaultCheckpointer();
             _dataTransfers = new Dictionary<string, DataTransfer>();
             _arrayPool = ArrayPool<byte>.Shared;
             _errorHandling = options?.ErrorHandling != default ? options.ErrorHandling : ErrorHandlingOptions.StopOnAllFailures;
@@ -258,48 +258,6 @@ namespace Azure.Storage.DataMovement
                 throw Errors.InvalidTransferId(nameof(PauseTransferIfRunningAsync), transferId);
             }
             await transfer.PauseIfRunningAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// stub
-        /// </summary>
-        /// <param name="transferId"></param>
-        /// <param name="sourceCredential"></param>
-        /// <param name="destinationCredential"></param>
-        /// <param name="transferOptions"></param>
-        /// <param name="cancellationToken"></param>
-        /// <returns></returns>
-        /// <exception cref="NotImplementedException"></exception>
-        public virtual Task<DataTransfer> ResumeTransferAsync(
-            string transferId,
-            object sourceCredential,
-            object destinationCredential,
-            TransferOptions transferOptions = default,
-            CancellationToken cancellationToken = default)
-        {
-            // stub
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
-        /// stub
-        /// </summary>
-        /// <param name="transferId"></param>
-        /// <param name="sourceCredential"></param>
-        /// <param name="destinationCredential"></param>
-        /// <param name="transferOptions"></param>
-        /// <param name="cancellationToken"></param>
-        /// <returns></returns>
-        /// <exception cref="NotImplementedException"></exception>
-        public virtual Task<DataTransfer> ResumeTransferAsync(
-            string transferId,
-            StorageTransferCredentials sourceCredential,
-            StorageTransferCredentials destinationCredential,
-            TransferOptions transferOptions = default,
-            CancellationToken cancellationToken = default)
-        {
-            // stub
-            throw new NotImplementedException();
         }
 
         /// <summary>

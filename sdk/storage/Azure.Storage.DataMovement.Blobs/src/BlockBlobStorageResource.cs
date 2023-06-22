@@ -314,10 +314,7 @@ namespace Azure.Storage.DataMovement.Blobs
         /// Transfer Id where we want to rehydrate the resource from the job from.
         /// </param>
         /// <param name="isSource">
-        /// Whether or not we are rehydrating the source or destination.
-        /// </param>
-        /// <param name="credentials">
-        /// Credentials which allows the storage resource to authenticate during the transfer.
+        /// Whether or not we are rehydrating the source or destination. True if the source, false if the destination.
         /// </param>
         /// <param name="cancellationToken">
         /// Whether or not to cancel the operation.
@@ -326,59 +323,18 @@ namespace Azure.Storage.DataMovement.Blobs
         /// The <see cref="Task"/> to rehdyrate a <see cref="LocalFileStorageResource"/> from
         /// a stored checkpointed transfer state.
         /// </returns>
-        public static async Task<BlockBlobStorageResource> RehydrateStorageResource(
+        internal static async Task<BlockBlobStorageResource> RehydrateResource(
             TransferCheckpointer checkpointer,
             string transferId,
             bool isSource,
-            StorageTransferCredentials credentials,
             CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(checkpointer, nameof(checkpointer));
 
-            BlockBlobStorageResource resource;
+            string storedPath = await checkpointer.GetPathFromCheckpointer(transferId, isSource, cancellationToken).ConfigureAwait(false);
+            // TODO: get options BlockBlobStorageResourceOptions from stored file
 
-            int offset = isSource ?
-                DataMovementConstants.PlanFile.SourcePathIndex :
-                DataMovementConstants.PlanFile.DestinationPathIndex;
-            int length = isSource ?
-                (DataMovementConstants.PlanFile.SourcePathLengthIndex - DataMovementConstants.PlanFile.SourcePathIndex) :
-                (DataMovementConstants.PlanFile.DestinationPathLengthIndex - DataMovementConstants.PlanFile.DestinationPathIndex);
-
-            string storedPath;
-            using (Stream stream = await checkpointer.ReadableStreamAsync(
-                transferId: transferId,
-                partNumber: 0,
-                offset: offset,
-                readSize: length,
-                cancellationToken: cancellationToken).ConfigureAwait(false))
-            {
-                storedPath = stream.ToString();
-            }
-            (Type, object) exCred = credentials.GetCredential();
-            if (exCred.Item1 == typeof(StorageSharedKeyCredential))
-            {
-                resource = new BlockBlobStorageResource(new BlockBlobClient(
-                    new Uri(storedPath),
-                    (StorageSharedKeyCredential)exCred.Item2));
-            }
-            else if (exCred.Item1 == typeof(AzureSasCredential))
-            {
-                resource = new BlockBlobStorageResource(new BlockBlobClient(
-                    new Uri(storedPath),
-                    (AzureSasCredential)exCred.Item2));
-            }
-            else if (exCred.Item1 == typeof(TokenCredential))
-            {
-                resource = new BlockBlobStorageResource(new BlockBlobClient(
-                    new Uri(storedPath),
-                    (TokenCredential)exCred.Item2));
-            }
-            else
-            {
-                resource = new BlockBlobStorageResource(new BlockBlobClient(
-                    new Uri(storedPath)));
-            }
-            return resource;
+            return new BlockBlobStorageResource(new BlockBlobClient(new Uri(storedPath)));
         }
 
         /// <summary>
@@ -390,188 +346,8 @@ namespace Azure.Storage.DataMovement.Blobs
         /// <param name="transferId">
         /// Transfer Id where we want to rehydrate the resource from the job from.
         /// </param>
-        /// <param name="credentials">
-        /// Credentials which allows the storage resource to authenticate during the transfer.
-        /// </param>
-        /// <param name="cancellationToken">
-        /// Whether or not to cancel the operation.
-        /// </param>
-        /// <returns>
-        /// The <see cref="Task"/> to rehdyrate a <see cref="LocalFileStorageResource"/> from
-        /// a stored checkpointed transfer state.
-        /// </returns>
-        public static async Task<BlockBlobStorageResource> RehydrateSourceResource(
-            TransferCheckpointerOptions checkpointer,
-            string transferId,
-            StorageTransferCredentials credentials,
-            CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(checkpointer, nameof(checkpointer));
-
-            BlockBlobStorageResource resource;
-
-            int offset = DataMovementConstants.PlanFile.SourcePathIndex;
-            int length = DataMovementConstants.PlanFile.SourcePathLengthIndex - DataMovementConstants.PlanFile.SourcePathIndex;
-            TransferCheckpointer transferCheckpointer = checkpointer.GetCheckpointer();
-
-            string storedPath;
-            using (Stream stream = await transferCheckpointer.ReadableStreamAsync(
-                transferId: transferId,
-                partNumber: 0,
-                offset: offset,
-                readSize: length,
-                cancellationToken: cancellationToken).ConfigureAwait(false))
-            {
-                storedPath = stream.ToString();
-            }
-            (Type, object) exCred = credentials.GetCredential();
-            if (exCred.Item1 == typeof(StorageSharedKeyCredential))
-            {
-                resource = new BlockBlobStorageResource(new BlockBlobClient(
-                    new Uri(storedPath),
-                    (StorageSharedKeyCredential)exCred.Item2));
-            }
-            else if (exCred.Item1 == typeof(AzureSasCredential))
-            {
-                resource = new BlockBlobStorageResource(new BlockBlobClient(
-                    new Uri(storedPath),
-                    (AzureSasCredential)exCred.Item2));
-            }
-            else if (exCred.Item1 == typeof(TokenCredential))
-            {
-                resource = new BlockBlobStorageResource(new BlockBlobClient(
-                    new Uri(storedPath),
-                    (TokenCredential)exCred.Item2));
-            }
-            else
-            {
-                resource = new BlockBlobStorageResource(new BlockBlobClient(
-                    new Uri(storedPath)));
-            }
-            return resource;
-        }
-
-        /// <summary>
-        /// Rehydrates from Checkpointer.
-        /// </summary>
-        /// <param name="checkpointer">
-        /// The checkpointer where the transfer state was saved to.
-        /// </param>
-        /// <param name="transferId">
-        /// Transfer Id where we want to rehydrate the resource from the job from.
-        /// </param>
-        /// <param name="credentials">
-        /// Credentials which allows the storage resource to authenticate during the transfer.
-        /// </param>
-        /// <param name="cancellationToken">
-        /// Whether or not to cancel the operation.
-        /// </param>
-        /// <returns>
-        /// The <see cref="Task"/> to rehdyrate a <see cref="LocalFileStorageResource"/> from
-        /// a stored checkpointed transfer state.
-        /// </returns>
-        public static async Task<BlockBlobStorageResource> RehydrateDestinationResource(
-            TransferCheckpointerOptions checkpointer,
-            string transferId,
-            StorageTransferCredentials credentials,
-            CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(checkpointer, nameof(checkpointer));
-
-            BlockBlobStorageResource resource;
-
-            int offset = DataMovementConstants.PlanFile.DestinationPathIndex;
-            int length = DataMovementConstants.PlanFile.DestinationPathLengthIndex - DataMovementConstants.PlanFile.DestinationPathIndex;
-
-            TransferCheckpointer transferCheckpointer = checkpointer.GetCheckpointer();
-            string storedPath;
-            using (Stream stream = await transferCheckpointer.ReadableStreamAsync(
-                transferId: transferId,
-                partNumber: 0,
-                offset: offset,
-                readSize: length,
-                cancellationToken: cancellationToken).ConfigureAwait(false))
-            {
-                storedPath = stream.ToString();
-            }
-            (Type, object) exCred = credentials.GetCredential();
-            if (exCred.Item1 == typeof(StorageSharedKeyCredential))
-            {
-                resource = new BlockBlobStorageResource(new BlockBlobClient(
-                    new Uri(storedPath),
-                    (StorageSharedKeyCredential)exCred.Item2));
-            }
-            else if (exCred.Item1 == typeof(AzureSasCredential))
-            {
-                resource = new BlockBlobStorageResource(new BlockBlobClient(
-                    new Uri(storedPath),
-                    (AzureSasCredential)exCred.Item2));
-            }
-            else if (exCred.Item1 == typeof(TokenCredential))
-            {
-                resource = new BlockBlobStorageResource(new BlockBlobClient(
-                    new Uri(storedPath),
-                    (TokenCredential)exCred.Item2));
-            }
-            else
-            {
-                resource = new BlockBlobStorageResource(new BlockBlobClient(
-                    new Uri(storedPath)));
-            }
-            return resource;
-        }
-
-        /// <summary>
-        /// Rehydrates from Checkpointer.
-        /// </summary>
-        /// <param name="checkpointer">
-        /// The checkpointer where the transfer state was saved to.
-        /// </param>
-        /// <param name="transferId">
-        /// Transfer Id where we want to rehydrate the resource from the job from.
-        /// </param>
-        /// <param name="cancellationToken">
-        /// Whether or not to cancel the operation.
-        /// </param>
-        /// <returns>
-        /// The <see cref="Task"/> to rehdyrate a <see cref="LocalFileStorageResource"/> from
-        /// a stored checkpointed transfer state.
-        /// </returns>
-        public static async Task<BlockBlobStorageResource> RehydrateSourceResource(
-            TransferCheckpointerOptions checkpointer,
-            string transferId,
-            CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(checkpointer, nameof(checkpointer));
-
-            BlockBlobStorageResource resource;
-
-            int offset = DataMovementConstants.PlanFile.SourcePathIndex;
-            int length = DataMovementConstants.PlanFile.SourcePathLengthIndex - DataMovementConstants.PlanFile.SourcePathIndex;
-
-            string storedPath;
-            TransferCheckpointer transferCheckpointer = checkpointer.GetCheckpointer();
-            using (Stream stream = await transferCheckpointer.ReadableStreamAsync(
-                transferId: transferId,
-                partNumber: 0,
-                offset: offset,
-                readSize: length,
-                cancellationToken: cancellationToken).ConfigureAwait(false))
-            {
-                storedPath = stream.ToString();
-            }
-            resource = new BlockBlobStorageResource(new BlockBlobClient(new Uri(storedPath)));
-            return resource;
-        }
-
-        /// <summary>
-        /// Rehydrates from Checkpointer.
-        /// </summary>
-        /// <param name="checkpointer">
-        /// The checkpointer where the transfer state was saved to.
-        /// </param>
-        /// <param name="transferId">
-        /// Transfer Id where we want to rehydrate the resource from the job from.
+        /// <param name="isSource">
+        /// Whether or not we are rehydrating the source or destination. True if the source, false if the destination.
         /// </param>
         /// <param name="sharedKeyCredential">
         /// Credentials which allows the storage resource to authenticate during the transfer.
@@ -583,34 +359,21 @@ namespace Azure.Storage.DataMovement.Blobs
         /// The <see cref="Task"/> to rehdyrate a <see cref="LocalFileStorageResource"/> from
         /// a stored checkpointed transfer state.
         /// </returns>
-        public static async Task<BlockBlobStorageResource> RehydrateSourceResource(
-            TransferCheckpointerOptions checkpointer,
+        internal static async Task<BlockBlobStorageResource> RehydrateResource(
+            TransferCheckpointer checkpointer,
             string transferId,
+            bool isSource,
             StorageSharedKeyCredential sharedKeyCredential,
             CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(checkpointer, nameof(checkpointer));
 
-            BlockBlobStorageResource resource;
+            string storedPath = await checkpointer.GetPathFromCheckpointer(transferId, isSource, cancellationToken).ConfigureAwait(false);
+            // TODO: get options BlockBlobStorageResourceOptions from stored file
 
-            int offset = DataMovementConstants.PlanFile.SourcePathIndex;
-            int length = DataMovementConstants.PlanFile.SourcePathLengthIndex - DataMovementConstants.PlanFile.SourcePathIndex;
-
-            string storedPath;
-            TransferCheckpointer transferCheckpointer = checkpointer.GetCheckpointer();
-            using (Stream stream = await transferCheckpointer.ReadableStreamAsync(
-                transferId: transferId,
-                partNumber: 0,
-                offset: offset,
-                readSize: length,
-                cancellationToken: cancellationToken).ConfigureAwait(false))
-            {
-                storedPath = stream.ToString();
-            }
-            resource = new BlockBlobStorageResource(new BlockBlobClient(
+            return new BlockBlobStorageResource(new BlockBlobClient(
                 new Uri(storedPath),
                 sharedKeyCredential));
-            return resource;
         }
 
         /// <summary>
@@ -621,6 +384,9 @@ namespace Azure.Storage.DataMovement.Blobs
         /// </param>
         /// <param name="transferId">
         /// Transfer Id where we want to rehydrate the resource from the job from.
+        /// </param>
+        /// <param name="isSource">
+        /// Whether or not we are rehydrating the source or destination. True if the source, false if the destination.
         /// </param>
         /// <param name="tokenCredential">
         /// Credentials which allows the storage resource to authenticate during the transfer.
@@ -632,34 +398,20 @@ namespace Azure.Storage.DataMovement.Blobs
         /// The <see cref="Task"/> to rehdyrate a <see cref="LocalFileStorageResource"/> from
         /// a stored checkpointed transfer state.
         /// </returns>
-        public static async Task<BlockBlobStorageResource> RehydrateSourceResource(
-            TransferCheckpointerOptions checkpointer,
+        internal static async Task<BlockBlobStorageResource> RehydrateResource(
+            TransferCheckpointer checkpointer,
             string transferId,
+            bool isSource,
             TokenCredential tokenCredential,
             CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(checkpointer, nameof(checkpointer));
 
-            BlockBlobStorageResource resource;
-
-            int offset = DataMovementConstants.PlanFile.SourcePathIndex;
-            int length = DataMovementConstants.PlanFile.SourcePathLengthIndex - DataMovementConstants.PlanFile.SourcePathIndex;
-
-            string storedPath;
-            TransferCheckpointer transferCheckpointer = checkpointer.GetCheckpointer();
-            using (Stream stream = await transferCheckpointer.ReadableStreamAsync(
-                transferId: transferId,
-                partNumber: 0,
-                offset: offset,
-                readSize: length,
-                cancellationToken: cancellationToken).ConfigureAwait(false))
-            {
-                storedPath = stream.ToString();
-            }
-            resource = new BlockBlobStorageResource(new BlockBlobClient(
+            string storedPath = await checkpointer.GetPathFromCheckpointer(transferId, isSource, cancellationToken).ConfigureAwait(false);
+            // TODO: get options BlockBlobStorageResourceOptions from stored file
+            return new BlockBlobStorageResource(new BlockBlobClient(
                 new Uri(storedPath),
                 tokenCredential));
-            return resource;
         }
 
         /// <summary>
@@ -670,6 +422,9 @@ namespace Azure.Storage.DataMovement.Blobs
         /// </param>
         /// <param name="transferId">
         /// Transfer Id where we want to rehydrate the resource from the job from.
+        /// </param>
+        /// <param name="isSource">
+        /// Whether or not we are rehydrating the source or destination. True if the source, false if the destination.
         /// </param>
         /// <param name="sasCredential">
         /// Credentials which allows the storage resource to authenticate during the transfer.
@@ -681,224 +436,20 @@ namespace Azure.Storage.DataMovement.Blobs
         /// The <see cref="Task"/> to rehdyrate a <see cref="LocalFileStorageResource"/> from
         /// a stored checkpointed transfer state.
         /// </returns>
-        public static async Task<BlockBlobStorageResource> RehydrateSourceResource(
-            TransferCheckpointerOptions checkpointer,
+        internal static async Task<BlockBlobStorageResource> RehydrateResource(
+            TransferCheckpointer checkpointer,
             string transferId,
+            bool isSource,
             AzureSasCredential sasCredential,
             CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(checkpointer, nameof(checkpointer));
 
-            BlockBlobStorageResource resource;
-
-            int offset = DataMovementConstants.PlanFile.SourcePathIndex;
-            int length = DataMovementConstants.PlanFile.SourcePathLengthIndex - DataMovementConstants.PlanFile.SourcePathIndex;
-
-            string storedPath;
-            TransferCheckpointer transferCheckpointer = checkpointer.GetCheckpointer();
-            using (Stream stream = await transferCheckpointer.ReadableStreamAsync(
-                transferId: transferId,
-                partNumber: 0,
-                offset: offset,
-                readSize: length,
-                cancellationToken: cancellationToken).ConfigureAwait(false))
-            {
-                storedPath = stream.ToString();
-            }
-            resource = new BlockBlobStorageResource(new BlockBlobClient(
+            string storedPath = await checkpointer.GetPathFromCheckpointer(transferId, isSource, cancellationToken).ConfigureAwait(false);
+            // TODO: get options BlockBlobStorageResourceOptions from stored file
+            return new BlockBlobStorageResource(new BlockBlobClient(
                 new Uri(storedPath),
                 sasCredential));
-            return resource;
-        }
-
-        /// <summary>
-        /// Rehydrates from Checkpointer.
-        /// </summary>
-        /// <param name="checkpointer">
-        /// The checkpointer where the transfer state was saved to.
-        /// </param>
-        /// <param name="transferId">
-        /// Transfer Id where we want to rehydrate the resource from the job from.
-        /// </param>
-        /// <param name="cancellationToken">
-        /// Whether or not to cancel the operation.
-        /// </param>
-        /// <returns>
-        /// The <see cref="Task"/> to rehdyrate a <see cref="LocalFileStorageResource"/> from
-        /// a stored checkpointed transfer state.
-        /// </returns>
-        public static async Task<BlockBlobStorageResource> RehydrateDestinationResource(
-            TransferCheckpointerOptions checkpointer,
-            string transferId,
-            CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(checkpointer, nameof(checkpointer));
-
-            BlockBlobStorageResource resource;
-
-            int offset = DataMovementConstants.PlanFile.SourcePathIndex;
-            int length = DataMovementConstants.PlanFile.SourcePathLengthIndex - DataMovementConstants.PlanFile.SourcePathIndex;
-
-            string storedPath;
-            TransferCheckpointer transferCheckpointer = checkpointer.GetCheckpointer();
-            using (Stream stream = await transferCheckpointer.ReadableStreamAsync(
-                transferId: transferId,
-                partNumber: 0,
-                offset: offset,
-                readSize: length,
-                cancellationToken: cancellationToken).ConfigureAwait(false))
-            {
-                storedPath = stream.ToString();
-            }
-            resource = new BlockBlobStorageResource(new BlockBlobClient(new Uri(storedPath)));
-            return resource;
-        }
-
-        /// <summary>
-        /// Rehydrates from Checkpointer.
-        /// </summary>
-        /// <param name="checkpointer">
-        /// The checkpointer where the transfer state was saved to.
-        /// </param>
-        /// <param name="transferId">
-        /// Transfer Id where we want to rehydrate the resource from the job from.
-        /// </param>
-        /// <param name="sharedKeyCredential">
-        /// Credentials which allows the storage resource to authenticate during the transfer.
-        /// </param>
-        /// <param name="cancellationToken">
-        /// Whether or not to cancel the operation.
-        /// </param>
-        /// <returns>
-        /// The <see cref="Task"/> to rehdyrate a <see cref="LocalFileStorageResource"/> from
-        /// a stored checkpointed transfer state.
-        /// </returns>
-        public static async Task<BlockBlobStorageResource> RehydrateDestinationResource(
-            TransferCheckpointerOptions checkpointer,
-            string transferId,
-            StorageSharedKeyCredential sharedKeyCredential,
-            CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(checkpointer, nameof(checkpointer));
-
-            BlockBlobStorageResource resource;
-
-            int offset = DataMovementConstants.PlanFile.SourcePathIndex;
-            int length = DataMovementConstants.PlanFile.SourcePathLengthIndex - DataMovementConstants.PlanFile.SourcePathIndex;
-
-            string storedPath;
-            TransferCheckpointer transferCheckpointer = checkpointer.GetCheckpointer();
-            using (Stream stream = await transferCheckpointer.ReadableStreamAsync(
-                transferId: transferId,
-                partNumber: 0,
-                offset: offset,
-                readSize: length,
-                cancellationToken: cancellationToken).ConfigureAwait(false))
-            {
-                storedPath = stream.ToString();
-            }
-            resource = new BlockBlobStorageResource(new BlockBlobClient(
-                new Uri(storedPath),
-                sharedKeyCredential));
-            return resource;
-        }
-
-        /// <summary>
-        /// Rehydrates from Checkpointer.
-        /// </summary>
-        /// <param name="checkpointer">
-        /// The checkpointer where the transfer state was saved to.
-        /// </param>
-        /// <param name="transferId">
-        /// Transfer Id where we want to rehydrate the resource from the job from.
-        /// </param>
-        /// <param name="tokenCredential">
-        /// Credentials which allows the storage resource to authenticate during the transfer.
-        /// </param>
-        /// <param name="cancellationToken">
-        /// Whether or not to cancel the operation.
-        /// </param>
-        /// <returns>
-        /// The <see cref="Task"/> to rehdyrate a <see cref="LocalFileStorageResource"/> from
-        /// a stored checkpointed transfer state.
-        /// </returns>
-        public static async Task<BlockBlobStorageResource> RehydrateDestinationResource(
-            TransferCheckpointerOptions checkpointer,
-            string transferId,
-            TokenCredential tokenCredential,
-            CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(checkpointer, nameof(checkpointer));
-
-            BlockBlobStorageResource resource;
-
-            int offset = DataMovementConstants.PlanFile.SourcePathIndex;
-            int length = DataMovementConstants.PlanFile.SourcePathLengthIndex - DataMovementConstants.PlanFile.SourcePathIndex;
-
-            string storedPath;
-            TransferCheckpointer transferCheckpointer = checkpointer.GetCheckpointer();
-            using (Stream stream = await transferCheckpointer.ReadableStreamAsync(
-                transferId: transferId,
-                partNumber: 0,
-                offset: offset,
-                readSize: length,
-                cancellationToken: cancellationToken).ConfigureAwait(false))
-            {
-                storedPath = stream.ToString();
-            }
-            resource = new BlockBlobStorageResource(new BlockBlobClient(
-                new Uri(storedPath),
-                tokenCredential));
-            return resource;
-        }
-
-        /// <summary>
-        /// Rehydrates from Checkpointer.
-        /// </summary>
-        /// <param name="checkpointer">
-        /// The checkpointer where the transfer state was saved to.
-        /// </param>
-        /// <param name="transferId">
-        /// Transfer Id where we want to rehydrate the resource from the job from.
-        /// </param>
-        /// <param name="sasCredential">
-        /// Credentials which allows the storage resource to authenticate during the transfer.
-        /// </param>
-        /// <param name="cancellationToken">
-        /// Whether or not to cancel the operation.
-        /// </param>
-        /// <returns>
-        /// The <see cref="Task"/> to rehdyrate a <see cref="LocalFileStorageResource"/> from
-        /// a stored checkpointed transfer state.
-        /// </returns>
-        public static async Task<BlockBlobStorageResource> RehydrateDestinationResource(
-            TransferCheckpointerOptions checkpointer,
-            string transferId,
-            AzureSasCredential sasCredential,
-            CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(checkpointer, nameof(checkpointer));
-
-            BlockBlobStorageResource resource;
-
-            int offset = DataMovementConstants.PlanFile.SourcePathIndex;
-            int length = DataMovementConstants.PlanFile.SourcePathLengthIndex - DataMovementConstants.PlanFile.SourcePathIndex;
-
-            string storedPath;
-            TransferCheckpointer transferCheckpointer = checkpointer.GetCheckpointer();
-            using (Stream stream = await transferCheckpointer.ReadableStreamAsync(
-                transferId: transferId,
-                partNumber: 0,
-                offset: offset,
-                readSize: length,
-                cancellationToken: cancellationToken).ConfigureAwait(false))
-            {
-                storedPath = stream.ToString();
-            }
-            resource = new BlockBlobStorageResource(new BlockBlobClient(
-                new Uri(storedPath),
-                sasCredential));
-            return resource;
         }
 
         private void GrabEtag(Response response)

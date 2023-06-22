@@ -25,6 +25,6 @@ namespace Azure.Storage.DataMovement
         /// Optional. Defines the options for creating a checkpointer which is used for saving
         /// transfer state so transfers can be resumed.
         /// </summary>
-        public TransferCheckpointer Checkpointer { get; set; }
+        public TransferCheckpointerOptions CheckpointerOptions { get; set; }
     }
 }

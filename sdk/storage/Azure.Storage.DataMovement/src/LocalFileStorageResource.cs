@@ -266,7 +266,7 @@ namespace Azure.Storage.DataMovement
         /// Transfer Id where we want to rehydrate the resource from the job from.
         /// </param>
         /// <param name="isSource">
-        /// Whether or not we are rehydrating the source or destination.
+        /// Whether or not we are rehydrating the source or destination. True if the source, false if the destination.
         /// </param>
         /// <param name="cancellationToken">
         /// Whether or not to cancel the operation.
@@ -275,119 +275,16 @@ namespace Azure.Storage.DataMovement
         /// The <see cref="Task"/> to rehdyrate a <see cref="LocalFileStorageResource"/> from
         /// a stored checkpointed transfer state.
         /// </returns>
-        public static async Task<LocalFileStorageResource> RehydrateStorageResource(
-            TransferCheckpointerOptions checkpointer,
+        internal static async Task<LocalFileStorageResource> RehydrateResource(
+            TransferCheckpointer checkpointer,
             string transferId,
             bool isSource,
             CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(checkpointer, nameof(checkpointer));
 
-            LocalFileStorageResource resource;
-
-            int offset = isSource ?
-                DataMovementConstants.PlanFile.SourcePathIndex :
-                DataMovementConstants.PlanFile.DestinationPathIndex;
-            int length = isSource ?
-                (DataMovementConstants.PlanFile.SourcePathLengthIndex - DataMovementConstants.PlanFile.SourcePathIndex) :
-                (DataMovementConstants.PlanFile.DestinationPathLengthIndex - DataMovementConstants.PlanFile.DestinationPathIndex);
-
-            TransferCheckpointer transferCheckpointer = checkpointer.GetCheckpointer();
-            using (Stream stream = await transferCheckpointer.ReadableStreamAsync(
-                transferId: transferId,
-                partNumber: 0,
-                offset: offset,
-                readSize: length,
-                cancellationToken: cancellationToken).ConfigureAwait(false))
-            {
-                string storedPath = stream.ToString();
-                resource = new LocalFileStorageResource(storedPath);
-            }
-            return resource;
-        }
-
-        /// <summary>
-        /// Rehydrates from Checkpointer.
-        /// </summary>
-        /// <param name="checkpointer">
-        /// The checkpointer where the transfer state was saved to.
-        /// </param>
-        /// <param name="transferId">
-        /// Transfer Id where we want to rehydrate the resource from the job from.
-        /// </param>
-        /// <param name="cancellationToken">
-        /// Whether or not to cancel the operation.
-        /// </param>
-        /// <returns>
-        /// The <see cref="Task"/> to rehdyrate a <see cref="LocalFileStorageResource"/> from
-        /// a stored checkpointed transfer state.
-        /// </returns>
-        public static async Task<LocalFileStorageResource> RehydrateSourceResource(
-            TransferCheckpointerOptions checkpointer,
-            string transferId,
-            CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(checkpointer, nameof(checkpointer));
-
-            LocalFileStorageResource resource;
-
-            int offset = DataMovementConstants.PlanFile.SourcePathIndex;
-            int length = DataMovementConstants.PlanFile.SourcePathLengthIndex - DataMovementConstants.PlanFile.SourcePathIndex;
-
-            TransferCheckpointer transferCheckpointer = checkpointer.GetCheckpointer();
-            using (Stream stream = await transferCheckpointer.ReadableStreamAsync(
-                transferId: transferId,
-                partNumber: 0,
-                offset: offset,
-                readSize: length,
-                cancellationToken: cancellationToken).ConfigureAwait(false))
-            {
-                string storedPath = stream.ToString();
-                resource = new LocalFileStorageResource(storedPath);
-            }
-            return resource;
-        }
-
-        /// <summary>
-        /// Rehydrates from Checkpointer.
-        /// </summary>
-        /// <param name="checkpointer">
-        /// The checkpointer where the transfer state was saved to.
-        /// </param>
-        /// <param name="transferId">
-        /// Transfer Id where we want to rehydrate the resource from the job from.
-        /// </param>
-        /// <param name="cancellationToken">
-        /// Whether or not to cancel the operation.
-        /// </param>
-        /// <returns>
-        /// The <see cref="Task"/> to rehdyrate a <see cref="LocalFileStorageResource"/> from
-        /// a stored checkpointed transfer state.
-        /// </returns>
-        public static async Task<LocalFileStorageResource> RehydrateDestinationResource(
-            TransferCheckpointerOptions checkpointer,
-            string transferId,
-            CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(checkpointer, nameof(checkpointer));
-
-            LocalFileStorageResource resource;
-
-            int offset = DataMovementConstants.PlanFile.DestinationPathIndex;
-            int length = DataMovementConstants.PlanFile.DestinationPathLengthIndex - DataMovementConstants.PlanFile.DestinationPathIndex;
-
-            TransferCheckpointer transferCheckpointer = checkpointer.GetCheckpointer();
-            using (Stream stream = await transferCheckpointer.ReadableStreamAsync(
-                transferId: transferId,
-                partNumber: 0,
-                offset: offset,
-                readSize: length,
-                cancellationToken: cancellationToken).ConfigureAwait(false))
-            {
-                string storedPath = stream.ToString();
-                resource = new LocalFileStorageResource(storedPath);
-            }
-            return resource;
+            string storedPath = await checkpointer.GetPathFromCheckpointer(transferId, isSource, cancellationToken).ConfigureAwait(false);
+            return new LocalFileStorageResource(storedPath);
         }
     }
 }

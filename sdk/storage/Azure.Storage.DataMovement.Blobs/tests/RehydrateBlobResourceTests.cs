@@ -15,9 +15,9 @@ using NUnit.Framework;
 
 namespace Azure.Storage.DataMovement.Tests
 {
-    public class RehydrateStorageResourceTests : DataMovementTestBase
+    public class RehydrateBlobResourceTests : DataMovementTestBase
     {
-        public RehydrateStorageResourceTests(bool async)
+        public RehydrateBlobResourceTests(bool async)
             : base(async, null /* RecordedTestMode.Record /* to re-record */)
         { }
 
@@ -100,7 +100,7 @@ namespace Azure.Storage.DataMovement.Tests
         [Test]
         [TestCase(true)]
         [TestCase(false)]
-        public async Task RehydrateLocalFile(bool isSource)
+        public async Task RehydrateBlockBlob(bool isSource)
         {
             using DisposingLocalDirectory test = DisposingLocalDirectory.GetTestDirectory(Guid.NewGuid().ToString());
             TransferCheckpointer checkpointer = new LocalTransferCheckpointer(test.DirectoryPath);
@@ -117,12 +117,13 @@ namespace Azure.Storage.DataMovement.Tests
                 sourceType,
                 new List<string>() { sourcePath },
                 destinationType,
-                new List<string>() { destinationPath } );
+                new List<string>() { destinationPath });
 
-            LocalFileStorageResource storageResource = await LocalFileStorageResource.RehydrateResource(
+            BlockBlobStorageResource storageResource = await BlockBlobStorageResource.RehydrateResource(
                 checkpointer,
                 transferId,
-                false);
+                false,
+                new StorageSharedKeyCredential("accountName", "accountKey"));
         }
     }
 }
