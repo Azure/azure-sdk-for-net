@@ -578,6 +578,24 @@ namespace Azure.AI.OpenAI
             }
         }
 
+        /// <summary>
+        ///     Get a set of generated images influenced by a provided textual prompt.
+        /// </summary>
+        /// <remarks>
+        ///     Image results are presented as <see cref="ImageReference"/> objects that include a temporary URL for
+        ///     the generated output. The <see cref="ImageReference.GetStreamAsync(CancellationToken)"/> method may
+        ///     be used to conveniently fetch the image data from the URL.
+        /// </remarks>
+        /// <param name="imageGenerationOptions">
+        ///     The configuration information for the image generation request that controls the content,
+        ///     size, and other details about generated images.
+        /// </param>
+        /// <param name="cancellationToken">
+        ///     An optional cancellation token that may be used to abort an ongoing request.
+        /// </param>
+        /// <returns>
+        ///     A list of <see cref="ImageReference"/> instances that represent the requested generated images.
+        /// </returns>
         public virtual Response<IReadOnlyList<ImageReference>> GetImages(
             ImageGenerationOptions imageGenerationOptions,
             CancellationToken cancellationToken = default)
@@ -609,6 +627,24 @@ namespace Azure.AI.OpenAI
             }
         }
 
+        /// <summary>
+        ///     Get a set of generated images influenced by a provided textual prompt.
+        /// </summary>
+        /// <remarks>
+        ///     Image results are presented as <see cref="ImageReference"/> objects that include a temporary URL for
+        ///     the generated output. The <see cref="ImageReference.GetStreamAsync(CancellationToken)"/> method may
+        ///     be used to conveniently fetch the image data from the URL.
+        /// </remarks>
+        /// <param name="imageGenerationOptions">
+        ///     The configuration information for the image generation request that controls the content,
+        ///     size, and other details about generated images.
+        /// </param>
+        /// <param name="cancellationToken">
+        ///     An optional cancellation token that may be used to abort an ongoing request.
+        /// </param>
+        /// <returns>
+        ///     A list of <see cref="ImageReference"/> instances that represent the requested generated images.
+        /// </returns>
         public virtual async Task<Response<IReadOnlyList<ImageReference>>> GetImagesAsync(
             ImageGenerationOptions imageGenerationOptions,
             CancellationToken cancellationToken = default)

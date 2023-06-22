@@ -160,9 +160,10 @@ namespace Azure.AI.OpenAI
     }
     public partial class ImageGenerationOptions
     {
+        public ImageGenerationOptions() { }
         public ImageGenerationOptions(string prompt) { }
         public int? N { get { throw null; } set { } }
-        public string Prompt { get { throw null; } }
+        public string Prompt { get { throw null; } set { } }
         public Azure.AI.OpenAI.ImageSize? Size { get { throw null; } set { } }
         public string User { get { throw null; } set { } }
     }
@@ -216,12 +217,6 @@ namespace Azure.AI.OpenAI
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.OpenAI.Embeddings>> GetEmbeddingsAsync(string deploymentOrModelName, Azure.AI.OpenAI.EmbeddingsOptions embeddingsOptions, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<System.Collections.Generic.IReadOnlyList<Azure.AI.OpenAI.ImageReference>> GetImages(Azure.AI.OpenAI.ImageGenerationOptions imageGenerationOptions, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<System.Collections.Generic.IReadOnlyList<Azure.AI.OpenAI.ImageReference>>> GetImagesAsync(Azure.AI.OpenAI.ImageGenerationOptions imageGenerationOptions, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public partial class PostOnlyBearerTokenAuthenticationPolicy : Azure.Core.Pipeline.BearerTokenAuthenticationPolicy
-        {
-            public PostOnlyBearerTokenAuthenticationPolicy(Azure.Core.TokenCredential tokenCredential, System.Collections.Generic.IEnumerable<string> scopes) : base (default(Azure.Core.TokenCredential), default(string)) { }
-            public override void Process(Azure.Core.HttpMessage message, System.ReadOnlyMemory<Azure.Core.Pipeline.HttpPipelinePolicy> pipeline) { }
-            public override System.Threading.Tasks.ValueTask ProcessAsync(Azure.Core.HttpMessage message, System.ReadOnlyMemory<Azure.Core.Pipeline.HttpPipelinePolicy> pipeline) { throw null; }
-        }
     }
     public partial class OpenAIClientOptions : Azure.Core.ClientOptions
     {

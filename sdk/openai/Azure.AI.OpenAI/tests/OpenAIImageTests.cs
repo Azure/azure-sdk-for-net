@@ -29,7 +29,11 @@ namespace Azure.AI.OpenAI.Tests
             string deploymentOrModelName = GetDeploymentOrModelName(serviceTarget, OpenAIClientScenario.Completions);
             Assert.That(client, Is.InstanceOf<OpenAIClient>());
             const string prompt = "a simplistic picture of a cyberpunk money dreaming of electric bananas";
-            ImageGenerationOptions requestOptions = new ImageGenerationOptions(prompt);
+            ImageGenerationOptions requestOptions = new ImageGenerationOptions()
+            {
+                Prompt = prompt,
+                Size = ImageSize.Size256x256
+            };
             Assert.That(requestOptions, Is.InstanceOf<ImageGenerationOptions>());
 
             Response<IReadOnlyList<ImageReference>> imagesResponse

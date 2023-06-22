@@ -35,9 +35,6 @@ namespace Azure.AI.OpenAI
             Size = size;
             User = user;
         }
-
-        /// <summary> A description of the desired images. </summary>
-        public string Prompt { get; }
         /// <summary> The number of images to generate (defaults to 1). </summary>
         public int? N { get; set; }
         /// <summary> The desired size of the generated images. Must be one of 256x256, 512x512, or 1024x1024 (defaults to 1024x1024). </summary>

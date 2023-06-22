@@ -5,13 +5,23 @@
 
 #nullable disable
 
-using System;
-using Azure.Core;
-
 namespace Azure.AI.OpenAI
 {
     /// <summary> Represents the request data used to generate images. </summary>
     public partial class ImageGenerationOptions
     {
+        /// <summary> Initializes a new instance of ImageGenerationOptions. </summary>
+        public ImageGenerationOptions()
+        {
+        }
+
+        /// <summary>
+        /// Gets or sets the description used to influence the generation of requested images.
+        /// </summary>
+        /// <remarks>
+        ///     For best results, ensure that the prompt is specific and sufficiently rich in details about
+        ///     desired topical content.
+        /// </remarks>
+        public string Prompt { get; set; }
     }
 }

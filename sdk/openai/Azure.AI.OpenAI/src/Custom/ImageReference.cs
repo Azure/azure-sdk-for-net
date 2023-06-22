@@ -14,9 +14,19 @@ using Azure.Core.Pipeline;
 
 namespace Azure.AI.OpenAI
 {
+    /// <summary>
+    /// Representation of a single generated image from an image generation request.
+    /// </summary>
     public partial class ImageReference
     {
+        /// <summary>
+        /// Gets the creation timestamp for the generated image.
+        /// </summary>
         public DateTimeOffset Created { get; }
+
+        /// <summary>
+        /// Gets a temporary URL from which the generated image may be downloaded.
+        /// </summary>
         public Uri DownloadUrl { get; }
 
         private HttpPipeline _pipeline { get; }
@@ -29,6 +39,20 @@ namespace Azure.AI.OpenAI
             DownloadUrl = downloadUri;
         }
 
+        /// <summary>
+        ///     Connects to the image source specified at <see cref="DownloadUrl"/> and opens a stream to retrieve the
+        ///     binary data of the image.
+        /// </summary>
+        /// <remarks>
+        ///     This method uses the <see cref="HttpPipeline"/> from the originating <see cref="OpenAIClient"/> to
+        ///     initiate the download and will inherit any configuration details, such as proxy settings.
+        /// </remarks>
+        /// <param name="cancellationToken">
+        ///     An optional cancellation token that may be used to abort the operation.
+        /// </param>
+        /// <returns>
+        ///     A stream of binary data for the generated image.
+        /// </returns>
         public async Task<Stream> GetStreamAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage message = _pipeline.CreateMessage();
