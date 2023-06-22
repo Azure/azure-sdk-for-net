@@ -391,7 +391,7 @@ namespace Azure.Storage.DataMovement
                     dataTransfer,
                     resumeJob).ConfigureAwait(false);
             }
-            // Cotnainer transfer
+            // Container transfer
             else if (sourceResource is StorageResourceContainer &&
                 destinationResource is StorageResourceContainer)
             {
