@@ -1,6 +1,6 @@
 # Troubleshooting Azure Monitor Ingestion client library issues
 
-This troubleshooting guide contains instructions to diagnose frequently encountered issues while using the Azure Monitor Ingestion client library for Java.
+This troubleshooting guide contains instructions to diagnose frequently encountered issues while using the Azure Monitor Ingestion client library for .Net.
 
 ## Table of contents
 
@@ -18,52 +18,35 @@ This troubleshooting guide contains instructions to diagnose frequently encounte
 
 ### Enable client logging
 
-To troubleshoot issues with the Azure Monitor Ingestion library, it's important to first enable logging to monitor the behavior of the application. The errors and warnings in the logs generally provide useful insights into what went wrong and sometimes include corrective actions to fix issues.
+To troubleshoot issues with the library, first enable logging to monitor the behavior of the application. The errors and warnings in the logs generally provide useful insights into what went wrong and sometimes include corrective actions to fix issues.
 
-The Azure client libraries for Java have two logging options:
+This library uses the standard [logging](https://docs.microsoft.com/dotnet/azure/sdk/logging) library. Basic information about HTTP sessions, such as URLs and headers, is logged at the `INFO` level.
 
-* A built-in logging framework.
-* Support for logging using the [SLF4J](https://www.slf4j.org/) interface.
+The simplest way to see the logs is to enable console logging. To create an Azure SDK log listener that outputs messages to the console, use the [AzureEventSourceListener.CreateConsoleLogger](https://docs.microsoft.com/dotnet/api/azure.core.diagnostics.azureeventsourcelistener.createconsolelogger?view=azure-dotnet) method:
 
-Refer to the instructions in this reference document on how
-to [configure logging in Azure SDK for Java](https://learn.microsoft.com/azure/developer/java/sdk/logging-overview).
+```C# Snippet:EnableClientLogging
+using Azure.Core.Diagnostics;
 
-### Enable HTTP request/response logging
-
-Reviewing the HTTP request sent or response received over the wire to/from the Azure Monitor service can be useful in troubleshooting issues. To enable logging the HTTP request and response payload, the `LogsIngestionClient` can be configured as follows:
-
-```java readme-sample-enablehttplogging
-LogsIngestionClient logsIngestionClient = new LogsIngestionClientBuilder()
-    .credential(credential)
-    .httpLogOptions(new HttpLogOptions().setLogLevel(HttpLogDetailLevel.BODY_AND_HEADERS))
-    .buildClient();
-```
-
-Alternatively, you can configure logging HTTP requests and responses for your entire application by setting the `AZURE_HTTP_LOG_DETAIL_LEVEL` environment variable. This change will enable logging for every Azure client that supports logging HTTP requests/responses.
-
-Environment variable name: `AZURE_HTTP_LOG_DETAIL_LEVEL`
-
-| Value            | Logging level                                                        |
-|------------------|----------------------------------------------------------------------|
-| `none`             | HTTP request/response logging is disabled                            |
-| `basic`            | Logs only URLs, HTTP methods, and time to finish the request.        |
-| `headers`          | Logs everything in `basic`, plus all the request and response headers. |
-| `body`             | Logs everything in `basic`, plus all the request and response body.    |
-| `body_and_headers` | Logs everything in `headers` and `body`.                                 |
-
-**NOTE**: When logging the request and response bodies, ensure that they don't contain confidential information. When logging headers, the client library has a default set of headers that are considered safe to log. This set can be updated by updating the log options in the builder, as follows:
-
-```java
-clientBuilder.httpLogOptions(new HttpLogOptions().addAllowedHeaderName("safe-to-log-header-name"))
+// set up a listener to monitor logged events
+using AzureEventSourceListener listener = AzureEventSourceListener.CreateConsoleLogger();
 ```
 
 ### Authentication errors
 
-The Azure Monitor Ingestion library supports Azure Active Directory authentication. The `LogsIngestionClientBuilder` can be configured to set the `credential`. To provide a valid credential, you can use `azure-identity` dependency. For more information on getting started, see the [README](https://github.com/Azure/azure-sdk-for-java/tree/main/sdk/monitor/azure-monitor-ingestion#create-the-client) of the Azure Monitor Ingestion library. For more information on the credential types supported in `azure-identity`, see the [Azure Identity library documentation](https://learn.microsoft.com/azure/developer/java/sdk/identity).
+### Troubleshooting insufficient access error for metrics query
 
-### Dependency conflicts
+If you get an HTTP error with status code 403 (Forbidden), it means the provided credentials lack sufficient permissions to query the workspace.
 
-If you see `NoSuchMethodError` or `NoClassDefFoundError` during your application runtime, this is due to a dependency version conflict. For more information on why this happens and [ways to mitigate this issue](https://learn.microsoft.com/azure/developer/java/sdk/troubleshooting-dependency-version-conflict#mitigate-version-mismatch-issues), see [troubleshooting dependency version conflicts](https://learn.microsoft.com/azure/developer/java/sdk/troubleshooting-dependency-version-conflict).
+```text
+"{"error":{"message":"The provided credentials have insufficient access to perform the requested operation","code":"InsufficientAccessError","correlationId":""}}"
+```
+
+Confirm that:
+
+1. Sufficient permissions have been granted to the application or user making the request. For more information, see [manage access to workspaces](https://docs.microsoft.com/azure/azure-monitor/logs/manage-access#manage-access-using-workspace-permissions).
+1. You're authenticating as that user or application if the user or application is granted sufficient privileges to query the workspace. If you're authenticating using the [DefaultAzureCredential](https://docs.microsoft.com/dotnet/api/azure.identity.defaultazurecredential?view=azure-dotnet), check the logs to verify the credential used is the one you expected. To enable logging, see the [Enable client logging](#enable-client-logging) section.
+
+For more help with troubleshooting authentication errors, see the Azure Identity client library [troubleshooting guide](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/identity/Azure.Identity/TROUBLESHOOTING.md).
 
 ## Troubleshooting logs ingestion
 
@@ -82,16 +65,16 @@ authentication token provided does not have access to ingest data for the data c
 1. Check that the application or user making the request has sufficient permissions:
    * See this document to [manage access to data collection rule](https://learn.microsoft.com/azure/azure-monitor/logs/tutorial-logs-ingestion-portal#assign-permissions-to-the-dcr).
    * To ingest logs, ensure the service principal is assigned the **Monitoring Metrics Publisher** role for the data collection rule.
-1. If the user or application is granted sufficient privileges to upload logs, ensure you're authenticating as that user/application. If you're authenticating using the [DefaultAzureCredential](https://github.com/Azure/azure-sdk-for-java/blob/main/sdk/identity/azure-identity/README.md#authenticating-with-defaultazurecredential), check the logs to verify that the credential used is the one you expected. To enable logging, see the [Enable client logging](#enable-client-logging) section.
+1. If the user or application is granted sufficient privileges to upload logs, ensure you're authenticating as that user/application. If you're authenticating using the [DefaultAzureCredential](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/identity/Azure.Identity/README.md#defaultazurecredential), check the logs to verify that the credential used is the one you expected. To enable logging, see the [Enable client logging](#enable-client-logging) section.
 1. The permissions may take up to 30 minutes to propagate. So, if the permissions were granted recently, retry after some time.
 
 ### Troubleshooting missing logs
 
 When you send logs to Azure Monitor for ingestion, the request may succeed, but you may not see the data appearing in the designated Log Analytics workspace table as configured in the DCR. To investigate and resolve this issue, ensure the following:
 
-* Double-check that you're using the correct data collection endpoint when configuring the `LogsIngestionClientBuilder`. Using the wrong endpoint can result in data not being properly sent to the Log Analytics workspace.
+* Double-check that you're using the correct data collection endpoint when configuring the `LogsIngestionClient`. Using the wrong endpoint can result in data not being properly sent to the Log Analytics workspace.
 
-* Make sure you provide the correct DCR ID to the `upload` method. The DCR ID is an immutable identifier that determines the transformation rules applied to the uploaded logs and directs them to the appropriate Log Analytics workspace table.
+* Make sure you provide the correct DCR ID to the `Upload` method. The DCR ID is an immutable identifier that determines the transformation rules applied to the uploaded logs and directs them to the appropriate Log Analytics workspace table.
 
 * Verify that the custom table specified in the DCR exists in the Log Analytics workspace. Ensure that you provide the accurate name of the custom table to the upload method. Mismatched table names can lead to logs not being stored correctly.
 
@@ -106,20 +89,33 @@ If you experience delays when uploading logs, it could be due to reaching servic
 To enable client logging and to troubleshoot this issue further, see the instructions provided in the section titled [Enable client logging](#enable-client-logging).
 
 If there are no throttling errors, then consider increasing the concurrency to upload multiple log requests in parallel.
-To set the concurrency, use the `UploadLogsOptions` type's `setMaxConcurrency` method.
+To set the concurrency, use the `UploadLogsOptions` type's `MaxConcurrency` property.
 
-```java readme-sample-uploadLogsWithMaxConcurrency
-DefaultAzureCredential tokenCredential = new DefaultAzureCredentialBuilder().build();
+```C# Snippet:UploadWithMaxConcurrency
+    Uri endpoint = new Uri("<data_collection_endpoint_uri>");
+    string ruleId = "<data_collection_rule_id>";
+    string streamName = "<stream_name>";
 
-LogsIngestionClient client = new LogsIngestionClientBuilder()
-        .endpoint("<data-collection-endpoint")
-        .credential(tokenCredential)
-        .buildClient();
+    var credential = new DefaultAzureCredential();
+    LogsIngestionClient client = new(endpoint, credential);
 
-List<Object> logs = getLogs();
-LogsUploadOptions logsUploadOptions = new LogsUploadOptions()
-        .setMaxConcurrency(3);
-client.upload("<data-collection-rule-id>", "<stream-name>", logs, logsUploadOptions,
-        Context.NONE);
-System.out.println("Logs uploaded successfully");
+    DateTimeOffset currentTime = DateTimeOffset.UtcNow;
+
+    var entries = new List<Object>();
+    for (int i = 0; i < 100; i++)
+    {
+        entries.Add(
+            new {
+                Time = currentTime,
+                Computer = "Computer" + i.ToString(),
+                AdditionalContext = i
+            }
+        );
+    }
+    // Set concurrency in LogsUploadOptions
+    LogsUploadOptions options = new LogsUploadOptions();
+    options.MaxConcurrency = 10;
+
+    // Upload our logs
+    Response response = await client.UploadAsync(ruleId, streamName, entries, options).ConfigureAwait(false);
 ```
