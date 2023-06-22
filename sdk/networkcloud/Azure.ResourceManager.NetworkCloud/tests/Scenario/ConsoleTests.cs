@@ -25,11 +25,14 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
             ResourceIdentifier consoleId = ConsoleResource.CreateResourceIdentifier(TestEnvironment.SubscriptionId, TestEnvironment.ClusterRG, TestEnvironment.VMName, ConsoleName);
             ConsoleResource console = Client.GetConsoleResource(consoleId);
 
-            VirtualMachineResource virtualMachine = Client.GetVirtualMachineResource(TestEnvironment.VMId);
+            // retrieve VM for which this console will be created for
+            ResourceIdentifier vmId = VirtualMachineResource.CreateResourceIdentifier(TestEnvironment.SubscriptionId, TestEnvironment.ClusterRG, TestEnvironment.VMName);
+            VirtualMachineResource virtualMachine = Client.GetVirtualMachineResource(vmId);
             virtualMachine = await virtualMachine.GetAsync();
+
             ConsoleCollection collection = virtualMachine.GetConsoles();
 
-            DateTime expiration = DateTime.Parse("2023-07-01T01:27:03.008Z");
+            DateTime expiration = DateTime.Parse(TestEnvironment.ConsoleExpirationDate);
 
             ConsoleData data = new ConsoleData
             (TestEnvironment.Location, new ExtendedLocation(TestEnvironment.ManagerExtendedLocation, "CustomLocation"), ConsoleEnabled.True, new SshPublicKey("ssh-rsa AAtsE3njSONzDYRIZv/WLjVuMfrUSByHp+jfaaOLHTIIB4fJvo6dQUZxE20w2iDHV3tEkmnTo84eba97VMueQD6OzJPEyWZMRpz8UYWOd0IXeRqiFu1lawNblZhwNT/ojNZfpB3af/YDzwQCZgTcTRyNNhL4o/blKUmug0daSsSXISTRnIDpcf5qytjs1Xo+yYyJMvzLL59mhAyb3p/cD+Y3/s3WhAx+l0XOKpzXnblrv9d3q4c2tWmm/SyFqthaqd0= fake-public-key"))

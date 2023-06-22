@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
         [Test]
         public async Task Volumes()
         {
-            string volumeName = "volumeName";
+            string volumeName = Recording.GenerateAssetName("volume");
             string resourceGroupName = TestEnvironment.ResourceGroup;
             string subscriptionId = TestEnvironment.SubscriptionId;
 
