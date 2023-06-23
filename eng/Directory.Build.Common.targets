@@ -27,7 +27,7 @@
   </Target>
 
   <!-- Validates that there is a release note entry for the current package version -->
-  <!-- <Target Name="ValidateReleaseNotes" BeforeTargets="SetPackageProjectUrlandReleaseNotes" Condition="'$(IsShippingLibrary)' == 'true'" >
+  <Target Name="ValidateReleaseNotes" BeforeTargets="SetPackageProjectUrlandReleaseNotes" Condition="'$(IsShippingLibrary)' == 'true'" >
     <PropertyGroup>
       <ValidateReleaseNotesScriptPath Condition=" '$(ValidateReleaseNotesScriptPath)'=='' ">$(MSBuildThisFileDirectory)common/scripts/Verify-ChangeLog.ps1</ValidateReleaseNotesScriptPath>
       <ChangeLogPath>$([MSBuild]::NormalizeDirectory($(MSBuildProjectDirectory)/../))CHANGELOG.md</ChangeLogPath>
@@ -36,7 +36,7 @@
       <Output TaskParameter="ExitCode" PropertyName="SetReleaseNotesErrorCode" />
     </Exec>
     <Error Condition="'$(SetReleaseNotesErrorCode)' != '0'" Text="ChangeLog verification failed for [$(ChangeLogPath)]." />
-  </Target> -->
+  </Target>
 
   <!--Run Aggregate Updates to Source -->
   <Target Name="UpdateSourceOnBuild" AfterTargets="Build" Condition="'$(UpdateSourceOnBuild)' == 'true' and '$(IsShippingClientLibrary)' == 'true'" >
