@@ -79,7 +79,13 @@ namespace Azure.Core
         /// <returns>An instance of <see cref="RequestContent"/> that wraps a <see cref="DynamicData"/>.</returns>
         public static RequestContent Create(DynamicData content) => new DynamicDataContent(content);
 
-        internal static RequestContent CreatePatch(DynamicData content)
+        /// <summary>
+        /// Generates JSON for JSON Merge Patch updates corresponding to the changes made to the DynamicData instance.
+        /// </summary>
+        /// <param name="content"></param>
+        /// <returns></returns>
+        /// <exception cref="NotImplementedException"></exception>
+        public static RequestContent CreatePatch(DynamicData content)
         {
             throw new NotImplementedException();
         }
