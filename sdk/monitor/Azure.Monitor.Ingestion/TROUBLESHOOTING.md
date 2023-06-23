@@ -23,7 +23,7 @@ This library uses the standard [logging](https://docs.microsoft.com/dotnet/azure
 
 The simplest way to see the logs is to enable console logging. To create an Azure SDK log listener that outputs messages to the console, use the [AzureEventSourceListener.CreateConsoleLogger](https://docs.microsoft.com/dotnet/api/azure.core.diagnostics.azureeventsourcelistener.createconsolelogger?view=azure-dotnet) method:
 
-```C# Snippet:EnableClientLogging
+```csharp
 using Azure.Core.Diagnostics;
 
 // set up a listener to monitor logged events
