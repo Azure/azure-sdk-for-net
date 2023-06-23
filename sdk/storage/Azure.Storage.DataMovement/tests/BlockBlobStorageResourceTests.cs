@@ -262,7 +262,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             BlobServiceClient serviceClient = BlobsClientBuilder.GetServiceClient_OAuth();
             await using DisposingBlobContainer test = await GetTestContainerAsync(
                 service: serviceClient,
-                publicAccessType: PublicAccessType.BlobContainer);
+                publicAccessType: PublicAccessType.None);
 
             BlockBlobClient sourceClient = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
             BlockBlobClient destinationClient = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
@@ -361,7 +361,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
         public async Task CopyBlockFromUriAsync_OAuth()
         {
             // Arrange
-            await using DisposingBlobContainer testContainer = await GetTestContainerAsync(publicAccessType: PublicAccessType.BlobContainer);
+            await using DisposingBlobContainer testContainer = await GetTestContainerAsync(publicAccessType: PublicAccessType.None);
             BlockBlobClient sourceClient = testContainer.Container.GetBlockBlobClient(GetNewBlobName());
             BlockBlobClient destinationClient = testContainer.Container.GetBlockBlobClient(GetNewBlobName());
 
@@ -404,7 +404,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
         public async Task CopyBlockFromUriAsync_OAuth_Token()
         {
             // Arrange
-            await using DisposingBlobContainer testContainer = await GetTestContainerAsync(publicAccessType: PublicAccessType.BlobContainer);
+            await using DisposingBlobContainer testContainer = await GetTestContainerAsync(publicAccessType: PublicAccessType.None);
             BlockBlobClient sourceClient = testContainer.Container.GetBlockBlobClient(GetNewBlobName());
             BlockBlobClient destinationClient = testContainer.Container.GetBlockBlobClient(GetNewBlobName());
 

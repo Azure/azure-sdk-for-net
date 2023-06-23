@@ -377,7 +377,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
         public async Task CopyBlockFromUriAsync_OAuth()
         {
             // Arrange
-            await using DisposingBlobContainer testContainer = await GetTestContainerAsync(publicAccessType: PublicAccessType.BlobContainer);
+            await using DisposingBlobContainer testContainer = await GetTestContainerAsync(publicAccessType: PublicAccessType.None);
             PageBlobClient sourceClient = testContainer.Container.GetPageBlobClient(GetNewBlobName());
             PageBlobClient destinationClient = testContainer.Container.GetPageBlobClient(GetNewBlobName());
 
@@ -424,7 +424,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
         public async Task CopyBlockFromUriAsync_OAuth_Token()
         {
             // Arrange
-            await using DisposingBlobContainer testContainer = await GetTestContainerAsync(publicAccessType: PublicAccessType.BlobContainer);
+            await using DisposingBlobContainer testContainer = await GetTestContainerAsync(publicAccessType: PublicAccessType.None);
             PageBlobClient sourceClient = testContainer.Container.GetPageBlobClient(GetNewBlobName());
             PageBlobClient destinationClient = testContainer.Container.GetPageBlobClient(GetNewBlobName());
 

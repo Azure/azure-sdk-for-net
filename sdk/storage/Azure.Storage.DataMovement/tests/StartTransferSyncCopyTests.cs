@@ -461,7 +461,7 @@ namespace Azure.Storage.DataMovement.Tests
             await using DisposingBlobContainer testContainer = await GetTestContainerAsync(
                 service,
                 containerName,
-                publicAccessType: PublicAccessType.BlobContainer);
+                publicAccessType: PublicAccessType.None);
             int size = Constants.KB;
             int waitTimeInSec = 10;
 
