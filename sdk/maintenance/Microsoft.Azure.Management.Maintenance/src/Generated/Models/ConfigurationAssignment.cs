@@ -41,12 +41,15 @@ namespace Microsoft.Azure.Management.Maintenance.Models
         /// <param name="maintenanceConfigurationId">The maintenance
         /// configuration Id</param>
         /// <param name="resourceId">The unique resourceId</param>
-        public ConfigurationAssignment(string id = default(string), string name = default(string), string type = default(string), SystemData systemData = default(SystemData), string location = default(string), string maintenanceConfigurationId = default(string), string resourceId = default(string))
+        /// <param name="filter">Properties of the configuration
+        /// assignment</param>
+        public ConfigurationAssignment(string id = default(string), string name = default(string), string type = default(string), SystemData systemData = default(SystemData), string location = default(string), string maintenanceConfigurationId = default(string), string resourceId = default(string), ConfigurationAssignmentFilterProperties filter = default(ConfigurationAssignmentFilterProperties))
             : base(id, name, type, systemData)
         {
             Location = location;
             MaintenanceConfigurationId = maintenanceConfigurationId;
             ResourceId = resourceId;
+            Filter = filter;
             CustomInit();
         }
 
@@ -72,6 +75,12 @@ namespace Microsoft.Azure.Management.Maintenance.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.resourceId")]
         public string ResourceId { get; set; }
+
+        /// <summary>
+        /// Gets or sets properties of the configuration assignment
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.filter")]
+        public ConfigurationAssignmentFilterProperties Filter { get; set; }
 
     }
 }

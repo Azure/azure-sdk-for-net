@@ -11,6 +11,7 @@ using NUnit.Framework;
 namespace Azure.Communication.JobRouter.Tests.Scenarios
 {
     [NonParallelizable]
+    [Ignore("enable after deployment with matching changes")]
     public class QueueScenario : RouterLiveTestBase
     {
         private static string ScenarioPrefix = nameof(QueueScenario);

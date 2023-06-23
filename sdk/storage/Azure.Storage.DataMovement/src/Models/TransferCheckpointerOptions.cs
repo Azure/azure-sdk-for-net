@@ -9,7 +9,10 @@ namespace Azure.Storage.DataMovement.Models
     /// </summary>
     public class TransferCheckpointerOptions
     {
-        internal string checkpointerPath;
+        /// <summary>
+        /// stub
+        /// </summary>
+        public string CheckpointerPath { get; private set; }
 
         /// <summary>
         /// Sets the checkpointer options to use a Local Checkpointer where
@@ -20,36 +23,7 @@ namespace Azure.Storage.DataMovement.Models
         /// </param>
         public TransferCheckpointerOptions(string localCheckpointerPath)
         {
-            checkpointerPath = localCheckpointerPath;
-        }
-
-        /// <summary>
-        /// Checks the specified checkpointer type the user specified in
-        /// order to create the respective checkpointer.
-        ///
-        /// By default a local folder will be used to store the job transfer files
-        /// and a <see cref="LocalTransferCheckpointer"/> will be used.
-        /// </summary>
-        /// <returns>
-        /// A <see cref="TransferCheckpointer"/> as specified by the user will be
-        /// returned.
-        ///
-        /// If no checkpointer type is specified by
-        /// default a <see cref="LocalTransferCheckpointer"/> using the folder
-        /// where the application is stored with and making a new folder called
-        /// .azstoragedml to store all the job plan files.
-        /// </returns>
-        internal TransferCheckpointer CreateTransferCheckpointer()
-        {
-            if (!string.IsNullOrEmpty(checkpointerPath))
-            {
-                return new LocalTransferCheckpointer(checkpointerPath);
-            }
-            else
-            {
-                // Default TransferCheckpointer
-                return new LocalTransferCheckpointer(default);
-            }
+            CheckpointerPath = localCheckpointerPath;
         }
     }
 }

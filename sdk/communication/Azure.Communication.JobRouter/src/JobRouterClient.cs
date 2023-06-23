@@ -122,8 +122,7 @@ using Azure.Core.Pipeline;
                     ChannelReference = options.ChannelReference,
                     QueueId = options.QueueId,
                     Priority = options.Priority,
-                    ScheduledTimeUtc = options.ScheduledTimeUtc,
-                    UnavailableForMatching = options.UnavailableForMatching,
+                    MatchingMode = options.MatchingMode,
                 };
 
                 foreach (var label in options.Labels)
@@ -178,8 +177,7 @@ using Azure.Core.Pipeline;
                     ChannelReference = options.ChannelReference,
                     QueueId = options.QueueId,
                     Priority = options.Priority,
-                    ScheduledTimeUtc = options.ScheduledTimeUtc,
-                    UnavailableForMatching = options.UnavailableForMatching,
+                    MatchingMode = options.MatchingMode,
                 };
 
                 foreach (var label in options.Labels)
@@ -236,8 +234,7 @@ using Azure.Core.Pipeline;
                     ChannelReference = options.ChannelReference,
                     QueueId = options.QueueId,
                     Priority = options.Priority,
-                    ScheduledTimeUtc = options.ScheduledTimeUtc,
-                    UnavailableForMatching = options.UnavailableForMatching,
+                    MatchingMode = options.MatchingMode,
                 };
 
                 foreach (var label in options.Labels)
@@ -291,8 +288,7 @@ using Azure.Core.Pipeline;
                     ChannelReference = options.ChannelReference,
                     QueueId = options.QueueId,
                     Priority = options.Priority,
-                    ScheduledTimeUtc = options.ScheduledTimeUtc,
-                    UnavailableForMatching = options.UnavailableForMatching,
+                    MatchingMode = options.MatchingMode,
                 };
 
                 foreach (var label in options.Labels)
@@ -348,8 +344,7 @@ using Azure.Core.Pipeline;
                     QueueId = options.QueueId,
                     Priority = options.Priority,
                     DispositionCode = options.DispositionCode,
-                    ScheduledTimeUtc = options.ScheduledTimeUtc,
-                    UnavailableForMatching = options.UnavailableForMatching,
+                    MatchingMode = options.MatchingMode,
                 };
 
                 foreach (var label in options.Labels)
@@ -405,8 +400,7 @@ using Azure.Core.Pipeline;
                     QueueId = options.QueueId,
                     Priority = options.Priority,
                     DispositionCode = options.DispositionCode,
-                    ScheduledTimeUtc = options.ScheduledTimeUtc,
-                    UnavailableForMatching = options.UnavailableForMatching,
+                    MatchingMode = options.MatchingMode,
                 };
 
                 foreach (var label in options.Labels)

@@ -5,26 +5,27 @@
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
+        "Accept-Language": "en-US",
         "Authorization": "Sanitized",
-        "User-Agent": "azsdk-net-Communication.PhoneNumbers/1.2.0-alpha.20230515.1 (.NET 7.0.5; Microsoft Windows 10.0.22621)",
-        "x-ms-client-request-id": "c0774ec2e5c88f937598bd54c3e3bc2c",
+        "User-Agent": "azsdk-net-Communication.PhoneNumbers/1.2.0-alpha.20230620.1 (.NET 7.0.7; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "45b49615582d2c49d9ed938ccb0089f0",
         "x-ms-content-sha256": "Sanitized",
-        "x-ms-date": "Mon, 15 May 2023 15:53:45 GMT",
+        "x-ms-date": "Wed, 21 Jun 2023 01:16:41 GMT",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "api-supported-versions": "2021-03-07, 2022-12-01, 2022-12-02-preview2",
+        "api-supported-versions": "2021-03-07, 2022-12-01, 2022-12-02-preview2, 2023-05-01-preview",
         "Cache-Control": "max-age=21600, private, stale-while-revalidate=86400",
         "Content-Length": "659",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 15 May 2023 15:53:47 GMT",
-        "MS-CV": "IzlKnGQURUOjHgvUxuHSdA.0",
+        "Date": "Wed, 21 Jun 2023 01:16:40 GMT",
+        "MS-CV": "zLH9EOWyZ0qJnvsoTAIT7w.0",
         "Strict-Transport-Security": "max-age=2592000",
-        "X-Azure-Ref": "0i1ViZAAAAABZyKQXn\u002B71T58s\u002BgvvAjz9U0FPMzFFREdFMTExNwA5ZmM3YjUxOS1hOGNjLTRmODktOTM1ZS1jOTE0OGFlMDllODE=",
+        "X-Azure-Ref": "0eE\u002BSZAAAAAByBzm7TkVxT7UnI1bnugfYWVZSMzExMDAwMTE1MDM3ADlmYzdiNTE5LWE4Y2MtNGY4OS05MzVlLWM5MTQ4YWUwOWU4MQ==",
         "X-Cache": "CONFIG_NOCACHE",
-        "X-Processing-Time": "988ms"
+        "X-Processing-Time": "375ms"
       },
       "ResponseBody": {
         "phoneNumberOfferings": [
@@ -74,6 +75,6 @@
   ],
   "Variables": {
     "COMMUNICATION_LIVETEST_STATIC_CONNECTION_STRING": "endpoint=https://smstestapp.communication.azure.com/;accesskey=Kg==",
-    "RandomSeed": "744525083"
+    "RandomSeed": "28922441"
   }
 }
