@@ -8,11 +8,12 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> Office365 linked service. </summary>
-    public partial class Office365LinkedService : FactoryLinkedServiceDefinition
+    public partial class Office365LinkedService : DataFactoryLinkedServiceDefinition
     {
         /// <summary> Initializes a new instance of Office365LinkedService. </summary>
         /// <param name="office365TenantId"> Azure tenant ID to which the Office 365 account belongs. Type: string (or Expression with resultType string). </param>
@@ -20,11 +21,11 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="servicePrincipalId"> Specify the application's client ID. Type: string (or Expression with resultType string). </param>
         /// <param name="servicePrincipalKey">
         /// Specify the application's key.
-        /// Please note <see cref="FactorySecretBaseDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="FactorySecretString"/> and <see cref="AzureKeyVaultSecretReference"/>.
+        /// Please note <see cref="DataFactorySecretBaseDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="DataFactorySecretString"/> and <see cref="AzureKeyVaultSecretReference"/>.
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="office365TenantId"/>, <paramref name="servicePrincipalTenantId"/>, <paramref name="servicePrincipalId"/> or <paramref name="servicePrincipalKey"/> is null. </exception>
-        public Office365LinkedService(BinaryData office365TenantId, BinaryData servicePrincipalTenantId, BinaryData servicePrincipalId, FactorySecretBaseDefinition servicePrincipalKey)
+        public Office365LinkedService(DataFactoryElement<string> office365TenantId, DataFactoryElement<string> servicePrincipalTenantId, DataFactoryElement<string> servicePrincipalId, DataFactorySecretBaseDefinition servicePrincipalKey)
         {
             Argument.AssertNotNull(office365TenantId, nameof(office365TenantId));
             Argument.AssertNotNull(servicePrincipalTenantId, nameof(servicePrincipalTenantId));
@@ -50,11 +51,11 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="servicePrincipalId"> Specify the application's client ID. Type: string (or Expression with resultType string). </param>
         /// <param name="servicePrincipalKey">
         /// Specify the application's key.
-        /// Please note <see cref="FactorySecretBaseDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="FactorySecretString"/> and <see cref="AzureKeyVaultSecretReference"/>.
+        /// Please note <see cref="DataFactorySecretBaseDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="DataFactorySecretString"/> and <see cref="AzureKeyVaultSecretReference"/>.
         /// </param>
-        /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string). </param>
-        internal Office365LinkedService(string linkedServiceType, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, BinaryData office365TenantId, BinaryData servicePrincipalTenantId, BinaryData servicePrincipalId, FactorySecretBaseDefinition servicePrincipalKey, BinaryData encryptedCredential) : base(linkedServiceType, connectVia, description, parameters, annotations, additionalProperties)
+        /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </param>
+        internal Office365LinkedService(string linkedServiceType, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<string> office365TenantId, DataFactoryElement<string> servicePrincipalTenantId, DataFactoryElement<string> servicePrincipalId, DataFactorySecretBaseDefinition servicePrincipalKey, BinaryData encryptedCredential) : base(linkedServiceType, connectVia, description, parameters, annotations, additionalProperties)
         {
             Office365TenantId = office365TenantId;
             ServicePrincipalTenantId = servicePrincipalTenantId;
@@ -64,107 +65,20 @@ namespace Azure.ResourceManager.DataFactory.Models
             LinkedServiceType = linkedServiceType ?? "Office365";
         }
 
-        /// <summary>
-        /// Azure tenant ID to which the Office 365 account belongs. Type: string (or Expression with resultType string).
-        /// <para>
-        /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        public BinaryData Office365TenantId { get; set; }
-        /// <summary>
-        /// Specify the tenant information under which your Azure AD web application resides. Type: string (or Expression with resultType string).
-        /// <para>
-        /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        public BinaryData ServicePrincipalTenantId { get; set; }
-        /// <summary>
-        /// Specify the application's client ID. Type: string (or Expression with resultType string).
-        /// <para>
-        /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        public BinaryData ServicePrincipalId { get; set; }
+        /// <summary> Azure tenant ID to which the Office 365 account belongs. Type: string (or Expression with resultType string). </summary>
+        public DataFactoryElement<string> Office365TenantId { get; set; }
+        /// <summary> Specify the tenant information under which your Azure AD web application resides. Type: string (or Expression with resultType string). </summary>
+        public DataFactoryElement<string> ServicePrincipalTenantId { get; set; }
+        /// <summary> Specify the application's client ID. Type: string (or Expression with resultType string). </summary>
+        public DataFactoryElement<string> ServicePrincipalId { get; set; }
         /// <summary>
         /// Specify the application's key.
-        /// Please note <see cref="FactorySecretBaseDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="FactorySecretString"/> and <see cref="AzureKeyVaultSecretReference"/>.
+        /// Please note <see cref="DataFactorySecretBaseDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="DataFactorySecretString"/> and <see cref="AzureKeyVaultSecretReference"/>.
         /// </summary>
-        public FactorySecretBaseDefinition ServicePrincipalKey { get; set; }
+        public DataFactorySecretBaseDefinition ServicePrincipalKey { get; set; }
         /// <summary>
-        /// The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string).
+        /// The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string.
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>

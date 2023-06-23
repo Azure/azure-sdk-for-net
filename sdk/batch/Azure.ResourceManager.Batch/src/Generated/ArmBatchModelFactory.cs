@@ -301,19 +301,6 @@ namespace Azure.ResourceManager.Batch.Models
             return new BatchAccountPoolData(id, name, resourceType, systemData, identity, displayName, lastModifiedOn, createdOn, provisioningState, provisioningStateTransitOn, allocationState, allocationStateTransitionOn, vmSize, deploymentConfiguration, currentDedicatedNodes, currentLowPriorityNodes, scaleSettings, autoScaleRun, interNodeCommunication, networkConfiguration, taskSlotsPerNode, taskSchedulingNodeFillType.HasValue ? new TaskSchedulingPolicy(taskSchedulingNodeFillType.Value) : null, userAccounts?.ToList(), metadata?.ToList(), startTask, certificates?.ToList(), applicationPackages?.ToList(), applicationLicenses?.ToList(), resizeOperationStatus, mountConfiguration?.ToList(), targetNodeCommunicationMode, currentNodeCommunicationMode, etag);
         }
 
-        /// <summary> Initializes a new instance of BatchVmContainerConfiguration. </summary>
-        /// <param name="containerType"> The container technology to be used. </param>
-        /// <param name="containerImageNames"> This is the full image reference, as would be specified to "docker pull". An image will be sourced from the default Docker registry unless the image is fully qualified with an alternative registry. </param>
-        /// <param name="containerRegistries"> If any images must be downloaded from a private registry which requires credentials, then those credentials must be provided here. </param>
-        /// <returns> A new <see cref="Models.BatchVmContainerConfiguration"/> instance for mocking. </returns>
-        public static BatchVmContainerConfiguration BatchVmContainerConfiguration(BatchVmContainerType containerType = default, IEnumerable<string> containerImageNames = null, IEnumerable<BatchVmContainerRegistry> containerRegistries = null)
-        {
-            containerImageNames ??= new List<string>();
-            containerRegistries ??= new List<BatchVmContainerRegistry>();
-
-            return new BatchVmContainerConfiguration(containerType, containerImageNames?.ToList(), containerRegistries?.ToList());
-        }
-
         /// <summary> Initializes a new instance of BatchAccountPoolAutoScaleRun. </summary>
         /// <param name="evaluationOn"> The time at which the autoscale formula was last evaluated. </param>
         /// <param name="results"> Each variable value is returned in the form $variable=value, and variables are separated by semicolons. </param>

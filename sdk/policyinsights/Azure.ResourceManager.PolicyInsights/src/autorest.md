@@ -147,6 +147,8 @@ models-to-treat-empty-string-as-null:
   - PolicyEvent
   - PolicyReference
   - PolicyState
+  - PolicyMetadataData
+  - SlimPolicyMetadata
 
 directive:
   # TODO: Autorest.csharp should combine these redundancy methods into the scope one automatically.

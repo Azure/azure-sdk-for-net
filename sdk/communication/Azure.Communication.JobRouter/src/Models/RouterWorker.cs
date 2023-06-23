@@ -11,30 +11,42 @@ namespace Azure.Communication.JobRouter.Models
     [CodeGenModel("RouterWorker")]
     public partial class RouterWorker
     {
+        /// <summary>
+        /// A set of key/value pairs that are identifying attributes used by the rules engines to make decisions.
+        /// </summary>
+        public IDictionary<string, LabelValue> Labels { get; } = new Dictionary<string, LabelValue>();
+
+        /// <summary>
+        /// A set of non-identifying attributes attached to this worker.
+        /// </summary>
+        public IDictionary<string, LabelValue> Tags { get; } = new Dictionary<string, LabelValue>();
+
+        /// <summary> The channel(s) this worker can handle and their impact on the workers capacity. </summary>
+        public IDictionary<string, ChannelConfiguration> ChannelConfigurations { get; } = new Dictionary<string, ChannelConfiguration>();
+
+        /// <summary> The queue(s) that this worker can receive work from. </summary>
+        public IDictionary<string, RouterQueueAssignment> QueueAssignments { get; } = new Dictionary<string, RouterQueueAssignment>();
+
         [CodeGenMember("Labels")]
         internal IDictionary<string, object> _labels
         {
             get
             {
                 return Labels != null && Labels.Count != 0
-                    ? Labels?.ToDictionary(x => x.Key,
-                        x => x.Value.Value)
+                    ? Labels?.ToDictionary(x => x.Key, x => x.Value.Value)
                     : new ChangeTrackingDictionary<string, object>();
             }
             set
             {
-                Labels = value != null && value.Count != 0
-                    ? value.ToDictionary(x => x.Key, x => new LabelValue(x.Value))
-                    : new Dictionary<string, LabelValue>();
+                if (value != null && value.Count != 0)
+                {
+                    foreach (var label in value)
+                    {
+                        Labels[label.Key] = new LabelValue(label.Value);
+                    }
+                }
             }
         }
-
-        /// <summary>
-        /// A set of key/value pairs that are identifying attributes used by the rules engines to make decisions.
-        /// </summary>
-#pragma warning disable CA2227 // Collection properties should be read only
-        public IDictionary<string, LabelValue> Labels { get; set; }
-#pragma warning restore CA2227 // Collection properties should be read only
 
         [CodeGenMember("Tags")]
         internal IDictionary<string, object> _tags
@@ -42,27 +54,22 @@ namespace Azure.Communication.JobRouter.Models
             get
             {
                 return Tags != null && Tags.Count != 0
-                    ? Tags?.ToDictionary(x => x.Key,
-                        x => x.Value.Value)
+                    ? Tags?.ToDictionary(x => x.Key, x => x.Value.Value)
                     : new ChangeTrackingDictionary<string, object>();
             }
             set
             {
-                Tags = value != null && value.Count != 0
-                    ? value.ToDictionary(x => x.Key, x => new LabelValue(x.Value))
-                    : new Dictionary<string, LabelValue>();
+                if (value != null && value.Count != 0)
+                {
+                    foreach (var tag in value)
+                    {
+                        Tags[tag.Key] = new LabelValue(tag.Value);
+                    }
+                }
             }
         }
 
-        /// <summary>
-        /// A set of non-identifying attributes attached to this worker.
-        /// </summary>
-#pragma warning disable CA2227 // Collection properties should be read only
-        public IDictionary<string, LabelValue> Tags { get; set; }
-#pragma warning restore CA2227 // Collection properties should be read only
-
         [CodeGenMember("ChannelConfigurations")]
-#pragma warning disable CA2227 // Collection properties should be read only
         internal IDictionary<string, ChannelConfiguration> _channelConfigurations {
             get
             {
@@ -70,12 +77,15 @@ namespace Azure.Communication.JobRouter.Models
             }
             set
             {
-                ChannelConfigurations = value;
+                foreach (var channelConfiguration in value)
+                {
+                    ChannelConfigurations[channelConfiguration.Key] = new ChannelConfiguration(channelConfiguration.Value.CapacityCostPerJob)
+                    {
+                        MaxNumberOfJobs = channelConfiguration.Value.MaxNumberOfJobs
+                    };
+                }
             }
         }
-
-        /// <summary> The channel(s) this worker can handle and their impact on the workers capacity. </summary>
-        public IDictionary<string, ChannelConfiguration> ChannelConfigurations { get; set; }
 
         [CodeGenMember("QueueAssignments")]
         internal IDictionary<string, object> _queueAssignments
@@ -89,12 +99,11 @@ namespace Azure.Communication.JobRouter.Models
             }
             set
             {
-                QueueAssignments = value.ToDictionary(x => x.Key, x => new QueueAssignment());
+                foreach (var queueAssignment in value)
+                {
+                    QueueAssignments[queueAssignment.Key] = new RouterQueueAssignment();
+                }
             }
         }
-
-        /// <summary> The queue(s) that this worker can receive work from. </summary>
-        public IDictionary<string, QueueAssignment> QueueAssignments { get; set; }
-#pragma warning restore CA2227 // Collection properties should be read only
     }
 }

@@ -5,7 +5,7 @@
 
 #nullable disable
 
-using System;
+using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -20,73 +20,15 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Initializes a new instance of SkipErrorFile. </summary>
         /// <param name="fileMissing"> Skip if file is deleted by other client during copy. Default is true. Type: boolean (or Expression with resultType boolean). </param>
         /// <param name="dataInconsistency"> Skip if source/sink file changed by other concurrent write. Default is false. Type: boolean (or Expression with resultType boolean). </param>
-        internal SkipErrorFile(BinaryData fileMissing, BinaryData dataInconsistency)
+        internal SkipErrorFile(DataFactoryElement<bool> fileMissing, DataFactoryElement<bool> dataInconsistency)
         {
             FileMissing = fileMissing;
             DataInconsistency = dataInconsistency;
         }
 
-        /// <summary>
-        /// Skip if file is deleted by other client during copy. Default is true. Type: boolean (or Expression with resultType boolean).
-        /// <para>
-        /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        public BinaryData FileMissing { get; set; }
-        /// <summary>
-        /// Skip if source/sink file changed by other concurrent write. Default is false. Type: boolean (or Expression with resultType boolean).
-        /// <para>
-        /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        public BinaryData DataInconsistency { get; set; }
+        /// <summary> Skip if file is deleted by other client during copy. Default is true. Type: boolean (or Expression with resultType boolean). </summary>
+        public DataFactoryElement<bool> FileMissing { get; set; }
+        /// <summary> Skip if source/sink file changed by other concurrent write. Default is false. Type: boolean (or Expression with resultType boolean). </summary>
+        public DataFactoryElement<bool> DataInconsistency { get; set; }
     }
 }

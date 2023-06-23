@@ -15,9 +15,9 @@ namespace Azure.Storage.DataMovement.Blobs
     /// <summary>
     /// The AppendBlobStorageResource class.
     /// </summary>
-    public class AppendBlobStorageResource : StorageResource
+    public class AppendBlobStorageResource : StorageResourceSingle
     {
-        private AppendBlobClient _blobClient;
+        internal AppendBlobClient BlobClient { get; set; }
         private AppendBlobStorageResourceOptions _options;
         private long? _length;
         private ETag? _etagDownloadLock = default;
@@ -25,12 +25,12 @@ namespace Azure.Storage.DataMovement.Blobs
         /// <summary>
         /// Gets the URL of the storage resource.
         /// </summary>
-        public override Uri Uri => _blobClient.Uri;
+        public override Uri Uri => BlobClient.Uri;
 
         /// <summary>
         /// Gets the path of the storage resource.
         /// </summary>
-        public override string Path => _blobClient.Name;
+        public override string Path => BlobClient.Name;
 
         /// <summary>
         /// Defines whether the storage resource type can produce a URL.
@@ -58,12 +58,12 @@ namespace Azure.Storage.DataMovement.Blobs
         /// The constructor for a new instance of the <see cref="AppendBlobStorageResource"/>
         /// class.
         /// </summary>
-        /// <param name="blobClient">The blob client <see cref="BlobClient"/>
+        /// <param name="blobClient">The blob client <see cref="Storage.Blobs.BlobClient"/>
         /// which will service the storage resource operations.</param>
         /// <param name="options">Options for the storage resource. See <see cref="AppendBlobStorageResourceOptions"/>.</param>
         public AppendBlobStorageResource(AppendBlobClient blobClient, AppendBlobStorageResourceOptions options = default)
         {
-            _blobClient = blobClient;
+            BlobClient = blobClient;
             _options = options;
         }
 
@@ -72,14 +72,17 @@ namespace Azure.Storage.DataMovement.Blobs
         /// </summary>
         /// <param name="blobClient">The blob client which will service the storage resource operations.</param>
         /// <param name="length">The content length of the blob.</param>
+        /// <param name="etagLock">Preset etag to lock on for reads.</param>
         /// <param name="options">Options for the storage resource. See <see cref="AppendBlobStorageResourceOptions"/>.</param>
         internal AppendBlobStorageResource(
             AppendBlobClient blobClient,
             long? length,
+            ETag? etagLock,
             AppendBlobStorageResourceOptions options = default)
             : this(blobClient, options)
         {
             _length = length;
+            _etagDownloadLock = etagLock;
         }
 
         /// <summary>
@@ -101,7 +104,7 @@ namespace Azure.Storage.DataMovement.Blobs
             long? length = default,
             CancellationToken cancellationToken = default)
         {
-            Response<BlobDownloadStreamingResult> response = await _blobClient.DownloadStreamingAsync(
+            Response<BlobDownloadStreamingResult> response = await BlobClient.DownloadStreamingAsync(
                 _options.ToBlobDownloadOptions(new HttpRange(position, length), _etagDownloadLock),
                 cancellationToken).ConfigureAwait(false);
             return response.Value.ToReadStreamStorageResourceInfo();
@@ -138,13 +141,13 @@ namespace Azure.Storage.DataMovement.Blobs
         {
             if (position == 0)
             {
-                await _blobClient.CreateAsync(
+                await BlobClient.CreateAsync(
                     _options.ToCreateOptions(overwrite),
                     cancellationToken).ConfigureAwait(false);
             }
             if (streamLength > 0)
             {
-                await _blobClient.AppendBlockAsync(
+                await BlobClient.AppendBlockAsync(
                     content: stream,
                     options: _options.ToAppendBlockOptions(overwrite),
                     cancellationToken: cancellationToken).ConfigureAwait(false);
@@ -154,7 +157,7 @@ namespace Azure.Storage.DataMovement.Blobs
         /// <summary>
         /// Uploads/copy the blob from a URL.
         /// </summary>
-        /// <param name="sourceResource">An instance of <see cref="StorageResource"/>
+        /// <param name="sourceResource">An instance of <see cref="StorageResourceSingle"/>
         /// that contains the data to be uploaded.</param>
         /// <param name="overwrite">
         /// If set to true, will overwrite the blob if it currently exists.
@@ -169,14 +172,14 @@ namespace Azure.Storage.DataMovement.Blobs
         /// </param>
         /// <returns></returns>
         public override async Task CopyFromUriAsync(
-            StorageResource sourceResource,
+            StorageResourceSingle sourceResource,
             bool overwrite,
             long completeLength,
             StorageResourceCopyFromUriOptions options = default,
             CancellationToken cancellationToken = default)
         {
             // Create Append blob beforehand
-            await _blobClient.CreateAsync(
+            await BlobClient.CreateAsync(
                 options: _options.ToCreateOptions(overwrite),
                 cancellationToken: cancellationToken).ConfigureAwait(false);
 
@@ -185,7 +188,7 @@ namespace Azure.Storage.DataMovement.Blobs
             if (completeLength > 0)
             {
                 HttpRange range = new HttpRange(0, completeLength);
-                await _blobClient.AppendBlockFromUriAsync(
+                await BlobClient.AppendBlockFromUriAsync(
                     sourceResource.Uri,
                     options: _options.ToAppendBlockFromUriOptions(overwrite, range, options?.SourceAuthentication),
                     cancellationToken: cancellationToken).ConfigureAwait(false);
@@ -195,7 +198,7 @@ namespace Azure.Storage.DataMovement.Blobs
         /// <summary>
         /// Uploads/copy the blob from a URL. Supports ranged operations.
         /// </summary>
-        /// <param name="sourceResource">An instance of <see cref="StorageResource"/>
+        /// <param name="sourceResource">An instance of <see cref="StorageResourceSingle"/>
         /// that contains the data to be uploaded.</param>
         /// <param name="overwrite">
         /// If set to true, will overwrite the blob if it already exists.
@@ -211,7 +214,7 @@ namespace Azure.Storage.DataMovement.Blobs
         /// </param>
         /// <returns></returns>
         public override async Task CopyBlockFromUriAsync(
-            StorageResource sourceResource,
+            StorageResourceSingle sourceResource,
             HttpRange range,
             bool overwrite,
             long completeLength = 0,
@@ -220,11 +223,11 @@ namespace Azure.Storage.DataMovement.Blobs
         {
             if (range.Offset == 0)
             {
-                await _blobClient.CreateAsync(
+                await BlobClient.CreateAsync(
                     _options.ToCreateOptions(overwrite),
                     cancellationToken).ConfigureAwait(false);
             }
-            await _blobClient.AppendBlockFromUriAsync(
+            await BlobClient.AppendBlockFromUriAsync(
             sourceResource.Uri,
             options: _options.ToAppendBlockFromUriOptions(
                 overwrite,
@@ -241,7 +244,7 @@ namespace Azure.Storage.DataMovement.Blobs
         /// <returns>Returns the properties of the Append Blob Storage Resource. See <see cref="StorageResourceProperties"/>.</returns>
         public override async Task<StorageResourceProperties> GetPropertiesAsync(CancellationToken cancellationToken = default)
         {
-            Response<BlobProperties> response = await _blobClient.GetPropertiesAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
+            Response<BlobProperties> response = await BlobClient.GetPropertiesAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
             GrabEtag(response.GetRawResponse());
             return response.Value.ToStorageResourceProperties();
         }
@@ -268,7 +271,7 @@ namespace Azure.Storage.DataMovement.Blobs
         /// </returns>
         public override async Task<bool> DeleteIfExistsAsync(CancellationToken cancellationToken = default)
         {
-            return await _blobClient.DeleteIfExistsAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
+            return await BlobClient.DeleteIfExistsAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
         }
 
         private void GrabEtag(Response response)

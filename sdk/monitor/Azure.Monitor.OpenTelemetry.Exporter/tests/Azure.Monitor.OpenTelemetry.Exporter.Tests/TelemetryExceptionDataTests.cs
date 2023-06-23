@@ -188,7 +188,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             {
                 builder.AddOpenTelemetry(options =>
                 {
-                    options.ParseStateValues = true;
                     options.AddInMemoryExporter(logRecords);
                 });
                 builder.AddFilter(typeof(TelemetryExceptionDataTests).FullName, LogLevel.Trace);
@@ -205,14 +204,13 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         }
 
         [Fact]
-        public void ExceptionDataContainsExceptionDetailsofAllInnerExceptionsOfAggregateException()
+        public void ExceptionDataContainsExceptionDetailsOfAllInnerExceptionsOfAggregateException()
         {
             var logRecords = new List<LogRecord>();
             using var loggerFactory = LoggerFactory.Create(builder =>
             {
                 builder.AddOpenTelemetry(options =>
                 {
-                    options.ParseStateValues = true;
                     options.AddInMemoryExporter(logRecords);
                 });
                 builder.AddFilter(typeof(TelemetryExceptionDataTests).FullName, LogLevel.Trace);
@@ -248,7 +246,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             {
                 builder.AddOpenTelemetry(options =>
                 {
-                    options.ParseStateValues = true;
                     options.AddInMemoryExporter(logRecords);
                 });
                 builder.AddFilter(typeof(TelemetryExceptionDataTests).FullName, LogLevel.Trace);
@@ -282,7 +279,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             {
                 builder.AddOpenTelemetry(options =>
                 {
-                    options.ParseStateValues = true;
                     options.AddInMemoryExporter(logRecords);
                 });
                 builder.AddFilter(typeof(TelemetryExceptionDataTests).FullName, LogLevel.Trace);
@@ -351,7 +347,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             {
                 builder.AddOpenTelemetry(options =>
                 {
-                    options.ParseStateValues = true;
                     options.AddInMemoryExporter(logRecords);
                 });
                 builder.AddFilter(typeof(TelemetryExceptionDataTests).FullName, LogLevel.Trace);
