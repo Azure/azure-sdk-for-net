@@ -716,20 +716,51 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
                 #endregion Snippet:TransferManagerTryPause_Async
 
                 #region Snippet:TransferManagerResume_Async
-                // Resume from checkpoint id
-                TransferOptions optionsWithResumeTransferId = new TransferOptions()
-                {
-                    ResumeFromCheckpointId = dataTransfer.Id
-                };
+                //// Resume from checkpoint id
+                //TransferOptions optionsWithResumeTransferId = new TransferOptions()
+                //{
+                //    ResumeFromCheckpointId = dataTransfer.Id
+                //};
 
-                DataTransfer resumedTransfer = await transferManager.StartTransferAsync(
-                    sourceResource: sourceResource,
-                    destinationResource: destinationResource,
-                    transferOptions: optionsWithResumeTransferId);
+                //DataTransfer resumedTransfer = await transferManager.StartTransferAsync(
+                //    sourceResource: sourceResource,
+                //    destinationResource: destinationResource,
+                //    transferOptions: optionsWithResumeTransferId);
+
+                (StorageResource Source, StorageResource Destination) GetResources(DataTransferProperties info)
+                {
+                    StorageResource source = default, destination = default;
+                    if (AzureBlobStorageResources.TryGetResourceProviders(
+                        info,
+                        out AzureBlobStorageResourceProvider azureSourceProvider,
+                        out AzureBlobStorageResourceProvider azureDestinationProvider))
+                    {
+                        source ??= azureSourceProvider?.MakeResource(GetScopedCredential(info.SourcePath));
+                        destination ??= azureSourceProvider?.MakeResource(GetScopedCredential(info.DestinationPath));
+                    }
+                    else if (LocalStorageResources.TryGetSourceResourceProvider(info, out LocalStorageResourceProvider localSourceProvider))
+                    {
+                        source = localSourceProvider.MakeResource();
+                    }
+                    return (source, destination);
+                }
+
+                await foreach (DataTransfer transfer in transferManager.GetTransfersAsync(
+                    new StorageTransferStatus[] { StorageTransferStatus.Paused, StorageTransferStatus.Queued }))
+                {
+                    (StorageResource resumeSource, StorageResource resumeDestination) = GetResources(null);
+                    await transferManager.StartTransferAsync(
+                        resumeSource,
+                        resumeDestination,
+                        new TransferOptions() // should there be a separate factory method for resume options?
+                        {
+                            ResumeFromCheckpointId = transfer.Id
+                        });
+                }
                 #endregion Snippet:TransferManagerResume_Async
 
                 // Wait for download to finish
-                await resumedTransfer.AwaitCompletion();
+                //await resumedTransfer.AwaitCompletion();
             }
             finally
             {
