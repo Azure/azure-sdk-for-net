@@ -25,6 +25,31 @@ namespace Azure.AI.OpenAI
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
+            if (Optional.IsDefined(Functions))
+            {
+                writer.WritePropertyName("functions"u8);
+                writer.WriteStartArray();
+                foreach (var item in Functions)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(FunctionCall))
+            {
+                switch (FunctionCall)
+                {
+                    case FunctionCallPreset preset:
+                        writer.WritePropertyName("function_call"u8);
+                        writer.WriteStringValue(preset.ToString());
+                        break;
+                    case FunctionName name:
+                        writer.WritePropertyName("function_call"u8);
+                        writer.WriteObjectValue(name);
+                        break;
+                }
+            }
+
             if (Optional.IsDefined(MaxTokens))
             {
                 if (MaxTokens != null)

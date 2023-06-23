@@ -30,6 +30,8 @@ namespace Azure.AI.OpenAI
         public ChatCompletionsOptions(System.Collections.Generic.IEnumerable<Azure.AI.OpenAI.ChatMessage> messages) { }
         public int? ChoiceCount { get { throw null; } set { } }
         public float? FrequencyPenalty { get { throw null; } set { } }
+        public object FunctionCall { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.AI.OpenAI.FunctionDefinition> Functions { get { throw null; } set { } }
         public int? MaxTokens { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.AI.OpenAI.ChatMessage> Messages { get { throw null; } }
         public float? NucleusSamplingFactor { get { throw null; } set { } }
@@ -44,6 +46,8 @@ namespace Azure.AI.OpenAI
         public ChatMessage(Azure.AI.OpenAI.ChatRole role) { }
         public ChatMessage(Azure.AI.OpenAI.ChatRole role, string content) { }
         public string Content { get { throw null; } set { } }
+        public Azure.AI.OpenAI.FunctionCall FunctionCall { get { throw null; } set { } }
+        public string Name { get { throw null; } set { } }
         public Azure.AI.OpenAI.ChatRole Role { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
@@ -53,6 +57,7 @@ namespace Azure.AI.OpenAI
         private readonly int _dummyPrimitive;
         public ChatRole(string value) { throw null; }
         public static Azure.AI.OpenAI.ChatRole Assistant { get { throw null; } }
+        public static Azure.AI.OpenAI.ChatRole Function { get { throw null; } }
         public static Azure.AI.OpenAI.ChatRole System { get { throw null; } }
         public static Azure.AI.OpenAI.ChatRole User { get { throw null; } }
         public bool Equals(Azure.AI.OpenAI.ChatRole other) { throw null; }
@@ -88,6 +93,7 @@ namespace Azure.AI.OpenAI
         private readonly int _dummyPrimitive;
         public CompletionsFinishReason(string value) { throw null; }
         public static Azure.AI.OpenAI.CompletionsFinishReason ContentFiltered { get { throw null; } }
+        public static Azure.AI.OpenAI.CompletionsFinishReason FunctionCall { get { throw null; } }
         public static Azure.AI.OpenAI.CompletionsFinishReason Stopped { get { throw null; } }
         public static Azure.AI.OpenAI.CompletionsFinishReason TokenLimitReached { get { throw null; } }
         public bool Equals(Azure.AI.OpenAI.CompletionsFinishReason other) { throw null; }
@@ -133,6 +139,17 @@ namespace Azure.AI.OpenAI
         public int PromptTokens { get { throw null; } }
         public int TotalTokens { get { throw null; } }
     }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public partial struct Either<T, U>
+    {
+        private object _dummy;
+        private int _dummyPrimitive;
+        public Either(T value) { throw null; }
+        public Either(U value) { throw null; }
+        public object Value { get { throw null; } set { } }
+        public static implicit operator Azure.AI.OpenAI.Either<T, U> (T value) { throw null; }
+        public static implicit operator Azure.AI.OpenAI.Either<T, U> (U value) { throw null; }
+    }
     public partial class EmbeddingItem
     {
         internal EmbeddingItem() { }
@@ -157,6 +174,42 @@ namespace Azure.AI.OpenAI
         internal EmbeddingsUsage() { }
         public int PromptTokens { get { throw null; } }
         public int TotalTokens { get { throw null; } }
+    }
+    public partial class FunctionCall
+    {
+        public FunctionCall(string name, string arguments) { }
+        public string Arguments { get { throw null; } set { } }
+        public string Name { get { throw null; } set { } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct FunctionCallPreset : System.IEquatable<Azure.AI.OpenAI.FunctionCallPreset>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public FunctionCallPreset(string value) { throw null; }
+        public static Azure.AI.OpenAI.FunctionCallPreset Auto { get { throw null; } }
+        public static Azure.AI.OpenAI.FunctionCallPreset None { get { throw null; } }
+        public bool Equals(Azure.AI.OpenAI.FunctionCallPreset other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.AI.OpenAI.FunctionCallPreset left, Azure.AI.OpenAI.FunctionCallPreset right) { throw null; }
+        public static implicit operator Azure.AI.OpenAI.FunctionCallPreset (string value) { throw null; }
+        public static bool operator !=(Azure.AI.OpenAI.FunctionCallPreset left, Azure.AI.OpenAI.FunctionCallPreset right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class FunctionDefinition
+    {
+        public FunctionDefinition(string name) { }
+        public string Description { get { throw null; } set { } }
+        public string Name { get { throw null; } }
+        public System.BinaryData Parameters { get { throw null; } set { } }
+    }
+    public partial class FunctionName
+    {
+        public FunctionName(string name) { }
+        public string Name { get { throw null; } set { } }
     }
     public partial class OpenAIClient
     {
@@ -183,11 +236,13 @@ namespace Azure.AI.OpenAI
     }
     public partial class OpenAIClientOptions : Azure.Core.ClientOptions
     {
-        public OpenAIClientOptions(Azure.AI.OpenAI.OpenAIClientOptions.ServiceVersion version = Azure.AI.OpenAI.OpenAIClientOptions.ServiceVersion.V2023_03_15_Preview) { }
+        public OpenAIClientOptions(Azure.AI.OpenAI.OpenAIClientOptions.ServiceVersion version = Azure.AI.OpenAI.OpenAIClientOptions.ServiceVersion.V2023_07_01_Preview) { }
         public enum ServiceVersion
         {
             V2022_12_01 = 1,
-            V2023_03_15_Preview = 2,
+            V2023_05_15 = 2,
+            V2023_06_01_Preview = 3,
+            V2023_07_01_Preview = 4,
         }
     }
     public partial class StreamingChatChoice

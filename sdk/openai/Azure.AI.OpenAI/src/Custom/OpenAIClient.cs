@@ -385,6 +385,12 @@ namespace Azure.AI.OpenAI
             RequestContent content = chatCompletionsOptions.ToRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
 
+            using MemoryStream stream = new MemoryStream();
+            CancellationTokenSource source = new CancellationTokenSource();
+            CancellationToken token = source.Token;
+            content.WriteTo(stream, token);
+            var contentString = System.Text.Encoding.UTF8.GetString(stream.ToArray());
+            Console.WriteLine(contentString);
             try
             {
                 using HttpMessage message = CreatePostRequestMessage(
