@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.CognitiveServices.Samples
 
             // invoke the operation and iterate over the result
             AzureLocation location = new AzureLocation("WestUS");
-            await foreach (Model item in subscriptionResource.GetModelsAsync(location))
+            await foreach (CognitiveServicesModel item in subscriptionResource.GetModelsAsync(location))
             {
                 Console.WriteLine($"Succeeded: {item}");
             }
