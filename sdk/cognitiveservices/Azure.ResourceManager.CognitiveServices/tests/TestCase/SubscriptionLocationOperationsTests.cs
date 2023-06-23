@@ -32,11 +32,11 @@ namespace Azure.ResourceManager.CognitiveServices.Tests
         public async Task ListModelsApiTests()
         {
             bool hasValue = false;
-            await foreach (Model item in DefaultSubscription.GetModelsAsync(AzureLocation.EastUS))
+            await foreach (CognitiveServicesModel item in DefaultSubscription.GetModelsAsync(AzureLocation.EastUS))
             {
                 hasValue = true;
                 Assert.IsNotNull(item.SkuName);
-                Assert.IsNotNull(item.ModelValue);
+                Assert.IsNotNull(item.Model);
             }
             Assert.IsTrue(hasValue);
         }
