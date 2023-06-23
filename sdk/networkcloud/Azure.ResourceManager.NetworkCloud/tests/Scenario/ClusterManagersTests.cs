@@ -23,14 +23,15 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
             string clusterManagerName = Recording.GenerateAssetName("clustermanager");
 
             // Create
-            var createData = new ClusterManagerData(new AzureLocation(TestEnvironment.Location), TestEnvironment.NFControllerId)
+            var createData = new ClusterManagerData(new AzureLocation(TestEnvironment.Location), TestEnvironment.SubnetId)
             {
                 Tags = {
                     ["DisableFabricIntegration"] = "true"
                 }
             };
-            var createResult  = await clusterManagerCollection.CreateOrUpdateAsync(WaitUntil.Completed, clusterManagerName, createData);
-            Assert.AreEqual(createResult.Value.Data.Tags, createData.Tags);
+            var createResult = await clusterManagerCollection.CreateOrUpdateAsync(WaitUntil.Completed, clusterManagerName, createData);
+            // check a specific tag as the subscription policies add more automatically.
+            Assert.AreEqual(createResult.Value.Data.Tags["DisableFabricIntegration"], createData.Tags["DisableFabricIntegration"]);
 
             // Get
             var getResult =await clusterManagerCollection.GetAsync(clusterManagerName);

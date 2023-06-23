@@ -27,7 +27,9 @@ namespace Azure.ResourceManager.NetworkCloud.Tests
         public string L3NetworkName => GetRecordedVariable("L3_NETWORK_NAME");
         public long L3Vlan => long.Parse(GetRecordedVariable("L3_VLAN"));
         public string ManagerExtendedLocation => GetRecordedVariable("MANAGER_EXTENDED_LOCATION");
-        public string NFControllerId => GetRecordedVariable("NF_CONTROLLER_ID");
+        public string LawId => GetRecordedVariable("LAW_ID");
+        public string SubnetId => GetRecordedVariable("SUBNET_ID");
+        public string ClusterVersion => GetRecordedVariable("CLUSTER_VERSION");
         public string IsolationDomainIds => GetRecordedVariable("ISOLATION_DOMAIN_IDS");
         public string TrunkedNetworkVlans => GetRecordedVariable("TRUNKED_VLANS");
         public string InterfaceName => GetRecordedVariable("INTERFACE_NAME");
