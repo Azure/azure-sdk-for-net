@@ -85,10 +85,7 @@ namespace Azure.Core
         /// <param name="content"></param>
         /// <returns></returns>
         /// <exception cref="NotImplementedException"></exception>
-        public static RequestContent CreatePatch(DynamicData content)
-        {
-            throw new NotImplementedException();
-        }
+        public static RequestContent CreatePatch(DynamicData content) => new DynamicDataContent(content, 'P');
 
         /// <summary>
         /// Creates an instance of <see cref="RequestContent"/> that wraps a serialized version of an object.
@@ -324,8 +321,13 @@ namespace Azure.Core
         private sealed class DynamicDataContent : RequestContent
         {
             private readonly DynamicData _data;
+            private readonly StandardFormat _format;
 
-            public DynamicDataContent(DynamicData data) => _data = data;
+            public DynamicDataContent(DynamicData data, StandardFormat format = default)
+            {
+                _data = data;
+                _format = format;
+            }
 
             public override void Dispose()
             {
@@ -334,7 +336,7 @@ namespace Azure.Core
 
             public override void WriteTo(Stream stream, CancellationToken cancellation)
             {
-                _data.WriteTo(stream);
+                _data.WriteTo(stream, _format);
             }
 
             public override bool TryComputeLength(out long length)

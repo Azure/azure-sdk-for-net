@@ -2,8 +2,9 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Buffers;
 using System.Collections.Generic;
-using System.Linq;
+using System.IO;
 using System.Text.Json;
 
 namespace Azure.Core.Json
@@ -13,6 +14,11 @@ namespace Azure.Core.Json
         internal void WriteTo(Utf8JsonWriter writer)
         {
             WriteElement(_path, _highWaterMark, _element, writer);
+        }
+
+        internal void WriteTo(Stream stream, StandardFormat format)
+        {
+            _root.WriteTo(stream, format);
         }
 
         private void WriteElement(string path, int highWaterMark, JsonElement element, Utf8JsonWriter writer)

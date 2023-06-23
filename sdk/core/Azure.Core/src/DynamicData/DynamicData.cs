@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Buffers;
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -44,6 +45,11 @@ namespace Azure.Core.Serialization
         {
             using Utf8JsonWriter writer = new(stream);
             _element.WriteTo(writer);
+        }
+
+        internal void WriteTo(Stream stream, StandardFormat format)
+        {
+            _element.WriteTo(stream, format);
         }
 
         private object? GetProperty(string name)
@@ -208,10 +214,6 @@ namespace Azure.Core.Serialization
                 throw new InvalidCastException($"Unable to convert value of kind '{element.ValueKind}' to type '{typeof(T)}'.", e);
             }
         }
-
-        //internal DynamicData GetPatch()
-        //{
-        //}
 
         /// <inheritdoc/>
         public override string ToString()
