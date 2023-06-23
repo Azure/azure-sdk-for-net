@@ -47,8 +47,6 @@ namespace Azure.Core.Pipeline
 
         public bool IsEnabled { get; }
 
-        public ActivitySource ActivityS { get; } = default!;
-
         public void AddAttribute(string name, string value)
         {
             _activityAdapter?.AddTag(name, value);
