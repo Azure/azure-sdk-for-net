@@ -716,7 +716,7 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
                 #endregion Snippet:TransferManagerTryPause_Async
 
                 // API for use in below sample
-                StorageSharedKeyCredential GetScopedCredential(Uri uri)
+                StorageSharedKeyCredential ProvideMyCredential(Uri uri)
                     // Customer should actually get their scoped credential, but shared key still lets sample run
                     => new StorageSharedKeyCredential(StorageAccountName, StorageAccountKey);
 
@@ -729,10 +729,10 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
                         out AzureBlobStorageResourceProvider azureSourceProvider,
                         out AzureBlobStorageResourceProvider azureDestinationProvider))
                     {
-                        source ??= azureSourceProvider?.MakeResource(GetScopedCredential(new Uri(info.SourcePath)));
-                        destination ??= azureSourceProvider?.MakeResource(GetScopedCredential(new Uri(info.DestinationPath)));
+                        source ??= azureSourceProvider?.MakeResource(ProvideMyCredential(new Uri(info.SourcePath)));
+                        destination ??= azureSourceProvider?.MakeResource(ProvideMyCredential(new Uri(info.DestinationPath)));
                     }
-                    else if (LocalStorageResources.TryGetResourceProviders(
+                    if (LocalStorageResources.TryGetResourceProviders(
                         info,
                         out LocalStorageResourceProvider localSourceProvider,
                         out LocalStorageResourceProvider localDestinationProvider))
