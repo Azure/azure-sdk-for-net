@@ -715,18 +715,12 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
                 await transferManager.PauseTransferIfRunningAsync(dataTransfer);
                 #endregion Snippet:TransferManagerTryPause_Async
 
+                // API for use in below sample
+                StorageSharedKeyCredential GetScopedCredential(Uri uri)
+                    // Customer should actually get their scoped credential, but shared key still lets sample run
+                    => new StorageSharedKeyCredential(StorageAccountName, StorageAccountKey);
+
                 #region Snippet:TransferManagerResume_Async
-                //// Resume from checkpoint id
-                //TransferOptions optionsWithResumeTransferId = new TransferOptions()
-                //{
-                //    ResumeFromCheckpointId = dataTransfer.Id
-                //};
-
-                //DataTransfer resumedTransfer = await transferManager.StartTransferAsync(
-                //    sourceResource: sourceResource,
-                //    destinationResource: destinationResource,
-                //    transferOptions: optionsWithResumeTransferId);
-
                 (StorageResource Source, StorageResource Destination) GetResources(DataTransferProperties info)
                 {
                     StorageResource source = default, destination = default;
@@ -735,12 +729,16 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
                         out AzureBlobStorageResourceProvider azureSourceProvider,
                         out AzureBlobStorageResourceProvider azureDestinationProvider))
                     {
-                        source ??= azureSourceProvider?.MakeResource(GetScopedCredential(info.SourcePath));
-                        destination ??= azureSourceProvider?.MakeResource(GetScopedCredential(info.DestinationPath));
+                        source ??= azureSourceProvider?.MakeResource(GetScopedCredential(new Uri(info.SourcePath)));
+                        destination ??= azureSourceProvider?.MakeResource(GetScopedCredential(new Uri(info.DestinationPath)));
                     }
-                    else if (LocalStorageResources.TryGetSourceResourceProvider(info, out LocalStorageResourceProvider localSourceProvider))
+                    else if (LocalStorageResources.TryGetResourceProviders(
+                        info,
+                        out LocalStorageResourceProvider localSourceProvider,
+                        out LocalStorageResourceProvider localDestinationProvider))
                     {
-                        source = localSourceProvider.MakeResource();
+                        source ??= localSourceProvider?.MakeResource();
+                        destination ??= localDestinationProvider?.MakeResource();
                     }
                     return (source, destination);
                 }
