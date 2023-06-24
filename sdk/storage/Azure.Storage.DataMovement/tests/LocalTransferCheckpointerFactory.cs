@@ -5,10 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Azure.Storage.DataMovement.Models.JobPlan;
-using NUnit.Framework.Internal;
 
 namespace Azure.Storage.DataMovement.Tests
 {
@@ -20,8 +17,10 @@ namespace Azure.Storage.DataMovement.Tests
         internal const long _testPartNumber = 5;
         internal static readonly DateTimeOffset _testStartTime
             = new DateTimeOffset(2023, 03, 13, 15, 24, 6, default);
+        internal const string _testSourceResourceType = "LocalFile";
         internal const string _testSourcePath = "C:/sample-source";
         internal const string _testSourceQuery = "sourcequery";
+        internal const string _testDestinationResourceType = "LocalFile";
         internal const string _testDestinationPath = "C:/sample-destination";
         internal const string _testDestinationQuery = "destquery";
         internal const byte _testPriority = 0;
@@ -141,8 +140,10 @@ namespace Azure.Storage.DataMovement.Tests
             DateTimeOffset startTime = default,
             string transferId = _testTransferId,
             long partNumber = _testPartNumber,
+            string sourceResourceType = _testSourceResourceType,
             string sourcePath = _testSourcePath,
             string sourceExtraQuery = _testSourceQuery,
+            string destinationResourceType = _testDestinationResourceType,
             string destinationPath = _testDestinationPath,
             string destinationExtraQuery = _testDestinationQuery,
             bool isFinalPart = false,
@@ -220,8 +221,10 @@ namespace Azure.Storage.DataMovement.Tests
                 startTime: startTime,
                 transferId: transferId,
                 partNumber: partNumber,
+                sourceResourceType: sourceResourceType,
                 sourcePath: sourcePath,
                 sourceExtraQuery: sourceExtraQuery,
+                destinationResourceType: destinationResourceType,
                 destinationPath: destinationPath,
                 destinationExtraQuery: destinationExtraQuery,
                 isFinalPart: isFinalPart,

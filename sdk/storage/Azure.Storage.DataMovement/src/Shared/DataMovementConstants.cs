@@ -1,6 +1,8 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Reflection;
+
 namespace Azure.Storage.DataMovement
 {
     internal class DataMovementConstants
@@ -57,11 +59,13 @@ namespace Azure.Storage.DataMovement
         internal static class PlanFile
         {
             internal const string SchemaVersion_b1 = "b1";
-            internal const string SchemaVersion = SchemaVersion_b1; // TODO: remove b for beta
+            internal const string SchemaVersion_b2 = "b2";
+            internal const string SchemaVersion = SchemaVersion_b2; // TODO: remove b for beta
 
             // Job Plan file extension. e.g. the file extension will look like {transferid}--{jobpartNumber}.steV{schemaVersion}
             internal const string FileExtension = ".steV";
             internal const string JobPlanFileNameDelimiter = "--";
+            internal const string LocalFileScheme = "LocalFile";
             internal const int JobPartLength = 5;
             internal const int IdSize = 36; // Size of a guid with hyphens
             internal const int CustomHeaderMaxBytes = 256;
@@ -76,6 +80,8 @@ namespace Azure.Storage.DataMovement
             internal const int VersionStrNumBytes = VersionStrLength * 2;
             internal const int TransferIdStrLength = 36;
             internal const int TransferIdStrNumBytes = TransferIdStrLength * 2;
+            internal const int ResourceTypeMaxStrLength = 20;
+            internal const int ResourceTypeNumBytes = ResourceTypeMaxStrLength * 2;
             internal const int PathStrMaxLength = 4096;
             internal const int PathStrNumBytes = PathStrMaxLength * 2;
             internal const int ExtraQueryMaxLength = 1000;
@@ -96,15 +102,25 @@ namespace Azure.Storage.DataMovement
             /// <summary>Index: 84</summary>
             internal const int PartNumberIndex = TransferIdIndex + TransferIdStrNumBytes;
             /// <summary>Index: 92</summary>
-            internal const int SourcePathLengthIndex = PartNumberIndex + LongSizeInBytes;
+            internal const int SourceResourceTypeLengthIndex = PartNumberIndex + LongSizeInBytes;
             /// <summary>Index: 94</summary>
+            internal const int SourceResourceTypeIndex = SourceResourceTypeLengthIndex + UShortSizeInBytes;
+            /// <summary>Index: 114</summary>
+            internal const int SourcePathLengthIndex = SourceResourceTypeIndex + ResourceTypeMaxStrLength;
+            /// <summary>Index: 116</summary>
             internal const int SourcePathIndex = SourcePathLengthIndex + UShortSizeInBytes;
-            /// <summary>Index: 8,286</summary>
+            /// <summary>Index: 8,308</summary>
             internal const int SourceExtraQueryLengthIndex = SourcePathIndex + PathStrNumBytes;
-            /// <summary>Index: 8,288</summary>
+            /// <summary>Index: 8,310</summary>
             internal const int SourceExtraQueryIndex = SourceExtraQueryLengthIndex + UShortSizeInBytes;
+            /// <summary>Index: 8,312</summary>
+            internal const int DestinationResourceTypeLengthIndex = SourceExtraQueryIndex + UShortSizeInBytes;
+            /// <summary>Index: 8,332</summary>
+            internal const int DestinationResourceTypeIndex = DestinationResourceTypeLengthIndex + ResourceTypeMaxStrLength;
+
+            // TODO: Index below here +44
             /// <summary>Index: 10,288</summary>
-            internal const int DestinationPathLengthIndex = SourceExtraQueryIndex + ExtraQueryNumBytes;
+            internal const int DestinationPathLengthIndex = DestinationResourceTypeIndex + ExtraQueryNumBytes;
             /// <summary>Index: 10,290</summary>
             internal const int DestinationPathIndex = DestinationPathLengthIndex + UShortSizeInBytes;
             /// <summary>Index: 18,482</summary>
