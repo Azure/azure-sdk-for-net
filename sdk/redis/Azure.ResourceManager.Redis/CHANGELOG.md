@@ -1,6 +1,6 @@
 # Release History
 
-## 1.3.0 (2023-04-01)
+## 1.2.0 (2023-06-24)
 
 ### Features Added
 
@@ -9,16 +9,6 @@
 ### Bugs Fixed
 
 - Updated validation to ensure access to storage account while enabling persistence.
-
-## 1.2.0-beta.2 (Unreleased)
-
-### Features Added
-
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
 
 ## 1.2.0-beta.1 (2023-05-31)
 
