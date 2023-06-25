@@ -14,9 +14,10 @@ namespace Azure.ResourceManager.Batch.Models
     public partial class BatchVmContainerConfiguration
     {
         /// <summary> Initializes a new instance of BatchVmContainerConfiguration. </summary>
-        public BatchVmContainerConfiguration()
+        /// <param name="containerType"> The container technology to be used. </param>
+        public BatchVmContainerConfiguration(BatchVmContainerType containerType)
         {
-            ContainerType = BatchVmContainerType.DockerCompatible;
+            ContainerType = containerType;
             ContainerImageNames = new ChangeTrackingList<string>();
             ContainerRegistries = new ChangeTrackingList<BatchVmContainerRegistry>();
         }

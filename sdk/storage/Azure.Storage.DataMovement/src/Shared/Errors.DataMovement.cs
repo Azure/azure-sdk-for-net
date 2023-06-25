@@ -119,5 +119,8 @@ namespace Azure.Storage
             => new InvalidOperationException($"Unexpected error: Experienced failed chunk transfer argument. " +
                     $"Offset: \"{offset}\"\n" +
                     $"Length: \"{bytesTransferred}\"");
+
+        public static InvalidOperationException InvalidTransferResourceTypes()
+            => new InvalidOperationException("Invalid source and destination resource types.");
     }
 }

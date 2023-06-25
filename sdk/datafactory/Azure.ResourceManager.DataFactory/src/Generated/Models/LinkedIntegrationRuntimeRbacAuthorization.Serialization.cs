@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 return null;
             }
             string resourceId = default;
-            Optional<FactoryCredentialReference> credential = default;
+            Optional<DataFactoryCredentialReference> credential = default;
             string authorizationType = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    credential = FactoryCredentialReference.DeserializeFactoryCredentialReference(property.Value);
+                    credential = DataFactoryCredentialReference.DeserializeDataFactoryCredentialReference(property.Value);
                     continue;
                 }
                 if (property.NameEquals("authorizationType"u8))
