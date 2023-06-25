@@ -14,15 +14,15 @@ namespace Azure.ResourceManager.AppService.Models
     {
         [Obsolete("Please use WebAppKeyInfo.Properties.Name instead")]
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public string Name
+        public new string Name
         {
             get
             {
-                return this.Properties.Name;
+                return this.KeyName;
             }
             set
             {
-                this.Properties.Name = value;
+                this.KeyName = value;
             }
         }
 
@@ -32,12 +32,17 @@ namespace Azure.ResourceManager.AppService.Models
         {
             get
             {
-                return this.Properties.Value;
+                return this.KeyValue;
             }
             set
             {
-                this.Properties.Value = value;
+                this.KeyValue = value;
             }
         }
+
+        /// <summary> Properties of function key info. </summary>
+        [Obsolete]
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public WebAppKeyInfoProperties Properties { get; set; }
     }
 }

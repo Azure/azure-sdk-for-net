@@ -5,10 +5,13 @@
 
 #nullable disable
 
+using Azure.Core;
+using Azure.ResourceManager.Models;
+
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Function key info. </summary>
-    public partial class WebAppKeyInfo
+    public partial class WebAppKeyInfo : ResourceData
     {
         /// <summary> Initializes a new instance of WebAppKeyInfo. </summary>
         public WebAppKeyInfo()
@@ -16,13 +19,25 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of WebAppKeyInfo. </summary>
-        /// <param name="properties"> Properties of function key info. </param>
-        internal WebAppKeyInfo(WebAppKeyInfoProperties properties)
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="keyName"> Key name. </param>
+        /// <param name="keyValue"> Key value. </param>
+        /// <param name="kind"> Kind of resource. </param>
+        internal WebAppKeyInfo(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string keyName, string keyValue, string kind) : base(id, name, resourceType, systemData)
         {
-            Properties = properties;
+            KeyName = keyName;
+            KeyValue = keyValue;
+            Kind = kind;
         }
 
-        /// <summary> Properties of function key info. </summary>
-        public WebAppKeyInfoProperties Properties { get; set; }
+        /// <summary> Key name. </summary>
+        public string KeyName { get; set; }
+        /// <summary> Key value. </summary>
+        public string KeyValue { get; set; }
+        /// <summary> Kind of resource. </summary>
+        public string Kind { get; set; }
     }
 }

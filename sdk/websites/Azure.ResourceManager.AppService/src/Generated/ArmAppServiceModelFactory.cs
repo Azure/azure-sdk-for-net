@@ -3311,6 +3311,20 @@ namespace Azure.ResourceManager.AppService.Models
             return new FunctionEnvelopeData(id, name, resourceType, systemData, functionAppId, scriptRootPathHref, scriptHref, configHref, testDataHref, secretsFileHref, href, config, files, testData, invokeUrlTemplate, language, isDisabled, kind);
         }
 
+        /// <summary> Initializes a new instance of WebAppKeyInfo. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="keyName"> Key name. </param>
+        /// <param name="keyValue"> Key value. </param>
+        /// <param name="kind"> Kind of resource. </param>
+        /// <returns> A new <see cref="Models.WebAppKeyInfo"/> instance for mocking. </returns>
+        public static WebAppKeyInfo WebAppKeyInfo(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string keyName = null, string keyValue = null, string kind = null)
+        {
+            return new WebAppKeyInfo(id, name, resourceType, systemData, keyName, keyValue, kind);
+        }
+
         /// <summary> Initializes a new instance of FunctionSecrets. </summary>
         /// <param name="key"> Secret key. </param>
         /// <param name="triggerUri"> Trigger URL. </param>

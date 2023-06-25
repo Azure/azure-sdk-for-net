@@ -557,6 +557,8 @@ rename-mapping:
   SiteAuthSettings.properties.clientSecretCertificateThumbprint: ClientSecretCertificateThumbprintString
   VnetInfoResource.properties.certThumbprint: CertThumbprintString
   VnetInfo.certThumbprint: CertThumbprintString
+  KeyInfo.properties.name: KeyName
+  KeyInfo.properties.value: KeyValue
 
 prepend-rp-prefix:
   - ApiDefinitionInfo
@@ -709,9 +711,14 @@ directive:
   - from: WebApps.json
     where: $.definitions.KeyInfo
     transform: >
+      $["allOf"] = [
+        {
+          "$ref": "./CommonDefinitions.json#/definitions/ProxyOnlyResource"
+        }
+      ];
       $["properties"] = {
-        "properties":{
-          "description": "Properties of function key info.",
+        "properties": {
+          "description": "KeyInfo resource specific properties",
           "type": "object",
           "properties": {
             "name": {
@@ -722,9 +729,10 @@ directive:
               "description": "Key value",
               "type": "string"
             }
-          }
+          },
+          "x-ms-client-flatten": true
         }
-      }
+      };
     reason: workaround incorrect definition in swagger before it's fixed. github issue 35146
 # get array
   - remove-operation: AppServicePlans_GetRouteForVnet
