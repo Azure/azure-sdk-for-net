@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
         /// <param name="frontendEndpoints"> Frontend endpoints associated with this rule. </param>
         /// <param name="acceptedProtocols"> Protocol schemes to match for this rule. </param>
         /// <param name="patternsToMatch"> The route patterns of the rule. </param>
-        /// <param name="enabledState"> Whether to enable use of this rule. Permitted values are &apos;Enabled&apos; or &apos;Disabled&apos;. </param>
+        /// <param name="enabledState"> Whether to enable use of this rule. Permitted values are 'Enabled' or 'Disabled'. </param>
         /// <param name="routeConfiguration">
         /// A reference to the routing configuration.
         /// Please note <see cref="RouteConfiguration"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
         public IList<FrontDoorProtocol> AcceptedProtocols { get; }
         /// <summary> The route patterns of the rule. </summary>
         public IList<string> PatternsToMatch { get; }
-        /// <summary> Whether to enable use of this rule. Permitted values are &apos;Enabled&apos; or &apos;Disabled&apos;. </summary>
+        /// <summary> Whether to enable use of this rule. Permitted values are 'Enabled' or 'Disabled'. </summary>
         public RoutingRuleEnabledState? EnabledState { get; set; }
         /// <summary>
         /// A reference to the routing configuration.

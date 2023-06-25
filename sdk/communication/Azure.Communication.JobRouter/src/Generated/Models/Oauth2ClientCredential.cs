@@ -8,7 +8,7 @@
 namespace Azure.Communication.JobRouter
 {
     /// <summary>
-    /// OAuth2.0 Credentials used to Contoso&apos;s Authorization server.
+    /// OAuth2.0 Credentials used to Contoso's Authorization server.
     /// Reference: https://www.oauth.com/oauth2-servers/access-tokens/client-credentials/
     /// </summary>
     public partial class Oauth2ClientCredential

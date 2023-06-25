@@ -39,15 +39,8 @@ namespace Azure.AI.ContentSafety
             }
             if (Optional.IsDefined(BreakByBlocklists))
             {
-                if (BreakByBlocklists != null)
-                {
-                    writer.WritePropertyName("breakByBlocklists"u8);
-                    writer.WriteBooleanValue(BreakByBlocklists.Value);
-                }
-                else
-                {
-                    writer.WriteNull("breakByBlocklists");
-                }
+                writer.WritePropertyName("breakByBlocklists"u8);
+                writer.WriteBooleanValue(BreakByBlocklists.Value);
             }
             writer.WriteEndObject();
         }

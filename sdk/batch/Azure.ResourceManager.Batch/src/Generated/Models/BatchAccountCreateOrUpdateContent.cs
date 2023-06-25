@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Batch.Models
         public BatchAccountPoolAllocationMode? PoolAllocationMode { get; set; }
         /// <summary> A reference to the Azure key vault associated with the Batch account. </summary>
         public BatchKeyVaultReference KeyVaultReference { get; set; }
-        /// <summary> If not specified, the default value is &apos;enabled&apos;. </summary>
+        /// <summary> If not specified, the default value is 'enabled'. </summary>
         public BatchPublicNetworkAccess? PublicNetworkAccess { get; set; }
         /// <summary> The network profile only takes effect when publicNetworkAccess is enabled. </summary>
         public BatchNetworkProfile NetworkProfile { get; set; }

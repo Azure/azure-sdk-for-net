@@ -11,7 +11,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     public partial class InMagePolicyInput : PolicyProviderSpecificInput
     {
         /// <summary> Initializes a new instance of InMagePolicyInput. </summary>
-        /// <param name="multiVmSyncStatus"> A value indicating whether multi-VM sync has to be enabled. Value should be &apos;Enabled&apos; or &apos;Disabled&apos;. </param>
+        /// <param name="multiVmSyncStatus"> A value indicating whether multi-VM sync has to be enabled. Value should be 'Enabled' or 'Disabled'. </param>
         public InMagePolicyInput(SetMultiVmSyncStatus multiVmSyncStatus)
         {
             MultiVmSyncStatus = multiVmSyncStatus;
@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         public int? RecoveryPointHistory { get; set; }
         /// <summary> The app consistent snapshot frequency (in minutes). </summary>
         public int? AppConsistentFrequencyInMinutes { get; set; }
-        /// <summary> A value indicating whether multi-VM sync has to be enabled. Value should be &apos;Enabled&apos; or &apos;Disabled&apos;. </summary>
+        /// <summary> A value indicating whether multi-VM sync has to be enabled. Value should be 'Enabled' or 'Disabled'. </summary>
         public SetMultiVmSyncStatus MultiVmSyncStatus { get; }
     }
 }

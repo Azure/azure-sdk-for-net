@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
         }
 
         /// <summary> Initializes a new instance of DestinationAddr. </summary>
-        /// <param name="cidrs"> special value &apos;any&apos;. </param>
+        /// <param name="cidrs"> special value 'any'. </param>
         /// <param name="countries"> list of countries. </param>
         /// <param name="feeds"> list of feeds. </param>
         /// <param name="prefixLists"> prefix list. </param>
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             FqdnLists = fqdnLists;
         }
 
-        /// <summary> special value &apos;any&apos;. </summary>
+        /// <summary> special value 'any'. </summary>
         public IList<string> Cidrs { get; }
         /// <summary> list of countries. </summary>
         public IList<string> Countries { get; }

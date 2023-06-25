@@ -2,9 +2,9 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
-
 using Azure.Monitor.OpenTelemetry.Exporter.Internals;
 using Azure.Monitor.OpenTelemetry.Exporter.Models;
 
@@ -109,6 +109,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             var httpResponseCode = httpStatusCode ?? "0";
             activity.SetTag(SemanticConventions.AttributeHttpUrl, "https://www.foo.bar/search");
             activity.SetTag(SemanticConventions.AttributeHttpStatusCode, httpStatusCode);
+            activity.SetTag(SemanticConventions.AttributeHttpMethod, "GET");
 
             var activityTagsProcessor = TraceHelper.EnumerateActivityTags(activity);
 
@@ -130,8 +131,102 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
 
             var requestData = new RequestData(2, activity, ref activityTagsProcessor);
 
-            Assert.True(activityTagsProcessor.HasAzureNamespace);
-            Assert.Equal("DemoAzureResource", requestData.Properties["az.namespace"]);
+            Assert.Equal("DemoAzureResource", activityTagsProcessor.AzureNamespace);
+        }
+
+        [Fact]
+        public void RequestDataContainsTimeSinceEnqueuedForConsumerSpans()
+        {
+            using ActivitySource activitySource = new ActivitySource(ActivitySourceName);
+            List<ActivityLink>? links = new List<ActivityLink>();
+            long enqueued0 = DateTimeOffset.UtcNow.AddMilliseconds(-100).ToUnixTimeMilliseconds();
+            long enqueued1 = DateTimeOffset.UtcNow.AddMilliseconds(-200).ToUnixTimeMilliseconds();
+            long enqueued2 = DateTimeOffset.UtcNow.AddMilliseconds(-300).ToUnixTimeMilliseconds();
+
+            links.Add(AddActivityLink(enqueued0));
+            links.Add(AddActivityLink(enqueued1));
+            links.Add(AddActivityLink(enqueued2));
+
+            using var activity = activitySource.StartActivity("Activity", ActivityKind.Consumer, null, null, links);
+            Assert.NotNull(activity);
+            var activityTagsProcessor = TraceHelper.EnumerateActivityTags(activity);
+
+            var requestData = new RequestData(2, activity, ref activityTagsProcessor);
+
+            DateTimeOffset startTime = activity.StartTimeUtc;
+            var startTimeEpoch = startTime.ToUnixTimeMilliseconds();
+
+            long expectedTimeInQueue = ((startTimeEpoch - enqueued0) +
+                                      (startTimeEpoch - enqueued1) +
+                                      (startTimeEpoch - enqueued2)) / 3; // avg diff with request start time across links
+
+            Assert.True(requestData.Measurements.TryGetValue("timeSinceEnqueued", out var timeInQueue));
+
+            Assert.Equal(expectedTimeInQueue, timeInQueue);
+        }
+
+        [Fact]
+        public void RequestDataTimeSinceEnqueuedNegative()
+        {
+            using ActivitySource activitySource = new ActivitySource(ActivitySourceName);
+            List<ActivityLink>? links = new List<ActivityLink>();
+            long enqueued0 = DateTimeOffset.UtcNow.AddMilliseconds(-100).ToUnixTimeMilliseconds();
+            long enqueued1 = DateTimeOffset.UtcNow.AddMilliseconds(-200).ToUnixTimeMilliseconds();
+            long enqueued2 = DateTimeOffset.UtcNow.AddMilliseconds(300).ToUnixTimeMilliseconds(); // ignored
+
+            links.Add(AddActivityLink(enqueued0));
+            links.Add(AddActivityLink(enqueued1));
+            links.Add(AddActivityLink(enqueued2));
+
+            using var activity = activitySource.StartActivity("Activity", ActivityKind.Consumer, null, null, links);
+            Assert.NotNull(activity);
+            var activityTagsProcessor = TraceHelper.EnumerateActivityTags(activity);
+
+            var requestData = new RequestData(2, activity, ref activityTagsProcessor);
+
+            DateTimeOffset startTime = activity.StartTimeUtc;
+            var startTimeEpoch = startTime.ToUnixTimeMilliseconds();
+
+            long expectedTimeInQueue = ((startTimeEpoch - enqueued0) +
+                                      (startTimeEpoch - enqueued1)) / 3; // avg diff with request start time across links
+
+            Assert.True(requestData.Measurements.TryGetValue("timeSinceEnqueued", out var timeInQueue));
+
+            Assert.Equal(expectedTimeInQueue, timeInQueue);
+        }
+
+        [Fact]
+        public void RequestDataTimeSinceEnqueuedInvalidEmqueuedTime()
+        {
+            using ActivitySource activitySource = new ActivitySource(ActivitySourceName);
+            List<ActivityLink>? links = new List<ActivityLink>();
+
+            ActivityTagsCollection tags = new ActivityTagsCollection();
+            tags.Add("enqueuedTime", "Invalid");
+            var link = new ActivityLink(new ActivityContext(ActivityTraceId.CreateRandom(), ActivitySpanId.CreateRandom(), ActivityTraceFlags.None, null), tags);
+            links.Add(link);
+
+            using var activity = activitySource.StartActivity("Activity", ActivityKind.Consumer, null, null, links);
+            Assert.NotNull(activity);
+            var activityTagsProcessor = TraceHelper.EnumerateActivityTags(activity);
+
+            var requestData = new RequestData(2, activity, ref activityTagsProcessor);
+
+            DateTimeOffset startTime = activity.StartTimeUtc;
+            var startTimeEpoch = startTime.ToUnixTimeMilliseconds();
+
+            Assert.False(requestData.Measurements.TryGetValue("timeSinceEnqueued", out var timeInQueue));
+        }
+
+        private ActivityLink AddActivityLink(long enqueuedTime)
+        {
+            ActivityTagsCollection tags = new ActivityTagsCollection
+            {
+                { "enqueuedTime", enqueuedTime.ToString() }
+            };
+            var link = new ActivityLink(new ActivityContext(ActivityTraceId.CreateRandom(), ActivitySpanId.CreateRandom(), ActivityTraceFlags.None, null), tags);
+
+            return link;
         }
     }
 }

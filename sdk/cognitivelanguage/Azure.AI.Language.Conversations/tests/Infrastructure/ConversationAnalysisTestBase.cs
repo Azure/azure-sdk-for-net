@@ -43,11 +43,11 @@ namespace Azure.AI.Language.Conversations.Tests
         {
             await base.StartTestRecordingAsync();
 
+            ConversationsClientOptions options = new ConversationsClientOptions(ServiceVersion);
             Client = CreateClient<TClient>(
                 TestEnvironment.Endpoint,
                 new AzureKeyCredential(TestEnvironment.ApiKey),
-                InstrumentClientOptions(
-                    new ConversationsClientOptions(ServiceVersion)));
+                InstrumentClientOptions(options));
         }
     }
 }

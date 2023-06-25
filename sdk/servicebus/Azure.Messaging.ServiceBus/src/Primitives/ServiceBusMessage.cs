@@ -124,11 +124,7 @@ namespace Azure.Messaging.ServiceBus
                 AmqpMessage.MessageAnnotations.Add(kvp.Key, kvp.Value);
             }
 
-            // copy delivery annotations
-            foreach (KeyValuePair<string, object> kvp in receivedMessage.AmqpMessage.DeliveryAnnotations)
-            {
-                AmqpMessage.DeliveryAnnotations.Add(kvp.Key, kvp.Value);
-            }
+            // delivery annotations should not be copied as they only apply to a single hop
 
             // copy footer
             foreach (KeyValuePair<string, object> kvp in receivedMessage.AmqpMessage.Footer)

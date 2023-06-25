@@ -50,12 +50,6 @@ namespace Azure.Identity.Tests
             cache = new TokenCache(new TokenCachePersistenceOptions(), mockWrapper.Object);
         }
 
-        [TearDown]
-        public void Cleanup()
-        {
-            TokenCache.ResetWrapperCache();
-        }
-
         public static IEnumerable<object[]> PersistentCacheOptions()
         {
             yield return new object[] { new TokenCachePersistenceOptions { UnsafeAllowUnencryptedStorage = true, Name = "foo" }, true, "foo" };

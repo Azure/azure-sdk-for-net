@@ -50,7 +50,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
 
             standardMetricCustomProcessor._meterProvider?.ForceFlush();
 
-            // Standard Metrics + Resource Metrics.
             Assert.Single(metricTelemetryItems);
 
             var metricTelemetry = metricTelemetryItems.Last()!;
@@ -102,7 +101,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
 
             standardMetricCustomProcessor._meterProvider?.ForceFlush();
 
-            // Standard Metrics + Resource Metrics.
             Assert.Single(metricTelemetryItems);
 
             var metricTelemetry = metricTelemetryItems.Last()!;
@@ -123,6 +121,54 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             Assert.Equal("Http", dependencyType);
             Assert.True(metricData.Properties.TryGetValue(StandardMetricConstants.DependencyTargetKey, out var dependencyTarget));
             Assert.Equal("www.foo.com", dependencyTarget);
+        }
+
+        [Theory]
+        [InlineData(ActivityKind.Server)]
+        [InlineData(ActivityKind.Client)]
+        public void ValidateNullStatusCode(ActivityKind kind)
+        {
+            var activitySource = new ActivitySource(nameof(StandardMetricTests.ValidateNullStatusCode));
+            var traceTelemetryItems = new List<TelemetryItem>();
+            var metricTelemetryItems = new List<TelemetryItem>();
+
+            var standardMetricCustomProcessor = new StandardMetricsExtractionProcessor(new AzureMonitorMetricExporter(new MockTransmitter(metricTelemetryItems)));
+
+            using var tracerProvider = Sdk.CreateTracerProviderBuilder()
+                .SetSampler(new AlwaysOnSampler())
+                .AddSource(nameof(StandardMetricTests.ValidateNullStatusCode))
+                .AddProcessor(standardMetricCustomProcessor)
+                .AddProcessor(new BatchActivityExportProcessor(new AzureMonitorTraceExporter(new MockTransmitter(traceTelemetryItems))))
+                .Build();
+
+            using (var activity = activitySource.StartActivity("Test", kind))
+            {
+                activity?.SetTag(SemanticConventions.AttributeHttpMethod, "Get");
+                activity?.SetTag(SemanticConventions.AttributeHttpUrl, "https://www.foo.com");
+            }
+
+            tracerProvider?.ForceFlush();
+
+            WaitForActivityExport(traceTelemetryItems);
+
+            standardMetricCustomProcessor._meterProvider?.ForceFlush();
+
+            // Standard Metrics + Resource Metrics.
+            Assert.Single(metricTelemetryItems);
+            var metricTelemetry = metricTelemetryItems.Last()!;
+            Assert.Equal("MetricData", metricTelemetry.Data.BaseType);
+            var metricData = (MetricsData)metricTelemetry.Data.BaseData;
+
+            if (kind == ActivityKind.Client)
+            {
+                Assert.True(metricData.Properties.TryGetValue(StandardMetricConstants.DependencyResultCodeKey, out var resultCode));
+                Assert.Equal("0", resultCode);
+            }
+            else
+            {
+                Assert.True(metricData.Properties.TryGetValue(StandardMetricConstants.RequestResultCodeKey, out var resultCode));
+                Assert.Equal("0", resultCode);
+            }
         }
 
         private void WaitForActivityExport(List<TelemetryItem> traceTelemetryItems)

@@ -31,6 +31,13 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
         public TokenCredential? Credential { get; set; }
 
         /// <summary>
+        /// Gets or sets the ratio of telemetry items to be sampled. The value must be between 0.0F and 1.0F, inclusive.
+        /// For example, specifying 0.4 means that 40% of traces are sampled and 60% are dropped.
+        /// The default value is 1.0F, indicating that all telemetry items are sampled.
+        /// </summary>
+        public float SamplingRatio { get; set; } = 1.0F;
+
+        /// <summary>
         /// The <see cref="ServiceVersion"/> of the Azure Monitor ingestion API.
         /// </summary>
         public ServiceVersion Version { get; set; } = LatestVersion;

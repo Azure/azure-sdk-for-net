@@ -49,11 +49,12 @@ namespace Azure.Identity
             Exception exception = null;
             try
             {
-                using JsonDocument json = async
-                    ? await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false)
-                    : JsonDocument.Parse(response.ContentStream);
                 if (response.Status == 200)
                 {
+                    using JsonDocument json = async
+                    ? await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false)
+                    : JsonDocument.Parse(response.ContentStream);
+
                     return GetTokenFromResponse(json.RootElement);
                 }
             }

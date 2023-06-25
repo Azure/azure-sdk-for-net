@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            Optional<IList<FactoryLinkedServiceReference>> linkedServices = default;
+            Optional<IList<DataFactoryLinkedServiceReference>> linkedServices = default;
             Optional<IList<DatasetReference>> datasets = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -55,10 +55,10 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    List<FactoryLinkedServiceReference> array = new List<FactoryLinkedServiceReference>();
+                    List<DataFactoryLinkedServiceReference> array = new List<DataFactoryLinkedServiceReference>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(FactoryLinkedServiceReference.DeserializeFactoryLinkedServiceReference(item));
+                        array.Add(DataFactoryLinkedServiceReference.DeserializeDataFactoryLinkedServiceReference(item));
                     }
                     linkedServices = array;
                     continue;

@@ -17,8 +17,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         }
 
         /// <summary> Initializes a new instance of GcpMemberOrganizationalInfo. </summary>
-        /// <param name="organizationMembershipType"> The multi cloud account&apos;s membership type in the organization. </param>
-        /// <param name="parentHierarchyId"> If the multi cloud account is not of membership type organization, this will be the ID of the project&apos;s parent. </param>
+        /// <param name="organizationMembershipType"> The multi cloud account's membership type in the organization. </param>
+        /// <param name="parentHierarchyId"> If the multi cloud account is not of membership type organization, this will be the ID of the project's parent. </param>
         /// <param name="managementProjectNumber"> The GCP management project number from organizational onboarding. </param>
         internal GcpMemberOrganizationalInfo(OrganizationMembershipType organizationMembershipType, string parentHierarchyId, string managementProjectNumber) : base(organizationMembershipType)
         {
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             OrganizationMembershipType = organizationMembershipType;
         }
 
-        /// <summary> If the multi cloud account is not of membership type organization, this will be the ID of the project&apos;s parent. </summary>
+        /// <summary> If the multi cloud account is not of membership type organization, this will be the ID of the project's parent. </summary>
         public string ParentHierarchyId { get; set; }
         /// <summary> The GCP management project number from organizational onboarding. </summary>
         public string ManagementProjectNumber { get; set; }
