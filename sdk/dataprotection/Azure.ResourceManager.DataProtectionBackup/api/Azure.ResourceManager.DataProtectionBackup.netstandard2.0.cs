@@ -1121,6 +1121,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
     {
         internal DataProtectionOperationJobExtendedInfo() { }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        [System.ObsoleteAttribute("This property is obsolete and will be removed in a future release", false)]
         public System.Guid? JobId { get { throw null; } }
         public Azure.Core.ResourceIdentifier JobResourceId { get { throw null; } }
     }

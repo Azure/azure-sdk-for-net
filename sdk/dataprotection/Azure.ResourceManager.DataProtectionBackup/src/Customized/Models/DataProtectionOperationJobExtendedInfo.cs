@@ -12,6 +12,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
     public partial class DataProtectionOperationJobExtendedInfo
     {
         /// <summary> Arm Id of the job created for this operation. </summary>
+        [Obsolete("This property is obsolete and will be removed in a future release", false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
         public Guid? JobId { get; }
     }
