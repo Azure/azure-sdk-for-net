@@ -1,0 +1,147 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://management.azure.com/tenants?api-version=2021-01-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-4e9a76dc1b1970b3fc9cfd6aa2fbf8b8-09ef04019819c41c-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET 6.0.14; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "ce80de17f0b9e6fd1b30d7f36fc2a3f1",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "140",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 09 Mar 2023 02:36:25 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "ea55e49d-9245-41df-a1e6-ecddab4eb264",
+        "x-ms-ratelimit-remaining-tenant-reads": "11999",
+        "x-ms-request-id": "ea55e49d-9245-41df-a1e6-ecddab4eb264",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20230309T023625Z:ea55e49d-9245-41df-a1e6-ecddab4eb264"
+      },
+      "ResponseBody": {
+        "value": [
+          {
+            "id": "/tenants/72f988bf-86f1-41af-91ab-2d7cd011db47",
+            "tenantId": "72f988bf-86f1-41af-91ab-2d7cd011db47",
+            "tenantCategory": "Home"
+          }
+        ]
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c?api-version=2021-01-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-b57179c9e800f51d0512630cd7b0e256-bfd6a7a17a520abb-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET 6.0.14; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "121c45a104f23e9994f60100fb448cf9",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "748",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 09 Mar 2023 02:36:25 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "6edbd6e6-17fb-45f1-9767-06103e01166a",
+        "x-ms-ratelimit-remaining-subscription-reads": "11999",
+        "x-ms-request-id": "6edbd6e6-17fb-45f1-9767-06103e01166a",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20230309T023625Z:6edbd6e6-17fb-45f1-9767-06103e01166a"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c",
+        "authorizationSource": "RoleBased",
+        "managedByTenants": [],
+        "tags": {
+          "TagKey-9823": "TagValue-1254",
+          "TagKey-3481": "TagValue-320",
+          "TagKey-4926": "TagValue-1187",
+          "TagKey-751": "TagValue-3921",
+          "TagKey-1866": "TagValue-8559",
+          "TagKey-3094": "TagValue-9190",
+          "TagKey-2449": "TagValue-9",
+          "TagKey-8379": "TagValue-164",
+          "TagKey-7470": "TagValue-2205",
+          "TagKey-4236": "TagValue-3698",
+          "TagKey-5316": "TagValue-2725"
+        },
+        "subscriptionId": "db1ab6f0-4769-4b27-930e-01e2ef9c123c",
+        "tenantId": "72f988bf-86f1-41af-91ab-2d7cd011db47",
+        "displayName": ".NET Mgmt SDK Test with TTL = 1 Day",
+        "state": "Enabled",
+        "subscriptionPolicies": {
+          "locationPlacementId": "Internal_2014-09-01",
+          "quotaId": "Internal_2014-09-01",
+          "spendingLimit": "Off"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/providers/Microsoft.PolicyInsights/policyMetadata/CIS_Azure_1.3.0_7.1?api-version=2019-10-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-be641d7a78e5e9bf791fe11e6354680d-3bdd0348cc3b7a7e-00",
+        "User-Agent": "azsdk-net-ResourceManager.PolicyInsights/1.2.0-alpha.20230309.1 (.NET 6.0.14; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "8573db72b40a2a4b7c8725b1969fc4d6",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "863",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 09 Mar 2023 02:36:26 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": "Kestrel",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "2c500cd0-600e-45c8-96ff-a7e8eefcbc46",
+        "x-ms-ratelimit-remaining-policy-insights-requests": "149",
+        "x-ms-ratelimit-remaining-tenant-reads": "11998",
+        "x-ms-request-id": "2c500cd0-600e-45c8-96ff-a7e8eefcbc46",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20230309T023627Z:2c500cd0-600e-45c8-96ff-a7e8eefcbc46"
+      },
+      "ResponseBody": {
+        "properties": {
+          "metadataId": "CIS Microsoft Azure Foundations Benchmark recommendation 7.1",
+          "category": "7 Virtual Machines",
+          "title": "Ensure Virtual Machines are utilizing Managed Disks",
+          "owner": "Shared",
+          "description": "Migrate BLOB based VHD\u0027s to Managed Disks on Virtual Machines to exploit the default features of this configuration.\nThe features include \n1) Default Disk Encryption\n2) Resilience as Microsoft will managed the disk storage and move around if underlying hardware goes faulty\n3) Reduction of costs over storage accounts",
+          "requirements": "The customer is responsible for implementing this recommendation.",
+          "additionalContentUrl": "https://www.cisecurity.org/benchmark/azure/",
+          "metadata": {}
+        },
+        "id": "/providers/Microsoft.PolicyInsights/policyMetadata/CIS_Azure_1.3.0_7.1",
+        "name": "CIS_Azure_1.3.0_7.1",
+        "type": "Microsoft.PolicyInsights/policyMetadata"
+      }
+    }
+  ],
+  "Variables": {
+    "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com",
+    "RandomSeed": "1860623298",
+    "RESOURCE_MANAGER_URL": null,
+    "SUBSCRIPTION_ID": "db1ab6f0-4769-4b27-930e-01e2ef9c123c"
+  }
+}

@@ -67,8 +67,8 @@ namespace Azure.Storage.DataMovement.Tests
                 .GetBlobContainerClient(containerName)
                 .GetBlockBlobClient(destinationBlobName));
 
-            StorageResource sourceResource = new BlockBlobStorageResource(sasSourceBlob);
-            StorageResource destinationResource = new BlockBlobStorageResource(sasDestinationBlob);
+            StorageResourceSingle sourceResource = new BlockBlobStorageResource(sasSourceBlob);
+            StorageResourceSingle destinationResource = new BlockBlobStorageResource(sasDestinationBlob);
 
             TransferManagerOptions managerOptions = new TransferManagerOptions()
             {
@@ -127,8 +127,8 @@ namespace Azure.Storage.DataMovement.Tests
             string destinationBlobName = GetNewBlobName();
             BlockBlobClient destinationBlob = await CreateBlockBlob(test.Container, Path.GetTempFileName(), destinationBlobName, Constants.KB * 4);
 
-            StorageResource sourceResource = new BlockBlobStorageResource(sourceBlob);
-            StorageResource destinationResource = new BlockBlobStorageResource(destinationBlob);
+            StorageResourceSingle sourceResource = new BlockBlobStorageResource(sourceBlob);
+            StorageResourceSingle destinationResource = new BlockBlobStorageResource(destinationBlob);
 
             TransferManagerOptions managerOptions = new TransferManagerOptions()
             {
@@ -152,7 +152,7 @@ namespace Azure.Storage.DataMovement.Tests
 
             // Act/Assert - resume transfer with wrong source resource.
             BlockBlobClient newSourceBlob = test.Container.GetBlockBlobClient(GetNewBlobName());
-            StorageResource wrongSourceResource = new BlockBlobStorageResource(newSourceBlob);
+            StorageResourceSingle wrongSourceResource = new BlockBlobStorageResource(newSourceBlob);
 
             TransferOptions resumeTransferOptions = new TransferOptions()
             {
@@ -186,8 +186,8 @@ namespace Azure.Storage.DataMovement.Tests
             string destinationBlobName = GetNewBlobName();
             BlockBlobClient destinationBlob = await CreateBlockBlob(test.Container, Path.GetTempFileName(), destinationBlobName, Constants.KB * 4);
 
-            StorageResource sourceResource = new BlockBlobStorageResource(sourceBlob);
-            StorageResource destinationResource = new BlockBlobStorageResource(destinationBlob);
+            StorageResourceSingle sourceResource = new BlockBlobStorageResource(sourceBlob);
+            StorageResourceSingle destinationResource = new BlockBlobStorageResource(destinationBlob);
 
             TransferManagerOptions managerOptions = new TransferManagerOptions()
             {
@@ -211,7 +211,7 @@ namespace Azure.Storage.DataMovement.Tests
 
             // Act/Assert - resume transfer with wrong destination resource.
             BlockBlobClient newDestinationBlob = test.Container.GetBlockBlobClient(GetNewBlobName());
-            StorageResource wrongDestinationResource = new BlockBlobStorageResource(newDestinationBlob);
+            StorageResourceSingle wrongDestinationResource = new BlockBlobStorageResource(newDestinationBlob);
 
             TransferOptions resumeTransferOptions = new TransferOptions()
             {
@@ -245,8 +245,8 @@ namespace Azure.Storage.DataMovement.Tests
             string destinationBlobName = GetNewBlobName();
             BlockBlobClient destinationBlob = await CreateBlockBlob(test.Container, Path.GetTempFileName(), destinationBlobName, Constants.KB * 4);
 
-            StorageResource sourceResource = new BlockBlobStorageResource(sourceBlob);
-            StorageResource destinationResource = new BlockBlobStorageResource(destinationBlob);
+            StorageResourceSingle sourceResource = new BlockBlobStorageResource(sourceBlob);
+            StorageResourceSingle destinationResource = new BlockBlobStorageResource(destinationBlob);
 
             TransferManagerOptions managerOptions = new TransferManagerOptions()
             {

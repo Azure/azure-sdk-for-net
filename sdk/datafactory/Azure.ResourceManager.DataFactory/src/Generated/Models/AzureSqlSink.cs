@@ -7,7 +7,7 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
+using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -17,7 +17,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Initializes a new instance of AzureSqlSink. </summary>
         public AzureSqlSink()
         {
-            StoredProcedureParameters = new ChangeTrackingDictionary<string, StoredProcedureParameter>();
             CopySinkType = "AzureSqlSink";
         }
 
@@ -39,7 +38,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="sqlWriterUseTableLock"> Whether to use table lock during bulk copy. Type: boolean (or Expression with resultType boolean). </param>
         /// <param name="writeBehavior"> Write behavior when copying data into Azure SQL. Type: SqlWriteBehaviorEnum (or Expression with resultType SqlWriteBehaviorEnum). </param>
         /// <param name="upsertSettings"> SQL upsert settings. </param>
-        internal AzureSqlSink(string copySinkType, BinaryData writeBatchSize, BinaryData writeBatchTimeout, BinaryData sinkRetryCount, BinaryData sinkRetryWait, BinaryData maxConcurrentConnections, BinaryData disableMetricsCollection, IDictionary<string, BinaryData> additionalProperties, BinaryData sqlWriterStoredProcedureName, BinaryData sqlWriterTableType, BinaryData preCopyScript, IDictionary<string, StoredProcedureParameter> storedProcedureParameters, BinaryData storedProcedureTableTypeParameterName, BinaryData tableOption, BinaryData sqlWriterUseTableLock, BinaryData writeBehavior, SqlUpsertSettings upsertSettings) : base(copySinkType, writeBatchSize, writeBatchTimeout, sinkRetryCount, sinkRetryWait, maxConcurrentConnections, disableMetricsCollection, additionalProperties)
+        internal AzureSqlSink(string copySinkType, DataFactoryElement<int> writeBatchSize, DataFactoryElement<string> writeBatchTimeout, DataFactoryElement<int> sinkRetryCount, DataFactoryElement<string> sinkRetryWait, DataFactoryElement<int> maxConcurrentConnections, DataFactoryElement<bool> disableMetricsCollection, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<string> sqlWriterStoredProcedureName, DataFactoryElement<string> sqlWriterTableType, DataFactoryElement<string> preCopyScript, BinaryData storedProcedureParameters, DataFactoryElement<string> storedProcedureTableTypeParameterName, DataFactoryElement<string> tableOption, DataFactoryElement<bool> sqlWriterUseTableLock, BinaryData writeBehavior, SqlUpsertSettings upsertSettings) : base(copySinkType, writeBatchSize, writeBatchTimeout, sinkRetryCount, sinkRetryWait, maxConcurrentConnections, disableMetricsCollection, additionalProperties)
         {
             SqlWriterStoredProcedureName = sqlWriterStoredProcedureName;
             SqlWriterTableType = sqlWriterTableType;
@@ -53,8 +52,14 @@ namespace Azure.ResourceManager.DataFactory.Models
             CopySinkType = copySinkType ?? "AzureSqlSink";
         }
 
+        /// <summary> SQL writer stored procedure name. Type: string (or Expression with resultType string). </summary>
+        public DataFactoryElement<string> SqlWriterStoredProcedureName { get; set; }
+        /// <summary> SQL writer table type. Type: string (or Expression with resultType string). </summary>
+        public DataFactoryElement<string> SqlWriterTableType { get; set; }
+        /// <summary> SQL pre-copy script. Type: string (or Expression with resultType string). </summary>
+        public DataFactoryElement<string> PreCopyScript { get; set; }
         /// <summary>
-        /// SQL writer stored procedure name. Type: string (or Expression with resultType string).
+        /// SQL stored procedure parameters.
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -83,164 +88,13 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </list>
         /// </para>
         /// </summary>
-        public BinaryData SqlWriterStoredProcedureName { get; set; }
-        /// <summary>
-        /// SQL writer table type. Type: string (or Expression with resultType string).
-        /// <para>
-        /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        public BinaryData SqlWriterTableType { get; set; }
-        /// <summary>
-        /// SQL pre-copy script. Type: string (or Expression with resultType string).
-        /// <para>
-        /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        public BinaryData PreCopyScript { get; set; }
-        /// <summary> SQL stored procedure parameters. </summary>
-        public IDictionary<string, StoredProcedureParameter> StoredProcedureParameters { get; }
-        /// <summary>
-        /// The stored procedure parameter name of the table type. Type: string (or Expression with resultType string).
-        /// <para>
-        /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        public BinaryData StoredProcedureTableTypeParameterName { get; set; }
-        /// <summary>
-        /// The option to handle sink table, such as autoCreate. For now only 'autoCreate' value is supported. Type: string (or Expression with resultType string).
-        /// <para>
-        /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        public BinaryData TableOption { get; set; }
-        /// <summary>
-        /// Whether to use table lock during bulk copy. Type: boolean (or Expression with resultType boolean).
-        /// <para>
-        /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        public BinaryData SqlWriterUseTableLock { get; set; }
+        public BinaryData StoredProcedureParameters { get; set; }
+        /// <summary> The stored procedure parameter name of the table type. Type: string (or Expression with resultType string). </summary>
+        public DataFactoryElement<string> StoredProcedureTableTypeParameterName { get; set; }
+        /// <summary> The option to handle sink table, such as autoCreate. For now only 'autoCreate' value is supported. Type: string (or Expression with resultType string). </summary>
+        public DataFactoryElement<string> TableOption { get; set; }
+        /// <summary> Whether to use table lock during bulk copy. Type: boolean (or Expression with resultType boolean). </summary>
+        public DataFactoryElement<bool> SqlWriterUseTableLock { get; set; }
         /// <summary>
         /// Write behavior when copying data into Azure SQL. Type: SqlWriteBehaviorEnum (or Expression with resultType SqlWriteBehaviorEnum)
         /// <para>

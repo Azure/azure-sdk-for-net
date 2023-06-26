@@ -261,7 +261,7 @@ namespace Azure.ResourceManager.Redis.Models
     public static partial class ArmRedisModelFactory
     {
         public static Azure.ResourceManager.Redis.Models.RedisAccessKeys RedisAccessKeys(string primaryKey = null, string secondaryKey = null) { throw null; }
-        public static Azure.ResourceManager.Redis.Models.RedisCommonConfiguration RedisCommonConfiguration(bool? isRdbBackupEnabled = default(bool?), string rdbBackupFrequency = null, int? rdbBackupMaxSnapshotCount = default(int?), string rdbStorageConnectionString = null, bool? isAofBackupEnabled = default(bool?), string aofStorageConnectionString0 = null, string aofStorageConnectionString1 = null, string maxFragmentationMemoryReserved = null, string maxMemoryPolicy = null, string maxMemoryReserved = null, string maxMemoryDelta = null, string maxClients = null, string preferredDataArchiveAuthMethod = null, string preferredDataPersistenceAuthMethod = null, string zonalConfiguration = null, string authNotRequired = null, System.Collections.Generic.IDictionary<string, System.BinaryData> additionalProperties = null) { throw null; }
+        public static Azure.ResourceManager.Redis.Models.RedisCommonConfiguration RedisCommonConfiguration(bool? isRdbBackupEnabled = default(bool?), string rdbBackupFrequency = null, int? rdbBackupMaxSnapshotCount = default(int?), string rdbStorageConnectionString = null, bool? isAofBackupEnabled = default(bool?), string aofStorageConnectionString0 = null, string aofStorageConnectionString1 = null, string maxFragmentationMemoryReserved = null, string maxMemoryPolicy = null, string maxMemoryReserved = null, string maxMemoryDelta = null, string maxClients = null, string preferredDataArchiveAuthMethod = null, string preferredDataPersistenceAuthMethod = null, string zonalConfiguration = null, string authNotRequired = null, string storageSubscriptionId = null, System.Collections.Generic.IDictionary<string, System.BinaryData> additionalProperties = null) { throw null; }
         public static Azure.ResourceManager.Redis.RedisData RedisData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), System.Collections.Generic.IEnumerable<string> zones = null, Azure.ResourceManager.Models.ManagedServiceIdentity identity = null, Azure.ResourceManager.Redis.Models.RedisCommonConfiguration redisConfiguration = null, string redisVersion = null, bool? enableNonSslPort = default(bool?), int? replicasPerMaster = default(int?), int? replicasPerPrimary = default(int?), System.Collections.Generic.IDictionary<string, string> tenantSettings = null, int? shardCount = default(int?), Azure.ResourceManager.Redis.Models.RedisTlsVersion? minimumTlsVersion = default(Azure.ResourceManager.Redis.Models.RedisTlsVersion?), Azure.ResourceManager.Redis.Models.RedisPublicNetworkAccess? publicNetworkAccess = default(Azure.ResourceManager.Redis.Models.RedisPublicNetworkAccess?), Azure.ResourceManager.Redis.Models.RedisSku sku = null, Azure.Core.ResourceIdentifier subnetId = null, System.Net.IPAddress staticIP = null, Azure.ResourceManager.Redis.Models.RedisProvisioningState? provisioningState = default(Azure.ResourceManager.Redis.Models.RedisProvisioningState?), string hostName = null, int? port = default(int?), int? sslPort = default(int?), Azure.ResourceManager.Redis.Models.RedisAccessKeys accessKeys = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.SubResource> linkedServers = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Redis.Models.RedisInstanceDetails> instances = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Redis.RedisPrivateEndpointConnectionData> privateEndpointConnections = null) { throw null; }
         public static Azure.ResourceManager.Redis.RedisFirewallRuleData RedisFirewallRuleData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Net.IPAddress startIP = null, System.Net.IPAddress endIP = null) { throw null; }
         public static Azure.ResourceManager.Redis.Models.RedisForceRebootResult RedisForceRebootResult(string message = null) { throw null; }
@@ -280,6 +280,7 @@ namespace Azure.ResourceManager.Redis.Models
         public string Format { get { throw null; } set { } }
         public string PreferredDataArchiveAuthMethod { get { throw null; } set { } }
         public string Prefix { get { throw null; } }
+        public string StorageSubscriptionId { get { throw null; } set { } }
     }
     public partial class ImportRdbContent
     {
@@ -287,6 +288,7 @@ namespace Azure.ResourceManager.Redis.Models
         public System.Collections.Generic.IList<string> Files { get { throw null; } }
         public string Format { get { throw null; } set { } }
         public string PreferredDataArchiveAuthMethod { get { throw null; } set { } }
+        public string StorageSubscriptionId { get { throw null; } set { } }
     }
     public partial class RedisAccessKeys
     {
@@ -313,6 +315,7 @@ namespace Azure.ResourceManager.Redis.Models
         public string RdbBackupFrequency { get { throw null; } set { } }
         public int? RdbBackupMaxSnapshotCount { get { throw null; } set { } }
         public string RdbStorageConnectionString { get { throw null; } set { } }
+        public string StorageSubscriptionId { get { throw null; } set { } }
         public string ZonalConfiguration { get { throw null; } }
     }
     public partial class RedisCreateOrUpdateContent
