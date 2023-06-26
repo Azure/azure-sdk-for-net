@@ -53,7 +53,7 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
             else
                 options.Serializers.Add(typeof(ModelC), new NewtonsoftJsonObjectSerializer());
 
-            Envelope<ModelC> model = ModelSerializer.Deserialize<Envelope<ModelC>>(new MemoryStream(Encoding.UTF8.GetBytes(serviceResponse)), options: options);
+            Envelope<ModelC> model = ModelSerializer.DeserializeJson<Envelope<ModelC>>(new MemoryStream(Encoding.UTF8.GetBytes(serviceResponse)), options: options);
 
             if (!ignoreReadOnly)
             {
@@ -64,13 +64,13 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
             VerifyModels.CheckAnimals(correctCat, model.ModelA, options);
             Assert.AreEqual("hello", model.ModelT.X);
             Assert.AreEqual("bye", model.ModelT.Y);
-            stream = ModelSerializer.Serialize(model, options);
+            stream = ModelSerializer.SerializeJson(model, options);
             stream.Position = 0;
             string roundTrip = new StreamReader(stream).ReadToEnd();
 
             Assert.That(roundTrip, Is.EqualTo(expectedSerializedString));
 
-            var model2 = ModelSerializer.Deserialize<Envelope<ModelC>>(new MemoryStream(Encoding.UTF8.GetBytes(roundTrip)), options: options);
+            var model2 = ModelSerializer.DeserializeJson<Envelope<ModelC>>(new MemoryStream(Encoding.UTF8.GetBytes(roundTrip)), options: options);
             ModelC correctModelC = new ModelC("hello", "bye");
             ModelC.VerifyModelC(correctModelC, model2.ModelT);
         }

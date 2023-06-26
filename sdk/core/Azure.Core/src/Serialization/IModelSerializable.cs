@@ -5,6 +5,9 @@ using System.IO;
 
 namespace Azure.Core.Serialization
 {
+    /// <summary>
+    /// TODO
+    /// </summary>
     public interface IModelSerializable
     {
         /// <summary>

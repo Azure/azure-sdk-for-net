@@ -12,13 +12,13 @@ using System.IO;
 namespace Azure.Core.Tests.Public.ModelSerializationTests.Models
 {
     [XmlRoot("Tag")]
-    internal class ModelI : IXmlSerializable, IModelSerializable
+    internal class XmlModelForCombinedInterface : IXmlSerializable, IModelSerializable
     {
         /// <summary> Initializes a new instance of ModelXml for testing. </summary>
         /// <param name="key"></param>
         /// <param name="value"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
-        public ModelI(string key, string value)
+        public XmlModelForCombinedInterface(string key, string value)
         {
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
@@ -34,7 +34,7 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests.Models
         [XmlElement("Value")]
         public string Value { get; set; }
 
-        void IXmlSerializable.Write(XmlWriter writer, string nameHint) => ((IModelSerializable)this).Serialize(writer, new ModelSerializerOptions() {NameHint = nameHint});
+        void IXmlSerializable.Write(XmlWriter writer, string nameHint) => ((IModelSerializable)this).Serialize(new ModelSerializerOptions() {NameHint = nameHint});
 
         internal static ModelXml DeserializeModelXml(XElement element, ModelSerializerOptions options = default)
         {
@@ -51,7 +51,7 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests.Models
             return new ModelXml(key, value);
         }
 
-        internal static void VerifyModelXml(ModelXml correctModelXml, ModelXml model2)
+        internal static void VerifyModelXmlModelForCombinedInterface(XmlModelForCombinedInterface correctModelXml, XmlModelForCombinedInterface model2)
         {
             Assert.AreEqual(correctModelXml.Key, model2.Key);
             Assert.AreEqual(correctModelXml.Value, model2.Value);

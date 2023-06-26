@@ -86,7 +86,7 @@ namespace Azure.Core.Samples
             ModelSerializerOptions options = new ModelSerializerOptions();
             options.Serializers.Add(typeof(DogListProperty), new NewtonsoftJsonObjectSerializer());
 
-            Stream stream = ModelSerializer.Serialize(dog, options);
+            Stream stream = ModelSerializer.SerializeJson(dog, options);
             #endregion
         }
 
@@ -116,7 +116,7 @@ namespace Azure.Core.Samples
                 FoodConsumed = { "kibble", "egg", "peanut butter" },
             };
 
-            Stream stream = ModelSerializer.Serialize(dog);
+            Stream stream = ModelSerializer.SerializeJson(dog);
             #endregion
         }
 
@@ -175,7 +175,7 @@ namespace Azure.Core.Samples
             envelope.ModelT = new ModelT { Name = "Fluffy", Age = 10 };
             ModelSerializerOptions options = new ModelSerializerOptions();
             options.Serializers.Add(typeof(ModelT), new NewtonsoftJsonObjectSerializer());
-            Stream stream = ModelSerializer.Serialize(envelope, options);
+            Stream stream = ModelSerializer.SerializeJson(envelope, options);
             #endregion
         }
 
@@ -193,7 +193,7 @@ namespace Azure.Core.Samples
             ModelSerializerOptions options = new ModelSerializerOptions();
             options.Serializers.Add(typeof(ModelT), new NewtonsoftJsonObjectSerializer());
 
-            Envelope<ModelT> model = ModelSerializer.Deserialize<Envelope<ModelT>>(new MemoryStream(Encoding.UTF8.GetBytes(serviceResponse)), options: options);
+            Envelope<ModelT> model = ModelSerializer.DeserializeJson<Envelope<ModelT>>(new MemoryStream(Encoding.UTF8.GetBytes(serviceResponse)), options: options);
             #endregion
         }
 
