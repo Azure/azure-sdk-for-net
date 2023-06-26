@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Hardwaresecuritymodules.Models
         /// <summary> Initializes a new instance of CloudHsmClusterSku. </summary>
         /// <param name="family"> Sku family of the Cloud HSM Cluster. </param>
         /// <param name="name"> Sku name of the Cloud HSM Cluster. </param>
-        public CloudHsmClusterSku(CloudHsmClusterSkuFamily? family = null, CloudHsmClusterSkuName name)
+        public CloudHsmClusterSku(CloudHsmClusterSkuName name, CloudHsmClusterSkuFamily? family = null)
         {
             Family = family ?? CloudHsmClusterSkuFamily.B;
             Name = name;
