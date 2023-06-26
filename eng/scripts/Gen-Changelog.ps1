@@ -1,12 +1,12 @@
 [CmdletBinding()]
 param (
-    [Parameter(Position=0)]
+    [Parameter(Position=0, Mandatory=$true)]
     [ValidateNotNullOrEmpty()]
     [string] $ServiceName,
-    [Parameter(Position=1)]
+    [Parameter(Position=1, Mandatory=$true)]
     [ValidateNotNullOrEmpty()]
     [string] $ReleaseVersion, # i.e. 1.0.1
-    [Parameter(Position=2)]
+    [Parameter(Position=2, Mandatory=$true)]
     [ValidateNotNullOrEmpty()]
     [string] $ReleaseDate # i.e. 2023-01-01
 )
