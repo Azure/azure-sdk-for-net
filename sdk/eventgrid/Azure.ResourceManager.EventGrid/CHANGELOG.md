@@ -15,9 +15,9 @@
 ### Features Added
 - Add support for Namespace
 - Add support for Namespace Topics.
-- Add support for Namespace Topic subscriptions.
+- Add support for Namespace Topic EventSubscriptions.
 - Add support for pull events from Namespace topics.
-- Add support for MQTT scenarios.
+- Add support for MQTT scenarios such as - Namespace Clients, Client Groups, CaCertificates and Permission Bindings.  
 
 ### Breaking Changes
 
