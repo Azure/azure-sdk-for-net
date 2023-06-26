@@ -80,8 +80,8 @@ namespace Azure.Storage.DataMovement
             internal const int VersionStrNumBytes = VersionStrLength * 2;
             internal const int TransferIdStrLength = 36;
             internal const int TransferIdStrNumBytes = TransferIdStrLength * 2;
-            internal const int ResourceTypeMaxStrLength = 20;
-            internal const int ResourceTypeNumBytes = ResourceTypeMaxStrLength * 2;
+            internal const int ResourceIdMaxStrLength = 20;
+            internal const int ResourceIdNumBytes = ResourceIdMaxStrLength * 2;
             internal const int PathStrMaxLength = 4096;
             internal const int PathStrNumBytes = PathStrMaxLength * 2;
             internal const int ExtraQueryMaxLength = 1000;
@@ -102,11 +102,11 @@ namespace Azure.Storage.DataMovement
             /// <summary>Index: 84</summary>
             internal const int PartNumberIndex = TransferIdIndex + TransferIdStrNumBytes;
             /// <summary>Index: 92</summary>
-            internal const int SourceResourceTypeLengthIndex = PartNumberIndex + LongSizeInBytes;
+            internal const int SourceResourceIdLengthIndex = PartNumberIndex + LongSizeInBytes;
             /// <summary>Index: 94</summary>
-            internal const int SourceResourceTypeIndex = SourceResourceTypeLengthIndex + UShortSizeInBytes;
+            internal const int SourceResourceIdIndex = SourceResourceIdLengthIndex + UShortSizeInBytes;
             /// <summary>Index: 114</summary>
-            internal const int SourcePathLengthIndex = SourceResourceTypeIndex + ResourceTypeMaxStrLength;
+            internal const int SourcePathLengthIndex = SourceResourceIdIndex + ResourceIdMaxStrLength;
             /// <summary>Index: 116</summary>
             internal const int SourcePathIndex = SourcePathLengthIndex + UShortSizeInBytes;
             /// <summary>Index: 8,308</summary>
@@ -114,13 +114,13 @@ namespace Azure.Storage.DataMovement
             /// <summary>Index: 8,310</summary>
             internal const int SourceExtraQueryIndex = SourceExtraQueryLengthIndex + UShortSizeInBytes;
             /// <summary>Index: 8,312</summary>
-            internal const int DestinationResourceTypeLengthIndex = SourceExtraQueryIndex + UShortSizeInBytes;
+            internal const int DestinationResourceIdLengthIndex = SourceExtraQueryIndex + UShortSizeInBytes;
             /// <summary>Index: 8,332</summary>
-            internal const int DestinationResourceTypeIndex = DestinationResourceTypeLengthIndex + ResourceTypeMaxStrLength;
+            internal const int DestinationResourceIdIndex = DestinationResourceIdLengthIndex + ResourceIdMaxStrLength;
 
             // TODO: Index below here +44
             /// <summary>Index: 10,288</summary>
-            internal const int DestinationPathLengthIndex = DestinationResourceTypeIndex + ExtraQueryNumBytes;
+            internal const int DestinationPathLengthIndex = DestinationResourceIdIndex + ExtraQueryNumBytes;
             /// <summary>Index: 10,290</summary>
             internal const int DestinationPathIndex = DestinationPathLengthIndex + UShortSizeInBytes;
             /// <summary>Index: 18,482</summary>
