@@ -160,5 +160,86 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics
                 WriteEvent(18, maxLinksAllowed, activitySourceName, activityDisplayName);
             }
         }
+
+        [Event(19, Message = "Failed to parse redirect headers. Not user actionable.", Level = EventLevel.Informational)]
+        public void RedirectHeaderParseFailed()
+        {
+            if (IsEnabled(EventLevel.Informational))
+            {
+                WriteEvent(19);
+            }
+        }
+
+        [Event(20, Message = "Failed to parse redirect cache, using default. Not user actionable.", Level = EventLevel.Informational)]
+        public void ParseRedirectCacheFailed()
+        {
+            if (IsEnabled(EventLevel.Informational))
+            {
+                WriteEvent(20);
+            }
+        }
+
+        [NonEvent]
+        public void ErrorCreatingStorageFolder(string path, Exception ex)
+        {
+            if (IsEnabled(EventLevel.Error))
+            {
+                ErrorCreatingStorageFolder(path, ex.FlattenException().ToInvariantString());
+            }
+        }
+
+        [Event(21, Message = "Failed to create a storage directory at path '{0}' due to an exception. If a storage directory cannot be created, telemetry may be lost. {1}", Level = EventLevel.Error)]
+        public void ErrorCreatingStorageFolder(string path, string exceptionMessage) => WriteEvent(21, path, exceptionMessage);
+
+        [NonEvent]
+        public void ErrorInitializingRoleInstanceToHostName(Exception ex)
+        {
+            if (IsEnabled(EventLevel.Error))
+            {
+                ErrorInitializingRoleInstanceToHostName(ex.FlattenException().ToInvariantString());
+            }
+        }
+
+        [Event(22, Message = "Failed to initialize Role Instance due to an exception. This data will be missing from telemetry. {0}", Level = EventLevel.Error)]
+        public void ErrorInitializingRoleInstanceToHostName(string exceptionMessage) => WriteEvent(22, exceptionMessage);
+
+        [NonEvent]
+        public void ErrorInitializingPartOfSdkVersion(Exception ex)
+        {
+            if (IsEnabled(EventLevel.Error))
+            {
+                ErrorInitializingPartOfSdkVersion(ex.FlattenException().ToInvariantString());
+            }
+        }
+
+        [Event(23, Message = "Failed to initialize SDK version due to an exception. Not user actionable. {0}", Level = EventLevel.Error)]
+        public void ErrorInitializingPartOfSdkVersion(string exceptionMessage) => WriteEvent(23, exceptionMessage);
+
+        [NonEvent]
+        public void SdkVersionCreateFailed(Exception ex)
+        {
+            if (IsEnabled(EventLevel.Error))
+            {
+                SdkVersionCreateFailed(ex.FlattenException().ToInvariantString());
+            }
+        }
+
+        [Event(24, Message = "Failed to create an SDK version due to an exception. Not user actionable. {0}", Level = EventLevel.Error)]
+        public void SdkVersionCreateFailed(string exceptionMessage) => WriteEvent(24, exceptionMessage);
+
+        [NonEvent]
+        public void FailedToTransmitFromStorage(Exception ex)
+        {
+            if (IsEnabled(EventLevel.Error))
+            {
+                FailedToTransmitFromStorage(ex.FlattenException().ToInvariantString());
+            }
+        }
+
+        [Event(25, Message = "Failed to transmit from storage due to an exception: {0}", Level = EventLevel.Error)]
+        public void FailedToTransmitFromStorage(string exceptionMessage) => WriteEvent(25, exceptionMessage);
+
+        [Event(26, Message = "Successfully transmitted a blob from storage.", Level = EventLevel.Informational)]
+        public void TransmitFromStorageSuccess() => WriteEvent(26);
     }
 }
