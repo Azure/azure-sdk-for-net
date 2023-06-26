@@ -10,6 +10,7 @@ using NUnit.Framework;
 
 namespace Azure.Communication.JobRouter.Tests.Scenarios
 {
+    [Ignore("enable after deployment with matching changes")]
     public class CancellationScenario : RouterLiveTestBase
     {
         public CancellationScenario(bool isAsync)

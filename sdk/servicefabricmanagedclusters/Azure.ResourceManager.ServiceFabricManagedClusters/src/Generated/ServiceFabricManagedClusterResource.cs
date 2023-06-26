@@ -36,6 +36,8 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
 
         private readonly ClientDiagnostics _serviceFabricManagedClusterManagedClustersClientDiagnostics;
         private readonly ManagedClustersRestOperations _serviceFabricManagedClusterManagedClustersRestClient;
+        private readonly ClientDiagnostics _managedAzResiliencyStatusClientDiagnostics;
+        private readonly ManagedAzResiliencyStatusRestOperations _managedAzResiliencyStatusRestClient;
         private readonly ServiceFabricManagedClusterData _data;
 
         /// <summary> Initializes a new instance of the <see cref="ServiceFabricManagedClusterResource"/> class for mocking. </summary>
@@ -60,6 +62,8 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
             _serviceFabricManagedClusterManagedClustersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ServiceFabricManagedClusters", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string serviceFabricManagedClusterManagedClustersApiVersion);
             _serviceFabricManagedClusterManagedClustersRestClient = new ManagedClustersRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, serviceFabricManagedClusterManagedClustersApiVersion);
+            _managedAzResiliencyStatusClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ServiceFabricManagedClusters", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+            _managedAzResiliencyStatusRestClient = new ManagedAzResiliencyStatusRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -440,6 +444,66 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
             {
                 var response = _serviceFabricManagedClusterManagedClustersRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken);
                 return Response.FromValue(new ServiceFabricManagedClusterResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Action to get Az Resiliency Status of all the Base resources constituting Service Fabric Managed Clusters.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceFabric/managedClusters/{clusterName}/getazresiliencystatus</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>managedAzResiliencyStatus_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<ManagedAzResiliencyStatus>> GetManagedAzResiliencyStatusAsync(CancellationToken cancellationToken = default)
+        {
+            using var scope = _managedAzResiliencyStatusClientDiagnostics.CreateScope("ServiceFabricManagedClusterResource.GetManagedAzResiliencyStatus");
+            scope.Start();
+            try
+            {
+                var response = await _managedAzResiliencyStatusRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Action to get Az Resiliency Status of all the Base resources constituting Service Fabric Managed Clusters.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceFabric/managedClusters/{clusterName}/getazresiliencystatus</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>managedAzResiliencyStatus_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<ManagedAzResiliencyStatus> GetManagedAzResiliencyStatus(CancellationToken cancellationToken = default)
+        {
+            using var scope = _managedAzResiliencyStatusClientDiagnostics.CreateScope("ServiceFabricManagedClusterResource.GetManagedAzResiliencyStatus");
+            scope.Start();
+            try
+            {
+                var response = _managedAzResiliencyStatusRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                return response;
             }
             catch (Exception e)
             {
