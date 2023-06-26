@@ -1810,8 +1810,8 @@
         "x-ms-routing-request-id": "WESTUS2:20230622T064627Z:83235f2e-296d-4b27-b15c-a2d862f4dacb"
       },
       "ResponseBody": {
-        "key1": "dxl2KmVg4u7hJmIGrMQFMZjxZ3wiPItjnyF2LKLKP3c=",
-        "key2": "kOry5zLbPw3q1l8FdY/qsicgu\u002BBQBzDhfuJJo7tVQ5M="
+        "key1": "PASSWORDCODE1BEFORE",
+        "key2": "PASSWORDCODE2BEFORE"
       }
     },
     {
@@ -1847,8 +1847,8 @@
         "x-ms-routing-request-id": "WESTUS2:20230622T064630Z:06d71530-e468-41e1-95bf-21bdb14cad40"
       },
       "ResponseBody": {
-        "key1": "rx9vFzgaOl/sLHI/FPPX/7VGGLqB4Klqa4sMAQGQh1I=",
-        "key2": "kOry5zLbPw3q1l8FdY/qsicgu\u002BBQBzDhfuJJo7tVQ5M="
+        "key1": "PASSWORDCODE1AFTER",
+        "key2": "PASSWORDCODE2BEFORE"
       }
     },
     {
