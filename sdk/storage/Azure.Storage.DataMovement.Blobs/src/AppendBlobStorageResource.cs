@@ -302,10 +302,20 @@ namespace Azure.Storage.DataMovement.Blobs
         {
             Argument.AssertNotNull(checkpointer, nameof(checkpointer));
 
-            string storedPath = await checkpointer.GetPathFromCheckpointer(transferId, isSource, cancellationToken).ConfigureAwait(false);
-            // TODO: get options AppendBlobStorageResourceOptions from stored file
+            string storedPath = await checkpointer.GetPathFromCheckpointerAsync(
+                transferId,
+                isSource,
+                cancellationToken).ConfigureAwait(false);
 
-            return new AppendBlobStorageResource(new AppendBlobClient(new Uri(storedPath)));
+            BlobStorageResourceOptions baseOptions = await checkpointer.GetBlobResourceOptionsAsync(
+                transferId,
+                isSource,
+                cancellationToken).ConfigureAwait(false);
+            AppendBlobStorageResourceOptions options = new(baseOptions);
+
+            return new AppendBlobStorageResource(
+                new AppendBlobClient(new Uri(storedPath)),
+                options);
         }
 
         /// <summary>
@@ -339,12 +349,20 @@ namespace Azure.Storage.DataMovement.Blobs
         {
             Argument.AssertNotNull(checkpointer, nameof(checkpointer));
 
-            string storedPath = await checkpointer.GetPathFromCheckpointer(transferId, isSource, cancellationToken).ConfigureAwait(false);
-            // TODO: get options AppendBlobStorageResourceOptions from stored file
+            string storedPath = await checkpointer.GetPathFromCheckpointerAsync(
+                transferId,
+                isSource,
+                cancellationToken).ConfigureAwait(false);
 
-            return new AppendBlobStorageResource(new AppendBlobClient(
-                new Uri(storedPath),
-                sharedKeyCredential));
+            BlobStorageResourceOptions baseOptions = await checkpointer.GetBlobResourceOptionsAsync(
+                transferId,
+                isSource,
+                cancellationToken).ConfigureAwait(false);
+            AppendBlobStorageResourceOptions options = new(baseOptions);
+
+            return new AppendBlobStorageResource(
+                new AppendBlobClient(new Uri(storedPath), sharedKeyCredential),
+                options);
         }
 
         /// <summary>
@@ -378,11 +396,20 @@ namespace Azure.Storage.DataMovement.Blobs
         {
             Argument.AssertNotNull(checkpointer, nameof(checkpointer));
 
-            string storedPath = await checkpointer.GetPathFromCheckpointer(transferId, isSource, cancellationToken).ConfigureAwait(false);
-            // TODO: get options AppendBlobStorageResourceOptions from stored file
-            return new AppendBlobStorageResource(new AppendBlobClient(
-                new Uri(storedPath),
-                tokenCredential));
+            string storedPath = await checkpointer.GetPathFromCheckpointerAsync(
+                transferId,
+                isSource,
+                cancellationToken).ConfigureAwait(false);
+
+            BlobStorageResourceOptions baseOptions = await checkpointer.GetBlobResourceOptionsAsync(
+                transferId,
+                isSource,
+                cancellationToken).ConfigureAwait(false);
+            AppendBlobStorageResourceOptions options = new(baseOptions);
+
+            return new AppendBlobStorageResource(
+                new AppendBlobClient(new Uri(storedPath), tokenCredential),
+                options);
         }
 
         /// <summary>
@@ -416,11 +443,20 @@ namespace Azure.Storage.DataMovement.Blobs
         {
             Argument.AssertNotNull(checkpointer, nameof(checkpointer));
 
-            string storedPath = await checkpointer.GetPathFromCheckpointer(transferId, isSource, cancellationToken).ConfigureAwait(false);
-            // TODO: get options AppendBlobStorageResourceOptions from stored file
-            return new AppendBlobStorageResource(new AppendBlobClient(
-                new Uri(storedPath),
-                sasCredential));
+            string storedPath = await checkpointer.GetPathFromCheckpointerAsync(
+                transferId,
+                isSource,
+                cancellationToken).ConfigureAwait(false);
+
+            BlobStorageResourceOptions baseOptions = await checkpointer.GetBlobResourceOptionsAsync(
+                transferId,
+                isSource,
+                cancellationToken).ConfigureAwait(false);
+            AppendBlobStorageResourceOptions options = new(baseOptions);
+
+            return new AppendBlobStorageResource(
+                new AppendBlobClient(new Uri(storedPath), sasCredential),
+                options);
         }
 
         private void GrabEtag(Response response)

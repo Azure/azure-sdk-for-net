@@ -261,27 +261,6 @@ namespace Azure.Storage.DataMovement
         }
 
         /// <summary>
-        /// stub
-        /// </summary>
-        /// <param name="transferId"></param>
-        /// <param name="sourceResource"></param>
-        /// <param name="destinationResource"></param>
-        /// <param name="transferOptions"></param>
-        /// <param name="cancellationToken"></param>
-        /// <returns></returns>
-        /// <exception cref="NotImplementedException"></exception>
-        public virtual Task<DataTransfer> ResumeTransferAsync(
-            string transferId,
-            StorageResource sourceResource,
-            StorageResource destinationResource,
-            TransferOptions transferOptions = default,
-            CancellationToken cancellationToken = default)
-        {
-            // stub
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
         /// Gets the current transfers stored in the <see cref="TransferManager"/>.
         /// </summary>
         /// <param name="filterByStatus">

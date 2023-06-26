@@ -283,7 +283,7 @@ namespace Azure.Storage.DataMovement
         {
             Argument.AssertNotNull(checkpointer, nameof(checkpointer));
 
-            string storedPath = await checkpointer.GetPathFromCheckpointer(transferId, isSource, cancellationToken).ConfigureAwait(false);
+            string storedPath = await checkpointer.GetPathFromCheckpointerAsync(transferId, isSource, cancellationToken).ConfigureAwait(false);
             return new LocalFileStorageResource(storedPath);
         }
     }

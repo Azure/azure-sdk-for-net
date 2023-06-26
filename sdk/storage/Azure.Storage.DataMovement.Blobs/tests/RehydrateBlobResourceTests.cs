@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using Azure.Storage.Blobs.Models;
@@ -182,7 +183,48 @@ namespace Azure.Storage.DataMovement.Tests
                 destinationType,
                 new List<string>() { destinationPath });
 
-            PageBlobStorageResource storageResource = await PageBlobStorageResource.RehydrateResource(
+            AppendBlobStorageResource storageResource = await AppendBlobStorageResource.RehydrateResource(
+                checkpointer,
+                transferId,
+                isSource);
+
+            Assert.AreEqual(originalPath, storageResource.Uri.AbsoluteUri);
+        }
+
+        [Test]
+        [TestCase(true)]
+        [TestCase(false)]
+        public async Task RehydrateBlobContainer(bool isSource)
+        {
+            using DisposingLocalDirectory test = DisposingLocalDirectory.GetTestDirectory(Guid.NewGuid().ToString());
+            TransferCheckpointer checkpointer = new LocalTransferCheckpointer(test.DirectoryPath);
+            string transferId = GetNewTransferId();
+            List<string> sourcePaths = new List<string>();
+            string sourceParentPath = "https://storageaccount.blob.core.windows.net/sourcecontainer";
+            List<string> destinationPaths = new List<string>();
+            string destinationParentPath = "https://storageaccount.blob.core.windows.net/destcontainer";
+            int jobPartCount = 10;
+            for (int i = 0; i < jobPartCount; i++)
+            {
+                string childPath = GetNewString(5);
+                sourcePaths.Add(string.Join("/", sourceParentPath, childPath));
+                destinationPaths.Add(string.Join("/", destinationParentPath, childPath));
+            }
+            string originalPath = isSource ? sourceParentPath : destinationParentPath;
+
+            StorageResourceType sourceType = isSource ? StorageResourceType.Local : StorageResourceType.BlockBlob;
+            StorageResourceType destinationType = !isSource ? StorageResourceType.Local : StorageResourceType.BlockBlob;
+
+            await AddJobPartToCheckpointer(
+                checkpointer,
+                transferId,
+                sourceType,
+                sourcePaths,
+                destinationType,
+                destinationPaths,
+                jobPartCount);
+
+            BlobStorageResourceContainer storageResource = await BlobStorageResourceContainer.RehydrateResource(
                 checkpointer,
                 transferId,
                 isSource);

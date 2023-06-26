@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Net.NetworkInformation;
 using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
@@ -168,10 +169,25 @@ namespace Azure.Storage.DataMovement.Blobs
         {
             Argument.AssertNotNull(checkpointer, nameof(checkpointer));
 
-            string storedPath = await checkpointer.GetPathFromCheckpointer(transferId, isSource, cancellationToken).ConfigureAwait(false);
-            // TODO: get options BlockBlobStorageResourceOptions from stored file
+            string storedPath = await checkpointer.GetPathFromCheckpointerAsync(
+                transferId,
+                isSource,
+                cancellationToken).ConfigureAwait(false);
 
-            return new BlobStorageResourceContainer(new BlobContainerClient(new Uri(storedPath)));
+            BlobUriBuilder uriBuilder = new BlobUriBuilder(new Uri(storedPath));
+            string prefix = uriBuilder.BlobName;
+            uriBuilder.BlobName = "";
+
+            BlobStorageResourceContainerOptions options =
+                await checkpointer.GetBlobContainerOptionsAsync(
+                    prefix,
+                    transferId,
+                    isSource,
+                    cancellationToken).ConfigureAwait(false);
+
+            return new BlobStorageResourceContainer(
+                new BlobContainerClient(uriBuilder.ToUri()),
+                options);
         }
 
         /// <summary>
@@ -205,12 +221,25 @@ namespace Azure.Storage.DataMovement.Blobs
         {
             Argument.AssertNotNull(checkpointer, nameof(checkpointer));
 
-            string storedPath = await checkpointer.GetPathFromCheckpointer(transferId, isSource, cancellationToken).ConfigureAwait(false);
-            // TODO: get options BlockBlobStorageResourceOptions from stored file
+            string storedPath = await checkpointer.GetPathFromCheckpointerAsync(
+                transferId,
+                isSource,
+                cancellationToken).ConfigureAwait(false);
 
-            return new BlobStorageResourceContainer(new BlobContainerClient(
-                new Uri(storedPath),
-                sharedKeyCredential));
+            BlobUriBuilder uriBuilder = new BlobUriBuilder(new Uri(storedPath));
+            string prefix = uriBuilder.BlobName;
+            uriBuilder.BlobName = "";
+
+            BlobStorageResourceContainerOptions options =
+                await checkpointer.GetBlobContainerOptionsAsync(
+                    prefix,
+                    transferId,
+                    isSource,
+                    cancellationToken).ConfigureAwait(false);
+
+            return new BlobStorageResourceContainer(
+                new BlobContainerClient(uriBuilder.ToUri(), sharedKeyCredential),
+                options);
         }
 
         /// <summary>
@@ -244,11 +273,25 @@ namespace Azure.Storage.DataMovement.Blobs
         {
             Argument.AssertNotNull(checkpointer, nameof(checkpointer));
 
-            string storedPath = await checkpointer.GetPathFromCheckpointer(transferId, isSource, cancellationToken).ConfigureAwait(false);
-            // TODO: get options BlockBlobStorageResourceOptions from stored file
-            return new BlobStorageResourceContainer(new BlobContainerClient(
-                new Uri(storedPath),
-                tokenCredential));
+            string storedPath = await checkpointer.GetPathFromCheckpointerAsync(
+                transferId,
+                isSource,
+                cancellationToken).ConfigureAwait(false);
+
+            BlobUriBuilder uriBuilder = new BlobUriBuilder(new Uri(storedPath));
+            string prefix = uriBuilder.BlobName;
+            uriBuilder.BlobName = "";
+
+            BlobStorageResourceContainerOptions options =
+                await checkpointer.GetBlobContainerOptionsAsync(
+                    prefix,
+                    transferId,
+                    isSource,
+                    cancellationToken).ConfigureAwait(false);
+
+            return new BlobStorageResourceContainer(
+                new BlobContainerClient(uriBuilder.ToUri(), tokenCredential),
+                options);
         }
 
         /// <summary>
@@ -282,11 +325,25 @@ namespace Azure.Storage.DataMovement.Blobs
         {
             Argument.AssertNotNull(checkpointer, nameof(checkpointer));
 
-            string storedPath = await checkpointer.GetPathFromCheckpointer(transferId, isSource, cancellationToken).ConfigureAwait(false);
-            // TODO: get options BlockBlobStorageResourceOptions from stored file
-            return new BlobStorageResourceContainer(new BlobContainerClient(
-                new Uri(storedPath),
-                sasCredential));
+            string storedPath = await checkpointer.GetPathFromCheckpointerAsync(
+                transferId,
+                isSource,
+                cancellationToken).ConfigureAwait(false);
+
+            BlobUriBuilder uriBuilder = new BlobUriBuilder(new Uri(storedPath));
+            string prefix = uriBuilder.BlobName;
+            uriBuilder.BlobName = "";
+
+            BlobStorageResourceContainerOptions options =
+                await checkpointer.GetBlobContainerOptionsAsync(
+                    prefix,
+                    transferId,
+                    isSource,
+                    cancellationToken).ConfigureAwait(false);
+
+            return new BlobStorageResourceContainer(
+                new BlobContainerClient(uriBuilder.ToUri(), sasCredential),
+                options);
         }
 
         private string ApplyOptionalPrefix(string path)

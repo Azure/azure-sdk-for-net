@@ -24,8 +24,6 @@ namespace Azure.Storage.DataMovement.Tests
         private enum StorageResourceType
         {
             BlockBlob,
-            PageBlob,
-            AppendBlob,
             Local
         }
 
@@ -127,6 +125,7 @@ namespace Azure.Storage.DataMovement.Tests
 
             Assert.AreEqual(originalPath, storageResource.Path);
         }
+
         [Test]
         [TestCase(true)]
         [TestCase(false)]

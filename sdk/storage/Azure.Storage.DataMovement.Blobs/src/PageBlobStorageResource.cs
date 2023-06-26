@@ -313,10 +313,20 @@ namespace Azure.Storage.DataMovement.Blobs
         {
             Argument.AssertNotNull(checkpointer, nameof(checkpointer));
 
-            string storedPath = await checkpointer.GetPathFromCheckpointer(transferId, isSource, cancellationToken).ConfigureAwait(false);
-            // TODO: get options PageBlobStorageResourceOptions from stored file
+            string storedPath = await checkpointer.GetPathFromCheckpointerAsync(
+                transferId,
+                isSource,
+                cancellationToken).ConfigureAwait(false);
 
-            return new PageBlobStorageResource(new PageBlobClient(new Uri(storedPath)));
+            PageBlobStorageResourceOptions options =
+                await checkpointer.GetPageBlobResourceOptionsAsync(
+                    transferId,
+                    isSource,
+                    cancellationToken).ConfigureAwait(false);
+
+            return new PageBlobStorageResource(
+                new PageBlobClient(new Uri(storedPath)),
+                options);
         }
 
         /// <summary>
@@ -350,12 +360,17 @@ namespace Azure.Storage.DataMovement.Blobs
         {
             Argument.AssertNotNull(checkpointer, nameof(checkpointer));
 
-            string storedPath = await checkpointer.GetPathFromCheckpointer(transferId, isSource, cancellationToken).ConfigureAwait(false);
-            // TODO: get options PageBlobStorageResourceOptions from stored file
+            PageBlobStorageResourceOptions options =
+                await checkpointer.GetPageBlobResourceOptionsAsync(
+                    transferId,
+                    isSource,
+                    cancellationToken).ConfigureAwait(false);
 
-            return new PageBlobStorageResource(new PageBlobClient(
-                new Uri(storedPath),
-                sharedKeyCredential));
+            string storedPath = await checkpointer.GetPathFromCheckpointerAsync(transferId, isSource, cancellationToken).ConfigureAwait(false);
+
+            return new PageBlobStorageResource(
+                new PageBlobClient(new Uri(storedPath), sharedKeyCredential),
+                options);
         }
 
         /// <summary>
@@ -389,11 +404,17 @@ namespace Azure.Storage.DataMovement.Blobs
         {
             Argument.AssertNotNull(checkpointer, nameof(checkpointer));
 
-            string storedPath = await checkpointer.GetPathFromCheckpointer(transferId, isSource, cancellationToken).ConfigureAwait(false);
+            PageBlobStorageResourceOptions options =
+                await checkpointer.GetPageBlobResourceOptionsAsync(
+                    transferId,
+                    isSource,
+                    cancellationToken).ConfigureAwait(false);
+
+            string storedPath = await checkpointer.GetPathFromCheckpointerAsync(transferId, isSource, cancellationToken).ConfigureAwait(false);
             // TODO: get options PageBlobStorageResourceOptions from stored file
-            return new PageBlobStorageResource(new PageBlobClient(
-                new Uri(storedPath),
-                tokenCredential));
+            return new PageBlobStorageResource(
+                new PageBlobClient(new Uri(storedPath), tokenCredential),
+                options);
         }
 
         /// <summary>
@@ -427,11 +448,17 @@ namespace Azure.Storage.DataMovement.Blobs
         {
             Argument.AssertNotNull(checkpointer, nameof(checkpointer));
 
-            string storedPath = await checkpointer.GetPathFromCheckpointer(transferId, isSource, cancellationToken).ConfigureAwait(false);
-            // TODO: get options PageBlobStorageResourceOptions from stored file
-            return new PageBlobStorageResource(new PageBlobClient(
-                new Uri(storedPath),
-                sasCredential));
+            PageBlobStorageResourceOptions options =
+                await checkpointer.GetPageBlobResourceOptionsAsync(
+                    transferId,
+                    isSource,
+                    cancellationToken).ConfigureAwait(false);
+
+            string storedPath = await checkpointer.GetPathFromCheckpointerAsync(transferId, isSource, cancellationToken).ConfigureAwait(false);
+
+            return new PageBlobStorageResource(
+                new PageBlobClient(new Uri(storedPath), sasCredential),
+                options);
         }
 
         private void GrabEtag(Response response)

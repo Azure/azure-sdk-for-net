@@ -2,10 +2,9 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.IO.MemoryMappedFiles;
-using System.Linq;
-using System.Runtime.InteropServices.ComTypes;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -66,7 +65,7 @@ namespace Azure.Storage.DataMovement
         /// The <see cref="Task"/> to rehdyrate a <see cref="LocalFileStorageResource"/> from
         /// a stored checkpointed transfer state.
         /// </returns>
-        internal static async Task<string> GetPathFromCheckpointer(
+        internal static async Task<string> GetPathFromCheckpointerAsync(
             this TransferCheckpointer checkpointer,
             string transferId,
             bool isSource,
@@ -76,8 +75,8 @@ namespace Azure.Storage.DataMovement
                 DataMovementConstants.PlanFile.SourcePathLengthIndex :
                 DataMovementConstants.PlanFile.DestinationPathLengthIndex;
             int readLength = isSource ?
-                (DataMovementConstants.PlanFile.SourceExtraQueryLengthIndex - DataMovementConstants.PlanFile.SourcePathLengthIndex) :
-                (DataMovementConstants.PlanFile.DestinationExtraQueryLengthIndex - DataMovementConstants.PlanFile.DestinationPathLengthIndex);
+                (DataMovementConstants.PlanFile.SourceExtraQueryLengthIndex - startPathIndex) :
+                (DataMovementConstants.PlanFile.DestinationExtraQueryLengthIndex - startPathIndex);
 
             int partCount = await checkpointer.CurrentJobPartCountAsync(transferId).ConfigureAwait(false);
             string storedPath = default;
@@ -122,6 +121,36 @@ namespace Azure.Storage.DataMovement
                 }
             }
             return storedPath.TrimEnd('\\');
+        }
+
+        internal static IDictionary<string, string> ToDictionary(this string str, string elementName)
+        {
+            IDictionary<string, string> dictionary = new Dictionary<string, string>();
+            string[] splitSemiColon = str.Split(';');
+            foreach (string value in splitSemiColon)
+            {
+                if (!string.IsNullOrEmpty(value))
+                {
+                    string[] splitEqual = value.Split('=');
+                    if (splitEqual.Length != 2)
+                    {
+                        throw Errors.InvalidStringToDictionary(elementName, str);
+                    }
+                    dictionary.Add(splitEqual[0], splitEqual[1]);
+                }
+            }
+            return dictionary;
+        }
+
+        internal static string ToString(this IDictionary<string, string> dict)
+        {
+            string concatStr = "";
+            foreach (KeyValuePair<string, string> kv in dict)
+            {
+                // e.g. store like "header=value;"
+                concatStr = string.Concat(concatStr, $"{kv.Key}={kv.Value};");
+            }
+            return concatStr;
         }
     }
 }
