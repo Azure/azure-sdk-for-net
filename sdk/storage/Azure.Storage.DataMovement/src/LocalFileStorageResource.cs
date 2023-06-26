@@ -7,8 +7,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Storage.DataMovement.Models;
-using Azure.Storage.DataMovement.Models.JobPlan;
-using static Azure.Storage.Constants.Sas;
 
 namespace Azure.Storage.DataMovement
 {

@@ -12,7 +12,6 @@ using Azure.Core;
 using Azure.Storage.Blobs.Models;
 using Azure.Storage.Blobs.Specialized;
 using Azure.Storage.DataMovement.Models;
-using static Azure.Storage.Constants.Sas;
 
 namespace Azure.Storage.DataMovement.Blobs
 {

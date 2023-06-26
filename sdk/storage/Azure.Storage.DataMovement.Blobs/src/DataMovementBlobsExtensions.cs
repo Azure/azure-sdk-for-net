@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 using System.Threading;
 using Azure.Storage.Blobs.Models;
 using Azure.Storage.DataMovement.Models;
-using Azure.Core;
 using Azure.Storage.DataMovement.Models.JobPlan;
 
 namespace Azure.Storage.DataMovement.Blobs
