@@ -101,11 +101,13 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
                 },
                 initialAgentPoolConfigurationsArray,
                 "1.24.9",
-                networkConfiguration
-            );
-            createData.AadAdminGroupObjectIds = new List<string>() { "3d4c8620-ac8c-4bd6-9a92-f2b75923ef9f" };
-            createData.AdministratorConfiguration = administratorConfiguration;
-            createData.ManagedResourceGroupConfiguration = new ManagedResourceGroupConfiguration(new AzureLocation("East US"), kubernetesClusterName + "-MRG");
+                networkConfiguration)
+            {
+                AadAdminGroupObjectIds = new List<string>() { "3d4c8620-ac8c-4bd6-9a92-f2b75923ef9f" },
+                AdministratorConfiguration = administratorConfiguration,
+                ManagedResourceGroupConfiguration = new ManagedResourceGroupConfiguration(new AzureLocation("East US"), kubernetesClusterName + "-MRG")
+            };
+
             ArmOperation<KubernetesClusterResource> createResult = await collection.CreateOrUpdateAsync(WaitUntil.Completed, kubernetesClusterName, createData);
             Assert.AreEqual(createResult.Value.Data.Name, kubernetesClusterName);
 
