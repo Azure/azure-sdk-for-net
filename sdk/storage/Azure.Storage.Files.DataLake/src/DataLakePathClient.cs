@@ -2106,8 +2106,8 @@ namespace Azure.Storage.Files.DataLake
             CancellationToken cancellationToken = default)
         {
             return RenameInternal(
-                destinationFileSystem,
                 destinationPath,
+                destinationFileSystem,
                 sourceConditions,
                 destinationConditions,
                 async: false,
@@ -2155,8 +2155,8 @@ namespace Azure.Storage.Files.DataLake
             CancellationToken cancellationToken = default)
         {
             return await RenameInternal(
-                destinationFileSystem,
                 destinationPath,
+                destinationFileSystem,
                 sourceConditions,
                 destinationConditions,
                 async: true,
