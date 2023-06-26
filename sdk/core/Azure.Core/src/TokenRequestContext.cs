@@ -51,6 +51,20 @@ namespace Azure.Core
         }
 
         /// <summary>
+        /// Creates a new TokenRequest with the specified scopes and options.
+        /// </summary>
+        /// <param name="scopes">The scopes required for the token.</param>
+        /// <param name="options">The <see cref="TokenRequestContextOptions"/> to configure token requests.</param>
+        public TokenRequestContext(string[] scopes, TokenRequestContextOptions options)
+        {
+            Scopes = scopes;
+            ParentRequestId = options.ParentRequestId;
+            Claims = options.Claims;
+            TenantId = options.TenantId;
+            EnableCae = options.EnableCae;
+        }
+
+        /// <summary>
         /// The scopes required for the token.
         /// </summary>
         public string[] Scopes { get; }
@@ -69,5 +83,10 @@ namespace Azure.Core
         /// The tenantId to be included in the token request.
         /// </summary>
         public string? TenantId { get; }
+
+        /// <summary>
+        /// Indicates whether to enable Conditional Access Exclusion (CAE) for the token request.
+        /// </summary>
+        public bool EnableCae { get; } = true;
     }
 }

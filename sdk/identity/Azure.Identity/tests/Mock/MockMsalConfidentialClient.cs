@@ -19,7 +19,7 @@ namespace Azure.Identity.Tests.Mock
         { }
 
         public MockMsalConfidentialClient(CredentialPipeline pipeline, string tenantId, string clientId, string clientSecret, string redirectUrl, TokenCredentialOptions options)
-            :base(pipeline, tenantId, clientId, clientSecret, redirectUrl, options)
+            : base(pipeline, tenantId, clientId, clientSecret, redirectUrl, options)
         { }
 
         public MockMsalConfidentialClient(AuthenticationResult result)
@@ -63,7 +63,7 @@ namespace Azure.Identity.Tests.Mock
             return this;
         }
 
-        public override ValueTask<AuthenticationResult> AcquireTokenForClientCoreAsync(string[] scopes, string tenantId, bool async, CancellationToken cancellationToken)
+        public override ValueTask<AuthenticationResult> AcquireTokenForClientCoreAsync(string[] scopes, string tenantId, bool enableCae, bool async, CancellationToken cancellationToken)
         {
             return new(ClientFactory(scopes, tenantId));
         }
@@ -73,6 +73,7 @@ namespace Azure.Identity.Tests.Mock
             AuthenticationAccount account,
             string tenantId,
             string replyUri,
+            bool enableCae,
             bool async,
             CancellationToken cancellationToken)
         {
@@ -84,6 +85,7 @@ namespace Azure.Identity.Tests.Mock
             string code,
             string tenantId,
             string replyUri,
+            bool enableCae,
             bool async,
             CancellationToken cancellationToken)
         {
@@ -94,6 +96,7 @@ namespace Azure.Identity.Tests.Mock
             string[] scopes,
             string tenantId,
             UserAssertion userAssertionValue,
+            bool enableCae,
             bool async,
             CancellationToken cancellationToken)
         {

@@ -13,6 +13,7 @@ namespace Azure.Identity
         where TClient : IClientApplicationBase
     {
         private readonly AsyncLockWithValue<TClient> _clientAsyncLock;
+        private readonly AsyncLockWithValue<TClient> _clientWithCaeAsyncLock;
         private bool _logAccountDetails;
 
         protected internal bool IsPiiLoggingEnabled { get; }
@@ -43,6 +44,7 @@ namespace Azure.Identity
             ClientId = clientId;
             TokenCache = cacheOptions?.TokenCachePersistenceOptions == null ? null : new TokenCache(cacheOptions?.TokenCachePersistenceOptions);
             _clientAsyncLock = new AsyncLockWithValue<TClient>();
+            _clientWithCaeAsyncLock = new AsyncLockWithValue<TClient>();
         }
 
         internal string TenantId { get; }
@@ -55,17 +57,20 @@ namespace Azure.Identity
 
         protected internal CredentialPipeline Pipeline { get; }
 
-        protected abstract ValueTask<TClient> CreateClientAsync(bool async, CancellationToken cancellationToken);
+        protected abstract ValueTask<TClient> CreateClientAsync(bool enableCae, bool async, CancellationToken cancellationToken);
 
-        protected async ValueTask<TClient> GetClientAsync(bool async, CancellationToken cancellationToken)
+        protected async ValueTask<TClient> GetClientAsync(bool enableCae, bool async, CancellationToken cancellationToken)
         {
-            using var asyncLock = await _clientAsyncLock.GetLockOrValueAsync(async, cancellationToken).ConfigureAwait(false);
+            using var asyncLock = enableCae ?
+                await _clientWithCaeAsyncLock.GetLockOrValueAsync(async, cancellationToken).ConfigureAwait(false) :
+                await _clientAsyncLock.GetLockOrValueAsync(async, cancellationToken).ConfigureAwait(false);
+
             if (asyncLock.HasValue)
             {
                 return asyncLock.Value;
             }
 
-            var client = await CreateClientAsync(async, cancellationToken).ConfigureAwait(false);
+            var client = await CreateClientAsync(enableCae, async, cancellationToken).ConfigureAwait(false);
 
             if (TokenCache != null)
             {

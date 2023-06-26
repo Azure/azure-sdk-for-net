@@ -29,7 +29,7 @@ namespace Azure.Identity.Tests.Mock
 
         public Func<DeviceCodeInfo, CancellationToken, AuthenticationResult> DeviceCodeAuthFactory { get; set; }
 
-        public Func<string[], IPublicClientApplication> PubClientAppFactory { get; set; }
+        public Func<bool, IPublicClientApplication> PubClientAppFactory { get; set; }
 
         public Func<string[], string,
             string,
@@ -43,19 +43,19 @@ namespace Azure.Identity.Tests.Mock
 
         public MockMsalPublicClient(AuthenticationResult result)
         {
-            AuthFactory = (_,_) => result;
-            UserPassAuthFactory = (_,_) => result;
-            InteractiveAuthFactory = (_,_,_,_,_,_,_) => result;
-            SilentAuthFactory = (_,_) => result;
-            ExtendedSilentAuthFactory = (_,_,_,_,_,_) => result;
-            DeviceCodeAuthFactory = (_,_) => result;
-            RefreshTokenFactory = (_,_,_,_,_,_,_) => result;
+            AuthFactory = (_, _) => result;
+            UserPassAuthFactory = (_, _) => result;
+            InteractiveAuthFactory = (_, _, _, _, _, _, _) => result;
+            SilentAuthFactory = (_, _) => result;
+            ExtendedSilentAuthFactory = (_, _, _, _, _, _) => result;
+            DeviceCodeAuthFactory = (_, _) => result;
+            RefreshTokenFactory = (_, _, _, _, _, _, _) => result;
         }
 
         public MockMsalPublicClient(CredentialPipeline pipeline, string tenantId, string clientId, string redirectUrl, TokenCredentialOptions options)
             : base(pipeline, tenantId, clientId, redirectUrl, options) { }
 
-        protected override ValueTask<List<IAccount>> GetAccountsCoreAsync(bool async, CancellationToken cancellationToken)
+        protected override ValueTask<List<IAccount>> GetAccountsCoreAsync(bool enableCae, bool async, CancellationToken cancellationToken)
         {
             return new(Accounts);
         }
@@ -66,6 +66,7 @@ namespace Azure.Identity.Tests.Mock
             string username,
             string password,
             string tenantId,
+            bool enableCae,
             bool async,
             CancellationToken cancellationToken)
         {
@@ -85,6 +86,7 @@ namespace Azure.Identity.Tests.Mock
             Prompt prompt,
             string loginHint,
             string tenantId,
+            bool enableCae,
             bool async,
             CancellationToken cancellationToken)
         {
@@ -108,6 +110,7 @@ namespace Azure.Identity.Tests.Mock
             string claims,
             IAccount account,
             string tenantId,
+            bool enableCae,
             bool async,
             CancellationToken cancellationToken)
         {
@@ -131,6 +134,7 @@ namespace Azure.Identity.Tests.Mock
             string claims,
             AuthenticationRecord record,
             string tenantId,
+            bool enableCae,
             bool async,
             CancellationToken cancellationToken)
         {
@@ -148,6 +152,7 @@ namespace Azure.Identity.Tests.Mock
             string[] scopes,
             string claims,
             Func<DeviceCodeResult, Task> deviceCodeCallback,
+            bool enableCae,
             bool async,
             CancellationToken cancellationToken)
         {
@@ -162,19 +167,19 @@ namespace Azure.Identity.Tests.Mock
             throw new NotImplementedException();
         }
 
-        internal ValueTask<IPublicClientApplication> CallCreateClientAsync(bool async, CancellationToken cancellationToken)
+        internal ValueTask<IPublicClientApplication> CallCreateClientAsync(bool enableCae, bool async, CancellationToken cancellationToken)
         {
-            return CreateClientAsync(async, cancellationToken);
+            return CreateClientAsync(enableCae, async, cancellationToken);
         }
 
-        protected override ValueTask<IPublicClientApplication> CreateClientCoreAsync(string[] clientCapabilities, bool async, CancellationToken cancellationToken)
+        protected override ValueTask<IPublicClientApplication> CreateClientCoreAsync(bool enableCae, bool async, CancellationToken cancellationToken)
         {
             if (PubClientAppFactory == null)
             {
                 throw new NotImplementedException();
             }
 
-            return new ValueTask<IPublicClientApplication>(PubClientAppFactory(clientCapabilities));
+            return new ValueTask<IPublicClientApplication>(PubClientAppFactory(enableCae));
         }
 
         protected override ValueTask<AuthenticationResult> AcquireTokenByRefreshTokenCoreAsync(
@@ -183,6 +188,7 @@ namespace Azure.Identity.Tests.Mock
             string refreshToken,
             AzureCloudInstance azureCloudInstance,
             string tenant,
+            bool enableCae,
             bool async,
             CancellationToken cancellationToken)
         {

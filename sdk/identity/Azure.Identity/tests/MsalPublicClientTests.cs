@@ -47,7 +47,7 @@ namespace Azure.Identity.Tests
                     return Moq.Mock.Of<IPublicClientApplication>();
                 };
 
-                mock.CallCreateClientAsync(false, default);
+                mock.CallCreateClientAsync(true, false, default);
             }
             finally
             {
