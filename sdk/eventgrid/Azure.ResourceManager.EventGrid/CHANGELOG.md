@@ -1,8 +1,23 @@
 # Release History
 
-## 1.1.0-beta.2 (Unreleased)
+## 1.1.0-beta.3 (Unreleased)
 
 ### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+## 1.1.0-beta.2 (2023-06-30)
+
+### Features Added
+- Add support for Namespace
+- Add support for Namespace Topics.
+- Add support for Namespace Topic subscriptions.
+- Add support for pull events from Namespace topics.
+- Add support for MQTT scenarios.
 
 ### Breaking Changes
 
