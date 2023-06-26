@@ -372,6 +372,16 @@ namespace Azure.Developer.LoadTesting.Models
             return new TestRunServerMetricConfig(testRunId, metrics, createdDateTime, createdBy, lastModifiedDateTime, lastModifiedBy);
         }
 
+        /// <summary> Initializes a new instance of DimensionValueList. </summary>
+        /// <param name="value"></param>
+        /// <returns> A new <see cref="Models.DimensionValueList"/> instance for mocking. </returns>
+        public static DimensionValueList DimensionValueList(IEnumerable<string> value = null)
+        {
+            value ??= new List<string>();
+
+            return new DimensionValueList(value?.ToList());
+        }
+
         /// <summary> Initializes a new instance of MetricDefinitionCollection. </summary>
         /// <param name="value"> the values for the metric definitions. </param>
         /// <returns> A new <see cref="Models.MetricDefinitionCollection"/> instance for mocking. </returns>

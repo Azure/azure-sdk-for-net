@@ -1033,6 +1033,66 @@ Console.WriteLine(result.GetProperty("lastModifiedBy").ToString());
 ]]></code>
 </example>
     </member>
+    <member name="GetMetricDimensionValuesAsync(string,string,string,Interval?,string,string,CancellationToken)">
+<example>
+This sample shows how to call GetMetricDimensionValuesAsync with required parameters.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new LoadTestRunClient(endpoint, credential);
+
+await foreach (var item in client.GetMetricDimensionValuesAsync("<testRunId>", "<name>", "<metricNamespace>", null, "<metricName>", "<timespan>"))
+{
+}
+]]></code>
+</example>
+    </member>
+    <member name="GetMetricDimensionValues(string,string,string,Interval?,string,string,CancellationToken)">
+<example>
+This sample shows how to call GetMetricDimensionValues with required parameters.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new LoadTestRunClient(endpoint, credential);
+
+foreach (var item in client.GetMetricDimensionValues("<testRunId>", "<name>", "<metricNamespace>", null, "<metricName>", "<timespan>"))
+{
+}
+]]></code>
+</example>
+    </member>
+    <member name="GetMetricDimensionValuesAsync(string,string,string,string,string,string,RequestContext)">
+<example>
+This sample shows how to call GetMetricDimensionValuesAsync with required parameters and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new LoadTestRunClient(endpoint, credential);
+
+await foreach (var item in client.GetMetricDimensionValuesAsync("<testRunId>", "<name>", "<metricNamespace>", "<interval>", "<metricName>", "<timespan>", new RequestContext()))
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("value")[0].ToString());
+}
+]]></code>
+</example>
+    </member>
+    <member name="GetMetricDimensionValues(string,string,string,string,string,string,RequestContext)">
+<example>
+This sample shows how to call GetMetricDimensionValues with required parameters and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new LoadTestRunClient(endpoint, credential);
+
+foreach (var item in client.GetMetricDimensionValues("<testRunId>", "<name>", "<metricNamespace>", "<interval>", "<metricName>", "<timespan>", new RequestContext()))
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("value")[0].ToString());
+}
+]]></code>
+</example>
+    </member>
     <member name="GetMetricsAsync(string,MetricRequestPayload,string,Interval?,string,string,string,CancellationToken)">
 <example>
 This sample shows how to call GetMetricsAsync with required parameters.
