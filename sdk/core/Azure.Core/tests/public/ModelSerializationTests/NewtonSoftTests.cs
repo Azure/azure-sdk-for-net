@@ -50,7 +50,7 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
             else
                 options.Serializers.Add(typeof(Animal), new NewtonsoftJsonObjectSerializer());
 
-            var model = ModelSerializer.Deserialize<Animal>(new MemoryStream(Encoding.UTF8.GetBytes(serviceResponse)), options: options);
+            var model = ModelSerializer.DeserializeJson<Animal>(new MemoryStream(Encoding.UTF8.GetBytes(serviceResponse)), options: options);
 
             if (!ignoreReadOnly)
             {
@@ -60,7 +60,7 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
             Assert.IsFalse(model.IsHungry);
             Assert.That(model.Weight, Is.EqualTo(2.5));
 
-            stream = ModelSerializer.Serialize<Animal>(model, options);
+            stream = ModelSerializer.SerializeJson<Animal>(model, options);
             stream.Position = 0;
             string roundTrip = new StreamReader(stream).ReadToEnd();
 
@@ -68,7 +68,7 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
             Assert.That(roundTrip, Is.EqualTo(expectedSerializedString));
 #endif
 
-            var model2 = ModelSerializer.Deserialize<Animal>(new MemoryStream(Encoding.UTF8.GetBytes(roundTrip)), options: options);
+            var model2 = ModelSerializer.DeserializeJson<Animal>(new MemoryStream(Encoding.UTF8.GetBytes(roundTrip)), options: options);
             VerifyModels.CheckAnimals(model, model2, options);
         }
 

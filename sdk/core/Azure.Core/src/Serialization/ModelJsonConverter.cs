@@ -13,7 +13,7 @@ namespace Azure.Core.Serialization
     /// .
     /// </summary>
 #pragma warning disable AZC0014 // Avoid using banned types in public API
-    public class ModelJsonConverter : JsonConverter<IModelSerializable>
+    public class ModelJsonConverter : JsonConverter<IJsonSerializableModel>
 #pragma warning restore AZC0014 // Avoid using banned types in public API
     {
         /// <summary>
@@ -54,10 +54,10 @@ namespace Azure.Core.Serialization
         /// <returns></returns>
         /// <exception cref="NotSupportedException"></exception>
 #pragma warning disable AZC0014 // Avoid using banned types in public API
-        public override IModelSerializable Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+        public override IJsonSerializableModel Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
 #pragma warning restore AZC0014 // Avoid using banned types in public API
         {
-            var model = ModelSerializer.DeserializeObject(JsonDocument.ParseValue(ref reader).RootElement, typeToConvert, ConvertOptions(options)) as IModelSerializable;
+            var model = ModelSerializer.DeserializeObjectJson(JsonDocument.ParseValue(ref reader).RootElement, typeToConvert, ConvertOptions(options)) as IJsonSerializableModel;
             if (model is null)
                 throw new InvalidOperationException($"Unexpected error when deserializing {typeToConvert.Name}.");
 
@@ -71,7 +71,7 @@ namespace Azure.Core.Serialization
         /// <param name="value"></param>
         /// <param name="options"></param>
 #pragma warning disable AZC0014 // Avoid using banned types in public API
-        public override void Write(Utf8JsonWriter writer, IModelSerializable value, JsonSerializerOptions options)
+        public override void Write(Utf8JsonWriter writer, IJsonSerializableModel value, JsonSerializerOptions options)
 #pragma warning restore AZC0014 // Avoid using banned types in public API
         {
             value.Serialize(writer, ConvertOptions(options));
