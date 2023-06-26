@@ -17,7 +17,7 @@ using Azure.ResourceManager.EventGrid.Models;
 
 namespace Azure.ResourceManager.EventGrid.Samples
 {
-    public partial class Sample_SubscriptionCollection
+    public partial class Sample_NamespaceEventSubscriptionCollection
     {
         // NamespaceTopicEventSubscriptions_Get
         [NUnit.Framework.Test]
@@ -41,16 +41,16 @@ namespace Azure.ResourceManager.EventGrid.Samples
             ResourceIdentifier namespaceTopicResourceId = NamespaceTopicResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, namespaceName, topicName);
             NamespaceTopicResource namespaceTopic = client.GetNamespaceTopicResource(namespaceTopicResourceId);
 
-            // get the collection of this SubscriptionResource
-            SubscriptionCollection collection = namespaceTopic.GetSubscriptions();
+            // get the collection of this NamespaceEventSubscriptionResource
+            NamespaceEventSubscriptionCollection collection = namespaceTopic.GetNamespaceEventSubscriptions();
 
             // invoke the operation
             string eventSubscriptionName = "examplenamespacetopicEventSub1";
-            SubscriptionResource result = await collection.GetAsync(eventSubscriptionName);
+            NamespaceEventSubscriptionResource result = await collection.GetAsync(eventSubscriptionName);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            SubscriptionData resourceData = result.Data;
+            NamespaceEventSubscriptionData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -77,8 +77,8 @@ namespace Azure.ResourceManager.EventGrid.Samples
             ResourceIdentifier namespaceTopicResourceId = NamespaceTopicResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, namespaceName, topicName);
             NamespaceTopicResource namespaceTopic = client.GetNamespaceTopicResource(namespaceTopicResourceId);
 
-            // get the collection of this SubscriptionResource
-            SubscriptionCollection collection = namespaceTopic.GetSubscriptions();
+            // get the collection of this NamespaceEventSubscriptionResource
+            NamespaceEventSubscriptionCollection collection = namespaceTopic.GetNamespaceEventSubscriptions();
 
             // invoke the operation
             string eventSubscriptionName = "examplenamespacetopicEventSub1";
@@ -109,12 +109,12 @@ namespace Azure.ResourceManager.EventGrid.Samples
             ResourceIdentifier namespaceTopicResourceId = NamespaceTopicResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, namespaceName, topicName);
             NamespaceTopicResource namespaceTopic = client.GetNamespaceTopicResource(namespaceTopicResourceId);
 
-            // get the collection of this SubscriptionResource
-            SubscriptionCollection collection = namespaceTopic.GetSubscriptions();
+            // get the collection of this NamespaceEventSubscriptionResource
+            NamespaceEventSubscriptionCollection collection = namespaceTopic.GetNamespaceEventSubscriptions();
 
             // invoke the operation
             string eventSubscriptionName = "examplenamespacetopicEventSub2";
-            SubscriptionData data = new SubscriptionData()
+            NamespaceEventSubscriptionData data = new NamespaceEventSubscriptionData()
             {
                 DeliveryConfiguration = new DeliveryConfiguration()
                 {
@@ -128,12 +128,12 @@ namespace Azure.ResourceManager.EventGrid.Samples
                 },
                 EventDeliverySchema = DeliverySchema.CloudEventSchemaV10,
             };
-            ArmOperation<SubscriptionResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, eventSubscriptionName, data);
-            SubscriptionResource result = lro.Value;
+            ArmOperation<NamespaceEventSubscriptionResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, eventSubscriptionName, data);
+            NamespaceEventSubscriptionResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            SubscriptionData resourceData = result.Data;
+            NamespaceEventSubscriptionData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -160,15 +160,15 @@ namespace Azure.ResourceManager.EventGrid.Samples
             ResourceIdentifier namespaceTopicResourceId = NamespaceTopicResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, namespaceName, topicName);
             NamespaceTopicResource namespaceTopic = client.GetNamespaceTopicResource(namespaceTopicResourceId);
 
-            // get the collection of this SubscriptionResource
-            SubscriptionCollection collection = namespaceTopic.GetSubscriptions();
+            // get the collection of this NamespaceEventSubscriptionResource
+            NamespaceEventSubscriptionCollection collection = namespaceTopic.GetNamespaceEventSubscriptions();
 
             // invoke the operation and iterate over the result
-            await foreach (SubscriptionResource item in collection.GetAllAsync())
+            await foreach (NamespaceEventSubscriptionResource item in collection.GetAllAsync())
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                SubscriptionData resourceData = item.Data;
+                NamespaceEventSubscriptionData resourceData = item.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }

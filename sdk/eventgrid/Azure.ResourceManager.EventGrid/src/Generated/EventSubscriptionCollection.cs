@@ -243,7 +243,7 @@ namespace Azure.ResourceManager.EventGrid
         /// <returns> An async collection of <see cref="EventSubscriptionResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<EventSubscriptionResource> GetAllAsync(string filter = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            if (Id.ResourceType == Resources.SubscriptionResource.ResourceType)
+            if (Id.ResourceType == SubscriptionResource.ResourceType)
             {
                 HttpMessage FirstPageRequest(int? pageSizeHint) => _eventSubscriptionRestClient.CreateListGlobalBySubscriptionRequest(Id.SubscriptionId, filter, top);
                 HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _eventSubscriptionRestClient.CreateListGlobalBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, filter, top);
@@ -312,7 +312,7 @@ namespace Azure.ResourceManager.EventGrid
         /// <returns> A collection of <see cref="EventSubscriptionResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<EventSubscriptionResource> GetAll(string filter = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            if (Id.ResourceType == Resources.SubscriptionResource.ResourceType)
+            if (Id.ResourceType == SubscriptionResource.ResourceType)
             {
                 HttpMessage FirstPageRequest(int? pageSizeHint) => _eventSubscriptionRestClient.CreateListGlobalBySubscriptionRequest(Id.SubscriptionId, filter, top);
                 HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _eventSubscriptionRestClient.CreateListGlobalBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, filter, top);

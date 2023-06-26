@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.EventGrid.Models
         public UpdateTopicSpacesConfigurationInfo TopicSpacesConfiguration { get; set; }
         /// <summary>
         /// This determines if traffic is allowed over public network. By default it is enabled. 
-        /// You can further restrict to specific IPs by configuring &lt;seealso cref=&quot;P:Microsoft.Azure.Events.ResourceProvider.Common.Contracts.PubSub.NamespaceUpdateParameterProperties.InboundIpRules&quot; /&gt;
+        /// You can further restrict to specific IPs by configuring &lt;seealso cref="P:Microsoft.Azure.Events.ResourceProvider.Common.Contracts.PubSub.NamespaceUpdateParameterProperties.InboundIpRules" /&gt;
         /// </summary>
         public EventGridPublicNetworkAccess? PublicNetworkAccess { get; set; }
         /// <summary> This can be used to restrict traffic from specific IPs instead of all IPs. Note: These are considered only if PublicNetworkAccess is enabled. </summary>

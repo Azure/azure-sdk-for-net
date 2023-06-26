@@ -32,10 +32,10 @@ namespace Azure.ResourceManager.EventGrid
         /// <param name="description"> Description for the Topic Space resource. </param>
         /// <param name="topicTemplates">
         /// The topic filters in the topic space.
-        /// Example: &quot;topicTemplates&quot;: [ 
-        ///               &quot;devices/foo/bar&quot;,
-        ///               &quot;devices/topic1/+&quot;,
-        ///               &quot;devices/${principal.name}/${principal.attributes.keyName}&quot; ].
+        /// Example: "topicTemplates": [ 
+        ///               "devices/foo/bar",
+        ///               "devices/topic1/+",
+        ///               "devices/${principal.name}/${principal.attributes.keyName}" ].
         /// </param>
         /// <param name="provisioningState"> Provisioning state of the TopicSpace resource. </param>
         internal TopicSpaceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string description, IList<string> topicTemplates, TopicSpaceProvisioningState? provisioningState) : base(id, name, resourceType, systemData)
@@ -49,10 +49,10 @@ namespace Azure.ResourceManager.EventGrid
         public string Description { get; set; }
         /// <summary>
         /// The topic filters in the topic space.
-        /// Example: &quot;topicTemplates&quot;: [ 
-        ///               &quot;devices/foo/bar&quot;,
-        ///               &quot;devices/topic1/+&quot;,
-        ///               &quot;devices/${principal.name}/${principal.attributes.keyName}&quot; ].
+        /// Example: "topicTemplates": [ 
+        ///               "devices/foo/bar",
+        ///               "devices/topic1/+",
+        ///               "devices/${principal.name}/${principal.attributes.keyName}" ].
         /// </summary>
         public IList<string> TopicTemplates { get; }
         /// <summary> Provisioning state of the TopicSpace resource. </summary>

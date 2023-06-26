@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.EventGrid.Models
         /// <param name="description"> Description for the Client Group resource. </param>
         /// <param name="query">
         /// The grouping query for the clients.
-        /// Example : attributes.keyName IN [&apos;a&apos;, &apos;b&apos;, &apos;c&apos;].
+        /// Example : attributes.keyName IN ['a', 'b', 'c'].
         /// </param>
         /// <param name="provisioningState"> Provisioning state of the ClientGroup resource. </param>
         /// <returns> A new <see cref="EventGrid.ClientGroupData"/> instance for mocking. </returns>
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.EventGrid.Models
         /// <param name="attributes">
         /// Attributes for the client. Supported values are int, bool, string, string[].
         /// Example:
-        /// &quot;attributes&quot;: { &quot;room&quot;: &quot;345&quot;, &quot;floor&quot;: 12, &quot;deviceTypes&quot;: [&quot;Fan&quot;, &quot;Light&quot;] }
+        /// "attributes": { "room": "345", "floor": 12, "deviceTypes": ["Fan", "Light"] }
         /// </param>
         /// <param name="provisioningState"> Provisioning state of the Client resource. </param>
         /// <returns> A new <see cref="EventGrid.ClientData"/> instance for mocking. </returns>
@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.EventGrid.Models
             return new DomainTopicData(id, name, resourceType, systemData, provisioningState);
         }
 
-        /// <summary> Initializes a new instance of SubscriptionData. </summary>
+        /// <summary> Initializes a new instance of NamespaceEventSubscriptionData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -214,10 +214,10 @@ namespace Azure.ResourceManager.EventGrid.Models
         /// <param name="deliveryConfiguration"> Information about the delivery configuration of the event subscription. </param>
         /// <param name="eventDeliverySchema"> The event delivery schema for the event subscription. </param>
         /// <param name="filtersConfiguration"> Information about the filter for the event subscription. </param>
-        /// <returns> A new <see cref="EventGrid.SubscriptionData"/> instance for mocking. </returns>
-        public static SubscriptionData SubscriptionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, SubscriptionProvisioningState? provisioningState = null, DeliveryConfiguration deliveryConfiguration = null, DeliverySchema? eventDeliverySchema = null, FiltersConfiguration filtersConfiguration = null)
+        /// <returns> A new <see cref="EventGrid.NamespaceEventSubscriptionData"/> instance for mocking. </returns>
+        public static NamespaceEventSubscriptionData NamespaceEventSubscriptionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, SubscriptionProvisioningState? provisioningState = null, DeliveryConfiguration deliveryConfiguration = null, DeliverySchema? eventDeliverySchema = null, FiltersConfiguration filtersConfiguration = null)
         {
-            return new SubscriptionData(id, name, resourceType, systemData, provisioningState, deliveryConfiguration, eventDeliverySchema, filtersConfiguration);
+            return new NamespaceEventSubscriptionData(id, name, resourceType, systemData, provisioningState, deliveryConfiguration, eventDeliverySchema, filtersConfiguration);
         }
 
         /// <summary> Initializes a new instance of EventGridSubscriptionData. </summary>
@@ -279,7 +279,7 @@ namespace Azure.ResourceManager.EventGrid.Models
         /// </param>
         /// <param name="publicNetworkAccess">
         /// This determines if traffic is allowed over public network. By default it is enabled.
-        /// You can further restrict to specific IPs by configuring &lt;seealso cref=&quot;P:Microsoft.Azure.Events.ResourceProvider.Common.Contracts.PubSub.NamespaceProperties.InboundIpRules&quot; /&gt;
+        /// You can further restrict to specific IPs by configuring &lt;seealso cref="P:Microsoft.Azure.Events.ResourceProvider.Common.Contracts.PubSub.NamespaceProperties.InboundIpRules" /&gt;
         /// </param>
         /// <param name="inboundIPRules"> This can be used to restrict traffic from specific IPs instead of all IPs. Note: These are considered only if PublicNetworkAccess is enabled. </param>
         /// <param name="minimumTlsVersionAllowed"> Minimum TLS version of the publisher allowed to publish to this namespace. Only TLS version 1.2 is supported. </param>
@@ -297,7 +297,7 @@ namespace Azure.ResourceManager.EventGrid.Models
         /// <param name="state"> Indicate if Topic Spaces Configuration is enabled for the namespace. Default is Disabled. </param>
         /// <param name="routeTopicResourceId">
         /// Fully qualified Azure Resource Id for the Event Grid Topic to which events will be routed to from TopicSpaces under a namespace.
-        /// This property should be in the following format &apos;/subscriptions/{subId}/resourcegroups/{resourceGroupName}/providers/microsoft.EventGrid/topics/{topicName}&apos;.
+        /// This property should be in the following format '/subscriptions/{subId}/resourcegroups/{resourceGroupName}/providers/microsoft.EventGrid/topics/{topicName}'.
         /// This topic should reside in the same region where namespace is located.
         /// </param>
         /// <param name="hostname"> The endpoint for the topic spaces configuration. This is a read-only property. </param>
@@ -580,7 +580,7 @@ namespace Azure.ResourceManager.EventGrid.Models
         /// <param name="metricResourceId"> Metric resource id for the topic. </param>
         /// <param name="publicNetworkAccess">
         /// This determines if traffic is allowed over public network. By default it is enabled. 
-        /// You can further restrict to specific IPs by configuring &lt;seealso cref=&quot;P:Microsoft.Azure.Events.ResourceProvider.Common.Contracts.TopicProperties.InboundIpRules&quot; /&gt;
+        /// You can further restrict to specific IPs by configuring &lt;seealso cref="P:Microsoft.Azure.Events.ResourceProvider.Common.Contracts.TopicProperties.InboundIpRules" /&gt;
         /// </param>
         /// <param name="inboundIPRules"> This can be used to restrict traffic from specific IPs instead of all IPs. Note: These are considered only if PublicNetworkAccess is enabled. </param>
         /// <param name="isLocalAuthDisabled"> This boolean is used to enable or disable local auth. Default value is false. When the property is set to true, only AAD token will be used to authenticate if user is allowed to publish to the topic. </param>
@@ -631,10 +631,10 @@ namespace Azure.ResourceManager.EventGrid.Models
         /// <param name="description"> Description for the Topic Space resource. </param>
         /// <param name="topicTemplates">
         /// The topic filters in the topic space.
-        /// Example: &quot;topicTemplates&quot;: [ 
-        ///               &quot;devices/foo/bar&quot;,
-        ///               &quot;devices/topic1/+&quot;,
-        ///               &quot;devices/${principal.name}/${principal.attributes.keyName}&quot; ].
+        /// Example: "topicTemplates": [ 
+        ///               "devices/foo/bar",
+        ///               "devices/topic1/+",
+        ///               "devices/${principal.name}/${principal.attributes.keyName}" ].
         /// </param>
         /// <param name="provisioningState"> Provisioning state of the TopicSpace resource. </param>
         /// <returns> A new <see cref="EventGrid.TopicSpaceData"/> instance for mocking. </returns>

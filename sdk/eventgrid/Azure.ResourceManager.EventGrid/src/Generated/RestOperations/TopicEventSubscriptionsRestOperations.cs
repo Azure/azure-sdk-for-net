@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.EventGrid
 
         /// <summary> Get all delivery attributes for an event subscription for topic. </summary>
         /// <param name="subscriptionId"> Subscription credentials that uniquely identify a Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The name of the resource group within the user&apos;s subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group within the user's subscription. </param>
         /// <param name="topicName"> Name of the topic. </param>
         /// <param name="eventSubscriptionName"> Name of the event subscription. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.EventGrid
 
         /// <summary> Get all delivery attributes for an event subscription for topic. </summary>
         /// <param name="subscriptionId"> Subscription credentials that uniquely identify a Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The name of the resource group within the user&apos;s subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group within the user's subscription. </param>
         /// <param name="topicName"> Name of the topic. </param>
         /// <param name="eventSubscriptionName"> Name of the event subscription. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.EventGrid
 
         /// <summary> Get properties of an event subscription of a topic. </summary>
         /// <param name="subscriptionId"> Subscription credentials that uniquely identify a Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The name of the resource group within the user&apos;s subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group within the user's subscription. </param>
         /// <param name="topicName"> Name of the topic. </param>
         /// <param name="eventSubscriptionName"> Name of the event subscription to be found. Event subscription names must be between 3 and 100 characters in length and use alphanumeric letters only. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.EventGrid
 
         /// <summary> Get properties of an event subscription of a topic. </summary>
         /// <param name="subscriptionId"> Subscription credentials that uniquely identify a Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The name of the resource group within the user&apos;s subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group within the user's subscription. </param>
         /// <param name="topicName"> Name of the topic. </param>
         /// <param name="eventSubscriptionName"> Name of the event subscription to be found. Event subscription names must be between 3 and 100 characters in length and use alphanumeric letters only. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

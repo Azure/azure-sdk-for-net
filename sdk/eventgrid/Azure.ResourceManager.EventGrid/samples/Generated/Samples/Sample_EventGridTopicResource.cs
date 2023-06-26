@@ -141,8 +141,8 @@ Action = EventGridIPActionType.Allow,
             // this example assumes you already have this SubscriptionResource created on azure
             // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
             string subscriptionId = "8f6b6269-84f2-4d09-9e31-1127efcd1e40";
-            ResourceIdentifier subscriptionResourceId = Resources.SubscriptionResource.CreateResourceIdentifier(subscriptionId);
-            Resources.SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
+            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
+            SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
             // invoke the operation and iterate over the result
             await foreach (EventGridTopicResource item in subscriptionResource.GetEventGridTopicsAsync())

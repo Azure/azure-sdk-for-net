@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.EventGrid
         /// <param name="attributes">
         /// Attributes for the client. Supported values are int, bool, string, string[].
         /// Example:
-        /// &quot;attributes&quot;: { &quot;room&quot;: &quot;345&quot;, &quot;floor&quot;: 12, &quot;deviceTypes&quot;: [&quot;Fan&quot;, &quot;Light&quot;] }
+        /// "attributes": { "room": "345", "floor": 12, "deviceTypes": ["Fan", "Light"] }
         /// </param>
         /// <param name="provisioningState"> Provisioning state of the Client resource. </param>
         internal ClientData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string description, string authenticationName, ClientAuthentication authentication, ClientCertificateAuthentication clientCertificateAuthentication, ClientState? state, IDictionary<string, BinaryData> attributes, ClientProvisioningState? provisioningState) : base(id, name, resourceType, systemData)
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.EventGrid
         /// <summary>
         /// Attributes for the client. Supported values are int, bool, string, string[].
         /// Example:
-        /// &quot;attributes&quot;: { &quot;room&quot;: &quot;345&quot;, &quot;floor&quot;: 12, &quot;deviceTypes&quot;: [&quot;Fan&quot;, &quot;Light&quot;] }
+        /// "attributes": { "room": "345", "floor": 12, "deviceTypes": ["Fan", "Light"] }
         /// <para>
         /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>

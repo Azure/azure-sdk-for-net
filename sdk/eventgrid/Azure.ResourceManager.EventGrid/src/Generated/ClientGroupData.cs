@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.EventGrid
         /// <param name="description"> Description for the Client Group resource. </param>
         /// <param name="query">
         /// The grouping query for the clients.
-        /// Example : attributes.keyName IN [&apos;a&apos;, &apos;b&apos;, &apos;c&apos;].
+        /// Example : attributes.keyName IN ['a', 'b', 'c'].
         /// </param>
         /// <param name="provisioningState"> Provisioning state of the ClientGroup resource. </param>
         internal ClientGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string description, string query, ClientGroupProvisioningState? provisioningState) : base(id, name, resourceType, systemData)
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.EventGrid
         public string Description { get; set; }
         /// <summary>
         /// The grouping query for the clients.
-        /// Example : attributes.keyName IN [&apos;a&apos;, &apos;b&apos;, &apos;c&apos;].
+        /// Example : attributes.keyName IN ['a', 'b', 'c'].
         /// </summary>
         public string Query { get; set; }
         /// <summary> Provisioning state of the ClientGroup resource. </summary>

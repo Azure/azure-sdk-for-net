@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.EventGrid.Models
 
         /// <summary> Initializes a new instance of StaticRoutingEnrichment. </summary>
         /// <param name="key"> Static routing enrichment key. </param>
-        /// <param name="valueType"> Static routing enrichment value type. For e.g. this property value can be &apos;String&apos;. </param>
+        /// <param name="valueType"> Static routing enrichment value type. For e.g. this property value can be 'String'. </param>
         internal StaticRoutingEnrichment(string key, StaticRoutingEnrichmentType? valueType)
         {
             Key = key;
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.EventGrid.Models
 
         /// <summary> Static routing enrichment key. </summary>
         public string Key { get; set; }
-        /// <summary> Static routing enrichment value type. For e.g. this property value can be &apos;String&apos;. </summary>
+        /// <summary> Static routing enrichment value type. For e.g. this property value can be 'String'. </summary>
         public StaticRoutingEnrichmentType? ValueType { get; set; }
     }
 }

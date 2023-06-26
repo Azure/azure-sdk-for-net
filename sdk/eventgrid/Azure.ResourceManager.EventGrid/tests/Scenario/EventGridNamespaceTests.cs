@@ -310,7 +310,7 @@ namespace Azure.ResourceManager.EventGrid.Tests
             Assert.AreEqual(namespaceTopicsResponse1.Data.EventRetentionInDays, 1);
 
             // create subscriptions
-            var subscriptionsCollection = namespaceTopicsResponse1.GetSubscriptions();
+            var subscriptionsCollection = namespaceTopicsResponse1.GetNamespaceEventSubscriptions();
 
             DeliveryConfiguration deliveryConfiguration = new DeliveryConfiguration()
             {
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.EventGrid.Tests
                     ReceiveLockDurationInSeconds = 120
                 }
             };
-            SubscriptionData subscriptionData = new SubscriptionData()
+            NamespaceEventSubscriptionData subscriptionData = new NamespaceEventSubscriptionData()
             {
                 DeliveryConfiguration = deliveryConfiguration
             };
@@ -357,7 +357,7 @@ namespace Azure.ResourceManager.EventGrid.Tests
                     ReceiveLockDurationInSeconds = 120
                 }
             };
-            SubscriptionPatch subscriptionPatch = new SubscriptionPatch()
+            NamespaceEventSubscriptionPatch subscriptionPatch = new NamespaceEventSubscriptionPatch()
             {
                 DeliveryConfiguration = deliveryConfiguration2
             };

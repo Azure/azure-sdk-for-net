@@ -18,46 +18,46 @@ using Azure.ResourceManager.EventGrid.Models;
 namespace Azure.ResourceManager.EventGrid
 {
     /// <summary>
-    /// A Class representing a Subscription along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="SubscriptionResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetSubscriptionResource method.
-    /// Otherwise you can get one from its parent resource <see cref="NamespaceTopicResource" /> using the GetSubscription method.
+    /// A Class representing a NamespaceEventSubscription along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="NamespaceEventSubscriptionResource" />
+    /// from an instance of <see cref="ArmClient" /> using the GetNamespaceEventSubscriptionResource method.
+    /// Otherwise you can get one from its parent resource <see cref="NamespaceTopicResource" /> using the GetNamespaceEventSubscription method.
     /// </summary>
-    public partial class SubscriptionResource : ArmResource
+    public partial class NamespaceEventSubscriptionResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="SubscriptionResource"/> instance. </summary>
+        /// <summary> Generate the resource identifier of a <see cref="NamespaceEventSubscriptionResource"/> instance. </summary>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string namespaceName, string topicName, string eventSubscriptionName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/namespaces/{namespaceName}/topics/{topicName}/eventSubscriptions/{eventSubscriptionName}";
             return new ResourceIdentifier(resourceId);
         }
 
-        private readonly ClientDiagnostics _subscriptionNamespaceTopicEventSubscriptionsClientDiagnostics;
-        private readonly NamespaceTopicEventSubscriptionsRestOperations _subscriptionNamespaceTopicEventSubscriptionsRestClient;
-        private readonly SubscriptionData _data;
+        private readonly ClientDiagnostics _namespaceEventSubscriptionNamespaceTopicEventSubscriptionsClientDiagnostics;
+        private readonly NamespaceTopicEventSubscriptionsRestOperations _namespaceEventSubscriptionNamespaceTopicEventSubscriptionsRestClient;
+        private readonly NamespaceEventSubscriptionData _data;
 
-        /// <summary> Initializes a new instance of the <see cref="SubscriptionResource"/> class for mocking. </summary>
-        protected SubscriptionResource()
+        /// <summary> Initializes a new instance of the <see cref="NamespaceEventSubscriptionResource"/> class for mocking. </summary>
+        protected NamespaceEventSubscriptionResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "SubscriptionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref = "NamespaceEventSubscriptionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal SubscriptionResource(ArmClient client, SubscriptionData data) : this(client, data.Id)
+        internal NamespaceEventSubscriptionResource(ArmClient client, NamespaceEventSubscriptionData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="SubscriptionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="NamespaceEventSubscriptionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal SubscriptionResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal NamespaceEventSubscriptionResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _subscriptionNamespaceTopicEventSubscriptionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.EventGrid", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string subscriptionNamespaceTopicEventSubscriptionsApiVersion);
-            _subscriptionNamespaceTopicEventSubscriptionsRestClient = new NamespaceTopicEventSubscriptionsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, subscriptionNamespaceTopicEventSubscriptionsApiVersion);
+            _namespaceEventSubscriptionNamespaceTopicEventSubscriptionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.EventGrid", ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ResourceType, out string namespaceEventSubscriptionNamespaceTopicEventSubscriptionsApiVersion);
+            _namespaceEventSubscriptionNamespaceTopicEventSubscriptionsRestClient = new NamespaceTopicEventSubscriptionsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, namespaceEventSubscriptionNamespaceTopicEventSubscriptionsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.EventGrid
 
         /// <summary> Gets the data representing this Feature. </summary>
         /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
-        public virtual SubscriptionData Data
+        public virtual NamespaceEventSubscriptionData Data
         {
             get
             {
@@ -101,16 +101,16 @@ namespace Azure.ResourceManager.EventGrid
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<SubscriptionResource>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<NamespaceEventSubscriptionResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _subscriptionNamespaceTopicEventSubscriptionsClientDiagnostics.CreateScope("SubscriptionResource.Get");
+            using var scope = _namespaceEventSubscriptionNamespaceTopicEventSubscriptionsClientDiagnostics.CreateScope("NamespaceEventSubscriptionResource.Get");
             scope.Start();
             try
             {
-                var response = await _subscriptionNamespaceTopicEventSubscriptionsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _namespaceEventSubscriptionNamespaceTopicEventSubscriptionsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SubscriptionResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new NamespaceEventSubscriptionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -133,16 +133,16 @@ namespace Azure.ResourceManager.EventGrid
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<SubscriptionResource> Get(CancellationToken cancellationToken = default)
+        public virtual Response<NamespaceEventSubscriptionResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _subscriptionNamespaceTopicEventSubscriptionsClientDiagnostics.CreateScope("SubscriptionResource.Get");
+            using var scope = _namespaceEventSubscriptionNamespaceTopicEventSubscriptionsClientDiagnostics.CreateScope("NamespaceEventSubscriptionResource.Get");
             scope.Start();
             try
             {
-                var response = _subscriptionNamespaceTopicEventSubscriptionsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _namespaceEventSubscriptionNamespaceTopicEventSubscriptionsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SubscriptionResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new NamespaceEventSubscriptionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -168,12 +168,12 @@ namespace Azure.ResourceManager.EventGrid
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _subscriptionNamespaceTopicEventSubscriptionsClientDiagnostics.CreateScope("SubscriptionResource.Delete");
+            using var scope = _namespaceEventSubscriptionNamespaceTopicEventSubscriptionsClientDiagnostics.CreateScope("NamespaceEventSubscriptionResource.Delete");
             scope.Start();
             try
             {
-                var response = await _subscriptionNamespaceTopicEventSubscriptionsRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new EventGridArmOperation(_subscriptionNamespaceTopicEventSubscriptionsClientDiagnostics, Pipeline, _subscriptionNamespaceTopicEventSubscriptionsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var response = await _namespaceEventSubscriptionNamespaceTopicEventSubscriptionsRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var operation = new EventGridArmOperation(_namespaceEventSubscriptionNamespaceTopicEventSubscriptionsClientDiagnostics, Pipeline, _namespaceEventSubscriptionNamespaceTopicEventSubscriptionsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -202,12 +202,12 @@ namespace Azure.ResourceManager.EventGrid
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _subscriptionNamespaceTopicEventSubscriptionsClientDiagnostics.CreateScope("SubscriptionResource.Delete");
+            using var scope = _namespaceEventSubscriptionNamespaceTopicEventSubscriptionsClientDiagnostics.CreateScope("NamespaceEventSubscriptionResource.Delete");
             scope.Start();
             try
             {
-                var response = _subscriptionNamespaceTopicEventSubscriptionsRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new EventGridArmOperation(_subscriptionNamespaceTopicEventSubscriptionsClientDiagnostics, Pipeline, _subscriptionNamespaceTopicEventSubscriptionsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var response = _namespaceEventSubscriptionNamespaceTopicEventSubscriptionsRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
+                var operation = new EventGridArmOperation(_namespaceEventSubscriptionNamespaceTopicEventSubscriptionsClientDiagnostics, Pipeline, _namespaceEventSubscriptionNamespaceTopicEventSubscriptionsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -236,16 +236,16 @@ namespace Azure.ResourceManager.EventGrid
         /// <param name="patch"> Updated event subscription information. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual async Task<ArmOperation<SubscriptionResource>> UpdateAsync(WaitUntil waitUntil, SubscriptionPatch patch, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<NamespaceEventSubscriptionResource>> UpdateAsync(WaitUntil waitUntil, NamespaceEventSubscriptionPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using var scope = _subscriptionNamespaceTopicEventSubscriptionsClientDiagnostics.CreateScope("SubscriptionResource.Update");
+            using var scope = _namespaceEventSubscriptionNamespaceTopicEventSubscriptionsClientDiagnostics.CreateScope("NamespaceEventSubscriptionResource.Update");
             scope.Start();
             try
             {
-                var response = await _subscriptionNamespaceTopicEventSubscriptionsRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, patch, cancellationToken).ConfigureAwait(false);
-                var operation = new EventGridArmOperation<SubscriptionResource>(new SubscriptionOperationSource(Client), _subscriptionNamespaceTopicEventSubscriptionsClientDiagnostics, Pipeline, _subscriptionNamespaceTopicEventSubscriptionsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, patch).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = await _namespaceEventSubscriptionNamespaceTopicEventSubscriptionsRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, patch, cancellationToken).ConfigureAwait(false);
+                var operation = new EventGridArmOperation<NamespaceEventSubscriptionResource>(new NamespaceEventSubscriptionOperationSource(Client), _namespaceEventSubscriptionNamespaceTopicEventSubscriptionsClientDiagnostics, Pipeline, _namespaceEventSubscriptionNamespaceTopicEventSubscriptionsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, patch).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -274,16 +274,16 @@ namespace Azure.ResourceManager.EventGrid
         /// <param name="patch"> Updated event subscription information. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual ArmOperation<SubscriptionResource> Update(WaitUntil waitUntil, SubscriptionPatch patch, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<NamespaceEventSubscriptionResource> Update(WaitUntil waitUntil, NamespaceEventSubscriptionPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using var scope = _subscriptionNamespaceTopicEventSubscriptionsClientDiagnostics.CreateScope("SubscriptionResource.Update");
+            using var scope = _namespaceEventSubscriptionNamespaceTopicEventSubscriptionsClientDiagnostics.CreateScope("NamespaceEventSubscriptionResource.Update");
             scope.Start();
             try
             {
-                var response = _subscriptionNamespaceTopicEventSubscriptionsRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, patch, cancellationToken);
-                var operation = new EventGridArmOperation<SubscriptionResource>(new SubscriptionOperationSource(Client), _subscriptionNamespaceTopicEventSubscriptionsClientDiagnostics, Pipeline, _subscriptionNamespaceTopicEventSubscriptionsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, patch).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = _namespaceEventSubscriptionNamespaceTopicEventSubscriptionsRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, patch, cancellationToken);
+                var operation = new EventGridArmOperation<NamespaceEventSubscriptionResource>(new NamespaceEventSubscriptionOperationSource(Client), _namespaceEventSubscriptionNamespaceTopicEventSubscriptionsClientDiagnostics, Pipeline, _namespaceEventSubscriptionNamespaceTopicEventSubscriptionsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, patch).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

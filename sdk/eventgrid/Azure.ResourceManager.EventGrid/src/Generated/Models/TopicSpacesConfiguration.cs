@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.EventGrid.Models
         /// <param name="state"> Indicate if Topic Spaces Configuration is enabled for the namespace. Default is Disabled. </param>
         /// <param name="routeTopicResourceId">
         /// Fully qualified Azure Resource Id for the Event Grid Topic to which events will be routed to from TopicSpaces under a namespace.
-        /// This property should be in the following format &apos;/subscriptions/{subId}/resourcegroups/{resourceGroupName}/providers/microsoft.EventGrid/topics/{topicName}&apos;.
+        /// This property should be in the following format '/subscriptions/{subId}/resourcegroups/{resourceGroupName}/providers/microsoft.EventGrid/topics/{topicName}'.
         /// This topic should reside in the same region where namespace is located.
         /// </param>
         /// <param name="hostname"> The endpoint for the topic spaces configuration. This is a read-only property. </param>
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.EventGrid.Models
         public TopicSpacesConfigurationState? State { get; set; }
         /// <summary>
         /// Fully qualified Azure Resource Id for the Event Grid Topic to which events will be routed to from TopicSpaces under a namespace.
-        /// This property should be in the following format &apos;/subscriptions/{subId}/resourcegroups/{resourceGroupName}/providers/microsoft.EventGrid/topics/{topicName}&apos;.
+        /// This property should be in the following format '/subscriptions/{subId}/resourcegroups/{resourceGroupName}/providers/microsoft.EventGrid/topics/{topicName}'.
         /// This topic should reside in the same region where namespace is located.
         /// </summary>
         public string RouteTopicResourceId { get; set; }

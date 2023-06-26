@@ -25,12 +25,12 @@ namespace Azure.ResourceManager.EventGrid.Models
         /// </param>
         /// <param name="maxDeliveryCount"> The maximum delivery count of the events. </param>
         /// <param name="deadLetterDestinationWithResourceIdentity">
-        /// The dead letter destination of the event subscription. Any event that cannot be delivered to its&apos; destination is sent to the dead letter destination.
+        /// The dead letter destination of the event subscription. Any event that cannot be delivered to its' destination is sent to the dead letter destination.
         /// Uses the managed identity setup on the parent resource (namely, topic) to acquire the authentication tokens being used during delivery / dead-lettering.
         /// </param>
         /// <param name="eventTimeToLive">
         /// Time span duration in ISO 8601 format that determines how long messages are available to the subscription from the time the message was published.
-        /// This duration value is expressed using the following format: \&apos;P(n)Y(n)M(n)DT(n)H(n)M(n)S\&apos;, where:
+        /// This duration value is expressed using the following format: \'P(n)Y(n)M(n)DT(n)H(n)M(n)S\', where:
         ///     - (n) is replaced by the value of each time element that follows the (n).
         ///     - P is the duration (or Period) designator and is always placed at the beginning of the duration.
         ///     - Y is the year designator, and it follows the value for the number of years.
@@ -43,8 +43,8 @@ namespace Azure.ResourceManager.EventGrid.Models
         ///     - S is the second designator, and it follows the value for the number of seconds.
         /// This duration value cannot be set greater than the topic’s EventRetentionInDays. It is is an optional field where its minimum value is 1 minute, and its maximum is determined
         /// by topic’s EventRetentionInDays value. The followings are examples of valid values:
-        ///     - \&apos;P0DT23H12M\&apos; or \&apos;PT23H12M\&apos;: for duration of 23 hours and 12 minutes.
-        ///     - \&apos;P1D\&apos; or \&apos;P1DT0H0M0S\&apos;: for duration of 1 day.
+        ///     - \'P0DT23H12M\' or \'PT23H12M\': for duration of 23 hours and 12 minutes.
+        ///     - \'P1D\' or \'P1DT0H0M0S\': for duration of 1 day.
         /// </param>
         internal QueueInfo(int? receiveLockDurationInSeconds, int? maxDeliveryCount, DeadLetterWithResourceIdentity deadLetterDestinationWithResourceIdentity, TimeSpan? eventTimeToLive)
         {
@@ -63,13 +63,13 @@ namespace Azure.ResourceManager.EventGrid.Models
         /// <summary> The maximum delivery count of the events. </summary>
         public int? MaxDeliveryCount { get; set; }
         /// <summary>
-        /// The dead letter destination of the event subscription. Any event that cannot be delivered to its&apos; destination is sent to the dead letter destination.
+        /// The dead letter destination of the event subscription. Any event that cannot be delivered to its' destination is sent to the dead letter destination.
         /// Uses the managed identity setup on the parent resource (namely, topic) to acquire the authentication tokens being used during delivery / dead-lettering.
         /// </summary>
         public DeadLetterWithResourceIdentity DeadLetterDestinationWithResourceIdentity { get; set; }
         /// <summary>
         /// Time span duration in ISO 8601 format that determines how long messages are available to the subscription from the time the message was published.
-        /// This duration value is expressed using the following format: \&apos;P(n)Y(n)M(n)DT(n)H(n)M(n)S\&apos;, where:
+        /// This duration value is expressed using the following format: \'P(n)Y(n)M(n)DT(n)H(n)M(n)S\', where:
         ///     - (n) is replaced by the value of each time element that follows the (n).
         ///     - P is the duration (or Period) designator and is always placed at the beginning of the duration.
         ///     - Y is the year designator, and it follows the value for the number of years.
@@ -82,8 +82,8 @@ namespace Azure.ResourceManager.EventGrid.Models
         ///     - S is the second designator, and it follows the value for the number of seconds.
         /// This duration value cannot be set greater than the topic’s EventRetentionInDays. It is is an optional field where its minimum value is 1 minute, and its maximum is determined
         /// by topic’s EventRetentionInDays value. The followings are examples of valid values:
-        ///     - \&apos;P0DT23H12M\&apos; or \&apos;PT23H12M\&apos;: for duration of 23 hours and 12 minutes.
-        ///     - \&apos;P1D\&apos; or \&apos;P1DT0H0M0S\&apos;: for duration of 1 day.
+        ///     - \'P0DT23H12M\' or \'PT23H12M\': for duration of 23 hours and 12 minutes.
+        ///     - \'P1D\' or \'P1DT0H0M0S\': for duration of 1 day.
         /// </summary>
         public TimeSpan? EventTimeToLive { get; set; }
     }

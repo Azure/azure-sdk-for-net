@@ -12,17 +12,17 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.EventGrid
 {
     /// <summary>
-    /// A class representing the Subscription data model.
+    /// A class representing the NamespaceEventSubscription data model.
     /// Event Subscription.
     /// </summary>
-    public partial class SubscriptionData : ResourceData
+    public partial class NamespaceEventSubscriptionData : ResourceData
     {
-        /// <summary> Initializes a new instance of SubscriptionData. </summary>
-        public SubscriptionData()
+        /// <summary> Initializes a new instance of NamespaceEventSubscriptionData. </summary>
+        public NamespaceEventSubscriptionData()
         {
         }
 
-        /// <summary> Initializes a new instance of SubscriptionData. </summary>
+        /// <summary> Initializes a new instance of NamespaceEventSubscriptionData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.EventGrid
         /// <param name="deliveryConfiguration"> Information about the delivery configuration of the event subscription. </param>
         /// <param name="eventDeliverySchema"> The event delivery schema for the event subscription. </param>
         /// <param name="filtersConfiguration"> Information about the filter for the event subscription. </param>
-        internal SubscriptionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SubscriptionProvisioningState? provisioningState, DeliveryConfiguration deliveryConfiguration, DeliverySchema? eventDeliverySchema, FiltersConfiguration filtersConfiguration) : base(id, name, resourceType, systemData)
+        internal NamespaceEventSubscriptionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SubscriptionProvisioningState? provisioningState, DeliveryConfiguration deliveryConfiguration, DeliverySchema? eventDeliverySchema, FiltersConfiguration filtersConfiguration) : base(id, name, resourceType, systemData)
         {
             ProvisioningState = provisioningState;
             DeliveryConfiguration = deliveryConfiguration;

@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.EventGrid.Models
 {
-    /// <summary> Static routing enrichment value type. For e.g. this property value can be &apos;String&apos;. </summary>
+    /// <summary> Static routing enrichment value type. For e.g. this property value can be 'String'. </summary>
     public readonly partial struct StaticRoutingEnrichmentType : IEquatable<StaticRoutingEnrichmentType>
     {
         private readonly string _value;

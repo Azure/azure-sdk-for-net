@@ -8,10 +8,10 @@
 namespace Azure.ResourceManager.EventGrid.Models
 {
     /// <summary> Properties of the Event Subscription update. </summary>
-    public partial class SubscriptionPatch
+    public partial class NamespaceEventSubscriptionPatch
     {
-        /// <summary> Initializes a new instance of SubscriptionPatch. </summary>
-        public SubscriptionPatch()
+        /// <summary> Initializes a new instance of NamespaceEventSubscriptionPatch. </summary>
+        public NamespaceEventSubscriptionPatch()
         {
         }
 

@@ -19,28 +19,28 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.EventGrid
 {
     /// <summary>
-    /// A class representing a collection of <see cref="SubscriptionResource" /> and their operations.
-    /// Each <see cref="SubscriptionResource" /> in the collection will belong to the same instance of <see cref="NamespaceTopicResource" />.
-    /// To get a <see cref="SubscriptionCollection" /> instance call the GetSubscriptions method from an instance of <see cref="NamespaceTopicResource" />.
+    /// A class representing a collection of <see cref="NamespaceEventSubscriptionResource" /> and their operations.
+    /// Each <see cref="NamespaceEventSubscriptionResource" /> in the collection will belong to the same instance of <see cref="NamespaceTopicResource" />.
+    /// To get a <see cref="NamespaceEventSubscriptionCollection" /> instance call the GetNamespaceEventSubscriptions method from an instance of <see cref="NamespaceTopicResource" />.
     /// </summary>
-    public partial class SubscriptionCollection : ArmCollection, IEnumerable<SubscriptionResource>, IAsyncEnumerable<SubscriptionResource>
+    public partial class NamespaceEventSubscriptionCollection : ArmCollection, IEnumerable<NamespaceEventSubscriptionResource>, IAsyncEnumerable<NamespaceEventSubscriptionResource>
     {
-        private readonly ClientDiagnostics _subscriptionNamespaceTopicEventSubscriptionsClientDiagnostics;
-        private readonly NamespaceTopicEventSubscriptionsRestOperations _subscriptionNamespaceTopicEventSubscriptionsRestClient;
+        private readonly ClientDiagnostics _namespaceEventSubscriptionNamespaceTopicEventSubscriptionsClientDiagnostics;
+        private readonly NamespaceTopicEventSubscriptionsRestOperations _namespaceEventSubscriptionNamespaceTopicEventSubscriptionsRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="SubscriptionCollection"/> class for mocking. </summary>
-        protected SubscriptionCollection()
+        /// <summary> Initializes a new instance of the <see cref="NamespaceEventSubscriptionCollection"/> class for mocking. </summary>
+        protected NamespaceEventSubscriptionCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="SubscriptionCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="NamespaceEventSubscriptionCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
-        internal SubscriptionCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal NamespaceEventSubscriptionCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _subscriptionNamespaceTopicEventSubscriptionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.EventGrid", SubscriptionResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(SubscriptionResource.ResourceType, out string subscriptionNamespaceTopicEventSubscriptionsApiVersion);
-            _subscriptionNamespaceTopicEventSubscriptionsRestClient = new NamespaceTopicEventSubscriptionsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, subscriptionNamespaceTopicEventSubscriptionsApiVersion);
+            _namespaceEventSubscriptionNamespaceTopicEventSubscriptionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.EventGrid", NamespaceEventSubscriptionResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(NamespaceEventSubscriptionResource.ResourceType, out string namespaceEventSubscriptionNamespaceTopicEventSubscriptionsApiVersion);
+            _namespaceEventSubscriptionNamespaceTopicEventSubscriptionsRestClient = new NamespaceTopicEventSubscriptionsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, namespaceEventSubscriptionNamespaceTopicEventSubscriptionsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -71,17 +71,17 @@ namespace Azure.ResourceManager.EventGrid
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="eventSubscriptionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="eventSubscriptionName"/> or <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<SubscriptionResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string eventSubscriptionName, SubscriptionData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<NamespaceEventSubscriptionResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string eventSubscriptionName, NamespaceEventSubscriptionData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(eventSubscriptionName, nameof(eventSubscriptionName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _subscriptionNamespaceTopicEventSubscriptionsClientDiagnostics.CreateScope("SubscriptionCollection.CreateOrUpdate");
+            using var scope = _namespaceEventSubscriptionNamespaceTopicEventSubscriptionsClientDiagnostics.CreateScope("NamespaceEventSubscriptionCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _subscriptionNamespaceTopicEventSubscriptionsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, eventSubscriptionName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new EventGridArmOperation<SubscriptionResource>(new SubscriptionOperationSource(Client), _subscriptionNamespaceTopicEventSubscriptionsClientDiagnostics, Pipeline, _subscriptionNamespaceTopicEventSubscriptionsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, eventSubscriptionName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = await _namespaceEventSubscriptionNamespaceTopicEventSubscriptionsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, eventSubscriptionName, data, cancellationToken).ConfigureAwait(false);
+                var operation = new EventGridArmOperation<NamespaceEventSubscriptionResource>(new NamespaceEventSubscriptionOperationSource(Client), _namespaceEventSubscriptionNamespaceTopicEventSubscriptionsClientDiagnostics, Pipeline, _namespaceEventSubscriptionNamespaceTopicEventSubscriptionsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, eventSubscriptionName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -112,17 +112,17 @@ namespace Azure.ResourceManager.EventGrid
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="eventSubscriptionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="eventSubscriptionName"/> or <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<SubscriptionResource> CreateOrUpdate(WaitUntil waitUntil, string eventSubscriptionName, SubscriptionData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<NamespaceEventSubscriptionResource> CreateOrUpdate(WaitUntil waitUntil, string eventSubscriptionName, NamespaceEventSubscriptionData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(eventSubscriptionName, nameof(eventSubscriptionName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _subscriptionNamespaceTopicEventSubscriptionsClientDiagnostics.CreateScope("SubscriptionCollection.CreateOrUpdate");
+            using var scope = _namespaceEventSubscriptionNamespaceTopicEventSubscriptionsClientDiagnostics.CreateScope("NamespaceEventSubscriptionCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _subscriptionNamespaceTopicEventSubscriptionsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, eventSubscriptionName, data, cancellationToken);
-                var operation = new EventGridArmOperation<SubscriptionResource>(new SubscriptionOperationSource(Client), _subscriptionNamespaceTopicEventSubscriptionsClientDiagnostics, Pipeline, _subscriptionNamespaceTopicEventSubscriptionsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, eventSubscriptionName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = _namespaceEventSubscriptionNamespaceTopicEventSubscriptionsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, eventSubscriptionName, data, cancellationToken);
+                var operation = new EventGridArmOperation<NamespaceEventSubscriptionResource>(new NamespaceEventSubscriptionOperationSource(Client), _namespaceEventSubscriptionNamespaceTopicEventSubscriptionsClientDiagnostics, Pipeline, _namespaceEventSubscriptionNamespaceTopicEventSubscriptionsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, eventSubscriptionName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -151,18 +151,18 @@ namespace Azure.ResourceManager.EventGrid
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="eventSubscriptionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="eventSubscriptionName"/> is null. </exception>
-        public virtual async Task<Response<SubscriptionResource>> GetAsync(string eventSubscriptionName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<NamespaceEventSubscriptionResource>> GetAsync(string eventSubscriptionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(eventSubscriptionName, nameof(eventSubscriptionName));
 
-            using var scope = _subscriptionNamespaceTopicEventSubscriptionsClientDiagnostics.CreateScope("SubscriptionCollection.Get");
+            using var scope = _namespaceEventSubscriptionNamespaceTopicEventSubscriptionsClientDiagnostics.CreateScope("NamespaceEventSubscriptionCollection.Get");
             scope.Start();
             try
             {
-                var response = await _subscriptionNamespaceTopicEventSubscriptionsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, eventSubscriptionName, cancellationToken).ConfigureAwait(false);
+                var response = await _namespaceEventSubscriptionNamespaceTopicEventSubscriptionsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, eventSubscriptionName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SubscriptionResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new NamespaceEventSubscriptionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -188,18 +188,18 @@ namespace Azure.ResourceManager.EventGrid
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="eventSubscriptionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="eventSubscriptionName"/> is null. </exception>
-        public virtual Response<SubscriptionResource> Get(string eventSubscriptionName, CancellationToken cancellationToken = default)
+        public virtual Response<NamespaceEventSubscriptionResource> Get(string eventSubscriptionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(eventSubscriptionName, nameof(eventSubscriptionName));
 
-            using var scope = _subscriptionNamespaceTopicEventSubscriptionsClientDiagnostics.CreateScope("SubscriptionCollection.Get");
+            using var scope = _namespaceEventSubscriptionNamespaceTopicEventSubscriptionsClientDiagnostics.CreateScope("NamespaceEventSubscriptionCollection.Get");
             scope.Start();
             try
             {
-                var response = _subscriptionNamespaceTopicEventSubscriptionsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, eventSubscriptionName, cancellationToken);
+                var response = _namespaceEventSubscriptionNamespaceTopicEventSubscriptionsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, eventSubscriptionName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SubscriptionResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new NamespaceEventSubscriptionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -221,15 +221,15 @@ namespace Azure.ResourceManager.EventGrid
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="filter"> The query used to filter the search results using OData syntax. Filtering is permitted on the &apos;name&apos; property only and with limited number of OData operations. These operations are: the &apos;contains&apos; function as well as the following logical operations: not, and, or, eq (for equal), and ne (for not equal). No arithmetic operations are supported. The following is a valid filter example: $filter=contains(namE, &apos;PATTERN&apos;) and name ne &apos;PATTERN-1&apos;. The following is not a valid filter example: $filter=location eq &apos;westus&apos;. </param>
+        /// <param name="filter"> The query used to filter the search results using OData syntax. Filtering is permitted on the 'name' property only and with limited number of OData operations. These operations are: the 'contains' function as well as the following logical operations: not, and, or, eq (for equal), and ne (for not equal). No arithmetic operations are supported. The following is a valid filter example: $filter=contains(namE, 'PATTERN') and name ne 'PATTERN-1'. The following is not a valid filter example: $filter=location eq 'westus'. </param>
         /// <param name="top"> The number of results to return per page for the list operation. Valid range for top parameter is 1 to 100. If not specified, the default number of results to be returned is 20 items per page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SubscriptionResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<SubscriptionResource> GetAllAsync(string filter = null, int? top = null, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="NamespaceEventSubscriptionResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<NamespaceEventSubscriptionResource> GetAllAsync(string filter = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _subscriptionNamespaceTopicEventSubscriptionsRestClient.CreateListByNamespaceTopicRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, top);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _subscriptionNamespaceTopicEventSubscriptionsRestClient.CreateListByNamespaceTopicNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, top);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SubscriptionResource(Client, SubscriptionData.DeserializeSubscriptionData(e)), _subscriptionNamespaceTopicEventSubscriptionsClientDiagnostics, Pipeline, "SubscriptionCollection.GetAll", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _namespaceEventSubscriptionNamespaceTopicEventSubscriptionsRestClient.CreateListByNamespaceTopicRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, top);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _namespaceEventSubscriptionNamespaceTopicEventSubscriptionsRestClient.CreateListByNamespaceTopicNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, top);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new NamespaceEventSubscriptionResource(Client, NamespaceEventSubscriptionData.DeserializeNamespaceEventSubscriptionData(e)), _namespaceEventSubscriptionNamespaceTopicEventSubscriptionsClientDiagnostics, Pipeline, "NamespaceEventSubscriptionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -245,15 +245,15 @@ namespace Azure.ResourceManager.EventGrid
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="filter"> The query used to filter the search results using OData syntax. Filtering is permitted on the &apos;name&apos; property only and with limited number of OData operations. These operations are: the &apos;contains&apos; function as well as the following logical operations: not, and, or, eq (for equal), and ne (for not equal). No arithmetic operations are supported. The following is a valid filter example: $filter=contains(namE, &apos;PATTERN&apos;) and name ne &apos;PATTERN-1&apos;. The following is not a valid filter example: $filter=location eq &apos;westus&apos;. </param>
+        /// <param name="filter"> The query used to filter the search results using OData syntax. Filtering is permitted on the 'name' property only and with limited number of OData operations. These operations are: the 'contains' function as well as the following logical operations: not, and, or, eq (for equal), and ne (for not equal). No arithmetic operations are supported. The following is a valid filter example: $filter=contains(namE, 'PATTERN') and name ne 'PATTERN-1'. The following is not a valid filter example: $filter=location eq 'westus'. </param>
         /// <param name="top"> The number of results to return per page for the list operation. Valid range for top parameter is 1 to 100. If not specified, the default number of results to be returned is 20 items per page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SubscriptionResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<SubscriptionResource> GetAll(string filter = null, int? top = null, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="NamespaceEventSubscriptionResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<NamespaceEventSubscriptionResource> GetAll(string filter = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _subscriptionNamespaceTopicEventSubscriptionsRestClient.CreateListByNamespaceTopicRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, top);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _subscriptionNamespaceTopicEventSubscriptionsRestClient.CreateListByNamespaceTopicNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, top);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SubscriptionResource(Client, SubscriptionData.DeserializeSubscriptionData(e)), _subscriptionNamespaceTopicEventSubscriptionsClientDiagnostics, Pipeline, "SubscriptionCollection.GetAll", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _namespaceEventSubscriptionNamespaceTopicEventSubscriptionsRestClient.CreateListByNamespaceTopicRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, top);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _namespaceEventSubscriptionNamespaceTopicEventSubscriptionsRestClient.CreateListByNamespaceTopicNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, top);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new NamespaceEventSubscriptionResource(Client, NamespaceEventSubscriptionData.DeserializeNamespaceEventSubscriptionData(e)), _namespaceEventSubscriptionNamespaceTopicEventSubscriptionsClientDiagnostics, Pipeline, "NamespaceEventSubscriptionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -277,11 +277,11 @@ namespace Azure.ResourceManager.EventGrid
         {
             Argument.AssertNotNullOrEmpty(eventSubscriptionName, nameof(eventSubscriptionName));
 
-            using var scope = _subscriptionNamespaceTopicEventSubscriptionsClientDiagnostics.CreateScope("SubscriptionCollection.Exists");
+            using var scope = _namespaceEventSubscriptionNamespaceTopicEventSubscriptionsClientDiagnostics.CreateScope("NamespaceEventSubscriptionCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _subscriptionNamespaceTopicEventSubscriptionsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, eventSubscriptionName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _namespaceEventSubscriptionNamespaceTopicEventSubscriptionsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, eventSubscriptionName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -312,11 +312,11 @@ namespace Azure.ResourceManager.EventGrid
         {
             Argument.AssertNotNullOrEmpty(eventSubscriptionName, nameof(eventSubscriptionName));
 
-            using var scope = _subscriptionNamespaceTopicEventSubscriptionsClientDiagnostics.CreateScope("SubscriptionCollection.Exists");
+            using var scope = _namespaceEventSubscriptionNamespaceTopicEventSubscriptionsClientDiagnostics.CreateScope("NamespaceEventSubscriptionCollection.Exists");
             scope.Start();
             try
             {
-                var response = _subscriptionNamespaceTopicEventSubscriptionsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, eventSubscriptionName, cancellationToken: cancellationToken);
+                var response = _namespaceEventSubscriptionNamespaceTopicEventSubscriptionsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, eventSubscriptionName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -326,7 +326,7 @@ namespace Azure.ResourceManager.EventGrid
             }
         }
 
-        IEnumerator<SubscriptionResource> IEnumerable<SubscriptionResource>.GetEnumerator()
+        IEnumerator<NamespaceEventSubscriptionResource> IEnumerable<NamespaceEventSubscriptionResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -336,7 +336,7 @@ namespace Azure.ResourceManager.EventGrid
             return GetAll().GetEnumerator();
         }
 
-        IAsyncEnumerator<SubscriptionResource> IAsyncEnumerable<SubscriptionResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<NamespaceEventSubscriptionResource> IAsyncEnumerable<NamespaceEventSubscriptionResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }

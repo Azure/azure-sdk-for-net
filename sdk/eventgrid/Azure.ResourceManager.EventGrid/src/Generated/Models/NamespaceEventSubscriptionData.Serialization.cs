@@ -12,7 +12,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.EventGrid
 {
-    public partial class SubscriptionData : IUtf8JsonSerializable
+    public partial class NamespaceEventSubscriptionData : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.EventGrid
             writer.WriteEndObject();
         }
 
-        internal static SubscriptionData DeserializeSubscriptionData(JsonElement element)
+        internal static NamespaceEventSubscriptionData DeserializeNamespaceEventSubscriptionData(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.EventGrid
                     continue;
                 }
             }
-            return new SubscriptionData(id, name, type, systemData.Value, Optional.ToNullable(provisioningState), deliveryConfiguration.Value, Optional.ToNullable(eventDeliverySchema), filtersConfiguration.Value);
+            return new NamespaceEventSubscriptionData(id, name, type, systemData.Value, Optional.ToNullable(provisioningState), deliveryConfiguration.Value, Optional.ToNullable(eventDeliverySchema), filtersConfiguration.Value);
         }
     }
 }

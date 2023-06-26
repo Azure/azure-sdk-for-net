@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.EventGrid.Models
         }
 
         /// <summary> Initializes a new instance of ClientAuthentication. </summary>
-        /// <param name="certificateThumbprint"> The self signed certificate&apos;s thumbprints data used for authentication. </param>
+        /// <param name="certificateThumbprint"> The self signed certificate's thumbprints data used for authentication. </param>
         /// <param name="certificateSubject"> The CA certificate subject name used for authentication. </param>
         internal ClientAuthentication(ClientCertificateThumbprint certificateThumbprint, ClientCertificateSubjectDistinguishedName certificateSubject)
         {
@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.EventGrid.Models
             CertificateSubject = certificateSubject;
         }
 
-        /// <summary> The self signed certificate&apos;s thumbprints data used for authentication. </summary>
+        /// <summary> The self signed certificate's thumbprints data used for authentication. </summary>
         public ClientCertificateThumbprint CertificateThumbprint { get; set; }
         /// <summary> The CA certificate subject name used for authentication. </summary>
         public ClientCertificateSubjectDistinguishedName CertificateSubject { get; set; }
