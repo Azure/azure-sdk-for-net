@@ -61,7 +61,7 @@ namespace Azure.Identity
 
         internal string RegionalAuthority { get; } = EnvironmentVariables.AzureRegionalAuthorityName;
 
-        protected override async ValueTask<IConfidentialClientApplication> CreateClientAsync(bool async, bool enableCae, CancellationToken cancellationToken)
+        protected override async ValueTask<IConfidentialClientApplication> CreateClientAsync(bool enableCae, bool async, CancellationToken cancellationToken)
         {
             ConfidentialClientApplicationBuilder confClientBuilder = ConfidentialClientApplicationBuilder.Create(ClientId)
                 .WithHttpClientFactory(new HttpPipelineClientFactory(Pipeline.HttpPipeline))

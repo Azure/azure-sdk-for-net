@@ -27,12 +27,12 @@ namespace Azure.Identity
             _beforeBuildClient = (options as IMsalPublicClientInitializerOptions)?.BeforeBuildClient;
         }
 
-        protected override ValueTask<IPublicClientApplication> CreateClientAsync(bool async, bool enableCae, CancellationToken cancellationToken)
+        protected override ValueTask<IPublicClientApplication> CreateClientAsync( bool enableCae, bool async,CancellationToken cancellationToken)
         {
-            return CreateClientCoreAsync(async, enableCae, cancellationToken);
+            return CreateClientCoreAsync( enableCae, async,cancellationToken);
         }
 
-        protected virtual ValueTask<IPublicClientApplication> CreateClientCoreAsync(bool async, bool enableCae, CancellationToken cancellationToken)
+        protected virtual ValueTask<IPublicClientApplication> CreateClientCoreAsync(bool enableCae, bool async, CancellationToken cancellationToken)
         {
             string[] clientCapabilities =
                 enableCae ? new[] { "CP1" } : Array.Empty<string>();
