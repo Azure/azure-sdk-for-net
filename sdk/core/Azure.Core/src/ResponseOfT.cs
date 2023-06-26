@@ -23,7 +23,7 @@ namespace Azure
         public override bool HasValue => Value != null;
 
         /// <inheritdoc />
-        public override T Value => Value!;
+        public override T Value => Value;
 
         /// <summary>
         /// Returns the value of this <see cref="Response{T}"/> object.
