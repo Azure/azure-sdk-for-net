@@ -91,10 +91,10 @@
           "DisableFabricIntegration": "true"
         },
         "systemData": {
-          "createdBy": "mbashtovaya@microsoft.com",
+          "createdBy": "Sanitized",
           "createdByType": "User",
           "createdAt": "2023-06-22T23:28:20.8726465Z",
-          "lastModifiedBy": "mbashtovaya@microsoft.com",
+          "lastModifiedBy": "Sanitized",
           "lastModifiedByType": "User",
           "lastModifiedAt": "2023-06-22T23:28:20.8726465Z"
         },
@@ -1588,10 +1588,10 @@
           "nc:environment": "sandbox"
         },
         "systemData": {
-          "createdBy": "mbashtovaya@microsoft.com",
+          "createdBy": "Sanitized",
           "createdByType": "User",
           "createdAt": "2023-06-22T23:28:20.8726465Z",
-          "lastModifiedBy": "mbashtovaya@microsoft.com",
+          "lastModifiedBy": "Sanitized",
           "lastModifiedByType": "User",
           "lastModifiedAt": "2023-06-22T23:28:20.8726465Z"
         },
@@ -1669,10 +1669,10 @@
           "nc:environment": "sandbox"
         },
         "systemData": {
-          "createdBy": "mbashtovaya@microsoft.com",
+          "createdBy": "Sanitized",
           "createdByType": "User",
           "createdAt": "2023-06-22T23:28:20.8726465Z",
-          "lastModifiedBy": "mbashtovaya@microsoft.com",
+          "lastModifiedBy": "Sanitized",
           "lastModifiedByType": "User",
           "lastModifiedAt": "2023-06-22T23:28:20.8726465Z"
         },
@@ -1757,10 +1757,10 @@
           "PatchTag": "patchTag"
         },
         "systemData": {
-          "createdBy": "mbashtovaya@microsoft.com",
+          "createdBy": "Sanitized",
           "createdByType": "User",
           "createdAt": "2023-06-22T23:28:20.8726465Z",
-          "lastModifiedBy": "mbashtovaya@microsoft.com",
+          "lastModifiedBy": "Sanitized",
           "lastModifiedByType": "User",
           "lastModifiedAt": "2023-06-22T23:46:02.6449852Z"
         },
@@ -1841,10 +1841,10 @@
               "PatchTag": "patchTag"
             },
             "systemData": {
-              "createdBy": "mbashtovaya@microsoft.com",
+              "createdBy": "Sanitized",
               "createdByType": "User",
               "createdAt": "2023-06-22T23:28:20.8726465Z",
-              "lastModifiedBy": "mbashtovaya@microsoft.com",
+              "lastModifiedBy": "Sanitized",
               "lastModifiedByType": "User",
               "lastModifiedAt": "2023-06-22T23:46:02.6449852Z"
             },
@@ -1926,10 +1926,10 @@
               "TreatFabricAsSubnet": "true"
             },
             "systemData": {
-              "createdBy": "nachoudhary@microsoft.com",
+              "createdBy": "Sanitized",
               "createdByType": "User",
               "createdAt": "2022-08-26T15:26:43.5814924Z",
-              "lastModifiedBy": "mbashtovaya@microsoft.com",
+              "lastModifiedBy": "Sanitized",
               "lastModifiedByType": "User",
               "lastModifiedAt": "2022-10-17T21:24:16.0692319Z"
             },
@@ -4634,10 +4634,10 @@
               "PatchTag": "patchTag"
             },
             "systemData": {
-              "createdBy": "mbashtovaya@microsoft.com",
+              "createdBy": "Sanitized",
               "createdByType": "User",
               "createdAt": "2023-06-22T23:28:20.8726465Z",
-              "lastModifiedBy": "mbashtovaya@microsoft.com",
+              "lastModifiedBy": "Sanitized",
               "lastModifiedByType": "User",
               "lastModifiedAt": "2023-06-22T23:46:02.6449852Z"
             },

@@ -99,10 +99,10 @@
         },
         "tags": {},
         "systemData": {
-          "createdBy": "mbashtovaya@microsoft.com",
+          "createdBy": "Sanitized",
           "createdByType": "User",
           "createdAt": "2023-06-22T14:24:45.127186Z",
-          "lastModifiedBy": "mbashtovaya@microsoft.com",
+          "lastModifiedBy": "Sanitized",
           "lastModifiedByType": "User",
           "lastModifiedAt": "2023-06-22T14:24:45.127186Z"
         },
@@ -374,7 +374,7 @@
         },
         "tags": {},
         "systemData": {
-          "createdBy": "mbashtovaya@microsoft.com",
+          "createdBy": "Sanitized",
           "createdByType": "User",
           "createdAt": "2023-06-22T14:24:45.127186Z",
           "lastModifiedBy": "319f651f-7ddb-4fc6-9857-7aef9250bd05",
@@ -441,7 +441,7 @@
         },
         "tags": {},
         "systemData": {
-          "createdBy": "mbashtovaya@microsoft.com",
+          "createdBy": "Sanitized",
           "createdByType": "User",
           "createdAt": "2023-06-22T14:24:45.127186Z",
           "lastModifiedBy": "319f651f-7ddb-4fc6-9857-7aef9250bd05",
@@ -511,7 +511,7 @@
             },
             "tags": {},
             "systemData": {
-              "createdBy": "mbashtovaya@microsoft.com",
+              "createdBy": "Sanitized",
               "createdByType": "User",
               "createdAt": "2023-06-22T14:24:45.127186Z",
               "lastModifiedBy": "319f651f-7ddb-4fc6-9857-7aef9250bd05",
@@ -708,7 +708,7 @@
               "type": "CustomLocation"
             },
             "systemData": {
-              "createdBy": "jagathnath@microsoft.com",
+              "createdBy": "Sanitized",
               "createdByType": "User",
               "createdAt": "2022-09-22T00:09:19.7671708Z",
               "lastModifiedBy": "319f651f-7ddb-4fc6-9857-7aef9250bd05",
@@ -738,7 +738,7 @@
               "type": "CustomLocation"
             },
             "systemData": {
-              "createdBy": "jagathnath@microsoft.com",
+              "createdBy": "Sanitized",
               "createdByType": "User",
               "createdAt": "2022-09-22T00:11:43.3385005Z",
               "lastModifiedBy": "319f651f-7ddb-4fc6-9857-7aef9250bd05",
@@ -768,7 +768,7 @@
               "type": "CustomLocation"
             },
             "systemData": {
-              "createdBy": "jagathnath@microsoft.com",
+              "createdBy": "Sanitized",
               "createdByType": "User",
               "createdAt": "2022-09-22T00:12:45.2904853Z",
               "lastModifiedBy": "319f651f-7ddb-4fc6-9857-7aef9250bd05",
@@ -798,7 +798,7 @@
               "type": "CustomLocation"
             },
             "systemData": {
-              "createdBy": "jagathnath@microsoft.com",
+              "createdBy": "Sanitized",
               "createdByType": "User",
               "createdAt": "2022-09-22T00:13:23.6289732Z",
               "lastModifiedBy": "319f651f-7ddb-4fc6-9857-7aef9250bd05",
@@ -872,7 +872,7 @@
               "ResourceType": "l3Network"
             },
             "systemData": {
-              "createdBy": "philsphicas@microsoft.com",
+              "createdBy": "Sanitized",
               "createdByType": "User",
               "createdAt": "2023-05-05T00:58:52.192935Z",
               "lastModifiedBy": "319f651f-7ddb-4fc6-9857-7aef9250bd05",
@@ -912,7 +912,7 @@
               "ResourceType": "l3Network"
             },
             "systemData": {
-              "createdBy": "philsphicas@microsoft.com",
+              "createdBy": "Sanitized",
               "createdByType": "User",
               "createdAt": "2023-05-05T01:09:45.0809732Z",
               "lastModifiedBy": "319f651f-7ddb-4fc6-9857-7aef9250bd05",
@@ -952,7 +952,7 @@
               "ResourceType": "l3Network"
             },
             "systemData": {
-              "createdBy": "philsphicas@microsoft.com",
+              "createdBy": "Sanitized",
               "createdByType": "User",
               "createdAt": "2023-05-06T20:54:53.0142407Z",
               "lastModifiedBy": "319f651f-7ddb-4fc6-9857-7aef9250bd05",
@@ -992,7 +992,7 @@
               "Purpose": "QA"
             },
             "systemData": {
-              "createdBy": "nishkumar@microsoft.com",
+              "createdBy": "Sanitized",
               "createdByType": "User",
               "createdAt": "2023-05-08T06:11:11.1512838Z",
               "lastModifiedBy": "319f651f-7ddb-4fc6-9857-7aef9250bd05",
@@ -1032,7 +1032,7 @@
               "ResourceType": "l3Network"
             },
             "systemData": {
-              "createdBy": "roytang@microsoft.com",
+              "createdBy": "Sanitized",
               "createdByType": "User",
               "createdAt": "2023-05-09T16:12:00.574226Z",
               "lastModifiedBy": "319f651f-7ddb-4fc6-9857-7aef9250bd05",
@@ -1072,7 +1072,7 @@
               "ResourceType": "l3Network"
             },
             "systemData": {
-              "createdBy": "roytang@microsoft.com",
+              "createdBy": "Sanitized",
               "createdByType": "User",
               "createdAt": "2023-05-09T16:14:54.7891563Z",
               "lastModifiedBy": "319f651f-7ddb-4fc6-9857-7aef9250bd05",
@@ -1112,7 +1112,7 @@
               "ResourceType": "l3Network"
             },
             "systemData": {
-              "createdBy": "philsphicas@microsoft.com",
+              "createdBy": "Sanitized",
               "createdByType": "User",
               "createdAt": "2023-05-10T02:26:15.3936035Z",
               "lastModifiedBy": "319f651f-7ddb-4fc6-9857-7aef9250bd05",
@@ -1152,7 +1152,7 @@
               "ResourceType": "l3Network"
             },
             "systemData": {
-              "createdBy": "alanmeadows@microsoft.com",
+              "createdBy": "Sanitized",
               "createdByType": "User",
               "createdAt": "2023-05-10T22:11:47.0268151Z",
               "lastModifiedBy": "319f651f-7ddb-4fc6-9857-7aef9250bd05",
@@ -1192,7 +1192,7 @@
               "ResourceType": "l3Network"
             },
             "systemData": {
-              "createdBy": "alanmeadows@microsoft.com",
+              "createdBy": "Sanitized",
               "createdByType": "User",
               "createdAt": "2023-05-10T22:13:03.1606873Z",
               "lastModifiedBy": "319f651f-7ddb-4fc6-9857-7aef9250bd05",
@@ -1232,7 +1232,7 @@
               "ResourceType": "l3Network"
             },
             "systemData": {
-              "createdBy": "nachoudhary@microsoft.com",
+              "createdBy": "Sanitized",
               "createdByType": "User",
               "createdAt": "2023-05-11T18:38:05.4229539Z",
               "lastModifiedBy": "319f651f-7ddb-4fc6-9857-7aef9250bd05",
@@ -1272,7 +1272,7 @@
               "ResourceType": "l3Network"
             },
             "systemData": {
-              "createdBy": "nachoudhary@microsoft.com",
+              "createdBy": "Sanitized",
               "createdByType": "User",
               "createdAt": "2023-05-11T18:39:55.0402232Z",
               "lastModifiedBy": "319f651f-7ddb-4fc6-9857-7aef9250bd05",
@@ -1312,7 +1312,7 @@
               "ResourceType": "l3Network"
             },
             "systemData": {
-              "createdBy": "manalva@microsoft.com",
+              "createdBy": "Sanitized",
               "createdByType": "User",
               "createdAt": "2023-05-11T19:08:33.9454963Z",
               "lastModifiedBy": "319f651f-7ddb-4fc6-9857-7aef9250bd05",
@@ -1352,7 +1352,7 @@
               "ResourceType": "l3Network"
             },
             "systemData": {
-              "createdBy": "nachoudhary@microsoft.com",
+              "createdBy": "Sanitized",
               "createdByType": "User",
               "createdAt": "2023-05-11T19:08:41.053241Z",
               "lastModifiedBy": "319f651f-7ddb-4fc6-9857-7aef9250bd05",
@@ -1392,7 +1392,7 @@
               "ResourceType": "l3Network"
             },
             "systemData": {
-              "createdBy": "nachoudhary@microsoft.com",
+              "createdBy": "Sanitized",
               "createdByType": "User",
               "createdAt": "2023-05-13T17:51:33.4204298Z",
               "lastModifiedBy": "319f651f-7ddb-4fc6-9857-7aef9250bd05",
@@ -1432,7 +1432,7 @@
               "ResourceType": "l3Network"
             },
             "systemData": {
-              "createdBy": "nachoudhary@microsoft.com",
+              "createdBy": "Sanitized",
               "createdByType": "User",
               "createdAt": "2023-05-15T21:03:01.5084857Z",
               "lastModifiedBy": "319f651f-7ddb-4fc6-9857-7aef9250bd05",
@@ -1472,7 +1472,7 @@
               "ResourceType": "l3Network"
             },
             "systemData": {
-              "createdBy": "roytang@microsoft.com",
+              "createdBy": "Sanitized",
               "createdByType": "User",
               "createdAt": "2023-05-16T15:13:02.6904271Z",
               "lastModifiedBy": "319f651f-7ddb-4fc6-9857-7aef9250bd05",
@@ -1512,7 +1512,7 @@
               "ResourceType": "l3Network"
             },
             "systemData": {
-              "createdBy": "roytang@microsoft.com",
+              "createdBy": "Sanitized",
               "createdByType": "User",
               "createdAt": "2023-05-16T15:23:22.1389472Z",
               "lastModifiedBy": "319f651f-7ddb-4fc6-9857-7aef9250bd05",
@@ -1552,7 +1552,7 @@
               "ResourceType": "l3Network"
             },
             "systemData": {
-              "createdBy": "roytang@microsoft.com",
+              "createdBy": "Sanitized",
               "createdByType": "User",
               "createdAt": "2023-05-16T15:43:18.2080981Z",
               "lastModifiedBy": "319f651f-7ddb-4fc6-9857-7aef9250bd05",
@@ -1592,7 +1592,7 @@
               "ResourceType": "l3Network"
             },
             "systemData": {
-              "createdBy": "philsphicas@microsoft.com",
+              "createdBy": "Sanitized",
               "createdByType": "User",
               "createdAt": "2023-05-16T17:06:36.934867Z",
               "lastModifiedBy": "319f651f-7ddb-4fc6-9857-7aef9250bd05",
@@ -1712,7 +1712,7 @@
               "usage": "uc-upf"
             },
             "systemData": {
-              "createdBy": "jcroth@microsoft.com",
+              "createdBy": "Sanitized",
               "createdByType": "User",
               "createdAt": "2023-05-23T23:52:42.9304142Z",
               "lastModifiedBy": "319f651f-7ddb-4fc6-9857-7aef9250bd05",
@@ -1749,7 +1749,7 @@
               "usage": "uc-upf"
             },
             "systemData": {
-              "createdBy": "jcroth@microsoft.com",
+              "createdBy": "Sanitized",
               "createdByType": "User",
               "createdAt": "2023-05-23T23:52:43.1282173Z",
               "lastModifiedBy": "319f651f-7ddb-4fc6-9857-7aef9250bd05",
@@ -1786,7 +1786,7 @@
               "usage": "uc-upf"
             },
             "systemData": {
-              "createdBy": "jcroth@microsoft.com",
+              "createdBy": "Sanitized",
               "createdByType": "User",
               "createdAt": "2023-05-23T23:52:43.5306487Z",
               "lastModifiedBy": "319f651f-7ddb-4fc6-9857-7aef9250bd05",
@@ -1820,7 +1820,7 @@
               "type": "CustomLocation"
             },
             "systemData": {
-              "createdBy": "mjeanneret@microsoft.com",
+              "createdBy": "Sanitized",
               "createdByType": "User",
               "createdAt": "2023-05-24T02:51:36.1665883Z",
               "lastModifiedBy": "319f651f-7ddb-4fc6-9857-7aef9250bd05",
@@ -1857,7 +1857,7 @@
               "usage": "example"
             },
             "systemData": {
-              "createdBy": "jcroth@microsoft.com",
+              "createdBy": "Sanitized",
               "createdByType": "User",
               "createdAt": "2023-05-26T22:24:19.2485642Z",
               "lastModifiedBy": "319f651f-7ddb-4fc6-9857-7aef9250bd05",
@@ -1894,7 +1894,7 @@
               "usage": "pathfinders"
             },
             "systemData": {
-              "createdBy": "jcroth@microsoft.com",
+              "createdBy": "Sanitized",
               "createdByType": "User",
               "createdAt": "2023-05-30T23:14:28.4222678Z",
               "lastModifiedBy": "319f651f-7ddb-4fc6-9857-7aef9250bd05",
@@ -1931,7 +1931,7 @@
               "usage": "pathfinders"
             },
             "systemData": {
-              "createdBy": "jcroth@microsoft.com",
+              "createdBy": "Sanitized",
               "createdByType": "User",
               "createdAt": "2023-05-30T23:14:32.0071427Z",
               "lastModifiedBy": "319f651f-7ddb-4fc6-9857-7aef9250bd05",
@@ -2132,7 +2132,7 @@
               "usage": "uc-smf"
             },
             "systemData": {
-              "createdBy": "jcroth@microsoft.com",
+              "createdBy": "Sanitized",
               "createdByType": "User",
               "createdAt": "2023-05-31T02:29:56.8762382Z",
               "lastModifiedBy": "319f651f-7ddb-4fc6-9857-7aef9250bd05",
@@ -2169,7 +2169,7 @@
               "usage": "uc-smf"
             },
             "systemData": {
-              "createdBy": "jcroth@microsoft.com",
+              "createdBy": "Sanitized",
               "createdByType": "User",
               "createdAt": "2023-05-31T03:00:28.5442137Z",
               "lastModifiedBy": "319f651f-7ddb-4fc6-9857-7aef9250bd05",
@@ -2725,7 +2725,7 @@
               "ResourceType": "l3Network"
             },
             "systemData": {
-              "createdBy": "nachoudhary@microsoft.com",
+              "createdBy": "Sanitized",
               "createdByType": "User",
               "createdAt": "2023-06-07T22:15:37.494961Z",
               "lastModifiedBy": "319f651f-7ddb-4fc6-9857-7aef9250bd05",
@@ -2765,7 +2765,7 @@
               "ResourceType": "l3Network"
             },
             "systemData": {
-              "createdBy": "manalva@microsoft.com",
+              "createdBy": "Sanitized",
               "createdByType": "User",
               "createdAt": "2023-06-10T08:37:18.9582442Z",
               "lastModifiedBy": "319f651f-7ddb-4fc6-9857-7aef9250bd05",
@@ -2805,7 +2805,7 @@
               "ResourceType": "l3Network"
             },
             "systemData": {
-              "createdBy": "manalva@microsoft.com",
+              "createdBy": "Sanitized",
               "createdByType": "User",
               "createdAt": "2023-06-10T08:39:05.2959731Z",
               "lastModifiedBy": "319f651f-7ddb-4fc6-9857-7aef9250bd05",
@@ -2845,7 +2845,7 @@
               "ResourceType": "l3Network"
             },
             "systemData": {
-              "createdBy": "manalva@microsoft.com",
+              "createdBy": "Sanitized",
               "createdByType": "User",
               "createdAt": "2023-06-10T08:40:46.8006835Z",
               "lastModifiedBy": "319f651f-7ddb-4fc6-9857-7aef9250bd05",
@@ -2885,7 +2885,7 @@
               "ResourceType": "l3Network"
             },
             "systemData": {
-              "createdBy": "manalva@microsoft.com",
+              "createdBy": "Sanitized",
               "createdByType": "User",
               "createdAt": "2023-06-10T08:42:27.7989159Z",
               "lastModifiedBy": "319f651f-7ddb-4fc6-9857-7aef9250bd05",
@@ -2925,7 +2925,7 @@
               "ResourceType": "l3Network"
             },
             "systemData": {
-              "createdBy": "manalva@microsoft.com",
+              "createdBy": "Sanitized",
               "createdByType": "User",
               "createdAt": "2023-06-10T08:43:50.67568Z",
               "lastModifiedBy": "319f651f-7ddb-4fc6-9857-7aef9250bd05",
@@ -2965,7 +2965,7 @@
               "ResourceType": "l3Network"
             },
             "systemData": {
-              "createdBy": "manalva@microsoft.com",
+              "createdBy": "Sanitized",
               "createdByType": "User",
               "createdAt": "2023-06-10T15:04:40.0823696Z",
               "lastModifiedBy": "319f651f-7ddb-4fc6-9857-7aef9250bd05",
@@ -3003,7 +3003,7 @@
               "usage": "uc-impact"
             },
             "systemData": {
-              "createdBy": "jcroth@microsoft.com",
+              "createdBy": "Sanitized",
               "createdByType": "User",
               "createdAt": "2023-06-14T21:00:39.9258583Z",
               "lastModifiedBy": "319f651f-7ddb-4fc6-9857-7aef9250bd05",
@@ -3042,7 +3042,7 @@
               "Purpose": "QA"
             },
             "systemData": {
-              "createdBy": "v-asomya@microsoft.com",
+              "createdBy": "Sanitized",
               "createdByType": "User",
               "createdAt": "2023-06-16T03:24:25.0096665Z",
               "lastModifiedBy": "319f651f-7ddb-4fc6-9857-7aef9250bd05",
@@ -3170,7 +3170,7 @@
               "Purpose": "QA"
             },
             "systemData": {
-              "createdBy": "v-asomya@microsoft.com",
+              "createdBy": "Sanitized",
               "createdByType": "User",
               "createdAt": "2023-06-16T15:56:02.6932225Z",
               "lastModifiedBy": "319f651f-7ddb-4fc6-9857-7aef9250bd05",
@@ -3250,7 +3250,7 @@
               "Purpose": "QA"
             },
             "systemData": {
-              "createdBy": "v-asomya@microsoft.com",
+              "createdBy": "Sanitized",
               "createdByType": "User",
               "createdAt": "2023-06-16T17:22:46.8033962Z",
               "lastModifiedBy": "319f651f-7ddb-4fc6-9857-7aef9250bd05",
@@ -3290,7 +3290,7 @@
               "Purpose": "QA"
             },
             "systemData": {
-              "createdBy": "v-asomya@microsoft.com",
+              "createdBy": "Sanitized",
               "createdByType": "User",
               "createdAt": "2023-06-16T18:57:37.8434024Z",
               "lastModifiedBy": "319f651f-7ddb-4fc6-9857-7aef9250bd05",
@@ -3328,7 +3328,7 @@
               "usage": "enea"
             },
             "systemData": {
-              "createdBy": "jcroth@microsoft.com",
+              "createdBy": "Sanitized",
               "createdByType": "User",
               "createdAt": "2023-06-16T22:21:32.7980032Z",
               "lastModifiedBy": "319f651f-7ddb-4fc6-9857-7aef9250bd05",
@@ -3367,7 +3367,7 @@
               "ResourceType": "l3Network"
             },
             "systemData": {
-              "createdBy": "philsphicas@microsoft.com",
+              "createdBy": "Sanitized",
               "createdByType": "User",
               "createdAt": "2023-06-16T23:20:26.7258842Z",
               "lastModifiedBy": "319f651f-7ddb-4fc6-9857-7aef9250bd05",
@@ -3407,7 +3407,7 @@
               "ResourceType": "l3Network"
             },
             "systemData": {
-              "createdBy": "philsphicas@microsoft.com",
+              "createdBy": "Sanitized",
               "createdByType": "User",
               "createdAt": "2023-06-17T06:09:05.2527833Z",
               "lastModifiedBy": "319f651f-7ddb-4fc6-9857-7aef9250bd05",
@@ -3447,7 +3447,7 @@
               "ResourceType": "l3Network"
             },
             "systemData": {
-              "createdBy": "philsphicas@microsoft.com",
+              "createdBy": "Sanitized",
               "createdByType": "User",
               "createdAt": "2023-06-17T06:13:27.7613176Z",
               "lastModifiedBy": "319f651f-7ddb-4fc6-9857-7aef9250bd05",
@@ -3487,7 +3487,7 @@
               "ResourceType": "l3Network"
             },
             "systemData": {
-              "createdBy": "roytang@microsoft.com",
+              "createdBy": "Sanitized",
               "createdByType": "User",
               "createdAt": "2023-06-19T05:22:09.3508921Z",
               "lastModifiedBy": "319f651f-7ddb-4fc6-9857-7aef9250bd05",
@@ -3527,7 +3527,7 @@
               "ResourceType": "l3Network"
             },
             "systemData": {
-              "createdBy": "roytang@microsoft.com",
+              "createdBy": "Sanitized",
               "createdByType": "User",
               "createdAt": "2023-06-19T05:24:31.1655537Z",
               "lastModifiedBy": "319f651f-7ddb-4fc6-9857-7aef9250bd05",
@@ -3567,7 +3567,7 @@
               "Purpose": "QA"
             },
             "systemData": {
-              "createdBy": "v-asomya@microsoft.com",
+              "createdBy": "Sanitized",
               "createdByType": "User",
               "createdAt": "2023-06-19T13:39:39.5976313Z",
               "lastModifiedBy": "319f651f-7ddb-4fc6-9857-7aef9250bd05",
@@ -3607,7 +3607,7 @@
               "ResourceType": "l3Network"
             },
             "systemData": {
-              "createdBy": "roytang@microsoft.com",
+              "createdBy": "Sanitized",
               "createdByType": "User",
               "createdAt": "2023-06-19T13:59:45.0139274Z",
               "lastModifiedBy": "319f651f-7ddb-4fc6-9857-7aef9250bd05",
@@ -3647,7 +3647,7 @@
               "ResourceType": "l3Network"
             },
             "systemData": {
-              "createdBy": "nachoudhary@microsoft.com",
+              "createdBy": "Sanitized",
               "createdByType": "User",
               "createdAt": "2023-06-19T14:01:18.3560987Z",
               "lastModifiedBy": "319f651f-7ddb-4fc6-9857-7aef9250bd05",
@@ -3687,7 +3687,7 @@
               "ResourceType": "l3Network"
             },
             "systemData": {
-              "createdBy": "nachoudhary@microsoft.com",
+              "createdBy": "Sanitized",
               "createdByType": "User",
               "createdAt": "2023-06-19T14:05:17.9247022Z",
               "lastModifiedBy": "319f651f-7ddb-4fc6-9857-7aef9250bd05",
@@ -3727,7 +3727,7 @@
               "ResourceType": "l3Network"
             },
             "systemData": {
-              "createdBy": "nachoudhary@microsoft.com",
+              "createdBy": "Sanitized",
               "createdByType": "User",
               "createdAt": "2023-06-19T14:09:34.4769927Z",
               "lastModifiedBy": "319f651f-7ddb-4fc6-9857-7aef9250bd05",
@@ -3762,7 +3762,7 @@
               "type": "CustomLocation"
             },
             "systemData": {
-              "createdBy": "roytang@microsoft.com",
+              "createdBy": "Sanitized",
               "createdByType": "User",
               "createdAt": "2023-06-19T20:43:35.8377118Z",
               "lastModifiedBy": "319f651f-7ddb-4fc6-9857-7aef9250bd05",
@@ -3892,7 +3892,7 @@
               "usage": "pentest"
             },
             "systemData": {
-              "createdBy": "vatsalparikh@microsoft.com",
+              "createdBy": "Sanitized",
               "createdByType": "User",
               "createdAt": "2023-06-20T03:49:18.7215249Z",
               "lastModifiedBy": "319f651f-7ddb-4fc6-9857-7aef9250bd05",
@@ -3933,7 +3933,7 @@
               "usage": "pentest"
             },
             "systemData": {
-              "createdBy": "vatsalparikh@microsoft.com",
+              "createdBy": "Sanitized",
               "createdByType": "User",
               "createdAt": "2023-06-20T03:49:18.9883206Z",
               "lastModifiedBy": "319f651f-7ddb-4fc6-9857-7aef9250bd05",
@@ -3970,7 +3970,7 @@
               "usage": "pentest"
             },
             "systemData": {
-              "createdBy": "vatsalparikh@microsoft.com",
+              "createdBy": "Sanitized",
               "createdByType": "User",
               "createdAt": "2023-06-20T03:49:19.0453886Z",
               "lastModifiedBy": "319f651f-7ddb-4fc6-9857-7aef9250bd05",
@@ -4011,7 +4011,7 @@
               "usage": "pentest"
             },
             "systemData": {
-              "createdBy": "vatsalparikh@microsoft.com",
+              "createdBy": "Sanitized",
               "createdByType": "User",
               "createdAt": "2023-06-20T03:49:19.2387476Z",
               "lastModifiedBy": "319f651f-7ddb-4fc6-9857-7aef9250bd05",
@@ -4050,7 +4050,7 @@
               "Purpose": "QA"
             },
             "systemData": {
-              "createdBy": "nishkumar@microsoft.com",
+              "createdBy": "Sanitized",
               "createdByType": "User",
               "createdAt": "2023-06-21T14:48:50.8753684Z",
               "lastModifiedBy": "319f651f-7ddb-4fc6-9857-7aef9250bd05",
@@ -4130,7 +4130,7 @@
               "ResourceType": "l3Network"
             },
             "systemData": {
-              "createdBy": "philsphicas@microsoft.com",
+              "createdBy": "Sanitized",
               "createdByType": "User",
               "createdAt": "2023-06-21T17:56:34.8922364Z",
               "lastModifiedBy": "319f651f-7ddb-4fc6-9857-7aef9250bd05",
@@ -4170,7 +4170,7 @@
               "Purpose": "QA"
             },
             "systemData": {
-              "createdBy": "odedlesage@microsoft.com",
+              "createdBy": "Sanitized",
               "createdByType": "User",
               "createdAt": "2023-06-21T22:10:01.4175372Z",
               "lastModifiedBy": "319f651f-7ddb-4fc6-9857-7aef9250bd05",
@@ -4214,7 +4214,7 @@
               "Purpose": "QA"
             },
             "systemData": {
-              "createdBy": "odedlesage@microsoft.com",
+              "createdBy": "Sanitized",
               "createdByType": "User",
               "createdAt": "2023-06-21T22:10:33.6380377Z",
               "lastModifiedBy": "319f651f-7ddb-4fc6-9857-7aef9250bd05",
@@ -4698,7 +4698,7 @@
               "Purpose": "QA"
             },
             "systemData": {
-              "createdBy": "v-asomya@microsoft.com",
+              "createdBy": "Sanitized",
               "createdByType": "User",
               "createdAt": "2023-06-22T13:54:33.4888508Z",
               "lastModifiedBy": "319f651f-7ddb-4fc6-9857-7aef9250bd05",
@@ -4738,7 +4738,7 @@
               "Purpose": "QA"
             },
             "systemData": {
-              "createdBy": "v-asomya@microsoft.com",
+              "createdBy": "Sanitized",
               "createdByType": "User",
               "createdAt": "2023-06-22T13:55:04.9110436Z",
               "lastModifiedBy": "319f651f-7ddb-4fc6-9857-7aef9250bd05",
@@ -4942,7 +4942,7 @@
             },
             "tags": {},
             "systemData": {
-              "createdBy": "mbashtovaya@microsoft.com",
+              "createdBy": "Sanitized",
               "createdByType": "User",
               "createdAt": "2023-06-22T14:24:45.127186Z",
               "lastModifiedBy": "319f651f-7ddb-4fc6-9857-7aef9250bd05",
@@ -5099,10 +5099,10 @@
           "key1": "myvalue1"
         },
         "systemData": {
-          "createdBy": "mbashtovaya@microsoft.com",
+          "createdBy": "Sanitized",
           "createdByType": "User",
           "createdAt": "2023-06-22T14:24:45.127186Z",
-          "lastModifiedBy": "mbashtovaya@microsoft.com",
+          "lastModifiedBy": "Sanitized",
           "lastModifiedByType": "User",
           "lastModifiedAt": "2023-06-22T14:24:56.3615003Z"
         },

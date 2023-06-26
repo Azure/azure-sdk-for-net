@@ -178,10 +178,10 @@
         },
         "tags": {},
         "systemData": {
-          "createdBy": "jmalcomb@microsoft.com",
+          "createdBy": "Sanitized",
           "createdByType": "User",
           "createdAt": "2023-06-26T12:45:50.1442465Z",
-          "lastModifiedBy": "jmalcomb@microsoft.com",
+          "lastModifiedBy": "Sanitized",
           "lastModifiedByType": "User",
           "lastModifiedAt": "2023-06-26T12:45:50.1442465Z"
         },
@@ -1466,7 +1466,7 @@
         },
         "tags": {},
         "systemData": {
-          "createdBy": "jmalcomb@microsoft.com",
+          "createdBy": "Sanitized",
           "createdByType": "User",
           "createdAt": "2023-06-26T12:45:50.1442465Z",
           "lastModifiedBy": "319f651f-7ddb-4fc6-9857-7aef9250bd05",
@@ -1747,7 +1747,7 @@
         },
         "tags": {},
         "systemData": {
-          "createdBy": "jmalcomb@microsoft.com",
+          "createdBy": "Sanitized",
           "createdByType": "User",
           "createdAt": "2023-06-26T12:45:50.1442465Z",
           "lastModifiedBy": "319f651f-7ddb-4fc6-9857-7aef9250bd05",
@@ -2326,7 +2326,7 @@
           "test": "patch"
         },
         "systemData": {
-          "createdBy": "jmalcomb@microsoft.com",
+          "createdBy": "Sanitized",
           "createdByType": "User",
           "createdAt": "2023-06-26T12:45:50.1442465Z",
           "lastModifiedBy": "319f651f-7ddb-4fc6-9857-7aef9250bd05",
@@ -2613,7 +2613,7 @@
               "test": "patch"
             },
             "systemData": {
-              "createdBy": "jmalcomb@microsoft.com",
+              "createdBy": "Sanitized",
               "createdByType": "User",
               "createdAt": "2023-06-26T12:45:50.1442465Z",
               "lastModifiedBy": "319f651f-7ddb-4fc6-9857-7aef9250bd05",
@@ -2904,7 +2904,7 @@
               "ResourceType": "ncaks"
             },
             "systemData": {
-              "createdBy": "manalva@microsoft.com",
+              "createdBy": "Sanitized",
               "createdByType": "User",
               "createdAt": "2023-05-11T17:31:20.7590147Z",
               "lastModifiedBy": "319f651f-7ddb-4fc6-9857-7aef9250bd05",
@@ -3020,7 +3020,7 @@
               "ResourceType": "ncaks"
             },
             "systemData": {
-              "createdBy": "manalva@microsoft.com",
+              "createdBy": "Sanitized",
               "createdByType": "User",
               "createdAt": "2023-05-11T19:12:31.5722494Z",
               "lastModifiedBy": "319f651f-7ddb-4fc6-9857-7aef9250bd05",
@@ -3136,7 +3136,7 @@
               "ResourceType": "ncaks"
             },
             "systemData": {
-              "createdBy": "manalva@microsoft.com",
+              "createdBy": "Sanitized",
               "createdByType": "User",
               "createdAt": "2023-05-12T06:14:53.4638699Z",
               "lastModifiedBy": "319f651f-7ddb-4fc6-9857-7aef9250bd05",
@@ -3252,7 +3252,7 @@
               "ResourceType": "ncaks"
             },
             "systemData": {
-              "createdBy": "manalva@microsoft.com",
+              "createdBy": "Sanitized",
               "createdByType": "User",
               "createdAt": "2023-05-15T10:26:07.7140946Z",
               "lastModifiedBy": "319f651f-7ddb-4fc6-9857-7aef9250bd05",
@@ -3464,7 +3464,7 @@
               "ResourceType": "ncaks"
             },
             "systemData": {
-              "createdBy": "manalva@microsoft.com",
+              "createdBy": "Sanitized",
               "createdByType": "User",
               "createdAt": "2023-05-15T14:08:13.7224009Z",
               "lastModifiedBy": "319f651f-7ddb-4fc6-9857-7aef9250bd05",
@@ -3697,7 +3697,7 @@
               "ResourceType": "kubernetescluster"
             },
             "systemData": {
-              "createdBy": "roytang@microsoft.com",
+              "createdBy": "Sanitized",
               "createdByType": "User",
               "createdAt": "2023-05-16T15:45:38.9316947Z",
               "lastModifiedBy": "319f651f-7ddb-4fc6-9857-7aef9250bd05",
@@ -4352,7 +4352,7 @@
               "ResourceType": "kubernetescluster"
             },
             "systemData": {
-              "createdBy": "matfuller@microsoft.com",
+              "createdBy": "Sanitized",
               "createdByType": "User",
               "createdAt": "2023-05-22T19:57:37.5769527Z",
               "lastModifiedBy": "319f651f-7ddb-4fc6-9857-7aef9250bd05",
@@ -4568,7 +4568,7 @@
               "type": "CustomLocation"
             },
             "systemData": {
-              "createdBy": "jagathnath@microsoft.com",
+              "createdBy": "Sanitized",
               "createdByType": "User",
               "createdAt": "2023-05-25T17:22:35.6212533Z",
               "lastModifiedBy": "319f651f-7ddb-4fc6-9857-7aef9250bd05",
@@ -4703,7 +4703,7 @@
             },
             "tags": {},
             "systemData": {
-              "createdBy": "jcroth@microsoft.com",
+              "createdBy": "Sanitized",
               "createdByType": "User",
               "createdAt": "2023-05-26T22:24:52.9490934Z",
               "lastModifiedBy": "319f651f-7ddb-4fc6-9857-7aef9250bd05",
@@ -4889,7 +4889,7 @@
               "type": "CustomLocation"
             },
             "systemData": {
-              "createdBy": "jagathnath@microsoft.com",
+              "createdBy": "Sanitized",
               "createdByType": "User",
               "createdAt": "2023-05-30T16:52:29.0087378Z",
               "lastModifiedBy": "319f651f-7ddb-4fc6-9857-7aef9250bd05",
@@ -5056,10 +5056,10 @@
               "UsedBy": "PenTest"
             },
             "systemData": {
-              "createdBy": "jcroth@microsoft.com",
+              "createdBy": "Sanitized",
               "createdByType": "User",
               "createdAt": "2023-05-30T23:17:24.4702084Z",
-              "lastModifiedBy": "jcroth@microsoft.com",
+              "lastModifiedBy": "Sanitized",
               "lastModifiedByType": "User",
               "lastModifiedAt": "2023-06-16T20:47:23.8956477Z"
             },
@@ -5577,7 +5577,7 @@
               "ResourceType": "kubernetescluster"
             },
             "systemData": {
-              "createdBy": "manalva@microsoft.com",
+              "createdBy": "Sanitized",
               "createdByType": "User",
               "createdAt": "2023-05-31T15:12:42.1814968Z",
               "lastModifiedBy": "319f651f-7ddb-4fc6-9857-7aef9250bd05",
@@ -5814,7 +5814,7 @@
               "ResourceType": "kubernetescluster"
             },
             "systemData": {
-              "createdBy": "roytang@microsoft.com",
+              "createdBy": "Sanitized",
               "createdByType": "User",
               "createdAt": "2023-05-31T16:59:31.1992903Z",
               "lastModifiedBy": "319f651f-7ddb-4fc6-9857-7aef9250bd05",
@@ -6026,7 +6026,7 @@
             },
             "tags": {},
             "systemData": {
-              "createdBy": "jcroth@microsoft.com",
+              "createdBy": "Sanitized",
               "createdByType": "User",
               "createdAt": "2023-05-31T19:35:58.1873824Z",
               "lastModifiedBy": "319f651f-7ddb-4fc6-9857-7aef9250bd05",
@@ -6318,7 +6318,7 @@
               "UsedBy": "Mukesh"
             },
             "systemData": {
-              "createdBy": "jcroth@microsoft.com",
+              "createdBy": "Sanitized",
               "createdByType": "User",
               "createdAt": "2023-06-02T23:28:01.5459222Z",
               "lastModifiedBy": "319f651f-7ddb-4fc6-9857-7aef9250bd05",
@@ -6512,7 +6512,7 @@
               "UsedBy": "JohnK"
             },
             "systemData": {
-              "createdBy": "jcroth@microsoft.com",
+              "createdBy": "Sanitized",
               "createdByType": "User",
               "createdAt": "2023-06-06T18:12:55.543932Z",
               "lastModifiedBy": "319f651f-7ddb-4fc6-9857-7aef9250bd05",
@@ -6725,7 +6725,7 @@
             },
             "tags": {},
             "systemData": {
-              "createdBy": "jcroth@microsoft.com",
+              "createdBy": "Sanitized",
               "createdByType": "User",
               "createdAt": "2023-06-06T18:51:17.8553919Z",
               "lastModifiedBy": "319f651f-7ddb-4fc6-9857-7aef9250bd05",
@@ -6979,7 +6979,7 @@
             },
             "tags": {},
             "systemData": {
-              "createdBy": "jcroth@microsoft.com",
+              "createdBy": "Sanitized",
               "createdByType": "User",
               "createdAt": "2023-06-06T19:01:10.8627181Z",
               "lastModifiedBy": "319f651f-7ddb-4fc6-9857-7aef9250bd05",
@@ -7425,10 +7425,10 @@
               "ResourceType": "kubernetescluster"
             },
             "systemData": {
-              "createdBy": "manalva@microsoft.com",
+              "createdBy": "Sanitized",
               "createdByType": "User",
               "createdAt": "2023-06-10T15:07:31.5455936Z",
-              "lastModifiedBy": "manalva@microsoft.com",
+              "lastModifiedBy": "Sanitized",
               "lastModifiedByType": "User",
               "lastModifiedAt": "2023-06-16T06:57:32.1955418Z"
             },
@@ -7548,7 +7548,7 @@
             },
             "tags": {},
             "systemData": {
-              "createdBy": "jcroth@microsoft.com",
+              "createdBy": "Sanitized",
               "createdByType": "User",
               "createdAt": "2023-06-13T01:07:35.4818765Z",
               "lastModifiedBy": "319f651f-7ddb-4fc6-9857-7aef9250bd05",
@@ -7829,7 +7829,7 @@
               "type": "CustomLocation"
             },
             "systemData": {
-              "createdBy": "jagathnath@microsoft.com",
+              "createdBy": "Sanitized",
               "createdByType": "User",
               "createdAt": "2023-06-14T21:43:53.9143429Z",
               "lastModifiedBy": "319f651f-7ddb-4fc6-9857-7aef9250bd05",
@@ -8130,7 +8130,7 @@
               "ManagedBy": "nc-resource-testing"
             },
             "systemData": {
-              "createdBy": "v-asomya@microsoft.com",
+              "createdBy": "Sanitized",
               "createdByType": "User",
               "createdAt": "2023-06-16T03:29:39.020013Z",
               "lastModifiedBy": "319f651f-7ddb-4fc6-9857-7aef9250bd05",
@@ -8148,7 +8148,7 @@
                 "adminUsername": "testnaksusername",
                 "sshPublicKeys": [
                   {
-                    "keyData": "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQCrBinYFGGVRUHnLvl/KTcbelvTnjXc5raUm4H7RUq\u002BnKQjoS6a8MYrQE2\u002BkmEA/\u002BrumXy6UfFkA7wUyKDiu4FzNJuaIp61ALW9evfxWUtFOTm3F4OzoAqNqMJRCz7UlN\u002BDfCNJgK0yz\u002BM\u002Bdn6PbR0GU4CA8bl5OAFMJuKpaRTJLzsjuSPD82wCjtZprCV549OYrDqhB77jPUK\u002BjkvDvid2Sgx\u002BBmcqnMsilux/33ztUILArsEdI8XfzQfvTBa1gXWaAjkUig/idWbp3k8VNiBROB1Jh1CHq9kx9No1RMymKPn0hiSWAgo9M\u002Bujj\u002Bm9j8HaCLNkS1t3AwXy5UvdL48bupqvVQUzhGY24VjGCUxgEJRcPs\u002BevnFK8DXm\u002BELDYsL6/Bnt1iA8Ty\u002B7prj0JHsHmOAeA2tY5VTT25mVMIVC9jjGaMKv/HApaFUy3WeytaRvjeHw2xHt9YyYzTk4h6t06H0Zrt68MRyaq1/wS5ILxm/fILGsFiydf0RKJxhyHCc= v-asomya@microsoft.com"
+                    "keyData": "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQCrBinYFGGVRUHnLvl/KTcbelvTnjXc5raUm4H7RUq\u002BnKQjoS6a8MYrQE2\u002BkmEA/\u002BrumXy6UfFkA7wUyKDiu4FzNJuaIp61ALW9evfxWUtFOTm3F4OzoAqNqMJRCz7UlN\u002BDfCNJgK0yz\u002BM\u002Bdn6PbR0GU4CA8bl5OAFMJuKpaRTJLzsjuSPD82wCjtZprCV549OYrDqhB77jPUK\u002BjkvDvid2Sgx\u002BBmcqnMsilux/33ztUILArsEdI8XfzQfvTBa1gXWaAjkUig/idWbp3k8VNiBROB1Jh1CHq9kx9No1RMymKPn0hiSWAgo9M\u002Bujj\u002Bm9j8HaCLNkS1t3AwXy5UvdL48bupqvVQUzhGY24VjGCUxgEJRcPs\u002BevnFK8DXm\u002BELDYsL6/Bnt1iA8Ty\u002B7prj0JHsHmOAeA2tY5VTT25mVMIVC9jjGaMKv/HApaFUy3WeytaRvjeHw2xHt9YyYzTk4h6t06H0Zrt68MRyaq1/wS5ILxm/fILGsFiydf0RKJxhyHCc= Sanitized"
                   }
                 ]
               },
@@ -8227,10 +8227,10 @@
               "ResourceType": "kubernetescluster"
             },
             "systemData": {
-              "createdBy": "manalva@microsoft.com",
+              "createdBy": "Sanitized",
               "createdByType": "User",
               "createdAt": "2023-06-16T07:04:35.0211508Z",
-              "lastModifiedBy": "manalva@microsoft.com",
+              "lastModifiedBy": "Sanitized",
               "lastModifiedByType": "User",
               "lastModifiedAt": "2023-06-16T09:22:51.2935995Z"
             },
@@ -8354,7 +8354,7 @@
               "ResourceType": "kubernetescluster"
             },
             "systemData": {
-              "createdBy": "manalva@microsoft.com",
+              "createdBy": "Sanitized",
               "createdByType": "User",
               "createdAt": "2023-06-16T09:45:10.7897705Z",
               "lastModifiedBy": "319f651f-7ddb-4fc6-9857-7aef9250bd05",
@@ -8825,7 +8825,7 @@
               "ManagedBy": "nc-resource-testing"
             },
             "systemData": {
-              "createdBy": "v-asomya@microsoft.com",
+              "createdBy": "Sanitized",
               "createdByType": "User",
               "createdAt": "2023-06-16T15:57:41.6517334Z",
               "lastModifiedBy": "319f651f-7ddb-4fc6-9857-7aef9250bd05",
@@ -8843,7 +8843,7 @@
                 "adminUsername": "testnaksusername",
                 "sshPublicKeys": [
                   {
-                    "keyData": "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQCrBinYFGGVRUHnLvl/KTcbelvTnjXc5raUm4H7RUq\u002BnKQjoS6a8MYrQE2\u002BkmEA/\u002BrumXy6UfFkA7wUyKDiu4FzNJuaIp61ALW9evfxWUtFOTm3F4OzoAqNqMJRCz7UlN\u002BDfCNJgK0yz\u002BM\u002Bdn6PbR0GU4CA8bl5OAFMJuKpaRTJLzsjuSPD82wCjtZprCV549OYrDqhB77jPUK\u002BjkvDvid2Sgx\u002BBmcqnMsilux/33ztUILArsEdI8XfzQfvTBa1gXWaAjkUig/idWbp3k8VNiBROB1Jh1CHq9kx9No1RMymKPn0hiSWAgo9M\u002Bujj\u002Bm9j8HaCLNkS1t3AwXy5UvdL48bupqvVQUzhGY24VjGCUxgEJRcPs\u002BevnFK8DXm\u002BELDYsL6/Bnt1iA8Ty\u002B7prj0JHsHmOAeA2tY5VTT25mVMIVC9jjGaMKv/HApaFUy3WeytaRvjeHw2xHt9YyYzTk4h6t06H0Zrt68MRyaq1/wS5ILxm/fILGsFiydf0RKJxhyHCc= v-asomya@microsoft.com"
+                    "keyData": "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQCrBinYFGGVRUHnLvl/KTcbelvTnjXc5raUm4H7RUq\u002BnKQjoS6a8MYrQE2\u002BkmEA/\u002BrumXy6UfFkA7wUyKDiu4FzNJuaIp61ALW9evfxWUtFOTm3F4OzoAqNqMJRCz7UlN\u002BDfCNJgK0yz\u002BM\u002Bdn6PbR0GU4CA8bl5OAFMJuKpaRTJLzsjuSPD82wCjtZprCV549OYrDqhB77jPUK\u002BjkvDvid2Sgx\u002BBmcqnMsilux/33ztUILArsEdI8XfzQfvTBa1gXWaAjkUig/idWbp3k8VNiBROB1Jh1CHq9kx9No1RMymKPn0hiSWAgo9M\u002Bujj\u002Bm9j8HaCLNkS1t3AwXy5UvdL48bupqvVQUzhGY24VjGCUxgEJRcPs\u002BevnFK8DXm\u002BELDYsL6/Bnt1iA8Ty\u002B7prj0JHsHmOAeA2tY5VTT25mVMIVC9jjGaMKv/HApaFUy3WeytaRvjeHw2xHt9YyYzTk4h6t06H0Zrt68MRyaq1/wS5ILxm/fILGsFiydf0RKJxhyHCc= Sanitized"
                   }
                 ]
               },
@@ -8918,7 +8918,7 @@
             },
             "tags": {},
             "systemData": {
-              "createdBy": "jcroth@microsoft.com",
+              "createdBy": "Sanitized",
               "createdByType": "User",
               "createdAt": "2023-06-16T16:16:01.9027862Z",
               "lastModifiedBy": "319f651f-7ddb-4fc6-9857-7aef9250bd05",
@@ -9310,7 +9310,7 @@
               "ManagedBy": "nc-resource-testing"
             },
             "systemData": {
-              "createdBy": "v-asomya@microsoft.com",
+              "createdBy": "Sanitized",
               "createdByType": "User",
               "createdAt": "2023-06-16T17:24:27.4801032Z",
               "lastModifiedBy": "319f651f-7ddb-4fc6-9857-7aef9250bd05",
@@ -9328,7 +9328,7 @@
                 "adminUsername": "testnaksusername",
                 "sshPublicKeys": [
                   {
-                    "keyData": "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQCrBinYFGGVRUHnLvl/KTcbelvTnjXc5raUm4H7RUq\u002BnKQjoS6a8MYrQE2\u002BkmEA/\u002BrumXy6UfFkA7wUyKDiu4FzNJuaIp61ALW9evfxWUtFOTm3F4OzoAqNqMJRCz7UlN\u002BDfCNJgK0yz\u002BM\u002Bdn6PbR0GU4CA8bl5OAFMJuKpaRTJLzsjuSPD82wCjtZprCV549OYrDqhB77jPUK\u002BjkvDvid2Sgx\u002BBmcqnMsilux/33ztUILArsEdI8XfzQfvTBa1gXWaAjkUig/idWbp3k8VNiBROB1Jh1CHq9kx9No1RMymKPn0hiSWAgo9M\u002Bujj\u002Bm9j8HaCLNkS1t3AwXy5UvdL48bupqvVQUzhGY24VjGCUxgEJRcPs\u002BevnFK8DXm\u002BELDYsL6/Bnt1iA8Ty\u002B7prj0JHsHmOAeA2tY5VTT25mVMIVC9jjGaMKv/HApaFUy3WeytaRvjeHw2xHt9YyYzTk4h6t06H0Zrt68MRyaq1/wS5ILxm/fILGsFiydf0RKJxhyHCc= v-asomya@microsoft.com"
+                    "keyData": "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQCrBinYFGGVRUHnLvl/KTcbelvTnjXc5raUm4H7RUq\u002BnKQjoS6a8MYrQE2\u002BkmEA/\u002BrumXy6UfFkA7wUyKDiu4FzNJuaIp61ALW9evfxWUtFOTm3F4OzoAqNqMJRCz7UlN\u002BDfCNJgK0yz\u002BM\u002Bdn6PbR0GU4CA8bl5OAFMJuKpaRTJLzsjuSPD82wCjtZprCV549OYrDqhB77jPUK\u002BjkvDvid2Sgx\u002BBmcqnMsilux/33ztUILArsEdI8XfzQfvTBa1gXWaAjkUig/idWbp3k8VNiBROB1Jh1CHq9kx9No1RMymKPn0hiSWAgo9M\u002Bujj\u002Bm9j8HaCLNkS1t3AwXy5UvdL48bupqvVQUzhGY24VjGCUxgEJRcPs\u002BevnFK8DXm\u002BELDYsL6/Bnt1iA8Ty\u002B7prj0JHsHmOAeA2tY5VTT25mVMIVC9jjGaMKv/HApaFUy3WeytaRvjeHw2xHt9YyYzTk4h6t06H0Zrt68MRyaq1/wS5ILxm/fILGsFiydf0RKJxhyHCc= Sanitized"
                   }
                 ]
               },
@@ -9405,10 +9405,10 @@
               "ManagedBy": "nc-resource-testing"
             },
             "systemData": {
-              "createdBy": "v-asomya@microsoft.com",
+              "createdBy": "Sanitized",
               "createdByType": "User",
               "createdAt": "2023-06-16T18:59:17.8145936Z",
-              "lastModifiedBy": "v-asomya@microsoft.com",
+              "lastModifiedBy": "Sanitized",
               "lastModifiedByType": "User",
               "lastModifiedAt": "2023-06-16T18:59:17.8145936Z"
             },
@@ -9423,7 +9423,7 @@
                 "adminUsername": "testnaksusername",
                 "sshPublicKeys": [
                   {
-                    "keyData": "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQCrBinYFGGVRUHnLvl/KTcbelvTnjXc5raUm4H7RUq\u002BnKQjoS6a8MYrQE2\u002BkmEA/\u002BrumXy6UfFkA7wUyKDiu4FzNJuaIp61ALW9evfxWUtFOTm3F4OzoAqNqMJRCz7UlN\u002BDfCNJgK0yz\u002BM\u002Bdn6PbR0GU4CA8bl5OAFMJuKpaRTJLzsjuSPD82wCjtZprCV549OYrDqhB77jPUK\u002BjkvDvid2Sgx\u002BBmcqnMsilux/33ztUILArsEdI8XfzQfvTBa1gXWaAjkUig/idWbp3k8VNiBROB1Jh1CHq9kx9No1RMymKPn0hiSWAgo9M\u002Bujj\u002Bm9j8HaCLNkS1t3AwXy5UvdL48bupqvVQUzhGY24VjGCUxgEJRcPs\u002BevnFK8DXm\u002BELDYsL6/Bnt1iA8Ty\u002B7prj0JHsHmOAeA2tY5VTT25mVMIVC9jjGaMKv/HApaFUy3WeytaRvjeHw2xHt9YyYzTk4h6t06H0Zrt68MRyaq1/wS5ILxm/fILGsFiydf0RKJxhyHCc= v-asomya@microsoft.com"
+                    "keyData": "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQCrBinYFGGVRUHnLvl/KTcbelvTnjXc5raUm4H7RUq\u002BnKQjoS6a8MYrQE2\u002BkmEA/\u002BrumXy6UfFkA7wUyKDiu4FzNJuaIp61ALW9evfxWUtFOTm3F4OzoAqNqMJRCz7UlN\u002BDfCNJgK0yz\u002BM\u002Bdn6PbR0GU4CA8bl5OAFMJuKpaRTJLzsjuSPD82wCjtZprCV549OYrDqhB77jPUK\u002BjkvDvid2Sgx\u002BBmcqnMsilux/33ztUILArsEdI8XfzQfvTBa1gXWaAjkUig/idWbp3k8VNiBROB1Jh1CHq9kx9No1RMymKPn0hiSWAgo9M\u002Bujj\u002Bm9j8HaCLNkS1t3AwXy5UvdL48bupqvVQUzhGY24VjGCUxgEJRcPs\u002BevnFK8DXm\u002BELDYsL6/Bnt1iA8Ty\u002B7prj0JHsHmOAeA2tY5VTT25mVMIVC9jjGaMKv/HApaFUy3WeytaRvjeHw2xHt9YyYzTk4h6t06H0Zrt68MRyaq1/wS5ILxm/fILGsFiydf0RKJxhyHCc= Sanitized"
                   }
                 ]
               },
@@ -9497,7 +9497,7 @@
               "type": "CustomLocation"
             },
             "systemData": {
-              "createdBy": "jagathnath@microsoft.com",
+              "createdBy": "Sanitized",
               "createdByType": "User",
               "createdAt": "2023-06-16T22:36:14.6403796Z",
               "lastModifiedBy": "319f651f-7ddb-4fc6-9857-7aef9250bd05",
@@ -9591,7 +9591,7 @@
               "type": "CustomLocation"
             },
             "systemData": {
-              "createdBy": "jagathnath@microsoft.com",
+              "createdBy": "Sanitized",
               "createdByType": "User",
               "createdAt": "2023-06-16T22:36:25.7650261Z",
               "lastModifiedBy": "319f651f-7ddb-4fc6-9857-7aef9250bd05",
@@ -9686,7 +9686,7 @@
             },
             "tags": {},
             "systemData": {
-              "createdBy": "jcroth@microsoft.com",
+              "createdBy": "Sanitized",
               "createdByType": "User",
               "createdAt": "2023-06-16T23:21:11.5750097Z",
               "lastModifiedBy": "319f651f-7ddb-4fc6-9857-7aef9250bd05",
@@ -10217,10 +10217,10 @@
               "ManagedBy": "nc-resource-testing"
             },
             "systemData": {
-              "createdBy": "v-asomya@microsoft.com",
+              "createdBy": "Sanitized",
               "createdByType": "User",
               "createdAt": "2023-06-19T13:41:21.1066068Z",
-              "lastModifiedBy": "v-asomya@microsoft.com",
+              "lastModifiedBy": "Sanitized",
               "lastModifiedByType": "User",
               "lastModifiedAt": "2023-06-19T13:41:21.1066068Z"
             },
@@ -10235,7 +10235,7 @@
                 "adminUsername": "testnaksusername",
                 "sshPublicKeys": [
                   {
-                    "keyData": "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQCrBinYFGGVRUHnLvl/KTcbelvTnjXc5raUm4H7RUq\u002BnKQjoS6a8MYrQE2\u002BkmEA/\u002BrumXy6UfFkA7wUyKDiu4FzNJuaIp61ALW9evfxWUtFOTm3F4OzoAqNqMJRCz7UlN\u002BDfCNJgK0yz\u002BM\u002Bdn6PbR0GU4CA8bl5OAFMJuKpaRTJLzsjuSPD82wCjtZprCV549OYrDqhB77jPUK\u002BjkvDvid2Sgx\u002BBmcqnMsilux/33ztUILArsEdI8XfzQfvTBa1gXWaAjkUig/idWbp3k8VNiBROB1Jh1CHq9kx9No1RMymKPn0hiSWAgo9M\u002Bujj\u002Bm9j8HaCLNkS1t3AwXy5UvdL48bupqvVQUzhGY24VjGCUxgEJRcPs\u002BevnFK8DXm\u002BELDYsL6/Bnt1iA8Ty\u002B7prj0JHsHmOAeA2tY5VTT25mVMIVC9jjGaMKv/HApaFUy3WeytaRvjeHw2xHt9YyYzTk4h6t06H0Zrt68MRyaq1/wS5ILxm/fILGsFiydf0RKJxhyHCc= v-asomya@microsoft.com"
+                    "keyData": "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQCrBinYFGGVRUHnLvl/KTcbelvTnjXc5raUm4H7RUq\u002BnKQjoS6a8MYrQE2\u002BkmEA/\u002BrumXy6UfFkA7wUyKDiu4FzNJuaIp61ALW9evfxWUtFOTm3F4OzoAqNqMJRCz7UlN\u002BDfCNJgK0yz\u002BM\u002Bdn6PbR0GU4CA8bl5OAFMJuKpaRTJLzsjuSPD82wCjtZprCV549OYrDqhB77jPUK\u002BjkvDvid2Sgx\u002BBmcqnMsilux/33ztUILArsEdI8XfzQfvTBa1gXWaAjkUig/idWbp3k8VNiBROB1Jh1CHq9kx9No1RMymKPn0hiSWAgo9M\u002Bujj\u002Bm9j8HaCLNkS1t3AwXy5UvdL48bupqvVQUzhGY24VjGCUxgEJRcPs\u002BevnFK8DXm\u002BELDYsL6/Bnt1iA8Ty\u002B7prj0JHsHmOAeA2tY5VTT25mVMIVC9jjGaMKv/HApaFUy3WeytaRvjeHw2xHt9YyYzTk4h6t06H0Zrt68MRyaq1/wS5ILxm/fILGsFiydf0RKJxhyHCc= Sanitized"
                   }
                 ]
               },
@@ -10309,7 +10309,7 @@
               "type": "CustomLocation"
             },
             "systemData": {
-              "createdBy": "jagathnath@microsoft.com",
+              "createdBy": "Sanitized",
               "createdByType": "User",
               "createdAt": "2023-06-19T14:27:14.4054321Z",
               "lastModifiedBy": "319f651f-7ddb-4fc6-9857-7aef9250bd05",
@@ -10567,7 +10567,7 @@
               "type": "CustomLocation"
             },
             "systemData": {
-              "createdBy": "jagathnath@microsoft.com",
+              "createdBy": "Sanitized",
               "createdByType": "User",
               "createdAt": "2023-06-19T18:02:07.9997477Z",
               "lastModifiedBy": "319f651f-7ddb-4fc6-9857-7aef9250bd05",
@@ -10826,7 +10826,7 @@
             },
             "tags": {},
             "systemData": {
-              "createdBy": "vatsalparikh@microsoft.com",
+              "createdBy": "Sanitized",
               "createdByType": "User",
               "createdAt": "2023-06-20T05:20:02.862564Z",
               "lastModifiedBy": "319f651f-7ddb-4fc6-9857-7aef9250bd05",
@@ -11147,7 +11147,7 @@
               "ManagedBy": "nc-resource-testing"
             },
             "systemData": {
-              "createdBy": "steveballs@microsoft.com",
+              "createdBy": "Sanitized",
               "createdByType": "User",
               "createdAt": "2023-06-20T10:48:46.1226326Z",
               "lastModifiedBy": "319f651f-7ddb-4fc6-9857-7aef9250bd05",
@@ -11353,7 +11353,7 @@
               "type": "CustomLocation"
             },
             "systemData": {
-              "createdBy": "jagathnath@microsoft.com",
+              "createdBy": "Sanitized",
               "createdByType": "User",
               "createdAt": "2023-06-20T20:41:44.868244Z",
               "lastModifiedBy": "319f651f-7ddb-4fc6-9857-7aef9250bd05",
@@ -11615,7 +11615,7 @@
               "type": "CustomLocation"
             },
             "systemData": {
-              "createdBy": "jagathnath@microsoft.com",
+              "createdBy": "Sanitized",
               "createdByType": "User",
               "createdAt": "2023-06-20T20:43:18.3016748Z",
               "lastModifiedBy": "319f651f-7ddb-4fc6-9857-7aef9250bd05",
@@ -11718,7 +11718,7 @@
               "ResourceType": "kubernetescluster"
             },
             "systemData": {
-              "createdBy": "omprakash@microsoft.com",
+              "createdBy": "Sanitized",
               "createdByType": "User",
               "createdAt": "2023-06-20T23:08:04.5508226Z",
               "lastModifiedBy": "319f651f-7ddb-4fc6-9857-7aef9250bd05",
@@ -12017,7 +12017,7 @@
             },
             "tags": {},
             "systemData": {
-              "createdBy": "joknight@microsoft.com",
+              "createdBy": "Sanitized",
               "createdByType": "User",
               "createdAt": "2023-06-21T16:47:04.2330828Z",
               "lastModifiedBy": "319f651f-7ddb-4fc6-9857-7aef9250bd05",
@@ -12305,7 +12305,7 @@
               "type": "CustomLocation"
             },
             "systemData": {
-              "createdBy": "mjeanneret@microsoft.com",
+              "createdBy": "Sanitized",
               "createdByType": "User",
               "createdAt": "2023-06-21T18:57:03.1407265Z",
               "lastModifiedBy": "319f651f-7ddb-4fc6-9857-7aef9250bd05",
@@ -12868,10 +12868,10 @@
               "ManagedBy": "nc-resource-testing"
             },
             "systemData": {
-              "createdBy": "v-asomya@microsoft.com",
+              "createdBy": "Sanitized",
               "createdByType": "User",
               "createdAt": "2023-06-22T13:56:14.5512942Z",
-              "lastModifiedBy": "v-asomya@microsoft.com",
+              "lastModifiedBy": "Sanitized",
               "lastModifiedByType": "User",
               "lastModifiedAt": "2023-06-22T13:56:14.5512942Z"
             },
@@ -12886,7 +12886,7 @@
                 "adminUsername": "testnaksusername",
                 "sshPublicKeys": [
                   {
-                    "keyData": "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQCrBinYFGGVRUHnLvl/KTcbelvTnjXc5raUm4H7RUq\u002BnKQjoS6a8MYrQE2\u002BkmEA/\u002BrumXy6UfFkA7wUyKDiu4FzNJuaIp61ALW9evfxWUtFOTm3F4OzoAqNqMJRCz7UlN\u002BDfCNJgK0yz\u002BM\u002Bdn6PbR0GU4CA8bl5OAFMJuKpaRTJLzsjuSPD82wCjtZprCV549OYrDqhB77jPUK\u002BjkvDvid2Sgx\u002BBmcqnMsilux/33ztUILArsEdI8XfzQfvTBa1gXWaAjkUig/idWbp3k8VNiBROB1Jh1CHq9kx9No1RMymKPn0hiSWAgo9M\u002Bujj\u002Bm9j8HaCLNkS1t3AwXy5UvdL48bupqvVQUzhGY24VjGCUxgEJRcPs\u002BevnFK8DXm\u002BELDYsL6/Bnt1iA8Ty\u002B7prj0JHsHmOAeA2tY5VTT25mVMIVC9jjGaMKv/HApaFUy3WeytaRvjeHw2xHt9YyYzTk4h6t06H0Zrt68MRyaq1/wS5ILxm/fILGsFiydf0RKJxhyHCc= v-asomya@microsoft.com"
+                    "keyData": "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQCrBinYFGGVRUHnLvl/KTcbelvTnjXc5raUm4H7RUq\u002BnKQjoS6a8MYrQE2\u002BkmEA/\u002BrumXy6UfFkA7wUyKDiu4FzNJuaIp61ALW9evfxWUtFOTm3F4OzoAqNqMJRCz7UlN\u002BDfCNJgK0yz\u002BM\u002Bdn6PbR0GU4CA8bl5OAFMJuKpaRTJLzsjuSPD82wCjtZprCV549OYrDqhB77jPUK\u002BjkvDvid2Sgx\u002BBmcqnMsilux/33ztUILArsEdI8XfzQfvTBa1gXWaAjkUig/idWbp3k8VNiBROB1Jh1CHq9kx9No1RMymKPn0hiSWAgo9M\u002Bujj\u002Bm9j8HaCLNkS1t3AwXy5UvdL48bupqvVQUzhGY24VjGCUxgEJRcPs\u002BevnFK8DXm\u002BELDYsL6/Bnt1iA8Ty\u002B7prj0JHsHmOAeA2tY5VTT25mVMIVC9jjGaMKv/HApaFUy3WeytaRvjeHw2xHt9YyYzTk4h6t06H0Zrt68MRyaq1/wS5ILxm/fILGsFiydf0RKJxhyHCc= Sanitized"
                   }
                 ]
               },
@@ -12963,10 +12963,10 @@
               "ManagedBy": "nc-resource-testing"
             },
             "systemData": {
-              "createdBy": "v-asomya@microsoft.com",
+              "createdBy": "Sanitized",
               "createdByType": "User",
               "createdAt": "2023-06-22T15:46:01.905444Z",
-              "lastModifiedBy": "v-asomya@microsoft.com",
+              "lastModifiedBy": "Sanitized",
               "lastModifiedByType": "User",
               "lastModifiedAt": "2023-06-22T15:46:01.905444Z"
             },
@@ -12981,7 +12981,7 @@
                 "adminUsername": "testnaksusername",
                 "sshPublicKeys": [
                   {
-                    "keyData": "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQCrBinYFGGVRUHnLvl/KTcbelvTnjXc5raUm4H7RUq\u002BnKQjoS6a8MYrQE2\u002BkmEA/\u002BrumXy6UfFkA7wUyKDiu4FzNJuaIp61ALW9evfxWUtFOTm3F4OzoAqNqMJRCz7UlN\u002BDfCNJgK0yz\u002BM\u002Bdn6PbR0GU4CA8bl5OAFMJuKpaRTJLzsjuSPD82wCjtZprCV549OYrDqhB77jPUK\u002BjkvDvid2Sgx\u002BBmcqnMsilux/33ztUILArsEdI8XfzQfvTBa1gXWaAjkUig/idWbp3k8VNiBROB1Jh1CHq9kx9No1RMymKPn0hiSWAgo9M\u002Bujj\u002Bm9j8HaCLNkS1t3AwXy5UvdL48bupqvVQUzhGY24VjGCUxgEJRcPs\u002BevnFK8DXm\u002BELDYsL6/Bnt1iA8Ty\u002B7prj0JHsHmOAeA2tY5VTT25mVMIVC9jjGaMKv/HApaFUy3WeytaRvjeHw2xHt9YyYzTk4h6t06H0Zrt68MRyaq1/wS5ILxm/fILGsFiydf0RKJxhyHCc= v-asomya@microsoft.com"
+                    "keyData": "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQCrBinYFGGVRUHnLvl/KTcbelvTnjXc5raUm4H7RUq\u002BnKQjoS6a8MYrQE2\u002BkmEA/\u002BrumXy6UfFkA7wUyKDiu4FzNJuaIp61ALW9evfxWUtFOTm3F4OzoAqNqMJRCz7UlN\u002BDfCNJgK0yz\u002BM\u002Bdn6PbR0GU4CA8bl5OAFMJuKpaRTJLzsjuSPD82wCjtZprCV549OYrDqhB77jPUK\u002BjkvDvid2Sgx\u002BBmcqnMsilux/33ztUILArsEdI8XfzQfvTBa1gXWaAjkUig/idWbp3k8VNiBROB1Jh1CHq9kx9No1RMymKPn0hiSWAgo9M\u002Bujj\u002Bm9j8HaCLNkS1t3AwXy5UvdL48bupqvVQUzhGY24VjGCUxgEJRcPs\u002BevnFK8DXm\u002BELDYsL6/Bnt1iA8Ty\u002B7prj0JHsHmOAeA2tY5VTT25mVMIVC9jjGaMKv/HApaFUy3WeytaRvjeHw2xHt9YyYzTk4h6t06H0Zrt68MRyaq1/wS5ILxm/fILGsFiydf0RKJxhyHCc= Sanitized"
                   }
                 ]
               },
@@ -13056,7 +13056,7 @@
             },
             "tags": {},
             "systemData": {
-              "createdBy": "rchoudhury@microsoft.com",
+              "createdBy": "Sanitized",
               "createdByType": "User",
               "createdAt": "2023-06-22T21:14:01.4734862Z",
               "lastModifiedBy": "319f651f-7ddb-4fc6-9857-7aef9250bd05",
@@ -13438,10 +13438,10 @@
               "ManagedBy": "nc-resource-testing"
             },
             "systemData": {
-              "createdBy": "v-asomya@microsoft.com",
+              "createdBy": "Sanitized",
               "createdByType": "User",
               "createdAt": "2023-06-23T02:35:16.9753289Z",
-              "lastModifiedBy": "v-asomya@microsoft.com",
+              "lastModifiedBy": "Sanitized",
               "lastModifiedByType": "User",
               "lastModifiedAt": "2023-06-23T02:35:16.9753289Z"
             },
@@ -13456,7 +13456,7 @@
                 "adminUsername": "testnaksusername",
                 "sshPublicKeys": [
                   {
-                    "keyData": "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQCrBinYFGGVRUHnLvl/KTcbelvTnjXc5raUm4H7RUq\u002BnKQjoS6a8MYrQE2\u002BkmEA/\u002BrumXy6UfFkA7wUyKDiu4FzNJuaIp61ALW9evfxWUtFOTm3F4OzoAqNqMJRCz7UlN\u002BDfCNJgK0yz\u002BM\u002Bdn6PbR0GU4CA8bl5OAFMJuKpaRTJLzsjuSPD82wCjtZprCV549OYrDqhB77jPUK\u002BjkvDvid2Sgx\u002BBmcqnMsilux/33ztUILArsEdI8XfzQfvTBa1gXWaAjkUig/idWbp3k8VNiBROB1Jh1CHq9kx9No1RMymKPn0hiSWAgo9M\u002Bujj\u002Bm9j8HaCLNkS1t3AwXy5UvdL48bupqvVQUzhGY24VjGCUxgEJRcPs\u002BevnFK8DXm\u002BELDYsL6/Bnt1iA8Ty\u002B7prj0JHsHmOAeA2tY5VTT25mVMIVC9jjGaMKv/HApaFUy3WeytaRvjeHw2xHt9YyYzTk4h6t06H0Zrt68MRyaq1/wS5ILxm/fILGsFiydf0RKJxhyHCc= v-asomya@microsoft.com"
+                    "keyData": "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQCrBinYFGGVRUHnLvl/KTcbelvTnjXc5raUm4H7RUq\u002BnKQjoS6a8MYrQE2\u002BkmEA/\u002BrumXy6UfFkA7wUyKDiu4FzNJuaIp61ALW9evfxWUtFOTm3F4OzoAqNqMJRCz7UlN\u002BDfCNJgK0yz\u002BM\u002Bdn6PbR0GU4CA8bl5OAFMJuKpaRTJLzsjuSPD82wCjtZprCV549OYrDqhB77jPUK\u002BjkvDvid2Sgx\u002BBmcqnMsilux/33ztUILArsEdI8XfzQfvTBa1gXWaAjkUig/idWbp3k8VNiBROB1Jh1CHq9kx9No1RMymKPn0hiSWAgo9M\u002Bujj\u002Bm9j8HaCLNkS1t3AwXy5UvdL48bupqvVQUzhGY24VjGCUxgEJRcPs\u002BevnFK8DXm\u002BELDYsL6/Bnt1iA8Ty\u002B7prj0JHsHmOAeA2tY5VTT25mVMIVC9jjGaMKv/HApaFUy3WeytaRvjeHw2xHt9YyYzTk4h6t06H0Zrt68MRyaq1/wS5ILxm/fILGsFiydf0RKJxhyHCc= Sanitized"
                   }
                 ]
               },
@@ -13746,7 +13746,7 @@
             },
             "tags": {},
             "systemData": {
-              "createdBy": "jmalcomb@microsoft.com",
+              "createdBy": "Sanitized",
               "createdByType": "User",
               "createdAt": "2023-06-23T18:28:19.9511837Z",
               "lastModifiedBy": "319f651f-7ddb-4fc6-9857-7aef9250bd05",
@@ -13865,10 +13865,10 @@
             },
             "tags": {},
             "systemData": {
-              "createdBy": "jmalcomb@microsoft.com",
+              "createdBy": "Sanitized",
               "createdByType": "User",
               "createdAt": "2023-06-23T19:19:47.2380504Z",
-              "lastModifiedBy": "jmalcomb@microsoft.com",
+              "lastModifiedBy": "Sanitized",
               "lastModifiedByType": "User",
               "lastModifiedAt": "2023-06-23T19:19:47.2380504Z"
             },
@@ -13984,10 +13984,10 @@
             },
             "tags": {},
             "systemData": {
-              "createdBy": "jmalcomb@microsoft.com",
+              "createdBy": "Sanitized",
               "createdByType": "User",
               "createdAt": "2023-06-23T19:40:54.0549863Z",
-              "lastModifiedBy": "jmalcomb@microsoft.com",
+              "lastModifiedBy": "Sanitized",
               "lastModifiedByType": "User",
               "lastModifiedAt": "2023-06-23T19:40:54.0549863Z"
             },
@@ -14097,7 +14097,7 @@
               "type": "CustomLocation"
             },
             "systemData": {
-              "createdBy": "priyashet@microsoft.com",
+              "createdBy": "Sanitized",
               "createdByType": "User",
               "createdAt": "2023-06-23T20:08:00.4537774Z",
               "lastModifiedBy": "319f651f-7ddb-4fc6-9857-7aef9250bd05",
@@ -14346,7 +14346,7 @@
             },
             "tags": {},
             "systemData": {
-              "createdBy": "jmalcomb@microsoft.com",
+              "createdBy": "Sanitized",
               "createdByType": "User",
               "createdAt": "2023-06-23T20:15:49.7045261Z",
               "lastModifiedBy": "319f651f-7ddb-4fc6-9857-7aef9250bd05",
@@ -14464,7 +14464,7 @@
               "ResourceType": "kubernetescluster"
             },
             "systemData": {
-              "createdBy": "roytang@microsoft.com",
+              "createdBy": "Sanitized",
               "createdByType": "User",
               "createdAt": "2023-06-23T20:25:11.1964845Z",
               "lastModifiedBy": "319f651f-7ddb-4fc6-9857-7aef9250bd05",
@@ -14978,10 +14978,10 @@
               "ManagedBy": "nc-resource-testing"
             },
             "systemData": {
-              "createdBy": "kroyburman@microsoft.com",
+              "createdBy": "Sanitized",
               "createdByType": "User",
               "createdAt": "2023-06-26T06:15:33.4644545Z",
-              "lastModifiedBy": "kroyburman@microsoft.com",
+              "lastModifiedBy": "Sanitized",
               "lastModifiedByType": "User",
               "lastModifiedAt": "2023-06-26T06:15:33.4644545Z"
             },
@@ -14996,7 +14996,7 @@
                 "adminUsername": "testnaksusername",
                 "sshPublicKeys": [
                   {
-                    "keyData": "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQDmjoJshCQG1V3WzIXfAKkird5cV43fIiq2iIp8uPI65KeLbI7w0aGafDRvJXX/cnS04RRDlqv6e6zqCNU7ePHuckLOqgVyjAo5v7AvmCa8a35rLAF43Adk7KB7v3ZWnPGmAKGEJLbATWGMS1A59jQH29z2L4ytQL69BagjBQRBitCQstZ\u002BYPevHO9xeA\u002BZ227E3N16HjgvSS6an5g\u002Bzz0TMcj98uTiRF0MXVeYjjh2GLEgafUAgp3fGOPBfL26bp\u002B2qQFiDME3VvGcYd8K2Xia9WrnQnPG\u002BazAbR\u002B30yMhLzsxjckKWFECrCcZEvselmIPV5I1M/8jcH/W9QflBpmL5waTDAdbqoHtJXuR3tr9Yl7ToIU5EhhancTIw\u002Bm90m8mSPeS5Qd4zGyiRq9Yhgl1neKDX3p5/iq\u002BJO75qeowD1zM80v6JjVkXEs4jiR1GQvTniIncERznFegd3lxd4tENMifLFWCt0e8gnEhtizHap6r9LsgGBSdQOayasJfuOOMRK5WBP25gLCiDtTMi7OIYcdUa6vZMzZDbdVTvCNxJevPvfLF7ifu1sdO9gHbfC7susN1bWlY/ZWrTLRLiYjFqT6TOOozuaOnmDLvyunoHnhybylieJkFcDOgJ59zSE4McitYJB7wHn6wdX1lDiXewa9HCBFyzQO661OFDB6LAQ== kroyburman@microsoft.com"
+                    "keyData": "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQDmjoJshCQG1V3WzIXfAKkird5cV43fIiq2iIp8uPI65KeLbI7w0aGafDRvJXX/cnS04RRDlqv6e6zqCNU7ePHuckLOqgVyjAo5v7AvmCa8a35rLAF43Adk7KB7v3ZWnPGmAKGEJLbATWGMS1A59jQH29z2L4ytQL69BagjBQRBitCQstZ\u002BYPevHO9xeA\u002BZ227E3N16HjgvSS6an5g\u002Bzz0TMcj98uTiRF0MXVeYjjh2GLEgafUAgp3fGOPBfL26bp\u002B2qQFiDME3VvGcYd8K2Xia9WrnQnPG\u002BazAbR\u002B30yMhLzsxjckKWFECrCcZEvselmIPV5I1M/8jcH/W9QflBpmL5waTDAdbqoHtJXuR3tr9Yl7ToIU5EhhancTIw\u002Bm90m8mSPeS5Qd4zGyiRq9Yhgl1neKDX3p5/iq\u002BJO75qeowD1zM80v6JjVkXEs4jiR1GQvTniIncERznFegd3lxd4tENMifLFWCt0e8gnEhtizHap6r9LsgGBSdQOayasJfuOOMRK5WBP25gLCiDtTMi7OIYcdUa6vZMzZDbdVTvCNxJevPvfLF7ifu1sdO9gHbfC7susN1bWlY/ZWrTLRLiYjFqT6TOOozuaOnmDLvyunoHnhybylieJkFcDOgJ59zSE4McitYJB7wHn6wdX1lDiXewa9HCBFyzQO661OFDB6LAQ== Sanitized"
                   }
                 ]
               },
@@ -15356,7 +15356,7 @@
               "ManagedBy": "nc-resource-testing"
             },
             "systemData": {
-              "createdBy": "kroyburman@microsoft.com",
+              "createdBy": "Sanitized",
               "createdByType": "User",
               "createdAt": "2023-06-26T11:55:04.5356579Z",
               "lastModifiedBy": "319f651f-7ddb-4fc6-9857-7aef9250bd05",
@@ -15374,7 +15374,7 @@
                 "adminUsername": "testnaksusername",
                 "sshPublicKeys": [
                   {
-                    "keyData": "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQDmjoJshCQG1V3WzIXfAKkird5cV43fIiq2iIp8uPI65KeLbI7w0aGafDRvJXX/cnS04RRDlqv6e6zqCNU7ePHuckLOqgVyjAo5v7AvmCa8a35rLAF43Adk7KB7v3ZWnPGmAKGEJLbATWGMS1A59jQH29z2L4ytQL69BagjBQRBitCQstZ\u002BYPevHO9xeA\u002BZ227E3N16HjgvSS6an5g\u002Bzz0TMcj98uTiRF0MXVeYjjh2GLEgafUAgp3fGOPBfL26bp\u002B2qQFiDME3VvGcYd8K2Xia9WrnQnPG\u002BazAbR\u002B30yMhLzsxjckKWFECrCcZEvselmIPV5I1M/8jcH/W9QflBpmL5waTDAdbqoHtJXuR3tr9Yl7ToIU5EhhancTIw\u002Bm90m8mSPeS5Qd4zGyiRq9Yhgl1neKDX3p5/iq\u002BJO75qeowD1zM80v6JjVkXEs4jiR1GQvTniIncERznFegd3lxd4tENMifLFWCt0e8gnEhtizHap6r9LsgGBSdQOayasJfuOOMRK5WBP25gLCiDtTMi7OIYcdUa6vZMzZDbdVTvCNxJevPvfLF7ifu1sdO9gHbfC7susN1bWlY/ZWrTLRLiYjFqT6TOOozuaOnmDLvyunoHnhybylieJkFcDOgJ59zSE4McitYJB7wHn6wdX1lDiXewa9HCBFyzQO661OFDB6LAQ== kroyburman@microsoft.com"
+                    "keyData": "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQDmjoJshCQG1V3WzIXfAKkird5cV43fIiq2iIp8uPI65KeLbI7w0aGafDRvJXX/cnS04RRDlqv6e6zqCNU7ePHuckLOqgVyjAo5v7AvmCa8a35rLAF43Adk7KB7v3ZWnPGmAKGEJLbATWGMS1A59jQH29z2L4ytQL69BagjBQRBitCQstZ\u002BYPevHO9xeA\u002BZ227E3N16HjgvSS6an5g\u002Bzz0TMcj98uTiRF0MXVeYjjh2GLEgafUAgp3fGOPBfL26bp\u002B2qQFiDME3VvGcYd8K2Xia9WrnQnPG\u002BazAbR\u002B30yMhLzsxjckKWFECrCcZEvselmIPV5I1M/8jcH/W9QflBpmL5waTDAdbqoHtJXuR3tr9Yl7ToIU5EhhancTIw\u002Bm90m8mSPeS5Qd4zGyiRq9Yhgl1neKDX3p5/iq\u002BJO75qeowD1zM80v6JjVkXEs4jiR1GQvTniIncERznFegd3lxd4tENMifLFWCt0e8gnEhtizHap6r9LsgGBSdQOayasJfuOOMRK5WBP25gLCiDtTMi7OIYcdUa6vZMzZDbdVTvCNxJevPvfLF7ifu1sdO9gHbfC7susN1bWlY/ZWrTLRLiYjFqT6TOOozuaOnmDLvyunoHnhybylieJkFcDOgJ59zSE4McitYJB7wHn6wdX1lDiXewa9HCBFyzQO661OFDB6LAQ== Sanitized"
                   }
                 ]
               },
@@ -16056,7 +16056,7 @@
               "test": "patch"
             },
             "systemData": {
-              "createdBy": "jmalcomb@microsoft.com",
+              "createdBy": "Sanitized",
               "createdByType": "User",
               "createdAt": "2023-06-26T12:45:50.1442465Z",
               "lastModifiedBy": "319f651f-7ddb-4fc6-9857-7aef9250bd05",

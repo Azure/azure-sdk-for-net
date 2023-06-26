@@ -106,10 +106,10 @@
         },
         "tags": {},
         "systemData": {
-          "createdBy": "mbashtovaya@microsoft.com",
+          "createdBy": "Sanitized",
           "createdByType": "User",
           "createdAt": "2023-06-22T15:15:37.0681816Z",
-          "lastModifiedBy": "mbashtovaya@microsoft.com",
+          "lastModifiedBy": "Sanitized",
           "lastModifiedByType": "User",
           "lastModifiedAt": "2023-06-22T15:15:37.0681816Z"
         },
@@ -388,7 +388,7 @@
         },
         "tags": {},
         "systemData": {
-          "createdBy": "mbashtovaya@microsoft.com",
+          "createdBy": "Sanitized",
           "createdByType": "User",
           "createdAt": "2023-06-22T15:15:37.0681816Z",
           "lastModifiedBy": "319f651f-7ddb-4fc6-9857-7aef9250bd05",
@@ -696,7 +696,7 @@
         },
         "tags": {},
         "systemData": {
-          "createdBy": "mbashtovaya@microsoft.com",
+          "createdBy": "Sanitized",
           "createdByType": "User",
           "createdAt": "2023-06-22T15:15:37.0681816Z",
           "lastModifiedBy": "319f651f-7ddb-4fc6-9857-7aef9250bd05",
@@ -1266,7 +1266,7 @@
           "key1": "myvalue1"
         },
         "systemData": {
-          "createdBy": "mbashtovaya@microsoft.com",
+          "createdBy": "Sanitized",
           "createdByType": "User",
           "createdAt": "2023-06-22T15:15:37.0681816Z",
           "lastModifiedBy": "319f651f-7ddb-4fc6-9857-7aef9250bd05",
@@ -1580,7 +1580,7 @@
               "key1": "myvalue1"
             },
             "systemData": {
-              "createdBy": "mbashtovaya@microsoft.com",
+              "createdBy": "Sanitized",
               "createdByType": "User",
               "createdAt": "2023-06-22T15:15:37.0681816Z",
               "lastModifiedBy": "319f651f-7ddb-4fc6-9857-7aef9250bd05",
@@ -1894,10 +1894,10 @@
             },
             "tags": {},
             "systemData": {
-              "createdBy": "rajeshwarig@microsoft.com",
+              "createdBy": "Sanitized",
               "createdByType": "User",
               "createdAt": "2023-04-25T16:10:59.7494917Z",
-              "lastModifiedBy": "rajeshwarig@microsoft.com",
+              "lastModifiedBy": "Sanitized",
               "lastModifiedByType": "User",
               "lastModifiedAt": "2023-04-25T16:10:59.7494917Z"
             },
@@ -1927,7 +1927,7 @@
               "type": "CustomLocation"
             },
             "systemData": {
-              "createdBy": "priyashet@microsoft.com",
+              "createdBy": "Sanitized",
               "createdByType": "User",
               "createdAt": "2023-05-03T21:57:32.8318455Z",
               "lastModifiedBy": "319f651f-7ddb-4fc6-9857-7aef9250bd05",
@@ -1957,7 +1957,7 @@
               "type": "CustomLocation"
             },
             "systemData": {
-              "createdBy": "priyashet@microsoft.com",
+              "createdBy": "Sanitized",
               "createdByType": "User",
               "createdAt": "2023-05-03T21:58:27.4139204Z",
               "lastModifiedBy": "319f651f-7ddb-4fc6-9857-7aef9250bd05",
@@ -4624,7 +4624,7 @@
               "ResourceType": "cloudservicesnetwork"
             },
             "systemData": {
-              "createdBy": "sophiehuang@microsoft.com",
+              "createdBy": "Sanitized",
               "createdByType": "User",
               "createdAt": "2023-06-22T03:30:39.0550046Z",
               "lastModifiedBy": "319f651f-7ddb-4fc6-9857-7aef9250bd05",
@@ -5423,7 +5423,7 @@
               "key1": "myvalue1"
             },
             "systemData": {
-              "createdBy": "mbashtovaya@microsoft.com",
+              "createdBy": "Sanitized",
               "createdByType": "User",
               "createdAt": "2023-06-22T15:15:37.0681816Z",
               "lastModifiedBy": "319f651f-7ddb-4fc6-9857-7aef9250bd05",
@@ -5700,7 +5700,7 @@
             },
             "tags": {},
             "systemData": {
-              "createdBy": "rajeshwarig@microsoft.com",
+              "createdBy": "Sanitized",
               "createdByType": "User",
               "createdAt": "2023-04-20T14:42:17.0443909Z",
               "lastModifiedBy": "319f651f-7ddb-4fc6-9857-7aef9250bd05",
@@ -5733,7 +5733,7 @@
             },
             "tags": {},
             "systemData": {
-              "createdBy": "rajeshwarig@microsoft.com",
+              "createdBy": "Sanitized",
               "createdByType": "User",
               "createdAt": "2023-04-25T15:45:32.4391673Z",
               "lastModifiedBy": "319f651f-7ddb-4fc6-9857-7aef9250bd05",
@@ -5815,7 +5815,7 @@
               "ResourceType": "cloudservicesnetwork"
             },
             "systemData": {
-              "createdBy": "roytang@microsoft.com",
+              "createdBy": "Sanitized",
               "createdByType": "User",
               "createdAt": "2023-05-02T17:19:19.1346885Z",
               "lastModifiedBy": "319f651f-7ddb-4fc6-9857-7aef9250bd05",
@@ -5921,7 +5921,7 @@
               "type": "CustomLocation"
             },
             "systemData": {
-              "createdBy": "mjeanneret@microsoft.com",
+              "createdBy": "Sanitized",
               "createdByType": "User",
               "createdAt": "2023-05-03T16:00:57.8924442Z",
               "lastModifiedBy": "319f651f-7ddb-4fc6-9857-7aef9250bd05",
@@ -6099,7 +6099,7 @@
               "ResourceType": "cloudservicesnetwork"
             },
             "systemData": {
-              "createdBy": "kroyburman@microsoft.com",
+              "createdBy": "Sanitized",
               "createdByType": "User",
               "createdAt": "2023-05-05T06:00:15.441869Z",
               "lastModifiedBy": "319f651f-7ddb-4fc6-9857-7aef9250bd05",
@@ -6219,7 +6219,7 @@
             },
             "tags": {},
             "systemData": {
-              "createdBy": "danielsteven@microsoft.com",
+              "createdBy": "Sanitized",
               "createdByType": "User",
               "createdAt": "2023-05-05T17:05:24.0796893Z",
               "lastModifiedBy": "319f651f-7ddb-4fc6-9857-7aef9250bd05",
@@ -6259,7 +6259,7 @@
               "type": "CustomLocation"
             },
             "systemData": {
-              "createdBy": "roytang@microsoft.com",
+              "createdBy": "Sanitized",
               "createdByType": "User",
               "createdAt": "2023-05-10T17:05:56.0851217Z",
               "lastModifiedBy": "319f651f-7ddb-4fc6-9857-7aef9250bd05",

@@ -190,10 +190,10 @@
           "key1": "myvalue1"
         },
         "systemData": {
-          "createdBy": "mbashtovaya@microsoft.com",
+          "createdBy": "Sanitized",
           "createdByType": "User",
           "createdAt": "2023-06-23T01:40:42.0348302Z",
-          "lastModifiedBy": "mbashtovaya@microsoft.com",
+          "lastModifiedBy": "Sanitized",
           "lastModifiedByType": "User",
           "lastModifiedAt": "2023-06-23T01:40:42.0348302Z"
         },
@@ -730,7 +730,7 @@
           "key1": "myvalue1"
         },
         "systemData": {
-          "createdBy": "mbashtovaya@microsoft.com",
+          "createdBy": "Sanitized",
           "createdByType": "User",
           "createdAt": "2023-06-23T01:40:42.0348302Z",
           "lastModifiedBy": "319f651f-7ddb-4fc6-9857-7aef9250bd05",
@@ -883,7 +883,7 @@
           "key1": "myvalue1"
         },
         "systemData": {
-          "createdBy": "mbashtovaya@microsoft.com",
+          "createdBy": "Sanitized",
           "createdByType": "User",
           "createdAt": "2023-06-23T01:40:42.0348302Z",
           "lastModifiedBy": "319f651f-7ddb-4fc6-9857-7aef9250bd05",
@@ -1040,7 +1040,7 @@
               "key1": "myvalue1"
             },
             "systemData": {
-              "createdBy": "mbashtovaya@microsoft.com",
+              "createdBy": "Sanitized",
               "createdByType": "User",
               "createdAt": "2023-06-23T01:40:42.0348302Z",
               "lastModifiedBy": "319f651f-7ddb-4fc6-9857-7aef9250bd05",
@@ -4164,7 +4164,7 @@
               "createdBy": "de975306-d24e-4dec-9d3b-ef05c66f0075",
               "createdByType": "Application",
               "createdAt": "2023-06-19T22:57:19.5338882Z",
-              "lastModifiedBy": "mbashtovaya@microsoft.com",
+              "lastModifiedBy": "Sanitized",
               "lastModifiedByType": "User",
               "lastModifiedAt": "2023-06-22T21:52:48.3958581Z"
             },
@@ -7936,7 +7936,7 @@
               "key1": "myvalue1"
             },
             "systemData": {
-              "createdBy": "mbashtovaya@microsoft.com",
+              "createdBy": "Sanitized",
               "createdByType": "User",
               "createdAt": "2023-06-23T01:40:42.0348302Z",
               "lastModifiedBy": "319f651f-7ddb-4fc6-9857-7aef9250bd05",
