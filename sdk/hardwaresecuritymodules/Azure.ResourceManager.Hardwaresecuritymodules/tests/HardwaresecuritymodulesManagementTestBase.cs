@@ -1,0 +1,58 @@
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+using Azure.Core;
+using Azure.Core.TestFramework;
+using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.TestFramework;
+using NUnit.Framework;
+using System.Threading.Tasks;
+
+namespace Azure.ResourceManager.Hardwaresecuritymodules.Tests
+{
+    public class HardwaresecuritymodulesManagementTestBase : ManagementRecordedTestBase<HardwaresecuritymodulesManagementTestEnvironment>
+    {
+        protected ArmClient Client { get; private set; }
+        protected SubscriptionResource DefaultSubscription { get; private set; }
+        protected HardwaresecuritymodulesManagementTestEnvironment testEnvironment => TestEnvironment;
+        protected AzureLocation Location;
+        protected ResourceGroupResource ResourceGroupResource { get; private set; }
+
+        protected HardwaresecuritymodulesManagementTestBase(bool isAsync, RecordedTestMode mode)
+        : base(isAsync, mode)
+        {
+        }
+
+        protected HardwaresecuritymodulesManagementTestBase(bool isAsync)
+            : base(isAsync)
+        {
+        }
+
+        [SetUp]
+        public async Task CreateCommonClient()
+        {
+            Client = GetArmClient();
+            DefaultSubscription = await Client.GetDefaultSubscriptionAsync().ConfigureAwait(false);
+        }
+
+        protected async Task BaseSetUpForTests()
+        {
+            if (Mode == RecordedTestMode.Record || Mode == RecordedTestMode.Playback)
+            {
+                await CreateCommonClient();
+            }
+            //TODO will initialize resource groups here as well
+            DefaultSubscription = await Client.GetDefaultSubscriptionAsync();
+            Location = new AzureLocation("eastus2");
+            ResourceGroupResource = await CreateResourceGroup(DefaultSubscription, "sdkTestsRg", Location);
+        }
+
+        protected async Task<ResourceGroupResource> CreateResourceGroup(SubscriptionResource subscription, string rgNamePrefix, AzureLocation location)
+        {
+            string rgName = Recording.GenerateAssetName(rgNamePrefix);
+            ResourceGroupData input = new ResourceGroupData(location);
+            var lro = await subscription.GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Completed, rgName, input);
+            return lro.Value;
+        }
+    }
+}
