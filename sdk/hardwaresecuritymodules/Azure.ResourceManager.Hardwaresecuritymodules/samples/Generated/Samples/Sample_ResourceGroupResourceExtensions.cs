@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Hardwaresecuritymodules.Samples
                 {
                     FipsState = 2,
                 },
-                Sku = new CloudHsmClusterSku(CloudHsmClusterSkuFamily.B, CloudHsmClusterSkuName.StandardB1),
+                Sku = new CloudHsmClusterSku(CloudHsmClusterSkuName.StandardB1, CloudHsmClusterSkuFamily.B),
                 Tags =
 {
 ["Dept"] = "hsm",

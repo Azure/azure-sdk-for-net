@@ -43,8 +43,8 @@ namespace Azure.ResourceManager.Hardwaresecuritymodules.Tests
             }
             //TODO will initialize resource groups here as well
             DefaultSubscription = await Client.GetDefaultSubscriptionAsync();
-            Location = new AzureLocation("eastus2");
-            ResourceGroupResource = await CreateResourceGroup(DefaultSubscription, "sdkTestsRg", Location);
+            //Location = new AzureLocation("eastus2");
+            ResourceGroupResource = await CreateResourceGroup(DefaultSubscription, "sdkTestsRg", AzureLocation.EastUS2);
         }
 
         protected async Task<ResourceGroupResource> CreateResourceGroup(SubscriptionResource subscription, string rgNamePrefix, AzureLocation location)
