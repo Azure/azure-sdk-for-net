@@ -579,65 +579,31 @@ namespace Azure.AI.OpenAI
         }
 
         /// <summary>
-        ///     Get a set of generated images influenced by a provided textual prompt.
+        /// Begins a long-running operation that will generate images based on a provided, textual prompt.
         /// </summary>
-        /// <remarks>
-        ///     Image results are presented as <see cref="ImageReference"/> objects that include a temporary URL for
-        ///     the generated output. The <see cref="ImageReference.GetStreamAsync(CancellationToken)"/> method may
-        ///     be used to conveniently fetch the image data from the URL.
-        /// </remarks>
-        /// <param name="imageGenerationOptions">
-        ///     The configuration information for the image generation request that controls the content,
-        ///     size, and other details about generated images.
-        /// </param>
-        /// <param name="cancellationToken">
-        ///     An optional cancellation token that may be used to abort an ongoing request.
-        /// </param>
-        /// <returns>
-        ///     A list of <see cref="ImageReference"/> instances that represent the requested generated images.
-        /// </returns>
-        public virtual Response<IReadOnlyList<ImageReference>> GetImages(
+        /// <param name="waitUntil"></param>
+        /// <param name="imageGenerationOptions"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        public virtual Task<Operation<BatchImageGenerationOperationResponse>> BeginBatchImageGenerationAsync(
+            WaitUntil waitUntil,
             ImageGenerationOptions imageGenerationOptions,
             CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(imageGenerationOptions, nameof(imageGenerationOptions));
-
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("OpenAIClient.GetImages");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("OpenAIClient.BeginBatchImageGeneration");
             scope.Start();
-
-            RequestContext context = FromCancellationToken(cancellationToken);
 
             try
             {
-                ImageResponse response = default;
-                Response rawResponse = default;
-
                 if (_isConfiguredForAzureOpenAI)
                 {
-                    Operation<ImageOperationResponse> imagesOperation = StartGenerateImage(
-                        WaitUntil.Completed,
-                        imageGenerationOptions,
-                        cancellationToken);
-
-                    rawResponse = imagesOperation.GetRawResponse();
-                    response = imagesOperation.Value.Result;
+                    return BeginAzureBatchImageGenerationAsync(waitUntil, imageGenerationOptions, cancellationToken);
                 }
                 else
                 {
-                    RequestContent content = imageGenerationOptions.ToRequestContent();
-
-                    HttpMessage message = CreatePostRequestMessage(
-                        string.Empty,
-                        "images/generations",
-                        content,
-                        context);
-                    rawResponse = _pipeline.ProcessMessage(message, context, cancellationToken);
-                    response = ImageResponse.FromResponse(rawResponse);
+                    throw new InvalidOperationException(
+                        "Batch image generation is only supported for clients configured to use the Azure OpenAI service.");
                 }
-
-                return Response.FromValue(
-                    ImageReference.RangeFromResponse(response, _pipeline),
-                    rawResponse);
             }
             catch (Exception e)
             {
@@ -647,66 +613,31 @@ namespace Azure.AI.OpenAI
         }
 
         /// <summary>
-        ///     Get a set of generated images influenced by a provided textual prompt.
+        /// Begins a long-running operation that will generate images based on a provided, textual prompt.
         /// </summary>
-        /// <remarks>
-        ///     Image results are presented as <see cref="ImageReference"/> objects that include a temporary URL for
-        ///     the generated output. The <see cref="ImageReference.GetStreamAsync(CancellationToken)"/> method may
-        ///     be used to conveniently fetch the image data from the URL.
-        /// </remarks>
-        /// <param name="imageGenerationOptions">
-        ///     The configuration information for the image generation request that controls the content,
-        ///     size, and other details about generated images.
-        /// </param>
-        /// <param name="cancellationToken">
-        ///     An optional cancellation token that may be used to abort an ongoing request.
-        /// </param>
-        /// <returns>
-        ///     A list of <see cref="ImageReference"/> instances that represent the requested generated images.
-        /// </returns>
-        public virtual async Task<Response<IReadOnlyList<ImageReference>>> GetImagesAsync(
+        /// <param name="waitUntil"></param>
+        /// <param name="imageGenerationOptions"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        public virtual Operation<BatchImageGenerationOperationResponse> BeginBatchImageGeneration(
+            WaitUntil waitUntil,
             ImageGenerationOptions imageGenerationOptions,
             CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(imageGenerationOptions, nameof(imageGenerationOptions));
-
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("OpenAIClient.GetImages");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("OpenAIClient.BeginBatchImageGeneration");
             scope.Start();
-
-            RequestContext context = FromCancellationToken(cancellationToken);
 
             try
             {
-                ImageResponse response = default;
-                Response rawResponse = default;
-
                 if (_isConfiguredForAzureOpenAI)
                 {
-                    Operation<ImageOperationResponse> imagesOperation = await StartGenerateImageAsync(
-                        WaitUntil.Completed,
-                        imageGenerationOptions,
-                        cancellationToken).ConfigureAwait(false);
-
-                    rawResponse = imagesOperation.GetRawResponse();
-                    response = imagesOperation.Value.Result;
+                    return BeginAzureBatchImageGeneration(waitUntil, imageGenerationOptions, cancellationToken);
                 }
                 else
                 {
-                    RequestContent content = imageGenerationOptions.ToRequestContent();
-
-                    HttpMessage message = CreatePostRequestMessage(
-                        string.Empty,
-                        "images/generations",
-                        content,
-                        context);
-                    rawResponse = await _pipeline.ProcessMessageAsync(message, context, cancellationToken)
-                        .ConfigureAwait(false);
-                    response = ImageResponse.FromResponse(rawResponse);
+                    throw new InvalidOperationException(
+                        "Batch image generation is only supported for clients configured to use the Azure OpenAI service.");
                 }
-
-                return Response.FromValue(
-                    ImageReference.RangeFromResponse(response, _pipeline),
-                    rawResponse);
             }
             catch (Exception e)
             {

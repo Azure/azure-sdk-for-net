@@ -1,0 +1,125 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://sdk8428.openai.azure.com/openai/images/generations:submit?api-version=2023-06-01-preview",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "api-key": "***********",
+        "Content-Length": "127",
+        "Content-Type": "application/json",
+        "traceparent": "00-59db722eba6a139a8ec8371666c83d53-9f849db8a1a96cd0-00",
+        "User-Agent": "azsdk-net-AI.OpenAI/1.0.0-alpha.20230626.1 (.NET 6.0.18; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "06daaeb0c8b2fb5c9272412b6911e9ae",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "prompt": "a simplistic picture of a cyberpunk money dreaming of electric bananas",
+        "n": 2,
+        "size": "256x256",
+        "user": "placeholder"
+      },
+      "StatusCode": 202,
+      "ResponseHeaders": {
+        "apim-request-id": "4d75848d-68e5-4fc9-8ba1-7f5d5ae43a52",
+        "Content-Length": "67",
+        "Content-Type": "application/json",
+        "Date": "Mon, 26 Jun 2023 22:53:04 GMT",
+        "OpenAI-Processing-Ms": "27.0402",
+        "operation-location": "https://sdk8428.openai.azure.com/openai/operations/images/bdadb004-2780-4bf7-b23f-f133d3a278c0?api-version=2023-06-01-preview",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "22",
+        "x-ms-client-request-id": "06daaeb0c8b2fb5c9272412b6911e9ae",
+        "x-ms-region": "East US",
+        "x-ms-request-id": "4d75848d-68e5-4fc9-8ba1-7f5d5ae43a52"
+      },
+      "ResponseBody": {
+        "id": "bdadb004-2780-4bf7-b23f-f133d3a278c0",
+        "status": "notRunning"
+      }
+    },
+    {
+      "RequestUri": "https://sdk8428.openai.azure.com/openai/operations/images/bdadb004-2780-4bf7-b23f-f133d3a278c0?api-version=2023-06-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "api-key": "***********",
+        "User-Agent": "azsdk-net-AI.OpenAI/1.0.0-alpha.20230626.1 (.NET 6.0.18; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "76f61fd759ada886692211a7eaf5949f",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "950a02a0-9121-437a-855f-54cfa19b510f",
+        "Content-Length": "88",
+        "Content-Type": "application/json",
+        "Date": "Mon, 26 Jun 2023 22:53:04 GMT",
+        "OpenAI-Processing-Ms": "12.6621",
+        "Retry-After": "6",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "7",
+        "x-ms-client-request-id": "76f61fd759ada886692211a7eaf5949f",
+        "x-ms-region": "East US",
+        "x-ms-request-id": "950a02a0-9121-437a-855f-54cfa19b510f"
+      },
+      "ResponseBody": {
+        "created": 1687819985,
+        "id": "bdadb004-2780-4bf7-b23f-f133d3a278c0",
+        "status": "notRunning"
+      }
+    },
+    {
+      "RequestUri": "https://sdk8428.openai.azure.com/openai/operations/images/bdadb004-2780-4bf7-b23f-f133d3a278c0?api-version=2023-06-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "api-key": "***********",
+        "User-Agent": "azsdk-net-AI.OpenAI/1.0.0-alpha.20230626.1 (.NET 6.0.18; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "dad2bc94a3194611df4322de59c67bd3",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "f392e685-6387-49b7-9e55-fb9b757840a8",
+        "Content-Length": "1024",
+        "Content-Type": "application/json",
+        "Date": "Mon, 26 Jun 2023 22:53:10 GMT",
+        "OpenAI-Processing-Ms": "11.0112",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "5",
+        "x-ms-client-request-id": "dad2bc94a3194611df4322de59c67bd3",
+        "x-ms-region": "East US",
+        "x-ms-request-id": "f392e685-6387-49b7-9e55-fb9b757840a8"
+      },
+      "ResponseBody": {
+        "created": 1687819985,
+        "expires": 1687906389,
+        "id": "bdadb004-2780-4bf7-b23f-f133d3a278c0",
+        "result": {
+          "created": 1687819985,
+          "data": [
+            {
+              "url": "https://dalleproduse.blob.core.windows.net/private/images/4d75848d-68e5-4fc9-8ba1-7f5d5ae43a52/generated_00.png?se=2023-06-27T22%3A53%3A09Z\u0026sig=sLNjewgRn6o1AgahiitLQWWo%2BZmOKO8ifSTCSNnC6xM%3D\u0026ske=2023-06-30T15%3A41%3A20Z\u0026skoid=09ba021e-c417-441c-b203-c81e5dcd7b7f\u0026sks=b\u0026skt=2023-06-23T15%3A41%3A20Z\u0026sktid=33e01921-4d64-4f8c-a055-5bdaffd5e33d\u0026skv=2020-10-02\u0026sp=r\u0026spr=https\u0026sr=b\u0026sv=2020-10-02"
+            },
+            {
+              "url": "https://dalleproduse.blob.core.windows.net/private/images/4d75848d-68e5-4fc9-8ba1-7f5d5ae43a52/generated_01.png?se=2023-06-27T22%3A53%3A09Z\u0026sig=Sanitized\u0026ske=2023-06-30T15%3A41%3A20Z\u0026skoid=09ba021e-c417-441c-b203-c81e5dcd7b7f\u0026sks=b\u0026skt=2023-06-23T15%3A41%3A20Z\u0026sktid=33e01921-4d64-4f8c-a055-5bdaffd5e33d\u0026skv=2020-10-02\u0026sp=r\u0026spr=https\u0026sr=b\u0026sv=2020-10-02"
+            }
+          ]
+        },
+        "status": "succeeded"
+      }
+    }
+  ],
+  "Variables": {
+    "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com",
+    "OPENAI_CHAT_COMPLETIONS_DEPLOYMENT_ID": "gpt-35-turbo",
+    "OPENAI_DEPLOYMENT_ID": "text-davinci-002",
+    "OPENAI_EMBEDDINGS_DEPLOYMENT_ID": "text-similarity-curie-001",
+    "OPENAI_ENDPOINT": "https://sdk8428.openai.azure.com/",
+    "RandomSeed": "61297941",
+    "SUBSCRIPTION_ID": "e72e5254-f265-4e95-9bd2-9ee8e7329051"
+  }
+}

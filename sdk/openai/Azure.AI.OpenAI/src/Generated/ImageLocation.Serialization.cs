@@ -12,7 +12,7 @@ using Azure.Core;
 
 namespace Azure.AI.OpenAI
 {
-    internal partial class ImageLocation
+    public partial class ImageLocation
     {
         internal static ImageLocation DeserializeImageLocation(JsonElement element)
         {

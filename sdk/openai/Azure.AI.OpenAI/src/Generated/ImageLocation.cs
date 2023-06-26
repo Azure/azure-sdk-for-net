@@ -11,7 +11,7 @@ using Azure;
 namespace Azure.AI.OpenAI
 {
     /// <summary> The image url if successful, and an error otherwise. </summary>
-    internal partial class ImageLocation
+    public partial class ImageLocation
     {
         /// <summary> Initializes a new instance of ImageLocation. </summary>
         internal ImageLocation()

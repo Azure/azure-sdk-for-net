@@ -2,12 +2,46 @@ namespace Azure.AI.OpenAI
 {
     public static partial class AzureOpenAIModelFactory
     {
+        public static Azure.AI.OpenAI.BatchImageGenerationOperationResponse BatchImageGenerationOperationResponse(string id = null, long created = (long)0, long? expires = default(long?), Azure.AI.OpenAI.ImageLocationResult result = null, Azure.AI.OpenAI.AzureOpenAIOperationState status = default(Azure.AI.OpenAI.AzureOpenAIOperationState), Azure.ResponseError error = null) { throw null; }
         public static Azure.AI.OpenAI.Choice Choice(string text = null, int index = 0, Azure.AI.OpenAI.CompletionsLogProbabilityModel logProbabilityModel = null, Azure.AI.OpenAI.CompletionsFinishReason finishReason = default(Azure.AI.OpenAI.CompletionsFinishReason)) { throw null; }
         public static Azure.AI.OpenAI.CompletionsLogProbabilityModel CompletionsLogProbabilityModel(System.Collections.Generic.IEnumerable<string> tokens = null, System.Collections.Generic.IEnumerable<float?> tokenLogProbabilities = null, System.Collections.Generic.IEnumerable<System.Collections.Generic.IDictionary<string, float?>> topLogProbabilities = null, System.Collections.Generic.IEnumerable<int> textOffsets = null) { throw null; }
         public static Azure.AI.OpenAI.CompletionsUsage CompletionsUsage(int completionTokens = 0, int promptTokens = 0, int totalTokens = 0) { throw null; }
         public static Azure.AI.OpenAI.EmbeddingItem EmbeddingItem(System.Collections.Generic.IEnumerable<float> embedding = null, int index = 0) { throw null; }
         public static Azure.AI.OpenAI.Embeddings Embeddings(System.Collections.Generic.IEnumerable<Azure.AI.OpenAI.EmbeddingItem> data = null, Azure.AI.OpenAI.EmbeddingsUsage usage = null) { throw null; }
         public static Azure.AI.OpenAI.EmbeddingsUsage EmbeddingsUsage(int promptTokens = 0, int totalTokens = 0) { throw null; }
+        public static Azure.AI.OpenAI.ImageLocation ImageLocation(System.Uri url = null, Azure.ResponseError error = null) { throw null; }
+        public static Azure.AI.OpenAI.ImageLocationResult ImageLocationResult(long created = (long)0, System.Collections.Generic.IEnumerable<Azure.AI.OpenAI.ImageLocation> data = null) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct AzureOpenAIOperationState : System.IEquatable<Azure.AI.OpenAI.AzureOpenAIOperationState>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public AzureOpenAIOperationState(string value) { throw null; }
+        public static Azure.AI.OpenAI.AzureOpenAIOperationState Canceled { get { throw null; } }
+        public static Azure.AI.OpenAI.AzureOpenAIOperationState Failed { get { throw null; } }
+        public static Azure.AI.OpenAI.AzureOpenAIOperationState NotRunning { get { throw null; } }
+        public static Azure.AI.OpenAI.AzureOpenAIOperationState Running { get { throw null; } }
+        public static Azure.AI.OpenAI.AzureOpenAIOperationState Succeeded { get { throw null; } }
+        public bool Equals(Azure.AI.OpenAI.AzureOpenAIOperationState other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.AI.OpenAI.AzureOpenAIOperationState left, Azure.AI.OpenAI.AzureOpenAIOperationState right) { throw null; }
+        public static implicit operator Azure.AI.OpenAI.AzureOpenAIOperationState (string value) { throw null; }
+        public static bool operator !=(Azure.AI.OpenAI.AzureOpenAIOperationState left, Azure.AI.OpenAI.AzureOpenAIOperationState right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class BatchImageGenerationOperationResponse
+    {
+        internal BatchImageGenerationOperationResponse() { }
+        public long Created { get { throw null; } }
+        public Azure.ResponseError Error { get { throw null; } }
+        public long? Expires { get { throw null; } }
+        public string Id { get { throw null; } }
+        public Azure.AI.OpenAI.ImageLocationResult Result { get { throw null; } }
+        public Azure.AI.OpenAI.AzureOpenAIOperationState Status { get { throw null; } }
     }
     public partial class ChatChoice
     {
@@ -167,12 +201,17 @@ namespace Azure.AI.OpenAI
         public Azure.AI.OpenAI.ImageSize? Size { get { throw null; } set { } }
         public string User { get { throw null; } set { } }
     }
-    public partial class ImageReference
+    public partial class ImageLocation
     {
-        protected ImageReference(Azure.Core.Pipeline.HttpPipeline downloadPipeline, long unixCreatedSeconds, System.Uri downloadUri) { }
-        public System.DateTimeOffset Created { get { throw null; } }
-        public System.Uri DownloadUrl { get { throw null; } }
-        public System.Threading.Tasks.Task<System.IO.Stream> GetStreamAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        internal ImageLocation() { }
+        public Azure.ResponseError Error { get { throw null; } }
+        public System.Uri Url { get { throw null; } }
+    }
+    public partial class ImageLocationResult
+    {
+        internal ImageLocationResult() { }
+        public long Created { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.AI.OpenAI.ImageLocation> Data { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ImageSize : System.IEquatable<Azure.AI.OpenAI.ImageSize>
@@ -203,6 +242,8 @@ namespace Azure.AI.OpenAI
         public OpenAIClient(System.Uri endpoint, Azure.Core.TokenCredential tokenCredential) { }
         public OpenAIClient(System.Uri endpoint, Azure.Core.TokenCredential tokenCredential, Azure.AI.OpenAI.OpenAIClientOptions options) { }
         public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
+        public virtual Azure.Operation<Azure.AI.OpenAI.BatchImageGenerationOperationResponse> BeginBatchImageGeneration(Azure.WaitUntil waitUntil, Azure.AI.OpenAI.ImageGenerationOptions imageGenerationOptions, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Operation<Azure.AI.OpenAI.BatchImageGenerationOperationResponse>> BeginBatchImageGenerationAsync(Azure.WaitUntil waitUntil, Azure.AI.OpenAI.ImageGenerationOptions imageGenerationOptions, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.AI.OpenAI.ChatCompletions> GetChatCompletions(string deploymentOrModelName, Azure.AI.OpenAI.ChatCompletionsOptions chatCompletionsOptions, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.OpenAI.ChatCompletions>> GetChatCompletionsAsync(string deploymentOrModelName, Azure.AI.OpenAI.ChatCompletionsOptions chatCompletionsOptions, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.AI.OpenAI.StreamingChatCompletions> GetChatCompletionsStreaming(string deploymentOrModelName, Azure.AI.OpenAI.ChatCompletionsOptions chatCompletionsOptions, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -215,8 +256,6 @@ namespace Azure.AI.OpenAI
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.OpenAI.StreamingCompletions>> GetCompletionsStreamingAsync(string deploymentOrModelName, Azure.AI.OpenAI.CompletionsOptions completionsOptions, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.AI.OpenAI.Embeddings> GetEmbeddings(string deploymentOrModelName, Azure.AI.OpenAI.EmbeddingsOptions embeddingsOptions, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.OpenAI.Embeddings>> GetEmbeddingsAsync(string deploymentOrModelName, Azure.AI.OpenAI.EmbeddingsOptions embeddingsOptions, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<System.Collections.Generic.IReadOnlyList<Azure.AI.OpenAI.ImageReference>> GetImages(Azure.AI.OpenAI.ImageGenerationOptions imageGenerationOptions, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<System.Collections.Generic.IReadOnlyList<Azure.AI.OpenAI.ImageReference>>> GetImagesAsync(Azure.AI.OpenAI.ImageGenerationOptions imageGenerationOptions, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class OpenAIClientOptions : Azure.Core.ClientOptions
     {

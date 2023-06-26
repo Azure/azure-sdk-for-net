@@ -11,9 +11,9 @@ using Azure.Core;
 
 namespace Azure.AI.OpenAI
 {
-    internal partial class ImageOperationResponse
+    public partial class BatchImageGenerationOperationResponse
     {
-        internal static ImageOperationResponse DeserializeImageOperationResponse(JsonElement element)
+        internal static BatchImageGenerationOperationResponse DeserializeBatchImageGenerationOperationResponse(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -22,8 +22,8 @@ namespace Azure.AI.OpenAI
             string id = default;
             long created = default;
             Optional<long> expires = default;
-            Optional<ImageResponse> result = default;
-            State status = default;
+            Optional<ImageLocationResult> result = default;
+            AzureOpenAIOperationState status = default;
             Optional<ResponseError> error = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -52,12 +52,12 @@ namespace Azure.AI.OpenAI
                     {
                         continue;
                     }
-                    result = ImageResponse.DeserializeImageResponse(property.Value);
+                    result = ImageLocationResult.DeserializeImageLocationResult(property.Value);
                     continue;
                 }
                 if (property.NameEquals("status"u8))
                 {
-                    status = new State(property.Value.GetString());
+                    status = new AzureOpenAIOperationState(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("error"u8))
@@ -70,15 +70,15 @@ namespace Azure.AI.OpenAI
                     continue;
                 }
             }
-            return new ImageOperationResponse(id, created, Optional.ToNullable(expires), result.Value, status, error.Value);
+            return new BatchImageGenerationOperationResponse(id, created, Optional.ToNullable(expires), result.Value, status, error.Value);
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static ImageOperationResponse FromResponse(Response response)
+        internal static BatchImageGenerationOperationResponse FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content);
-            return DeserializeImageOperationResponse(document.RootElement);
+            return DeserializeBatchImageGenerationOperationResponse(document.RootElement);
         }
     }
 }

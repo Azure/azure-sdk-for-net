@@ -11,15 +11,15 @@ using Azure.Core;
 
 namespace Azure.AI.OpenAI
 {
-    /// <summary> The result of the operation if the operation succeeded. </summary>
-    internal partial class ImageOperationResponse
+    /// <summary> A polling status update or final response payload for an image operation. </summary>
+    public partial class BatchImageGenerationOperationResponse
     {
-        /// <summary> Initializes a new instance of ImageOperationResponse. </summary>
+        /// <summary> Initializes a new instance of BatchImageGenerationOperationResponse. </summary>
         /// <param name="id"> The ID of the operation. </param>
         /// <param name="created"> A timestamp when this job or item was created (in unix epochs). </param>
         /// <param name="status"> The status of the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        internal ImageOperationResponse(string id, long created, State status)
+        internal BatchImageGenerationOperationResponse(string id, long created, AzureOpenAIOperationState status)
         {
             Argument.AssertNotNull(id, nameof(id));
 
@@ -28,14 +28,14 @@ namespace Azure.AI.OpenAI
             Status = status;
         }
 
-        /// <summary> Initializes a new instance of ImageOperationResponse. </summary>
+        /// <summary> Initializes a new instance of BatchImageGenerationOperationResponse. </summary>
         /// <param name="id"> The ID of the operation. </param>
         /// <param name="created"> A timestamp when this job or item was created (in unix epochs). </param>
         /// <param name="expires"> A timestamp when this operation and its associated images expire and will be deleted (in unix epochs). </param>
         /// <param name="result"> The result of the operation if the operation succeeded. </param>
         /// <param name="status"> The status of the operation. </param>
         /// <param name="error"> The error if the operation failed. </param>
-        internal ImageOperationResponse(string id, long created, long? expires, ImageResponse result, State status, ResponseError error)
+        internal BatchImageGenerationOperationResponse(string id, long created, long? expires, ImageLocationResult result, AzureOpenAIOperationState status, ResponseError error)
         {
             Id = id;
             Created = created;
@@ -52,9 +52,9 @@ namespace Azure.AI.OpenAI
         /// <summary> A timestamp when this operation and its associated images expire and will be deleted (in unix epochs). </summary>
         public long? Expires { get; }
         /// <summary> The result of the operation if the operation succeeded. </summary>
-        public ImageResponse Result { get; }
+        public ImageLocationResult Result { get; }
         /// <summary> The status of the operation. </summary>
-        public State Status { get; }
+        public AzureOpenAIOperationState Status { get; }
         /// <summary> The error if the operation failed. </summary>
         public ResponseError Error { get; }
     }
