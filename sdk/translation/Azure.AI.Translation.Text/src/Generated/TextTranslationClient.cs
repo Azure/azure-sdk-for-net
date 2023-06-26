@@ -113,6 +113,438 @@ namespace Azure.AI.Translation.Text
             return Response.FromValue(GetLanguagesResult.FromResponse(response), response);
         }
 
+        /// <summary> Translate Text. </summary>
+        /// <param name="to">
+        /// Specifies the language of the output text. The target language must be one of the supported languages included 
+        /// in the translation scope. For example, use to=de to translate to German.
+        /// It's possible to translate to multiple languages simultaneously by repeating the parameter in the query string. 
+        /// For example, use to=de&amp;to=it to translate to German and Italian.
+        /// </param>
+        /// <param name="requestBody"> Defines the content of the request. </param>
+        /// <param name="clientTraceId"> A client-generated GUID to uniquely identify the request. </param>
+        /// <param name="from">
+        /// Specifies the language of the input text. Find which languages are available to translate from by 
+        /// looking up supported languages using the translation scope. If the from parameter isn't specified, 
+        /// automatic language detection is applied to determine the source language.
+        /// 
+        /// You must use the from parameter rather than autodetection when using the dynamic dictionary feature. 
+        /// Note: the dynamic dictionary feature is case-sensitive.
+        /// </param>
+        /// <param name="textType">
+        /// Defines whether the text being translated is plain text or HTML text. Any HTML needs to be a well-formed, 
+        /// complete element. Possible values are: plain (default) or html. Allowed values: "Plain" | "Html"
+        /// </param>
+        /// <param name="category">
+        /// A string specifying the category (domain) of the translation. This parameter is used to get translations 
+        /// from a customized system built with Custom Translator. Add the Category ID from your Custom Translator 
+        /// project details to this parameter to use your deployed customized system. Default value is: general.
+        /// </param>
+        /// <param name="profanityAction">
+        /// Specifies how profanities should be treated in translations.
+        /// Possible values are: NoAction (default), Marked or Deleted. Allowed values: "NoAction" | "Marked" | "Deleted"
+        /// </param>
+        /// <param name="profanityMarker">
+        /// Specifies how profanities should be marked in translations.
+        /// Possible values are: Asterisk (default) or Tag. . Allowed values: "Asterisk" | "Tag"
+        /// </param>
+        /// <param name="includeAlignment">
+        /// Specifies whether to include alignment projection from source text to translated text.
+        /// Possible values are: true or false (default).
+        /// </param>
+        /// <param name="includeSentenceLength">
+        /// Specifies whether to include sentence boundaries for the input text and the translated text.
+        /// Possible values are: true or false (default).
+        /// </param>
+        /// <param name="suggestedFrom">
+        /// Specifies a fallback language if the language of the input text can't be identified. 
+        /// Language autodetection is applied when the from parameter is omitted. If detection fails, 
+        /// the suggestedFrom language will be assumed.
+        /// </param>
+        /// <param name="fromScript"> Specifies the script of the input text. </param>
+        /// <param name="toScript"> Specifies the script of the translated text. </param>
+        /// <param name="allowFallback">
+        /// Specifies that the service is allowed to fall back to a general system when a custom system doesn't exist. 
+        /// Possible values are: true (default) or false.
+        /// 
+        /// allowFallback=false specifies that the translation should only use systems trained for the category specified 
+        /// by the request. If a translation for language X to language Y requires chaining through a pivot language E, 
+        /// then all the systems in the chain (X → E and E → Y) will need to be custom and have the same category. 
+        /// If no system is found with the specific category, the request will return a 400 status code. allowFallback=true 
+        /// specifies that the service is allowed to fall back to a general system when a custom system doesn't exist.
+        /// </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="to"/> or <paramref name="requestBody"/> is null. </exception>
+        /// <include file="Docs/TextTranslationClient.xml" path="doc/members/member[@name='TranslateAsync(IEnumerable{string},IEnumerable{InputTextItem},string,string,string,string,string,string,bool?,bool?,string,string,string,bool?,CancellationToken)']/*" />
+        public virtual async Task<Response<IReadOnlyList<TranslatedTextItem>>> TranslateAsync(IEnumerable<string> to, IEnumerable<InputTextItem> requestBody, string clientTraceId = null, string @from = null, string textType = null, string category = null, string profanityAction = null, string profanityMarker = null, bool? includeAlignment = null, bool? includeSentenceLength = null, string suggestedFrom = null, string fromScript = null, string toScript = null, bool? allowFallback = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(to, nameof(to));
+            Argument.AssertNotNull(requestBody, nameof(requestBody));
+
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = await TranslateAsync(to, RequestContentHelper.FromEnumerable(requestBody), clientTraceId, @from, textType, category, profanityAction, profanityMarker, includeAlignment, includeSentenceLength, suggestedFrom, fromScript, toScript, allowFallback, context).ConfigureAwait(false);
+            IReadOnlyList<TranslatedTextItem> value = default;
+            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            List<TranslatedTextItem> array = new List<TranslatedTextItem>();
+            foreach (var item in document.RootElement.EnumerateArray())
+            {
+                array.Add(TranslatedTextItem.DeserializeTranslatedTextItem(item));
+            }
+            value = array;
+            return Response.FromValue(value, response);
+        }
+
+        /// <summary> Translate Text. </summary>
+        /// <param name="to">
+        /// Specifies the language of the output text. The target language must be one of the supported languages included 
+        /// in the translation scope. For example, use to=de to translate to German.
+        /// It's possible to translate to multiple languages simultaneously by repeating the parameter in the query string. 
+        /// For example, use to=de&amp;to=it to translate to German and Italian.
+        /// </param>
+        /// <param name="requestBody"> Defines the content of the request. </param>
+        /// <param name="clientTraceId"> A client-generated GUID to uniquely identify the request. </param>
+        /// <param name="from">
+        /// Specifies the language of the input text. Find which languages are available to translate from by 
+        /// looking up supported languages using the translation scope. If the from parameter isn't specified, 
+        /// automatic language detection is applied to determine the source language.
+        /// 
+        /// You must use the from parameter rather than autodetection when using the dynamic dictionary feature. 
+        /// Note: the dynamic dictionary feature is case-sensitive.
+        /// </param>
+        /// <param name="textType">
+        /// Defines whether the text being translated is plain text or HTML text. Any HTML needs to be a well-formed, 
+        /// complete element. Possible values are: plain (default) or html. Allowed values: "Plain" | "Html"
+        /// </param>
+        /// <param name="category">
+        /// A string specifying the category (domain) of the translation. This parameter is used to get translations 
+        /// from a customized system built with Custom Translator. Add the Category ID from your Custom Translator 
+        /// project details to this parameter to use your deployed customized system. Default value is: general.
+        /// </param>
+        /// <param name="profanityAction">
+        /// Specifies how profanities should be treated in translations.
+        /// Possible values are: NoAction (default), Marked or Deleted. Allowed values: "NoAction" | "Marked" | "Deleted"
+        /// </param>
+        /// <param name="profanityMarker">
+        /// Specifies how profanities should be marked in translations.
+        /// Possible values are: Asterisk (default) or Tag. . Allowed values: "Asterisk" | "Tag"
+        /// </param>
+        /// <param name="includeAlignment">
+        /// Specifies whether to include alignment projection from source text to translated text.
+        /// Possible values are: true or false (default).
+        /// </param>
+        /// <param name="includeSentenceLength">
+        /// Specifies whether to include sentence boundaries for the input text and the translated text.
+        /// Possible values are: true or false (default).
+        /// </param>
+        /// <param name="suggestedFrom">
+        /// Specifies a fallback language if the language of the input text can't be identified. 
+        /// Language autodetection is applied when the from parameter is omitted. If detection fails, 
+        /// the suggestedFrom language will be assumed.
+        /// </param>
+        /// <param name="fromScript"> Specifies the script of the input text. </param>
+        /// <param name="toScript"> Specifies the script of the translated text. </param>
+        /// <param name="allowFallback">
+        /// Specifies that the service is allowed to fall back to a general system when a custom system doesn't exist. 
+        /// Possible values are: true (default) or false.
+        /// 
+        /// allowFallback=false specifies that the translation should only use systems trained for the category specified 
+        /// by the request. If a translation for language X to language Y requires chaining through a pivot language E, 
+        /// then all the systems in the chain (X → E and E → Y) will need to be custom and have the same category. 
+        /// If no system is found with the specific category, the request will return a 400 status code. allowFallback=true 
+        /// specifies that the service is allowed to fall back to a general system when a custom system doesn't exist.
+        /// </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="to"/> or <paramref name="requestBody"/> is null. </exception>
+        /// <include file="Docs/TextTranslationClient.xml" path="doc/members/member[@name='Translate(IEnumerable{string},IEnumerable{InputTextItem},string,string,string,string,string,string,bool?,bool?,string,string,string,bool?,CancellationToken)']/*" />
+        public virtual Response<IReadOnlyList<TranslatedTextItem>> Translate(IEnumerable<string> to, IEnumerable<InputTextItem> requestBody, string clientTraceId = null, string @from = null, string textType = null, string category = null, string profanityAction = null, string profanityMarker = null, bool? includeAlignment = null, bool? includeSentenceLength = null, string suggestedFrom = null, string fromScript = null, string toScript = null, bool? allowFallback = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(to, nameof(to));
+            Argument.AssertNotNull(requestBody, nameof(requestBody));
+
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = Translate(to, RequestContentHelper.FromEnumerable(requestBody), clientTraceId, @from, textType, category, profanityAction, profanityMarker, includeAlignment, includeSentenceLength, suggestedFrom, fromScript, toScript, allowFallback, context);
+            IReadOnlyList<TranslatedTextItem> value = default;
+            using var document = JsonDocument.Parse(response.ContentStream);
+            List<TranslatedTextItem> array = new List<TranslatedTextItem>();
+            foreach (var item in document.RootElement.EnumerateArray())
+            {
+                array.Add(TranslatedTextItem.DeserializeTranslatedTextItem(item));
+            }
+            value = array;
+            return Response.FromValue(value, response);
+        }
+
+        /// <summary> Transliterate Text. </summary>
+        /// <param name="language">
+        /// Specifies the language of the text to convert from one script to another. 
+        /// Possible languages are listed in the transliteration scope obtained by querying the service 
+        /// for its supported languages.
+        /// </param>
+        /// <param name="fromScript">
+        /// Specifies the script used by the input text. Look up supported languages using the transliteration scope,
+        /// to find input scripts available for the selected language.
+        /// </param>
+        /// <param name="toScript">
+        /// Specifies the output script. Look up supported languages using the transliteration scope, to find output 
+        /// scripts available for the selected combination of input language and input script.
+        /// </param>
+        /// <param name="requestBody"> Defines the content of the request. </param>
+        /// <param name="clientTraceId"> A client-generated GUID to uniquely identify the request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="language"/>, <paramref name="fromScript"/>, <paramref name="toScript"/> or <paramref name="requestBody"/> is null. </exception>
+        /// <include file="Docs/TextTranslationClient.xml" path="doc/members/member[@name='TransliterateAsync(string,string,string,IEnumerable{InputTextItem},string,CancellationToken)']/*" />
+        public virtual async Task<Response<IReadOnlyList<TransliteratedText>>> TransliterateAsync(string language, string fromScript, string toScript, IEnumerable<InputTextItem> requestBody, string clientTraceId = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(language, nameof(language));
+            Argument.AssertNotNull(fromScript, nameof(fromScript));
+            Argument.AssertNotNull(toScript, nameof(toScript));
+            Argument.AssertNotNull(requestBody, nameof(requestBody));
+
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = await TransliterateAsync(language, fromScript, toScript, RequestContentHelper.FromEnumerable(requestBody), clientTraceId, context).ConfigureAwait(false);
+            IReadOnlyList<TransliteratedText> value = default;
+            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            List<TransliteratedText> array = new List<TransliteratedText>();
+            foreach (var item in document.RootElement.EnumerateArray())
+            {
+                array.Add(TransliteratedText.DeserializeTransliteratedText(item));
+            }
+            value = array;
+            return Response.FromValue(value, response);
+        }
+
+        /// <summary> Transliterate Text. </summary>
+        /// <param name="language">
+        /// Specifies the language of the text to convert from one script to another. 
+        /// Possible languages are listed in the transliteration scope obtained by querying the service 
+        /// for its supported languages.
+        /// </param>
+        /// <param name="fromScript">
+        /// Specifies the script used by the input text. Look up supported languages using the transliteration scope,
+        /// to find input scripts available for the selected language.
+        /// </param>
+        /// <param name="toScript">
+        /// Specifies the output script. Look up supported languages using the transliteration scope, to find output 
+        /// scripts available for the selected combination of input language and input script.
+        /// </param>
+        /// <param name="requestBody"> Defines the content of the request. </param>
+        /// <param name="clientTraceId"> A client-generated GUID to uniquely identify the request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="language"/>, <paramref name="fromScript"/>, <paramref name="toScript"/> or <paramref name="requestBody"/> is null. </exception>
+        /// <include file="Docs/TextTranslationClient.xml" path="doc/members/member[@name='Transliterate(string,string,string,IEnumerable{InputTextItem},string,CancellationToken)']/*" />
+        public virtual Response<IReadOnlyList<TransliteratedText>> Transliterate(string language, string fromScript, string toScript, IEnumerable<InputTextItem> requestBody, string clientTraceId = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(language, nameof(language));
+            Argument.AssertNotNull(fromScript, nameof(fromScript));
+            Argument.AssertNotNull(toScript, nameof(toScript));
+            Argument.AssertNotNull(requestBody, nameof(requestBody));
+
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = Transliterate(language, fromScript, toScript, RequestContentHelper.FromEnumerable(requestBody), clientTraceId, context);
+            IReadOnlyList<TransliteratedText> value = default;
+            using var document = JsonDocument.Parse(response.ContentStream);
+            List<TransliteratedText> array = new List<TransliteratedText>();
+            foreach (var item in document.RootElement.EnumerateArray())
+            {
+                array.Add(TransliteratedText.DeserializeTransliteratedText(item));
+            }
+            value = array;
+            return Response.FromValue(value, response);
+        }
+
+        /// <summary> Find Sentence Boundaries. </summary>
+        /// <param name="requestBody"> Defines the content of the request. </param>
+        /// <param name="clientTraceId"> A client-generated GUID to uniquely identify the request. </param>
+        /// <param name="language">
+        /// Language tag identifying the language of the input text. 
+        /// If a code isn't specified, automatic language detection will be applied.
+        /// </param>
+        /// <param name="script">
+        /// Script tag identifying the script used by the input text. 
+        /// If a script isn't specified, the default script of the language will be assumed.
+        /// </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="requestBody"/> is null. </exception>
+        /// <include file="Docs/TextTranslationClient.xml" path="doc/members/member[@name='FindSentenceBoundariesAsync(IEnumerable{InputTextItem},string,string,string,CancellationToken)']/*" />
+        public virtual async Task<Response<IReadOnlyList<BreakSentenceItem>>> FindSentenceBoundariesAsync(IEnumerable<InputTextItem> requestBody, string clientTraceId = null, string language = null, string script = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(requestBody, nameof(requestBody));
+
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = await FindSentenceBoundariesAsync(RequestContentHelper.FromEnumerable(requestBody), clientTraceId, language, script, context).ConfigureAwait(false);
+            IReadOnlyList<BreakSentenceItem> value = default;
+            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            List<BreakSentenceItem> array = new List<BreakSentenceItem>();
+            foreach (var item in document.RootElement.EnumerateArray())
+            {
+                array.Add(BreakSentenceItem.DeserializeBreakSentenceItem(item));
+            }
+            value = array;
+            return Response.FromValue(value, response);
+        }
+
+        /// <summary> Find Sentence Boundaries. </summary>
+        /// <param name="requestBody"> Defines the content of the request. </param>
+        /// <param name="clientTraceId"> A client-generated GUID to uniquely identify the request. </param>
+        /// <param name="language">
+        /// Language tag identifying the language of the input text. 
+        /// If a code isn't specified, automatic language detection will be applied.
+        /// </param>
+        /// <param name="script">
+        /// Script tag identifying the script used by the input text. 
+        /// If a script isn't specified, the default script of the language will be assumed.
+        /// </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="requestBody"/> is null. </exception>
+        /// <include file="Docs/TextTranslationClient.xml" path="doc/members/member[@name='FindSentenceBoundaries(IEnumerable{InputTextItem},string,string,string,CancellationToken)']/*" />
+        public virtual Response<IReadOnlyList<BreakSentenceItem>> FindSentenceBoundaries(IEnumerable<InputTextItem> requestBody, string clientTraceId = null, string language = null, string script = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(requestBody, nameof(requestBody));
+
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = FindSentenceBoundaries(RequestContentHelper.FromEnumerable(requestBody), clientTraceId, language, script, context);
+            IReadOnlyList<BreakSentenceItem> value = default;
+            using var document = JsonDocument.Parse(response.ContentStream);
+            List<BreakSentenceItem> array = new List<BreakSentenceItem>();
+            foreach (var item in document.RootElement.EnumerateArray())
+            {
+                array.Add(BreakSentenceItem.DeserializeBreakSentenceItem(item));
+            }
+            value = array;
+            return Response.FromValue(value, response);
+        }
+
+        /// <summary> Lookup Dictionary Entries. </summary>
+        /// <param name="from">
+        /// Specifies the language of the input text.
+        /// The source language must be one of the supported languages included in the dictionary scope.
+        /// </param>
+        /// <param name="to">
+        /// Specifies the language of the output text.
+        /// The target language must be one of the supported languages included in the dictionary scope.
+        /// </param>
+        /// <param name="requestBody"> Defines the content of the request. </param>
+        /// <param name="clientTraceId"> A client-generated GUID to uniquely identify the request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="from"/>, <paramref name="to"/> or <paramref name="requestBody"/> is null. </exception>
+        /// <include file="Docs/TextTranslationClient.xml" path="doc/members/member[@name='LookupDictionaryEntriesAsync(string,string,IEnumerable{InputTextItem},string,CancellationToken)']/*" />
+        public virtual async Task<Response<IReadOnlyList<DictionaryLookupItem>>> LookupDictionaryEntriesAsync(string @from, string to, IEnumerable<InputTextItem> requestBody, string clientTraceId = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(@from, nameof(@from));
+            Argument.AssertNotNull(to, nameof(to));
+            Argument.AssertNotNull(requestBody, nameof(requestBody));
+
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = await LookupDictionaryEntriesAsync(@from, to, RequestContentHelper.FromEnumerable(requestBody), clientTraceId, context).ConfigureAwait(false);
+            IReadOnlyList<DictionaryLookupItem> value = default;
+            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            List<DictionaryLookupItem> array = new List<DictionaryLookupItem>();
+            foreach (var item in document.RootElement.EnumerateArray())
+            {
+                array.Add(DictionaryLookupItem.DeserializeDictionaryLookupItem(item));
+            }
+            value = array;
+            return Response.FromValue(value, response);
+        }
+
+        /// <summary> Lookup Dictionary Entries. </summary>
+        /// <param name="from">
+        /// Specifies the language of the input text.
+        /// The source language must be one of the supported languages included in the dictionary scope.
+        /// </param>
+        /// <param name="to">
+        /// Specifies the language of the output text.
+        /// The target language must be one of the supported languages included in the dictionary scope.
+        /// </param>
+        /// <param name="requestBody"> Defines the content of the request. </param>
+        /// <param name="clientTraceId"> A client-generated GUID to uniquely identify the request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="from"/>, <paramref name="to"/> or <paramref name="requestBody"/> is null. </exception>
+        /// <include file="Docs/TextTranslationClient.xml" path="doc/members/member[@name='LookupDictionaryEntries(string,string,IEnumerable{InputTextItem},string,CancellationToken)']/*" />
+        public virtual Response<IReadOnlyList<DictionaryLookupItem>> LookupDictionaryEntries(string @from, string to, IEnumerable<InputTextItem> requestBody, string clientTraceId = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(@from, nameof(@from));
+            Argument.AssertNotNull(to, nameof(to));
+            Argument.AssertNotNull(requestBody, nameof(requestBody));
+
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = LookupDictionaryEntries(@from, to, RequestContentHelper.FromEnumerable(requestBody), clientTraceId, context);
+            IReadOnlyList<DictionaryLookupItem> value = default;
+            using var document = JsonDocument.Parse(response.ContentStream);
+            List<DictionaryLookupItem> array = new List<DictionaryLookupItem>();
+            foreach (var item in document.RootElement.EnumerateArray())
+            {
+                array.Add(DictionaryLookupItem.DeserializeDictionaryLookupItem(item));
+            }
+            value = array;
+            return Response.FromValue(value, response);
+        }
+
+        /// <summary> Lookup Dictionary Examples. </summary>
+        /// <param name="from">
+        /// Specifies the language of the input text.
+        /// The source language must be one of the supported languages included in the dictionary scope.
+        /// </param>
+        /// <param name="to">
+        /// Specifies the language of the output text.
+        /// The target language must be one of the supported languages included in the dictionary scope.
+        /// </param>
+        /// <param name="requestBody"> Defines the content of the request. </param>
+        /// <param name="clientTraceId"> A client-generated GUID to uniquely identify the request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="from"/>, <paramref name="to"/> or <paramref name="requestBody"/> is null. </exception>
+        /// <include file="Docs/TextTranslationClient.xml" path="doc/members/member[@name='LookupDictionaryExamplesAsync(string,string,IEnumerable{DictionaryExampleTextItem},string,CancellationToken)']/*" />
+        public virtual async Task<Response<IReadOnlyList<DictionaryExampleItem>>> LookupDictionaryExamplesAsync(string @from, string to, IEnumerable<DictionaryExampleTextItem> requestBody, string clientTraceId = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(@from, nameof(@from));
+            Argument.AssertNotNull(to, nameof(to));
+            Argument.AssertNotNull(requestBody, nameof(requestBody));
+
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = await LookupDictionaryExamplesAsync(@from, to, RequestContentHelper.FromEnumerable(requestBody), clientTraceId, context).ConfigureAwait(false);
+            IReadOnlyList<DictionaryExampleItem> value = default;
+            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            List<DictionaryExampleItem> array = new List<DictionaryExampleItem>();
+            foreach (var item in document.RootElement.EnumerateArray())
+            {
+                array.Add(DictionaryExampleItem.DeserializeDictionaryExampleItem(item));
+            }
+            value = array;
+            return Response.FromValue(value, response);
+        }
+
+        /// <summary> Lookup Dictionary Examples. </summary>
+        /// <param name="from">
+        /// Specifies the language of the input text.
+        /// The source language must be one of the supported languages included in the dictionary scope.
+        /// </param>
+        /// <param name="to">
+        /// Specifies the language of the output text.
+        /// The target language must be one of the supported languages included in the dictionary scope.
+        /// </param>
+        /// <param name="requestBody"> Defines the content of the request. </param>
+        /// <param name="clientTraceId"> A client-generated GUID to uniquely identify the request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="from"/>, <paramref name="to"/> or <paramref name="requestBody"/> is null. </exception>
+        /// <include file="Docs/TextTranslationClient.xml" path="doc/members/member[@name='LookupDictionaryExamples(string,string,IEnumerable{DictionaryExampleTextItem},string,CancellationToken)']/*" />
+        public virtual Response<IReadOnlyList<DictionaryExampleItem>> LookupDictionaryExamples(string @from, string to, IEnumerable<DictionaryExampleTextItem> requestBody, string clientTraceId = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(@from, nameof(@from));
+            Argument.AssertNotNull(to, nameof(to));
+            Argument.AssertNotNull(requestBody, nameof(requestBody));
+
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = LookupDictionaryExamples(@from, to, RequestContentHelper.FromEnumerable(requestBody), clientTraceId, context);
+            IReadOnlyList<DictionaryExampleItem> value = default;
+            using var document = JsonDocument.Parse(response.ContentStream);
+            List<DictionaryExampleItem> array = new List<DictionaryExampleItem>();
+            foreach (var item in document.RootElement.EnumerateArray())
+            {
+                array.Add(DictionaryExampleItem.DeserializeDictionaryExampleItem(item));
+            }
+            value = array;
+            return Response.FromValue(value, response);
+        }
+
         internal HttpMessage CreateGetLanguagesRequest(string clientTraceId, string scope, string acceptLanguage, ETag? ifNoneMatch, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
