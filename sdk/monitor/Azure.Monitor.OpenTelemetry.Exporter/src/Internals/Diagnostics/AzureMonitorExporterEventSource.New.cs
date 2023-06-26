@@ -51,13 +51,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics
         public void TransmissionFailed(string message, string retryDetails, string metaData) => WriteEvent(8, message, retryDetails, metaData);
 
         [Event(9, Message = "{0} has been disposed.", Level = EventLevel.Informational)]
-        public void DisposedObject(string name)
-        {
-            if (IsEnabled(EventLevel.Informational))
-            {
-                WriteEvent(9, name);
-            }
-        }
+        public void DisposedObject(string name) => WriteEvent(9, name);
 
         [NonEvent]
         public void VmMetadataFailed(Exception ex)
@@ -96,13 +90,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics
         public void FailedToParseConnectionString(string exceptionMessage) => WriteEvent(12, exceptionMessage);
 
         [Event(13, Message = "Unsupported Metric Type '{0}' cannot be exported.", Level = EventLevel.Warning)]
-        public void UnsupportedMetricType(string metricTypeName)
-        {
-            if (IsEnabled(EventLevel.Warning))
-            {
-                WriteEvent(13, metricTypeName);
-            }
-        }
+        public void UnsupportedMetricType(string metricTypeName) => WriteEvent(13, metricTypeName);
 
         [NonEvent]
         public void FailedToConvertLogRecord(Exception ex)
@@ -153,31 +141,13 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics
         public void FailedToExtractActivityEvent(string activitySourceName, string activityDisplayName, string exceptionMessage) => WriteEvent(17, activitySourceName, activityDisplayName, exceptionMessage);
 
         [Event(18, Message = "Maximum count of {0} Activity Links reached. Excess Links are dropped. ActivitySource: {1}. Activity: {2}.", Level = EventLevel.Warning)]
-        public void ActivityLinksIgnored(int maxLinksAllowed, string activitySourceName, string activityDisplayName)
-        {
-            if (IsEnabled(EventLevel.Warning))
-            {
-                WriteEvent(18, maxLinksAllowed, activitySourceName, activityDisplayName);
-            }
-        }
+        public void ActivityLinksIgnored(int maxLinksAllowed, string activitySourceName, string activityDisplayName) => WriteEvent(18, maxLinksAllowed, activitySourceName, activityDisplayName);
 
         [Event(19, Message = "Failed to parse redirect headers. Not user actionable.", Level = EventLevel.Informational)]
-        public void RedirectHeaderParseFailed()
-        {
-            if (IsEnabled(EventLevel.Informational))
-            {
-                WriteEvent(19);
-            }
-        }
+        public void RedirectHeaderParseFailed() => WriteEvent(19);
 
         [Event(20, Message = "Failed to parse redirect cache, using default. Not user actionable.", Level = EventLevel.Informational)]
-        public void ParseRedirectCacheFailed()
-        {
-            if (IsEnabled(EventLevel.Informational))
-            {
-                WriteEvent(20);
-            }
-        }
+        public void ParseRedirectCacheFailed() => WriteEvent(20);
 
         [NonEvent]
         public void ErrorCreatingStorageFolder(string path, Exception ex)
