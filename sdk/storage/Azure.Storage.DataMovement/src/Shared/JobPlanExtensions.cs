@@ -120,7 +120,7 @@ namespace Azure.Storage.DataMovement
                     }
                 }
             }
-            return storedPath.TrimEnd('\\');
+            return storedPath.TrimEnd('\\', '/');
         }
 
         internal static IDictionary<string, string> ToDictionary(this string str, string elementName)
