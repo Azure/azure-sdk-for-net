@@ -29,6 +29,8 @@ namespace Azure.ResourceManager.NetworkCloud.Tests
         public long L3Vlan => long.Parse(GetRecordedVariable("L3_VLAN"));
         public string ManagerExtendedLocation => GetRecordedVariable("MANAGER_EXTENDED_LOCATION");
         public string NFControllerId => GetRecordedVariable("NF_CONTROLLER_ID");
+
+        public string TrunkedNetworkId => GetRecordedVariable("TRUNKED_NETWORK_ID");
         public string TrunkedNetworkName => GetRecordedVariable("TRUNKED_NETWORK_NAME");
         public string TrunkedNetworkVlans => GetRecordedVariable("TRUNKED_VLANS");
 
@@ -36,12 +38,20 @@ namespace Azure.ResourceManager.NetworkCloud.Tests
         public string CSNAttachmentName => GetRecordedVariable("CSN_ATTACHMENT_NAME");
         public string L3NAttachmentId => GetRecordedVariable("L3_ATTACHMENT_ID");
         public string L3NAttachmentName => GetRecordedVariable("L3_ATTACHMENT_NAME");
+
+        public string CniNetworkId => GetRecordedVariable("CNI_NETWORK_ID");
+
+        public string CloudServicesNetworkId => GetRecordedVariable("CLOUD_SERVICES_NETWORK_ID");
+
         public ResourceIdentifier VMId => new ResourceIdentifier(GetRecordedVariable("VIRTUAL_MACHINE_ID"));
         public string VMImage => GetRecordedVariable("VM_IMAGE");
         public string VMImageRepoPwd => GetRecordedVariable("VM_IMAGE_REPO_PWD", options => options.IsSecret());
         public string VMImageRepoUri => GetRecordedVariable("VM_IMAGE_REPO_URI");
         public string VMImageRepoUser => GetRecordedVariable("VM_IMAGE_REPO_USER");
         public string VMName => GetRecordedVariable("VIRTUAL_MACHINE_NAME");
+
+        public string SshPublicKey => GetRecordedVariable("SSH_PUBLIC_KEY");
+
         // Support using the Default Credential created by Azure CLI so
         // that we don't have to support creating a service principal, etc. to run these tests.
         public override TokenCredential Credential
