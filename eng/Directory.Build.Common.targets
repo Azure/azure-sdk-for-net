@@ -213,7 +213,6 @@
   <ItemGroup Condition="'$(IsMgmtLibrary)' == 'true' and '$(IsTestProject)' != 'true'">
 
     <PackageReference Include="Azure.Core" />
-    <PackageReference Include="Azure.Core.Expressions.DataFactory"/>
     <PackageReference Include="System.Text.Json" />
 
     <!-- TODO: Review these file references-->
@@ -221,6 +220,11 @@
     <Compile Include="$(AzureCoreSharedSources)AzureResourceProviderNamespaceAttribute.cs" LinkBase="Shared" />
     <Compile Include="$(AzureCoreSharedSources)ForwardsClientCallsAttribute.cs" LinkBase="Shared/Core" />
     <Compile Include="$(AzureCoreSharedSources)ApiVersionString.cs" LinkBase="Shared/Core" />
+  </ItemGroup>
+
+  <!-- DataFactory Project Specific Overrides-->
+  <ItemGroup Condition="$(MSBuildProjectName) == 'Azure.ResourceManager.DataFactory'">
+    <PackageReference Include="Azure.Core.Expressions.DataFactory"/>
   </ItemGroup>
 
   <!-- Management Client TEST Project Specific Overrides -->
