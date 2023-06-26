@@ -474,11 +474,10 @@ namespace Azure.ResourceManager.StorageCache
             return message;
         }
 
-
         /// <summary> Tells the cache to write all dirty data to the Storage Target's backend storage. Client requests to this storage target's namespace will return errors until the flush operation completes. </summary>
-        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> Target resource group. </param>
-        /// <param name="cacheName"> Name of Cache. Length of name must not be greater than 80 and chars must be from the [-0-9a-zA-Z_] char class. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="cacheName"> Name of cache. Length of name must not be greater than 80 and chars must be from the [-0-9a-zA-Z_] char class. </param>
         /// <param name="storageTargetName"> Name of Storage Target. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="cacheName"/> or <paramref name="storageTargetName"/> is null. </exception>
@@ -504,9 +503,9 @@ namespace Azure.ResourceManager.StorageCache
         }
 
         /// <summary> Tells the cache to write all dirty data to the Storage Target's backend storage. Client requests to this storage target's namespace will return errors until the flush operation completes. </summary>
-        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> Target resource group. </param>
-        /// <param name="cacheName"> Name of Cache. Length of name must not be greater than 80 and chars must be from the [-0-9a-zA-Z_] char class. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="cacheName"> Name of cache. Length of name must not be greater than 80 and chars must be from the [-0-9a-zA-Z_] char class. </param>
         /// <param name="storageTargetName"> Name of Storage Target. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="cacheName"/> or <paramref name="storageTargetName"/> is null. </exception>

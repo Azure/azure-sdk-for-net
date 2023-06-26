@@ -1121,10 +1121,10 @@ namespace Azure.ResourceManager.StorageCache
             return message;
         }
 
-        /// <summary> Upgrade a Cache's firmware if a new version is available. Otherwise, this operation has no effect. </summary>
-        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> Target resource group. </param>
-        /// <param name="cacheName"> Name of Cache. Length of name must not be greater than 80 and chars must be from the [-0-9a-zA-Z_] char class. </param>
+        /// <summary> Upgrade a cache's firmware if a new version is available. Otherwise, this operation has no effect. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="cacheName"> Name of cache. Length of name must not be greater than 80 and chars must be from the [-0-9a-zA-Z_] char class. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="cacheName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="cacheName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -1147,10 +1147,10 @@ namespace Azure.ResourceManager.StorageCache
             }
         }
 
-        /// <summary> Upgrade a Cache's firmware if a new version is available. Otherwise, this operation has no effect. </summary>
-        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> Target resource group. </param>
-        /// <param name="cacheName"> Name of Cache. Length of name must not be greater than 80 and chars must be from the [-0-9a-zA-Z_] char class. </param>
+        /// <summary> Upgrade a cache's firmware if a new version is available. Otherwise, this operation has no effect. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="cacheName"> Name of cache. Length of name must not be greater than 80 and chars must be from the [-0-9a-zA-Z_] char class. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="cacheName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="cacheName"/> is an empty string, and was expected to be non-empty. </exception>

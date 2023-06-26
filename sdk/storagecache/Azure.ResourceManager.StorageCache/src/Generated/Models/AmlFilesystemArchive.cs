@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.StorageCache.Models
         }
 
         /// <summary> Initializes a new instance of AmlFilesystemArchive. </summary>
-        /// <param name="filesystemPath"> Lustre file system path to archive relative to the file system root.  Specify &apos;/&apos; to archive all modified data. </param>
+        /// <param name="filesystemPath"> Lustre file system path to archive relative to the file system root.  Specify '/' to archive all modified data. </param>
         /// <param name="status"> The status of the archive. </param>
         internal AmlFilesystemArchive(string filesystemPath, AmlFilesystemArchiveStatus status)
         {
@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.StorageCache.Models
             Status = status;
         }
 
-        /// <summary> Lustre file system path to archive relative to the file system root.  Specify &apos;/&apos; to archive all modified data. </summary>
+        /// <summary> Lustre file system path to archive relative to the file system root.  Specify '/' to archive all modified data. </summary>
         public string FilesystemPath { get; }
         /// <summary> The status of the archive. </summary>
         public AmlFilesystemArchiveStatus Status { get; }

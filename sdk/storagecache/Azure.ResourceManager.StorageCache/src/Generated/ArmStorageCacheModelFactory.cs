@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.StorageCache.Models
         /// <param name="storageCapacityTiB"> The size of the AML file system, in TiB. This might be rounded up. </param>
         /// <param name="health"> Health of the AML file system. </param>
         /// <param name="provisioningState"> ARM provisioning state. </param>
-        /// <param name="filesystemSubnet"> Subnet used for managing the AML file system and for client-facing operations. This subnet should have at least a /24 subnet mask within the VNET&apos;s address space. </param>
+        /// <param name="filesystemSubnet"> Subnet used for managing the AML file system and for client-facing operations. This subnet should have at least a /24 subnet mask within the VNET's address space. </param>
         /// <param name="clientInfo"> Client information for the AML file system. </param>
         /// <param name="throughputProvisionedMBps"> Throughput provisioned in MB per sec, calculated as storageCapacityTiB * per-unit storage throughput. </param>
         /// <param name="keyEncryptionKey"> Specifies encryption settings of the AML file system. </param>
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.StorageCache.Models
         }
 
         /// <summary> Initializes a new instance of AmlFilesystemClientInfo. </summary>
-        /// <param name="mgsAddress"> The IPv4 address used by clients to mount the AML file system&apos;s Lustre Management Service (MGS). </param>
+        /// <param name="mgsAddress"> The IPv4 address used by clients to mount the AML file system's Lustre Management Service (MGS). </param>
         /// <param name="mountCommand"> Recommended command to mount the AML file system. </param>
         /// <param name="lustreVersion"> The version of Lustre running in the AML file system. </param>
         /// <param name="containerStorageInterface"> Container Storage Interface information for the AML file system. </param>
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.StorageCache.Models
         }
 
         /// <summary> Initializes a new instance of AmlFilesystemArchive. </summary>
-        /// <param name="filesystemPath"> Lustre file system path to archive relative to the file system root.  Specify &apos;/&apos; to archive all modified data. </param>
+        /// <param name="filesystemPath"> Lustre file system path to archive relative to the file system root.  Specify '/' to archive all modified data. </param>
         /// <param name="status"> The status of the archive. </param>
         /// <returns> A new <see cref="Models.AmlFilesystemArchive"/> instance for mocking. </returns>
         public static AmlFilesystemArchive AmlFilesystemArchive(string filesystemPath = null, AmlFilesystemArchiveStatus status = null)

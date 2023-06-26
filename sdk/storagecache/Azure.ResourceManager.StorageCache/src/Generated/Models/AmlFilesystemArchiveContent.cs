@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.StorageCache.Models
         {
         }
 
-        /// <summary> Lustre file system path to archive relative to the file system root.  Specify &apos;/&apos; to archive all modified data. </summary>
+        /// <summary> Lustre file system path to archive relative to the file system root.  Specify '/' to archive all modified data. </summary>
         public string FilesystemPath { get; set; }
     }
 }

@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.StorageCache.Models
         {
         }
 
-        /// <summary> Subnet used for managing the AML file system and for client-facing operations. This subnet should have at least a /24 subnet mask within the VNET&apos;s address space. </summary>
+        /// <summary> Subnet used for managing the AML file system and for client-facing operations. This subnet should have at least a /24 subnet mask within the VNET's address space. </summary>
         public string FilesystemSubnet { get; set; }
         /// <summary> The size of the AML file system, in TiB. </summary>
         public float? StorageCapacityTiB { get; set; }

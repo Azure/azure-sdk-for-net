@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.StorageCache.Models
         }
 
         /// <summary> Initializes a new instance of AmlFilesystemClientInfo. </summary>
-        /// <param name="mgsAddress"> The IPv4 address used by clients to mount the AML file system&apos;s Lustre Management Service (MGS). </param>
+        /// <param name="mgsAddress"> The IPv4 address used by clients to mount the AML file system's Lustre Management Service (MGS). </param>
         /// <param name="mountCommand"> Recommended command to mount the AML file system. </param>
         /// <param name="lustreVersion"> The version of Lustre running in the AML file system. </param>
         /// <param name="containerStorageInterface"> Container Storage Interface information for the AML file system. </param>
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.StorageCache.Models
             ContainerStorageInterface = containerStorageInterface;
         }
 
-        /// <summary> The IPv4 address used by clients to mount the AML file system&apos;s Lustre Management Service (MGS). </summary>
+        /// <summary> The IPv4 address used by clients to mount the AML file system's Lustre Management Service (MGS). </summary>
         public string MgsAddress { get; }
         /// <summary> Recommended command to mount the AML file system. </summary>
         public string MountCommand { get; }

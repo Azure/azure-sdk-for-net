@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.StorageCache
         /// <param name="storageCapacityTiB"> The size of the AML file system, in TiB. This might be rounded up. </param>
         /// <param name="health"> Health of the AML file system. </param>
         /// <param name="provisioningState"> ARM provisioning state. </param>
-        /// <param name="filesystemSubnet"> Subnet used for managing the AML file system and for client-facing operations. This subnet should have at least a /24 subnet mask within the VNET&apos;s address space. </param>
+        /// <param name="filesystemSubnet"> Subnet used for managing the AML file system and for client-facing operations. This subnet should have at least a /24 subnet mask within the VNET's address space. </param>
         /// <param name="clientInfo"> Client information for the AML file system. </param>
         /// <param name="throughputProvisionedMBps"> Throughput provisioned in MB per sec, calculated as storageCapacityTiB * per-unit storage throughput. </param>
         /// <param name="encryptionSettings"> Specifies encryption settings of the AML file system. </param>
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.StorageCache
         public AmlFilesystemHealth Health { get; }
         /// <summary> ARM provisioning state. </summary>
         public AmlFilesystemProvisioningStateType? ProvisioningState { get; }
-        /// <summary> Subnet used for managing the AML file system and for client-facing operations. This subnet should have at least a /24 subnet mask within the VNET&apos;s address space. </summary>
+        /// <summary> Subnet used for managing the AML file system and for client-facing operations. This subnet should have at least a /24 subnet mask within the VNET's address space. </summary>
         public string FilesystemSubnet { get; set; }
         /// <summary> Client information for the AML file system. </summary>
         public AmlFilesystemClientInfo ClientInfo { get; }
