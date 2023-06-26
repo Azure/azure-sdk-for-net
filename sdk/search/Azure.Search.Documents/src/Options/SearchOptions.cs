@@ -287,7 +287,7 @@ namespace Azure.Search.Documents
 
                 if (QueryCaption.HasValue)
                 {
-                    if (QueryCaption.Value != QueryCaptionType.None)
+                    if (QueryCaption.Value == QueryCaptionType.Extractive)
                     {
                         queryCaptionStringValue = $"{QueryCaption.Value}{QueryCaptionRawSplitter}{QueryCaptionHighlightEnabled.GetValueOrDefault(true)}";
                     }
