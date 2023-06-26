@@ -209,7 +209,7 @@ namespace Azure.AI.OpenAI
     public partial class FunctionName
     {
         public FunctionName(string name) { }
-        public string Name { get { throw null; } set { } }
+        public string Name { get { throw null; } }
     }
     public partial class OpenAIClient
     {
