@@ -174,16 +174,16 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics
         public void ErrorInitializingRoleInstanceToHostName(string exceptionMessage) => WriteEvent(22, exceptionMessage);
 
         [NonEvent]
-        public void ErrorInitializingPartOfSdkVersion(Exception ex)
+        public void ErrorInitializingPartOfSdkVersion(string typeName, Exception ex)
         {
             if (IsEnabled(EventLevel.Error))
             {
-                ErrorInitializingPartOfSdkVersion(ex.FlattenException().ToInvariantString());
+                ErrorInitializingPartOfSdkVersion(typeName, ex.FlattenException().ToInvariantString());
             }
         }
 
-        [Event(23, Message = "Failed to initialize SDK version due to an exception. Not user actionable. {0}", Level = EventLevel.Error)]
-        public void ErrorInitializingPartOfSdkVersion(string exceptionMessage) => WriteEvent(23, exceptionMessage);
+        [Event(23, Message = "Failed to get Type version while initialize SDK version due to an exception. Not user actionable. Type: {0}. {1}", Level = EventLevel.Error)]
+        public void ErrorInitializingPartOfSdkVersion(string typeName, string exceptionMessage) => WriteEvent(23, typeName, exceptionMessage);
 
         [NonEvent]
         public void SdkVersionCreateFailed(Exception ex)
