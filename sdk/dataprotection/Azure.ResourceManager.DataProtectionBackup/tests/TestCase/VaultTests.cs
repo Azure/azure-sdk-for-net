@@ -13,9 +13,9 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Tests.TestCase
 {
-    public class BackupVaultTests : DataProtectionBackupManagementTestBase
+    public class VaultTests : DataProtectionBackupManagementTestBase
     {
-        public BackupVaultTests(bool isAsync)
+        public VaultTests(bool isAsync)
             : base(isAsync)//, RecordedTestMode.Record)
         {
         }
