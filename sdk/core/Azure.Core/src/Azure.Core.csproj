@@ -23,7 +23,7 @@
     <SupportedPlatform Include="browser" />
   </ItemGroup>
 
-  <!-- Upgrade System.Diagnostics.DiagnosticSource to 6.0.1 in netcoreapp3.1+ -->
+  <!-- Keep System.Diagnostics.DiagnosticSource 5.0.0 for netcoreapp2.1 support. -->
   <ItemGroup Condition=" '$(TargetFramework)' == 'netcoreapp2.1' ">
     <PackageReference Include="System.Diagnostics.DiagnosticSource" VersionOverride="5.0.0" />
   </ItemGroup>
