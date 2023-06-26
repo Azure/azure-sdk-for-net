@@ -73,14 +73,14 @@ DogListProperty dog = new DogListProperty
     FoodConsumed = { "kibble", "egg", "peanut butter" },
 };
 
-Stream stream = ModelSerializer.Serialize(dog);
+Stream stream = ModelSerializer.SerializeJson(dog);
 ```
 
 Deserialization
 ```C# Snippet:ModelSerializer_Deserialize
 string json = @"[{""LatinName"":""Animalia"",""Weight"":1.1,""Name"":""Doggo"",""IsHungry"":false,""FoodConsumed"":[""kibble"",""egg"",""peanut butter""],""NumberOfLegs"":4}]";
 
-DogListProperty dog = ModelSerializer.Deserialize<DogListProperty>(json);
+DogListProperty dog = ModelSerializer.DeserializeJson<DogListProperty>(json);
 ```
 
 ## Using ModelSerializer for NewtonSoftJson
@@ -98,7 +98,7 @@ DogListProperty dog = new DogListProperty
 ModelSerializerOptions options = new ModelSerializerOptions();
 options.Serializers.Add(typeof(DogListProperty), new NewtonsoftJsonObjectSerializer());
 
-Stream stream = ModelSerializer.Serialize(dog, options);
+Stream stream = ModelSerializer.SerializeJson(dog, options);
 ```
 
 Deserialization
@@ -108,7 +108,7 @@ ModelSerializerOptions options = new ModelSerializerOptions();
 options.Serializers.Add(typeof(DogListProperty), new NewtonsoftJsonObjectSerializer());
 string json = @"[{""LatinName"":""Animalia"",""Weight"":1.1,""Name"":""Doggo"",""IsHungry"":false,""FoodConsumed"":[""kibble"",""egg"",""peanut butter""],""NumberOfLegs"":4}]";
 
-DogListProperty dog = ModelSerializer.Deserialize<DogListProperty>(json, options);
+DogListProperty dog = ModelSerializer.DeserializeJson<DogListProperty>(json, options);
 ```
 
 ## Using ModelJsonConverter for JsonSerializer
@@ -162,7 +162,7 @@ envelope.ModelA = new CatReadOnlyProperty();
 envelope.ModelT = new ModelT { Name = "Fluffy", Age = 10 };
 ModelSerializerOptions options = new ModelSerializerOptions();
 options.Serializers.Add(typeof(ModelT), new NewtonsoftJsonObjectSerializer());
-Stream stream = ModelSerializer.Serialize(envelope, options);
+Stream stream = ModelSerializer.SerializeJson(envelope, options);
 ```
 
 Deserialization
@@ -176,7 +176,7 @@ string serviceResponse =
 ModelSerializerOptions options = new ModelSerializerOptions();
 options.Serializers.Add(typeof(ModelT), new NewtonsoftJsonObjectSerializer());
 
-Envelope<ModelT> model = ModelSerializer.Deserialize<Envelope<ModelT>>(new MemoryStream(Encoding.UTF8.GetBytes(serviceResponse)), options: options);
+Envelope<ModelT> model = ModelSerializer.DeserializeJson<Envelope<ModelT>>(new MemoryStream(Encoding.UTF8.GetBytes(serviceResponse)), options: options);
 ```
 
 ## XmlModel Example
@@ -184,8 +184,8 @@ By using the SerializeXml and DeserializeXml methods we can serialize and deseri
 
 Serialization
 ```C# Snippet:XmlModelSerialize
-ModelXml modelXml = new ModelXml("Color", "Red");
-var stream = ModelSerializer.SerializeXml<ModelXml>(modelXml);
+ModelXml modelXml = new ModelXml("Color", "Red", "ReadOnly");
+var stream = ModelSerializer.SerializeXml(modelXml);
 stream.Position = 0;
 string roundTrip = new StreamReader(stream).ReadToEnd();
 ```

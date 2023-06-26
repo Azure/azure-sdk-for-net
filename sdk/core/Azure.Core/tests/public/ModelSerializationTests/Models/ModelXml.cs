@@ -7,6 +7,7 @@ using System.Xml;
 using Azure.Core.Serialization;
 using NUnit.Framework;
 using System.Xml.Serialization;
+using System.Collections.Generic;
 
 namespace Azure.Core.Tests.Public.ModelSerializationTests.Models
 {
@@ -17,13 +18,14 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests.Models
         /// <param name="key"></param>
         /// <param name="value"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
-        public ModelXml(string key, string value)
+        public ModelXml(string key, string value, string readonlyProperty)
         {
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
             Key = key;
             Value = value;
+            ReadOnlyProperty = readonlyProperty;
         }
 
         /// <summary> Gets or sets the key. </summary>
@@ -32,6 +34,9 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests.Models
         /// <summary> Gets or sets the value. </summary>
         [XmlElement("Value")]
         public string Value { get; set; }
+        /// <summary> Gets or sets the value. </summary>
+        [XmlElement("ReadOnlyProperty")]
+        public string ReadOnlyProperty { get; }
 
         void IXmlSerializable.Write(XmlWriter writer, string nameHint) => ((IXmlSerializableModel)this).Serialize(writer, new ModelSerializerOptions() {NameHint = nameHint});
 
@@ -39,6 +44,7 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests.Models
         {
             string key = default;
             string value = default;
+            string readonlyProperty = default;
             if (element.Element("Key") is XElement keyElement)
             {
                 key = (string)keyElement;
@@ -47,7 +53,11 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests.Models
             {
                 value = (string)valueElement;
             }
-            return new ModelXml(key, value);
+            if (element.Element("ReadOnlyProperty") is XElement readonlyPropertyElement)
+            {
+                readonlyProperty = (string)readonlyPropertyElement;
+            }
+            return new ModelXml(key, value, readonlyProperty);
         }
 
         void IXmlSerializableModel.Serialize(XmlWriter writer, ModelSerializerOptions options)
@@ -59,13 +69,13 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests.Models
             writer.WriteStartElement("Value");
             writer.WriteValue(Value);
             writer.WriteEndElement();
+            if (!options.IgnoreReadOnlyProperties)
+            {
+                writer.WriteStartElement("ReadOnlyProperty");
+                writer.WriteValue(ReadOnlyProperty);
+                writer.WriteEndElement();
+            }
             writer.WriteEndElement();
-        }
-
-        internal static void VerifyModelXml(ModelXml correctModelXml, ModelXml model2)
-        {
-            Assert.AreEqual(correctModelXml.Key, model2.Key);
-            Assert.AreEqual(correctModelXml.Value, model2.Value);
         }
     }
 }

@@ -69,7 +69,7 @@ namespace Azure.Core.Serialization
             }
             // else use default XmlWriter
             Stream stream = new MemoryStream();
-            using var writer = XmlWriter.Create(stream, new XmlWriterSettings
+            var writer = XmlWriter.Create(stream, new XmlWriterSettings
             {
                 Encoding = new UTF8Encoding(false),
                 OmitXmlDeclaration = true,
@@ -78,8 +78,6 @@ namespace Azure.Core.Serialization
 
             model.Serialize(writer, options ?? new ModelSerializerOptions());
             writer.Flush();
-
-            stream.Position = 0;
             return stream;
         }
         #endregion
@@ -105,12 +103,7 @@ namespace Azure.Core.Serialization
                     return data.ToStream();
                 }
             }
-            // else use default STJ serializer
-            Stream stream = new MemoryStream();
-            var writer = new Utf8JsonWriter(stream);
-            model.Serialize(writer, options ?? new ModelSerializerOptions());
-            writer.Flush();
-            return stream;
+            return model.Serialize(options ?? new ModelSerializerOptions());
         }
         #endregion
 
@@ -119,7 +112,7 @@ namespace Azure.Core.Serialization
         /// Serialize a XML model. Todo: collapse this method when working - need compile check over runtime
         /// </summary>
         /// <returns></returns>
-        public static T DeserializeXml<T>(Stream streamtream, ModelSerializerOptions? options = default) where T : class, IXmlSerializableModel
+        public static T DeserializeXml<T>(Stream stream, ModelSerializerOptions? options = default) where T : class, IXmlSerializableModel
         {
             if (options != null)
             {
@@ -174,9 +167,9 @@ namespace Azure.Core.Serialization
         /// <param name="json"></param>
         /// <param name="options"></param>
         /// <returns></returns>
-        public static T DeserializeJsonString<T>(string json, ModelSerializerOptions? options = default) where T : class, IJsonSerializableModel
+        public static T DeserializeJson<T>(string json, ModelSerializerOptions? options = default) where T : class, IJsonSerializableModel
         {
-            using Stream streamtream = new MemoryStream();
+            using Stream stream = new MemoryStream();
             using StreamWriter writer = new StreamWriter(stream);
             writer.Write(json);
             stream.Position = 0;
@@ -204,7 +197,7 @@ namespace Azure.Core.Serialization
         /// <param name="stream"></param>
         /// <param name="options"></param>
         /// <returns></returns>
-        public static T DeserializeJson<T>(Stream streamtream, ModelSerializerOptions? options = default) where T : class, IJsonSerializableModel
+        public static T DeserializeJson<T>(Stream stream, ModelSerializerOptions? options = default) where T : class, IJsonSerializableModel
         {
             if (options != null)
             {
@@ -287,6 +280,8 @@ namespace Azure.Core.Serialization
             return model;
         }
 
+        private static readonly Type[] _combinedDeserializeMethodParameters = new Type[] { typeof(Stream), typeof(ModelSerializerOptions) };
+
         internal static object? DeserializeObject(Stream stream, Type typeToConvert, ModelSerializerOptions options)
         {
             var classNameInMethod = typeToConvert.Name.AsSpan();
@@ -295,7 +290,7 @@ namespace Azure.Core.Serialization
                 classNameInMethod = classNameInMethod.Slice(0, backtickIndex);
             var methodName = $"Deserialize{classNameInMethod.ToString()}";
 
-            var method = typeToConvert.GetMethod(methodName, BindingFlags.NonPublic | BindingFlags.Static);
+            var method = typeToConvert.GetMethod(methodName, BindingFlags.NonPublic | BindingFlags.Static, null, _combinedDeserializeMethodParameters, null);
             if (method is null)
                 throw new NotSupportedException($"{typeToConvert.Name} does not have a deserialize method defined.");
 

@@ -99,7 +99,7 @@ namespace Azure.Core.Samples
             options.Serializers.Add(typeof(DogListProperty), new NewtonsoftJsonObjectSerializer());
             string json = @"[{""LatinName"":""Animalia"",""Weight"":1.1,""Name"":""Doggo"",""IsHungry"":false,""FoodConsumed"":[""kibble"",""egg"",""peanut butter""],""NumberOfLegs"":4}]";
 
-            DogListProperty dog = ModelSerializer.Deserialize<DogListProperty>(json, options);
+            DogListProperty dog = ModelSerializer.DeserializeJson<DogListProperty>(json, options);
             #endregion
         }
 
@@ -127,7 +127,7 @@ namespace Azure.Core.Samples
             #region Snippet:ModelSerializer_Deserialize
             string json = @"[{""LatinName"":""Animalia"",""Weight"":1.1,""Name"":""Doggo"",""IsHungry"":false,""FoodConsumed"":[""kibble"",""egg"",""peanut butter""],""NumberOfLegs"":4}]";
 
-            DogListProperty dog = ModelSerializer.Deserialize<DogListProperty>(json);
+            DogListProperty dog = ModelSerializer.DeserializeJson<DogListProperty>(json);
             #endregion
         }
 
@@ -202,8 +202,8 @@ namespace Azure.Core.Samples
         public void XmlModelSerialize()
         {
             #region Snippet:XmlModelSerialize
-            ModelXml modelXml = new ModelXml("Color", "Red");
-            var stream = ModelSerializer.SerializeXml<ModelXml>(modelXml);
+            ModelXml modelXml = new ModelXml("Color", "Red", "ReadOnly");
+            var stream = ModelSerializer.SerializeXml(modelXml);
             stream.Position = 0;
             string roundTrip = new StreamReader(stream).ReadToEnd();
             #endregion

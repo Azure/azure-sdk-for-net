@@ -18,13 +18,14 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests.Models
         /// <param name="key"></param>
         /// <param name="value"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
-        public XmlModelForCombinedInterface(string key, string value)
+        public XmlModelForCombinedInterface(string key, string value, string readOnlyProperty)
         {
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
             Key = key;
             Value = value;
+            ReadOnlyProperty = readOnlyProperty;
         }
 
         /// <summary> Gets or sets the key. </summary>
@@ -33,13 +34,20 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests.Models
         /// <summary> Gets or sets the value. </summary>
         [XmlElement("Value")]
         public string Value { get; set; }
+        /// <summary> Gets or sets the value. </summary>
+        [XmlElement("ReadOnlyProperty")]
+        public string ReadOnlyProperty { get; }
 
-        void IXmlSerializable.Write(XmlWriter writer, string nameHint) => ((IModelSerializable)this).Serialize(new ModelSerializerOptions() {NameHint = nameHint});
+        void IXmlSerializable.Write(XmlWriter writer, string nameHint) => ((IModelSerializable)this).Serialize(new ModelSerializerOptions() { NameHint = nameHint });
 
-        internal static ModelXml DeserializeModelXml(XElement element, ModelSerializerOptions options = default)
+        internal static XmlModelForCombinedInterface DeserializeXmlModelForCombinedInterface(Stream stream, ModelSerializerOptions options = default)
+            => DeserializeXmlModelForCombinedInterface(XElement.Load(stream), options);
+
+        internal static XmlModelForCombinedInterface DeserializeXmlModelForCombinedInterface(XElement element, ModelSerializerOptions options = default)
         {
             string key = default;
             string value = default;
+            string readOnlyProperty = default;
             if (element.Element("Key") is XElement keyElement)
             {
                 key = (string)keyElement;
@@ -48,22 +56,20 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests.Models
             {
                 value = (string)valueElement;
             }
-            return new ModelXml(key, value);
-        }
-
-        internal static void VerifyModelXmlModelForCombinedInterface(XmlModelForCombinedInterface correctModelXml, XmlModelForCombinedInterface model2)
-        {
-            Assert.AreEqual(correctModelXml.Key, model2.Key);
-            Assert.AreEqual(correctModelXml.Value, model2.Value);
+            if (element.Element("ReadOnlyProperty") is XElement readOnlyPropertyElement)
+            {
+                readOnlyProperty = (string)readOnlyPropertyElement;
+            }
+            return new XmlModelForCombinedInterface(key, value, readOnlyProperty);
         }
 
         Stream IModelSerializable.Serialize(ModelSerializerOptions options)
         {
-            Stream s = new MemoryStream();
-            XmlWriter writer = XmlWriter.Create(s);
+            Stream stream = new MemoryStream();
+            XmlWriter writer = XmlWriter.Create(stream);
             SerializeWithWriter(writer, options);
-            //s.Position = 0;
-            return s;
+            writer.Flush();
+            return stream;
         }
 
         private void SerializeWithWriter(XmlWriter writer, ModelSerializerOptions options)
@@ -75,6 +81,12 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests.Models
             writer.WriteStartElement("Value");
             writer.WriteValue(Value);
             writer.WriteEndElement();
+            if (!options.IgnoreReadOnlyProperties)
+            {
+                writer.WriteStartElement("ReadOnlyProperty");
+                writer.WriteValue(ReadOnlyProperty);
+                writer.WriteEndElement();
+            }
             writer.WriteEndElement();
         }
     }
