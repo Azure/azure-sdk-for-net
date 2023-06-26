@@ -10,6 +10,7 @@ using NUnit.Framework;
 
 namespace Azure.Communication.JobRouter.Tests.Scenarios
 {
+    [Ignore("enable after deployment with matching changes")]
     public class CancellationScenario : RouterLiveTestBase
     {
         public CancellationScenario(bool isAsync)
@@ -20,20 +21,16 @@ namespace Azure.Communication.JobRouter.Tests.Scenarios
         [Test]
         public async Task Scenario()
         {
-            RouterClient client = CreateRouterClientWithConnectionString();
-            RouterAdministrationClient administrationClient = CreateRouterAdministrationClientWithConnectionString();
+            JobRouterClient client = CreateRouterClientWithConnectionString();
+            JobRouterAdministrationClient administrationClient = CreateRouterAdministrationClientWithConnectionString();
 
             var dispositionCode = "dispositionCode";
             var channelResponse = GenerateUniqueId($"Channel-{IdPrefix}-{nameof(CancellationScenario)}");
 
             var distributionPolicyId = GenerateUniqueId($"{IdPrefix}-dist-policy");
             var distributionPolicyResponse = await administrationClient.CreateDistributionPolicyAsync(
-                new CreateDistributionPolicyOptions(distributionPolicyId,
-                    TimeSpan.FromMinutes(10),
-                    new LongestIdleMode(1, 1))
-                {
-                    Name = "test",
-                });
+                new CreateDistributionPolicyOptions(distributionPolicyId, TimeSpan.FromMinutes(10),
+                    new LongestIdleMode()) { Name = "test", });
             AddForCleanup(new Task(async () => await administrationClient.DeleteDistributionPolicyAsync(distributionPolicyId)));
 
             var queueResponse = await administrationClient.CreateQueueAsync(
@@ -56,9 +53,9 @@ namespace Azure.Communication.JobRouter.Tests.Scenarios
             AddForCleanup(new Task(async () => await client.DeleteJobAsync(jobId)));
 
             var job = await Poll(async () => await client.GetJobAsync(createJob.Value.Id),
-                x => x.Value.JobStatus == RouterJobStatus.Queued,
+                x => x.Value.Status == RouterJobStatus.Queued,
                 TimeSpan.FromSeconds(10));
-            Assert.AreEqual(RouterJobStatus.Queued, job.Value.JobStatus);
+            Assert.AreEqual(RouterJobStatus.Queued, job.Value.Status);
 
             await client.CancelJobAsync(new CancelJobOptions(job.Value.Id)
             {
@@ -66,7 +63,7 @@ namespace Azure.Communication.JobRouter.Tests.Scenarios
             });
 
             var finalJobState = await client.GetJobAsync(createJob.Value.Id);
-            Assert.AreEqual(RouterJobStatus.Cancelled, finalJobState.Value.JobStatus);
+            Assert.AreEqual(RouterJobStatus.Cancelled, finalJobState.Value.Status);
             Assert.AreEqual(dispositionCode, finalJobState.Value.DispositionCode);
         }
     }

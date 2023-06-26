@@ -55,8 +55,8 @@ namespace Azure.Storage.DataMovement
         private UriToStreamJobPart(
             UriToStreamTransferJob job,
             int partNumber,
-            StorageResource sourceResource,
-            StorageResource destinationResource,
+            StorageResourceSingle sourceResource,
+            StorageResourceSingle destinationResource,
             bool isFinalPart,
             StorageTransferStatus jobPartStatus = StorageTransferStatus.Queued,
             long? length = default)
@@ -101,8 +101,8 @@ namespace Azure.Storage.DataMovement
         public static async Task<UriToStreamJobPart> CreateJobPartAsync(
             UriToStreamTransferJob job,
             int partNumber,
-            StorageResource sourceResource,
-            StorageResource destinationResource,
+            StorageResourceSingle sourceResource,
+            StorageResourceSingle destinationResource,
             bool isFinalPart,
             StorageTransferStatus jobPartStatus = default,
             long? length = default,

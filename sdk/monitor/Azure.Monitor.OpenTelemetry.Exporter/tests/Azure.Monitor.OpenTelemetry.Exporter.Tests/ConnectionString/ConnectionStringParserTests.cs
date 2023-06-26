@@ -85,7 +85,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         }
 
         [Fact]
-        public void TestExpliticOverride_PreservesSchema()
+        public void TestExplicitOverride_PreservesSchema()
         {
             RunTest(
                 connectionString: "InstrumentationKey=00000000-0000-0000-0000-000000000000;IngestionEndpoint=http://custom.contoso.com:444/",
@@ -94,7 +94,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         }
 
         [Fact]
-        public void TestExpliticOverride_InvalidValue()
+        public void TestExplicitOverride_InvalidValue()
         {
             Assert.Throws<InvalidOperationException>(() => RunTest(
                 connectionString: "InstrumentationKey=00000000-0000-0000-0000-000000000000;IngestionEndpoint=https:////custom.contoso.com",
@@ -103,7 +103,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         }
 
         [Fact]
-        public void TestExpliticOverride_InvalidValue2()
+        public void TestExplicitOverride_InvalidValue2()
         {
             Assert.Throws<InvalidOperationException>(() => RunTest(
                 connectionString: "InstrumentationKey=00000000-0000-0000-0000-000000000000;IngestionEndpoint=https://www.~!@#$%&^*()_{}{}><?<?>:L\":\"_+_+_",
@@ -112,7 +112,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         }
 
         [Fact]
-        public void TestExpliticOverride_InvalidValue3()
+        public void TestExplicitOverride_InvalidValue3()
         {
             Assert.Throws<InvalidOperationException>(() => RunTest(
                 connectionString: "InstrumentationKey=00000000-0000-0000-0000-000000000000;EndpointSuffix=~!@#$%&^*()_{}{}><?<?>:L\":\"_+_+_",
@@ -121,7 +121,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         }
 
         [Fact]
-        public void TestExpliticOverride_InvalidLocation()
+        public void TestExplicitOverride_InvalidLocation()
         {
             Assert.Throws<InvalidOperationException>(() => RunTest(
                 connectionString: "InstrumentationKey=00000000-0000-0000-0000-000000000000;EndpointSuffix=ingestion.azuremonitor.com;Location=~!@#$%&^*()_{}{}><?<?>:L\":\"_+_+_",

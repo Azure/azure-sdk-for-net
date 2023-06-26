@@ -16,6 +16,6 @@ namespace Azure.Communication.JobRouter
         }
 
         /// <summary> If WaitForActivation is true, then the job is not queued for re-matching with a worker. </summary>
-        public bool? WaitForActivation { get; set; }
+        public bool? SuspendMatching { get; set; }
     }
 }
