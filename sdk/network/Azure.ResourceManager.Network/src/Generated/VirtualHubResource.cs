@@ -676,9 +676,9 @@ namespace Azure.ResourceManager.Network
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="content"> Parameters supplied to get the effective routes for a specific resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation<VirtualHubEffectiveRouteList>> GetEffectiveVirtualHubRoutesAsync(WaitUntil waitUntil, EffectiveRoutesContent content = null, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<VirtualHubEffectiveRouteList>> GetVirtualHubEffectiveRoutesAsync(WaitUntil waitUntil, EffectiveRoutesContent content = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _virtualHubClientDiagnostics.CreateScope("VirtualHubResource.GetEffectiveVirtualHubRoutes");
+            using var scope = _virtualHubClientDiagnostics.CreateScope("VirtualHubResource.GetVirtualHubEffectiveRoutes");
             scope.Start();
             try
             {
@@ -711,9 +711,9 @@ namespace Azure.ResourceManager.Network
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="content"> Parameters supplied to get the effective routes for a specific resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation<VirtualHubEffectiveRouteList> GetEffectiveVirtualHubRoutes(WaitUntil waitUntil, EffectiveRoutesContent content = null, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<VirtualHubEffectiveRouteList> GetVirtualHubEffectiveRoutes(WaitUntil waitUntil, EffectiveRoutesContent content = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _virtualHubClientDiagnostics.CreateScope("VirtualHubResource.GetEffectiveVirtualHubRoutes");
+            using var scope = _virtualHubClientDiagnostics.CreateScope("VirtualHubResource.GetVirtualHubEffectiveRoutes");
             scope.Start();
             try
             {
@@ -747,11 +747,11 @@ namespace Azure.ResourceManager.Network
         /// <param name="content"> Parameters supplied to get the inbound routes for a connection resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<ArmOperation<EffectiveRouteMapRouteList>> GetInboundRoutesAsync(WaitUntil waitUntil, VirtualHubInboundRoutesContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<EffectiveRouteMapRouteList>> GetVirtualHubInboundRoutesAsync(WaitUntil waitUntil, VirtualHubInboundRoutesContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _virtualHubClientDiagnostics.CreateScope("VirtualHubResource.GetInboundRoutes");
+            using var scope = _virtualHubClientDiagnostics.CreateScope("VirtualHubResource.GetVirtualHubInboundRoutes");
             scope.Start();
             try
             {
@@ -785,11 +785,11 @@ namespace Azure.ResourceManager.Network
         /// <param name="content"> Parameters supplied to get the inbound routes for a connection resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual ArmOperation<EffectiveRouteMapRouteList> GetInboundRoutes(WaitUntil waitUntil, VirtualHubInboundRoutesContent content, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<EffectiveRouteMapRouteList> GetVirtualHubInboundRoutes(WaitUntil waitUntil, VirtualHubInboundRoutesContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _virtualHubClientDiagnostics.CreateScope("VirtualHubResource.GetInboundRoutes");
+            using var scope = _virtualHubClientDiagnostics.CreateScope("VirtualHubResource.GetVirtualHubInboundRoutes");
             scope.Start();
             try
             {
@@ -823,11 +823,11 @@ namespace Azure.ResourceManager.Network
         /// <param name="content"> Parameters supplied to get the outbound routes for a connection resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<ArmOperation<EffectiveRouteMapRouteList>> GetOutboundRoutesAsync(WaitUntil waitUntil, VirtualHubOutboundRoutesContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<EffectiveRouteMapRouteList>> GetVirtualHubOutboundRoutesAsync(WaitUntil waitUntil, VirtualHubOutboundRoutesContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _virtualHubClientDiagnostics.CreateScope("VirtualHubResource.GetOutboundRoutes");
+            using var scope = _virtualHubClientDiagnostics.CreateScope("VirtualHubResource.GetVirtualHubOutboundRoutes");
             scope.Start();
             try
             {
@@ -861,11 +861,11 @@ namespace Azure.ResourceManager.Network
         /// <param name="content"> Parameters supplied to get the outbound routes for a connection resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual ArmOperation<EffectiveRouteMapRouteList> GetOutboundRoutes(WaitUntil waitUntil, VirtualHubOutboundRoutesContent content, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<EffectiveRouteMapRouteList> GetVirtualHubOutboundRoutes(WaitUntil waitUntil, VirtualHubOutboundRoutesContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _virtualHubClientDiagnostics.CreateScope("VirtualHubResource.GetOutboundRoutes");
+            using var scope = _virtualHubClientDiagnostics.CreateScope("VirtualHubResource.GetVirtualHubOutboundRoutes");
             scope.Start();
             try
             {

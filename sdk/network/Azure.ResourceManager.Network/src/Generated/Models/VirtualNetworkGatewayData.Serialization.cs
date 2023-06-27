@@ -208,7 +208,7 @@ namespace Azure.ResourceManager.Network
             Optional<bool> enableBgpRouteTranslationForNat = default;
             Optional<bool> allowVirtualWanTraffic = default;
             Optional<bool> allowRemoteVnetTraffic = default;
-            Optional<AdminState> adminState = default;
+            Optional<ExpressRouteGatewayAdminState> adminState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("extendedLocation"u8))
@@ -508,7 +508,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            adminState = new AdminState(property0.Value.GetString());
+                            adminState = new ExpressRouteGatewayAdminState(property0.Value.GetString());
                             continue;
                         }
                     }

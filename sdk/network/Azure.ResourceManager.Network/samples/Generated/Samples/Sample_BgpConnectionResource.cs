@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.Network.Samples
         // VirtualRouterPeerListLearnedRoutes
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetLearnedRoutesVirtualHubBgpConnection_VirtualRouterPeerListLearnedRoutes()
+        public async Task GetVirtualHubBgpConnectionLearnedRoutes_VirtualRouterPeerListLearnedRoutes()
         {
             // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2023-02-01/examples/VirtualRouterPeerListLearnedRoute.json
             // this example is just showing the usage of "VirtualHubBgpConnections_ListLearnedRoutes" operation, for the dependent resources, they will have to be created separately.
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.Network.Samples
             BgpConnectionResource bgpConnection = client.GetBgpConnectionResource(bgpConnectionResourceId);
 
             // invoke the operation
-            ArmOperation<IDictionary<string, IList<PeerRoute>>> lro = await bgpConnection.GetLearnedRoutesVirtualHubBgpConnectionAsync(WaitUntil.Completed);
+            ArmOperation<IDictionary<string, IList<PeerRoute>>> lro = await bgpConnection.GetVirtualHubBgpConnectionLearnedRoutesAsync(WaitUntil.Completed);
             IDictionary<string, IList<PeerRoute>> result = lro.Value;
 
             Console.WriteLine($"Succeeded: {result}");
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.Network.Samples
         // VirtualRouterPeerListAdvertisedRoutes
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetAdvertisedRoutesVirtualHubBgpConnection_VirtualRouterPeerListAdvertisedRoutes()
+        public async Task GetVirtualHubBgpConnectionAdvertisedRoutes_VirtualRouterPeerListAdvertisedRoutes()
         {
             // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2023-02-01/examples/VirtualRouterPeerListAdvertisedRoute.json
             // this example is just showing the usage of "VirtualHubBgpConnections_ListAdvertisedRoutes" operation, for the dependent resources, they will have to be created separately.
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Network.Samples
             BgpConnectionResource bgpConnection = client.GetBgpConnectionResource(bgpConnectionResourceId);
 
             // invoke the operation
-            ArmOperation<IDictionary<string, IList<PeerRoute>>> lro = await bgpConnection.GetAdvertisedRoutesVirtualHubBgpConnectionAsync(WaitUntil.Completed);
+            ArmOperation<IDictionary<string, IList<PeerRoute>>> lro = await bgpConnection.GetVirtualHubBgpConnectionAdvertisedRoutesAsync(WaitUntil.Completed);
             IDictionary<string, IList<PeerRoute>> result = lro.Value;
 
             Console.WriteLine($"Succeeded: {result}");
