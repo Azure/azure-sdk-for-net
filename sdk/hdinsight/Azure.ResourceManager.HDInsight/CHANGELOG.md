@@ -1,6 +1,6 @@
 # Release History
 
-## 1.1.0-beta.2 (2023-07-27)
+## 1.2.0-beta.1 (2023-07-28)
 
 ### Features Added
 
@@ -9,7 +9,6 @@
 ### Other Changes
 
 - Upgraded API version to 2023-04-15-preview.
-- Upgraded dependent `Azure.Core` to `1.33.0`.
 
 ## 1.1.0-beta.1 (2023-05-30)
 
