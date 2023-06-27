@@ -224,6 +224,36 @@ namespace Azure.Core.Samples
             #endregion
         }
 
+        [Test]
+        [Ignore("Only verifying that the sample builds")]
+        public void IModelSerializableSerialize()
+        {
+            #region Snippet:ModelSerializer_IModelSerializable_Serialize
+            XmlModelForCombinedInterface xmlModel = new XmlModelForCombinedInterface("Color", "Red", "ReadOnly");
+            var stream = ModelSerializer.Serialize(xmlModel);
+            stream.Position = 0;
+            string xmlString = new StreamReader(stream).ReadToEnd();
+
+            JsonModelForCombinedInterface jsonModel = new JsonModelForCombinedInterface("Color", "Red", "ReadOnly");
+            stream = ModelSerializer.Serialize(jsonModel);
+            stream.Position = 0;
+            string jsonString = new StreamReader(stream).ReadToEnd();
+            #endregion
+        }
+
+        [Test]
+        [Ignore("Only verifying that the sample builds")]
+        public void IModelSerializableDeserialize()
+        {
+            #region Snippet:ModelSerializer_IModelSerializable_Deserialize
+            string xmlResponse = "<Tag><Key>Color</Key><Value>Red</Value></Tag>";
+            XmlModelForCombinedInterface xmlModel = ModelSerializer.Deserialize<XmlModelForCombinedInterface>(new MemoryStream(Encoding.UTF8.GetBytes(xmlResponse)));
+
+            string jsonResponse = "{\"key\":\"Color\",\"value\":\"Red\",\"readOnlyProperty\":\"ReadOnly\",\"x\":\"extra\"}";
+            JsonModelForCombinedInterface jsonModel = ModelSerializer.Deserialize<JsonModelForCombinedInterface>(new MemoryStream(Encoding.UTF8.GetBytes(jsonResponse)));
+            #endregion
+        }
+
         #region Snippet:Example_Model
         private class ModelT
         {

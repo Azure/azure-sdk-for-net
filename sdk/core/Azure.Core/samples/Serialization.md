@@ -6,7 +6,7 @@ When using protocol methods for advanced handling of RequestContext it is still 
 There is an explicit cast operator that can be used to convert the protocol Response to the strongly typed model.
 There is also an explicit cast operator that can be used to convert the strongly typed model to the protocol RequestContent.
 
-Serialization
+### Serialization
 
 ```C# Snippet:ExplicitCast_Serialize
 PetStoreClient client = new PetStoreClient(new Uri("http://somewhere.com"), new MockCredential());
@@ -15,7 +15,7 @@ Response response = client.CreatePet("myPet", (RequestContent)dog);
 var response2 = client.CreatePet("myPet", RequestContent.Create(dog));
 ```
 
-Deserialization
+### Deserialization
 
 ```C# Snippet:ExplicitCast_Deserialize
 PetStoreClient client = new PetStoreClient(new Uri("http://somewhere.com"), new MockCredential());
@@ -34,7 +34,7 @@ If we go this route the IJsonSerializable interface will only be needed for comp
 One limitation if we go this route is there isn't a clear place to pass in a flag to include additional properties during serialization and deserialization.
 One solution here is to always have this on by default for public usage and internally turn it off for communication with Azure services.
 
-Serialization
+### Serialization
 
 ```C# Snippet:Stj_Serialize
 DogListProperty dog = new DogListProperty
@@ -49,7 +49,7 @@ DogListProperty dog = new DogListProperty
 string json = System.Text.Json.JsonSerializer.Serialize(dog);
 ```
 
-Deserialization
+### Deserialization
 
 ```C# Snippet:Stj_Deserialize
 string json = "{\"latinName\":\"Animalia\",\"weight\":1.1,\"name\":\"Doggo\",\"isHungry\":false,\"foodConsumed\":[\"kibble\",\"egg\",\"peanut butter\"],\"numberOfLegs\":4}";
@@ -63,7 +63,8 @@ DogListProperty dog = System.Text.Json.JsonSerializer.Deserialize<DogListPropert
 Serialize would use the Try/Do examples from above. We would use Interface form the Serializable but potentially have static method for Deserialize. 
 When using Static Deserialize, an empty Model does not have to be created first as we can deserialize directly into a new instance.
 
-Serialization
+### Serialization
+
 ```C# Snippet:ModelSerializer_Serialize
 DogListProperty dog = new DogListProperty
 {
@@ -76,7 +77,8 @@ DogListProperty dog = new DogListProperty
 Stream stream = ModelSerializer.SerializeJson(dog);
 ```
 
-Deserialization
+### Deserialization
+
 ```C# Snippet:ModelSerializer_Deserialize
 string json = @"[{""LatinName"":""Animalia"",""Weight"":1.1,""Name"":""Doggo"",""IsHungry"":false,""FoodConsumed"":[""kibble"",""egg"",""peanut butter""],""NumberOfLegs"":4}]";
 
@@ -86,7 +88,8 @@ DogListProperty dog = ModelSerializer.DeserializeJson<DogListProperty>(json);
 ## Using ModelSerializer for NewtonSoftJson
 By using the ModelSerializer class, a new instance of Dog does not need to be created before calling Deserialize. Also added ObjectSerializer to Options class so different kinds of Serializers can be used.
 
-Serialization
+### Serialization
+
 ```C# Snippet:NewtonSoft_Serialize
 DogListProperty dog = new DogListProperty
 {
@@ -101,7 +104,7 @@ options.Serializers.Add(typeof(DogListProperty), new NewtonsoftJsonObjectSeriali
 Stream stream = ModelSerializer.SerializeJson(dog, options);
 ```
 
-Deserialization
+### Deserialization
 
 ```C# Snippet:NewtonSoft_Deserialize
 ModelSerializerOptions options = new ModelSerializerOptions();
@@ -116,7 +119,8 @@ By using the ModelJsonConverter class we can have a place to add additional prop
 This will allow us to add things like `IgnoreAdditionalProperties` and `Version` to the options without needing to have our own ModelSerializer.
 The `SerializableOptions` would become internal and we would have a converter to convert from `JsonSerializerOptions` + `ModelJsonConverter` to `SerializableOptions`.
 
-Serialization
+### Serialization
+
 ```C# Snippet:ModelConverter_Serialize
 DogListProperty dog = new DogListProperty
 {
@@ -132,7 +136,7 @@ options.Converters.Add(new ModelJsonConverter(false));
 string json = System.Text.Json.JsonSerializer.Serialize(dog, options);
 ```
 
-Deserialization
+### Deserialization
 
 ```C# Snippet:ModelConverter_Deserialize
 string json = @"[{""LatinName"":""Animalia"",""Weight"":1.1,""Name"":""Doggo"",""IsHungry"":false,""FoodConsumed"":[""kibble"",""egg"",""peanut butter""],""NumberOfLegs"":4}]";
@@ -155,7 +159,8 @@ private class ModelT
 }
 ```
 
-Serialization
+### Serialization
+
 ```C# Snippet:BYOMWithNewtonsoftSerialize
 Envelope<ModelT> envelope = new Envelope<ModelT>();
 envelope.ModelA = new CatReadOnlyProperty();
@@ -165,7 +170,8 @@ options.Serializers.Add(typeof(ModelT), new NewtonsoftJsonObjectSerializer());
 Stream stream = ModelSerializer.SerializeJson(envelope, options);
 ```
 
-Deserialization
+### Deserialization
+
 ```C# Snippet:BYOMWithNewtonsoftDeserialize
 string serviceResponse =
     "{\"readOnlyProperty\":\"read\"," +
@@ -182,7 +188,8 @@ Envelope<ModelT> model = ModelSerializer.DeserializeJson<Envelope<ModelT>>(new M
 ## XmlModel Example
 By using the SerializeXml and DeserializeXml methods we can serialize and deserialize Xml Models using the XmlSerializer. Next steps include combining ModelSerializer Serialize/Deserialize methods with XmlSerializer models to have a single method for both Json and Xml.
 
-Serialization
+### Serialization
+
 ```C# Snippet:XmlModelSerialize
 ModelXml modelXml = new ModelXml("Color", "Red", "ReadOnly");
 var stream = ModelSerializer.SerializeXml(modelXml);
@@ -190,7 +197,8 @@ stream.Position = 0;
 string roundTrip = new StreamReader(stream).ReadToEnd();
 ```
 
-Deserialization
+### Deserialization
+
 ```C# Snippet:XmlModelDeserialize
 string serviceResponse =
     "<Tag>" +
@@ -199,4 +207,35 @@ string serviceResponse =
     "</Tag>";
 
 ModelXml model = ModelSerializer.DeserializeXml<ModelXml>(new MemoryStream(Encoding.UTF8.GetBytes(serviceResponse)));
+```
+
+## Using ModelSerializer with generic IModelSerializable
+
+In this example we demonstrate how we could use the exact same method / interface to serialize either json or xml.
+Above we demonstrate using `SerializeJson` and `SerializeXml` methods but this requires the user to know which serializer to use.
+We could delegate needing to know this to each model itself since they for sure need to know how to serialize themselves.  It does
+introduce a question around what happens if a model could be serialized as both json and xml.
+
+### Serialization
+
+```C# Snippet:ModelSerializer_IModelSerializable_Serialize
+XmlModelForCombinedInterface xmlModel = new XmlModelForCombinedInterface("Color", "Red", "ReadOnly");
+var stream = ModelSerializer.Serialize(xmlModel);
+stream.Position = 0;
+string xmlString = new StreamReader(stream).ReadToEnd();
+
+JsonModelForCombinedInterface jsonModel = new JsonModelForCombinedInterface("Color", "Red", "ReadOnly");
+stream = ModelSerializer.Serialize(jsonModel);
+stream.Position = 0;
+string jsonString = new StreamReader(stream).ReadToEnd();
+```
+
+### Deserialization
+
+```C# Snippet:ModelSerializer_IModelSerializable_Deserialize
+string xmlResponse = "<Tag><Key>Color</Key><Value>Red</Value></Tag>";
+XmlModelForCombinedInterface xmlModel = ModelSerializer.Deserialize<XmlModelForCombinedInterface>(new MemoryStream(Encoding.UTF8.GetBytes(xmlResponse)));
+
+string jsonResponse = "{\"key\":\"Color\",\"value\":\"Red\",\"readOnlyProperty\":\"ReadOnly\",\"x\":\"extra\"}";
+JsonModelForCombinedInterface jsonModel = ModelSerializer.Deserialize<JsonModelForCombinedInterface>(new MemoryStream(Encoding.UTF8.GetBytes(jsonResponse)));
 ```
