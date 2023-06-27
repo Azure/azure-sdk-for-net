@@ -119,6 +119,8 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
             // Update KubernetesCluster
             KubernetesClusterPatch updateData = new KubernetesClusterPatch()
             {
+                ControlPlaneNodeCount = 3,
+                KubernetesVersion = "1.25.4-1",
                 Tags = { { "test", "patch" } },
             };
             ArmOperation<KubernetesClusterResource> updateResult = await kubernetesCluster.UpdateAsync(WaitUntil.Completed, updateData);
