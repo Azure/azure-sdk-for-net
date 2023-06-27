@@ -17,6 +17,27 @@ namespace Azure.AI.OpenAI
             Value = value;
         }
 
+        public V As<V>()
+        {
+            if (Value is V)
+            {
+                return (V)Value;
+            }
+            else
+            {
+                switch (Value)
+                {
+                    case T t:
+                        throw new InvalidCastException($"Value is of type {nameof(T)}.");
+                    case U u:
+                        throw new InvalidCastException($"Value is of type {nameof(U)}.");
+                    default:
+                        throw new InvalidCastException($"Value is of type {nameof(T)} or {nameof(U)}.");
+                }
+
+            }
+        }
+
         private object _value;
         public object Value {
             get
