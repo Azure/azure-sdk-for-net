@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
@@ -240,7 +239,7 @@ namespace Azure.ResourceManager.DataFactory.Samples
             DataFactoryResource dataFactory = client.GetDataFactoryResource(dataFactoryResourceId);
 
             // invoke the operation
-            FactoryDataPlaneUserAccessPolicy policy = new FactoryDataPlaneUserAccessPolicy()
+            DataFactoryDataPlaneUserAccessPolicy policy = new DataFactoryDataPlaneUserAccessPolicy()
             {
                 Permissions = "r",
                 AccessResourcePath = "",
@@ -248,7 +247,7 @@ namespace Azure.ResourceManager.DataFactory.Samples
                 StartTime = "2018-11-10T02:46:20.2659347Z",
                 ExpireTime = "2018-11-10T09:46:20.2659347Z",
             };
-            FactoryDataPlaneAccessPolicyResult result = await dataFactory.GetDataPlaneAccessAsync(policy);
+            DataFactoryDataPlaneAccessPolicyResult result = await dataFactory.GetDataPlaneAccessAsync(policy);
 
             Console.WriteLine($"Succeeded: {result}");
         }
@@ -356,7 +355,7 @@ new RunQueryFilter(RunQueryFilterOperand.PipelineName,RunQueryFilterOperator.Equ
 })
 },
             };
-            await foreach (FactoryPipelineRunInfo item in dataFactory.GetPipelineRunsAsync(content))
+            await foreach (DataFactoryPipelineRunInfo item in dataFactory.GetPipelineRunsAsync(content))
             {
                 Console.WriteLine($"Succeeded: {item}");
             }
@@ -387,7 +386,7 @@ new RunQueryFilter(RunQueryFilterOperand.PipelineName,RunQueryFilterOperator.Equ
 
             // invoke the operation
             string runId = "2f7fdb90-5df1-4b8e-ac2f-064cfa58202b";
-            FactoryPipelineRunInfo result = await dataFactory.GetPipelineRunAsync(runId);
+            DataFactoryPipelineRunInfo result = await dataFactory.GetPipelineRunAsync(runId);
 
             Console.WriteLine($"Succeeded: {result}");
         }
@@ -444,7 +443,7 @@ new RunQueryFilter(RunQueryFilterOperand.PipelineName,RunQueryFilterOperator.Equ
             // invoke the operation and iterate over the result
             string runId = "2f7fdb90-5df1-4b8e-ac2f-064cfa58202b";
             RunFilterContent content = new RunFilterContent(DateTimeOffset.Parse("2018-06-16T00:36:44.3345758Z"), DateTimeOffset.Parse("2018-06-16T00:49:48.3686473Z"));
-            await foreach (ActivityRunInfo item in dataFactory.GetActivityRunAsync(runId, content))
+            await foreach (DataFactoryActivityRunInfo item in dataFactory.GetActivityRunAsync(runId, content))
             {
                 Console.WriteLine($"Succeeded: {item}");
             }
@@ -478,11 +477,11 @@ new RunQueryFilter(RunQueryFilterOperand.PipelineName,RunQueryFilterOperator.Equ
             {
                 ParentTriggerName = "exampleTrigger",
             };
-            await foreach (FactoryTriggerResource item in dataFactory.GetTriggersAsync(content))
+            await foreach (DataFactoryTriggerResource item in dataFactory.GetTriggersAsync(content))
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                FactoryTriggerData resourceData = item.Data;
+                DataFactoryTriggerData resourceData = item.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
@@ -522,7 +521,7 @@ new RunQueryFilter(RunQueryFilterOperand.TriggerName,RunQueryFilterOperator.Equa
 })
 },
             };
-            await foreach (FactoryTriggerRun item in dataFactory.GetTriggerRunsAsync(content))
+            await foreach (DataFactoryTriggerRun item in dataFactory.GetTriggerRunsAsync(content))
             {
                 Console.WriteLine($"Succeeded: {item}");
             }
@@ -552,10 +551,10 @@ new RunQueryFilter(RunQueryFilterOperand.TriggerName,RunQueryFilterOperator.Equa
             DataFactoryResource dataFactory = client.GetDataFactoryResource(dataFactoryResourceId);
 
             // invoke the operation
-            FactoryDataFlowDebugSessionContent content = new FactoryDataFlowDebugSessionContent()
+            DataFactoryDataFlowDebugSessionContent content = new DataFactoryDataFlowDebugSessionContent()
             {
                 TimeToLiveInMinutes = 60,
-                IntegrationRuntime = new FactoryIntegrationRuntimeDebugInfo(new ManagedIntegrationRuntime()
+                IntegrationRuntime = new DataFactoryIntegrationRuntimeDebugInfo(new ManagedIntegrationRuntime()
                 {
                     ComputeProperties = new IntegrationRuntimeComputeProperties()
                     {
@@ -572,8 +571,8 @@ new RunQueryFilter(RunQueryFilterOperand.TriggerName,RunQueryFilterOperator.Equa
                     Name = "ir1",
                 },
             };
-            ArmOperation<FactoryDataFlowCreateDebugSessionResult> lro = await dataFactory.CreateDataFlowDebugSessionAsync(WaitUntil.Completed, content);
-            FactoryDataFlowCreateDebugSessionResult result = lro.Value;
+            ArmOperation<DataFactoryDataFlowCreateDebugSessionResult> lro = await dataFactory.CreateDataFlowDebugSessionAsync(WaitUntil.Completed, content);
+            DataFactoryDataFlowCreateDebugSessionResult result = lro.Value;
 
             Console.WriteLine($"Succeeded: {result}");
         }
@@ -606,125 +605,6 @@ new RunQueryFilter(RunQueryFilterOperand.TriggerName,RunQueryFilterOperator.Equa
             }
 
             Console.WriteLine($"Succeeded");
-        }
-
-        // DataFlowDebugSession_AddDataFlow
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task AddDataFlowToDebugSession_DataFlowDebugSessionAddDataFlow()
-        {
-            // Generated from example definition: specification/datafactory/resource-manager/Microsoft.DataFactory/stable/2018-06-01/examples/DataFlowDebugSession_AddDataFlow.json
-            // this example is just showing the usage of "DataFlowDebugSession_AddDataFlow" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this DataFactoryResource created on azure
-            // for more information of creating DataFactoryResource, please refer to the document of DataFactoryResource
-            string subscriptionId = "12345678-1234-1234-1234-12345678abc";
-            string resourceGroupName = "exampleResourceGroup";
-            string factoryName = "exampleFactoryName";
-            ResourceIdentifier dataFactoryResourceId = DataFactoryResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, factoryName);
-            DataFactoryResource dataFactory = client.GetDataFactoryResource(dataFactoryResourceId);
-
-            // invoke the operation
-            FactoryDataFlowDebugPackageContent content = new FactoryDataFlowDebugPackageContent()
-            {
-                SessionId = Guid.Parse("f06ed247-9d07-49b2-b05e-2cb4a2fc871e"),
-                DataFlow = new FactoryDataFlowDebugInfo(new FactoryMappingDataFlowDefinition()
-                {
-                    Sources =
-{
-new DataFlowSource("source1")
-{
-Dataset = new DatasetReference(DatasetReferenceType.DatasetReference,"DelimitedText2"),
-}
-},
-                    Sinks =
-{
-},
-                    Transformations =
-{
-},
-                    Script = "\n\nsource(output(\n\t\tColumn_1 as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false) ~> source1",
-                })
-                {
-                    Name = "dataflow1",
-                },
-                Datasets =
-{
-new FactoryDatasetDebugInfo(new DelimitedTextDataset(new FactoryLinkedServiceReference(FactoryLinkedServiceReferenceType.LinkedServiceReference,"linkedService5"))
-{
-DataLocation = new AzureBlobStorageLocation()
-{
-Container = BinaryData.FromString("dataflow-sample-data"),
-FileName = BinaryData.FromString("Ansiencoding.csv"),
-},
-ColumnDelimiter = BinaryData.FromString(","),
-QuoteChar = BinaryData.FromString("\""),
-EscapeChar = BinaryData.FromString("\\"),
-FirstRowAsHeader = BinaryData.FromString("true"),
-Schema = BinaryData.FromObjectAsJson(new object[] { new Dictionary<string, object>()
-{
-["type"] = "String"} }),
-Annotations =
-{
-},
-})
-{
-Name = "dataset1",
-}
-},
-                LinkedServices =
-{
-new FactoryLinkedServiceDebugInfo(new AzureBlobStorageLinkedService()
-{
-ConnectionString = BinaryData.FromString("DefaultEndpointsProtocol=https;AccountName=<storageName>;EndpointSuffix=core.windows.net;"),
-EncryptedCredential = BinaryData.FromString("<credential>"),
-Annotations =
-{
-},
-})
-{
-Name = "linkedService1",
-}
-},
-                DebugSettings = new DataFlowDebugPackageDebugSettings()
-                {
-                    SourceSettings =
-{
-new DataFlowSourceSetting()
-{
-SourceName = "source1",
-RowLimit = 1000,
-},new DataFlowSourceSetting()
-{
-SourceName = "source2",
-RowLimit = 222,
-}
-},
-                    Parameters =
-{
-["sourcePath"] = BinaryData.FromString("Toy"),
-},
-                    DatasetParameters = BinaryData.FromObjectAsJson(new Dictionary<string, object>()
-                    {
-                        ["Movies"] = new Dictionary<string, object>()
-                        {
-                            ["path"] = "abc"
-                        },
-                        ["Output"] = new Dictionary<string, object>()
-                        {
-                            ["time"] = "def"
-                        }
-                    }),
-                },
-            };
-            FactoryDataFlowStartDebugSessionResult result = await dataFactory.AddDataFlowToDebugSessionAsync(content);
-
-            Console.WriteLine($"Succeeded: {result}");
         }
 
         // DataFlowDebugSession_Delete
@@ -789,8 +669,8 @@ RowLimit = 222,
                     RowLimits = 100,
                 },
             };
-            ArmOperation<FactoryDataFlowDebugCommandResult> lro = await dataFactory.ExecuteDataFlowDebugSessionCommandAsync(WaitUntil.Completed, content);
-            FactoryDataFlowDebugCommandResult result = lro.Value;
+            ArmOperation<DataFactoryDataFlowDebugCommandResult> lro = await dataFactory.ExecuteDataFlowDebugSessionCommandAsync(WaitUntil.Completed, content);
+            DataFactoryDataFlowDebugCommandResult result = lro.Value;
 
             Console.WriteLine($"Succeeded: {result}");
         }
@@ -817,7 +697,7 @@ RowLimit = 222,
             DataFactoryResource dataFactory = client.GetDataFactoryResource(dataFactoryResourceId);
 
             // invoke the operation and iterate over the result
-            await foreach (FactoryPrivateLinkResource item in dataFactory.GetPrivateLinkResourcesAsync())
+            await foreach (DataFactoryPrivateLinkResource item in dataFactory.GetPrivateLinkResourcesAsync())
             {
                 Console.WriteLine($"Succeeded: {item}");
             }

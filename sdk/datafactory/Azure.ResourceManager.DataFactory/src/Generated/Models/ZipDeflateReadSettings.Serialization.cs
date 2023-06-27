@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -20,11 +21,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(PreserveZipFileNameAsFolder))
             {
                 writer.WritePropertyName("preserveZipFileNameAsFolder"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(PreserveZipFileNameAsFolder);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(PreserveZipFileNameAsFolder.ToString()).RootElement);
-#endif
+                JsonSerializer.Serialize(writer, PreserveZipFileNameAsFolder);
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(CompressionReadSettingsType);
@@ -46,7 +43,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            Optional<BinaryData> preserveZipFileNameAsFolder = default;
+            Optional<DataFactoryElement<bool>> preserveZipFileNameAsFolder = default;
             string type = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -58,7 +55,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    preserveZipFileNameAsFolder = BinaryData.FromString(property.Value.GetRawText());
+                    preserveZipFileNameAsFolder = JsonSerializer.Deserialize<DataFactoryElement<bool>>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("type"u8))

@@ -65,7 +65,7 @@ namespace Azure.Storage.DataMovement.Blobs
         /// Retrieves a single blob resource based on this respective resource.
         /// </summary>
         /// <param name="path">The path to the storage resource, relative to the directory prefix if any.</param>
-        public override StorageResource GetChildStorageResource(string path)
+        public override StorageResourceSingle GetChildStorageResource(string path)
             => GetBlobAsStorageResource(ApplyOptionalPrefix(path), type: _options?.BlobType ?? BlobType.Block);
 
         /// <summary>
@@ -76,10 +76,10 @@ namespace Azure.Storage.DataMovement.Blobs
         /// <param name="type">The type of <see cref="BlobType"/> that the storage resource is.</param>
         /// <param name="etagLock">Etag for the resource to lock on.</param>
         /// <returns>
-        /// <see cref="StorageResource"/> which represents the child blob client of
+        /// <see cref="StorageResourceSingle"/> which represents the child blob client of
         /// this respective blob virtual directory resource.
         /// </returns>
-        private StorageResource GetBlobAsStorageResource(
+        private StorageResourceSingle GetBlobAsStorageResource(
             string blobName,
             long? length = default,
             BlobType type = BlobType.Block,
@@ -121,7 +121,7 @@ namespace Azure.Storage.DataMovement.Blobs
         /// Because blobs is a flat namespace, virtual directories will not be returned.
         /// </summary>
         /// <returns>List of the child resources in the storage container.</returns>
-        public override async IAsyncEnumerable<StorageResourceBase> GetStorageResourcesAsync(
+        public override async IAsyncEnumerable<StorageResource> GetStorageResourcesAsync(
             [EnumeratorCancellation] CancellationToken cancellationToken = default)
         {
             AsyncPageable<BlobItem> pages = _blobContainerClient.GetBlobsAsync(

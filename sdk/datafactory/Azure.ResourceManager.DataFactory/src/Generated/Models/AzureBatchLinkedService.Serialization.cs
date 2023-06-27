@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -62,28 +63,16 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WritePropertyName("typeProperties"u8);
             writer.WriteStartObject();
             writer.WritePropertyName("accountName"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(AccountName);
-#else
-            JsonSerializer.Serialize(writer, JsonDocument.Parse(AccountName.ToString()).RootElement);
-#endif
+            JsonSerializer.Serialize(writer, AccountName);
             if (Optional.IsDefined(AccessKey))
             {
                 writer.WritePropertyName("accessKey"u8);
                 writer.WriteObjectValue(AccessKey);
             }
             writer.WritePropertyName("batchUri"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(BatchUri);
-#else
-            JsonSerializer.Serialize(writer, JsonDocument.Parse(BatchUri.ToString()).RootElement);
-#endif
+            JsonSerializer.Serialize(writer, BatchUri);
             writer.WritePropertyName("poolName"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(PoolName);
-#else
-            JsonSerializer.Serialize(writer, JsonDocument.Parse(PoolName.ToString()).RootElement);
-#endif
+            JsonSerializer.Serialize(writer, PoolName);
             writer.WritePropertyName("linkedServiceName"u8);
             writer.WriteObjectValue(LinkedServiceName);
             if (Optional.IsDefined(EncryptedCredential))
@@ -124,13 +113,13 @@ namespace Azure.ResourceManager.DataFactory.Models
             Optional<string> description = default;
             Optional<IDictionary<string, EntityParameterSpecification>> parameters = default;
             Optional<IList<BinaryData>> annotations = default;
-            BinaryData accountName = default;
-            Optional<FactorySecretBaseDefinition> accessKey = default;
-            BinaryData batchUri = default;
-            BinaryData poolName = default;
-            FactoryLinkedServiceReference linkedServiceName = default;
+            DataFactoryElement<string> accountName = default;
+            Optional<DataFactorySecretBaseDefinition> accessKey = default;
+            DataFactoryElement<string> batchUri = default;
+            DataFactoryElement<string> poolName = default;
+            DataFactoryLinkedServiceReference linkedServiceName = default;
             Optional<BinaryData> encryptedCredential = default;
-            Optional<FactoryCredentialReference> credential = default;
+            Optional<DataFactoryCredentialReference> credential = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -200,7 +189,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         if (property0.NameEquals("accountName"u8))
                         {
-                            accountName = BinaryData.FromString(property0.Value.GetRawText());
+                            accountName = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("accessKey"u8))
@@ -209,22 +198,22 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            accessKey = FactorySecretBaseDefinition.DeserializeFactorySecretBaseDefinition(property0.Value);
+                            accessKey = DataFactorySecretBaseDefinition.DeserializeDataFactorySecretBaseDefinition(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("batchUri"u8))
                         {
-                            batchUri = BinaryData.FromString(property0.Value.GetRawText());
+                            batchUri = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("poolName"u8))
                         {
-                            poolName = BinaryData.FromString(property0.Value.GetRawText());
+                            poolName = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("linkedServiceName"u8))
                         {
-                            linkedServiceName = FactoryLinkedServiceReference.DeserializeFactoryLinkedServiceReference(property0.Value);
+                            linkedServiceName = DataFactoryLinkedServiceReference.DeserializeDataFactoryLinkedServiceReference(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("encryptedCredential"u8))
@@ -242,7 +231,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            credential = FactoryCredentialReference.DeserializeFactoryCredentialReference(property0.Value);
+                            credential = DataFactoryCredentialReference.DeserializeDataFactoryCredentialReference(property0.Value);
                             continue;
                         }
                     }

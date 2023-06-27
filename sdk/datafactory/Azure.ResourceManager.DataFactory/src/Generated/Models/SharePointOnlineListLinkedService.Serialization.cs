@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -62,23 +63,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WritePropertyName("typeProperties"u8);
             writer.WriteStartObject();
             writer.WritePropertyName("siteUrl"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(SiteUri);
-#else
-            JsonSerializer.Serialize(writer, JsonDocument.Parse(SiteUri.ToString()).RootElement);
-#endif
+            JsonSerializer.Serialize(writer, SiteUri);
             writer.WritePropertyName("tenantId"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(TenantId);
-#else
-            JsonSerializer.Serialize(writer, JsonDocument.Parse(TenantId.ToString()).RootElement);
-#endif
+            JsonSerializer.Serialize(writer, TenantId);
             writer.WritePropertyName("servicePrincipalId"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(ServicePrincipalId);
-#else
-            JsonSerializer.Serialize(writer, JsonDocument.Parse(ServicePrincipalId.ToString()).RootElement);
-#endif
+            JsonSerializer.Serialize(writer, ServicePrincipalId);
             writer.WritePropertyName("servicePrincipalKey"u8);
             writer.WriteObjectValue(ServicePrincipalKey);
             if (Optional.IsDefined(EncryptedCredential))
@@ -114,10 +103,10 @@ namespace Azure.ResourceManager.DataFactory.Models
             Optional<string> description = default;
             Optional<IDictionary<string, EntityParameterSpecification>> parameters = default;
             Optional<IList<BinaryData>> annotations = default;
-            BinaryData siteUrl = default;
-            BinaryData tenantId = default;
-            BinaryData servicePrincipalId = default;
-            FactorySecretBaseDefinition servicePrincipalKey = default;
+            DataFactoryElement<string> siteUrl = default;
+            DataFactoryElement<string> tenantId = default;
+            DataFactoryElement<string> servicePrincipalId = default;
+            DataFactorySecretBaseDefinition servicePrincipalKey = default;
             Optional<BinaryData> encryptedCredential = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -188,22 +177,22 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         if (property0.NameEquals("siteUrl"u8))
                         {
-                            siteUrl = BinaryData.FromString(property0.Value.GetRawText());
+                            siteUrl = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("tenantId"u8))
                         {
-                            tenantId = BinaryData.FromString(property0.Value.GetRawText());
+                            tenantId = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("servicePrincipalId"u8))
                         {
-                            servicePrincipalId = BinaryData.FromString(property0.Value.GetRawText());
+                            servicePrincipalId = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("servicePrincipalKey"u8))
                         {
-                            servicePrincipalKey = FactorySecretBaseDefinition.DeserializeFactorySecretBaseDefinition(property0.Value);
+                            servicePrincipalKey = DataFactorySecretBaseDefinition.DeserializeDataFactorySecretBaseDefinition(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("encryptedCredential"u8))
