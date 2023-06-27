@@ -10,16 +10,16 @@ using Azure.Monitor.OpenTelemetry.Exporter.Internals;
 using BenchmarkDotNet.Attributes;
 
 /*
-BenchmarkDotNet=v0.13.4, OS=Windows 11 (10.0.22621.1778)
-Intel Core i7-8650U CPU 1.90GHz (Kaby Lake R), 1 CPU, 8 logical and 4 physical cores
-.NET SDK=7.0.105
-  [Host] : .NET 7.0.5 (7.0.523.17405), X64 RyuJIT AVX2
+BenchmarkDotNet=v0.13.4, OS=Windows 11 (10.0.22621.1702)
+Intel Core i7-8850H CPU 2.60GHz (Coffee Lake), 1 CPU, 12 logical and 6 physical cores
+.NET SDK=7.0.203
+  [Host]     : .NET 7.0.5 (7.0.523.17405), X64 RyuJIT AVX2
+  DefaultJob : .NET 7.0.5 (7.0.523.17405), X64 RyuJIT AVX2
 
-Job=InProcess  Toolchain=InProcessEmitToolchain
 
-|                              Method    |     Mean |   Error |   StdDev |   Median |   Gen0 | Allocated |
-|--------------------------------------- |---------:|--------:|---------:|---------:|-------:|----------:|
-|     Benchmark_ActivityTagsProcessor    | 282.5 ns | 5.61 ns | 13.66 ns | 279.0 ns | 0.1335 |     560 B |
+|                          Method |     Mean |   Error |  StdDev | Allocated |
+|-------------------------------- |---------:|--------:|--------:|----------:|
+| Benchmark_ActivityTagsProcessor | 262.0 ns | 2.51 ns | 2.10 ns |         - |
 */
 
 namespace Azure.Monitor.OpenTelemetry.Exporter.Benchmarks
@@ -64,6 +64,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Benchmarks
         {
             var activityTagsProcessor = new ActivityTagsProcessor();
             activityTagsProcessor.CategorizeTags(_activity!);
+            activityTagsProcessor.Return();
         }
 
         private static Activity? CreateTestActivity(IEnumerable<KeyValuePair<string, object>>? additionalAttributes = null)

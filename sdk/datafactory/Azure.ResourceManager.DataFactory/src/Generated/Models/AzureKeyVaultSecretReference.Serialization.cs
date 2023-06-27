@@ -5,9 +5,9 @@
 
 #nullable disable
 
-using System;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -19,19 +19,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WritePropertyName("store"u8);
             writer.WriteObjectValue(Store);
             writer.WritePropertyName("secretName"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(SecretName);
-#else
-            JsonSerializer.Serialize(writer, JsonDocument.Parse(SecretName.ToString()).RootElement);
-#endif
+            JsonSerializer.Serialize(writer, SecretName);
             if (Optional.IsDefined(SecretVersion))
             {
                 writer.WritePropertyName("secretVersion"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(SecretVersion);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(SecretVersion.ToString()).RootElement);
-#endif
+                JsonSerializer.Serialize(writer, SecretVersion);
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(SecretBaseType);
@@ -44,20 +36,20 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            FactoryLinkedServiceReference store = default;
-            BinaryData secretName = default;
-            Optional<BinaryData> secretVersion = default;
+            DataFactoryLinkedServiceReference store = default;
+            DataFactoryElement<string> secretName = default;
+            Optional<DataFactoryElement<string>> secretVersion = default;
             string type = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("store"u8))
                 {
-                    store = FactoryLinkedServiceReference.DeserializeFactoryLinkedServiceReference(property.Value);
+                    store = DataFactoryLinkedServiceReference.DeserializeDataFactoryLinkedServiceReference(property.Value);
                     continue;
                 }
                 if (property.NameEquals("secretName"u8))
                 {
-                    secretName = BinaryData.FromString(property.Value.GetRawText());
+                    secretName = JsonSerializer.Deserialize<DataFactoryElement<string>>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("secretVersion"u8))
@@ -66,7 +58,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    secretVersion = BinaryData.FromString(property.Value.GetRawText());
+                    secretVersion = JsonSerializer.Deserialize<DataFactoryElement<string>>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("type"u8))

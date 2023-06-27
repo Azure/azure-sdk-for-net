@@ -32,12 +32,12 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
         /// <summary> Initializes a new instance of ReportProperties. </summary>
         /// <param name="id"> Report id in database. </param>
         /// <param name="status"> Report status. </param>
-        /// <param name="tenantId"> Report&apos;s tenant id. </param>
+        /// <param name="tenantId"> Report's tenant id. </param>
         /// <param name="reportName"> Report name. </param>
         /// <param name="offerGuid"> Report offer Guid. </param>
         /// <param name="timeZone">
-        /// Report collection trigger time&apos;s time zone, the available list can be obtained by executing &quot;Get-TimeZone -ListAvailable&quot; in PowerShell.
-        /// An example of valid timezone id is &quot;Pacific Standard Time&quot;.
+        /// Report collection trigger time's time zone, the available list can be obtained by executing "Get-TimeZone -ListAvailable" in PowerShell.
+        /// An example of valid timezone id is "Pacific Standard Time".
         /// </param>
         /// <param name="triggerOn"> Report collection trigger time. </param>
         /// <param name="nextTriggerOn"> Report next collection trigger time. </param>
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="properties"> Snapshot&apos;s property&apos;. </param>
+        /// <param name="properties"> Snapshot's property'. </param>
         /// <returns> A new <see cref="AppComplianceAutomation.SnapshotResourceData"/> instance for mocking. </returns>
         public static SnapshotResourceData SnapshotResourceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, SnapshotProperties properties = null)
         {
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
         }
 
         /// <summary> Initializes a new instance of ComplianceResult. </summary>
-        /// <param name="complianceName"> The name of the compliance. e.g. &quot;M365&quot;. </param>
+        /// <param name="complianceName"> The name of the compliance. e.g. "M365". </param>
         /// <param name="categories"> List of categories. </param>
         /// <returns> A new <see cref="Models.ComplianceResult"/> instance for mocking. </returns>
         public static ComplianceResult ComplianceResult(string complianceName = null, IEnumerable<Category> categories = null)
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
         }
 
         /// <summary> Initializes a new instance of Category. </summary>
-        /// <param name="categoryName"> The name of the compliance category. e.g. &quot;Operational Security&quot;. </param>
+        /// <param name="categoryName"> The name of the compliance category. e.g. "Operational Security". </param>
         /// <param name="categoryType"> The category type. </param>
         /// <param name="categoryStatus"> Category status. </param>
         /// <param name="controlFamilies"> List of control families. </param>
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
         }
 
         /// <summary> Initializes a new instance of ControlFamily. </summary>
-        /// <param name="familyName"> The name of the control family. e.g. &quot;Malware Protection - Anti-Virus&quot;. </param>
+        /// <param name="familyName"> The name of the control family. e.g. "Malware Protection - Anti-Virus". </param>
         /// <param name="familyType"> The control family type. </param>
         /// <param name="familyStatus"> Control family status. </param>
         /// <param name="controls"> List of controls. </param>
@@ -131,12 +131,12 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
         }
 
         /// <summary> Initializes a new instance of Control. </summary>
-        /// <param name="controlId"> The Id of the control. e.g. &quot;Operational Security#10&quot;. </param>
-        /// <param name="controlShortName"> The short name of the control. e.g. &quot;Unsupported OS and Software.&quot;. </param>
-        /// <param name="controlFullName"> The full name of the control. e.g. &quot;Validate that unsupported operating systems and software components are not in use.&quot;. </param>
+        /// <param name="controlId"> The Id of the control. e.g. "Operational Security#10". </param>
+        /// <param name="controlShortName"> The short name of the control. e.g. "Unsupported OS and Software.". </param>
+        /// <param name="controlFullName"> The full name of the control. e.g. "Validate that unsupported operating systems and software components are not in use.". </param>
         /// <param name="controlType"> The control type. </param>
-        /// <param name="controlDescription"> The control&apos;s description. </param>
-        /// <param name="controlDescriptionHyperLink"> The hyper link to the control&apos;s description&apos;. </param>
+        /// <param name="controlDescription"> The control's description. </param>
+        /// <param name="controlDescriptionHyperLink"> The hyper link to the control's description'. </param>
         /// <param name="controlStatus"> Control status. </param>
         /// <param name="assessments"> List of assessments. </param>
         /// <returns> A new <see cref="Models.Control"/> instance for mocking. </returns>
@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
         /// <param name="subscriptionId"> The subscription Id of this resource. </param>
         /// <param name="resourceGroup"> The resource group name of this resource. </param>
         /// <param name="resourceType"> The resource type of this resource. </param>
-        /// <param name="resourceId"> The resource Id - e.g. &quot;/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg1/providers/Microsoft.Compute/virtualMachines/vm1&quot;. </param>
+        /// <param name="resourceId"> The resource Id - e.g. "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg1/providers/Microsoft.Compute/virtualMachines/vm1". </param>
         /// <returns> A new <see cref="Models.ResourceItem"/> instance for mocking. </returns>
         public static ResourceItem ResourceItem(string subscriptionId = null, string resourceGroup = null, string resourceType = null, string resourceId = null)
         {
@@ -201,18 +201,18 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
 
         /// <summary> Initializes a new instance of ComplianceReportItem. </summary>
         /// <param name="categoryName"> The category name. </param>
-        /// <param name="controlId"> The control Id - e.g. &quot;1&quot;. </param>
+        /// <param name="controlId"> The control Id - e.g. "1". </param>
         /// <param name="controlName"> The control name. </param>
         /// <param name="controlType"> The control type. </param>
-        /// <param name="complianceState"> The compliance result&apos;s status. </param>
+        /// <param name="complianceState"> The compliance result's status. </param>
         /// <param name="policyId"> The compliance result mapped policy Id. </param>
-        /// <param name="policyDisplayName"> The policy&apos;s display name. </param>
-        /// <param name="policyDescription"> The policy&apos;s detail description. </param>
+        /// <param name="policyDisplayName"> The policy's display name. </param>
+        /// <param name="policyDescription"> The policy's detail description. </param>
         /// <param name="subscriptionId"> The compliance result mapped subscription Id. </param>
         /// <param name="resourceGroup"> The compliance result mapped resource group. </param>
         /// <param name="resourceType"> The compliance result mapped resource type. </param>
-        /// <param name="resourceId"> The compliance result mapped resource Id - e.g. &quot;/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg1/providers/Microsoft.Compute/virtualMachines/vm1&quot;. </param>
-        /// <param name="statusChangeDate"> The compliance result last changed date - e.g. &quot;2022-10-24T02:55:16.3274379Z&quot;. For unavailable date, set it as &quot;N/A&quot;. </param>
+        /// <param name="resourceId"> The compliance result mapped resource Id - e.g. "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg1/providers/Microsoft.Compute/virtualMachines/vm1". </param>
+        /// <param name="statusChangeDate"> The compliance result last changed date - e.g. "2022-10-24T02:55:16.3274379Z". For unavailable date, set it as "N/A". </param>
         /// <returns> A new <see cref="Models.ComplianceReportItem"/> instance for mocking. </returns>
         public static ComplianceReportItem ComplianceReportItem(string categoryName = null, string controlId = null, string controlName = null, ControlType? controlType = null, ComplianceState? complianceState = null, string policyId = null, string policyDisplayName = null, string policyDescription = null, string subscriptionId = null, string resourceGroup = null, string resourceType = null, string resourceId = null, string statusChangeDate = null)
         {

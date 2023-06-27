@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.AppContainers
         /// <param name="identity"> managed identities for the Container App to interact with other Azure services without maintaining any secrets or credentials in code. </param>
         /// <param name="managedBy"> The fully qualified resource ID of the resource that manages this resource. Indicates if this resource is managed by another Azure resource. If this is present, complete mode deployment will not delete the resource if it is removed from the template since it is managed by another resource. </param>
         /// <param name="provisioningState"> Provisioning state of the Container App. </param>
-        /// <param name="managedEnvironmentId"> Deprecated. Resource ID of the Container App&apos;s environment. </param>
+        /// <param name="managedEnvironmentId"> Deprecated. Resource ID of the Container App's environment. </param>
         /// <param name="environmentId"> Resource ID of environment. </param>
         /// <param name="workloadProfileName"> Workload profile name to pin for container app execution. </param>
         /// <param name="latestRevisionName"> Name of the latest revision of the Container App. </param>
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.AppContainers
         public string ManagedBy { get; set; }
         /// <summary> Provisioning state of the Container App. </summary>
         public ContainerAppProvisioningState? ProvisioningState { get; }
-        /// <summary> Deprecated. Resource ID of the Container App&apos;s environment. </summary>
+        /// <summary> Deprecated. Resource ID of the Container App's environment. </summary>
         public ResourceIdentifier ManagedEnvironmentId { get; set; }
         /// <summary> Resource ID of environment. </summary>
         public ResourceIdentifier EnvironmentId { get; set; }

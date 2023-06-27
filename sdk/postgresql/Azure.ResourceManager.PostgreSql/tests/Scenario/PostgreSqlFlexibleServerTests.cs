@@ -430,46 +430,31 @@ namespace Azure.ResourceManager.PostgreSql.Tests
                     },
                 },
                 };
-                if (Mode == RecordedTestMode.Playback)
+                VirtualNetworkResource vnetResource = (await rg.GetVirtualNetworks().CreateOrUpdateAsync(WaitUntil.Completed, vnetName, networkData)).Value;
+                var subnetCollection = vnetResource.GetSubnets();
+                //SubnetResource subnetResource = (await subnetCollection.CreateOrUpdateAsync(WaitUntil.Completed, subnetName2, subnetData)).Value;
+                vnetID = vnetResource.Data.Id;
+                subnetID = vnetResource.Data.Subnets[0].Id;
+                for (var i = 0; i < 2; ++i)
                 {
-                    vnetID = VirtualNetworkResource.CreateResourceIdentifier(rg.Id.SubscriptionId, rg.Id.Name, vnetName);
-                    subnetID = SubnetResource.CreateResourceIdentifier(rg.Id.SubscriptionId, rg.Id.Name, vnetName, sourceSubnetName);
-                    for (var i = 0; i < 2; ++i)
+                    var replicaSubnetOperation = await vnetResource.GetSubnets().CreateOrUpdateAsync(WaitUntil.Completed, replicaSubnetName[i], new SubnetData()
                     {
-                        replicaSubnetID[i] = SubnetResource.CreateResourceIdentifier(rg.Id.SubscriptionId, rg.Id.Name, vnetName, replicaSubnetName[i]);
-                    }
-                }
-                else
-                {
-                    using (Recording.DisableRecording())
-                    {
-                        VirtualNetworkResource vnetResource = (await rg.GetVirtualNetworks().CreateOrUpdateAsync(WaitUntil.Completed, vnetName, networkData)).Value;
-                        var subnetCollection = vnetResource.GetSubnets();
-                        //SubnetResource subnetResource = (await subnetCollection.CreateOrUpdateAsync(WaitUntil.Completed, subnetName2, subnetData)).Value;
-                        vnetID = vnetResource.Data.Id;
-                        subnetID = vnetResource.Data.Subnets[0].Id;
-                        for (var i = 0; i < 2; ++i)
-                        {
-                            var replicaSubnetOperation = await vnetResource.GetSubnets().CreateOrUpdateAsync(WaitUntil.Completed, replicaSubnetName[i], new SubnetData()
-                            {
-                                Name = replicaSubnetName[i],
-                                AddressPrefix = $"10.0.{i + 1}.0/24",
-                                PrivateEndpointNetworkPolicy = VirtualNetworkPrivateEndpointNetworkPolicy.Disabled,
-                                Delegations = {
+                        Name = replicaSubnetName[i],
+                        AddressPrefix = $"10.0.{i + 1}.0/24",
+                        PrivateEndpointNetworkPolicy = VirtualNetworkPrivateEndpointNetworkPolicy.Disabled,
+                        Delegations = {
                             new ServiceDelegation()
                             {
                                 Name = "Microsoft.DBforPostgreSQL/flexibleServers",
                                 ServiceName = "Microsoft.DBforPostgreSQL/flexibleServers",
                             },
                         },
-                                PrivateLinkServiceNetworkPolicy = VirtualNetworkPrivateLinkServiceNetworkPolicy.Enabled,
-                            });
-                            replicaSubnet[i] = replicaSubnetOperation.Value;
-                            replicaSubnetID[i] = replicaSubnetOperation.Value.Data.Id;
-                        }
-                    }
-                };
-            sourcePrivateDnsZone = await CreatePrivateDnsZone(sourceServerName, vnetID, rg.Data.Name);
+                        PrivateLinkServiceNetworkPolicy = VirtualNetworkPrivateLinkServiceNetworkPolicy.Enabled,
+                    });
+                    replicaSubnet[i] = replicaSubnetOperation.Value;
+                    replicaSubnetID[i] = replicaSubnetOperation.Value.Data.Id;
+                }
+                sourcePrivateDnsZone = await CreatePrivateDnsZone(sourceServerName, vnetID, rg.Data.Name);
                 for (var i = 0; i < 2; ++i)
                 {
                     replicaPrivateDnsZone[i] = await CreatePrivateDnsZone(replicaServerName[i], vnetID, rg.Data.Name);

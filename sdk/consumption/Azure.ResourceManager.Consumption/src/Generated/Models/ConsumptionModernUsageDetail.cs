@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Consumption.Models
         /// Serialized Name: ModernUsageDetail.properties.billingAccountId
         /// </param>
         /// <param name="effectivePrice">
-        /// Effective Price that&apos;s charged for the usage.
+        /// Effective Price that's charged for the usage.
         /// Serialized Name: ModernUsageDetail.properties.effectivePrice
         /// </param>
         /// <param name="pricingModel">
@@ -259,19 +259,19 @@ namespace Azure.ResourceManager.Consumption.Models
         /// Serialized Name: ModernUsageDetail.properties.servicePeriodEndDate
         /// </param>
         /// <param name="customerTenantId">
-        /// Identifier of the customer&apos;s AAD tenant.
+        /// Identifier of the customer's AAD tenant.
         /// Serialized Name: ModernUsageDetail.properties.customerTenantId
         /// </param>
         /// <param name="customerName">
-        /// Name of the customer&apos;s AAD tenant.
+        /// Name of the customer's AAD tenant.
         /// Serialized Name: ModernUsageDetail.properties.customerName
         /// </param>
         /// <param name="partnerTenantId">
-        /// Identifier for the partner&apos;s AAD tenant.
+        /// Identifier for the partner's AAD tenant.
         /// Serialized Name: ModernUsageDetail.properties.partnerTenantId
         /// </param>
         /// <param name="partnerName">
-        /// Name of the partner&apos; AAD tenant.
+        /// Name of the partner' AAD tenant.
         /// Serialized Name: ModernUsageDetail.properties.partnerName
         /// </param>
         /// <param name="resellerMpnId">
@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.Consumption.Models
         /// Serialized Name: ModernUsageDetail.properties.publisherId
         /// </param>
         /// <param name="marketPrice">
-        /// Market Price that&apos;s charged for the usage.
+        /// Market Price that's charged for the usage.
         /// Serialized Name: ModernUsageDetail.properties.marketPrice
         /// </param>
         /// <param name="exchangeRatePricingToBilling">
@@ -413,7 +413,7 @@ namespace Azure.ResourceManager.Consumption.Models
         /// </summary>
         public string BillingAccountId { get; }
         /// <summary>
-        /// Effective Price that&apos;s charged for the usage.
+        /// Effective Price that's charged for the usage.
         /// Serialized Name: ModernUsageDetail.properties.effectivePrice
         /// </summary>
         public decimal? EffectivePrice { get; }
@@ -678,22 +678,22 @@ namespace Azure.ResourceManager.Consumption.Models
         /// </summary>
         public DateTimeOffset? ServicePeriodEndOn { get; }
         /// <summary>
-        /// Identifier of the customer&apos;s AAD tenant.
+        /// Identifier of the customer's AAD tenant.
         /// Serialized Name: ModernUsageDetail.properties.customerTenantId
         /// </summary>
         public string CustomerTenantId { get; }
         /// <summary>
-        /// Name of the customer&apos;s AAD tenant.
+        /// Name of the customer's AAD tenant.
         /// Serialized Name: ModernUsageDetail.properties.customerName
         /// </summary>
         public string CustomerName { get; }
         /// <summary>
-        /// Identifier for the partner&apos;s AAD tenant.
+        /// Identifier for the partner's AAD tenant.
         /// Serialized Name: ModernUsageDetail.properties.partnerTenantId
         /// </summary>
         public string PartnerTenantId { get; }
         /// <summary>
-        /// Name of the partner&apos; AAD tenant.
+        /// Name of the partner' AAD tenant.
         /// Serialized Name: ModernUsageDetail.properties.partnerName
         /// </summary>
         public string PartnerName { get; }
@@ -713,7 +713,7 @@ namespace Azure.ResourceManager.Consumption.Models
         /// </summary>
         public string PublisherId { get; }
         /// <summary>
-        /// Market Price that&apos;s charged for the usage.
+        /// Market Price that's charged for the usage.
         /// Serialized Name: ModernUsageDetail.properties.marketPrice
         /// </summary>
         public decimal? MarketPrice { get; }

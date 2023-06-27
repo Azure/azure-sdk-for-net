@@ -48,12 +48,12 @@ namespace Azure.Storage.DataMovement
         /// <summary>
         /// Specifies the source resource.
         /// </summary>
-        internal StorageResource _sourceResource;
+        internal StorageResourceSingle _sourceResource;
 
         /// <summary>
         /// Specifies the destination resource.
         /// </summary>
-        internal StorageResource _destinationResource;
+        internal StorageResourceSingle _destinationResource;
 
         /// <summary>
         /// Specifies the options for error handling.
@@ -150,8 +150,8 @@ namespace Azure.Storage.DataMovement
         internal JobPartInternal(
             DataTransfer dataTransfer,
             int partNumber,
-            StorageResource sourceResource,
-            StorageResource destinationResource,
+            StorageResourceSingle sourceResource,
+            StorageResourceSingle destinationResource,
             long? maximumTransferChunkSize,
             long? initialTransferSize,
             ErrorHandlingOptions errorHandling,
@@ -231,9 +231,16 @@ namespace Azure.Storage.DataMovement
             await QueueChunk(
                 async () =>
                 {
-                    await Task.Run(chunkTask).ConfigureAwait(false);
-                    chunkCompleted.SetResult(true);
-                    await CheckAndUpdateCancellationStatusAsync().ConfigureAwait(false);
+                    try
+                    {
+                        await Task.Run(chunkTask).ConfigureAwait(false);
+                        chunkCompleted.SetResult(true);
+                        await CheckAndUpdateCancellationStatusAsync().ConfigureAwait(false);
+                    }
+                    catch (Exception ex)
+                    {
+                        await InvokeFailedArg(ex).ConfigureAwait(false);
+                    }
                 }).ConfigureAwait(false);
         }
 
@@ -371,7 +378,8 @@ namespace Azure.Storage.DataMovement
         /// </summary>
         public async virtual Task InvokeFailedArg(Exception ex)
         {
-            if (ex is not OperationCanceledException)
+            if (ex is not OperationCanceledException
+                && ex is not TaskCanceledException)
             {
                 SetFailureType(ex.Message);
                 if (TransferFailedEventHandler != null)

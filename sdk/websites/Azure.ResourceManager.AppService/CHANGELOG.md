@@ -8,6 +8,8 @@
 
 ### Bugs Fixed
 
+- Fixed an issue that exception throws when `Uri` type field is empty during deserialization of `WebAppBackupData`.
+
 ### Other Changes
 
 ## 1.1.0-beta.1 (2023-05-31)
