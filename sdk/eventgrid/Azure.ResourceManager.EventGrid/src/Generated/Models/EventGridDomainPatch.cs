@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.EventGrid.Models
         /// <summary> Identity information for the resource. </summary>
         public ManagedServiceIdentity Identity { get; set; }
         /// <summary>
-        /// This determines if traffic is allowed over public network. By default it is enabled. 
+        /// This determines if traffic is allowed over public network. By default it is enabled.
         /// You can further restrict to specific IPs by configuring &lt;seealso cref="P:Microsoft.Azure.Events.ResourceProvider.Common.Contracts.DomainUpdateParameterProperties.InboundIpRules" /&gt;
         /// </summary>
         public EventGridPublicNetworkAccess? PublicNetworkAccess { get; set; }
