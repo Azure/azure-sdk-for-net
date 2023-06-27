@@ -213,11 +213,11 @@ namespace Azure.Analytics.Purview.Catalog
 
         /// <summary>
         /// [Protocol Method] Returns lineage info about entity.
-        /// 
+        ///
         /// In addition to the typeName path parameter, attribute key-value pair(s) can be provided in the following format
-        /// 
+        ///
         /// attr:[attrName]=[attrValue]
-        /// 
+        ///
         /// NOTE: The attrName and attrValue should be unique across entities, eg. qualifiedName
         /// <list type="bullet">
         /// <item>
@@ -260,11 +260,11 @@ namespace Azure.Analytics.Purview.Catalog
 
         /// <summary>
         /// [Protocol Method] Returns lineage info about entity.
-        /// 
+        ///
         /// In addition to the typeName path parameter, attribute key-value pair(s) can be provided in the following format
-        /// 
+        ///
         /// attr:[attrName]=[attrValue]
-        /// 
+        ///
         /// NOTE: The attrName and attrValue should be unique across entities, eg. qualifiedName
         /// <list type="bullet">
         /// <item>

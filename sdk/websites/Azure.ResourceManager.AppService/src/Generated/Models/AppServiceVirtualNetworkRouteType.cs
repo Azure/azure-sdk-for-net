@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.AppService.Models
     /// DEFAULT - By default, every app has routes to the local address ranges specified by RFC1918
     /// INHERITED - Routes inherited from the real Virtual Network routes
     /// STATIC - Static route set on the app only
-    /// 
+    ///
     /// These values will be used for syncing an app's routes with those from a Virtual Network.
     /// </summary>
     public readonly partial struct AppServiceVirtualNetworkRouteType : IEquatable<AppServiceVirtualNetworkRouteType>

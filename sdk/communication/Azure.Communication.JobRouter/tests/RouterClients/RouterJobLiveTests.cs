@@ -14,6 +14,7 @@ using NUnit.Framework;
 
 namespace Azure.Communication.JobRouter.Tests.RouterClients
 {
+    [Ignore("enable after deployment with matching changes")]
     public class RouterJobLiveTests : RouterLiveTestBase
     {
         public RouterJobLiveTests(bool isAsync) : base(isAsync)
@@ -159,8 +160,7 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
                 new CreateJobOptions(jobId1, channelId, createQueue.Id)
                 {
                     Priority = 1,
-                    ScheduledTimeUtc = timeToEnqueueJob,
-                    UnavailableForMatching = true,
+                    MatchingMode = new ScheduleAndSuspendMode(timeToEnqueueJob),
                 });
 
             AddForCleanup(new Task(async () => await routerClient.CancelJobAsync(new CancelJobOptions(jobId1))));

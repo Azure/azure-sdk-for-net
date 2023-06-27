@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Consumption.Models
         /// Serialized Name: ReservationRecommendationDetailsModel.sku
         /// </param>
         /// <param name="currency">
-        /// An ISO 4217 currency code identifier for the costs and savings 
+        /// An ISO 4217 currency code identifier for the costs and savings
         /// Serialized Name: ReservationRecommendationDetailsModel.properties.currency
         /// </param>
         /// <param name="properties">
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Consumption.Models
         /// </summary>
         public string Sku { get; }
         /// <summary>
-        /// An ISO 4217 currency code identifier for the costs and savings 
+        /// An ISO 4217 currency code identifier for the costs and savings
         /// Serialized Name: ReservationRecommendationDetailsModel.properties.currency
         /// </summary>
         public string Currency { get; }

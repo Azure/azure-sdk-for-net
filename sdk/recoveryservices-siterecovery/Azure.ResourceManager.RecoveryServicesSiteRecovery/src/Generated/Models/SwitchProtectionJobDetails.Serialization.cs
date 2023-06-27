@@ -19,14 +19,18 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<string> newReplicationProtectedItemId = default;
+            Optional<ResourceIdentifier> newReplicationProtectedItemId = default;
             string instanceType = default;
             Optional<IReadOnlyDictionary<string, string>> affectedObjectDetails = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("newReplicationProtectedItemId"u8))
                 {
-                    newReplicationProtectedItemId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    newReplicationProtectedItemId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("instanceType"u8))

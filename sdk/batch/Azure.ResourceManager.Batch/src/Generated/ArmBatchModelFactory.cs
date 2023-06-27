@@ -278,7 +278,7 @@ namespace Azure.ResourceManager.Batch.Models
         /// <param name="startTask"> In an PATCH (update) operation, this property can be set to an empty object to remove the start task from the pool. </param>
         /// <param name="certificates">
         /// For Windows compute nodes, the Batch service installs the certificates to the specified certificate store and location. For Linux compute nodes, the certificates are stored in a directory inside the task working directory and an environment variable AZ_BATCH_CERTIFICATES_DIR is supplied to the task to query for this location. For certificates with visibility of 'remoteUser', a 'certs' directory is created in the user's home directory (e.g., /home/{user-name}/certs) and certificates are placed in that directory.
-        /// 
+        ///
         /// Warning: This property is deprecated and will be removed after February, 2024. Please use the [Azure KeyVault Extension](https://learn.microsoft.com/azure/batch/batch-certificate-migration-guide) instead.
         /// </param>
         /// <param name="applicationPackages"> Changes to application package references affect all new compute nodes joining the pool, but do not affect compute nodes that are already in the pool until they are rebooted or reimaged. There is a maximum of 10 application package references on any given pool. </param>
@@ -299,19 +299,6 @@ namespace Azure.ResourceManager.Batch.Models
             mountConfiguration ??= new List<BatchMountConfiguration>();
 
             return new BatchAccountPoolData(id, name, resourceType, systemData, identity, displayName, lastModifiedOn, createdOn, provisioningState, provisioningStateTransitOn, allocationState, allocationStateTransitionOn, vmSize, deploymentConfiguration, currentDedicatedNodes, currentLowPriorityNodes, scaleSettings, autoScaleRun, interNodeCommunication, networkConfiguration, taskSlotsPerNode, taskSchedulingNodeFillType.HasValue ? new TaskSchedulingPolicy(taskSchedulingNodeFillType.Value) : null, userAccounts?.ToList(), metadata?.ToList(), startTask, certificates?.ToList(), applicationPackages?.ToList(), applicationLicenses?.ToList(), resizeOperationStatus, mountConfiguration?.ToList(), targetNodeCommunicationMode, currentNodeCommunicationMode, etag);
-        }
-
-        /// <summary> Initializes a new instance of BatchVmContainerConfiguration. </summary>
-        /// <param name="containerType"> The container technology to be used. </param>
-        /// <param name="containerImageNames"> This is the full image reference, as would be specified to "docker pull". An image will be sourced from the default Docker registry unless the image is fully qualified with an alternative registry. </param>
-        /// <param name="containerRegistries"> If any images must be downloaded from a private registry which requires credentials, then those credentials must be provided here. </param>
-        /// <returns> A new <see cref="Models.BatchVmContainerConfiguration"/> instance for mocking. </returns>
-        public static BatchVmContainerConfiguration BatchVmContainerConfiguration(BatchVmContainerType containerType = default, IEnumerable<string> containerImageNames = null, IEnumerable<BatchVmContainerRegistry> containerRegistries = null)
-        {
-            containerImageNames ??= new List<string>();
-            containerRegistries ??= new List<BatchVmContainerRegistry>();
-
-            return new BatchVmContainerConfiguration(containerType, containerImageNames?.ToList(), containerRegistries?.ToList());
         }
 
         /// <summary> Initializes a new instance of BatchAccountPoolAutoScaleRun. </summary>

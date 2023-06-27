@@ -4,11 +4,11 @@
 
 ### Features Added
 
-### Breaking Changes
-
-### Bugs Fixed
+- Supported the new `DataFactoryElement<T>` expression type property.
 
 ### Other Changes
+
+- Upgraded API version.
 
 ## 1.0.0-beta.2 (2022-08-29)
 

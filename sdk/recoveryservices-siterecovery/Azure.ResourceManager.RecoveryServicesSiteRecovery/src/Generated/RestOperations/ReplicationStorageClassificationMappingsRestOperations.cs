@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2023-02-01";
+            _apiVersion = apiVersion ?? "2023-04-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/>, <paramref name="fabricName"/> or <paramref name="storageClassificationName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/>, <paramref name="fabricName"/> or <paramref name="storageClassificationName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<Models.StorageClassificationMappingCollection>> ListByReplicationStorageClassificationsAsync(string subscriptionId, string resourceGroupName, string resourceName, string fabricName, string storageClassificationName, CancellationToken cancellationToken = default)
+        public async Task<Response<StorageClassificationMappingListResult>> ListByReplicationStorageClassificationsAsync(string subscriptionId, string resourceGroupName, string resourceName, string fabricName, string storageClassificationName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -85,9 +85,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
             {
                 case 200:
                     {
-                        Models.StorageClassificationMappingCollection value = default;
+                        StorageClassificationMappingListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = Models.StorageClassificationMappingCollection.DeserializeStorageClassificationMappingCollection(document.RootElement);
+                        value = StorageClassificationMappingListResult.DeserializeStorageClassificationMappingListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/>, <paramref name="fabricName"/> or <paramref name="storageClassificationName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/>, <paramref name="fabricName"/> or <paramref name="storageClassificationName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<Models.StorageClassificationMappingCollection> ListByReplicationStorageClassifications(string subscriptionId, string resourceGroupName, string resourceName, string fabricName, string storageClassificationName, CancellationToken cancellationToken = default)
+        public Response<StorageClassificationMappingListResult> ListByReplicationStorageClassifications(string subscriptionId, string resourceGroupName, string resourceName, string fabricName, string storageClassificationName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -118,9 +118,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
             {
                 case 200:
                     {
-                        Models.StorageClassificationMappingCollection value = default;
+                        StorageClassificationMappingListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = Models.StorageClassificationMappingCollection.DeserializeStorageClassificationMappingCollection(document.RootElement);
+                        value = StorageClassificationMappingListResult.DeserializeStorageClassificationMappingListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -439,7 +439,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<Models.StorageClassificationMappingCollection>> ListAsync(string subscriptionId, string resourceGroupName, string resourceName, CancellationToken cancellationToken = default)
+        public async Task<Response<StorageClassificationMappingListResult>> ListAsync(string subscriptionId, string resourceGroupName, string resourceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -451,9 +451,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
             {
                 case 200:
                     {
-                        Models.StorageClassificationMappingCollection value = default;
+                        StorageClassificationMappingListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = Models.StorageClassificationMappingCollection.DeserializeStorageClassificationMappingCollection(document.RootElement);
+                        value = StorageClassificationMappingListResult.DeserializeStorageClassificationMappingListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -468,7 +468,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<Models.StorageClassificationMappingCollection> List(string subscriptionId, string resourceGroupName, string resourceName, CancellationToken cancellationToken = default)
+        public Response<StorageClassificationMappingListResult> List(string subscriptionId, string resourceGroupName, string resourceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -480,9 +480,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
             {
                 case 200:
                     {
-                        Models.StorageClassificationMappingCollection value = default;
+                        StorageClassificationMappingListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = Models.StorageClassificationMappingCollection.DeserializeStorageClassificationMappingCollection(document.RootElement);
+                        value = StorageClassificationMappingListResult.DeserializeStorageClassificationMappingListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -514,7 +514,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/>, <paramref name="fabricName"/> or <paramref name="storageClassificationName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/>, <paramref name="fabricName"/> or <paramref name="storageClassificationName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<Models.StorageClassificationMappingCollection>> ListByReplicationStorageClassificationsNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string resourceName, string fabricName, string storageClassificationName, CancellationToken cancellationToken = default)
+        public async Task<Response<StorageClassificationMappingListResult>> ListByReplicationStorageClassificationsNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string resourceName, string fabricName, string storageClassificationName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -529,9 +529,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
             {
                 case 200:
                     {
-                        Models.StorageClassificationMappingCollection value = default;
+                        StorageClassificationMappingListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = Models.StorageClassificationMappingCollection.DeserializeStorageClassificationMappingCollection(document.RootElement);
+                        value = StorageClassificationMappingListResult.DeserializeStorageClassificationMappingListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -549,7 +549,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/>, <paramref name="fabricName"/> or <paramref name="storageClassificationName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/>, <paramref name="fabricName"/> or <paramref name="storageClassificationName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<Models.StorageClassificationMappingCollection> ListByReplicationStorageClassificationsNextPage(string nextLink, string subscriptionId, string resourceGroupName, string resourceName, string fabricName, string storageClassificationName, CancellationToken cancellationToken = default)
+        public Response<StorageClassificationMappingListResult> ListByReplicationStorageClassificationsNextPage(string nextLink, string subscriptionId, string resourceGroupName, string resourceName, string fabricName, string storageClassificationName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -564,9 +564,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
             {
                 case 200:
                     {
-                        Models.StorageClassificationMappingCollection value = default;
+                        StorageClassificationMappingListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = Models.StorageClassificationMappingCollection.DeserializeStorageClassificationMappingCollection(document.RootElement);
+                        value = StorageClassificationMappingListResult.DeserializeStorageClassificationMappingListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -596,7 +596,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<Models.StorageClassificationMappingCollection>> ListNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string resourceName, CancellationToken cancellationToken = default)
+        public async Task<Response<StorageClassificationMappingListResult>> ListNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string resourceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -609,9 +609,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
             {
                 case 200:
                     {
-                        Models.StorageClassificationMappingCollection value = default;
+                        StorageClassificationMappingListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = Models.StorageClassificationMappingCollection.DeserializeStorageClassificationMappingCollection(document.RootElement);
+                        value = StorageClassificationMappingListResult.DeserializeStorageClassificationMappingListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -627,7 +627,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<Models.StorageClassificationMappingCollection> ListNextPage(string nextLink, string subscriptionId, string resourceGroupName, string resourceName, CancellationToken cancellationToken = default)
+        public Response<StorageClassificationMappingListResult> ListNextPage(string nextLink, string subscriptionId, string resourceGroupName, string resourceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -640,9 +640,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
             {
                 case 200:
                     {
-                        Models.StorageClassificationMappingCollection value = default;
+                        StorageClassificationMappingListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = Models.StorageClassificationMappingCollection.DeserializeStorageClassificationMappingCollection(document.RootElement);
+                        value = StorageClassificationMappingListResult.DeserializeStorageClassificationMappingListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

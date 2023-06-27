@@ -557,7 +557,7 @@ namespace Azure.AI.TextAnalytics.Legacy
         /// <exception cref="ArgumentNullException"> <paramref name="input"/> is null. </exception>
         /// <remarks>
         /// The API returns a list of entities with personal information (\"SSN\", \"Bank Account\" etc) in the document. For the list of supported entity types, check &lt;a href="https://aka.ms/tanerpii"&gt;Supported Entity Types in Text Analytics API&lt;/a&gt;. See the &lt;a href="https://aka.ms/talangs"&gt;Supported languages in Text Analytics API&lt;/a&gt; for the list of enabled languages.
-        /// 
+        ///
         /// </remarks>
         public async Task<Response<PiiResult>> EntitiesRecognitionPiiAsync(MultiLanguageBatchInput input, string modelVersion = null, bool? showStats = null, bool? loggingOptOut = null, string domain = null, StringIndexType? stringIndexType = null, IEnumerable<PiiEntityLegacyCategory> piiCategories = null, CancellationToken cancellationToken = default)
         {
@@ -594,7 +594,7 @@ namespace Azure.AI.TextAnalytics.Legacy
         /// <exception cref="ArgumentNullException"> <paramref name="input"/> is null. </exception>
         /// <remarks>
         /// The API returns a list of entities with personal information (\"SSN\", \"Bank Account\" etc) in the document. For the list of supported entity types, check &lt;a href="https://aka.ms/tanerpii"&gt;Supported Entity Types in Text Analytics API&lt;/a&gt;. See the &lt;a href="https://aka.ms/talangs"&gt;Supported languages in Text Analytics API&lt;/a&gt; for the list of enabled languages.
-        /// 
+        ///
         /// </remarks>
         public Response<PiiResult> EntitiesRecognitionPii(MultiLanguageBatchInput input, string modelVersion = null, bool? showStats = null, bool? loggingOptOut = null, string domain = null, StringIndexType? stringIndexType = null, IEnumerable<PiiEntityLegacyCategory> piiCategories = null, CancellationToken cancellationToken = default)
         {

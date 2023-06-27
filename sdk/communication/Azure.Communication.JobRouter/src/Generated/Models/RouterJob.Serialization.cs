@@ -101,15 +101,10 @@ namespace Azure.Communication.JobRouter.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsDefined(UnavailableForMatching))
+            if (Optional.IsDefined(_matchingMode))
             {
-                writer.WritePropertyName("unavailableForMatching"u8);
-                writer.WriteBooleanValue(UnavailableForMatching.Value);
-            }
-            if (Optional.IsDefined(ScheduledTimeUtc))
-            {
-                writer.WritePropertyName("scheduledTimeUtc"u8);
-                writer.WriteStringValue(ScheduledTimeUtc.Value, "O");
+                writer.WritePropertyName("matchingMode"u8);
+                writer.WriteObjectValue(_matchingMode);
             }
             writer.WriteEndObject();
         }
@@ -135,8 +130,8 @@ namespace Azure.Communication.JobRouter.Models
             Optional<IReadOnlyDictionary<string, RouterJobAssignment>> assignments = default;
             Optional<IDictionary<string, object>> tags = default;
             Optional<IDictionary<string, string>> notes = default;
-            Optional<bool> unavailableForMatching = default;
-            Optional<DateTimeOffset> scheduledTimeUtc = default;
+            Optional<DateTimeOffset> scheduledAt = default;
+            Optional<JobMatchingModeInternal> matchingMode = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -294,26 +289,26 @@ namespace Azure.Communication.JobRouter.Models
                     notes = dictionary;
                     continue;
                 }
-                if (property.NameEquals("unavailableForMatching"u8))
+                if (property.NameEquals("scheduledAt"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    unavailableForMatching = property.Value.GetBoolean();
+                    scheduledAt = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("scheduledTimeUtc"u8))
+                if (property.NameEquals("matchingMode"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    scheduledTimeUtc = property.Value.GetDateTimeOffset("O");
+                    matchingMode = JobMatchingModeInternal.DeserializeJobMatchingModeInternal(property.Value);
                     continue;
                 }
             }
-            return new RouterJob(id.Value, channelReference.Value, Optional.ToNullable(status), Optional.ToNullable(enqueuedAt), channelId.Value, classificationPolicyId.Value, queueId.Value, Optional.ToNullable(priority), dispositionCode.Value, Optional.ToList(requestedWorkerSelectors), Optional.ToList(attachedWorkerSelectors), Optional.ToDictionary(labels), Optional.ToDictionary(assignments), Optional.ToDictionary(tags), Optional.ToDictionary(notes), Optional.ToNullable(unavailableForMatching), Optional.ToNullable(scheduledTimeUtc));
+            return new RouterJob(id.Value, channelReference.Value, Optional.ToNullable(status), Optional.ToNullable(enqueuedAt), channelId.Value, classificationPolicyId.Value, queueId.Value, Optional.ToNullable(priority), dispositionCode.Value, Optional.ToList(requestedWorkerSelectors), Optional.ToList(attachedWorkerSelectors), Optional.ToDictionary(labels), Optional.ToDictionary(assignments), Optional.ToDictionary(tags), Optional.ToDictionary(notes), Optional.ToNullable(scheduledAt), matchingMode.Value);
         }
     }
 }
