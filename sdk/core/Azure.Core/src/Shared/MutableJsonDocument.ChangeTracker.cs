@@ -6,6 +6,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text.Json;
 
 namespace Azure.Core.Json
@@ -138,7 +139,7 @@ namespace Azure.Core.Json
                 }
             }
 
-            internal HashSet<string> GetChangedProperties(in int highWaterMark)
+            internal IEnumerable<string> GetChangedProperties(in int highWaterMark)
             {
                 HashSet<string> properties = new HashSet<string>();
 
@@ -153,7 +154,10 @@ namespace Azure.Core.Json
                     properties.Add(c.Path);
                 }
 
-                return properties;
+                List<string> list = properties.ToList();
+                list.Sort();
+
+                return list;
             }
 
             internal bool WasRemoved(string path, int highWaterMark)

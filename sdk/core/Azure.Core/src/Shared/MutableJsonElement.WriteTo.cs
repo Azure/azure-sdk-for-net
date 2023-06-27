@@ -130,7 +130,7 @@ namespace Azure.Core.Json
 
             // TODO: it would be cool to get these sorted hierarchically to make
             // it easy to write the JSON grouped correctly as objects.
-            HashSet<string> changedProperties = _root.Changes.GetChangedProperties(hwm);
+            IEnumerable<string> changedProperties = _root.Changes.GetChangedProperties(hwm);
 
             // TODO: deal with descendants and ancestors.
             // This version just writes out merge patch for individual properties.
