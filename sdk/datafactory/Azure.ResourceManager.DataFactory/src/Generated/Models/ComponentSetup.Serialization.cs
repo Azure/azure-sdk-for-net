@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             string type = default;
             string componentName = default;
-            Optional<FactorySecretBaseDefinition> licenseKey = default;
+            Optional<DataFactorySecretBaseDefinition> licenseKey = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"u8))
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            licenseKey = FactorySecretBaseDefinition.DeserializeFactorySecretBaseDefinition(property0.Value);
+                            licenseKey = DataFactorySecretBaseDefinition.DeserializeDataFactorySecretBaseDefinition(property0.Value);
                             continue;
                         }
                     }

@@ -19,7 +19,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(Duration))
             {
                 writer.WritePropertyName("duration"u8);
-                writer.WriteStringValue(Duration.Value, "P");
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(Duration);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(Duration.ToString()).RootElement);
+#endif
             }
             writer.WriteEndObject();
         }
@@ -30,7 +34,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            Optional<TimeSpan> duration = default;
+            Optional<BinaryData> duration = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("duration"u8))
@@ -39,11 +43,11 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    duration = property.Value.GetTimeSpan("P");
+                    duration = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
             }
-            return new PipelineElapsedTimeMetricPolicy(Optional.ToNullable(duration));
+            return new PipelineElapsedTimeMetricPolicy(duration.Value);
         }
     }
 }

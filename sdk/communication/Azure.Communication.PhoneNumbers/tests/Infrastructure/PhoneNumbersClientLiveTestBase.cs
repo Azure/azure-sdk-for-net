@@ -16,6 +16,7 @@ namespace Azure.Communication.PhoneNumbers.Tests
         private const string PhoneNumberRegEx = @"[\\+]?[0-9]{11,15}";
         private const string UrlEncodedPhoneNumberRegEx = @"[\\%2B]{0,3}[0-9]{11,15}";
         protected const string UnauthorizedNumber = "+14255550123";
+        protected const string UnknownPhoneNumberSearchResultId = "01234567-0123-0123-0123-0123456789AB";
 
         public PhoneNumbersClientLiveTestBase(bool isAsync) : base(isAsync)
         {
@@ -114,6 +115,7 @@ namespace Azure.Communication.PhoneNumbers.Tests
         {
             PhoneNumbersClientOptions phoneNumbersClientOptions = new PhoneNumbersClientOptions();
             phoneNumbersClientOptions.Diagnostics.LoggedHeaderNames.Add("MS-CV");
+            phoneNumbersClientOptions.AcceptedLanguage = "en-US";
             return InstrumentClientOptions(phoneNumbersClientOptions);
         }
     }

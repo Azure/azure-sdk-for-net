@@ -12,14 +12,14 @@ namespace Azure.Storage.DataMovement.Models
     public class TransferSkippedEventArgs : StorageTransferEventArgs
     {
         /// <summary>
-        /// Gets the <see cref="StorageResource"/> that was the source resource for the transfer.
+        /// Gets the <see cref="StorageResourceSingle"/> that was the source resource for the transfer.
         /// </summary>
-        public StorageResource SourceResource { get; }
+        public StorageResourceSingle SourceResource { get; }
 
         /// <summary>
-        /// Gets the <see cref="StorageResource"/> that was the destination resource for the transfer.
+        /// Gets the <see cref="StorageResourceSingle"/> that was the destination resource for the transfer.
         /// </summary>
-        public StorageResource DestinationResource { get; }
+        public StorageResourceSingle DestinationResource { get; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="TransferFailedEventArgs"/>.
@@ -46,8 +46,8 @@ namespace Azure.Storage.DataMovement.Models
         /// </exception>
         public TransferSkippedEventArgs(
             string transferId,
-            StorageResource sourceResource,
-            StorageResource destinationResource,
+            StorageResourceSingle sourceResource,
+            StorageResourceSingle destinationResource,
             bool isRunningSynchronously,
             CancellationToken cancellationToken)
             : base(transferId, isRunningSynchronously, cancellationToken)
