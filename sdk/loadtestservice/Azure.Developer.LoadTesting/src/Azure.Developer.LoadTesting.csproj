@@ -16,9 +16,18 @@
     <Compile Include="$(AzureCoreSharedSources)ArrayBufferWriter.cs" LinkBase="Shared" />
     <Compile Include="$(AzureCoreSharedSources)AzureResourceProviderNamespaceAttribute.cs" LinkBase="Shared" />
     <Compile Include="$(AzureCoreSharedSources)AzureKeyCredentialPolicy.cs" LinkBase="Shared" />
+    <Compile Include="$(AzureCoreSharedSources)MutableJsonChange.cs" LinkBase="Shared" />
+    <Compile Include="$(AzureCoreSharedSources)MutableJsonChangeKind.cs" LinkBase="Shared" />
+    <Compile Include="$(AzureCoreSharedSources)MutableJsonDocument.cs" LinkBase="Shared" />
+    <Compile Include="$(AzureCoreSharedSources)MutableJsonDocument.ChangeTracker.cs" LinkBase="Shared" />
+    <Compile Include="$(AzureCoreSharedSources)MutableJsonElement.cs" LinkBase="Shared" />
+    <Compile Include="$(AzureCoreSharedSources)MutableJsonElement.ArrayEnumerator.cs" LinkBase="Shared" />
+    <Compile Include="$(AzureCoreSharedSources)MutableJsonElement.ObjectEnumerator.cs" LinkBase="Shared" />
+    <Compile Include="$(AzureCoreSharedSources)MutableJsonElement.WriteTo.cs" LinkBase="Shared" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Azure.Core" />
+    <!--<PackageReference Include="Azure.Core" />-->
+    <ProjectReference Include="..\..\..\core\Azure.Core\src\Azure.Core.csproj" />
     <PackageReference Include="System.Text.Json" />
   </ItemGroup>
 

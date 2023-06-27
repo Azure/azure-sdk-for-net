@@ -4,6 +4,8 @@
 using System;
 using System.Text.Json;
 
+#nullable enable
+
 namespace Azure.Core.Json
 {
     internal struct MutableJsonChange
