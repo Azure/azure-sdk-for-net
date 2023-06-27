@@ -50,6 +50,7 @@ namespace Azure.Developer.LoadTesting.Tests
         public async Task CreateOrUpdateTestConveninence()
         {
             Test test = new Test();
+            test.TestId = _testId;
             test.Description = "This test was created through loadtesting C# SDK";
             test.DisplayName = "Dotnet Testing Framework Loadtest";
             test.LoadTestConfiguration = new LoadTestConfiguration();
@@ -60,7 +61,7 @@ namespace Azure.Developer.LoadTesting.Tests
             test.PassFailCriteria = new PassFailCriteria();
             test.PassFailCriteria.PassFailMetrics.Clear();
 
-            Response<Test> response = await _loadTestAdministrationClient.CreateOrUpdateTestAsync(_testId, test);
+            Response<Test> response = await _loadTestAdministrationClient.CreateOrUpdateTestAsync(test);
             Assert.AreEqual(_testId, response.Value.TestId);
         }
 
