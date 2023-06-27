@@ -1,14 +1,17 @@
 # Release History
 
-## 1.1.0-beta.2 (Unreleased)
+## 1.1.0-beta.2 (2023-06-27)
 
 ### Features Added
-
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
+- Added support for Namespace
+- Added support for Namespace Topics.
+- Added support for Namespace Topic EventSubscriptions.
+- Added support for pull events from Namespace topics.
+- Added support for Namespace Clients.
+- Added support for Namespace ClientGroups. 
+- Added support for Namespace CaCertificates. 
+- Added support for Namespace TopicSpaces. 
+- Added support for Namespace Permission Bindings.
 
 ## 1.1.0-beta.1 (2023-05-30)
 
