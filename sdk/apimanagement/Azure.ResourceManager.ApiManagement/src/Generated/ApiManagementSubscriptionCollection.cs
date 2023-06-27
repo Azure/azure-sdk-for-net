@@ -70,9 +70,9 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="sid"> Subscription entity Identifier. The entity represents the association between a user and a product in API Management. </param>
         /// <param name="content"> Create parameters. </param>
         /// <param name="notify">
-        /// Notify change in Subscription State. 
-        ///  - If false, do not send any email notification for change of state of subscription 
-        ///  - If true, send email notification of change of state of subscription 
+        /// Notify change in Subscription State.
+        ///  - If false, do not send any email notification for change of state of subscription
+        ///  - If true, send email notification of change of state of subscription
         /// </param>
         /// <param name="ifMatch"> ETag of the Entity. Not required when creating an entity, but required when updating an entity. </param>
         /// <param name="appType"> Determines the type of application which send the create user request. Default is legacy publisher portal. </param>
@@ -118,9 +118,9 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="sid"> Subscription entity Identifier. The entity represents the association between a user and a product in API Management. </param>
         /// <param name="content"> Create parameters. </param>
         /// <param name="notify">
-        /// Notify change in Subscription State. 
-        ///  - If false, do not send any email notification for change of state of subscription 
-        ///  - If true, send email notification of change of state of subscription 
+        /// Notify change in Subscription State.
+        ///  - If false, do not send any email notification for change of state of subscription
+        ///  - If true, send email notification of change of state of subscription
         /// </param>
         /// <param name="ifMatch"> ETag of the Entity. Not required when creating an entity, but required when updating an entity. </param>
         /// <param name="appType"> Determines the type of application which send the create user request. Default is legacy publisher portal. </param>

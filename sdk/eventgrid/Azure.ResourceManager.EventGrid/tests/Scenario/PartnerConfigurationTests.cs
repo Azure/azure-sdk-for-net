@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.EventGrid.Tests
         private ResourceGroupResource _resourceGroup;
 
         public PartnerConfigurationTests(bool isAsync)
-            : base(isAsync)// RecordedTestMode.Record)
+            : base(isAsync)//, RecordedTestMode.Record)
         {
         }
 
@@ -32,11 +32,9 @@ namespace Azure.ResourceManager.EventGrid.Tests
         [PlaybackOnly("SDK do not support creating partner configuraion, it must be manually created before running this case")]
         public async Task PartnerConfigurationE2EOperation()
         {
-            // Get by subscription
-            var configList = await DefaultSubscription.GetPartnerConfigurationsAsync().ToEnumerableAsync();
-            var configuration = configList.FirstOrDefault();
+            var configuration = (CreatePartnerConfiguration(_resourceGroup, Recording.GenerateAssetName("registration"))).Result;
+
             Assert.IsNotNull(configuration);
-            Assert.AreEqual("default", configuration.Data.Name);
             Assert.AreEqual("Microsoft.EventGrid/partnerConfigurations", configuration.Data.ResourceType.ToString());
 
             // Authorize partner in configuration

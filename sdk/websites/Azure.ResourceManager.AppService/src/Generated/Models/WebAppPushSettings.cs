@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="tagsRequiringAuth">
         /// Gets or sets a JSON string containing a list of tags that require user authentication to be used in the push registration endpoint.
         /// Tags can consist of alphanumeric characters and the following:
-        /// '_', '@', '#', '.', ':', '-'. 
+        /// '_', '@', '#', '.', ':', '-'.
         /// Validation should be performed at the PushRequestHandler.
         /// </param>
         /// <param name="dynamicTagsJson"> Gets or sets a JSON string containing a list of dynamic tags that will be evaluated from user claims in the push registration endpoint. </param>
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary>
         /// Gets or sets a JSON string containing a list of tags that require user authentication to be used in the push registration endpoint.
         /// Tags can consist of alphanumeric characters and the following:
-        /// '_', '@', '#', '.', ':', '-'. 
+        /// '_', '@', '#', '.', ':', '-'.
         /// Validation should be performed at the PushRequestHandler.
         /// </summary>
         public string TagsRequiringAuth { get; set; }

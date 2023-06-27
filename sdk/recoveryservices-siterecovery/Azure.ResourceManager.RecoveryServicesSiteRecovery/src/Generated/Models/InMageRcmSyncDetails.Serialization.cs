@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
 
@@ -18,13 +19,13 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<DiskReplicationProgressHealth> progressHealth = default;
+            Optional<SiteRecoveryDiskReplicationProgressHealth> progressHealth = default;
             Optional<long> transferredBytes = default;
             Optional<long> last15MinutesTransferredBytes = default;
             Optional<string> lastDataTransferTimeUtc = default;
             Optional<long> processedBytes = default;
-            Optional<string> startTime = default;
-            Optional<string> lastRefreshTime = default;
+            Optional<DateTimeOffset> startTime = default;
+            Optional<DateTimeOffset> lastRefreshTime = default;
             Optional<int> progressPercentage = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -34,7 +35,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    progressHealth = new DiskReplicationProgressHealth(property.Value.GetString());
+                    progressHealth = new SiteRecoveryDiskReplicationProgressHealth(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("transferredBytes"u8))
@@ -71,12 +72,20 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 if (property.NameEquals("startTime"u8))
                 {
-                    startTime = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    startTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (property.NameEquals("lastRefreshTime"u8))
                 {
-                    lastRefreshTime = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    lastRefreshTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (property.NameEquals("progressPercentage"u8))
@@ -89,7 +98,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     continue;
                 }
             }
-            return new InMageRcmSyncDetails(Optional.ToNullable(progressHealth), Optional.ToNullable(transferredBytes), Optional.ToNullable(last15MinutesTransferredBytes), lastDataTransferTimeUtc.Value, Optional.ToNullable(processedBytes), startTime.Value, lastRefreshTime.Value, Optional.ToNullable(progressPercentage));
+            return new InMageRcmSyncDetails(Optional.ToNullable(progressHealth), Optional.ToNullable(transferredBytes), Optional.ToNullable(last15MinutesTransferredBytes), lastDataTransferTimeUtc.Value, Optional.ToNullable(processedBytes), Optional.ToNullable(startTime), Optional.ToNullable(lastRefreshTime), Optional.ToNullable(progressPercentage));
         }
     }
 }
