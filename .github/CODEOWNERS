@@ -154,7 +154,7 @@
 
 # PRLabel: %Cognitive - Language
 # ServiceLabel: %Cognitive - Language %Service Attention
-/sdk/cognitivelanguage/                                            @quentinRobinson @wangyuantao @heaths @rokulka @mshaban-msft
+/sdk/cognitivelanguage/                                            @quentinRobinson @wangyuantao @heaths
 
 # ServiceLabel: %Cognitive - Anomaly Detector %Service Attention
 /sdk/cognitiveservices/AnomalyDetector/                            @yingqunpku @bowgong
