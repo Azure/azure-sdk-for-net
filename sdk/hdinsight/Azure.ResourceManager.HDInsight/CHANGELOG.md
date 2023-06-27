@@ -4,8 +4,7 @@
 
 ### Features Added
 
-- Added feature to support selecting use secure channel during creation.
-- The paramter would force to true if the cluster created based on a stroage account that secure transfer enabled, no matter it use 'blob' or 'dfs' type.
+- Added feature to support selecting use secure channel during creation. The paramter would force to true if the cluster created based on a stroage account that secure transfer enabled, no matter it use 'blob' or 'dfs' type.
 
 ### Other Changes
 
