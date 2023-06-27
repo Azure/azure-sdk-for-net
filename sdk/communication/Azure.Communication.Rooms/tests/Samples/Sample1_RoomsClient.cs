@@ -67,10 +67,23 @@ namespace Azure.Communication.Rooms.Tests.samples
             Assert.IsFalse(string.IsNullOrWhiteSpace(getCommunicationRoom.Id));
 
             #region Snippet:Azure_Communication_Rooms_Tests_Samples_GetRoomsAsync
+
+            // Retrieve 2 pages of room objects
+            const int PageSize = 30;
+            const int PageCount = 2;
+            int MaxRoomCount = PageCount * PageSize;
+            int counter = 1;
+
             AsyncPageable<CommunicationRoom> allRooms = roomsClient.GetRoomsAsync();
             await foreach (CommunicationRoom room in allRooms)
             {
                 Console.WriteLine($"Room with id {room.Id} is valid from {room.ValidFrom} to {room.ValidUntil}.");
+                counter++;
+
+                if (counter == MaxRoomCount)
+                {
+                    break;
+                }
             }
             #endregion Snippet:Azure_Communication_Rooms_Tests_Samples_GetRoomsAsync
 
