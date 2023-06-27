@@ -11,8 +11,8 @@ namespace Azure.Storage.DataMovement.Models
     /// <summary>
     /// Internal Resource Authentication Scheme for a <see cref="StorageResource"/>.
     ///
-    /// This is specifically used for <see cref="StorageResource.CopyBlockFromUriAsync(StorageResource, HttpRange, bool, long, StorageResourceCopyFromUriOptions, System.Threading.CancellationToken)"/>
-    /// and <see cref="StorageResource.CopyFromUriAsync(StorageResource, bool, long, StorageResourceCopyFromUriOptions, System.Threading.CancellationToken)"/> when using the
+    /// This is specifically used for <see cref="StorageResourceSingle.CopyBlockFromUriAsync(StorageResourceSingle, HttpRange, bool, long, StorageResourceCopyFromUriOptions, System.Threading.CancellationToken)"/>
+    /// and <see cref="StorageResourceSingle.CopyFromUriAsync(StorageResourceSingle, bool, long, StorageResourceCopyFromUriOptions, System.Threading.CancellationToken)"/> when using the
     /// <see cref="StorageResourceCopyFromUriOptions.SourceAuthentication"/>. It's also used on the source copy source when a <see cref="AzureSasCredential"/> is used on the Uri.
     /// </summary>
     internal class ResourceAuthorization
