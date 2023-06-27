@@ -2176,7 +2176,7 @@ namespace Azure.ResourceManager.Automation
         /// </list>
         /// </summary>
         /// <param name="clientRequestId"> Identifies this specific client request. </param>
-        /// <param name="filter"> The filter to apply on the operation. You can use the following filters: &apos;properties/osType&apos;, &apos;properties/status&apos;, &apos;properties/startTime&apos;, and &apos;properties/softwareUpdateConfiguration/name&apos;. </param>
+        /// <param name="filter"> The filter to apply on the operation. You can use the following filters: 'properties/osType', 'properties/status', 'properties/startTime', and 'properties/softwareUpdateConfiguration/name'. </param>
         /// <param name="skip"> Number of entries you skip before returning results. </param>
         /// <param name="top"> Maximum number of entries returned in the results collection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -2201,7 +2201,7 @@ namespace Azure.ResourceManager.Automation
         /// </list>
         /// </summary>
         /// <param name="clientRequestId"> Identifies this specific client request. </param>
-        /// <param name="filter"> The filter to apply on the operation. You can use the following filters: &apos;properties/osType&apos;, &apos;properties/status&apos;, &apos;properties/startTime&apos;, and &apos;properties/softwareUpdateConfiguration/name&apos;. </param>
+        /// <param name="filter"> The filter to apply on the operation. You can use the following filters: 'properties/osType', 'properties/status', 'properties/startTime', and 'properties/softwareUpdateConfiguration/name'. </param>
         /// <param name="skip"> Number of entries you skip before returning results. </param>
         /// <param name="top"> Maximum number of entries returned in the results collection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -2290,7 +2290,7 @@ namespace Azure.ResourceManager.Automation
         /// </list>
         /// </summary>
         /// <param name="clientRequestId"> Identifies this specific client request. </param>
-        /// <param name="filter"> The filter to apply on the operation. You can use the following filters: &apos;properties/osType&apos;, &apos;properties/status&apos;, &apos;properties/startTime&apos;, and &apos;properties/softwareUpdateConfiguration/name&apos;. </param>
+        /// <param name="filter"> The filter to apply on the operation. You can use the following filters: 'properties/osType', 'properties/status', 'properties/startTime', and 'properties/softwareUpdateConfiguration/name'. </param>
         /// <param name="skip"> number of entries you skip before returning results. </param>
         /// <param name="top"> Maximum number of entries returned in the results collection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -2315,7 +2315,7 @@ namespace Azure.ResourceManager.Automation
         /// </list>
         /// </summary>
         /// <param name="clientRequestId"> Identifies this specific client request. </param>
-        /// <param name="filter"> The filter to apply on the operation. You can use the following filters: &apos;properties/osType&apos;, &apos;properties/status&apos;, &apos;properties/startTime&apos;, and &apos;properties/softwareUpdateConfiguration/name&apos;. </param>
+        /// <param name="filter"> The filter to apply on the operation. You can use the following filters: 'properties/osType', 'properties/status', 'properties/startTime', and 'properties/softwareUpdateConfiguration/name'. </param>
         /// <param name="skip"> number of entries you skip before returning results. </param>
         /// <param name="top"> Maximum number of entries returned in the results collection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

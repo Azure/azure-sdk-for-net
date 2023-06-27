@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         /// <summary> Get notifications on new alerts. </summary>
         public static SecurityAlertNotificationState On { get; } = new SecurityAlertNotificationState(OnValue);
-        /// <summary> Don&apos;t get notifications on new alerts. </summary>
+        /// <summary> Don't get notifications on new alerts. </summary>
         public static SecurityAlertNotificationState Off { get; } = new SecurityAlertNotificationState(OffValue);
         /// <summary> Determines if two <see cref="SecurityAlertNotificationState"/> values are the same. </summary>
         public static bool operator ==(SecurityAlertNotificationState left, SecurityAlertNotificationState right) => left.Equals(right);

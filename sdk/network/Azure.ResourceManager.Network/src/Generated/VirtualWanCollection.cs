@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary>
-        /// Creates a VirtualWAN resource if it doesn&apos;t exist else updates the existing VirtualWAN.
+        /// Creates a VirtualWAN resource if it doesn't exist else updates the existing VirtualWAN.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary>
-        /// Creates a VirtualWAN resource if it doesn&apos;t exist else updates the existing VirtualWAN.
+        /// Creates a VirtualWAN resource if it doesn't exist else updates the existing VirtualWAN.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>

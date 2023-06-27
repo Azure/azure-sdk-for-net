@@ -44,9 +44,9 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// The available derived classes include <see cref="AzureKeyVaultSecretReference"/> and <see cref="SecureString"/>.
         /// </param>
         /// <param name="authHeaders"> The additional HTTP headers in the request to RESTful API used for authorization. Type: object (or Expression with resultType object). </param>
-        /// <param name="servicePrincipalId"> The application&apos;s client ID used in AadServicePrincipal authentication type. </param>
+        /// <param name="servicePrincipalId"> The application's client ID used in AadServicePrincipal authentication type. </param>
         /// <param name="servicePrincipalKey">
-        /// The application&apos;s key used in AadServicePrincipal authentication type.
+        /// The application's key used in AadServicePrincipal authentication type.
         /// Please note <see cref="SecretBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="AzureKeyVaultSecretReference"/> and <see cref="SecureString"/>.
         /// </param>
@@ -101,10 +101,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public SecretBase Password { get; set; }
         /// <summary> The additional HTTP headers in the request to RESTful API used for authorization. Type: object (or Expression with resultType object). </summary>
         public object AuthHeaders { get; set; }
-        /// <summary> The application&apos;s client ID used in AadServicePrincipal authentication type. </summary>
+        /// <summary> The application's client ID used in AadServicePrincipal authentication type. </summary>
         public object ServicePrincipalId { get; set; }
         /// <summary>
-        /// The application&apos;s key used in AadServicePrincipal authentication type.
+        /// The application's key used in AadServicePrincipal authentication type.
         /// Please note <see cref="SecretBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="AzureKeyVaultSecretReference"/> and <see cref="SecureString"/>.
         /// </summary>

@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         /// <param name="metricName"> The name of the metric for which usage should be tracked. </param>
         /// <param name="lowerLoadThreshold"> The lower limit of the load below which a scale in operation should be performed. </param>
         /// <param name="upperLoadThreshold"> The upper limit of the load beyond which a scale out operation should be performed. </param>
-        /// <param name="scaleInterval"> The period in seconds on which a decision is made whether to scale or not. This property should come in ISO 8601 format &quot;hh:mm:ss&quot;. </param>
+        /// <param name="scaleInterval"> The period in seconds on which a decision is made whether to scale or not. This property should come in ISO 8601 format "hh:mm:ss". </param>
         /// <exception cref="ArgumentNullException"> <paramref name="metricName"/> or <paramref name="scaleInterval"/> is null. </exception>
         public AveragePartitionLoadScalingTrigger(string metricName, double lowerLoadThreshold, double upperLoadThreshold, string scaleInterval)
         {
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         /// <param name="metricName"> The name of the metric for which usage should be tracked. </param>
         /// <param name="lowerLoadThreshold"> The lower limit of the load below which a scale in operation should be performed. </param>
         /// <param name="upperLoadThreshold"> The upper limit of the load beyond which a scale out operation should be performed. </param>
-        /// <param name="scaleInterval"> The period in seconds on which a decision is made whether to scale or not. This property should come in ISO 8601 format &quot;hh:mm:ss&quot;. </param>
+        /// <param name="scaleInterval"> The period in seconds on which a decision is made whether to scale or not. This property should come in ISO 8601 format "hh:mm:ss". </param>
         internal AveragePartitionLoadScalingTrigger(ServiceScalingTriggerKind kind, string metricName, double lowerLoadThreshold, double upperLoadThreshold, string scaleInterval) : base(kind)
         {
             MetricName = metricName;
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         public double LowerLoadThreshold { get; set; }
         /// <summary> The upper limit of the load beyond which a scale out operation should be performed. </summary>
         public double UpperLoadThreshold { get; set; }
-        /// <summary> The period in seconds on which a decision is made whether to scale or not. This property should come in ISO 8601 format &quot;hh:mm:ss&quot;. </summary>
+        /// <summary> The period in seconds on which a decision is made whether to scale or not. This property should come in ISO 8601 format "hh:mm:ss". </summary>
         public string ScaleInterval { get; set; }
     }
 }

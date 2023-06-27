@@ -15,10 +15,10 @@ namespace Azure.Communication.JobRouter
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(ReofferTimeUtc))
+            if (Optional.IsDefined(RetryOfferAt))
             {
-                writer.WritePropertyName("reofferTimeUtc"u8);
-                writer.WriteStringValue(ReofferTimeUtc.Value, "O");
+                writer.WritePropertyName("retryOfferAt"u8);
+                writer.WriteStringValue(RetryOfferAt.Value, "O");
             }
             writer.WriteEndObject();
         }

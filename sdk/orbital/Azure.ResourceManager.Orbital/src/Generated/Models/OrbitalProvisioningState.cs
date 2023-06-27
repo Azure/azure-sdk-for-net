@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Orbital.Models
 {
-    /// <summary> The current state of the resource&apos;s creation, deletion, or modification. </summary>
+    /// <summary> The current state of the resource's creation, deletion, or modification. </summary>
     public readonly partial struct OrbitalProvisioningState : IEquatable<OrbitalProvisioningState>
     {
         private readonly string _value;

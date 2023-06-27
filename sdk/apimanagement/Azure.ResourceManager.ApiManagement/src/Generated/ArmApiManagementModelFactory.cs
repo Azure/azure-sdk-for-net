@@ -81,13 +81,13 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <param name="createdOn"> The time the API Revision was created. The date conforms to the following format: yyyy-MM-ddTHH:mm:ssZ as specified by the ISO 8601 standard. </param>
         /// <param name="updatedOn"> The time the API Revision were updated. The date conforms to the following format: yyyy-MM-ddTHH:mm:ssZ as specified by the ISO 8601 standard. </param>
         /// <param name="description"> Description of the API Revision. </param>
-        /// <param name="privateUri"> Gateway URL for accessing the non-current API Revision. </param>
+        /// <param name="privateUriString"> Gateway URL for accessing the non-current API Revision. </param>
         /// <param name="isOnline"> Indicates if API revision is the current api revision. </param>
         /// <param name="isCurrent"> Indicates if API revision is accessible via the gateway. </param>
         /// <returns> A new <see cref="Models.ApiRevisionContract"/> instance for mocking. </returns>
-        public static ApiRevisionContract ApiRevisionContract(string apiId = null, string apiRevision = null, DateTimeOffset? createdOn = null, DateTimeOffset? updatedOn = null, string description = null, Uri privateUri = null, bool? isOnline = null, bool? isCurrent = null)
+        public static ApiRevisionContract ApiRevisionContract(string apiId = null, string apiRevision = null, DateTimeOffset? createdOn = null, DateTimeOffset? updatedOn = null, string description = null, string privateUriString = null, bool? isOnline = null, bool? isCurrent = null)
         {
-            return new ApiRevisionContract(apiId, apiRevision, createdOn, updatedOn, description, privateUri, isOnline, isCurrent);
+            return new ApiRevisionContract(apiId, apiRevision, createdOn, updatedOn, description, privateUriString, isOnline, isCurrent);
         }
 
         /// <summary> Initializes a new instance of ApiReleaseData. </summary>
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <param name="systemData"> The systemData. </param>
         /// <param name="description"> Product description. May include HTML formatting tags. </param>
         /// <param name="terms"> Product terms of use. Developers trying to subscribe to the product will be presented and required to accept these terms before they can complete the subscription process. </param>
-        /// <param name="isSubscriptionRequired"> Whether a product subscription is required for accessing APIs included in this product. If true, the product is referred to as &quot;protected&quot; and a valid subscription key is required for a request to an API included in the product to succeed. If false, the product is referred to as &quot;open&quot; and requests to an API included in the product can be made without a subscription key. If property is omitted when creating a new product it&apos;s value is assumed to be true. </param>
+        /// <param name="isSubscriptionRequired"> Whether a product subscription is required for accessing APIs included in this product. If true, the product is referred to as "protected" and a valid subscription key is required for a request to an API included in the product to succeed. If false, the product is referred to as "open" and requests to an API included in the product can be made without a subscription key. If property is omitted when creating a new product it's value is assumed to be true. </param>
         /// <param name="isApprovalRequired"> whether subscription approval is required. If false, new subscriptions will be approved automatically enabling developers to call the product’s APIs immediately after subscribing. If true, administrators must manually approve the subscription before the developer can any of the product’s APIs. Can be present only if subscriptionRequired property is present and has a value of false. </param>
         /// <param name="subscriptionsLimit"> Whether the number of subscriptions a user can have to this product at the same time. Set to null or omit to allow unlimited per user subscriptions. Can be present only if subscriptionRequired property is present and has a value of false. </param>
         /// <param name="state"> whether product is published or not. Published products are discoverable by users of developer portal. Non published products are visible only to administrators. Default state of Product is notPublished. </param>
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <summary> Initializes a new instance of ProductEntityBaseProperties. </summary>
         /// <param name="description"> Product description. May include HTML formatting tags. </param>
         /// <param name="terms"> Product terms of use. Developers trying to subscribe to the product will be presented and required to accept these terms before they can complete the subscription process. </param>
-        /// <param name="isSubscriptionRequired"> Whether a product subscription is required for accessing APIs included in this product. If true, the product is referred to as &quot;protected&quot; and a valid subscription key is required for a request to an API included in the product to succeed. If false, the product is referred to as &quot;open&quot; and requests to an API included in the product can be made without a subscription key. If property is omitted when creating a new product it&apos;s value is assumed to be true. </param>
+        /// <param name="isSubscriptionRequired"> Whether a product subscription is required for accessing APIs included in this product. If true, the product is referred to as "protected" and a valid subscription key is required for a request to an API included in the product to succeed. If false, the product is referred to as "open" and requests to an API included in the product can be made without a subscription key. If property is omitted when creating a new product it's value is assumed to be true. </param>
         /// <param name="isApprovalRequired"> whether subscription approval is required. If false, new subscriptions will be approved automatically enabling developers to call the product’s APIs immediately after subscribing. If true, administrators must manually approve the subscription before the developer can any of the product’s APIs. Can be present only if subscriptionRequired property is present and has a value of false. </param>
         /// <param name="subscriptionsLimit"> Whether the number of subscriptions a user can have to this product at the same time. Set to null or omit to allow unlimited per user subscriptions. Can be present only if subscriptionRequired property is present and has a value of false. </param>
         /// <param name="state"> whether product is published or not. Published products are discoverable by users of developer portal. Non published products are visible only to administrators. Default state of Product is notPublished. </param>
@@ -256,7 +256,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="title"> Filename by which the binary data will be saved. </param>
-        /// <param name="contentFormat"> Either &apos;link&apos; if content is provided via an HTTP link or the MIME type of the Base64-encoded binary data provided in the &apos;content&apos; property. </param>
+        /// <param name="contentFormat"> Either 'link' if content is provided via an HTTP link or the MIME type of the Base64-encoded binary data provided in the 'content' property. </param>
         /// <param name="content"> An HTTP link or Base64-encoded binary data. </param>
         /// <returns> A new <see cref="ApiManagement.ApiIssueAttachmentData"/> instance for mocking. </returns>
         public static ApiIssueAttachmentData ApiIssueAttachmentData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string title = null, string contentFormat = null, string content = null)
@@ -347,7 +347,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <summary> Initializes a new instance of AssociatedProductProperties. </summary>
         /// <param name="description"> Product description. May include HTML formatting tags. </param>
         /// <param name="terms"> Product terms of use. Developers trying to subscribe to the product will be presented and required to accept these terms before they can complete the subscription process. </param>
-        /// <param name="isSubscriptionRequired"> Whether a product subscription is required for accessing APIs included in this product. If true, the product is referred to as &quot;protected&quot; and a valid subscription key is required for a request to an API included in the product to succeed. If false, the product is referred to as &quot;open&quot; and requests to an API included in the product can be made without a subscription key. If property is omitted when creating a new product it&apos;s value is assumed to be true. </param>
+        /// <param name="isSubscriptionRequired"> Whether a product subscription is required for accessing APIs included in this product. If true, the product is referred to as "protected" and a valid subscription key is required for a request to an API included in the product to succeed. If false, the product is referred to as "open" and requests to an API included in the product can be made without a subscription key. If property is omitted when creating a new product it's value is assumed to be true. </param>
         /// <param name="isApprovalRequired"> whether subscription approval is required. If false, new subscriptions will be approved automatically enabling developers to call the product’s APIs immediately after subscribing. If true, administrators must manually approve the subscription before the developer can any of the product’s APIs. Can be present only if subscriptionRequired property is present and has a value of false. </param>
         /// <param name="subscriptionsLimit"> Whether the number of subscriptions a user can have to this product at the same time. Set to null or omit to allow unlimited per user subscriptions. Can be present only if subscriptionRequired property is present and has a value of false. </param>
         /// <param name="state"> whether product is published or not. Published products are discoverable by users of developer portal. Non published products are visible only to administrators. Default state of Product is notPublished. </param>
@@ -383,7 +383,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <param name="description"> Description of the authorization server. Can contain HTML formatting tags. </param>
         /// <param name="authorizationMethods"> HTTP verbs supported by the authorization endpoint. GET must be always present. POST is optional. </param>
         /// <param name="clientAuthenticationMethods"> Method of authentication supported by the token endpoint of this authorization server. Possible values are Basic and/or Body. When Body is specified, client credentials and other parameters are passed within the request body in the application/x-www-form-urlencoded format. </param>
-        /// <param name="tokenBodyParameters"> Additional parameters required by the token endpoint of this authorization server represented as an array of JSON objects with name and value string properties, i.e. {&quot;name&quot; : &quot;name value&quot;, &quot;value&quot;: &quot;a value&quot;}. </param>
+        /// <param name="tokenBodyParameters"> Additional parameters required by the token endpoint of this authorization server represented as an array of JSON objects with name and value string properties, i.e. {"name" : "name value", "value": "a value"}. </param>
         /// <param name="tokenEndpoint"> OAuth token endpoint. Contains absolute URI to entity being referenced. </param>
         /// <param name="doesSupportState"> If true, authorization server will include state parameter from the authorization request to its response. Client may use state parameter to raise protocol security. </param>
         /// <param name="defaultScope"> Access token scope that is going to be requested by default. Can be overridden at the API level. Should be provided in the form of a string containing space-delimited values. </param>
@@ -395,7 +395,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <param name="authorizationEndpoint"> OAuth authorization endpoint. See http://tools.ietf.org/html/rfc6749#section-3.2. </param>
         /// <param name="grantTypes"> Form of an authorization grant, which the client uses to request the access token. </param>
         /// <param name="clientId"> Client or app id registered with this authorization server. </param>
-        /// <param name="clientSecret"> Client or app secret registered with this authorization server. This property will not be filled on &apos;GET&apos; operations! Use &apos;/listSecrets&apos; POST request to get the value. </param>
+        /// <param name="clientSecret"> Client or app secret registered with this authorization server. This property will not be filled on 'GET' operations! Use '/listSecrets' POST request to get the value. </param>
         /// <returns> A new <see cref="ApiManagement.ApiManagementAuthorizationServerData"/> instance for mocking. </returns>
         public static ApiManagementAuthorizationServerData ApiManagementAuthorizationServerData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string description = null, IEnumerable<AuthorizationMethod> authorizationMethods = null, IEnumerable<ClientAuthenticationMethod> clientAuthenticationMethods = null, IEnumerable<TokenBodyParameterContract> tokenBodyParameters = null, string tokenEndpoint = null, bool? doesSupportState = null, string defaultScope = null, IEnumerable<BearerTokenSendingMethod> bearerTokenSendingMethods = null, string resourceOwnerUsername = null, string resourceOwnerPassword = null, string displayName = null, string clientRegistrationEndpoint = null, string authorizationEndpoint = null, IEnumerable<GrantType> grantTypes = null, string clientId = null, string clientSecret = null)
         {
@@ -416,7 +416,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <param name="description"> Description of the authorization server. Can contain HTML formatting tags. </param>
         /// <param name="authorizationMethods"> HTTP verbs supported by the authorization endpoint. GET must be always present. POST is optional. </param>
         /// <param name="clientAuthenticationMethods"> Method of authentication supported by the token endpoint of this authorization server. Possible values are Basic and/or Body. When Body is specified, client credentials and other parameters are passed within the request body in the application/x-www-form-urlencoded format. </param>
-        /// <param name="tokenBodyParameters"> Additional parameters required by the token endpoint of this authorization server represented as an array of JSON objects with name and value string properties, i.e. {&quot;name&quot; : &quot;name value&quot;, &quot;value&quot;: &quot;a value&quot;}. </param>
+        /// <param name="tokenBodyParameters"> Additional parameters required by the token endpoint of this authorization server represented as an array of JSON objects with name and value string properties, i.e. {"name" : "name value", "value": "a value"}. </param>
         /// <param name="tokenEndpoint"> OAuth token endpoint. Contains absolute URI to entity being referenced. </param>
         /// <param name="doesSupportState"> If true, authorization server will include state parameter from the authorization request to its response. Client may use state parameter to raise protocol security. </param>
         /// <param name="defaultScope"> Access token scope that is going to be requested by default. Can be overridden at the API level. Should be provided in the form of a string containing space-delimited values. </param>
@@ -428,7 +428,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <param name="authorizationEndpoint"> OAuth authorization endpoint. See http://tools.ietf.org/html/rfc6749#section-3.2. </param>
         /// <param name="grantTypes"> Form of an authorization grant, which the client uses to request the access token. </param>
         /// <param name="clientId"> Client or app id registered with this authorization server. </param>
-        /// <param name="clientSecret"> Client or app secret registered with this authorization server. This property will not be filled on &apos;GET&apos; operations! Use &apos;/listSecrets&apos; POST request to get the value. </param>
+        /// <param name="clientSecret"> Client or app secret registered with this authorization server. This property will not be filled on 'GET' operations! Use '/listSecrets' POST request to get the value. </param>
         /// <returns> A new <see cref="Models.ApiManagementAuthorizationServerPatch"/> instance for mocking. </returns>
         public static ApiManagementAuthorizationServerPatch ApiManagementAuthorizationServerPatch(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string description = null, IEnumerable<AuthorizationMethod> authorizationMethods = null, IEnumerable<ClientAuthenticationMethod> clientAuthenticationMethods = null, IEnumerable<TokenBodyParameterContract> tokenBodyParameters = null, string tokenEndpoint = null, bool? doesSupportState = null, string defaultScope = null, IEnumerable<BearerTokenSendingMethod> bearerTokenSendingMethods = null, string resourceOwnerUsername = null, string resourceOwnerPassword = null, string displayName = null, string clientRegistrationEndpoint = null, string authorizationEndpoint = null, IEnumerable<GrantType> grantTypes = null, string clientId = null, string clientSecret = null)
         {
@@ -490,7 +490,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <param name="systemData"> The systemData. </param>
         /// <param name="description"> Cache description. </param>
         /// <param name="connectionString"> Runtime connection string to cache. </param>
-        /// <param name="useFromLocation"> Location identifier to use cache from (should be either &apos;default&apos; or valid Azure region identifier). </param>
+        /// <param name="useFromLocation"> Location identifier to use cache from (should be either 'default' or valid Azure region identifier). </param>
         /// <param name="resourceUri"> Original uri of entity in external system cache points to. </param>
         /// <returns> A new <see cref="ApiManagement.ApiManagementCacheData"/> instance for mocking. </returns>
         public static ApiManagementCacheData ApiManagementCacheData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string description = null, string connectionString = null, string useFromLocation = null, Uri resourceUri = null)
@@ -507,7 +507,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <param name="thumbprint"> Thumbprint of the certificate. </param>
         /// <param name="expireOn">
         /// Expiration date of the certificate. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard.
-        /// 
+        ///
         /// </param>
         /// <param name="keyVaultDetails"> KeyVault location details of the certificate. </param>
         /// <returns> A new <see cref="ApiManagement.ApiManagementCertificateData"/> instance for mocking. </returns>
@@ -622,10 +622,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <param name="publicIPAddresses"> Public Static Load Balanced IP addresses of the API Management service in Primary region. Available only for Basic, Standard, Premium and Isolated SKU. </param>
         /// <param name="privateIPAddresses"> Private Static Load Balanced IP addresses of the API Management service in Primary region which is deployed in an Internal Virtual Network. Available only for Basic, Standard, Premium and Isolated SKU. </param>
         /// <param name="publicIPAddressId"> Public Standard SKU IP V4 based IP address to be associated with Virtual Network deployed service in the region. Supported only for Developer and Premium SKU being deployed in Virtual Network. </param>
-        /// <param name="publicNetworkAccess"> Whether or not public endpoint access is allowed for this API Management service.  Value is optional but if passed in, must be &apos;Enabled&apos; or &apos;Disabled&apos;. If &apos;Disabled&apos;, private endpoints are the exclusive access method. Default value is &apos;Enabled&apos;. </param>
+        /// <param name="publicNetworkAccess"> Whether or not public endpoint access is allowed for this API Management service.  Value is optional but if passed in, must be 'Enabled' or 'Disabled'. If 'Disabled', private endpoints are the exclusive access method. Default value is 'Enabled'. </param>
         /// <param name="virtualNetworkConfiguration"> Virtual network configuration of the API Management service. </param>
         /// <param name="additionalLocations"> Additional datacenter locations of the API Management service. </param>
-        /// <param name="customProperties"> Custom properties of the API Management service.&lt;/br&gt;Setting `Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Ciphers.TripleDes168` will disable the cipher TLS_RSA_WITH_3DES_EDE_CBC_SHA for all TLS(1.0, 1.1 and 1.2).&lt;/br&gt;Setting `Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Protocols.Tls11` can be used to disable just TLS 1.1.&lt;/br&gt;Setting `Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Protocols.Tls10` can be used to disable TLS 1.0 on an API Management service.&lt;/br&gt;Setting `Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Backend.Protocols.Tls11` can be used to disable just TLS 1.1 for communications with backends.&lt;/br&gt;Setting `Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Backend.Protocols.Tls10` can be used to disable TLS 1.0 for communications with backends.&lt;/br&gt;Setting `Microsoft.WindowsAzure.ApiManagement.Gateway.Protocols.Server.Http2` can be used to enable HTTP2 protocol on an API Management service.&lt;/br&gt;Not specifying any of these properties on PATCH operation will reset omitted properties&apos; values to their defaults. For all the settings except Http2 the default value is `True` if the service was created on or before April 1st 2018 and `False` otherwise. Http2 setting&apos;s default value is `False`.&lt;/br&gt;&lt;/br&gt;You can disable any of next ciphers by using settings `Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Ciphers.[cipher_name]`: TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA, TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA, TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA, TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA, TLS_RSA_WITH_AES_128_GCM_SHA256, TLS_RSA_WITH_AES_256_CBC_SHA256, TLS_RSA_WITH_AES_128_CBC_SHA256, TLS_RSA_WITH_AES_256_CBC_SHA, TLS_RSA_WITH_AES_128_CBC_SHA. For example, `Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Ciphers.TLS_RSA_WITH_AES_128_CBC_SHA256`:`false`. The default value is `true` for them.  Note: next ciphers can&apos;t be disabled since they are required by Azure CloudService internal components: TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384,TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256,TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384,TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256,TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA384,TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA256,TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384,TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256,TLS_RSA_WITH_AES_256_GCM_SHA384. </param>
+        /// <param name="customProperties"> Custom properties of the API Management service.&lt;/br&gt;Setting `Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Ciphers.TripleDes168` will disable the cipher TLS_RSA_WITH_3DES_EDE_CBC_SHA for all TLS(1.0, 1.1 and 1.2).&lt;/br&gt;Setting `Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Protocols.Tls11` can be used to disable just TLS 1.1.&lt;/br&gt;Setting `Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Protocols.Tls10` can be used to disable TLS 1.0 on an API Management service.&lt;/br&gt;Setting `Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Backend.Protocols.Tls11` can be used to disable just TLS 1.1 for communications with backends.&lt;/br&gt;Setting `Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Backend.Protocols.Tls10` can be used to disable TLS 1.0 for communications with backends.&lt;/br&gt;Setting `Microsoft.WindowsAzure.ApiManagement.Gateway.Protocols.Server.Http2` can be used to enable HTTP2 protocol on an API Management service.&lt;/br&gt;Not specifying any of these properties on PATCH operation will reset omitted properties' values to their defaults. For all the settings except Http2 the default value is `True` if the service was created on or before April 1st 2018 and `False` otherwise. Http2 setting's default value is `False`.&lt;/br&gt;&lt;/br&gt;You can disable any of next ciphers by using settings `Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Ciphers.[cipher_name]`: TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA, TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA, TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA, TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA, TLS_RSA_WITH_AES_128_GCM_SHA256, TLS_RSA_WITH_AES_256_CBC_SHA256, TLS_RSA_WITH_AES_128_CBC_SHA256, TLS_RSA_WITH_AES_256_CBC_SHA, TLS_RSA_WITH_AES_128_CBC_SHA. For example, `Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Ciphers.TLS_RSA_WITH_AES_128_CBC_SHA256`:`false`. The default value is `true` for them.  Note: next ciphers can't be disabled since they are required by Azure CloudService internal components: TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384,TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256,TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384,TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256,TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA384,TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA256,TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384,TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256,TLS_RSA_WITH_AES_256_GCM_SHA384. </param>
         /// <param name="certificates"> List of Certificates that need to be installed in the API Management service. Max supported certificates that can be installed is 10. </param>
         /// <param name="enableClientCertificate"> Property only meant to be used for Consumption SKU Service. This enforces a client certificate to be presented on each request to the gateway. This also enables the ability to authenticate the certificate in the policy on the gateway. </param>
         /// <param name="disableGateway"> Property only valid for an Api Management service deployed in multiple locations. This can be used to disable the gateway in master region. </param>
@@ -722,10 +722,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <param name="publicIPAddresses"> Public Static Load Balanced IP addresses of the API Management service in Primary region. Available only for Basic, Standard, Premium and Isolated SKU. </param>
         /// <param name="privateIPAddresses"> Private Static Load Balanced IP addresses of the API Management service in Primary region which is deployed in an Internal Virtual Network. Available only for Basic, Standard, Premium and Isolated SKU. </param>
         /// <param name="publicIPAddressId"> Public Standard SKU IP V4 based IP address to be associated with Virtual Network deployed service in the region. Supported only for Developer and Premium SKU being deployed in Virtual Network. </param>
-        /// <param name="publicNetworkAccess"> Whether or not public endpoint access is allowed for this API Management service.  Value is optional but if passed in, must be &apos;Enabled&apos; or &apos;Disabled&apos;. If &apos;Disabled&apos;, private endpoints are the exclusive access method. Default value is &apos;Enabled&apos;. </param>
+        /// <param name="publicNetworkAccess"> Whether or not public endpoint access is allowed for this API Management service.  Value is optional but if passed in, must be 'Enabled' or 'Disabled'. If 'Disabled', private endpoints are the exclusive access method. Default value is 'Enabled'. </param>
         /// <param name="virtualNetworkConfiguration"> Virtual network configuration of the API Management service. </param>
         /// <param name="additionalLocations"> Additional datacenter locations of the API Management service. </param>
-        /// <param name="customProperties"> Custom properties of the API Management service.&lt;/br&gt;Setting `Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Ciphers.TripleDes168` will disable the cipher TLS_RSA_WITH_3DES_EDE_CBC_SHA for all TLS(1.0, 1.1 and 1.2).&lt;/br&gt;Setting `Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Protocols.Tls11` can be used to disable just TLS 1.1.&lt;/br&gt;Setting `Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Protocols.Tls10` can be used to disable TLS 1.0 on an API Management service.&lt;/br&gt;Setting `Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Backend.Protocols.Tls11` can be used to disable just TLS 1.1 for communications with backends.&lt;/br&gt;Setting `Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Backend.Protocols.Tls10` can be used to disable TLS 1.0 for communications with backends.&lt;/br&gt;Setting `Microsoft.WindowsAzure.ApiManagement.Gateway.Protocols.Server.Http2` can be used to enable HTTP2 protocol on an API Management service.&lt;/br&gt;Not specifying any of these properties on PATCH operation will reset omitted properties&apos; values to their defaults. For all the settings except Http2 the default value is `True` if the service was created on or before April 1st 2018 and `False` otherwise. Http2 setting&apos;s default value is `False`.&lt;/br&gt;&lt;/br&gt;You can disable any of next ciphers by using settings `Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Ciphers.[cipher_name]`: TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA, TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA, TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA, TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA, TLS_RSA_WITH_AES_128_GCM_SHA256, TLS_RSA_WITH_AES_256_CBC_SHA256, TLS_RSA_WITH_AES_128_CBC_SHA256, TLS_RSA_WITH_AES_256_CBC_SHA, TLS_RSA_WITH_AES_128_CBC_SHA. For example, `Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Ciphers.TLS_RSA_WITH_AES_128_CBC_SHA256`:`false`. The default value is `true` for them.  Note: next ciphers can&apos;t be disabled since they are required by Azure CloudService internal components: TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384,TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256,TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384,TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256,TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA384,TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA256,TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384,TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256,TLS_RSA_WITH_AES_256_GCM_SHA384. </param>
+        /// <param name="customProperties"> Custom properties of the API Management service.&lt;/br&gt;Setting `Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Ciphers.TripleDes168` will disable the cipher TLS_RSA_WITH_3DES_EDE_CBC_SHA for all TLS(1.0, 1.1 and 1.2).&lt;/br&gt;Setting `Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Protocols.Tls11` can be used to disable just TLS 1.1.&lt;/br&gt;Setting `Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Protocols.Tls10` can be used to disable TLS 1.0 on an API Management service.&lt;/br&gt;Setting `Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Backend.Protocols.Tls11` can be used to disable just TLS 1.1 for communications with backends.&lt;/br&gt;Setting `Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Backend.Protocols.Tls10` can be used to disable TLS 1.0 for communications with backends.&lt;/br&gt;Setting `Microsoft.WindowsAzure.ApiManagement.Gateway.Protocols.Server.Http2` can be used to enable HTTP2 protocol on an API Management service.&lt;/br&gt;Not specifying any of these properties on PATCH operation will reset omitted properties' values to their defaults. For all the settings except Http2 the default value is `True` if the service was created on or before April 1st 2018 and `False` otherwise. Http2 setting's default value is `False`.&lt;/br&gt;&lt;/br&gt;You can disable any of next ciphers by using settings `Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Ciphers.[cipher_name]`: TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA, TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA, TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA, TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA, TLS_RSA_WITH_AES_128_GCM_SHA256, TLS_RSA_WITH_AES_256_CBC_SHA256, TLS_RSA_WITH_AES_128_CBC_SHA256, TLS_RSA_WITH_AES_256_CBC_SHA, TLS_RSA_WITH_AES_128_CBC_SHA. For example, `Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Ciphers.TLS_RSA_WITH_AES_128_CBC_SHA256`:`false`. The default value is `true` for them.  Note: next ciphers can't be disabled since they are required by Azure CloudService internal components: TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384,TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256,TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384,TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256,TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA384,TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA256,TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384,TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256,TLS_RSA_WITH_AES_256_GCM_SHA384. </param>
         /// <param name="certificates"> List of Certificates that need to be installed in the API Management service. Max supported certificates that can be installed is 10. </param>
         /// <param name="enableClientCertificate"> Property only meant to be used for Consumption SKU Service. This enforces a client certificate to be presented on each request to the gateway. This also enables the ability to authenticate the certificate in the policy on the gateway. </param>
         /// <param name="disableGateway"> Property only valid for an Api Management service deployed in multiple locations. This can be used to disable the gateway in master region. </param>
@@ -944,7 +944,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <param name="email"> Email address. </param>
         /// <param name="registriesOn">
         /// Date of user registration. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard.
-        /// 
+        ///
         /// </param>
         /// <param name="groups"> Collection of groups user is part of. </param>
         /// <returns> A new <see cref="Models.ApiManagementGroupUserData"/> instance for mocking. </returns>
@@ -969,7 +969,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <param name="email"> Email address. </param>
         /// <param name="registriesOn">
         /// Date of user registration. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard.
-        /// 
+        ///
         /// </param>
         /// <param name="groups"> Collection of groups user is part of. </param>
         /// <returns> A new <see cref="ApiManagement.UserContractData"/> instance for mocking. </returns>
@@ -995,7 +995,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <param name="profileEditingPolicyName"> Profile Editing Policy Name. Only applies to AAD B2C Identity Provider. </param>
         /// <param name="passwordResetPolicyName"> Password Reset Policy Name. Only applies to AAD B2C Identity Provider. </param>
         /// <param name="clientId"> Client Id of the Application in the external Identity Provider. It is App ID for Facebook login, Client ID for Google login, App ID for Microsoft. </param>
-        /// <param name="clientSecret"> Client secret of the Application in external Identity Provider, used to authenticate login request. For example, it is App Secret for Facebook login, API Key for Google login, Public Key for Microsoft. This property will not be filled on &apos;GET&apos; operations! Use &apos;/listSecrets&apos; POST request to get the value. </param>
+        /// <param name="clientSecret"> Client secret of the Application in external Identity Provider, used to authenticate login request. For example, it is App Secret for Facebook login, API Key for Google login, Public Key for Microsoft. This property will not be filled on 'GET' operations! Use '/listSecrets' POST request to get the value. </param>
         /// <returns> A new <see cref="ApiManagement.ApiManagementIdentityProviderData"/> instance for mocking. </returns>
         public static ApiManagementIdentityProviderData ApiManagementIdentityProviderData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IdentityProviderType? identityProviderType = null, string signInTenant = null, IEnumerable<string> allowedTenants = null, string authority = null, string signUpPolicyName = null, string signInPolicyName = null, string profileEditingPolicyName = null, string passwordResetPolicyName = null, string clientId = null, string clientSecret = null)
         {
@@ -1018,7 +1018,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <param name="profileEditingPolicyName"> Profile Editing Policy Name. Only applies to AAD B2C Identity Provider. </param>
         /// <param name="passwordResetPolicyName"> Password Reset Policy Name. Only applies to AAD B2C Identity Provider. </param>
         /// <param name="clientId"> Client Id of the Application in the external Identity Provider. It is App ID for Facebook login, Client ID for Google login, App ID for Microsoft. </param>
-        /// <param name="clientSecret"> Client secret of the Application in external Identity Provider, used to authenticate login request. For example, it is App Secret for Facebook login, API Key for Google login, Public Key for Microsoft. This property will not be filled on &apos;GET&apos; operations! Use &apos;/listSecrets&apos; POST request to get the value. </param>
+        /// <param name="clientSecret"> Client secret of the Application in external Identity Provider, used to authenticate login request. For example, it is App Secret for Facebook login, API Key for Google login, Public Key for Microsoft. This property will not be filled on 'GET' operations! Use '/listSecrets' POST request to get the value. </param>
         /// <returns> A new <see cref="Models.ApiManagementIdentityProviderCreateOrUpdateContent"/> instance for mocking. </returns>
         public static ApiManagementIdentityProviderCreateOrUpdateContent ApiManagementIdentityProviderCreateOrUpdateContent(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IdentityProviderType? identityProviderType = null, string signInTenant = null, IEnumerable<string> allowedTenants = null, string authority = null, string signUpPolicyName = null, string signInPolicyName = null, string profileEditingPolicyName = null, string passwordResetPolicyName = null, string clientId = null, string clientSecret = null)
         {
@@ -1064,7 +1064,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <param name="tags"> Optional tags that when provided can be used to filter the NamedValue list. </param>
         /// <param name="isSecret"> Determines whether the value is a secret and should be encrypted or not. Default value is false. </param>
         /// <param name="displayName"> Unique name of NamedValue. It may contain only letters, digits, period, dash, and underscore characters. </param>
-        /// <param name="value"> Value of the NamedValue. Can contain policy expressions. It may not be empty or consist only of whitespace. This property will not be filled on &apos;GET&apos; operations! Use &apos;/listSecrets&apos; POST request to get the value. </param>
+        /// <param name="value"> Value of the NamedValue. Can contain policy expressions. It may not be empty or consist only of whitespace. This property will not be filled on 'GET' operations! Use '/listSecrets' POST request to get the value. </param>
         /// <param name="keyVaultDetails"> KeyVault location details of the namedValue. </param>
         /// <returns> A new <see cref="ApiManagement.ApiManagementNamedValueData"/> instance for mocking. </returns>
         public static ApiManagementNamedValueData ApiManagementNamedValueData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IEnumerable<string> tags = null, bool? isSecret = null, string displayName = null, string value = null, KeyVaultContractProperties keyVaultDetails = null)
@@ -1082,7 +1082,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <param name="tags"> Optional tags that when provided can be used to filter the NamedValue list. </param>
         /// <param name="isSecret"> Determines whether the value is a secret and should be encrypted or not. Default value is false. </param>
         /// <param name="displayName"> Unique name of NamedValue. It may contain only letters, digits, period, dash, and underscore characters. </param>
-        /// <param name="value"> Value of the NamedValue. Can contain policy expressions. It may not be empty or consist only of whitespace. This property will not be filled on &apos;GET&apos; operations! Use &apos;/listSecrets&apos; POST request to get the value. </param>
+        /// <param name="value"> Value of the NamedValue. Can contain policy expressions. It may not be empty or consist only of whitespace. This property will not be filled on 'GET' operations! Use '/listSecrets' POST request to get the value. </param>
         /// <param name="keyVault"> KeyVault location details of the namedValue. </param>
         /// <returns> A new <see cref="Models.ApiManagementNamedValueCreateOrUpdateContent"/> instance for mocking. </returns>
         public static ApiManagementNamedValueCreateOrUpdateContent ApiManagementNamedValueCreateOrUpdateContent(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IEnumerable<string> tags = null, bool? isSecret = null, string displayName = null, string value = null, KeyVaultContractCreateProperties keyVault = null)
@@ -1127,11 +1127,11 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <param name="error"> Error details of the connectivity to the resource. </param>
         /// <param name="lastUpdatedOn">
         /// The date when the resource connectivity status was last updated. This status should be updated every 15 minutes. If this status has not been updated, then it means that the service has lost network connectivity to the resource, from inside the Virtual Network.The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard.
-        /// 
+        ///
         /// </param>
         /// <param name="lastStatusChangedOn">
         /// The date when the resource connectivity status last Changed from success to failure or vice-versa. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard.
-        /// 
+        ///
         /// </param>
         /// <param name="resourceType"> Resource Type. </param>
         /// <param name="isOptional"> Whether this is optional. </param>
@@ -1246,9 +1246,9 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <param name="systemData"> The systemData. </param>
         /// <param name="description"> Portal revision description. </param>
         /// <param name="statusDetails"> Portal revision publishing status details. </param>
-        /// <param name="status"> Status of the portal&apos;s revision. </param>
-        /// <param name="isCurrent"> Indicates if the portal&apos;s revision is public. </param>
-        /// <param name="createdOn"> Portal&apos;s revision creation date and time. </param>
+        /// <param name="status"> Status of the portal's revision. </param>
+        /// <param name="isCurrent"> Indicates if the portal's revision is public. </param>
+        /// <param name="createdOn"> Portal's revision creation date and time. </param>
         /// <param name="updatedOn"> Last updated date and time. </param>
         /// <returns> A new <see cref="ApiManagement.ApiManagementPortalRevisionData"/> instance for mocking. </returns>
         public static ApiManagementPortalRevisionData ApiManagementPortalRevisionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string description = null, string statusDetails = null, PortalRevisionStatus? status = null, bool? isCurrent = null, DateTimeOffset? createdOn = null, DateTimeOffset? updatedOn = null)
@@ -1413,27 +1413,27 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <param name="state"> Subscription state. Possible states are * active – the subscription is active, * suspended – the subscription is blocked, and the subscriber cannot call any APIs of the product, * submitted – the subscription request has been made by the developer, but has not yet been approved or rejected, * rejected – the subscription request has been denied by an administrator, * cancelled – the subscription has been cancelled by the developer or administrator, * expired – the subscription reached its expiration date and was deactivated. </param>
         /// <param name="createdOn">
         /// Subscription creation date. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard.
-        /// 
+        ///
         /// </param>
         /// <param name="startOn">
         /// Subscription activation date. The setting is for audit purposes only and the subscription is not automatically activated. The subscription lifecycle can be managed by using the `state` property. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard.
-        /// 
+        ///
         /// </param>
         /// <param name="expireOn">
         /// Subscription expiration date. The setting is for audit purposes only and the subscription is not automatically expired. The subscription lifecycle can be managed by using the `state` property. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard.
-        /// 
+        ///
         /// </param>
         /// <param name="endOn">
         /// Date when subscription was cancelled or expired. The setting is for audit purposes only and the subscription is not automatically cancelled. The subscription lifecycle can be managed by using the `state` property. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard.
-        /// 
+        ///
         /// </param>
         /// <param name="notifiesOn">
         /// Upcoming subscription expiration notification date. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard.
-        /// 
+        ///
         /// </param>
-        /// <param name="primaryKey"> Subscription primary key. This property will not be filled on &apos;GET&apos; operations! Use &apos;/listSecrets&apos; POST request to get the value. </param>
-        /// <param name="secondaryKey"> Subscription secondary key. This property will not be filled on &apos;GET&apos; operations! Use &apos;/listSecrets&apos; POST request to get the value. </param>
-        /// <param name="stateComment"> Optional subscription comment added by an administrator when the state is changed to the &apos;rejected&apos;. </param>
+        /// <param name="primaryKey"> Subscription primary key. This property will not be filled on 'GET' operations! Use '/listSecrets' POST request to get the value. </param>
+        /// <param name="secondaryKey"> Subscription secondary key. This property will not be filled on 'GET' operations! Use '/listSecrets' POST request to get the value. </param>
+        /// <param name="stateComment"> Optional subscription comment added by an administrator when the state is changed to the 'rejected'. </param>
         /// <param name="allowTracing"> Determines whether tracing is enabled. </param>
         /// <returns> A new <see cref="ApiManagement.SubscriptionContractData"/> instance for mocking. </returns>
         public static SubscriptionContractData SubscriptionContractData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string ownerId = null, string scope = null, string displayName = null, SubscriptionState? state = null, DateTimeOffset? createdOn = null, DateTimeOffset? startOn = null, DateTimeOffset? expireOn = null, DateTimeOffset? endOn = null, DateTimeOffset? notifiesOn = null, string primaryKey = null, string secondaryKey = null, string stateComment = null, bool? allowTracing = null)
@@ -1446,11 +1446,11 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <param name="periodKey"> Identifier of the Period for which the counter was collected. Must not be empty. </param>
         /// <param name="periodStartOn">
         /// The date of the start of Counter Period. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard.
-        /// 
+        ///
         /// </param>
         /// <param name="periodEndOn">
         /// The date of the end of Counter Period. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard.
-        /// 
+        ///
         /// </param>
         /// <param name="value"> Quota Value Properties. </param>
         /// <returns> A new <see cref="Models.QuotaCounterContract"/> instance for mocking. </returns>
@@ -1482,7 +1482,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <param name="name"> Name depending on report endpoint specifies product, API, operation or developer name. </param>
         /// <param name="timestamp">
         /// Start of aggregation period. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard.
-        /// 
+        ///
         /// </param>
         /// <param name="interval"> Length of aggregation period.  Interval must be multiple of 15 minutes and may not be zero. The value should be in ISO 8601 format (http://en.wikipedia.org/wiki/ISO_8601#Durations). </param>
         /// <param name="country"> Country to which this record data is related. </param>
@@ -1689,7 +1689,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="accessInfoType"> Access Information type (&apos;access&apos; or &apos;gitAccess&apos;). </param>
+        /// <param name="accessInfoType"> Access Information type ('access' or 'gitAccess'). </param>
         /// <param name="principalId"> Principal (User) Identifier. </param>
         /// <param name="isDirectAccessEnabled"> Determines whether direct access is enabled. </param>
         /// <returns> A new <see cref="ApiManagement.TenantAccessInfoData"/> instance for mocking. </returns>
@@ -1699,10 +1699,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Initializes a new instance of TenantAccessInfoSecretsDetails. </summary>
-        /// <param name="accessInfoType"> Access Information type (&apos;access&apos; or &apos;gitAccess&apos;). </param>
+        /// <param name="accessInfoType"> Access Information type ('access' or 'gitAccess'). </param>
         /// <param name="principalId"> Principal (User) Identifier. </param>
-        /// <param name="primaryKey"> Primary access key. This property will not be filled on &apos;GET&apos; operations! Use &apos;/listSecrets&apos; POST request to get the value. </param>
-        /// <param name="secondaryKey"> Secondary access key. This property will not be filled on &apos;GET&apos; operations! Use &apos;/listSecrets&apos; POST request to get the value. </param>
+        /// <param name="primaryKey"> Primary access key. This property will not be filled on 'GET' operations! Use '/listSecrets' POST request to get the value. </param>
+        /// <param name="secondaryKey"> Secondary access key. This property will not be filled on 'GET' operations! Use '/listSecrets' POST request to get the value. </param>
         /// <param name="isDirectAccessEnabled"> Determines whether direct access is enabled. </param>
         /// <returns> A new <see cref="Models.TenantAccessInfoSecretsDetails"/> instance for mocking. </returns>
         public static TenantAccessInfoSecretsDetails TenantAccessInfoSecretsDetails(string accessInfoType = null, string principalId = null, string primaryKey = null, string secondaryKey = null, bool? isDirectAccessEnabled = null)
@@ -1719,11 +1719,11 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <param name="status"> Status of an async operation. </param>
         /// <param name="startedOn">
         /// Start time of an async operation. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard.
-        /// 
+        ///
         /// </param>
         /// <param name="updatedOn">
         /// Last update time of an async operation. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard.
-        /// 
+        ///
         /// </param>
         /// <param name="resultInfo"> Optional result info. </param>
         /// <param name="error"> Error Body Contract. </param>
@@ -1758,11 +1758,11 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <param name="isGitEnabled"> value indicating whether Git configuration access is enabled. </param>
         /// <param name="syncOn">
         /// The date of the latest synchronization. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard.
-        /// 
+        ///
         /// </param>
         /// <param name="configurationChangeOn">
         /// The date of the latest configuration change. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard.
-        /// 
+        ///
         /// </param>
         /// <param name="lastOperationId"> Most recent tenant configuration operation identifier. </param>
         /// <returns> A new <see cref="Models.TenantConfigurationSyncStateContract"/> instance for mocking. </returns>

@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary> Initializes a new instance of MachineLearningBuildContext. </summary>
         /// <param name="contextUri">
         /// [Required] URI of the Docker build context used to build the image. Supports blob URIs on environment creation and may return blob or Git URIs.
-        /// &lt;seealso href=&quot;https://docs.docker.com/engine/reference/commandline/build/#extended-description&quot; /&gt;
+        /// &lt;seealso href="https://docs.docker.com/engine/reference/commandline/build/#extended-description" /&gt;
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="contextUri"/> is null. </exception>
         public MachineLearningBuildContext(Uri contextUri)
@@ -29,11 +29,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary> Initializes a new instance of MachineLearningBuildContext. </summary>
         /// <param name="contextUri">
         /// [Required] URI of the Docker build context used to build the image. Supports blob URIs on environment creation and may return blob or Git URIs.
-        /// &lt;seealso href=&quot;https://docs.docker.com/engine/reference/commandline/build/#extended-description&quot; /&gt;
+        /// &lt;seealso href="https://docs.docker.com/engine/reference/commandline/build/#extended-description" /&gt;
         /// </param>
         /// <param name="dockerfilePath">
         /// Path to the Dockerfile in the build context.
-        /// &lt;seealso href=&quot;https://docs.docker.com/engine/reference/builder/&quot; /&gt;
+        /// &lt;seealso href="https://docs.docker.com/engine/reference/builder/" /&gt;
         /// </param>
         internal MachineLearningBuildContext(Uri contextUri, string dockerfilePath)
         {
@@ -43,12 +43,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary>
         /// [Required] URI of the Docker build context used to build the image. Supports blob URIs on environment creation and may return blob or Git URIs.
-        /// &lt;seealso href=&quot;https://docs.docker.com/engine/reference/commandline/build/#extended-description&quot; /&gt;
+        /// &lt;seealso href="https://docs.docker.com/engine/reference/commandline/build/#extended-description" /&gt;
         /// </summary>
         public Uri ContextUri { get; set; }
         /// <summary>
         /// Path to the Dockerfile in the build context.
-        /// &lt;seealso href=&quot;https://docs.docker.com/engine/reference/builder/&quot; /&gt;
+        /// &lt;seealso href="https://docs.docker.com/engine/reference/builder/" /&gt;
         /// </summary>
         public string DockerfilePath { get; set; }
     }

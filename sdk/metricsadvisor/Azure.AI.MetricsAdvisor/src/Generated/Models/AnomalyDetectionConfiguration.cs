@@ -14,7 +14,6 @@ namespace Azure.AI.MetricsAdvisor.Models
     /// <summary> The AnomalyDetectionConfiguration. </summary>
     public partial class AnomalyDetectionConfiguration
     {
-
         /// <summary> Initializes a new instance of AnomalyDetectionConfiguration. </summary>
         /// <param name="id"> anomaly detection configuration unique id. </param>
         /// <param name="name"> anomaly detection configuration name. </param>

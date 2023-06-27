@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 return null;
             }
             Optional<Uri> blobContainerUri = default;
-            Optional<FactorySecretString> sasToken = default;
+            Optional<DataFactorySecretString> sasToken = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("blobContainerUri"u8))
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    sasToken = FactorySecretString.DeserializeFactorySecretString(property.Value);
+                    sasToken = DataFactorySecretString.DeserializeDataFactorySecretString(property.Value);
                     continue;
                 }
             }

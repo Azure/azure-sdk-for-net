@@ -55,7 +55,6 @@ namespace Azure.AI.TextAnalytics.Tests
         };
 
         [RecordedTest]
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/36799")]
         public async Task DetectLanguageWithAADTest()
         {
             TextAnalyticsClient client = GetClient(useTokenCredential: true);

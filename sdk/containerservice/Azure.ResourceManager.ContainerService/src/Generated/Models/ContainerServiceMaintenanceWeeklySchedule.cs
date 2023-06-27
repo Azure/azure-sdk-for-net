@@ -7,7 +7,7 @@
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    /// <summary> For schedules like: &apos;recur every Monday&apos; or &apos;recur every 3 weeks on Wednesday&apos;. </summary>
+    /// <summary> For schedules like: 'recur every Monday' or 'recur every 3 weeks on Wednesday'. </summary>
     public partial class ContainerServiceMaintenanceWeeklySchedule
     {
         /// <summary> Initializes a new instance of ContainerServiceMaintenanceWeeklySchedule. </summary>

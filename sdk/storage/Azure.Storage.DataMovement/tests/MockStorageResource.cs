@@ -2,10 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Storage.DataMovement.Models;
@@ -13,11 +10,9 @@ using Azure.Storage.Tests.Shared;
 
 namespace Azure.Storage.DataMovement.Tests
 {
-    internal class MockStorageResource : StorageResource
+    internal class MockStorageResource : StorageResourceSingle
     {
         private readonly Stream _readStream;
-
-        public override TransferCopyMethod ServiceCopyMethod => TransferCopyMethod.None;
 
         public override TransferType TransferType => TransferType.Sequential;
 
@@ -59,12 +54,12 @@ namespace Azure.Storage.DataMovement.Tests
             return Task.CompletedTask;
         }
 
-        public override Task CopyBlockFromUriAsync(StorageResource sourceResource, HttpRange range, bool overwrite, long completeLength = 0, StorageResourceCopyFromUriOptions options = null, CancellationToken cancellationToken = default)
+        public override Task CopyBlockFromUriAsync(StorageResourceSingle sourceResource, HttpRange range, bool overwrite, long completeLength = 0, StorageResourceCopyFromUriOptions options = null, CancellationToken cancellationToken = default)
         {
             return Task.CompletedTask;
         }
 
-        public override Task CopyFromUriAsync(StorageResource sourceResource, bool overwrite, long completeLength, StorageResourceCopyFromUriOptions options = null, CancellationToken cancellationToken = default)
+        public override Task CopyFromUriAsync(StorageResourceSingle sourceResource, bool overwrite, long completeLength, StorageResourceCopyFromUriOptions options = null, CancellationToken cancellationToken = default)
         {
             return Task.CompletedTask;
         }
