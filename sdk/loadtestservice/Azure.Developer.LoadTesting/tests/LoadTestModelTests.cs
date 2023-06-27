@@ -25,7 +25,7 @@ namespace Azure.Developer.LoadTesting.Tests
         [Test]
         public void CanGetTestId()
         {
-            JsonDocument doc = JsonDocument.Parse("""{"testId": "abc"}""");
+            JsonDocument doc = JsonDocument.Parse("""{"testId":"abc"}""");
             Test test = new(doc.RootElement);
 
             Assert.AreEqual("abc", test.TestId);
@@ -34,7 +34,7 @@ namespace Azure.Developer.LoadTesting.Tests
         [Test]
         public void CanPatchTestId_NoChanges()
         {
-            JsonDocument doc = JsonDocument.Parse("""{"testId": "abc"}""");
+            JsonDocument doc = JsonDocument.Parse("""{"testId":"abc"}""");
             Test test = new(doc.RootElement);
 
             BinaryData utf8;
@@ -48,23 +48,23 @@ namespace Azure.Developer.LoadTesting.Tests
             CollectionAssert.AreEqual(""u8.ToArray(), utf8.ToArray());
         }
 
-        //[Test]
-        //public void CanPatchTestId_OneChange()
-        //{
-        //    JsonDocument doc = JsonDocument.Parse("""{"testId": "abc"}""");
-        //    Test test = new(doc.RootElement);
+        [Test]
+        public void CanPatchTestId_OneChange()
+        {
+            JsonDocument doc = JsonDocument.Parse("""{"testId":"abc"}""");
+            Test test = new(doc.RootElement);
 
-        //    test.TestId = "def";
+            test.TestId = "def";
 
-        //    BinaryData utf8;
-        //    using (MemoryStream stream = new())
-        //    {
-        //        test.WritePatch(stream);
-        //        stream.Position = 0;
-        //        utf8 = BinaryData.FromStream(stream);
-        //    }
+            BinaryData utf8;
+            using (MemoryStream stream = new())
+            {
+                test.WritePatch(stream);
+                stream.Position = 0;
+                utf8 = BinaryData.FromStream(stream);
+            }
 
-        //    CollectionAssert.AreEqual("""{"testId": "def"}"""u8.ToArray(), utf8.ToArray());
-        //}
+            Assert.AreEqual("""{"testId":"def"}""", utf8.ToString());
+        }
     }
 }

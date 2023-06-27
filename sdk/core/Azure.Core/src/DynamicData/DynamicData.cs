@@ -49,6 +49,8 @@ namespace Azure.Core.Serialization
 
         internal void WriteTo(Stream stream, StandardFormat format)
         {
+            // TODO: This is going to write out the PATCH JSON for the
+            // root document and not the single element, so has a bug.
             _element.WriteTo(stream, format);
         }
 

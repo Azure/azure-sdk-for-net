@@ -5,6 +5,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Text.Json;
 
 namespace Azure.Core.Json
@@ -135,6 +136,24 @@ namespace Azure.Core.Json
                         yield return c;
                     }
                 }
+            }
+
+            internal HashSet<string> GetChangedProperties(in int highWaterMark)
+            {
+                HashSet<string> properties = new HashSet<string>();
+
+                if (_changes == null)
+                {
+                    return properties;
+                }
+
+                for (int i = _changes!.Count - 1; i > highWaterMark; i--)
+                {
+                    MutableJsonChange c = _changes[i];
+                    properties.Add(c.Path);
+                }
+
+                return properties;
             }
 
             internal bool WasRemoved(string path, int highWaterMark)

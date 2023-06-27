@@ -115,5 +115,51 @@ namespace Azure.Core.Json
 
             writer.WriteEndArray();
         }
+
+        internal void WritePatch(Utf8JsonWriter writer)
+        {
+            // This version is not efficient; Proof of concept.
+
+            int hwm = -1;
+
+            // Get the list of paths to properties that have changed.
+            // This should consolidate multiple changes to a path down to one.
+
+            // TODO: it would be cool to get these sorted hierarchically to make
+            // it easy to write the JSON grouped correctly as objects.
+            HashSet<string> changedProperties = _root.Changes.GetChangedProperties(hwm);
+
+            // TODO: deal with descendants and ancestors.
+            // This version just writes out merge patch for individual properties.
+
+            // Test case: properties on the same descendant object are updated
+            // between updates to different descendant objects, but they group
+            // together correctly in the PATCH JSON.
+
+            // Test case: ancestor changes then descendant changes
+            // Test case: descendant changes then ancestor changes
+
+            // Test case: array elements change
+            // Test case: enum values change
+            // Test case: new property is added
+            // Test case: property is deleted
+
+            writer.WriteStartObject();
+
+            foreach (string path in changedProperties)
+            {
+                if (_root.Changes.TryGetChange(path, hwm, out MutableJsonChange change))
+                {
+                    string[] pathSegments = path.Split(MutableJsonDocument.ChangeTracker.Delimiter);
+                    if (pathSegments.Length == 1)
+                    {
+                        writer.WritePropertyName(pathSegments[0]);
+                        change.GetSerializedValue().WriteTo(writer);
+                    }
+                }
+            }
+
+            writer.WriteEndObject();
+        }
     }
 }

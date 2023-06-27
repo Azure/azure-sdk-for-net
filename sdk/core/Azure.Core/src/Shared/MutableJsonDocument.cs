@@ -70,12 +70,6 @@ namespace Azure.Core.Json
                     WriteJson(stream);
                     break;
             }
-
-            if (format.Symbol == 'P')
-            {
-                WritePatch(stream);
-                return;
-            }
         }
 
         private void WriteJson(Stream stream)
@@ -97,7 +91,8 @@ namespace Azure.Core.Json
                 return;
             }
 
-            // TODO: implement
+            using Utf8JsonWriter writer = new(stream);
+            RootElement.WritePatch(writer);
         }
 
         /// <summary>
