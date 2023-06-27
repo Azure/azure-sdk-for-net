@@ -1,5 +1,15 @@
 # Release History
 
+## 1.2.0-beta.1 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
 ## 1.1.0 (2023-06-27)
 
 This release is the stable release of 1.1.0-beta.1.
