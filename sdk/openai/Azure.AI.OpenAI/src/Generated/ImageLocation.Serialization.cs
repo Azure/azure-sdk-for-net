@@ -20,30 +20,16 @@ namespace Azure.AI.OpenAI
             {
                 return null;
             }
-            Optional<Uri> url = default;
-            Optional<ResponseError> error = default;
+            Uri url = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("url"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     url = new Uri(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("error"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    error = JsonSerializer.Deserialize<ResponseError>(property.Value.GetRawText());
-                    continue;
-                }
             }
-            return new ImageLocation(url.Value, error.Value);
+            return new ImageLocation(url);
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>

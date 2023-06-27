@@ -12,16 +12,16 @@ using Azure.Core;
 
 namespace Azure.AI.OpenAI
 {
-    public partial class ImageLocationResult
+    public partial class ImageGenerations
     {
-        internal static ImageLocationResult DeserializeImageLocationResult(JsonElement element)
+        internal static ImageGenerations DeserializeImageGenerations(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             long created = default;
-            IReadOnlyList<ImageLocation> data = default;
+            IReadOnlyList<ImageResponseItem> data = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("created"u8))
@@ -31,24 +31,18 @@ namespace Azure.AI.OpenAI
                 }
                 if (property.NameEquals("data"u8))
                 {
-                    List<ImageLocation> array = new List<ImageLocation>();
+                    // CUSTOM CODE NOTE: "data" is replaced with a custom union type (via abstract class and
+                    //                   inheritance) and this modification appropriately deserializes that.
+                    List<ImageResponseItem> array = new List<ImageResponseItem>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ImageLocation.DeserializeImageLocation(item));
+                        array.Add(ImageResponseItem.DeserializeImageResponseItem(item));
                     }
                     data = array;
                     continue;
                 }
             }
-            return new ImageLocationResult(created, data);
-        }
-
-        /// <summary> Deserializes the model from a raw response. </summary>
-        /// <param name="response"> The response to deserialize the model from. </param>
-        internal static ImageLocationResult FromResponse(Response response)
-        {
-            using var document = JsonDocument.Parse(response.Content);
-            return DeserializeImageLocationResult(document.RootElement);
+            return new ImageGenerations(created, data);
         }
     }
 }

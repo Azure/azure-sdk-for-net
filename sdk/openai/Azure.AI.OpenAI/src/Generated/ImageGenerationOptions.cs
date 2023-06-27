@@ -25,20 +25,30 @@ namespace Azure.AI.OpenAI
 
         /// <summary> Initializes a new instance of ImageGenerationOptions. </summary>
         /// <param name="prompt"> A description of the desired images. </param>
-        /// <param name="n"> The number of images to generate (defaults to 1). </param>
+        /// <param name="imageCount"> The number of images to generate (defaults to 1). </param>
         /// <param name="size"> The desired size of the generated images. Must be one of 256x256, 512x512, or 1024x1024 (defaults to 1024x1024). </param>
+        /// <param name="responseFormat">
+        ///   The format in which image generation response items should be presented.
+        ///   Azure OpenAI only supports URL response items.
+        /// </param>
         /// <param name="user"> A unique identifier representing your end-user, which can help to monitor and detect abuse. </param>
-        internal ImageGenerationOptions(string prompt, int? n, ImageSize? size, string user)
+        internal ImageGenerationOptions(string prompt, int? imageCount, ImageSize? size, ImageGenerationResponseFormat? responseFormat, string user)
         {
             Prompt = prompt;
-            N = n;
+            ImageCount = imageCount;
             Size = size;
+            ResponseFormat = responseFormat;
             User = user;
         }
         /// <summary> The number of images to generate (defaults to 1). </summary>
-        public int? N { get; set; }
+        public int? ImageCount { get; set; }
         /// <summary> The desired size of the generated images. Must be one of 256x256, 512x512, or 1024x1024 (defaults to 1024x1024). </summary>
         public ImageSize? Size { get; set; }
+        /// <summary>
+        ///   The format in which image generation response items should be presented.
+        ///   Azure OpenAI only supports URL response items.
+        /// </summary>
+        public ImageGenerationResponseFormat? ResponseFormat { get; set; }
         /// <summary> A unique identifier representing your end-user, which can help to monitor and detect abuse. </summary>
         public string User { get; set; }
     }

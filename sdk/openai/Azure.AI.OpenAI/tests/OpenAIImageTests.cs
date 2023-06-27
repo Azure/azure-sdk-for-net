@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
@@ -20,7 +19,7 @@ namespace Azure.AI.OpenAI.Tests
         [RecordedTest]
         [TestCase(OpenAIClientServiceTarget.Azure)]
         [TestCase(OpenAIClientServiceTarget.NonAzure)]
-        public async Task CanGenerateBatchImages(OpenAIClientServiceTarget serviceTarget)
+        public async Task CanGenerateImages(OpenAIClientServiceTarget serviceTarget)
         {
             OpenAIClient client = GetTestClient(serviceTarget);
             Assert.That(client, Is.InstanceOf<OpenAIClient>());
@@ -30,49 +29,85 @@ namespace Azure.AI.OpenAI.Tests
             {
                 Prompt = prompt,
                 Size = ImageSize.Size256x256,
-                N = 2,
+                ImageCount = 2,
                 User = "placeholder",
             };
             Assert.That(requestOptions, Is.InstanceOf<ImageGenerationOptions>());
 
-            if (serviceTarget == OpenAIClientServiceTarget.NonAzure)
-            {
-                Assert.ThrowsAsync<InvalidOperationException>(async () => await client.BeginBatchImageGenerationAsync(
-                    WaitUntil.Started,
-                    requestOptions));
-                return;
-            }
+            Response<ImageGenerations> imagesResponse = await client.GetImageGenerationsAsync(requestOptions);
 
-            Operation<BatchImageGenerationOperationResponse> operation
-                = await client.BeginBatchImageGenerationAsync(WaitUntil.Started, requestOptions);
-            Assert.IsFalse(operation.HasCompleted);
-
-            await operation.WaitForCompletionAsync();
-            Assert.IsTrue(operation.HasCompleted);
-            Assert.IsTrue(operation.HasValue);
-
-            Response rawResponse = operation.GetRawResponse();
+            Response rawResponse = imagesResponse.GetRawResponse();
             Assert.That(rawResponse, Is.Not.Null);
             Assert.That(rawResponse.IsError, Is.False);
 
-            BatchImageGenerationOperationResponse operationResponse = operation.Value;
-            Assert.IsNotNull(operationResponse);
-            Assert.That(operationResponse.Status, Is.EqualTo(AzureOpenAIOperationState.Succeeded));
-            Assert.That(operationResponse.Id, Is.Not.Null.Or.Empty);
-            Assert.That(operationResponse.Created, Is.GreaterThan(0));
-            Assert.That(operationResponse.Expires, Is.GreaterThan(0));
-            Assert.That(operationResponse.Expires, Is.GreaterThan(operationResponse.Created));
+            ImageGenerations imageGenerations = imagesResponse.Value;
+            Assert.That(imageGenerations, Is.InstanceOf<ImageGenerations>());
+            Assert.That(imageGenerations, Is.Not.Null);
+            Assert.That(imageGenerations.Created, Is.GreaterThan(new DateTimeOffset(new DateTime(2023, 1, 1))));
 
-            ImageLocationResult imageLocationResult = operationResponse.Result;
-            Assert.IsNotNull(imageLocationResult);
-            Assert.That(imageLocationResult.Created, Is.GreaterThan(0));
-            Assert.That(imageLocationResult.Data, Is.Not.Null.Or.Empty);
-            Assert.That(imageLocationResult.Data.Count, Is.EqualTo(requestOptions.N));
+            Assert.That(imageGenerations.Data, Is.Not.Null.Or.Empty);
+            Assert.That(imageGenerations.Data.Count, Is.EqualTo(requestOptions.ImageCount));
 
-            ImageLocation firstImage = imageLocationResult.Data[0];
-            Assert.That(firstImage, Is.Not.Null);
-            Assert.That(firstImage.Error, Is.Null);
-            Assert.That(firstImage.Url, Is.Not.Null.Or.Empty);
+            ImageLocation firstImageLocation = imageGenerations.Data[0] as ImageLocation;
+            Assert.That(firstImageLocation, Is.Not.Null);
+            Assert.That(firstImageLocation.Url, Is.Not.Null.Or.Empty);
+
+            using Stream imageStream = await firstImageLocation.GetStreamAsync();
+            using var copyStream = new MemoryStream();
+            imageStream.CopyTo(copyStream);
+
+            Assert.That(copyStream.Length, Is.GreaterThan(0));
+
+            ImageLocation secondImageLocation = imageGenerations.Data[1] as ImageLocation;
+            Assert.That(secondImageLocation, Is.Not.Null);
+            Assert.That(secondImageLocation.Url, Is.Not.Null.Or.Empty);
+            Assert.That(
+                secondImageLocation.Url.ToString(),
+                Is.Not.EquivalentTo(firstImageLocation.Url.ToString()));
+        }
+
+        [RecordedTest]
+        // [TestCase(OpenAIClientServiceTarget.Azure)]
+        [TestCase(OpenAIClientServiceTarget.NonAzure)]
+        [Ignore("Test recording currently fails with b64 data payload")]
+        public async Task Base64EncodedResponsesWork(OpenAIClientServiceTarget serviceTarget)
+        {
+            OpenAIClient client = GetTestClient(serviceTarget);
+            Assert.That(client, Is.InstanceOf<OpenAIClient>());
+
+            const string prompt = "a simplistic picture of a cyberpunk money dreaming of electric bananas";
+            var requestOptions = new ImageGenerationOptions()
+            {
+                Prompt = prompt,
+                Size = ImageSize.Size256x256,
+                ResponseFormat = ImageGenerationResponseFormat.Base64,
+                User = "placeholder",
+            };
+            Assert.That(requestOptions, Is.InstanceOf<ImageGenerationOptions>());
+
+            Response<ImageGenerations> imagesResponse = await client.GetImageGenerationsAsync(requestOptions);
+
+            Response rawResponse = imagesResponse.GetRawResponse();
+            Assert.That(rawResponse, Is.Not.Null);
+            Assert.That(rawResponse.IsError, Is.False);
+
+            ImageGenerations imageGenerations = imagesResponse.Value;
+            Assert.That(imageGenerations, Is.InstanceOf<ImageGenerations>());
+            Assert.That(imageGenerations, Is.Not.Null);
+            Assert.That(imageGenerations.Created, Is.GreaterThan(new DateTimeOffset(new DateTime(2023, 1, 1))));
+
+            Assert.That(imageGenerations.Data, Is.Not.Null.Or.Empty);
+            Assert.That(imageGenerations.Data.Count, Is.EqualTo(1));
+
+            ImagePayload imagePayload = imageGenerations.Data[0] as ImagePayload;
+            Assert.That(imagePayload, Is.Not.Null);
+            Assert.That(imagePayload.Base64Data, Is.Not.Null.Or.Empty);
+
+            using Stream helperDataStream = await imageGenerations.Data[0].GetStreamAsync();
+            using var streamReader = new StreamReader(helperDataStream);
+            string helperStreamDump = await streamReader.ReadToEndAsync();
+
+            Assert.That(helperStreamDump.Length, Is.EqualTo(imagePayload.Base64Data.Length));
         }
     }
 }

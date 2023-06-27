@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.AI.OpenAI
 {
     /// <summary> The state of a job or item. </summary>
-    public readonly partial struct AzureOpenAIOperationState : IEquatable<AzureOpenAIOperationState>
+    internal readonly partial struct AzureOpenAIOperationState : IEquatable<AzureOpenAIOperationState>
     {
         private readonly string _value;
 

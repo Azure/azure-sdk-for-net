@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.AI.OpenAI
 {
-    public partial class BatchImageGenerationOperationResponse
+    internal partial class BatchImageGenerationOperationResponse
     {
         internal static BatchImageGenerationOperationResponse DeserializeBatchImageGenerationOperationResponse(JsonElement element)
         {
@@ -22,7 +22,7 @@ namespace Azure.AI.OpenAI
             string id = default;
             long created = default;
             Optional<long> expires = default;
-            Optional<ImageLocationResult> result = default;
+            Optional<ImageGenerations> result = default;
             AzureOpenAIOperationState status = default;
             Optional<ResponseError> error = default;
             foreach (var property in element.EnumerateObject())
@@ -52,7 +52,7 @@ namespace Azure.AI.OpenAI
                     {
                         continue;
                     }
-                    result = ImageLocationResult.DeserializeImageLocationResult(property.Value);
+                    result = ImageGenerations.DeserializeImageGenerations(property.Value);
                     continue;
                 }
                 if (property.NameEquals("status"u8))

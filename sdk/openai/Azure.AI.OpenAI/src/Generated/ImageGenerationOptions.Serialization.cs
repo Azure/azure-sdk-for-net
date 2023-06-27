@@ -17,15 +17,20 @@ namespace Azure.AI.OpenAI
             writer.WriteStartObject();
             writer.WritePropertyName("prompt"u8);
             writer.WriteStringValue(Prompt);
-            if (Optional.IsDefined(N))
+            if (Optional.IsDefined(ImageCount))
             {
                 writer.WritePropertyName("n"u8);
-                writer.WriteNumberValue(N.Value);
+                writer.WriteNumberValue(ImageCount.Value);
             }
             if (Optional.IsDefined(Size))
             {
                 writer.WritePropertyName("size"u8);
                 writer.WriteStringValue(Size.Value.ToString());
+            }
+            if (Optional.IsDefined(ResponseFormat))
+            {
+                writer.WritePropertyName("response_format"u8);
+                writer.WriteStringValue(ResponseFormat.Value.ToString());
             }
             if (Optional.IsDefined(User))
             {
