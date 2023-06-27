@@ -6,10 +6,12 @@
 #nullable disable
 
 using System;
+using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.Developer.LoadTesting.Models;
 
 namespace Azure.Developer.LoadTesting
 {
@@ -98,6 +100,18 @@ namespace Azure.Developer.LoadTesting
         }
 
         /// <summary>
+        /// </summary>
+        /// <param name="test"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+#pragma warning disable CS1998 // Async method lacks 'await' operators and will run synchronously
+        public virtual async Task<Response<Test>> CreateOrUpdateTestAsync(Test test, CancellationToken cancellationToken = default)
+#pragma warning restore CS1998 // Async method lacks 'await' operators and will run synchronously
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
         /// [Protocol Method] Create a new test or update an existing test.
         /// <list type="bullet">
         /// <item>
@@ -133,6 +147,17 @@ namespace Azure.Developer.LoadTesting
                 throw;
             }
         }
+
+        /// <summary>
+        /// </summary>
+        /// <param name="test"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        public virtual Response<Test> CreateOrUpdateTest(Test test, CancellationToken cancellationToken = default)
+        {
+            throw new NotImplementedException();
+        }
+
 
         /// <summary>
         /// [Protocol Method] Delete a test by its name.
