@@ -1,6 +1,6 @@
 # Release History
 
-## 1.1.0-beta.2 (2023-06-30)
+## 1.1.0-beta.2 (2023-06-27)
 
 ### Features Added
 - Added support for Namespace
