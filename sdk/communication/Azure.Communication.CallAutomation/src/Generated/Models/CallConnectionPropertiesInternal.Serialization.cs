@@ -25,6 +25,7 @@ namespace Azure.Communication.CallAutomation
             Optional<IReadOnlyList<CommunicationIdentifierModel>> targets = default;
             Optional<CallConnectionState> callConnectionState = default;
             Optional<string> callbackUri = default;
+            Optional<string> websocketUrl = default;
             Optional<string> mediaSubscriptionId = default;
             Optional<PhoneNumberIdentifierModel> sourceCallerIdNumber = default;
             Optional<string> sourceDisplayName = default;
@@ -71,6 +72,11 @@ namespace Azure.Communication.CallAutomation
                     callbackUri = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("websocketUrl"u8))
+                {
+                    websocketUrl = property.Value.GetString();
+                    continue;
+                }
                 if (property.NameEquals("mediaSubscriptionId"u8))
                 {
                     mediaSubscriptionId = property.Value.GetString();
@@ -114,7 +120,7 @@ namespace Azure.Communication.CallAutomation
                     continue;
                 }
             }
-            return new CallConnectionPropertiesInternal(callConnectionId.Value, serverCallId.Value, Optional.ToList(targets), Optional.ToNullable(callConnectionState), callbackUri.Value, mediaSubscriptionId.Value, sourceCallerIdNumber.Value, sourceDisplayName.Value, sourceIdentity.Value, correlationId.Value, answeredByIdentifier.Value);
+            return new CallConnectionPropertiesInternal(callConnectionId.Value, serverCallId.Value, Optional.ToList(targets), Optional.ToNullable(callConnectionState), callbackUri.Value, websocketUrl.Value, mediaSubscriptionId.Value, sourceCallerIdNumber.Value, sourceDisplayName.Value, sourceIdentity.Value, correlationId.Value, answeredByIdentifier.Value);
         }
     }
 }

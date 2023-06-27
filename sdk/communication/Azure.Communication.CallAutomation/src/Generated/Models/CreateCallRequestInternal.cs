@@ -18,15 +18,12 @@ namespace Azure.Communication.CallAutomation
     {
         /// <summary> Initializes a new instance of CreateCallRequestInternal. </summary>
         /// <param name="targets"> The targets of the call. </param>
-        /// <param name="callbackUri"> The callback URI. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="targets"/> or <paramref name="callbackUri"/> is null. </exception>
-        public CreateCallRequestInternal(IEnumerable<CommunicationIdentifierModel> targets, string callbackUri)
+        /// <exception cref="ArgumentNullException"> <paramref name="targets"/> is null. </exception>
+        public CreateCallRequestInternal(IEnumerable<CommunicationIdentifierModel> targets)
         {
             Argument.AssertNotNull(targets, nameof(targets));
-            Argument.AssertNotNull(callbackUri, nameof(callbackUri));
 
             Targets = targets.ToList();
-            CallbackUri = callbackUri;
         }
 
         /// <summary> The targets of the call. </summary>
@@ -42,8 +39,10 @@ namespace Azure.Communication.CallAutomation
         public CommunicationUserIdentifierModel SourceIdentity { get; set; }
         /// <summary> A customer set value used to track the answering of a call. </summary>
         public string OperationContext { get; set; }
+        /// <summary> Flag to enable Websocket. </summary>
+        public bool? WebsocketEnable { get; set; }
         /// <summary> The callback URI. </summary>
-        public string CallbackUri { get; }
+        public string CallbackUri { get; set; }
         /// <summary> Media Streaming Configuration. </summary>
         public MediaStreamingOptionsInternal MediaStreamingConfiguration { get; set; }
         /// <summary> The identifier of the Cognitive Service resource assigned to this call. </summary>

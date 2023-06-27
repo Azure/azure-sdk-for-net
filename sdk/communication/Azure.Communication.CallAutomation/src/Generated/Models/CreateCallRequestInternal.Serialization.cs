@@ -42,8 +42,16 @@ namespace Azure.Communication.CallAutomation
                 writer.WritePropertyName("operationContext"u8);
                 writer.WriteStringValue(OperationContext);
             }
-            writer.WritePropertyName("callbackUri"u8);
-            writer.WriteStringValue(CallbackUri);
+            if (Optional.IsDefined(WebsocketEnable))
+            {
+                writer.WritePropertyName("websocketEnable"u8);
+                writer.WriteBooleanValue(WebsocketEnable.Value);
+            }
+            if (Optional.IsDefined(CallbackUri))
+            {
+                writer.WritePropertyName("callbackUri"u8);
+                writer.WriteStringValue(CallbackUri);
+            }
             if (Optional.IsDefined(MediaStreamingConfiguration))
             {
                 writer.WritePropertyName("mediaStreamingConfiguration"u8);
