@@ -498,13 +498,31 @@ namespace Azure.Core.Tests
         }
 
         [Test]
-        public void CannotWriteToStreamWithPatchFormat()
+        public void CanWriteToStreamWithPatchFormat()
+        {
+            string json = """{"foo":1}""";
+            MutableJsonDocument mdoc = MutableJsonDocument.Parse(json);
+
+            mdoc.RootElement.GetProperty("foo").Set(2);
+
+            using Stream stream = new MemoryStream();
+            mdoc.WriteTo(stream, 'P');
+            stream.Flush();
+            stream.Position = 0;
+
+            string actual = BinaryData.FromStream(stream).ToString();
+
+            Assert.AreEqual("""{"foo":2}""", actual);
+        }
+
+        [Test]
+        public void CannotWriteToStreamWithUnknownFormat()
         {
             string json = """{ "foo" : 1 }""";
             MutableJsonDocument mdoc = MutableJsonDocument.Parse(json);
 
             Stream stream = new MemoryStream();
-            Assert.Throws<FormatException>(() => mdoc.WriteTo(stream, 'P'));
+            Assert.Throws<FormatException>(() => mdoc.WriteTo(stream, 'U'));
         }
 
         [TestCaseSource(nameof(TestCases))]
@@ -652,6 +670,147 @@ namespace Azure.Core.Tests
             MutableJsonDocumentTests.ValidateWriteTo($"{{\"foo\":\"{fooString}\",\"bar\":\"{barString}\"}}", mdoc);
         }
 
+        #region JSON Merge Patch
+        [Test]
+        public void CanWritePatchChangeRoot()
+        {
+            string json = """{"foo": 1}""";
+            MutableJsonDocument mdoc = MutableJsonDocument.Parse(json);
+
+            mdoc.RootElement.GetProperty("foo").Set(2);
+
+            using Stream stream = new MemoryStream();
+            mdoc.WriteTo(stream, 'P');
+            stream.Flush();
+            stream.Position = 0;
+
+            string actual = BinaryData.FromStream(stream).ToString();
+
+            AreEqualJson("""{"foo": 2}""", actual);
+        }
+
+        [Test]
+        public void CanWritePatchChangeRootOnePropertyChangesAnotherDoesnt()
+        {
+            string json = """{"foo": 1, "bar": "a"}""";
+            MutableJsonDocument mdoc = MutableJsonDocument.Parse(json);
+
+            mdoc.RootElement.GetProperty("foo").Set(2);
+
+            using Stream stream = new MemoryStream();
+            mdoc.WriteTo(stream, 'P');
+            stream.Flush();
+            stream.Position = 0;
+
+            string actual = BinaryData.FromStream(stream).ToString();
+
+            AreEqualJson("""{"foo": 2}""", actual);
+        }
+
+        [Test]
+        public void CanWritePatchChangeRootChangeMultipleProperties()
+        {
+            string json = """{"foo": 1, "bar": "a"}""";
+            MutableJsonDocument mdoc = MutableJsonDocument.Parse(json);
+
+            mdoc.RootElement.GetProperty("foo").Set(2);
+            mdoc.RootElement.GetProperty("bar").Set("b");
+
+            using Stream stream = new MemoryStream();
+            mdoc.WriteTo(stream, 'P');
+            stream.Flush();
+            stream.Position = 0;
+
+            string actual = BinaryData.FromStream(stream).ToString();
+
+            // TODO: does order matter?  This fails:
+            //AreEqualJson("""{"foo": 2, "bar": "b"}""", actual);
+
+            AreEqualJson("""{"bar": "b", "foo": 2}""", actual);
+        }
+
+        private static void AreEqualJson(string expected, string actual)
+        {
+            JsonDocument doc = JsonDocument.Parse(expected);
+            BinaryData buffer = MutableJsonDocumentTests.GetWriteToBuffer(doc);
+            Assert.AreEqual(buffer.ToString(), actual);
+        }
+
+        [Test]
+        public void CanWritePatchChangeChild()
+        {
+            string json = """
+                {
+                    "parent": {
+                        "child": true
+                    }
+                }
+                """;
+            MutableJsonDocument mdoc = MutableJsonDocument.Parse(json);
+
+            mdoc.RootElement.GetProperty("parent").GetProperty("child").Set(false);
+
+            using Stream stream = new MemoryStream();
+            mdoc.WriteTo(stream, 'P');
+            stream.Flush();
+            stream.Position = 0;
+
+            string actual = BinaryData.FromStream(stream).ToString();
+
+            AreEqualJson("""{"parent": {"child": false}}""", actual);
+        }
+
+        [Test]
+        public void CanWritePatchInterleaveChildObjectChanges()
+        {
+            throw new NotImplementedException();
+        }
+
+        [Test]
+        public void CanWritePatchForNonRootElement()
+        {
+            throw new NotImplementedException();
+        }
+
+        [Test]
+        public void CanWritePatchToArrayElement()
+        {
+            throw new NotImplementedException();
+        }
+
+        [Test]
+        public void CanWritePatchReplaceObject()
+        {
+            throw new NotImplementedException();
+        }
+
+        [Test]
+        public void CanWritePatchAddProperty()
+        {
+            throw new NotImplementedException();
+        }
+
+        [Test]
+        public void CanWritePatchAddObject()
+        {
+            throw new NotImplementedException();
+        }
+
+        [Test]
+        public void CanWritePatchDeleteProperty()
+        {
+            throw new NotImplementedException();
+        }
+
+        [Test]
+        public void CanWritePatchDeleteObject()
+        {
+            throw new NotImplementedException();
+        }
+
+        #endregion
+
+        #region Helpers
         public static IEnumerable<dynamic> TestCases()
         {
             yield return """
@@ -770,7 +929,6 @@ namespace Azure.Core.Tests
                 """;
         }
 
-        #region Helpers
         private class TestClass
         {
             public string StringProperty { get; set; }

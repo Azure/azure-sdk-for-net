@@ -18,6 +18,9 @@ namespace Azure.Core.Json
 
         internal void WriteTo(Stream stream, StandardFormat format)
         {
+            // TODO: Test case: This writes for the current element,
+            // not the full root document.
+
             _root.WriteTo(stream, format);
         }
 
