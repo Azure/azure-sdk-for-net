@@ -1,6 +1,6 @@
 # Troubleshooting Azure Monitor Ingestion client library issues
 
-This troubleshooting guide contains instructions to diagnose frequently encountered issues while using the Azure Monitor Ingestion client library for .Net.
+This troubleshooting guide contains instructions to diagnose frequently encountered issues while using the Azure Monitor Ingestion client library for .NET.
 
 ## Table of contents
 
@@ -19,9 +19,9 @@ This troubleshooting guide contains instructions to diagnose frequently encounte
 
 To troubleshoot issues with the library, first enable logging to monitor the behavior of the application. The errors and warnings in the logs generally provide useful insights into what went wrong and sometimes include corrective actions to fix issues.
 
-This library uses the standard [logging](https://docs.microsoft.com/dotnet/azure/sdk/logging) library. Basic information about HTTP sessions, such as URLs and headers, is logged at the `INFO` level.
+This library uses the standard [logging](https://learn.microsoft.com/dotnet/azure/sdk/logging) library. Basic information about HTTP sessions, such as URLs and headers, is logged at the `INFO` level.
 
-The simplest way to see the logs is to enable console logging. To create an Azure SDK log listener that outputs messages to the console, use the [AzureEventSourceListener.CreateConsoleLogger](https://docs.microsoft.com/dotnet/api/azure.core.diagnostics.azureeventsourcelistener.createconsolelogger?view=azure-dotnet) method:
+The simplest way to see the logs is to enable console logging. To create an Azure SDK log listener that outputs messages to the console, use the [AzureEventSourceListener.CreateConsoleLogger](https://learn.microsoft.com/dotnet/api/azure.core.diagnostics.azureeventsourcelistener.createconsolelogger?view=azure-dotnet) method:
 
 ```csharp
 using Azure.Core.Diagnostics;
@@ -42,8 +42,8 @@ If you get an HTTP error with status code 403 (Forbidden), it means the provided
 
 Confirm that:
 
-1. Sufficient permissions have been granted to the application or user making the request. For more information, see [manage access to workspaces](https://docs.microsoft.com/azure/azure-monitor/logs/manage-access#manage-access-using-workspace-permissions).
-1. You're authenticating as that user or application if the user or application is granted sufficient privileges to query the workspace. If you're authenticating using the [DefaultAzureCredential](https://docs.microsoft.com/dotnet/api/azure.identity.defaultazurecredential?view=azure-dotnet), check the logs to verify the credential used is the one you expected. To enable logging, see the [Enable client logging](#enable-client-logging) section.
+1. Sufficient permissions have been granted to the application or user making the request. For more information, see [manage access to workspaces](https://learn.microsoft.com/azure/azure-monitor/logs/manage-access#manage-access-using-workspace-permissions).
+1. You're authenticating as that user or application if the user or application is granted sufficient privileges to query the workspace. If you're authenticating using the [DefaultAzureCredential](https://learn.microsoft.com/dotnet/api/azure.identity.defaultazurecredential?view=azure-dotnet), check the logs to verify the credential used is the one you expected. To enable logging, see the [Enable client logging](#enable-client-logging) section.
 
 For more help with troubleshooting authentication errors, see the Azure Identity client library [troubleshooting guide](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/identity/Azure.Identity/TROUBLESHOOTING.md).
 
@@ -51,7 +51,7 @@ For more help with troubleshooting authentication errors, see the Azure Identity
 
 ### Troubleshooting authorization errors
 
-If you get an HTTP error with status code 403 (Forbidden), it means that the provided credentials have insufficient permissions to upload logs to the specified Data Collection Endpoint (DCE) and Data Collection Rule (DCR) ID.
+If you get an error with HTTP status code 403 (Forbidden), it means that the provided credentials have insufficient permissions to upload logs to the specified Data Collection Endpoint (DCE) and Data Collection Rule (DCR) ID.
 
 ```text
 com.azure.core.exception.HttpResponseException: Status code 403, "{"error":{"code":"OperationFailed","message":"The 
@@ -63,15 +63,15 @@ authentication token provided does not have access to ingest data for the data c
 
 1. Check that the application or user making the request has sufficient permissions:
    * See this document to [manage access to data collection rule](https://learn.microsoft.com/azure/azure-monitor/logs/tutorial-logs-ingestion-portal#assign-permissions-to-the-dcr).
-   * To ingest logs, ensure the service principal is assigned the **Monitoring Metrics Publisher** role for the data collection rule.
+   * To ingest logs, ensure the service principal is assigned the **Monitoring Metrics Publisher** role for the DCR.
 1. If the user or application is granted sufficient privileges to upload logs, ensure you're authenticating as that user/application. If you're authenticating using the [DefaultAzureCredential](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/identity/Azure.Identity/README.md#defaultazurecredential), check the logs to verify that the credential used is the one you expected. To enable logging, see the [Enable client logging](#enable-client-logging) section.
-1. The permissions may take up to 30 minutes to propagate. So, if the permissions were granted recently, retry after some time.
+1. The permissions may take up to 30 minutes to propagate. If the permissions were granted recently, retry after some time.
 
 ### Troubleshooting missing logs
 
-When you send logs to Azure Monitor for ingestion, the request may succeed, but you may not see the data appearing in the designated Log Analytics workspace table as configured in the DCR. To investigate and resolve this issue, ensure the following:
+When you send logs to Azure Monitor for ingestion, the request may succeed, but you may not see the data appear in the designated Log Analytics workspace table as configured in the DCR. To investigate and resolve this issue, ensure the following:
 
-* Double-check that you're using the correct data collection endpoint when configuring the `LogsIngestionClient`. Using the wrong endpoint can result in data not being properly sent to the Log Analytics workspace.
+* Double-check that you're using the correct DCE when configuring the `LogsIngestionClient`. Using the wrong endpoint can result in data not being properly sent to the Log Analytics workspace.
 
 * Make sure you provide the correct DCR ID to the `Upload` method. The DCR ID is an immutable identifier that determines the transformation rules applied to the uploaded logs and directs them to the appropriate Log Analytics workspace table.
 
@@ -88,7 +88,7 @@ If you experience delays when uploading logs, it could be due to reaching servic
 To enable client logging and to troubleshoot this issue further, see the instructions provided in the section titled [Enable client logging](#enable-client-logging).
 
 If there are no throttling errors, then consider increasing the concurrency to upload multiple log requests in parallel.
-To set the concurrency, use the `UploadLogsOptions` type's `MaxConcurrency` property.
+To set the concurrency, use the `UploadLogsOptions.MaxConcurrency` property.
 
 ```C# Snippet:UploadWithMaxConcurrency
     Uri endpoint = new Uri("<data_collection_endpoint_uri>");

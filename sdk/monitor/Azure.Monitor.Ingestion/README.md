@@ -251,8 +251,6 @@ Console.WriteLine("Table entry count: " +
 
 ## Troubleshooting
 
-### Enabling logging
-
 For details on diagnosing various failure scenarios, see our [troubleshooting guide](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/monitor/Azure.Monitor.Ingestion/TROUBLESHOOTING.md).
 
 ## Next steps
