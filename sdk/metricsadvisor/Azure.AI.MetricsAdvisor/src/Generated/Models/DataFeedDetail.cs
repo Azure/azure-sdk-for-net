@@ -19,7 +19,6 @@ namespace Azure.AI.MetricsAdvisor.Models
     /// </summary>
     internal partial class DataFeedDetail
     {
-
         /// <summary> Initializes a new instance of DataFeedDetail. </summary>
         /// <param name="dataSourceType"> data source type. </param>
         /// <param name="dataFeedId"> data feed unique id. </param>

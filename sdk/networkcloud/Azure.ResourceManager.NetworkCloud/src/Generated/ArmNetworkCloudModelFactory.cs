@@ -392,9 +392,9 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// </param>
         /// <param name="ipv4Address">
         /// The IPv4 address of the virtual machine.
-        /// 
+        ///
         /// This field is used only if the attached network has IPAllocationType of IPV4 or DualStack.
-        /// 
+        ///
         /// If IPAllocationMethod is:
         /// Static - this field must contain a user specified IPv4 address from within the subnet specified in the attached network.
         /// Dynamic - this field is read-only, but will be populated with an address from within the subnet specified in the attached network.
@@ -402,9 +402,9 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// </param>
         /// <param name="ipv6Address">
         /// The IPv6 address of the virtual machine.
-        /// 
+        ///
         /// This field is used only if the attached network has IPAllocationType of IPV6 or DualStack.
-        /// 
+        ///
         /// If IPAllocationMethod is:
         /// Static - this field must contain an IPv6 address range from within the range specified in the attached network.
         /// Dynamic - this field is read-only, but will be populated with an range from within the subnet specified in the attached network.
