@@ -101,11 +101,12 @@ namespace Azure.Developer.LoadTesting
 
         /// <summary>
         /// </summary>
+        /// <param name="testId">TODO: we'll want to include this in the model, not the method</param>
         /// <param name="test"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
 #pragma warning disable CS1998 // Async method lacks 'await' operators and will run synchronously
-        public virtual async Task<Response<Test>> CreateOrUpdateTestAsync(Test test, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<Test>> CreateOrUpdateTestAsync(string testId, Test test, CancellationToken cancellationToken = default)
 #pragma warning restore CS1998 // Async method lacks 'await' operators and will run synchronously
         {
             throw new NotImplementedException();
@@ -150,10 +151,11 @@ namespace Azure.Developer.LoadTesting
 
         /// <summary>
         /// </summary>
+        /// <param name="testId"></param>
         /// <param name="test"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public virtual Response<Test> CreateOrUpdateTest(Test test, CancellationToken cancellationToken = default)
+        public virtual Response<Test> CreateOrUpdateTest(string testId, Test test, CancellationToken cancellationToken = default)
         {
             throw new NotImplementedException();
         }
