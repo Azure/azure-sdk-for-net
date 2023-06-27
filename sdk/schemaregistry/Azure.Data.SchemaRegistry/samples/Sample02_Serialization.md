@@ -13,7 +13,9 @@ The following shows how to use the `SchemaRegistrySerializer` to serialize and d
 
 ## Implementing `SchemaValidator`
 
-The `SchemaValidator` is an abstract class that must be implemented and passed into the `SchemaRegistryJsonSerializer` constructor. This allows you to choose the third-party JSON Schema package you would like to use to generate schemas from .NET types and validate .NET objects against JSON schemas. Implementing both `SchemaValidator.Validate` and `SchemaValidator.GenerateSchema` is required.
+The `SchemaValidator` is an abstract class that must be implemented and passed into the `SchemaRegistryJsonSerializer` constructor. This allows you to choose the third-party JSON Schema package you would like to use to generate schemas from .NET types and validate .NET objects against JSON schemas.
+
+Implementing both `SchemaValidator.Validate` and `SchemaValidator.GenerateSchema` is required. Validation may be useful for your application since JSON deserialization is flexible. Deserializing on its own will not verify that a type matches a given schema, so implementing the validation method will be a much more reliable way to enforce schema adherance.
 
 The following is an outline of how an implemented `SchemaValidator` may look:
 ```C# Snippet:SampleSchemaRegistryJsonSchemaGeneratorImplementation
@@ -50,10 +52,10 @@ internal class SampleJsonValidator : SchemaValidator
 {
     public override bool IsValid(object data, Type dataType, string schemaDefinition)
     {
-        JSchema schema = JSchema.Parse(schemaDefinition);
-        JObject jsonObject = JObject.FromObject(data);
+        JsonSchemaSample schema = JsonSchemaSample.Parse(schemaDefinition);
+        JsonObjectSample jsonObject = JObject.FromObject(data);
 
-        bool isValid = jsonObject.IsValid(schema, out IList<ValidationError> messages);
+        bool isValid = jsonObject.IsValid(schema, out IList<ErrorMessageSample> messages);
 
         if (!isValid)
         {
@@ -64,8 +66,8 @@ internal class SampleJsonValidator : SchemaValidator
 
     public override string GenerateSchema(Type dataType)
     {
-        JSchemaGenerator generator = new();
-        JSchema schema = generator.Generate(dataType);
+        JsonSchemaGeneratorSample generator = new();
+        JsonSchemaSample schema = generator.Generate(dataType);
 
         return schema.ToString();
     }

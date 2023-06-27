@@ -4,8 +4,6 @@
 using System.Collections;
 using System.Collections.Generic;
 
-#nullable disable
-
 namespace Azure.Core
 {
     /// <summary>

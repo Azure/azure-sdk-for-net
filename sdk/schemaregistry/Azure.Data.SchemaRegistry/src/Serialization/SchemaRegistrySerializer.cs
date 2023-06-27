@@ -302,14 +302,19 @@ namespace Azure.Data.SchemaRegistry.Serialization
                 throw new Exception("An error occurred while attempting to serialize the data.", ex);
             }
 
+            bool isValid;
             try
             {
                 // Attempt to validate
-                _schemaValidator.IsValid(value, dataType, schemaString);
+                isValid = _schemaValidator.IsValid(value, dataType, schemaString);
             }
             catch (Exception ex)
             {
-                throw new Exception($"An error occurred while attempting to validate the object against the schema.", ex);
+                throw new Exception("An error occurred while attempting to validate the object against the schema.", ex);
+            }
+            if (!isValid)
+            {
+                throw new Exception("The validate method determined the object was invalid according to the schema.");
             }
 
             try
@@ -526,14 +531,19 @@ namespace Azure.Data.SchemaRegistry.Serialization
                 throw new Exception($"An error occurred while attempting to deserialize the data.", ex);
             }
 
+            bool isValid;
             try
             {
                 // Attempt to validate the object against the schema definition
-                _schemaValidator.IsValid(objectToReturn, dataType, schemaDefinition);
+                isValid = _schemaValidator.IsValid(objectToReturn, dataType, schemaDefinition);
             }
             catch (Exception ex)
             {
                 throw new Exception($"An error occurred while attempting to validate the deserialized object.", ex);
+            }
+            if (!isValid)
+            {
+                throw new Exception("The validate method determined the object was invalid according to the schema.");
             }
 
             return objectToReturn;
