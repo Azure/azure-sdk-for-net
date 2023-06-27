@@ -12,6 +12,7 @@ using Azure.Storage.Blobs.Models;
 using Azure.Storage.DataMovement.Blobs;
 using Azure.Storage.DataMovement.Models;
 using Azure.Storage.DataMovement.Models.JobPlan;
+using Moq;
 using NUnit.Framework;
 
 namespace Azure.Storage.DataMovement.Tests
@@ -28,6 +29,16 @@ namespace Azure.Storage.DataMovement.Tests
             PageBlob,
             AppendBlob,
             Local
+        }
+
+        private static Mock<DataTransferProperties> GetProperties(
+            string checkpointerPath,
+            string transferId)
+        {
+            Mock<DataTransferProperties> mock = new();
+            mock.Setup(p => p.TransferId).Returns(transferId);
+            mock.Setup(p => p.Checkpointer).Returns(new TransferCheckpointerOptions(checkpointerPath));
+            return mock;
         }
 
         private async Task AddJobPartToCheckpointer(
@@ -103,7 +114,7 @@ namespace Azure.Storage.DataMovement.Tests
         [TestCase(false)]
         public async Task RehydrateBlockBlob(bool isSource)
         {
-            using DisposingLocalDirectory test = DisposingLocalDirectory.GetTestDirectory(Guid.NewGuid().ToString());
+            using DisposingLocalDirectory test = DisposingLocalDirectory.GetTestDirectory();
             TransferCheckpointer checkpointer = new LocalTransferCheckpointer(test.DirectoryPath);
             string transferId = GetNewTransferId();
             string sourcePath = "https://storageaccount.blob.core.windows.net/container/blobsource";
@@ -113,6 +124,8 @@ namespace Azure.Storage.DataMovement.Tests
             StorageResourceType sourceType = isSource ? StorageResourceType.Local : StorageResourceType.BlockBlob;
             StorageResourceType destinationType = !isSource ? StorageResourceType.Local : StorageResourceType.BlockBlob;
 
+            DataTransferProperties transferProperties = GetProperties(test.DirectoryPath, transferId).Object;
+
             await AddJobPartToCheckpointer(
                 checkpointer,
                 transferId,
@@ -121,10 +134,7 @@ namespace Azure.Storage.DataMovement.Tests
                 destinationType,
                 new List<string>() { destinationPath });
 
-            BlockBlobStorageResource storageResource = await BlockBlobStorageResource.RehydrateResource(
-                checkpointer,
-                transferId,
-                isSource);
+            BlockBlobStorageResource storageResource = await BlockBlobStorageResource.RehydrateResourceAsync(transferProperties, isSource);
 
             Assert.AreEqual(originalPath, storageResource.Uri.AbsoluteUri);
         }
@@ -134,7 +144,7 @@ namespace Azure.Storage.DataMovement.Tests
         [TestCase(false)]
         public async Task RehydratePageBlob(bool isSource)
         {
-            using DisposingLocalDirectory test = DisposingLocalDirectory.GetTestDirectory(Guid.NewGuid().ToString());
+            using DisposingLocalDirectory test = DisposingLocalDirectory.GetTestDirectory();
             TransferCheckpointer checkpointer = new LocalTransferCheckpointer(test.DirectoryPath);
             string transferId = GetNewTransferId();
             string sourcePath = "https://storageaccount.blob.core.windows.net/container/blobsource";
@@ -144,6 +154,8 @@ namespace Azure.Storage.DataMovement.Tests
             StorageResourceType sourceType = isSource ? StorageResourceType.Local : StorageResourceType.BlockBlob;
             StorageResourceType destinationType = !isSource ? StorageResourceType.Local : StorageResourceType.BlockBlob;
 
+            DataTransferProperties transferProperties = GetProperties(test.DirectoryPath, transferId).Object;
+
             await AddJobPartToCheckpointer(
                 checkpointer,
                 transferId,
@@ -152,10 +164,8 @@ namespace Azure.Storage.DataMovement.Tests
                 destinationType,
                 new List<string>() { destinationPath });
 
-            PageBlobStorageResource storageResource = await PageBlobStorageResource.RehydrateResource(
-                checkpointer,
-                transferId,
-                isSource);
+            PageBlobStorageResource storageResource =
+                await PageBlobStorageResource.RehydrateResourceAsync(transferProperties, isSource);
 
             Assert.AreEqual(originalPath, storageResource.Uri.AbsoluteUri);
         }
@@ -165,7 +175,7 @@ namespace Azure.Storage.DataMovement.Tests
         [TestCase(false)]
         public async Task RehydrateAppendBlob(bool isSource)
         {
-            using DisposingLocalDirectory test = DisposingLocalDirectory.GetTestDirectory(Guid.NewGuid().ToString());
+            using DisposingLocalDirectory test = DisposingLocalDirectory.GetTestDirectory();
             TransferCheckpointer checkpointer = new LocalTransferCheckpointer(test.DirectoryPath);
             string transferId = GetNewTransferId();
             string sourcePath = "https://storageaccount.blob.core.windows.net/container/blobsource";
@@ -175,6 +185,7 @@ namespace Azure.Storage.DataMovement.Tests
             StorageResourceType sourceType = isSource ? StorageResourceType.Local : StorageResourceType.BlockBlob;
             StorageResourceType destinationType = !isSource ? StorageResourceType.Local : StorageResourceType.BlockBlob;
 
+            DataTransferProperties transferProperties = GetProperties(test.DirectoryPath, transferId).Object;
             await AddJobPartToCheckpointer(
                 checkpointer,
                 transferId,
@@ -183,10 +194,8 @@ namespace Azure.Storage.DataMovement.Tests
                 destinationType,
                 new List<string>() { destinationPath });
 
-            AppendBlobStorageResource storageResource = await AppendBlobStorageResource.RehydrateResource(
-                checkpointer,
-                transferId,
-                isSource);
+            AppendBlobStorageResource storageResource =
+                await AppendBlobStorageResource.RehydrateResourceAsync(transferProperties, isSource);
 
             Assert.AreEqual(originalPath, storageResource.Uri.AbsoluteUri);
         }
@@ -196,7 +205,7 @@ namespace Azure.Storage.DataMovement.Tests
         [TestCase(false)]
         public async Task RehydrateBlobContainer(bool isSource)
         {
-            using DisposingLocalDirectory test = DisposingLocalDirectory.GetTestDirectory(Guid.NewGuid().ToString());
+            using DisposingLocalDirectory test = DisposingLocalDirectory.GetTestDirectory();
             TransferCheckpointer checkpointer = new LocalTransferCheckpointer(test.DirectoryPath);
             string transferId = GetNewTransferId();
             List<string> sourcePaths = new List<string>();
@@ -210,6 +219,8 @@ namespace Azure.Storage.DataMovement.Tests
                 sourcePaths.Add(string.Join("/", sourceParentPath, childPath));
                 destinationPaths.Add(string.Join("/", destinationParentPath, childPath));
             }
+            DataTransferProperties transferProperties = GetProperties(test.DirectoryPath, transferId).Object;
+
             string originalPath = isSource ? sourceParentPath : destinationParentPath;
 
             StorageResourceType sourceType = isSource ? StorageResourceType.Local : StorageResourceType.BlockBlob;
@@ -224,10 +235,8 @@ namespace Azure.Storage.DataMovement.Tests
                 destinationPaths,
                 jobPartCount);
 
-            BlobStorageResourceContainer storageResource = await BlobStorageResourceContainer.RehydrateResource(
-                checkpointer,
-                transferId,
-                isSource);
+            BlobStorageResourceContainer storageResource =
+                await BlobStorageResourceContainer.RehydrateResourceAsync(transferProperties, isSource);
 
             Assert.AreEqual(originalPath, storageResource.Uri.AbsoluteUri);
         }

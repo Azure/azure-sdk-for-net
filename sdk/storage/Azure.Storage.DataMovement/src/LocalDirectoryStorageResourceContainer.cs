@@ -8,6 +8,7 @@ using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
+using Azure.Storage.DataMovement.Models;
 
 namespace Azure.Storage.DataMovement
 {
@@ -78,11 +79,8 @@ namespace Azure.Storage.DataMovement
         /// <summary>
         /// Rehydrates from Checkpointer.
         /// </summary>
-        /// <param name="checkpointer">
-        /// The checkpointer where the transfer state was saved to.
-        /// </param>
-        /// <param name="transferId">
-        /// Transfer Id where we want to rehydrate the resource from the job from.
+        /// <param name="transferProperties">
+        /// The properties of the transfer to rehydrate.
         /// </param>
         /// <param name="isSource">
         /// Whether or not we are rehydrating the source or destination. True if the source, false if the destination.
@@ -95,14 +93,17 @@ namespace Azure.Storage.DataMovement
         /// a stored checkpointed transfer state.
         /// </returns>
         internal static async Task<LocalDirectoryStorageResourceContainer> RehydrateResource(
-            TransferCheckpointer checkpointer,
-            string transferId,
+            DataTransferProperties transferProperties,
             bool isSource,
             CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(checkpointer, nameof(checkpointer));
+            Argument.AssertNotNull(transferProperties, nameof(transferProperties));
+            TransferCheckpointer checkpointer = transferProperties.Checkpointer.GetCheckpointer();
 
-            string storedPath = await checkpointer.GetPathFromCheckpointerAsync(transferId, isSource, cancellationToken).ConfigureAwait(false);
+            string storedPath = await checkpointer.GetResourcePathAsync(
+                transferProperties.TransferId,
+                isSource,
+                cancellationToken).ConfigureAwait(false);
             return new LocalDirectoryStorageResourceContainer(storedPath);
         }
     }

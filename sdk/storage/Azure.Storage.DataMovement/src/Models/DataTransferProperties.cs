@@ -16,27 +16,27 @@ namespace Azure.Storage.DataMovement.Models
         /// <summary>
         /// Contains the checkpointer information to rehydrate the StorageResource from.
         /// </summary>
-        public TransferCheckpointerOptions Checkpointer { get; internal set; }
+        public virtual TransferCheckpointerOptions Checkpointer { get; internal set; }
 
         /// <summary>
         /// Contains the transfer ID which to rehydrate the StorageResource from.
         /// </summary>
-        public string TransferId { get; internal set; }
+        public virtual string TransferId { get; internal set; }
 
         /// <summary>
         /// Contains the Source Scheme of the Storage Resource to rehydrate the StorageResource from.
         /// </summary>
-        public string SourceScheme { get; internal set; }
+        public virtual string SourceScheme { get; internal set; }
 
         /// <summary>
         /// Contains the Source Scheme of the Storage Resource to rehydrate the StorageResource from.
         /// </summary>
-        public string DestinationScheme { get; internal set; }
+        public virtual string DestinationScheme { get; internal set; }
 
         /// <summary>
         /// Defines whether or not this was a container transfer, in order to rehydrate the StorageResource.
         /// </summary>
-        public bool IsContainer { get; internal set; }
+        public virtual bool IsContainer { get; internal set; }
 
         /// <summary>
         /// For mocking.

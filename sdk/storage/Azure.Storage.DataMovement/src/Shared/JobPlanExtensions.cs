@@ -65,7 +65,7 @@ namespace Azure.Storage.DataMovement
         /// The <see cref="Task"/> to rehdyrate a <see cref="LocalFileStorageResource"/> from
         /// a stored checkpointed transfer state.
         /// </returns>
-        internal static async Task<string> GetPathFromCheckpointerAsync(
+        internal static async Task<string> GetResourcePathAsync(
             this TransferCheckpointer checkpointer,
             string transferId,
             bool isSource,
@@ -142,7 +142,7 @@ namespace Azure.Storage.DataMovement
             return dictionary;
         }
 
-        internal static string ToString(this IDictionary<string, string> dict)
+        internal static string DictionaryToString(this IDictionary<string, string> dict)
         {
             string concatStr = "";
             foreach (KeyValuePair<string, string> kv in dict)
@@ -151,6 +151,57 @@ namespace Azure.Storage.DataMovement
                 concatStr = string.Concat(concatStr, $"{kv.Key}={kv.Value};");
             }
             return concatStr;
+        }
+
+        internal static async Task<string> GetHeaderValue(
+            this TransferCheckpointer checkpointer,
+            string transferId,
+            int startIndex,
+            int streamReadLength,
+            int valueLength,
+            CancellationToken cancellationToken)
+        {
+            string value;
+            using (Stream stream = await checkpointer.ReadableStreamAsync(
+                transferId: transferId,
+                partNumber: 0,
+                offset: startIndex,
+                readSize: streamReadLength,
+                cancellationToken: cancellationToken).ConfigureAwait(false))
+            {
+                BinaryReader reader = new BinaryReader(stream);
+
+                // Read Path Length
+                byte[] pathLengthBuffer = reader.ReadBytes(DataMovementConstants.PlanFile.UShortSizeInBytes);
+                ushort pathLength = pathLengthBuffer.ToUShort();
+
+                // Read Path
+                byte[] pathBuffer = reader.ReadBytes(valueLength);
+                value = pathBuffer.ToString(pathLength);
+            }
+            return value;
+        }
+
+        internal static async Task<byte> GetByteValue(
+            this TransferCheckpointer checkpointer,
+            string transferId,
+            int startIndex,
+            CancellationToken cancellationToken)
+        {
+            byte value;
+            using (Stream stream = await checkpointer.ReadableStreamAsync(
+                transferId: transferId,
+                partNumber: 0,
+                offset: startIndex,
+                readSize: DataMovementConstants.PlanFile.OneByte,
+                cancellationToken: cancellationToken).ConfigureAwait(false))
+            {
+                BinaryReader reader = new BinaryReader(stream);
+
+                // Read Byte
+                value = reader.ReadByte();
+            }
+            return value;
         }
     }
 }

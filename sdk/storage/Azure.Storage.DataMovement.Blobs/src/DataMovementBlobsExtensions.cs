@@ -515,8 +515,7 @@ namespace Azure.Storage.DataMovement.Blobs
                 // Get Metadata
                 int metadataIndex = DataMovementConstants.PlanFile.DstBlobMetadataLengthIndex;
                 int metadataReadLength = DataMovementConstants.PlanFile.DstBlobTagsLengthIndex - metadataIndex;
-                string metadata = await GetHeaderValue(
-                    checkpointer,
+                string metadata = await checkpointer.GetHeaderValue(
                     transferId,
                     metadataIndex,
                     metadataReadLength,
@@ -527,8 +526,7 @@ namespace Azure.Storage.DataMovement.Blobs
                 // Get blob tags
                 int tagsIndex = DataMovementConstants.PlanFile.DstBlobTagsLengthIndex;
                 int tagsReadLength = DataMovementConstants.PlanFile.DstBlobIsSourceEncrypted - tagsIndex;
-                string tags = await GetHeaderValue(
-                    checkpointer,
+                string tags = await checkpointer.GetHeaderValue(
                     transferId,
                     tagsIndex,
                     tagsReadLength,
@@ -557,57 +555,6 @@ namespace Azure.Storage.DataMovement.Blobs
             };
 
             return options;
-        }
-
-        private static async Task<string> GetHeaderValue(
-            this TransferCheckpointer checkpointer,
-            string transferId,
-            int startIndex,
-            int streamReadLength,
-            int valueLength,
-            CancellationToken cancellationToken)
-        {
-            string value;
-            using (Stream stream = await checkpointer.ReadableStreamAsync(
-                transferId: transferId,
-                partNumber: 0,
-                offset: startIndex,
-                readSize: streamReadLength,
-                cancellationToken: cancellationToken).ConfigureAwait(false))
-            {
-                BinaryReader reader = new BinaryReader(stream);
-
-                // Read Path Length
-                byte[] pathLengthBuffer = reader.ReadBytes(DataMovementConstants.PlanFile.UShortSizeInBytes);
-                ushort pathLength = pathLengthBuffer.ToUShort();
-
-                // Read Path
-                byte[] pathBuffer = reader.ReadBytes(valueLength);
-                value = pathBuffer.ToString(pathLength);
-            }
-            return value;
-        }
-
-        private static async Task<byte> GetByteValue(
-            this TransferCheckpointer checkpointer,
-            string transferId,
-            int startIndex,
-            CancellationToken cancellationToken)
-        {
-            byte value;
-            using (Stream stream = await checkpointer.ReadableStreamAsync(
-                transferId: transferId,
-                partNumber: 0,
-                offset: startIndex,
-                readSize: DataMovementConstants.PlanFile.OneByte,
-                cancellationToken: cancellationToken).ConfigureAwait(false))
-            {
-                BinaryReader reader = new BinaryReader(stream);
-
-                // Read Byte
-                value = reader.ReadByte();
-            }
-            return value;
         }
 
         private static AccessTier ToAccessTier(this JobPartPlanBlockBlobTier tier)

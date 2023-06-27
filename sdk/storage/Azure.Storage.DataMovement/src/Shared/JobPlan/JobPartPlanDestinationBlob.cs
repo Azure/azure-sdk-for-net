@@ -239,7 +239,7 @@ namespace Azure.Storage.DataMovement.Models.JobPlan
             BlockBlobTier = blockBlobTier;
             PageBlobTier = pageBlobTier;
             PutMd5 = putMd5;
-            string metadataConvert = JobPlanExtensions.ToString(metadata);
+            string metadataConvert = metadata.DictionaryToString();
             if (metadataConvert.Length <= DataMovementConstants.PlanFile.MetadataStrMaxLength)
             {
                 Metadata = metadataConvert;
@@ -252,7 +252,7 @@ namespace Azure.Storage.DataMovement.Models.JobPlan
                     expectedSize: DataMovementConstants.PlanFile.MetadataStrMaxLength,
                     actualSize: metadataConvert.Length);
             }
-            string blobTagsConvert = JobPlanExtensions.ToString(blobTags);
+            string blobTagsConvert = blobTags.DictionaryToString();
             if (blobTagsConvert.Length <= DataMovementConstants.PlanFile.BlobTagsStrMaxLength)
             {
                 BlobTags = blobTagsConvert;
