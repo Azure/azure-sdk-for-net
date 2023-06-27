@@ -29,6 +29,8 @@ namespace Azure.ResourceManager.EventGrid.Models
         public EventGridPublicNetworkAccess? PublicNetworkAccess { get; set; }
         /// <summary> This can be used to restrict traffic from specific IPs instead of all IPs. Note: These are considered only if PublicNetworkAccess is enabled. </summary>
         public IList<EventGridInboundIPRule> InboundIPRules { get; }
+        /// <summary> Minimum TLS version of the publisher allowed to publish to this domain. </summary>
+        public TlsVersion? MinimumTlsVersionAllowed { get; set; }
         /// <summary> This boolean is used to enable or disable local auth. Default value is false. When the property is set to true, only AAD token will be used to authenticate if user is allowed to publish to the partner namespace. </summary>
         public bool? IsLocalAuthDisabled { get; set; }
     }
