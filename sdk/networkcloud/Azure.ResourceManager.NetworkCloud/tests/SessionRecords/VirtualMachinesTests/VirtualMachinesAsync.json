@@ -1328,7 +1328,7 @@
               "placementHints": [],
               "sshPublicKeys": [
                 {
-                  "keyData": "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQCvqUbdqkqLxq7cpR5sYYlsxIL77afxHBOL0N7gmCkThP111oDoPONnwPjNT2ciMOcp9/6N6Qc7cN40cr3KyZcVOymp5/6b5tYb1xWj6\u002Bf8qwKvxXc4hHGL1OYkpVph3Q3tYNz2F77ublnI8/FqLX9YUnnP9IwqWNObIc6buoN5cKR9AZoXecT95q7bKJsAj/JetB/xL7tI3F68mceUhV\u002B45rJDHGeKTDBeVUbG7usRYwpbBtUIm8KTXtF0RkiHRh0i9y1vKBNRSi7y4xTmstWUr3/wuBInVl4LlG7gVG37ZvmSgSfy5ZwJEnuLAClZSMYbpoObcN9Q4dsDrlXBL1wHhfu\u002BnGyNsFPC48H1qoNEPh6S5Z1/TQephSXSlhu6ahegMlKf/EygRr3s6FUTBGtGLgoUrCifVEMVykyDsMJCNw/1SH53eYVF87yV0NbaJVQAkk5BaX2vX0ek5FNpFYy9id3p04PzmDqTf1YOvaLXRWAXAVwiDazukIyURLb\u002Bujs= REDACTED
+                  "keyData": "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQCvqUbdqkqLxq7cpR5sYYlsxIL77afxHBOL0N7gmCkThP111oDoPONnwPjNT2ciMOcp9/6N6Qc7cN40cr3KyZcVOymp5/6b5tYb1xWj6\u002Bf8qwKvxXc4hHGL1OYkpVph3Q3tYNz2F77ublnI8/FqLX9YUnnP9IwqWNObIc6buoN5cKR9AZoXecT95q7bKJsAj/JetB/xL7tI3F68mceUhV\u002B45rJDHGeKTDBeVUbG7usRYwpbBtUIm8KTXtF0RkiHRh0i9y1vKBNRSi7y4xTmstWUr3/wuBInVl4LlG7gVG37ZvmSgSfy5ZwJEnuLAClZSMYbpoObcN9Q4dsDrlXBL1wHhfu\u002BnGyNsFPC48H1qoNEPh6S5Z1/TQephSXSlhu6ahegMlKf/EygRr3s6FUTBGtGLgoUrCifVEMVykyDsMJCNw/1SH53eYVF87yV0NbaJVQAkk5BaX2vX0ek5FNpFYy9id3p04PzmDqTf1YOvaLXRWAXAVwiDazukIyURLb\u002Bujs= fakeuser@fakehost"
                 }
               ],
               "storageProfile": {
@@ -1396,7 +1396,7 @@
               "placementHints": [],
               "sshPublicKeys": [
                 {
-                  "keyData": "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQCvqUbdqkqLxq7cpR5sYYlsxIL77afxHBOL0N7gmCkThP111oDoPONnwPjNT2ciMOcp9/6N6Qc7cN40cr3KyZcVOymp5/6b5tYb1xWj6\u002Bf8qwKvxXc4hHGL1OYkpVph3Q3tYNz2F77ublnI8/FqLX9YUnnP9IwqWNObIc6buoN5cKR9AZoXecT95q7bKJsAj/JetB/xL7tI3F68mceUhV\u002B45rJDHGeKTDBeVUbG7usRYwpbBtUIm8KTXtF0RkiHRh0i9y1vKBNRSi7y4xTmstWUr3/wuBInVl4LlG7gVG37ZvmSgSfy5ZwJEnuLAClZSMYbpoObcN9Q4dsDrlXBL1wHhfu\u002BnGyNsFPC48H1qoNEPh6S5Z1/TQephSXSlhu6ahegMlKf/EygRr3s6FUTBGtGLgoUrCifVEMVykyDsMJCNw/1SH53eYVF87yV0NbaJVQAkk5BaX2vX0ek5FNpFYy9id3p04PzmDqTf1YOvaLXRWAXAVwiDazukIyURLb\u002Bujs= REDACTED
+                  "keyData": "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQCvqUbdqkqLxq7cpR5sYYlsxIL77afxHBOL0N7gmCkThP111oDoPONnwPjNT2ciMOcp9/6N6Qc7cN40cr3KyZcVOymp5/6b5tYb1xWj6\u002Bf8qwKvxXc4hHGL1OYkpVph3Q3tYNz2F77ublnI8/FqLX9YUnnP9IwqWNObIc6buoN5cKR9AZoXecT95q7bKJsAj/JetB/xL7tI3F68mceUhV\u002B45rJDHGeKTDBeVUbG7usRYwpbBtUIm8KTXtF0RkiHRh0i9y1vKBNRSi7y4xTmstWUr3/wuBInVl4LlG7gVG37ZvmSgSfy5ZwJEnuLAClZSMYbpoObcN9Q4dsDrlXBL1wHhfu\u002BnGyNsFPC48H1qoNEPh6S5Z1/TQephSXSlhu6ahegMlKf/EygRr3s6FUTBGtGLgoUrCifVEMVykyDsMJCNw/1SH53eYVF87yV0NbaJVQAkk5BaX2vX0ek5FNpFYy9id3p04PzmDqTf1YOvaLXRWAXAVwiDazukIyURLb\u002Bujs= fakeuser@fakehost"
                 }
               ],
               "storageProfile": {
