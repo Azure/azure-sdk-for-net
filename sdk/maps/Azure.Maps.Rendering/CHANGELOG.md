@@ -2,7 +2,7 @@
 
 ## 1.0.0-beta.2 (Unreleased)
 
-### Breaking Changes
+### Other Changes
 
 - Deprecate Elevation tile enum
 
