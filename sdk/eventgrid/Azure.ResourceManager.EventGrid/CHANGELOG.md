@@ -13,15 +13,15 @@
 ## 1.1.0-beta.2 (2023-06-30)
 
 ### Features Added
-- Add support for Namespace
-- Add support for Namespace Topics.
-- Add support for Namespace Topic EventSubscriptions.
-- Add support for pull events from Namespace topics.
-- Add support for Namespace Clients.
-- Add support for Namespace ClientGroups. 
-- Add support for Namespace CaCertificates. 
-- Add support for Namespace TopicSpaces. 
-- Add support for Namespace Permission Bindings.
+- Added support for Namespace
+- Added support for Namespace Topics.
+- Added support for Namespace Topic EventSubscriptions.
+- Added support for pull events from Namespace topics.
+- Added support for Namespace Clients.
+- Added support for Namespace ClientGroups. 
+- Added support for Namespace CaCertificates. 
+- Added support for Namespace TopicSpaces. 
+- Added support for Namespace Permission Bindings.
 
 ### Breaking Changes
 
