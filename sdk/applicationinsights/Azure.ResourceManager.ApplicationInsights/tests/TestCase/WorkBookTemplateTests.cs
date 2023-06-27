@@ -9,41 +9,42 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.ApplicationInsights.Tests.TestCase
 {
-    public class ComponentTests : ApplicationInsightsManagementTestBase
+    public class WorkBookTemplateTests : ApplicationInsightsManagementTestBase
     {
-        public ComponentTests(bool isAsync)
+        public WorkBookTemplateTests(bool isAsync)
             : base(isAsync, RecordedTestMode.Record)
         {
         }
 
-        private async Task<ApplicationInsightsComponentCollection> GetComponentCollectionAsync()
+        private async Task<WorkbookTemplateCollection> GetWorkbookTemplateCollectionAsync()
         {
             var resourceGroup = await CreateResourceGroupAsync();
-            var collection = resourceGroup.GetApplicationInsightsComponents();
+            var collection = resourceGroup.GetWorkbookTemplates();
             return collection;
         }
 
         [TestCase]
-        public async Task ComponentApiTests()
+        public async Task TemplateApiTests()
         {
             //1.CreateOrUpdate
-            var collection = await GetComponentCollectionAsync();
-            var name = Recording.GenerateAssetName("component");
-            var name2 = Recording.GenerateAssetName("component");
-            var name3 = Recording.GenerateAssetName("component");
-            var input = ResourceDataHelpers.GetComponentData(DefaultLocation);
+            var collection = await GetWorkbookTemplateCollectionAsync();
+            var name = Recording.GenerateAssetName("template");
+            var name2 = Recording.GenerateAssetName("template");
+            var name3 = Recording.GenerateAssetName("template");
+            var input = ResourceDataHelpers.GetWorkbookTemplateData(DefaultLocation);
             var lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, name, input);
-            ApplicationInsightsComponentResource component = lro.Value;
-            Assert.AreEqual(name, component.Data.Name);
+            WorkbookTemplateResource template = lro.Value;
+            Assert.AreEqual(name, template.Data.Name);
             //2.Get
-            ApplicationInsightsComponentResource component2 = await component.GetAsync();
-            ResourceDataHelpers.AssertComponment(component.Data, component2.Data);
+            WorkbookTemplateResource template2 = await template.GetAsync();
+            //ResourceDataHelpers.AssertTemplateData(template.Data, template2.Data);
             //3.GetAll
             _ = await collection.CreateOrUpdateAsync(WaitUntil.Completed, name, input);
             _ = await collection.CreateOrUpdateAsync(WaitUntil.Completed, name2, input);
             _ = await collection.CreateOrUpdateAsync(WaitUntil.Completed, name3, input);
             int count = 0;
-            await foreach (var num in collection.GetAllAsync())
+            AsyncPageable<WorkbookTemplateResource> workbookTemplateResources = collection.GetAllAsync();
+            await foreach (var num in workbookTemplateResources)
             {
                 count++;
             }
@@ -55,10 +56,10 @@ namespace Azure.ResourceManager.ApplicationInsights.Tests.TestCase
             Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await collection.ExistsAsync(null));
             //Resource
             //5.Get
-            ApplicationInsightsComponentResource component3 = await component.GetAsync();
-            ResourceDataHelpers.AssertComponment(component.Data, component3.Data);
+            WorkbookTemplateResource template3 = await template.GetAsync();
+            ResourceDataHelpers.AssertTemplateData(template.Data, template3.Data);
             //6.Delete
-            await component.DeleteAsync(WaitUntil.Completed);
+            await template.DeleteAsync(WaitUntil.Completed);
         }
     }
 }

@@ -1,0 +1,540 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c?api-version=2021-01-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Connection": "keep-alive",
+        "traceparent": "00-ffaa1ba96799be41a0994a460a296257-59384b02e0d6f745-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.6.0 (.NET Framework 4.8.9166.0; Microsoft Windows 10.0.22621 )",
+        "x-ms-client-request-id": "fcb0edaf6bca81a7cf0cfe18cbc40943",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "748",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 26 Jun 2023 09:23:16 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "7ff85274-41fd-465a-80a4-cfa49dfc31ca",
+        "x-ms-ratelimit-remaining-subscription-reads": "11999",
+        "x-ms-request-id": "7ff85274-41fd-465a-80a4-cfa49dfc31ca",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20230626T092316Z:7ff85274-41fd-465a-80a4-cfa49dfc31ca"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c",
+        "authorizationSource": "RoleBased",
+        "managedByTenants": [],
+        "tags": {
+          "TagKey-9823": "TagValue-1254",
+          "TagKey-3481": "TagValue-320",
+          "TagKey-4926": "TagValue-1187",
+          "TagKey-751": "TagValue-3921",
+          "TagKey-1866": "TagValue-8559",
+          "TagKey-3094": "TagValue-9190",
+          "TagKey-2449": "TagValue-9",
+          "TagKey-8379": "TagValue-164",
+          "TagKey-7470": "TagValue-2205",
+          "TagKey-4236": "TagValue-3698",
+          "TagKey-5316": "TagValue-2725"
+        },
+        "subscriptionId": "db1ab6f0-4769-4b27-930e-01e2ef9c123c",
+        "tenantId": "72f988bf-86f1-41af-91ab-2d7cd011db47",
+        "displayName": ".NET Mgmt SDK Test with TTL = 1 Day",
+        "state": "Enabled",
+        "subscriptionPolicies": {
+          "locationPlacementId": "Internal_2014-09-01",
+          "quotaId": "Internal_2014-09-01",
+          "spendingLimit": "Off"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/testRG-5209?api-version=**",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "43",
+        "Content-Type": "application/json",
+        "traceparent": "00-f28d9188e9e89d40a4ab439273aec8a6-5fe27d7ea6d3f14a-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.6.0 (.NET Framework 4.8.9166.0; Microsoft Windows 10.0.22621 )",
+        "x-ms-client-request-id": "bac016bcbf6c2792f6b8a6df37d33038",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "tags": {
+          "test": "env"
+        },
+        "location": "eastus"
+      },
+      "StatusCode": 201,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "241",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 26 Jun 2023 09:23:20 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "e8260973-3b35-45f7-bcab-6bb13851aa68",
+        "x-ms-ratelimit-remaining-subscription-writes": "1199",
+        "x-ms-request-id": "e8260973-3b35-45f7-bcab-6bb13851aa68",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20230626T092320Z:e8260973-3b35-45f7-bcab-6bb13851aa68"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-5209",
+        "name": "testRG-5209",
+        "type": "Microsoft.Resources/resourceGroups",
+        "location": "eastus",
+        "tags": {
+          "test": "env"
+        },
+        "properties": {
+          "provisioningState": "Succeeded"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-5209/providers/Microsoft.Insights/workbooktemplates/template9417?api-version=2020-11-20",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "989",
+        "Content-Type": "application/json",
+        "traceparent": "00-8353bf086063fb4185fcb60f96a20163-cc8871492600064b-00",
+        "User-Agent": "azsdk-net-ResourceManager.ApplicationInsights/1.0.0-alpha.20230626.1 (.NET Framework 4.8.9166.0; Microsoft Windows 10.0.22621 )",
+        "x-ms-client-request-id": "2be12878e5ea613831c4ce31ab9f770f",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "tags": {},
+        "location": "eastus",
+        "properties": {
+          "priority": 1,
+          "author": "Contoso",
+          "templateData": {
+            "$schema": "https://github.com/Microsoft/Application-Insights-Workbooks/blob/master/schema/workbook.json",
+            "items": [
+              {
+                "name": "text - 2",
+                "type": "1",
+                "content": {
+                  "json": "## New workbook\n---\n\nWelcome to your new workbook.  This area will display text formatted as markdown.\n\n\nWe\u0027ve included a basic analytics query to get you started. Use the \u0060Edit\u0060 button below each section to configure it or add more sections."
+                }
+              },
+              {
+                "name": "query - 2",
+                "type": "3",
+                "content": {
+                  "exportToExcelOptions": "visible",
+                  "query": "union withsource=TableName *\n| summarize Count=count() by TableName\n| render barchart",
+                  "queryType": "0",
+                  "resourceType": "microsoft.operationalinsights/workspaces",
+                  "size": "1",
+                  "version": "KqlItem/1.0"
+                }
+              }
+            ],
+            "styleSettings": {},
+            "version": "Notebook/1.0"
+          },
+          "galleries": [
+            {
+              "name": "Simple Template",
+              "category": "Failures",
+              "type": "tsg",
+              "order": 100,
+              "resourceType": "microsoft.insights/components"
+            }
+          ]
+        }
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Access-Control-Expose-Headers": "Request-Context",
+        "Cache-Control": "no-cache",
+        "Content-Length": "1650",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 26 Jun 2023 09:23:29 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Request-Context": "appId=cid-v1:60b64f55-e716-48c8-8b96-83eb9c6a7a9b",
+        "Server": "Microsoft-IIS/10.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "230f21bc-4d8c-4823-86a7-c4069ef29b79",
+        "x-ms-ratelimit-remaining-subscription-writes": "1198",
+        "x-ms-request-id": "230f21bc-4d8c-4823-86a7-c4069ef29b79",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20230626T092329Z:230f21bc-4d8c-4823-86a7-c4069ef29b79",
+        "X-Powered-By": "ASP.NET"
+      },
+      "ResponseBody": {
+        "name": "template9417",
+        "location": "eastus",
+        "tags": {},
+        "type": "microsoft.insights/workbooktemplates",
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testrg-5209/providers/microsoft.insights/workbooktemplates/template9417",
+        "properties": {
+          "priority": 1,
+          "author": "Contoso",
+          "templateData": {
+            "$schema": "https://github.com/Microsoft/Application-Insights-Workbooks/blob/master/schema/workbook.json",
+            "items": [
+              {
+                "name": "text - 2",
+                "type": "1",
+                "content": {
+                  "json": "## New workbook\n---\n\nWelcome to your new workbook.  This area will display text formatted as markdown.\n\n\nWe\u0027ve included a basic analytics query to get you started. Use the \u0060Edit\u0060 button below each section to configure it or add more sections."
+                }
+              },
+              {
+                "name": "query - 2",
+                "type": "3",
+                "content": {
+                  "exportToExcelOptions": "visible",
+                  "query": "union withsource=TableName *\n| summarize Count=count() by TableName\n| render barchart",
+                  "queryType": "0",
+                  "resourceType": "microsoft.operationalinsights/workspaces",
+                  "size": "1",
+                  "version": "KqlItem/1.0"
+                }
+              }
+            ],
+            "styleSettings": {},
+            "version": "Notebook/1.0"
+          },
+          "galleries": [
+            {
+              "name": "Simple Template",
+              "category": "Failures",
+              "order": 100,
+              "type": "tsg",
+              "resourceType": "microsoft.insights/components"
+            }
+          ],
+          "localized": null
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testrg-5209/providers/Microsoft.Insights/workbooktemplates/template9417?api-version=2020-11-20",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-9eb5f09ea10b3046b4e959f05a5fac6b-d27adf90a4638545-00",
+        "User-Agent": "azsdk-net-ResourceManager.ApplicationInsights/1.0.0-alpha.20230626.1 (.NET Framework 4.8.9166.0; Microsoft Windows 10.0.22621 )",
+        "x-ms-client-request-id": "437589571e2dd4d4b300a19839cde0b8",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Access-Control-Expose-Headers": "Request-Context",
+        "Cache-Control": "no-cache",
+        "Content-Length": "1650",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 26 Jun 2023 09:23:29 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Request-Context": "appId=cid-v1:60b64f55-e716-48c8-8b96-83eb9c6a7a9b",
+        "Server": "Microsoft-IIS/10.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "70845620-fe11-4d7e-aa66-f8a24d3b305d",
+        "x-ms-ratelimit-remaining-subscription-reads": "11998",
+        "x-ms-request-id": "70845620-fe11-4d7e-aa66-f8a24d3b305d",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20230626T092330Z:70845620-fe11-4d7e-aa66-f8a24d3b305d",
+        "X-Powered-By": "ASP.NET"
+      },
+      "ResponseBody": {
+        "name": "template9417",
+        "location": "eastus",
+        "tags": {},
+        "type": "microsoft.insights/workbooktemplates",
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testrg-5209/providers/microsoft.insights/workbooktemplates/template9417",
+        "properties": {
+          "priority": 1,
+          "author": "Contoso",
+          "templateData": {
+            "$schema": "https://github.com/Microsoft/Application-Insights-Workbooks/blob/master/schema/workbook.json",
+            "items": [
+              {
+                "name": "text - 2",
+                "type": "1",
+                "content": {
+                  "json": "## New workbook\n---\n\nWelcome to your new workbook.  This area will display text formatted as markdown.\n\n\nWe\u0027ve included a basic analytics query to get you started. Use the \u0060Edit\u0060 button below each section to configure it or add more sections."
+                }
+              },
+              {
+                "name": "query - 2",
+                "type": "3",
+                "content": {
+                  "exportToExcelOptions": "visible",
+                  "query": "union withsource=TableName *\n| summarize Count=count() by TableName\n| render barchart",
+                  "queryType": "0",
+                  "resourceType": "microsoft.operationalinsights/workspaces",
+                  "size": "1",
+                  "version": "KqlItem/1.0"
+                }
+              }
+            ],
+            "styleSettings": {},
+            "version": "Notebook/1.0"
+          },
+          "galleries": [
+            {
+              "name": "Simple Template",
+              "category": "Failures",
+              "order": 100,
+              "type": "tsg",
+              "resourceType": "microsoft.insights/components"
+            }
+          ],
+          "localized": null
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-5209/providers/Microsoft.Insights/workbooktemplates/template9417?api-version=2020-11-20",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-5a7801f4311cdb47b9ba90fb395e99e3-772105e44379a449-00",
+        "User-Agent": "azsdk-net-ResourceManager.ApplicationInsights/1.0.0-alpha.20230626.1 (.NET Framework 4.8.9166.0; Microsoft Windows 10.0.22621 )",
+        "x-ms-client-request-id": "f3cac48aebdbd4d6345e60632886fa3f",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Access-Control-Expose-Headers": "Request-Context",
+        "Cache-Control": "no-cache",
+        "Content-Length": "1650",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 26 Jun 2023 09:23:30 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Request-Context": "appId=cid-v1:60b64f55-e716-48c8-8b96-83eb9c6a7a9b",
+        "Server": "Microsoft-IIS/10.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "43d98b0c-7ff3-43d5-9ff4-61c50491fef3",
+        "x-ms-ratelimit-remaining-subscription-reads": "11997",
+        "x-ms-request-id": "43d98b0c-7ff3-43d5-9ff4-61c50491fef3",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20230626T092331Z:43d98b0c-7ff3-43d5-9ff4-61c50491fef3",
+        "X-Powered-By": "ASP.NET"
+      },
+      "ResponseBody": {
+        "name": "template9417",
+        "location": "eastus",
+        "tags": {},
+        "type": "microsoft.insights/workbooktemplates",
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testrg-5209/providers/microsoft.insights/workbooktemplates/template9417",
+        "properties": {
+          "priority": 1,
+          "author": "Contoso",
+          "templateData": {
+            "$schema": "https://github.com/Microsoft/Application-Insights-Workbooks/blob/master/schema/workbook.json",
+            "items": [
+              {
+                "name": "text - 2",
+                "type": "1",
+                "content": {
+                  "json": "## New workbook\n---\n\nWelcome to your new workbook.  This area will display text formatted as markdown.\n\n\nWe\u0027ve included a basic analytics query to get you started. Use the \u0060Edit\u0060 button below each section to configure it or add more sections."
+                }
+              },
+              {
+                "name": "query - 2",
+                "type": "3",
+                "content": {
+                  "exportToExcelOptions": "visible",
+                  "query": "union withsource=TableName *\n| summarize Count=count() by TableName\n| render barchart",
+                  "queryType": "0",
+                  "resourceType": "microsoft.operationalinsights/workspaces",
+                  "size": "1",
+                  "version": "KqlItem/1.0"
+                }
+              }
+            ],
+            "styleSettings": {},
+            "version": "Notebook/1.0"
+          },
+          "galleries": [
+            {
+              "name": "Simple Template",
+              "category": "Failures",
+              "order": 100,
+              "type": "tsg",
+              "resourceType": "microsoft.insights/components"
+            }
+          ],
+          "localized": null
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-5209/providers/Microsoft.Insights/workbooktemplates/template94171?api-version=2020-11-20",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-355d670cfa50e345b1d0505d05ddf43f-32e63817f124f146-00",
+        "User-Agent": "azsdk-net-ResourceManager.ApplicationInsights/1.0.0-alpha.20230626.1 (.NET Framework 4.8.9166.0; Microsoft Windows 10.0.22621 )",
+        "x-ms-client-request-id": "afd8c4bff69d5917530d77e943a02864",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 404,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "233",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 26 Jun 2023 09:23:31 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "c5834095-69b9-41cb-9eac-0f58742c859e",
+        "x-ms-failure-cause": "gateway",
+        "x-ms-request-id": "c5834095-69b9-41cb-9eac-0f58742c859e",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20230626T092331Z:c5834095-69b9-41cb-9eac-0f58742c859e"
+      },
+      "ResponseBody": {
+        "error": {
+          "code": "ResourceNotFound",
+          "message": "The Resource \u0027Microsoft.Insights/workbooktemplates/template94171\u0027 under resource group \u0027testRG-5209\u0027 was not found. For more details please go to https://aka.ms/ARMResourceNotFoundFix"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testrg-5209/providers/Microsoft.Insights/workbooktemplates/template9417?api-version=2020-11-20",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-1181ea6223d2794aac5d02cd38a00370-6f4b8203def2174e-00",
+        "User-Agent": "azsdk-net-ResourceManager.ApplicationInsights/1.0.0-alpha.20230626.1 (.NET Framework 4.8.9166.0; Microsoft Windows 10.0.22621 )",
+        "x-ms-client-request-id": "e7a715e484d56c34b3a00fcfbe71ac2c",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Access-Control-Expose-Headers": "Request-Context",
+        "Cache-Control": "no-cache",
+        "Content-Length": "1650",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 26 Jun 2023 09:23:31 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Request-Context": "appId=cid-v1:60b64f55-e716-48c8-8b96-83eb9c6a7a9b",
+        "Server": "Microsoft-IIS/10.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "b0e048dd-8c84-4b06-9df6-b00fbff2f46b",
+        "x-ms-ratelimit-remaining-subscription-reads": "11995",
+        "x-ms-request-id": "b0e048dd-8c84-4b06-9df6-b00fbff2f46b",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20230626T092332Z:b0e048dd-8c84-4b06-9df6-b00fbff2f46b",
+        "X-Powered-By": "ASP.NET"
+      },
+      "ResponseBody": {
+        "name": "template9417",
+        "location": "eastus",
+        "tags": {},
+        "type": "microsoft.insights/workbooktemplates",
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testrg-5209/providers/microsoft.insights/workbooktemplates/template9417",
+        "properties": {
+          "priority": 1,
+          "author": "Contoso",
+          "templateData": {
+            "$schema": "https://github.com/Microsoft/Application-Insights-Workbooks/blob/master/schema/workbook.json",
+            "items": [
+              {
+                "name": "text - 2",
+                "type": "1",
+                "content": {
+                  "json": "## New workbook\n---\n\nWelcome to your new workbook.  This area will display text formatted as markdown.\n\n\nWe\u0027ve included a basic analytics query to get you started. Use the \u0060Edit\u0060 button below each section to configure it or add more sections."
+                }
+              },
+              {
+                "name": "query - 2",
+                "type": "3",
+                "content": {
+                  "exportToExcelOptions": "visible",
+                  "query": "union withsource=TableName *\n| summarize Count=count() by TableName\n| render barchart",
+                  "queryType": "0",
+                  "resourceType": "microsoft.operationalinsights/workspaces",
+                  "size": "1",
+                  "version": "KqlItem/1.0"
+                }
+              }
+            ],
+            "styleSettings": {},
+            "version": "Notebook/1.0"
+          },
+          "galleries": [
+            {
+              "name": "Simple Template",
+              "category": "Failures",
+              "order": 100,
+              "type": "tsg",
+              "resourceType": "microsoft.insights/components"
+            }
+          ],
+          "localized": null
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testrg-5209/providers/Microsoft.Insights/workbooktemplates/template9417?api-version=2020-11-20",
+      "RequestMethod": "DELETE",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-d4e9bb1ed769c34c8126a82d9043ba31-c7925c850bca8a4f-00",
+        "User-Agent": "azsdk-net-ResourceManager.ApplicationInsights/1.0.0-alpha.20230626.1 (.NET Framework 4.8.9166.0; Microsoft Windows 10.0.22621 )",
+        "x-ms-client-request-id": "75d8620631f4941aad719fce73ed9194",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Access-Control-Expose-Headers": "Request-Context",
+        "Cache-Control": "no-cache",
+        "Content-Length": "0",
+        "Date": "Mon, 26 Jun 2023 09:23:36 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Request-Context": "appId=cid-v1:60b64f55-e716-48c8-8b96-83eb9c6a7a9b",
+        "Server": "Microsoft-IIS/10.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "53fe5dfa-0a6e-4539-96f4-c3da535522fa",
+        "x-ms-ratelimit-remaining-subscription-deletes": "14999",
+        "x-ms-request-id": "53fe5dfa-0a6e-4539-96f4-c3da535522fa",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20230626T092337Z:53fe5dfa-0a6e-4539-96f4-c3da535522fa",
+        "X-Powered-By": "ASP.NET"
+      },
+      "ResponseBody": null
+    }
+  ],
+  "Variables": {
+    "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com/",
+    "LOCATION": "EastUS",
+    "RandomSeed": "502571384",
+    "RESOURCE_MANAGER_URL": null,
+    "SUBSCRIPTION_ID": "db1ab6f0-4769-4b27-930e-01e2ef9c123c"
+  }
+}
