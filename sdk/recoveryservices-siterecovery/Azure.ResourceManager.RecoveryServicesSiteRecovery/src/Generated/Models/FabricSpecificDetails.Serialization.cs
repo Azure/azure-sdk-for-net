@@ -21,10 +21,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "Azure": return AzureFabricSpecificDetails.DeserializeAzureFabricSpecificDetails(element);
+                    case "Azure": return SiteRecoveryFabricProviderSpecificDetails.DeserializeSiteRecoveryFabricProviderSpecificDetails(element);
                     case "HyperVSite": return HyperVSiteDetails.DeserializeHyperVSiteDetails(element);
                     case "InMageRcm": return InMageRcmFabricSpecificDetails.DeserializeInMageRcmFabricSpecificDetails(element);
-                    case "VMM": return VmmDetails.DeserializeVmmDetails(element);
+                    case "VMM": return VmmFabricDetails.DeserializeVmmFabricDetails(element);
                     case "VMware": return VMwareDetails.DeserializeVMwareDetails(element);
                     case "VMwareV2": return VMwareV2FabricSpecificDetails.DeserializeVMwareV2FabricSpecificDetails(element);
                 }

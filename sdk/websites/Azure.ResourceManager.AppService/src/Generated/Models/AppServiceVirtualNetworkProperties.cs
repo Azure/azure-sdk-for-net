@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="vnetResourceId"> The Virtual Network's resource ID. </param>
         /// <param name="certThumbprintString"> The client certificate thumbprint. </param>
         /// <param name="certBlob">
-        /// A certificate file (.cer) blob containing the public key of the private key used to authenticate a 
+        /// A certificate file (.cer) blob containing the public key of the private key used to authenticate a
         /// Point-To-Site VPN connection.
         /// </param>
         /// <param name="routes"> The routes that this Virtual Network connection uses. </param>
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> The client certificate thumbprint. </summary>
         public string CertThumbprintString { get; }
         /// <summary>
-        /// A certificate file (.cer) blob containing the public key of the private key used to authenticate a 
+        /// A certificate file (.cer) blob containing the public key of the private key used to authenticate a
         /// Point-To-Site VPN connection.
         /// </summary>
         public string CertBlob { get; }

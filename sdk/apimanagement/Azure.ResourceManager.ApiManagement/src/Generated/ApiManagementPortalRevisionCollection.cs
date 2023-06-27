@@ -224,11 +224,11 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="filter">
         /// | Field       | Supported operators    | Supported functions               |
         /// |-------------|------------------------|-----------------------------------|
-        /// 
+        ///
         /// |name | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith|
         /// |description | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith|
         /// |isCurrent | eq, ne |    |
-        /// 
+        ///
         /// </param>
         /// <param name="top"> Number of records to return. </param>
         /// <param name="skip"> Number of records to skip. </param>
@@ -257,11 +257,11 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="filter">
         /// | Field       | Supported operators    | Supported functions               |
         /// |-------------|------------------------|-----------------------------------|
-        /// 
+        ///
         /// |name | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith|
         /// |description | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith|
         /// |isCurrent | eq, ne |    |
-        /// 
+        ///
         /// </param>
         /// <param name="top"> Number of records to return. </param>
         /// <param name="skip"> Number of records to skip. </param>

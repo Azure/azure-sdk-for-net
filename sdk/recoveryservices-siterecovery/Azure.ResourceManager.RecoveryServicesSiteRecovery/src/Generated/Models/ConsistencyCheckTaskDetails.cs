@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     /// <summary> This class contains monitoring details of all the inconsistent Protected Entities in Vmm. </summary>
-    public partial class ConsistencyCheckTaskDetails : TaskTypeDetails
+    public partial class ConsistencyCheckTaskDetails : SiteRecoveryTaskTypeDetails
     {
         /// <summary> Initializes a new instance of ConsistencyCheckTaskDetails. </summary>
         internal ConsistencyCheckTaskDetails()

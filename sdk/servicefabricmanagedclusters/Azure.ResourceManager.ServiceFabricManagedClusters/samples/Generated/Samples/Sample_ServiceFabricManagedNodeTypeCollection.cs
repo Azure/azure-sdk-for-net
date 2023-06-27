@@ -578,7 +578,7 @@ Settings = BinaryData.FromObjectAsJson(new Dictionary<string, object>()
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Put node type with vm image plan 
+        // Put node type with vm image plan
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task CreateOrUpdate_PutNodeTypeWithVmImagePlan()
