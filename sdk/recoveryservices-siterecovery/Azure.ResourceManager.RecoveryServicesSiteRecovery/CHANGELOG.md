@@ -1,6 +1,6 @@
 # Release History
 
-## 1.0.0-beta.4 (2023-06-27)
+## 1.0.0 (2023-06-27)
 
 This release is the first stable release of the Azure Recovery Services Site Recovery Management client library.
 
