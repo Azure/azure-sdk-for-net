@@ -16,6 +16,7 @@ using Azure.Storage.DataMovement.Models;
 using Azure.Storage.Blobs.Models;
 using Azure.Storage.Blobs;
 using Microsoft.CodeAnalysis.Diagnostics;
+using System.Linq;
 
 namespace Azure.Storage.DataMovement.Blobs.Samples
 {
@@ -743,22 +744,23 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
                     return (source, destination);
                 }
 
+                List<DataTransfer> resumedTransfers = new();
                 await foreach (DataTransfer transfer in transferManager.GetTransfersAsync(
                     new StorageTransferStatus[] { StorageTransferStatus.Paused, StorageTransferStatus.Queued }))
                 {
                     (StorageResource resumeSource, StorageResource resumeDestination) = GetResources(null);
-                    await transferManager.StartTransferAsync(
+                    resumedTransfers.Add(await transferManager.StartTransferAsync(
                         resumeSource,
                         resumeDestination,
                         new TransferOptions() // should there be a separate factory method for resume options?
                         {
                             ResumeFromCheckpointId = transfer.Id
-                        });
+                        }));
                 }
                 #endregion Snippet:TransferManagerResume_Async
 
                 // Wait for download to finish
-                //await resumedTransfer.AwaitCompletion();
+                await Task.WhenAll(resumedTransfers.Select(t => t.AwaitCompletion()));
             }
             finally
             {
