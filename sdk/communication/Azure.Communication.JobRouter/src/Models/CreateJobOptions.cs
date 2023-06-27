@@ -70,12 +70,8 @@ namespace Azure.Communication.JobRouter
         public IDictionary<string, LabelValue> Labels { get; } = new Dictionary<string, LabelValue>();
 
         /// <summary>
-        /// A flag indicating this job is not ready for being matched with workers.
-        /// When set to true, job matching will not be started. If set to false, job matching will start automatically
+        /// If provided, will determine how job matching will be carried out. Default mode: QueueAndMatchMode.
         /// </summary>
-        public bool? UnavailableForMatching { get; set; }
-
-        /// <summary> If set, job will be scheduled to be enqueued at a given time. </summary>
-        public DateTimeOffset? ScheduledTimeUtc { get; set; }
+        public JobMatchingMode MatchingMode { get; set; }
     }
 }

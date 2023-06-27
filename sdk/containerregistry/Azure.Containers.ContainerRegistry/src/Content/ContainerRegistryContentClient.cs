@@ -679,13 +679,15 @@ namespace Azure.Containers.ContainerRegistry
             return reference.StartsWith("sha256:", StringComparison.OrdinalIgnoreCase);
         }
 
-        private static void CheckContentLength(Response response)
+        private static long CheckContentLength(Response response)
         {
-            if (response.Headers.ContentLength == null ||
-                response.Headers.ContentLength <= 0)
+            if (response.Headers.ContentLengthLong == null ||
+                response.Headers.ContentLengthLong <= 0)
             {
                 throw new RequestFailedException(response.Status, InvalidContentLengthMessage);
             }
+
+            return response.Headers.ContentLengthLong.Value;
         }
 
         private static void CheckManifestSize(Response response)
@@ -695,7 +697,7 @@ namespace Azure.Containers.ContainerRegistry
             // it indicates a malicious or faulty service and should not be trusted.
             CheckContentLength(response);
 
-            int? size = response.Headers.ContentLength;
+            long? size = response.Headers.ContentLengthLong;
 
             if (size > MaxManifestSize)
             {
@@ -873,7 +875,7 @@ namespace Azure.Containers.ContainerRegistry
                 _blobRestClientWithRedirects.GetBlob(_repositoryName, digest, cancellationToken);
 
             Response response = blobResult.GetRawResponse();
-            CheckContentLength(response);
+            long contentLength = CheckContentLength(response);
 
             // Wrap the response Content in a RetriableStream so we
             // can return it before it's finished downloading, but still
@@ -885,7 +887,7 @@ namespace Azure.Containers.ContainerRegistry
                 _pipeline.ResponseClassifier,
                 _maxRetries);
 
-            ValidatingStream stream = new(retriableStream, (int)blobResult.Headers.ContentLength.Value, digest);
+            ValidatingStream stream = new(retriableStream, contentLength, digest);
 
             return Response.FromValue(new DownloadRegistryBlobStreamingResult(digest, stream), response);
         }
@@ -1036,7 +1038,7 @@ namespace Azure.Containers.ContainerRegistry
                 {
                     // Request a chunk
                     long requestLength = blobSize.HasValue ?
-                        (int)Math.Min(blobSize.Value - blobBytes, options.MaxChunkSize) :
+                        Math.Min(blobSize.Value - blobBytes, options.MaxChunkSize) :
                         options.MaxChunkSize;
                     string requestRange = new HttpRange(blobBytes, requestLength).ToString();
 
@@ -1044,9 +1046,11 @@ namespace Azure.Containers.ContainerRegistry
                         await _blobRestClientWithRedirects.GetChunkAsync(_repositoryName, digest, requestRange, cancellationToken).ConfigureAwait(false) :
                         _blobRestClientWithRedirects.GetChunk(_repositoryName, digest, requestRange, cancellationToken);
 
-                    blobSize ??= GetBlobSize(getChunkResponse.GetRawResponse());
+                    Response rawResponse = getChunkResponse.GetRawResponse();
+                    blobSize ??= GetBlobSize(rawResponse);
 
-                    int chunkLength = (int)getChunkResponse.Headers.ContentLength.Value;
+                    long contentLength = CheckContentLength(rawResponse);
+                    int chunkLength = checked((int)contentLength);
                     Stream responseStream = getChunkResponse.Value;
 
                     // Read the response stream until all content is received.
