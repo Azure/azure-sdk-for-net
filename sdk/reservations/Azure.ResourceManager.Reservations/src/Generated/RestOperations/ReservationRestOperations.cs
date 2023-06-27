@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Reservations
 
         /// <summary>
         /// Check whether the scopes from request is valid for `Reservation`.
-        /// 
+        ///
         /// </summary>
         /// <param name="reservationOrderId"> Order Id of the reservation. </param>
         /// <param name="reservationId"> Id of the reservation item. </param>
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Reservations
 
         /// <summary>
         /// Check whether the scopes from request is valid for `Reservation`.
-        /// 
+        ///
         /// </summary>
         /// <param name="reservationOrderId"> Order Id of the reservation. </param>
         /// <param name="reservationId"> Id of the reservation item. </param>
@@ -505,7 +505,7 @@ namespace Azure.ResourceManager.Reservations
 
         /// <summary>
         /// Restores a `Reservation` to the state it was before archiving.
-        /// 
+        ///
         /// </summary>
         /// <param name="reservationOrderId"> Order Id of the reservation. </param>
         /// <param name="reservationId"> Id of the reservation item. </param>
@@ -525,7 +525,7 @@ namespace Azure.ResourceManager.Reservations
 
         /// <summary>
         /// Restores a `Reservation` to the state it was before archiving.
-        /// 
+        ///
         /// </summary>
         /// <param name="reservationOrderId"> Order Id of the reservation. </param>
         /// <param name="reservationId"> Id of the reservation item. </param>

@@ -921,7 +921,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="metadata"> Metadata about the resource. </param>
         /// <param name="streamDeclarations"> Declaration of custom streams used in this rule. </param>
         /// <param name="dataSources">
-        /// The specification of data sources. 
+        /// The specification of data sources.
         /// This property is optional and can be omitted if the rule is meant to be used via direct calls to the provisioned endpoint.
         /// </param>
         /// <param name="destinations"> The specification of destinations. </param>
@@ -950,7 +950,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="workspaceResourceId"> The resource ID of the Log Analytics workspace. </param>
         /// <param name="workspaceId"> The Customer ID of the Log Analytics workspace. </param>
         /// <param name="name">
-        /// A friendly name for the destination. 
+        /// A friendly name for the destination.
         /// This name should be unique across all destinations (regardless of type) within the data collection rule.
         /// </param>
         /// <returns> A new <see cref="Models.LogAnalyticsDestination"/> instance for mocking. </returns>
@@ -963,7 +963,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="accountResourceId"> The resource ID of the monitoring account. </param>
         /// <param name="accountId"> The immutable ID  of the account. </param>
         /// <param name="name">
-        /// A friendly name for the destination. 
+        /// A friendly name for the destination.
         /// This name should be unique across all destinations (regardless of type) within the data collection rule.
         /// </param>
         /// <returns> A new <see cref="Models.MonitoringAccountDestination"/> instance for mocking. </returns>

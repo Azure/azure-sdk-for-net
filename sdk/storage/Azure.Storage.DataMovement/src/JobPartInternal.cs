@@ -48,12 +48,12 @@ namespace Azure.Storage.DataMovement
         /// <summary>
         /// Specifies the source resource.
         /// </summary>
-        internal StorageResource _sourceResource;
+        internal StorageResourceSingle _sourceResource;
 
         /// <summary>
         /// Specifies the destination resource.
         /// </summary>
-        internal StorageResource _destinationResource;
+        internal StorageResourceSingle _destinationResource;
 
         /// <summary>
         /// Specifies the options for error handling.
@@ -150,8 +150,8 @@ namespace Azure.Storage.DataMovement
         internal JobPartInternal(
             DataTransfer dataTransfer,
             int partNumber,
-            StorageResource sourceResource,
-            StorageResource destinationResource,
+            StorageResourceSingle sourceResource,
+            StorageResourceSingle destinationResource,
             long? maximumTransferChunkSize,
             long? initialTransferSize,
             ErrorHandlingOptions errorHandling,

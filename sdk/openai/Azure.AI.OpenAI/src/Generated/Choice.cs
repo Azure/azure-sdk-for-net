@@ -17,7 +17,6 @@ namespace Azure.AI.OpenAI
     /// </summary>
     public partial class Choice
     {
-
         /// <summary> The generated text for a given completions prompt. </summary>
         public string Text { get; }
         /// <summary> The ordered index associated with this completions choice. </summary>
