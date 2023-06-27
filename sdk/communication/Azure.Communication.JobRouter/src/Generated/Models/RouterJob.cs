@@ -15,7 +15,6 @@ namespace Azure.Communication.JobRouter.Models
     /// <summary> A unit of work to be routed. </summary>
     public partial class RouterJob
     {
-
         /// <summary> Initializes a new instance of RouterJob. </summary>
         /// <param name="id"> The id of the job. </param>
         /// <param name="channelReference"> Reference to an external parent context, eg. call ID. </param>

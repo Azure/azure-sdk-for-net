@@ -63,7 +63,7 @@ namespace Azure.AI.Translation.Text
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal new static TransliterableScript FromResponse(Response response)
+        internal static new TransliterableScript FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content);
             return DeserializeTransliterableScript(document.RootElement);

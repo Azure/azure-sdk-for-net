@@ -14,7 +14,6 @@ namespace Azure.Communication.JobRouter.Models
     /// <summary> A container for the rules that govern how jobs are classified. </summary>
     public partial class ClassificationPolicy
     {
-
         /// <summary> Initializes a new instance of ClassificationPolicy. </summary>
         /// <param name="id"> Unique identifier of this policy. </param>
         /// <param name="name"> Friendly name of this policy. </param>
@@ -26,7 +25,7 @@ namespace Azure.Communication.JobRouter.Models
         /// </param>
         /// <param name="prioritizationRule">
         /// A rule of one of the following types:
-        ///             
+        ///
         /// StaticRule:  A rule providing static rules that always return the same result, regardless of input.
         /// DirectMapRule:  A rule that return the same labels as the input labels.
         /// ExpressionRule: A rule providing inline expression rules.
@@ -58,7 +57,7 @@ namespace Azure.Communication.JobRouter.Models
         public string FallbackQueueId { get; set; }
         /// <summary>
         /// A rule of one of the following types:
-        ///             
+        ///
         /// StaticRule:  A rule providing static rules that always return the same result, regardless of input.
         /// DirectMapRule:  A rule that return the same labels as the input labels.
         /// ExpressionRule: A rule providing inline expression rules.
