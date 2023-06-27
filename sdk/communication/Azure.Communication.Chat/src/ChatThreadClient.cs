@@ -6,7 +6,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.Communication.Chat;
 using Azure.Communication.Pipeline;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -77,7 +76,7 @@ namespace Azure.Communication.Chat
         /// <param name="options"> Chat thread options. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        public virtual Response UpdateChatThreadProperties(UpdateChatThreadOptions options, CancellationToken cancellationToken = default)
+        public virtual Response UpdateProperties(UpdateChatThreadPropertiesOptions options, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ChatThreadClient)}.{nameof(UpdateTopic)}");
             scope.Start();
@@ -95,7 +94,7 @@ namespace Azure.Communication.Chat
         /// <param name="options"> Chat thread options. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        public virtual async Task<Response> UpdateChatThreadPropertiesAsync(UpdateChatThreadOptions options, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> UpdatePropertiesAsync(UpdateChatThreadPropertiesOptions options, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ChatThreadClient)}.{nameof(UpdateTopic)}");
             scope.Start();

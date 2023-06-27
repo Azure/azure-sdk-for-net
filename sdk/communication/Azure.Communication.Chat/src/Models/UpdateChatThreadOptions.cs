@@ -5,7 +5,7 @@ using System.Collections.Generic;
 namespace Azure.Communication.Chat
 {
 #pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
-    public class UpdateChatThreadOptions
+    public class UpdateChatThreadPropertiesOptions
     {
         public string Topic { get; set; }
 
