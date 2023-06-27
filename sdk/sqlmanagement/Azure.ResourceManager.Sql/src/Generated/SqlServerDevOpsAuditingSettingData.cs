@@ -29,23 +29,23 @@ namespace Azure.ResourceManager.Sql
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="isAzureMonitorTargetEnabled">
-        /// Specifies whether DevOps audit events are sent to Azure Monitor. 
+        /// Specifies whether DevOps audit events are sent to Azure Monitor.
         /// In order to send the events to Azure Monitor, specify 'State' as 'Enabled' and 'IsAzureMonitorTargetEnabled' as true.
-        /// 
+        ///
         /// When using REST API to configure DevOps audit, Diagnostic Settings with 'DevOpsOperationsAudit' diagnostic logs category on the master database should be also created.
-        /// 
+        ///
         /// Diagnostic Settings URI format:
         /// PUT https://management.azure.com/subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.Sql/servers/{serverName}/databases/master/providers/microsoft.insights/diagnosticSettings/{settingsName}?api-version=2017-05-01-preview
-        /// 
+        ///
         /// For more information, see [Diagnostic Settings REST API](https://go.microsoft.com/fwlink/?linkid=2033207)
         /// or [Diagnostic Settings PowerShell](https://go.microsoft.com/fwlink/?linkid=2033043)
-        /// 
+        ///
         /// </param>
         /// <param name="isManagedIdentityInUse"> Specifies whether Managed Identity is used to access blob storage. </param>
         /// <param name="state"> Specifies the state of the audit. If state is Enabled, storageEndpoint or isAzureMonitorTargetEnabled are required. </param>
         /// <param name="storageEndpoint"> Specifies the blob storage endpoint (e.g. https://MyAccount.blob.core.windows.net). If state is Enabled, storageEndpoint or isAzureMonitorTargetEnabled is required. </param>
         /// <param name="storageAccountAccessKey">
-        /// Specifies the identifier key of the auditing storage account. 
+        /// Specifies the identifier key of the auditing storage account.
         /// If state is Enabled and storageEndpoint is specified, not specifying the storageAccountAccessKey will use SQL server system-assigned managed identity to access the storage.
         /// Prerequisites for using managed identity authentication:
         /// 1. Assign SQL Server a system-assigned managed identity in Azure Active Directory (AAD).
@@ -64,17 +64,17 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary>
-        /// Specifies whether DevOps audit events are sent to Azure Monitor. 
+        /// Specifies whether DevOps audit events are sent to Azure Monitor.
         /// In order to send the events to Azure Monitor, specify 'State' as 'Enabled' and 'IsAzureMonitorTargetEnabled' as true.
-        /// 
+        ///
         /// When using REST API to configure DevOps audit, Diagnostic Settings with 'DevOpsOperationsAudit' diagnostic logs category on the master database should be also created.
-        /// 
+        ///
         /// Diagnostic Settings URI format:
         /// PUT https://management.azure.com/subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.Sql/servers/{serverName}/databases/master/providers/microsoft.insights/diagnosticSettings/{settingsName}?api-version=2017-05-01-preview
-        /// 
+        ///
         /// For more information, see [Diagnostic Settings REST API](https://go.microsoft.com/fwlink/?linkid=2033207)
         /// or [Diagnostic Settings PowerShell](https://go.microsoft.com/fwlink/?linkid=2033043)
-        /// 
+        ///
         /// </summary>
         public bool? IsAzureMonitorTargetEnabled { get; set; }
         /// <summary> Specifies whether Managed Identity is used to access blob storage. </summary>
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Specifies the blob storage endpoint (e.g. https://MyAccount.blob.core.windows.net). If state is Enabled, storageEndpoint or isAzureMonitorTargetEnabled is required. </summary>
         public string StorageEndpoint { get; set; }
         /// <summary>
-        /// Specifies the identifier key of the auditing storage account. 
+        /// Specifies the identifier key of the auditing storage account.
         /// If state is Enabled and storageEndpoint is specified, not specifying the storageAccountAccessKey will use SQL server system-assigned managed identity to access the storage.
         /// Prerequisites for using managed identity authentication:
         /// 1. Assign SQL Server a system-assigned managed identity in Azure Active Directory (AAD).
