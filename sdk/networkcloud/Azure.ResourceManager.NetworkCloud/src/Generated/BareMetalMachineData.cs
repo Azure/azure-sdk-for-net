@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.NetworkCloud
         public HardwareValidationStatus HardwareValidationStatus { get; }
         /// <summary> Field Deprecated. These fields will be empty/omitted. The list of the resource IDs for the HybridAksClusters that have nodes hosted on this bare metal machine. </summary>
         public IReadOnlyList<string> HybridAksClustersAssociatedIds { get; }
-        /// <summary> The name of this machine represented by the host object in the Cluster&apos;s Kubernetes control plane. </summary>
+        /// <summary> The name of this machine represented by the host object in the Cluster's Kubernetes control plane. </summary>
         public string KubernetesNodeName { get; }
         /// <summary> The version of Kubernetes running on this machine. </summary>
         public string KubernetesVersion { get; }
@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.NetworkCloud
         public BareMetalMachineReadyState? ReadyState { get; }
         /// <summary> The serial number of the bare metal machine. </summary>
         public string SerialNumber { get; set; }
-        /// <summary> The discovered value of the machine&apos;s service tag. </summary>
+        /// <summary> The discovered value of the machine's service tag. </summary>
         public string ServiceTag { get; }
         /// <summary> Field Deprecated. These fields will be empty/omitted. The list of the resource IDs for the VirtualMachines that are hosted on this bare metal machine. </summary>
         public IReadOnlyList<string> VirtualMachinesAssociatedIds { get; }

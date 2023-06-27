@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <param name="systemData"> Metadata pertaining to creation and last modification of the resource. </param>
         /// <param name="displayName"> The user-defined name of the private workbook. </param>
         /// <param name="serializedData"> Configuration of this particular private workbook. Configuration data is a string containing valid JSON. </param>
-        /// <param name="version"> This instance&apos;s version of the data model. This can change as new features are added that can be marked private workbook. </param>
+        /// <param name="version"> This instance's version of the data model. This can change as new features are added that can be marked private workbook. </param>
         /// <param name="timeModified"> Date and time in UTC of the last modification that was made to this private workbook definition. </param>
         /// <param name="category"> Workbook category, as defined by the user at creation time. </param>
         /// <param name="userId"> Unique user id of the specific user that owns this private workbook. </param>
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         public string DisplayName { get; set; }
         /// <summary> Configuration of this particular private workbook. Configuration data is a string containing valid JSON. </summary>
         public string SerializedData { get; set; }
-        /// <summary> This instance&apos;s version of the data model. This can change as new features are added that can be marked private workbook. </summary>
+        /// <summary> This instance's version of the data model. This can change as new features are added that can be marked private workbook. </summary>
         public string Version { get; set; }
         /// <summary> Date and time in UTC of the last modification that was made to this private workbook definition. </summary>
         public string TimeModified { get; }

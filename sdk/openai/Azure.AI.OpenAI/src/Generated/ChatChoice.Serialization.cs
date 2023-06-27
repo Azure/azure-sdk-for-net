@@ -21,7 +21,7 @@ namespace Azure.AI.OpenAI
             }
             Optional<ChatMessage> message = default;
             int index = default;
-            Optional<CompletionsFinishReason> finishReason = default;
+            CompletionsFinishReason finishReason = default;
             Optional<ChatMessage> delta = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -41,10 +41,6 @@ namespace Azure.AI.OpenAI
                 }
                 if (property.NameEquals("finish_reason"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     finishReason = new CompletionsFinishReason(property.Value.GetString());
                     continue;
                 }
@@ -58,7 +54,7 @@ namespace Azure.AI.OpenAI
                     continue;
                 }
             }
-            return new ChatChoice(message.Value, index, Optional.ToNullable(finishReason), delta.Value);
+            return new ChatChoice(message.Value, index, finishReason, delta.Value);
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>

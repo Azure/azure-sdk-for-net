@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.IoT.TimeSeriesInsights
 {
-    /// <summary> Request to get or delete time series types by IDs or type names. Exactly one of &quot;typeIds&quot; or &quot;names&quot; must be set. </summary>
+    /// <summary> Request to get or delete time series types by IDs or type names. Exactly one of "typeIds" or "names" must be set. </summary>
     internal partial class TypesRequestBatchGetOrDelete
     {
         /// <summary> Initializes a new instance of TypesRequestBatchGetOrDelete. </summary>

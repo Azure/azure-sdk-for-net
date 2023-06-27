@@ -10,13 +10,13 @@ using Azure.Core;
 
 namespace Azure.Communication.JobRouter
 {
-    /// <summary> Attaches labels to a worker when a RouterRule is resolved. </summary>
+    /// <summary> Attaches queue selectors to a job when the RouterRule is resolved. </summary>
     public partial class RuleEngineQueueSelectorAttachment : QueueSelectorAttachment
     {
         /// <summary> Initializes a new instance of RuleEngineQueueSelectorAttachment. </summary>
         /// <param name="rule">
         /// A rule of one of the following types:
-        ///             
+        ///
         /// StaticRule:  A rule providing static rules that always return the same result, regardless of input.
         /// DirectMapRule:  A rule that return the same labels as the input labels.
         /// ExpressionRule: A rule providing inline expression rules.
@@ -35,10 +35,10 @@ namespace Azure.Communication.JobRouter
         }
 
         /// <summary> Initializes a new instance of RuleEngineQueueSelectorAttachment. </summary>
-        /// <param name="kind"> The type discriminator describing the type of label selector attachment. </param>
+        /// <param name="kind"> The type discriminator describing the type of queue selector attachment. </param>
         /// <param name="rule">
         /// A rule of one of the following types:
-        ///             
+        ///
         /// StaticRule:  A rule providing static rules that always return the same result, regardless of input.
         /// DirectMapRule:  A rule that return the same labels as the input labels.
         /// ExpressionRule: A rule providing inline expression rules.
@@ -55,7 +55,7 @@ namespace Azure.Communication.JobRouter
 
         /// <summary>
         /// A rule of one of the following types:
-        ///             
+        ///
         /// StaticRule:  A rule providing static rules that always return the same result, regardless of input.
         /// DirectMapRule:  A rule that return the same labels as the input labels.
         /// ExpressionRule: A rule providing inline expression rules.

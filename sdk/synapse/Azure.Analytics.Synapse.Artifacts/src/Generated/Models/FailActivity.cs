@@ -16,8 +16,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     {
         /// <summary> Initializes a new instance of FailActivity. </summary>
         /// <param name="name"> Activity name. </param>
-        /// <param name="message"> The error message that surfaced in the Fail activity. It can be dynamic content that&apos;s evaluated to a non empty/blank string at runtime. Type: string (or Expression with resultType string). </param>
-        /// <param name="errorCode"> The error code that categorizes the error type of the Fail activity. It can be dynamic content that&apos;s evaluated to a non empty/blank string at runtime. Type: string (or Expression with resultType string). </param>
+        /// <param name="message"> The error message that surfaced in the Fail activity. It can be dynamic content that's evaluated to a non empty/blank string at runtime. Type: string (or Expression with resultType string). </param>
+        /// <param name="errorCode"> The error code that categorizes the error type of the Fail activity. It can be dynamic content that's evaluated to a non empty/blank string at runtime. Type: string (or Expression with resultType string). </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="message"/> or <paramref name="errorCode"/> is null. </exception>
         public FailActivity(string name, object message, object errorCode) : base(name)
         {
@@ -37,8 +37,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="dependsOn"> Activity depends on condition. </param>
         /// <param name="userProperties"> Activity user properties. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        /// <param name="message"> The error message that surfaced in the Fail activity. It can be dynamic content that&apos;s evaluated to a non empty/blank string at runtime. Type: string (or Expression with resultType string). </param>
-        /// <param name="errorCode"> The error code that categorizes the error type of the Fail activity. It can be dynamic content that&apos;s evaluated to a non empty/blank string at runtime. Type: string (or Expression with resultType string). </param>
+        /// <param name="message"> The error message that surfaced in the Fail activity. It can be dynamic content that's evaluated to a non empty/blank string at runtime. Type: string (or Expression with resultType string). </param>
+        /// <param name="errorCode"> The error code that categorizes the error type of the Fail activity. It can be dynamic content that's evaluated to a non empty/blank string at runtime. Type: string (or Expression with resultType string). </param>
         internal FailActivity(string name, string type, string description, IList<ActivityDependency> dependsOn, IList<UserProperty> userProperties, IDictionary<string, object> additionalProperties, object message, object errorCode) : base(name, type, description, dependsOn, userProperties, additionalProperties)
         {
             Message = message;
@@ -46,9 +46,9 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Type = type ?? "Fail";
         }
 
-        /// <summary> The error message that surfaced in the Fail activity. It can be dynamic content that&apos;s evaluated to a non empty/blank string at runtime. Type: string (or Expression with resultType string). </summary>
+        /// <summary> The error message that surfaced in the Fail activity. It can be dynamic content that's evaluated to a non empty/blank string at runtime. Type: string (or Expression with resultType string). </summary>
         public object Message { get; set; }
-        /// <summary> The error code that categorizes the error type of the Fail activity. It can be dynamic content that&apos;s evaluated to a non empty/blank string at runtime. Type: string (or Expression with resultType string). </summary>
+        /// <summary> The error code that categorizes the error type of the Fail activity. It can be dynamic content that's evaluated to a non empty/blank string at runtime. Type: string (or Expression with resultType string). </summary>
         public object ErrorCode { get; set; }
     }
 }

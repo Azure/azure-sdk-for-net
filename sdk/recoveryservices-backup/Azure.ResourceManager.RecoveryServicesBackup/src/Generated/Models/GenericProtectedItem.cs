@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="protectionState"> Backup state of this backup item. </param>
         /// <param name="protectedItemId"> Data Plane Service ID of the protected item. </param>
         /// <param name="sourceAssociations"> Loosely coupled (type, value) associations (example - parent of a protected item). </param>
-        /// <param name="fabricName"> Name of this backup item&apos;s fabric. </param>
+        /// <param name="fabricName"> Name of this backup item's fabric. </param>
         internal GenericProtectedItem(string protectedItemType, BackupManagementType? backupManagementType, BackupDataSourceType? workloadType, string containerName, ResourceIdentifier sourceResourceId, ResourceIdentifier policyId, DateTimeOffset? lastRecoverOn, string backupSetName, BackupCreateMode? createMode, DateTimeOffset? deferredDeletedOn, bool? isScheduledForDeferredDelete, string deferredDeleteTimeRemaining, bool? isDeferredDeleteScheduleUpcoming, bool? isRehydrate, IList<string> resourceGuardOperationRequests, bool? isArchiveEnabled, string policyName, int? softDeleteRetentionPeriod, string friendlyName, string policyState, BackupProtectionState? protectionState, long? protectedItemId, IDictionary<string, string> sourceAssociations, string fabricName) : base(protectedItemType, backupManagementType, workloadType, containerName, sourceResourceId, policyId, lastRecoverOn, backupSetName, createMode, deferredDeletedOn, isScheduledForDeferredDelete, deferredDeleteTimeRemaining, isDeferredDeleteScheduleUpcoming, isRehydrate, resourceGuardOperationRequests, isArchiveEnabled, policyName, softDeleteRetentionPeriod)
         {
             FriendlyName = friendlyName;
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         public long? ProtectedItemId { get; set; }
         /// <summary> Loosely coupled (type, value) associations (example - parent of a protected item). </summary>
         public IDictionary<string, string> SourceAssociations { get; }
-        /// <summary> Name of this backup item&apos;s fabric. </summary>
+        /// <summary> Name of this backup item's fabric. </summary>
         public string FabricName { get; set; }
     }
 }

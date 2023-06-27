@@ -1,22 +1,19 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.Core.Serialization;
+using System.Linq;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
-namespace Azure.Core.Dynamic
+namespace Azure.Core.Serialization
 {
-    /// <summary>
-    /// Provides options to be used with <see cref="DynamicData"/>.
-    /// </summary>
     internal class DynamicDataOptions
     {
-        private static readonly DynamicDataOptions _default = new()
+        public DynamicDataOptions()
         {
-            DateTimeHandling = DynamicDateTimeHandling.Rfc3339
-        };
-        internal static DynamicDataOptions Default { get => _default; }
-
-        public DynamicDataOptions() { }
+            // Set the default
+            DateTimeFormat = DynamicData.RoundTripFormat;
+        }
 
         /// <summary>
         /// Copy constructor
@@ -24,18 +21,55 @@ namespace Azure.Core.Dynamic
         /// <param name="options"></param>
         public DynamicDataOptions(DynamicDataOptions options)
         {
-            PropertyNamingConvention = options.PropertyNamingConvention;
-            DateTimeHandling = options.DateTimeHandling;
+            PropertyNameFormat = options.PropertyNameFormat;
+            DateTimeFormat = options.DateTimeFormat;
         }
 
-        /// <summary>
-        /// Gets or sets an object that specifies how dynamic property names will be mapped to member names in the data buffer.
-        /// </summary>
-        public PropertyNamingConvention PropertyNamingConvention { get; set; }
+        public JsonPropertyNames PropertyNameFormat { get; set; }
 
-        /// <summary>
-        /// Gets or sets an object that specifies how DateTime and DateTimeOffset should be handled when serializing and deserializing.
-        /// </summary>
-        public DynamicDateTimeHandling DateTimeHandling { get; set; }
+        public string DateTimeFormat { get; set; }
+
+        internal static JsonSerializerOptions ToSerializerOptions(DynamicDataOptions options)
+        {
+            JsonSerializerOptions serializerOptions = new()
+            {
+                Converters =
+                {
+                    new DynamicData.DynamicTimeSpanConverter(),
+                    new DynamicData.DynamicDateTimeConverter(options.DateTimeFormat),
+                    new DynamicData.DynamicDateTimeOffsetConverter(options.DateTimeFormat),
+                }
+            };
+
+            switch (options.PropertyNameFormat)
+            {
+                case JsonPropertyNames.CamelCase:
+                    serializerOptions.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
+                    break;
+                case JsonPropertyNames.UseExact:
+                default:
+                    break;
+            }
+
+            return serializerOptions;
+        }
+
+        internal static DynamicDataOptions FromSerializerOptions(JsonSerializerOptions options)
+        {
+            DynamicDataOptions value = new();
+
+            JsonConverter? c = options.Converters.FirstOrDefault(c => c is DynamicData.DynamicDateTimeConverter);
+            if (c is DynamicData.DynamicDateTimeConverter dtc)
+            {
+                value.DateTimeFormat = dtc.Format;
+            }
+
+            if (options.PropertyNamingPolicy == JsonNamingPolicy.CamelCase)
+            {
+                value.PropertyNameFormat = JsonPropertyNames.CamelCase;
+            }
+
+            return value;
+        }
     }
 }

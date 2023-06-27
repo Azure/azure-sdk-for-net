@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <param name="hybridAksIpamEnabled"> Field Deprecated. The field was previously optional, now it will have no defined behavior and will be ignored. The indicator of whether or not to disable IPAM allocation on the network attachment definition injected into the Hybrid AKS Cluster. </param>
         /// <param name="hybridAksPluginType"> Field Deprecated. The field was previously optional, now it will have no defined behavior and will be ignored. The network plugin type for Hybrid AKS. </param>
         /// <param name="interfaceName"> The default interface name for this L3 network in the virtual machine. This name can be overridden by the name supplied in the network attachment configuration of that virtual machine. </param>
-        /// <param name="ipAllocationType"> The type of the IP address allocation, defaulted to &quot;DualStack&quot;. </param>
+        /// <param name="ipAllocationType"> The type of the IP address allocation, defaulted to "DualStack". </param>
         /// <param name="ipv4ConnectedPrefix">
         /// The IPV4 prefix (CIDR) assigned to this L3 network. Required when the IP allocation type
         /// is IPV4 or DualStack.
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.NetworkCloud
         public HybridAksPluginType? HybridAksPluginType { get; set; }
         /// <summary> The default interface name for this L3 network in the virtual machine. This name can be overridden by the name supplied in the network attachment configuration of that virtual machine. </summary>
         public string InterfaceName { get; set; }
-        /// <summary> The type of the IP address allocation, defaulted to &quot;DualStack&quot;. </summary>
+        /// <summary> The type of the IP address allocation, defaulted to "DualStack". </summary>
         public IPAllocationType? IPAllocationType { get; set; }
         /// <summary>
         /// The IPV4 prefix (CIDR) assigned to this L3 network. Required when the IP allocation type

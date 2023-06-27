@@ -7,6 +7,7 @@ using System.Diagnostics.Tracing;
 using System.Linq;
 using Azure.Core.Shared;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics;
+using Azure.Monitor.OpenTelemetry.Exporter.Tests.CommonTestFramework;
 using Xunit;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
@@ -16,6 +17,16 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
     /// </summary>
     public class AzureMonitorExporterEventSourceTests
     {
+        /// <summary>
+        /// This test uses reflection to invoke every Event method in our EventSource class.
+        /// This validates that paramaters are logged and helps to confirm that EventIds are correct.
+        /// </summary>
+        [Fact]
+        public void EventSourceTest_AzureMonitorExporterEventSource()
+        {
+            EventSourceTestHelper.MethodsAreImplementedConsistentlyWithTheirAttributes(AzureMonitorExporterEventSource.Log);
+        }
+
         [Fact]
         public void VerifyEventSource_Critical() => Test(writeAction: AzureMonitorExporterEventSource.Log.WriteCritical, expectedId: 1, expectedName: "WriteCritical");
 
@@ -97,7 +108,23 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             Assert.Equal(expectedName, eventData.EventName);
 
             var message = EventSourceEventFormatting.Format(eventData);
-            Assert.Equal($"{name} - System.Exception: hello world_1", message);
+
+#if NETFRAMEWORK
+            var expectedMessage = $"{name} - System.AggregateException: One or more errors occurred. ---> System.Exception: hello world_1"
+                + Environment.NewLine + "   --- End of inner exception stack trace ---"
+                + Environment.NewLine + "---> (Inner Exception #0) System.Exception: hello world_1<---"
+                + Environment.NewLine
+                + Environment.NewLine + "---> (Inner Exception #1) System.Exception: hello world_2)<---"
+                + Environment.NewLine;
+#else
+            var expectedMessage = $"{name} - System.AggregateException: One or more errors occurred. (hello world_1) (hello world_2))"
+                + Environment.NewLine + " ---> System.Exception: hello world_1"
+                + Environment.NewLine + "   --- End of inner exception stack trace ---"
+                + Environment.NewLine + " ---> (Inner Exception #1) System.Exception: hello world_2)<---"
+                + Environment.NewLine;
+#endif
+
+            Assert.Equal(expectedMessage, message);
         }
 
         public class TestListener : EventListener
