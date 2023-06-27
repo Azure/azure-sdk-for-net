@@ -18,9 +18,9 @@
 - Add support for Namespace Topic EventSubscriptions.
 - Add support for pull events from Namespace topics.
 - Add support for Namespace Clients.
-- Add support for Namespace Client Groups. 
+- Add support for Namespace ClientGroups. 
 - Add support for Namespace CaCertificates. 
-- Add support for Namespace Topic Spaces. 
+- Add support for Namespace TopicSpaces. 
 - Add support for Namespace Permission Bindings.
 
 ### Breaking Changes
