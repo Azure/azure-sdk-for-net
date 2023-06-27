@@ -4,6 +4,8 @@
 using System.Collections;
 using System.Collections.Generic;
 
+#nullable enable
+
 namespace Azure.Core
 {
     /// <summary>
@@ -12,6 +14,7 @@ namespace Azure.Core
     /// <typeparam name="TKey">The type of key</typeparam>
     /// <typeparam name="TValue">The type of value</typeparam>
     internal class LruCache<TKey, TValue> : IEnumerable<KeyValuePair<TKey, TValue>>
+        where TKey : notnull
     {
         private readonly int _capacity;
         private readonly LinkedList<KeyValuePair<TKey, TValue>> _linkedList;
@@ -43,7 +46,7 @@ namespace Azure.Core
                     return true;
                 }
 
-                value = default(TValue);
+                value = default(TValue)!;
                 return false;
             }
         }
@@ -68,7 +71,7 @@ namespace Azure.Core
                 if (_map.Count > _capacity)
                 {
                     // remove least recently used node
-                    LinkedListNode<KeyValuePair<TKey, TValue>> last = _linkedList.Last;
+                    LinkedListNode<KeyValuePair<TKey, TValue>> last = _linkedList.Last!;
                     _linkedList.RemoveLast();
                     var toRemove = _map[last.Value.Key];
                     _map.Remove(last.Value.Key);
