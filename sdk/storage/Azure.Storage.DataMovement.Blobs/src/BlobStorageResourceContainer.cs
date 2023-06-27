@@ -163,10 +163,7 @@ namespace Azure.Storage.DataMovement.Blobs
             Argument.AssertNotNull(transferProperties, nameof(transferProperties));
             TransferCheckpointer checkpointer = transferProperties.Checkpointer.GetCheckpointer();
 
-            string storedPath = await checkpointer.GetResourcePathAsync(
-                transferProperties.TransferId,
-                isSource,
-                cancellationToken).ConfigureAwait(false);
+            string storedPath = isSource ? transferProperties.SourcePath : transferProperties.DestinationPath;
 
             BlobUriBuilder uriBuilder = new BlobUriBuilder(new Uri(storedPath));
             string prefix = uriBuilder.BlobName;
@@ -212,10 +209,7 @@ namespace Azure.Storage.DataMovement.Blobs
             Argument.AssertNotNull(transferProperties, nameof(transferProperties));
             TransferCheckpointer checkpointer = transferProperties.Checkpointer.GetCheckpointer();
 
-            string storedPath = await checkpointer.GetResourcePathAsync(
-                transferProperties.TransferId,
-                isSource,
-                cancellationToken).ConfigureAwait(false);
+            string storedPath = isSource ? transferProperties.SourcePath : transferProperties.DestinationPath;
 
             BlobUriBuilder uriBuilder = new BlobUriBuilder(new Uri(storedPath));
             string prefix = uriBuilder.BlobName;
@@ -261,10 +255,7 @@ namespace Azure.Storage.DataMovement.Blobs
             Argument.AssertNotNull(transferProperties, nameof(transferProperties));
             TransferCheckpointer checkpointer = transferProperties.Checkpointer.GetCheckpointer();
 
-            string storedPath = await checkpointer.GetResourcePathAsync(
-                transferProperties.TransferId,
-                isSource,
-                cancellationToken).ConfigureAwait(false);
+            string storedPath = isSource ? transferProperties.SourcePath : transferProperties.DestinationPath;
 
             BlobUriBuilder uriBuilder = new BlobUriBuilder(new Uri(storedPath));
             string prefix = uriBuilder.BlobName;
@@ -310,10 +301,7 @@ namespace Azure.Storage.DataMovement.Blobs
             Argument.AssertNotNull(transferProperties, nameof(transferProperties));
             TransferCheckpointer checkpointer = transferProperties.Checkpointer.GetCheckpointer();
 
-            string storedPath = await checkpointer.GetResourcePathAsync(
-                transferProperties.TransferId,
-                isSource,
-                cancellationToken).ConfigureAwait(false);
+            string storedPath = isSource ? transferProperties.SourcePath : transferProperties.DestinationPath;
 
             BlobUriBuilder uriBuilder = new BlobUriBuilder(new Uri(storedPath));
             string prefix = uriBuilder.BlobName;

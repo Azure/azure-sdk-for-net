@@ -316,10 +316,7 @@ namespace Azure.Storage.DataMovement.Blobs
                     isSource,
                     cancellationToken).ConfigureAwait(false);
 
-            string storedPath = await checkpointer.GetResourcePathAsync(
-                transferProperties.TransferId,
-                isSource,
-                cancellationToken).ConfigureAwait(false);
+            string storedPath = isSource ? transferProperties.SourcePath : transferProperties.DestinationPath;
 
             return new PageBlobStorageResource(
                 new PageBlobClient(new Uri(storedPath)),
@@ -360,10 +357,7 @@ namespace Azure.Storage.DataMovement.Blobs
                     isSource,
                     cancellationToken).ConfigureAwait(false);
 
-            string storedPath = await checkpointer.GetResourcePathAsync(
-                transferProperties.TransferId,
-                isSource,
-                cancellationToken).ConfigureAwait(false);
+            string storedPath = isSource ? transferProperties.SourcePath : transferProperties.DestinationPath;
 
             return new PageBlobStorageResource(
                 new PageBlobClient(new Uri(storedPath), sharedKeyCredential),
@@ -404,10 +398,7 @@ namespace Azure.Storage.DataMovement.Blobs
                     isSource,
                     cancellationToken).ConfigureAwait(false);
 
-            string storedPath = await checkpointer.GetResourcePathAsync(
-                transferProperties.TransferId,
-                isSource,
-                cancellationToken).ConfigureAwait(false);
+            string storedPath = isSource ? transferProperties.SourcePath : transferProperties.DestinationPath;
 
             // TODO: get options PageBlobStorageResourceOptions from stored file
             return new PageBlobStorageResource(
@@ -449,10 +440,7 @@ namespace Azure.Storage.DataMovement.Blobs
                     isSource,
                     cancellationToken).ConfigureAwait(false);
 
-            string storedPath = await checkpointer.GetResourcePathAsync(
-                transferProperties.TransferId,
-                isSource,
-                cancellationToken).ConfigureAwait(false);
+            string storedPath = isSource ? transferProperties.SourcePath : transferProperties.DestinationPath;
 
             return new PageBlobStorageResource(
                 new PageBlobClient(new Uri(storedPath), sasCredential),

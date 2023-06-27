@@ -327,10 +327,7 @@ namespace Azure.Storage.DataMovement.Blobs
             Argument.AssertNotNull(transferProperties, nameof(transferProperties));
             TransferCheckpointer checkpointer = transferProperties.Checkpointer.GetCheckpointer();
 
-            string storedPath = await checkpointer.GetResourcePathAsync(
-                transferProperties.TransferId,
-                isSource,
-                cancellationToken).ConfigureAwait(false);
+            string storedPath = isSource ? transferProperties.SourcePath : transferProperties.DestinationPath;
 
             BlockBlobStorageResourceOptions options =
                 await checkpointer.GetBlockBlobResourceOptionsAsync(
@@ -371,10 +368,7 @@ namespace Azure.Storage.DataMovement.Blobs
             Argument.AssertNotNull(transferProperties, nameof(transferProperties));
             TransferCheckpointer checkpointer = transferProperties.Checkpointer.GetCheckpointer();
 
-            string storedPath = await checkpointer.GetResourcePathAsync(
-                transferProperties.TransferId,
-                isSource,
-                cancellationToken).ConfigureAwait(false);
+            string storedPath = isSource ? transferProperties.SourcePath : transferProperties.DestinationPath;
 
             BlockBlobStorageResourceOptions options =
                 await checkpointer.GetBlockBlobResourceOptionsAsync(
@@ -415,10 +409,7 @@ namespace Azure.Storage.DataMovement.Blobs
             Argument.AssertNotNull(transferProperties, nameof(transferProperties));
             TransferCheckpointer checkpointer = transferProperties.Checkpointer.GetCheckpointer();
 
-            string storedPath = await checkpointer.GetResourcePathAsync(
-                transferProperties.TransferId,
-                isSource,
-                cancellationToken).ConfigureAwait(false);
+            string storedPath = isSource ? transferProperties.SourcePath : transferProperties.DestinationPath;
 
             BlockBlobStorageResourceOptions options =
                 await checkpointer.GetBlockBlobResourceOptionsAsync(
@@ -459,10 +450,7 @@ namespace Azure.Storage.DataMovement.Blobs
             Argument.AssertNotNull(transferProperties, nameof(transferProperties));
             TransferCheckpointer checkpointer = transferProperties.Checkpointer.GetCheckpointer();
 
-            string storedPath = await checkpointer.GetResourcePathAsync(
-                transferProperties.TransferId,
-                isSource,
-                cancellationToken).ConfigureAwait(false);
+            string storedPath = isSource ? transferProperties.SourcePath : transferProperties.DestinationPath;
 
             BlockBlobStorageResourceOptions options =
                 await checkpointer.GetBlockBlobResourceOptionsAsync(

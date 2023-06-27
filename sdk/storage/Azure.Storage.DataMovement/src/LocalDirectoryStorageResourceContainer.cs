@@ -85,25 +85,18 @@ namespace Azure.Storage.DataMovement
         /// <param name="isSource">
         /// Whether or not we are rehydrating the source or destination. True if the source, false if the destination.
         /// </param>
-        /// <param name="cancellationToken">
-        /// Whether or not to cancel the operation.
-        /// </param>
         /// <returns>
         /// The <see cref="Task"/> to rehdyrate a <see cref="LocalFileStorageResource"/> from
         /// a stored checkpointed transfer state.
         /// </returns>
-        internal static async Task<LocalDirectoryStorageResourceContainer> RehydrateResource(
+        internal static LocalDirectoryStorageResourceContainer RehydrateResource(
             DataTransferProperties transferProperties,
-            bool isSource,
-            CancellationToken cancellationToken = default)
+            bool isSource)
         {
             Argument.AssertNotNull(transferProperties, nameof(transferProperties));
-            TransferCheckpointer checkpointer = transferProperties.Checkpointer.GetCheckpointer();
 
-            string storedPath = await checkpointer.GetResourcePathAsync(
-                transferProperties.TransferId,
-                isSource,
-                cancellationToken).ConfigureAwait(false);
+            string storedPath = isSource ? transferProperties.SourcePath : transferProperties.DestinationPath;
+
             return new LocalDirectoryStorageResourceContainer(storedPath);
         }
     }

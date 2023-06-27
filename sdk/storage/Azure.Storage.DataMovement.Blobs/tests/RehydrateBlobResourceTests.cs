@@ -33,11 +33,15 @@ namespace Azure.Storage.DataMovement.Tests
 
         private static Mock<DataTransferProperties> GetProperties(
             string checkpointerPath,
-            string transferId)
+            string transferId,
+            string sourcePath,
+            string destinationPath)
         {
-            Mock<DataTransferProperties> mock = new();
+            var mock = new Mock<DataTransferProperties>(MockBehavior.Strict);
             mock.Setup(p => p.TransferId).Returns(transferId);
             mock.Setup(p => p.Checkpointer).Returns(new TransferCheckpointerOptions(checkpointerPath));
+            mock.Setup(p => p.SourcePath).Returns(sourcePath);
+            mock.Setup(p => p.DestinationPath).Returns(destinationPath);
             return mock;
         }
 
@@ -124,7 +128,11 @@ namespace Azure.Storage.DataMovement.Tests
             StorageResourceType sourceType = isSource ? StorageResourceType.Local : StorageResourceType.BlockBlob;
             StorageResourceType destinationType = !isSource ? StorageResourceType.Local : StorageResourceType.BlockBlob;
 
-            DataTransferProperties transferProperties = GetProperties(test.DirectoryPath, transferId).Object;
+            DataTransferProperties transferProperties = GetProperties(
+                test.DirectoryPath,
+                transferId,
+                sourcePath,
+                destinationPath).Object;
 
             await AddJobPartToCheckpointer(
                 checkpointer,
@@ -154,7 +162,11 @@ namespace Azure.Storage.DataMovement.Tests
             StorageResourceType sourceType = isSource ? StorageResourceType.Local : StorageResourceType.BlockBlob;
             StorageResourceType destinationType = !isSource ? StorageResourceType.Local : StorageResourceType.BlockBlob;
 
-            DataTransferProperties transferProperties = GetProperties(test.DirectoryPath, transferId).Object;
+            DataTransferProperties transferProperties = GetProperties(
+                test.DirectoryPath,
+                transferId,
+                sourcePath,
+                destinationPath).Object;
 
             await AddJobPartToCheckpointer(
                 checkpointer,
@@ -185,7 +197,12 @@ namespace Azure.Storage.DataMovement.Tests
             StorageResourceType sourceType = isSource ? StorageResourceType.Local : StorageResourceType.BlockBlob;
             StorageResourceType destinationType = !isSource ? StorageResourceType.Local : StorageResourceType.BlockBlob;
 
-            DataTransferProperties transferProperties = GetProperties(test.DirectoryPath, transferId).Object;
+            DataTransferProperties transferProperties = GetProperties(
+                test.DirectoryPath,
+                transferId,
+                sourcePath,
+                destinationPath).Object;
+
             await AddJobPartToCheckpointer(
                 checkpointer,
                 transferId,
@@ -219,7 +236,11 @@ namespace Azure.Storage.DataMovement.Tests
                 sourcePaths.Add(string.Join("/", sourceParentPath, childPath));
                 destinationPaths.Add(string.Join("/", destinationParentPath, childPath));
             }
-            DataTransferProperties transferProperties = GetProperties(test.DirectoryPath, transferId).Object;
+            DataTransferProperties transferProperties = GetProperties(
+                test.DirectoryPath,
+                transferId,
+                sourceParentPath,
+                destinationParentPath).Object;
 
             string originalPath = isSource ? sourceParentPath : destinationParentPath;
 
