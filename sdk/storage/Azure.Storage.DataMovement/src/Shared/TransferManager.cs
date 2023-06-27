@@ -129,11 +129,13 @@ namespace Azure.Storage.DataMovement
         }
 
         #region Job Channel Management
-        internal async Task QueueJobAsync(TransferJobInternal job)
+        internal async Task QueueJobAsync(
+            TransferJobInternal job,
+            CancellationToken cancellationToken)
         {
             await _jobsToProcessChannel.Writer.WriteAsync(
                 job,
-                cancellationToken: _cancellationToken).ConfigureAwait(false);
+                cancellationToken: cancellationToken).ConfigureAwait(false);
         }
 
         // Inform the Reader that there's work to be executed for this Channel.
@@ -293,6 +295,50 @@ namespace Azure.Storage.DataMovement
         }
 
         /// <summary>
+        /// Resumes a transfer that has been paused or is in a completed state with failed or skipped transfers.
+        /// </summary>
+        /// <param name="transferId">The transfer ID of the transfer attempting to be resumed.</param>
+        /// <param name="sourceResource">A <see cref="StorageResource"/> representing the source.</param>
+        /// <param name="destinationResource">A <see cref="StorageResource"/> representing the destination.</param>
+        /// <param name="transferOptions">Options specific to this transfer.</param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>Returns a <see cref="DataTransfer"/> for tracking this transfer.</returns>
+        public virtual async Task<DataTransfer> ResumeTransferAsync(
+            string transferId,
+            StorageResource sourceResource,
+            StorageResource destinationResource,
+            TransferOptions transferOptions = default,
+            CancellationToken cancellationToken = default)
+        {
+            CancellationHelper.ThrowIfCancellationRequested(cancellationToken);
+
+            // Attempt to add existing job to the checkpointer.
+            await _checkpointer.AddExistingJobAsync(
+                transferId: transferId,
+                cancellationToken: _cancellationToken).ConfigureAwait(false);
+
+            if (_dataTransfers.ContainsKey(transferId))
+            {
+                // Remove the stale DataTransfer so we can pass a new DataTransfer object
+                // to the user and also track the transfer from the DataTransfer object
+                _dataTransfers.Remove(transferId);
+            }
+
+            DataTransfer dataTransfer = await BuildAndAddTransferJobAsync(
+                sourceResource,
+                destinationResource,
+                transferOptions,
+                transferId,
+                true,
+                cancellationToken).ConfigureAwait(false);
+
+            return dataTransfer;
+        }
+
+        /// <summary>
         /// Attempts to pause all the ongoing transfers.
         /// </summary>
         /// <returns></returns>
@@ -324,57 +370,45 @@ namespace Azure.Storage.DataMovement
         /// <param name="sourceResource">A <see cref="StorageResource"/> representing the source.</param>
         /// <param name="destinationResource">A <see cref="StorageResource"/> representing the destination.</param>
         /// <param name="transferOptions">Options specific to this transfer.</param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
         /// <returns>Returns a <see cref="DataTransfer"/> for tracking this transfer.</returns>
         public virtual async Task<DataTransfer> StartTransferAsync(
             StorageResource sourceResource,
             StorageResource destinationResource,
-            TransferOptions transferOptions = default)
+            TransferOptions transferOptions = default,
+            CancellationToken cancellationToken = default)
         {
-            if (sourceResource == default)
-            {
-                throw Errors.ArgumentNull(nameof(sourceResource));
-            }
-            if (destinationResource == default)
-            {
-                throw Errors.ArgumentNull(nameof(destinationResource));
-            }
+            CancellationHelper.ThrowIfCancellationRequested(cancellationToken);
+            Argument.AssertNotNull(sourceResource, nameof(sourceResource));
+            Argument.AssertNotNull(destinationResource, nameof(destinationResource));
 
             transferOptions ??= new TransferOptions();
 
-            bool resumeJob = false;
-            string transferId;
-            // Check if this is a job that is being asked to resume
-            if (!string.IsNullOrEmpty(transferOptions.ResumeFromCheckpointId))
-            {
-                resumeJob = true;
-                transferId = transferOptions.ResumeFromCheckpointId;
-                // Attempt to add existing job to the checkpointer.
-                await _checkpointer.AddExistingJobAsync(
-                    transferId: transferId,
-                    cancellationToken: _cancellationToken).ConfigureAwait(false);
+            string transferId = Guid.NewGuid().ToString();
+            await _checkpointer.AddNewJobAsync(transferId, _cancellationToken).ConfigureAwait(false);
 
-                // Check if it's a single part transfer.
-                int partCount = await _checkpointer.CurrentJobPartCountAsync(
-                    transferId: transferId,
-                    cancellationToken: _cancellationToken).ConfigureAwait(false);
-                if (partCount > 1)
-                {
-                    throw Errors.MismatchIdSingleContainer(transferId);
-                }
-                if (_dataTransfers.ContainsKey(transferId))
-                {
-                    // Remove the stale DataTransfer so we can pass a new DataTransfer object
-                    // to the user and also track the transfer from the DataTransfer object
-                    _dataTransfers.Remove(transferId);
-                }
-            }
-            else
-            {
-                // Add Transfer to Checkpointer
-                transferId = Guid.NewGuid().ToString();
-                await _checkpointer.AddNewJobAsync(transferId, _cancellationToken).ConfigureAwait(false);
-            }
+            DataTransfer dataTransfer = await BuildAndAddTransferJobAsync(
+                sourceResource,
+                destinationResource,
+                transferOptions,
+                transferId,
+                true,
+                cancellationToken).ConfigureAwait(false);
 
+            return dataTransfer;
+        }
+
+        private async Task<DataTransfer> BuildAndAddTransferJobAsync(
+            StorageResource sourceResource,
+            StorageResource destinationResource,
+            TransferOptions transferOptions,
+            string transferId,
+            bool resumeJob,
+            CancellationToken cancellationToken)
+        {
             DataTransfer dataTransfer = new DataTransfer(id: transferId);
             _dataTransfers.Add(dataTransfer.Id, dataTransfer);
 
@@ -407,9 +441,8 @@ namespace Azure.Storage.DataMovement
             {
                 throw Errors.InvalidTransferResourceTypes();
             }
-
             // Queue Job
-            await QueueJobAsync(transferJobInternal).ConfigureAwait(false);
+            await QueueJobAsync(transferJobInternal, cancellationToken).ConfigureAwait(false);
 
             return dataTransfer;
         }
