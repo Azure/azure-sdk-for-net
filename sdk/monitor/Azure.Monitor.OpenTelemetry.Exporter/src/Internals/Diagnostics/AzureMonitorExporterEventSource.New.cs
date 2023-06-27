@@ -143,10 +143,10 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics
         [Event(18, Message = "Maximum count of {0} Activity Links reached. Excess Links are dropped. ActivitySource: {1}. Activity: {2}.", Level = EventLevel.Warning)]
         public void ActivityLinksIgnored(int maxLinksAllowed, string activitySourceName, string activityDisplayName) => WriteEvent(18, maxLinksAllowed, activitySourceName, activityDisplayName);
 
-        [Event(19, Message = "Failed to parse redirect headers. Not user actionable.", Level = EventLevel.Informational)]
+        [Event(19, Message = "Failed to parse redirect headers. Not user actionable.", Level = EventLevel.Warning)]
         public void RedirectHeaderParseFailed() => WriteEvent(19);
 
-        [Event(20, Message = "Failed to parse redirect cache, using default. Not user actionable.", Level = EventLevel.Informational)]
+        [Event(20, Message = "Failed to parse redirect cache, using default. Not user actionable.", Level = EventLevel.Warning)]
         public void ParseRedirectCacheFailed() => WriteEvent(20);
 
         [NonEvent]
@@ -170,31 +170,31 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics
             }
         }
 
-        [Event(22, Message = "Failed to initialize Role Instance due to an exception. This data will be missing from telemetry. {0}", Level = EventLevel.Error)]
+        [Event(22, Message = "Failed to initialize Role Instance due to an exception. Role Instance will be missing from telemetry. {0}", Level = EventLevel.Error)]
         public void ErrorInitializingRoleInstanceToHostName(string exceptionMessage) => WriteEvent(22, exceptionMessage);
 
         [NonEvent]
         public void ErrorInitializingPartOfSdkVersion(string typeName, Exception ex)
         {
-            if (IsEnabled(EventLevel.Error))
+            if (IsEnabled(EventLevel.Warning))
             {
                 ErrorInitializingPartOfSdkVersion(typeName, ex.FlattenException().ToInvariantString());
             }
         }
 
-        [Event(23, Message = "Failed to get Type version while initialize SDK version due to an exception. Not user actionable. Type: {0}. {1}", Level = EventLevel.Error)]
+        [Event(23, Message = "Failed to get Type version while initialize SDK version due to an exception. Not user actionable. Type: {0}. {1}", Level = EventLevel.Warning)]
         public void ErrorInitializingPartOfSdkVersion(string typeName, string exceptionMessage) => WriteEvent(23, typeName, exceptionMessage);
 
         [NonEvent]
         public void SdkVersionCreateFailed(Exception ex)
         {
-            if (IsEnabled(EventLevel.Error))
+            if (IsEnabled(EventLevel.Warning))
             {
                 SdkVersionCreateFailed(ex.FlattenException().ToInvariantString());
             }
         }
 
-        [Event(24, Message = "Failed to create an SDK version due to an exception. Not user actionable. {0}", Level = EventLevel.Error)]
+        [Event(24, Message = "Failed to create an SDK version due to an exception. Not user actionable. {0}", Level = EventLevel.Warning)]
         public void SdkVersionCreateFailed(string exceptionMessage) => WriteEvent(24, exceptionMessage);
 
         [NonEvent]
