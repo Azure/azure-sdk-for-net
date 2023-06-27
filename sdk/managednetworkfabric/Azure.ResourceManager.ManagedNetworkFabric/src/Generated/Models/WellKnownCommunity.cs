@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
     ///  `NoAdvertise` - Don't advertise routes to any peer.
     /// `NoExport` - Don't export to next AS.
     /// `GShut` - Graceful Shutdown (GSHUT) withdraw routes before terminating BGP connection.
-    /// 
+    ///
     /// </summary>
     public readonly partial struct WellKnownCommunity : IEquatable<WellKnownCommunity>
     {
