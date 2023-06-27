@@ -87,11 +87,11 @@ namespace Azure.ResourceManager.EventGrid
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets a collection of NamespaceEventSubscriptionResources in the NamespaceTopic. </summary>
-        /// <returns> An object representing collection of NamespaceEventSubscriptionResources and their operations over a NamespaceEventSubscriptionResource. </returns>
-        public virtual NamespaceEventSubscriptionCollection GetNamespaceEventSubscriptions()
+        /// <summary> Gets a collection of NamespaceTopicEventSubscriptionResources in the NamespaceTopic. </summary>
+        /// <returns> An object representing collection of NamespaceTopicEventSubscriptionResources and their operations over a NamespaceTopicEventSubscriptionResource. </returns>
+        public virtual NamespaceTopicEventSubscriptionCollection GetNamespaceTopicEventSubscriptions()
         {
-            return GetCachedClient(Client => new NamespaceEventSubscriptionCollection(Client, Id));
+            return GetCachedClient(Client => new NamespaceTopicEventSubscriptionCollection(Client, Id));
         }
 
         /// <summary>
@@ -112,9 +112,9 @@ namespace Azure.ResourceManager.EventGrid
         /// <exception cref="ArgumentException"> <paramref name="eventSubscriptionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="eventSubscriptionName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<NamespaceEventSubscriptionResource>> GetNamespaceEventSubscriptionAsync(string eventSubscriptionName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<NamespaceTopicEventSubscriptionResource>> GetNamespaceTopicEventSubscriptionAsync(string eventSubscriptionName, CancellationToken cancellationToken = default)
         {
-            return await GetNamespaceEventSubscriptions().GetAsync(eventSubscriptionName, cancellationToken).ConfigureAwait(false);
+            return await GetNamespaceTopicEventSubscriptions().GetAsync(eventSubscriptionName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -135,9 +135,9 @@ namespace Azure.ResourceManager.EventGrid
         /// <exception cref="ArgumentException"> <paramref name="eventSubscriptionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="eventSubscriptionName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<NamespaceEventSubscriptionResource> GetNamespaceEventSubscription(string eventSubscriptionName, CancellationToken cancellationToken = default)
+        public virtual Response<NamespaceTopicEventSubscriptionResource> GetNamespaceTopicEventSubscription(string eventSubscriptionName, CancellationToken cancellationToken = default)
         {
-            return GetNamespaceEventSubscriptions().Get(eventSubscriptionName, cancellationToken);
+            return GetNamespaceTopicEventSubscriptions().Get(eventSubscriptionName, cancellationToken);
         }
 
         /// <summary>

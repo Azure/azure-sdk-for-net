@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.EventGrid.Models
             return new DomainTopicData(id, name, resourceType, systemData, provisioningState);
         }
 
-        /// <summary> Initializes a new instance of NamespaceEventSubscriptionData. </summary>
+        /// <summary> Initializes a new instance of NamespaceTopicEventSubscriptionData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -214,10 +214,10 @@ namespace Azure.ResourceManager.EventGrid.Models
         /// <param name="deliveryConfiguration"> Information about the delivery configuration of the event subscription. </param>
         /// <param name="eventDeliverySchema"> The event delivery schema for the event subscription. </param>
         /// <param name="filtersConfiguration"> Information about the filter for the event subscription. </param>
-        /// <returns> A new <see cref="EventGrid.NamespaceEventSubscriptionData"/> instance for mocking. </returns>
-        public static NamespaceEventSubscriptionData NamespaceEventSubscriptionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, SubscriptionProvisioningState? provisioningState = null, DeliveryConfiguration deliveryConfiguration = null, DeliverySchema? eventDeliverySchema = null, FiltersConfiguration filtersConfiguration = null)
+        /// <returns> A new <see cref="EventGrid.NamespaceTopicEventSubscriptionData"/> instance for mocking. </returns>
+        public static NamespaceTopicEventSubscriptionData NamespaceTopicEventSubscriptionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, SubscriptionProvisioningState? provisioningState = null, DeliveryConfiguration deliveryConfiguration = null, DeliverySchema? eventDeliverySchema = null, FiltersConfiguration filtersConfiguration = null)
         {
-            return new NamespaceEventSubscriptionData(id, name, resourceType, systemData, provisioningState, deliveryConfiguration, eventDeliverySchema, filtersConfiguration);
+            return new NamespaceTopicEventSubscriptionData(id, name, resourceType, systemData, provisioningState, deliveryConfiguration, eventDeliverySchema, filtersConfiguration);
         }
 
         /// <summary> Initializes a new instance of EventGridSubscriptionData. </summary>

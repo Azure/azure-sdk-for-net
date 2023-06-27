@@ -17,7 +17,7 @@ using Azure.ResourceManager.EventGrid.Models;
 
 namespace Azure.ResourceManager.EventGrid.Samples
 {
-    public partial class Sample_NamespaceEventSubscriptionResource
+    public partial class Sample_NamespaceTopicEventSubscriptionResource
     {
         // NamespaceTopicEventSubscriptions_Get
         [NUnit.Framework.Test]
@@ -32,22 +32,22 @@ namespace Azure.ResourceManager.EventGrid.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this NamespaceEventSubscriptionResource created on azure
-            // for more information of creating NamespaceEventSubscriptionResource, please refer to the document of NamespaceEventSubscriptionResource
+            // this example assumes you already have this NamespaceTopicEventSubscriptionResource created on azure
+            // for more information of creating NamespaceTopicEventSubscriptionResource, please refer to the document of NamespaceTopicEventSubscriptionResource
             string subscriptionId = "8f6b6269-84f2-4d09-9e31-1127efcd1e40";
             string resourceGroupName = "examplerg";
             string namespaceName = "examplenamespace2";
             string topicName = "examplenamespacetopic2";
             string eventSubscriptionName = "examplenamespacetopicEventSub1";
-            ResourceIdentifier namespaceEventSubscriptionResourceId = NamespaceEventSubscriptionResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, namespaceName, topicName, eventSubscriptionName);
-            NamespaceEventSubscriptionResource namespaceEventSubscription = client.GetNamespaceEventSubscriptionResource(namespaceEventSubscriptionResourceId);
+            ResourceIdentifier namespaceTopicEventSubscriptionResourceId = NamespaceTopicEventSubscriptionResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, namespaceName, topicName, eventSubscriptionName);
+            NamespaceTopicEventSubscriptionResource namespaceTopicEventSubscription = client.GetNamespaceTopicEventSubscriptionResource(namespaceTopicEventSubscriptionResourceId);
 
             // invoke the operation
-            NamespaceEventSubscriptionResource result = await namespaceEventSubscription.GetAsync();
+            NamespaceTopicEventSubscriptionResource result = await namespaceTopicEventSubscription.GetAsync();
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            NamespaceEventSubscriptionData resourceData = result.Data;
+            NamespaceTopicEventSubscriptionData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -65,18 +65,18 @@ namespace Azure.ResourceManager.EventGrid.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this NamespaceEventSubscriptionResource created on azure
-            // for more information of creating NamespaceEventSubscriptionResource, please refer to the document of NamespaceEventSubscriptionResource
+            // this example assumes you already have this NamespaceTopicEventSubscriptionResource created on azure
+            // for more information of creating NamespaceTopicEventSubscriptionResource, please refer to the document of NamespaceTopicEventSubscriptionResource
             string subscriptionId = "8f6b6269-84f2-4d09-9e31-1127efcd1e40";
             string resourceGroupName = "examplerg";
             string namespaceName = "examplenamespace2";
             string topicName = "examplenamespacetopic2";
             string eventSubscriptionName = "examplenamespacetopicEventSub2";
-            ResourceIdentifier namespaceEventSubscriptionResourceId = NamespaceEventSubscriptionResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, namespaceName, topicName, eventSubscriptionName);
-            NamespaceEventSubscriptionResource namespaceEventSubscription = client.GetNamespaceEventSubscriptionResource(namespaceEventSubscriptionResourceId);
+            ResourceIdentifier namespaceTopicEventSubscriptionResourceId = NamespaceTopicEventSubscriptionResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, namespaceName, topicName, eventSubscriptionName);
+            NamespaceTopicEventSubscriptionResource namespaceTopicEventSubscription = client.GetNamespaceTopicEventSubscriptionResource(namespaceTopicEventSubscriptionResourceId);
 
             // invoke the operation
-            await namespaceEventSubscription.DeleteAsync(WaitUntil.Completed);
+            await namespaceTopicEventSubscription.DeleteAsync(WaitUntil.Completed);
 
             Console.WriteLine($"Succeeded");
         }
@@ -94,18 +94,18 @@ namespace Azure.ResourceManager.EventGrid.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this NamespaceEventSubscriptionResource created on azure
-            // for more information of creating NamespaceEventSubscriptionResource, please refer to the document of NamespaceEventSubscriptionResource
+            // this example assumes you already have this NamespaceTopicEventSubscriptionResource created on azure
+            // for more information of creating NamespaceTopicEventSubscriptionResource, please refer to the document of NamespaceTopicEventSubscriptionResource
             string subscriptionId = "8f6b6269-84f2-4d09-9e31-1127efcd1e40";
             string resourceGroupName = "examplerg";
             string namespaceName = "exampleNamespaceName1";
             string topicName = "exampleNamespaceTopicName1";
             string eventSubscriptionName = "exampleNamespaceTopicEventSubscriptionName1";
-            ResourceIdentifier namespaceEventSubscriptionResourceId = NamespaceEventSubscriptionResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, namespaceName, topicName, eventSubscriptionName);
-            NamespaceEventSubscriptionResource namespaceEventSubscription = client.GetNamespaceEventSubscriptionResource(namespaceEventSubscriptionResourceId);
+            ResourceIdentifier namespaceTopicEventSubscriptionResourceId = NamespaceTopicEventSubscriptionResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, namespaceName, topicName, eventSubscriptionName);
+            NamespaceTopicEventSubscriptionResource namespaceTopicEventSubscription = client.GetNamespaceTopicEventSubscriptionResource(namespaceTopicEventSubscriptionResourceId);
 
             // invoke the operation
-            NamespaceEventSubscriptionPatch patch = new NamespaceEventSubscriptionPatch()
+            NamespaceTopicEventSubscriptionPatch patch = new NamespaceTopicEventSubscriptionPatch()
             {
                 DeliveryConfiguration = new DeliveryConfiguration()
                 {
@@ -119,12 +119,12 @@ namespace Azure.ResourceManager.EventGrid.Samples
                 },
                 EventDeliverySchema = DeliverySchema.CloudEventSchemaV10,
             };
-            ArmOperation<NamespaceEventSubscriptionResource> lro = await namespaceEventSubscription.UpdateAsync(WaitUntil.Completed, patch);
-            NamespaceEventSubscriptionResource result = lro.Value;
+            ArmOperation<NamespaceTopicEventSubscriptionResource> lro = await namespaceTopicEventSubscription.UpdateAsync(WaitUntil.Completed, patch);
+            NamespaceTopicEventSubscriptionResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            NamespaceEventSubscriptionData resourceData = result.Data;
+            NamespaceTopicEventSubscriptionData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }

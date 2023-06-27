@@ -17,20 +17,20 @@ namespace Azure.ResourceManager.EventGrid.Models
         /// <summary> Initializes a new instance of SubscriptionsListResult. </summary>
         internal SubscriptionsListResult()
         {
-            Value = new ChangeTrackingList<NamespaceEventSubscriptionData>();
+            Value = new ChangeTrackingList<NamespaceTopicEventSubscriptionData>();
         }
 
         /// <summary> Initializes a new instance of SubscriptionsListResult. </summary>
         /// <param name="value"> A collection of Subscriptions. </param>
         /// <param name="nextLink"> A link for the next page of event subscriptions. </param>
-        internal SubscriptionsListResult(IReadOnlyList<NamespaceEventSubscriptionData> value, string nextLink)
+        internal SubscriptionsListResult(IReadOnlyList<NamespaceTopicEventSubscriptionData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> A collection of Subscriptions. </summary>
-        public IReadOnlyList<NamespaceEventSubscriptionData> Value { get; }
+        public IReadOnlyList<NamespaceTopicEventSubscriptionData> Value { get; }
         /// <summary> A link for the next page of event subscriptions. </summary>
         public string NextLink { get; }
     }

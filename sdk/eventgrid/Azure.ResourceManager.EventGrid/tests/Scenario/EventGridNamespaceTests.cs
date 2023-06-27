@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.EventGrid.Tests
     public class EventGridNamespaceTests : EventGridManagementTestBase
     {
         public EventGridNamespaceTests(bool isAsync)
-            : base(isAsync)//, RecordedTestMode.Record)
+            : base(isAsync, RecordedTestMode.Record)
         {
         }
 
@@ -310,7 +310,7 @@ namespace Azure.ResourceManager.EventGrid.Tests
             Assert.AreEqual(namespaceTopicsResponse1.Data.EventRetentionInDays, 1);
 
             // create subscriptions
-            var subscriptionsCollection = namespaceTopicsResponse1.GetNamespaceEventSubscriptions();
+            var subscriptionsCollection = namespaceTopicsResponse1.GetNamespaceTopicEventSubscriptions();
 
             DeliveryConfiguration deliveryConfiguration = new DeliveryConfiguration()
             {
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.EventGrid.Tests
                     ReceiveLockDurationInSeconds = 120
                 }
             };
-            NamespaceEventSubscriptionData subscriptionData = new NamespaceEventSubscriptionData()
+            NamespaceTopicEventSubscriptionData subscriptionData = new NamespaceTopicEventSubscriptionData()
             {
                 DeliveryConfiguration = deliveryConfiguration
             };
@@ -357,7 +357,7 @@ namespace Azure.ResourceManager.EventGrid.Tests
                     ReceiveLockDurationInSeconds = 120
                 }
             };
-            NamespaceEventSubscriptionPatch subscriptionPatch = new NamespaceEventSubscriptionPatch()
+            NamespaceTopicEventSubscriptionPatch subscriptionPatch = new NamespaceTopicEventSubscriptionPatch()
             {
                 DeliveryConfiguration = deliveryConfiguration2
             };

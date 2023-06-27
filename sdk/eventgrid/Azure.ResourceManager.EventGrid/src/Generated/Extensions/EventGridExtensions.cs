@@ -310,20 +310,20 @@ namespace Azure.ResourceManager.EventGrid
         }
         #endregion
 
-        #region NamespaceEventSubscriptionResource
+        #region NamespaceTopicEventSubscriptionResource
         /// <summary>
-        /// Gets an object representing a <see cref="NamespaceEventSubscriptionResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="NamespaceEventSubscriptionResource.CreateResourceIdentifier" /> to create a <see cref="NamespaceEventSubscriptionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="NamespaceTopicEventSubscriptionResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="NamespaceTopicEventSubscriptionResource.CreateResourceIdentifier" /> to create a <see cref="NamespaceTopicEventSubscriptionResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="NamespaceEventSubscriptionResource" /> object. </returns>
-        public static NamespaceEventSubscriptionResource GetNamespaceEventSubscriptionResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="NamespaceTopicEventSubscriptionResource" /> object. </returns>
+        public static NamespaceTopicEventSubscriptionResource GetNamespaceTopicEventSubscriptionResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                NamespaceEventSubscriptionResource.ValidateResourceId(id);
-                return new NamespaceEventSubscriptionResource(client, id);
+                NamespaceTopicEventSubscriptionResource.ValidateResourceId(id);
+                return new NamespaceTopicEventSubscriptionResource(client, id);
             }
             );
         }
