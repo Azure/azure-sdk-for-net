@@ -10,7 +10,9 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="$(AzureCoreTestFramework)" />
-    <ProjectReference Include="..\..\Azure.Communication.Identity\src\Azure.Communication.Identity.csproj" />
+    <ProjectReference Include="..\..\Azure.Communication.Identity\src\Azure.Communication.Identity.csproj">
+      <ExcludeFromCodeCoverage>true</ExcludeFromCodeCoverage>
+    </ProjectReference>
     <ProjectReference Include="..\src\Azure.Communication.Chat.csproj" />
   </ItemGroup>
   <ItemGroup>
