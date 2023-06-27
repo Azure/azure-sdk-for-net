@@ -27,15 +27,15 @@ namespace Azure.Identity
             _beforeBuildClient = (options as IMsalPublicClientInitializerOptions)?.BeforeBuildClient;
         }
 
-        protected override ValueTask<IPublicClientApplication> CreateClientAsync( bool enableCae, bool async,CancellationToken cancellationToken)
+        protected override ValueTask<IPublicClientApplication> CreateClientAsync(bool enableCae, bool async, CancellationToken cancellationToken)
         {
-            return CreateClientCoreAsync( enableCae, async,cancellationToken);
+            return CreateClientCoreAsync(enableCae, async, cancellationToken);
         }
 
         protected virtual ValueTask<IPublicClientApplication> CreateClientCoreAsync(bool enableCae, bool async, CancellationToken cancellationToken)
         {
             string[] clientCapabilities =
-                enableCae ? new[] { "CP1" } : Array.Empty<string>();
+                enableCae ? cp1Capabilities : Array.Empty<string>();
 
             var authorityUri = new UriBuilder(AuthorityHost.Scheme, AuthorityHost.Host, AuthorityHost.Port, TenantId ?? Constants.OrganizationsTenantId).Uri;
 

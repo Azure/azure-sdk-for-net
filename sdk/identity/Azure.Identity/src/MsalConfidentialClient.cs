@@ -61,8 +61,16 @@ namespace Azure.Identity
 
         internal string RegionalAuthority { get; } = EnvironmentVariables.AzureRegionalAuthorityName;
 
-        protected override async ValueTask<IConfidentialClientApplication> CreateClientAsync(bool enableCae, bool async, CancellationToken cancellationToken)
+        protected override ValueTask<IConfidentialClientApplication> CreateClientAsync(bool enableCae, bool async, CancellationToken cancellationToken)
         {
+            return CreateClientCoreAsync(enableCae, async, cancellationToken);
+        }
+
+        protected virtual async ValueTask<IConfidentialClientApplication> CreateClientCoreAsync(bool enableCae, bool async, CancellationToken cancellationToken)
+        {
+            string[] clientCapabilities =
+                enableCae ? cp1Capabilities : Array.Empty<string>();
+
             ConfidentialClientApplicationBuilder confClientBuilder = ConfidentialClientApplicationBuilder.Create(ClientId)
                 .WithHttpClientFactory(new HttpPipelineClientFactory(Pipeline.HttpPipeline))
                 .WithLogging(LogMsal, enablePiiLogging: IsPiiLoggingEnabled);
@@ -82,6 +90,11 @@ namespace Azure.Identity
                 {
                     confClientBuilder.WithInstanceDiscovery(false);
                 }
+            }
+
+            if (clientCapabilities.Length > 0)
+            {
+                confClientBuilder.WithClientCapabilities(clientCapabilities);
             }
 
             if (_clientSecret != null)

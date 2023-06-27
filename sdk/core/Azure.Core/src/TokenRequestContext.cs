@@ -87,6 +87,6 @@ namespace Azure.Core
         /// <summary>
         /// Indicates whether to enable Conditional Access Exclusion (CAE) for the token request.
         /// </summary>
-        public bool EnableCae { get; } = true;
+        public bool EnableCae { get; }
     }
 }

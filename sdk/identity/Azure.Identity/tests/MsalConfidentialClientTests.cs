@@ -7,19 +7,19 @@ using NUnit.Framework;
 
 namespace Azure.Identity.Tests
 {
-    public class MsalPublicClientTests
+    public class MsalConfidentialClientTests
     {
         [Test]
         public void CreateClientRespectsCaeConfig(
             [Values(true, false)] bool enableCae,
             [Values(true, false)] bool async)
         {
-            var mock = new MockMsalPublicClient
+            var mock = new MockMsalConfidentialClient
             {
                 ClientAppFactory = (useCae) =>
                 {
                     Assert.AreEqual(useCae, enableCae);
-                    return Moq.Mock.Of<IPublicClientApplication>();
+                    return Moq.Mock.Of<IConfidentialClientApplication>();
                 }
             };
 

@@ -16,29 +16,14 @@ namespace Azure.Identity.Tests.Mock
     {
         public DeviceCodeResult DeviceCodeResult { get; set; } = GetDeviceCodeResult();
         public List<IAccount> Accounts { get; set; }
-
         public Func<string[], string, AuthenticationResult> AuthFactory { get; set; }
-
         public Func<string[], string, AuthenticationResult> UserPassAuthFactory { get; set; }
-
         public Func<string[], string, Prompt, string, string, bool, CancellationToken, AuthenticationResult> InteractiveAuthFactory { get; set; }
-
         public Func<string[], string, AuthenticationResult> SilentAuthFactory { get; set; }
-
         public Func<string[], string, IAccount, string, bool, CancellationToken, AuthenticationResult> ExtendedSilentAuthFactory { get; set; }
-
         public Func<DeviceCodeInfo, CancellationToken, AuthenticationResult> DeviceCodeAuthFactory { get; set; }
-
-        public Func<bool, IPublicClientApplication> PubClientAppFactory { get; set; }
-
-        public Func<string[], string,
-            string,
-            AzureCloudInstance,
-            string,
-            bool,
-            CancellationToken, AuthenticationResult> RefreshTokenFactory
-        { get; set; }
-
+        public Func<bool, IPublicClientApplication> ClientAppFactory { get; set; }
+        public Func<string[], string, string, AzureCloudInstance, string, bool, CancellationToken, AuthenticationResult> RefreshTokenFactory { get; set; }
         public MockMsalPublicClient() { }
 
         public MockMsalPublicClient(AuthenticationResult result)
@@ -174,12 +159,12 @@ namespace Azure.Identity.Tests.Mock
 
         protected override ValueTask<IPublicClientApplication> CreateClientCoreAsync(bool enableCae, bool async, CancellationToken cancellationToken)
         {
-            if (PubClientAppFactory == null)
+            if (ClientAppFactory == null)
             {
                 throw new NotImplementedException();
             }
 
-            return new ValueTask<IPublicClientApplication>(PubClientAppFactory(enableCae));
+            return new ValueTask<IPublicClientApplication>(ClientAppFactory(enableCae));
         }
 
         protected override ValueTask<AuthenticationResult> AcquireTokenByRefreshTokenCoreAsync(

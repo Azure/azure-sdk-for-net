@@ -18,6 +18,7 @@ namespace Azure.Identity
 
         protected internal bool IsPiiLoggingEnabled { get; }
         protected internal bool DisableInstanceDiscovery { get; }
+        protected string[] cp1Capabilities = new[] { "CP1" };
 
         /// <summary>
         /// For mocking purposes only.
