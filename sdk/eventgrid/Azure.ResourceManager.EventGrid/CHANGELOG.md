@@ -13,12 +13,6 @@
 - Added support for Namespace TopicSpaces. 
 - Added support for Namespace Permission Bindings.
 
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
-
 ## 1.1.0-beta.1 (2023-05-30)
 
 ### Features Added
