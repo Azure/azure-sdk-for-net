@@ -5,7 +5,7 @@
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/json",
-        "Authorization": "REDACTED",
+        "Authorization": "Sanitized",
         "Content-Length": "21",
         "Content-Type": "application/json",
         "traceparent": "00-b8a5953d801573e4225e90aace7b000f-0899793a37457d9b-00",
@@ -46,7 +46,7 @@
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
-        "Authorization": "REDACTED",
+        "Authorization": "Sanitized",
         "User-Agent": "azsdk-net-ResourceManager.NetworkCloud/1.0.0-alpha.20230622.1 (.NET 7.0.5; Linux 5.15.90.1-microsoft-standard-WSL2 #1 SMP Fri Jan 27 02:56:13 UTC 2023)",
         "x-ms-client-request-id": "0ff95bd2da33649aa2766e43a6084ba6",
         "x-ms-return-client-request-id": "true"
@@ -5013,7 +5013,7 @@
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
-        "Authorization": "REDACTED",
+        "Authorization": "Sanitized",
         "traceparent": "00-fd9a23632b1a511b78427a64229787d9-f89e13ed0a16910f-00",
         "User-Agent": "azsdk-net-ResourceManager.NetworkCloud/1.0.0-alpha.20230622.1 (.NET 7.0.5; Linux 5.15.90.1-microsoft-standard-WSL2 #1 SMP Fri Jan 27 02:56:13 UTC 2023)",
         "x-ms-client-request-id": "15d057f87f6d9641e9eb6603f7b9db21",

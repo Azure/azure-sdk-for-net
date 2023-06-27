@@ -5,7 +5,7 @@
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/json",
-        "Authorization": "REDACTED",
+        "Authorization": "Sanitized",
         "Content-Length": "21",
         "Content-Type": "application/json",
         "traceparent": "00-5c64109fee6346761e3ab2398e54eebf-2604695cdf68126f-00",
@@ -46,7 +46,7 @@
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
-        "Authorization": "REDACTED",
+        "Authorization": "Sanitized",
         "traceparent": "00-5f46a5addabc9bd2fdba2bdceeff699a-741a80aa68367ac3-00",
         "User-Agent": "azsdk-net-ResourceManager.NetworkCloud/1.0.0-alpha.20230619.1 (.NET 7.0.5; Linux 5.15.90.1-microsoft-standard-WSL2 #1 SMP Fri Jan 27 02:56:13 UTC 2023)",
         "x-ms-client-request-id": "c4caed2e613f8b36314ae5969bab21d2",
@@ -332,7 +332,7 @@
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/json",
-        "Authorization": "REDACTED",
+        "Authorization": "Sanitized",
         "Content-Length": "1126",
         "Content-Type": "application/json",
         "traceparent": "00-cfb9209981ddf89fa857a38c02e219e3-396a7ec439c85ed3-00",
@@ -457,7 +457,7 @@
       "RequestUri": "https://management.azure.com/subscriptions/fca2e8ee-1179-48b8-9532-428ed0873a2e/providers/Microsoft.NetworkCloud/locations/EASTUS/operationStatuses/4b848ee0-4a6a-4ff6-ab48-e96838c23c50*4DDA8E081AD77320710F42C75201942C3060CA45B35F032AA70F459BDCE11BEB?api-version=2023-05-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
-        "Authorization": "REDACTED",
+        "Authorization": "Sanitized",
         "traceparent": "00-cfb9209981ddf89fa857a38c02e219e3-af98592f72024cf1-00",
         "User-Agent": "azsdk-net-ResourceManager/1.6.0 (.NET 7.0.5; Linux 5.15.90.1-microsoft-standard-WSL2 #1 SMP Fri Jan 27 02:56:13 UTC 2023)",
         "x-ms-client-request-id": "e19bde562a4941fffedc9ed7ee796734",
@@ -493,7 +493,7 @@
       "RequestUri": "https://management.azure.com/subscriptions/fca2e8ee-1179-48b8-9532-428ed0873a2e/providers/Microsoft.NetworkCloud/locations/EASTUS/operationStatuses/4b848ee0-4a6a-4ff6-ab48-e96838c23c50*4DDA8E081AD77320710F42C75201942C3060CA45B35F032AA70F459BDCE11BEB?api-version=2023-05-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
-        "Authorization": "REDACTED",
+        "Authorization": "Sanitized",
         "traceparent": "00-cfb9209981ddf89fa857a38c02e219e3-c555b1ac1402f53b-00",
         "User-Agent": "azsdk-net-ResourceManager/1.6.0 (.NET 7.0.5; Linux 5.15.90.1-microsoft-standard-WSL2 #1 SMP Fri Jan 27 02:56:13 UTC 2023)",
         "x-ms-client-request-id": "a88020b2c7da0a759bc2cb68c5f810ab",
@@ -529,7 +529,7 @@
       "RequestUri": "https://management.azure.com/subscriptions/fca2e8ee-1179-48b8-9532-428ed0873a2e/providers/Microsoft.NetworkCloud/locations/EASTUS/operationStatuses/4b848ee0-4a6a-4ff6-ab48-e96838c23c50*4DDA8E081AD77320710F42C75201942C3060CA45B35F032AA70F459BDCE11BEB?api-version=2023-05-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
-        "Authorization": "REDACTED",
+        "Authorization": "Sanitized",
         "traceparent": "00-cfb9209981ddf89fa857a38c02e219e3-bcffb4e365b7acd5-00",
         "User-Agent": "azsdk-net-ResourceManager/1.6.0 (.NET 7.0.5; Linux 5.15.90.1-microsoft-standard-WSL2 #1 SMP Fri Jan 27 02:56:13 UTC 2023)",
         "x-ms-client-request-id": "456628b6b661ea7af38f5c80fe2448ba",
@@ -565,7 +565,7 @@
       "RequestUri": "https://management.azure.com/subscriptions/fca2e8ee-1179-48b8-9532-428ed0873a2e/providers/Microsoft.NetworkCloud/locations/EASTUS/operationStatuses/4b848ee0-4a6a-4ff6-ab48-e96838c23c50*4DDA8E081AD77320710F42C75201942C3060CA45B35F032AA70F459BDCE11BEB?api-version=2023-05-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
-        "Authorization": "REDACTED",
+        "Authorization": "Sanitized",
         "traceparent": "00-cfb9209981ddf89fa857a38c02e219e3-7416630a4d2ac466-00",
         "User-Agent": "azsdk-net-ResourceManager/1.6.0 (.NET 7.0.5; Linux 5.15.90.1-microsoft-standard-WSL2 #1 SMP Fri Jan 27 02:56:13 UTC 2023)",
         "x-ms-client-request-id": "bc43f23008f98f70689045875f977b05",
@@ -601,7 +601,7 @@
       "RequestUri": "https://management.azure.com/subscriptions/fca2e8ee-1179-48b8-9532-428ed0873a2e/providers/Microsoft.NetworkCloud/locations/EASTUS/operationStatuses/4b848ee0-4a6a-4ff6-ab48-e96838c23c50*4DDA8E081AD77320710F42C75201942C3060CA45B35F032AA70F459BDCE11BEB?api-version=2023-05-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
-        "Authorization": "REDACTED",
+        "Authorization": "Sanitized",
         "traceparent": "00-cfb9209981ddf89fa857a38c02e219e3-e4f5135ca17762fb-00",
         "User-Agent": "azsdk-net-ResourceManager/1.6.0 (.NET 7.0.5; Linux 5.15.90.1-microsoft-standard-WSL2 #1 SMP Fri Jan 27 02:56:13 UTC 2023)",
         "x-ms-client-request-id": "c621f3cb2213fbd3a695b54b6bf50b76",
@@ -637,7 +637,7 @@
       "RequestUri": "https://management.azure.com/subscriptions/fca2e8ee-1179-48b8-9532-428ed0873a2e/providers/Microsoft.NetworkCloud/locations/EASTUS/operationStatuses/4b848ee0-4a6a-4ff6-ab48-e96838c23c50*4DDA8E081AD77320710F42C75201942C3060CA45B35F032AA70F459BDCE11BEB?api-version=2023-05-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
-        "Authorization": "REDACTED",
+        "Authorization": "Sanitized",
         "traceparent": "00-cfb9209981ddf89fa857a38c02e219e3-e9d384d66e0419bb-00",
         "User-Agent": "azsdk-net-ResourceManager/1.6.0 (.NET 7.0.5; Linux 5.15.90.1-microsoft-standard-WSL2 #1 SMP Fri Jan 27 02:56:13 UTC 2023)",
         "x-ms-client-request-id": "d237107a54b5adb1b8d7dcd070f38b5b",
@@ -673,7 +673,7 @@
       "RequestUri": "https://management.azure.com/subscriptions/fca2e8ee-1179-48b8-9532-428ed0873a2e/providers/Microsoft.NetworkCloud/locations/EASTUS/operationStatuses/4b848ee0-4a6a-4ff6-ab48-e96838c23c50*4DDA8E081AD77320710F42C75201942C3060CA45B35F032AA70F459BDCE11BEB?api-version=2023-05-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
-        "Authorization": "REDACTED",
+        "Authorization": "Sanitized",
         "traceparent": "00-cfb9209981ddf89fa857a38c02e219e3-bcb0c8b1dd9d2c5e-00",
         "User-Agent": "azsdk-net-ResourceManager/1.6.0 (.NET 7.0.5; Linux 5.15.90.1-microsoft-standard-WSL2 #1 SMP Fri Jan 27 02:56:13 UTC 2023)",
         "x-ms-client-request-id": "0bb4561382030ea61f47166452252473",
@@ -709,7 +709,7 @@
       "RequestUri": "https://management.azure.com/subscriptions/fca2e8ee-1179-48b8-9532-428ed0873a2e/providers/Microsoft.NetworkCloud/locations/EASTUS/operationStatuses/4b848ee0-4a6a-4ff6-ab48-e96838c23c50*4DDA8E081AD77320710F42C75201942C3060CA45B35F032AA70F459BDCE11BEB?api-version=2023-05-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
-        "Authorization": "REDACTED",
+        "Authorization": "Sanitized",
         "traceparent": "00-cfb9209981ddf89fa857a38c02e219e3-05e5a3659b96b5f4-00",
         "User-Agent": "azsdk-net-ResourceManager/1.6.0 (.NET 7.0.5; Linux 5.15.90.1-microsoft-standard-WSL2 #1 SMP Fri Jan 27 02:56:13 UTC 2023)",
         "x-ms-client-request-id": "4e0dce84a860775042730d3c46028bb3",
@@ -745,7 +745,7 @@
       "RequestUri": "https://management.azure.com/subscriptions/fca2e8ee-1179-48b8-9532-428ed0873a2e/providers/Microsoft.NetworkCloud/locations/EASTUS/operationStatuses/4b848ee0-4a6a-4ff6-ab48-e96838c23c50*4DDA8E081AD77320710F42C75201942C3060CA45B35F032AA70F459BDCE11BEB?api-version=2023-05-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
-        "Authorization": "REDACTED",
+        "Authorization": "Sanitized",
         "traceparent": "00-cfb9209981ddf89fa857a38c02e219e3-9dbc35e5fcda2a78-00",
         "User-Agent": "azsdk-net-ResourceManager/1.6.0 (.NET 7.0.5; Linux 5.15.90.1-microsoft-standard-WSL2 #1 SMP Fri Jan 27 02:56:13 UTC 2023)",
         "x-ms-client-request-id": "14375a0a0041f7736928b36d3e4c5a93",
@@ -781,7 +781,7 @@
       "RequestUri": "https://management.azure.com/subscriptions/fca2e8ee-1179-48b8-9532-428ed0873a2e/providers/Microsoft.NetworkCloud/locations/EASTUS/operationStatuses/4b848ee0-4a6a-4ff6-ab48-e96838c23c50*4DDA8E081AD77320710F42C75201942C3060CA45B35F032AA70F459BDCE11BEB?api-version=2023-05-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
-        "Authorization": "REDACTED",
+        "Authorization": "Sanitized",
         "traceparent": "00-cfb9209981ddf89fa857a38c02e219e3-d66dc0dc34bd79e9-00",
         "User-Agent": "azsdk-net-ResourceManager/1.6.0 (.NET 7.0.5; Linux 5.15.90.1-microsoft-standard-WSL2 #1 SMP Fri Jan 27 02:56:13 UTC 2023)",
         "x-ms-client-request-id": "a14b69b23ce56afb053dc88f746ac81d",
@@ -817,7 +817,7 @@
       "RequestUri": "https://management.azure.com/subscriptions/fca2e8ee-1179-48b8-9532-428ed0873a2e/providers/Microsoft.NetworkCloud/locations/EASTUS/operationStatuses/4b848ee0-4a6a-4ff6-ab48-e96838c23c50*4DDA8E081AD77320710F42C75201942C3060CA45B35F032AA70F459BDCE11BEB?api-version=2023-05-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
-        "Authorization": "REDACTED",
+        "Authorization": "Sanitized",
         "traceparent": "00-cfb9209981ddf89fa857a38c02e219e3-279add980bf5f945-00",
         "User-Agent": "azsdk-net-ResourceManager/1.6.0 (.NET 7.0.5; Linux 5.15.90.1-microsoft-standard-WSL2 #1 SMP Fri Jan 27 02:56:13 UTC 2023)",
         "x-ms-client-request-id": "f85a62bc0fed84315b15e437f5e338f5",
@@ -853,7 +853,7 @@
       "RequestUri": "https://management.azure.com/subscriptions/fca2e8ee-1179-48b8-9532-428ed0873a2e/providers/Microsoft.NetworkCloud/locations/EASTUS/operationStatuses/4b848ee0-4a6a-4ff6-ab48-e96838c23c50*4DDA8E081AD77320710F42C75201942C3060CA45B35F032AA70F459BDCE11BEB?api-version=2023-05-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
-        "Authorization": "REDACTED",
+        "Authorization": "Sanitized",
         "traceparent": "00-cfb9209981ddf89fa857a38c02e219e3-7f0022d634eecd75-00",
         "User-Agent": "azsdk-net-ResourceManager/1.6.0 (.NET 7.0.5; Linux 5.15.90.1-microsoft-standard-WSL2 #1 SMP Fri Jan 27 02:56:13 UTC 2023)",
         "x-ms-client-request-id": "dc897a18e9b6cdcd5ecc0e0337e483ff",
@@ -889,7 +889,7 @@
       "RequestUri": "https://management.azure.com/subscriptions/fca2e8ee-1179-48b8-9532-428ed0873a2e/providers/Microsoft.NetworkCloud/locations/EASTUS/operationStatuses/4b848ee0-4a6a-4ff6-ab48-e96838c23c50*4DDA8E081AD77320710F42C75201942C3060CA45B35F032AA70F459BDCE11BEB?api-version=2023-05-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
-        "Authorization": "REDACTED",
+        "Authorization": "Sanitized",
         "traceparent": "00-cfb9209981ddf89fa857a38c02e219e3-c00bb48516ef26b3-00",
         "User-Agent": "azsdk-net-ResourceManager/1.6.0 (.NET 7.0.5; Linux 5.15.90.1-microsoft-standard-WSL2 #1 SMP Fri Jan 27 02:56:13 UTC 2023)",
         "x-ms-client-request-id": "dbb0966062f2a3a537c746d058c37522",
@@ -925,7 +925,7 @@
       "RequestUri": "https://management.azure.com/subscriptions/fca2e8ee-1179-48b8-9532-428ed0873a2e/providers/Microsoft.NetworkCloud/locations/EASTUS/operationStatuses/4b848ee0-4a6a-4ff6-ab48-e96838c23c50*4DDA8E081AD77320710F42C75201942C3060CA45B35F032AA70F459BDCE11BEB?api-version=2023-05-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
-        "Authorization": "REDACTED",
+        "Authorization": "Sanitized",
         "traceparent": "00-cfb9209981ddf89fa857a38c02e219e3-613cb633cda69b91-00",
         "User-Agent": "azsdk-net-ResourceManager/1.6.0 (.NET 7.0.5; Linux 5.15.90.1-microsoft-standard-WSL2 #1 SMP Fri Jan 27 02:56:13 UTC 2023)",
         "x-ms-client-request-id": "f976d304ebe1d366958c9921002d4c76",
@@ -963,7 +963,7 @@
       "RequestUri": "https://management.azure.com/subscriptions/fca2e8ee-1179-48b8-9532-428ed0873a2e/resourceGroups/nc-resource-testing-k5-0907401cb287-ors8g/providers/Microsoft.NetworkCloud/kubernetesClusters/res-test-standard-naks-d5a98/agentPools/systemPool3991?api-version=2023-05-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
-        "Authorization": "REDACTED",
+        "Authorization": "Sanitized",
         "traceparent": "00-cfb9209981ddf89fa857a38c02e219e3-db105bb3ebc0d5ec-00",
         "User-Agent": "azsdk-net-ResourceManager/1.6.0 (.NET 7.0.5; Linux 5.15.90.1-microsoft-standard-WSL2 #1 SMP Fri Jan 27 02:56:13 UTC 2023)",
         "x-ms-client-request-id": "5fd7e5915d32b602d5e5a5eea2fd759b",
@@ -1046,7 +1046,7 @@
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
-        "Authorization": "REDACTED",
+        "Authorization": "Sanitized",
         "traceparent": "00-94d1d5b8b698769a1571af79b8686450-41f7ed3486d55f27-00",
         "User-Agent": "azsdk-net-ResourceManager.NetworkCloud/1.0.0-alpha.20230619.1 (.NET 7.0.5; Linux 5.15.90.1-microsoft-standard-WSL2 #1 SMP Fri Jan 27 02:56:13 UTC 2023)",
         "x-ms-client-request-id": "64ffec578a6e741e2fdd4665c884a309",
@@ -1129,7 +1129,7 @@
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
-        "Authorization": "REDACTED",
+        "Authorization": "Sanitized",
         "User-Agent": "azsdk-net-ResourceManager.NetworkCloud/1.0.0-alpha.20230619.1 (.NET 7.0.5; Linux 5.15.90.1-microsoft-standard-WSL2 #1 SMP Fri Jan 27 02:56:13 UTC 2023)",
         "x-ms-client-request-id": "723ecf7b15eca7f0d0bf23fb46783097",
         "x-ms-return-client-request-id": "true"
@@ -1346,7 +1346,7 @@
       "RequestMethod": "PATCH",
       "RequestHeaders": {
         "Accept": "application/json",
-        "Authorization": "REDACTED",
+        "Authorization": "Sanitized",
         "Content-Length": "64",
         "Content-Type": "application/json",
         "traceparent": "00-17020780b4c40b75c40bb5100247c97a-f8dbe40989958840-00",
@@ -1388,7 +1388,7 @@
       "RequestUri": "https://management.azure.com/subscriptions/fca2e8ee-1179-48b8-9532-428ed0873a2e/providers/Microsoft.NetworkCloud/locations/EASTUS/operationStatuses/f9eda4af-4c96-45fc-8d60-d91924d9e704*4DDA8E081AD77320710F42C75201942C3060CA45B35F032AA70F459BDCE11BEB?api-version=2023-05-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
-        "Authorization": "REDACTED",
+        "Authorization": "Sanitized",
         "traceparent": "00-17020780b4c40b75c40bb5100247c97a-934eefdfc15c2c43-00",
         "User-Agent": "azsdk-net-ResourceManager/1.6.0 (.NET 7.0.5; Linux 5.15.90.1-microsoft-standard-WSL2 #1 SMP Fri Jan 27 02:56:13 UTC 2023)",
         "x-ms-client-request-id": "c94eaeac8eba93dbc737ab8ae59b9033",
@@ -1424,7 +1424,7 @@
       "RequestUri": "https://management.azure.com/subscriptions/fca2e8ee-1179-48b8-9532-428ed0873a2e/providers/Microsoft.NetworkCloud/locations/EASTUS/operationStatuses/f9eda4af-4c96-45fc-8d60-d91924d9e704*4DDA8E081AD77320710F42C75201942C3060CA45B35F032AA70F459BDCE11BEB?api-version=2023-05-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
-        "Authorization": "REDACTED",
+        "Authorization": "Sanitized",
         "traceparent": "00-17020780b4c40b75c40bb5100247c97a-a212d6091f09a693-00",
         "User-Agent": "azsdk-net-ResourceManager/1.6.0 (.NET 7.0.5; Linux 5.15.90.1-microsoft-standard-WSL2 #1 SMP Fri Jan 27 02:56:13 UTC 2023)",
         "x-ms-client-request-id": "aab8d2d05e0415d9508718d55359a0a4",
@@ -1460,7 +1460,7 @@
       "RequestUri": "https://management.azure.com/subscriptions/fca2e8ee-1179-48b8-9532-428ed0873a2e/providers/Microsoft.NetworkCloud/locations/EASTUS/operationStatuses/f9eda4af-4c96-45fc-8d60-d91924d9e704*4DDA8E081AD77320710F42C75201942C3060CA45B35F032AA70F459BDCE11BEB?api-version=2023-05-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
-        "Authorization": "REDACTED",
+        "Authorization": "Sanitized",
         "traceparent": "00-17020780b4c40b75c40bb5100247c97a-302a0c2607da9365-00",
         "User-Agent": "azsdk-net-ResourceManager/1.6.0 (.NET 7.0.5; Linux 5.15.90.1-microsoft-standard-WSL2 #1 SMP Fri Jan 27 02:56:13 UTC 2023)",
         "x-ms-client-request-id": "68a87833254eb396c0df0b8756245c60",
@@ -1496,7 +1496,7 @@
       "RequestUri": "https://management.azure.com/subscriptions/fca2e8ee-1179-48b8-9532-428ed0873a2e/providers/Microsoft.NetworkCloud/locations/EASTUS/operationStatuses/f9eda4af-4c96-45fc-8d60-d91924d9e704*4DDA8E081AD77320710F42C75201942C3060CA45B35F032AA70F459BDCE11BEB?api-version=2023-05-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
-        "Authorization": "REDACTED",
+        "Authorization": "Sanitized",
         "traceparent": "00-17020780b4c40b75c40bb5100247c97a-3149be2ca9f7c9a1-00",
         "User-Agent": "azsdk-net-ResourceManager/1.6.0 (.NET 7.0.5; Linux 5.15.90.1-microsoft-standard-WSL2 #1 SMP Fri Jan 27 02:56:13 UTC 2023)",
         "x-ms-client-request-id": "94dd5fc8836a4db2d538793276053f6d",
@@ -1532,7 +1532,7 @@
       "RequestUri": "https://management.azure.com/subscriptions/fca2e8ee-1179-48b8-9532-428ed0873a2e/providers/Microsoft.NetworkCloud/locations/EASTUS/operationStatuses/f9eda4af-4c96-45fc-8d60-d91924d9e704*4DDA8E081AD77320710F42C75201942C3060CA45B35F032AA70F459BDCE11BEB?api-version=2023-05-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
-        "Authorization": "REDACTED",
+        "Authorization": "Sanitized",
         "traceparent": "00-17020780b4c40b75c40bb5100247c97a-a4ee2269c882fe6d-00",
         "User-Agent": "azsdk-net-ResourceManager/1.6.0 (.NET 7.0.5; Linux 5.15.90.1-microsoft-standard-WSL2 #1 SMP Fri Jan 27 02:56:13 UTC 2023)",
         "x-ms-client-request-id": "6c56079627f2abe53b04ea255351be2c",
@@ -1568,7 +1568,7 @@
       "RequestUri": "https://management.azure.com/subscriptions/fca2e8ee-1179-48b8-9532-428ed0873a2e/providers/Microsoft.NetworkCloud/locations/EASTUS/operationStatuses/f9eda4af-4c96-45fc-8d60-d91924d9e704*4DDA8E081AD77320710F42C75201942C3060CA45B35F032AA70F459BDCE11BEB?api-version=2023-05-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
-        "Authorization": "REDACTED",
+        "Authorization": "Sanitized",
         "traceparent": "00-17020780b4c40b75c40bb5100247c97a-83a76aed5a5de0c4-00",
         "User-Agent": "azsdk-net-ResourceManager/1.6.0 (.NET 7.0.5; Linux 5.15.90.1-microsoft-standard-WSL2 #1 SMP Fri Jan 27 02:56:13 UTC 2023)",
         "x-ms-client-request-id": "f30db72b0b7bb039c65a9315ab643dbb",
@@ -1606,7 +1606,7 @@
       "RequestUri": "https://management.azure.com/subscriptions/fca2e8ee-1179-48b8-9532-428ed0873a2e/resourceGroups/nc-resource-testing-k5-0907401cb287-ors8g/providers/Microsoft.NetworkCloud/kubernetesClusters/res-test-standard-naks-d5a98/agentPools/systemPool3991?api-version=2023-05-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
-        "Authorization": "REDACTED",
+        "Authorization": "Sanitized",
         "traceparent": "00-17020780b4c40b75c40bb5100247c97a-3bd7dfce92e77513-00",
         "User-Agent": "azsdk-net-ResourceManager/1.6.0 (.NET 7.0.5; Linux 5.15.90.1-microsoft-standard-WSL2 #1 SMP Fri Jan 27 02:56:13 UTC 2023)",
         "x-ms-client-request-id": "4ef19d9fefcda06e7a325965988dfa84",
@@ -1689,7 +1689,7 @@
       "RequestMethod": "DELETE",
       "RequestHeaders": {
         "Accept": "application/json",
-        "Authorization": "REDACTED",
+        "Authorization": "Sanitized",
         "traceparent": "00-b07da765d851b23ad6a9325bdba9cf04-313c98214efc4e25-00",
         "User-Agent": "azsdk-net-ResourceManager.NetworkCloud/1.0.0-alpha.20230619.1 (.NET 7.0.5; Linux 5.15.90.1-microsoft-standard-WSL2 #1 SMP Fri Jan 27 02:56:13 UTC 2023)",
         "x-ms-client-request-id": "be074d794bf78af1cea6a59794cfffd7",
@@ -1723,7 +1723,7 @@
       "RequestUri": "https://management.azure.com/subscriptions/fca2e8ee-1179-48b8-9532-428ed0873a2e/providers/Microsoft.NetworkCloud/locations/EASTUS/operationStatuses/ac239a9d-e176-4872-b1ed-85dc3b254e52*4DDA8E081AD77320710F42C75201942C3060CA45B35F032AA70F459BDCE11BEB?api-version=2023-05-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
-        "Authorization": "REDACTED",
+        "Authorization": "Sanitized",
         "traceparent": "00-b07da765d851b23ad6a9325bdba9cf04-42ee07cb6212fa5c-00",
         "User-Agent": "azsdk-net-ResourceManager/1.6.0 (.NET 7.0.5; Linux 5.15.90.1-microsoft-standard-WSL2 #1 SMP Fri Jan 27 02:56:13 UTC 2023)",
         "x-ms-client-request-id": "5e9b0f607e5c54c3ac66802749d60baa",
@@ -1759,7 +1759,7 @@
       "RequestUri": "https://management.azure.com/subscriptions/fca2e8ee-1179-48b8-9532-428ed0873a2e/providers/Microsoft.NetworkCloud/locations/EASTUS/operationStatuses/ac239a9d-e176-4872-b1ed-85dc3b254e52*4DDA8E081AD77320710F42C75201942C3060CA45B35F032AA70F459BDCE11BEB?api-version=2023-05-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
-        "Authorization": "REDACTED",
+        "Authorization": "Sanitized",
         "traceparent": "00-b07da765d851b23ad6a9325bdba9cf04-2ff7177988e34c1b-00",
         "User-Agent": "azsdk-net-ResourceManager/1.6.0 (.NET 7.0.5; Linux 5.15.90.1-microsoft-standard-WSL2 #1 SMP Fri Jan 27 02:56:13 UTC 2023)",
         "x-ms-client-request-id": "699e813344070923eecc758ad2a8d8fa",
@@ -1795,7 +1795,7 @@
       "RequestUri": "https://management.azure.com/subscriptions/fca2e8ee-1179-48b8-9532-428ed0873a2e/providers/Microsoft.NetworkCloud/locations/EASTUS/operationStatuses/ac239a9d-e176-4872-b1ed-85dc3b254e52*4DDA8E081AD77320710F42C75201942C3060CA45B35F032AA70F459BDCE11BEB?api-version=2023-05-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
-        "Authorization": "REDACTED",
+        "Authorization": "Sanitized",
         "traceparent": "00-b07da765d851b23ad6a9325bdba9cf04-bebaf2b375e3c282-00",
         "User-Agent": "azsdk-net-ResourceManager/1.6.0 (.NET 7.0.5; Linux 5.15.90.1-microsoft-standard-WSL2 #1 SMP Fri Jan 27 02:56:13 UTC 2023)",
         "x-ms-client-request-id": "85376c8fa033497a6b3109f9f037f173",
@@ -1831,7 +1831,7 @@
       "RequestUri": "https://management.azure.com/subscriptions/fca2e8ee-1179-48b8-9532-428ed0873a2e/providers/Microsoft.NetworkCloud/locations/EASTUS/operationStatuses/ac239a9d-e176-4872-b1ed-85dc3b254e52*4DDA8E081AD77320710F42C75201942C3060CA45B35F032AA70F459BDCE11BEB?api-version=2023-05-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
-        "Authorization": "REDACTED",
+        "Authorization": "Sanitized",
         "traceparent": "00-b07da765d851b23ad6a9325bdba9cf04-e63ad115b5276b81-00",
         "User-Agent": "azsdk-net-ResourceManager/1.6.0 (.NET 7.0.5; Linux 5.15.90.1-microsoft-standard-WSL2 #1 SMP Fri Jan 27 02:56:13 UTC 2023)",
         "x-ms-client-request-id": "3016ce61ad351b31eb926f9008398104",
@@ -1867,7 +1867,7 @@
       "RequestUri": "https://management.azure.com/subscriptions/fca2e8ee-1179-48b8-9532-428ed0873a2e/providers/Microsoft.NetworkCloud/locations/EASTUS/operationStatuses/ac239a9d-e176-4872-b1ed-85dc3b254e52*4DDA8E081AD77320710F42C75201942C3060CA45B35F032AA70F459BDCE11BEB?api-version=2023-05-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
-        "Authorization": "REDACTED",
+        "Authorization": "Sanitized",
         "traceparent": "00-b07da765d851b23ad6a9325bdba9cf04-267639dfba4fe988-00",
         "User-Agent": "azsdk-net-ResourceManager/1.6.0 (.NET 7.0.5; Linux 5.15.90.1-microsoft-standard-WSL2 #1 SMP Fri Jan 27 02:56:13 UTC 2023)",
         "x-ms-client-request-id": "dd98858e869f92760754fdd63b2a19b7",
@@ -1903,7 +1903,7 @@
       "RequestUri": "https://management.azure.com/subscriptions/fca2e8ee-1179-48b8-9532-428ed0873a2e/providers/Microsoft.NetworkCloud/locations/EASTUS/operationStatuses/ac239a9d-e176-4872-b1ed-85dc3b254e52*4DDA8E081AD77320710F42C75201942C3060CA45B35F032AA70F459BDCE11BEB?api-version=2023-05-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
-        "Authorization": "REDACTED",
+        "Authorization": "Sanitized",
         "traceparent": "00-b07da765d851b23ad6a9325bdba9cf04-420756070a7ab8b6-00",
         "User-Agent": "azsdk-net-ResourceManager/1.6.0 (.NET 7.0.5; Linux 5.15.90.1-microsoft-standard-WSL2 #1 SMP Fri Jan 27 02:56:13 UTC 2023)",
         "x-ms-client-request-id": "032802daa791e1c53a1b9aa130ea4032",
@@ -1939,7 +1939,7 @@
       "RequestUri": "https://management.azure.com/subscriptions/fca2e8ee-1179-48b8-9532-428ed0873a2e/providers/Microsoft.NetworkCloud/locations/EASTUS/operationStatuses/ac239a9d-e176-4872-b1ed-85dc3b254e52*4DDA8E081AD77320710F42C75201942C3060CA45B35F032AA70F459BDCE11BEB?api-version=2023-05-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
-        "Authorization": "REDACTED",
+        "Authorization": "Sanitized",
         "traceparent": "00-b07da765d851b23ad6a9325bdba9cf04-a7755e48baddaa22-00",
         "User-Agent": "azsdk-net-ResourceManager/1.6.0 (.NET 7.0.5; Linux 5.15.90.1-microsoft-standard-WSL2 #1 SMP Fri Jan 27 02:56:13 UTC 2023)",
         "x-ms-client-request-id": "6a6b05af139edbd4578329e0b05bdfc1",
@@ -1975,7 +1975,7 @@
       "RequestUri": "https://management.azure.com/subscriptions/fca2e8ee-1179-48b8-9532-428ed0873a2e/providers/Microsoft.NetworkCloud/locations/EASTUS/operationStatuses/ac239a9d-e176-4872-b1ed-85dc3b254e52*4DDA8E081AD77320710F42C75201942C3060CA45B35F032AA70F459BDCE11BEB?api-version=2023-05-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
-        "Authorization": "REDACTED",
+        "Authorization": "Sanitized",
         "traceparent": "00-b07da765d851b23ad6a9325bdba9cf04-5ac218d7bed9b233-00",
         "User-Agent": "azsdk-net-ResourceManager/1.6.0 (.NET 7.0.5; Linux 5.15.90.1-microsoft-standard-WSL2 #1 SMP Fri Jan 27 02:56:13 UTC 2023)",
         "x-ms-client-request-id": "06b5b8797d10e672c0b7a283ecd5611c",
@@ -2011,7 +2011,7 @@
       "RequestUri": "https://management.azure.com/subscriptions/fca2e8ee-1179-48b8-9532-428ed0873a2e/providers/Microsoft.NetworkCloud/locations/EASTUS/operationStatuses/ac239a9d-e176-4872-b1ed-85dc3b254e52*4DDA8E081AD77320710F42C75201942C3060CA45B35F032AA70F459BDCE11BEB?api-version=2023-05-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
-        "Authorization": "REDACTED",
+        "Authorization": "Sanitized",
         "traceparent": "00-b07da765d851b23ad6a9325bdba9cf04-7dbe7b3171afa201-00",
         "User-Agent": "azsdk-net-ResourceManager/1.6.0 (.NET 7.0.5; Linux 5.15.90.1-microsoft-standard-WSL2 #1 SMP Fri Jan 27 02:56:13 UTC 2023)",
         "x-ms-client-request-id": "3626ca14aebec6182e4dac0d7de430df",
