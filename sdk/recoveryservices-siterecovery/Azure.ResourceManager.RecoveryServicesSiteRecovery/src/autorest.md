@@ -8,8 +8,8 @@ azure-arm: true
 csharp: true
 library-name: RecoveryServicesSiteRecovery
 namespace: Azure.ResourceManager.RecoveryServicesSiteRecovery
-require: https://github.com/Azure/azure-rest-api-specs/blob/95fb710c0025b325306898a3210333eaaf5d5e62/specification/recoveryservicessiterecovery/resource-manager/readme.md
-#tag: package-2023-02
+require: https://github.com/Azure/azure-rest-api-specs/blob/d03c1964cb76ffd6884d10a1871bbe779a2f68ef/specification/recoveryservicessiterecovery/resource-manager/readme.md
+#tag: package-2023-04
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 skip-csproj: true
