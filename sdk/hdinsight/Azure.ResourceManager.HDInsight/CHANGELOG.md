@@ -1,10 +1,12 @@
 # Release History
 
-## 1.1.0 (2023-06-29)
+## 1.1.0 (2023-06-27)
+
+This release is the stable release of 1.1.0-beta.1.
 
 ### Other Changes
 
-- Release 1.1.0.
+- Upgraded dependent Azure.Core to 1.33.0.
 
 ## 1.1.0-beta.1 (2023-05-30)
 
