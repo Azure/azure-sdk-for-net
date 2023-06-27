@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.EventGrid.Models
 {
     /// <summary> NumberLessThanOrEquals Filter. </summary>
-    public partial class NumberLessThanOrEqualsFilter : Filter
+    public partial class NumberLessThanOrEqualsFilter : EventGridFilter
     {
         /// <summary> Initializes a new instance of NumberLessThanOrEqualsFilter. </summary>
         public NumberLessThanOrEqualsFilter()

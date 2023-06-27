@@ -52,11 +52,11 @@ namespace Azure.ResourceManager.EventGrid
             return GetCachedClient(Client => new EventGridDomainCollection(Client, Id));
         }
 
-        /// <summary> Gets a collection of NamespaceResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of NamespaceResources and their operations over a NamespaceResource. </returns>
-        public virtual NamespaceCollection GetNamespaces()
+        /// <summary> Gets a collection of EventGridNamespaceResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of EventGridNamespaceResources and their operations over a EventGridNamespaceResource. </returns>
+        public virtual EventGridNamespaceCollection GetEventGridNamespaces()
         {
-            return GetCachedClient(Client => new NamespaceCollection(Client, Id));
+            return GetCachedClient(Client => new EventGridNamespaceCollection(Client, Id));
         }
 
         /// <summary> Gets an object representing a PartnerConfigurationResource along with the instance operations that can be performed on it in the ResourceGroupResource. </summary>

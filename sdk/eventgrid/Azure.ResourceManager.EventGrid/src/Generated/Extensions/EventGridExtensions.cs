@@ -120,39 +120,39 @@ namespace Azure.ResourceManager.EventGrid
         }
         #endregion
 
-        #region ClientGroupResource
+        #region EventGridNamespaceClientGroupResource
         /// <summary>
-        /// Gets an object representing a <see cref="ClientGroupResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ClientGroupResource.CreateResourceIdentifier" /> to create a <see cref="ClientGroupResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing an <see cref="EventGridNamespaceClientGroupResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="EventGridNamespaceClientGroupResource.CreateResourceIdentifier" /> to create an <see cref="EventGridNamespaceClientGroupResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ClientGroupResource" /> object. </returns>
-        public static ClientGroupResource GetClientGroupResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="EventGridNamespaceClientGroupResource" /> object. </returns>
+        public static EventGridNamespaceClientGroupResource GetEventGridNamespaceClientGroupResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                ClientGroupResource.ValidateResourceId(id);
-                return new ClientGroupResource(client, id);
+                EventGridNamespaceClientGroupResource.ValidateResourceId(id);
+                return new EventGridNamespaceClientGroupResource(client, id);
             }
             );
         }
         #endregion
 
-        #region ClientResource
+        #region EventGridNamespaceClientResource
         /// <summary>
-        /// Gets an object representing a <see cref="ClientResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ClientResource.CreateResourceIdentifier" /> to create a <see cref="ClientResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing an <see cref="EventGridNamespaceClientResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="EventGridNamespaceClientResource.CreateResourceIdentifier" /> to create an <see cref="EventGridNamespaceClientResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ClientResource" /> object. </returns>
-        public static ClientResource GetClientResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="EventGridNamespaceClientResource" /> object. </returns>
+        public static EventGridNamespaceClientResource GetEventGridNamespaceClientResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                ClientResource.ValidateResourceId(id);
-                return new ClientResource(client, id);
+                EventGridNamespaceClientResource.ValidateResourceId(id);
+                return new EventGridNamespaceClientResource(client, id);
             }
             );
         }
@@ -329,20 +329,20 @@ namespace Azure.ResourceManager.EventGrid
         }
         #endregion
 
-        #region NamespaceResource
+        #region EventGridNamespaceResource
         /// <summary>
-        /// Gets an object representing a <see cref="NamespaceResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="NamespaceResource.CreateResourceIdentifier" /> to create a <see cref="NamespaceResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing an <see cref="EventGridNamespaceResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="EventGridNamespaceResource.CreateResourceIdentifier" /> to create an <see cref="EventGridNamespaceResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="NamespaceResource" /> object. </returns>
-        public static NamespaceResource GetNamespaceResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="EventGridNamespaceResource" /> object. </returns>
+        public static EventGridNamespaceResource GetEventGridNamespaceResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                NamespaceResource.ValidateResourceId(id);
-                return new NamespaceResource(client, id);
+                EventGridNamespaceResource.ValidateResourceId(id);
+                return new EventGridNamespaceResource(client, id);
             }
             );
         }
@@ -462,20 +462,20 @@ namespace Azure.ResourceManager.EventGrid
         }
         #endregion
 
-        #region PermissionBindingResource
+        #region EventGridNamespacePermissionBindingResource
         /// <summary>
-        /// Gets an object representing a <see cref="PermissionBindingResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="PermissionBindingResource.CreateResourceIdentifier" /> to create a <see cref="PermissionBindingResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing an <see cref="EventGridNamespacePermissionBindingResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="EventGridNamespacePermissionBindingResource.CreateResourceIdentifier" /> to create an <see cref="EventGridNamespacePermissionBindingResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="PermissionBindingResource" /> object. </returns>
-        public static PermissionBindingResource GetPermissionBindingResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="EventGridNamespacePermissionBindingResource" /> object. </returns>
+        public static EventGridNamespacePermissionBindingResource GetEventGridNamespacePermissionBindingResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                PermissionBindingResource.ValidateResourceId(id);
-                return new PermissionBindingResource(client, id);
+                EventGridNamespacePermissionBindingResource.ValidateResourceId(id);
+                return new EventGridNamespacePermissionBindingResource(client, id);
             }
             );
         }
@@ -833,12 +833,12 @@ namespace Azure.ResourceManager.EventGrid
             return resourceGroupResource.GetEventGridDomains().Get(domainName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of NamespaceResources in the ResourceGroupResource. </summary>
+        /// <summary> Gets a collection of EventGridNamespaceResources in the ResourceGroupResource. </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of NamespaceResources and their operations over a NamespaceResource. </returns>
-        public static NamespaceCollection GetNamespaces(this ResourceGroupResource resourceGroupResource)
+        /// <returns> An object representing collection of EventGridNamespaceResources and their operations over a EventGridNamespaceResource. </returns>
+        public static EventGridNamespaceCollection GetEventGridNamespaces(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetNamespaces();
+            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetEventGridNamespaces();
         }
 
         /// <summary>
@@ -860,9 +860,9 @@ namespace Azure.ResourceManager.EventGrid
         /// <exception cref="ArgumentException"> <paramref name="namespaceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="namespaceName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<NamespaceResource>> GetNamespaceAsync(this ResourceGroupResource resourceGroupResource, string namespaceName, CancellationToken cancellationToken = default)
+        public static async Task<Response<EventGridNamespaceResource>> GetEventGridNamespaceAsync(this ResourceGroupResource resourceGroupResource, string namespaceName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetNamespaces().GetAsync(namespaceName, cancellationToken).ConfigureAwait(false);
+            return await resourceGroupResource.GetEventGridNamespaces().GetAsync(namespaceName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -884,9 +884,9 @@ namespace Azure.ResourceManager.EventGrid
         /// <exception cref="ArgumentException"> <paramref name="namespaceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="namespaceName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<NamespaceResource> GetNamespace(this ResourceGroupResource resourceGroupResource, string namespaceName, CancellationToken cancellationToken = default)
+        public static Response<EventGridNamespaceResource> GetEventGridNamespace(this ResourceGroupResource resourceGroupResource, string namespaceName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetNamespaces().Get(namespaceName, cancellationToken);
+            return resourceGroupResource.GetEventGridNamespaces().Get(namespaceName, cancellationToken);
         }
 
         /// <summary> Gets an object representing a PartnerConfigurationResource along with the instance operations that can be performed on it in the ResourceGroupResource. </summary>
@@ -1296,10 +1296,10 @@ namespace Azure.ResourceManager.EventGrid
         /// <param name="filter"> The query used to filter the search results using OData syntax. Filtering is permitted on the 'name' property only and with limited number of OData operations. These operations are: the 'contains' function as well as the following logical operations: not, and, or, eq (for equal), and ne (for not equal). No arithmetic operations are supported. The following is a valid filter example: $filter=contains(namE, 'PATTERN') and name ne 'PATTERN-1'. The following is not a valid filter example: $filter=location eq 'westus'. </param>
         /// <param name="top"> The number of results to return per page for the list operation. Valid range for top parameter is 1 to 100. If not specified, the default number of results to be returned is 20 items per page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="NamespaceResource" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<NamespaceResource> GetNamespacesAsync(this SubscriptionResource subscriptionResource, string filter = null, int? top = null, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="EventGridNamespaceResource" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<EventGridNamespaceResource> GetEventGridNamespacesAsync(this SubscriptionResource subscriptionResource, string filter = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetNamespacesAsync(filter, top, cancellationToken);
+            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetEventGridNamespacesAsync(filter, top, cancellationToken);
         }
 
         /// <summary>
@@ -1319,10 +1319,10 @@ namespace Azure.ResourceManager.EventGrid
         /// <param name="filter"> The query used to filter the search results using OData syntax. Filtering is permitted on the 'name' property only and with limited number of OData operations. These operations are: the 'contains' function as well as the following logical operations: not, and, or, eq (for equal), and ne (for not equal). No arithmetic operations are supported. The following is a valid filter example: $filter=contains(namE, 'PATTERN') and name ne 'PATTERN-1'. The following is not a valid filter example: $filter=location eq 'westus'. </param>
         /// <param name="top"> The number of results to return per page for the list operation. Valid range for top parameter is 1 to 100. If not specified, the default number of results to be returned is 20 items per page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="NamespaceResource" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<NamespaceResource> GetNamespaces(this SubscriptionResource subscriptionResource, string filter = null, int? top = null, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="EventGridNamespaceResource" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<EventGridNamespaceResource> GetEventGridNamespaces(this SubscriptionResource subscriptionResource, string filter = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetNamespaces(filter, top, cancellationToken);
+            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetEventGridNamespaces(filter, top, cancellationToken);
         }
 
         /// <summary>

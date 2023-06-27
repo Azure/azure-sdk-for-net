@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.EventGrid.Models
 {
     /// <summary> IsNotNull Filter. </summary>
-    public partial class IsNotNullFilter : Filter
+    public partial class IsNotNullFilter : EventGridFilter
     {
         /// <summary> Initializes a new instance of IsNotNullFilter. </summary>
         public IsNotNullFilter()

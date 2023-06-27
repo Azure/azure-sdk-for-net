@@ -17,20 +17,20 @@ namespace Azure.ResourceManager.EventGrid.Models
         /// <summary> Initializes a new instance of ClientsListResult. </summary>
         internal ClientsListResult()
         {
-            Value = new ChangeTrackingList<ClientData>();
+            Value = new ChangeTrackingList<EventGridNamespaceClientData>();
         }
 
         /// <summary> Initializes a new instance of ClientsListResult. </summary>
         /// <param name="value"> A collection of Client. </param>
         /// <param name="nextLink"> A link for the next page of Client. </param>
-        internal ClientsListResult(IReadOnlyList<ClientData> value, string nextLink)
+        internal ClientsListResult(IReadOnlyList<EventGridNamespaceClientData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> A collection of Client. </summary>
-        public IReadOnlyList<ClientData> Value { get; }
+        public IReadOnlyList<EventGridNamespaceClientData> Value { get; }
         /// <summary> A link for the next page of Client. </summary>
         public string NextLink { get; }
     }

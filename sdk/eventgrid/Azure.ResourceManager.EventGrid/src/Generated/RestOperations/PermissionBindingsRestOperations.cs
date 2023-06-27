@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.EventGrid
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="namespaceName"/> or <paramref name="permissionBindingName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="namespaceName"/> or <paramref name="permissionBindingName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<PermissionBindingData>> GetAsync(string subscriptionId, string resourceGroupName, string namespaceName, string permissionBindingName, CancellationToken cancellationToken = default)
+        public async Task<Response<EventGridNamespacePermissionBindingData>> GetAsync(string subscriptionId, string resourceGroupName, string namespaceName, string permissionBindingName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -80,13 +80,13 @@ namespace Azure.ResourceManager.EventGrid
             {
                 case 200:
                     {
-                        PermissionBindingData value = default;
+                        EventGridNamespacePermissionBindingData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = PermissionBindingData.DeserializePermissionBindingData(document.RootElement);
+                        value = EventGridNamespacePermissionBindingData.DeserializeEventGridNamespacePermissionBindingData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((PermissionBindingData)null, message.Response);
+                    return Response.FromValue((EventGridNamespacePermissionBindingData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.EventGrid
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="namespaceName"/> or <paramref name="permissionBindingName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="namespaceName"/> or <paramref name="permissionBindingName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<PermissionBindingData> Get(string subscriptionId, string resourceGroupName, string namespaceName, string permissionBindingName, CancellationToken cancellationToken = default)
+        public Response<EventGridNamespacePermissionBindingData> Get(string subscriptionId, string resourceGroupName, string namespaceName, string permissionBindingName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -113,19 +113,19 @@ namespace Azure.ResourceManager.EventGrid
             {
                 case 200:
                     {
-                        PermissionBindingData value = default;
+                        EventGridNamespacePermissionBindingData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = PermissionBindingData.DeserializePermissionBindingData(document.RootElement);
+                        value = EventGridNamespacePermissionBindingData.DeserializeEventGridNamespacePermissionBindingData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((PermissionBindingData)null, message.Response);
+                    return Response.FromValue((EventGridNamespacePermissionBindingData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string namespaceName, string permissionBindingName, PermissionBindingData data)
+        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string namespaceName, string permissionBindingName, EventGridNamespacePermissionBindingData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.EventGrid
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="namespaceName"/>, <paramref name="permissionBindingName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="namespaceName"/> or <paramref name="permissionBindingName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string namespaceName, string permissionBindingName, PermissionBindingData data, CancellationToken cancellationToken = default)
+        public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string namespaceName, string permissionBindingName, EventGridNamespacePermissionBindingData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.EventGrid
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="namespaceName"/>, <paramref name="permissionBindingName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="namespaceName"/> or <paramref name="permissionBindingName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response CreateOrUpdate(string subscriptionId, string resourceGroupName, string namespaceName, string permissionBindingName, PermissionBindingData data, CancellationToken cancellationToken = default)
+        public Response CreateOrUpdate(string subscriptionId, string resourceGroupName, string namespaceName, string permissionBindingName, EventGridNamespacePermissionBindingData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));

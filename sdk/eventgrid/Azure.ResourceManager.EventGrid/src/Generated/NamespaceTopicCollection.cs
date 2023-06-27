@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.EventGrid
 {
     /// <summary>
     /// A class representing a collection of <see cref="NamespaceTopicResource" /> and their operations.
-    /// Each <see cref="NamespaceTopicResource" /> in the collection will belong to the same instance of <see cref="NamespaceResource" />.
-    /// To get a <see cref="NamespaceTopicCollection" /> instance call the GetNamespaceTopics method from an instance of <see cref="NamespaceResource" />.
+    /// Each <see cref="NamespaceTopicResource" /> in the collection will belong to the same instance of <see cref="EventGridNamespaceResource" />.
+    /// To get a <see cref="NamespaceTopicCollection" /> instance call the GetNamespaceTopics method from an instance of <see cref="EventGridNamespaceResource" />.
     /// </summary>
     public partial class NamespaceTopicCollection : ArmCollection, IEnumerable<NamespaceTopicResource>, IAsyncEnumerable<NamespaceTopicResource>
     {
@@ -48,8 +48,8 @@ namespace Azure.ResourceManager.EventGrid
 
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != NamespaceResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, NamespaceResource.ResourceType), nameof(id));
+            if (id.ResourceType != EventGridNamespaceResource.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, EventGridNamespaceResource.ResourceType), nameof(id));
         }
 
         /// <summary>

@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.EventGrid.Models
 {
     /// <summary> The UnknownFilter. </summary>
-    internal partial class UnknownFilter : Filter
+    internal partial class UnknownFilter : EventGridFilter
     {
         /// <summary> Initializes a new instance of UnknownFilter. </summary>
         /// <param name="operatorType"> The operator type used for filtering, e.g., NumberIn, StringContains, BoolEquals and others. </param>

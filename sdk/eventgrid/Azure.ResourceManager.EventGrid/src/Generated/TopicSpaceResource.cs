@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.EventGrid
     /// A Class representing a TopicSpace along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="TopicSpaceResource" />
     /// from an instance of <see cref="ArmClient" /> using the GetTopicSpaceResource method.
-    /// Otherwise you can get one from its parent resource <see cref="NamespaceResource" /> using the GetTopicSpace method.
+    /// Otherwise you can get one from its parent resource <see cref="EventGridNamespaceResource" /> using the GetTopicSpace method.
     /// </summary>
     public partial class TopicSpaceResource : ArmResource
     {

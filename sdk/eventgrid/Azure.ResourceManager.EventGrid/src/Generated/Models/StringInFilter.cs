@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.EventGrid.Models
 {
     /// <summary> StringIn Filter. </summary>
-    public partial class StringInFilter : Filter
+    public partial class StringInFilter : EventGridFilter
     {
         /// <summary> Initializes a new instance of StringInFilter. </summary>
         public StringInFilter()

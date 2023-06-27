@@ -17,20 +17,20 @@ namespace Azure.ResourceManager.EventGrid.Models
         /// <summary> Initializes a new instance of PermissionBindingsListResult. </summary>
         internal PermissionBindingsListResult()
         {
-            Value = new ChangeTrackingList<PermissionBindingData>();
+            Value = new ChangeTrackingList<EventGridNamespacePermissionBindingData>();
         }
 
         /// <summary> Initializes a new instance of PermissionBindingsListResult. </summary>
         /// <param name="value"> A collection of Permission Binding. </param>
         /// <param name="nextLink"> A link for the next page of Permission Binding. </param>
-        internal PermissionBindingsListResult(IReadOnlyList<PermissionBindingData> value, string nextLink)
+        internal PermissionBindingsListResult(IReadOnlyList<EventGridNamespacePermissionBindingData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> A collection of Permission Binding. </summary>
-        public IReadOnlyList<PermissionBindingData> Value { get; }
+        public IReadOnlyList<EventGridNamespacePermissionBindingData> Value { get; }
         /// <summary> A link for the next page of Permission Binding. </summary>
         public string NextLink { get; }
     }

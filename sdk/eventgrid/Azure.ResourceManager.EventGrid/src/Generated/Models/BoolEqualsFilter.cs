@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.EventGrid.Models
 {
     /// <summary> BoolEquals Filter. </summary>
-    public partial class BoolEqualsFilter : Filter
+    public partial class BoolEqualsFilter : EventGridFilter
     {
         /// <summary> Initializes a new instance of BoolEqualsFilter. </summary>
         public BoolEqualsFilter()

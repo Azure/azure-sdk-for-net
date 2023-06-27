@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.EventGrid.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<ClientData>> value = default;
+            Optional<IReadOnlyList<EventGridNamespaceClientData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -30,10 +30,10 @@ namespace Azure.ResourceManager.EventGrid.Models
                     {
                         continue;
                     }
-                    List<ClientData> array = new List<ClientData>();
+                    List<EventGridNamespaceClientData> array = new List<EventGridNamespaceClientData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ClientData.DeserializeClientData(item));
+                        array.Add(EventGridNamespaceClientData.DeserializeEventGridNamespaceClientData(item));
                     }
                     value = array;
                     continue;

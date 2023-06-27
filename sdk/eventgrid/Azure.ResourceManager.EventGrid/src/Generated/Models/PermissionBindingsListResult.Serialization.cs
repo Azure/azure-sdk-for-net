@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.EventGrid.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<PermissionBindingData>> value = default;
+            Optional<IReadOnlyList<EventGridNamespacePermissionBindingData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -30,10 +30,10 @@ namespace Azure.ResourceManager.EventGrid.Models
                     {
                         continue;
                     }
-                    List<PermissionBindingData> array = new List<PermissionBindingData>();
+                    List<EventGridNamespacePermissionBindingData> array = new List<EventGridNamespacePermissionBindingData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PermissionBindingData.DeserializePermissionBindingData(item));
+                        array.Add(EventGridNamespacePermissionBindingData.DeserializeEventGridNamespacePermissionBindingData(item));
                     }
                     value = array;
                     continue;

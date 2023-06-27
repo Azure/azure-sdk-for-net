@@ -17,17 +17,17 @@ namespace Azure.ResourceManager.EventGrid.Models
         public FiltersConfiguration()
         {
             IncludedEventTypes = new ChangeTrackingList<string>();
-            Filters = new ChangeTrackingList<Filter>();
+            Filters = new ChangeTrackingList<EventGridFilter>();
         }
 
         /// <summary> Initializes a new instance of FiltersConfiguration. </summary>
         /// <param name="includedEventTypes"> A list of applicable event types that need to be part of the event subscription. If it is desired to subscribe to all default event types, set the IncludedEventTypes to null. </param>
         /// <param name="filters">
         /// An array of filters that are used for filtering event subscriptions.
-        /// Please note <see cref="Filter"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="EventGridFilter"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="BoolEqualsFilter"/>, <see cref="IsNotNullFilter"/>, <see cref="IsNullOrUndefinedFilter"/>, <see cref="NumberGreaterThanFilter"/>, <see cref="NumberGreaterThanOrEqualsFilter"/>, <see cref="NumberInFilter"/>, <see cref="NumberInRangeFilter"/>, <see cref="NumberLessThanFilter"/>, <see cref="NumberLessThanOrEqualsFilter"/>, <see cref="NumberNotInFilter"/>, <see cref="NumberNotInRangeFilter"/>, <see cref="StringBeginsWithFilter"/>, <see cref="StringContainsFilter"/>, <see cref="StringEndsWithFilter"/>, <see cref="StringInFilter"/>, <see cref="StringNotBeginsWithFilter"/>, <see cref="StringNotContainsFilter"/>, <see cref="StringNotEndsWithFilter"/> and <see cref="StringNotInFilter"/>.
         /// </param>
-        internal FiltersConfiguration(IList<string> includedEventTypes, IList<Filter> filters)
+        internal FiltersConfiguration(IList<string> includedEventTypes, IList<EventGridFilter> filters)
         {
             IncludedEventTypes = includedEventTypes;
             Filters = filters;
@@ -37,9 +37,9 @@ namespace Azure.ResourceManager.EventGrid.Models
         public IList<string> IncludedEventTypes { get; }
         /// <summary>
         /// An array of filters that are used for filtering event subscriptions.
-        /// Please note <see cref="Filter"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="EventGridFilter"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="BoolEqualsFilter"/>, <see cref="IsNotNullFilter"/>, <see cref="IsNullOrUndefinedFilter"/>, <see cref="NumberGreaterThanFilter"/>, <see cref="NumberGreaterThanOrEqualsFilter"/>, <see cref="NumberInFilter"/>, <see cref="NumberInRangeFilter"/>, <see cref="NumberLessThanFilter"/>, <see cref="NumberLessThanOrEqualsFilter"/>, <see cref="NumberNotInFilter"/>, <see cref="NumberNotInRangeFilter"/>, <see cref="StringBeginsWithFilter"/>, <see cref="StringContainsFilter"/>, <see cref="StringEndsWithFilter"/>, <see cref="StringInFilter"/>, <see cref="StringNotBeginsWithFilter"/>, <see cref="StringNotContainsFilter"/>, <see cref="StringNotEndsWithFilter"/> and <see cref="StringNotInFilter"/>.
         /// </summary>
-        public IList<Filter> Filters { get; }
+        public IList<EventGridFilter> Filters { get; }
     }
 }

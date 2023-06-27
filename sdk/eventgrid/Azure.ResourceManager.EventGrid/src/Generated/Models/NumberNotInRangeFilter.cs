@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.EventGrid.Models
 {
     /// <summary> NumberNotInRange Filter. </summary>
-    public partial class NumberNotInRangeFilter : Filter
+    public partial class NumberNotInRangeFilter : EventGridFilter
     {
         /// <summary> Initializes a new instance of NumberNotInRangeFilter. </summary>
         public NumberNotInRangeFilter()

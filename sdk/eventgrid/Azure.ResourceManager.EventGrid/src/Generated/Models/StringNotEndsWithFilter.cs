@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.EventGrid.Models
 {
     /// <summary> StringNotEndsWith Filter. </summary>
-    public partial class StringNotEndsWithFilter : Filter
+    public partial class StringNotEndsWithFilter : EventGridFilter
     {
         /// <summary> Initializes a new instance of StringNotEndsWithFilter. </summary>
         public StringNotEndsWithFilter()

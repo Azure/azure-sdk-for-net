@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                 return null;
             }
             Optional<IList<string>> includedEventTypes = default;
-            Optional<IList<Filter>> filters = default;
+            Optional<IList<EventGridFilter>> filters = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("includedEventTypes"u8))
@@ -69,10 +69,10 @@ namespace Azure.ResourceManager.EventGrid.Models
                     {
                         continue;
                     }
-                    List<Filter> array = new List<Filter>();
+                    List<EventGridFilter> array = new List<EventGridFilter>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Filter.DeserializeFilter(item));
+                        array.Add(EventGridFilter.DeserializeEventGridFilter(item));
                     }
                     filters = array;
                     continue;

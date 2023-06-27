@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.EventGrid
     /// A Class representing a CaCertificate along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="CaCertificateResource" />
     /// from an instance of <see cref="ArmClient" /> using the GetCaCertificateResource method.
-    /// Otherwise you can get one from its parent resource <see cref="NamespaceResource" /> using the GetCaCertificate method.
+    /// Otherwise you can get one from its parent resource <see cref="EventGridNamespaceResource" /> using the GetCaCertificate method.
     /// </summary>
     public partial class CaCertificateResource : ArmResource
     {

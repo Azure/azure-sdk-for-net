@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.EventGrid
         private DomainsRestOperations _eventGridDomainDomainsRestClient;
         private ClientDiagnostics _eventSubscriptionClientDiagnostics;
         private EventSubscriptionsRestOperations _eventSubscriptionRestClient;
-        private ClientDiagnostics _namespaceClientDiagnostics;
-        private NamespacesRestOperations _namespaceRestClient;
+        private ClientDiagnostics _eventGridNamespaceNamespacesClientDiagnostics;
+        private NamespacesRestOperations _eventGridNamespaceNamespacesRestClient;
         private ClientDiagnostics _partnerConfigurationClientDiagnostics;
         private PartnerConfigurationsRestOperations _partnerConfigurationRestClient;
         private ClientDiagnostics _partnerDestinationClientDiagnostics;
@@ -53,8 +53,8 @@ namespace Azure.ResourceManager.EventGrid
         private DomainsRestOperations EventGridDomainDomainsRestClient => _eventGridDomainDomainsRestClient ??= new DomainsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(EventGridDomainResource.ResourceType));
         private ClientDiagnostics EventSubscriptionClientDiagnostics => _eventSubscriptionClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.EventGrid", EventSubscriptionResource.ResourceType.Namespace, Diagnostics);
         private EventSubscriptionsRestOperations EventSubscriptionRestClient => _eventSubscriptionRestClient ??= new EventSubscriptionsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(EventSubscriptionResource.ResourceType));
-        private ClientDiagnostics NamespaceClientDiagnostics => _namespaceClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.EventGrid", NamespaceResource.ResourceType.Namespace, Diagnostics);
-        private NamespacesRestOperations NamespaceRestClient => _namespaceRestClient ??= new NamespacesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(NamespaceResource.ResourceType));
+        private ClientDiagnostics EventGridNamespaceNamespacesClientDiagnostics => _eventGridNamespaceNamespacesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.EventGrid", EventGridNamespaceResource.ResourceType.Namespace, Diagnostics);
+        private NamespacesRestOperations EventGridNamespaceNamespacesRestClient => _eventGridNamespaceNamespacesRestClient ??= new NamespacesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(EventGridNamespaceResource.ResourceType));
         private ClientDiagnostics PartnerConfigurationClientDiagnostics => _partnerConfigurationClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.EventGrid", PartnerConfigurationResource.ResourceType.Namespace, Diagnostics);
         private PartnerConfigurationsRestOperations PartnerConfigurationRestClient => _partnerConfigurationRestClient ??= new PartnerConfigurationsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(PartnerConfigurationResource.ResourceType));
         private ClientDiagnostics PartnerDestinationClientDiagnostics => _partnerDestinationClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.EventGrid", PartnerDestinationResource.ResourceType.Namespace, Diagnostics);
@@ -140,12 +140,12 @@ namespace Azure.ResourceManager.EventGrid
         /// <param name="filter"> The query used to filter the search results using OData syntax. Filtering is permitted on the 'name' property only and with limited number of OData operations. These operations are: the 'contains' function as well as the following logical operations: not, and, or, eq (for equal), and ne (for not equal). No arithmetic operations are supported. The following is a valid filter example: $filter=contains(namE, 'PATTERN') and name ne 'PATTERN-1'. The following is not a valid filter example: $filter=location eq 'westus'. </param>
         /// <param name="top"> The number of results to return per page for the list operation. Valid range for top parameter is 1 to 100. If not specified, the default number of results to be returned is 20 items per page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="NamespaceResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<NamespaceResource> GetNamespacesAsync(string filter = null, int? top = null, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="EventGridNamespaceResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<EventGridNamespaceResource> GetEventGridNamespacesAsync(string filter = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => NamespaceRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, filter, top);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => NamespaceRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, filter, top);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new NamespaceResource(Client, NamespaceData.DeserializeNamespaceData(e)), NamespaceClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetNamespaces", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => EventGridNamespaceNamespacesRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, filter, top);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => EventGridNamespaceNamespacesRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, filter, top);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new EventGridNamespaceResource(Client, EventGridNamespaceData.DeserializeEventGridNamespaceData(e)), EventGridNamespaceNamespacesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetEventGridNamespaces", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -164,12 +164,12 @@ namespace Azure.ResourceManager.EventGrid
         /// <param name="filter"> The query used to filter the search results using OData syntax. Filtering is permitted on the 'name' property only and with limited number of OData operations. These operations are: the 'contains' function as well as the following logical operations: not, and, or, eq (for equal), and ne (for not equal). No arithmetic operations are supported. The following is a valid filter example: $filter=contains(namE, 'PATTERN') and name ne 'PATTERN-1'. The following is not a valid filter example: $filter=location eq 'westus'. </param>
         /// <param name="top"> The number of results to return per page for the list operation. Valid range for top parameter is 1 to 100. If not specified, the default number of results to be returned is 20 items per page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="NamespaceResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<NamespaceResource> GetNamespaces(string filter = null, int? top = null, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="EventGridNamespaceResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<EventGridNamespaceResource> GetEventGridNamespaces(string filter = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => NamespaceRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, filter, top);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => NamespaceRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, filter, top);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new NamespaceResource(Client, NamespaceData.DeserializeNamespaceData(e)), NamespaceClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetNamespaces", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => EventGridNamespaceNamespacesRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, filter, top);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => EventGridNamespaceNamespacesRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, filter, top);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new EventGridNamespaceResource(Client, EventGridNamespaceData.DeserializeEventGridNamespaceData(e)), EventGridNamespaceNamespacesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetEventGridNamespaces", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

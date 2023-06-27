@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.EventGrid.Models
             return new EventSubscriptionFullUri(endpoint);
         }
 
-        /// <summary> Initializes a new instance of ClientGroupData. </summary>
+        /// <summary> Initializes a new instance of EventGridNamespaceClientGroupData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -78,13 +78,13 @@ namespace Azure.ResourceManager.EventGrid.Models
         /// Example : attributes.keyName IN ['a', 'b', 'c'].
         /// </param>
         /// <param name="provisioningState"> Provisioning state of the ClientGroup resource. </param>
-        /// <returns> A new <see cref="EventGrid.ClientGroupData"/> instance for mocking. </returns>
-        public static ClientGroupData ClientGroupData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string description = null, string query = null, ClientGroupProvisioningState? provisioningState = null)
+        /// <returns> A new <see cref="EventGrid.EventGridNamespaceClientGroupData"/> instance for mocking. </returns>
+        public static EventGridNamespaceClientGroupData EventGridNamespaceClientGroupData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string description = null, string query = null, ClientGroupProvisioningState? provisioningState = null)
         {
-            return new ClientGroupData(id, name, resourceType, systemData, description, query, provisioningState);
+            return new EventGridNamespaceClientGroupData(id, name, resourceType, systemData, description, query, provisioningState);
         }
 
-        /// <summary> Initializes a new instance of ClientData. </summary>
+        /// <summary> Initializes a new instance of EventGridNamespaceClientData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -100,12 +100,12 @@ namespace Azure.ResourceManager.EventGrid.Models
         /// "attributes": { "room": "345", "floor": 12, "deviceTypes": ["Fan", "Light"] }
         /// </param>
         /// <param name="provisioningState"> Provisioning state of the Client resource. </param>
-        /// <returns> A new <see cref="EventGrid.ClientData"/> instance for mocking. </returns>
-        public static ClientData ClientData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string description = null, string authenticationName = null, ClientAuthentication authentication = null, ClientCertificateAuthentication clientCertificateAuthentication = null, ClientState? state = null, IDictionary<string, BinaryData> attributes = null, ClientProvisioningState? provisioningState = null)
+        /// <returns> A new <see cref="EventGrid.EventGridNamespaceClientData"/> instance for mocking. </returns>
+        public static EventGridNamespaceClientData EventGridNamespaceClientData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string description = null, string authenticationName = null, EventGridNamespaceClientAuthentication authentication = null, ClientCertificateAuthentication clientCertificateAuthentication = null, EventGridNamespaceClientState? state = null, IDictionary<string, BinaryData> attributes = null, EventGridNamespaceClientProvisioningState? provisioningState = null)
         {
             attributes ??= new Dictionary<string, BinaryData>();
 
-            return new ClientData(id, name, resourceType, systemData, description, authenticationName, authentication, clientCertificateAuthentication, state, attributes, provisioningState);
+            return new EventGridNamespaceClientData(id, name, resourceType, systemData, description, authenticationName, authentication, clientCertificateAuthentication, state, attributes, provisioningState);
         }
 
         /// <summary> Initializes a new instance of EventGridDomainData. </summary>
@@ -260,7 +260,7 @@ namespace Azure.ResourceManager.EventGrid.Models
             return new EventGridSubscriptionData(id, name, resourceType, systemData, topic, provisioningState, destination, deliveryWithResourceIdentity, filter, labels?.ToList(), expireOn, eventDeliverySchema, retryPolicy, deadLetterDestination, deadLetterWithResourceIdentity);
         }
 
-        /// <summary> Initializes a new instance of NamespaceData. </summary>
+        /// <summary> Initializes a new instance of EventGridNamespaceData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -283,14 +283,14 @@ namespace Azure.ResourceManager.EventGrid.Models
         /// </param>
         /// <param name="inboundIPRules"> This can be used to restrict traffic from specific IPs instead of all IPs. Note: These are considered only if PublicNetworkAccess is enabled. </param>
         /// <param name="minimumTlsVersionAllowed"> Minimum TLS version of the publisher allowed to publish to this namespace. Only TLS version 1.2 is supported. </param>
-        /// <returns> A new <see cref="EventGrid.NamespaceData"/> instance for mocking. </returns>
-        public static NamespaceData NamespaceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, NamespaceSku sku = null, ManagedServiceIdentity identity = null, IEnumerable<EventGridPrivateEndpointConnectionData> privateEndpointConnections = null, NamespaceProvisioningState? provisioningState = null, string topicsHostname = null, TopicSpacesConfiguration topicSpacesConfiguration = null, bool? isZoneRedundant = null, EventGridPublicNetworkAccess? publicNetworkAccess = null, IEnumerable<EventGridInboundIPRule> inboundIPRules = null, TlsVersion? minimumTlsVersionAllowed = null)
+        /// <returns> A new <see cref="EventGrid.EventGridNamespaceData"/> instance for mocking. </returns>
+        public static EventGridNamespaceData EventGridNamespaceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, NamespaceSku sku = null, ManagedServiceIdentity identity = null, IEnumerable<EventGridPrivateEndpointConnectionData> privateEndpointConnections = null, NamespaceProvisioningState? provisioningState = null, string topicsHostname = null, TopicSpacesConfiguration topicSpacesConfiguration = null, bool? isZoneRedundant = null, EventGridPublicNetworkAccess? publicNetworkAccess = null, IEnumerable<EventGridInboundIPRule> inboundIPRules = null, TlsVersion? minimumTlsVersionAllowed = null)
         {
             tags ??= new Dictionary<string, string>();
             privateEndpointConnections ??= new List<EventGridPrivateEndpointConnectionData>();
             inboundIPRules ??= new List<EventGridInboundIPRule>();
 
-            return new NamespaceData(id, name, resourceType, systemData, tags, location, sku, identity, privateEndpointConnections?.ToList(), provisioningState, topicsHostname != null ? new TopicsConfiguration(topicsHostname) : null, topicSpacesConfiguration, isZoneRedundant, publicNetworkAccess, inboundIPRules?.ToList(), minimumTlsVersionAllowed);
+            return new EventGridNamespaceData(id, name, resourceType, systemData, tags, location, sku, identity, privateEndpointConnections?.ToList(), provisioningState, topicsHostname != null ? new TopicsConfiguration(topicsHostname) : null, topicSpacesConfiguration, isZoneRedundant, publicNetworkAccess, inboundIPRules?.ToList(), minimumTlsVersionAllowed);
         }
 
         /// <summary> Initializes a new instance of TopicSpacesConfiguration. </summary>
@@ -492,7 +492,7 @@ namespace Azure.ResourceManager.EventGrid.Models
             return new PartnerTopicData(id, name, resourceType, systemData, tags, location, identity, partnerRegistrationImmutableId, source, eventTypeInfo, expireOnIfNotActivated, provisioningState, activationState, partnerTopicFriendlyDescription, messageForActivation);
         }
 
-        /// <summary> Initializes a new instance of PermissionBindingData. </summary>
+        /// <summary> Initializes a new instance of EventGridNamespacePermissionBindingData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -508,10 +508,10 @@ namespace Azure.ResourceManager.EventGrid.Models
         /// The client group needs to be a resource under the same namespace the permission binding is a part of.
         /// </param>
         /// <param name="provisioningState"> Provisioning state of the PermissionBinding resource. </param>
-        /// <returns> A new <see cref="EventGrid.PermissionBindingData"/> instance for mocking. </returns>
-        public static PermissionBindingData PermissionBindingData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string description = null, string topicSpaceName = null, PermissionType? permission = null, string clientGroupName = null, PermissionBindingProvisioningState? provisioningState = null)
+        /// <returns> A new <see cref="EventGrid.EventGridNamespacePermissionBindingData"/> instance for mocking. </returns>
+        public static EventGridNamespacePermissionBindingData EventGridNamespacePermissionBindingData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string description = null, string topicSpaceName = null, PermissionType? permission = null, string clientGroupName = null, PermissionBindingProvisioningState? provisioningState = null)
         {
-            return new PermissionBindingData(id, name, resourceType, systemData, description, topicSpaceName, permission, clientGroupName, provisioningState);
+            return new EventGridNamespacePermissionBindingData(id, name, resourceType, systemData, description, topicSpaceName, permission, clientGroupName, provisioningState);
         }
 
         /// <summary> Initializes a new instance of EventGridPrivateLinkResourceData. </summary>

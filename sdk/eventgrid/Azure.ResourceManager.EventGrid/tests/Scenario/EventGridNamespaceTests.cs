@@ -20,17 +20,17 @@ namespace Azure.ResourceManager.EventGrid.Tests
     public class EventGridNamespaceTests : EventGridManagementTestBase
     {
         public EventGridNamespaceTests(bool isAsync)
-            : base(isAsync, RecordedTestMode.Record)
+            : base(isAsync)//, RecordedTestMode.Record)
         {
         }
 
-        private NamespaceCollection NamespaceCollection { get; set; }
+        private EventGridNamespaceCollection NamespaceCollection { get; set; }
         private ResourceGroupResource ResourceGroup { get; set; }
 
         private async Task SetCollection()
         {
             ResourceGroup = await CreateResourceGroupAsync(DefaultSubscription, Recording.GenerateAssetName("sdktest-"), DefaultLocation);
-            NamespaceCollection = ResourceGroup.GetNamespaces();
+            NamespaceCollection = ResourceGroup.GetEventGridNamespaces();
         }
 
         [Test]
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.EventGrid.Tests
                 Capacity = 1,
             };
             AzureLocation location = new AzureLocation("eastus2euap", "eastus2euap");
-            var nameSpace = new NamespaceData(location)
+            var nameSpace = new EventGridNamespaceData(location)
             {
                 Tags = {
                     {"originalTag1", "originalValue1"},
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.EventGrid.Tests
                 Capacity = 2,
             };
 
-            NamespacePatch namespacePatch = new NamespacePatch()
+            EventGridNamespacePatch namespacePatch = new EventGridNamespacePatch()
             {
                 Tags = {
                     {"updatedTag1", "updatedValue1"},
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.EventGrid.Tests
                 Capacity = 1,
             };
             AzureLocation location = new AzureLocation("eastus2euap", "eastus2euap");
-            var nameSpace = new NamespaceData(location)
+            var nameSpace = new EventGridNamespaceData(location)
             {
                 Tags = {
                     {"originalTag1", "originalValue1"},
@@ -284,7 +284,7 @@ namespace Azure.ResourceManager.EventGrid.Tests
                 Capacity = 1,
             };
             AzureLocation location = new AzureLocation("eastus2euap", "eastus2euap");
-            var nameSpace = new NamespaceData(location)
+            var nameSpace = new EventGridNamespaceData(location)
             {
                 Tags = {
                     {"originalTag1", "originalValue1"},
@@ -406,7 +406,7 @@ namespace Azure.ResourceManager.EventGrid.Tests
                 Capacity = 1,
             };
             AzureLocation location = new AzureLocation("eastus2euap", "eastus2euap");
-            var nameSpace = new NamespaceData(location)
+            var nameSpace = new EventGridNamespaceData(location)
             {
                 Tags = {
                     {"originalTag1", "originalValue1"},
@@ -473,7 +473,7 @@ namespace Azure.ResourceManager.EventGrid.Tests
             Assert.AreEqual(listCaCertificatesAfterAllDeleted.Count, 0);
 
             // create clients
-            var clientCollection = createNamespaceResponse.GetClients();
+            var clientCollection = createNamespaceResponse.GetEventGridNamespaceClients();
             string clientName1 = "clientName1";
             string clientName2 = "clientName2";
             var clientCertificateAuthentication = new ClientCertificateAuthentication()
@@ -481,7 +481,7 @@ namespace Azure.ResourceManager.EventGrid.Tests
                 ValidationScheme = ClientCertificateValidationScheme.ThumbprintMatch,
             };
             clientCertificateAuthentication.AllowedThumbprints.Add("934367bf1c97033f877db0f15cb1b586957d313");
-            ClientData clientData = new ClientData()
+            EventGridNamespaceClientData clientData = new EventGridNamespaceClientData()
             {
                 ClientCertificateAuthentication = clientCertificateAuthentication,
                 Description = "Before"
@@ -490,26 +490,26 @@ namespace Azure.ResourceManager.EventGrid.Tests
             var createClientResponse1 = (await clientCollection.CreateOrUpdateAsync(WaitUntil.Completed, clientName1, clientData)).Value;
             Assert.IsNotNull(createClientResponse1);
             Assert.AreEqual(createClientResponse1.Data.Name, clientName1);
-            Assert.AreEqual(createClientResponse1.Data.ProvisioningState, ClientProvisioningState.Succeeded);
+            Assert.AreEqual(createClientResponse1.Data.ProvisioningState, EventGridNamespaceClientProvisioningState.Succeeded);
             var createClientResponse2 = (await clientCollection.CreateOrUpdateAsync(WaitUntil.Completed, clientName2, clientData)).Value;
             Assert.IsNotNull(createClientResponse2);
             Assert.AreEqual(createClientResponse2.Data.Name, clientName2);
-            Assert.AreEqual(createClientResponse2.Data.ProvisioningState, ClientProvisioningState.Succeeded);
+            Assert.AreEqual(createClientResponse2.Data.ProvisioningState, EventGridNamespaceClientProvisioningState.Succeeded);
 
             //update client
-            ClientData updatedClientData = new ClientData()
+            EventGridNamespaceClientData updatedClientData = new EventGridNamespaceClientData()
             {
                 ClientCertificateAuthentication = clientCertificateAuthentication,
                 Description = "After"
             };
             var updateClientResponse = (await createClientResponse1.UpdateAsync(WaitUntil.Completed, updatedClientData)).Value;
             Assert.IsNotNull(updateClientResponse);
-            Assert.AreEqual(updateClientResponse.Data.ProvisioningState, ClientProvisioningState.Succeeded);
+            Assert.AreEqual(updateClientResponse.Data.ProvisioningState, EventGridNamespaceClientProvisioningState.Succeeded);
 
             // Get updated client
             var getClientResponse = (await updateClientResponse.GetAsync()).Value;
             Assert.IsNotNull(getClientResponse);
-            Assert.AreEqual(getClientResponse.Data.ProvisioningState, ClientProvisioningState.Succeeded);
+            Assert.AreEqual(getClientResponse.Data.ProvisioningState, EventGridNamespaceClientProvisioningState.Succeeded);
             Assert.AreEqual(getClientResponse.Data.Name, clientName1);
             Assert.AreEqual(getClientResponse.Data.Description, "After");
 
@@ -524,10 +524,10 @@ namespace Azure.ResourceManager.EventGrid.Tests
             Assert.AreEqual(getAllClientsAfterDeletion.Count, 0);
 
             //create client groups
-            var clientGroupCollection = createNamespaceResponse.GetClientGroups();
+            var clientGroupCollection = createNamespaceResponse.GetEventGridNamespaceClientGroups();
             string clientGroupName1 = "clientGroupName1";
             string clientGroupName2 = "clientGroupName2";
-            ClientGroupData clientGroupData = new ClientGroupData()
+            EventGridNamespaceClientGroupData clientGroupData = new EventGridNamespaceClientGroupData()
             {
                 Query = "attributes.testType = 'synthetics'"
             };
@@ -599,10 +599,10 @@ namespace Azure.ResourceManager.EventGrid.Tests
             Assert.AreEqual(listTopicSpacesAfterDeletion.Count, 1);
 
             // Create Permission Bindings
-            var permissionBindingsCollection = createNamespaceResponse.GetPermissionBindings();
+            var permissionBindingsCollection = createNamespaceResponse.GetEventGridNamespacePermissionBindings();
             var PermissionBindingName1 = "PermissionBinding1";
             var PermissionBindingName2 = "PermissionBinding2";
-            PermissionBindingData permissionBindingData = new PermissionBindingData()
+            EventGridNamespacePermissionBindingData permissionBindingData = new EventGridNamespacePermissionBindingData()
             {
                 TopicSpaceName = topicSpaceName2,
                 ClientGroupName = clientGroupName2,
@@ -620,7 +620,7 @@ namespace Azure.ResourceManager.EventGrid.Tests
             Assert.AreEqual(permissionBindingResponse2.Data.Name, PermissionBindingName2);
 
             // udpate permission bindings
-            PermissionBindingData permissionBindingDataAfter = new PermissionBindingData()
+            EventGridNamespacePermissionBindingData permissionBindingDataAfter = new EventGridNamespacePermissionBindingData()
             {
                 TopicSpaceName = topicSpaceName2,
                 ClientGroupName = clientGroupName2,

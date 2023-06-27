@@ -17,20 +17,20 @@ namespace Azure.ResourceManager.EventGrid.Models
         /// <summary> Initializes a new instance of NamespacesListResult. </summary>
         internal NamespacesListResult()
         {
-            Value = new ChangeTrackingList<NamespaceData>();
+            Value = new ChangeTrackingList<EventGridNamespaceData>();
         }
 
         /// <summary> Initializes a new instance of NamespacesListResult. </summary>
         /// <param name="value"> A collection of namespaces. </param>
         /// <param name="nextLink"> A link for the next page of namespaces. </param>
-        internal NamespacesListResult(IReadOnlyList<NamespaceData> value, string nextLink)
+        internal NamespacesListResult(IReadOnlyList<EventGridNamespaceData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> A collection of namespaces. </summary>
-        public IReadOnlyList<NamespaceData> Value { get; }
+        public IReadOnlyList<EventGridNamespaceData> Value { get; }
         /// <summary> A link for the next page of namespaces. </summary>
         public string NextLink { get; }
     }

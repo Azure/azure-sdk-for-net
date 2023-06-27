@@ -31,16 +31,16 @@ namespace Azure.ResourceManager.EventGrid.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this NamespaceResource created on azure
-            // for more information of creating NamespaceResource, please refer to the document of NamespaceResource
+            // this example assumes you already have this EventGridNamespaceResource created on azure
+            // for more information of creating EventGridNamespaceResource, please refer to the document of EventGridNamespaceResource
             string subscriptionId = "8f6b6269-84f2-4d09-9e31-1127efcd1e41";
             string resourceGroupName = "examplerg";
             string namespaceName = "examplenamespace2";
-            ResourceIdentifier namespaceResourceId = NamespaceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, namespaceName);
-            NamespaceResource @namespace = client.GetNamespaceResource(namespaceResourceId);
+            ResourceIdentifier eventGridNamespaceResourceId = EventGridNamespaceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, namespaceName);
+            EventGridNamespaceResource eventGridNamespace = client.GetEventGridNamespaceResource(eventGridNamespaceResourceId);
 
             // get the collection of this NamespaceTopicResource
-            NamespaceTopicCollection collection = @namespace.GetNamespaceTopics();
+            NamespaceTopicCollection collection = eventGridNamespace.GetNamespaceTopics();
 
             // invoke the operation
             string topicName = "examplenamespacetopic2";
@@ -66,16 +66,16 @@ namespace Azure.ResourceManager.EventGrid.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this NamespaceResource created on azure
-            // for more information of creating NamespaceResource, please refer to the document of NamespaceResource
+            // this example assumes you already have this EventGridNamespaceResource created on azure
+            // for more information of creating EventGridNamespaceResource, please refer to the document of EventGridNamespaceResource
             string subscriptionId = "8f6b6269-84f2-4d09-9e31-1127efcd1e41";
             string resourceGroupName = "examplerg";
             string namespaceName = "examplenamespace2";
-            ResourceIdentifier namespaceResourceId = NamespaceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, namespaceName);
-            NamespaceResource @namespace = client.GetNamespaceResource(namespaceResourceId);
+            ResourceIdentifier eventGridNamespaceResourceId = EventGridNamespaceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, namespaceName);
+            EventGridNamespaceResource eventGridNamespace = client.GetEventGridNamespaceResource(eventGridNamespaceResourceId);
 
             // get the collection of this NamespaceTopicResource
-            NamespaceTopicCollection collection = @namespace.GetNamespaceTopics();
+            NamespaceTopicCollection collection = eventGridNamespace.GetNamespaceTopics();
 
             // invoke the operation
             string topicName = "examplenamespacetopic2";
@@ -97,16 +97,16 @@ namespace Azure.ResourceManager.EventGrid.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this NamespaceResource created on azure
-            // for more information of creating NamespaceResource, please refer to the document of NamespaceResource
+            // this example assumes you already have this EventGridNamespaceResource created on azure
+            // for more information of creating EventGridNamespaceResource, please refer to the document of EventGridNamespaceResource
             string subscriptionId = "8f6b6269-84f2-4d09-9e31-1127efcd1e40";
             string resourceGroupName = "examplerg";
             string namespaceName = "examplenamespace2";
-            ResourceIdentifier namespaceResourceId = NamespaceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, namespaceName);
-            NamespaceResource @namespace = client.GetNamespaceResource(namespaceResourceId);
+            ResourceIdentifier eventGridNamespaceResourceId = EventGridNamespaceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, namespaceName);
+            EventGridNamespaceResource eventGridNamespace = client.GetEventGridNamespaceResource(eventGridNamespaceResourceId);
 
             // get the collection of this NamespaceTopicResource
-            NamespaceTopicCollection collection = @namespace.GetNamespaceTopics();
+            NamespaceTopicCollection collection = eventGridNamespace.GetNamespaceTopics();
 
             // invoke the operation
             string topicName = "examplenamespacetopic2";
@@ -139,16 +139,16 @@ namespace Azure.ResourceManager.EventGrid.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this NamespaceResource created on azure
-            // for more information of creating NamespaceResource, please refer to the document of NamespaceResource
+            // this example assumes you already have this EventGridNamespaceResource created on azure
+            // for more information of creating EventGridNamespaceResource, please refer to the document of EventGridNamespaceResource
             string subscriptionId = "8f6b6269-84f2-4d09-9e31-1127efcd1e40";
             string resourceGroupName = "examplerg";
             string namespaceName = "examplenamespace2";
-            ResourceIdentifier namespaceResourceId = NamespaceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, namespaceName);
-            NamespaceResource @namespace = client.GetNamespaceResource(namespaceResourceId);
+            ResourceIdentifier eventGridNamespaceResourceId = EventGridNamespaceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, namespaceName);
+            EventGridNamespaceResource eventGridNamespace = client.GetEventGridNamespaceResource(eventGridNamespaceResourceId);
 
             // get the collection of this NamespaceTopicResource
-            NamespaceTopicCollection collection = @namespace.GetNamespaceTopics();
+            NamespaceTopicCollection collection = eventGridNamespace.GetNamespaceTopics();
 
             // invoke the operation and iterate over the result
             await foreach (NamespaceTopicResource item in collection.GetAllAsync())
