@@ -6,8 +6,6 @@ This troubleshooting guide contains instructions to diagnose frequently encounte
 
 * [General troubleshooting](#general-troubleshooting)
     * [Enable client logging](#enable-client-logging)
-    * [Troubleshooting authentication issues](#authentication-errors)
-    * [Troubleshooting NoSuchMethodError or NoClassDefFoundError](#dependency-conflicts)
 * [Troubleshooting logs ingestion](#troubleshooting-logs-ingestion)
     * [Troubleshooting authorization errors](#troubleshooting-authorization-errors)
     * [Troubleshooting missing logs](#troubleshooting-missing-logs)
@@ -30,23 +28,6 @@ using Azure.Core.Diagnostics;
 using AzureEventSourceListener listener = AzureEventSourceListener.CreateConsoleLogger();
 ```
 
-### Authentication errors
-
-### Troubleshooting insufficient access error for metrics query
-
-If you get an HTTP error with status code 403 (Forbidden), it means the provided credentials lack sufficient permissions to query the workspace.
-
-```text
-"{"error":{"message":"The provided credentials have insufficient access to perform the requested operation","code":"InsufficientAccessError","correlationId":""}}"
-```
-
-Confirm that:
-
-1. Sufficient permissions have been granted to the application or user making the request. For more information, see [manage access to workspaces](https://learn.microsoft.com/azure/azure-monitor/logs/manage-access#manage-access-using-workspace-permissions).
-1. You're authenticating as that user or application if the user or application is granted sufficient privileges to query the workspace. If you're authenticating using the [DefaultAzureCredential](https://learn.microsoft.com/dotnet/api/azure.identity.defaultazurecredential?view=azure-dotnet), check the logs to verify the credential used is the one you expected. To enable logging, see the [Enable client logging](#enable-client-logging) section.
-
-For more help with troubleshooting authentication errors, see the Azure Identity client library [troubleshooting guide](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/identity/Azure.Identity/TROUBLESHOOTING.md).
-
 ## Troubleshooting logs ingestion
 
 ### Troubleshooting authorization errors
@@ -62,7 +43,7 @@ authentication token provided does not have access to ingest data for the data c
 ```
 
 1. Check that the application or user making the request has sufficient permissions:
-   * See this document to [manage access to data collection rule](https://learn.microsoft.com/azure/azure-monitor/logs/tutorial-logs-ingestion-portal#assign-permissions-to-the-dcr).
+   * See this document to [manage access to DCR](https://learn.microsoft.com/azure/azure-monitor/logs/tutorial-logs-ingestion-portal#assign-permissions-to-the-dcr).
    * To ingest logs, ensure the service principal is assigned the **Monitoring Metrics Publisher** role for the DCR.
 1. If the user or application is granted sufficient privileges to upload logs, ensure you're authenticating as that user/application. If you're authenticating using the [DefaultAzureCredential](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/identity/Azure.Identity/README.md#defaultazurecredential), check the logs to verify that the credential used is the one you expected. To enable logging, see the [Enable client logging](#enable-client-logging) section.
 1. The permissions may take up to 30 minutes to propagate. If the permissions were granted recently, retry after some time.
@@ -91,30 +72,29 @@ If there are no throttling errors, then consider increasing the concurrency to u
 To set the concurrency, use the `UploadLogsOptions.MaxConcurrency` property.
 
 ```C# Snippet:UploadWithMaxConcurrency
-    Uri endpoint = new Uri("<data_collection_endpoint_uri>");
-    string ruleId = "<data_collection_rule_id>";
-    string streamName = "<stream_name>";
+var endpoint = new Uri("<data_collection_endpoint_uri>");
+var ruleId = "<data_collection_rule_id>";
+var streamName = "<stream_name>";
 
-    var credential = new DefaultAzureCredential();
-    LogsIngestionClient client = new(endpoint, credential);
+var credential = new DefaultAzureCredential();
+LogsIngestionClient client = new(endpoint, credential);
 
-    DateTimeOffset currentTime = DateTimeOffset.UtcNow;
+DateTimeOffset currentTime = DateTimeOffset.UtcNow;
 
-    var entries = new List<Object>();
-    for (int i = 0; i < 100; i++)
-    {
-        entries.Add(
-            new {
-                Time = currentTime,
-                Computer = "Computer" + i.ToString(),
-                AdditionalContext = i
-            }
-        );
-    }
-    // Set concurrency in LogsUploadOptions
-    LogsUploadOptions options = new LogsUploadOptions();
-    options.MaxConcurrency = 10;
+var entries = new List<object>();
+for (int i = 0; i < 100; i++)
+{
+    entries.Add(
+        new {
+            Time = currentTime,
+            Computer = "Computer" + i.ToString(),
+            AdditionalContext = i
+        }
+    );
+}
+// Set concurrency in LogsUploadOptions
+LogsUploadOptions options = new LogsUploadOptions(MaxConcurreny = 10);
 
-    // Upload our logs
-    Response response = await client.UploadAsync(ruleId, streamName, entries, options).ConfigureAwait(false);
+// Upload our logs
+Response response = await client.Upload(ruleId, streamName, entries, options);
 ```
