@@ -19,11 +19,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="processServerId"> The Process Server Id. </param>
         /// <param name="retentionDrive"> The retention drive to use on the MT. </param>
         /// <param name="profileId"> The Policy Id. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="masterTargetId"/>, <paramref name="processServerId"/>, <paramref name="retentionDrive"/> or <paramref name="profileId"/> is null. </exception>
-        public InMageReprotectContent(string masterTargetId, string processServerId, string retentionDrive, string profileId)
+        /// <exception cref="ArgumentNullException"> <paramref name="masterTargetId"/>, <paramref name="retentionDrive"/> or <paramref name="profileId"/> is null. </exception>
+        public InMageReprotectContent(string masterTargetId, Guid processServerId, string retentionDrive, string profileId)
         {
             Argument.AssertNotNull(masterTargetId, nameof(masterTargetId));
-            Argument.AssertNotNull(processServerId, nameof(processServerId));
             Argument.AssertNotNull(retentionDrive, nameof(retentionDrive));
             Argument.AssertNotNull(profileId, nameof(profileId));
 
@@ -38,7 +37,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <summary> The Master Target Id. </summary>
         public string MasterTargetId { get; }
         /// <summary> The Process Server Id. </summary>
-        public string ProcessServerId { get; }
+        public Guid ProcessServerId { get; }
         /// <summary> The retention drive to use on the MT. </summary>
         public string RetentionDrive { get; }
         /// <summary> The CS account Id. </summary>

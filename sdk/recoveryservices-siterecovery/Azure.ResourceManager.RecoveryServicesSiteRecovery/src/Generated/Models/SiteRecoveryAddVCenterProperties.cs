@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Net;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
@@ -22,7 +23,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <summary> The IP address of the vCenter to be discovered. </summary>
         public IPAddress IPAddress { get; set; }
         /// <summary> The process server Id from where the discovery is orchestrated. </summary>
-        public string ProcessServerId { get; set; }
+        public Guid? ProcessServerId { get; set; }
         /// <summary> The port number for discovery. </summary>
         public string Port { get; set; }
         /// <summary> The account Id which has privileges to discover the vCenter. </summary>

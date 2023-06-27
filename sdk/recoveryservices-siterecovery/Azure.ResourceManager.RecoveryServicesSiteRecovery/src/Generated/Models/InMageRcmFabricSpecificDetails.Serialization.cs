@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Optional<ResourceIdentifier> vmwareSiteId = default;
             Optional<ResourceIdentifier> physicalSiteId = default;
             Optional<string> serviceEndpoint = default;
-            Optional<string> serviceResourceId = default;
+            Optional<ResourceIdentifier> serviceResourceId = default;
             Optional<string> serviceContainerId = default;
             Optional<Uri> dataPlaneUri = default;
             Optional<Uri> controlPlaneUri = default;
@@ -64,7 +64,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 if (property.NameEquals("serviceResourceId"u8))
                 {
-                    serviceResourceId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    serviceResourceId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("serviceContainerId"u8))

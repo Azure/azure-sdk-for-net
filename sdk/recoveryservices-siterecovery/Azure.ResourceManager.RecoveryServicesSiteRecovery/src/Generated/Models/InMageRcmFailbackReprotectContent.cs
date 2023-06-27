@@ -16,10 +16,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <summary> Initializes a new instance of InMageRcmFailbackReprotectContent. </summary>
         /// <param name="processServerId"> The process server Id. </param>
         /// <param name="policyId"> The Policy Id. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="processServerId"/> or <paramref name="policyId"/> is null. </exception>
-        public InMageRcmFailbackReprotectContent(string processServerId, ResourceIdentifier policyId)
+        /// <exception cref="ArgumentNullException"> <paramref name="policyId"/> is null. </exception>
+        public InMageRcmFailbackReprotectContent(Guid processServerId, ResourceIdentifier policyId)
         {
-            Argument.AssertNotNull(processServerId, nameof(processServerId));
             Argument.AssertNotNull(policyId, nameof(policyId));
 
             ProcessServerId = processServerId;
@@ -28,7 +27,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> The process server Id. </summary>
-        public string ProcessServerId { get; }
+        public Guid ProcessServerId { get; }
         /// <summary> The run as account Id. </summary>
         public string RunAsAccountId { get; set; }
         /// <summary> The Policy Id. </summary>

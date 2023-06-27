@@ -148,9 +148,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Samples
 
             // invoke the operation
             string recoveryPlanName = "RPtest1";
-            SiteRecoveryRecoveryPlanCreateOrUpdateContent content = new SiteRecoveryRecoveryPlanCreateOrUpdateContent(new SiteRecoveryCreateRecoveryPlanProperties(new ResourceIdentifier("/Subscriptions/c183865e-6077-46f2-a3b1-deb0f4f4650a/resourceGroups/resourceGroupPS1/providers/Microsoft.RecoveryServices/vaults/vault1/replicationFabrics/cloud1"), new ResourceIdentifier("Microsoft Azure"), new SiteRecoveryRecoveryPlanGroup[]
+            SiteRecoveryRecoveryPlanCreateOrUpdateContent content = new SiteRecoveryRecoveryPlanCreateOrUpdateContent(new SiteRecoveryCreateRecoveryPlanProperties(new ResourceIdentifier("/Subscriptions/c183865e-6077-46f2-a3b1-deb0f4f4650a/resourceGroups/resourceGroupPS1/providers/Microsoft.RecoveryServices/vaults/vault1/replicationFabrics/cloud1"), new ResourceIdentifier("Microsoft Azure"), new SiteRecoveryPlanGroup[]
             {
-new SiteRecoveryRecoveryPlanGroup(RecoveryPlanGroupType.Boot)
+new SiteRecoveryPlanGroup(RecoveryPlanGroupType.Boot)
 {
 ReplicationProtectedItems =
 {

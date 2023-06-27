@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Optional<ResourceIdentifier> physicalSiteId = default;
             Optional<ResourceIdentifier> migrationSolutionId = default;
             Optional<string> serviceEndpoint = default;
-            Optional<string> serviceResourceId = default;
+            Optional<ResourceIdentifier> serviceResourceId = default;
             Optional<string> serviceContainerId = default;
             Optional<IReadOnlyList<SiteRecoveryProcessServerDetails>> processServers = default;
             string instanceType = default;
@@ -63,7 +63,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 if (property.NameEquals("serviceResourceId"u8))
                 {
-                    serviceResourceId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    serviceResourceId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("serviceContainerId"u8))

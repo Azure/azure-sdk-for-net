@@ -18,12 +18,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="fabricDiscoveryMachineId"> The ARM Id of discovered machine. </param>
         /// <param name="targetResourceGroupId"> The target resource group ARM Id. </param>
         /// <param name="processServerId"> The process server Id. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="fabricDiscoveryMachineId"/>, <paramref name="targetResourceGroupId"/> or <paramref name="processServerId"/> is null. </exception>
-        public InMageRcmEnableProtectionContent(string fabricDiscoveryMachineId, ResourceIdentifier targetResourceGroupId, string processServerId)
+        /// <exception cref="ArgumentNullException"> <paramref name="fabricDiscoveryMachineId"/> or <paramref name="targetResourceGroupId"/> is null. </exception>
+        public InMageRcmEnableProtectionContent(string fabricDiscoveryMachineId, ResourceIdentifier targetResourceGroupId, Guid processServerId)
         {
             Argument.AssertNotNull(fabricDiscoveryMachineId, nameof(fabricDiscoveryMachineId));
             Argument.AssertNotNull(targetResourceGroupId, nameof(targetResourceGroupId));
-            Argument.AssertNotNull(processServerId, nameof(processServerId));
 
             FabricDiscoveryMachineId = fabricDiscoveryMachineId;
             DisksToInclude = new ChangeTrackingList<InMageRcmDiskContent>();
@@ -65,7 +64,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <summary> The run-as account Id. </summary>
         public string RunAsAccountId { get; set; }
         /// <summary> The process server Id. </summary>
-        public string ProcessServerId { get; }
+        public Guid ProcessServerId { get; }
         /// <summary> The multi VM group name. </summary>
         public string MultiVmGroupName { get; set; }
     }

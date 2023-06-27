@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <summary> Recovery plan update properties. </summary>
         internal UpdateRecoveryPlanContentProperties Properties { get; set; }
         /// <summary> The recovery plan groups. </summary>
-        public IList<SiteRecoveryRecoveryPlanGroup> UpdateRecoveryPlanContentGroups
+        public IList<SiteRecoveryPlanGroup> UpdateRecoveryPlanContentGroups
         {
             get
             {

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -22,9 +23,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <summary> The container identifier. </summary>
         public string ContainerName { get; set; }
         /// <summary> The source process server. </summary>
-        public string SourceProcessServerId { get; set; }
+        public Guid? SourceProcessServerId { get; set; }
         /// <summary> The new process server. </summary>
-        public string TargetProcessServerId { get; set; }
+        public Guid? TargetProcessServerId { get; set; }
         /// <summary> The VMS to migrate. </summary>
         public IList<string> VmsToMigrate { get; }
         /// <summary> A value for failover type. It can be systemlevel/serverlevel. </summary>

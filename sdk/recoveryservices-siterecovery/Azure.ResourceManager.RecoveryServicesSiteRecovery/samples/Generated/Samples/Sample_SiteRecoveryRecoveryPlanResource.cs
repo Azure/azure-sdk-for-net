@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Samples
             {
                 UpdateRecoveryPlanContentGroups =
 {
-new SiteRecoveryRecoveryPlanGroup(RecoveryPlanGroupType.Shutdown)
+new SiteRecoveryPlanGroup(RecoveryPlanGroupType.Shutdown)
 {
 ReplicationProtectedItems =
 {
@@ -116,7 +116,7 @@ StartGroupActions =
 EndGroupActions =
 {
 },
-},new SiteRecoveryRecoveryPlanGroup(RecoveryPlanGroupType.Failover)
+},new SiteRecoveryPlanGroup(RecoveryPlanGroupType.Failover)
 {
 ReplicationProtectedItems =
 {
@@ -127,7 +127,7 @@ StartGroupActions =
 EndGroupActions =
 {
 },
-},new SiteRecoveryRecoveryPlanGroup(RecoveryPlanGroupType.Boot)
+},new SiteRecoveryPlanGroup(RecoveryPlanGroupType.Boot)
 {
 ReplicationProtectedItems =
 {
@@ -143,7 +143,7 @@ StartGroupActions =
 EndGroupActions =
 {
 },
-},new SiteRecoveryRecoveryPlanGroup(RecoveryPlanGroupType.Boot)
+},new SiteRecoveryPlanGroup(RecoveryPlanGroupType.Boot)
 {
 ReplicationProtectedItems =
 {

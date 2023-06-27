@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Samples
                 {
                     FriendlyName = "esx-78",
                     IPAddress = IPAddress.Parse("inmtest78"),
-                    ProcessServerId = "5A720CAB-39CB-F445-BD1662B0B33164B5",
+                    ProcessServerId = Guid.Parse("5A720CAB-39CB-F445-BD1662B0B33164B5"),
                     Port = "443",
                     RunAsAccountId = "2",
                 },

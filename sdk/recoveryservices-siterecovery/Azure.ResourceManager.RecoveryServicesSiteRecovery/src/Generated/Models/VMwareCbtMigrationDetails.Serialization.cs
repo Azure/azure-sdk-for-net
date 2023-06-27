@@ -20,15 +20,15 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<string> vmwareMachineId = default;
+            Optional<ResourceIdentifier> vmwareMachineId = default;
             Optional<string> osType = default;
             Optional<string> osName = default;
             Optional<string> firmwareType = default;
             Optional<string> targetGeneration = default;
             Optional<string> licenseType = default;
             Optional<string> sqlServerLicenseType = default;
-            Optional<string> dataMoverRunAsAccountId = default;
-            Optional<string> snapshotRunAsAccountId = default;
+            Optional<ResourceIdentifier> dataMoverRunAsAccountId = default;
+            Optional<ResourceIdentifier> snapshotRunAsAccountId = default;
             Optional<ResourceIdentifier> storageAccountId = default;
             Optional<string> targetVmName = default;
             Optional<string> targetVmSize = default;
@@ -67,7 +67,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 if (property.NameEquals("vmwareMachineId"u8))
                 {
-                    vmwareMachineId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    vmwareMachineId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("osType"u8))
@@ -102,12 +106,20 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 if (property.NameEquals("dataMoverRunAsAccountId"u8))
                 {
-                    dataMoverRunAsAccountId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    dataMoverRunAsAccountId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("snapshotRunAsAccountId"u8))
                 {
-                    snapshotRunAsAccountId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    snapshotRunAsAccountId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("storageAccountId"u8))

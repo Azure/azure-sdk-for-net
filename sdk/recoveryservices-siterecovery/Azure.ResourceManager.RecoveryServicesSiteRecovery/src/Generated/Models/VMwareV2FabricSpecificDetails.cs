@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="serviceResourceId"> The service resource Id. </param>
         /// <param name="serviceContainerId"> The service container Id. </param>
         /// <param name="processServers"> The list of process servers. </param>
-        internal VMwareV2FabricSpecificDetails(string instanceType, ResourceIdentifier vmwareSiteId, ResourceIdentifier physicalSiteId, ResourceIdentifier migrationSolutionId, string serviceEndpoint, string serviceResourceId, string serviceContainerId, IReadOnlyList<SiteRecoveryProcessServerDetails> processServers) : base(instanceType)
+        internal VMwareV2FabricSpecificDetails(string instanceType, ResourceIdentifier vmwareSiteId, ResourceIdentifier physicalSiteId, ResourceIdentifier migrationSolutionId, string serviceEndpoint, ResourceIdentifier serviceResourceId, string serviceContainerId, IReadOnlyList<SiteRecoveryProcessServerDetails> processServers) : base(instanceType)
         {
             VMwareSiteId = vmwareSiteId;
             PhysicalSiteId = physicalSiteId;
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <summary> The service endpoint. </summary>
         public string ServiceEndpoint { get; }
         /// <summary> The service resource Id. </summary>
-        public string ServiceResourceId { get; }
+        public ResourceIdentifier ServiceResourceId { get; }
         /// <summary> The service container Id. </summary>
         public string ServiceContainerId { get; }
         /// <summary> The list of process servers. </summary>

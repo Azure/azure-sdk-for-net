@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Optional<string> internalId = default;
             Optional<DateTimeOffset> lastHeartbeat = default;
             Optional<string> discoveryStatus = default;
-            Optional<string> processServerId = default;
+            Optional<Guid> processServerId = default;
             Optional<IPAddress> ipAddress = default;
             Optional<string> infrastructureId = default;
             Optional<string> port = default;
@@ -60,7 +60,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 if (property.NameEquals("processServerId"u8))
                 {
-                    processServerId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    processServerId = property.Value.GetGuid();
                     continue;
                 }
                 if (property.NameEquals("ipAddress"u8))
@@ -107,7 +111,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     continue;
                 }
             }
-            return new SiteRecoveryVCenterProperties(friendlyName.Value, internalId.Value, Optional.ToNullable(lastHeartbeat), discoveryStatus.Value, processServerId.Value, ipAddress.Value, infrastructureId.Value, port.Value, runAsAccountId.Value, fabricArmResourceName.Value, Optional.ToList(healthErrors));
+            return new SiteRecoveryVCenterProperties(friendlyName.Value, internalId.Value, Optional.ToNullable(lastHeartbeat), discoveryStatus.Value, Optional.ToNullable(processServerId), ipAddress.Value, infrastructureId.Value, port.Value, runAsAccountId.Value, fabricArmResourceName.Value, Optional.ToList(healthErrors));
         }
     }
 }

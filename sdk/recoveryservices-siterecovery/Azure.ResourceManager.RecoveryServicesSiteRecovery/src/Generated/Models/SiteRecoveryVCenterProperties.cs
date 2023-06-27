@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="runAsAccountId"> The account Id which has privileges to discover the vCenter. </param>
         /// <param name="fabricArmResourceName"> The ARM resource name of the fabric containing this VCenter. </param>
         /// <param name="healthErrors"> The health errors for this VCenter. </param>
-        internal SiteRecoveryVCenterProperties(string friendlyName, string internalId, DateTimeOffset? lastHeartbeatReceivedOn, string discoveryStatus, string processServerId, IPAddress ipAddress, string infrastructureId, string port, string runAsAccountId, string fabricArmResourceName, IReadOnlyList<SiteRecoveryHealthError> healthErrors)
+        internal SiteRecoveryVCenterProperties(string friendlyName, string internalId, DateTimeOffset? lastHeartbeatReceivedOn, string discoveryStatus, Guid? processServerId, IPAddress ipAddress, string infrastructureId, string port, string runAsAccountId, string fabricArmResourceName, IReadOnlyList<SiteRecoveryHealthError> healthErrors)
         {
             FriendlyName = friendlyName;
             InternalId = internalId;
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <summary> The VCenter discovery status. </summary>
         public string DiscoveryStatus { get; }
         /// <summary> The process server Id. </summary>
-        public string ProcessServerId { get; }
+        public Guid? ProcessServerId { get; }
         /// <summary> The IP address of the vCenter. </summary>
         public IPAddress IPAddress { get; }
         /// <summary> The infrastructure Id of vCenter. </summary>

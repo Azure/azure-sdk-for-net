@@ -23,12 +23,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             if (Optional.IsDefined(SourceProcessServerId))
             {
                 writer.WritePropertyName("sourceProcessServerId"u8);
-                writer.WriteStringValue(SourceProcessServerId);
+                writer.WriteStringValue(SourceProcessServerId.Value);
             }
             if (Optional.IsDefined(TargetProcessServerId))
             {
                 writer.WritePropertyName("targetProcessServerId"u8);
-                writer.WriteStringValue(TargetProcessServerId);
+                writer.WriteStringValue(TargetProcessServerId.Value);
             }
             if (Optional.IsCollectionDefined(VmsToMigrate))
             {

@@ -11,11 +11,11 @@ using Azure.Core;
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     /// <summary> Recovery plan group details. </summary>
-    public partial class SiteRecoveryRecoveryPlanGroup
+    public partial class SiteRecoveryPlanGroup
     {
-        /// <summary> Initializes a new instance of SiteRecoveryRecoveryPlanGroup. </summary>
+        /// <summary> Initializes a new instance of SiteRecoveryPlanGroup. </summary>
         /// <param name="groupType"> The group type. </param>
-        public SiteRecoveryRecoveryPlanGroup(RecoveryPlanGroupType groupType)
+        public SiteRecoveryPlanGroup(RecoveryPlanGroupType groupType)
         {
             GroupType = groupType;
             ReplicationProtectedItems = new ChangeTrackingList<RecoveryPlanProtectedItem>();
@@ -23,12 +23,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             EndGroupActions = new ChangeTrackingList<RecoveryPlanAction>();
         }
 
-        /// <summary> Initializes a new instance of SiteRecoveryRecoveryPlanGroup. </summary>
+        /// <summary> Initializes a new instance of SiteRecoveryPlanGroup. </summary>
         /// <param name="groupType"> The group type. </param>
         /// <param name="replicationProtectedItems"> The list of protected items. </param>
         /// <param name="startGroupActions"> The start group actions. </param>
         /// <param name="endGroupActions"> The end group actions. </param>
-        internal SiteRecoveryRecoveryPlanGroup(RecoveryPlanGroupType groupType, IList<RecoveryPlanProtectedItem> replicationProtectedItems, IList<RecoveryPlanAction> startGroupActions, IList<RecoveryPlanAction> endGroupActions)
+        internal SiteRecoveryPlanGroup(RecoveryPlanGroupType groupType, IList<RecoveryPlanProtectedItem> replicationProtectedItems, IList<RecoveryPlanAction> startGroupActions, IList<RecoveryPlanAction> endGroupActions)
         {
             GroupType = groupType;
             ReplicationProtectedItems = replicationProtectedItems;

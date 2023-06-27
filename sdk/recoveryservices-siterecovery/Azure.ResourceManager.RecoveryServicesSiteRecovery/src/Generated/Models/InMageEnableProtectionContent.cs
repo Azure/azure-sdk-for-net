@@ -20,11 +20,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="retentionDrive"> The retention drive to use on the MT. </param>
         /// <param name="multiVmGroupId"> The multi VM group Id. </param>
         /// <param name="multiVmGroupName"> The multi VM group name. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="masterTargetId"/>, <paramref name="processServerId"/>, <paramref name="retentionDrive"/>, <paramref name="multiVmGroupId"/> or <paramref name="multiVmGroupName"/> is null. </exception>
-        public InMageEnableProtectionContent(string masterTargetId, string processServerId, string retentionDrive, string multiVmGroupId, string multiVmGroupName)
+        /// <exception cref="ArgumentNullException"> <paramref name="masterTargetId"/>, <paramref name="retentionDrive"/>, <paramref name="multiVmGroupId"/> or <paramref name="multiVmGroupName"/> is null. </exception>
+        public InMageEnableProtectionContent(string masterTargetId, Guid processServerId, string retentionDrive, string multiVmGroupId, string multiVmGroupName)
         {
             Argument.AssertNotNull(masterTargetId, nameof(masterTargetId));
-            Argument.AssertNotNull(processServerId, nameof(processServerId));
             Argument.AssertNotNull(retentionDrive, nameof(retentionDrive));
             Argument.AssertNotNull(multiVmGroupId, nameof(multiVmGroupId));
             Argument.AssertNotNull(multiVmGroupName, nameof(multiVmGroupName));
@@ -43,7 +42,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <summary> The Master Target Id. </summary>
         public string MasterTargetId { get; }
         /// <summary> The Process Server Id. </summary>
-        public string ProcessServerId { get; }
+        public Guid ProcessServerId { get; }
         /// <summary> The retention drive to use on the MT. </summary>
         public string RetentionDrive { get; }
         /// <summary> The CS account Id. </summary>

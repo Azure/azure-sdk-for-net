@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             if (Optional.IsDefined(ProcessServerId))
             {
                 writer.WritePropertyName("processServerId"u8);
-                writer.WriteStringValue(ProcessServerId);
+                writer.WriteStringValue(ProcessServerId.Value);
             }
             if (Optional.IsDefined(Port))
             {

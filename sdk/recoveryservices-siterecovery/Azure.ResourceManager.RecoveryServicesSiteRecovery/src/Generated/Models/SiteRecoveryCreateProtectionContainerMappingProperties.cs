@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> The target unique protection container name. </summary>
-        public string TargetProtectionContainerId { get; set; }
+        public ResourceIdentifier TargetProtectionContainerId { get; set; }
         /// <summary> Applicable policy. </summary>
         public ResourceIdentifier PolicyId { get; set; }
         /// <summary>

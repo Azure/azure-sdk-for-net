@@ -9,6 +9,7 @@ csharp: true
 library-name: RecoveryServicesSiteRecovery
 namespace: Azure.ResourceManager.RecoveryServicesSiteRecovery
 require: https://github.com/Azure/azure-rest-api-specs/blob/95fb710c0025b325306898a3210333eaaf5d5e62/specification/recoveryservicessiterecovery/resource-manager/readme.md
+#tag: package-2023-02
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 skip-csproj: true
@@ -64,6 +65,7 @@ rename-mapping:
   CreateProtectionContainerMappingInputProperties: SiteRecoveryCreateProtectionContainerMappingProperties
   ComputeSizeErrorDetails: SiteRecoveryComputeSizeErrorDetails
   CreatePolicyInputProperties: SiteRecoveryCreatePolicyProperties
+  CreateProtectionContainerMappingInputProperties.targetProtectionContainerId: -|arm-id
   CreateProtectionIntentProperties: SiteRecoveryCreateProtectionIntentProperties
   CreateProtectionIntentProviderSpecificDetails: SiteRecoveryCreateProtectionIntentProviderDetail
   CreateRecoveryPlanInputProperties: SiteRecoveryCreateRecoveryPlanProperties
@@ -106,6 +108,7 @@ rename-mapping:
   HyperVReplicaAzureReprotectInput.hvHostVmId: HyperVHostVmId
   HyperVReplicaAzureReprotectInput.vHDId: VhdId
   HyperVVirtualMachineDetails: HyperVVmDetails
+  InMageAzureV2EnableProtectionInput.targetAzureSubnetId: -|arm-id
   InMageAzureV2DiskInputDetails: InMageAzureV2DiskDetails
   InMageAzureV2ProtectedDiskDetails.psDataInMegaBytes: PSDataInMegaBytes
   InMageAzureV2ProtectedDiskDetails.resyncLastDataTransferTimeUTC: ResyncLastDataTransferOn
@@ -115,6 +118,7 @@ rename-mapping:
   InMageProtectedDiskDetails.psDataInMB: PSDataInMB
   InMageRcmDiscoveredProtectedVmDetails.createdTimestamp: CreatedOn
   InMageRcmDiscoveredProtectedVmDetails.updatedTimestamp: UpdatedOn
+  InMageRcmFabricSpecificDetails.serviceResourceId: -|arm-id
   InMageRcmFailbackDiscoveredProtectedVmDetails.createdTimestamp: CreatedOn
   InMageRcmFailbackDiscoveredProtectedVmDetails.updatedTimestamp: UpdatedOn
   InMageRcmFailbackDiscoveredProtectedVmDetails.lastDiscoveryTimeInUtc: LastDiscoveredOn
@@ -203,7 +207,7 @@ rename-mapping:
   RecoveryPlanProperties: SiteRecoveryRecoveryPlanProperties
   RecoveryPlanA2AInput: RecoveryPlanA2AContent
   RecoveryPlanAutomationRunbookActionDetails.runbookId: -|arm-id
-  RecoveryPlanGroup: SiteRecoveryRecoveryPlanGroup
+  RecoveryPlanGroup: SiteRecoveryPlanGroup
   RecoveryPoint: SiteRecoveryPoint
   RecoveryPointCollection: SiteRecoveryPointListResult
   RecoveryPointProperties: SiteRecoveryPointProperties
@@ -292,7 +296,12 @@ rename-mapping:
   VMNicDetails.enableAcceleratedNetworkingOnTfo: IsAcceleratedNetworkingOnTfoEnabled
   VMNicDetails.reuseExistingNic: IsReuseExistingNicAllowed
   VMNicDetails.tfoReuseExistingNic: IsTfoReuseExistingNicAllowed
-  
+  VMwareCbtEnableMigrationInput.dataMoverRunAsAccountId: -|arm-id 
+  VMwareCbtEnableMigrationInput.snapshotRunAsAccountId: -|arm-id 
+  VMwareCbtMigrationDetails.dataMoverRunAsAccountId: -|arm-id 
+  VMwareCbtMigrationDetails.snapshotRunAsAccountId: -|arm-id 
+  VMwareV2FabricSpecificDetails.serviceResourceId: -|arm-id
+
 format-by-name-rules:
   'tenantId': 'uuid'
   'ETag': 'etag'
@@ -324,6 +333,8 @@ format-by-name-rules:
   'VMwareSiteId': 'arm-id'
   'PhysicalSiteId': 'arm-id'
   'MigrationSolutionId': 'arm-id'
+  'VMwareMachineId': 'arm-id'
+  '*ProcessServerId': 'uuid'
 
 rename-rules:
   CPU: Cpu

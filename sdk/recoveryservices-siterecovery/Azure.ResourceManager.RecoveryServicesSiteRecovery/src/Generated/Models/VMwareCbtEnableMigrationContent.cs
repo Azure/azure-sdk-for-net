@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="targetResourceGroupId"> The target resource group ARM Id. </param>
         /// <param name="targetNetworkId"> The target network ARM Id. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="vmwareMachineId"/>, <paramref name="disksToInclude"/>, <paramref name="dataMoverRunAsAccountId"/>, <paramref name="snapshotRunAsAccountId"/>, <paramref name="targetResourceGroupId"/> or <paramref name="targetNetworkId"/> is null. </exception>
-        public VMwareCbtEnableMigrationContent(string vmwareMachineId, IEnumerable<VMwareCbtDiskContent> disksToInclude, string dataMoverRunAsAccountId, string snapshotRunAsAccountId, ResourceIdentifier targetResourceGroupId, ResourceIdentifier targetNetworkId)
+        public VMwareCbtEnableMigrationContent(ResourceIdentifier vmwareMachineId, IEnumerable<VMwareCbtDiskContent> disksToInclude, ResourceIdentifier dataMoverRunAsAccountId, ResourceIdentifier snapshotRunAsAccountId, ResourceIdentifier targetResourceGroupId, ResourceIdentifier targetNetworkId)
         {
             Argument.AssertNotNull(vmwareMachineId, nameof(vmwareMachineId));
             Argument.AssertNotNull(disksToInclude, nameof(disksToInclude));
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> The ARM Id of the VM discovered in VMware. </summary>
-        public string VMwareMachineId { get; }
+        public ResourceIdentifier VMwareMachineId { get; }
         /// <summary> The disks to include list. </summary>
         public IList<VMwareCbtDiskContent> DisksToInclude { get; }
         /// <summary> License type. </summary>
@@ -56,9 +56,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <summary> A value indicating whether bulk SQL RP registration to be done. </summary>
         public string PerformSqlBulkRegistration { get; set; }
         /// <summary> The data mover run as account Id. </summary>
-        public string DataMoverRunAsAccountId { get; }
+        public ResourceIdentifier DataMoverRunAsAccountId { get; }
         /// <summary> The snapshot run as account Id. </summary>
-        public string SnapshotRunAsAccountId { get; }
+        public ResourceIdentifier SnapshotRunAsAccountId { get; }
         /// <summary> The target VM name. </summary>
         public string TargetVmName { get; set; }
         /// <summary> The target VM size. </summary>

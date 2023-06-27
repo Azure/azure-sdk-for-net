@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -23,7 +24,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <summary> The Master target Id. </summary>
         public string MasterTargetId { get; set; }
         /// <summary> The Process Server Id. </summary>
-        public string ProcessServerId { get; set; }
+        public Guid? ProcessServerId { get; set; }
         /// <summary> The storage account id. </summary>
         public ResourceIdentifier StorageAccountId { get; set; }
         /// <summary> The CS account Id. </summary>

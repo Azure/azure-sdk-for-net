@@ -139,8 +139,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Samples
                 Properties = new FailoverProcessServerProperties()
                 {
                     ContainerName = "cloud_1f3c15af-2256-4568-9e06-e1ef4f728f75",
-                    SourceProcessServerId = "AFA0EC54-1894-4E44-9CAB02DB8854B117",
-                    TargetProcessServerId = "5D3ED340-85AE-C646-B338641E015DA405",
+                    SourceProcessServerId = Guid.Parse("AFA0EC54-1894-4E44-9CAB02DB8854B117"),
+                    TargetProcessServerId = Guid.Parse("5D3ED340-85AE-C646-B338641E015DA405"),
                     VmsToMigrate =
 {
 "Vm1","Vm2"

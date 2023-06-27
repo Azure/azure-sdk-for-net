@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="recoveryFabricId"> The recovery fabric Id. </param>
         /// <param name="groups"> The recovery plan groups. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="primaryFabricId"/>, <paramref name="recoveryFabricId"/> or <paramref name="groups"/> is null. </exception>
-        public SiteRecoveryCreateRecoveryPlanProperties(ResourceIdentifier primaryFabricId, ResourceIdentifier recoveryFabricId, IEnumerable<SiteRecoveryRecoveryPlanGroup> groups)
+        public SiteRecoveryCreateRecoveryPlanProperties(ResourceIdentifier primaryFabricId, ResourceIdentifier recoveryFabricId, IEnumerable<SiteRecoveryPlanGroup> groups)
         {
             Argument.AssertNotNull(primaryFabricId, nameof(primaryFabricId));
             Argument.AssertNotNull(recoveryFabricId, nameof(recoveryFabricId));
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <summary> The failover deployment model. </summary>
         public FailoverDeploymentModel? FailoverDeploymentModel { get; set; }
         /// <summary> The recovery plan groups. </summary>
-        public IList<SiteRecoveryRecoveryPlanGroup> Groups { get; }
+        public IList<SiteRecoveryPlanGroup> Groups { get; }
         /// <summary>
         /// The provider specific input.
         /// Please note <see cref="RecoveryPlanProviderSpecificContent"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.

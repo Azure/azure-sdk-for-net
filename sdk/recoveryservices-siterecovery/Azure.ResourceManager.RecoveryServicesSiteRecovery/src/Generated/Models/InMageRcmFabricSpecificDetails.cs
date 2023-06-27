@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="marsAgents"> The list of Mars agents. </param>
         /// <param name="dras"> The list of DRAs. </param>
         /// <param name="agentDetails"> The list of agent details. </param>
-        internal InMageRcmFabricSpecificDetails(string instanceType, ResourceIdentifier vmwareSiteId, ResourceIdentifier physicalSiteId, string serviceEndpoint, string serviceResourceId, string serviceContainerId, Uri dataPlaneUri, Uri controlPlaneUri, IdentityProviderDetails sourceAgentIdentityDetails, IReadOnlyList<SiteRecoveryProcessServerDetails> processServers, IReadOnlyList<RcmProxyDetails> rcmProxies, IReadOnlyList<PushInstallerDetails> pushInstallers, IReadOnlyList<ReplicationAgentDetails> replicationAgents, IReadOnlyList<ReprotectAgentDetails> reprotectAgents, IReadOnlyList<MarsAgentDetails> marsAgents, IReadOnlyList<SiteRecoveryDraDetails> dras, IReadOnlyList<SiteRecoveryAgentDetails> agentDetails) : base(instanceType)
+        internal InMageRcmFabricSpecificDetails(string instanceType, ResourceIdentifier vmwareSiteId, ResourceIdentifier physicalSiteId, string serviceEndpoint, ResourceIdentifier serviceResourceId, string serviceContainerId, Uri dataPlaneUri, Uri controlPlaneUri, IdentityProviderDetails sourceAgentIdentityDetails, IReadOnlyList<SiteRecoveryProcessServerDetails> processServers, IReadOnlyList<RcmProxyDetails> rcmProxies, IReadOnlyList<PushInstallerDetails> pushInstallers, IReadOnlyList<ReplicationAgentDetails> replicationAgents, IReadOnlyList<ReprotectAgentDetails> reprotectAgents, IReadOnlyList<MarsAgentDetails> marsAgents, IReadOnlyList<SiteRecoveryDraDetails> dras, IReadOnlyList<SiteRecoveryAgentDetails> agentDetails) : base(instanceType)
         {
             VMwareSiteId = vmwareSiteId;
             PhysicalSiteId = physicalSiteId;
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <summary> The service endpoint. </summary>
         public string ServiceEndpoint { get; }
         /// <summary> The service resource Id. </summary>
-        public string ServiceResourceId { get; }
+        public ResourceIdentifier ServiceResourceId { get; }
         /// <summary> The service container Id. </summary>
         public string ServiceContainerId { get; }
         /// <summary> The data plane Uri. </summary>

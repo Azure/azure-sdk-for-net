@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Optional<CurrentScenarioDetails> currentScenario = default;
             Optional<string> currentScenarioStatus = default;
             Optional<string> currentScenarioStatusDescription = default;
-            Optional<IReadOnlyList<SiteRecoveryRecoveryPlanGroup>> groups = default;
+            Optional<IReadOnlyList<SiteRecoveryPlanGroup>> groups = default;
             Optional<IReadOnlyList<RecoveryPlanProviderSpecificDetails>> providerSpecificDetails = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -156,10 +156,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    List<SiteRecoveryRecoveryPlanGroup> array = new List<SiteRecoveryRecoveryPlanGroup>();
+                    List<SiteRecoveryPlanGroup> array = new List<SiteRecoveryPlanGroup>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SiteRecoveryRecoveryPlanGroup.DeserializeSiteRecoveryRecoveryPlanGroup(item));
+                        array.Add(SiteRecoveryPlanGroup.DeserializeSiteRecoveryPlanGroup(item));
                     }
                     groups = array;
                     continue;

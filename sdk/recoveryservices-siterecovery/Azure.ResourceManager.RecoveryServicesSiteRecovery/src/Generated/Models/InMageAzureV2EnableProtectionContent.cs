@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -27,7 +28,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <summary> The Master target Id. </summary>
         public string MasterTargetId { get; set; }
         /// <summary> The Process Server Id. </summary>
-        public string ProcessServerId { get; set; }
+        public Guid? ProcessServerId { get; set; }
         /// <summary> The storage account Id. </summary>
         public ResourceIdentifier StorageAccountId { get; set; }
         /// <summary> The CS account Id. </summary>
@@ -41,7 +42,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <summary> The selected target Azure network Id. </summary>
         public ResourceIdentifier TargetAzureNetworkId { get; set; }
         /// <summary> The selected target Azure subnet Id. </summary>
-        public string TargetAzureSubnetId { get; set; }
+        public ResourceIdentifier TargetAzureSubnetId { get; set; }
         /// <summary> The selected option to enable RDP\SSH on target VM after failover. String value of SrsDataContract.EnableRDPOnTargetOption enum. </summary>
         public string EnableRdpOnTargetOption { get; set; }
         /// <summary> The target azure VM Name. </summary>

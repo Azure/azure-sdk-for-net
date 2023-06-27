@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         {
             ReplicationProviders = new ChangeTrackingList<string>();
             AllowedOperations = new ChangeTrackingList<string>();
-            Groups = new ChangeTrackingList<SiteRecoveryRecoveryPlanGroup>();
+            Groups = new ChangeTrackingList<SiteRecoveryPlanGroup>();
             ProviderSpecificDetails = new ChangeTrackingList<RecoveryPlanProviderSpecificDetails>();
         }
 
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// Please note <see cref="RecoveryPlanProviderSpecificDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="RecoveryPlanA2ADetails"/>.
         /// </param>
-        internal SiteRecoveryRecoveryPlanProperties(string friendlyName, ResourceIdentifier primaryFabricId, string primaryFabricFriendlyName, ResourceIdentifier recoveryFabricId, string recoveryFabricFriendlyName, string failoverDeploymentModel, IReadOnlyList<string> replicationProviders, IReadOnlyList<string> allowedOperations, DateTimeOffset? lastPlannedFailoverOn, DateTimeOffset? lastUnplannedFailoverOn, DateTimeOffset? lastTestFailoverOn, CurrentScenarioDetails currentScenario, string currentScenarioStatus, string currentScenarioStatusDescription, IReadOnlyList<SiteRecoveryRecoveryPlanGroup> groups, IReadOnlyList<RecoveryPlanProviderSpecificDetails> providerSpecificDetails)
+        internal SiteRecoveryRecoveryPlanProperties(string friendlyName, ResourceIdentifier primaryFabricId, string primaryFabricFriendlyName, ResourceIdentifier recoveryFabricId, string recoveryFabricFriendlyName, string failoverDeploymentModel, IReadOnlyList<string> replicationProviders, IReadOnlyList<string> allowedOperations, DateTimeOffset? lastPlannedFailoverOn, DateTimeOffset? lastUnplannedFailoverOn, DateTimeOffset? lastTestFailoverOn, CurrentScenarioDetails currentScenario, string currentScenarioStatus, string currentScenarioStatusDescription, IReadOnlyList<SiteRecoveryPlanGroup> groups, IReadOnlyList<RecoveryPlanProviderSpecificDetails> providerSpecificDetails)
         {
             FriendlyName = friendlyName;
             PrimaryFabricId = primaryFabricId;
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <summary> The recovery plan status description. </summary>
         public string CurrentScenarioStatusDescription { get; }
         /// <summary> The recovery plan groups. </summary>
-        public IReadOnlyList<SiteRecoveryRecoveryPlanGroup> Groups { get; }
+        public IReadOnlyList<SiteRecoveryPlanGroup> Groups { get; }
         /// <summary>
         /// The provider id and provider specific details.
         /// Please note <see cref="RecoveryPlanProviderSpecificDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
