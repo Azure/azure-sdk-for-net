@@ -729,11 +729,23 @@ namespace Azure.Core.Tests
             AreEqualJson("""{"bar": "b", "foo": 2}""", actual);
         }
 
-        private static void AreEqualJson(string expected, string actual)
+        [Test]
+        public void CanWritePatchChangeRootMultipleChangesSameProperty()
         {
-            JsonDocument doc = JsonDocument.Parse(expected);
-            BinaryData buffer = MutableJsonDocumentTests.GetWriteToBuffer(doc);
-            Assert.AreEqual(buffer.ToString(), actual);
+            string json = """{"foo": 1, "bar": "a"}""";
+            MutableJsonDocument mdoc = MutableJsonDocument.Parse(json);
+
+            mdoc.RootElement.GetProperty("foo").Set(2);
+            mdoc.RootElement.GetProperty("foo").Set(3);
+
+            using Stream stream = new MemoryStream();
+            mdoc.WriteTo(stream, 'P');
+            stream.Flush();
+            stream.Position = 0;
+
+            string actual = BinaryData.FromStream(stream).ToString();
+
+            AreEqualJson("""{"foo": 3}""", actual);
         }
 
         [Test]
@@ -763,7 +775,46 @@ namespace Azure.Core.Tests
         [Test]
         public void CanWritePatchInterleaveChildObjectChanges()
         {
-            throw new NotImplementedException();
+            string json = """
+                {
+                    "a": {
+                        "aa": 1,
+                        "ab": 2
+                    },
+                    "b": {
+                        "ba": "1",
+                        "bb": "2"
+                    }
+                }
+                """;
+            MutableJsonDocument mdoc = MutableJsonDocument.Parse(json);
+
+            mdoc.RootElement.GetProperty("a").GetProperty("aa").Set(3);
+            mdoc.RootElement.GetProperty("b").GetProperty("ba").Set("3");
+            mdoc.RootElement.GetProperty("a").GetProperty("ab").Set(4);
+            mdoc.RootElement.GetProperty("b").GetProperty("ba").Set("4");
+            mdoc.RootElement.GetProperty("a").GetProperty("aa").Set(5);
+
+            string expected = """
+                {
+                    "a": {
+                        "aa": 5,
+                        "ab": 4
+                    },
+                    "b": {
+                        "ba": "4"
+                    }
+                }
+                """;
+
+            using Stream stream = new MemoryStream();
+            mdoc.WriteTo(stream, 'P');
+            stream.Flush();
+            stream.Position = 0;
+
+            string actual = BinaryData.FromStream(stream).ToString();
+
+            AreEqualJson(expected, actual);
         }
 
         [Test]
@@ -811,6 +862,13 @@ namespace Azure.Core.Tests
         #endregion
 
         #region Helpers
+        private static void AreEqualJson(string expected, string actual)
+        {
+            JsonDocument doc = JsonDocument.Parse(expected);
+            BinaryData buffer = MutableJsonDocumentTests.GetWriteToBuffer(doc);
+            Assert.AreEqual(buffer.ToString(), actual);
+        }
+
         public static IEnumerable<dynamic> TestCases()
         {
             yield return """

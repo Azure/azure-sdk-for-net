@@ -158,6 +158,24 @@ namespace Azure.Core.Json
                     {
                         writer.WritePropertyName(pathSegments[0]);
                         change.GetSerializedValue().WriteTo(writer);
+                        continue;
+                    }
+
+                    // TODO: this will break on arrays.
+                    // TODO: this doesn't group changes to the same object
+                    int i = 0;
+                    for (; i < pathSegments.Length - 1; i++)
+                    {
+                        writer.WritePropertyName(pathSegments[i]);
+                        writer.WriteStartObject();
+                    }
+
+                    writer.WritePropertyName(pathSegments[i]);
+                    change.GetSerializedValue().WriteTo(writer);
+
+                    for (i=0; i < pathSegments.Length - 1; i++)
+                    {
+                        writer.WriteEndObject();
                     }
                 }
             }
