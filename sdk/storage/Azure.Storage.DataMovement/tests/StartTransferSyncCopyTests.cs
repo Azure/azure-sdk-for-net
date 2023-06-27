@@ -26,8 +26,8 @@ namespace Azure.Storage.DataMovement.Tests
         internal class VerifyBlockBlobCopyFromUriInfo
         {
             public readonly string SourceLocalPath;
-            public readonly StorageResource SourceResource;
-            public readonly StorageResource DestinationResource;
+            public readonly StorageResourceSingle SourceResource;
+            public readonly StorageResourceSingle DestinationResource;
             public readonly BlockBlobClient DestinationClient;
             public TestEventsRaised testEventsRaised;
             public DataTransfer DataTransfer;
@@ -35,8 +35,8 @@ namespace Azure.Storage.DataMovement.Tests
 
             public VerifyBlockBlobCopyFromUriInfo(
                 string sourceLocalPath,
-                StorageResource sourceResource,
-                StorageResource destinationResource,
+                StorageResourceSingle sourceResource,
+                StorageResourceSingle destinationResource,
                 BlockBlobClient destinationClient,
                 TestEventsRaised eventsRaised,
                 bool completed)
@@ -136,10 +136,10 @@ namespace Azure.Storage.DataMovement.Tests
                     await originalBlob.UploadAsync(originalStream);
                 }
 
-                StorageResource sourceResource = new BlockBlobStorageResource(originalBlob);
+                StorageResourceSingle sourceResource = new BlockBlobStorageResource(originalBlob);
                 // Set up destination client
                 BlockBlobClient destClient = InstrumentClient(container.GetBlockBlobClient(string.Concat(destinationBlobNames[i])));
-                StorageResource destinationResource = new BlockBlobStorageResource(destClient);
+                StorageResourceSingle destinationResource = new BlockBlobStorageResource(destClient);
                 copyBlobInfo.Add(new VerifyBlockBlobCopyFromUriInfo(
                     localSourceFile,
                     sourceResource,
@@ -370,8 +370,8 @@ namespace Azure.Storage.DataMovement.Tests
                 newSourceFile,
                 GetNewBlobName(),
                 size);
-            StorageResource sourceResource = new BlockBlobStorageResource(blockBlobClient);
-            StorageResource destinationResource = new BlockBlobStorageResource(destinationClient);
+            StorageResourceSingle sourceResource = new BlockBlobStorageResource(blockBlobClient);
+            StorageResourceSingle destinationResource = new BlockBlobStorageResource(destinationClient);
             TestEventsRaised testEventsRaised = new TestEventsRaised(options);
 
             TransferManager transferManager = new TransferManager();
@@ -424,8 +424,8 @@ namespace Azure.Storage.DataMovement.Tests
                 newSourceFile,
                 GetNewBlobName(),
                 size);
-            StorageResource sourceResource = new BlockBlobStorageResource(blockBlobClient);
-            StorageResource destinationResource = new BlockBlobStorageResource(destinationClient);
+            StorageResourceSingle sourceResource = new BlockBlobStorageResource(blockBlobClient);
+            StorageResourceSingle destinationResource = new BlockBlobStorageResource(destinationClient);
             TransferManager transferManager = new TransferManager();
 
             // Start transfer and await for completion.
@@ -483,8 +483,8 @@ namespace Azure.Storage.DataMovement.Tests
                 blobName: destinationBlobName,
                 size: size);
 
-            StorageResource sourceResource = new AppendBlobStorageResource(sourceBlob);
-            StorageResource destinationResource = new AppendBlobStorageResource(destinationBlob);
+            StorageResourceSingle sourceResource = new AppendBlobStorageResource(sourceBlob);
+            StorageResourceSingle destinationResource = new AppendBlobStorageResource(destinationBlob);
             TransferManager transferManager = new TransferManager();
 
             // Start transfer and await for completion.
@@ -536,8 +536,8 @@ namespace Azure.Storage.DataMovement.Tests
                 blobName: destinationBlobName,
                 size: size);
 
-            StorageResource sourceResource = new PageBlobStorageResource(sourceClient);
-            StorageResource destinationResource = new PageBlobStorageResource(destinationClient);
+            StorageResourceSingle sourceResource = new PageBlobStorageResource(sourceClient);
+            StorageResourceSingle destinationResource = new PageBlobStorageResource(destinationClient);
             TransferManager transferManager = new TransferManager();
 
             // Start transfer and await for completion.
@@ -584,8 +584,8 @@ namespace Azure.Storage.DataMovement.Tests
             // Create new source block blob.
             string newSourceFile = Path.Combine(testDirectory.DirectoryPath, sourceBlobName);
             BlockBlobClient blockBlobClient = await CreateBlockBlob(containerClient, newSourceFile, sourceBlobName, size);
-            StorageResource sourceResource = new BlockBlobStorageResource(blockBlobClient);
-            StorageResource destinationResource = new BlockBlobStorageResource(destinationClient);
+            StorageResourceSingle sourceResource = new BlockBlobStorageResource(blockBlobClient);
+            StorageResourceSingle destinationResource = new BlockBlobStorageResource(destinationClient);
 
             // Create Transfer Manager with single threaded operation
             TransferManagerOptions managerOptions = new TransferManagerOptions()

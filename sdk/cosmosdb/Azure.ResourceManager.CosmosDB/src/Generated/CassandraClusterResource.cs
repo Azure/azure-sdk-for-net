@@ -404,7 +404,7 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary>
-        /// Invoke a command like nodetool for cassandra maintenance 
+        /// Invoke a command like nodetool for cassandra maintenance
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -442,7 +442,7 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary>
-        /// Invoke a command like nodetool for cassandra maintenance 
+        /// Invoke a command like nodetool for cassandra maintenance
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>

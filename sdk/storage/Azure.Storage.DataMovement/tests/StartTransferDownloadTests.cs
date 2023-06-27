@@ -151,8 +151,8 @@ namespace Azure.Storage.DataMovement.Tests
                     BlobName = blobNames[i]
                 };
                 BlockBlobClient sourceBlobClient = InstrumentClient(new BlockBlobClient(blobUriBuilder.ToUri(), credential, GetOptions(true)));
-                StorageResource sourceResource = new BlockBlobStorageResource(sourceBlobClient);
-                StorageResource destinationResource = new LocalFileStorageResource(downloadedBlobInfo[i].DestinationLocalPath);
+                StorageResourceSingle sourceResource = new BlockBlobStorageResource(sourceBlobClient);
+                StorageResourceSingle destinationResource = new LocalFileStorageResource(downloadedBlobInfo[i].DestinationLocalPath);
 
                 // Act
                 DataTransfer transfer = await transferManager.StartTransferAsync(
@@ -316,8 +316,8 @@ namespace Azure.Storage.DataMovement.Tests
                 CreateMode = StorageResourceCreateMode.Fail,
             };
             TestEventsRaised testEventsRaised = new TestEventsRaised(options);
-            StorageResource sourceResource = new BlockBlobStorageResource(sourceClient);
-            StorageResource destinationResource = new LocalFileStorageResource(destFile);
+            StorageResourceSingle sourceResource = new BlockBlobStorageResource(sourceClient);
+            StorageResourceSingle destinationResource = new LocalFileStorageResource(destFile);
             TransferManager transferManager = new TransferManager();
 
             // Start transfer and await for completion.
@@ -569,8 +569,8 @@ namespace Azure.Storage.DataMovement.Tests
                     BlobName = blobNames[i]
                 };
                 AppendBlobClient sourceBlobClient = InstrumentClient(new AppendBlobClient(blobUriBuilder.ToUri(), credential, GetOptions(true)));
-                StorageResource sourceResource = new AppendBlobStorageResource(sourceBlobClient);
-                StorageResource destinationResource = new LocalFileStorageResource(downloadedBlobInfo[i].DestinationLocalPath);
+                StorageResourceSingle sourceResource = new AppendBlobStorageResource(sourceBlobClient);
+                StorageResourceSingle destinationResource = new LocalFileStorageResource(downloadedBlobInfo[i].DestinationLocalPath);
 
                 // Act
                 DataTransfer transfer = await transferManager.StartTransferAsync(
@@ -724,8 +724,8 @@ namespace Azure.Storage.DataMovement.Tests
                 CreateMode = StorageResourceCreateMode.Fail,
             };
             TestEventsRaised testEventsRaised = new TestEventsRaised(options);
-            StorageResource sourceResource = new AppendBlobStorageResource(sourceClient);
-            StorageResource destinationResource = new LocalFileStorageResource(destFile);
+            StorageResourceSingle sourceResource = new AppendBlobStorageResource(sourceClient);
+            StorageResourceSingle destinationResource = new LocalFileStorageResource(destFile);
             TransferManager transferManager = new TransferManager();
 
             // Start transfer and await for completion.
@@ -773,8 +773,8 @@ namespace Azure.Storage.DataMovement.Tests
             };
             TestEventsRaised testEventsRaised = new TestEventsRaised(options);
 
-            StorageResource sourceResource = new AppendBlobStorageResource(sourceClient);
-            StorageResource destinationResource = new LocalFileStorageResource(destFile);
+            StorageResourceSingle sourceResource = new AppendBlobStorageResource(sourceClient);
+            StorageResourceSingle destinationResource = new LocalFileStorageResource(destFile);
 
             DataTransfer transfer = await transferManager.StartTransferAsync(
                 sourceResource,
@@ -1033,8 +1033,8 @@ namespace Azure.Storage.DataMovement.Tests
                     BlobName = blobNames[i]
                 };
                 PageBlobClient sourceBlobClient = InstrumentClient(new PageBlobClient(blobUriBuilder.ToUri(), credential, GetOptions(true)));
-                StorageResource sourceResource = new PageBlobStorageResource(sourceBlobClient);
-                StorageResource destinationResource = new LocalFileStorageResource(downloadedBlobInfo[i].DestinationLocalPath);
+                StorageResourceSingle sourceResource = new PageBlobStorageResource(sourceBlobClient);
+                StorageResourceSingle destinationResource = new LocalFileStorageResource(downloadedBlobInfo[i].DestinationLocalPath);
 
                 // Act
                 DataTransfer transfer = await TransferManager.StartTransferAsync(
@@ -1184,8 +1184,8 @@ namespace Azure.Storage.DataMovement.Tests
                 CreateMode = StorageResourceCreateMode.Fail,
             };
             TestEventsRaised testEventsRaised = new TestEventsRaised(options);
-            StorageResource sourceResource = new PageBlobStorageResource(sourceClient);
-            StorageResource destinationResource = new LocalFileStorageResource(destFile);
+            StorageResourceSingle sourceResource = new PageBlobStorageResource(sourceClient);
+            StorageResourceSingle destinationResource = new LocalFileStorageResource(destFile);
             TransferManager transferManager = new TransferManager();
 
             // Start transfer and await for completion.
@@ -1378,8 +1378,8 @@ namespace Azure.Storage.DataMovement.Tests
             // Create new source block blob.
             string newSourceFile = Path.Combine(localDirectoryPath, sourceBlobName);
             BlockBlobClient blockBlobClient = await CreateBlockBlob(containerClient, newSourceFile, sourceBlobName, size);
-            StorageResource sourceResource = new BlockBlobStorageResource(blockBlobClient);
-            StorageResource destinationResource = new LocalFileStorageResource(destFile);
+            StorageResourceSingle sourceResource = new BlockBlobStorageResource(blockBlobClient);
+            StorageResourceSingle destinationResource = new LocalFileStorageResource(destFile);
 
             // Create Transfer Manager with single threaded operation
             TransferManagerOptions managerOptions = new TransferManagerOptions()

@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.RecoveryServicesSiteRecovery;
@@ -17,37 +18,37 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> Model factory for models. </summary>
     public static partial class ArmRecoveryServicesSiteRecoveryModelFactory
     {
-        /// <summary> Initializes a new instance of AlertData. </summary>
+        /// <summary> Initializes a new instance of SiteRecoveryAlertData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties"> Alert related data. </param>
         /// <param name="location"> Resource Location. </param>
-        /// <returns> A new <see cref="RecoveryServicesSiteRecovery.AlertData"/> instance for mocking. </returns>
-        public static AlertData AlertData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, AlertProperties properties = null, AzureLocation? location = null)
+        /// <returns> A new <see cref="RecoveryServicesSiteRecovery.SiteRecoveryAlertData"/> instance for mocking. </returns>
+        public static SiteRecoveryAlertData SiteRecoveryAlertData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, SiteRecoveryAlertProperties properties = null, AzureLocation? location = null)
         {
-            return new AlertData(id, name, resourceType, systemData, properties, location);
+            return new SiteRecoveryAlertData(id, name, resourceType, systemData, properties, location);
         }
 
-        /// <summary> Initializes a new instance of AlertProperties. </summary>
+        /// <summary> Initializes a new instance of SiteRecoveryAlertProperties. </summary>
         /// <param name="sendToOwners"> A value indicating whether to send email to subscription administrator. </param>
         /// <param name="customEmailAddresses"> The custom email address for sending emails. </param>
         /// <param name="locale"> The locale for the email notification. </param>
-        /// <returns> A new <see cref="Models.AlertProperties"/> instance for mocking. </returns>
-        public static AlertProperties AlertProperties(string sendToOwners = null, IEnumerable<string> customEmailAddresses = null, string locale = null)
+        /// <returns> A new <see cref="Models.SiteRecoveryAlertProperties"/> instance for mocking. </returns>
+        public static SiteRecoveryAlertProperties SiteRecoveryAlertProperties(string sendToOwners = null, IEnumerable<string> customEmailAddresses = null, string locale = null)
         {
             customEmailAddresses ??= new List<string>();
 
-            return new AlertProperties(sendToOwners, customEmailAddresses?.ToList(), locale);
+            return new SiteRecoveryAlertProperties(sendToOwners, customEmailAddresses?.ToList(), locale);
         }
 
-        /// <summary> Initializes a new instance of ReplicationAppliance. </summary>
-        /// <param name="replicationApplianceProviderSpecificDetails"> Appliance related data. </param>
-        /// <returns> A new <see cref="Models.ReplicationAppliance"/> instance for mocking. </returns>
-        public static ReplicationAppliance ReplicationAppliance(ApplianceSpecificDetails replicationApplianceProviderSpecificDetails = null)
+        /// <summary> Initializes a new instance of SiteRecoveryReplicationAppliance. </summary>
+        /// <param name="siteRecoveryReplicationApplianceProviderSpecificDetails"> Appliance related data. </param>
+        /// <returns> A new <see cref="Models.SiteRecoveryReplicationAppliance"/> instance for mocking. </returns>
+        public static SiteRecoveryReplicationAppliance SiteRecoveryReplicationAppliance(SiteRecoveryApplianceSpecificDetails siteRecoveryReplicationApplianceProviderSpecificDetails = null)
         {
-            return new ReplicationAppliance(replicationApplianceProviderSpecificDetails != null ? new ReplicationApplianceProperties(replicationApplianceProviderSpecificDetails) : null);
+            return new SiteRecoveryReplicationAppliance(siteRecoveryReplicationApplianceProviderSpecificDetails != null ? new SiteRecoveryReplicationApplianceProperties(siteRecoveryReplicationApplianceProviderSpecificDetails) : null);
         }
 
         /// <summary> Initializes a new instance of ReplicationEligibilityResultData. </summary>
@@ -57,76 +58,76 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties"> Gets properties model for replication eligibility results API. </param>
         /// <returns> A new <see cref="RecoveryServicesSiteRecovery.ReplicationEligibilityResultData"/> instance for mocking. </returns>
-        public static ReplicationEligibilityResultData ReplicationEligibilityResultData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ReplicationEligibilityResultsProperties properties = null)
+        public static ReplicationEligibilityResultData ReplicationEligibilityResultData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ReplicationEligibilityResultProperties properties = null)
         {
             return new ReplicationEligibilityResultData(id, name, resourceType, systemData, properties);
         }
 
-        /// <summary> Initializes a new instance of ReplicationEligibilityResultsProperties. </summary>
+        /// <summary> Initializes a new instance of ReplicationEligibilityResultProperties. </summary>
         /// <param name="clientRequestId"> The client request Id. </param>
         /// <param name="errors"> The error details. </param>
-        /// <returns> A new <see cref="Models.ReplicationEligibilityResultsProperties"/> instance for mocking. </returns>
-        public static ReplicationEligibilityResultsProperties ReplicationEligibilityResultsProperties(string clientRequestId = null, IEnumerable<ReplicationEligibilityResultsErrorInfo> errors = null)
+        /// <returns> A new <see cref="Models.ReplicationEligibilityResultProperties"/> instance for mocking. </returns>
+        public static ReplicationEligibilityResultProperties ReplicationEligibilityResultProperties(string clientRequestId = null, IEnumerable<ReplicationEligibilityResultErrorInfo> errors = null)
         {
-            errors ??= new List<ReplicationEligibilityResultsErrorInfo>();
+            errors ??= new List<ReplicationEligibilityResultErrorInfo>();
 
-            return new ReplicationEligibilityResultsProperties(clientRequestId, errors?.ToList());
+            return new ReplicationEligibilityResultProperties(clientRequestId, errors?.ToList());
         }
 
-        /// <summary> Initializes a new instance of ReplicationEligibilityResultsErrorInfo. </summary>
+        /// <summary> Initializes a new instance of ReplicationEligibilityResultErrorInfo. </summary>
         /// <param name="code"> The error code. </param>
         /// <param name="message"> The error message. </param>
         /// <param name="possibleCauses"> The possible causes. </param>
         /// <param name="recommendedAction"> The recommended action. </param>
         /// <param name="status"> The error status. </param>
-        /// <returns> A new <see cref="Models.ReplicationEligibilityResultsErrorInfo"/> instance for mocking. </returns>
-        public static ReplicationEligibilityResultsErrorInfo ReplicationEligibilityResultsErrorInfo(string code = null, string message = null, string possibleCauses = null, string recommendedAction = null, string status = null)
+        /// <returns> A new <see cref="Models.ReplicationEligibilityResultErrorInfo"/> instance for mocking. </returns>
+        public static ReplicationEligibilityResultErrorInfo ReplicationEligibilityResultErrorInfo(string code = null, string message = null, string possibleCauses = null, string recommendedAction = null, string status = null)
         {
-            return new ReplicationEligibilityResultsErrorInfo(code, message, possibleCauses, recommendedAction, status);
+            return new ReplicationEligibilityResultErrorInfo(code, message, possibleCauses, recommendedAction, status);
         }
 
-        /// <summary> Initializes a new instance of EventData. </summary>
+        /// <summary> Initializes a new instance of SiteRecoveryEventData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties"> Event related data. </param>
         /// <param name="location"> Resource Location. </param>
-        /// <returns> A new <see cref="RecoveryServicesSiteRecovery.EventData"/> instance for mocking. </returns>
-        public static EventData EventData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, EventProperties properties = null, AzureLocation? location = null)
+        /// <returns> A new <see cref="RecoveryServicesSiteRecovery.SiteRecoveryEventData"/> instance for mocking. </returns>
+        public static SiteRecoveryEventData SiteRecoveryEventData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, SiteRecoveryEventProperties properties = null, AzureLocation? location = null)
         {
-            return new EventData(id, name, resourceType, systemData, properties, location);
+            return new SiteRecoveryEventData(id, name, resourceType, systemData, properties, location);
         }
 
-        /// <summary> Initializes a new instance of EventProperties. </summary>
+        /// <summary> Initializes a new instance of SiteRecoveryEventProperties. </summary>
         /// <param name="eventCode"> The Id of the monitoring event. </param>
         /// <param name="description"> The event name. </param>
         /// <param name="eventType"> The type of the event. for example: VM Health, Server Health, Job Failure etc. </param>
         /// <param name="affectedObjectFriendlyName"> The friendly name of the source of the event on which it is raised (for example, VM, VMM etc). </param>
         /// <param name="affectedObjectCorrelationId"> The affected object correlationId for the event. </param>
         /// <param name="severity"> The severity of the event. </param>
-        /// <param name="timeOfOccurrence"> The time of occurrence of the event. </param>
+        /// <param name="occurredOn"> The time of occurrence of the event. </param>
         /// <param name="fabricId"> The ARM ID of the fabric. </param>
         /// <param name="providerSpecificDetails">
         /// The provider specific settings.
-        /// Please note <see cref="EventProviderSpecificDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="SiteRecoveryEventProviderSpecificDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="A2AEventDetails"/>, <see cref="HyperVReplica2012EventDetails"/>, <see cref="HyperVReplica2012R2EventDetails"/>, <see cref="HyperVReplicaAzureEventDetails"/>, <see cref="HyperVReplicaBaseEventDetails"/>, <see cref="InMageAzureV2EventDetails"/>, <see cref="InMageRcmEventDetails"/>, <see cref="InMageRcmFailbackEventDetails"/> and <see cref="VMwareCbtEventDetails"/>.
         /// </param>
         /// <param name="eventSpecificDetails">
         /// The event specific settings.
-        /// Please note <see cref="EventSpecificDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="JobStatusEventDetails"/>.
+        /// Please note <see cref="SiteRecoveryEventSpecificDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="SiteRecoveryJobStatusEventDetails"/>.
         /// </param>
         /// <param name="healthErrors"> The list of errors / warnings capturing details associated with the issue(s). </param>
-        /// <returns> A new <see cref="Models.EventProperties"/> instance for mocking. </returns>
-        public static EventProperties EventProperties(string eventCode = null, string description = null, string eventType = null, string affectedObjectFriendlyName = null, string affectedObjectCorrelationId = null, string severity = null, DateTimeOffset? timeOfOccurrence = null, string fabricId = null, EventProviderSpecificDetails providerSpecificDetails = null, EventSpecificDetails eventSpecificDetails = null, IEnumerable<HealthError> healthErrors = null)
+        /// <returns> A new <see cref="Models.SiteRecoveryEventProperties"/> instance for mocking. </returns>
+        public static SiteRecoveryEventProperties SiteRecoveryEventProperties(string eventCode = null, string description = null, string eventType = null, string affectedObjectFriendlyName = null, string affectedObjectCorrelationId = null, string severity = null, DateTimeOffset? occurredOn = null, ResourceIdentifier fabricId = null, SiteRecoveryEventProviderSpecificDetails providerSpecificDetails = null, SiteRecoveryEventSpecificDetails eventSpecificDetails = null, IEnumerable<SiteRecoveryHealthError> healthErrors = null)
         {
-            healthErrors ??= new List<HealthError>();
+            healthErrors ??= new List<SiteRecoveryHealthError>();
 
-            return new EventProperties(eventCode, description, eventType, affectedObjectFriendlyName, affectedObjectCorrelationId, severity, timeOfOccurrence, fabricId, providerSpecificDetails, eventSpecificDetails, healthErrors?.ToList());
+            return new SiteRecoveryEventProperties(eventCode, description, eventType, affectedObjectFriendlyName, affectedObjectCorrelationId, severity, occurredOn, fabricId, providerSpecificDetails, eventSpecificDetails, healthErrors?.ToList());
         }
 
-        /// <summary> Initializes a new instance of HealthError. </summary>
+        /// <summary> Initializes a new instance of SiteRecoveryHealthError. </summary>
         /// <param name="innerHealthErrors"> The inner health errors. HealthError having a list of HealthError as child errors is problematic. InnerHealthError is used because this will prevent an infinite loop of structures when Hydra tries to auto-generate the contract. We are exposing the related health errors as inner health errors and all API consumers can utilize this in the same fashion as Exception -&gt; InnerException. </param>
         /// <param name="errorSource"> Source of error. </param>
         /// <param name="errorType"> Type of error. </param>
@@ -142,15 +143,15 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="entityId"> ID of the entity. </param>
         /// <param name="errorId"> The health error unique id. </param>
         /// <param name="customerResolvability"> Value indicating whether the health error is customer resolvable. </param>
-        /// <returns> A new <see cref="Models.HealthError"/> instance for mocking. </returns>
-        public static HealthError HealthError(IEnumerable<InnerHealthError> innerHealthErrors = null, string errorSource = null, string errorType = null, string errorLevel = null, string errorCategory = null, string errorCode = null, string summaryMessage = null, string errorMessage = null, string possibleCauses = null, string recommendedAction = null, DateTimeOffset? creationTimeUtc = null, string recoveryProviderErrorMessage = null, string entityId = null, string errorId = null, HealthErrorCustomerResolvability? customerResolvability = null)
+        /// <returns> A new <see cref="Models.SiteRecoveryHealthError"/> instance for mocking. </returns>
+        public static SiteRecoveryHealthError SiteRecoveryHealthError(IEnumerable<SiteRecoveryInnerHealthError> innerHealthErrors = null, string errorSource = null, string errorType = null, string errorLevel = null, string errorCategory = null, string errorCode = null, string summaryMessage = null, string errorMessage = null, string possibleCauses = null, string recommendedAction = null, DateTimeOffset? creationTimeUtc = null, string recoveryProviderErrorMessage = null, string entityId = null, string errorId = null, HealthErrorCustomerResolvability? customerResolvability = null)
         {
-            innerHealthErrors ??= new List<InnerHealthError>();
+            innerHealthErrors ??= new List<SiteRecoveryInnerHealthError>();
 
-            return new HealthError(innerHealthErrors?.ToList(), errorSource, errorType, errorLevel, errorCategory, errorCode, summaryMessage, errorMessage, possibleCauses, recommendedAction, creationTimeUtc, recoveryProviderErrorMessage, entityId, errorId, customerResolvability);
+            return new SiteRecoveryHealthError(innerHealthErrors?.ToList(), errorSource, errorType, errorLevel, errorCategory, errorCode, summaryMessage, errorMessage, possibleCauses, recommendedAction, creationTimeUtc, recoveryProviderErrorMessage, entityId, errorId, customerResolvability);
         }
 
-        /// <summary> Initializes a new instance of InnerHealthError. </summary>
+        /// <summary> Initializes a new instance of SiteRecoveryInnerHealthError. </summary>
         /// <param name="errorSource"> Source of error. </param>
         /// <param name="errorType"> Type of error. </param>
         /// <param name="errorLevel"> Level of error. </param>
@@ -160,31 +161,31 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="errorMessage"> Error message. </param>
         /// <param name="possibleCauses"> Possible causes of error. </param>
         /// <param name="recommendedAction"> Recommended action to resolve error. </param>
-        /// <param name="creationTimeUtc"> Error creation time (UTC). </param>
+        /// <param name="createdOn"> Error creation time (UTC). </param>
         /// <param name="recoveryProviderErrorMessage"> DRA error message. </param>
         /// <param name="entityId"> ID of the entity. </param>
         /// <param name="errorId"> The health error unique id. </param>
         /// <param name="customerResolvability"> Value indicating whether the health error is customer resolvable. </param>
-        /// <returns> A new <see cref="Models.InnerHealthError"/> instance for mocking. </returns>
-        public static InnerHealthError InnerHealthError(string errorSource = null, string errorType = null, string errorLevel = null, string errorCategory = null, string errorCode = null, string summaryMessage = null, string errorMessage = null, string possibleCauses = null, string recommendedAction = null, DateTimeOffset? creationTimeUtc = null, string recoveryProviderErrorMessage = null, string entityId = null, string errorId = null, HealthErrorCustomerResolvability? customerResolvability = null)
+        /// <returns> A new <see cref="Models.SiteRecoveryInnerHealthError"/> instance for mocking. </returns>
+        public static SiteRecoveryInnerHealthError SiteRecoveryInnerHealthError(string errorSource = null, string errorType = null, string errorLevel = null, string errorCategory = null, string errorCode = null, string summaryMessage = null, string errorMessage = null, string possibleCauses = null, string recommendedAction = null, DateTimeOffset? createdOn = null, string recoveryProviderErrorMessage = null, string entityId = null, string errorId = null, HealthErrorCustomerResolvability? customerResolvability = null)
         {
-            return new InnerHealthError(errorSource, errorType, errorLevel, errorCategory, errorCode, summaryMessage, errorMessage, possibleCauses, recommendedAction, creationTimeUtc, recoveryProviderErrorMessage, entityId, errorId, customerResolvability);
+            return new SiteRecoveryInnerHealthError(errorSource, errorType, errorLevel, errorCategory, errorCode, summaryMessage, errorMessage, possibleCauses, recommendedAction, createdOn, recoveryProviderErrorMessage, entityId, errorId, customerResolvability);
         }
 
-        /// <summary> Initializes a new instance of FabricData. </summary>
+        /// <summary> Initializes a new instance of SiteRecoveryFabricData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties"> Fabric related data. </param>
         /// <param name="location"> Resource Location. </param>
-        /// <returns> A new <see cref="RecoveryServicesSiteRecovery.FabricData"/> instance for mocking. </returns>
-        public static FabricData FabricData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, FabricProperties properties = null, AzureLocation? location = null)
+        /// <returns> A new <see cref="RecoveryServicesSiteRecovery.SiteRecoveryFabricData"/> instance for mocking. </returns>
+        public static SiteRecoveryFabricData SiteRecoveryFabricData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, SiteRecoveryFabricProperties properties = null, AzureLocation? location = null)
         {
-            return new FabricData(id, name, resourceType, systemData, properties, location);
+            return new SiteRecoveryFabricData(id, name, resourceType, systemData, properties, location);
         }
 
-        /// <summary> Initializes a new instance of FabricProperties. </summary>
+        /// <summary> Initializes a new instance of SiteRecoveryFabricProperties. </summary>
         /// <param name="friendlyName"> Friendly name of the fabric. </param>
         /// <param name="encryptionDetails"> Encryption details for the fabric. </param>
         /// <param name="rolloverEncryptionDetails"> Rollover encryption details for the fabric. </param>
@@ -193,104 +194,104 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="customDetails">
         /// Fabric specific settings.
         /// Please note <see cref="FabricSpecificDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="AzureFabricSpecificDetails"/>, <see cref="HyperVSiteDetails"/>, <see cref="InMageRcmFabricSpecificDetails"/>, <see cref="VmmDetails"/>, <see cref="VMwareDetails"/> and <see cref="VMwareV2FabricSpecificDetails"/>.
+        /// The available derived classes include <see cref="SiteRecoveryFabricProviderSpecificDetails"/>, <see cref="HyperVSiteDetails"/>, <see cref="InMageRcmFabricSpecificDetails"/>, <see cref="VmmFabricDetails"/>, <see cref="VMwareDetails"/> and <see cref="VMwareV2FabricSpecificDetails"/>.
         /// </param>
         /// <param name="healthErrorDetails"> Fabric health error details. </param>
         /// <param name="health"> Health of fabric. </param>
-        /// <returns> A new <see cref="Models.FabricProperties"/> instance for mocking. </returns>
-        public static FabricProperties FabricProperties(string friendlyName = null, EncryptionDetails encryptionDetails = null, EncryptionDetails rolloverEncryptionDetails = null, string internalIdentifier = null, string bcdrState = null, FabricSpecificDetails customDetails = null, IEnumerable<HealthError> healthErrorDetails = null, string health = null)
+        /// <returns> A new <see cref="Models.SiteRecoveryFabricProperties"/> instance for mocking. </returns>
+        public static SiteRecoveryFabricProperties SiteRecoveryFabricProperties(string friendlyName = null, SiteRecoveryEncryptionDetails encryptionDetails = null, SiteRecoveryEncryptionDetails rolloverEncryptionDetails = null, string internalIdentifier = null, string bcdrState = null, FabricSpecificDetails customDetails = null, IEnumerable<SiteRecoveryHealthError> healthErrorDetails = null, string health = null)
         {
-            healthErrorDetails ??= new List<HealthError>();
+            healthErrorDetails ??= new List<SiteRecoveryHealthError>();
 
-            return new FabricProperties(friendlyName, encryptionDetails, rolloverEncryptionDetails, internalIdentifier, bcdrState, customDetails, healthErrorDetails?.ToList(), health);
+            return new SiteRecoveryFabricProperties(friendlyName, encryptionDetails, rolloverEncryptionDetails, internalIdentifier, bcdrState, customDetails, healthErrorDetails?.ToList(), health);
         }
 
-        /// <summary> Initializes a new instance of EncryptionDetails. </summary>
+        /// <summary> Initializes a new instance of SiteRecoveryEncryptionDetails. </summary>
         /// <param name="kekState"> The key encryption key state for the Vmm. </param>
         /// <param name="kekCertThumbprint"> The key encryption key certificate thumbprint. </param>
-        /// <param name="kekCertExpiryOn"> The key encryption key certificate expiry date. </param>
-        /// <returns> A new <see cref="Models.EncryptionDetails"/> instance for mocking. </returns>
-        public static EncryptionDetails EncryptionDetails(string kekState = null, string kekCertThumbprint = null, DateTimeOffset? kekCertExpiryOn = null)
+        /// <param name="kekCertExpireOn"> The key encryption key certificate expiry date. </param>
+        /// <returns> A new <see cref="Models.SiteRecoveryEncryptionDetails"/> instance for mocking. </returns>
+        public static SiteRecoveryEncryptionDetails SiteRecoveryEncryptionDetails(string kekState = null, string kekCertThumbprint = null, DateTimeOffset? kekCertExpireOn = null)
         {
-            return new EncryptionDetails(kekState, kekCertThumbprint, kekCertExpiryOn);
+            return new SiteRecoveryEncryptionDetails(kekState, kekCertThumbprint, kekCertExpireOn);
         }
 
-        /// <summary> Initializes a new instance of LogicalNetworkData. </summary>
+        /// <summary> Initializes a new instance of SiteRecoveryLogicalNetworkData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties"> The Logical Network Properties. </param>
         /// <param name="location"> Resource Location. </param>
-        /// <returns> A new <see cref="RecoveryServicesSiteRecovery.LogicalNetworkData"/> instance for mocking. </returns>
-        public static LogicalNetworkData LogicalNetworkData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, LogicalNetworkProperties properties = null, AzureLocation? location = null)
+        /// <returns> A new <see cref="RecoveryServicesSiteRecovery.SiteRecoveryLogicalNetworkData"/> instance for mocking. </returns>
+        public static SiteRecoveryLogicalNetworkData SiteRecoveryLogicalNetworkData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, SiteRecoveryLogicalNetworkProperties properties = null, AzureLocation? location = null)
         {
-            return new LogicalNetworkData(id, name, resourceType, systemData, properties, location);
+            return new SiteRecoveryLogicalNetworkData(id, name, resourceType, systemData, properties, location);
         }
 
-        /// <summary> Initializes a new instance of LogicalNetworkProperties. </summary>
+        /// <summary> Initializes a new instance of SiteRecoveryLogicalNetworkProperties. </summary>
         /// <param name="friendlyName"> The Friendly Name. </param>
         /// <param name="networkVirtualizationStatus"> A value indicating whether Network Virtualization is enabled for the logical network. </param>
         /// <param name="logicalNetworkUsage"> A value indicating whether logical network is used as private test network by test failover. </param>
         /// <param name="logicalNetworkDefinitionsStatus"> A value indicating whether logical network definitions are isolated. </param>
-        /// <returns> A new <see cref="Models.LogicalNetworkProperties"/> instance for mocking. </returns>
-        public static LogicalNetworkProperties LogicalNetworkProperties(string friendlyName = null, string networkVirtualizationStatus = null, string logicalNetworkUsage = null, string logicalNetworkDefinitionsStatus = null)
+        /// <returns> A new <see cref="Models.SiteRecoveryLogicalNetworkProperties"/> instance for mocking. </returns>
+        public static SiteRecoveryLogicalNetworkProperties SiteRecoveryLogicalNetworkProperties(string friendlyName = null, string networkVirtualizationStatus = null, string logicalNetworkUsage = null, string logicalNetworkDefinitionsStatus = null)
         {
-            return new LogicalNetworkProperties(friendlyName, networkVirtualizationStatus, logicalNetworkUsage, logicalNetworkDefinitionsStatus);
+            return new SiteRecoveryLogicalNetworkProperties(friendlyName, networkVirtualizationStatus, logicalNetworkUsage, logicalNetworkDefinitionsStatus);
         }
 
-        /// <summary> Initializes a new instance of NetworkData. </summary>
+        /// <summary> Initializes a new instance of SiteRecoveryNetworkData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties"> The Network Properties. </param>
         /// <param name="location"> Resource Location. </param>
-        /// <returns> A new <see cref="RecoveryServicesSiteRecovery.NetworkData"/> instance for mocking. </returns>
-        public static NetworkData NetworkData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, NetworkProperties properties = null, AzureLocation? location = null)
+        /// <returns> A new <see cref="RecoveryServicesSiteRecovery.SiteRecoveryNetworkData"/> instance for mocking. </returns>
+        public static SiteRecoveryNetworkData SiteRecoveryNetworkData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, SiteRecoveryNetworkProperties properties = null, AzureLocation? location = null)
         {
-            return new NetworkData(id, name, resourceType, systemData, properties, location);
+            return new SiteRecoveryNetworkData(id, name, resourceType, systemData, properties, location);
         }
 
-        /// <summary> Initializes a new instance of NetworkProperties. </summary>
+        /// <summary> Initializes a new instance of SiteRecoveryNetworkProperties. </summary>
         /// <param name="fabricType"> The Fabric Type. </param>
         /// <param name="subnets"> The List of subnets. </param>
         /// <param name="friendlyName"> The Friendly Name. </param>
         /// <param name="networkType"> The Network Type. </param>
-        /// <returns> A new <see cref="Models.NetworkProperties"/> instance for mocking. </returns>
-        public static NetworkProperties NetworkProperties(string fabricType = null, IEnumerable<Subnet> subnets = null, string friendlyName = null, string networkType = null)
+        /// <returns> A new <see cref="Models.SiteRecoveryNetworkProperties"/> instance for mocking. </returns>
+        public static SiteRecoveryNetworkProperties SiteRecoveryNetworkProperties(string fabricType = null, IEnumerable<SiteRecoverySubnet> subnets = null, string friendlyName = null, string networkType = null)
         {
-            subnets ??= new List<Subnet>();
+            subnets ??= new List<SiteRecoverySubnet>();
 
-            return new NetworkProperties(fabricType, subnets?.ToList(), friendlyName, networkType);
+            return new SiteRecoveryNetworkProperties(fabricType, subnets?.ToList(), friendlyName, networkType);
         }
 
-        /// <summary> Initializes a new instance of Subnet. </summary>
+        /// <summary> Initializes a new instance of SiteRecoverySubnet. </summary>
         /// <param name="name"> The subnet name. </param>
         /// <param name="friendlyName"> The subnet friendly name. </param>
         /// <param name="addressList"> The list of addresses for the subnet. </param>
-        /// <returns> A new <see cref="Models.Subnet"/> instance for mocking. </returns>
-        public static Subnet Subnet(string name = null, string friendlyName = null, IEnumerable<string> addressList = null)
+        /// <returns> A new <see cref="Models.SiteRecoverySubnet"/> instance for mocking. </returns>
+        public static SiteRecoverySubnet SiteRecoverySubnet(string name = null, string friendlyName = null, IEnumerable<string> addressList = null)
         {
             addressList ??= new List<string>();
 
-            return new Subnet(name, friendlyName, addressList?.ToList());
+            return new SiteRecoverySubnet(name, friendlyName, addressList?.ToList());
         }
 
-        /// <summary> Initializes a new instance of NetworkMappingData. </summary>
+        /// <summary> Initializes a new instance of SiteRecoveryNetworkMappingData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties"> The Network Mapping Properties. </param>
         /// <param name="location"> Resource Location. </param>
-        /// <returns> A new <see cref="RecoveryServicesSiteRecovery.NetworkMappingData"/> instance for mocking. </returns>
-        public static NetworkMappingData NetworkMappingData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, NetworkMappingProperties properties = null, AzureLocation? location = null)
+        /// <returns> A new <see cref="RecoveryServicesSiteRecovery.SiteRecoveryNetworkMappingData"/> instance for mocking. </returns>
+        public static SiteRecoveryNetworkMappingData SiteRecoveryNetworkMappingData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, SiteRecoveryNetworkMappingProperties properties = null, AzureLocation? location = null)
         {
-            return new NetworkMappingData(id, name, resourceType, systemData, properties, location);
+            return new SiteRecoveryNetworkMappingData(id, name, resourceType, systemData, properties, location);
         }
 
-        /// <summary> Initializes a new instance of NetworkMappingProperties. </summary>
+        /// <summary> Initializes a new instance of SiteRecoveryNetworkMappingProperties. </summary>
         /// <param name="state"> The pairing state for network mapping. </param>
         /// <param name="primaryNetworkFriendlyName"> The primary network friendly name. </param>
         /// <param name="primaryNetworkId"> The primary network id for network mapping. </param>
@@ -302,28 +303,28 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="fabricSpecificSettings">
         /// The fabric specific settings.
         /// Please note <see cref="NetworkMappingFabricSpecificSettings"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="AzureToAzureNetworkMappingSettings"/>, <see cref="VmmToAzureNetworkMappingSettings"/> and <see cref="VmmToVmmNetworkMappingSettings"/>.
+        /// The available derived classes include <see cref="A2ANetworkMappingSettings"/>, <see cref="VmmToAzureNetworkMappingSettings"/> and <see cref="VmmToVmmNetworkMappingSettings"/>.
         /// </param>
-        /// <returns> A new <see cref="Models.NetworkMappingProperties"/> instance for mocking. </returns>
-        public static NetworkMappingProperties NetworkMappingProperties(string state = null, string primaryNetworkFriendlyName = null, string primaryNetworkId = null, string primaryFabricFriendlyName = null, string recoveryNetworkFriendlyName = null, string recoveryNetworkId = null, string recoveryFabricArmId = null, string recoveryFabricFriendlyName = null, NetworkMappingFabricSpecificSettings fabricSpecificSettings = null)
+        /// <returns> A new <see cref="Models.SiteRecoveryNetworkMappingProperties"/> instance for mocking. </returns>
+        public static SiteRecoveryNetworkMappingProperties SiteRecoveryNetworkMappingProperties(string state = null, string primaryNetworkFriendlyName = null, ResourceIdentifier primaryNetworkId = null, string primaryFabricFriendlyName = null, string recoveryNetworkFriendlyName = null, ResourceIdentifier recoveryNetworkId = null, ResourceIdentifier recoveryFabricArmId = null, string recoveryFabricFriendlyName = null, NetworkMappingFabricSpecificSettings fabricSpecificSettings = null)
         {
-            return new NetworkMappingProperties(state, primaryNetworkFriendlyName, primaryNetworkId, primaryFabricFriendlyName, recoveryNetworkFriendlyName, recoveryNetworkId, recoveryFabricArmId, recoveryFabricFriendlyName, fabricSpecificSettings);
+            return new SiteRecoveryNetworkMappingProperties(state, primaryNetworkFriendlyName, primaryNetworkId, primaryFabricFriendlyName, recoveryNetworkFriendlyName, recoveryNetworkId, recoveryFabricArmId, recoveryFabricFriendlyName, fabricSpecificSettings);
         }
 
-        /// <summary> Initializes a new instance of ProtectionContainerData. </summary>
+        /// <summary> Initializes a new instance of SiteRecoveryProtectionContainerData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties"> The custom data. </param>
         /// <param name="location"> Resource Location. </param>
-        /// <returns> A new <see cref="RecoveryServicesSiteRecovery.ProtectionContainerData"/> instance for mocking. </returns>
-        public static ProtectionContainerData ProtectionContainerData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ProtectionContainerProperties properties = null, AzureLocation? location = null)
+        /// <returns> A new <see cref="RecoveryServicesSiteRecovery.SiteRecoveryProtectionContainerData"/> instance for mocking. </returns>
+        public static SiteRecoveryProtectionContainerData SiteRecoveryProtectionContainerData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, SiteRecoveryProtectionContainerProperties properties = null, AzureLocation? location = null)
         {
-            return new ProtectionContainerData(id, name, resourceType, systemData, properties, location);
+            return new SiteRecoveryProtectionContainerData(id, name, resourceType, systemData, properties, location);
         }
 
-        /// <summary> Initializes a new instance of ProtectionContainerProperties. </summary>
+        /// <summary> Initializes a new instance of SiteRecoveryProtectionContainerProperties. </summary>
         /// <param name="fabricFriendlyName"> Fabric friendly name. </param>
         /// <param name="friendlyName"> The name. </param>
         /// <param name="fabricType"> The fabric type. </param>
@@ -331,26 +332,26 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="pairingStatus"> The pairing status of this cloud. </param>
         /// <param name="role"> The role of this cloud. </param>
         /// <param name="fabricSpecificDetailsInstanceType"> Fabric specific details. </param>
-        /// <returns> A new <see cref="Models.ProtectionContainerProperties"/> instance for mocking. </returns>
-        public static ProtectionContainerProperties ProtectionContainerProperties(string fabricFriendlyName = null, string friendlyName = null, string fabricType = null, int? protectedItemCount = null, string pairingStatus = null, string role = null, string fabricSpecificDetailsInstanceType = null)
+        /// <returns> A new <see cref="Models.SiteRecoveryProtectionContainerProperties"/> instance for mocking. </returns>
+        public static SiteRecoveryProtectionContainerProperties SiteRecoveryProtectionContainerProperties(string fabricFriendlyName = null, string friendlyName = null, string fabricType = null, int? protectedItemCount = null, string pairingStatus = null, string role = null, string fabricSpecificDetailsInstanceType = null)
         {
-            return new ProtectionContainerProperties(fabricFriendlyName, friendlyName, fabricType, protectedItemCount, pairingStatus, role, fabricSpecificDetailsInstanceType != null ? new ProtectionContainerFabricSpecificDetails(fabricSpecificDetailsInstanceType) : null);
+            return new SiteRecoveryProtectionContainerProperties(fabricFriendlyName, friendlyName, fabricType, protectedItemCount, pairingStatus, role, fabricSpecificDetailsInstanceType != null ? new ProtectionContainerFabricSpecificDetails(fabricSpecificDetailsInstanceType) : null);
         }
 
-        /// <summary> Initializes a new instance of MigrationItemData. </summary>
+        /// <summary> Initializes a new instance of SiteRecoveryMigrationItemData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties"> The migration item properties. </param>
         /// <param name="location"> Resource Location. </param>
-        /// <returns> A new <see cref="RecoveryServicesSiteRecovery.MigrationItemData"/> instance for mocking. </returns>
-        public static MigrationItemData MigrationItemData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, MigrationItemProperties properties = null, AzureLocation? location = null)
+        /// <returns> A new <see cref="RecoveryServicesSiteRecovery.SiteRecoveryMigrationItemData"/> instance for mocking. </returns>
+        public static SiteRecoveryMigrationItemData SiteRecoveryMigrationItemData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, SiteRecoveryMigrationItemProperties properties = null, AzureLocation? location = null)
         {
-            return new MigrationItemData(id, name, resourceType, systemData, properties, location);
+            return new SiteRecoveryMigrationItemData(id, name, resourceType, systemData, properties, location);
         }
 
-        /// <summary> Initializes a new instance of MigrationItemProperties. </summary>
+        /// <summary> Initializes a new instance of SiteRecoveryMigrationItemProperties. </summary>
         /// <param name="machineName"> The on-premise virtual machine name. </param>
         /// <param name="policyId"> The ARM Id of policy governing this item. </param>
         /// <param name="policyFriendlyName"> The name of policy governing this item. </param>
@@ -375,14 +376,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// Please note <see cref="MigrationProviderSpecificSettings"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="VMwareCbtMigrationDetails"/>.
         /// </param>
-        /// <returns> A new <see cref="Models.MigrationItemProperties"/> instance for mocking. </returns>
-        public static MigrationItemProperties MigrationItemProperties(string machineName = null, string policyId = null, string policyFriendlyName = null, string recoveryServicesProviderId = null, string replicationStatus = null, MigrationState? migrationState = null, string migrationStateDescription = null, DateTimeOffset? lastTestMigrationOn = null, string lastTestMigrationStatus = null, DateTimeOffset? lastMigrationOn = null, string lastMigrationStatus = null, TestMigrationState? testMigrateState = null, string testMigrateStateDescription = null, ProtectionHealth? health = null, IEnumerable<HealthError> healthErrors = null, IEnumerable<MigrationItemOperation> allowedOperations = null, CurrentJobDetails currentJob = null, IEnumerable<CriticalJobHistoryDetails> criticalJobHistory = null, string eventCorrelationId = null, MigrationProviderSpecificSettings providerSpecificDetails = null)
+        /// <returns> A new <see cref="Models.SiteRecoveryMigrationItemProperties"/> instance for mocking. </returns>
+        public static SiteRecoveryMigrationItemProperties SiteRecoveryMigrationItemProperties(string machineName = null, ResourceIdentifier policyId = null, string policyFriendlyName = null, string recoveryServicesProviderId = null, string replicationStatus = null, SiteRecoveryMigrationState? migrationState = null, string migrationStateDescription = null, DateTimeOffset? lastTestMigrationOn = null, string lastTestMigrationStatus = null, DateTimeOffset? lastMigrationOn = null, string lastMigrationStatus = null, TestMigrationState? testMigrateState = null, string testMigrateStateDescription = null, SiteRecoveryProtectionHealth? health = null, IEnumerable<SiteRecoveryHealthError> healthErrors = null, IEnumerable<MigrationItemOperation> allowedOperations = null, CurrentJobDetails currentJob = null, IEnumerable<CriticalJobHistoryDetails> criticalJobHistory = null, string eventCorrelationId = null, MigrationProviderSpecificSettings providerSpecificDetails = null)
         {
-            healthErrors ??= new List<HealthError>();
+            healthErrors ??= new List<SiteRecoveryHealthError>();
             allowedOperations ??= new List<MigrationItemOperation>();
             criticalJobHistory ??= new List<CriticalJobHistoryDetails>();
 
-            return new MigrationItemProperties(machineName, policyId, policyFriendlyName, recoveryServicesProviderId, replicationStatus, migrationState, migrationStateDescription, lastTestMigrationOn, lastTestMigrationStatus, lastMigrationOn, lastMigrationStatus, testMigrateState, testMigrateStateDescription, health, healthErrors?.ToList(), allowedOperations?.ToList(), currentJob, criticalJobHistory?.ToList(), eventCorrelationId, providerSpecificDetails);
+            return new SiteRecoveryMigrationItemProperties(machineName, policyId, policyFriendlyName, recoveryServicesProviderId, replicationStatus, migrationState, migrationStateDescription, lastTestMigrationOn, lastTestMigrationStatus, lastMigrationOn, lastMigrationStatus, testMigrateState, testMigrateStateDescription, health, healthErrors?.ToList(), allowedOperations?.ToList(), currentJob, criticalJobHistory?.ToList(), eventCorrelationId, providerSpecificDetails);
         }
 
         /// <summary> Initializes a new instance of CurrentJobDetails. </summary>
@@ -390,7 +391,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="jobId"> The ARM Id of the job being executed. </param>
         /// <param name="startOn"> The start time of the job. </param>
         /// <returns> A new <see cref="Models.CurrentJobDetails"/> instance for mocking. </returns>
-        public static CurrentJobDetails CurrentJobDetails(string jobName = null, string jobId = null, DateTimeOffset? startOn = null)
+        public static CurrentJobDetails CurrentJobDetails(string jobName = null, ResourceIdentifier jobId = null, DateTimeOffset? startOn = null)
         {
             return new CurrentJobDetails(jobName, jobId, startOn);
         }
@@ -401,7 +402,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="startOn"> The start time of the job. </param>
         /// <param name="jobStatus"> The job state. </param>
         /// <returns> A new <see cref="Models.CriticalJobHistoryDetails"/> instance for mocking. </returns>
-        public static CriticalJobHistoryDetails CriticalJobHistoryDetails(string jobName = null, string jobId = null, DateTimeOffset? startOn = null, string jobStatus = null)
+        public static CriticalJobHistoryDetails CriticalJobHistoryDetails(string jobName = null, ResourceIdentifier jobId = null, DateTimeOffset? startOn = null, string jobStatus = null)
         {
             return new CriticalJobHistoryDetails(jobName, jobId, startOn, jobStatus);
         }
@@ -428,20 +429,20 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             return new MigrationRecoveryPointProperties(recoveryPointOn, recoveryPointType);
         }
 
-        /// <summary> Initializes a new instance of ProtectableItemData. </summary>
+        /// <summary> Initializes a new instance of SiteRecoveryProtectableItemData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties"> The custom data. </param>
         /// <param name="location"> Resource Location. </param>
-        /// <returns> A new <see cref="RecoveryServicesSiteRecovery.ProtectableItemData"/> instance for mocking. </returns>
-        public static ProtectableItemData ProtectableItemData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ProtectableItemProperties properties = null, AzureLocation? location = null)
+        /// <returns> A new <see cref="RecoveryServicesSiteRecovery.SiteRecoveryProtectableItemData"/> instance for mocking. </returns>
+        public static SiteRecoveryProtectableItemData SiteRecoveryProtectableItemData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, SiteRecoveryProtectableItemProperties properties = null, AzureLocation? location = null)
         {
-            return new ProtectableItemData(id, name, resourceType, systemData, properties, location);
+            return new SiteRecoveryProtectableItemData(id, name, resourceType, systemData, properties, location);
         }
 
-        /// <summary> Initializes a new instance of ProtectableItemProperties. </summary>
+        /// <summary> Initializes a new instance of SiteRecoveryProtectableItemProperties. </summary>
         /// <param name="friendlyName"> The name. </param>
         /// <param name="protectionStatus"> The protection status. </param>
         /// <param name="replicationProtectedItemId"> The ARM resource of protected items. </param>
@@ -450,16 +451,16 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="supportedReplicationProviders"> The list of replication providers supported for the protectable item. </param>
         /// <param name="customDetails">
         /// The Replication provider custom settings.
-        /// Please note <see cref="ConfigurationSettings"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="HyperVVirtualMachineDetails"/>, <see cref="ReplicationGroupDetails"/>, <see cref="VMwareVirtualMachineDetails"/> and <see cref="VmmVirtualMachineDetails"/>.
+        /// Please note <see cref="SiteRecoveryReplicationProviderSettings"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="HyperVVmDetails"/>, <see cref="ReplicationGroupDetails"/>, <see cref="VMwareVmDetails"/> and <see cref="VmmVmDetails"/>.
         /// </param>
-        /// <returns> A new <see cref="Models.ProtectableItemProperties"/> instance for mocking. </returns>
-        public static ProtectableItemProperties ProtectableItemProperties(string friendlyName = null, string protectionStatus = null, string replicationProtectedItemId = null, string recoveryServicesProviderId = null, IEnumerable<string> protectionReadinessErrors = null, IEnumerable<string> supportedReplicationProviders = null, ConfigurationSettings customDetails = null)
+        /// <returns> A new <see cref="Models.SiteRecoveryProtectableItemProperties"/> instance for mocking. </returns>
+        public static SiteRecoveryProtectableItemProperties SiteRecoveryProtectableItemProperties(string friendlyName = null, string protectionStatus = null, ResourceIdentifier replicationProtectedItemId = null, ResourceIdentifier recoveryServicesProviderId = null, IEnumerable<string> protectionReadinessErrors = null, IEnumerable<string> supportedReplicationProviders = null, SiteRecoveryReplicationProviderSettings customDetails = null)
         {
             protectionReadinessErrors ??= new List<string>();
             supportedReplicationProviders ??= new List<string>();
 
-            return new ProtectableItemProperties(friendlyName, protectionStatus, replicationProtectedItemId, recoveryServicesProviderId, protectionReadinessErrors?.ToList(), supportedReplicationProviders?.ToList(), customDetails);
+            return new SiteRecoveryProtectableItemProperties(friendlyName, protectionStatus, replicationProtectedItemId, recoveryServicesProviderId, protectionReadinessErrors?.ToList(), supportedReplicationProviders?.ToList(), customDetails);
         }
 
         /// <summary> Initializes a new instance of ReplicationProtectedItemData. </summary>
@@ -511,10 +512,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="recoveryContainerId"> The recovery container Id. </param>
         /// <param name="eventCorrelationId"> The correlation Id for events associated with this protected item. </param>
         /// <returns> A new <see cref="Models.ReplicationProtectedItemProperties"/> instance for mocking. </returns>
-        public static ReplicationProtectedItemProperties ReplicationProtectedItemProperties(string friendlyName = null, string protectedItemType = null, string protectableItemId = null, string recoveryServicesProviderId = null, string primaryFabricFriendlyName = null, string primaryFabricProvider = null, string recoveryFabricFriendlyName = null, string recoveryFabricId = null, string primaryProtectionContainerFriendlyName = null, string recoveryProtectionContainerFriendlyName = null, string protectionState = null, string protectionStateDescription = null, string activeLocation = null, string testFailoverState = null, string testFailoverStateDescription = null, string switchProviderState = null, string switchProviderStateDescription = null, IEnumerable<string> allowedOperations = null, string replicationHealth = null, string failoverHealth = null, IEnumerable<HealthError> healthErrors = null, string policyId = null, string policyFriendlyName = null, DateTimeOffset? lastSuccessfulFailoverOn = null, DateTimeOffset? lastSuccessfulTestFailoverOn = null, CurrentScenarioDetails currentScenario = null, string failoverRecoveryPointId = null, ReplicationProviderSpecificSettings providerSpecificDetails = null, string recoveryContainerId = null, string eventCorrelationId = null)
+        public static ReplicationProtectedItemProperties ReplicationProtectedItemProperties(string friendlyName = null, string protectedItemType = null, ResourceIdentifier protectableItemId = null, string recoveryServicesProviderId = null, string primaryFabricFriendlyName = null, string primaryFabricProvider = null, string recoveryFabricFriendlyName = null, ResourceIdentifier recoveryFabricId = null, string primaryProtectionContainerFriendlyName = null, string recoveryProtectionContainerFriendlyName = null, string protectionState = null, string protectionStateDescription = null, string activeLocation = null, string testFailoverState = null, string testFailoverStateDescription = null, string switchProviderState = null, string switchProviderStateDescription = null, IEnumerable<string> allowedOperations = null, string replicationHealth = null, string failoverHealth = null, IEnumerable<SiteRecoveryHealthError> healthErrors = null, ResourceIdentifier policyId = null, string policyFriendlyName = null, DateTimeOffset? lastSuccessfulFailoverOn = null, DateTimeOffset? lastSuccessfulTestFailoverOn = null, CurrentScenarioDetails currentScenario = null, ResourceIdentifier failoverRecoveryPointId = null, ReplicationProviderSpecificSettings providerSpecificDetails = null, ResourceIdentifier recoveryContainerId = null, Guid? eventCorrelationId = null)
         {
             allowedOperations ??= new List<string>();
-            healthErrors ??= new List<HealthError>();
+            healthErrors ??= new List<SiteRecoveryHealthError>();
 
             return new ReplicationProtectedItemProperties(friendlyName, protectedItemType, protectableItemId, recoveryServicesProviderId, primaryFabricFriendlyName, primaryFabricProvider, recoveryFabricFriendlyName, recoveryFabricId, primaryProtectionContainerFriendlyName, recoveryProtectionContainerFriendlyName, protectionState, protectionStateDescription, activeLocation, testFailoverState, testFailoverStateDescription, switchProviderState, switchProviderStateDescription, allowedOperations?.ToList(), replicationHealth, failoverHealth, healthErrors?.ToList(), policyId, policyFriendlyName, lastSuccessfulFailoverOn, lastSuccessfulTestFailoverOn, currentScenario, failoverRecoveryPointId, providerSpecificDetails, recoveryContainerId, eventCorrelationId);
         }
@@ -524,25 +525,25 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="jobId"> ARM Id of the job being executed. </param>
         /// <param name="startOn"> Start time of the workflow. </param>
         /// <returns> A new <see cref="Models.CurrentScenarioDetails"/> instance for mocking. </returns>
-        public static CurrentScenarioDetails CurrentScenarioDetails(string scenarioName = null, string jobId = null, DateTimeOffset? startOn = null)
+        public static CurrentScenarioDetails CurrentScenarioDetails(string scenarioName = null, ResourceIdentifier jobId = null, DateTimeOffset? startOn = null)
         {
             return new CurrentScenarioDetails(scenarioName, jobId, startOn);
         }
 
-        /// <summary> Initializes a new instance of RecoveryPointData. </summary>
+        /// <summary> Initializes a new instance of SiteRecoveryPointData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties"> The recovery point properties. </param>
         /// <param name="location"> Resource Location. </param>
-        /// <returns> A new <see cref="RecoveryServicesSiteRecovery.RecoveryPointData"/> instance for mocking. </returns>
-        public static RecoveryPointData RecoveryPointData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, RecoveryPointProperties properties = null, AzureLocation? location = null)
+        /// <returns> A new <see cref="RecoveryServicesSiteRecovery.SiteRecoveryPointData"/> instance for mocking. </returns>
+        public static SiteRecoveryPointData SiteRecoveryPointData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, SiteRecoveryPointProperties properties = null, AzureLocation? location = null)
         {
-            return new RecoveryPointData(id, name, resourceType, systemData, properties, location);
+            return new SiteRecoveryPointData(id, name, resourceType, systemData, properties, location);
         }
 
-        /// <summary> Initializes a new instance of RecoveryPointProperties. </summary>
+        /// <summary> Initializes a new instance of SiteRecoveryPointProperties. </summary>
         /// <param name="recoveryPointOn"> The recovery point time. </param>
         /// <param name="recoveryPointType"> The recovery point type: ApplicationConsistent, CrashConsistent. </param>
         /// <param name="providerSpecificDetails">
@@ -550,10 +551,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// Please note <see cref="ProviderSpecificRecoveryPointDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="A2ARecoveryPointDetails"/>, <see cref="InMageAzureV2RecoveryPointDetails"/> and <see cref="InMageRcmRecoveryPointDetails"/>.
         /// </param>
-        /// <returns> A new <see cref="Models.RecoveryPointProperties"/> instance for mocking. </returns>
-        public static RecoveryPointProperties RecoveryPointProperties(DateTimeOffset? recoveryPointOn = null, string recoveryPointType = null, ProviderSpecificRecoveryPointDetails providerSpecificDetails = null)
+        /// <returns> A new <see cref="Models.SiteRecoveryPointProperties"/> instance for mocking. </returns>
+        public static SiteRecoveryPointProperties SiteRecoveryPointProperties(DateTimeOffset? recoveryPointOn = null, string recoveryPointType = null, ProviderSpecificRecoveryPointDetails providerSpecificDetails = null)
         {
-            return new RecoveryPointProperties(recoveryPointOn, recoveryPointType, providerSpecificDetails);
+            return new SiteRecoveryPointProperties(recoveryPointOn, recoveryPointType, providerSpecificDetails);
         }
 
         /// <summary> Initializes a new instance of TargetComputeSize. </summary>
@@ -580,21 +581,21 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="highIopsSupported"> The value indicating whether the target compute size supports high Iops. </param>
         /// <param name="hyperVGenerations"> The supported HyperV Generations. </param>
         /// <returns> A new <see cref="Models.TargetComputeSizeProperties"/> instance for mocking. </returns>
-        public static TargetComputeSizeProperties TargetComputeSizeProperties(string name = null, string friendlyName = null, int? cpuCoresCount = null, int? vCpusAvailable = null, double? memoryInGB = null, int? maxDataDiskCount = null, int? maxNicsCount = null, IEnumerable<ComputeSizeErrorDetails> errors = null, string highIopsSupported = null, IEnumerable<string> hyperVGenerations = null)
+        public static TargetComputeSizeProperties TargetComputeSizeProperties(string name = null, string friendlyName = null, int? cpuCoresCount = null, int? vCpusAvailable = null, double? memoryInGB = null, int? maxDataDiskCount = null, int? maxNicsCount = null, IEnumerable<SiteRecoveryComputeSizeErrorDetails> errors = null, string highIopsSupported = null, IEnumerable<string> hyperVGenerations = null)
         {
-            errors ??= new List<ComputeSizeErrorDetails>();
+            errors ??= new List<SiteRecoveryComputeSizeErrorDetails>();
             hyperVGenerations ??= new List<string>();
 
             return new TargetComputeSizeProperties(name, friendlyName, cpuCoresCount, vCpusAvailable, memoryInGB, maxDataDiskCount, maxNicsCount, errors?.ToList(), highIopsSupported, hyperVGenerations?.ToList());
         }
 
-        /// <summary> Initializes a new instance of ComputeSizeErrorDetails. </summary>
+        /// <summary> Initializes a new instance of SiteRecoveryComputeSizeErrorDetails. </summary>
         /// <param name="message"> The error message. </param>
         /// <param name="severity"> The severity of the error. </param>
-        /// <returns> A new <see cref="Models.ComputeSizeErrorDetails"/> instance for mocking. </returns>
-        public static ComputeSizeErrorDetails ComputeSizeErrorDetails(string message = null, string severity = null)
+        /// <returns> A new <see cref="Models.SiteRecoveryComputeSizeErrorDetails"/> instance for mocking. </returns>
+        public static SiteRecoveryComputeSizeErrorDetails SiteRecoveryComputeSizeErrorDetails(string message = null, string severity = null)
         {
-            return new ComputeSizeErrorDetails(message, severity);
+            return new SiteRecoveryComputeSizeErrorDetails(message, severity);
         }
 
         /// <summary> Initializes a new instance of ProtectionContainerMappingData. </summary>
@@ -627,35 +628,35 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="targetFabricFriendlyName"> Friendly name of target fabric. </param>
         /// <param name="policyFriendlyName"> Friendly name of replication policy. </param>
         /// <returns> A new <see cref="Models.ProtectionContainerMappingProperties"/> instance for mocking. </returns>
-        public static ProtectionContainerMappingProperties ProtectionContainerMappingProperties(string targetProtectionContainerId = null, string targetProtectionContainerFriendlyName = null, ProtectionContainerMappingProviderSpecificDetails providerSpecificDetails = null, string health = null, IEnumerable<HealthError> healthErrorDetails = null, string policyId = null, string state = null, string sourceProtectionContainerFriendlyName = null, string sourceFabricFriendlyName = null, string targetFabricFriendlyName = null, string policyFriendlyName = null)
+        public static ProtectionContainerMappingProperties ProtectionContainerMappingProperties(ResourceIdentifier targetProtectionContainerId = null, string targetProtectionContainerFriendlyName = null, ProtectionContainerMappingProviderSpecificDetails providerSpecificDetails = null, string health = null, IEnumerable<SiteRecoveryHealthError> healthErrorDetails = null, ResourceIdentifier policyId = null, string state = null, string sourceProtectionContainerFriendlyName = null, string sourceFabricFriendlyName = null, string targetFabricFriendlyName = null, string policyFriendlyName = null)
         {
-            healthErrorDetails ??= new List<HealthError>();
+            healthErrorDetails ??= new List<SiteRecoveryHealthError>();
 
             return new ProtectionContainerMappingProperties(targetProtectionContainerId, targetProtectionContainerFriendlyName, providerSpecificDetails, health, healthErrorDetails?.ToList(), policyId, state, sourceProtectionContainerFriendlyName, sourceFabricFriendlyName, targetFabricFriendlyName, policyFriendlyName);
         }
 
-        /// <summary> Initializes a new instance of RecoveryServicesProviderData. </summary>
+        /// <summary> Initializes a new instance of SiteRecoveryServicesProviderData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties"> Provider properties. </param>
         /// <param name="location"> Resource Location. </param>
-        /// <returns> A new <see cref="RecoveryServicesSiteRecovery.RecoveryServicesProviderData"/> instance for mocking. </returns>
-        public static RecoveryServicesProviderData RecoveryServicesProviderData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, RecoveryServicesProviderProperties properties = null, AzureLocation? location = null)
+        /// <returns> A new <see cref="RecoveryServicesSiteRecovery.SiteRecoveryServicesProviderData"/> instance for mocking. </returns>
+        public static SiteRecoveryServicesProviderData SiteRecoveryServicesProviderData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, SiteRecoveryServicesProviderProperties properties = null, AzureLocation? location = null)
         {
-            return new RecoveryServicesProviderData(id, name, resourceType, systemData, properties, location);
+            return new SiteRecoveryServicesProviderData(id, name, resourceType, systemData, properties, location);
         }
 
-        /// <summary> Initializes a new instance of RecoveryServicesProviderProperties. </summary>
+        /// <summary> Initializes a new instance of SiteRecoveryServicesProviderProperties. </summary>
         /// <param name="fabricType"> Type of the site. </param>
         /// <param name="friendlyName"> Friendly name of the DRA. </param>
         /// <param name="providerVersion"> The provider version. </param>
         /// <param name="serverVersion"> The fabric provider. </param>
         /// <param name="providerVersionState"> DRA version status. </param>
-        /// <param name="providerVersionExpiryOn"> Expiry date of the version. </param>
+        /// <param name="providerVersionExpireOn"> Expiry date of the version. </param>
         /// <param name="fabricFriendlyName"> The fabric friendly name. </param>
-        /// <param name="lastHeartBeat"> Time when last heartbeat was sent by the DRA. </param>
+        /// <param name="lastHeartbeatReceivedOn"> Time when last heartbeat was sent by the DRA. </param>
         /// <param name="connectionStatus"> A value indicating whether DRA is responsive. </param>
         /// <param name="protectedItemCount"> Number of protected VMs currently managed by the DRA. </param>
         /// <param name="allowedScenarios"> The scenarios allowed on this provider. </param>
@@ -668,13 +669,13 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="resourceAccessIdentityDetails"> The resource access identity details. </param>
         /// <param name="dataPlaneAuthenticationIdentityDetails"> The data plane authentication identity details. </param>
         /// <param name="providerVersionDetails"> The provider version details. </param>
-        /// <returns> A new <see cref="Models.RecoveryServicesProviderProperties"/> instance for mocking. </returns>
-        public static RecoveryServicesProviderProperties RecoveryServicesProviderProperties(string fabricType = null, string friendlyName = null, string providerVersion = null, string serverVersion = null, string providerVersionState = null, DateTimeOffset? providerVersionExpiryOn = null, string fabricFriendlyName = null, DateTimeOffset? lastHeartBeat = null, string connectionStatus = null, int? protectedItemCount = null, IEnumerable<string> allowedScenarios = null, IEnumerable<HealthError> healthErrorDetails = null, string draIdentifier = null, string machineId = null, string machineName = null, string biosId = null, IdentityProviderDetails authenticationIdentityDetails = null, IdentityProviderDetails resourceAccessIdentityDetails = null, IdentityProviderDetails dataPlaneAuthenticationIdentityDetails = null, VersionDetails providerVersionDetails = null)
+        /// <returns> A new <see cref="Models.SiteRecoveryServicesProviderProperties"/> instance for mocking. </returns>
+        public static SiteRecoveryServicesProviderProperties SiteRecoveryServicesProviderProperties(string fabricType = null, string friendlyName = null, string providerVersion = null, string serverVersion = null, string providerVersionState = null, DateTimeOffset? providerVersionExpireOn = null, string fabricFriendlyName = null, DateTimeOffset? lastHeartbeatReceivedOn = null, string connectionStatus = null, int? protectedItemCount = null, IEnumerable<string> allowedScenarios = null, IEnumerable<SiteRecoveryHealthError> healthErrorDetails = null, string draIdentifier = null, string machineId = null, string machineName = null, string biosId = null, IdentityProviderDetails authenticationIdentityDetails = null, IdentityProviderDetails resourceAccessIdentityDetails = null, IdentityProviderDetails dataPlaneAuthenticationIdentityDetails = null, SiteRecoveryVersionDetails providerVersionDetails = null)
         {
             allowedScenarios ??= new List<string>();
-            healthErrorDetails ??= new List<HealthError>();
+            healthErrorDetails ??= new List<SiteRecoveryHealthError>();
 
-            return new RecoveryServicesProviderProperties(fabricType, friendlyName, providerVersion, serverVersion, providerVersionState, providerVersionExpiryOn, fabricFriendlyName, lastHeartBeat, connectionStatus, protectedItemCount, allowedScenarios?.ToList(), healthErrorDetails?.ToList(), draIdentifier, machineId, machineName, biosId, authenticationIdentityDetails, resourceAccessIdentityDetails, dataPlaneAuthenticationIdentityDetails, providerVersionDetails);
+            return new SiteRecoveryServicesProviderProperties(fabricType, friendlyName, providerVersion, serverVersion, providerVersionState, providerVersionExpireOn, fabricFriendlyName, lastHeartbeatReceivedOn, connectionStatus, protectedItemCount, allowedScenarios?.ToList(), healthErrorDetails?.ToList(), draIdentifier, machineId, machineName, biosId, authenticationIdentityDetails, resourceAccessIdentityDetails, dataPlaneAuthenticationIdentityDetails, providerVersionDetails);
         }
 
         /// <summary> Initializes a new instance of IdentityProviderDetails. </summary>
@@ -689,14 +690,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             return new IdentityProviderDetails(tenantId, applicationId, objectId, audience, aadAuthority);
         }
 
-        /// <summary> Initializes a new instance of VersionDetails. </summary>
+        /// <summary> Initializes a new instance of SiteRecoveryVersionDetails. </summary>
         /// <param name="version"> The agent version. </param>
-        /// <param name="expiryOn"> Version expiry date. </param>
+        /// <param name="expireOn"> Version expiry date. </param>
         /// <param name="status"> A value indicating whether security update required. </param>
-        /// <returns> A new <see cref="Models.VersionDetails"/> instance for mocking. </returns>
-        public static VersionDetails VersionDetails(string version = null, DateTimeOffset? expiryOn = null, AgentVersionStatus? status = null)
+        /// <returns> A new <see cref="Models.SiteRecoveryVersionDetails"/> instance for mocking. </returns>
+        public static SiteRecoveryVersionDetails SiteRecoveryVersionDetails(string version = null, DateTimeOffset? expireOn = null, SiteRecoveryAgentVersionStatus? status = null)
         {
-            return new VersionDetails(version, expiryOn, status);
+            return new SiteRecoveryVersionDetails(version, expireOn, status);
         }
 
         /// <summary> Initializes a new instance of StorageClassificationData. </summary>
@@ -720,28 +721,28 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="targetStorageClassificationId"> Properties of the storage mapping object. </param>
         /// <param name="location"> Resource Location. </param>
         /// <returns> A new <see cref="RecoveryServicesSiteRecovery.StorageClassificationMappingData"/> instance for mocking. </returns>
-        public static StorageClassificationMappingData StorageClassificationMappingData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string targetStorageClassificationId = null, AzureLocation? location = null)
+        public static StorageClassificationMappingData StorageClassificationMappingData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ResourceIdentifier targetStorageClassificationId = null, AzureLocation? location = null)
         {
             return new StorageClassificationMappingData(id, name, resourceType, systemData, targetStorageClassificationId != null ? new StorageClassificationMappingProperties(targetStorageClassificationId) : null, location);
         }
 
-        /// <summary> Initializes a new instance of VCenterData. </summary>
+        /// <summary> Initializes a new instance of SiteRecoveryVCenterData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties"> VCenter related data. </param>
         /// <param name="location"> Resource Location. </param>
-        /// <returns> A new <see cref="RecoveryServicesSiteRecovery.VCenterData"/> instance for mocking. </returns>
-        public static VCenterData VCenterData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, VCenterProperties properties = null, AzureLocation? location = null)
+        /// <returns> A new <see cref="RecoveryServicesSiteRecovery.SiteRecoveryVCenterData"/> instance for mocking. </returns>
+        public static SiteRecoveryVCenterData SiteRecoveryVCenterData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, SiteRecoveryVCenterProperties properties = null, AzureLocation? location = null)
         {
-            return new VCenterData(id, name, resourceType, systemData, properties, location);
+            return new SiteRecoveryVCenterData(id, name, resourceType, systemData, properties, location);
         }
 
-        /// <summary> Initializes a new instance of VCenterProperties. </summary>
+        /// <summary> Initializes a new instance of SiteRecoveryVCenterProperties. </summary>
         /// <param name="friendlyName"> Friendly name of the vCenter. </param>
         /// <param name="internalId"> VCenter internal ID. </param>
-        /// <param name="lastHeartbeat"> The time when the last heartbeat was received by vCenter. </param>
+        /// <param name="lastHeartbeatReceivedOn"> The time when the last heartbeat was received by vCenter. </param>
         /// <param name="discoveryStatus"> The VCenter discovery status. </param>
         /// <param name="processServerId"> The process server Id. </param>
         /// <param name="ipAddress"> The IP address of the vCenter. </param>
@@ -750,28 +751,28 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="runAsAccountId"> The account Id which has privileges to discover the vCenter. </param>
         /// <param name="fabricArmResourceName"> The ARM resource name of the fabric containing this VCenter. </param>
         /// <param name="healthErrors"> The health errors for this VCenter. </param>
-        /// <returns> A new <see cref="Models.VCenterProperties"/> instance for mocking. </returns>
-        public static VCenterProperties VCenterProperties(string friendlyName = null, string internalId = null, DateTimeOffset? lastHeartbeat = null, string discoveryStatus = null, string processServerId = null, string ipAddress = null, string infrastructureId = null, string port = null, string runAsAccountId = null, string fabricArmResourceName = null, IEnumerable<HealthError> healthErrors = null)
+        /// <returns> A new <see cref="Models.SiteRecoveryVCenterProperties"/> instance for mocking. </returns>
+        public static SiteRecoveryVCenterProperties SiteRecoveryVCenterProperties(string friendlyName = null, string internalId = null, DateTimeOffset? lastHeartbeatReceivedOn = null, string discoveryStatus = null, Guid? processServerId = null, IPAddress ipAddress = null, string infrastructureId = null, string port = null, string runAsAccountId = null, string fabricArmResourceName = null, IEnumerable<SiteRecoveryHealthError> healthErrors = null)
         {
-            healthErrors ??= new List<HealthError>();
+            healthErrors ??= new List<SiteRecoveryHealthError>();
 
-            return new VCenterProperties(friendlyName, internalId, lastHeartbeat, discoveryStatus, processServerId, ipAddress, infrastructureId, port, runAsAccountId, fabricArmResourceName, healthErrors?.ToList());
+            return new SiteRecoveryVCenterProperties(friendlyName, internalId, lastHeartbeatReceivedOn, discoveryStatus, processServerId, ipAddress, infrastructureId, port, runAsAccountId, fabricArmResourceName, healthErrors?.ToList());
         }
 
-        /// <summary> Initializes a new instance of JobData. </summary>
+        /// <summary> Initializes a new instance of SiteRecoveryJobData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties"> The custom data. </param>
         /// <param name="location"> Resource Location. </param>
-        /// <returns> A new <see cref="RecoveryServicesSiteRecovery.JobData"/> instance for mocking. </returns>
-        public static JobData JobData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, JobProperties properties = null, AzureLocation? location = null)
+        /// <returns> A new <see cref="RecoveryServicesSiteRecovery.SiteRecoveryJobData"/> instance for mocking. </returns>
+        public static SiteRecoveryJobData SiteRecoveryJobData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, SiteRecoveryJobProperties properties = null, AzureLocation? location = null)
         {
-            return new JobData(id, name, resourceType, systemData, properties, location);
+            return new SiteRecoveryJobData(id, name, resourceType, systemData, properties, location);
         }
 
-        /// <summary> Initializes a new instance of JobProperties. </summary>
+        /// <summary> Initializes a new instance of SiteRecoveryJobProperties. </summary>
         /// <param name="activityId"> The activity id. </param>
         /// <param name="scenarioName"> The ScenarioName. </param>
         /// <param name="friendlyName"> The DisplayName. </param>
@@ -787,20 +788,20 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="targetInstanceType"> The type of the affected object which is of Microsoft.Azure.SiteRecovery.V2015_11_10.AffectedObjectType class. </param>
         /// <param name="customDetails">
         /// The custom job details like test failover job details.
-        /// Please note <see cref="JobDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="SiteRecoveryJobDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="AsrJobDetails"/>, <see cref="ExportJobDetails"/>, <see cref="FailoverJobDetails"/>, <see cref="SwitchProtectionJobDetails"/> and <see cref="TestFailoverJobDetails"/>.
         /// </param>
-        /// <returns> A new <see cref="Models.JobProperties"/> instance for mocking. </returns>
-        public static JobProperties JobProperties(string activityId = null, string scenarioName = null, string friendlyName = null, string state = null, string stateDescription = null, IEnumerable<ASRTask> tasks = null, IEnumerable<JobErrorDetails> errors = null, DateTimeOffset? startOn = null, DateTimeOffset? endOn = null, IEnumerable<string> allowedActions = null, string targetObjectId = null, string targetObjectName = null, string targetInstanceType = null, JobDetails customDetails = null)
+        /// <returns> A new <see cref="Models.SiteRecoveryJobProperties"/> instance for mocking. </returns>
+        public static SiteRecoveryJobProperties SiteRecoveryJobProperties(string activityId = null, string scenarioName = null, string friendlyName = null, string state = null, string stateDescription = null, IEnumerable<AsrTask> tasks = null, IEnumerable<SiteRecoveryJobErrorDetails> errors = null, DateTimeOffset? startOn = null, DateTimeOffset? endOn = null, IEnumerable<string> allowedActions = null, string targetObjectId = null, string targetObjectName = null, string targetInstanceType = null, SiteRecoveryJobDetails customDetails = null)
         {
-            tasks ??= new List<ASRTask>();
-            errors ??= new List<JobErrorDetails>();
+            tasks ??= new List<AsrTask>();
+            errors ??= new List<SiteRecoveryJobErrorDetails>();
             allowedActions ??= new List<string>();
 
-            return new JobProperties(activityId, scenarioName, friendlyName, state, stateDescription, tasks?.ToList(), errors?.ToList(), startOn, endOn, allowedActions?.ToList(), targetObjectId, targetObjectName, targetInstanceType, customDetails);
+            return new SiteRecoveryJobProperties(activityId, scenarioName, friendlyName, state, stateDescription, tasks?.ToList(), errors?.ToList(), startOn, endOn, allowedActions?.ToList(), targetObjectId, targetObjectName, targetInstanceType, customDetails);
         }
 
-        /// <summary> Initializes a new instance of ASRTask. </summary>
+        /// <summary> Initializes a new instance of AsrTask. </summary>
         /// <param name="taskId"> The Id. </param>
         /// <param name="name"> The unique Task name. </param>
         /// <param name="startOn"> The start time. </param>
@@ -812,106 +813,106 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="taskType"> The type of task. Details in CustomDetails property depend on this type. </param>
         /// <param name="customDetails">
         /// The custom task details based on the task type.
-        /// Please note <see cref="TaskTypeDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="AutomationRunbookTaskDetails"/>, <see cref="ConsistencyCheckTaskDetails"/>, <see cref="FabricReplicationGroupTaskDetails"/>, <see cref="JobTaskDetails"/>, <see cref="ManualActionTaskDetails"/>, <see cref="ScriptActionTaskDetails"/>, <see cref="VirtualMachineTaskDetails"/> and <see cref="VmNicUpdatesTaskDetails"/>.
+        /// Please note <see cref="SiteRecoveryTaskTypeDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="AutomationRunbookTaskDetails"/>, <see cref="ConsistencyCheckTaskDetails"/>, <see cref="FabricReplicationGroupTaskDetails"/>, <see cref="SiteRecoveryJobTaskDetails"/>, <see cref="ManualActionTaskDetails"/>, <see cref="ScriptActionTaskDetails"/>, <see cref="SiteRecoveryVmTaskDetails"/> and <see cref="VmNicUpdatesTaskDetails"/>.
         /// </param>
         /// <param name="groupTaskCustomDetails">
         /// The custom task details based on the task type, if the task type is GroupTaskDetails or one of the types derived from it.
-        /// Please note <see cref="GroupTaskDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="SiteRecoveryGroupTaskDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="InlineWorkflowTaskDetails"/>, <see cref="RecoveryPlanGroupTaskDetails"/> and <see cref="RecoveryPlanShutdownGroupTaskDetails"/>.
         /// </param>
         /// <param name="errors"> The task error details. </param>
-        /// <returns> A new <see cref="Models.ASRTask"/> instance for mocking. </returns>
-        public static ASRTask ASRTask(string taskId = null, string name = null, DateTimeOffset? startOn = null, DateTimeOffset? endOn = null, IEnumerable<string> allowedActions = null, string friendlyName = null, string state = null, string stateDescription = null, string taskType = null, TaskTypeDetails customDetails = null, GroupTaskDetails groupTaskCustomDetails = null, IEnumerable<JobErrorDetails> errors = null)
+        /// <returns> A new <see cref="Models.AsrTask"/> instance for mocking. </returns>
+        public static AsrTask AsrTask(string taskId = null, string name = null, DateTimeOffset? startOn = null, DateTimeOffset? endOn = null, IEnumerable<string> allowedActions = null, string friendlyName = null, string state = null, string stateDescription = null, string taskType = null, SiteRecoveryTaskTypeDetails customDetails = null, SiteRecoveryGroupTaskDetails groupTaskCustomDetails = null, IEnumerable<SiteRecoveryJobErrorDetails> errors = null)
         {
             allowedActions ??= new List<string>();
-            errors ??= new List<JobErrorDetails>();
+            errors ??= new List<SiteRecoveryJobErrorDetails>();
 
-            return new ASRTask(taskId, name, startOn, endOn, allowedActions?.ToList(), friendlyName, state, stateDescription, taskType, customDetails, groupTaskCustomDetails, errors?.ToList());
+            return new AsrTask(taskId, name, startOn, endOn, allowedActions?.ToList(), friendlyName, state, stateDescription, taskType, customDetails, groupTaskCustomDetails, errors?.ToList());
         }
 
-        /// <summary> Initializes a new instance of GroupTaskDetails. </summary>
+        /// <summary> Initializes a new instance of SiteRecoveryGroupTaskDetails. </summary>
         /// <param name="instanceType"> The type of task details. </param>
         /// <param name="childTasks"> The child tasks. </param>
-        /// <returns> A new <see cref="Models.GroupTaskDetails"/> instance for mocking. </returns>
-        public static GroupTaskDetails GroupTaskDetails(string instanceType = null, IEnumerable<ASRTask> childTasks = null)
+        /// <returns> A new <see cref="Models.SiteRecoveryGroupTaskDetails"/> instance for mocking. </returns>
+        public static SiteRecoveryGroupTaskDetails SiteRecoveryGroupTaskDetails(string instanceType = null, IEnumerable<AsrTask> childTasks = null)
         {
-            childTasks ??= new List<ASRTask>();
+            childTasks ??= new List<AsrTask>();
 
             return new UnknownGroupTaskDetails(instanceType, childTasks?.ToList());
         }
 
-        /// <summary> Initializes a new instance of JobErrorDetails. </summary>
+        /// <summary> Initializes a new instance of SiteRecoveryJobErrorDetails. </summary>
         /// <param name="serviceErrorDetails"> The Service error details. </param>
         /// <param name="providerErrorDetails"> The Provider error details. </param>
         /// <param name="errorLevel"> Error level of error. </param>
         /// <param name="createdOn"> The creation time of job error. </param>
         /// <param name="taskId"> The Id of the task. </param>
-        /// <returns> A new <see cref="Models.JobErrorDetails"/> instance for mocking. </returns>
-        public static JobErrorDetails JobErrorDetails(ServiceError serviceErrorDetails = null, ProviderError providerErrorDetails = null, string errorLevel = null, DateTimeOffset? createdOn = null, string taskId = null)
+        /// <returns> A new <see cref="Models.SiteRecoveryJobErrorDetails"/> instance for mocking. </returns>
+        public static SiteRecoveryJobErrorDetails SiteRecoveryJobErrorDetails(SiteRecoveryServiceError serviceErrorDetails = null, SiteRecoveryJobProviderError providerErrorDetails = null, string errorLevel = null, DateTimeOffset? createdOn = null, string taskId = null)
         {
-            return new JobErrorDetails(serviceErrorDetails, providerErrorDetails, errorLevel, createdOn, taskId);
+            return new SiteRecoveryJobErrorDetails(serviceErrorDetails, providerErrorDetails, errorLevel, createdOn, taskId);
         }
 
-        /// <summary> Initializes a new instance of ServiceError. </summary>
+        /// <summary> Initializes a new instance of SiteRecoveryServiceError. </summary>
         /// <param name="code"> Error code. </param>
         /// <param name="message"> Error message. </param>
         /// <param name="possibleCauses"> Possible causes of error. </param>
         /// <param name="recommendedAction"> Recommended action to resolve error. </param>
         /// <param name="activityId"> Activity Id. </param>
-        /// <returns> A new <see cref="Models.ServiceError"/> instance for mocking. </returns>
-        public static ServiceError ServiceError(string code = null, string message = null, string possibleCauses = null, string recommendedAction = null, string activityId = null)
+        /// <returns> A new <see cref="Models.SiteRecoveryServiceError"/> instance for mocking. </returns>
+        public static SiteRecoveryServiceError SiteRecoveryServiceError(string code = null, string message = null, string possibleCauses = null, string recommendedAction = null, string activityId = null)
         {
-            return new ServiceError(code, message, possibleCauses, recommendedAction, activityId);
+            return new SiteRecoveryServiceError(code, message, possibleCauses, recommendedAction, activityId);
         }
 
-        /// <summary> Initializes a new instance of ProviderError. </summary>
+        /// <summary> Initializes a new instance of SiteRecoveryJobProviderError. </summary>
         /// <param name="errorCode"> The Error code. </param>
         /// <param name="errorMessage"> The Error message. </param>
         /// <param name="errorId"> The Provider error Id. </param>
         /// <param name="possibleCauses"> The possible causes for the error. </param>
         /// <param name="recommendedAction"> The recommended action to resolve the error. </param>
-        /// <returns> A new <see cref="Models.ProviderError"/> instance for mocking. </returns>
-        public static ProviderError ProviderError(int? errorCode = null, string errorMessage = null, string errorId = null, string possibleCauses = null, string recommendedAction = null)
+        /// <returns> A new <see cref="Models.SiteRecoveryJobProviderError"/> instance for mocking. </returns>
+        public static SiteRecoveryJobProviderError SiteRecoveryJobProviderError(int? errorCode = null, string errorMessage = null, string errorId = null, string possibleCauses = null, string recommendedAction = null)
         {
-            return new ProviderError(errorCode, errorMessage, errorId, possibleCauses, recommendedAction);
+            return new SiteRecoveryJobProviderError(errorCode, errorMessage, errorId, possibleCauses, recommendedAction);
         }
 
-        /// <summary> Initializes a new instance of JobDetails. </summary>
+        /// <summary> Initializes a new instance of SiteRecoveryJobDetails. </summary>
         /// <param name="instanceType"> Gets the type of job details (see JobDetailsTypes enum for possible values). </param>
         /// <param name="affectedObjectDetails"> The affected object properties like source server, source cloud, target server, target cloud etc. based on the workflow object details. </param>
-        /// <returns> A new <see cref="Models.JobDetails"/> instance for mocking. </returns>
-        public static JobDetails JobDetails(string instanceType = null, IReadOnlyDictionary<string, string> affectedObjectDetails = null)
+        /// <returns> A new <see cref="Models.SiteRecoveryJobDetails"/> instance for mocking. </returns>
+        public static SiteRecoveryJobDetails SiteRecoveryJobDetails(string instanceType = null, IReadOnlyDictionary<string, string> affectedObjectDetails = null)
         {
             affectedObjectDetails ??= new Dictionary<string, string>();
 
             return new UnknownJobDetails(instanceType, affectedObjectDetails);
         }
 
-        /// <summary> Initializes a new instance of PolicyData. </summary>
+        /// <summary> Initializes a new instance of SiteRecoveryPolicyData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties"> The custom data. </param>
         /// <param name="location"> Resource Location. </param>
-        /// <returns> A new <see cref="RecoveryServicesSiteRecovery.PolicyData"/> instance for mocking. </returns>
-        public static PolicyData PolicyData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, PolicyProperties properties = null, AzureLocation? location = null)
+        /// <returns> A new <see cref="RecoveryServicesSiteRecovery.SiteRecoveryPolicyData"/> instance for mocking. </returns>
+        public static SiteRecoveryPolicyData SiteRecoveryPolicyData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, SiteRecoveryPolicyProperties properties = null, AzureLocation? location = null)
         {
-            return new PolicyData(id, name, resourceType, systemData, properties, location);
+            return new SiteRecoveryPolicyData(id, name, resourceType, systemData, properties, location);
         }
 
-        /// <summary> Initializes a new instance of PolicyProperties. </summary>
+        /// <summary> Initializes a new instance of SiteRecoveryPolicyProperties. </summary>
         /// <param name="friendlyName"> The FriendlyName. </param>
         /// <param name="providerSpecificDetails">
         /// The ReplicationChannelSetting.
         /// Please note <see cref="PolicyProviderSpecificDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="A2APolicyDetails"/>, <see cref="HyperVReplicaPolicyDetails"/>, <see cref="HyperVReplicaBluePolicyDetails"/>, <see cref="HyperVReplicaAzurePolicyDetails"/>, <see cref="HyperVReplicaBasePolicyDetails"/>, <see cref="InMagePolicyDetails"/>, <see cref="InMageAzureV2PolicyDetails"/>, <see cref="InMageBasePolicyDetails"/>, <see cref="InMageRcmPolicyDetails"/>, <see cref="InMageRcmFailbackPolicyDetails"/> and <see cref="VMwareCbtPolicyDetails"/>.
         /// </param>
-        /// <returns> A new <see cref="Models.PolicyProperties"/> instance for mocking. </returns>
-        public static PolicyProperties PolicyProperties(string friendlyName = null, PolicyProviderSpecificDetails providerSpecificDetails = null)
+        /// <returns> A new <see cref="Models.SiteRecoveryPolicyProperties"/> instance for mocking. </returns>
+        public static SiteRecoveryPolicyProperties SiteRecoveryPolicyProperties(string friendlyName = null, PolicyProviderSpecificDetails providerSpecificDetails = null)
         {
-            return new PolicyProperties(friendlyName, providerSpecificDetails);
+            return new SiteRecoveryPolicyProperties(friendlyName, providerSpecificDetails);
         }
 
         /// <summary> Initializes a new instance of ReplicationProtectionIntentData. </summary>
@@ -932,32 +933,32 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="jobId"> The job Id. </param>
         /// <param name="jobState"> The job state. </param>
         /// <param name="isActive"> A value indicating whether the intent object is active. </param>
-        /// <param name="creationTimeUTC"> The creation time in UTC. </param>
+        /// <param name="createdOn"> The creation time in UTC. </param>
         /// <param name="providerSpecificDetails">
         /// The Replication provider custom settings.
         /// Please note <see cref="ReplicationProtectionIntentProviderSpecificSettings"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="A2AReplicationIntentDetails"/>.
         /// </param>
         /// <returns> A new <see cref="Models.ReplicationProtectionIntentProperties"/> instance for mocking. </returns>
-        public static ReplicationProtectionIntentProperties ReplicationProtectionIntentProperties(string friendlyName = null, string jobId = null, string jobState = null, bool? isActive = null, string creationTimeUTC = null, ReplicationProtectionIntentProviderSpecificSettings providerSpecificDetails = null)
+        public static ReplicationProtectionIntentProperties ReplicationProtectionIntentProperties(string friendlyName = null, ResourceIdentifier jobId = null, string jobState = null, bool? isActive = null, string createdOn = null, ReplicationProtectionIntentProviderSpecificSettings providerSpecificDetails = null)
         {
-            return new ReplicationProtectionIntentProperties(friendlyName, jobId, jobState, isActive, creationTimeUTC, providerSpecificDetails);
+            return new ReplicationProtectionIntentProperties(friendlyName, jobId, jobState, isActive, createdOn, providerSpecificDetails);
         }
 
-        /// <summary> Initializes a new instance of RecoveryPlanData. </summary>
+        /// <summary> Initializes a new instance of SiteRecoveryRecoveryPlanData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties"> The custom details. </param>
         /// <param name="location"> Resource Location. </param>
-        /// <returns> A new <see cref="RecoveryServicesSiteRecovery.RecoveryPlanData"/> instance for mocking. </returns>
-        public static RecoveryPlanData RecoveryPlanData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, RecoveryPlanProperties properties = null, AzureLocation? location = null)
+        /// <returns> A new <see cref="RecoveryServicesSiteRecovery.SiteRecoveryRecoveryPlanData"/> instance for mocking. </returns>
+        public static SiteRecoveryRecoveryPlanData SiteRecoveryRecoveryPlanData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, SiteRecoveryRecoveryPlanProperties properties = null, AzureLocation? location = null)
         {
-            return new RecoveryPlanData(id, name, resourceType, systemData, properties, location);
+            return new SiteRecoveryRecoveryPlanData(id, name, resourceType, systemData, properties, location);
         }
 
-        /// <summary> Initializes a new instance of RecoveryPlanProperties. </summary>
+        /// <summary> Initializes a new instance of SiteRecoveryRecoveryPlanProperties. </summary>
         /// <param name="friendlyName"> The friendly name. </param>
         /// <param name="primaryFabricId"> The primary fabric Id. </param>
         /// <param name="primaryFabricFriendlyName"> The primary fabric friendly name. </param>
@@ -978,62 +979,62 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// Please note <see cref="RecoveryPlanProviderSpecificDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="RecoveryPlanA2ADetails"/>.
         /// </param>
-        /// <returns> A new <see cref="Models.RecoveryPlanProperties"/> instance for mocking. </returns>
-        public static RecoveryPlanProperties RecoveryPlanProperties(string friendlyName = null, string primaryFabricId = null, string primaryFabricFriendlyName = null, string recoveryFabricId = null, string recoveryFabricFriendlyName = null, string failoverDeploymentModel = null, IEnumerable<string> replicationProviders = null, IEnumerable<string> allowedOperations = null, DateTimeOffset? lastPlannedFailoverOn = null, DateTimeOffset? lastUnplannedFailoverOn = null, DateTimeOffset? lastTestFailoverOn = null, CurrentScenarioDetails currentScenario = null, string currentScenarioStatus = null, string currentScenarioStatusDescription = null, IEnumerable<RecoveryPlanGroup> groups = null, IEnumerable<RecoveryPlanProviderSpecificDetails> providerSpecificDetails = null)
+        /// <returns> A new <see cref="Models.SiteRecoveryRecoveryPlanProperties"/> instance for mocking. </returns>
+        public static SiteRecoveryRecoveryPlanProperties SiteRecoveryRecoveryPlanProperties(string friendlyName = null, ResourceIdentifier primaryFabricId = null, string primaryFabricFriendlyName = null, ResourceIdentifier recoveryFabricId = null, string recoveryFabricFriendlyName = null, string failoverDeploymentModel = null, IEnumerable<string> replicationProviders = null, IEnumerable<string> allowedOperations = null, DateTimeOffset? lastPlannedFailoverOn = null, DateTimeOffset? lastUnplannedFailoverOn = null, DateTimeOffset? lastTestFailoverOn = null, CurrentScenarioDetails currentScenario = null, string currentScenarioStatus = null, string currentScenarioStatusDescription = null, IEnumerable<SiteRecoveryPlanGroup> groups = null, IEnumerable<RecoveryPlanProviderSpecificDetails> providerSpecificDetails = null)
         {
             replicationProviders ??= new List<string>();
             allowedOperations ??= new List<string>();
-            groups ??= new List<RecoveryPlanGroup>();
+            groups ??= new List<SiteRecoveryPlanGroup>();
             providerSpecificDetails ??= new List<RecoveryPlanProviderSpecificDetails>();
 
-            return new RecoveryPlanProperties(friendlyName, primaryFabricId, primaryFabricFriendlyName, recoveryFabricId, recoveryFabricFriendlyName, failoverDeploymentModel, replicationProviders?.ToList(), allowedOperations?.ToList(), lastPlannedFailoverOn, lastUnplannedFailoverOn, lastTestFailoverOn, currentScenario, currentScenarioStatus, currentScenarioStatusDescription, groups?.ToList(), providerSpecificDetails?.ToList());
+            return new SiteRecoveryRecoveryPlanProperties(friendlyName, primaryFabricId, primaryFabricFriendlyName, recoveryFabricId, recoveryFabricFriendlyName, failoverDeploymentModel, replicationProviders?.ToList(), allowedOperations?.ToList(), lastPlannedFailoverOn, lastUnplannedFailoverOn, lastTestFailoverOn, currentScenario, currentScenarioStatus, currentScenarioStatusDescription, groups?.ToList(), providerSpecificDetails?.ToList());
         }
 
-        /// <summary> Initializes a new instance of SupportedOperatingSystems. </summary>
+        /// <summary> Initializes a new instance of SiteRecoverySupportedOperatingSystems. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="supportedOSList"> The supported operating systems properties. </param>
         /// <param name="location"> Resource Location. </param>
-        /// <returns> A new <see cref="Models.SupportedOperatingSystems"/> instance for mocking. </returns>
-        public static SupportedOperatingSystems SupportedOperatingSystems(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IEnumerable<SupportedOSProperty> supportedOSList = null, AzureLocation? location = null)
+        /// <returns> A new <see cref="Models.SiteRecoverySupportedOperatingSystems"/> instance for mocking. </returns>
+        public static SiteRecoverySupportedOperatingSystems SiteRecoverySupportedOperatingSystems(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IEnumerable<SiteRecoverySupportedOSProperty> supportedOSList = null, AzureLocation? location = null)
         {
-            supportedOSList ??= new List<SupportedOSProperty>();
+            supportedOSList ??= new List<SiteRecoverySupportedOSProperty>();
 
-            return new SupportedOperatingSystems(id, name, resourceType, systemData, supportedOSList != null ? new SupportedOSProperties(supportedOSList?.ToList()) : null, location);
+            return new SiteRecoverySupportedOperatingSystems(id, name, resourceType, systemData, supportedOSList != null ? new SiteRecoverySupportedOSProperties(supportedOSList?.ToList()) : null, location);
         }
 
-        /// <summary> Initializes a new instance of SupportedOSProperty. </summary>
+        /// <summary> Initializes a new instance of SiteRecoverySupportedOSProperty. </summary>
         /// <param name="instanceType"> The replication provider type. </param>
         /// <param name="supportedOS"> The list of supported operating systems. </param>
-        /// <returns> A new <see cref="Models.SupportedOSProperty"/> instance for mocking. </returns>
-        public static SupportedOSProperty SupportedOSProperty(string instanceType = null, IEnumerable<SupportedOSDetails> supportedOS = null)
+        /// <returns> A new <see cref="Models.SiteRecoverySupportedOSProperty"/> instance for mocking. </returns>
+        public static SiteRecoverySupportedOSProperty SiteRecoverySupportedOSProperty(string instanceType = null, IEnumerable<SiteRecoverySupportedOSDetails> supportedOS = null)
         {
-            supportedOS ??= new List<SupportedOSDetails>();
+            supportedOS ??= new List<SiteRecoverySupportedOSDetails>();
 
-            return new SupportedOSProperty(instanceType, supportedOS?.ToList());
+            return new SiteRecoverySupportedOSProperty(instanceType, supportedOS?.ToList());
         }
 
-        /// <summary> Initializes a new instance of SupportedOSDetails. </summary>
+        /// <summary> Initializes a new instance of SiteRecoverySupportedOSDetails. </summary>
         /// <param name="osName"> The name. </param>
         /// <param name="osType"> The type. </param>
         /// <param name="osVersions"> The list of version for operating system. </param>
-        /// <returns> A new <see cref="Models.SupportedOSDetails"/> instance for mocking. </returns>
-        public static SupportedOSDetails SupportedOSDetails(string osName = null, string osType = null, IEnumerable<OSVersionWrapper> osVersions = null)
+        /// <returns> A new <see cref="Models.SiteRecoverySupportedOSDetails"/> instance for mocking. </returns>
+        public static SiteRecoverySupportedOSDetails SiteRecoverySupportedOSDetails(string osName = null, string osType = null, IEnumerable<SiteRecoveryOSVersionWrapper> osVersions = null)
         {
-            osVersions ??= new List<OSVersionWrapper>();
+            osVersions ??= new List<SiteRecoveryOSVersionWrapper>();
 
-            return new SupportedOSDetails(osName, osType, osVersions?.ToList());
+            return new SiteRecoverySupportedOSDetails(osName, osType, osVersions?.ToList());
         }
 
-        /// <summary> Initializes a new instance of OSVersionWrapper. </summary>
+        /// <summary> Initializes a new instance of SiteRecoveryOSVersionWrapper. </summary>
         /// <param name="version"> The version. </param>
         /// <param name="servicePack"> The service pack. </param>
-        /// <returns> A new <see cref="Models.OSVersionWrapper"/> instance for mocking. </returns>
-        public static OSVersionWrapper OSVersionWrapper(string version = null, string servicePack = null)
+        /// <returns> A new <see cref="Models.SiteRecoveryOSVersionWrapper"/> instance for mocking. </returns>
+        public static SiteRecoveryOSVersionWrapper SiteRecoveryOSVersionWrapper(string version = null, string servicePack = null)
         {
-            return new OSVersionWrapper(version, servicePack);
+            return new SiteRecoveryOSVersionWrapper(version, servicePack);
         }
 
         /// <summary> Initializes a new instance of VaultHealthDetails. </summary>
@@ -1055,9 +1056,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="fabricsHealth"> The list of the health detail of the fabrics in the vault. </param>
         /// <param name="containersHealth"> The list of the health detail of the containers in the vault. </param>
         /// <returns> A new <see cref="Models.VaultHealthProperties"/> instance for mocking. </returns>
-        public static VaultHealthProperties VaultHealthProperties(IEnumerable<HealthError> vaultErrors = null, ResourceHealthSummary protectedItemsHealth = null, ResourceHealthSummary fabricsHealth = null, ResourceHealthSummary containersHealth = null)
+        public static VaultHealthProperties VaultHealthProperties(IEnumerable<SiteRecoveryHealthError> vaultErrors = null, ResourceHealthSummary protectedItemsHealth = null, ResourceHealthSummary fabricsHealth = null, ResourceHealthSummary containersHealth = null)
         {
-            vaultErrors ??= new List<HealthError>();
+            vaultErrors ??= new List<SiteRecoveryHealthError>();
 
             return new VaultHealthProperties(vaultErrors?.ToList(), protectedItemsHealth, fabricsHealth, containersHealth);
         }
@@ -1084,33 +1085,33 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="affectedResourceSubtype"> The sub type of any subcomponent within the ARM resource that this might be applicable. Value remains null if not applicable. </param>
         /// <param name="affectedResourceCorrelationIds"> The list of affected resource correlation Ids. This can be used to uniquely identify the count of items affected by a specific category and severity as well as count of item affected by an specific issue. </param>
         /// <returns> A new <see cref="Models.HealthErrorSummary"/> instance for mocking. </returns>
-        public static HealthErrorSummary HealthErrorSummary(string summaryCode = null, HealthErrorCategory? category = null, Severity? severity = null, string summaryMessage = null, string affectedResourceType = null, string affectedResourceSubtype = null, IEnumerable<string> affectedResourceCorrelationIds = null)
+        public static HealthErrorSummary HealthErrorSummary(string summaryCode = null, HealthErrorCategory? category = null, SiteRecoveryErrorSeverity? severity = null, string summaryMessage = null, string affectedResourceType = null, string affectedResourceSubtype = null, IEnumerable<string> affectedResourceCorrelationIds = null)
         {
             affectedResourceCorrelationIds ??= new List<string>();
 
             return new HealthErrorSummary(summaryCode, category, severity, summaryMessage, affectedResourceType, affectedResourceSubtype, affectedResourceCorrelationIds?.ToList());
         }
 
-        /// <summary> Initializes a new instance of VaultSettingData. </summary>
+        /// <summary> Initializes a new instance of SiteRecoveryVaultSettingData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties"> The vault setting properties. </param>
         /// <param name="location"> Resource Location. </param>
-        /// <returns> A new <see cref="RecoveryServicesSiteRecovery.VaultSettingData"/> instance for mocking. </returns>
-        public static VaultSettingData VaultSettingData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, VaultSettingProperties properties = null, AzureLocation? location = null)
+        /// <returns> A new <see cref="RecoveryServicesSiteRecovery.SiteRecoveryVaultSettingData"/> instance for mocking. </returns>
+        public static SiteRecoveryVaultSettingData SiteRecoveryVaultSettingData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, SiteRecoveryVaultSettingProperties properties = null, AzureLocation? location = null)
         {
-            return new VaultSettingData(id, name, resourceType, systemData, properties, location);
+            return new SiteRecoveryVaultSettingData(id, name, resourceType, systemData, properties, location);
         }
 
-        /// <summary> Initializes a new instance of VaultSettingProperties. </summary>
+        /// <summary> Initializes a new instance of SiteRecoveryVaultSettingProperties. </summary>
         /// <param name="migrationSolutionId"> The migration solution ARM Id. </param>
         /// <param name="vmwareToAzureProviderType"> VMware to Azure provider type. </param>
-        /// <returns> A new <see cref="Models.VaultSettingProperties"/> instance for mocking. </returns>
-        public static VaultSettingProperties VaultSettingProperties(string migrationSolutionId = null, string vmwareToAzureProviderType = null)
+        /// <returns> A new <see cref="Models.SiteRecoveryVaultSettingProperties"/> instance for mocking. </returns>
+        public static SiteRecoveryVaultSettingProperties SiteRecoveryVaultSettingProperties(ResourceIdentifier migrationSolutionId = null, string vmwareToAzureProviderType = null)
         {
-            return new VaultSettingProperties(migrationSolutionId, vmwareToAzureProviderType);
+            return new SiteRecoveryVaultSettingProperties(migrationSolutionId, vmwareToAzureProviderType);
         }
 
         /// <summary> Initializes a new instance of A2ACrossClusterMigrationReplicationDetails. </summary>
@@ -1121,7 +1122,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="vmProtectionStateDescription"> The protection state description for the vm. </param>
         /// <param name="lifecycleId"> An id associated with the PE that survives actions like switch protection which change the backing PE/CPE objects internally.The lifecycle id gets carried forward to have a link/continuity in being able to have an Id that denotes the "same" protected item even though other internal Ids/ARM Id might be changing. </param>
         /// <returns> A new <see cref="Models.A2ACrossClusterMigrationReplicationDetails"/> instance for mocking. </returns>
-        public static A2ACrossClusterMigrationReplicationDetails A2ACrossClusterMigrationReplicationDetails(string fabricObjectId = null, string primaryFabricLocation = null, string osType = null, string vmProtectionState = null, string vmProtectionStateDescription = null, string lifecycleId = null)
+        public static A2ACrossClusterMigrationReplicationDetails A2ACrossClusterMigrationReplicationDetails(ResourceIdentifier fabricObjectId = null, AzureLocation? primaryFabricLocation = null, string osType = null, string vmProtectionState = null, string vmProtectionStateDescription = null, string lifecycleId = null)
         {
             return new A2ACrossClusterMigrationReplicationDetails("A2ACrossClusterMigration", fabricObjectId, primaryFabricLocation, osType, vmProtectionState, vmProtectionStateDescription, lifecycleId);
         }
@@ -1134,7 +1135,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="remoteFabricName"> Remote fabric arm name. </param>
         /// <param name="remoteFabricLocation"> Remote fabric location. </param>
         /// <returns> A new <see cref="Models.A2AEventDetails"/> instance for mocking. </returns>
-        public static A2AEventDetails A2AEventDetails(string protectedItemName = null, string fabricObjectId = null, string fabricName = null, string fabricLocation = null, string remoteFabricName = null, string remoteFabricLocation = null)
+        public static A2AEventDetails A2AEventDetails(string protectedItemName = null, ResourceIdentifier fabricObjectId = null, string fabricName = null, AzureLocation? fabricLocation = null, string remoteFabricName = null, AzureLocation? remoteFabricLocation = null)
         {
             return new A2AEventDetails("A2A", protectedItemName, fabricObjectId, fabricName, fabricLocation, remoteFabricName, remoteFabricLocation);
         }
@@ -1143,7 +1144,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="primaryExtendedLocation"> The primary ExtendedLocation. </param>
         /// <param name="recoveryExtendedLocation"> The recovery ExtendedLocation. </param>
         /// <returns> A new <see cref="Models.A2AExtendedLocationDetails"/> instance for mocking. </returns>
-        public static A2AExtendedLocationDetails A2AExtendedLocationDetails(ExtendedLocation primaryExtendedLocation = null, ExtendedLocation recoveryExtendedLocation = null)
+        public static A2AExtendedLocationDetails A2AExtendedLocationDetails(SiteRecoveryExtendedLocation primaryExtendedLocation = null, SiteRecoveryExtendedLocation recoveryExtendedLocation = null)
         {
             return new A2AExtendedLocationDetails(primaryExtendedLocation, recoveryExtendedLocation);
         }
@@ -1162,7 +1163,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="primaryFabricLocation"> Primary fabric location info. </param>
         /// <param name="recoveryFabricLocation"> The recovery fabric location info. </param>
         /// <returns> A new <see cref="Models.A2AFabricSpecificLocationDetails"/> instance for mocking. </returns>
-        public static A2AFabricSpecificLocationDetails A2AFabricSpecificLocationDetails(string initialPrimaryZone = null, string initialRecoveryZone = null, ExtendedLocation initialPrimaryExtendedLocation = null, ExtendedLocation initialRecoveryExtendedLocation = null, string initialPrimaryFabricLocation = null, string initialRecoveryFabricLocation = null, string primaryZone = null, string recoveryZone = null, ExtendedLocation primaryExtendedLocation = null, ExtendedLocation recoveryExtendedLocation = null, string primaryFabricLocation = null, string recoveryFabricLocation = null)
+        public static A2AFabricSpecificLocationDetails A2AFabricSpecificLocationDetails(string initialPrimaryZone = null, string initialRecoveryZone = null, SiteRecoveryExtendedLocation initialPrimaryExtendedLocation = null, SiteRecoveryExtendedLocation initialRecoveryExtendedLocation = null, AzureLocation? initialPrimaryFabricLocation = null, AzureLocation? initialRecoveryFabricLocation = null, string primaryZone = null, string recoveryZone = null, SiteRecoveryExtendedLocation primaryExtendedLocation = null, SiteRecoveryExtendedLocation recoveryExtendedLocation = null, AzureLocation? primaryFabricLocation = null, AzureLocation? recoveryFabricLocation = null)
         {
             return new A2AFabricSpecificLocationDetails(initialPrimaryZone, initialRecoveryZone, initialPrimaryExtendedLocation, initialRecoveryExtendedLocation, initialPrimaryFabricLocation, initialRecoveryFabricLocation, primaryZone, recoveryZone, primaryExtendedLocation, recoveryExtendedLocation, primaryFabricLocation, recoveryFabricLocation);
         }
@@ -1188,7 +1189,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="diskCapacityInBytes"> The disk capacity in bytes. </param>
         /// <param name="primaryStagingAzureStorageAccountId"> The primary staging storage account. </param>
         /// <param name="diskType"> The type of disk. </param>
-        /// <param name="resyncRequired"> A value indicating whether resync is required for this disk. </param>
+        /// <param name="isResyncRequired"> A value indicating whether resync is required for this disk. </param>
         /// <param name="monitoringPercentageCompletion"> The percentage of the monitoring job. The type of the monitoring job is defined by MonitoringJobType property. </param>
         /// <param name="monitoringJobType"> The type of the monitoring job. The progress is contained in MonitoringPercentageCompletion property. </param>
         /// <param name="dataPendingInStagingStorageAccountInMB"> The data pending for replication in MB at staging account. </param>
@@ -1204,11 +1205,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="failoverDiskName"> The failover name for the managed disk. </param>
         /// <param name="tfoDiskName"> The test failover name for the managed disk. </param>
         /// <returns> A new <see cref="Models.A2AProtectedDiskDetails"/> instance for mocking. </returns>
-        public static A2AProtectedDiskDetails A2AProtectedDiskDetails(Uri diskUri = null, string recoveryAzureStorageAccountId = null, string primaryDiskAzureStorageAccountId = null, Uri recoveryDiskUri = null, string diskName = null, long? diskCapacityInBytes = null, string primaryStagingAzureStorageAccountId = null, string diskType = null, bool? resyncRequired = null, int? monitoringPercentageCompletion = null, string monitoringJobType = null, double? dataPendingInStagingStorageAccountInMB = null, double? dataPendingAtSourceAgentInMB = null, string diskState = null, IEnumerable<string> allowedDiskLevelOperation = null, bool? isDiskEncrypted = null, string secretIdentifier = null, string dekKeyVaultArmId = null, bool? isDiskKeyEncrypted = null, string keyIdentifier = null, string kekKeyVaultArmId = null, string failoverDiskName = null, string tfoDiskName = null)
+        public static A2AProtectedDiskDetails A2AProtectedDiskDetails(Uri diskUri = null, ResourceIdentifier recoveryAzureStorageAccountId = null, ResourceIdentifier primaryDiskAzureStorageAccountId = null, Uri recoveryDiskUri = null, string diskName = null, long? diskCapacityInBytes = null, ResourceIdentifier primaryStagingAzureStorageAccountId = null, string diskType = null, bool? isResyncRequired = null, int? monitoringPercentageCompletion = null, string monitoringJobType = null, double? dataPendingInStagingStorageAccountInMB = null, double? dataPendingAtSourceAgentInMB = null, string diskState = null, IEnumerable<string> allowedDiskLevelOperation = null, bool? isDiskEncrypted = null, string secretIdentifier = null, ResourceIdentifier dekKeyVaultArmId = null, bool? isDiskKeyEncrypted = null, string keyIdentifier = null, ResourceIdentifier kekKeyVaultArmId = null, string failoverDiskName = null, string tfoDiskName = null)
         {
             allowedDiskLevelOperation ??= new List<string>();
 
-            return new A2AProtectedDiskDetails(diskUri, recoveryAzureStorageAccountId, primaryDiskAzureStorageAccountId, recoveryDiskUri, diskName, diskCapacityInBytes, primaryStagingAzureStorageAccountId, diskType, resyncRequired, monitoringPercentageCompletion, monitoringJobType, dataPendingInStagingStorageAccountInMB, dataPendingAtSourceAgentInMB, diskState, allowedDiskLevelOperation?.ToList(), isDiskEncrypted, secretIdentifier, dekKeyVaultArmId, isDiskKeyEncrypted, keyIdentifier, kekKeyVaultArmId, failoverDiskName, tfoDiskName);
+            return new A2AProtectedDiskDetails(diskUri, recoveryAzureStorageAccountId, primaryDiskAzureStorageAccountId, recoveryDiskUri, diskName, diskCapacityInBytes, primaryStagingAzureStorageAccountId, diskType, isResyncRequired, monitoringPercentageCompletion, monitoringJobType, dataPendingInStagingStorageAccountInMB, dataPendingAtSourceAgentInMB, diskState, allowedDiskLevelOperation?.ToList(), isDiskEncrypted, secretIdentifier, dekKeyVaultArmId, isDiskKeyEncrypted, keyIdentifier, kekKeyVaultArmId, failoverDiskName, tfoDiskName);
         }
 
         /// <summary> Initializes a new instance of A2AProtectedManagedDiskDetails. </summary>
@@ -1225,7 +1226,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="diskCapacityInBytes"> The disk capacity in bytes. </param>
         /// <param name="primaryStagingAzureStorageAccountId"> The primary staging storage account. </param>
         /// <param name="diskType"> The type of disk. </param>
-        /// <param name="resyncRequired"> A value indicating whether resync is required for this disk. </param>
+        /// <param name="isResyncRequired"> A value indicating whether resync is required for this disk. </param>
         /// <param name="monitoringPercentageCompletion"> The percentage of the monitoring job. The type of the monitoring job is defined by MonitoringJobType property. </param>
         /// <param name="monitoringJobType"> The type of the monitoring job. The progress is contained in MonitoringPercentageCompletion property. </param>
         /// <param name="dataPendingInStagingStorageAccountInMB"> The data pending for replication in MB at staging account. </param>
@@ -1241,11 +1242,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="failoverDiskName"> The failover name for the managed disk. </param>
         /// <param name="tfoDiskName"> The test failover name for the managed disk. </param>
         /// <returns> A new <see cref="Models.A2AProtectedManagedDiskDetails"/> instance for mocking. </returns>
-        public static A2AProtectedManagedDiskDetails A2AProtectedManagedDiskDetails(string diskId = null, string recoveryResourceGroupId = null, string recoveryTargetDiskId = null, string recoveryReplicaDiskId = null, string recoveryOrignalTargetDiskId = null, string recoveryReplicaDiskAccountType = null, string recoveryTargetDiskAccountType = null, string recoveryDiskEncryptionSetId = null, string primaryDiskEncryptionSetId = null, string diskName = null, long? diskCapacityInBytes = null, string primaryStagingAzureStorageAccountId = null, string diskType = null, bool? resyncRequired = null, int? monitoringPercentageCompletion = null, string monitoringJobType = null, double? dataPendingInStagingStorageAccountInMB = null, double? dataPendingAtSourceAgentInMB = null, string diskState = null, IEnumerable<string> allowedDiskLevelOperation = null, bool? isDiskEncrypted = null, string secretIdentifier = null, string dekKeyVaultArmId = null, bool? isDiskKeyEncrypted = null, string keyIdentifier = null, string kekKeyVaultArmId = null, string failoverDiskName = null, string tfoDiskName = null)
+        public static A2AProtectedManagedDiskDetails A2AProtectedManagedDiskDetails(string diskId = null, ResourceIdentifier recoveryResourceGroupId = null, ResourceIdentifier recoveryTargetDiskId = null, ResourceIdentifier recoveryReplicaDiskId = null, ResourceIdentifier recoveryOrignalTargetDiskId = null, string recoveryReplicaDiskAccountType = null, string recoveryTargetDiskAccountType = null, ResourceIdentifier recoveryDiskEncryptionSetId = null, ResourceIdentifier primaryDiskEncryptionSetId = null, string diskName = null, long? diskCapacityInBytes = null, ResourceIdentifier primaryStagingAzureStorageAccountId = null, string diskType = null, bool? isResyncRequired = null, int? monitoringPercentageCompletion = null, string monitoringJobType = null, double? dataPendingInStagingStorageAccountInMB = null, double? dataPendingAtSourceAgentInMB = null, string diskState = null, IEnumerable<string> allowedDiskLevelOperation = null, bool? isDiskEncrypted = null, string secretIdentifier = null, ResourceIdentifier dekKeyVaultArmId = null, bool? isDiskKeyEncrypted = null, string keyIdentifier = null, ResourceIdentifier kekKeyVaultArmId = null, string failoverDiskName = null, string tfoDiskName = null)
         {
             allowedDiskLevelOperation ??= new List<string>();
 
-            return new A2AProtectedManagedDiskDetails(diskId, recoveryResourceGroupId, recoveryTargetDiskId, recoveryReplicaDiskId, recoveryOrignalTargetDiskId, recoveryReplicaDiskAccountType, recoveryTargetDiskAccountType, recoveryDiskEncryptionSetId, primaryDiskEncryptionSetId, diskName, diskCapacityInBytes, primaryStagingAzureStorageAccountId, diskType, resyncRequired, monitoringPercentageCompletion, monitoringJobType, dataPendingInStagingStorageAccountInMB, dataPendingAtSourceAgentInMB, diskState, allowedDiskLevelOperation?.ToList(), isDiskEncrypted, secretIdentifier, dekKeyVaultArmId, isDiskKeyEncrypted, keyIdentifier, kekKeyVaultArmId, failoverDiskName, tfoDiskName);
+            return new A2AProtectedManagedDiskDetails(diskId, recoveryResourceGroupId, recoveryTargetDiskId, recoveryReplicaDiskId, recoveryOrignalTargetDiskId, recoveryReplicaDiskAccountType, recoveryTargetDiskAccountType, recoveryDiskEncryptionSetId, primaryDiskEncryptionSetId, diskName, diskCapacityInBytes, primaryStagingAzureStorageAccountId, diskType, isResyncRequired, monitoringPercentageCompletion, monitoringJobType, dataPendingInStagingStorageAccountInMB, dataPendingAtSourceAgentInMB, diskState, allowedDiskLevelOperation?.ToList(), isDiskEncrypted, secretIdentifier, dekKeyVaultArmId, isDiskKeyEncrypted, keyIdentifier, kekKeyVaultArmId, failoverDiskName, tfoDiskName);
         }
 
         /// <summary> Initializes a new instance of A2AProtectionContainerMappingDetails. </summary>
@@ -1255,7 +1256,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="scheduleName"> The schedule arm name. </param>
         /// <param name="jobScheduleName"> The job schedule arm name. </param>
         /// <returns> A new <see cref="Models.A2AProtectionContainerMappingDetails"/> instance for mocking. </returns>
-        public static A2AProtectionContainerMappingDetails A2AProtectionContainerMappingDetails(AgentAutoUpdateStatus? agentAutoUpdateStatus = null, string automationAccountArmId = null, AutomationAccountAuthenticationType? automationAccountAuthenticationType = null, string scheduleName = null, string jobScheduleName = null)
+        public static A2AProtectionContainerMappingDetails A2AProtectionContainerMappingDetails(SiteRecoveryAgentAutoUpdateStatus? agentAutoUpdateStatus = null, ResourceIdentifier automationAccountArmId = null, AutomationAccountAuthenticationType? automationAccountAuthenticationType = null, string scheduleName = null, string jobScheduleName = null)
         {
             return new A2AProtectionContainerMappingDetails("A2A", agentAutoUpdateStatus, automationAccountArmId, automationAccountAuthenticationType, scheduleName, jobScheduleName);
         }
@@ -1303,9 +1304,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="monitoringJobType"> The type of the monitoring job. The progress is contained in MonitoringPercentageCompletion property. </param>
         /// <param name="lastHeartbeat"> The last heartbeat received from the source server. </param>
         /// <param name="agentVersion"> The agent version. </param>
-        /// <param name="agentExpiryOn"> Agent expiry date. </param>
+        /// <param name="agentExpireOn"> Agent expiry date. </param>
         /// <param name="isReplicationAgentUpdateRequired"> A value indicating whether replication agent update is required. </param>
-        /// <param name="agentCertificateExpiryOn"> Agent certificate expiry date. </param>
+        /// <param name="agentCertificateExpireOn"> Agent certificate expiry date. </param>
         /// <param name="isReplicationAgentCertificateUpdateRequired"> A value indicating whether agent certificate update is required. </param>
         /// <param name="recoveryFabricObjectId"> The recovery fabric object Id. </param>
         /// <param name="vmProtectionState"> The protection state for the vm. </param>
@@ -1326,14 +1327,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="recoveryVirtualMachineScaleSetId"> The recovery virtual machine scale set id. </param>
         /// <param name="recoveryCapacityReservationGroupId"> The recovery capacity reservation group Id. </param>
         /// <returns> A new <see cref="Models.A2AReplicationDetails"/> instance for mocking. </returns>
-        public static A2AReplicationDetails A2AReplicationDetails(string fabricObjectId = null, string initialPrimaryZone = null, string initialPrimaryFabricLocation = null, string initialRecoveryZone = null, ExtendedLocation initialPrimaryExtendedLocation = null, ExtendedLocation initialRecoveryExtendedLocation = null, string initialRecoveryFabricLocation = null, string multiVmGroupId = null, string multiVmGroupName = null, MultiVmGroupCreateOption? multiVmGroupCreateOption = null, string managementId = null, IEnumerable<A2AProtectedDiskDetails> protectedDisks = null, IEnumerable<A2AUnprotectedDiskDetails> unprotectedDisks = null, IEnumerable<A2AProtectedManagedDiskDetails> protectedManagedDisks = null, string recoveryBootDiagStorageAccountId = null, string primaryFabricLocation = null, string recoveryFabricLocation = null, string osType = null, string recoveryAzureVmSize = null, string recoveryAzureVmName = null, string recoveryAzureResourceGroupId = null, string recoveryCloudService = null, string recoveryAvailabilitySet = null, string selectedRecoveryAzureNetworkId = null, string selectedTfoAzureNetworkId = null, IEnumerable<VmNicDetails> vmNics = null, AzureToAzureVmSyncedConfigDetails vmSyncedConfigDetails = null, int? monitoringPercentageCompletion = null, string monitoringJobType = null, DateTimeOffset? lastHeartbeat = null, string agentVersion = null, DateTimeOffset? agentExpiryOn = null, bool? isReplicationAgentUpdateRequired = null, DateTimeOffset? agentCertificateExpiryOn = null, bool? isReplicationAgentCertificateUpdateRequired = null, string recoveryFabricObjectId = null, string vmProtectionState = null, string vmProtectionStateDescription = null, string lifecycleId = null, string testFailoverRecoveryFabricObjectId = null, long? rpoInSeconds = null, DateTimeOffset? lastRpoCalculatedOn = null, string primaryAvailabilityZone = null, string recoveryAvailabilityZone = null, ExtendedLocation primaryExtendedLocation = null, ExtendedLocation recoveryExtendedLocation = null, VmEncryptionType? vmEncryptionType = null, string tfoAzureVmName = null, string recoveryAzureGeneration = null, string recoveryProximityPlacementGroupId = null, AutoProtectionOfDataDisk? autoProtectionOfDataDisk = null, string recoveryVirtualMachineScaleSetId = null, string recoveryCapacityReservationGroupId = null)
+        public static A2AReplicationDetails A2AReplicationDetails(ResourceIdentifier fabricObjectId = null, string initialPrimaryZone = null, AzureLocation? initialPrimaryFabricLocation = null, string initialRecoveryZone = null, SiteRecoveryExtendedLocation initialPrimaryExtendedLocation = null, SiteRecoveryExtendedLocation initialRecoveryExtendedLocation = null, AzureLocation? initialRecoveryFabricLocation = null, string multiVmGroupId = null, string multiVmGroupName = null, MultiVmGroupCreateOption? multiVmGroupCreateOption = null, string managementId = null, IEnumerable<A2AProtectedDiskDetails> protectedDisks = null, IEnumerable<A2AUnprotectedDiskDetails> unprotectedDisks = null, IEnumerable<A2AProtectedManagedDiskDetails> protectedManagedDisks = null, ResourceIdentifier recoveryBootDiagStorageAccountId = null, AzureLocation? primaryFabricLocation = null, AzureLocation? recoveryFabricLocation = null, string osType = null, string recoveryAzureVmSize = null, string recoveryAzureVmName = null, ResourceIdentifier recoveryAzureResourceGroupId = null, string recoveryCloudService = null, string recoveryAvailabilitySet = null, ResourceIdentifier selectedRecoveryAzureNetworkId = null, ResourceIdentifier selectedTfoAzureNetworkId = null, IEnumerable<VmNicDetails> vmNics = null, A2AVmSyncedConfigDetails vmSyncedConfigDetails = null, int? monitoringPercentageCompletion = null, string monitoringJobType = null, DateTimeOffset? lastHeartbeat = null, string agentVersion = null, DateTimeOffset? agentExpireOn = null, bool? isReplicationAgentUpdateRequired = null, DateTimeOffset? agentCertificateExpireOn = null, bool? isReplicationAgentCertificateUpdateRequired = null, ResourceIdentifier recoveryFabricObjectId = null, string vmProtectionState = null, string vmProtectionStateDescription = null, string lifecycleId = null, ResourceIdentifier testFailoverRecoveryFabricObjectId = null, long? rpoInSeconds = null, DateTimeOffset? lastRpoCalculatedOn = null, string primaryAvailabilityZone = null, string recoveryAvailabilityZone = null, SiteRecoveryExtendedLocation primaryExtendedLocation = null, SiteRecoveryExtendedLocation recoveryExtendedLocation = null, SiteRecoveryVmEncryptionType? vmEncryptionType = null, string tfoAzureVmName = null, string recoveryAzureGeneration = null, ResourceIdentifier recoveryProximityPlacementGroupId = null, AutoProtectionOfDataDisk? autoProtectionOfDataDisk = null, ResourceIdentifier recoveryVirtualMachineScaleSetId = null, ResourceIdentifier recoveryCapacityReservationGroupId = null)
         {
             protectedDisks ??= new List<A2AProtectedDiskDetails>();
             unprotectedDisks ??= new List<A2AUnprotectedDiskDetails>();
             protectedManagedDisks ??= new List<A2AProtectedManagedDiskDetails>();
             vmNics ??= new List<VmNicDetails>();
 
-            return new A2AReplicationDetails("A2A", fabricObjectId, initialPrimaryZone, initialPrimaryFabricLocation, initialRecoveryZone, initialPrimaryExtendedLocation, initialRecoveryExtendedLocation, initialRecoveryFabricLocation, multiVmGroupId, multiVmGroupName, multiVmGroupCreateOption, managementId, protectedDisks?.ToList(), unprotectedDisks?.ToList(), protectedManagedDisks?.ToList(), recoveryBootDiagStorageAccountId, primaryFabricLocation, recoveryFabricLocation, osType, recoveryAzureVmSize, recoveryAzureVmName, recoveryAzureResourceGroupId, recoveryCloudService, recoveryAvailabilitySet, selectedRecoveryAzureNetworkId, selectedTfoAzureNetworkId, vmNics?.ToList(), vmSyncedConfigDetails, monitoringPercentageCompletion, monitoringJobType, lastHeartbeat, agentVersion, agentExpiryOn, isReplicationAgentUpdateRequired, agentCertificateExpiryOn, isReplicationAgentCertificateUpdateRequired, recoveryFabricObjectId, vmProtectionState, vmProtectionStateDescription, lifecycleId, testFailoverRecoveryFabricObjectId, rpoInSeconds, lastRpoCalculatedOn, primaryAvailabilityZone, recoveryAvailabilityZone, primaryExtendedLocation, recoveryExtendedLocation, vmEncryptionType, tfoAzureVmName, recoveryAzureGeneration, recoveryProximityPlacementGroupId, autoProtectionOfDataDisk, recoveryVirtualMachineScaleSetId, recoveryCapacityReservationGroupId);
+            return new A2AReplicationDetails("A2A", fabricObjectId, initialPrimaryZone, initialPrimaryFabricLocation, initialRecoveryZone, initialPrimaryExtendedLocation, initialRecoveryExtendedLocation, initialRecoveryFabricLocation, multiVmGroupId, multiVmGroupName, multiVmGroupCreateOption, managementId, protectedDisks?.ToList(), unprotectedDisks?.ToList(), protectedManagedDisks?.ToList(), recoveryBootDiagStorageAccountId, primaryFabricLocation, recoveryFabricLocation, osType, recoveryAzureVmSize, recoveryAzureVmName, recoveryAzureResourceGroupId, recoveryCloudService, recoveryAvailabilitySet, selectedRecoveryAzureNetworkId, selectedTfoAzureNetworkId, vmNics?.ToList(), vmSyncedConfigDetails, monitoringPercentageCompletion, monitoringJobType, lastHeartbeat, agentVersion, agentExpireOn, isReplicationAgentUpdateRequired, agentCertificateExpireOn, isReplicationAgentCertificateUpdateRequired, recoveryFabricObjectId, vmProtectionState, vmProtectionStateDescription, lifecycleId, testFailoverRecoveryFabricObjectId, rpoInSeconds, lastRpoCalculatedOn, primaryAvailabilityZone, recoveryAvailabilityZone, primaryExtendedLocation, recoveryExtendedLocation, vmEncryptionType, tfoAzureVmName, recoveryAzureGeneration, recoveryProximityPlacementGroupId, autoProtectionOfDataDisk, recoveryVirtualMachineScaleSetId, recoveryCapacityReservationGroupId);
         }
 
         /// <summary> Initializes a new instance of A2AUnprotectedDiskDetails. </summary>
@@ -1354,26 +1355,26 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="ipConfigs"> The IP configurations of the NIC. </param>
         /// <param name="selectionType"> Selection type for failover. </param>
         /// <param name="recoveryNetworkSecurityGroupId"> The id of the NSG associated with the NIC. </param>
-        /// <param name="enableAcceleratedNetworkingOnRecovery"> A value indicating whether the NIC has accelerated networking enabled. </param>
+        /// <param name="isAcceleratedNetworkingOnRecoveryEnabled"> A value indicating whether the NIC has accelerated networking enabled. </param>
         /// <param name="tfoVmNetworkId"> The network to be used by NIC during test failover. </param>
         /// <param name="tfoNetworkSecurityGroupId"> The NSG to be used by NIC during test failover. </param>
-        /// <param name="enableAcceleratedNetworkingOnTfo"> Whether the TFO NIC has accelerated networking enabled. </param>
+        /// <param name="isAcceleratedNetworkingOnTfoEnabled"> Whether the TFO NIC has accelerated networking enabled. </param>
         /// <param name="recoveryNicName"> The name of the NIC to be used when creating target NICs. </param>
         /// <param name="recoveryNicResourceGroupName"> The resource group of the NIC to be used when creating target NICs. </param>
-        /// <param name="reuseExistingNic"> A value indicating whether an existing NIC is allowed to be reused during failover subject to availability. </param>
+        /// <param name="isReuseExistingNicAllowed"> A value indicating whether an existing NIC is allowed to be reused during failover subject to availability. </param>
         /// <param name="tfoRecoveryNicName"> The name of the NIC to be used when creating target NICs in TFO. </param>
         /// <param name="tfoRecoveryNicResourceGroupName"> The resource group of the NIC to be used when creating target NICs in TFO. </param>
-        /// <param name="tfoReuseExistingNic"> A value indicating whether an existing NIC is allowed to be reused during test failover subject to availability. </param>
+        /// <param name="isTfoReuseExistingNicAllowed"> A value indicating whether an existing NIC is allowed to be reused during test failover subject to availability. </param>
         /// <param name="targetNicName"> Target NIC name. </param>
         /// <returns> A new <see cref="Models.VmNicDetails"/> instance for mocking. </returns>
-        public static VmNicDetails VmNicDetails(string nicId = null, string replicaNicId = null, string sourceNicArmId = null, string vmNetworkName = null, string recoveryVmNetworkId = null, IEnumerable<IPConfigDetails> ipConfigs = null, string selectionType = null, string recoveryNetworkSecurityGroupId = null, bool? enableAcceleratedNetworkingOnRecovery = null, string tfoVmNetworkId = null, string tfoNetworkSecurityGroupId = null, bool? enableAcceleratedNetworkingOnTfo = null, string recoveryNicName = null, string recoveryNicResourceGroupName = null, bool? reuseExistingNic = null, string tfoRecoveryNicName = null, string tfoRecoveryNicResourceGroupName = null, bool? tfoReuseExistingNic = null, string targetNicName = null)
+        public static VmNicDetails VmNicDetails(string nicId = null, string replicaNicId = null, ResourceIdentifier sourceNicArmId = null, string vmNetworkName = null, ResourceIdentifier recoveryVmNetworkId = null, IEnumerable<HyperVIPConfigDetails> ipConfigs = null, string selectionType = null, string recoveryNetworkSecurityGroupId = null, bool? isAcceleratedNetworkingOnRecoveryEnabled = null, ResourceIdentifier tfoVmNetworkId = null, string tfoNetworkSecurityGroupId = null, bool? isAcceleratedNetworkingOnTfoEnabled = null, string recoveryNicName = null, string recoveryNicResourceGroupName = null, bool? isReuseExistingNicAllowed = null, string tfoRecoveryNicName = null, string tfoRecoveryNicResourceGroupName = null, bool? isTfoReuseExistingNicAllowed = null, string targetNicName = null)
         {
-            ipConfigs ??= new List<IPConfigDetails>();
+            ipConfigs ??= new List<HyperVIPConfigDetails>();
 
-            return new VmNicDetails(nicId, replicaNicId, sourceNicArmId, vmNetworkName, recoveryVmNetworkId, ipConfigs?.ToList(), selectionType, recoveryNetworkSecurityGroupId, enableAcceleratedNetworkingOnRecovery, tfoVmNetworkId, tfoNetworkSecurityGroupId, enableAcceleratedNetworkingOnTfo, recoveryNicName, recoveryNicResourceGroupName, reuseExistingNic, tfoRecoveryNicName, tfoRecoveryNicResourceGroupName, tfoReuseExistingNic, targetNicName);
+            return new VmNicDetails(nicId, replicaNicId, sourceNicArmId, vmNetworkName, recoveryVmNetworkId, ipConfigs?.ToList(), selectionType, recoveryNetworkSecurityGroupId, isAcceleratedNetworkingOnRecoveryEnabled, tfoVmNetworkId, tfoNetworkSecurityGroupId, isAcceleratedNetworkingOnTfoEnabled, recoveryNicName, recoveryNicResourceGroupName, isReuseExistingNicAllowed, tfoRecoveryNicName, tfoRecoveryNicResourceGroupName, isTfoReuseExistingNicAllowed, targetNicName);
         }
 
-        /// <summary> Initializes a new instance of IPConfigDetails. </summary>
+        /// <summary> Initializes a new instance of HyperVIPConfigDetails. </summary>
         /// <param name="name"></param>
         /// <param name="isPrimary"></param>
         /// <param name="subnetName"></param>
@@ -1389,36 +1390,36 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="tfoStaticIPAddress"></param>
         /// <param name="tfoPublicIPAddressId"></param>
         /// <param name="tfoLBBackendAddressPoolIds"></param>
-        /// <returns> A new <see cref="Models.IPConfigDetails"/> instance for mocking. </returns>
-        public static IPConfigDetails IPConfigDetails(string name = null, bool? isPrimary = null, string subnetName = null, string staticIPAddress = null, string ipAddressType = null, bool? isSeletedForFailover = null, string recoverySubnetName = null, string recoveryStaticIPAddress = null, string recoveryIPAddressType = null, string recoveryPublicIPAddressId = null, IEnumerable<string> recoveryLBBackendAddressPoolIds = null, string tfoSubnetName = null, string tfoStaticIPAddress = null, string tfoPublicIPAddressId = null, IEnumerable<string> tfoLBBackendAddressPoolIds = null)
+        /// <returns> A new <see cref="Models.HyperVIPConfigDetails"/> instance for mocking. </returns>
+        public static HyperVIPConfigDetails HyperVIPConfigDetails(string name = null, bool? isPrimary = null, string subnetName = null, IPAddress staticIPAddress = null, string ipAddressType = null, bool? isSeletedForFailover = null, string recoverySubnetName = null, IPAddress recoveryStaticIPAddress = null, string recoveryIPAddressType = null, ResourceIdentifier recoveryPublicIPAddressId = null, IEnumerable<string> recoveryLBBackendAddressPoolIds = null, string tfoSubnetName = null, IPAddress tfoStaticIPAddress = null, ResourceIdentifier tfoPublicIPAddressId = null, IEnumerable<string> tfoLBBackendAddressPoolIds = null)
         {
             recoveryLBBackendAddressPoolIds ??= new List<string>();
             tfoLBBackendAddressPoolIds ??= new List<string>();
 
-            return new IPConfigDetails(name, isPrimary, subnetName, staticIPAddress, ipAddressType, isSeletedForFailover, recoverySubnetName, recoveryStaticIPAddress, recoveryIPAddressType, recoveryPublicIPAddressId, recoveryLBBackendAddressPoolIds?.ToList(), tfoSubnetName, tfoStaticIPAddress, tfoPublicIPAddressId, tfoLBBackendAddressPoolIds?.ToList());
+            return new HyperVIPConfigDetails(name, isPrimary, subnetName, staticIPAddress, ipAddressType, isSeletedForFailover, recoverySubnetName, recoveryStaticIPAddress, recoveryIPAddressType, recoveryPublicIPAddressId, recoveryLBBackendAddressPoolIds?.ToList(), tfoSubnetName, tfoStaticIPAddress, tfoPublicIPAddressId, tfoLBBackendAddressPoolIds?.ToList());
         }
 
-        /// <summary> Initializes a new instance of AzureToAzureVmSyncedConfigDetails. </summary>
+        /// <summary> Initializes a new instance of A2AVmSyncedConfigDetails. </summary>
         /// <param name="tags"> The Azure VM tags. </param>
-        /// <param name="inputEndpoints"> The Azure VM input endpoints. </param>
-        /// <returns> A new <see cref="Models.AzureToAzureVmSyncedConfigDetails"/> instance for mocking. </returns>
-        public static AzureToAzureVmSyncedConfigDetails AzureToAzureVmSyncedConfigDetails(IReadOnlyDictionary<string, string> tags = null, IEnumerable<InputEndpoint> inputEndpoints = null)
+        /// <param name="vmEndpoints"> The Azure VM input endpoints. </param>
+        /// <returns> A new <see cref="Models.A2AVmSyncedConfigDetails"/> instance for mocking. </returns>
+        public static A2AVmSyncedConfigDetails A2AVmSyncedConfigDetails(IReadOnlyDictionary<string, string> tags = null, IEnumerable<SiteRecoveryVmEndpoint> vmEndpoints = null)
         {
             tags ??= new Dictionary<string, string>();
-            inputEndpoints ??= new List<InputEndpoint>();
+            vmEndpoints ??= new List<SiteRecoveryVmEndpoint>();
 
-            return new AzureToAzureVmSyncedConfigDetails(tags, inputEndpoints?.ToList());
+            return new A2AVmSyncedConfigDetails(tags, vmEndpoints?.ToList());
         }
 
-        /// <summary> Initializes a new instance of InputEndpoint. </summary>
+        /// <summary> Initializes a new instance of SiteRecoveryVmEndpoint. </summary>
         /// <param name="endpointName"></param>
         /// <param name="privatePort"></param>
         /// <param name="publicPort"></param>
         /// <param name="protocol"></param>
-        /// <returns> A new <see cref="Models.InputEndpoint"/> instance for mocking. </returns>
-        public static InputEndpoint InputEndpoint(string endpointName = null, int? privatePort = null, int? publicPort = null, string protocol = null)
+        /// <returns> A new <see cref="Models.SiteRecoveryVmEndpoint"/> instance for mocking. </returns>
+        public static SiteRecoveryVmEndpoint SiteRecoveryVmEndpoint(string endpointName = null, int? privatePort = null, int? publicPort = null, string protocol = null)
         {
-            return new InputEndpoint(endpointName, privatePort, publicPort, protocol);
+            return new SiteRecoveryVmEndpoint(endpointName, privatePort, publicPort, protocol);
         }
 
         /// <summary> Initializes a new instance of A2AReplicationIntentDetails. </summary>
@@ -1469,10 +1470,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="automationAccountArmId"> The automation account arm id. </param>
         /// <param name="automationAccountAuthenticationType"> A value indicating the type authentication to use for automation Account. </param>
         /// <returns> A new <see cref="Models.A2AReplicationIntentDetails"/> instance for mocking. </returns>
-        public static A2AReplicationIntentDetails A2AReplicationIntentDetails(string fabricObjectId = null, string primaryLocation = null, string recoveryLocation = null, string recoverySubscriptionId = null, IEnumerable<A2AProtectionIntentDiskInputDetails> vmDisks = null, IEnumerable<A2AProtectionIntentManagedDiskInputDetails> vmManagedDisks = null, string recoveryResourceGroupId = null, ProtectionProfileCustomDetails protectionProfile = null, StorageAccountCustomDetails primaryStagingStorageAccount = null, RecoveryAvailabilitySetCustomDetails recoveryAvailabilitySet = null, RecoveryVirtualNetworkCustomDetails recoveryVirtualNetwork = null, RecoveryProximityPlacementGroupCustomDetails recoveryProximityPlacementGroup = null, AutoProtectionOfDataDisk? autoProtectionOfDataDisk = null, string multiVmGroupName = null, string multiVmGroupId = null, StorageAccountCustomDetails recoveryBootDiagStorageAccount = null, DiskEncryptionInfo diskEncryptionInfo = null, string recoveryAvailabilityZone = null, string recoveryAvailabilityType = null, AgentAutoUpdateStatus? agentAutoUpdateStatus = null, string automationAccountArmId = null, AutomationAccountAuthenticationType? automationAccountAuthenticationType = null)
+        public static A2AReplicationIntentDetails A2AReplicationIntentDetails(ResourceIdentifier fabricObjectId = null, AzureLocation? primaryLocation = null, AzureLocation? recoveryLocation = null, string recoverySubscriptionId = null, IEnumerable<A2AProtectionIntentDiskDetails> vmDisks = null, IEnumerable<A2AProtectionIntentManagedDiskDetails> vmManagedDisks = null, ResourceIdentifier recoveryResourceGroupId = null, ProtectionProfileCustomDetails protectionProfile = null, StorageAccountCustomDetails primaryStagingStorageAccount = null, RecoveryAvailabilitySetCustomDetails recoveryAvailabilitySet = null, RecoveryVirtualNetworkCustomDetails recoveryVirtualNetwork = null, RecoveryProximityPlacementGroupCustomDetails recoveryProximityPlacementGroup = null, AutoProtectionOfDataDisk? autoProtectionOfDataDisk = null, string multiVmGroupName = null, string multiVmGroupId = null, StorageAccountCustomDetails recoveryBootDiagStorageAccount = null, SiteRecoveryDiskEncryptionInfo diskEncryptionInfo = null, string recoveryAvailabilityZone = null, string recoveryAvailabilityType = null, SiteRecoveryAgentAutoUpdateStatus? agentAutoUpdateStatus = null, ResourceIdentifier automationAccountArmId = null, AutomationAccountAuthenticationType? automationAccountAuthenticationType = null)
         {
-            vmDisks ??= new List<A2AProtectionIntentDiskInputDetails>();
-            vmManagedDisks ??= new List<A2AProtectionIntentManagedDiskInputDetails>();
+            vmDisks ??= new List<A2AProtectionIntentDiskDetails>();
+            vmManagedDisks ??= new List<A2AProtectionIntentManagedDiskDetails>();
 
             return new A2AReplicationIntentDetails("A2A", fabricObjectId, primaryLocation, recoveryLocation, recoverySubscriptionId, vmDisks?.ToList(), vmManagedDisks?.ToList(), recoveryResourceGroupId, protectionProfile, primaryStagingStorageAccount, recoveryAvailabilitySet, recoveryVirtualNetwork, recoveryProximityPlacementGroup, autoProtectionOfDataDisk, multiVmGroupName, multiVmGroupId, recoveryBootDiagStorageAccount, diskEncryptionInfo, recoveryAvailabilityZone, recoveryAvailabilityType, agentAutoUpdateStatus, automationAccountArmId, automationAccountAuthenticationType);
         }
@@ -1486,30 +1487,30 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             return new A2AZoneDetails(source, target);
         }
 
-        /// <summary> Initializes a new instance of AgentDetails. </summary>
+        /// <summary> Initializes a new instance of SiteRecoveryAgentDetails. </summary>
         /// <param name="agentId"> The Id of the agent running on the server. </param>
         /// <param name="machineId"> The Id of the machine to which the agent is registered. </param>
         /// <param name="biosId"> The machine BIOS Id. </param>
         /// <param name="fqdn"> The machine FQDN. </param>
         /// <param name="disks"> The disks. </param>
-        /// <returns> A new <see cref="Models.AgentDetails"/> instance for mocking. </returns>
-        public static AgentDetails AgentDetails(string agentId = null, string machineId = null, string biosId = null, string fqdn = null, IEnumerable<AgentDiskDetails> disks = null)
+        /// <returns> A new <see cref="Models.SiteRecoveryAgentDetails"/> instance for mocking. </returns>
+        public static SiteRecoveryAgentDetails SiteRecoveryAgentDetails(string agentId = null, string machineId = null, string biosId = null, string fqdn = null, IEnumerable<SiteRecoveryAgentDiskDetails> disks = null)
         {
-            disks ??= new List<AgentDiskDetails>();
+            disks ??= new List<SiteRecoveryAgentDiskDetails>();
 
-            return new AgentDetails(agentId, machineId, biosId, fqdn, disks?.ToList());
+            return new SiteRecoveryAgentDetails(agentId, machineId, biosId, fqdn, disks?.ToList());
         }
 
-        /// <summary> Initializes a new instance of AgentDiskDetails. </summary>
+        /// <summary> Initializes a new instance of SiteRecoveryAgentDiskDetails. </summary>
         /// <param name="diskId"> The disk Id. </param>
         /// <param name="diskName"> The disk name. </param>
         /// <param name="isOSDisk"> A value indicating whether the disk is the OS disk. </param>
         /// <param name="capacityInBytes"> The disk capacity in bytes. </param>
         /// <param name="lunId"> The lun of disk. </param>
-        /// <returns> A new <see cref="Models.AgentDiskDetails"/> instance for mocking. </returns>
-        public static AgentDiskDetails AgentDiskDetails(string diskId = null, string diskName = null, string isOSDisk = null, long? capacityInBytes = null, int? lunId = null)
+        /// <returns> A new <see cref="Models.SiteRecoveryAgentDiskDetails"/> instance for mocking. </returns>
+        public static SiteRecoveryAgentDiskDetails SiteRecoveryAgentDiskDetails(string diskId = null, string diskName = null, string isOSDisk = null, long? capacityInBytes = null, int? lunId = null)
         {
-            return new AgentDiskDetails(diskId, diskName, isOSDisk, capacityInBytes, lunId);
+            return new SiteRecoveryAgentDiskDetails(diskId, diskName, isOSDisk, capacityInBytes, lunId);
         }
 
         /// <summary> Initializes a new instance of AsrJobDetails. </summary>
@@ -1533,38 +1534,38 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="jobOutput"> The execution output of the runbook. </param>
         /// <param name="isPrimarySideScript"> A value indicating whether it is a primary side script or not. </param>
         /// <returns> A new <see cref="Models.AutomationRunbookTaskDetails"/> instance for mocking. </returns>
-        public static AutomationRunbookTaskDetails AutomationRunbookTaskDetails(string name = null, string cloudServiceName = null, string subscriptionId = null, string accountName = null, string runbookId = null, string runbookName = null, string jobId = null, string jobOutput = null, bool? isPrimarySideScript = null)
+        public static AutomationRunbookTaskDetails AutomationRunbookTaskDetails(string name = null, string cloudServiceName = null, string subscriptionId = null, string accountName = null, string runbookId = null, string runbookName = null, ResourceIdentifier jobId = null, string jobOutput = null, bool? isPrimarySideScript = null)
         {
             return new AutomationRunbookTaskDetails("AutomationRunbookTaskDetails", name, cloudServiceName, subscriptionId, accountName, runbookId, runbookName, jobId, jobOutput, isPrimarySideScript);
         }
 
-        /// <summary> Initializes a new instance of AzureFabricSpecificDetails. </summary>
+        /// <summary> Initializes a new instance of SiteRecoveryFabricProviderSpecificDetails. </summary>
         /// <param name="location"> The Location for the Azure fabric. </param>
         /// <param name="containerIds"> The container Ids for the Azure fabric. </param>
         /// <param name="zones"> The zones. </param>
         /// <param name="extendedLocations"> The ExtendedLocations. </param>
         /// <param name="locationDetails"> The location details. </param>
-        /// <returns> A new <see cref="Models.AzureFabricSpecificDetails"/> instance for mocking. </returns>
-        public static AzureFabricSpecificDetails AzureFabricSpecificDetails(AzureLocation? location = null, IEnumerable<string> containerIds = null, IEnumerable<A2AZoneDetails> zones = null, IEnumerable<A2AExtendedLocationDetails> extendedLocations = null, IEnumerable<A2AFabricSpecificLocationDetails> locationDetails = null)
+        /// <returns> A new <see cref="Models.SiteRecoveryFabricProviderSpecificDetails"/> instance for mocking. </returns>
+        public static SiteRecoveryFabricProviderSpecificDetails SiteRecoveryFabricProviderSpecificDetails(AzureLocation? location = null, IEnumerable<ResourceIdentifier> containerIds = null, IEnumerable<A2AZoneDetails> zones = null, IEnumerable<A2AExtendedLocationDetails> extendedLocations = null, IEnumerable<A2AFabricSpecificLocationDetails> locationDetails = null)
         {
-            containerIds ??= new List<string>();
+            containerIds ??= new List<ResourceIdentifier>();
             zones ??= new List<A2AZoneDetails>();
             extendedLocations ??= new List<A2AExtendedLocationDetails>();
             locationDetails ??= new List<A2AFabricSpecificLocationDetails>();
 
-            return new AzureFabricSpecificDetails("Azure", location, containerIds?.ToList(), zones?.ToList(), extendedLocations?.ToList(), locationDetails?.ToList());
+            return new SiteRecoveryFabricProviderSpecificDetails("Azure", location, containerIds?.ToList(), zones?.ToList(), extendedLocations?.ToList(), locationDetails?.ToList());
         }
 
-        /// <summary> Initializes a new instance of AzureToAzureNetworkMappingSettings. </summary>
+        /// <summary> Initializes a new instance of A2ANetworkMappingSettings. </summary>
         /// <param name="primaryFabricLocation"> The primary fabric location. </param>
         /// <param name="recoveryFabricLocation"> The recovery fabric location. </param>
-        /// <returns> A new <see cref="Models.AzureToAzureNetworkMappingSettings"/> instance for mocking. </returns>
-        public static AzureToAzureNetworkMappingSettings AzureToAzureNetworkMappingSettings(string primaryFabricLocation = null, string recoveryFabricLocation = null)
+        /// <returns> A new <see cref="Models.A2ANetworkMappingSettings"/> instance for mocking. </returns>
+        public static A2ANetworkMappingSettings A2ANetworkMappingSettings(AzureLocation? primaryFabricLocation = null, AzureLocation? recoveryFabricLocation = null)
         {
-            return new AzureToAzureNetworkMappingSettings("AzureToAzure", primaryFabricLocation, recoveryFabricLocation);
+            return new A2ANetworkMappingSettings("AzureToAzure", primaryFabricLocation, recoveryFabricLocation);
         }
 
-        /// <summary> Initializes a new instance of AzureVmDiskDetails. </summary>
+        /// <summary> Initializes a new instance of SiteRecoveryVmDiskDetails. </summary>
         /// <param name="vhdType"> VHD type. </param>
         /// <param name="vhdId"> The VHD id. </param>
         /// <param name="diskId"> The disk resource id. </param>
@@ -1575,10 +1576,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="lunId"> Ordinal\LunId of the disk for the Azure VM. </param>
         /// <param name="diskEncryptionSetId"> The DiskEncryptionSet ARM ID. </param>
         /// <param name="customTargetDiskName"> The custom target Azure disk name. </param>
-        /// <returns> A new <see cref="Models.AzureVmDiskDetails"/> instance for mocking. </returns>
-        public static AzureVmDiskDetails AzureVmDiskDetails(string vhdType = null, string vhdId = null, string diskId = null, string vhdName = null, string maxSizeMB = null, string targetDiskLocation = null, string targetDiskName = null, string lunId = null, string diskEncryptionSetId = null, string customTargetDiskName = null)
+        /// <returns> A new <see cref="Models.SiteRecoveryVmDiskDetails"/> instance for mocking. </returns>
+        public static SiteRecoveryVmDiskDetails SiteRecoveryVmDiskDetails(string vhdType = null, string vhdId = null, string diskId = null, string vhdName = null, string maxSizeMB = null, string targetDiskLocation = null, string targetDiskName = null, string lunId = null, ResourceIdentifier diskEncryptionSetId = null, string customTargetDiskName = null)
         {
-            return new AzureVmDiskDetails(vhdType, vhdId, diskId, vhdName, maxSizeMB, targetDiskLocation, targetDiskName, lunId, diskEncryptionSetId, customTargetDiskName);
+            return new SiteRecoveryVmDiskDetails(vhdType, vhdId, diskId, vhdName, maxSizeMB, targetDiskLocation, targetDiskName, lunId, diskEncryptionSetId, customTargetDiskName);
         }
 
         /// <summary> Initializes a new instance of ConsistencyCheckTaskDetails. </summary>
@@ -1605,54 +1606,54 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             return new InconsistentVmDetails(vmName, cloudName, details?.ToList(), errorIds?.ToList());
         }
 
-        /// <summary> Initializes a new instance of DataStore. </summary>
+        /// <summary> Initializes a new instance of SiteRecoveryDataStore. </summary>
         /// <param name="symbolicName"> The symbolic name of data store. </param>
         /// <param name="uuid"> The uuid of data store. </param>
         /// <param name="capacity"> The capacity of data store in GBs. </param>
         /// <param name="freeSpace"> The free space of data store in GBs. </param>
         /// <param name="dataStoreType"> The type of data store. </param>
-        /// <returns> A new <see cref="Models.DataStore"/> instance for mocking. </returns>
-        public static DataStore DataStore(string symbolicName = null, string uuid = null, string capacity = null, string freeSpace = null, string dataStoreType = null)
+        /// <returns> A new <see cref="Models.SiteRecoveryDataStore"/> instance for mocking. </returns>
+        public static SiteRecoveryDataStore SiteRecoveryDataStore(string symbolicName = null, Guid? uuid = null, string capacity = null, string freeSpace = null, string dataStoreType = null)
         {
-            return new DataStore(symbolicName, uuid, capacity, freeSpace, dataStoreType);
+            return new SiteRecoveryDataStore(symbolicName, uuid, capacity, freeSpace, dataStoreType);
         }
 
-        /// <summary> Initializes a new instance of DiskDetails. </summary>
+        /// <summary> Initializes a new instance of SiteRecoveryDiskDetails. </summary>
         /// <param name="maxSizeMB"> The hard disk max size in MB. </param>
         /// <param name="vhdType"> The type of the volume. </param>
         /// <param name="vhdId"> The VHD Id. </param>
         /// <param name="vhdName"> The VHD name. </param>
-        /// <returns> A new <see cref="Models.DiskDetails"/> instance for mocking. </returns>
-        public static DiskDetails DiskDetails(long? maxSizeMB = null, string vhdType = null, string vhdId = null, string vhdName = null)
+        /// <returns> A new <see cref="Models.SiteRecoveryDiskDetails"/> instance for mocking. </returns>
+        public static SiteRecoveryDiskDetails SiteRecoveryDiskDetails(long? maxSizeMB = null, string vhdType = null, string vhdId = null, string vhdName = null)
         {
-            return new DiskDetails(maxSizeMB, vhdType, vhdId, vhdName);
+            return new SiteRecoveryDiskDetails(maxSizeMB, vhdType, vhdId, vhdName);
         }
 
-        /// <summary> Initializes a new instance of DiskVolumeDetails. </summary>
+        /// <summary> Initializes a new instance of SiteRecoveryDiskVolumeDetails. </summary>
         /// <param name="label"> The volume label. </param>
         /// <param name="name"> The volume name. </param>
-        /// <returns> A new <see cref="Models.DiskVolumeDetails"/> instance for mocking. </returns>
-        public static DiskVolumeDetails DiskVolumeDetails(string label = null, string name = null)
+        /// <returns> A new <see cref="Models.SiteRecoveryDiskVolumeDetails"/> instance for mocking. </returns>
+        public static SiteRecoveryDiskVolumeDetails SiteRecoveryDiskVolumeDetails(string label = null, string name = null)
         {
-            return new DiskVolumeDetails(label, name);
+            return new SiteRecoveryDiskVolumeDetails(label, name);
         }
 
-        /// <summary> Initializes a new instance of DraDetails. </summary>
+        /// <summary> Initializes a new instance of SiteRecoveryDraDetails. </summary>
         /// <param name="id"> The DRA Id. </param>
         /// <param name="name"> The DRA name. </param>
         /// <param name="biosId"> The DRA Bios Id. </param>
         /// <param name="version"> The version. </param>
-        /// <param name="lastHeartbeatUtc"> The last heartbeat received from the DRA. </param>
+        /// <param name="lastHeartbeatReceivedOn"> The last heartbeat received from the DRA. </param>
         /// <param name="health"> The health. </param>
         /// <param name="healthErrors"> The health errors. </param>
         /// <param name="forwardProtectedItemCount"> The count of protected items which are protected in forward direction. </param>
         /// <param name="reverseProtectedItemCount"> The count of protected items which are protected in reverse direction. </param>
-        /// <returns> A new <see cref="Models.DraDetails"/> instance for mocking. </returns>
-        public static DraDetails DraDetails(string id = null, string name = null, string biosId = null, string version = null, DateTimeOffset? lastHeartbeatUtc = null, ProtectionHealth? health = null, IEnumerable<HealthError> healthErrors = null, int? forwardProtectedItemCount = null, int? reverseProtectedItemCount = null)
+        /// <returns> A new <see cref="Models.SiteRecoveryDraDetails"/> instance for mocking. </returns>
+        public static SiteRecoveryDraDetails SiteRecoveryDraDetails(string id = null, string name = null, string biosId = null, string version = null, DateTimeOffset? lastHeartbeatReceivedOn = null, SiteRecoveryProtectionHealth? health = null, IEnumerable<SiteRecoveryHealthError> healthErrors = null, int? forwardProtectedItemCount = null, int? reverseProtectedItemCount = null)
         {
-            healthErrors ??= new List<HealthError>();
+            healthErrors ??= new List<SiteRecoveryHealthError>();
 
-            return new DraDetails(id, name, biosId, version, lastHeartbeatUtc, health, healthErrors?.ToList(), forwardProtectedItemCount, reverseProtectedItemCount);
+            return new SiteRecoveryDraDetails(id, name, biosId, version, lastHeartbeatReceivedOn, health, healthErrors?.ToList(), forwardProtectedItemCount, reverseProtectedItemCount);
         }
 
         /// <summary> Initializes a new instance of ExportJobDetails. </summary>
@@ -1672,30 +1673,30 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="skippedReason"> The skipped reason. </param>
         /// <param name="skippedReasonString"> The skipped reason string. </param>
         /// <returns> A new <see cref="Models.FabricReplicationGroupTaskDetails"/> instance for mocking. </returns>
-        public static FabricReplicationGroupTaskDetails FabricReplicationGroupTaskDetails(JobEntity jobTask = null, string skippedReason = null, string skippedReasonString = null)
+        public static FabricReplicationGroupTaskDetails FabricReplicationGroupTaskDetails(SiteRecoveryJobEntity jobTask = null, string skippedReason = null, string skippedReasonString = null)
         {
             return new FabricReplicationGroupTaskDetails("FabricReplicationGroupTaskDetails", jobTask, skippedReason, skippedReasonString);
         }
 
-        /// <summary> Initializes a new instance of JobTaskDetails. </summary>
+        /// <summary> Initializes a new instance of SiteRecoveryJobTaskDetails. </summary>
         /// <param name="jobTask"> The job entity. </param>
-        /// <returns> A new <see cref="Models.JobTaskDetails"/> instance for mocking. </returns>
-        public static JobTaskDetails JobTaskDetails(JobEntity jobTask = null)
+        /// <returns> A new <see cref="Models.SiteRecoveryJobTaskDetails"/> instance for mocking. </returns>
+        public static SiteRecoveryJobTaskDetails SiteRecoveryJobTaskDetails(SiteRecoveryJobEntity jobTask = null)
         {
-            return new JobTaskDetails("JobTaskDetails", jobTask);
+            return new SiteRecoveryJobTaskDetails("JobTaskDetails", jobTask);
         }
 
-        /// <summary> Initializes a new instance of JobEntity. </summary>
+        /// <summary> Initializes a new instance of SiteRecoveryJobEntity. </summary>
         /// <param name="jobId"> The job id. </param>
         /// <param name="jobFriendlyName"> The job display name. </param>
         /// <param name="targetObjectId"> The object id. </param>
         /// <param name="targetObjectName"> The object name. </param>
         /// <param name="targetInstanceType"> The workflow affected object type. </param>
         /// <param name="jobScenarioName"> The job name. Enum type ScenarioName. </param>
-        /// <returns> A new <see cref="Models.JobEntity"/> instance for mocking. </returns>
-        public static JobEntity JobEntity(string jobId = null, string jobFriendlyName = null, string targetObjectId = null, string targetObjectName = null, string targetInstanceType = null, string jobScenarioName = null)
+        /// <returns> A new <see cref="Models.SiteRecoveryJobEntity"/> instance for mocking. </returns>
+        public static SiteRecoveryJobEntity SiteRecoveryJobEntity(ResourceIdentifier jobId = null, string jobFriendlyName = null, string targetObjectId = null, string targetObjectName = null, string targetInstanceType = null, string jobScenarioName = null)
         {
-            return new JobEntity(jobId, jobFriendlyName, targetObjectId, targetObjectName, targetInstanceType, jobScenarioName);
+            return new SiteRecoveryJobEntity(jobId, jobFriendlyName, targetObjectId, targetObjectName, targetInstanceType, jobScenarioName);
         }
 
         /// <summary> Initializes a new instance of FailoverJobDetails. </summary>
@@ -1721,7 +1722,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="recoveryPointId"> The recovery point Id. </param>
         /// <param name="recoveryPointOn"> The recovery point time. </param>
         /// <returns> A new <see cref="Models.FailoverReplicationProtectedItemDetails"/> instance for mocking. </returns>
-        public static FailoverReplicationProtectedItemDetails FailoverReplicationProtectedItemDetails(string name = null, string friendlyName = null, string testVmName = null, string testVmFriendlyName = null, string networkConnectionStatus = null, string networkFriendlyName = null, string subnet = null, string recoveryPointId = null, DateTimeOffset? recoveryPointOn = null)
+        public static FailoverReplicationProtectedItemDetails FailoverReplicationProtectedItemDetails(string name = null, string friendlyName = null, string testVmName = null, string testVmFriendlyName = null, string networkConnectionStatus = null, string networkFriendlyName = null, string subnet = null, ResourceIdentifier recoveryPointId = null, DateTimeOffset? recoveryPointOn = null)
         {
             return new FailoverReplicationProtectedItemDetails(name, friendlyName, testVmName, testVmFriendlyName, networkConnectionStatus, networkFriendlyName, subnet, recoveryPointId, recoveryPointOn);
         }
@@ -1774,7 +1775,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="replicaDiskType"> The replica disk type. </param>
         /// <param name="diskEncryptionSetId"> The disk encryption set ARM Id. </param>
         /// <returns> A new <see cref="Models.HyperVReplicaAzureManagedDiskDetails"/> instance for mocking. </returns>
-        public static HyperVReplicaAzureManagedDiskDetails HyperVReplicaAzureManagedDiskDetails(string diskId = null, string seedManagedDiskId = null, string replicaDiskType = null, string diskEncryptionSetId = null)
+        public static HyperVReplicaAzureManagedDiskDetails HyperVReplicaAzureManagedDiskDetails(string diskId = null, string seedManagedDiskId = null, string replicaDiskType = null, ResourceIdentifier diskEncryptionSetId = null)
         {
             return new HyperVReplicaAzureManagedDiskDetails(diskId, seedManagedDiskId, replicaDiskType, diskEncryptionSetId);
         }
@@ -1787,7 +1788,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="encryption"> A value indicating whether encryption is enabled for virtual machines in this cloud. </param>
         /// <param name="activeStorageAccountId"> The active storage account Id. </param>
         /// <returns> A new <see cref="Models.HyperVReplicaAzurePolicyDetails"/> instance for mocking. </returns>
-        public static HyperVReplicaAzurePolicyDetails HyperVReplicaAzurePolicyDetails(int? recoveryPointHistoryDurationInHours = null, int? applicationConsistentSnapshotFrequencyInHours = null, int? replicationInterval = null, string onlineReplicationStartTime = null, string encryption = null, string activeStorageAccountId = null)
+        public static HyperVReplicaAzurePolicyDetails HyperVReplicaAzurePolicyDetails(int? recoveryPointHistoryDurationInHours = null, int? applicationConsistentSnapshotFrequencyInHours = null, int? replicationInterval = null, string onlineReplicationStartTime = null, string encryption = null, ResourceIdentifier activeStorageAccountId = null)
         {
             return new HyperVReplicaAzurePolicyDetails("HyperVReplicaAzure", recoveryPointHistoryDurationInHours, applicationConsistentSnapshotFrequencyInHours, replicationInterval, onlineReplicationStartTime, encryption, activeStorageAccountId);
         }
@@ -1827,9 +1828,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="targetNicTags"> The tags for the target NICs. </param>
         /// <param name="protectedManagedDisks"> The list of protected managed disks. </param>
         /// <returns> A new <see cref="Models.HyperVReplicaAzureReplicationDetails"/> instance for mocking. </returns>
-        public static HyperVReplicaAzureReplicationDetails HyperVReplicaAzureReplicationDetails(IEnumerable<AzureVmDiskDetails> azureVmDiskDetails = null, string recoveryAzureVmName = null, string recoveryAzureVmSize = null, string recoveryAzureStorageAccount = null, string recoveryAzureLogStorageAccountId = null, DateTimeOffset? lastReplicatedOn = null, long? rpoInSeconds = null, DateTimeOffset? lastRpoCalculatedOn = null, string vmId = null, string vmProtectionState = null, string vmProtectionStateDescription = null, InitialReplicationDetails initialReplicationDetails = null, IEnumerable<VmNicDetails> vmNics = null, string selectedRecoveryAzureNetworkId = null, string selectedSourceNicId = null, string encryption = null, OSDetails osDetails = null, int? sourceVmRamSizeInMB = null, int? sourceVmCpuCount = null, string enableRdpOnTargetOption = null, string recoveryAzureResourceGroupId = null, string recoveryAvailabilitySetId = null, string targetAvailabilityZone = null, string targetProximityPlacementGroupId = null, string useManagedDisks = null, string licenseType = null, string sqlServerLicenseType = null, DateTimeOffset? lastRecoveryPointReceived = null, IReadOnlyDictionary<string, string> targetVmTags = null, IReadOnlyDictionary<string, string> seedManagedDiskTags = null, IReadOnlyDictionary<string, string> targetManagedDiskTags = null, IReadOnlyDictionary<string, string> targetNicTags = null, IEnumerable<HyperVReplicaAzureManagedDiskDetails> protectedManagedDisks = null)
+        public static HyperVReplicaAzureReplicationDetails HyperVReplicaAzureReplicationDetails(IEnumerable<SiteRecoveryVmDiskDetails> azureVmDiskDetails = null, string recoveryAzureVmName = null, string recoveryAzureVmSize = null, string recoveryAzureStorageAccount = null, ResourceIdentifier recoveryAzureLogStorageAccountId = null, DateTimeOffset? lastReplicatedOn = null, long? rpoInSeconds = null, DateTimeOffset? lastRpoCalculatedOn = null, string vmId = null, string vmProtectionState = null, string vmProtectionStateDescription = null, InitialReplicationDetails initialReplicationDetails = null, IEnumerable<VmNicDetails> vmNics = null, ResourceIdentifier selectedRecoveryAzureNetworkId = null, string selectedSourceNicId = null, string encryption = null, SiteRecoveryOSDetails osDetails = null, int? sourceVmRamSizeInMB = null, int? sourceVmCpuCount = null, string enableRdpOnTargetOption = null, ResourceIdentifier recoveryAzureResourceGroupId = null, ResourceIdentifier recoveryAvailabilitySetId = null, string targetAvailabilityZone = null, ResourceIdentifier targetProximityPlacementGroupId = null, string useManagedDisks = null, string licenseType = null, string sqlServerLicenseType = null, DateTimeOffset? lastRecoveryPointReceived = null, IReadOnlyDictionary<string, string> targetVmTags = null, IReadOnlyDictionary<string, string> seedManagedDiskTags = null, IReadOnlyDictionary<string, string> targetManagedDiskTags = null, IReadOnlyDictionary<string, string> targetNicTags = null, IEnumerable<HyperVReplicaAzureManagedDiskDetails> protectedManagedDisks = null)
         {
-            azureVmDiskDetails ??= new List<AzureVmDiskDetails>();
+            azureVmDiskDetails ??= new List<SiteRecoveryVmDiskDetails>();
             vmNics ??= new List<VmNicDetails>();
             targetVmTags ??= new Dictionary<string, string>();
             seedManagedDiskTags ??= new Dictionary<string, string>();
@@ -1849,17 +1850,17 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             return new InitialReplicationDetails(initialReplicationType, initialReplicationProgressPercentage);
         }
 
-        /// <summary> Initializes a new instance of OSDetails. </summary>
+        /// <summary> Initializes a new instance of SiteRecoveryOSDetails. </summary>
         /// <param name="osType"> VM Disk details. </param>
         /// <param name="productType"> Product type. </param>
         /// <param name="osEdition"> The OSEdition. </param>
         /// <param name="osVersion"> The OS Version. </param>
         /// <param name="osMajorVersion"> The OS Major Version. </param>
         /// <param name="osMinorVersion"> The OS Minor Version. </param>
-        /// <returns> A new <see cref="Models.OSDetails"/> instance for mocking. </returns>
-        public static OSDetails OSDetails(string osType = null, string productType = null, string osEdition = null, string osVersion = null, string osMajorVersion = null, string osMinorVersion = null)
+        /// <returns> A new <see cref="Models.SiteRecoveryOSDetails"/> instance for mocking. </returns>
+        public static SiteRecoveryOSDetails SiteRecoveryOSDetails(string osType = null, string productType = null, string osEdition = null, string osVersion = null, string osMajorVersion = null, string osMinorVersion = null)
         {
-            return new OSDetails(osType, productType, osEdition, osVersion, osMajorVersion, osMinorVersion);
+            return new SiteRecoveryOSDetails(osType, productType, osEdition, osVersion, osMajorVersion, osMinorVersion);
         }
 
         /// <summary> Initializes a new instance of HyperVReplicaBaseEventDetails. </summary>
@@ -1899,10 +1900,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="initialReplicationDetails"> Initial replication details. </param>
         /// <param name="vmDiskDetails"> VM disk details. </param>
         /// <returns> A new <see cref="Models.HyperVReplicaBaseReplicationDetails"/> instance for mocking. </returns>
-        public static HyperVReplicaBaseReplicationDetails HyperVReplicaBaseReplicationDetails(DateTimeOffset? lastReplicatedOn = null, IEnumerable<VmNicDetails> vmNics = null, string vmId = null, string vmProtectionState = null, string vmProtectionStateDescription = null, InitialReplicationDetails initialReplicationDetails = null, IEnumerable<DiskDetails> vmDiskDetails = null)
+        public static HyperVReplicaBaseReplicationDetails HyperVReplicaBaseReplicationDetails(DateTimeOffset? lastReplicatedOn = null, IEnumerable<VmNicDetails> vmNics = null, string vmId = null, string vmProtectionState = null, string vmProtectionStateDescription = null, InitialReplicationDetails initialReplicationDetails = null, IEnumerable<SiteRecoveryDiskDetails> vmDiskDetails = null)
         {
             vmNics ??= new List<VmNicDetails>();
-            vmDiskDetails ??= new List<DiskDetails>();
+            vmDiskDetails ??= new List<SiteRecoveryDiskDetails>();
 
             return new HyperVReplicaBaseReplicationDetails("HyperVReplicaBaseReplicationDetails", lastReplicatedOn, vmNics?.ToList(), vmId, vmProtectionState, vmProtectionStateDescription, initialReplicationDetails, vmDiskDetails?.ToList());
         }
@@ -1934,10 +1935,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="initialReplicationDetails"> Initial replication details. </param>
         /// <param name="vmDiskDetails"> VM disk details. </param>
         /// <returns> A new <see cref="Models.HyperVReplicaBlueReplicationDetails"/> instance for mocking. </returns>
-        public static HyperVReplicaBlueReplicationDetails HyperVReplicaBlueReplicationDetails(DateTimeOffset? lastReplicatedOn = null, IEnumerable<VmNicDetails> vmNics = null, string vmId = null, string vmProtectionState = null, string vmProtectionStateDescription = null, InitialReplicationDetails initialReplicationDetails = null, IEnumerable<DiskDetails> vmDiskDetails = null)
+        public static HyperVReplicaBlueReplicationDetails HyperVReplicaBlueReplicationDetails(DateTimeOffset? lastReplicatedOn = null, IEnumerable<VmNicDetails> vmNics = null, string vmId = null, string vmProtectionState = null, string vmProtectionStateDescription = null, InitialReplicationDetails initialReplicationDetails = null, IEnumerable<SiteRecoveryDiskDetails> vmDiskDetails = null)
         {
             vmNics ??= new List<VmNicDetails>();
-            vmDiskDetails ??= new List<DiskDetails>();
+            vmDiskDetails ??= new List<SiteRecoveryDiskDetails>();
 
             return new HyperVReplicaBlueReplicationDetails("HyperVReplica2012R2", lastReplicatedOn, vmNics?.ToList(), vmId, vmProtectionState, vmProtectionStateDescription, initialReplicationDetails, vmDiskDetails?.ToList());
         }
@@ -1968,10 +1969,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="initialReplicationDetails"> Initial replication details. </param>
         /// <param name="vmDiskDetails"> VM disk details. </param>
         /// <returns> A new <see cref="Models.HyperVReplicaReplicationDetails"/> instance for mocking. </returns>
-        public static HyperVReplicaReplicationDetails HyperVReplicaReplicationDetails(DateTimeOffset? lastReplicatedOn = null, IEnumerable<VmNicDetails> vmNics = null, string vmId = null, string vmProtectionState = null, string vmProtectionStateDescription = null, InitialReplicationDetails initialReplicationDetails = null, IEnumerable<DiskDetails> vmDiskDetails = null)
+        public static HyperVReplicaReplicationDetails HyperVReplicaReplicationDetails(DateTimeOffset? lastReplicatedOn = null, IEnumerable<VmNicDetails> vmNics = null, string vmId = null, string vmProtectionState = null, string vmProtectionStateDescription = null, InitialReplicationDetails initialReplicationDetails = null, IEnumerable<SiteRecoveryDiskDetails> vmDiskDetails = null)
         {
             vmNics ??= new List<VmNicDetails>();
-            vmDiskDetails ??= new List<DiskDetails>();
+            vmDiskDetails ??= new List<SiteRecoveryDiskDetails>();
 
             return new HyperVReplicaReplicationDetails("HyperVReplica2012", lastReplicatedOn, vmNics?.ToList(), vmId, vmProtectionState, vmProtectionStateDescription, initialReplicationDetails, vmDiskDetails?.ToList());
         }
@@ -1986,7 +1987,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             return new HyperVSiteDetails("HyperVSite", hyperVHosts?.ToList());
         }
 
-        /// <summary> Initializes a new instance of HyperVVirtualMachineDetails. </summary>
+        /// <summary> Initializes a new instance of HyperVVmDetails. </summary>
         /// <param name="sourceItemId"> The source id of the object. </param>
         /// <param name="generation"> The id of the object in fabric. </param>
         /// <param name="osDetails"> The Last replication time. </param>
@@ -1995,21 +1996,21 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="hasFibreChannelAdapter"> A value indicating whether the VM has a fibre channel adapter attached. String value of SrsDataContract.PresenceStatus enum. </param>
         /// <param name="hasSharedVhd"> A value indicating whether the VM has a shared VHD attached. String value of SrsDataContract.PresenceStatus enum. </param>
         /// <param name="hyperVHostId"> The Id of the hyper-v host in fabric. </param>
-        /// <returns> A new <see cref="Models.HyperVVirtualMachineDetails"/> instance for mocking. </returns>
-        public static HyperVVirtualMachineDetails HyperVVirtualMachineDetails(string sourceItemId = null, string generation = null, OSDetails osDetails = null, IEnumerable<DiskDetails> diskDetails = null, PresenceStatus? hasPhysicalDisk = null, PresenceStatus? hasFibreChannelAdapter = null, PresenceStatus? hasSharedVhd = null, string hyperVHostId = null)
+        /// <returns> A new <see cref="Models.HyperVVmDetails"/> instance for mocking. </returns>
+        public static HyperVVmDetails HyperVVmDetails(string sourceItemId = null, string generation = null, SiteRecoveryOSDetails osDetails = null, IEnumerable<SiteRecoveryDiskDetails> diskDetails = null, HyperVVmDiskPresenceStatus? hasPhysicalDisk = null, HyperVVmDiskPresenceStatus? hasFibreChannelAdapter = null, HyperVVmDiskPresenceStatus? hasSharedVhd = null, string hyperVHostId = null)
         {
-            diskDetails ??= new List<DiskDetails>();
+            diskDetails ??= new List<SiteRecoveryDiskDetails>();
 
-            return new HyperVVirtualMachineDetails("HyperVVirtualMachine", sourceItemId, generation, osDetails, diskDetails?.ToList(), hasPhysicalDisk, hasFibreChannelAdapter, hasSharedVhd, hyperVHostId);
+            return new HyperVVmDetails("HyperVVirtualMachine", sourceItemId, generation, osDetails, diskDetails?.ToList(), hasPhysicalDisk, hasFibreChannelAdapter, hasSharedVhd, hyperVHostId);
         }
 
         /// <summary> Initializes a new instance of InlineWorkflowTaskDetails. </summary>
         /// <param name="childTasks"> The child tasks. </param>
         /// <param name="workflowIds"> The list of child workflow ids. </param>
         /// <returns> A new <see cref="Models.InlineWorkflowTaskDetails"/> instance for mocking. </returns>
-        public static InlineWorkflowTaskDetails InlineWorkflowTaskDetails(IEnumerable<ASRTask> childTasks = null, IEnumerable<string> workflowIds = null)
+        public static InlineWorkflowTaskDetails InlineWorkflowTaskDetails(IEnumerable<AsrTask> childTasks = null, IEnumerable<string> workflowIds = null)
         {
-            childTasks ??= new List<ASRTask>();
+            childTasks ??= new List<AsrTask>();
             workflowIds ??= new List<string>();
 
             return new InlineWorkflowTaskDetails("InlineWorkflowTaskDetails", childTasks?.ToList(), workflowIds?.ToList());
@@ -2019,11 +2020,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="agentVersion"> The agent version. </param>
         /// <param name="agentUpdateStatus"> A value indicating whether installed agent needs to be updated. </param>
         /// <param name="postUpdateRebootStatus"> A value indicating whether reboot is required after update is applied. </param>
-        /// <param name="agentExpiryOn"> Agent expiry date. </param>
+        /// <param name="agentExpireOn"> Agent expiry date. </param>
         /// <returns> A new <see cref="Models.InMageAgentDetails"/> instance for mocking. </returns>
-        public static InMageAgentDetails InMageAgentDetails(string agentVersion = null, string agentUpdateStatus = null, string postUpdateRebootStatus = null, DateTimeOffset? agentExpiryOn = null)
+        public static InMageAgentDetails InMageAgentDetails(string agentVersion = null, string agentUpdateStatus = null, string postUpdateRebootStatus = null, DateTimeOffset? agentExpireOn = null)
         {
-            return new InMageAgentDetails(agentVersion, agentUpdateStatus, postUpdateRebootStatus, agentExpiryOn);
+            return new InMageAgentDetails(agentVersion, agentUpdateStatus, postUpdateRebootStatus, agentExpireOn);
         }
 
         /// <summary> Initializes a new instance of InMageAzureV2EventDetails. </summary>
@@ -2047,7 +2048,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="diskEncryptionSetId"> The DiskEncryptionSet ARM ID. </param>
         /// <param name="targetDiskName"> The target disk name. </param>
         /// <returns> A new <see cref="Models.InMageAzureV2ManagedDiskDetails"/> instance for mocking. </returns>
-        public static InMageAzureV2ManagedDiskDetails InMageAzureV2ManagedDiskDetails(string diskId = null, string seedManagedDiskId = null, string replicaDiskType = null, string diskEncryptionSetId = null, string targetDiskName = null)
+        public static InMageAzureV2ManagedDiskDetails InMageAzureV2ManagedDiskDetails(string diskId = null, string seedManagedDiskId = null, string replicaDiskType = null, ResourceIdentifier diskEncryptionSetId = null, string targetDiskName = null)
         {
             return new InMageAzureV2ManagedDiskDetails(diskId, seedManagedDiskId, replicaDiskType, diskEncryptionSetId, targetDiskName);
         }
@@ -2083,15 +2084,15 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="resyncProcessedBytes"> The resync processed bytes. </param>
         /// <param name="resyncTotalTransferredBytes"> The resync total transferred bytes. </param>
         /// <param name="resyncLast15MinutesTransferredBytes"> The resync last 15 minutes transferred bytes. </param>
-        /// <param name="resyncLastDataTransferTimeUTC"> The last data transfer time in UTC. </param>
+        /// <param name="resyncLastDataTransferOn"> The last data transfer time in UTC. </param>
         /// <param name="resyncStartOn"> The resync start time. </param>
         /// <param name="progressHealth"> The Progress Health. </param>
         /// <param name="progressStatus"> The Progress Status. </param>
         /// <param name="secondsToTakeSwitchProvider"> The seconds to take for switch provider. </param>
         /// <returns> A new <see cref="Models.InMageAzureV2ProtectedDiskDetails"/> instance for mocking. </returns>
-        public static InMageAzureV2ProtectedDiskDetails InMageAzureV2ProtectedDiskDetails(string diskId = null, string diskName = null, string protectionStage = null, string healthErrorCode = null, long? rpoInSeconds = null, string resyncRequired = null, int? resyncProgressPercentage = null, long? resyncDurationInSeconds = null, long? diskCapacityInBytes = null, long? fileSystemCapacityInBytes = null, double? sourceDataInMegaBytes = null, double? psDataInMegaBytes = null, double? targetDataInMegaBytes = null, string diskResized = null, DateTimeOffset? lastRpoCalculatedOn = null, long? resyncProcessedBytes = null, long? resyncTotalTransferredBytes = null, long? resyncLast15MinutesTransferredBytes = null, DateTimeOffset? resyncLastDataTransferTimeUTC = null, DateTimeOffset? resyncStartOn = null, string progressHealth = null, string progressStatus = null, long? secondsToTakeSwitchProvider = null)
+        public static InMageAzureV2ProtectedDiskDetails InMageAzureV2ProtectedDiskDetails(string diskId = null, string diskName = null, string protectionStage = null, string healthErrorCode = null, long? rpoInSeconds = null, string resyncRequired = null, int? resyncProgressPercentage = null, long? resyncDurationInSeconds = null, long? diskCapacityInBytes = null, long? fileSystemCapacityInBytes = null, double? sourceDataInMegaBytes = null, double? psDataInMegaBytes = null, double? targetDataInMegaBytes = null, string diskResized = null, DateTimeOffset? lastRpoCalculatedOn = null, long? resyncProcessedBytes = null, long? resyncTotalTransferredBytes = null, long? resyncLast15MinutesTransferredBytes = null, DateTimeOffset? resyncLastDataTransferOn = null, DateTimeOffset? resyncStartOn = null, string progressHealth = null, string progressStatus = null, long? secondsToTakeSwitchProvider = null)
         {
-            return new InMageAzureV2ProtectedDiskDetails(diskId, diskName, protectionStage, healthErrorCode, rpoInSeconds, resyncRequired, resyncProgressPercentage, resyncDurationInSeconds, diskCapacityInBytes, fileSystemCapacityInBytes, sourceDataInMegaBytes, psDataInMegaBytes, targetDataInMegaBytes, diskResized, lastRpoCalculatedOn, resyncProcessedBytes, resyncTotalTransferredBytes, resyncLast15MinutesTransferredBytes, resyncLastDataTransferTimeUTC, resyncStartOn, progressHealth, progressStatus, secondsToTakeSwitchProvider);
+            return new InMageAzureV2ProtectedDiskDetails(diskId, diskName, protectionStage, healthErrorCode, rpoInSeconds, resyncRequired, resyncProgressPercentage, resyncDurationInSeconds, diskCapacityInBytes, fileSystemCapacityInBytes, sourceDataInMegaBytes, psDataInMegaBytes, targetDataInMegaBytes, diskResized, lastRpoCalculatedOn, resyncProcessedBytes, resyncTotalTransferredBytes, resyncLast15MinutesTransferredBytes, resyncLastDataTransferOn, resyncStartOn, progressHealth, progressStatus, secondsToTakeSwitchProvider);
         }
 
         /// <summary> Initializes a new instance of InMageAzureV2RecoveryPointDetails. </summary>
@@ -2115,7 +2116,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="uncompressedDataRateInMB"> The uncompressed data change rate in MB. </param>
         /// <param name="ipAddress"> The source IP address. </param>
         /// <param name="agentVersion"> The agent version. </param>
-        /// <param name="agentExpiryOn"> Agent expiry date. </param>
+        /// <param name="agentExpireOn"> Agent expiry date. </param>
         /// <param name="isAgentUpdateRequired"> A value indicating whether installed agent needs to be updated. </param>
         /// <param name="isRebootAfterUpdateRequired"> A value indicating whether the source server requires a restart after update. </param>
         /// <param name="lastHeartbeat"> The last heartbeat received from the source server. </param>
@@ -2171,13 +2172,13 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="switchProviderBlockingErrorDetails"> The switch provider blocking error information. </param>
         /// <param name="switchProviderDetails"> The switch provider blocking error information. </param>
         /// <returns> A new <see cref="Models.InMageAzureV2ReplicationDetails"/> instance for mocking. </returns>
-        public static InMageAzureV2ReplicationDetails InMageAzureV2ReplicationDetails(string infrastructureVmId = null, string vCenterInfrastructureId = null, string protectionStage = null, string vmId = null, string vmProtectionState = null, string vmProtectionStateDescription = null, int? resyncProgressPercentage = null, long? rpoInSeconds = null, double? compressedDataRateInMB = null, double? uncompressedDataRateInMB = null, string ipAddress = null, string agentVersion = null, DateTimeOffset? agentExpiryOn = null, string isAgentUpdateRequired = null, string isRebootAfterUpdateRequired = null, DateTimeOffset? lastHeartbeat = null, string processServerId = null, string processServerName = null, string multiVmGroupId = null, string multiVmGroupName = null, string multiVmSyncStatus = null, IEnumerable<InMageAzureV2ProtectedDiskDetails> protectedDisks = null, string diskResized = null, string masterTargetId = null, int? sourceVmCpuCount = null, int? sourceVmRamSizeInMB = null, string osType = null, string vhdName = null, string osDiskId = null, IEnumerable<AzureVmDiskDetails> azureVmDiskDetails = null, string recoveryAzureVmName = null, string recoveryAzureVmSize = null, string recoveryAzureStorageAccount = null, string recoveryAzureLogStorageAccountId = null, IEnumerable<VmNicDetails> vmNics = null, string selectedRecoveryAzureNetworkId = null, string selectedTfoAzureNetworkId = null, string selectedSourceNicId = null, string discoveryType = null, string enableRdpOnTargetOption = null, IEnumerable<string> datastores = null, string targetVmId = null, string recoveryAzureResourceGroupId = null, string recoveryAvailabilitySetId = null, string targetAvailabilityZone = null, string targetProximityPlacementGroupId = null, string useManagedDisks = null, string licenseType = null, string sqlServerLicenseType = null, IEnumerable<HealthError> validationErrors = null, DateTimeOffset? lastRpoCalculatedOn = null, DateTimeOffset? lastUpdateReceivedOn = null, string replicaId = null, string osVersion = null, IEnumerable<InMageAzureV2ManagedDiskDetails> protectedManagedDisks = null, DateTimeOffset? lastRecoveryPointReceived = null, string firmwareType = null, string azureVmGeneration = null, bool? isAdditionalStatsAvailable = null, long? totalDataTransferred = null, string totalProgressHealth = null, IReadOnlyDictionary<string, string> targetVmTags = null, IReadOnlyDictionary<string, string> seedManagedDiskTags = null, IReadOnlyDictionary<string, string> targetManagedDiskTags = null, IReadOnlyDictionary<string, string> targetNicTags = null, IEnumerable<InMageAzureV2SwitchProviderBlockingErrorDetails> switchProviderBlockingErrorDetails = null, InMageAzureV2SwitchProviderDetails switchProviderDetails = null)
+        public static InMageAzureV2ReplicationDetails InMageAzureV2ReplicationDetails(string infrastructureVmId = null, string vCenterInfrastructureId = null, string protectionStage = null, string vmId = null, string vmProtectionState = null, string vmProtectionStateDescription = null, int? resyncProgressPercentage = null, long? rpoInSeconds = null, double? compressedDataRateInMB = null, double? uncompressedDataRateInMB = null, IPAddress ipAddress = null, string agentVersion = null, DateTimeOffset? agentExpireOn = null, string isAgentUpdateRequired = null, string isRebootAfterUpdateRequired = null, DateTimeOffset? lastHeartbeat = null, Guid? processServerId = null, string processServerName = null, string multiVmGroupId = null, string multiVmGroupName = null, string multiVmSyncStatus = null, IEnumerable<InMageAzureV2ProtectedDiskDetails> protectedDisks = null, string diskResized = null, string masterTargetId = null, int? sourceVmCpuCount = null, int? sourceVmRamSizeInMB = null, string osType = null, string vhdName = null, string osDiskId = null, IEnumerable<SiteRecoveryVmDiskDetails> azureVmDiskDetails = null, string recoveryAzureVmName = null, string recoveryAzureVmSize = null, string recoveryAzureStorageAccount = null, ResourceIdentifier recoveryAzureLogStorageAccountId = null, IEnumerable<VmNicDetails> vmNics = null, ResourceIdentifier selectedRecoveryAzureNetworkId = null, ResourceIdentifier selectedTfoAzureNetworkId = null, string selectedSourceNicId = null, string discoveryType = null, string enableRdpOnTargetOption = null, IEnumerable<string> datastores = null, string targetVmId = null, ResourceIdentifier recoveryAzureResourceGroupId = null, ResourceIdentifier recoveryAvailabilitySetId = null, string targetAvailabilityZone = null, ResourceIdentifier targetProximityPlacementGroupId = null, string useManagedDisks = null, string licenseType = null, string sqlServerLicenseType = null, IEnumerable<SiteRecoveryHealthError> validationErrors = null, DateTimeOffset? lastRpoCalculatedOn = null, DateTimeOffset? lastUpdateReceivedOn = null, string replicaId = null, string osVersion = null, IEnumerable<InMageAzureV2ManagedDiskDetails> protectedManagedDisks = null, DateTimeOffset? lastRecoveryPointReceived = null, string firmwareType = null, string azureVmGeneration = null, bool? isAdditionalStatsAvailable = null, long? totalDataTransferred = null, string totalProgressHealth = null, IReadOnlyDictionary<string, string> targetVmTags = null, IReadOnlyDictionary<string, string> seedManagedDiskTags = null, IReadOnlyDictionary<string, string> targetManagedDiskTags = null, IReadOnlyDictionary<string, string> targetNicTags = null, IEnumerable<InMageAzureV2SwitchProviderBlockingErrorDetails> switchProviderBlockingErrorDetails = null, InMageAzureV2SwitchProviderDetails switchProviderDetails = null)
         {
             protectedDisks ??= new List<InMageAzureV2ProtectedDiskDetails>();
-            azureVmDiskDetails ??= new List<AzureVmDiskDetails>();
+            azureVmDiskDetails ??= new List<SiteRecoveryVmDiskDetails>();
             vmNics ??= new List<VmNicDetails>();
             datastores ??= new List<string>();
-            validationErrors ??= new List<HealthError>();
+            validationErrors ??= new List<SiteRecoveryHealthError>();
             protectedManagedDisks ??= new List<InMageAzureV2ManagedDiskDetails>();
             targetVmTags ??= new Dictionary<string, string>();
             seedManagedDiskTags ??= new Dictionary<string, string>();
@@ -2185,7 +2186,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             targetNicTags ??= new Dictionary<string, string>();
             switchProviderBlockingErrorDetails ??= new List<InMageAzureV2SwitchProviderBlockingErrorDetails>();
 
-            return new InMageAzureV2ReplicationDetails("InMageAzureV2", infrastructureVmId, vCenterInfrastructureId, protectionStage, vmId, vmProtectionState, vmProtectionStateDescription, resyncProgressPercentage, rpoInSeconds, compressedDataRateInMB, uncompressedDataRateInMB, ipAddress, agentVersion, agentExpiryOn, isAgentUpdateRequired, isRebootAfterUpdateRequired, lastHeartbeat, processServerId, processServerName, multiVmGroupId, multiVmGroupName, multiVmSyncStatus, protectedDisks?.ToList(), diskResized, masterTargetId, sourceVmCpuCount, sourceVmRamSizeInMB, osType, vhdName, osDiskId, azureVmDiskDetails?.ToList(), recoveryAzureVmName, recoveryAzureVmSize, recoveryAzureStorageAccount, recoveryAzureLogStorageAccountId, vmNics?.ToList(), selectedRecoveryAzureNetworkId, selectedTfoAzureNetworkId, selectedSourceNicId, discoveryType, enableRdpOnTargetOption, datastores?.ToList(), targetVmId, recoveryAzureResourceGroupId, recoveryAvailabilitySetId, targetAvailabilityZone, targetProximityPlacementGroupId, useManagedDisks, licenseType, sqlServerLicenseType, validationErrors?.ToList(), lastRpoCalculatedOn, lastUpdateReceivedOn, replicaId, osVersion, protectedManagedDisks?.ToList(), lastRecoveryPointReceived, firmwareType, azureVmGeneration, isAdditionalStatsAvailable, totalDataTransferred, totalProgressHealth, targetVmTags, seedManagedDiskTags, targetManagedDiskTags, targetNicTags, switchProviderBlockingErrorDetails?.ToList(), switchProviderDetails);
+            return new InMageAzureV2ReplicationDetails("InMageAzureV2", infrastructureVmId, vCenterInfrastructureId, protectionStage, vmId, vmProtectionState, vmProtectionStateDescription, resyncProgressPercentage, rpoInSeconds, compressedDataRateInMB, uncompressedDataRateInMB, ipAddress, agentVersion, agentExpireOn, isAgentUpdateRequired, isRebootAfterUpdateRequired, lastHeartbeat, processServerId, processServerName, multiVmGroupId, multiVmGroupName, multiVmSyncStatus, protectedDisks?.ToList(), diskResized, masterTargetId, sourceVmCpuCount, sourceVmRamSizeInMB, osType, vhdName, osDiskId, azureVmDiskDetails?.ToList(), recoveryAzureVmName, recoveryAzureVmSize, recoveryAzureStorageAccount, recoveryAzureLogStorageAccountId, vmNics?.ToList(), selectedRecoveryAzureNetworkId, selectedTfoAzureNetworkId, selectedSourceNicId, discoveryType, enableRdpOnTargetOption, datastores?.ToList(), targetVmId, recoveryAzureResourceGroupId, recoveryAvailabilitySetId, targetAvailabilityZone, targetProximityPlacementGroupId, useManagedDisks, licenseType, sqlServerLicenseType, validationErrors?.ToList(), lastRpoCalculatedOn, lastUpdateReceivedOn, replicaId, osVersion, protectedManagedDisks?.ToList(), lastRecoveryPointReceived, firmwareType, azureVmGeneration, isAdditionalStatsAvailable, totalDataTransferred, totalProgressHealth, targetVmTags, seedManagedDiskTags, targetManagedDiskTags, targetNicTags, switchProviderBlockingErrorDetails?.ToList(), switchProviderDetails);
         }
 
         /// <summary> Initializes a new instance of InMageAzureV2SwitchProviderBlockingErrorDetails. </summary>
@@ -2210,7 +2211,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="targetFabricId"> The target fabric Id. </param>
         /// <param name="targetApplianceId"> The target appliance Id. </param>
         /// <returns> A new <see cref="Models.InMageAzureV2SwitchProviderDetails"/> instance for mocking. </returns>
-        public static InMageAzureV2SwitchProviderDetails InMageAzureV2SwitchProviderDetails(string targetVaultId = null, string targetResourceId = null, string targetFabricId = null, string targetApplianceId = null)
+        public static InMageAzureV2SwitchProviderDetails InMageAzureV2SwitchProviderDetails(ResourceIdentifier targetVaultId = null, ResourceIdentifier targetResourceId = null, ResourceIdentifier targetFabricId = null, string targetApplianceId = null)
         {
             return new InMageAzureV2SwitchProviderDetails(targetVaultId, targetResourceId, targetFabricId, targetApplianceId);
         }
@@ -2234,9 +2235,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="diskConfiguration"> Whether disk is dynamic disk or basic disk. </param>
         /// <param name="volumeList"> Volumes of the disk. </param>
         /// <returns> A new <see cref="Models.InMageDiskDetails"/> instance for mocking. </returns>
-        public static InMageDiskDetails InMageDiskDetails(string diskId = null, string diskName = null, string diskSizeInMB = null, string diskType = null, string diskConfiguration = null, IEnumerable<DiskVolumeDetails> volumeList = null)
+        public static InMageDiskDetails InMageDiskDetails(string diskId = null, string diskName = null, string diskSizeInMB = null, string diskType = null, string diskConfiguration = null, IEnumerable<SiteRecoveryDiskVolumeDetails> volumeList = null)
         {
-            volumeList ??= new List<DiskVolumeDetails>();
+            volumeList ??= new List<SiteRecoveryDiskVolumeDetails>();
 
             return new InMageDiskDetails(diskId, diskName, diskSizeInMB, diskType, diskConfiguration, volumeList?.ToList());
         }
@@ -2326,14 +2327,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="dra"> The DRA. </param>
         /// <param name="switchProviderBlockingErrorDetails"> The switch provider blocking error information. </param>
         /// <returns> A new <see cref="Models.InMageRcmApplianceDetails"/> instance for mocking. </returns>
-        public static InMageRcmApplianceDetails InMageRcmApplianceDetails(string id = null, string name = null, string fabricArmId = null, ProcessServerDetails processServer = null, RcmProxyDetails rcmProxy = null, PushInstallerDetails pushInstaller = null, ReplicationAgentDetails replicationAgent = null, ReprotectAgentDetails reprotectAgent = null, MarsAgentDetails marsAgent = null, DraDetails dra = null, IEnumerable<InMageRcmFabricSwitchProviderBlockingErrorDetails> switchProviderBlockingErrorDetails = null)
+        public static InMageRcmApplianceDetails InMageRcmApplianceDetails(string id = null, string name = null, ResourceIdentifier fabricArmId = null, SiteRecoveryProcessServerDetails processServer = null, RcmProxyDetails rcmProxy = null, PushInstallerDetails pushInstaller = null, ReplicationAgentDetails replicationAgent = null, ReprotectAgentDetails reprotectAgent = null, MarsAgentDetails marsAgent = null, SiteRecoveryDraDetails dra = null, IEnumerable<InMageRcmFabricSwitchProviderBlockingErrorDetails> switchProviderBlockingErrorDetails = null)
         {
             switchProviderBlockingErrorDetails ??= new List<InMageRcmFabricSwitchProviderBlockingErrorDetails>();
 
             return new InMageRcmApplianceDetails(id, name, fabricArmId, processServer, rcmProxy, pushInstaller, replicationAgent, reprotectAgent, marsAgent, dra, switchProviderBlockingErrorDetails?.ToList());
         }
 
-        /// <summary> Initializes a new instance of ProcessServerDetails. </summary>
+        /// <summary> Initializes a new instance of SiteRecoveryProcessServerDetails. </summary>
         /// <param name="id"> The process server Id. </param>
         /// <param name="name"> The process server name. </param>
         /// <param name="biosId"> The process server Bios Id. </param>
@@ -2341,7 +2342,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="fqdn"> The process server Fqdn. </param>
         /// <param name="ipAddresses"> The list of IP addresses for communicating with the RCM component. </param>
         /// <param name="version"> The version. </param>
-        /// <param name="lastHeartbeatUtc"> The last heartbeat received from the process server. </param>
+        /// <param name="lastHeartbeatReceivedOn"> The last heartbeat received from the process server. </param>
         /// <param name="totalMemoryInBytes"> The total memory. </param>
         /// <param name="availableMemoryInBytes"> The available memory. </param>
         /// <param name="usedMemoryInBytes"> The used memory. </param>
@@ -2363,13 +2364,13 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="healthErrors"> The health errors. </param>
         /// <param name="protectedItemCount"> The protected item count. </param>
         /// <param name="historicHealth"> The historic health of the process server based on the health in last 24 hours. </param>
-        /// <returns> A new <see cref="Models.ProcessServerDetails"/> instance for mocking. </returns>
-        public static ProcessServerDetails ProcessServerDetails(string id = null, string name = null, string biosId = null, string fabricObjectId = null, string fqdn = null, IEnumerable<string> ipAddresses = null, string version = null, DateTimeOffset? lastHeartbeatUtc = null, long? totalMemoryInBytes = null, long? availableMemoryInBytes = null, long? usedMemoryInBytes = null, double? memoryUsagePercentage = null, long? totalSpaceInBytes = null, long? availableSpaceInBytes = null, long? usedSpaceInBytes = null, double? freeSpacePercentage = null, long? throughputUploadPendingDataInBytes = null, long? throughputInBytes = null, double? processorUsagePercentage = null, RcmComponentStatus? throughputStatus = null, long? systemLoad = null, RcmComponentStatus? systemLoadStatus = null, RcmComponentStatus? diskUsageStatus = null, RcmComponentStatus? memoryUsageStatus = null, RcmComponentStatus? processorUsageStatus = null, ProtectionHealth? health = null, IEnumerable<HealthError> healthErrors = null, int? protectedItemCount = null, ProtectionHealth? historicHealth = null)
+        /// <returns> A new <see cref="Models.SiteRecoveryProcessServerDetails"/> instance for mocking. </returns>
+        public static SiteRecoveryProcessServerDetails SiteRecoveryProcessServerDetails(string id = null, string name = null, string biosId = null, ResourceIdentifier fabricObjectId = null, string fqdn = null, IEnumerable<IPAddress> ipAddresses = null, string version = null, DateTimeOffset? lastHeartbeatReceivedOn = null, long? totalMemoryInBytes = null, long? availableMemoryInBytes = null, long? usedMemoryInBytes = null, double? memoryUsagePercentage = null, long? totalSpaceInBytes = null, long? availableSpaceInBytes = null, long? usedSpaceInBytes = null, double? freeSpacePercentage = null, long? throughputUploadPendingDataInBytes = null, long? throughputInBytes = null, double? processorUsagePercentage = null, RcmComponentStatus? throughputStatus = null, long? systemLoad = null, RcmComponentStatus? systemLoadStatus = null, RcmComponentStatus? diskUsageStatus = null, RcmComponentStatus? memoryUsageStatus = null, RcmComponentStatus? processorUsageStatus = null, SiteRecoveryProtectionHealth? health = null, IEnumerable<SiteRecoveryHealthError> healthErrors = null, int? protectedItemCount = null, SiteRecoveryProtectionHealth? historicHealth = null)
         {
-            ipAddresses ??= new List<string>();
-            healthErrors ??= new List<HealthError>();
+            ipAddresses ??= new List<IPAddress>();
+            healthErrors ??= new List<SiteRecoveryHealthError>();
 
-            return new ProcessServerDetails(id, name, biosId, fabricObjectId, fqdn, ipAddresses?.ToList(), version, lastHeartbeatUtc, totalMemoryInBytes, availableMemoryInBytes, usedMemoryInBytes, memoryUsagePercentage, totalSpaceInBytes, availableSpaceInBytes, usedSpaceInBytes, freeSpacePercentage, throughputUploadPendingDataInBytes, throughputInBytes, processorUsagePercentage, throughputStatus, systemLoad, systemLoadStatus, diskUsageStatus, memoryUsageStatus, processorUsageStatus, health, healthErrors?.ToList(), protectedItemCount, historicHealth);
+            return new SiteRecoveryProcessServerDetails(id, name, biosId, fabricObjectId, fqdn, ipAddresses?.ToList(), version, lastHeartbeatReceivedOn, totalMemoryInBytes, availableMemoryInBytes, usedMemoryInBytes, memoryUsagePercentage, totalSpaceInBytes, availableSpaceInBytes, usedSpaceInBytes, freeSpacePercentage, throughputUploadPendingDataInBytes, throughputInBytes, processorUsagePercentage, throughputStatus, systemLoad, systemLoadStatus, diskUsageStatus, memoryUsageStatus, processorUsageStatus, health, healthErrors?.ToList(), protectedItemCount, historicHealth);
         }
 
         /// <summary> Initializes a new instance of RcmProxyDetails. </summary>
@@ -2380,15 +2381,15 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="fqdn"> The RCM proxy Fqdn. </param>
         /// <param name="clientAuthenticationType"> The client authentication type. </param>
         /// <param name="version"> The version. </param>
-        /// <param name="lastHeartbeatUtc"> The last heartbeat received from the RCM proxy. </param>
+        /// <param name="lastHeartbeatReceivedOn"> The last heartbeat received from the RCM proxy. </param>
         /// <param name="health"> The health of the RCM proxy. </param>
         /// <param name="healthErrors"> The health errors. </param>
         /// <returns> A new <see cref="Models.RcmProxyDetails"/> instance for mocking. </returns>
-        public static RcmProxyDetails RcmProxyDetails(string id = null, string name = null, string biosId = null, string fabricObjectId = null, string fqdn = null, string clientAuthenticationType = null, string version = null, DateTimeOffset? lastHeartbeatUtc = null, ProtectionHealth? health = null, IEnumerable<HealthError> healthErrors = null)
+        public static RcmProxyDetails RcmProxyDetails(string id = null, string name = null, string biosId = null, ResourceIdentifier fabricObjectId = null, string fqdn = null, string clientAuthenticationType = null, string version = null, DateTimeOffset? lastHeartbeatReceivedOn = null, SiteRecoveryProtectionHealth? health = null, IEnumerable<SiteRecoveryHealthError> healthErrors = null)
         {
-            healthErrors ??= new List<HealthError>();
+            healthErrors ??= new List<SiteRecoveryHealthError>();
 
-            return new RcmProxyDetails(id, name, biosId, fabricObjectId, fqdn, clientAuthenticationType, version, lastHeartbeatUtc, health, healthErrors?.ToList());
+            return new RcmProxyDetails(id, name, biosId, fabricObjectId, fqdn, clientAuthenticationType, version, lastHeartbeatReceivedOn, health, healthErrors?.ToList());
         }
 
         /// <summary> Initializes a new instance of PushInstallerDetails. </summary>
@@ -2398,15 +2399,15 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="fabricObjectId"> The fabric object Id. </param>
         /// <param name="fqdn"> The push installer Fqdn. </param>
         /// <param name="version"> The version. </param>
-        /// <param name="lastHeartbeatUtc"> The last heartbeat received from the push installer. </param>
+        /// <param name="lastHeartbeatReceivedOn"> The last heartbeat received from the push installer. </param>
         /// <param name="health"> The health of the push installer. </param>
         /// <param name="healthErrors"> The health errors. </param>
         /// <returns> A new <see cref="Models.PushInstallerDetails"/> instance for mocking. </returns>
-        public static PushInstallerDetails PushInstallerDetails(string id = null, string name = null, string biosId = null, string fabricObjectId = null, string fqdn = null, string version = null, DateTimeOffset? lastHeartbeatUtc = null, ProtectionHealth? health = null, IEnumerable<HealthError> healthErrors = null)
+        public static PushInstallerDetails PushInstallerDetails(string id = null, string name = null, string biosId = null, ResourceIdentifier fabricObjectId = null, string fqdn = null, string version = null, DateTimeOffset? lastHeartbeatReceivedOn = null, SiteRecoveryProtectionHealth? health = null, IEnumerable<SiteRecoveryHealthError> healthErrors = null)
         {
-            healthErrors ??= new List<HealthError>();
+            healthErrors ??= new List<SiteRecoveryHealthError>();
 
-            return new PushInstallerDetails(id, name, biosId, fabricObjectId, fqdn, version, lastHeartbeatUtc, health, healthErrors?.ToList());
+            return new PushInstallerDetails(id, name, biosId, fabricObjectId, fqdn, version, lastHeartbeatReceivedOn, health, healthErrors?.ToList());
         }
 
         /// <summary> Initializes a new instance of ReplicationAgentDetails. </summary>
@@ -2420,9 +2421,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="health"> The health of the replication agent. </param>
         /// <param name="healthErrors"> The health errors. </param>
         /// <returns> A new <see cref="Models.ReplicationAgentDetails"/> instance for mocking. </returns>
-        public static ReplicationAgentDetails ReplicationAgentDetails(string id = null, string name = null, string biosId = null, string fabricObjectId = null, string fqdn = null, string version = null, DateTimeOffset? lastHeartbeatUtc = null, ProtectionHealth? health = null, IEnumerable<HealthError> healthErrors = null)
+        public static ReplicationAgentDetails ReplicationAgentDetails(string id = null, string name = null, string biosId = null, ResourceIdentifier fabricObjectId = null, string fqdn = null, string version = null, DateTimeOffset? lastHeartbeatUtc = null, SiteRecoveryProtectionHealth? health = null, IEnumerable<SiteRecoveryHealthError> healthErrors = null)
         {
-            healthErrors ??= new List<HealthError>();
+            healthErrors ??= new List<SiteRecoveryHealthError>();
 
             return new ReplicationAgentDetails(id, name, biosId, fabricObjectId, fqdn, version, lastHeartbeatUtc, health, healthErrors?.ToList());
         }
@@ -2434,20 +2435,20 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="fabricObjectId"> The fabric object Id. </param>
         /// <param name="fqdn"> The reprotect agent Fqdn. </param>
         /// <param name="version"> The version. </param>
-        /// <param name="lastHeartbeatUtc"> The last heartbeat received from the reprotect agent. </param>
+        /// <param name="lastHeartbeatReceivedOn"> The last heartbeat received from the reprotect agent. </param>
         /// <param name="health"> The health of the reprotect agent. </param>
         /// <param name="healthErrors"> The health errors. </param>
         /// <param name="protectedItemCount"> The protected item count. </param>
         /// <param name="accessibleDatastores"> The list of accessible datastores fetched from discovery. </param>
         /// <param name="vCenterId"> The Vcenter Id. </param>
-        /// <param name="lastDiscoveryInUtc"> The last time when SDS information discovered in SRS. </param>
+        /// <param name="last"> The last time when SDS information discovered in SRS. </param>
         /// <returns> A new <see cref="Models.ReprotectAgentDetails"/> instance for mocking. </returns>
-        public static ReprotectAgentDetails ReprotectAgentDetails(string id = null, string name = null, string biosId = null, string fabricObjectId = null, string fqdn = null, string version = null, DateTimeOffset? lastHeartbeatUtc = null, ProtectionHealth? health = null, IEnumerable<HealthError> healthErrors = null, int? protectedItemCount = null, IEnumerable<string> accessibleDatastores = null, string vCenterId = null, DateTimeOffset? lastDiscoveryInUtc = null)
+        public static ReprotectAgentDetails ReprotectAgentDetails(string id = null, string name = null, string biosId = null, ResourceIdentifier fabricObjectId = null, string fqdn = null, string version = null, DateTimeOffset? lastHeartbeatReceivedOn = null, SiteRecoveryProtectionHealth? health = null, IEnumerable<SiteRecoveryHealthError> healthErrors = null, int? protectedItemCount = null, IEnumerable<string> accessibleDatastores = null, string vCenterId = null, DateTimeOffset? last = null)
         {
-            healthErrors ??= new List<HealthError>();
+            healthErrors ??= new List<SiteRecoveryHealthError>();
             accessibleDatastores ??= new List<string>();
 
-            return new ReprotectAgentDetails(id, name, biosId, fabricObjectId, fqdn, version, lastHeartbeatUtc, health, healthErrors?.ToList(), protectedItemCount, accessibleDatastores?.ToList(), vCenterId, lastDiscoveryInUtc);
+            return new ReprotectAgentDetails(id, name, biosId, fabricObjectId, fqdn, version, lastHeartbeatReceivedOn, health, healthErrors?.ToList(), protectedItemCount, accessibleDatastores?.ToList(), vCenterId, last);
         }
 
         /// <summary> Initializes a new instance of MarsAgentDetails. </summary>
@@ -2457,15 +2458,15 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="fabricObjectId"> The fabric object Id. </param>
         /// <param name="fqdn"> The Mars agent Fqdn. </param>
         /// <param name="version"> The version. </param>
-        /// <param name="lastHeartbeatUtc"> The last heartbeat received from the Mars agent. </param>
+        /// <param name="lastHeartbeatReceivedOn"> The last heartbeat received from the Mars agent. </param>
         /// <param name="health"> The health of the Mars agent. </param>
         /// <param name="healthErrors"> The health errors. </param>
         /// <returns> A new <see cref="Models.MarsAgentDetails"/> instance for mocking. </returns>
-        public static MarsAgentDetails MarsAgentDetails(string id = null, string name = null, string biosId = null, string fabricObjectId = null, string fqdn = null, string version = null, DateTimeOffset? lastHeartbeatUtc = null, ProtectionHealth? health = null, IEnumerable<HealthError> healthErrors = null)
+        public static MarsAgentDetails MarsAgentDetails(string id = null, string name = null, string biosId = null, ResourceIdentifier fabricObjectId = null, string fqdn = null, string version = null, DateTimeOffset? lastHeartbeatReceivedOn = null, SiteRecoveryProtectionHealth? health = null, IEnumerable<SiteRecoveryHealthError> healthErrors = null)
         {
-            healthErrors ??= new List<HealthError>();
+            healthErrors ??= new List<SiteRecoveryHealthError>();
 
-            return new MarsAgentDetails(id, name, biosId, fabricObjectId, fqdn, version, lastHeartbeatUtc, health, healthErrors?.ToList());
+            return new MarsAgentDetails(id, name, biosId, fabricObjectId, fqdn, version, lastHeartbeatReceivedOn, health, healthErrors?.ToList());
         }
 
         /// <summary> Initializes a new instance of InMageRcmFabricSwitchProviderBlockingErrorDetails. </summary>
@@ -2503,17 +2504,17 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="powerStatus"> The VM power status. </param>
         /// <param name="vmFqdn"> The VM fqdn. </param>
         /// <param name="osName"> The VM's OS name. </param>
-        /// <param name="createdTimestamp"> The SDS created timestamp. </param>
-        /// <param name="updatedTimestamp"> The SDS updated timestamp. </param>
+        /// <param name="createdOn"> The SDS created timestamp. </param>
+        /// <param name="updatedOn"> The SDS updated timestamp. </param>
         /// <param name="isDeleted"> A value indicating whether the VM is deleted. </param>
         /// <param name="lastDiscoveryTimeInUtc"> The last time when SDS information discovered in SRS. </param>
         /// <returns> A new <see cref="Models.InMageRcmDiscoveredProtectedVmDetails"/> instance for mocking. </returns>
-        public static InMageRcmDiscoveredProtectedVmDetails InMageRcmDiscoveredProtectedVmDetails(string vCenterId = null, string vCenterFqdn = null, IEnumerable<string> datastores = null, IEnumerable<string> ipAddresses = null, string vmwareToolsStatus = null, string powerStatus = null, string vmFqdn = null, string osName = null, DateTimeOffset? createdTimestamp = null, DateTimeOffset? updatedTimestamp = null, bool? isDeleted = null, DateTimeOffset? lastDiscoveryTimeInUtc = null)
+        public static InMageRcmDiscoveredProtectedVmDetails InMageRcmDiscoveredProtectedVmDetails(string vCenterId = null, string vCenterFqdn = null, IEnumerable<string> datastores = null, IEnumerable<IPAddress> ipAddresses = null, string vmwareToolsStatus = null, string powerStatus = null, string vmFqdn = null, string osName = null, DateTimeOffset? createdOn = null, DateTimeOffset? updatedOn = null, bool? isDeleted = null, DateTimeOffset? lastDiscoveryTimeInUtc = null)
         {
             datastores ??= new List<string>();
-            ipAddresses ??= new List<string>();
+            ipAddresses ??= new List<IPAddress>();
 
-            return new InMageRcmDiscoveredProtectedVmDetails(vCenterId, vCenterFqdn, datastores?.ToList(), ipAddresses?.ToList(), vmwareToolsStatus, powerStatus, vmFqdn, osName, createdTimestamp, updatedTimestamp, isDeleted, lastDiscoveryTimeInUtc);
+            return new InMageRcmDiscoveredProtectedVmDetails(vCenterId, vCenterFqdn, datastores?.ToList(), ipAddresses?.ToList(), vmwareToolsStatus, powerStatus, vmFqdn, osName, createdOn, updatedOn, isDeleted, lastDiscoveryTimeInUtc);
         }
 
         /// <summary> Initializes a new instance of InMageRcmEventDetails. </summary>
@@ -2526,7 +2527,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="serverType"> The server type. </param>
         /// <param name="componentDisplayName"> The component display name. </param>
         /// <returns> A new <see cref="Models.InMageRcmEventDetails"/> instance for mocking. </returns>
-        public static InMageRcmEventDetails InMageRcmEventDetails(string protectedItemName = null, string vmName = null, string latestAgentVersion = null, string jobId = null, string fabricName = null, string applianceName = null, string serverType = null, string componentDisplayName = null)
+        public static InMageRcmEventDetails InMageRcmEventDetails(string protectedItemName = null, string vmName = null, string latestAgentVersion = null, ResourceIdentifier jobId = null, string fabricName = null, string applianceName = null, string serverType = null, string componentDisplayName = null)
         {
             return new InMageRcmEventDetails("InMageRcm", protectedItemName, vmName, latestAgentVersion, jobId, fabricName, applianceName, serverType, componentDisplayName);
         }
@@ -2549,16 +2550,16 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="dras"> The list of DRAs. </param>
         /// <param name="agentDetails"> The list of agent details. </param>
         /// <returns> A new <see cref="Models.InMageRcmFabricSpecificDetails"/> instance for mocking. </returns>
-        public static InMageRcmFabricSpecificDetails InMageRcmFabricSpecificDetails(string vmwareSiteId = null, string physicalSiteId = null, string serviceEndpoint = null, string serviceResourceId = null, string serviceContainerId = null, Uri dataPlaneUri = null, Uri controlPlaneUri = null, IdentityProviderDetails sourceAgentIdentityDetails = null, IEnumerable<ProcessServerDetails> processServers = null, IEnumerable<RcmProxyDetails> rcmProxies = null, IEnumerable<PushInstallerDetails> pushInstallers = null, IEnumerable<ReplicationAgentDetails> replicationAgents = null, IEnumerable<ReprotectAgentDetails> reprotectAgents = null, IEnumerable<MarsAgentDetails> marsAgents = null, IEnumerable<DraDetails> dras = null, IEnumerable<AgentDetails> agentDetails = null)
+        public static InMageRcmFabricSpecificDetails InMageRcmFabricSpecificDetails(ResourceIdentifier vmwareSiteId = null, ResourceIdentifier physicalSiteId = null, string serviceEndpoint = null, ResourceIdentifier serviceResourceId = null, string serviceContainerId = null, Uri dataPlaneUri = null, Uri controlPlaneUri = null, IdentityProviderDetails sourceAgentIdentityDetails = null, IEnumerable<SiteRecoveryProcessServerDetails> processServers = null, IEnumerable<RcmProxyDetails> rcmProxies = null, IEnumerable<PushInstallerDetails> pushInstallers = null, IEnumerable<ReplicationAgentDetails> replicationAgents = null, IEnumerable<ReprotectAgentDetails> reprotectAgents = null, IEnumerable<MarsAgentDetails> marsAgents = null, IEnumerable<SiteRecoveryDraDetails> dras = null, IEnumerable<SiteRecoveryAgentDetails> agentDetails = null)
         {
-            processServers ??= new List<ProcessServerDetails>();
+            processServers ??= new List<SiteRecoveryProcessServerDetails>();
             rcmProxies ??= new List<RcmProxyDetails>();
             pushInstallers ??= new List<PushInstallerDetails>();
             replicationAgents ??= new List<ReplicationAgentDetails>();
             reprotectAgents ??= new List<ReprotectAgentDetails>();
             marsAgents ??= new List<MarsAgentDetails>();
-            dras ??= new List<DraDetails>();
-            agentDetails ??= new List<AgentDetails>();
+            dras ??= new List<SiteRecoveryDraDetails>();
+            agentDetails ??= new List<SiteRecoveryAgentDetails>();
 
             return new InMageRcmFabricSpecificDetails("InMageRcm", vmwareSiteId, physicalSiteId, serviceEndpoint, serviceResourceId, serviceContainerId, dataPlaneUri, controlPlaneUri, sourceAgentIdentityDetails, processServers?.ToList(), rcmProxies?.ToList(), pushInstallers?.ToList(), replicationAgents?.ToList(), reprotectAgents?.ToList(), marsAgents?.ToList(), dras?.ToList(), agentDetails?.ToList());
         }
@@ -2572,17 +2573,17 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="powerStatus"> The VM power status. </param>
         /// <param name="vmFqdn"> The VM fqdn. </param>
         /// <param name="osName"> The VM's OS name. </param>
-        /// <param name="createdTimestamp"> The SDS created timestamp. </param>
-        /// <param name="updatedTimestamp"> The SDS updated timestamp. </param>
+        /// <param name="createdOn"> The SDS created timestamp. </param>
+        /// <param name="updatedOn"> The SDS updated timestamp. </param>
         /// <param name="isDeleted"> A value indicating whether the VM is deleted. </param>
-        /// <param name="lastDiscoveryTimeInUtc"> The last time when SDS information discovered in SRS. </param>
+        /// <param name="lastDiscoveredOn"> The last time when SDS information discovered in SRS. </param>
         /// <returns> A new <see cref="Models.InMageRcmFailbackDiscoveredProtectedVmDetails"/> instance for mocking. </returns>
-        public static InMageRcmFailbackDiscoveredProtectedVmDetails InMageRcmFailbackDiscoveredProtectedVmDetails(string vCenterId = null, string vCenterFqdn = null, IEnumerable<string> datastores = null, IEnumerable<string> ipAddresses = null, string vmwareToolsStatus = null, string powerStatus = null, string vmFqdn = null, string osName = null, DateTimeOffset? createdTimestamp = null, DateTimeOffset? updatedTimestamp = null, bool? isDeleted = null, DateTimeOffset? lastDiscoveryTimeInUtc = null)
+        public static InMageRcmFailbackDiscoveredProtectedVmDetails InMageRcmFailbackDiscoveredProtectedVmDetails(string vCenterId = null, string vCenterFqdn = null, IEnumerable<string> datastores = null, IEnumerable<IPAddress> ipAddresses = null, string vmwareToolsStatus = null, string powerStatus = null, string vmFqdn = null, string osName = null, DateTimeOffset? createdOn = null, DateTimeOffset? updatedOn = null, bool? isDeleted = null, DateTimeOffset? lastDiscoveredOn = null)
         {
             datastores ??= new List<string>();
-            ipAddresses ??= new List<string>();
+            ipAddresses ??= new List<IPAddress>();
 
-            return new InMageRcmFailbackDiscoveredProtectedVmDetails(vCenterId, vCenterFqdn, datastores?.ToList(), ipAddresses?.ToList(), vmwareToolsStatus, powerStatus, vmFqdn, osName, createdTimestamp, updatedTimestamp, isDeleted, lastDiscoveryTimeInUtc);
+            return new InMageRcmFailbackDiscoveredProtectedVmDetails(vCenterId, vCenterFqdn, datastores?.ToList(), ipAddresses?.ToList(), vmwareToolsStatus, powerStatus, vmFqdn, osName, createdOn, updatedOn, isDeleted, lastDiscoveredOn);
         }
 
         /// <summary> Initializes a new instance of InMageRcmFailbackEventDetails. </summary>
@@ -2602,17 +2603,17 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="latestVersion"> The latest agent version available. </param>
         /// <param name="driverVersion"> The driver version. </param>
         /// <param name="latestUpgradableVersionWithoutReboot"> The latest upgradeable version available without reboot. </param>
-        /// <param name="agentVersionExpiryOn"> The agent version expiry date. </param>
-        /// <param name="driverVersionExpiryOn"> The driver version expiry date. </param>
-        /// <param name="lastHeartbeatUtc"> The time of the last heartbeat received from the agent. </param>
+        /// <param name="agentVersionExpireOn"> The agent version expiry date. </param>
+        /// <param name="driverVersionExpireOn"> The driver version expiry date. </param>
+        /// <param name="lastHeartbeatReceivedOn"> The time of the last heartbeat received from the agent. </param>
         /// <param name="reasonsBlockingUpgrade"> The whether update is possible or not. </param>
         /// <param name="isUpgradeable"> A value indicating whether agent is upgradeable or not. </param>
         /// <returns> A new <see cref="Models.InMageRcmFailbackMobilityAgentDetails"/> instance for mocking. </returns>
-        public static InMageRcmFailbackMobilityAgentDetails InMageRcmFailbackMobilityAgentDetails(string version = null, string latestVersion = null, string driverVersion = null, string latestUpgradableVersionWithoutReboot = null, DateTimeOffset? agentVersionExpiryOn = null, DateTimeOffset? driverVersionExpiryOn = null, DateTimeOffset? lastHeartbeatUtc = null, IEnumerable<AgentUpgradeBlockedReason> reasonsBlockingUpgrade = null, string isUpgradeable = null)
+        public static InMageRcmFailbackMobilityAgentDetails InMageRcmFailbackMobilityAgentDetails(string version = null, string latestVersion = null, string driverVersion = null, string latestUpgradableVersionWithoutReboot = null, DateTimeOffset? agentVersionExpireOn = null, DateTimeOffset? driverVersionExpireOn = null, DateTimeOffset? lastHeartbeatReceivedOn = null, IEnumerable<AgentUpgradeBlockedReason> reasonsBlockingUpgrade = null, string isUpgradeable = null)
         {
             reasonsBlockingUpgrade ??= new List<AgentUpgradeBlockedReason>();
 
-            return new InMageRcmFailbackMobilityAgentDetails(version, latestVersion, driverVersion, latestUpgradableVersionWithoutReboot, agentVersionExpiryOn, driverVersionExpiryOn, lastHeartbeatUtc, reasonsBlockingUpgrade?.ToList(), isUpgradeable);
+            return new InMageRcmFailbackMobilityAgentDetails(version, latestVersion, driverVersion, latestUpgradableVersionWithoutReboot, agentVersionExpireOn, driverVersionExpireOn, lastHeartbeatReceivedOn, reasonsBlockingUpgrade?.ToList(), isUpgradeable);
         }
 
         /// <summary> Initializes a new instance of InMageRcmFailbackNicDetails. </summary>
@@ -2621,7 +2622,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="adapterType"> The adapter type. </param>
         /// <param name="sourceIPAddress"> The IP address. </param>
         /// <returns> A new <see cref="Models.InMageRcmFailbackNicDetails"/> instance for mocking. </returns>
-        public static InMageRcmFailbackNicDetails InMageRcmFailbackNicDetails(string macAddress = null, string networkName = null, string adapterType = null, string sourceIPAddress = null)
+        public static InMageRcmFailbackNicDetails InMageRcmFailbackNicDetails(string macAddress = null, string networkName = null, string adapterType = null, IPAddress sourceIPAddress = null)
         {
             return new InMageRcmFailbackNicDetails(macAddress, networkName, adapterType, sourceIPAddress);
         }
@@ -2646,26 +2647,26 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="isInitialReplicationComplete"> A value indicating whether initial replication is complete or not. </param>
         /// <param name="irDetails"> The initial replication details. </param>
         /// <param name="resyncDetails"> The resync details. </param>
-        /// <param name="lastSyncOn"> The last sync time. </param>
+        /// <param name="lastSyncedOn"> The last sync time. </param>
         /// <returns> A new <see cref="Models.InMageRcmFailbackProtectedDiskDetails"/> instance for mocking. </returns>
-        public static InMageRcmFailbackProtectedDiskDetails InMageRcmFailbackProtectedDiskDetails(string diskId = null, string diskName = null, string isOSDisk = null, long? capacityInBytes = null, string diskUuid = null, double? dataPendingInLogDataStoreInMB = null, double? dataPendingAtSourceAgentInMB = null, string isInitialReplicationComplete = null, InMageRcmFailbackSyncDetails irDetails = null, InMageRcmFailbackSyncDetails resyncDetails = null, DateTimeOffset? lastSyncOn = null)
+        public static InMageRcmFailbackProtectedDiskDetails InMageRcmFailbackProtectedDiskDetails(string diskId = null, string diskName = null, string isOSDisk = null, long? capacityInBytes = null, string diskUuid = null, double? dataPendingInLogDataStoreInMB = null, double? dataPendingAtSourceAgentInMB = null, string isInitialReplicationComplete = null, InMageRcmFailbackSyncDetails irDetails = null, InMageRcmFailbackSyncDetails resyncDetails = null, DateTimeOffset? lastSyncedOn = null)
         {
-            return new InMageRcmFailbackProtectedDiskDetails(diskId, diskName, isOSDisk, capacityInBytes, diskUuid, dataPendingInLogDataStoreInMB, dataPendingAtSourceAgentInMB, isInitialReplicationComplete, irDetails, resyncDetails, lastSyncOn);
+            return new InMageRcmFailbackProtectedDiskDetails(diskId, diskName, isOSDisk, capacityInBytes, diskUuid, dataPendingInLogDataStoreInMB, dataPendingAtSourceAgentInMB, isInitialReplicationComplete, irDetails, resyncDetails, lastSyncedOn);
         }
 
         /// <summary> Initializes a new instance of InMageRcmFailbackSyncDetails. </summary>
         /// <param name="progressHealth"> The progress health. </param>
         /// <param name="transferredBytes"> The transferred bytes from source VM to azure for the disk. </param>
         /// <param name="last15MinutesTransferredBytes"> The bytes transferred in last 15 minutes from source VM to target. </param>
-        /// <param name="lastDataTransferTimeUtc"> The time of the last data transfer from source VM to target. </param>
+        /// <param name="lastDataTransferOn"> The time of the last data transfer from source VM to target. </param>
         /// <param name="processedBytes"> The total processed bytes. This includes bytes that are transferred from source VM to target and matched bytes. </param>
-        /// <param name="startTime"> The start time. </param>
-        /// <param name="lastRefreshTime"> The last refresh time. </param>
+        /// <param name="startOn"> The start time. </param>
+        /// <param name="lastRefreshedOn"> The last refresh time. </param>
         /// <param name="progressPercentage"> Progress in percentage. Progress percentage is calculated based on processed bytes. </param>
         /// <returns> A new <see cref="Models.InMageRcmFailbackSyncDetails"/> instance for mocking. </returns>
-        public static InMageRcmFailbackSyncDetails InMageRcmFailbackSyncDetails(DiskReplicationProgressHealth? progressHealth = null, long? transferredBytes = null, long? last15MinutesTransferredBytes = null, string lastDataTransferTimeUtc = null, long? processedBytes = null, string startTime = null, string lastRefreshTime = null, int? progressPercentage = null)
+        public static InMageRcmFailbackSyncDetails InMageRcmFailbackSyncDetails(SiteRecoveryDiskReplicationProgressHealth? progressHealth = null, long? transferredBytes = null, long? last15MinutesTransferredBytes = null, DateTimeOffset? lastDataTransferOn = null, long? processedBytes = null, DateTimeOffset? startOn = null, DateTimeOffset? lastRefreshedOn = null, int? progressPercentage = null)
         {
-            return new InMageRcmFailbackSyncDetails(progressHealth, transferredBytes, last15MinutesTransferredBytes, lastDataTransferTimeUtc, processedBytes, startTime, lastRefreshTime, progressPercentage);
+            return new InMageRcmFailbackSyncDetails(progressHealth, transferredBytes, last15MinutesTransferredBytes, lastDataTransferOn, processedBytes, startOn, lastRefreshedOn, progressPercentage);
         }
 
         /// <summary> Initializes a new instance of InMageRcmFailbackReplicationDetails. </summary>
@@ -2699,7 +2700,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="lastUsedPolicyFriendlyName"> The policy friendly name used by the forward replication. </param>
         /// <param name="isAgentRegistrationSuccessfulAfterFailover"> A value indicating whether agent registration was successful after failover. </param>
         /// <returns> A new <see cref="Models.InMageRcmFailbackReplicationDetails"/> instance for mocking. </returns>
-        public static InMageRcmFailbackReplicationDetails InMageRcmFailbackReplicationDetails(string internalIdentifier = null, string azureVirtualMachineId = null, string multiVmGroupName = null, string reprotectAgentId = null, string reprotectAgentName = null, string osType = null, string logStorageAccountId = null, string targetVCenterId = null, string targetDataStoreName = null, string targetVmName = null, int? initialReplicationProgressPercentage = null, long? initialReplicationProcessedBytes = null, long? initialReplicationTransferredBytes = null, VmReplicationProgressHealth? initialReplicationProgressHealth = null, int? resyncProgressPercentage = null, long? resyncProcessedBytes = null, long? resyncTransferredBytes = null, VmReplicationProgressHealth? resyncProgressHealth = null, string resyncRequired = null, ResyncState? resyncState = null, IEnumerable<InMageRcmFailbackProtectedDiskDetails> protectedDisks = null, InMageRcmFailbackMobilityAgentDetails mobilityAgentDetails = null, IEnumerable<InMageRcmFailbackNicDetails> vmNics = null, DateTimeOffset? lastPlannedFailoverStartOn = null, PlannedFailoverStatus? lastPlannedFailoverStatus = null, InMageRcmFailbackDiscoveredProtectedVmDetails discoveredVmDetails = null, string lastUsedPolicyId = null, string lastUsedPolicyFriendlyName = null, bool? isAgentRegistrationSuccessfulAfterFailover = null)
+        public static InMageRcmFailbackReplicationDetails InMageRcmFailbackReplicationDetails(string internalIdentifier = null, ResourceIdentifier azureVirtualMachineId = null, string multiVmGroupName = null, string reprotectAgentId = null, string reprotectAgentName = null, string osType = null, ResourceIdentifier logStorageAccountId = null, string targetVCenterId = null, string targetDataStoreName = null, string targetVmName = null, int? initialReplicationProgressPercentage = null, long? initialReplicationProcessedBytes = null, long? initialReplicationTransferredBytes = null, VmReplicationProgressHealth? initialReplicationProgressHealth = null, int? resyncProgressPercentage = null, long? resyncProcessedBytes = null, long? resyncTransferredBytes = null, VmReplicationProgressHealth? resyncProgressHealth = null, string resyncRequired = null, SiteRecoveryResyncState? resyncState = null, IEnumerable<InMageRcmFailbackProtectedDiskDetails> protectedDisks = null, InMageRcmFailbackMobilityAgentDetails mobilityAgentDetails = null, IEnumerable<InMageRcmFailbackNicDetails> vmNics = null, DateTimeOffset? lastPlannedFailoverStartOn = null, PlannedFailoverStatus? lastPlannedFailoverStatus = null, InMageRcmFailbackDiscoveredProtectedVmDetails discoveredVmDetails = null, ResourceIdentifier lastUsedPolicyId = null, string lastUsedPolicyFriendlyName = null, bool? isAgentRegistrationSuccessfulAfterFailover = null)
         {
             protectedDisks ??= new List<InMageRcmFailbackProtectedDiskDetails>();
             vmNics ??= new List<InMageRcmFailbackNicDetails>();
@@ -2729,17 +2730,17 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="latestAgentReleaseDate"> The latest agent version release date. </param>
         /// <param name="driverVersion"> The driver version. </param>
         /// <param name="latestUpgradableVersionWithoutReboot"> The latest upgradeable version available without reboot. </param>
-        /// <param name="agentVersionExpiryOn"> The agent version expiry date. </param>
-        /// <param name="driverVersionExpiryOn"> The driver version expiry date. </param>
-        /// <param name="lastHeartbeatUtc"> The time of the last heartbeat received from the agent. </param>
+        /// <param name="agentVersionExpireOn"> The agent version expiry date. </param>
+        /// <param name="driverVersionExpireOn"> The driver version expiry date. </param>
+        /// <param name="lastHeartbeatReceivedOn"> The time of the last heartbeat received from the agent. </param>
         /// <param name="reasonsBlockingUpgrade"> The whether update is possible or not. </param>
         /// <param name="isUpgradeable"> A value indicating whether agent is upgradeable or not. </param>
         /// <returns> A new <see cref="Models.InMageRcmMobilityAgentDetails"/> instance for mocking. </returns>
-        public static InMageRcmMobilityAgentDetails InMageRcmMobilityAgentDetails(string version = null, string latestVersion = null, string latestAgentReleaseDate = null, string driverVersion = null, string latestUpgradableVersionWithoutReboot = null, DateTimeOffset? agentVersionExpiryOn = null, DateTimeOffset? driverVersionExpiryOn = null, DateTimeOffset? lastHeartbeatUtc = null, IEnumerable<AgentUpgradeBlockedReason> reasonsBlockingUpgrade = null, string isUpgradeable = null)
+        public static InMageRcmMobilityAgentDetails InMageRcmMobilityAgentDetails(string version = null, string latestVersion = null, string latestAgentReleaseDate = null, string driverVersion = null, string latestUpgradableVersionWithoutReboot = null, DateTimeOffset? agentVersionExpireOn = null, DateTimeOffset? driverVersionExpireOn = null, DateTimeOffset? lastHeartbeatReceivedOn = null, IEnumerable<AgentUpgradeBlockedReason> reasonsBlockingUpgrade = null, string isUpgradeable = null)
         {
             reasonsBlockingUpgrade ??= new List<AgentUpgradeBlockedReason>();
 
-            return new InMageRcmMobilityAgentDetails(version, latestVersion, latestAgentReleaseDate, driverVersion, latestUpgradableVersionWithoutReboot, agentVersionExpiryOn, driverVersionExpiryOn, lastHeartbeatUtc, reasonsBlockingUpgrade?.ToList(), isUpgradeable);
+            return new InMageRcmMobilityAgentDetails(version, latestVersion, latestAgentReleaseDate, driverVersion, latestUpgradableVersionWithoutReboot, agentVersionExpireOn, driverVersionExpireOn, lastHeartbeatReceivedOn, reasonsBlockingUpgrade?.ToList(), isUpgradeable);
         }
 
         /// <summary> Initializes a new instance of InMageRcmNicDetails. </summary>
@@ -2757,7 +2758,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="testIPAddress"> The test IP address. </param>
         /// <param name="testIPAddressType"> The test IP address type. </param>
         /// <returns> A new <see cref="Models.InMageRcmNicDetails"/> instance for mocking. </returns>
-        public static InMageRcmNicDetails InMageRcmNicDetails(string nicId = null, string isPrimaryNic = null, string isSelectedForFailover = null, string sourceIPAddress = null, EthernetAddressType? sourceIPAddressType = null, string sourceNetworkId = null, string sourceSubnetName = null, string targetIPAddress = null, EthernetAddressType? targetIPAddressType = null, string targetSubnetName = null, string testSubnetName = null, string testIPAddress = null, EthernetAddressType? testIPAddressType = null)
+        public static InMageRcmNicDetails InMageRcmNicDetails(string nicId = null, string isPrimaryNic = null, string isSelectedForFailover = null, IPAddress sourceIPAddress = null, SiteRecoveryEthernetAddressType? sourceIPAddressType = null, ResourceIdentifier sourceNetworkId = null, string sourceSubnetName = null, IPAddress targetIPAddress = null, SiteRecoveryEthernetAddressType? targetIPAddressType = null, string targetSubnetName = null, string testSubnetName = null, IPAddress testIPAddress = null, SiteRecoveryEthernetAddressType? testIPAddressType = null)
         {
             return new InMageRcmNicDetails(nicId, isPrimaryNic, isSelectedForFailover, sourceIPAddress, sourceIPAddressType, sourceNetworkId, sourceSubnetName, targetIPAddress, targetIPAddressType, targetSubnetName, testSubnetName, testIPAddress, testIPAddressType);
         }
@@ -2790,7 +2791,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="irDetails"> The initial replication details. </param>
         /// <param name="resyncDetails"> The resync details. </param>
         /// <returns> A new <see cref="Models.InMageRcmProtectedDiskDetails"/> instance for mocking. </returns>
-        public static InMageRcmProtectedDiskDetails InMageRcmProtectedDiskDetails(string diskId = null, string diskName = null, string isOSDisk = null, long? capacityInBytes = null, string logStorageAccountId = null, string diskEncryptionSetId = null, string seedManagedDiskId = null, Uri seedBlobUri = null, string targetManagedDiskId = null, DiskAccountType? diskType = null, double? dataPendingInLogDataStoreInMB = null, double? dataPendingAtSourceAgentInMB = null, string isInitialReplicationComplete = null, InMageRcmSyncDetails irDetails = null, InMageRcmSyncDetails resyncDetails = null)
+        public static InMageRcmProtectedDiskDetails InMageRcmProtectedDiskDetails(string diskId = null, string diskName = null, string isOSDisk = null, long? capacityInBytes = null, ResourceIdentifier logStorageAccountId = null, ResourceIdentifier diskEncryptionSetId = null, string seedManagedDiskId = null, Uri seedBlobUri = null, string targetManagedDiskId = null, SiteRecoveryDiskAccountType? diskType = null, double? dataPendingInLogDataStoreInMB = null, double? dataPendingAtSourceAgentInMB = null, string isInitialReplicationComplete = null, InMageRcmSyncDetails irDetails = null, InMageRcmSyncDetails resyncDetails = null)
         {
             return new InMageRcmProtectedDiskDetails(diskId, diskName, isOSDisk, capacityInBytes, logStorageAccountId, diskEncryptionSetId, seedManagedDiskId, seedBlobUri, targetManagedDiskId, diskType, dataPendingInLogDataStoreInMB, dataPendingAtSourceAgentInMB, isInitialReplicationComplete, irDetails, resyncDetails);
         }
@@ -2801,13 +2802,13 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="last15MinutesTransferredBytes"> The bytes transferred in last 15 minutes from source VM to azure. </param>
         /// <param name="lastDataTransferTimeUtc"> The time of the last data transfer from source VM to azure. </param>
         /// <param name="processedBytes"> The total processed bytes. This includes bytes that are transferred from source VM to azure and matched bytes. </param>
-        /// <param name="startTime"> The start time. </param>
-        /// <param name="lastRefreshTime"> The last refresh time. </param>
+        /// <param name="staStartOn"> The start time. </param>
+        /// <param name="lastRefreshedOn"> The last refresh time. </param>
         /// <param name="progressPercentage"> Progress in percentage. Progress percentage is calculated based on processed bytes. </param>
         /// <returns> A new <see cref="Models.InMageRcmSyncDetails"/> instance for mocking. </returns>
-        public static InMageRcmSyncDetails InMageRcmSyncDetails(DiskReplicationProgressHealth? progressHealth = null, long? transferredBytes = null, long? last15MinutesTransferredBytes = null, string lastDataTransferTimeUtc = null, long? processedBytes = null, string startTime = null, string lastRefreshTime = null, int? progressPercentage = null)
+        public static InMageRcmSyncDetails InMageRcmSyncDetails(SiteRecoveryDiskReplicationProgressHealth? progressHealth = null, long? transferredBytes = null, long? last15MinutesTransferredBytes = null, string lastDataTransferTimeUtc = null, long? processedBytes = null, DateTimeOffset? staStartOn = null, DateTimeOffset? lastRefreshedOn = null, int? progressPercentage = null)
         {
-            return new InMageRcmSyncDetails(progressHealth, transferredBytes, last15MinutesTransferredBytes, lastDataTransferTimeUtc, processedBytes, startTime, lastRefreshTime, progressPercentage);
+            return new InMageRcmSyncDetails(progressHealth, transferredBytes, last15MinutesTransferredBytes, lastDataTransferTimeUtc, processedBytes, staStartOn, lastRefreshedOn, progressPercentage);
         }
 
         /// <summary> Initializes a new instance of InMageRcmProtectionContainerMappingDetails. </summary>
@@ -2880,7 +2881,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="vmNics"> The network details. </param>
         /// <param name="discoveredVmDetails"> The discovered VM details. </param>
         /// <returns> A new <see cref="Models.InMageRcmReplicationDetails"/> instance for mocking. </returns>
-        public static InMageRcmReplicationDetails InMageRcmReplicationDetails(string internalIdentifier = null, string fabricDiscoveryMachineId = null, string multiVmGroupName = null, string discoveryType = null, string processServerId = null, int? processorCoreCount = null, double? allocatedMemoryInMB = null, string processServerName = null, string runAsAccountId = null, string osType = null, string firmwareType = null, string primaryNicIPAddress = null, string targetGeneration = null, string licenseType = null, string storageAccountId = null, string targetVmName = null, string targetVmSize = null, string targetResourceGroupId = null, string targetLocation = null, string targetAvailabilitySetId = null, string targetAvailabilityZone = null, string targetProximityPlacementGroupId = null, string targetBootDiagnosticsStorageAccountId = null, string targetNetworkId = null, string testNetworkId = null, string failoverRecoveryPointId = null, DateTimeOffset? lastRecoveryPointReceived = null, long? lastRpoInSeconds = null, DateTimeOffset? lastRpoCalculatedOn = null, string lastRecoveryPointId = null, int? initialReplicationProgressPercentage = null, long? initialReplicationProcessedBytes = null, long? initialReplicationTransferredBytes = null, VmReplicationProgressHealth? initialReplicationProgressHealth = null, int? resyncProgressPercentage = null, long? resyncProcessedBytes = null, long? resyncTransferredBytes = null, VmReplicationProgressHealth? resyncProgressHealth = null, string resyncRequired = null, ResyncState? resyncState = null, MobilityAgentUpgradeState? agentUpgradeState = null, string lastAgentUpgradeType = null, string agentUpgradeJobId = null, string agentUpgradeAttemptToVersion = null, IEnumerable<InMageRcmProtectedDiskDetails> protectedDisks = null, string isLastUpgradeSuccessful = null, bool? isAgentRegistrationSuccessfulAfterFailover = null, InMageRcmMobilityAgentDetails mobilityAgentDetails = null, IEnumerable<InMageRcmLastAgentUpgradeErrorDetails> lastAgentUpgradeErrorDetails = null, IEnumerable<InMageRcmAgentUpgradeBlockingErrorDetails> agentUpgradeBlockingErrorDetails = null, IEnumerable<InMageRcmNicDetails> vmNics = null, InMageRcmDiscoveredProtectedVmDetails discoveredVmDetails = null)
+        public static InMageRcmReplicationDetails InMageRcmReplicationDetails(string internalIdentifier = null, string fabricDiscoveryMachineId = null, string multiVmGroupName = null, string discoveryType = null, Guid? processServerId = null, int? processorCoreCount = null, double? allocatedMemoryInMB = null, string processServerName = null, string runAsAccountId = null, string osType = null, string firmwareType = null, IPAddress primaryNicIPAddress = null, string targetGeneration = null, string licenseType = null, ResourceIdentifier storageAccountId = null, string targetVmName = null, string targetVmSize = null, ResourceIdentifier targetResourceGroupId = null, string targetLocation = null, ResourceIdentifier targetAvailabilitySetId = null, string targetAvailabilityZone = null, ResourceIdentifier targetProximityPlacementGroupId = null, ResourceIdentifier targetBootDiagnosticsStorageAccountId = null, ResourceIdentifier targetNetworkId = null, ResourceIdentifier testNetworkId = null, ResourceIdentifier failoverRecoveryPointId = null, DateTimeOffset? lastRecoveryPointReceived = null, long? lastRpoInSeconds = null, DateTimeOffset? lastRpoCalculatedOn = null, ResourceIdentifier lastRecoveryPointId = null, int? initialReplicationProgressPercentage = null, long? initialReplicationProcessedBytes = null, long? initialReplicationTransferredBytes = null, VmReplicationProgressHealth? initialReplicationProgressHealth = null, int? resyncProgressPercentage = null, long? resyncProcessedBytes = null, long? resyncTransferredBytes = null, VmReplicationProgressHealth? resyncProgressHealth = null, string resyncRequired = null, SiteRecoveryResyncState? resyncState = null, MobilityAgentUpgradeState? agentUpgradeState = null, string lastAgentUpgradeType = null, string agentUpgradeJobId = null, string agentUpgradeAttemptToVersion = null, IEnumerable<InMageRcmProtectedDiskDetails> protectedDisks = null, string isLastUpgradeSuccessful = null, bool? isAgentRegistrationSuccessfulAfterFailover = null, InMageRcmMobilityAgentDetails mobilityAgentDetails = null, IEnumerable<InMageRcmLastAgentUpgradeErrorDetails> lastAgentUpgradeErrorDetails = null, IEnumerable<InMageRcmAgentUpgradeBlockingErrorDetails> agentUpgradeBlockingErrorDetails = null, IEnumerable<InMageRcmNicDetails> vmNics = null, InMageRcmDiscoveredProtectedVmDetails discoveredVmDetails = null)
         {
             protectedDisks ??= new List<InMageRcmProtectedDiskDetails>();
             lastAgentUpgradeErrorDetails ??= new List<InMageRcmLastAgentUpgradeErrorDetails>();
@@ -2900,14 +2901,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="vmProtectionState"> The protection state for the vm. </param>
         /// <param name="vmProtectionStateDescription"> The protection state description for the vm. </param>
         /// <param name="resyncDetails"> The resync details of the machine. </param>
-        /// <param name="retentionWindowStart"> The retention window start time. </param>
-        /// <param name="retentionWindowEnd"> The retention window end time. </param>
+        /// <param name="retentionWindowStartOn"> The retention window start time. </param>
+        /// <param name="retentionWindowEndOn"> The retention window end time. </param>
         /// <param name="compressedDataRateInMB"> The compressed data change rate in MB. </param>
         /// <param name="uncompressedDataRateInMB"> The uncompressed data change rate in MB. </param>
         /// <param name="rpoInSeconds"> The RPO in seconds. </param>
         /// <param name="protectedDisks"> The list of protected disks. </param>
         /// <param name="ipAddress"> The source IP address. </param>
-        /// <param name="lastHeartbeat"> The last heartbeat received from the source server. </param>
+        /// <param name="lastHeartbeatReceivedOn"> The last heartbeat received from the source server. </param>
         /// <param name="processServerId"> The process server Id. </param>
         /// <param name="masterTargetId"> The master target Id. </param>
         /// <param name="consistencyPoints"> The collection of Consistency points. </param>
@@ -2932,36 +2933,36 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="totalDataTransferred"> The total transferred data in bytes. </param>
         /// <param name="totalProgressHealth"> The progress health. </param>
         /// <returns> A new <see cref="Models.InMageReplicationDetails"/> instance for mocking. </returns>
-        public static InMageReplicationDetails InMageReplicationDetails(string activeSiteType = null, int? sourceVmCpuCount = null, int? sourceVmRamSizeInMB = null, OSDiskDetails osDetails = null, string protectionStage = null, string vmId = null, string vmProtectionState = null, string vmProtectionStateDescription = null, InitialReplicationDetails resyncDetails = null, DateTimeOffset? retentionWindowStart = null, DateTimeOffset? retentionWindowEnd = null, double? compressedDataRateInMB = null, double? uncompressedDataRateInMB = null, long? rpoInSeconds = null, IEnumerable<InMageProtectedDiskDetails> protectedDisks = null, string ipAddress = null, DateTimeOffset? lastHeartbeat = null, string processServerId = null, string masterTargetId = null, IReadOnlyDictionary<string, DateTimeOffset> consistencyPoints = null, string diskResized = null, string rebootAfterUpdateStatus = null, string multiVmGroupId = null, string multiVmGroupName = null, string multiVmSyncStatus = null, InMageAgentDetails agentDetails = null, string vCenterInfrastructureId = null, string infrastructureVmId = null, IEnumerable<VmNicDetails> vmNics = null, string discoveryType = null, string azureStorageAccountId = null, IEnumerable<string> datastores = null, IEnumerable<HealthError> validationErrors = null, DateTimeOffset? lastRpoCalculatedOn = null, DateTimeOffset? lastUpdateReceivedOn = null, string replicaId = null, string osVersion = null, bool? isAdditionalStatsAvailable = null, long? totalDataTransferred = null, string totalProgressHealth = null)
+        public static InMageReplicationDetails InMageReplicationDetails(string activeSiteType = null, int? sourceVmCpuCount = null, int? sourceVmRamSizeInMB = null, SiteRecoveryOSDiskDetails osDetails = null, string protectionStage = null, string vmId = null, string vmProtectionState = null, string vmProtectionStateDescription = null, InitialReplicationDetails resyncDetails = null, DateTimeOffset? retentionWindowStartOn = null, DateTimeOffset? retentionWindowEndOn = null, double? compressedDataRateInMB = null, double? uncompressedDataRateInMB = null, long? rpoInSeconds = null, IEnumerable<InMageProtectedDiskDetails> protectedDisks = null, IPAddress ipAddress = null, DateTimeOffset? lastHeartbeatReceivedOn = null, Guid? processServerId = null, string masterTargetId = null, IReadOnlyDictionary<string, DateTimeOffset> consistencyPoints = null, string diskResized = null, string rebootAfterUpdateStatus = null, string multiVmGroupId = null, string multiVmGroupName = null, string multiVmSyncStatus = null, InMageAgentDetails agentDetails = null, string vCenterInfrastructureId = null, string infrastructureVmId = null, IEnumerable<VmNicDetails> vmNics = null, string discoveryType = null, ResourceIdentifier azureStorageAccountId = null, IEnumerable<string> datastores = null, IEnumerable<SiteRecoveryHealthError> validationErrors = null, DateTimeOffset? lastRpoCalculatedOn = null, DateTimeOffset? lastUpdateReceivedOn = null, string replicaId = null, string osVersion = null, bool? isAdditionalStatsAvailable = null, long? totalDataTransferred = null, string totalProgressHealth = null)
         {
             protectedDisks ??= new List<InMageProtectedDiskDetails>();
             consistencyPoints ??= new Dictionary<string, DateTimeOffset>();
             vmNics ??= new List<VmNicDetails>();
             datastores ??= new List<string>();
-            validationErrors ??= new List<HealthError>();
+            validationErrors ??= new List<SiteRecoveryHealthError>();
 
-            return new InMageReplicationDetails("InMage", activeSiteType, sourceVmCpuCount, sourceVmRamSizeInMB, osDetails, protectionStage, vmId, vmProtectionState, vmProtectionStateDescription, resyncDetails, retentionWindowStart, retentionWindowEnd, compressedDataRateInMB, uncompressedDataRateInMB, rpoInSeconds, protectedDisks?.ToList(), ipAddress, lastHeartbeat, processServerId, masterTargetId, consistencyPoints, diskResized, rebootAfterUpdateStatus, multiVmGroupId, multiVmGroupName, multiVmSyncStatus, agentDetails, vCenterInfrastructureId, infrastructureVmId, vmNics?.ToList(), discoveryType, azureStorageAccountId, datastores?.ToList(), validationErrors?.ToList(), lastRpoCalculatedOn, lastUpdateReceivedOn, replicaId, osVersion, isAdditionalStatsAvailable, totalDataTransferred, totalProgressHealth);
+            return new InMageReplicationDetails("InMage", activeSiteType, sourceVmCpuCount, sourceVmRamSizeInMB, osDetails, protectionStage, vmId, vmProtectionState, vmProtectionStateDescription, resyncDetails, retentionWindowStartOn, retentionWindowEndOn, compressedDataRateInMB, uncompressedDataRateInMB, rpoInSeconds, protectedDisks?.ToList(), ipAddress, lastHeartbeatReceivedOn, processServerId, masterTargetId, consistencyPoints, diskResized, rebootAfterUpdateStatus, multiVmGroupId, multiVmGroupName, multiVmSyncStatus, agentDetails, vCenterInfrastructureId, infrastructureVmId, vmNics?.ToList(), discoveryType, azureStorageAccountId, datastores?.ToList(), validationErrors?.ToList(), lastRpoCalculatedOn, lastUpdateReceivedOn, replicaId, osVersion, isAdditionalStatsAvailable, totalDataTransferred, totalProgressHealth);
         }
 
-        /// <summary> Initializes a new instance of OSDiskDetails. </summary>
+        /// <summary> Initializes a new instance of SiteRecoveryOSDiskDetails. </summary>
         /// <param name="osVhdId"> The id of the disk containing the OS. </param>
         /// <param name="osType"> The type of the OS on the VM. </param>
         /// <param name="vhdName"> The OS disk VHD name. </param>
-        /// <returns> A new <see cref="Models.OSDiskDetails"/> instance for mocking. </returns>
-        public static OSDiskDetails OSDiskDetails(string osVhdId = null, string osType = null, string vhdName = null)
+        /// <returns> A new <see cref="Models.SiteRecoveryOSDiskDetails"/> instance for mocking. </returns>
+        public static SiteRecoveryOSDiskDetails SiteRecoveryOSDiskDetails(string osVhdId = null, string osType = null, string vhdName = null)
         {
-            return new OSDiskDetails(osVhdId, osType, vhdName);
+            return new SiteRecoveryOSDiskDetails(osVhdId, osType, vhdName);
         }
 
-        /// <summary> Initializes a new instance of JobStatusEventDetails. </summary>
+        /// <summary> Initializes a new instance of SiteRecoveryJobStatusEventDetails. </summary>
         /// <param name="jobId"> Job arm id for the event. </param>
         /// <param name="jobFriendlyName"> JobName for the Event. </param>
         /// <param name="jobStatus"> JobStatus for the Event. </param>
         /// <param name="affectedObjectType"> AffectedObjectType for the event. </param>
-        /// <returns> A new <see cref="Models.JobStatusEventDetails"/> instance for mocking. </returns>
-        public static JobStatusEventDetails JobStatusEventDetails(string jobId = null, string jobFriendlyName = null, string jobStatus = null, string affectedObjectType = null)
+        /// <returns> A new <see cref="Models.SiteRecoveryJobStatusEventDetails"/> instance for mocking. </returns>
+        public static SiteRecoveryJobStatusEventDetails SiteRecoveryJobStatusEventDetails(ResourceIdentifier jobId = null, string jobFriendlyName = null, string jobStatus = null, string affectedObjectType = null)
         {
-            return new JobStatusEventDetails("JobStatus", jobId, jobFriendlyName, jobStatus, affectedObjectType);
+            return new SiteRecoveryJobStatusEventDetails("JobStatus", jobId, jobFriendlyName, jobStatus, affectedObjectType);
         }
 
         /// <summary> Initializes a new instance of ManualActionTaskDetails. </summary>
@@ -2980,7 +2981,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="name"> The server name. </param>
         /// <param name="osType"> The OS type of the server. </param>
         /// <param name="agentVersion"> The version of the scout component on the server. </param>
-        /// <param name="lastHeartbeat"> The last heartbeat received from the server. </param>
+        /// <param name="lastHeartbeatReceivedOn"> The last heartbeat received from the server. </param>
         /// <param name="versionStatus"> Version status. </param>
         /// <param name="retentionVolumes"> The retention volumes of Master target Server. </param>
         /// <param name="dataStores"> The list of data stores in the fabric. </param>
@@ -2988,31 +2989,31 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="healthErrors"> Health errors. </param>
         /// <param name="diskCount"> Disk count of the master target. </param>
         /// <param name="osVersion"> OS Version of the master target. </param>
-        /// <param name="agentExpiryOn"> Agent expiry date. </param>
+        /// <param name="agentExpireOn"> Agent expiry date. </param>
         /// <param name="marsAgentVersion"> MARS agent version. </param>
-        /// <param name="marsAgentExpiryOn"> MARS agent expiry date. </param>
+        /// <param name="marsAgentExpireOn"> MARS agent expiry date. </param>
         /// <param name="agentVersionDetails"> Agent version details. </param>
         /// <param name="marsAgentVersionDetails"> Mars agent version details. </param>
         /// <returns> A new <see cref="Models.MasterTargetServer"/> instance for mocking. </returns>
-        public static MasterTargetServer MasterTargetServer(string id = null, string ipAddress = null, string name = null, string osType = null, string agentVersion = null, DateTimeOffset? lastHeartbeat = null, string versionStatus = null, IEnumerable<RetentionVolume> retentionVolumes = null, IEnumerable<DataStore> dataStores = null, IEnumerable<HealthError> validationErrors = null, IEnumerable<HealthError> healthErrors = null, int? diskCount = null, string osVersion = null, DateTimeOffset? agentExpiryOn = null, string marsAgentVersion = null, DateTimeOffset? marsAgentExpiryOn = null, VersionDetails agentVersionDetails = null, VersionDetails marsAgentVersionDetails = null)
+        public static MasterTargetServer MasterTargetServer(string id = null, IPAddress ipAddress = null, string name = null, string osType = null, string agentVersion = null, DateTimeOffset? lastHeartbeatReceivedOn = null, string versionStatus = null, IEnumerable<SiteRecoveryRetentionVolume> retentionVolumes = null, IEnumerable<SiteRecoveryDataStore> dataStores = null, IEnumerable<SiteRecoveryHealthError> validationErrors = null, IEnumerable<SiteRecoveryHealthError> healthErrors = null, int? diskCount = null, string osVersion = null, DateTimeOffset? agentExpireOn = null, string marsAgentVersion = null, DateTimeOffset? marsAgentExpireOn = null, SiteRecoveryVersionDetails agentVersionDetails = null, SiteRecoveryVersionDetails marsAgentVersionDetails = null)
         {
-            retentionVolumes ??= new List<RetentionVolume>();
-            dataStores ??= new List<DataStore>();
-            validationErrors ??= new List<HealthError>();
-            healthErrors ??= new List<HealthError>();
+            retentionVolumes ??= new List<SiteRecoveryRetentionVolume>();
+            dataStores ??= new List<SiteRecoveryDataStore>();
+            validationErrors ??= new List<SiteRecoveryHealthError>();
+            healthErrors ??= new List<SiteRecoveryHealthError>();
 
-            return new MasterTargetServer(id, ipAddress, name, osType, agentVersion, lastHeartbeat, versionStatus, retentionVolumes?.ToList(), dataStores?.ToList(), validationErrors?.ToList(), healthErrors?.ToList(), diskCount, osVersion, agentExpiryOn, marsAgentVersion, marsAgentExpiryOn, agentVersionDetails, marsAgentVersionDetails);
+            return new MasterTargetServer(id, ipAddress, name, osType, agentVersion, lastHeartbeatReceivedOn, versionStatus, retentionVolumes?.ToList(), dataStores?.ToList(), validationErrors?.ToList(), healthErrors?.ToList(), diskCount, osVersion, agentExpireOn, marsAgentVersion, marsAgentExpireOn, agentVersionDetails, marsAgentVersionDetails);
         }
 
-        /// <summary> Initializes a new instance of RetentionVolume. </summary>
+        /// <summary> Initializes a new instance of SiteRecoveryRetentionVolume. </summary>
         /// <param name="volumeName"> The volume name. </param>
         /// <param name="capacityInBytes"> The volume capacity. </param>
         /// <param name="freeSpaceInBytes"> The free space available in this volume. </param>
         /// <param name="thresholdPercentage"> The threshold percentage. </param>
-        /// <returns> A new <see cref="Models.RetentionVolume"/> instance for mocking. </returns>
-        public static RetentionVolume RetentionVolume(string volumeName = null, long? capacityInBytes = null, long? freeSpaceInBytes = null, int? thresholdPercentage = null)
+        /// <returns> A new <see cref="Models.SiteRecoveryRetentionVolume"/> instance for mocking. </returns>
+        public static SiteRecoveryRetentionVolume SiteRecoveryRetentionVolume(string volumeName = null, long? capacityInBytes = null, long? freeSpaceInBytes = null, int? thresholdPercentage = null)
         {
-            return new RetentionVolume(volumeName, capacityInBytes, freeSpaceInBytes, thresholdPercentage);
+            return new SiteRecoveryRetentionVolume(volumeName, capacityInBytes, freeSpaceInBytes, thresholdPercentage);
         }
 
         /// <summary> Initializes a new instance of MobilityServiceUpdate. </summary>
@@ -3025,13 +3026,13 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             return new MobilityServiceUpdate(version, rebootStatus, osType);
         }
 
-        /// <summary> Initializes a new instance of ProcessServer. </summary>
+        /// <summary> Initializes a new instance of SiteRecoveryProcessServer. </summary>
         /// <param name="friendlyName"> The Process Server's friendly name. </param>
         /// <param name="id"> The Process Server Id. </param>
         /// <param name="ipAddress"> The IP address of the server. </param>
         /// <param name="osType"> The OS type of the server. </param>
         /// <param name="agentVersion"> The version of the scout component on the server. </param>
-        /// <param name="lastHeartbeat"> The last heartbeat received from the server. </param>
+        /// <param name="lastHeartbeatReceivedOn"> The last heartbeat received from the server. </param>
         /// <param name="versionStatus"> Version status. </param>
         /// <param name="mobilityServiceUpdates"> The list of the mobility service updates available on the Process Server. </param>
         /// <param name="hostId"> The agent generated Id. </param>
@@ -3048,11 +3049,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="availableSpaceInBytes"> The available space. </param>
         /// <param name="spaceUsageStatus"> The space usage status. </param>
         /// <param name="psServiceStatus"> The PS service status. </param>
-        /// <param name="sslCertExpiryOn"> The PS SSL cert expiry date. </param>
+        /// <param name="sslCertExpireOn"> The PS SSL cert expiry date. </param>
         /// <param name="sslCertExpiryRemainingDays"> CS SSL cert expiry date. </param>
         /// <param name="osVersion"> OS Version of the process server. Note: This will get populated if user has CS version greater than 9.12.0.0. </param>
         /// <param name="healthErrors"> Health errors. </param>
-        /// <param name="agentExpiryOn"> Agent expiry date. </param>
+        /// <param name="agentExpireOn"> Agent expiry date. </param>
         /// <param name="agentVersionDetails"> The agent version details. </param>
         /// <param name="health"> The health of Process Server. </param>
         /// <param name="psStatsRefreshOn"> The process server stats refresh time. </param>
@@ -3062,13 +3063,13 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="throughputStatus"> The throughput status. </param>
         /// <param name="marsCommunicationStatus"> The MARS communication status. </param>
         /// <param name="marsRegistrationStatus"> The MARS registration status. </param>
-        /// <returns> A new <see cref="Models.ProcessServer"/> instance for mocking. </returns>
-        public static ProcessServer ProcessServer(string friendlyName = null, string id = null, string ipAddress = null, string osType = null, string agentVersion = null, DateTimeOffset? lastHeartbeat = null, string versionStatus = null, IEnumerable<MobilityServiceUpdate> mobilityServiceUpdates = null, string hostId = null, string machineCount = null, string replicationPairCount = null, string systemLoad = null, string systemLoadStatus = null, string cpuLoad = null, string cpuLoadStatus = null, long? totalMemoryInBytes = null, long? availableMemoryInBytes = null, string memoryUsageStatus = null, long? totalSpaceInBytes = null, long? availableSpaceInBytes = null, string spaceUsageStatus = null, string psServiceStatus = null, DateTimeOffset? sslCertExpiryOn = null, int? sslCertExpiryRemainingDays = null, string osVersion = null, IEnumerable<HealthError> healthErrors = null, DateTimeOffset? agentExpiryOn = null, VersionDetails agentVersionDetails = null, ProtectionHealth? health = null, DateTimeOffset? psStatsRefreshOn = null, long? throughputUploadPendingDataInBytes = null, long? throughputInMBps = null, long? throughputInBytes = null, string throughputStatus = null, string marsCommunicationStatus = null, string marsRegistrationStatus = null)
+        /// <returns> A new <see cref="Models.SiteRecoveryProcessServer"/> instance for mocking. </returns>
+        public static SiteRecoveryProcessServer SiteRecoveryProcessServer(string friendlyName = null, string id = null, IPAddress ipAddress = null, string osType = null, string agentVersion = null, DateTimeOffset? lastHeartbeatReceivedOn = null, string versionStatus = null, IEnumerable<MobilityServiceUpdate> mobilityServiceUpdates = null, string hostId = null, string machineCount = null, string replicationPairCount = null, string systemLoad = null, string systemLoadStatus = null, string cpuLoad = null, string cpuLoadStatus = null, long? totalMemoryInBytes = null, long? availableMemoryInBytes = null, string memoryUsageStatus = null, long? totalSpaceInBytes = null, long? availableSpaceInBytes = null, string spaceUsageStatus = null, string psServiceStatus = null, DateTimeOffset? sslCertExpireOn = null, int? sslCertExpiryRemainingDays = null, string osVersion = null, IEnumerable<SiteRecoveryHealthError> healthErrors = null, DateTimeOffset? agentExpireOn = null, SiteRecoveryVersionDetails agentVersionDetails = null, SiteRecoveryProtectionHealth? health = null, DateTimeOffset? psStatsRefreshOn = null, long? throughputUploadPendingDataInBytes = null, long? throughputInMBps = null, long? throughputInBytes = null, string throughputStatus = null, string marsCommunicationStatus = null, string marsRegistrationStatus = null)
         {
             mobilityServiceUpdates ??= new List<MobilityServiceUpdate>();
-            healthErrors ??= new List<HealthError>();
+            healthErrors ??= new List<SiteRecoveryHealthError>();
 
-            return new ProcessServer(friendlyName, id, ipAddress, osType, agentVersion, lastHeartbeat, versionStatus, mobilityServiceUpdates?.ToList(), hostId, machineCount, replicationPairCount, systemLoad, systemLoadStatus, cpuLoad, cpuLoadStatus, totalMemoryInBytes, availableMemoryInBytes, memoryUsageStatus, totalSpaceInBytes, availableSpaceInBytes, spaceUsageStatus, psServiceStatus, sslCertExpiryOn, sslCertExpiryRemainingDays, osVersion, healthErrors?.ToList(), agentExpiryOn, agentVersionDetails, health, psStatsRefreshOn, throughputUploadPendingDataInBytes, throughputInMBps, throughputInBytes, throughputStatus, marsCommunicationStatus, marsRegistrationStatus);
+            return new SiteRecoveryProcessServer(friendlyName, id, ipAddress, osType, agentVersion, lastHeartbeatReceivedOn, versionStatus, mobilityServiceUpdates?.ToList(), hostId, machineCount, replicationPairCount, systemLoad, systemLoadStatus, cpuLoad, cpuLoadStatus, totalMemoryInBytes, availableMemoryInBytes, memoryUsageStatus, totalSpaceInBytes, availableSpaceInBytes, spaceUsageStatus, psServiceStatus, sslCertExpireOn, sslCertExpiryRemainingDays, osVersion, healthErrors?.ToList(), agentExpireOn, agentVersionDetails, health, psStatsRefreshOn, throughputUploadPendingDataInBytes, throughputInMBps, throughputInBytes, throughputStatus, marsCommunicationStatus, marsRegistrationStatus);
         }
 
         /// <summary> Initializes a new instance of RecoveryPlanA2ADetails. </summary>
@@ -3077,7 +3078,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="primaryExtendedLocation"> The primary extended location. </param>
         /// <param name="recoveryExtendedLocation"> The recovery extended location. </param>
         /// <returns> A new <see cref="Models.RecoveryPlanA2ADetails"/> instance for mocking. </returns>
-        public static RecoveryPlanA2ADetails RecoveryPlanA2ADetails(string primaryZone = null, string recoveryZone = null, ExtendedLocation primaryExtendedLocation = null, ExtendedLocation recoveryExtendedLocation = null)
+        public static RecoveryPlanA2ADetails RecoveryPlanA2ADetails(string primaryZone = null, string recoveryZone = null, SiteRecoveryExtendedLocation primaryExtendedLocation = null, SiteRecoveryExtendedLocation recoveryExtendedLocation = null)
         {
             return new RecoveryPlanA2ADetails("A2A", primaryZone, recoveryZone, primaryExtendedLocation, recoveryExtendedLocation);
         }
@@ -3088,9 +3089,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="groupId"> The group identifier. </param>
         /// <param name="rpGroupType"> The group type. </param>
         /// <returns> A new <see cref="Models.RecoveryPlanGroupTaskDetails"/> instance for mocking. </returns>
-        public static RecoveryPlanGroupTaskDetails RecoveryPlanGroupTaskDetails(IEnumerable<ASRTask> childTasks = null, string name = null, string groupId = null, string rpGroupType = null)
+        public static RecoveryPlanGroupTaskDetails RecoveryPlanGroupTaskDetails(IEnumerable<AsrTask> childTasks = null, string name = null, string groupId = null, string rpGroupType = null)
         {
-            childTasks ??= new List<ASRTask>();
+            childTasks ??= new List<AsrTask>();
 
             return new RecoveryPlanGroupTaskDetails("RecoveryPlanGroupTaskDetails", childTasks?.ToList(), name, groupId, rpGroupType);
         }
@@ -3101,20 +3102,20 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="groupId"> The group identifier. </param>
         /// <param name="rpGroupType"> The group type. </param>
         /// <returns> A new <see cref="Models.RecoveryPlanShutdownGroupTaskDetails"/> instance for mocking. </returns>
-        public static RecoveryPlanShutdownGroupTaskDetails RecoveryPlanShutdownGroupTaskDetails(IEnumerable<ASRTask> childTasks = null, string name = null, string groupId = null, string rpGroupType = null)
+        public static RecoveryPlanShutdownGroupTaskDetails RecoveryPlanShutdownGroupTaskDetails(IEnumerable<AsrTask> childTasks = null, string name = null, string groupId = null, string rpGroupType = null)
         {
-            childTasks ??= new List<ASRTask>();
+            childTasks ??= new List<AsrTask>();
 
             return new RecoveryPlanShutdownGroupTaskDetails("RecoveryPlanShutdownGroupTaskDetails", childTasks?.ToList(), name, groupId, rpGroupType);
         }
 
-        /// <summary> Initializes a new instance of RunAsAccount. </summary>
+        /// <summary> Initializes a new instance of SiteRecoveryRunAsAccount. </summary>
         /// <param name="accountId"> The CS RunAs account Id. </param>
         /// <param name="accountName"> The CS RunAs account name. </param>
-        /// <returns> A new <see cref="Models.RunAsAccount"/> instance for mocking. </returns>
-        public static RunAsAccount RunAsAccount(string accountId = null, string accountName = null)
+        /// <returns> A new <see cref="Models.SiteRecoveryRunAsAccount"/> instance for mocking. </returns>
+        public static SiteRecoveryRunAsAccount SiteRecoveryRunAsAccount(string accountId = null, string accountName = null)
         {
-            return new RunAsAccount(accountId, accountName);
+            return new SiteRecoveryRunAsAccount(accountId, accountName);
         }
 
         /// <summary> Initializes a new instance of ScriptActionTaskDetails. </summary>
@@ -3132,7 +3133,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="affectedObjectDetails"> The affected object properties like source server, source cloud, target server, target cloud etc. based on the workflow object details. </param>
         /// <param name="newReplicationProtectedItemId"> ARM Id of the new replication protected item. </param>
         /// <returns> A new <see cref="Models.SwitchProtectionJobDetails"/> instance for mocking. </returns>
-        public static SwitchProtectionJobDetails SwitchProtectionJobDetails(IReadOnlyDictionary<string, string> affectedObjectDetails = null, string newReplicationProtectedItemId = null)
+        public static SwitchProtectionJobDetails SwitchProtectionJobDetails(IReadOnlyDictionary<string, string> affectedObjectDetails = null, ResourceIdentifier newReplicationProtectedItemId = null)
         {
             affectedObjectDetails ??= new Dictionary<string, string>();
 
@@ -3156,17 +3157,17 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             return new TestFailoverJobDetails("TestFailoverJobDetails", affectedObjectDetails, testFailoverStatus, comments, networkName, networkFriendlyName, networkType, protectedItemDetails?.ToList());
         }
 
-        /// <summary> Initializes a new instance of VirtualMachineTaskDetails. </summary>
+        /// <summary> Initializes a new instance of SiteRecoveryVmTaskDetails. </summary>
         /// <param name="jobTask"> The job entity. </param>
         /// <param name="skippedReason"> The skipped reason. </param>
         /// <param name="skippedReasonString"> The skipped reason string. </param>
-        /// <returns> A new <see cref="Models.VirtualMachineTaskDetails"/> instance for mocking. </returns>
-        public static VirtualMachineTaskDetails VirtualMachineTaskDetails(JobEntity jobTask = null, string skippedReason = null, string skippedReasonString = null)
+        /// <returns> A new <see cref="Models.SiteRecoveryVmTaskDetails"/> instance for mocking. </returns>
+        public static SiteRecoveryVmTaskDetails SiteRecoveryVmTaskDetails(SiteRecoveryJobEntity jobTask = null, string skippedReason = null, string skippedReasonString = null)
         {
-            return new VirtualMachineTaskDetails("VirtualMachineTaskDetails", jobTask, skippedReason, skippedReasonString);
+            return new SiteRecoveryVmTaskDetails("VirtualMachineTaskDetails", jobTask, skippedReason, skippedReasonString);
         }
 
-        /// <summary> Initializes a new instance of VmmVirtualMachineDetails. </summary>
+        /// <summary> Initializes a new instance of VmmVmDetails. </summary>
         /// <param name="sourceItemId"> The source id of the object. </param>
         /// <param name="generation"> The id of the object in fabric. </param>
         /// <param name="osDetails"> The Last replication time. </param>
@@ -3175,12 +3176,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="hasFibreChannelAdapter"> A value indicating whether the VM has a fibre channel adapter attached. String value of SrsDataContract.PresenceStatus enum. </param>
         /// <param name="hasSharedVhd"> A value indicating whether the VM has a shared VHD attached. String value of SrsDataContract.PresenceStatus enum. </param>
         /// <param name="hyperVHostId"> The Id of the hyper-v host in fabric. </param>
-        /// <returns> A new <see cref="Models.VmmVirtualMachineDetails"/> instance for mocking. </returns>
-        public static VmmVirtualMachineDetails VmmVirtualMachineDetails(string sourceItemId = null, string generation = null, OSDetails osDetails = null, IEnumerable<DiskDetails> diskDetails = null, PresenceStatus? hasPhysicalDisk = null, PresenceStatus? hasFibreChannelAdapter = null, PresenceStatus? hasSharedVhd = null, string hyperVHostId = null)
+        /// <returns> A new <see cref="Models.VmmVmDetails"/> instance for mocking. </returns>
+        public static VmmVmDetails VmmVmDetails(string sourceItemId = null, string generation = null, SiteRecoveryOSDetails osDetails = null, IEnumerable<SiteRecoveryDiskDetails> diskDetails = null, HyperVVmDiskPresenceStatus? hasPhysicalDisk = null, HyperVVmDiskPresenceStatus? hasFibreChannelAdapter = null, HyperVVmDiskPresenceStatus? hasSharedVhd = null, string hyperVHostId = null)
         {
-            diskDetails ??= new List<DiskDetails>();
+            diskDetails ??= new List<SiteRecoveryDiskDetails>();
 
-            return new VmmVirtualMachineDetails("VmmVirtualMachine", sourceItemId, generation, osDetails, diskDetails?.ToList(), hasPhysicalDisk, hasFibreChannelAdapter, hasSharedVhd, hyperVHostId);
+            return new VmmVmDetails("VmmVirtualMachine", sourceItemId, generation, osDetails, diskDetails?.ToList(), hasPhysicalDisk, hasFibreChannelAdapter, hasSharedVhd, hyperVHostId);
         }
 
         /// <summary> Initializes a new instance of VmNicUpdatesTaskDetails. </summary>
@@ -3245,7 +3246,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="targetDiskTags"> The tags for the target disks. </param>
         /// <param name="supportedOSVersions"> List of supported inplace OS Upgrade versions. </param>
         /// <returns> A new <see cref="Models.VMwareCbtMigrationDetails"/> instance for mocking. </returns>
-        public static VMwareCbtMigrationDetails VMwareCbtMigrationDetails(string vmwareMachineId = null, string osType = null, string osName = null, string firmwareType = null, string targetGeneration = null, string licenseType = null, string sqlServerLicenseType = null, string dataMoverRunAsAccountId = null, string snapshotRunAsAccountId = null, string storageAccountId = null, string targetVmName = null, string targetVmSize = null, string targetLocation = null, string targetResourceGroupId = null, string targetAvailabilitySetId = null, string targetAvailabilityZone = null, string targetProximityPlacementGroupId = null, ResourceIdentifier confidentialVmKeyVaultId = null, VMwareCbtSecurityProfileProperties targetVmSecurityProfile = null, string targetBootDiagnosticsStorageAccountId = null, IReadOnlyDictionary<string, string> targetVmTags = null, IEnumerable<VMwareCbtProtectedDiskDetails> protectedDisks = null, string targetNetworkId = null, string testNetworkId = null, IEnumerable<VMwareCbtNicDetails> vmNics = null, IReadOnlyDictionary<string, string> targetNicTags = null, string migrationRecoveryPointId = null, DateTimeOffset? lastRecoveryPointReceived = null, string lastRecoveryPointId = null, int? initialSeedingProgressPercentage = null, int? migrationProgressPercentage = null, int? resyncProgressPercentage = null, int? resumeProgressPercentage = null, long? initialSeedingRetryCount = null, long? resyncRetryCount = null, long? resumeRetryCount = null, string resyncRequired = null, ResyncState? resyncState = null, string performAutoResync = null, IReadOnlyDictionary<string, string> seedDiskTags = null, IReadOnlyDictionary<string, string> targetDiskTags = null, IEnumerable<string> supportedOSVersions = null)
+        public static VMwareCbtMigrationDetails VMwareCbtMigrationDetails(ResourceIdentifier vmwareMachineId = null, string osType = null, string osName = null, string firmwareType = null, string targetGeneration = null, string licenseType = null, string sqlServerLicenseType = null, ResourceIdentifier dataMoverRunAsAccountId = null, ResourceIdentifier snapshotRunAsAccountId = null, ResourceIdentifier storageAccountId = null, string targetVmName = null, string targetVmSize = null, string targetLocation = null, ResourceIdentifier targetResourceGroupId = null, ResourceIdentifier targetAvailabilitySetId = null, string targetAvailabilityZone = null, ResourceIdentifier targetProximityPlacementGroupId = null, ResourceIdentifier confidentialVmKeyVaultId = null, VMwareCbtSecurityProfileProperties targetVmSecurityProfile = null, ResourceIdentifier targetBootDiagnosticsStorageAccountId = null, IReadOnlyDictionary<string, string> targetVmTags = null, IEnumerable<VMwareCbtProtectedDiskDetails> protectedDisks = null, ResourceIdentifier targetNetworkId = null, ResourceIdentifier testNetworkId = null, IEnumerable<VMwareCbtNicDetails> vmNics = null, IReadOnlyDictionary<string, string> targetNicTags = null, ResourceIdentifier migrationRecoveryPointId = null, DateTimeOffset? lastRecoveryPointReceived = null, ResourceIdentifier lastRecoveryPointId = null, int? initialSeedingProgressPercentage = null, int? migrationProgressPercentage = null, int? resyncProgressPercentage = null, int? resumeProgressPercentage = null, long? initialSeedingRetryCount = null, long? resyncRetryCount = null, long? resumeRetryCount = null, string resyncRequired = null, SiteRecoveryResyncState? resyncState = null, string performAutoResync = null, IReadOnlyDictionary<string, string> seedDiskTags = null, IReadOnlyDictionary<string, string> targetDiskTags = null, IEnumerable<string> supportedOSVersions = null)
         {
             targetVmTags ??= new Dictionary<string, string>();
             protectedDisks ??= new List<VMwareCbtProtectedDiskDetails>();
@@ -3274,7 +3275,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="targetBlobUri"> The uri of the target blob. </param>
         /// <param name="targetDiskName"> The name for the target managed disk. </param>
         /// <returns> A new <see cref="Models.VMwareCbtProtectedDiskDetails"/> instance for mocking. </returns>
-        public static VMwareCbtProtectedDiskDetails VMwareCbtProtectedDiskDetails(string diskId = null, string diskName = null, DiskAccountType? diskType = null, string diskPath = null, string isOSDisk = null, long? capacityInBytes = null, string logStorageAccountId = null, string logStorageAccountSasSecretName = null, string diskEncryptionSetId = null, string seedManagedDiskId = null, Uri seedBlobUri = null, string targetManagedDiskId = null, Uri targetBlobUri = null, string targetDiskName = null)
+        public static VMwareCbtProtectedDiskDetails VMwareCbtProtectedDiskDetails(string diskId = null, string diskName = null, SiteRecoveryDiskAccountType? diskType = null, string diskPath = null, string isOSDisk = null, long? capacityInBytes = null, ResourceIdentifier logStorageAccountId = null, string logStorageAccountSasSecretName = null, ResourceIdentifier diskEncryptionSetId = null, string seedManagedDiskId = null, Uri seedBlobUri = null, string targetManagedDiskId = null, Uri targetBlobUri = null, string targetDiskName = null)
         {
             return new VMwareCbtProtectedDiskDetails(diskId, diskName, diskType, diskPath, isOSDisk, capacityInBytes, logStorageAccountId, logStorageAccountSasSecretName, diskEncryptionSetId, seedManagedDiskId, seedBlobUri, targetManagedDiskId, targetBlobUri, targetDiskName);
         }
@@ -3295,7 +3296,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="targetNicName"> Target NIC name. </param>
         /// <param name="isSelectedForMigration"> A value indicating whether this NIC is selected for migration. </param>
         /// <returns> A new <see cref="Models.VMwareCbtNicDetails"/> instance for mocking. </returns>
-        public static VMwareCbtNicDetails VMwareCbtNicDetails(string nicId = null, string isPrimaryNic = null, string sourceIPAddress = null, EthernetAddressType? sourceIPAddressType = null, string sourceNetworkId = null, string targetIPAddress = null, EthernetAddressType? targetIPAddressType = null, string targetSubnetName = null, string testNetworkId = null, string testSubnetName = null, string testIPAddress = null, EthernetAddressType? testIPAddressType = null, string targetNicName = null, string isSelectedForMigration = null)
+        public static VMwareCbtNicDetails VMwareCbtNicDetails(string nicId = null, string isPrimaryNic = null, IPAddress sourceIPAddress = null, SiteRecoveryEthernetAddressType? sourceIPAddressType = null, ResourceIdentifier sourceNetworkId = null, IPAddress targetIPAddress = null, SiteRecoveryEthernetAddressType? targetIPAddressType = null, string targetSubnetName = null, ResourceIdentifier testNetworkId = null, string testSubnetName = null, IPAddress testIPAddress = null, SiteRecoveryEthernetAddressType? testIPAddressType = null, string targetNicName = null, string isSelectedForMigration = null)
         {
             return new VMwareCbtNicDetails(nicId, isPrimaryNic, sourceIPAddress, sourceIPAddressType, sourceNetworkId, targetIPAddress, targetIPAddressType, targetSubnetName, testNetworkId, testSubnetName, testIPAddress, testIPAddressType, targetNicName, isSelectedForMigration);
         }
@@ -3320,7 +3321,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="roleSizeToNicCountMap"> The role size to NIC count map. </param>
         /// <param name="excludedSkus"> The SKUs to be excluded. </param>
         /// <returns> A new <see cref="Models.VMwareCbtProtectionContainerMappingDetails"/> instance for mocking. </returns>
-        public static VMwareCbtProtectionContainerMappingDetails VMwareCbtProtectionContainerMappingDetails(string keyVaultId = null, Uri keyVaultUri = null, string storageAccountId = null, string storageAccountSasSecretName = null, string serviceBusConnectionStringSecretName = null, string targetLocation = null, IReadOnlyDictionary<string, int> roleSizeToNicCountMap = null, IEnumerable<string> excludedSkus = null)
+        public static VMwareCbtProtectionContainerMappingDetails VMwareCbtProtectionContainerMappingDetails(ResourceIdentifier keyVaultId = null, Uri keyVaultUri = null, ResourceIdentifier storageAccountId = null, string storageAccountSasSecretName = null, string serviceBusConnectionStringSecretName = null, string targetLocation = null, IReadOnlyDictionary<string, int> roleSizeToNicCountMap = null, IEnumerable<string> excludedSkus = null)
         {
             roleSizeToNicCountMap ??= new Dictionary<string, int>();
             excludedSkus ??= new List<string>();
@@ -3356,21 +3357,21 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="hostName"> The host name. </param>
         /// <param name="lastHeartbeat"> The last heartbeat received from CS server. </param>
         /// <param name="versionStatus"> Version status. </param>
-        /// <param name="sslCertExpiryOn"> CS SSL cert expiry date. </param>
+        /// <param name="sslCertExpireOn"> CS SSL cert expiry date. </param>
         /// <param name="sslCertExpiryRemainingDays"> CS SSL cert expiry date. </param>
         /// <param name="psTemplateVersion"> PS template version. </param>
-        /// <param name="agentExpiryOn"> Agent expiry date. </param>
+        /// <param name="agentExpireOn"> Agent expiry date. </param>
         /// <param name="agentVersionDetails"> The agent version details. </param>
         /// <param name="switchProviderBlockingErrorDetails"> The switch provider blocking error information. </param>
         /// <returns> A new <see cref="Models.VMwareDetails"/> instance for mocking. </returns>
-        public static VMwareDetails VMwareDetails(IEnumerable<ProcessServer> processServers = null, IEnumerable<MasterTargetServer> masterTargetServers = null, IEnumerable<RunAsAccount> runAsAccounts = null, string replicationPairCount = null, string processServerCount = null, string agentCount = null, string protectedServers = null, string systemLoad = null, string systemLoadStatus = null, string cpuLoad = null, string cpuLoadStatus = null, long? totalMemoryInBytes = null, long? availableMemoryInBytes = null, string memoryUsageStatus = null, long? totalSpaceInBytes = null, long? availableSpaceInBytes = null, string spaceUsageStatus = null, string webLoad = null, string webLoadStatus = null, string databaseServerLoad = null, string databaseServerLoadStatus = null, string csServiceStatus = null, string ipAddress = null, string agentVersion = null, string hostName = null, DateTimeOffset? lastHeartbeat = null, string versionStatus = null, DateTimeOffset? sslCertExpiryOn = null, int? sslCertExpiryRemainingDays = null, string psTemplateVersion = null, DateTimeOffset? agentExpiryOn = null, VersionDetails agentVersionDetails = null, IEnumerable<InMageFabricSwitchProviderBlockingErrorDetails> switchProviderBlockingErrorDetails = null)
+        public static VMwareDetails VMwareDetails(IEnumerable<SiteRecoveryProcessServer> processServers = null, IEnumerable<MasterTargetServer> masterTargetServers = null, IEnumerable<SiteRecoveryRunAsAccount> runAsAccounts = null, string replicationPairCount = null, string processServerCount = null, string agentCount = null, string protectedServers = null, string systemLoad = null, string systemLoadStatus = null, string cpuLoad = null, string cpuLoadStatus = null, long? totalMemoryInBytes = null, long? availableMemoryInBytes = null, string memoryUsageStatus = null, long? totalSpaceInBytes = null, long? availableSpaceInBytes = null, string spaceUsageStatus = null, string webLoad = null, string webLoadStatus = null, string databaseServerLoad = null, string databaseServerLoadStatus = null, string csServiceStatus = null, IPAddress ipAddress = null, string agentVersion = null, string hostName = null, DateTimeOffset? lastHeartbeat = null, string versionStatus = null, DateTimeOffset? sslCertExpireOn = null, int? sslCertExpiryRemainingDays = null, string psTemplateVersion = null, DateTimeOffset? agentExpireOn = null, SiteRecoveryVersionDetails agentVersionDetails = null, IEnumerable<InMageFabricSwitchProviderBlockingErrorDetails> switchProviderBlockingErrorDetails = null)
         {
-            processServers ??= new List<ProcessServer>();
+            processServers ??= new List<SiteRecoveryProcessServer>();
             masterTargetServers ??= new List<MasterTargetServer>();
-            runAsAccounts ??= new List<RunAsAccount>();
+            runAsAccounts ??= new List<SiteRecoveryRunAsAccount>();
             switchProviderBlockingErrorDetails ??= new List<InMageFabricSwitchProviderBlockingErrorDetails>();
 
-            return new VMwareDetails("VMware", processServers?.ToList(), masterTargetServers?.ToList(), runAsAccounts?.ToList(), replicationPairCount, processServerCount, agentCount, protectedServers, systemLoad, systemLoadStatus, cpuLoad, cpuLoadStatus, totalMemoryInBytes, availableMemoryInBytes, memoryUsageStatus, totalSpaceInBytes, availableSpaceInBytes, spaceUsageStatus, webLoad, webLoadStatus, databaseServerLoad, databaseServerLoadStatus, csServiceStatus, ipAddress, agentVersion, hostName, lastHeartbeat, versionStatus, sslCertExpiryOn, sslCertExpiryRemainingDays, psTemplateVersion, agentExpiryOn, agentVersionDetails, switchProviderBlockingErrorDetails?.ToList());
+            return new VMwareDetails("VMware", processServers?.ToList(), masterTargetServers?.ToList(), runAsAccounts?.ToList(), replicationPairCount, processServerCount, agentCount, protectedServers, systemLoad, systemLoadStatus, cpuLoad, cpuLoadStatus, totalMemoryInBytes, availableMemoryInBytes, memoryUsageStatus, totalSpaceInBytes, availableSpaceInBytes, spaceUsageStatus, webLoad, webLoadStatus, databaseServerLoad, databaseServerLoadStatus, csServiceStatus, ipAddress, agentVersion, hostName, lastHeartbeat, versionStatus, sslCertExpireOn, sslCertExpiryRemainingDays, psTemplateVersion, agentExpireOn, agentVersionDetails, switchProviderBlockingErrorDetails?.ToList());
         }
 
         /// <summary> Initializes a new instance of VMwareV2FabricSpecificDetails. </summary>
@@ -3382,14 +3383,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="serviceContainerId"> The service container Id. </param>
         /// <param name="processServers"> The list of process servers. </param>
         /// <returns> A new <see cref="Models.VMwareV2FabricSpecificDetails"/> instance for mocking. </returns>
-        public static VMwareV2FabricSpecificDetails VMwareV2FabricSpecificDetails(string vmwareSiteId = null, string physicalSiteId = null, string migrationSolutionId = null, string serviceEndpoint = null, string serviceResourceId = null, string serviceContainerId = null, IEnumerable<ProcessServerDetails> processServers = null)
+        public static VMwareV2FabricSpecificDetails VMwareV2FabricSpecificDetails(ResourceIdentifier vmwareSiteId = null, ResourceIdentifier physicalSiteId = null, ResourceIdentifier migrationSolutionId = null, string serviceEndpoint = null, ResourceIdentifier serviceResourceId = null, string serviceContainerId = null, IEnumerable<SiteRecoveryProcessServerDetails> processServers = null)
         {
-            processServers ??= new List<ProcessServerDetails>();
+            processServers ??= new List<SiteRecoveryProcessServerDetails>();
 
             return new VMwareV2FabricSpecificDetails("VMwareV2", vmwareSiteId, physicalSiteId, migrationSolutionId, serviceEndpoint, serviceResourceId, serviceContainerId, processServers?.ToList());
         }
 
-        /// <summary> Initializes a new instance of VMwareVirtualMachineDetails. </summary>
+        /// <summary> Initializes a new instance of VMwareVmDetails. </summary>
         /// <param name="agentGeneratedId"> The ID generated by the InMage agent after it gets installed on guest. This is the ID to be used during InMage CreateProtection. </param>
         /// <param name="agentInstalled"> The value indicating if InMage scout agent is installed on guest. </param>
         /// <param name="osType"> The OsType installed on VM. </param>
@@ -3400,13 +3401,13 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="discoveryType"> A value indicating the discovery type of the machine. Value can be vCenter or physical. </param>
         /// <param name="diskDetails"> The disk details. </param>
         /// <param name="validationErrors"> The validation errors. </param>
-        /// <returns> A new <see cref="Models.VMwareVirtualMachineDetails"/> instance for mocking. </returns>
-        public static VMwareVirtualMachineDetails VMwareVirtualMachineDetails(string agentGeneratedId = null, string agentInstalled = null, string osType = null, string agentVersion = null, string ipAddress = null, string poweredOn = null, string vCenterInfrastructureId = null, string discoveryType = null, IEnumerable<InMageDiskDetails> diskDetails = null, IEnumerable<HealthError> validationErrors = null)
+        /// <returns> A new <see cref="Models.VMwareVmDetails"/> instance for mocking. </returns>
+        public static VMwareVmDetails VMwareVmDetails(string agentGeneratedId = null, string agentInstalled = null, string osType = null, string agentVersion = null, IPAddress ipAddress = null, string poweredOn = null, string vCenterInfrastructureId = null, string discoveryType = null, IEnumerable<InMageDiskDetails> diskDetails = null, IEnumerable<SiteRecoveryHealthError> validationErrors = null)
         {
             diskDetails ??= new List<InMageDiskDetails>();
-            validationErrors ??= new List<HealthError>();
+            validationErrors ??= new List<SiteRecoveryHealthError>();
 
-            return new VMwareVirtualMachineDetails("VMwareVirtualMachine", agentGeneratedId, agentInstalled, osType, agentVersion, ipAddress, poweredOn, vCenterInfrastructureId, discoveryType, diskDetails?.ToList(), validationErrors?.ToList());
+            return new VMwareVmDetails("VMwareVirtualMachine", agentGeneratedId, agentInstalled, osType, agentVersion, ipAddress, poweredOn, vCenterInfrastructureId, discoveryType, diskDetails?.ToList(), validationErrors?.ToList());
         }
     }
 }

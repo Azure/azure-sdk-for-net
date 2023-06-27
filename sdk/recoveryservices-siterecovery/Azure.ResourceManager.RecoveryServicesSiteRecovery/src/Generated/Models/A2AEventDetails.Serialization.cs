@@ -19,11 +19,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 return null;
             }
             Optional<string> protectedItemName = default;
-            Optional<string> fabricObjectId = default;
+            Optional<ResourceIdentifier> fabricObjectId = default;
             Optional<string> fabricName = default;
-            Optional<string> fabricLocation = default;
+            Optional<AzureLocation> fabricLocation = default;
             Optional<string> remoteFabricName = default;
-            Optional<string> remoteFabricLocation = default;
+            Optional<AzureLocation> remoteFabricLocation = default;
             string instanceType = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -34,7 +34,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 if (property.NameEquals("fabricObjectId"u8))
                 {
-                    fabricObjectId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    fabricObjectId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("fabricName"u8))
@@ -44,7 +48,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 if (property.NameEquals("fabricLocation"u8))
                 {
-                    fabricLocation = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    fabricLocation = new AzureLocation(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("remoteFabricName"u8))
@@ -54,7 +62,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 if (property.NameEquals("remoteFabricLocation"u8))
                 {
-                    remoteFabricLocation = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    remoteFabricLocation = new AzureLocation(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("instanceType"u8))
@@ -63,7 +75,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     continue;
                 }
             }
-            return new A2AEventDetails(instanceType, protectedItemName.Value, fabricObjectId.Value, fabricName.Value, fabricLocation.Value, remoteFabricName.Value, remoteFabricLocation.Value);
+            return new A2AEventDetails(instanceType, protectedItemName.Value, fabricObjectId.Value, fabricName.Value, Optional.ToNullable(fabricLocation), remoteFabricName.Value, Optional.ToNullable(remoteFabricLocation));
         }
     }
 }

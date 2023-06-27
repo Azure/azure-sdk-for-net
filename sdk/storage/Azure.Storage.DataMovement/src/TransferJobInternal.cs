@@ -36,12 +36,12 @@ namespace Azure.Storage.DataMovement
         /// <summary>
         /// Source resource
         /// </summary>
-        internal StorageResource _sourceResource;
+        internal StorageResourceSingle _sourceResource;
 
         /// <summary>
         /// Destination Resource
         /// </summary>
-        internal StorageResource _destinationResource;
+        internal StorageResourceSingle _destinationResource;
 
         /// <summary>
         /// Source resource
@@ -184,8 +184,8 @@ namespace Azure.Storage.DataMovement
         /// </summary>
         internal TransferJobInternal(
             DataTransfer dataTransfer,
-            StorageResource sourceResource,
-            StorageResource destinationResource,
+            StorageResourceSingle sourceResource,
+            StorageResourceSingle destinationResource,
             TransferOptions transferOptions,
             QueueChunkTaskInternal queueChunkTask,
             TransferCheckpointer checkpointer,
