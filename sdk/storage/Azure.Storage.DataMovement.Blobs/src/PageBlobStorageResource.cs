@@ -22,6 +22,11 @@ namespace Azure.Storage.DataMovement.Blobs
         private ETag? _etagDownloadLock = default;
 
         /// <summary>
+        /// The identifier for the type of storage resource.
+        /// </summary>
+        public override string ResourceId => "PageBlob";
+
+        /// <summary>
         /// Gets the URL of the storage resource.
         /// </summary>
         public override Uri Uri => BlobClient.Uri;

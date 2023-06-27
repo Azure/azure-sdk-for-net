@@ -66,7 +66,7 @@ namespace Azure.Storage.DataMovement.Tests
         private async Task CopyBlockBlobsAndVerify(
             BlobContainerClient container,
             long size = Constants.KB,
-            int waitTimeInSec = 30,
+            int waitTimeInSec = 5,
             int blobCount = 1,
             TransferManagerOptions transferManagerOptions = default,
             List<string> sourceBlobNames = default,

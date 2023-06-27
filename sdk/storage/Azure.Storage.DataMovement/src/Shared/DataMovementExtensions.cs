@@ -247,10 +247,10 @@ namespace Azure.Storage.DataMovement
                 startTime: DateTimeOffset.UtcNow, // TODO: update to job start time
                 transferId: jobPart._dataTransfer.Id,
                 partNumber: (uint)jobPart.PartNumber,
-                sourceResourceId: string.Empty, // TODO: Get resource type from source resource
+                sourceResourceId: jobPart._sourceResource.ResourceId,
                 sourcePath: sourcePath,
                 sourceExtraQuery: "", // TODO: convert options to string
-                destinationResourceId: string.Empty, // TODO: Get resource type from destination resource
+                destinationResourceId: jobPart._destinationResource.ResourceId,
                 destinationPath: destinationPath,
                 destinationExtraQuery: "", // TODO: convert options to string
                 isFinalPart: isFinalPart,
