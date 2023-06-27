@@ -183,13 +183,13 @@ namespace Azure.ResourceManager.Synapse.Models
         /// <param name="restorePointInTime"> Snapshot time to restore. </param>
         /// <param name="createMode">
         /// Specifies the mode of sql pool creation.
-        /// 
+        ///
         /// Default: regular sql pool creation.
-        /// 
+        ///
         /// PointInTimeRestore: Creates a sql pool by restoring a point in time backup of an existing sql pool. sourceDatabaseId must be specified as the resource ID of the existing sql pool, and restorePointInTime must be specified.
-        /// 
+        ///
         /// Recovery: Creates a sql pool by a geo-replicated backup. sourceDatabaseId  must be specified as the recoverableDatabaseId to restore.
-        /// 
+        ///
         /// Restore: Creates a sql pool by restoring a backup of a deleted sql  pool. SourceDatabaseId should be the sql pool's original resource ID. SourceDatabaseId and sourceDatabaseDeletionDate must be specified.
         /// </param>
         /// <param name="createdOn"> Date the SQL pool was created. </param>
@@ -340,17 +340,17 @@ namespace Azure.ResourceManager.Synapse.Models
         /// <param name="retentionDays"> Specifies the number of days to keep in the audit logs in the storage account. </param>
         /// <param name="auditActionsAndGroups">
         /// Specifies the Actions-Groups and Actions to audit.
-        /// 
+        ///
         /// The recommended set of action groups to use is the following combination - this will audit all the queries and stored procedures executed against the database, as well as successful and failed logins:
-        /// 
+        ///
         /// BATCH_COMPLETED_GROUP,
         /// SUCCESSFUL_DATABASE_AUTHENTICATION_GROUP,
         /// FAILED_DATABASE_AUTHENTICATION_GROUP.
-        /// 
+        ///
         /// This above combination is also the set that is configured by default when enabling auditing from the Azure portal.
-        /// 
+        ///
         /// The supported action groups to audit are (note: choose only specific groups that cover your auditing needs. Using unnecessary groups could lead to very large quantities of audit records):
-        /// 
+        ///
         /// APPLICATION_ROLE_CHANGE_PASSWORD_GROUP
         /// BACKUP_RESTORE_GROUP
         /// DATABASE_LOGOUT_GROUP
@@ -371,11 +371,11 @@ namespace Azure.ResourceManager.Synapse.Models
         /// USER_CHANGE_PASSWORD_GROUP
         /// BATCH_STARTED_GROUP
         /// BATCH_COMPLETED_GROUP
-        /// 
+        ///
         /// These are groups that cover all sql statements and stored procedures executed against the database, and should not be used in combination with other groups as this will result in duplicate audit logs.
-        /// 
+        ///
         /// For more information, see [Database-Level Audit Action Groups](https://docs.microsoft.com/en-us/sql/relational-databases/security/auditing/sql-server-audit-action-groups-and-actions#database-level-audit-action-groups).
-        /// 
+        ///
         /// For Database auditing policy, specific Actions can also be specified (note that Actions cannot be specified for Server auditing policy). The supported actions to audit are:
         /// SELECT
         /// UPDATE
@@ -384,34 +384,34 @@ namespace Azure.ResourceManager.Synapse.Models
         /// EXECUTE
         /// RECEIVE
         /// REFERENCES
-        /// 
+        ///
         /// The general form for defining an action to be audited is:
         /// {action} ON {object} BY {principal}
-        /// 
+        ///
         /// Note that &lt;object&gt; in the above format can refer to an object like a table, view, or stored procedure, or an entire database or schema. For the latter cases, the forms DATABASE::{db_name} and SCHEMA::{schema_name} are used, respectively.
-        /// 
+        ///
         /// For example:
         /// SELECT on dbo.myTable by public
         /// SELECT on DATABASE::myDatabase by public
         /// SELECT on SCHEMA::mySchema by public
-        /// 
+        ///
         /// For more information, see [Database-Level Audit Actions](https://docs.microsoft.com/en-us/sql/relational-databases/security/auditing/sql-server-audit-action-groups-and-actions#database-level-audit-actions)
         /// </param>
         /// <param name="storageAccountSubscriptionId"> Specifies the blob storage subscription Id. </param>
         /// <param name="isStorageSecondaryKeyInUse"> Specifies whether storageAccountAccessKey value is the storage's secondary key. </param>
         /// <param name="isAzureMonitorTargetEnabled">
-        /// Specifies whether audit events are sent to Azure Monitor. 
+        /// Specifies whether audit events are sent to Azure Monitor.
         /// In order to send the events to Azure Monitor, specify 'state' as 'Enabled' and 'isAzureMonitorTargetEnabled' as true.
-        /// 
+        ///
         /// When using REST API to configure auditing, Diagnostic Settings with 'SQLSecurityAuditEvents' diagnostic logs category on the database should be also created.
         /// Note that for server level audit you should use the 'master' database as {databaseName}.
-        /// 
+        ///
         /// Diagnostic Settings URI format:
         /// PUT https://management.azure.com/subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/providers/microsoft.insights/diagnosticSettings/{settingsName}?api-version=2017-05-01-preview
-        /// 
+        ///
         /// For more information, see [Diagnostic Settings REST API](https://go.microsoft.com/fwlink/?linkid=2033207)
         /// or [Diagnostic Settings PowerShell](https://go.microsoft.com/fwlink/?linkid=2033043)
-        /// 
+        ///
         /// </param>
         /// <returns> A new <see cref="Synapse.SynapseSqlPoolBlobAuditingPolicyData"/> instance for mocking. </returns>
         public static SynapseSqlPoolBlobAuditingPolicyData SynapseSqlPoolBlobAuditingPolicyData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string kind = null, SynapseBlobAuditingPolicyState? state = null, string storageEndpoint = null, string storageAccountAccessKey = null, int? retentionDays = null, IEnumerable<string> auditActionsAndGroups = null, Guid? storageAccountSubscriptionId = null, bool? isStorageSecondaryKeyInUse = null, bool? isAzureMonitorTargetEnabled = null)
@@ -644,7 +644,7 @@ namespace Azure.ResourceManager.Synapse.Models
         /// <param name="state"> Specifies the state of the policy. If state is Enabled, storageEndpoint or isAzureMonitorTargetEnabled are required. </param>
         /// <param name="storageEndpoint"> Specifies the blob storage endpoint (e.g. https://MyAccount.blob.core.windows.net). If state is Enabled, storageEndpoint or isAzureMonitorTargetEnabled is required. </param>
         /// <param name="storageAccountAccessKey">
-        /// Specifies the identifier key of the auditing storage account. 
+        /// Specifies the identifier key of the auditing storage account.
         /// If state is Enabled and storageEndpoint is specified, not specifying the storageAccountAccessKey will use SQL server system-assigned managed identity to access the storage.
         /// Prerequisites for using managed identity authentication:
         /// 1. Assign SQL Server a system-assigned managed identity in Azure Active Directory (AAD).
@@ -654,17 +654,17 @@ namespace Azure.ResourceManager.Synapse.Models
         /// <param name="retentionDays"> Specifies the number of days to keep in the audit logs in the storage account. </param>
         /// <param name="auditActionsAndGroups">
         /// Specifies the Actions-Groups and Actions to audit.
-        /// 
+        ///
         /// The recommended set of action groups to use is the following combination - this will audit all the queries and stored procedures executed against the database, as well as successful and failed logins:
-        /// 
+        ///
         /// BATCH_COMPLETED_GROUP,
         /// SUCCESSFUL_DATABASE_AUTHENTICATION_GROUP,
         /// FAILED_DATABASE_AUTHENTICATION_GROUP.
-        /// 
+        ///
         /// This above combination is also the set that is configured by default when enabling auditing from the Azure portal.
-        /// 
+        ///
         /// The supported action groups to audit are (note: choose only specific groups that cover your auditing needs. Using unnecessary groups could lead to very large quantities of audit records):
-        /// 
+        ///
         /// APPLICATION_ROLE_CHANGE_PASSWORD_GROUP
         /// BACKUP_RESTORE_GROUP
         /// DATABASE_LOGOUT_GROUP
@@ -685,11 +685,11 @@ namespace Azure.ResourceManager.Synapse.Models
         /// USER_CHANGE_PASSWORD_GROUP
         /// BATCH_STARTED_GROUP
         /// BATCH_COMPLETED_GROUP
-        /// 
+        ///
         /// These are groups that cover all sql statements and stored procedures executed against the database, and should not be used in combination with other groups as this will result in duplicate audit logs.
-        /// 
+        ///
         /// For more information, see [Database-Level Audit Action Groups](https://docs.microsoft.com/en-us/sql/relational-databases/security/auditing/sql-server-audit-action-groups-and-actions#database-level-audit-action-groups).
-        /// 
+        ///
         /// For Database auditing policy, specific Actions can also be specified (note that Actions cannot be specified for Server auditing policy). The supported actions to audit are:
         /// SELECT
         /// UPDATE
@@ -698,34 +698,34 @@ namespace Azure.ResourceManager.Synapse.Models
         /// EXECUTE
         /// RECEIVE
         /// REFERENCES
-        /// 
+        ///
         /// The general form for defining an action to be audited is:
         /// {action} ON {object} BY {principal}
-        /// 
+        ///
         /// Note that &lt;object&gt; in the above format can refer to an object like a table, view, or stored procedure, or an entire database or schema. For the latter cases, the forms DATABASE::{db_name} and SCHEMA::{schema_name} are used, respectively.
-        /// 
+        ///
         /// For example:
         /// SELECT on dbo.myTable by public
         /// SELECT on DATABASE::myDatabase by public
         /// SELECT on SCHEMA::mySchema by public
-        /// 
+        ///
         /// For more information, see [Database-Level Audit Actions](https://docs.microsoft.com/en-us/sql/relational-databases/security/auditing/sql-server-audit-action-groups-and-actions#database-level-audit-actions)
         /// </param>
         /// <param name="storageAccountSubscriptionId"> Specifies the blob storage subscription Id. </param>
         /// <param name="isStorageSecondaryKeyInUse"> Specifies whether storageAccountAccessKey value is the storage's secondary key. </param>
         /// <param name="isAzureMonitorTargetEnabled">
-        /// Specifies whether audit events are sent to Azure Monitor. 
+        /// Specifies whether audit events are sent to Azure Monitor.
         /// In order to send the events to Azure Monitor, specify 'state' as 'Enabled' and 'isAzureMonitorTargetEnabled' as true.
-        /// 
+        ///
         /// When using REST API to configure auditing, Diagnostic Settings with 'SQLSecurityAuditEvents' diagnostic logs category on the database should be also created.
         /// Note that for server level audit you should use the 'master' database as {databaseName}.
-        /// 
+        ///
         /// Diagnostic Settings URI format:
         /// PUT https://management.azure.com/subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/providers/microsoft.insights/diagnosticSettings/{settingsName}?api-version=2017-05-01-preview
-        /// 
+        ///
         /// For more information, see [Diagnostic Settings REST API](https://go.microsoft.com/fwlink/?linkid=2033207)
         /// or [Diagnostic Settings PowerShell](https://go.microsoft.com/fwlink/?linkid=2033043)
-        /// 
+        ///
         /// </param>
         /// <param name="queueDelayMs">
         /// Specifies the amount of time in milliseconds that can elapse before audit actions are forced to be processed.
@@ -824,7 +824,7 @@ namespace Azure.ResourceManager.Synapse.Models
         /// <param name="state"> Specifies the state of the policy. If state is Enabled, storageEndpoint or isAzureMonitorTargetEnabled are required. </param>
         /// <param name="storageEndpoint"> Specifies the blob storage endpoint (e.g. https://MyAccount.blob.core.windows.net). If state is Enabled, storageEndpoint or isAzureMonitorTargetEnabled is required. </param>
         /// <param name="storageAccountAccessKey">
-        /// Specifies the identifier key of the auditing storage account. 
+        /// Specifies the identifier key of the auditing storage account.
         /// If state is Enabled and storageEndpoint is specified, not specifying the storageAccountAccessKey will use SQL server system-assigned managed identity to access the storage.
         /// Prerequisites for using managed identity authentication:
         /// 1. Assign SQL Server a system-assigned managed identity in Azure Active Directory (AAD).
@@ -834,17 +834,17 @@ namespace Azure.ResourceManager.Synapse.Models
         /// <param name="retentionDays"> Specifies the number of days to keep in the audit logs in the storage account. </param>
         /// <param name="auditActionsAndGroups">
         /// Specifies the Actions-Groups and Actions to audit.
-        /// 
+        ///
         /// The recommended set of action groups to use is the following combination - this will audit all the queries and stored procedures executed against the database, as well as successful and failed logins:
-        /// 
+        ///
         /// BATCH_COMPLETED_GROUP,
         /// SUCCESSFUL_DATABASE_AUTHENTICATION_GROUP,
         /// FAILED_DATABASE_AUTHENTICATION_GROUP.
-        /// 
+        ///
         /// This above combination is also the set that is configured by default when enabling auditing from the Azure portal.
-        /// 
+        ///
         /// The supported action groups to audit are (note: choose only specific groups that cover your auditing needs. Using unnecessary groups could lead to very large quantities of audit records):
-        /// 
+        ///
         /// APPLICATION_ROLE_CHANGE_PASSWORD_GROUP
         /// BACKUP_RESTORE_GROUP
         /// DATABASE_LOGOUT_GROUP
@@ -865,11 +865,11 @@ namespace Azure.ResourceManager.Synapse.Models
         /// USER_CHANGE_PASSWORD_GROUP
         /// BATCH_STARTED_GROUP
         /// BATCH_COMPLETED_GROUP
-        /// 
+        ///
         /// These are groups that cover all sql statements and stored procedures executed against the database, and should not be used in combination with other groups as this will result in duplicate audit logs.
-        /// 
+        ///
         /// For more information, see [Database-Level Audit Action Groups](https://docs.microsoft.com/en-us/sql/relational-databases/security/auditing/sql-server-audit-action-groups-and-actions#database-level-audit-action-groups).
-        /// 
+        ///
         /// For Database auditing policy, specific Actions can also be specified (note that Actions cannot be specified for Server auditing policy). The supported actions to audit are:
         /// SELECT
         /// UPDATE
@@ -878,34 +878,34 @@ namespace Azure.ResourceManager.Synapse.Models
         /// EXECUTE
         /// RECEIVE
         /// REFERENCES
-        /// 
+        ///
         /// The general form for defining an action to be audited is:
         /// {action} ON {object} BY {principal}
-        /// 
+        ///
         /// Note that &lt;object&gt; in the above format can refer to an object like a table, view, or stored procedure, or an entire database or schema. For the latter cases, the forms DATABASE::{db_name} and SCHEMA::{schema_name} are used, respectively.
-        /// 
+        ///
         /// For example:
         /// SELECT on dbo.myTable by public
         /// SELECT on DATABASE::myDatabase by public
         /// SELECT on SCHEMA::mySchema by public
-        /// 
+        ///
         /// For more information, see [Database-Level Audit Actions](https://docs.microsoft.com/en-us/sql/relational-databases/security/auditing/sql-server-audit-action-groups-and-actions#database-level-audit-actions)
         /// </param>
         /// <param name="storageAccountSubscriptionId"> Specifies the blob storage subscription Id. </param>
         /// <param name="isStorageSecondaryKeyInUse"> Specifies whether storageAccountAccessKey value is the storage's secondary key. </param>
         /// <param name="isAzureMonitorTargetEnabled">
-        /// Specifies whether audit events are sent to Azure Monitor. 
+        /// Specifies whether audit events are sent to Azure Monitor.
         /// In order to send the events to Azure Monitor, specify 'state' as 'Enabled' and 'isAzureMonitorTargetEnabled' as true.
-        /// 
+        ///
         /// When using REST API to configure auditing, Diagnostic Settings with 'SQLSecurityAuditEvents' diagnostic logs category on the database should be also created.
         /// Note that for server level audit you should use the 'master' database as {databaseName}.
-        /// 
+        ///
         /// Diagnostic Settings URI format:
         /// PUT https://management.azure.com/subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/providers/microsoft.insights/diagnosticSettings/{settingsName}?api-version=2017-05-01-preview
-        /// 
+        ///
         /// For more information, see [Diagnostic Settings REST API](https://go.microsoft.com/fwlink/?linkid=2033207)
         /// or [Diagnostic Settings PowerShell](https://go.microsoft.com/fwlink/?linkid=2033043)
-        /// 
+        ///
         /// </param>
         /// <param name="queueDelayMs">
         /// Specifies the amount of time in milliseconds that can elapse before audit actions are forced to be processed.
@@ -914,15 +914,15 @@ namespace Azure.ResourceManager.Synapse.Models
         /// <param name="isDevopsAuditEnabled">
         /// Specifies the state of devops audit. If state is Enabled, devops logs will be sent to Azure Monitor.
         /// In order to send the events to Azure Monitor, specify 'State' as 'Enabled', 'IsAzureMonitorTargetEnabled' as true and 'IsDevopsAuditEnabled' as true
-        /// 
+        ///
         /// When using REST API to configure auditing, Diagnostic Settings with 'DevOpsOperationsAudit' diagnostic logs category on the master database should also be created.
-        /// 
+        ///
         /// Diagnostic Settings URI format:
         /// PUT https://management.azure.com/subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.Sql/servers/{serverName}/databases/master/providers/microsoft.insights/diagnosticSettings/{settingsName}?api-version=2017-05-01-preview
-        /// 
+        ///
         /// For more information, see [Diagnostic Settings REST API](https://go.microsoft.com/fwlink/?linkid=2033207)
         /// or [Diagnostic Settings PowerShell](https://go.microsoft.com/fwlink/?linkid=2033043)
-        /// 
+        ///
         /// </param>
         /// <returns> A new <see cref="Synapse.SynapseServerBlobAuditingPolicyData"/> instance for mocking. </returns>
         public static SynapseServerBlobAuditingPolicyData SynapseServerBlobAuditingPolicyData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, SynapseBlobAuditingPolicyState? state = null, string storageEndpoint = null, string storageAccountAccessKey = null, int? retentionDays = null, IEnumerable<string> auditActionsAndGroups = null, Guid? storageAccountSubscriptionId = null, bool? isStorageSecondaryKeyInUse = null, bool? isAzureMonitorTargetEnabled = null, int? queueDelayMs = null, bool? isDevopsAuditEnabled = null)
@@ -941,7 +941,7 @@ namespace Azure.ResourceManager.Synapse.Models
         /// <param name="state"> Specifies the state of the policy. If state is Enabled, storageEndpoint or isAzureMonitorTargetEnabled are required. </param>
         /// <param name="storageEndpoint"> Specifies the blob storage endpoint (e.g. https://MyAccount.blob.core.windows.net). If state is Enabled, storageEndpoint or isAzureMonitorTargetEnabled is required. </param>
         /// <param name="storageAccountAccessKey">
-        /// Specifies the identifier key of the auditing storage account. 
+        /// Specifies the identifier key of the auditing storage account.
         /// If state is Enabled and storageEndpoint is specified, not specifying the storageAccountAccessKey will use SQL server system-assigned managed identity to access the storage.
         /// Prerequisites for using managed identity authentication:
         /// 1. Assign SQL Server a system-assigned managed identity in Azure Active Directory (AAD).
@@ -951,17 +951,17 @@ namespace Azure.ResourceManager.Synapse.Models
         /// <param name="retentionDays"> Specifies the number of days to keep in the audit logs in the storage account. </param>
         /// <param name="auditActionsAndGroups">
         /// Specifies the Actions-Groups and Actions to audit.
-        /// 
+        ///
         /// The recommended set of action groups to use is the following combination - this will audit all the queries and stored procedures executed against the database, as well as successful and failed logins:
-        /// 
+        ///
         /// BATCH_COMPLETED_GROUP,
         /// SUCCESSFUL_DATABASE_AUTHENTICATION_GROUP,
         /// FAILED_DATABASE_AUTHENTICATION_GROUP.
-        /// 
+        ///
         /// This above combination is also the set that is configured by default when enabling auditing from the Azure portal.
-        /// 
+        ///
         /// The supported action groups to audit are (note: choose only specific groups that cover your auditing needs. Using unnecessary groups could lead to very large quantities of audit records):
-        /// 
+        ///
         /// APPLICATION_ROLE_CHANGE_PASSWORD_GROUP
         /// BACKUP_RESTORE_GROUP
         /// DATABASE_LOGOUT_GROUP
@@ -982,11 +982,11 @@ namespace Azure.ResourceManager.Synapse.Models
         /// USER_CHANGE_PASSWORD_GROUP
         /// BATCH_STARTED_GROUP
         /// BATCH_COMPLETED_GROUP
-        /// 
+        ///
         /// These are groups that cover all sql statements and stored procedures executed against the database, and should not be used in combination with other groups as this will result in duplicate audit logs.
-        /// 
+        ///
         /// For more information, see [Database-Level Audit Action Groups](https://docs.microsoft.com/en-us/sql/relational-databases/security/auditing/sql-server-audit-action-groups-and-actions#database-level-audit-action-groups).
-        /// 
+        ///
         /// For Database auditing policy, specific Actions can also be specified (note that Actions cannot be specified for Server auditing policy). The supported actions to audit are:
         /// SELECT
         /// UPDATE
@@ -995,34 +995,34 @@ namespace Azure.ResourceManager.Synapse.Models
         /// EXECUTE
         /// RECEIVE
         /// REFERENCES
-        /// 
+        ///
         /// The general form for defining an action to be audited is:
         /// {action} ON {object} BY {principal}
-        /// 
+        ///
         /// Note that &lt;object&gt; in the above format can refer to an object like a table, view, or stored procedure, or an entire database or schema. For the latter cases, the forms DATABASE::{db_name} and SCHEMA::{schema_name} are used, respectively.
-        /// 
+        ///
         /// For example:
         /// SELECT on dbo.myTable by public
         /// SELECT on DATABASE::myDatabase by public
         /// SELECT on SCHEMA::mySchema by public
-        /// 
+        ///
         /// For more information, see [Database-Level Audit Actions](https://docs.microsoft.com/en-us/sql/relational-databases/security/auditing/sql-server-audit-action-groups-and-actions#database-level-audit-actions)
         /// </param>
         /// <param name="storageAccountSubscriptionId"> Specifies the blob storage subscription Id. </param>
         /// <param name="isStorageSecondaryKeyInUse"> Specifies whether storageAccountAccessKey value is the storage's secondary key. </param>
         /// <param name="isAzureMonitorTargetEnabled">
-        /// Specifies whether audit events are sent to Azure Monitor. 
+        /// Specifies whether audit events are sent to Azure Monitor.
         /// In order to send the events to Azure Monitor, specify 'state' as 'Enabled' and 'isAzureMonitorTargetEnabled' as true.
-        /// 
+        ///
         /// When using REST API to configure auditing, Diagnostic Settings with 'SQLSecurityAuditEvents' diagnostic logs category on the database should be also created.
         /// Note that for server level audit you should use the 'master' database as {databaseName}.
-        /// 
+        ///
         /// Diagnostic Settings URI format:
         /// PUT https://management.azure.com/subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/providers/microsoft.insights/diagnosticSettings/{settingsName}?api-version=2017-05-01-preview
-        /// 
+        ///
         /// For more information, see [Diagnostic Settings REST API](https://go.microsoft.com/fwlink/?linkid=2033207)
         /// or [Diagnostic Settings PowerShell](https://go.microsoft.com/fwlink/?linkid=2033043)
-        /// 
+        ///
         /// </param>
         /// <param name="queueDelayMs">
         /// Specifies the amount of time in milliseconds that can elapse before audit actions are forced to be processed.
@@ -1031,15 +1031,15 @@ namespace Azure.ResourceManager.Synapse.Models
         /// <param name="isDevopsAuditEnabled">
         /// Specifies the state of devops audit. If state is Enabled, devops logs will be sent to Azure Monitor.
         /// In order to send the events to Azure Monitor, specify 'State' as 'Enabled', 'IsAzureMonitorTargetEnabled' as true and 'IsDevopsAuditEnabled' as true
-        /// 
+        ///
         /// When using REST API to configure auditing, Diagnostic Settings with 'DevOpsOperationsAudit' diagnostic logs category on the master database should also be created.
-        /// 
+        ///
         /// Diagnostic Settings URI format:
         /// PUT https://management.azure.com/subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.Sql/servers/{serverName}/databases/master/providers/microsoft.insights/diagnosticSettings/{settingsName}?api-version=2017-05-01-preview
-        /// 
+        ///
         /// For more information, see [Diagnostic Settings REST API](https://go.microsoft.com/fwlink/?linkid=2033207)
         /// or [Diagnostic Settings PowerShell](https://go.microsoft.com/fwlink/?linkid=2033043)
-        /// 
+        ///
         /// </param>
         /// <returns> A new <see cref="Synapse.SynapseExtendedServerBlobAuditingPolicyData"/> instance for mocking. </returns>
         public static SynapseExtendedServerBlobAuditingPolicyData SynapseExtendedServerBlobAuditingPolicyData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string predicateExpression = null, SynapseBlobAuditingPolicyState? state = null, string storageEndpoint = null, string storageAccountAccessKey = null, int? retentionDays = null, IEnumerable<string> auditActionsAndGroups = null, Guid? storageAccountSubscriptionId = null, bool? isStorageSecondaryKeyInUse = null, bool? isAzureMonitorTargetEnabled = null, int? queueDelayMs = null, bool? isDevopsAuditEnabled = null)

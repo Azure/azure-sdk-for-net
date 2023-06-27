@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         /// <param name="version">
         /// The version of the application type as defined in the application manifest.
         /// This name must be the full Arm Resource ID for the referenced application type version.
-        /// 
+        ///
         /// </param>
         /// <param name="parameters"> List of application parameters with overridden values from their default values specified in the application manifest. </param>
         /// <param name="upgradePolicy"> Describes the policy for a monitored application upgrade. </param>
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         /// Dns name used for the service. If this is specified, then the DNS name can be used to return the IP addresses of service endpoints for application layer protocols (e.g., HTTP).
         /// When updating serviceDnsName, old name may be temporarily resolvable. However, rely on new name.
         /// When removing serviceDnsName, removed name may temporarily be resolvable. Do not rely on the name being unresolvable.
-        /// 
+        ///
         /// </param>
         /// <returns> A new <see cref="Models.ManagedServiceProperties"/> instance for mocking. </returns>
         public static ManagedServiceProperties ManagedServiceProperties(string placementConstraints = null, IEnumerable<ManagedServiceCorrelation> correlationScheme = null, IEnumerable<ManagedServiceLoadMetric> serviceLoadMetrics = null, IEnumerable<ManagedServicePlacementPolicy> servicePlacementPolicies = null, ServiceFabricManagedServiceMoveCost? defaultMoveCost = null, IEnumerable<ManagedServiceScalingPolicy> scalingPolicies = null, string provisioningState = null, string serviceKind = "Unknown", string serviceTypeName = null, ManagedServicePartitionScheme partitionDescription = null, ManagedServicePackageActivationMode? servicePackageActivationMode = null, string serviceDnsName = null)
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         /// <param name="clusterCodeVersion"> The Service Fabric runtime version of the cluster. This property is required when **clusterUpgradeMode** is set to 'Manual'. To get list of available Service Fabric versions for new clusters use [ClusterVersion API](./ClusterVersion.md). To get the list of available version for existing clusters use **availableClusterVersions**. </param>
         /// <param name="clusterUpgradeMode">
         /// The upgrade mode of the cluster when new Service Fabric runtime version is available.
-        /// 
+        ///
         /// </param>
         /// <param name="clusterUpgradeCadence"> Indicates when new cluster runtime version upgrades will be applied after they are released. By default is Wave0. Only applies when **clusterUpgradeMode** is set to 'Automatic'. </param>
         /// <param name="addOnFeatures"> List of add-on features to enable on the cluster. </param>
@@ -387,7 +387,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         /// Dns name used for the service. If this is specified, then the DNS name can be used to return the IP addresses of service endpoints for application layer protocols (e.g., HTTP).
         /// When updating serviceDnsName, old name may be temporarily resolvable. However, rely on new name.
         /// When removing serviceDnsName, removed name may temporarily be resolvable. Do not rely on the name being unresolvable.
-        /// 
+        ///
         /// </param>
         /// <param name="hasPersistedState"> A flag indicating whether this is a persistent service which stores states on the local disk. If it is then the value of this property is true, if not it is false. </param>
         /// <param name="targetReplicaSetSize"> The target replica set size as a number. </param>
@@ -430,7 +430,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         /// Dns name used for the service. If this is specified, then the DNS name can be used to return the IP addresses of service endpoints for application layer protocols (e.g., HTTP).
         /// When updating serviceDnsName, old name may be temporarily resolvable. However, rely on new name.
         /// When removing serviceDnsName, removed name may temporarily be resolvable. Do not rely on the name being unresolvable.
-        /// 
+        ///
         /// </param>
         /// <param name="instanceCount"> The instance count. </param>
         /// <param name="minInstanceCount"> MinInstanceCount is the minimum number of instances that must be up to meet the EnsureAvailability safety check during operations like upgrade or deactivate node. The actual number that is used is max( MinInstanceCount, ceil( MinInstancePercentage/100.0 * InstanceCount) ). Note, if InstanceCount is set to -1, during MinInstanceCount computation -1 is first converted into the number of nodes on which the instances are allowed to be placed according to the placement constraints on the service. </param>

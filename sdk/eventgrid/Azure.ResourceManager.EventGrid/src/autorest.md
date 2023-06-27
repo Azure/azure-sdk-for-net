@@ -8,7 +8,7 @@ azure-arm: true
 csharp: true
 library-name: EventGrid
 namespace: Azure.ResourceManager.EventGrid
-require: https://github.com/Azure/azure-rest-api-specs/blob/df70965d3a207eb2a628c96aa6ed935edc6b7911/specification/eventgrid/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/4b7481587132ce0bde5f0a6d6ab590129f7b7179/specification/eventgrid/resource-manager/readme.md
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 skip-csproj: true
@@ -100,6 +100,16 @@ rename-mapping:
   SystemTopic.properties.source: -|arm-id
   SystemTopic.properties.metricResourceId: -|uuid
   Topic: EventGridTopic
+  TopicRegenerateKeyRequest: TopicRegenerateKeyContent
+  Subscription: NamespaceTopicEventSubscription
+  Client: EventGridNamespaceClient
+  ClientGroup: EventGridNamespaceClientGroup
+  Namespace: EventGridNamespace
+  PermissionBinding: EventGridNamespacePermissionBinding
+  ClientAuthentication: EventGridNamespaceClientAuthentication
+  ClientProvisioningState: EventGridNamespaceClientProvisioningState
+  ClientState: EventGridNamespaceClientState
+  Filter: EventGridFilter
   Topic.properties.disableLocalAuth: IsLocalAuthDisabled
   Topic.properties.endpoint: Endpoint|Uri
   TopicUpdateParameters.properties.disableLocalAuth: IsLocalAuthDisabled

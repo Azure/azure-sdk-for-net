@@ -10,7 +10,6 @@ namespace Azure.Communication.JobRouter
     /// <summary> Jobs are distributed to the worker with the strongest abilities available. </summary>
     public partial class BestWorkerMode : DistributionMode
     {
-
         /// <summary> Initializes a new instance of BestWorkerMode. </summary>
         /// <param name="kind"> The type discriminator describing a sub-type of Mode. </param>
         /// <param name="minConcurrentOffers"> Governs the minimum desired number of active concurrent offers a job can have. </param>
@@ -24,7 +23,7 @@ namespace Azure.Communication.JobRouter
         /// </param>
         /// <param name="scoringRule">
         /// A rule of one of the following types:
-        ///             
+        ///
         /// StaticRule:  A rule providing static rules that always return the same result, regardless of input.
         /// DirectMapRule:  A rule that return the same labels as the input labels.
         /// ExpressionRule: A rule providing inline expression rules.

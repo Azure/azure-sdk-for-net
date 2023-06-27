@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// calls (for example: http://example.com:12345). Use "*" to allow all.
         /// </param>
         /// <param name="isCredentialsSupported">
-        /// Gets or sets whether CORS requests with credentials are allowed. See 
+        /// Gets or sets whether CORS requests with credentials are allowed. See
         /// https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS#Requests_with_credentials
         /// for more details.
         /// </param>
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// </summary>
         public IList<string> AllowedOrigins { get; }
         /// <summary>
-        /// Gets or sets whether CORS requests with credentials are allowed. See 
+        /// Gets or sets whether CORS requests with credentials are allowed. See
         /// https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS#Requests_with_credentials
         /// for more details.
         /// </summary>
