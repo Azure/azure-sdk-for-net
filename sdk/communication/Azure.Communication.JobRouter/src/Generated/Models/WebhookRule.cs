@@ -22,10 +22,10 @@ namespace Azure.Communication.JobRouter
         /// <param name="kind"> The type discriminator describing a sub-type of Rule. </param>
         /// <param name="authorizationServerUri"> Uri for Authorization Server. </param>
         /// <param name="clientCredential">
-        /// OAuth2.0 Credentials used to Contoso&apos;s Authorization server.
+        /// OAuth2.0 Credentials used to Contoso's Authorization server.
         /// Reference: https://www.oauth.com/oauth2-servers/access-tokens/client-credentials/
         /// </param>
-        /// <param name="webhookUri"> Uri for Contoso&apos;s Web Server. </param>
+        /// <param name="webhookUri"> Uri for Contoso's Web Server. </param>
         internal WebhookRule(string kind, Uri authorizationServerUri, Oauth2ClientCredential clientCredential, Uri webhookUri) : base(kind)
         {
             AuthorizationServerUri = authorizationServerUri;
@@ -37,11 +37,11 @@ namespace Azure.Communication.JobRouter
         /// <summary> Uri for Authorization Server. </summary>
         public Uri AuthorizationServerUri { get; set; }
         /// <summary>
-        /// OAuth2.0 Credentials used to Contoso&apos;s Authorization server.
+        /// OAuth2.0 Credentials used to Contoso's Authorization server.
         /// Reference: https://www.oauth.com/oauth2-servers/access-tokens/client-credentials/
         /// </summary>
         public Oauth2ClientCredential ClientCredential { get; set; }
-        /// <summary> Uri for Contoso&apos;s Web Server. </summary>
+        /// <summary> Uri for Contoso's Web Server. </summary>
         public Uri WebhookUri { get; set; }
     }
 }

@@ -12,7 +12,7 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    /// <summary> Describes a virtual machine scale set network profile&apos;s network configurations. </summary>
+    /// <summary> Describes a virtual machine scale set network profile's network configurations. </summary>
     public partial class VirtualMachineScaleSetNetworkConfiguration : ComputeWriteableSubResourceData
     {
         /// <summary> Initializes a new instance of VirtualMachineScaleSetNetworkConfiguration. </summary>

@@ -404,7 +404,7 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary>
-        /// Invoke a command like nodetool for cassandra maintenance 
+        /// Invoke a command like nodetool for cassandra maintenance
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -442,7 +442,7 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary>
-        /// Invoke a command like nodetool for cassandra maintenance 
+        /// Invoke a command like nodetool for cassandra maintenance
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -480,7 +480,7 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary>
-        /// Deallocate the Managed Cassandra Cluster and Associated Data Centers. Deallocation will deallocate the host virtual machine of this cluster, and reserved the data disk. This won&apos;t do anything on an already deallocated cluster. Use Start to restart the cluster.
+        /// Deallocate the Managed Cassandra Cluster and Associated Data Centers. Deallocation will deallocate the host virtual machine of this cluster, and reserved the data disk. This won't do anything on an already deallocated cluster. Use Start to restart the cluster.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -514,7 +514,7 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary>
-        /// Deallocate the Managed Cassandra Cluster and Associated Data Centers. Deallocation will deallocate the host virtual machine of this cluster, and reserved the data disk. This won&apos;t do anything on an already deallocated cluster. Use Start to restart the cluster.
+        /// Deallocate the Managed Cassandra Cluster and Associated Data Centers. Deallocation will deallocate the host virtual machine of this cluster, and reserved the data disk. This won't do anything on an already deallocated cluster. Use Start to restart the cluster.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -548,7 +548,7 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary>
-        /// Start the Managed Cassandra Cluster and Associated Data Centers. Start will start the host virtual machine of this cluster with reserved data disk. This won&apos;t do anything on an already running cluster. Use Deallocate to deallocate the cluster.
+        /// Start the Managed Cassandra Cluster and Associated Data Centers. Start will start the host virtual machine of this cluster with reserved data disk. This won't do anything on an already running cluster. Use Deallocate to deallocate the cluster.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -582,7 +582,7 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary>
-        /// Start the Managed Cassandra Cluster and Associated Data Centers. Start will start the host virtual machine of this cluster with reserved data disk. This won&apos;t do anything on an already running cluster. Use Deallocate to deallocate the cluster.
+        /// Start the Managed Cassandra Cluster and Associated Data Centers. Start will start the host virtual machine of this cluster with reserved data disk. This won't do anything on an already running cluster. Use Deallocate to deallocate the cluster.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>

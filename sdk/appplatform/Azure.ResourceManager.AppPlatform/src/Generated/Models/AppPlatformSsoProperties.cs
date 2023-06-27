@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
         }
 
         /// <summary> Initializes a new instance of AppPlatformSsoProperties. </summary>
-        /// <param name="scope"> It defines the specific actions applications can be allowed to do on a user&apos;s behalf. </param>
+        /// <param name="scope"> It defines the specific actions applications can be allowed to do on a user's behalf. </param>
         /// <param name="clientId"> The public identifier for the application. </param>
         /// <param name="clientSecret"> The secret known only to the application and the authorization server. </param>
         /// <param name="issuerUri"> The URI of Issuer Identifier. </param>
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             IssuerUri = issuerUri;
         }
 
-        /// <summary> It defines the specific actions applications can be allowed to do on a user&apos;s behalf. </summary>
+        /// <summary> It defines the specific actions applications can be allowed to do on a user's behalf. </summary>
         public IList<string> Scope { get; }
         /// <summary> The public identifier for the application. </summary>
         public string ClientId { get; set; }

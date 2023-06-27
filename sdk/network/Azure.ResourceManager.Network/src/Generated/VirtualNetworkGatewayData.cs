@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="sku"> The reference to the VirtualNetworkGatewaySku resource which represents the SKU selected for Virtual network gateway. </param>
         /// <param name="vpnClientConfiguration"> The reference to the VpnClientConfiguration resource which represents the P2S VpnClient configurations. </param>
         /// <param name="virtualNetworkGatewayPolicyGroups"> The reference to the VirtualNetworkGatewayPolicyGroup resource which represents the available VirtualNetworkGatewayPolicyGroup for the gateway. </param>
-        /// <param name="bgpSettings"> Virtual network gateway&apos;s BGP speaker settings. </param>
+        /// <param name="bgpSettings"> Virtual network gateway's BGP speaker settings. </param>
         /// <param name="customRoutes"> The reference to the address space resource which represents the custom routes address space specified by the customer for virtual network gateway and VpnClient. </param>
         /// <param name="resourceGuid"> The resource GUID property of the virtual network gateway resource. </param>
         /// <param name="provisioningState"> The provisioning state of the virtual network gateway resource. </param>
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.Network
         public VpnClientConfiguration VpnClientConfiguration { get; set; }
         /// <summary> The reference to the VirtualNetworkGatewayPolicyGroup resource which represents the available VirtualNetworkGatewayPolicyGroup for the gateway. </summary>
         public IList<VirtualNetworkGatewayPolicyGroup> VirtualNetworkGatewayPolicyGroups { get; }
-        /// <summary> Virtual network gateway&apos;s BGP speaker settings. </summary>
+        /// <summary> Virtual network gateway's BGP speaker settings. </summary>
         public BgpSettings BgpSettings { get; set; }
         /// <summary> The reference to the address space resource which represents the custom routes address space specified by the customer for virtual network gateway and VpnClient. </summary>
         internal AddressSpace CustomRoutes { get; set; }

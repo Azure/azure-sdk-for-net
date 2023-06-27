@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    /// <summary> The default is &apos;Ephemeral&apos; if the VM supports it and has a cache disk larger than the requested OSDiskSizeGB. Otherwise, defaults to &apos;Managed&apos;. May not be changed after creation. For more information see [Ephemeral OS](https://docs.microsoft.com/azure/aks/cluster-configuration#ephemeral-os). </summary>
+    /// <summary> The default is 'Ephemeral' if the VM supports it and has a cache disk larger than the requested OSDiskSizeGB. Otherwise, defaults to 'Managed'. May not be changed after creation. For more information see [Ephemeral OS](https://docs.microsoft.com/azure/aks/cluster-configuration#ephemeral-os). </summary>
     public readonly partial struct ContainerServiceOSDiskType : IEquatable<ContainerServiceOSDiskType>
     {
         private readonly string _value;
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         private const string ManagedValue = "Managed";
         private const string EphemeralValue = "Ephemeral";
 
-        /// <summary> Azure replicates the operating system disk for a virtual machine to Azure storage to avoid data loss should the VM need to be relocated to another host. Since containers aren&apos;t designed to have local state persisted, this behavior offers limited value while providing some drawbacks, including slower node provisioning and higher read/write latency. </summary>
+        /// <summary> Azure replicates the operating system disk for a virtual machine to Azure storage to avoid data loss should the VM need to be relocated to another host. Since containers aren't designed to have local state persisted, this behavior offers limited value while providing some drawbacks, including slower node provisioning and higher read/write latency. </summary>
         public static ContainerServiceOSDiskType Managed { get; } = new ContainerServiceOSDiskType(ManagedValue);
         /// <summary> Ephemeral OS disks are stored only on the host machine, just like a temporary disk. This provides lower read/write latency, along with faster node scaling and cluster upgrades. </summary>
         public static ContainerServiceOSDiskType Ephemeral { get; } = new ContainerServiceOSDiskType(EphemeralValue);

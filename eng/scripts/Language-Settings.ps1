@@ -417,6 +417,11 @@ function EnsureCustomSource($package) {
       -Source CustomPackageSource `
       -AllVersions `
       -AllowPrereleaseVersions
+
+      if (!$? -or !$existingVersions) { 
+        Write-Host "Failed to find package $($package.Name) in custom source $customPackageSource"
+        return $package
+      }
   }
   catch {
     Write-Error $_ -ErrorAction Continue
@@ -436,7 +441,6 @@ function EnsureCustomSource($package) {
 }
 
 $PackageExclusions = @{
-  'Azure.Messaging.EventGrid' = 'Fails docs CI: https://github.com/Azure/azure-sdk-for-net/issues/36474'
 }
 
 function Update-dotnet-DocsMsPackages($DocsRepoLocation, $DocsMetadata) {

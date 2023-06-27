@@ -26,6 +26,7 @@ namespace Azure.Communication.CallAutomation
         internal AzureCommunicationServicesRestClient AzureCommunicationServicesRestClient { get; }
         internal CallMediaRestClient CallMediaRestClient { get; }
         internal CallRecordingRestClient CallRecordingRestClient { get; }
+        internal CallDialogRestClient CallDialogRestClient { get; }
         internal CallAutomationEventProcessor EventProcessor { get; }
         internal CommunicationUserIdentifier Source { get; }
 
@@ -109,6 +110,7 @@ namespace Azure.Communication.CallAutomation
             CallConnectionRestClient = new CallConnectionRestClient(_clientDiagnostics, httpPipeline, endpoint, options.ApiVersion);
             CallMediaRestClient = new CallMediaRestClient(_clientDiagnostics, httpPipeline, endpoint, options.ApiVersion);
             CallRecordingRestClient = new CallRecordingRestClient(_clientDiagnostics, httpPipeline, endpoint, options.ApiVersion);
+            CallDialogRestClient = new CallDialogRestClient(_clientDiagnostics, httpPipeline, endpoint, options.ApiVersion);
             EventProcessor = new CallAutomationEventProcessor();
             Source = options.Source;
         }
@@ -169,7 +171,7 @@ namespace Azure.Communication.CallAutomation
 
                 var answerResponse = await AzureCommunicationServicesRestClient.AnswerCallAsync(request,
                     repeatabilityHeaders.RepeatabilityRequestId,
-                    repeatabilityHeaders.GetRepeatabilityFirstSentString(),
+                    repeatabilityHeaders.RepeatabilityFirstSent,
                     cancellationToken)
                     .ConfigureAwait(false);
 
@@ -222,7 +224,7 @@ namespace Azure.Communication.CallAutomation
 
                 var answerResponse = AzureCommunicationServicesRestClient.AnswerCall(request,
                     repeatabilityHeaders.RepeatabilityRequestId,
-                    repeatabilityHeaders.GetRepeatabilityFirstSentString(),
+                    repeatabilityHeaders.RepeatabilityFirstSent,
                     cancellationToken);
 
                 var result = new AnswerCallResult(GetCallConnection(answerResponse.Value.CallConnectionId), new CallConnectionProperties(answerResponse.Value));
@@ -301,7 +303,7 @@ namespace Azure.Communication.CallAutomation
                 return await AzureCommunicationServicesRestClient.RedirectCallAsync(
                     request,
                     repeatabilityHeaders.RepeatabilityRequestId,
-                    repeatabilityHeaders.GetRepeatabilityFirstSentString(),
+                    repeatabilityHeaders.RepeatabilityFirstSent,
                     cancellationToken
                     ).ConfigureAwait(false);
             }
@@ -350,7 +352,7 @@ namespace Azure.Communication.CallAutomation
                 return AzureCommunicationServicesRestClient.RedirectCall(
                     request,
                     repeatabilityHeaders.RepeatabilityRequestId,
-                    repeatabilityHeaders.GetRepeatabilityFirstSentString(),
+                    repeatabilityHeaders.RepeatabilityFirstSent,
                     cancellationToken);
             }
             catch (Exception ex)
@@ -393,7 +395,7 @@ namespace Azure.Communication.CallAutomation
                 return await AzureCommunicationServicesRestClient.RejectCallAsync(
                     request,
                     repeatabilityHeaders.RepeatabilityRequestId,
-                    repeatabilityHeaders.GetRepeatabilityFirstSentString(),
+                    repeatabilityHeaders.RepeatabilityFirstSent,
                     cancellationToken
                     ).ConfigureAwait(false);
             }
@@ -437,7 +439,7 @@ namespace Azure.Communication.CallAutomation
                 return AzureCommunicationServicesRestClient.RejectCall(
                     request,
                     repeatabilityHeaders.RepeatabilityRequestId,
-                    repeatabilityHeaders.GetRepeatabilityFirstSentString(),
+                    repeatabilityHeaders.RepeatabilityFirstSent,
                     cancellationToken
                     );
             }
@@ -489,7 +491,7 @@ namespace Azure.Communication.CallAutomation
                 var createCallResponse = await AzureCommunicationServicesRestClient.CreateCallAsync(
                     request,
                     repeatabilityHeaders.RepeatabilityRequestId,
-                    repeatabilityHeaders.GetRepeatabilityFirstSentString(),
+                    repeatabilityHeaders.RepeatabilityFirstSent,
                     cancellationToken
                     ).ConfigureAwait(false);
 
@@ -549,7 +551,7 @@ namespace Azure.Communication.CallAutomation
                 var createCallResponse = AzureCommunicationServicesRestClient.CreateCall(
                     request,
                     repeatabilityHeaders.RepeatabilityRequestId,
-                    repeatabilityHeaders.GetRepeatabilityFirstSentString(),
+                    repeatabilityHeaders.RepeatabilityFirstSent,
                     cancellationToken
                     );
 
@@ -594,7 +596,7 @@ namespace Azure.Communication.CallAutomation
                 var createCallResponse = await AzureCommunicationServicesRestClient.CreateCallAsync(
                     request,
                     repeatabilityHeaders.RepeatabilityRequestId,
-                    repeatabilityHeaders.GetRepeatabilityFirstSentString(),
+                    repeatabilityHeaders.RepeatabilityFirstSent,
                     cancellationToken
                     ).ConfigureAwait(false);
 
@@ -639,7 +641,7 @@ namespace Azure.Communication.CallAutomation
                 var createCallResponse = AzureCommunicationServicesRestClient.CreateCall(
                     request,
                     repeatabilityHeaders.RepeatabilityRequestId,
-                    repeatabilityHeaders.GetRepeatabilityFirstSentString(),
+                    repeatabilityHeaders.RepeatabilityFirstSent,
                     cancellationToken
                     );
 
@@ -750,7 +752,7 @@ namespace Azure.Communication.CallAutomation
             scope.Start();
             try
             {
-                return new CallConnection(callConnectionId, CallConnectionRestClient, CallMediaRestClient, _clientDiagnostics, EventProcessor);
+                return new CallConnection(callConnectionId, CallConnectionRestClient, CallMediaRestClient, CallDialogRestClient, _clientDiagnostics, EventProcessor);
             }
             catch (Exception ex)
             {

@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Consumption.Models
         public string StartDate { get; set; }
         /// <summary> End date. Only applicable when querying with billing profile. </summary>
         public string EndDate { get; set; }
-        /// <summary> Required only for daily grain. The properties/UsageDate for start date and end date. The filter supports &apos;le&apos; and  &apos;ge&apos;. Not applicable when querying with billing profile. </summary>
+        /// <summary> Required only for daily grain. The properties/UsageDate for start date and end date. The filter supports 'le' and  'ge'. Not applicable when querying with billing profile. </summary>
         public string Filter { get; set; }
         /// <summary> Reservation Id GUID. Only valid if reservationOrderId is also provided. Filter to a specific reservation. </summary>
         public string ReservationId { get; set; }

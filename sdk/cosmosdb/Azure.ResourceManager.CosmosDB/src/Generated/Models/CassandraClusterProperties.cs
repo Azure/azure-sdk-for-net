@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <summary> Initializes a new instance of CassandraClusterProperties. </summary>
         /// <param name="provisioningState"> The status of the resource at the time the operation was called. </param>
         /// <param name="restoreFromBackupId"> To create an empty cluster, omit this field or set it to null. To restore a backup into a new cluster, set this field to the resource id of the backup. </param>
-        /// <param name="delegatedManagementSubnetId"> Resource id of a subnet that this cluster&apos;s management service should have its network interface attached to. The subnet must be routable to all subnets that will be delegated to data centers. The resource id must be of the form &apos;/subscriptions/&lt;subscription id&gt;/resourceGroups/&lt;resource group&gt;/providers/Microsoft.Network/virtualNetworks/&lt;virtual network&gt;/subnets/&lt;subnet&gt;&apos;. </param>
+        /// <param name="delegatedManagementSubnetId"> Resource id of a subnet that this cluster's management service should have its network interface attached to. The subnet must be routable to all subnets that will be delegated to data centers. The resource id must be of the form '/subscriptions/&lt;subscription id&gt;/resourceGroups/&lt;resource group&gt;/providers/Microsoft.Network/virtualNetworks/&lt;virtual network&gt;/subnets/&lt;subnet&gt;'. </param>
         /// <param name="cassandraVersion"> Which version of Cassandra should this cluster converge to running (e.g., 3.11). When updated, the cluster may take some time to migrate to the new version. </param>
         /// <param name="clusterNameOverride"> If you need to set the clusterName property in cassandra.yaml to something besides the resource name of the cluster, set the value to use on this property. </param>
         /// <param name="authenticationMethod"> Which authentication method Cassandra should use to authenticate clients. &apos;None&apos; turns off authentication, so should not be used except in emergencies. &apos;Cassandra&apos; is the default password based authentication. The default is &apos;Cassandra&apos;. </param>
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public CassandraProvisioningState? ProvisioningState { get; set; }
         /// <summary> To create an empty cluster, omit this field or set it to null. To restore a backup into a new cluster, set this field to the resource id of the backup. </summary>
         public string RestoreFromBackupId { get; set; }
-        /// <summary> Resource id of a subnet that this cluster&apos;s management service should have its network interface attached to. The subnet must be routable to all subnets that will be delegated to data centers. The resource id must be of the form &apos;/subscriptions/&lt;subscription id&gt;/resourceGroups/&lt;resource group&gt;/providers/Microsoft.Network/virtualNetworks/&lt;virtual network&gt;/subnets/&lt;subnet&gt;&apos;. </summary>
+        /// <summary> Resource id of a subnet that this cluster's management service should have its network interface attached to. The subnet must be routable to all subnets that will be delegated to data centers. The resource id must be of the form '/subscriptions/&lt;subscription id&gt;/resourceGroups/&lt;resource group&gt;/providers/Microsoft.Network/virtualNetworks/&lt;virtual network&gt;/subnets/&lt;subnet&gt;'. </summary>
         public ResourceIdentifier DelegatedManagementSubnetId { get; set; }
         /// <summary> Which version of Cassandra should this cluster converge to running (e.g., 3.11). When updated, the cluster may take some time to migrate to the new version. </summary>
         public string CassandraVersion { get; set; }
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public string ClusterNameOverride { get; set; }
         /// <summary> Which authentication method Cassandra should use to authenticate clients. &apos;None&apos; turns off authentication, so should not be used except in emergencies. &apos;Cassandra&apos; is the default password based authentication. The default is &apos;Cassandra&apos;. </summary>
         public CassandraAuthenticationMethod? AuthenticationMethod { get; set; }
-        /// <summary> Initial password for clients connecting as admin to the cluster. Should be changed after cluster creation. Returns null on GET. This field only applies when the authenticationMethod field is &apos;Cassandra&apos;. </summary>
+        /// <summary> Initial password for clients connecting as admin to the cluster. Should be changed after cluster creation. Returns null on GET. This field only applies when the authenticationMethod field is 'Cassandra'. </summary>
         public string InitialCassandraAdminPassword { get; set; }
         /// <summary> Hostname or IP address where the Prometheus endpoint containing data about the managed Cassandra nodes can be reached. </summary>
         internal CassandraDataCenterSeedNode PrometheusEndpoint { get; set; }

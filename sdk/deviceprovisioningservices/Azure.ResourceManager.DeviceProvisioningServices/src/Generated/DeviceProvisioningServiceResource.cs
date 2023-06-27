@@ -383,7 +383,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         }
 
         /// <summary>
-        /// Update an existing provisioning service&apos;s tags. to update other fields use the CreateOrUpdate method
+        /// Update an existing provisioning service's tags. to update other fields use the CreateOrUpdate method
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -421,7 +421,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         }
 
         /// <summary>
-        /// Update an existing provisioning service&apos;s tags. to update other fields use the CreateOrUpdate method
+        /// Update an existing provisioning service's tags. to update other fields use the CreateOrUpdate method
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>

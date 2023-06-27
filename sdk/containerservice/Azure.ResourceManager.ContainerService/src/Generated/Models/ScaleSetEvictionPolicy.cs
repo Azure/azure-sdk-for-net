@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         private const string DeleteValue = "Delete";
         private const string DeallocateValue = "Deallocate";
 
-        /// <summary> Nodes in the underlying Scale Set of the node pool are deleted when they&apos;re evicted. </summary>
+        /// <summary> Nodes in the underlying Scale Set of the node pool are deleted when they're evicted. </summary>
         public static ScaleSetEvictionPolicy Delete { get; } = new ScaleSetEvictionPolicy(DeleteValue);
         /// <summary> Nodes in the underlying Scale Set of the node pool are set to the stopped-deallocated state upon eviction. Nodes in the stopped-deallocated state count against your compute quota and can cause issues with cluster scaling or upgrading. </summary>
         public static ScaleSetEvictionPolicy Deallocate { get; } = new ScaleSetEvictionPolicy(DeallocateValue);

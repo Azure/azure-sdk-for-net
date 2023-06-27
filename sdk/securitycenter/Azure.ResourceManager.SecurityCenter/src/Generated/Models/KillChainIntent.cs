@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary> The kill chain related intent behind the alert. For list of supported values, and explanations of Azure Security Center&apos;s supported kill chain intents. </summary>
+    /// <summary> The kill chain related intent behind the alert. For list of supported values, and explanations of Azure Security Center's supported kill chain intents. </summary>
     public readonly partial struct KillChainIntent : IEquatable<KillChainIntent>
     {
         private readonly string _value;

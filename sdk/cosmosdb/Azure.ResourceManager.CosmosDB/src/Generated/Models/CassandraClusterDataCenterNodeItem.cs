@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> Initializes a new instance of CassandraClusterDataCenterNodeItem. </summary>
-        /// <param name="address"> The node&apos;s IP address. </param>
+        /// <param name="address"> The node's IP address. </param>
         /// <param name="state"> The state of the node in Cassandra ring. </param>
         /// <param name="status"></param>
         /// <param name="cassandraProcessStatus"> Cassandra service status on this node. </param>
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             CpuUsage = cpuUsage;
         }
 
-        /// <summary> The node&apos;s IP address. </summary>
+        /// <summary> The node's IP address. </summary>
         public string Address { get; }
         /// <summary> The state of the node in Cassandra ring. </summary>
         public CassandraNodeState? State { get; }

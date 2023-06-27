@@ -25,6 +25,11 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                 }
                 writer.WriteEndArray();
             }
+            if (Optional.IsDefined(ResetAllToDefault))
+            {
+                writer.WritePropertyName("resetAllToDefault"u8);
+                writer.WriteStringValue(ResetAllToDefault.Value.ToString());
+            }
             writer.WriteEndObject();
         }
     }

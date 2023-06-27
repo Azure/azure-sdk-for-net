@@ -14,9 +14,9 @@ namespace Azure.Maps.Routing
     /// <summary> Post body parameters for Route directions. </summary>
     public partial class RouteDirectionParameters
     {
-        /// <summary> This is a list of 3-character, ISO 3166-1, alpha-3 country codes of countries in which all toll roads with vignettes are to be avoided, e.g. &quot;AUS,CHE&quot;. Toll roads with vignettes in countries not in the list are unaffected. Note: It is an error to specify both **avoidVignette** and **allowVignette**. </summary>
+        /// <summary> This is a list of 3-character, ISO 3166-1, alpha-3 country codes of countries in which all toll roads with vignettes are to be avoided, e.g. "AUS,CHE". Toll roads with vignettes in countries not in the list are unaffected. Note: It is an error to specify both **avoidVignette** and **allowVignette**. </summary>
         public IList<string> AvoidVignette { get; }
-        /// <summary> This is a list of 3-character, ISO 3166-1, alpha-3 country codes of countries in which toll roads with vignettes are allowed, e.g. &quot;AUS,CHE&quot;. Specifying **allowVignette** with some countries X is equivalent to specifying **avoidVignette** with all countries but X. Specifying **allowVignette** with an empty list is the same as avoiding all toll roads with vignettes. Note: It is an error to specify both **avoidVignette** and **allowVignette**. </summary>
+        /// <summary> This is a list of 3-character, ISO 3166-1, alpha-3 country codes of countries in which toll roads with vignettes are allowed, e.g. "AUS,CHE". Specifying **allowVignette** with some countries X is equivalent to specifying **avoidVignette** with all countries but X. Specifying **allowVignette** with an empty list is the same as avoiding all toll roads with vignettes. Note: It is an error to specify both **avoidVignette** and **allowVignette**. </summary>
         public IList<string> AllowVignette { get; }
     }
 }

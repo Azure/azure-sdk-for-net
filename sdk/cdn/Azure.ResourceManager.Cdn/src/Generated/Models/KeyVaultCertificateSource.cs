@@ -10,14 +10,14 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary> Describes the parameters for using a user&apos;s KeyVault certificate for securing custom domain. </summary>
+    /// <summary> Describes the parameters for using a user's KeyVault certificate for securing custom domain. </summary>
     public partial class KeyVaultCertificateSource
     {
         /// <summary> Initializes a new instance of KeyVaultCertificateSource. </summary>
         /// <param name="sourceType"></param>
-        /// <param name="subscriptionId"> Subscription Id of the user&apos;s Key Vault containing the SSL certificate. </param>
-        /// <param name="resourceGroupName"> Resource group of the user&apos;s Key Vault containing the SSL certificate. </param>
-        /// <param name="vaultName"> The name of the user&apos;s Key Vault containing the SSL certificate. </param>
+        /// <param name="subscriptionId"> Subscription Id of the user's Key Vault containing the SSL certificate. </param>
+        /// <param name="resourceGroupName"> Resource group of the user's Key Vault containing the SSL certificate. </param>
+        /// <param name="vaultName"> The name of the user's Key Vault containing the SSL certificate. </param>
         /// <param name="secretName"> The name of Key Vault Secret (representing the full certificate PFX) in Key Vault. </param>
         /// <param name="updateRule"> Describes the action that shall be taken when the certificate is updated in Key Vault. </param>
         /// <param name="deleteRule"> Describes the action that shall be taken when the certificate is removed from Key Vault. </param>
@@ -40,9 +40,9 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <summary> Initializes a new instance of KeyVaultCertificateSource. </summary>
         /// <param name="sourceType"></param>
-        /// <param name="subscriptionId"> Subscription Id of the user&apos;s Key Vault containing the SSL certificate. </param>
-        /// <param name="resourceGroupName"> Resource group of the user&apos;s Key Vault containing the SSL certificate. </param>
-        /// <param name="vaultName"> The name of the user&apos;s Key Vault containing the SSL certificate. </param>
+        /// <param name="subscriptionId"> Subscription Id of the user's Key Vault containing the SSL certificate. </param>
+        /// <param name="resourceGroupName"> Resource group of the user's Key Vault containing the SSL certificate. </param>
+        /// <param name="vaultName"> The name of the user's Key Vault containing the SSL certificate. </param>
         /// <param name="secretName"> The name of Key Vault Secret (representing the full certificate PFX) in Key Vault. </param>
         /// <param name="secretVersion"> The version(GUID) of Key Vault Secret in Key Vault. </param>
         /// <param name="updateRule"> Describes the action that shall be taken when the certificate is updated in Key Vault. </param>
@@ -61,11 +61,11 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <summary> Gets or sets the source type. </summary>
         public KeyVaultCertificateSourceType SourceType { get; set; }
-        /// <summary> Subscription Id of the user&apos;s Key Vault containing the SSL certificate. </summary>
+        /// <summary> Subscription Id of the user's Key Vault containing the SSL certificate. </summary>
         public string SubscriptionId { get; set; }
-        /// <summary> Resource group of the user&apos;s Key Vault containing the SSL certificate. </summary>
+        /// <summary> Resource group of the user's Key Vault containing the SSL certificate. </summary>
         public string ResourceGroupName { get; set; }
-        /// <summary> The name of the user&apos;s Key Vault containing the SSL certificate. </summary>
+        /// <summary> The name of the user's Key Vault containing the SSL certificate. </summary>
         public string VaultName { get; set; }
         /// <summary> The name of Key Vault Secret (representing the full certificate PFX) in Key Vault. </summary>
         public string SecretName { get; set; }

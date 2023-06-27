@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Redis
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2022-06-01";
+            _apiVersion = apiVersion ?? "2023-04-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Redis
 
         /// <summary> Checks that the redis cache name is valid and is not already in use. </summary>
         /// <param name="subscriptionId"> Gets subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="content"> Parameters supplied to the CheckNameAvailability Redis operation. The only supported resource type is &apos;Microsoft.Cache/redis&apos;. </param>
+        /// <param name="content"> Parameters supplied to the CheckNameAvailability Redis operation. The only supported resource type is 'Microsoft.Cache/redis'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.Redis
 
         /// <summary> Checks that the redis cache name is valid and is not already in use. </summary>
         /// <param name="subscriptionId"> Gets subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="content"> Parameters supplied to the CheckNameAvailability Redis operation. The only supported resource type is &apos;Microsoft.Cache/redis&apos;. </param>
+        /// <param name="content"> Parameters supplied to the CheckNameAvailability Redis operation. The only supported resource type is 'Microsoft.Cache/redis'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
@@ -655,7 +655,7 @@ namespace Azure.ResourceManager.Redis
             return message;
         }
 
-        /// <summary> Retrieve a Redis cache&apos;s access keys. This operation requires write permission to the cache resource. </summary>
+        /// <summary> Retrieve a Redis cache's access keys. This operation requires write permission to the cache resource. </summary>
         /// <param name="subscriptionId"> Gets subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="name"> The name of the Redis cache. </param>
@@ -684,7 +684,7 @@ namespace Azure.ResourceManager.Redis
             }
         }
 
-        /// <summary> Retrieve a Redis cache&apos;s access keys. This operation requires write permission to the cache resource. </summary>
+        /// <summary> Retrieve a Redis cache's access keys. This operation requires write permission to the cache resource. </summary>
         /// <param name="subscriptionId"> Gets subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="name"> The name of the Redis cache. </param>
@@ -738,7 +738,7 @@ namespace Azure.ResourceManager.Redis
             return message;
         }
 
-        /// <summary> Regenerate Redis cache&apos;s access keys. This operation requires write permission to the cache resource. </summary>
+        /// <summary> Regenerate Redis cache's access keys. This operation requires write permission to the cache resource. </summary>
         /// <param name="subscriptionId"> Gets subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="name"> The name of the Redis cache. </param>
@@ -769,7 +769,7 @@ namespace Azure.ResourceManager.Redis
             }
         }
 
-        /// <summary> Regenerate Redis cache&apos;s access keys. This operation requires write permission to the cache resource. </summary>
+        /// <summary> Regenerate Redis cache's access keys. This operation requires write permission to the cache resource. </summary>
         /// <param name="subscriptionId"> Gets subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="name"> The name of the Redis cache. </param>

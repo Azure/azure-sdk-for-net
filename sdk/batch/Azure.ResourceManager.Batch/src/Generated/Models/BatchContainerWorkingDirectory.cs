@@ -7,7 +7,7 @@
 
 namespace Azure.ResourceManager.Batch.Models
 {
-    /// <summary> A flag to indicate where the container task working directory is. The default is &apos;taskWorkingDirectory&apos;. </summary>
+    /// <summary> A flag to indicate where the container task working directory is. The default is 'taskWorkingDirectory'. </summary>
     public enum BatchContainerWorkingDirectory
     {
         /// <summary> Use the standard Batch service task working directory, which will contain the Task resource files populated by Batch. </summary>

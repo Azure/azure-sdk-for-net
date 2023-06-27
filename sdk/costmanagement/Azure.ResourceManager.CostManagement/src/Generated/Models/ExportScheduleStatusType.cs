@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.CostManagement.Models
 {
-    /// <summary> The status of the export&apos;s schedule. If &apos;Inactive&apos;, the export&apos;s schedule is paused. </summary>
+    /// <summary> The status of the export's schedule. If 'Inactive', the export's schedule is paused. </summary>
     public readonly partial struct ExportScheduleStatusType : IEquatable<ExportScheduleStatusType>
     {
         private readonly string _value;

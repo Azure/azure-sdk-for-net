@@ -42,8 +42,8 @@ namespace Azure.Identity
                     $"{nameof(ManagedIdentityClientOptions)} cannot specify both {nameof(options.ResourceIdentifier)} and {nameof(options.ClientId)}.");
             }
 
-            ClientId = options.ClientId;
-            ResourceIdentifier = options.ResourceIdentifier;
+            ClientId = string.IsNullOrEmpty(options.ClientId) ? null : options.ClientId;
+            ResourceIdentifier = string.IsNullOrEmpty(options.ResourceIdentifier) ? null : options.ResourceIdentifier;
             Pipeline = options.Pipeline;
             _identitySource = new Lazy<ManagedIdentitySource>(() => SelectManagedIdentitySource(options));
             _msal = new MsalConfidentialClient(Pipeline, "MANAGED-IDENTITY-RESOURCE-TENENT", ClientId ?? "SYSTEM-ASSIGNED-MANAGED-IDENTITY", AppTokenProviderImpl, options.Options);
