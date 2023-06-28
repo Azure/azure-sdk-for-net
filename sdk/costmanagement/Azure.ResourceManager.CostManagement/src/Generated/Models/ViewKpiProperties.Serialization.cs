@@ -10,15 +10,15 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.CostManagement.Models
 {
-    public partial class KpiProperties : IUtf8JsonSerializable
+    public partial class ViewKpiProperties : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(ViewKpiType))
+            if (Optional.IsDefined(KpiType))
             {
                 writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(ViewKpiType.Value.ToString());
+                writer.WriteStringValue(KpiType.Value.ToString());
             }
             if (Optional.IsDefined(Id))
             {
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.CostManagement.Models
             writer.WriteEndObject();
         }
 
-        internal static KpiProperties DeserializeKpiProperties(JsonElement element)
+        internal static ViewKpiProperties DeserializeViewKpiProperties(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                     continue;
                 }
             }
-            return new KpiProperties(Optional.ToNullable(type), id.Value, Optional.ToNullable(enabled));
+            return new ViewKpiProperties(Optional.ToNullable(type), id.Value, Optional.ToNullable(enabled));
         }
     }
 }

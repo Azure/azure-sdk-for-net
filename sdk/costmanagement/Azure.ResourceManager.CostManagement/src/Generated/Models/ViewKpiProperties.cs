@@ -8,26 +8,26 @@
 namespace Azure.ResourceManager.CostManagement.Models
 {
     /// <summary> Each KPI must contain a 'type' and 'enabled' key. </summary>
-    public partial class KpiProperties
+    public partial class ViewKpiProperties
     {
-        /// <summary> Initializes a new instance of KpiProperties. </summary>
-        public KpiProperties()
+        /// <summary> Initializes a new instance of ViewKpiProperties. </summary>
+        public ViewKpiProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of KpiProperties. </summary>
-        /// <param name="viewKpiType"> KPI type (Forecast, Budget). </param>
+        /// <summary> Initializes a new instance of ViewKpiProperties. </summary>
+        /// <param name="kpiType"> KPI type (Forecast, Budget). </param>
         /// <param name="id"> ID of resource related to metric (budget). </param>
         /// <param name="enabled"> show the KPI in the UI?. </param>
-        internal KpiProperties(ViewKpiType? viewKpiType, string id, bool? enabled)
+        internal ViewKpiProperties(ViewKpiType? kpiType, string id, bool? enabled)
         {
-            ViewKpiType = viewKpiType;
+            KpiType = kpiType;
             Id = id;
             Enabled = enabled;
         }
 
         /// <summary> KPI type (Forecast, Budget). </summary>
-        public ViewKpiType? ViewKpiType { get; set; }
+        public ViewKpiType? KpiType { get; set; }
         /// <summary> ID of resource related to metric (budget). </summary>
         public string Id { get; set; }
         /// <summary> show the KPI in the UI?. </summary>

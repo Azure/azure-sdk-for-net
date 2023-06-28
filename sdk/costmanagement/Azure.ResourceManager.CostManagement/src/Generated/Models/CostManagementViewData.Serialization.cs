@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.CostManagement
             Optional<ViewChartType> chart = default;
             Optional<AccumulatedType> accumulated = default;
             Optional<ViewMetricType> metric = default;
-            Optional<IList<KpiProperties>> kpis = default;
+            Optional<IList<ViewKpiProperties>> kpis = default;
             Optional<IList<ViewPivotProperties>> pivots = default;
             Optional<ViewReportType> type0 = default;
             Optional<ReportTimeframeType> timeframe = default;
@@ -246,10 +246,10 @@ namespace Azure.ResourceManager.CostManagement
                             {
                                 continue;
                             }
-                            List<KpiProperties> array = new List<KpiProperties>();
+                            List<ViewKpiProperties> array = new List<ViewKpiProperties>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(KpiProperties.DeserializeKpiProperties(item));
+                                array.Add(ViewKpiProperties.DeserializeViewKpiProperties(item));
                             }
                             kpis = array;
                             continue;

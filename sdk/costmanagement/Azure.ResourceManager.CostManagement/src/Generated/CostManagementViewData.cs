@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.CostManagement
         /// <summary> Initializes a new instance of CostManagementViewData. </summary>
         public CostManagementViewData()
         {
-            Kpis = new ChangeTrackingList<KpiProperties>();
+            Kpis = new ChangeTrackingList<ViewKpiProperties>();
             Pivots = new ChangeTrackingList<ViewPivotProperties>();
         }
 
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.CostManagement
         /// <param name="dataSet"> Has definition for data in this report config. </param>
         /// <param name="includeMonetaryCommitment"> If true, report includes monetary commitment. </param>
         /// <param name="eTag"> eTag of the resource. To handle concurrent update scenario, this field will be used to determine whether the user is updating the latest version or not. </param>
-        internal CostManagementViewData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string displayName, string scope, DateTimeOffset? createdOn, DateTimeOffset? modifiedOn, string dateRange, string currency, ViewChartType? chart, AccumulatedType? accumulated, ViewMetricType? metric, IList<KpiProperties> kpis, IList<ViewPivotProperties> pivots, ViewReportType? typePropertiesQueryType, ReportTimeframeType? timeframe, ReportConfigTimePeriod timePeriod, ReportConfigDataset dataSet, bool? includeMonetaryCommitment, ETag? eTag) : base(id, name, resourceType, systemData)
+        internal CostManagementViewData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string displayName, string scope, DateTimeOffset? createdOn, DateTimeOffset? modifiedOn, string dateRange, string currency, ViewChartType? chart, AccumulatedType? accumulated, ViewMetricType? metric, IList<ViewKpiProperties> kpis, IList<ViewPivotProperties> pivots, ViewReportType? typePropertiesQueryType, ReportTimeframeType? timeframe, ReportConfigTimePeriod timePeriod, ReportConfigDataset dataSet, bool? includeMonetaryCommitment, ETag? eTag) : base(id, name, resourceType, systemData)
         {
             DisplayName = displayName;
             Scope = scope;
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.CostManagement
         /// <summary> Metric to use when displaying costs. </summary>
         public ViewMetricType? Metric { get; set; }
         /// <summary> List of KPIs to show in Cost Analysis UI. </summary>
-        public IList<KpiProperties> Kpis { get; }
+        public IList<ViewKpiProperties> Kpis { get; }
         /// <summary> Configuration of 3 sub-views in the Cost Analysis UI. </summary>
         public IList<ViewPivotProperties> Pivots { get; }
         /// <summary> The type of the report. Usage represents actual usage, forecast represents forecasted data and UsageAndForecast represents both usage and forecasted data. Actual usage and forecasted data can be differentiated based on dates. </summary>
