@@ -68,10 +68,10 @@ namespace Azure.Communication.Rooms.Tests.samples
 
             #region Snippet:Azure_Communication_Rooms_Tests_Samples_GetRoomsAsync
 
-            // Retrieve 2 pages of room objects
+            // Retrieve the first 2 pages of active rooms
             const int PageSize = 30;
             const int PageCount = 2;
-            int MaxRoomCount = PageCount * PageSize;
+            int maxRoomCount = PageCount * PageSize;
             int counter = 1;
 
             AsyncPageable<CommunicationRoom> allRooms = roomsClient.GetRoomsAsync();
@@ -80,7 +80,7 @@ namespace Azure.Communication.Rooms.Tests.samples
                 Console.WriteLine($"Room with id {room.Id} is valid from {room.ValidFrom} to {room.ValidUntil}.");
                 counter++;
 
-                if (counter == MaxRoomCount)
+                if (counter == maxRoomCount)
                 {
                     break;
                 }
