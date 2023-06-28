@@ -1,0 +1,3484 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/routePolicies/nfa-tool-ts-sdk-routePolicy062223?api-version=2023-02-01-preview",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "2321",
+        "Content-Type": "application/json",
+        "traceparent": "00-31973fd9ff9064ed397fde7d809b1805-7133f315ca98b889-00",
+        "User-Agent": "azsdk-net-ResourceManager.ManagedNetworkFabric/1.0.0-alpha.20230622.1 (.NET 7.0.7; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "3a8000305e2a90ef3b8ec42ec25f80ee",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "tags": {
+          "key8254": ""
+        },
+        "location": "eastus",
+        "properties": {
+          "annotation": "annotationValue",
+          "statements": [
+            {
+              "sequenceNumber": 7,
+              "condition": {
+                "ipPrefixId": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/ipPrefixes/nfa-tool-ts-sdk-ipPrefix061623",
+                "ipExtendedCommunityIds": [
+                  "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/ipExtendedCommunities/nfa-tool-ts-sdk-ipExtendedCommunity061623"
+                ],
+                "ipCommunityIds": [
+                  "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/ipCommunities/nfa-tool-ts-sdk-ipCommunity061623"
+                ]
+              },
+              "action": {
+                "localPreference": 20,
+                "actionType": "Permit",
+                "ipCommunityProperties": {
+                  "delete": {
+                    "ipCommunityIds": [
+                      "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/ipCommunities/nfa-tool-ts-sdk-ipCommunity061623"
+                    ]
+                  },
+                  "set": {
+                    "ipCommunityIds": [
+                      "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/ipCommunities/nfa-tool-ts-sdk-ipCommunity061623"
+                    ]
+                  },
+                  "add": {
+                    "ipCommunityIds": [
+                      "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/ipCommunities/nfa-tool-ts-sdk-ipCommunity061623"
+                    ]
+                  }
+                },
+                "ipExtendedCommunityProperties": {
+                  "delete": {
+                    "ipExtendedCommunityIds": [
+                      "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/ipExtendedCommunities/nfa-tool-ts-sdk-ipExtendedCommunity061623"
+                    ]
+                  },
+                  "set": {
+                    "ipExtendedCommunityIds": [
+                      "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/ipExtendedCommunities/nfa-tool-ts-sdk-ipExtendedCommunity061623"
+                    ]
+                  },
+                  "add": {
+                    "ipExtendedCommunityIds": [
+                      "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/ipExtendedCommunities/nfa-tool-ts-sdk-ipExtendedCommunity061623"
+                    ]
+                  }
+                }
+              },
+              "annotation": "annotationValue"
+            }
+          ]
+        }
+      },
+      "StatusCode": 201,
+      "ResponseHeaders": {
+        "Azure-AsyncOperation": "https://management.azure.com/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/providers/Microsoft.ManagedNetworkFabric/locations/EASTUS/operationStatuses/9beb808d-abb0-4350-8946-1be4a7126b87*352BE3A1595067942A9BDC3ADCC6E354531988E8596077717ADD3009936B30AB?api-version=2023-02-01-preview",
+        "Cache-Control": "no-cache",
+        "Content-Length": "2859",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 22 Jun 2023 07:08:14 GMT",
+        "ETag": "\u0022c4011351-0000-0100-0000-6493f35c0000\u0022",
+        "Expires": "-1",
+        "mise-correlation-id": "6da0f1d0-3523-4517-9487-c658cefad836",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "3a8000305e2a90ef3b8ec42ec25f80ee",
+        "x-ms-correlation-request-id": "fe366917-c882-4467-8747-fb2427b21a7f",
+        "x-ms-providerhub-traffic": "True",
+        "x-ms-ratelimit-remaining-subscription-writes": "1199",
+        "x-ms-request-id": "881c3129-c33f-4b82-b8a3-c134ff6a629b",
+        "x-ms-routing-request-id": "WESTINDIA:20230622T070814Z:fe366917-c882-4467-8747-fb2427b21a7f"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/routePolicies/nfa-tool-ts-sdk-routePolicy062223",
+        "name": "nfa-tool-ts-sdk-routePolicy062223",
+        "type": "microsoft.managednetworkfabric/routepolicies",
+        "location": "eastus",
+        "tags": {
+          "key8254": ""
+        },
+        "systemData": {
+          "createdBy": "v-rmarimuthu@microsoft.com",
+          "createdByType": "User",
+          "createdAt": "2023-06-22T07:08:11.1318874Z",
+          "lastModifiedBy": "v-rmarimuthu@microsoft.com",
+          "lastModifiedByType": "User",
+          "lastModifiedAt": "2023-06-22T07:08:11.1318874Z"
+        },
+        "properties": {
+          "annotation": "annotationValue",
+          "statements": [
+            {
+              "sequenceNumber": 7,
+              "condition": {
+                "ipCommunityIds": [
+                  "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/ipCommunities/nfa-tool-ts-sdk-ipCommunity061623"
+                ],
+                "ipExtendedCommunityIds": [
+                  "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/ipExtendedCommunities/nfa-tool-ts-sdk-ipExtendedCommunity061623"
+                ],
+                "ipPrefixId": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/ipPrefixes/nfa-tool-ts-sdk-ipPrefix061623"
+              },
+              "action": {
+                "localPreference": 20,
+                "actionType": "Permit",
+                "ipCommunityProperties": {
+                  "add": {
+                    "ipCommunityIds": [
+                      "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/ipCommunities/nfa-tool-ts-sdk-ipCommunity061623"
+                    ]
+                  },
+                  "delete": {
+                    "ipCommunityIds": [
+                      "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/ipCommunities/nfa-tool-ts-sdk-ipCommunity061623"
+                    ]
+                  },
+                  "set": {
+                    "ipCommunityIds": [
+                      "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/ipCommunities/nfa-tool-ts-sdk-ipCommunity061623"
+                    ]
+                  }
+                },
+                "ipExtendedCommunityProperties": {
+                  "add": {
+                    "ipExtendedCommunityIds": [
+                      "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/ipExtendedCommunities/nfa-tool-ts-sdk-ipExtendedCommunity061623"
+                    ]
+                  },
+                  "delete": {
+                    "ipExtendedCommunityIds": [
+                      "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/ipExtendedCommunities/nfa-tool-ts-sdk-ipExtendedCommunity061623"
+                    ]
+                  },
+                  "set": {
+                    "ipExtendedCommunityIds": [
+                      "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/ipExtendedCommunities/nfa-tool-ts-sdk-ipExtendedCommunity061623"
+                    ]
+                  }
+                }
+              }
+            }
+          ],
+          "provisioningState": "Accepted"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/providers/Microsoft.ManagedNetworkFabric/locations/EASTUS/operationStatuses/9beb808d-abb0-4350-8946-1be4a7126b87*352BE3A1595067942A9BDC3ADCC6E354531988E8596077717ADD3009936B30AB?api-version=2023-02-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-31973fd9ff9064ed397fde7d809b1805-6443e9da8d2a0983-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.6.0 (.NET 7.0.7; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "707bbb238b4905a6f8279d4e9f3e1945",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "677",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 22 Jun 2023 07:08:15 GMT",
+        "ETag": "\u00224304aeef-0000-0100-0000-6493f35e0000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "707bbb238b4905a6f8279d4e9f3e1945",
+        "x-ms-correlation-request-id": "7430ca47-3fa3-4d90-8e7c-8729c7ab4801",
+        "x-ms-ratelimit-remaining-subscription-reads": "11999",
+        "x-ms-request-id": "73563c16-e6e0-4f82-a6ff-ba9cbf79de73",
+        "x-ms-routing-request-id": "WESTINDIA:20230622T070815Z:7430ca47-3fa3-4d90-8e7c-8729c7ab4801"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/providers/Microsoft.ManagedNetworkFabric/locations/EASTUS/operationStatuses/9beb808d-abb0-4350-8946-1be4a7126b87*352BE3A1595067942A9BDC3ADCC6E354531988E8596077717ADD3009936B30AB",
+        "name": "9beb808d-abb0-4350-8946-1be4a7126b87*352BE3A1595067942A9BDC3ADCC6E354531988E8596077717ADD3009936B30AB",
+        "resourceId": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/routePolicies/nfa-tool-ts-sdk-routePolicy062223",
+        "status": "Succeeded",
+        "startTime": "2023-06-22T07:08:12.1424681Z",
+        "endTime": "2023-06-22T07:08:14.7514117Z",
+        "properties": null
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/routePolicies/nfa-tool-ts-sdk-routePolicy062223?api-version=2023-02-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-31973fd9ff9064ed397fde7d809b1805-a72ef3f46a7d262d-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.6.0 (.NET 7.0.7; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "06065ae7596cfa75fc8507116fba626b",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "2860",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 22 Jun 2023 07:08:15 GMT",
+        "ETag": "\u0022c4011751-0000-0100-0000-6493f35e0000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "06065ae7596cfa75fc8507116fba626b",
+        "x-ms-correlation-request-id": "bcac090a-0ade-439a-a4b7-12c5cbc7457b",
+        "x-ms-providerhub-traffic": "True",
+        "x-ms-ratelimit-remaining-subscription-reads": "11998",
+        "x-ms-request-id": "5953b8a8-6db3-4163-82f8-cc97cf24046c",
+        "x-ms-routing-request-id": "WESTINDIA:20230622T070816Z:bcac090a-0ade-439a-a4b7-12c5cbc7457b"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/routePolicies/nfa-tool-ts-sdk-routePolicy062223",
+        "name": "nfa-tool-ts-sdk-routePolicy062223",
+        "type": "microsoft.managednetworkfabric/routepolicies",
+        "location": "eastus",
+        "tags": {
+          "key8254": ""
+        },
+        "systemData": {
+          "createdBy": "v-rmarimuthu@microsoft.com",
+          "createdByType": "User",
+          "createdAt": "2023-06-22T07:08:11.1318874Z",
+          "lastModifiedBy": "v-rmarimuthu@microsoft.com",
+          "lastModifiedByType": "User",
+          "lastModifiedAt": "2023-06-22T07:08:11.1318874Z"
+        },
+        "properties": {
+          "annotation": "annotationValue",
+          "statements": [
+            {
+              "sequenceNumber": 7,
+              "condition": {
+                "ipCommunityIds": [
+                  "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/ipCommunities/nfa-tool-ts-sdk-ipCommunity061623"
+                ],
+                "ipExtendedCommunityIds": [
+                  "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/ipExtendedCommunities/nfa-tool-ts-sdk-ipExtendedCommunity061623"
+                ],
+                "ipPrefixId": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/ipPrefixes/nfa-tool-ts-sdk-ipPrefix061623"
+              },
+              "action": {
+                "localPreference": 20,
+                "actionType": "Permit",
+                "ipCommunityProperties": {
+                  "add": {
+                    "ipCommunityIds": [
+                      "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/ipCommunities/nfa-tool-ts-sdk-ipCommunity061623"
+                    ]
+                  },
+                  "delete": {
+                    "ipCommunityIds": [
+                      "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/ipCommunities/nfa-tool-ts-sdk-ipCommunity061623"
+                    ]
+                  },
+                  "set": {
+                    "ipCommunityIds": [
+                      "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/ipCommunities/nfa-tool-ts-sdk-ipCommunity061623"
+                    ]
+                  }
+                },
+                "ipExtendedCommunityProperties": {
+                  "add": {
+                    "ipExtendedCommunityIds": [
+                      "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/ipExtendedCommunities/nfa-tool-ts-sdk-ipExtendedCommunity061623"
+                    ]
+                  },
+                  "delete": {
+                    "ipExtendedCommunityIds": [
+                      "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/ipExtendedCommunities/nfa-tool-ts-sdk-ipExtendedCommunity061623"
+                    ]
+                  },
+                  "set": {
+                    "ipExtendedCommunityIds": [
+                      "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/ipExtendedCommunities/nfa-tool-ts-sdk-ipExtendedCommunity061623"
+                    ]
+                  }
+                }
+              }
+            }
+          ],
+          "provisioningState": "Succeeded"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/routePolicies/nfa-tool-ts-sdk-routePolicy062223?api-version=2023-02-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-df4dfde6ff3f2bddc6666dd1306a1521-09d4539a01672f4f-00",
+        "User-Agent": "azsdk-net-ResourceManager.ManagedNetworkFabric/1.0.0-alpha.20230622.1 (.NET 7.0.7; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "070aa4f810e413a49063b9f998b65cf4",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "2860",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 22 Jun 2023 07:08:16 GMT",
+        "ETag": "\u0022c4011751-0000-0100-0000-6493f35e0000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "070aa4f810e413a49063b9f998b65cf4",
+        "x-ms-correlation-request-id": "7bb51152-96aa-4dc0-9d47-35062d2138f3",
+        "x-ms-providerhub-traffic": "True",
+        "x-ms-ratelimit-remaining-subscription-reads": "11997",
+        "x-ms-request-id": "dc6c1dd3-b8ce-4578-a8e0-4821c408fed1",
+        "x-ms-routing-request-id": "WESTINDIA:20230622T070816Z:7bb51152-96aa-4dc0-9d47-35062d2138f3"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/routePolicies/nfa-tool-ts-sdk-routePolicy062223",
+        "name": "nfa-tool-ts-sdk-routePolicy062223",
+        "type": "microsoft.managednetworkfabric/routepolicies",
+        "location": "eastus",
+        "tags": {
+          "key8254": ""
+        },
+        "systemData": {
+          "createdBy": "v-rmarimuthu@microsoft.com",
+          "createdByType": "User",
+          "createdAt": "2023-06-22T07:08:11.1318874Z",
+          "lastModifiedBy": "v-rmarimuthu@microsoft.com",
+          "lastModifiedByType": "User",
+          "lastModifiedAt": "2023-06-22T07:08:11.1318874Z"
+        },
+        "properties": {
+          "annotation": "annotationValue",
+          "statements": [
+            {
+              "sequenceNumber": 7,
+              "condition": {
+                "ipCommunityIds": [
+                  "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/ipCommunities/nfa-tool-ts-sdk-ipCommunity061623"
+                ],
+                "ipExtendedCommunityIds": [
+                  "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/ipExtendedCommunities/nfa-tool-ts-sdk-ipExtendedCommunity061623"
+                ],
+                "ipPrefixId": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/ipPrefixes/nfa-tool-ts-sdk-ipPrefix061623"
+              },
+              "action": {
+                "localPreference": 20,
+                "actionType": "Permit",
+                "ipCommunityProperties": {
+                  "add": {
+                    "ipCommunityIds": [
+                      "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/ipCommunities/nfa-tool-ts-sdk-ipCommunity061623"
+                    ]
+                  },
+                  "delete": {
+                    "ipCommunityIds": [
+                      "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/ipCommunities/nfa-tool-ts-sdk-ipCommunity061623"
+                    ]
+                  },
+                  "set": {
+                    "ipCommunityIds": [
+                      "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/ipCommunities/nfa-tool-ts-sdk-ipCommunity061623"
+                    ]
+                  }
+                },
+                "ipExtendedCommunityProperties": {
+                  "add": {
+                    "ipExtendedCommunityIds": [
+                      "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/ipExtendedCommunities/nfa-tool-ts-sdk-ipExtendedCommunity061623"
+                    ]
+                  },
+                  "delete": {
+                    "ipExtendedCommunityIds": [
+                      "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/ipExtendedCommunities/nfa-tool-ts-sdk-ipExtendedCommunity061623"
+                    ]
+                  },
+                  "set": {
+                    "ipExtendedCommunityIds": [
+                      "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/ipExtendedCommunities/nfa-tool-ts-sdk-ipExtendedCommunity061623"
+                    ]
+                  }
+                }
+              }
+            }
+          ],
+          "provisioningState": "Succeeded"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/routePolicies?api-version=2023-02-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "User-Agent": "azsdk-net-ResourceManager.ManagedNetworkFabric/1.0.0-alpha.20230622.1 (.NET 7.0.7; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "d34da8fe8fc9c9b4458174c48494963d",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "2872",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 22 Jun 2023 07:08:17 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "316fb14e-36fa-42df-aeac-c26b625160ba",
+        "x-ms-original-request-ids": [
+          "c2529cad-2517-4c52-a5dd-24f155eefa7b",
+          "dd7ffc15-d541-4241-941a-e9aba3b90ff2",
+          "284adf59-47c3-47e5-a454-687113c5bf32",
+          "c66fcdb9-c931-4c3f-881b-4a5379b156d3"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": "11996",
+        "x-ms-request-id": "316fb14e-36fa-42df-aeac-c26b625160ba",
+        "x-ms-routing-request-id": "WESTINDIA:20230622T070818Z:316fb14e-36fa-42df-aeac-c26b625160ba"
+      },
+      "ResponseBody": {
+        "value": [
+          {
+            "id": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/routePolicies/nfa-tool-ts-sdk-routePolicy062223",
+            "name": "nfa-tool-ts-sdk-routePolicy062223",
+            "type": "microsoft.managednetworkfabric/routepolicies",
+            "location": "eastus",
+            "tags": {
+              "key8254": ""
+            },
+            "systemData": {
+              "createdBy": "v-rmarimuthu@microsoft.com",
+              "createdByType": "User",
+              "createdAt": "2023-06-22T07:08:11.1318874Z",
+              "lastModifiedBy": "v-rmarimuthu@microsoft.com",
+              "lastModifiedByType": "User",
+              "lastModifiedAt": "2023-06-22T07:08:11.1318874Z"
+            },
+            "properties": {
+              "annotation": "annotationValue",
+              "statements": [
+                {
+                  "sequenceNumber": 7,
+                  "condition": {
+                    "ipCommunityIds": [
+                      "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/ipCommunities/nfa-tool-ts-sdk-ipCommunity061623"
+                    ],
+                    "ipExtendedCommunityIds": [
+                      "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/ipExtendedCommunities/nfa-tool-ts-sdk-ipExtendedCommunity061623"
+                    ],
+                    "ipPrefixId": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/ipPrefixes/nfa-tool-ts-sdk-ipPrefix061623"
+                  },
+                  "action": {
+                    "localPreference": 20,
+                    "actionType": "Permit",
+                    "ipCommunityProperties": {
+                      "add": {
+                        "ipCommunityIds": [
+                          "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/ipCommunities/nfa-tool-ts-sdk-ipCommunity061623"
+                        ]
+                      },
+                      "delete": {
+                        "ipCommunityIds": [
+                          "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/ipCommunities/nfa-tool-ts-sdk-ipCommunity061623"
+                        ]
+                      },
+                      "set": {
+                        "ipCommunityIds": [
+                          "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/ipCommunities/nfa-tool-ts-sdk-ipCommunity061623"
+                        ]
+                      }
+                    },
+                    "ipExtendedCommunityProperties": {
+                      "add": {
+                        "ipExtendedCommunityIds": [
+                          "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/ipExtendedCommunities/nfa-tool-ts-sdk-ipExtendedCommunity061623"
+                        ]
+                      },
+                      "delete": {
+                        "ipExtendedCommunityIds": [
+                          "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/ipExtendedCommunities/nfa-tool-ts-sdk-ipExtendedCommunity061623"
+                        ]
+                      },
+                      "set": {
+                        "ipExtendedCommunityIds": [
+                          "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/ipExtendedCommunities/nfa-tool-ts-sdk-ipExtendedCommunity061623"
+                        ]
+                      }
+                    }
+                  }
+                }
+              ],
+              "provisioningState": "Succeeded"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/providers/Microsoft.ManagedNetworkFabric/routePolicies?api-version=2023-02-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "User-Agent": "azsdk-net-ResourceManager.ManagedNetworkFabric/1.0.0-alpha.20230622.1 (.NET 7.0.7; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "fb5631c51233d761b5f27508a07b6245",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "83260",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 22 Jun 2023 07:08:18 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "9cf705bf-0b55-4623-b66f-127a5e200e7a",
+        "x-ms-original-request-ids": [
+          "6334c068-df47-4145-b2fb-9fb61d868d02",
+          "226edfe7-9428-4cb1-9b0f-b26d9dc062ab",
+          "94b0e10e-4b46-4ed9-82ba-34dfaba8172c",
+          "656266bd-b901-400b-a984-58a857fe3f6e"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": "11995",
+        "x-ms-request-id": "9cf705bf-0b55-4623-b66f-127a5e200e7a",
+        "x-ms-routing-request-id": "WESTINDIA:20230622T070819Z:9cf705bf-0b55-4623-b66f-127a5e200e7a"
+      },
+      "ResponseBody": {
+        "value": [
+          {
+            "id": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/ankitha-rg/providers/Microsoft.ManagedNetworkFabric/routePolicies/rcf-Fab1-l3domain-connsubnet-ext-policy",
+            "name": "rcf-Fab1-l3domain-connsubnet-ext-policy",
+            "type": "microsoft.managednetworkfabric/routepolicies",
+            "location": "westus3",
+            "systemData": {
+              "createdBy": "v-akurapati@microsoft.com",
+              "createdByType": "User",
+              "createdAt": "2023-05-09T10:31:48.9140534Z",
+              "lastModifiedBy": "v-akurapati@microsoft.com",
+              "lastModifiedByType": "User",
+              "lastModifiedAt": "2023-05-09T10:31:48.9140534Z"
+            },
+            "properties": {
+              "statements": [
+                {
+                  "sequenceNumber": 10,
+                  "condition": {},
+                  "action": {
+                    "actionType": "Permit",
+                    "ipCommunityProperties": {
+                      "set": {
+                        "ipCommunityIds": [
+                          "\u003Cref-of-ipcommunity-staticsubnet\u003E"
+                        ]
+                      }
+                    }
+                  }
+                }
+              ],
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/microsoft.managednetworkfabric/routePolicies/rcf-nf1fab3200623-l3domain-v4-connsubnet-ext-policy-2601-2602",
+            "name": "rcf-nf1fab3200623-l3domain-v4-connsubnet-ext-policy-2601-2602",
+            "type": "microsoft.managednetworkfabric/routepolicies",
+            "location": "eastus",
+            "systemData": {
+              "createdBy": "edf733ea-9067-4115-8588-b12c62d25d45",
+              "createdByType": "Application",
+              "createdAt": "2023-06-22T05:34:46.297064Z",
+              "lastModifiedBy": "d1bd24c7-b27f-477e-86dd-939e107873d7",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-06-22T05:37:01.3829371Z"
+            },
+            "properties": {
+              "statements": [
+                {
+                  "sequenceNumber": 10,
+                  "condition": {
+                    "ipPrefixId": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/Microsoft.ManagedNetworkFabric/ipPrefixes/ipprefixv4-2601-staticsubnet"
+                  },
+                  "action": {
+                    "actionType": "Permit",
+                    "ipCommunityProperties": {
+                      "set": {
+                        "ipCommunityIds": [
+                          "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/Microsoft.ManagedNetworkFabric/ipCommunities/ipcommunity-2601-staticsubnet"
+                        ]
+                      }
+                    }
+                  }
+                },
+                {
+                  "sequenceNumber": 20,
+                  "condition": {
+                    "ipPrefixId": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/Microsoft.ManagedNetworkFabric/ipPrefixes/ipprefixv4-2602-staticsubnet"
+                  },
+                  "action": {
+                    "actionType": "Permit",
+                    "ipCommunityProperties": {
+                      "set": {
+                        "ipCommunityIds": [
+                          "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/Microsoft.ManagedNetworkFabric/ipCommunities/ipcommunity-2602-staticsubnet"
+                        ]
+                      }
+                    }
+                  }
+                },
+                {
+                  "sequenceNumber": 30,
+                  "condition": {
+                    "ipPrefixId": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/Microsoft.ManagedNetworkFabric/ipPrefixes/ipprefixv4-2601-connsubnet"
+                  },
+                  "action": {
+                    "actionType": "Permit",
+                    "ipCommunityProperties": {
+                      "set": {
+                        "ipCommunityIds": [
+                          "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/Microsoft.ManagedNetworkFabric/ipCommunities/ipcommunity-connsubnet-2601"
+                        ]
+                      }
+                    }
+                  }
+                },
+                {
+                  "sequenceNumber": 40,
+                  "condition": {
+                    "ipPrefixId": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/Microsoft.ManagedNetworkFabric/ipPrefixes/ipprefixv4-2602-connsubnet"
+                  },
+                  "action": {
+                    "actionType": "Permit",
+                    "ipCommunityProperties": {
+                      "set": {
+                        "ipCommunityIds": [
+                          "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/Microsoft.ManagedNetworkFabric/ipCommunities/ipcommunity-connsubnet-2602"
+                        ]
+                      }
+                    }
+                  }
+                }
+              ],
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/microsoft.managednetworkfabric/routePolicies/rcf-nf1fab3200623-l3domain-v4-intnw-2601-imp-policy",
+            "name": "rcf-nf1fab3200623-l3domain-v4-intnw-2601-imp-policy",
+            "type": "microsoft.managednetworkfabric/routepolicies",
+            "location": "eastus",
+            "systemData": {
+              "createdBy": "edf733ea-9067-4115-8588-b12c62d25d45",
+              "createdByType": "Application",
+              "createdAt": "2023-06-22T05:34:56.0159629Z",
+              "lastModifiedBy": "d1bd24c7-b27f-477e-86dd-939e107873d7",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-06-22T05:35:49.9597858Z"
+            },
+            "properties": {
+              "statements": [
+                {
+                  "sequenceNumber": 10,
+                  "condition": {
+                    "ipPrefixId": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/Microsoft.ManagedNetworkFabric/ipPrefixes/ipprefixv4-2601-cn1"
+                  },
+                  "action": {
+                    "actionType": "Permit",
+                    "ipCommunityProperties": {
+                      "set": {
+                        "ipCommunityIds": [
+                          "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/Microsoft.ManagedNetworkFabric/ipCommunities/ipcommunity-2601-imp"
+                        ]
+                      }
+                    }
+                  }
+                },
+                {
+                  "sequenceNumber": 20,
+                  "condition": {
+                    "ipPrefixId": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/Microsoft.ManagedNetworkFabric/ipPrefixes/ipprefixv4-2601-cn2"
+                  },
+                  "action": {
+                    "actionType": "Permit",
+                    "ipCommunityProperties": {
+                      "set": {
+                        "ipCommunityIds": [
+                          "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/Microsoft.ManagedNetworkFabric/ipCommunities/ipcommunity-2601-imp"
+                        ]
+                      }
+                    }
+                  }
+                },
+                {
+                  "sequenceNumber": 30,
+                  "condition": {
+                    "ipPrefixId": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/Microsoft.ManagedNetworkFabric/ipPrefixes/ipprefixv4-2601-cn3"
+                  },
+                  "action": {
+                    "actionType": "Deny"
+                  }
+                },
+                {
+                  "sequenceNumber": 40,
+                  "condition": {
+                    "ipPrefixId": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/Microsoft.ManagedNetworkFabric/ipPrefixes/ipprefixv4-2601-cn4"
+                  },
+                  "action": {
+                    "actionType": "Deny"
+                  }
+                }
+              ],
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/microsoft.managednetworkfabric/routePolicies/rcf-nf1fab3200623-l3domain-v4-intnw-2601-exp-policy",
+            "name": "rcf-nf1fab3200623-l3domain-v4-intnw-2601-exp-policy",
+            "type": "microsoft.managednetworkfabric/routepolicies",
+            "location": "eastus",
+            "systemData": {
+              "createdBy": "edf733ea-9067-4115-8588-b12c62d25d45",
+              "createdByType": "Application",
+              "createdAt": "2023-06-22T05:35:05.3754888Z",
+              "lastModifiedBy": "d1bd24c7-b27f-477e-86dd-939e107873d7",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-06-22T05:35:50.1941351Z"
+            },
+            "properties": {
+              "statements": [
+                {
+                  "sequenceNumber": 10,
+                  "condition": {
+                    "ipPrefixId": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/Microsoft.ManagedNetworkFabric/ipPrefixes/ipprefixv4-2601-cn1-exp"
+                  },
+                  "action": {
+                    "actionType": "Permit",
+                    "ipCommunityProperties": {
+                      "set": {
+                        "ipCommunityIds": [
+                          "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/Microsoft.ManagedNetworkFabric/ipCommunities/ipcommunity-2601-exp"
+                        ]
+                      }
+                    }
+                  }
+                },
+                {
+                  "sequenceNumber": 20,
+                  "condition": {
+                    "ipPrefixId": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/Microsoft.ManagedNetworkFabric/ipPrefixes/ipprefixv4-2601-cn2-exp"
+                  },
+                  "action": {
+                    "actionType": "Permit",
+                    "ipCommunityProperties": {
+                      "set": {
+                        "ipCommunityIds": [
+                          "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/Microsoft.ManagedNetworkFabric/ipCommunities/ipcommunity-2601-exp"
+                        ]
+                      }
+                    }
+                  }
+                },
+                {
+                  "sequenceNumber": 30,
+                  "condition": {
+                    "ipPrefixId": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/Microsoft.ManagedNetworkFabric/ipPrefixes/ipprefixv4-2601-cn3-exp"
+                  },
+                  "action": {
+                    "actionType": "Deny"
+                  }
+                },
+                {
+                  "sequenceNumber": 40,
+                  "condition": {
+                    "ipPrefixId": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/Microsoft.ManagedNetworkFabric/ipPrefixes/ipprefixv4-2601-cn4-exp"
+                  },
+                  "action": {
+                    "actionType": "Deny"
+                  }
+                },
+                {
+                  "sequenceNumber": 50,
+                  "condition": {
+                    "ipExtendedCommunityIds": [
+                      "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/Microsoft.ManagedNetworkFabric/ipExtendedCommunities/ipextcommunity-2601-cn1"
+                    ]
+                  },
+                  "action": {
+                    "actionType": "Permit",
+                    "ipExtendedCommunityProperties": {
+                      "add": {
+                        "ipExtendedCommunityIds": [
+                          "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/Microsoft.ManagedNetworkFabric/ipExtendedCommunities/ipextcommunity-2601"
+                        ]
+                      }
+                    }
+                  }
+                },
+                {
+                  "sequenceNumber": 60,
+                  "condition": {
+                    "ipExtendedCommunityIds": [
+                      "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/Microsoft.ManagedNetworkFabric/ipExtendedCommunities/ipextcommunity-2601-cn2"
+                    ]
+                  },
+                  "action": {
+                    "actionType": "Permit",
+                    "ipExtendedCommunityProperties": {
+                      "delete": {
+                        "ipExtendedCommunityIds": [
+                          "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/Microsoft.ManagedNetworkFabric/ipExtendedCommunities/ipextcommunity-2601"
+                        ]
+                      }
+                    }
+                  }
+                }
+              ],
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/microsoft.managednetworkfabric/routePolicies/rcf-nf1fab3200623-l3domain-v4-intnw-2602-imp-policy",
+            "name": "rcf-nf1fab3200623-l3domain-v4-intnw-2602-imp-policy",
+            "type": "microsoft.managednetworkfabric/routepolicies",
+            "location": "eastus",
+            "systemData": {
+              "createdBy": "edf733ea-9067-4115-8588-b12c62d25d45",
+              "createdByType": "Application",
+              "createdAt": "2023-06-22T05:35:16.1881555Z",
+              "lastModifiedBy": "edf733ea-9067-4115-8588-b12c62d25d45",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-06-22T05:35:16.1881555Z"
+            },
+            "properties": {
+              "statements": [
+                {
+                  "sequenceNumber": 10,
+                  "condition": {
+                    "ipPrefixId": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/Microsoft.ManagedNetworkFabric/ipPrefixes/ipprefixv4-2602-cn1-imp"
+                  },
+                  "action": {
+                    "actionType": "Permit",
+                    "ipCommunityProperties": {
+                      "set": {
+                        "ipCommunityIds": [
+                          "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/Microsoft.ManagedNetworkFabric/ipCommunities/ipcommunity-2602-imp"
+                        ]
+                      }
+                    }
+                  }
+                },
+                {
+                  "sequenceNumber": 20,
+                  "condition": {
+                    "ipPrefixId": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/Microsoft.ManagedNetworkFabric/ipPrefixes/ipprefixv4-2602-cn2-imp"
+                  },
+                  "action": {
+                    "actionType": "Permit",
+                    "ipCommunityProperties": {
+                      "set": {
+                        "ipCommunityIds": [
+                          "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/Microsoft.ManagedNetworkFabric/ipCommunities/ipcommunity-2602-imp"
+                        ]
+                      }
+                    }
+                  }
+                },
+                {
+                  "sequenceNumber": 30,
+                  "condition": {
+                    "ipPrefixId": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/Microsoft.ManagedNetworkFabric/ipPrefixes/ipprefixv4-2602-cn3-imp"
+                  },
+                  "action": {
+                    "actionType": "Deny"
+                  }
+                },
+                {
+                  "sequenceNumber": 40,
+                  "condition": {
+                    "ipPrefixId": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/Microsoft.ManagedNetworkFabric/ipPrefixes/ipprefixv4-2602-cn4-imp"
+                  },
+                  "action": {
+                    "actionType": "Deny"
+                  }
+                },
+                {
+                  "sequenceNumber": 50,
+                  "condition": {
+                    "ipCommunityIds": [
+                      "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/Microsoft.ManagedNetworkFabric/ipCommunities/ipcommunity-2602-cn1"
+                    ]
+                  },
+                  "action": {
+                    "actionType": "Permit",
+                    "ipCommunityProperties": {
+                      "add": {
+                        "ipCommunityIds": [
+                          "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/Microsoft.ManagedNetworkFabric/ipCommunities/ipcommunity-2602-imp"
+                        ]
+                      }
+                    }
+                  }
+                },
+                {
+                  "sequenceNumber": 60,
+                  "condition": {
+                    "ipCommunityIds": [
+                      "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/Microsoft.ManagedNetworkFabric/ipCommunities/ipcommunity-2602-cn2"
+                    ]
+                  },
+                  "action": {
+                    "actionType": "Permit",
+                    "ipCommunityProperties": {
+                      "delete": {
+                        "ipCommunityIds": [
+                          "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/Microsoft.ManagedNetworkFabric/ipCommunities/ipcommunity-2602-imp"
+                        ]
+                      }
+                    }
+                  }
+                }
+              ],
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/microsoft.managednetworkfabric/routePolicies/rcf-nf1fab3200623-l3domain-v4-intnw-2602-exp-policy",
+            "name": "rcf-nf1fab3200623-l3domain-v4-intnw-2602-exp-policy",
+            "type": "microsoft.managednetworkfabric/routepolicies",
+            "location": "eastus",
+            "systemData": {
+              "createdBy": "edf733ea-9067-4115-8588-b12c62d25d45",
+              "createdByType": "Application",
+              "createdAt": "2023-06-22T05:35:25.5633002Z",
+              "lastModifiedBy": "edf733ea-9067-4115-8588-b12c62d25d45",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-06-22T05:35:25.5633002Z"
+            },
+            "properties": {
+              "statements": [
+                {
+                  "sequenceNumber": 10,
+                  "condition": {
+                    "ipPrefixId": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/Microsoft.ManagedNetworkFabric/ipPrefixes/ipprefixv4-2602-cn1-exp"
+                  },
+                  "action": {
+                    "actionType": "Permit",
+                    "ipCommunityProperties": {
+                      "set": {
+                        "ipCommunityIds": [
+                          "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/Microsoft.ManagedNetworkFabric/ipCommunities/ipcommunity-2602-exp"
+                        ]
+                      }
+                    }
+                  }
+                },
+                {
+                  "sequenceNumber": 20,
+                  "condition": {
+                    "ipPrefixId": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/Microsoft.ManagedNetworkFabric/ipPrefixes/ipprefixv4-2602-cn2-exp"
+                  },
+                  "action": {
+                    "actionType": "Permit",
+                    "ipCommunityProperties": {
+                      "set": {
+                        "ipCommunityIds": [
+                          "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/Microsoft.ManagedNetworkFabric/ipCommunities/ipcommunity-2602-exp"
+                        ]
+                      }
+                    }
+                  }
+                },
+                {
+                  "sequenceNumber": 30,
+                  "condition": {
+                    "ipPrefixId": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/Microsoft.ManagedNetworkFabric/ipPrefixes/ipprefixv4-2602-cn3-exp"
+                  },
+                  "action": {
+                    "actionType": "Deny"
+                  }
+                },
+                {
+                  "sequenceNumber": 40,
+                  "condition": {
+                    "ipPrefixId": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/Microsoft.ManagedNetworkFabric/ipPrefixes/ipprefixv4-2602-cn4-exp"
+                  },
+                  "action": {
+                    "actionType": "Deny"
+                  }
+                },
+                {
+                  "sequenceNumber": 50,
+                  "condition": {
+                    "ipExtendedCommunityIds": [
+                      "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/Microsoft.ManagedNetworkFabric/ipExtendedCommunities/ipextcommunity-2602-cn1"
+                    ]
+                  },
+                  "action": {
+                    "actionType": "Permit",
+                    "ipExtendedCommunityProperties": {
+                      "add": {
+                        "ipExtendedCommunityIds": [
+                          "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/Microsoft.ManagedNetworkFabric/ipExtendedCommunities/ipextcommunity-2602"
+                        ]
+                      }
+                    }
+                  }
+                },
+                {
+                  "sequenceNumber": 60,
+                  "condition": {
+                    "ipExtendedCommunityIds": [
+                      "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/Microsoft.ManagedNetworkFabric/ipExtendedCommunities/ipextcommunity-2602-cn2"
+                    ]
+                  },
+                  "action": {
+                    "actionType": "Permit",
+                    "ipExtendedCommunityProperties": {
+                      "delete": {
+                        "ipExtendedCommunityIds": [
+                          "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/Microsoft.ManagedNetworkFabric/ipExtendedCommunities/ipextcommunity-2602"
+                        ]
+                      }
+                    }
+                  }
+                }
+              ],
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/microsoft.managednetworkfabric/routePolicies/rcf-nf1fab3200623-l3domain-v4-extoptionB-imp-policy-2601-2602",
+            "name": "rcf-nf1fab3200623-l3domain-v4-extoptionB-imp-policy-2601-2602",
+            "type": "microsoft.managednetworkfabric/routepolicies",
+            "location": "eastus",
+            "systemData": {
+              "createdBy": "edf733ea-9067-4115-8588-b12c62d25d45",
+              "createdByType": "Application",
+              "createdAt": "2023-06-22T05:35:34.9696979Z",
+              "lastModifiedBy": "edf733ea-9067-4115-8588-b12c62d25d45",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-06-22T05:35:34.9696979Z"
+            },
+            "properties": {
+              "statements": [
+                {
+                  "sequenceNumber": 10,
+                  "condition": {
+                    "ipPrefixId": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/Microsoft.ManagedNetworkFabric/ipPrefixes/ipprefixv4-2602-cn1-ext-imp"
+                  },
+                  "action": {
+                    "actionType": "Permit",
+                    "ipExtendedCommunityProperties": {
+                      "set": {
+                        "ipExtendedCommunityIds": [
+                          "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/Microsoft.ManagedNetworkFabric/ipExtendedCommunities/ipextcommunity-2601-ext-imp"
+                        ]
+                      }
+                    }
+                  }
+                },
+                {
+                  "sequenceNumber": 20,
+                  "condition": {
+                    "ipPrefixId": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/Microsoft.ManagedNetworkFabric/ipPrefixes/ipprefixv4-2602-cn3-ext-imp"
+                  },
+                  "action": {
+                    "actionType": "Permit",
+                    "ipExtendedCommunityProperties": {
+                      "set": {
+                        "ipExtendedCommunityIds": [
+                          "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/Microsoft.ManagedNetworkFabric/ipExtendedCommunities/ipextcommunity-2602-ext-imp"
+                        ]
+                      }
+                    }
+                  }
+                }
+              ],
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/microsoft.managednetworkfabric/routePolicies/rcf-nf1fab3200623-l3domain-v4-extoptionB-exp-policy-2601-2602",
+            "name": "rcf-nf1fab3200623-l3domain-v4-extoptionB-exp-policy-2601-2602",
+            "type": "microsoft.managednetworkfabric/routepolicies",
+            "location": "eastus",
+            "systemData": {
+              "createdBy": "edf733ea-9067-4115-8588-b12c62d25d45",
+              "createdByType": "Application",
+              "createdAt": "2023-06-22T05:35:41.9229259Z",
+              "lastModifiedBy": "edf733ea-9067-4115-8588-b12c62d25d45",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-06-22T05:35:41.9229259Z"
+            },
+            "properties": {
+              "statements": [
+                {
+                  "sequenceNumber": 10,
+                  "condition": {
+                    "ipPrefixId": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/Microsoft.ManagedNetworkFabric/ipPrefixes/ipprefixv4-2602-cn1-ext-exp"
+                  },
+                  "action": {
+                    "actionType": "Permit",
+                    "ipExtendedCommunityProperties": {
+                      "set": {
+                        "ipExtendedCommunityIds": [
+                          "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/Microsoft.ManagedNetworkFabric/ipExtendedCommunities/ipextcommunity-2601-ext-exp"
+                        ]
+                      }
+                    }
+                  }
+                },
+                {
+                  "sequenceNumber": 20,
+                  "condition": {
+                    "ipPrefixId": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/Microsoft.ManagedNetworkFabric/ipPrefixes/ipprefixv4-2602-cn3-ext-exp"
+                  },
+                  "action": {
+                    "actionType": "Permit",
+                    "ipExtendedCommunityProperties": {
+                      "set": {
+                        "ipExtendedCommunityIds": [
+                          "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/Microsoft.ManagedNetworkFabric/ipExtendedCommunities/ipextcommunity-2602-ext-exp"
+                        ]
+                      }
+                    }
+                  }
+                }
+              ],
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/microsoft.managednetworkfabric/routePolicies/rcf-nf1fab3200623-l3domain-v4-connsubnet-ext-policy-2603-2604",
+            "name": "rcf-nf1fab3200623-l3domain-v4-connsubnet-ext-policy-2603-2604",
+            "type": "microsoft.managednetworkfabric/routepolicies",
+            "location": "eastus",
+            "systemData": {
+              "createdBy": "edf733ea-9067-4115-8588-b12c62d25d45",
+              "createdByType": "Application",
+              "createdAt": "2023-06-22T05:35:59.4075711Z",
+              "lastModifiedBy": "edf733ea-9067-4115-8588-b12c62d25d45",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-06-22T05:35:59.4075711Z"
+            },
+            "properties": {
+              "statements": [
+                {
+                  "sequenceNumber": 10,
+                  "condition": {
+                    "ipPrefixId": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/Microsoft.ManagedNetworkFabric/ipPrefixes/ipprefixv4-2603-staticsubnet"
+                  },
+                  "action": {
+                    "actionType": "Permit",
+                    "ipCommunityProperties": {
+                      "set": {
+                        "ipCommunityIds": [
+                          "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/Microsoft.ManagedNetworkFabric/ipCommunities/ipcommunity-2603-staticsubnet"
+                        ]
+                      }
+                    }
+                  }
+                },
+                {
+                  "sequenceNumber": 20,
+                  "condition": {
+                    "ipPrefixId": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/Microsoft.ManagedNetworkFabric/ipPrefixes/ipprefixv4-2604-staticsubnet"
+                  },
+                  "action": {
+                    "actionType": "Permit",
+                    "ipCommunityProperties": {
+                      "set": {
+                        "ipCommunityIds": [
+                          "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/Microsoft.ManagedNetworkFabric/ipCommunities/ipcommunity-2604-staticsubnet"
+                        ]
+                      }
+                    }
+                  }
+                },
+                {
+                  "sequenceNumber": 30,
+                  "condition": {
+                    "ipPrefixId": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/Microsoft.ManagedNetworkFabric/ipPrefixes/ipprefixv4-2603-connsubnet"
+                  },
+                  "action": {
+                    "actionType": "Permit",
+                    "ipCommunityProperties": {
+                      "set": {
+                        "ipCommunityIds": [
+                          "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/Microsoft.ManagedNetworkFabric/ipCommunities/ipcommunity-connsubnet-2603"
+                        ]
+                      }
+                    }
+                  }
+                },
+                {
+                  "sequenceNumber": 40,
+                  "condition": {
+                    "ipPrefixId": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/Microsoft.ManagedNetworkFabric/ipPrefixes/ipprefixv4-2604-connsubnet"
+                  },
+                  "action": {
+                    "actionType": "Permit",
+                    "ipCommunityProperties": {
+                      "set": {
+                        "ipCommunityIds": [
+                          "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/Microsoft.ManagedNetworkFabric/ipCommunities/ipcommunity-connsubnet-2604"
+                        ]
+                      }
+                    }
+                  }
+                }
+              ],
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/microsoft.managednetworkfabric/routePolicies/rcf-nf1fab3200623-l3domain-v4-intnw-2603-imp-policy",
+            "name": "rcf-nf1fab3200623-l3domain-v4-intnw-2603-imp-policy",
+            "type": "microsoft.managednetworkfabric/routepolicies",
+            "location": "eastus",
+            "systemData": {
+              "createdBy": "edf733ea-9067-4115-8588-b12c62d25d45",
+              "createdByType": "Application",
+              "createdAt": "2023-06-22T05:36:08.6108951Z",
+              "lastModifiedBy": "edf733ea-9067-4115-8588-b12c62d25d45",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-06-22T05:36:08.6108951Z"
+            },
+            "properties": {
+              "statements": [
+                {
+                  "sequenceNumber": 10,
+                  "condition": {
+                    "ipPrefixId": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/Microsoft.ManagedNetworkFabric/ipPrefixes/ipprefixv4-2603-cn1"
+                  },
+                  "action": {
+                    "actionType": "Permit",
+                    "ipCommunityProperties": {
+                      "set": {
+                        "ipCommunityIds": [
+                          "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/Microsoft.ManagedNetworkFabric/ipCommunities/ipcommunity-2603-imp"
+                        ]
+                      }
+                    }
+                  }
+                },
+                {
+                  "sequenceNumber": 20,
+                  "condition": {
+                    "ipPrefixId": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/Microsoft.ManagedNetworkFabric/ipPrefixes/ipprefixv4-2603-cn2"
+                  },
+                  "action": {
+                    "actionType": "Permit",
+                    "ipCommunityProperties": {
+                      "set": {
+                        "ipCommunityIds": [
+                          "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/Microsoft.ManagedNetworkFabric/ipCommunities/ipcommunity-2603-imp"
+                        ]
+                      }
+                    }
+                  }
+                },
+                {
+                  "sequenceNumber": 30,
+                  "condition": {
+                    "ipPrefixId": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/Microsoft.ManagedNetworkFabric/ipPrefixes/ipprefixv4-2603-cn3"
+                  },
+                  "action": {
+                    "actionType": "Deny"
+                  }
+                },
+                {
+                  "sequenceNumber": 40,
+                  "condition": {
+                    "ipPrefixId": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/Microsoft.ManagedNetworkFabric/ipPrefixes/ipprefixv4-2603-cn4"
+                  },
+                  "action": {
+                    "actionType": "Deny"
+                  }
+                }
+              ],
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/microsoft.managednetworkfabric/routePolicies/rcf-nf1fab3200623-l3domain-v4-intnw-2603-exp-policy",
+            "name": "rcf-nf1fab3200623-l3domain-v4-intnw-2603-exp-policy",
+            "type": "microsoft.managednetworkfabric/routepolicies",
+            "location": "eastus",
+            "systemData": {
+              "createdBy": "edf733ea-9067-4115-8588-b12c62d25d45",
+              "createdByType": "Application",
+              "createdAt": "2023-06-22T05:36:18.4703678Z",
+              "lastModifiedBy": "edf733ea-9067-4115-8588-b12c62d25d45",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-06-22T05:36:18.4703678Z"
+            },
+            "properties": {
+              "statements": [
+                {
+                  "sequenceNumber": 10,
+                  "condition": {
+                    "ipPrefixId": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/Microsoft.ManagedNetworkFabric/ipPrefixes/ipprefixv4-2603-cn1-exp"
+                  },
+                  "action": {
+                    "actionType": "Permit",
+                    "ipCommunityProperties": {
+                      "set": {
+                        "ipCommunityIds": [
+                          "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/Microsoft.ManagedNetworkFabric/ipCommunities/ipcommunity-2603-exp"
+                        ]
+                      }
+                    }
+                  }
+                },
+                {
+                  "sequenceNumber": 20,
+                  "condition": {
+                    "ipPrefixId": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/Microsoft.ManagedNetworkFabric/ipPrefixes/ipprefixv4-2603-cn2-exp"
+                  },
+                  "action": {
+                    "actionType": "Permit",
+                    "ipCommunityProperties": {
+                      "set": {
+                        "ipCommunityIds": [
+                          "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/Microsoft.ManagedNetworkFabric/ipCommunities/ipcommunity-2603-exp"
+                        ]
+                      }
+                    }
+                  }
+                },
+                {
+                  "sequenceNumber": 30,
+                  "condition": {
+                    "ipPrefixId": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/Microsoft.ManagedNetworkFabric/ipPrefixes/ipprefixv4-2603-cn3-exp"
+                  },
+                  "action": {
+                    "actionType": "Deny"
+                  }
+                },
+                {
+                  "sequenceNumber": 40,
+                  "condition": {
+                    "ipPrefixId": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/Microsoft.ManagedNetworkFabric/ipPrefixes/ipprefixv4-2603-cn4-exp"
+                  },
+                  "action": {
+                    "actionType": "Deny"
+                  }
+                },
+                {
+                  "sequenceNumber": 50,
+                  "condition": {
+                    "ipExtendedCommunityIds": [
+                      "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/Microsoft.ManagedNetworkFabric/ipExtendedCommunities/ipextcommunity-2603-cn1"
+                    ]
+                  },
+                  "action": {
+                    "actionType": "Permit",
+                    "ipExtendedCommunityProperties": {
+                      "add": {
+                        "ipExtendedCommunityIds": [
+                          "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/Microsoft.ManagedNetworkFabric/ipExtendedCommunities/ipextcommunity-2603"
+                        ]
+                      }
+                    }
+                  }
+                },
+                {
+                  "sequenceNumber": 60,
+                  "condition": {
+                    "ipExtendedCommunityIds": [
+                      "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/Microsoft.ManagedNetworkFabric/ipExtendedCommunities/ipextcommunity-2603-cn2"
+                    ]
+                  },
+                  "action": {
+                    "actionType": "Permit",
+                    "ipExtendedCommunityProperties": {
+                      "delete": {
+                        "ipExtendedCommunityIds": [
+                          "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/Microsoft.ManagedNetworkFabric/ipExtendedCommunities/ipextcommunity-2603"
+                        ]
+                      }
+                    }
+                  }
+                }
+              ],
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/microsoft.managednetworkfabric/routePolicies/rcf-nf1fab3200623-l3domain-v4-intnw-2604-imp-policy",
+            "name": "rcf-nf1fab3200623-l3domain-v4-intnw-2604-imp-policy",
+            "type": "microsoft.managednetworkfabric/routepolicies",
+            "location": "eastus",
+            "systemData": {
+              "createdBy": "edf733ea-9067-4115-8588-b12c62d25d45",
+              "createdByType": "Application",
+              "createdAt": "2023-06-22T05:36:29.7049124Z",
+              "lastModifiedBy": "edf733ea-9067-4115-8588-b12c62d25d45",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-06-22T05:36:29.7049124Z"
+            },
+            "properties": {
+              "statements": [
+                {
+                  "sequenceNumber": 10,
+                  "condition": {
+                    "ipPrefixId": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/Microsoft.ManagedNetworkFabric/ipPrefixes/ipprefixv4-2604-cn1-imp"
+                  },
+                  "action": {
+                    "actionType": "Permit",
+                    "ipCommunityProperties": {
+                      "set": {
+                        "ipCommunityIds": [
+                          "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/Microsoft.ManagedNetworkFabric/ipCommunities/ipcommunity-2604-imp"
+                        ]
+                      }
+                    }
+                  }
+                },
+                {
+                  "sequenceNumber": 20,
+                  "condition": {
+                    "ipPrefixId": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/Microsoft.ManagedNetworkFabric/ipPrefixes/ipprefixv4-2604-cn2-imp"
+                  },
+                  "action": {
+                    "actionType": "Permit",
+                    "ipCommunityProperties": {
+                      "set": {
+                        "ipCommunityIds": [
+                          "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/Microsoft.ManagedNetworkFabric/ipCommunities/ipcommunity-2604-imp"
+                        ]
+                      }
+                    }
+                  }
+                },
+                {
+                  "sequenceNumber": 30,
+                  "condition": {
+                    "ipPrefixId": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/Microsoft.ManagedNetworkFabric/ipPrefixes/ipprefixv4-2604-cn3-imp"
+                  },
+                  "action": {
+                    "actionType": "Deny"
+                  }
+                },
+                {
+                  "sequenceNumber": 40,
+                  "condition": {
+                    "ipPrefixId": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/Microsoft.ManagedNetworkFabric/ipPrefixes/ipprefixv4-2604-cn4-imp"
+                  },
+                  "action": {
+                    "actionType": "Deny"
+                  }
+                },
+                {
+                  "sequenceNumber": 50,
+                  "condition": {
+                    "ipCommunityIds": [
+                      "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/Microsoft.ManagedNetworkFabric/ipCommunities/ipcommunity-2604-cn1"
+                    ]
+                  },
+                  "action": {
+                    "actionType": "Permit",
+                    "ipCommunityProperties": {
+                      "add": {
+                        "ipCommunityIds": [
+                          "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/Microsoft.ManagedNetworkFabric/ipCommunities/ipcommunity-2604-imp"
+                        ]
+                      }
+                    }
+                  }
+                },
+                {
+                  "sequenceNumber": 60,
+                  "condition": {
+                    "ipCommunityIds": [
+                      "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/Microsoft.ManagedNetworkFabric/ipCommunities/ipcommunity-2604-cn2"
+                    ]
+                  },
+                  "action": {
+                    "actionType": "Permit",
+                    "ipCommunityProperties": {
+                      "delete": {
+                        "ipCommunityIds": [
+                          "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/Microsoft.ManagedNetworkFabric/ipCommunities/ipcommunity-2604-imp"
+                        ]
+                      }
+                    }
+                  }
+                }
+              ],
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/microsoft.managednetworkfabric/routePolicies/rcf-nf1fab3200623-l3domain-v4-intnw-2604-exp-policy",
+            "name": "rcf-nf1fab3200623-l3domain-v4-intnw-2604-exp-policy",
+            "type": "microsoft.managednetworkfabric/routepolicies",
+            "location": "eastus",
+            "systemData": {
+              "createdBy": "edf733ea-9067-4115-8588-b12c62d25d45",
+              "createdByType": "Application",
+              "createdAt": "2023-06-22T05:36:38.1894191Z",
+              "lastModifiedBy": "edf733ea-9067-4115-8588-b12c62d25d45",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-06-22T05:36:38.1894191Z"
+            },
+            "properties": {
+              "statements": [
+                {
+                  "sequenceNumber": 10,
+                  "condition": {
+                    "ipPrefixId": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/Microsoft.ManagedNetworkFabric/ipPrefixes/ipprefixv4-2604-cn1-exp"
+                  },
+                  "action": {
+                    "actionType": "Permit",
+                    "ipCommunityProperties": {
+                      "set": {
+                        "ipCommunityIds": [
+                          "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/Microsoft.ManagedNetworkFabric/ipCommunities/ipcommunity-2604-exp"
+                        ]
+                      }
+                    }
+                  }
+                },
+                {
+                  "sequenceNumber": 20,
+                  "condition": {
+                    "ipPrefixId": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/Microsoft.ManagedNetworkFabric/ipPrefixes/ipprefixv4-2604-cn2-exp"
+                  },
+                  "action": {
+                    "actionType": "Permit",
+                    "ipCommunityProperties": {
+                      "set": {
+                        "ipCommunityIds": [
+                          "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/Microsoft.ManagedNetworkFabric/ipCommunities/ipcommunity-2604-exp"
+                        ]
+                      }
+                    }
+                  }
+                },
+                {
+                  "sequenceNumber": 30,
+                  "condition": {
+                    "ipPrefixId": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/Microsoft.ManagedNetworkFabric/ipPrefixes/ipprefixv4-2604-cn3-exp"
+                  },
+                  "action": {
+                    "actionType": "Deny"
+                  }
+                },
+                {
+                  "sequenceNumber": 40,
+                  "condition": {
+                    "ipPrefixId": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/Microsoft.ManagedNetworkFabric/ipPrefixes/ipprefixv4-2604-cn4-exp"
+                  },
+                  "action": {
+                    "actionType": "Deny"
+                  }
+                },
+                {
+                  "sequenceNumber": 50,
+                  "condition": {
+                    "ipExtendedCommunityIds": [
+                      "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/Microsoft.ManagedNetworkFabric/ipExtendedCommunities/ipextcommunity-2604-cn1"
+                    ]
+                  },
+                  "action": {
+                    "actionType": "Permit",
+                    "ipExtendedCommunityProperties": {
+                      "add": {
+                        "ipExtendedCommunityIds": [
+                          "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/Microsoft.ManagedNetworkFabric/ipExtendedCommunities/ipextcommunity-2604"
+                        ]
+                      }
+                    }
+                  }
+                },
+                {
+                  "sequenceNumber": 60,
+                  "condition": {
+                    "ipExtendedCommunityIds": [
+                      "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/Microsoft.ManagedNetworkFabric/ipExtendedCommunities/ipextcommunity-2604-cn2"
+                    ]
+                  },
+                  "action": {
+                    "actionType": "Permit",
+                    "ipExtendedCommunityProperties": {
+                      "delete": {
+                        "ipExtendedCommunityIds": [
+                          "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/Microsoft.ManagedNetworkFabric/ipExtendedCommunities/ipextcommunity-2604"
+                        ]
+                      }
+                    }
+                  }
+                }
+              ],
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/microsoft.managednetworkfabric/routePolicies/rcf-nf1fab3200623-l3domain-v4-extoptionA-imp-policy-2603-2604",
+            "name": "rcf-nf1fab3200623-l3domain-v4-extoptionA-imp-policy-2603-2604",
+            "type": "microsoft.managednetworkfabric/routepolicies",
+            "location": "eastus",
+            "systemData": {
+              "createdBy": "edf733ea-9067-4115-8588-b12c62d25d45",
+              "createdByType": "Application",
+              "createdAt": "2023-06-22T05:36:46.2207909Z",
+              "lastModifiedBy": "edf733ea-9067-4115-8588-b12c62d25d45",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-06-22T05:36:46.2207909Z"
+            },
+            "properties": {
+              "statements": [
+                {
+                  "sequenceNumber": 10,
+                  "condition": {
+                    "ipPrefixId": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/Microsoft.ManagedNetworkFabric/ipPrefixes/ipprefixv4-2604-cn1-ext-imp"
+                  },
+                  "action": {
+                    "actionType": "Permit",
+                    "ipExtendedCommunityProperties": {
+                      "set": {
+                        "ipExtendedCommunityIds": [
+                          "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/Microsoft.ManagedNetworkFabric/ipExtendedCommunities/ipextcommunity-2603-ext-imp"
+                        ]
+                      }
+                    }
+                  }
+                },
+                {
+                  "sequenceNumber": 20,
+                  "condition": {
+                    "ipPrefixId": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/Microsoft.ManagedNetworkFabric/ipPrefixes/ipprefixv4-2604-cn3-ext-imp"
+                  },
+                  "action": {
+                    "actionType": "Permit",
+                    "ipExtendedCommunityProperties": {
+                      "set": {
+                        "ipExtendedCommunityIds": [
+                          "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/Microsoft.ManagedNetworkFabric/ipExtendedCommunities/ipextcommunity-2604-ext-imp"
+                        ]
+                      }
+                    }
+                  }
+                }
+              ],
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/microsoft.managednetworkfabric/routePolicies/rcf-nf1fab3200623-l3domain-v4-extoptionA-exp-policy-2603-2604",
+            "name": "rcf-nf1fab3200623-l3domain-v4-extoptionA-exp-policy-2603-2604",
+            "type": "microsoft.managednetworkfabric/routepolicies",
+            "location": "eastus",
+            "systemData": {
+              "createdBy": "edf733ea-9067-4115-8588-b12c62d25d45",
+              "createdByType": "Application",
+              "createdAt": "2023-06-22T05:36:51.7833767Z",
+              "lastModifiedBy": "edf733ea-9067-4115-8588-b12c62d25d45",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-06-22T05:36:51.7833767Z"
+            },
+            "properties": {
+              "statements": [
+                {
+                  "sequenceNumber": 10,
+                  "condition": {
+                    "ipPrefixId": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/Microsoft.ManagedNetworkFabric/ipPrefixes/ipprefixv4-2604-cn1-ext-exp"
+                  },
+                  "action": {
+                    "actionType": "Permit",
+                    "ipExtendedCommunityProperties": {
+                      "set": {
+                        "ipExtendedCommunityIds": [
+                          "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/Microsoft.ManagedNetworkFabric/ipExtendedCommunities/ipextcommunity-2603-ext-exp"
+                        ]
+                      }
+                    }
+                  }
+                },
+                {
+                  "sequenceNumber": 20,
+                  "condition": {
+                    "ipPrefixId": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/Microsoft.ManagedNetworkFabric/ipPrefixes/ipprefixv4-2604-cn3-ext-exp"
+                  },
+                  "action": {
+                    "actionType": "Permit",
+                    "ipExtendedCommunityProperties": {
+                      "set": {
+                        "ipExtendedCommunityIds": [
+                          "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/Microsoft.ManagedNetworkFabric/ipExtendedCommunities/ipextcommunity-2604-ext-exp"
+                        ]
+                      }
+                    }
+                  }
+                }
+              ],
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/microsoft.managednetworkfabric/routePolicies/rcf-nf1fab3200623-l3domain-v6-connsubnet-ext-policy-2605-2606",
+            "name": "rcf-nf1fab3200623-l3domain-v6-connsubnet-ext-policy-2605-2606",
+            "type": "microsoft.managednetworkfabric/routepolicies",
+            "location": "eastus",
+            "systemData": {
+              "createdBy": "edf733ea-9067-4115-8588-b12c62d25d45",
+              "createdByType": "Application",
+              "createdAt": "2023-06-22T05:37:11.299303Z",
+              "lastModifiedBy": "edf733ea-9067-4115-8588-b12c62d25d45",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-06-22T05:37:11.299303Z"
+            },
+            "properties": {
+              "statements": [
+                {
+                  "sequenceNumber": 10,
+                  "condition": {
+                    "ipPrefixId": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/Microsoft.ManagedNetworkFabric/ipPrefixes/ipprefixv6-2605-staticsubnet"
+                  },
+                  "action": {
+                    "actionType": "Permit",
+                    "ipCommunityProperties": {
+                      "set": {
+                        "ipCommunityIds": [
+                          "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/Microsoft.ManagedNetworkFabric/ipCommunities/ipcommunity-2605-staticsubnet"
+                        ]
+                      }
+                    }
+                  }
+                },
+                {
+                  "sequenceNumber": 20,
+                  "condition": {
+                    "ipPrefixId": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/Microsoft.ManagedNetworkFabric/ipPrefixes/ipprefixv6-2606-staticsubnet"
+                  },
+                  "action": {
+                    "actionType": "Permit",
+                    "ipCommunityProperties": {
+                      "set": {
+                        "ipCommunityIds": [
+                          "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/Microsoft.ManagedNetworkFabric/ipCommunities/ipcommunity-2606-staticsubnet"
+                        ]
+                      }
+                    }
+                  }
+                },
+                {
+                  "sequenceNumber": 30,
+                  "condition": {
+                    "ipPrefixId": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/Microsoft.ManagedNetworkFabric/ipPrefixes/ipprefixv6-2605-connsubnet"
+                  },
+                  "action": {
+                    "actionType": "Permit",
+                    "ipCommunityProperties": {
+                      "set": {
+                        "ipCommunityIds": [
+                          "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/Microsoft.ManagedNetworkFabric/ipCommunities/ipcommunity-connsubnet-2605"
+                        ]
+                      }
+                    }
+                  }
+                },
+                {
+                  "sequenceNumber": 40,
+                  "condition": {
+                    "ipPrefixId": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/Microsoft.ManagedNetworkFabric/ipPrefixes/ipprefixv6-2606-connsubnet"
+                  },
+                  "action": {
+                    "actionType": "Permit",
+                    "ipCommunityProperties": {
+                      "set": {
+                        "ipCommunityIds": [
+                          "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/Microsoft.ManagedNetworkFabric/ipCommunities/ipcommunity-connsubnet-2606"
+                        ]
+                      }
+                    }
+                  }
+                }
+              ],
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/microsoft.managednetworkfabric/routePolicies/rcf-nf1fab3200623-l3domain-v6-intnw-2605-imp-policy",
+            "name": "rcf-nf1fab3200623-l3domain-v6-intnw-2605-imp-policy",
+            "type": "microsoft.managednetworkfabric/routepolicies",
+            "location": "eastus",
+            "systemData": {
+              "createdBy": "edf733ea-9067-4115-8588-b12c62d25d45",
+              "createdByType": "Application",
+              "createdAt": "2023-06-22T05:37:20.5963184Z",
+              "lastModifiedBy": "edf733ea-9067-4115-8588-b12c62d25d45",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-06-22T05:37:20.5963184Z"
+            },
+            "properties": {
+              "statements": [
+                {
+                  "sequenceNumber": 10,
+                  "condition": {
+                    "ipPrefixId": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/Microsoft.ManagedNetworkFabric/ipPrefixes/ipprefixv6-2605-cn1-imp"
+                  },
+                  "action": {
+                    "actionType": "Permit",
+                    "ipCommunityProperties": {
+                      "set": {
+                        "ipCommunityIds": [
+                          "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/Microsoft.ManagedNetworkFabric/ipCommunities/ipcommunity-2605-imp"
+                        ]
+                      }
+                    }
+                  }
+                },
+                {
+                  "sequenceNumber": 20,
+                  "condition": {
+                    "ipPrefixId": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/Microsoft.ManagedNetworkFabric/ipPrefixes/ipprefixv6-2605-cn2-imp"
+                  },
+                  "action": {
+                    "actionType": "Permit",
+                    "ipCommunityProperties": {
+                      "set": {
+                        "ipCommunityIds": [
+                          "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/Microsoft.ManagedNetworkFabric/ipCommunities/ipcommunity-2605-imp"
+                        ]
+                      }
+                    }
+                  }
+                },
+                {
+                  "sequenceNumber": 30,
+                  "condition": {
+                    "ipPrefixId": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/Microsoft.ManagedNetworkFabric/ipPrefixes/ipprefixv6-2605-cn3-imp"
+                  },
+                  "action": {
+                    "actionType": "Deny"
+                  }
+                },
+                {
+                  "sequenceNumber": 40,
+                  "condition": {
+                    "ipPrefixId": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/Microsoft.ManagedNetworkFabric/ipPrefixes/ipprefixv6-2605-cn4-imp"
+                  },
+                  "action": {
+                    "actionType": "Deny"
+                  }
+                }
+              ],
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/microsoft.managednetworkfabric/routePolicies/rcf-nf1fab3200623-l3domain-v6-intnw-2605-exp-policy",
+            "name": "rcf-nf1fab3200623-l3domain-v6-intnw-2605-exp-policy",
+            "type": "microsoft.managednetworkfabric/routepolicies",
+            "location": "eastus",
+            "systemData": {
+              "createdBy": "edf733ea-9067-4115-8588-b12c62d25d45",
+              "createdByType": "Application",
+              "createdAt": "2023-06-22T05:37:30.2527198Z",
+              "lastModifiedBy": "edf733ea-9067-4115-8588-b12c62d25d45",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-06-22T05:37:30.2527198Z"
+            },
+            "properties": {
+              "statements": [
+                {
+                  "sequenceNumber": 10,
+                  "condition": {
+                    "ipPrefixId": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/Microsoft.ManagedNetworkFabric/ipPrefixes/ipprefixv6-2605-cn1-exp"
+                  },
+                  "action": {
+                    "actionType": "Permit",
+                    "ipCommunityProperties": {
+                      "set": {
+                        "ipCommunityIds": [
+                          "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/Microsoft.ManagedNetworkFabric/ipCommunities/ipcommunity-2605-exp"
+                        ]
+                      }
+                    }
+                  }
+                },
+                {
+                  "sequenceNumber": 20,
+                  "condition": {
+                    "ipPrefixId": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/Microsoft.ManagedNetworkFabric/ipPrefixes/ipprefixv6-2605-cn2-exp"
+                  },
+                  "action": {
+                    "actionType": "Permit",
+                    "ipCommunityProperties": {
+                      "set": {
+                        "ipCommunityIds": [
+                          "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/Microsoft.ManagedNetworkFabric/ipCommunities/ipcommunity-2605-exp"
+                        ]
+                      }
+                    }
+                  }
+                },
+                {
+                  "sequenceNumber": 30,
+                  "condition": {
+                    "ipPrefixId": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/Microsoft.ManagedNetworkFabric/ipPrefixes/ipprefixv6-2605-cn3-exp"
+                  },
+                  "action": {
+                    "actionType": "Deny"
+                  }
+                },
+                {
+                  "sequenceNumber": 40,
+                  "condition": {
+                    "ipPrefixId": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/Microsoft.ManagedNetworkFabric/ipPrefixes/ipprefixv6-2605-cn4-exp"
+                  },
+                  "action": {
+                    "actionType": "Deny"
+                  }
+                },
+                {
+                  "sequenceNumber": 50,
+                  "condition": {
+                    "ipExtendedCommunityIds": [
+                      "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/Microsoft.ManagedNetworkFabric/ipExtendedCommunities/ipextcommunity-2605-cn1"
+                    ]
+                  },
+                  "action": {
+                    "actionType": "Permit",
+                    "ipExtendedCommunityProperties": {
+                      "add": {
+                        "ipExtendedCommunityIds": [
+                          "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/Microsoft.ManagedNetworkFabric/ipExtendedCommunities/ipextcommunity-2605"
+                        ]
+                      }
+                    }
+                  }
+                },
+                {
+                  "sequenceNumber": 60,
+                  "condition": {
+                    "ipExtendedCommunityIds": [
+                      "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/Microsoft.ManagedNetworkFabric/ipExtendedCommunities/ipextcommunity-2605-cn2"
+                    ]
+                  },
+                  "action": {
+                    "actionType": "Permit",
+                    "ipExtendedCommunityProperties": {
+                      "delete": {
+                        "ipExtendedCommunityIds": [
+                          "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/Microsoft.ManagedNetworkFabric/ipExtendedCommunities/ipextcommunity-2605"
+                        ]
+                      }
+                    }
+                  }
+                }
+              ],
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/microsoft.managednetworkfabric/routePolicies/rcf-nf1fab3200623-l3domain-v6-intnw-2606-imp-policy",
+            "name": "rcf-nf1fab3200623-l3domain-v6-intnw-2606-imp-policy",
+            "type": "microsoft.managednetworkfabric/routepolicies",
+            "location": "eastus",
+            "systemData": {
+              "createdBy": "edf733ea-9067-4115-8588-b12c62d25d45",
+              "createdByType": "Application",
+              "createdAt": "2023-06-22T05:37:42.5029018Z",
+              "lastModifiedBy": "edf733ea-9067-4115-8588-b12c62d25d45",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-06-22T05:37:42.5029018Z"
+            },
+            "properties": {
+              "statements": [
+                {
+                  "sequenceNumber": 10,
+                  "condition": {
+                    "ipPrefixId": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/Microsoft.ManagedNetworkFabric/ipPrefixes/ipprefixv6-2606-cn1-imp"
+                  },
+                  "action": {
+                    "actionType": "Permit",
+                    "ipCommunityProperties": {
+                      "set": {
+                        "ipCommunityIds": [
+                          "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/Microsoft.ManagedNetworkFabric/ipCommunities/ipcommunity-2606-imp"
+                        ]
+                      }
+                    }
+                  }
+                },
+                {
+                  "sequenceNumber": 20,
+                  "condition": {
+                    "ipPrefixId": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/Microsoft.ManagedNetworkFabric/ipPrefixes/ipprefixv6-2606-cn2-imp"
+                  },
+                  "action": {
+                    "actionType": "Permit",
+                    "ipCommunityProperties": {
+                      "set": {
+                        "ipCommunityIds": [
+                          "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/Microsoft.ManagedNetworkFabric/ipCommunities/ipcommunity-2606-imp"
+                        ]
+                      }
+                    }
+                  }
+                },
+                {
+                  "sequenceNumber": 30,
+                  "condition": {
+                    "ipPrefixId": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/Microsoft.ManagedNetworkFabric/ipPrefixes/ipprefixv6-2606-cn3-imp"
+                  },
+                  "action": {
+                    "actionType": "Deny"
+                  }
+                },
+                {
+                  "sequenceNumber": 40,
+                  "condition": {
+                    "ipPrefixId": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/Microsoft.ManagedNetworkFabric/ipPrefixes/ipprefixv6-2606-cn4-imp"
+                  },
+                  "action": {
+                    "actionType": "Deny"
+                  }
+                },
+                {
+                  "sequenceNumber": 50,
+                  "condition": {
+                    "ipExtendedCommunityIds": [
+                      "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/Microsoft.ManagedNetworkFabric/ipExtendedCommunities/ipextcommunity-2606-cn1"
+                    ]
+                  },
+                  "action": {
+                    "actionType": "Permit",
+                    "ipExtendedCommunityProperties": {
+                      "add": {
+                        "ipExtendedCommunityIds": [
+                          "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/Microsoft.ManagedNetworkFabric/ipExtendedCommunities/ipextcommunity-2606"
+                        ]
+                      }
+                    }
+                  }
+                },
+                {
+                  "sequenceNumber": 60,
+                  "condition": {
+                    "ipExtendedCommunityIds": [
+                      "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/Microsoft.ManagedNetworkFabric/ipExtendedCommunities/ipextcommunity-2606-cn2"
+                    ]
+                  },
+                  "action": {
+                    "actionType": "Permit",
+                    "ipExtendedCommunityProperties": {
+                      "delete": {
+                        "ipExtendedCommunityIds": [
+                          "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/Microsoft.ManagedNetworkFabric/ipExtendedCommunities/ipextcommunity-2606"
+                        ]
+                      }
+                    }
+                  }
+                }
+              ],
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/microsoft.managednetworkfabric/routePolicies/rcf-nf1fab3200623-l3domain-v6-intnw-2606-exp-policy",
+            "name": "rcf-nf1fab3200623-l3domain-v6-intnw-2606-exp-policy",
+            "type": "microsoft.managednetworkfabric/routepolicies",
+            "location": "eastus",
+            "systemData": {
+              "createdBy": "edf733ea-9067-4115-8588-b12c62d25d45",
+              "createdByType": "Application",
+              "createdAt": "2023-06-22T05:37:48.924877Z",
+              "lastModifiedBy": "edf733ea-9067-4115-8588-b12c62d25d45",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-06-22T05:37:48.924877Z"
+            },
+            "properties": {
+              "statements": [
+                {
+                  "sequenceNumber": 10,
+                  "condition": {
+                    "ipPrefixId": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/Microsoft.ManagedNetworkFabric/ipPrefixes/ipprefixv6-2606-cn1-exp"
+                  },
+                  "action": {
+                    "actionType": "Permit",
+                    "ipCommunityProperties": {
+                      "set": {
+                        "ipCommunityIds": [
+                          "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/Microsoft.ManagedNetworkFabric/ipCommunities/ipcommunity-2606-exp"
+                        ]
+                      }
+                    }
+                  }
+                },
+                {
+                  "sequenceNumber": 20,
+                  "condition": {
+                    "ipPrefixId": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/Microsoft.ManagedNetworkFabric/ipPrefixes/ipprefixv6-2606-cn2-exp"
+                  },
+                  "action": {
+                    "actionType": "Permit",
+                    "ipCommunityProperties": {
+                      "set": {
+                        "ipCommunityIds": [
+                          "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/Microsoft.ManagedNetworkFabric/ipCommunities/ipcommunity-2606-exp"
+                        ]
+                      }
+                    }
+                  }
+                },
+                {
+                  "sequenceNumber": 30,
+                  "condition": {
+                    "ipPrefixId": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/Microsoft.ManagedNetworkFabric/ipPrefixes/ipprefixv6-2606-cn3-exp"
+                  },
+                  "action": {
+                    "actionType": "Deny"
+                  }
+                },
+                {
+                  "sequenceNumber": 40,
+                  "condition": {
+                    "ipPrefixId": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/Microsoft.ManagedNetworkFabric/ipPrefixes/ipprefixv6-2606-cn4-exp"
+                  },
+                  "action": {
+                    "actionType": "Deny"
+                  }
+                },
+                {
+                  "sequenceNumber": 50,
+                  "condition": {
+                    "ipExtendedCommunityIds": [
+                      "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/Microsoft.ManagedNetworkFabric/ipExtendedCommunities/ipextcommunity-2606-cn1"
+                    ]
+                  },
+                  "action": {
+                    "actionType": "Permit",
+                    "ipExtendedCommunityProperties": {
+                      "add": {
+                        "ipExtendedCommunityIds": [
+                          "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/Microsoft.ManagedNetworkFabric/ipExtendedCommunities/ipextcommunity-2606"
+                        ]
+                      }
+                    }
+                  }
+                },
+                {
+                  "sequenceNumber": 60,
+                  "condition": {
+                    "ipExtendedCommunityIds": [
+                      "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/Microsoft.ManagedNetworkFabric/ipExtendedCommunities/ipextcommunity-2606-cn2"
+                    ]
+                  },
+                  "action": {
+                    "actionType": "Permit",
+                    "ipExtendedCommunityProperties": {
+                      "delete": {
+                        "ipExtendedCommunityIds": [
+                          "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/Microsoft.ManagedNetworkFabric/ipExtendedCommunities/ipextcommunity-2606"
+                        ]
+                      }
+                    }
+                  }
+                }
+              ],
+              "provisioningState": "Failed"
+            }
+          },
+          {
+            "id": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/microsoft.managednetworkfabric/routePolicies/rcf-nf1fab3200623-l3domain-v6-exportA-imp-policy-2605-2606",
+            "name": "rcf-nf1fab3200623-l3domain-v6-exportA-imp-policy-2605-2606",
+            "type": "microsoft.managednetworkfabric/routepolicies",
+            "location": "eastus",
+            "systemData": {
+              "createdBy": "edf733ea-9067-4115-8588-b12c62d25d45",
+              "createdByType": "Application",
+              "createdAt": "2023-06-22T05:37:57.1437528Z",
+              "lastModifiedBy": "edf733ea-9067-4115-8588-b12c62d25d45",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-06-22T05:37:57.1437528Z"
+            },
+            "properties": {
+              "statements": [
+                {
+                  "sequenceNumber": 10,
+                  "condition": {
+                    "ipPrefixId": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/Microsoft.ManagedNetworkFabric/ipPrefixes/ipprefixv6-2606-cn1-ext-imp"
+                  },
+                  "action": {
+                    "actionType": "Permit",
+                    "ipExtendedCommunityProperties": {
+                      "set": {
+                        "ipExtendedCommunityIds": [
+                          "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/Microsoft.ManagedNetworkFabric/ipExtendedCommunities/ipextcommunity-2605-ext-imp"
+                        ]
+                      }
+                    }
+                  }
+                },
+                {
+                  "sequenceNumber": 20,
+                  "condition": {
+                    "ipPrefixId": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/Microsoft.ManagedNetworkFabric/ipPrefixes/ipprefixv6-2606-cn3-ext-imp"
+                  },
+                  "action": {
+                    "actionType": "Permit",
+                    "ipExtendedCommunityProperties": {
+                      "set": {
+                        "ipExtendedCommunityIds": [
+                          "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/Microsoft.ManagedNetworkFabric/ipExtendedCommunities/ipextcommunity-2606-ext-imp"
+                        ]
+                      }
+                    }
+                  }
+                }
+              ],
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/microsoft.managednetworkfabric/routePolicies/rcf-nf1fab3200623-l3domain-v6-exportA-exp-policy-2605-2606",
+            "name": "rcf-nf1fab3200623-l3domain-v6-exportA-exp-policy-2605-2606",
+            "type": "microsoft.managednetworkfabric/routepolicies",
+            "location": "eastus",
+            "systemData": {
+              "createdBy": "edf733ea-9067-4115-8588-b12c62d25d45",
+              "createdByType": "Application",
+              "createdAt": "2023-06-22T05:38:02.2063303Z",
+              "lastModifiedBy": "edf733ea-9067-4115-8588-b12c62d25d45",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-06-22T05:38:02.2063303Z"
+            },
+            "properties": {
+              "statements": [
+                {
+                  "sequenceNumber": 10,
+                  "condition": {
+                    "ipPrefixId": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/Microsoft.ManagedNetworkFabric/ipPrefixes/ipprefixv6-2606-cn1-ext-exp"
+                  },
+                  "action": {
+                    "actionType": "Permit",
+                    "ipExtendedCommunityProperties": {
+                      "set": {
+                        "ipExtendedCommunityIds": [
+                          "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/Microsoft.ManagedNetworkFabric/ipExtendedCommunities/ipextcommunity-2605-ext-exp"
+                        ]
+                      }
+                    }
+                  }
+                },
+                {
+                  "sequenceNumber": 20,
+                  "condition": {
+                    "ipPrefixId": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/Microsoft.ManagedNetworkFabric/ipPrefixes/ipprefixv6-2606-cn3-ext-exp"
+                  },
+                  "action": {
+                    "actionType": "Permit",
+                    "ipExtendedCommunityProperties": {
+                      "set": {
+                        "ipExtendedCommunityIds": [
+                          "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/Microsoft.ManagedNetworkFabric/ipExtendedCommunities/ipextcommunity-2606-ext-exp"
+                        ]
+                      }
+                    }
+                  }
+                }
+              ],
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/microsoft.managednetworkfabric/routePolicies/rcf-nf1fab3200623-l3domain-v6-connsubnet-ext-policy-2607-2608",
+            "name": "rcf-nf1fab3200623-l3domain-v6-connsubnet-ext-policy-2607-2608",
+            "type": "microsoft.managednetworkfabric/routepolicies",
+            "location": "eastus",
+            "systemData": {
+              "createdBy": "edf733ea-9067-4115-8588-b12c62d25d45",
+              "createdByType": "Application",
+              "createdAt": "2023-06-22T05:38:22.9566465Z",
+              "lastModifiedBy": "edf733ea-9067-4115-8588-b12c62d25d45",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-06-22T05:38:22.9566465Z"
+            },
+            "properties": {
+              "statements": [
+                {
+                  "sequenceNumber": 10,
+                  "condition": {
+                    "ipPrefixId": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/Microsoft.ManagedNetworkFabric/ipPrefixes/ipprefixv6-2607-staticsubnet"
+                  },
+                  "action": {
+                    "actionType": "Permit",
+                    "ipCommunityProperties": {
+                      "set": {
+                        "ipCommunityIds": [
+                          "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/Microsoft.ManagedNetworkFabric/ipCommunities/ipcommunity-2607-staticsubnet"
+                        ]
+                      }
+                    }
+                  }
+                },
+                {
+                  "sequenceNumber": 20,
+                  "condition": {
+                    "ipPrefixId": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/Microsoft.ManagedNetworkFabric/ipPrefixes/ipprefixv6-2608-staticsubnet"
+                  },
+                  "action": {
+                    "actionType": "Permit",
+                    "ipCommunityProperties": {
+                      "set": {
+                        "ipCommunityIds": [
+                          "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/Microsoft.ManagedNetworkFabric/ipCommunities/ipcommunity-2608-staticsubnet"
+                        ]
+                      }
+                    }
+                  }
+                },
+                {
+                  "sequenceNumber": 30,
+                  "condition": {
+                    "ipPrefixId": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/Microsoft.ManagedNetworkFabric/ipPrefixes/ipprefixv6-2607-connsubnet"
+                  },
+                  "action": {
+                    "actionType": "Permit",
+                    "ipCommunityProperties": {
+                      "set": {
+                        "ipCommunityIds": [
+                          "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/Microsoft.ManagedNetworkFabric/ipCommunities/ipcommunity-connsubnet-2607"
+                        ]
+                      }
+                    }
+                  }
+                },
+                {
+                  "sequenceNumber": 40,
+                  "condition": {
+                    "ipPrefixId": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/Microsoft.ManagedNetworkFabric/ipPrefixes/ipprefixv6-2608-connsubnet"
+                  },
+                  "action": {
+                    "actionType": "Permit",
+                    "ipCommunityProperties": {
+                      "set": {
+                        "ipCommunityIds": [
+                          "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/Microsoft.ManagedNetworkFabric/ipCommunities/ipcommunity-connsubnet-2608"
+                        ]
+                      }
+                    }
+                  }
+                }
+              ],
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/microsoft.managednetworkfabric/routePolicies/rcf-nf1fab3200623-l3domain-v6-intnw-2607-imp-policy",
+            "name": "rcf-nf1fab3200623-l3domain-v6-intnw-2607-imp-policy",
+            "type": "microsoft.managednetworkfabric/routepolicies",
+            "location": "eastus",
+            "systemData": {
+              "createdBy": "edf733ea-9067-4115-8588-b12c62d25d45",
+              "createdByType": "Application",
+              "createdAt": "2023-06-22T05:38:35.0505778Z",
+              "lastModifiedBy": "edf733ea-9067-4115-8588-b12c62d25d45",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-06-22T05:38:35.0505778Z"
+            },
+            "properties": {
+              "statements": [
+                {
+                  "sequenceNumber": 10,
+                  "condition": {
+                    "ipPrefixId": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/Microsoft.ManagedNetworkFabric/ipPrefixes/ipprefixv6-2607-cn1-imp"
+                  },
+                  "action": {
+                    "actionType": "Permit",
+                    "ipCommunityProperties": {
+                      "set": {
+                        "ipCommunityIds": [
+                          "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/Microsoft.ManagedNetworkFabric/ipCommunities/ipcommunity-2607-imp"
+                        ]
+                      }
+                    }
+                  }
+                },
+                {
+                  "sequenceNumber": 20,
+                  "condition": {
+                    "ipPrefixId": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/Microsoft.ManagedNetworkFabric/ipPrefixes/ipprefixv6-2607-cn2-imp"
+                  },
+                  "action": {
+                    "actionType": "Permit",
+                    "ipCommunityProperties": {
+                      "set": {
+                        "ipCommunityIds": [
+                          "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/Microsoft.ManagedNetworkFabric/ipCommunities/ipcommunity-2607-imp"
+                        ]
+                      }
+                    }
+                  }
+                },
+                {
+                  "sequenceNumber": 30,
+                  "condition": {
+                    "ipPrefixId": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/Microsoft.ManagedNetworkFabric/ipPrefixes/ipprefixv6-2607-cn3-imp"
+                  },
+                  "action": {
+                    "actionType": "Deny"
+                  }
+                },
+                {
+                  "sequenceNumber": 40,
+                  "condition": {
+                    "ipPrefixId": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/Microsoft.ManagedNetworkFabric/ipPrefixes/ipprefixv6-2607-cn4-imp"
+                  },
+                  "action": {
+                    "actionType": "Deny"
+                  }
+                }
+              ],
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/microsoft.managednetworkfabric/routePolicies/rcf-nf1fab3200623-l3domain-v6-intnw-2607-exp-policy",
+            "name": "rcf-nf1fab3200623-l3domain-v6-intnw-2607-exp-policy",
+            "type": "microsoft.managednetworkfabric/routepolicies",
+            "location": "eastus",
+            "systemData": {
+              "createdBy": "edf733ea-9067-4115-8588-b12c62d25d45",
+              "createdByType": "Application",
+              "createdAt": "2023-06-22T05:38:43.9882161Z",
+              "lastModifiedBy": "edf733ea-9067-4115-8588-b12c62d25d45",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-06-22T05:38:43.9882161Z"
+            },
+            "properties": {
+              "statements": [
+                {
+                  "sequenceNumber": 10,
+                  "condition": {
+                    "ipPrefixId": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/Microsoft.ManagedNetworkFabric/ipPrefixes/ipprefixv6-2607-cn1-exp"
+                  },
+                  "action": {
+                    "actionType": "Permit",
+                    "ipCommunityProperties": {
+                      "set": {
+                        "ipCommunityIds": [
+                          "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/Microsoft.ManagedNetworkFabric/ipCommunities/ipcommunity-2607-exp"
+                        ]
+                      }
+                    }
+                  }
+                },
+                {
+                  "sequenceNumber": 20,
+                  "condition": {
+                    "ipPrefixId": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/Microsoft.ManagedNetworkFabric/ipPrefixes/ipprefixv6-2607-cn2-exp"
+                  },
+                  "action": {
+                    "actionType": "Permit",
+                    "ipCommunityProperties": {
+                      "set": {
+                        "ipCommunityIds": [
+                          "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/Microsoft.ManagedNetworkFabric/ipCommunities/ipcommunity-2607-exp"
+                        ]
+                      }
+                    }
+                  }
+                },
+                {
+                  "sequenceNumber": 30,
+                  "condition": {
+                    "ipPrefixId": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/Microsoft.ManagedNetworkFabric/ipPrefixes/ipprefixv6-2607-cn3-exp"
+                  },
+                  "action": {
+                    "actionType": "Deny"
+                  }
+                },
+                {
+                  "sequenceNumber": 40,
+                  "condition": {
+                    "ipPrefixId": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/Microsoft.ManagedNetworkFabric/ipPrefixes/ipprefixv6-2607-cn4-exp"
+                  },
+                  "action": {
+                    "actionType": "Deny"
+                  }
+                },
+                {
+                  "sequenceNumber": 50,
+                  "condition": {
+                    "ipExtendedCommunityIds": [
+                      "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/Microsoft.ManagedNetworkFabric/ipExtendedCommunities/ipextcommunity-2607-cn1"
+                    ]
+                  },
+                  "action": {
+                    "actionType": "Permit",
+                    "ipExtendedCommunityProperties": {
+                      "add": {
+                        "ipExtendedCommunityIds": [
+                          "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/Microsoft.ManagedNetworkFabric/ipExtendedCommunities/ipextcommunity-2607"
+                        ]
+                      }
+                    }
+                  }
+                },
+                {
+                  "sequenceNumber": 60,
+                  "condition": {
+                    "ipExtendedCommunityIds": [
+                      "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/Microsoft.ManagedNetworkFabric/ipExtendedCommunities/ipextcommunity-2607-cn2"
+                    ]
+                  },
+                  "action": {
+                    "actionType": "Permit",
+                    "ipExtendedCommunityProperties": {
+                      "delete": {
+                        "ipExtendedCommunityIds": [
+                          "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/Microsoft.ManagedNetworkFabric/ipExtendedCommunities/ipextcommunity-2607"
+                        ]
+                      }
+                    }
+                  }
+                }
+              ],
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/microsoft.managednetworkfabric/routePolicies/rcf-nf1fab3200623-l3domain-v6-intnw-2608-imp-policy",
+            "name": "rcf-nf1fab3200623-l3domain-v6-intnw-2608-imp-policy",
+            "type": "microsoft.managednetworkfabric/routepolicies",
+            "location": "eastus",
+            "systemData": {
+              "createdBy": "edf733ea-9067-4115-8588-b12c62d25d45",
+              "createdByType": "Application",
+              "createdAt": "2023-06-22T05:38:55.6602713Z",
+              "lastModifiedBy": "edf733ea-9067-4115-8588-b12c62d25d45",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-06-22T05:38:55.6602713Z"
+            },
+            "properties": {
+              "statements": [
+                {
+                  "sequenceNumber": 10,
+                  "condition": {
+                    "ipPrefixId": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/Microsoft.ManagedNetworkFabric/ipPrefixes/ipprefixv6-2608-cn1-imp"
+                  },
+                  "action": {
+                    "actionType": "Permit",
+                    "ipCommunityProperties": {
+                      "set": {
+                        "ipCommunityIds": [
+                          "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/Microsoft.ManagedNetworkFabric/ipCommunities/ipcommunity-2608-imp"
+                        ]
+                      }
+                    }
+                  }
+                },
+                {
+                  "sequenceNumber": 20,
+                  "condition": {
+                    "ipPrefixId": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/Microsoft.ManagedNetworkFabric/ipPrefixes/ipprefixv6-2608-cn2-imp"
+                  },
+                  "action": {
+                    "actionType": "Permit",
+                    "ipCommunityProperties": {
+                      "set": {
+                        "ipCommunityIds": [
+                          "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/Microsoft.ManagedNetworkFabric/ipCommunities/ipcommunity-2608-imp"
+                        ]
+                      }
+                    }
+                  }
+                },
+                {
+                  "sequenceNumber": 30,
+                  "condition": {
+                    "ipPrefixId": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/Microsoft.ManagedNetworkFabric/ipPrefixes/ipprefixv6-2608-cn3-imp"
+                  },
+                  "action": {
+                    "actionType": "Deny"
+                  }
+                },
+                {
+                  "sequenceNumber": 40,
+                  "condition": {
+                    "ipPrefixId": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/Microsoft.ManagedNetworkFabric/ipPrefixes/ipprefixv6-2608-cn4-imp"
+                  },
+                  "action": {
+                    "actionType": "Deny"
+                  }
+                },
+                {
+                  "sequenceNumber": 50,
+                  "condition": {
+                    "ipCommunityIds": [
+                      "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/Microsoft.ManagedNetworkFabric/ipCommunities/ipcommunity-2608-cn1"
+                    ]
+                  },
+                  "action": {
+                    "actionType": "Permit",
+                    "ipCommunityProperties": {
+                      "add": {
+                        "ipCommunityIds": [
+                          "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/Microsoft.ManagedNetworkFabric/ipCommunities/ipcommunity-2608-imp"
+                        ]
+                      }
+                    }
+                  }
+                },
+                {
+                  "sequenceNumber": 60,
+                  "condition": {
+                    "ipCommunityIds": [
+                      "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/Microsoft.ManagedNetworkFabric/ipCommunities/ipcommunity-2608-cn2"
+                    ]
+                  },
+                  "action": {
+                    "actionType": "Permit",
+                    "ipCommunityProperties": {
+                      "delete": {
+                        "ipCommunityIds": [
+                          "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/Microsoft.ManagedNetworkFabric/ipCommunities/ipcommunity-2608-imp"
+                        ]
+                      }
+                    }
+                  }
+                }
+              ],
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/microsoft.managednetworkfabric/routePolicies/rcf-nf1fab3200623-l3domain-v6-intnw-2608-exp-policy",
+            "name": "rcf-nf1fab3200623-l3domain-v6-intnw-2608-exp-policy",
+            "type": "microsoft.managednetworkfabric/routepolicies",
+            "location": "eastus",
+            "systemData": {
+              "createdBy": "edf733ea-9067-4115-8588-b12c62d25d45",
+              "createdByType": "Application",
+              "createdAt": "2023-06-22T05:39:05.222917Z",
+              "lastModifiedBy": "edf733ea-9067-4115-8588-b12c62d25d45",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-06-22T05:39:05.222917Z"
+            },
+            "properties": {
+              "statements": [
+                {
+                  "sequenceNumber": 10,
+                  "condition": {
+                    "ipPrefixId": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/Microsoft.ManagedNetworkFabric/ipPrefixes/ipprefixv6-2608-cn1-exp"
+                  },
+                  "action": {
+                    "actionType": "Permit",
+                    "ipCommunityProperties": {
+                      "set": {
+                        "ipCommunityIds": [
+                          "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/Microsoft.ManagedNetworkFabric/ipCommunities/ipcommunity-2608-exp"
+                        ]
+                      }
+                    }
+                  }
+                },
+                {
+                  "sequenceNumber": 20,
+                  "condition": {
+                    "ipPrefixId": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/Microsoft.ManagedNetworkFabric/ipPrefixes/ipprefixv6-2608-cn2-exp"
+                  },
+                  "action": {
+                    "actionType": "Permit",
+                    "ipCommunityProperties": {
+                      "set": {
+                        "ipCommunityIds": [
+                          "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/Microsoft.ManagedNetworkFabric/ipCommunities/ipcommunity-2608-exp"
+                        ]
+                      }
+                    }
+                  }
+                },
+                {
+                  "sequenceNumber": 30,
+                  "condition": {
+                    "ipPrefixId": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/Microsoft.ManagedNetworkFabric/ipPrefixes/ipprefixv6-2608-cn3-exp"
+                  },
+                  "action": {
+                    "actionType": "Deny"
+                  }
+                },
+                {
+                  "sequenceNumber": 40,
+                  "condition": {
+                    "ipPrefixId": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/Microsoft.ManagedNetworkFabric/ipPrefixes/ipprefixv6-2608-cn4-exp"
+                  },
+                  "action": {
+                    "actionType": "Deny"
+                  }
+                },
+                {
+                  "sequenceNumber": 50,
+                  "condition": {
+                    "ipExtendedCommunityIds": [
+                      "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/Microsoft.ManagedNetworkFabric/ipExtendedCommunities/ipextcommunity-2608-cn1"
+                    ]
+                  },
+                  "action": {
+                    "actionType": "Permit",
+                    "ipExtendedCommunityProperties": {
+                      "add": {
+                        "ipExtendedCommunityIds": [
+                          "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/Microsoft.ManagedNetworkFabric/ipExtendedCommunities/ipextcommunity-2608"
+                        ]
+                      }
+                    }
+                  }
+                },
+                {
+                  "sequenceNumber": 60,
+                  "condition": {
+                    "ipExtendedCommunityIds": [
+                      "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/Microsoft.ManagedNetworkFabric/ipExtendedCommunities/ipextcommunity-2608-cn2"
+                    ]
+                  },
+                  "action": {
+                    "actionType": "Permit",
+                    "ipExtendedCommunityProperties": {
+                      "delete": {
+                        "ipExtendedCommunityIds": [
+                          "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/Microsoft.ManagedNetworkFabric/ipExtendedCommunities/ipextcommunity-2608"
+                        ]
+                      }
+                    }
+                  }
+                }
+              ],
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/microsoft.managednetworkfabric/routePolicies/rcf-nf1fab3200623-l3domain-v6-extoptB-imp-policy-2607-2608",
+            "name": "rcf-nf1fab3200623-l3domain-v6-extoptB-imp-policy-2607-2608",
+            "type": "microsoft.managednetworkfabric/routepolicies",
+            "location": "eastus",
+            "systemData": {
+              "createdBy": "edf733ea-9067-4115-8588-b12c62d25d45",
+              "createdByType": "Application",
+              "createdAt": "2023-06-22T05:39:13.3324105Z",
+              "lastModifiedBy": "edf733ea-9067-4115-8588-b12c62d25d45",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-06-22T05:39:13.3324105Z"
+            },
+            "properties": {
+              "statements": [
+                {
+                  "sequenceNumber": 10,
+                  "condition": {
+                    "ipPrefixId": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/Microsoft.ManagedNetworkFabric/ipPrefixes/ipprefixv6-2608-cn1-ext-imp"
+                  },
+                  "action": {
+                    "actionType": "Permit",
+                    "ipExtendedCommunityProperties": {
+                      "set": {
+                        "ipExtendedCommunityIds": [
+                          "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/Microsoft.ManagedNetworkFabric/ipExtendedCommunities/ipextcommunity-2607-ext-imp"
+                        ]
+                      }
+                    }
+                  }
+                },
+                {
+                  "sequenceNumber": 20,
+                  "condition": {
+                    "ipPrefixId": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/Microsoft.ManagedNetworkFabric/ipPrefixes/ipprefixv6-2608-cn3-ext-imp"
+                  },
+                  "action": {
+                    "actionType": "Permit",
+                    "ipExtendedCommunityProperties": {
+                      "set": {
+                        "ipExtendedCommunityIds": [
+                          "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/Microsoft.ManagedNetworkFabric/ipExtendedCommunities/ipextcommunity-2608-ext-imp"
+                        ]
+                      }
+                    }
+                  }
+                }
+              ],
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/microsoft.managednetworkfabric/routePolicies/rcf-nf1fab3200623-l3domain-v6-extoptB-exp-policy-2607-2608",
+            "name": "rcf-nf1fab3200623-l3domain-v6-extoptB-exp-policy-2607-2608",
+            "type": "microsoft.managednetworkfabric/routepolicies",
+            "location": "eastus",
+            "systemData": {
+              "createdBy": "edf733ea-9067-4115-8588-b12c62d25d45",
+              "createdByType": "Application",
+              "createdAt": "2023-06-22T05:39:18.2074857Z",
+              "lastModifiedBy": "edf733ea-9067-4115-8588-b12c62d25d45",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-06-22T05:39:18.2074857Z"
+            },
+            "properties": {
+              "statements": [
+                {
+                  "sequenceNumber": 10,
+                  "condition": {
+                    "ipPrefixId": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/Microsoft.ManagedNetworkFabric/ipPrefixes/ipprefixv6-2608-cn1-ext-exp"
+                  },
+                  "action": {
+                    "actionType": "Permit",
+                    "ipExtendedCommunityProperties": {
+                      "set": {
+                        "ipExtendedCommunityIds": [
+                          "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/Microsoft.ManagedNetworkFabric/ipExtendedCommunities/ipextcommunity-2607-ext-exp"
+                        ]
+                      }
+                    }
+                  }
+                },
+                {
+                  "sequenceNumber": 20,
+                  "condition": {
+                    "ipPrefixId": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/Microsoft.ManagedNetworkFabric/ipPrefixes/ipprefixv6-2608-cn3-ext-exp"
+                  },
+                  "action": {
+                    "actionType": "Permit",
+                    "ipExtendedCommunityProperties": {
+                      "set": {
+                        "ipExtendedCommunityIds": [
+                          "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/Microsoft.ManagedNetworkFabric/ipExtendedCommunities/ipextcommunity-2608-ext-exp"
+                        ]
+                      }
+                    }
+                  }
+                }
+              ],
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/microsoft.managednetworkfabric/routePolicies/rcf-nf1fab3200623-l3domain-v4-intnw-2609-imp-policy",
+            "name": "rcf-nf1fab3200623-l3domain-v4-intnw-2609-imp-policy",
+            "type": "microsoft.managednetworkfabric/routepolicies",
+            "location": "eastus",
+            "systemData": {
+              "createdBy": "edf733ea-9067-4115-8588-b12c62d25d45",
+              "createdByType": "Application",
+              "createdAt": "2023-06-22T05:39:37.817157Z",
+              "lastModifiedBy": "edf733ea-9067-4115-8588-b12c62d25d45",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-06-22T05:39:37.817157Z"
+            },
+            "properties": {
+              "statements": [
+                {
+                  "sequenceNumber": 10,
+                  "condition": {
+                    "ipPrefixId": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/Microsoft.ManagedNetworkFabric/ipPrefixes/ipprefixv4-2609-cn1-imp"
+                  },
+                  "action": {
+                    "actionType": "Permit",
+                    "ipCommunityProperties": {
+                      "set": {
+                        "ipCommunityIds": [
+                          "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/Microsoft.ManagedNetworkFabric/ipCommunities/ipcommunity-2609-imp"
+                        ]
+                      }
+                    }
+                  }
+                },
+                {
+                  "sequenceNumber": 20,
+                  "condition": {
+                    "ipPrefixId": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/Microsoft.ManagedNetworkFabric/ipPrefixes/ipprefixv4-2609-cn2-imp"
+                  },
+                  "action": {
+                    "actionType": "Permit",
+                    "ipCommunityProperties": {
+                      "set": {
+                        "ipCommunityIds": [
+                          "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/Microsoft.ManagedNetworkFabric/ipCommunities/ipcommunity-2609-imp"
+                        ]
+                      }
+                    }
+                  }
+                },
+                {
+                  "sequenceNumber": 30,
+                  "condition": {
+                    "ipPrefixId": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/Microsoft.ManagedNetworkFabric/ipPrefixes/ipprefixv4-2609-cn3-imp"
+                  },
+                  "action": {
+                    "actionType": "Deny"
+                  }
+                },
+                {
+                  "sequenceNumber": 40,
+                  "condition": {
+                    "ipPrefixId": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/Microsoft.ManagedNetworkFabric/ipPrefixes/ipprefixv4-2609-cn4-imp"
+                  },
+                  "action": {
+                    "actionType": "Deny"
+                  }
+                }
+              ],
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/microsoft.managednetworkfabric/routePolicies/rcf-nf1fab3200623-l3domain-v4-intnw-2609-exp-policy",
+            "name": "rcf-nf1fab3200623-l3domain-v4-intnw-2609-exp-policy",
+            "type": "microsoft.managednetworkfabric/routepolicies",
+            "location": "eastus",
+            "systemData": {
+              "createdBy": "edf733ea-9067-4115-8588-b12c62d25d45",
+              "createdByType": "Application",
+              "createdAt": "2023-06-22T05:39:45.7704108Z",
+              "lastModifiedBy": "edf733ea-9067-4115-8588-b12c62d25d45",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-06-22T05:39:45.7704108Z"
+            },
+            "properties": {
+              "statements": [
+                {
+                  "sequenceNumber": 10,
+                  "condition": {
+                    "ipPrefixId": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/Microsoft.ManagedNetworkFabric/ipPrefixes/ipprefixv4-2609-cn1-exp"
+                  },
+                  "action": {
+                    "actionType": "Permit",
+                    "ipCommunityProperties": {
+                      "set": {
+                        "ipCommunityIds": [
+                          "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/Microsoft.ManagedNetworkFabric/ipCommunities/ipcommunity-2609-exp"
+                        ]
+                      }
+                    }
+                  }
+                },
+                {
+                  "sequenceNumber": 20,
+                  "condition": {
+                    "ipPrefixId": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/Microsoft.ManagedNetworkFabric/ipPrefixes/ipprefixv4-2609-cn2-exp"
+                  },
+                  "action": {
+                    "actionType": "Permit",
+                    "ipCommunityProperties": {
+                      "set": {
+                        "ipCommunityIds": [
+                          "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/Microsoft.ManagedNetworkFabric/ipCommunities/ipcommunity-2609-exp"
+                        ]
+                      }
+                    }
+                  }
+                },
+                {
+                  "sequenceNumber": 30,
+                  "condition": {
+                    "ipPrefixId": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/Microsoft.ManagedNetworkFabric/ipPrefixes/ipprefixv4-2609-cn3-exp"
+                  },
+                  "action": {
+                    "actionType": "Deny"
+                  }
+                },
+                {
+                  "sequenceNumber": 40,
+                  "condition": {
+                    "ipPrefixId": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/Microsoft.ManagedNetworkFabric/ipPrefixes/ipprefixv4-2609-cn4-exp"
+                  },
+                  "action": {
+                    "actionType": "Deny"
+                  }
+                },
+                {
+                  "sequenceNumber": 50,
+                  "condition": {
+                    "ipExtendedCommunityIds": [
+                      "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/Microsoft.ManagedNetworkFabric/ipExtendedCommunities/ipextcommunity-2609-cn1"
+                    ]
+                  },
+                  "action": {
+                    "actionType": "Permit",
+                    "ipExtendedCommunityProperties": {
+                      "add": {
+                        "ipExtendedCommunityIds": [
+                          "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/Microsoft.ManagedNetworkFabric/ipExtendedCommunities/ipextcommunity-2609"
+                        ]
+                      }
+                    }
+                  }
+                },
+                {
+                  "sequenceNumber": 60,
+                  "condition": {
+                    "ipExtendedCommunityIds": [
+                      "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/Microsoft.ManagedNetworkFabric/ipExtendedCommunities/ipextcommunity-2609-cn2"
+                    ]
+                  },
+                  "action": {
+                    "actionType": "Permit",
+                    "ipExtendedCommunityProperties": {
+                      "delete": {
+                        "ipExtendedCommunityIds": [
+                          "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/Microsoft.ManagedNetworkFabric/ipExtendedCommunities/ipextcommunity-2609"
+                        ]
+                      }
+                    }
+                  }
+                }
+              ],
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/microsoft.managednetworkfabric/routePolicies/rcf-nf1fab3200623-l3domain-v4-intnw-2610-imp-policy",
+            "name": "rcf-nf1fab3200623-l3domain-v4-intnw-2610-imp-policy",
+            "type": "microsoft.managednetworkfabric/routepolicies",
+            "location": "eastus",
+            "systemData": {
+              "createdBy": "edf733ea-9067-4115-8588-b12c62d25d45",
+              "createdByType": "Application",
+              "createdAt": "2023-06-22T05:39:55.0675633Z",
+              "lastModifiedBy": "edf733ea-9067-4115-8588-b12c62d25d45",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-06-22T05:39:55.0675633Z"
+            },
+            "properties": {
+              "statements": [
+                {
+                  "sequenceNumber": 10,
+                  "condition": {
+                    "ipPrefixId": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/Microsoft.ManagedNetworkFabric/ipPrefixes/ipprefixv4-2610-cn1-imp"
+                  },
+                  "action": {
+                    "actionType": "Permit",
+                    "ipCommunityProperties": {
+                      "set": {
+                        "ipCommunityIds": [
+                          "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/Microsoft.ManagedNetworkFabric/ipCommunities/ipcommunity-2610-imp"
+                        ]
+                      }
+                    }
+                  }
+                },
+                {
+                  "sequenceNumber": 20,
+                  "condition": {
+                    "ipPrefixId": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/Microsoft.ManagedNetworkFabric/ipPrefixes/ipprefixv4-2610-cn2-imp"
+                  },
+                  "action": {
+                    "actionType": "Permit",
+                    "ipCommunityProperties": {
+                      "set": {
+                        "ipCommunityIds": [
+                          "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/Microsoft.ManagedNetworkFabric/ipCommunities/ipcommunity-2610-imp"
+                        ]
+                      }
+                    }
+                  }
+                },
+                {
+                  "sequenceNumber": 30,
+                  "condition": {
+                    "ipPrefixId": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/Microsoft.ManagedNetworkFabric/ipPrefixes/ipprefixv4-2610-cn3-imp"
+                  },
+                  "action": {
+                    "actionType": "Deny"
+                  }
+                },
+                {
+                  "sequenceNumber": 40,
+                  "condition": {
+                    "ipPrefixId": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/Microsoft.ManagedNetworkFabric/ipPrefixes/ipprefixv4-2610-cn4-imp"
+                  },
+                  "action": {
+                    "actionType": "Deny"
+                  }
+                },
+                {
+                  "sequenceNumber": 50,
+                  "condition": {
+                    "ipCommunityIds": [
+                      "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/Microsoft.ManagedNetworkFabric/ipCommunities/ipcommunity-2610-cn1"
+                    ]
+                  },
+                  "action": {
+                    "actionType": "Permit",
+                    "ipCommunityProperties": {
+                      "add": {
+                        "ipCommunityIds": [
+                          "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/Microsoft.ManagedNetworkFabric/ipCommunities/ipcommunity-2610-imp"
+                        ]
+                      }
+                    }
+                  }
+                },
+                {
+                  "sequenceNumber": 60,
+                  "condition": {
+                    "ipCommunityIds": [
+                      "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/Microsoft.ManagedNetworkFabric/ipCommunities/ipcommunity-2610-cn2"
+                    ]
+                  },
+                  "action": {
+                    "actionType": "Permit",
+                    "ipCommunityProperties": {
+                      "delete": {
+                        "ipCommunityIds": [
+                          "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/Microsoft.ManagedNetworkFabric/ipCommunities/ipcommunity-2610-imp"
+                        ]
+                      }
+                    }
+                  }
+                }
+              ],
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/microsoft.managednetworkfabric/routePolicies/rcf-nf1fab3200623-l3domain-v4-intnw-2610-exp-policy",
+            "name": "rcf-nf1fab3200623-l3domain-v4-intnw-2610-exp-policy",
+            "type": "microsoft.managednetworkfabric/routepolicies",
+            "location": "eastus",
+            "systemData": {
+              "createdBy": "edf733ea-9067-4115-8588-b12c62d25d45",
+              "createdByType": "Application",
+              "createdAt": "2023-06-22T05:40:03.3176929Z",
+              "lastModifiedBy": "edf733ea-9067-4115-8588-b12c62d25d45",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-06-22T05:40:03.3176929Z"
+            },
+            "properties": {
+              "statements": [
+                {
+                  "sequenceNumber": 10,
+                  "condition": {
+                    "ipPrefixId": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/Microsoft.ManagedNetworkFabric/ipPrefixes/ipprefixv4-2610-cn1-exp"
+                  },
+                  "action": {
+                    "actionType": "Permit",
+                    "ipCommunityProperties": {
+                      "set": {
+                        "ipCommunityIds": [
+                          "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/Microsoft.ManagedNetworkFabric/ipCommunities/ipcommunity-2610-exp"
+                        ]
+                      }
+                    }
+                  }
+                },
+                {
+                  "sequenceNumber": 20,
+                  "condition": {
+                    "ipPrefixId": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/Microsoft.ManagedNetworkFabric/ipPrefixes/ipprefixv4-2610-cn2-exp"
+                  },
+                  "action": {
+                    "actionType": "Permit",
+                    "ipCommunityProperties": {
+                      "set": {
+                        "ipCommunityIds": [
+                          "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/Microsoft.ManagedNetworkFabric/ipCommunities/ipcommunity-2610-exp"
+                        ]
+                      }
+                    }
+                  }
+                },
+                {
+                  "sequenceNumber": 30,
+                  "condition": {
+                    "ipPrefixId": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/Microsoft.ManagedNetworkFabric/ipPrefixes/ipprefixv4-2610-cn3-exp"
+                  },
+                  "action": {
+                    "actionType": "Deny"
+                  }
+                },
+                {
+                  "sequenceNumber": 40,
+                  "condition": {
+                    "ipPrefixId": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/Microsoft.ManagedNetworkFabric/ipPrefixes/ipprefixv4-2610-cn4-exp"
+                  },
+                  "action": {
+                    "actionType": "Deny"
+                  }
+                },
+                {
+                  "sequenceNumber": 50,
+                  "condition": {
+                    "ipExtendedCommunityIds": [
+                      "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/Microsoft.ManagedNetworkFabric/ipExtendedCommunities/ipextcommunity-2610-cn1"
+                    ]
+                  },
+                  "action": {
+                    "actionType": "Permit",
+                    "ipExtendedCommunityProperties": {
+                      "add": {
+                        "ipExtendedCommunityIds": [
+                          "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/Microsoft.ManagedNetworkFabric/ipExtendedCommunities/ipextcommunity-2610"
+                        ]
+                      }
+                    }
+                  }
+                },
+                {
+                  "sequenceNumber": 60,
+                  "condition": {
+                    "ipExtendedCommunityIds": [
+                      "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/Microsoft.ManagedNetworkFabric/ipExtendedCommunities/ipextcommunity-2610-cn2"
+                    ]
+                  },
+                  "action": {
+                    "actionType": "Permit",
+                    "ipExtendedCommunityProperties": {
+                      "delete": {
+                        "ipExtendedCommunityIds": [
+                          "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/Microsoft.ManagedNetworkFabric/ipExtendedCommunities/ipextcommunity-2610"
+                        ]
+                      }
+                    }
+                  }
+                }
+              ],
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/routePolicies/nfa-tool-ts-sdk-routePolicy062223",
+            "name": "nfa-tool-ts-sdk-routePolicy062223",
+            "type": "microsoft.managednetworkfabric/routepolicies",
+            "location": "eastus",
+            "tags": {
+              "key8254": ""
+            },
+            "systemData": {
+              "createdBy": "v-rmarimuthu@microsoft.com",
+              "createdByType": "User",
+              "createdAt": "2023-06-22T07:08:11.1318874Z",
+              "lastModifiedBy": "v-rmarimuthu@microsoft.com",
+              "lastModifiedByType": "User",
+              "lastModifiedAt": "2023-06-22T07:08:11.1318874Z"
+            },
+            "properties": {
+              "annotation": "annotationValue",
+              "statements": [
+                {
+                  "sequenceNumber": 7,
+                  "condition": {
+                    "ipCommunityIds": [
+                      "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/ipCommunities/nfa-tool-ts-sdk-ipCommunity061623"
+                    ],
+                    "ipExtendedCommunityIds": [
+                      "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/ipExtendedCommunities/nfa-tool-ts-sdk-ipExtendedCommunity061623"
+                    ],
+                    "ipPrefixId": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/ipPrefixes/nfa-tool-ts-sdk-ipPrefix061623"
+                  },
+                  "action": {
+                    "localPreference": 20,
+                    "actionType": "Permit",
+                    "ipCommunityProperties": {
+                      "add": {
+                        "ipCommunityIds": [
+                          "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/ipCommunities/nfa-tool-ts-sdk-ipCommunity061623"
+                        ]
+                      },
+                      "delete": {
+                        "ipCommunityIds": [
+                          "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/ipCommunities/nfa-tool-ts-sdk-ipCommunity061623"
+                        ]
+                      },
+                      "set": {
+                        "ipCommunityIds": [
+                          "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/ipCommunities/nfa-tool-ts-sdk-ipCommunity061623"
+                        ]
+                      }
+                    },
+                    "ipExtendedCommunityProperties": {
+                      "add": {
+                        "ipExtendedCommunityIds": [
+                          "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/ipExtendedCommunities/nfa-tool-ts-sdk-ipExtendedCommunity061623"
+                        ]
+                      },
+                      "delete": {
+                        "ipExtendedCommunityIds": [
+                          "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/ipExtendedCommunities/nfa-tool-ts-sdk-ipExtendedCommunity061623"
+                        ]
+                      },
+                      "set": {
+                        "ipExtendedCommunityIds": [
+                          "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/ipExtendedCommunities/nfa-tool-ts-sdk-ipExtendedCommunity061623"
+                        ]
+                      }
+                    }
+                  }
+                }
+              ],
+              "provisioningState": "Succeeded"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/routePolicies/nfa-tool-ts-sdk-routePolicy062223?api-version=2023-02-01-preview",
+      "RequestMethod": "DELETE",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-3169a8ecc15117b2b8c40a19ee7918c5-754da68c626dbd41-00",
+        "User-Agent": "azsdk-net-ResourceManager.ManagedNetworkFabric/1.0.0-alpha.20230622.1 (.NET 7.0.7; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "c61212288e6d68a2ef41c2629be08efb",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 202,
+      "ResponseHeaders": {
+        "Azure-AsyncOperation": "https://management.azure.com/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/providers/Microsoft.ManagedNetworkFabric/locations/EASTUS/operationStatuses/8b1f4cc5-8154-47db-9cf4-30f83eb2191d*352BE3A1595067942A9BDC3ADCC6E354531988E8596077717ADD3009936B30AB?api-version=2023-02-01-preview",
+        "Cache-Control": "no-cache",
+        "Content-Length": "4",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 22 Jun 2023 07:08:19 GMT",
+        "ETag": "\u0022c4011851-0000-0100-0000-6493f3630000\u0022",
+        "Expires": "-1",
+        "Location": "https://management.azure.com/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/providers/Microsoft.ManagedNetworkFabric/locations/EASTUS/operationStatuses/8b1f4cc5-8154-47db-9cf4-30f83eb2191d*352BE3A1595067942A9BDC3ADCC6E354531988E8596077717ADD3009936B30AB?api-version=2023-02-01-preview",
+        "mise-correlation-id": "2030210a-b846-4ef1-9ef5-19fc512edf96",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "c61212288e6d68a2ef41c2629be08efb",
+        "x-ms-correlation-request-id": "39f674bd-b3f2-4d15-8c0c-bcfb432da705",
+        "x-ms-providerhub-traffic": "True",
+        "x-ms-ratelimit-remaining-subscription-deletes": "14999",
+        "x-ms-request-id": "c96e1d61-1c5c-45c1-807a-5d78f901584d",
+        "x-ms-routing-request-id": "WESTINDIA:20230622T070820Z:39f674bd-b3f2-4d15-8c0c-bcfb432da705"
+      },
+      "ResponseBody": "null"
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/providers/Microsoft.ManagedNetworkFabric/locations/EASTUS/operationStatuses/8b1f4cc5-8154-47db-9cf4-30f83eb2191d*352BE3A1595067942A9BDC3ADCC6E354531988E8596077717ADD3009936B30AB?api-version=2023-02-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-3169a8ecc15117b2b8c40a19ee7918c5-3e4ccdc91aa25395-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.6.0 (.NET 7.0.7; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "729b2e1fcf8136d08fed0bf14fff3bd4",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 202,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "617",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 22 Jun 2023 07:08:20 GMT",
+        "ETag": "\u00224304b0ef-0000-0100-0000-6493f3640000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "729b2e1fcf8136d08fed0bf14fff3bd4",
+        "x-ms-correlation-request-id": "18b4b17f-1e17-4b50-ba0c-f7cdefbbb882",
+        "x-ms-ratelimit-remaining-subscription-reads": "11994",
+        "x-ms-request-id": "0a0f9ea6-d373-4150-abeb-919b4423d940",
+        "x-ms-routing-request-id": "WESTINDIA:20230622T070820Z:18b4b17f-1e17-4b50-ba0c-f7cdefbbb882"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/providers/Microsoft.ManagedNetworkFabric/locations/EASTUS/operationStatuses/8b1f4cc5-8154-47db-9cf4-30f83eb2191d*352BE3A1595067942A9BDC3ADCC6E354531988E8596077717ADD3009936B30AB",
+        "name": "8b1f4cc5-8154-47db-9cf4-30f83eb2191d*352BE3A1595067942A9BDC3ADCC6E354531988E8596077717ADD3009936B30AB",
+        "resourceId": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/routePolicies/nfa-tool-ts-sdk-routePolicy062223",
+        "status": "Updating",
+        "startTime": "2023-06-22T07:08:19.9341091Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/providers/Microsoft.ManagedNetworkFabric/locations/EASTUS/operationStatuses/8b1f4cc5-8154-47db-9cf4-30f83eb2191d*352BE3A1595067942A9BDC3ADCC6E354531988E8596077717ADD3009936B30AB?api-version=2023-02-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-3169a8ecc15117b2b8c40a19ee7918c5-d096fa7c917b4720-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.6.0 (.NET 7.0.7; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "243b7a63fb47c7e551267ff770cb4f44",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 202,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "617",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 22 Jun 2023 07:08:21 GMT",
+        "ETag": "\u00224304b0ef-0000-0100-0000-6493f3640000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "243b7a63fb47c7e551267ff770cb4f44",
+        "x-ms-correlation-request-id": "18c50d5f-7dca-4b0d-b94f-8f0a9c51ac80",
+        "x-ms-ratelimit-remaining-subscription-reads": "11993",
+        "x-ms-request-id": "1c3dd8b0-b862-4fc2-831d-6cf930ae5b85",
+        "x-ms-routing-request-id": "WESTINDIA:20230622T070821Z:18c50d5f-7dca-4b0d-b94f-8f0a9c51ac80"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/providers/Microsoft.ManagedNetworkFabric/locations/EASTUS/operationStatuses/8b1f4cc5-8154-47db-9cf4-30f83eb2191d*352BE3A1595067942A9BDC3ADCC6E354531988E8596077717ADD3009936B30AB",
+        "name": "8b1f4cc5-8154-47db-9cf4-30f83eb2191d*352BE3A1595067942A9BDC3ADCC6E354531988E8596077717ADD3009936B30AB",
+        "resourceId": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/routePolicies/nfa-tool-ts-sdk-routePolicy062223",
+        "status": "Updating",
+        "startTime": "2023-06-22T07:08:19.9341091Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/providers/Microsoft.ManagedNetworkFabric/locations/EASTUS/operationStatuses/8b1f4cc5-8154-47db-9cf4-30f83eb2191d*352BE3A1595067942A9BDC3ADCC6E354531988E8596077717ADD3009936B30AB?api-version=2023-02-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-3169a8ecc15117b2b8c40a19ee7918c5-006d732ec50dd4e3-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.6.0 (.NET 7.0.7; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "6c43f9191c45fe79abfed77356ce9c47",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "677",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 22 Jun 2023 07:08:22 GMT",
+        "ETag": "\u00224304dbef-0000-0100-0000-6493f3660000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "6c43f9191c45fe79abfed77356ce9c47",
+        "x-ms-correlation-request-id": "bf3d1e55-01ae-40d2-aad5-1d8f75b243fe",
+        "x-ms-ratelimit-remaining-subscription-reads": "11992",
+        "x-ms-request-id": "b109553f-f8f4-401f-b19a-a5e2f7dc9c8f",
+        "x-ms-routing-request-id": "WESTINDIA:20230622T070823Z:bf3d1e55-01ae-40d2-aad5-1d8f75b243fe"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/providers/Microsoft.ManagedNetworkFabric/locations/EASTUS/operationStatuses/8b1f4cc5-8154-47db-9cf4-30f83eb2191d*352BE3A1595067942A9BDC3ADCC6E354531988E8596077717ADD3009936B30AB",
+        "name": "8b1f4cc5-8154-47db-9cf4-30f83eb2191d*352BE3A1595067942A9BDC3ADCC6E354531988E8596077717ADD3009936B30AB",
+        "resourceId": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/routePolicies/nfa-tool-ts-sdk-routePolicy062223",
+        "status": "Succeeded",
+        "startTime": "2023-06-22T07:08:19.9341091Z",
+        "endTime": "2023-06-22T07:08:21.9978125Z",
+        "properties": null
+      }
+    }
+  ],
+  "Variables": {
+    "LOCATION": "eastus",
+    "RandomSeed": "690927296",
+    "RESOURCE_GROUP_NAME": "nfa-tool-ts-clisdktest-nfrg060523",
+    "RESOURCE_MANAGER_URL": null,
+    "ROUTE_POLICY_NAME": "nfa-tool-ts-sdk-routePolicy062223",
+    "SUBSCRIPTION_ID": "61065ccc-9543-4b91-b2d1-0ce42a914507"
+  }
+}

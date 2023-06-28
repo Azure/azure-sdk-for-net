@@ -6,6 +6,8 @@
 
 ### Breaking Changes
 
+- Add property `JobResourceId` to class `DataProtectionOperationJobExtendedInfo`, replace the `JobId`.
+
 ### Bugs Fixed
 
 ### Other Changes

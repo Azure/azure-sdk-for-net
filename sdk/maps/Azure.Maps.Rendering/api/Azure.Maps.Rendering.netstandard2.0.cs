@@ -191,8 +191,6 @@ namespace Azure.Maps.Rendering
         public static Azure.Maps.Rendering.MapTileSetId MicrosoftBaseLabelsDarkgrey { get { throw null; } }
         public static Azure.Maps.Rendering.MapTileSetId MicrosoftBaseLabelsRoad { get { throw null; } }
         public static Azure.Maps.Rendering.MapTileSetId MicrosoftBaseRoad { get { throw null; } }
-        public static Azure.Maps.Rendering.MapTileSetId MicrosoftDem { get { throw null; } }
-        public static Azure.Maps.Rendering.MapTileSetId MicrosoftDemContours { get { throw null; } }
         public static Azure.Maps.Rendering.MapTileSetId MicrosoftImagery { get { throw null; } }
         public static Azure.Maps.Rendering.MapTileSetId MicrosoftTerraMain { get { throw null; } }
         public static Azure.Maps.Rendering.MapTileSetId MicrosoftTrafficAbsolute { get { throw null; } }

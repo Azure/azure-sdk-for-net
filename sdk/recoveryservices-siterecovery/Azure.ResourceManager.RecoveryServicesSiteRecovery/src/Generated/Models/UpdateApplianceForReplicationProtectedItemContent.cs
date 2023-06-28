@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <summary> Initializes a new instance of UpdateApplianceForReplicationProtectedItemContent. </summary>
         /// <param name="properties"> Update appliance replication protected item properties. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
-        public UpdateApplianceForReplicationProtectedItemContent(UpdateApplianceForReplicationProtectedItemInputProperties properties)
+        public UpdateApplianceForReplicationProtectedItemContent(UpdateApplianceForReplicationProtectedItemProperties properties)
         {
             Argument.AssertNotNull(properties, nameof(properties));
 
@@ -24,6 +24,6 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Update appliance replication protected item properties. </summary>
-        public UpdateApplianceForReplicationProtectedItemInputProperties Properties { get; }
+        public UpdateApplianceForReplicationProtectedItemProperties Properties { get; }
     }
 }

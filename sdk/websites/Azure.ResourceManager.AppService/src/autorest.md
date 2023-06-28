@@ -597,6 +597,10 @@ prepend-rp-prefix:
   - IPFilterTag
   - VirtualNetworkProfile
 
+models-to-treat-empty-string-as-null:
+  - WebAppBackupData
+  - WebSiteInstanceStatusData
+
 directive:
 # operation removal - should be temporary
 # pageable lro

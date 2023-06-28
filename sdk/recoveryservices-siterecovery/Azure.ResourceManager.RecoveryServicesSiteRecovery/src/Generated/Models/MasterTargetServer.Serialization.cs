@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Net;
 using System.Text.Json;
 using Azure.Core;
 
@@ -21,23 +22,23 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 return null;
             }
             Optional<string> id = default;
-            Optional<string> ipAddress = default;
+            Optional<IPAddress> ipAddress = default;
             Optional<string> name = default;
             Optional<string> osType = default;
             Optional<string> agentVersion = default;
             Optional<DateTimeOffset> lastHeartbeat = default;
             Optional<string> versionStatus = default;
-            Optional<IReadOnlyList<RetentionVolume>> retentionVolumes = default;
-            Optional<IReadOnlyList<DataStore>> dataStores = default;
-            Optional<IReadOnlyList<HealthError>> validationErrors = default;
-            Optional<IReadOnlyList<HealthError>> healthErrors = default;
+            Optional<IReadOnlyList<SiteRecoveryRetentionVolume>> retentionVolumes = default;
+            Optional<IReadOnlyList<SiteRecoveryDataStore>> dataStores = default;
+            Optional<IReadOnlyList<SiteRecoveryHealthError>> validationErrors = default;
+            Optional<IReadOnlyList<SiteRecoveryHealthError>> healthErrors = default;
             Optional<int> diskCount = default;
             Optional<string> osVersion = default;
-            Optional<DateTimeOffset> agentExpiryDate = default;
+            Optional<DateTimeOffset> agentExpireOn = default;
             Optional<string> marsAgentVersion = default;
-            Optional<DateTimeOffset> marsAgentExpiryDate = default;
-            Optional<VersionDetails> agentVersionDetails = default;
-            Optional<VersionDetails> marsAgentVersionDetails = default;
+            Optional<DateTimeOffset> marsAgentExpireOn = default;
+            Optional<SiteRecoveryVersionDetails> agentVersionDetails = default;
+            Optional<SiteRecoveryVersionDetails> marsAgentVersionDetails = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -47,7 +48,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 if (property.NameEquals("ipAddress"u8))
                 {
-                    ipAddress = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    ipAddress = IPAddress.Parse(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("name"u8))
@@ -85,10 +90,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    List<RetentionVolume> array = new List<RetentionVolume>();
+                    List<SiteRecoveryRetentionVolume> array = new List<SiteRecoveryRetentionVolume>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RetentionVolume.DeserializeRetentionVolume(item));
+                        array.Add(SiteRecoveryRetentionVolume.DeserializeSiteRecoveryRetentionVolume(item));
                     }
                     retentionVolumes = array;
                     continue;
@@ -99,10 +104,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    List<DataStore> array = new List<DataStore>();
+                    List<SiteRecoveryDataStore> array = new List<SiteRecoveryDataStore>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataStore.DeserializeDataStore(item));
+                        array.Add(SiteRecoveryDataStore.DeserializeSiteRecoveryDataStore(item));
                     }
                     dataStores = array;
                     continue;
@@ -113,10 +118,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    List<HealthError> array = new List<HealthError>();
+                    List<SiteRecoveryHealthError> array = new List<SiteRecoveryHealthError>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(HealthError.DeserializeHealthError(item));
+                        array.Add(SiteRecoveryHealthError.DeserializeSiteRecoveryHealthError(item));
                     }
                     validationErrors = array;
                     continue;
@@ -127,10 +132,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    List<HealthError> array = new List<HealthError>();
+                    List<SiteRecoveryHealthError> array = new List<SiteRecoveryHealthError>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(HealthError.DeserializeHealthError(item));
+                        array.Add(SiteRecoveryHealthError.DeserializeSiteRecoveryHealthError(item));
                     }
                     healthErrors = array;
                     continue;
@@ -155,7 +160,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    agentExpiryDate = property.Value.GetDateTimeOffset("O");
+                    agentExpireOn = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (property.NameEquals("marsAgentVersion"u8))
@@ -169,7 +174,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    marsAgentExpiryDate = property.Value.GetDateTimeOffset("O");
+                    marsAgentExpireOn = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (property.NameEquals("agentVersionDetails"u8))
@@ -178,7 +183,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    agentVersionDetails = VersionDetails.DeserializeVersionDetails(property.Value);
+                    agentVersionDetails = SiteRecoveryVersionDetails.DeserializeSiteRecoveryVersionDetails(property.Value);
                     continue;
                 }
                 if (property.NameEquals("marsAgentVersionDetails"u8))
@@ -187,11 +192,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    marsAgentVersionDetails = VersionDetails.DeserializeVersionDetails(property.Value);
+                    marsAgentVersionDetails = SiteRecoveryVersionDetails.DeserializeSiteRecoveryVersionDetails(property.Value);
                     continue;
                 }
             }
-            return new MasterTargetServer(id.Value, ipAddress.Value, name.Value, osType.Value, agentVersion.Value, Optional.ToNullable(lastHeartbeat), versionStatus.Value, Optional.ToList(retentionVolumes), Optional.ToList(dataStores), Optional.ToList(validationErrors), Optional.ToList(healthErrors), Optional.ToNullable(diskCount), osVersion.Value, Optional.ToNullable(agentExpiryDate), marsAgentVersion.Value, Optional.ToNullable(marsAgentExpiryDate), agentVersionDetails.Value, marsAgentVersionDetails.Value);
+            return new MasterTargetServer(id.Value, ipAddress.Value, name.Value, osType.Value, agentVersion.Value, Optional.ToNullable(lastHeartbeat), versionStatus.Value, Optional.ToList(retentionVolumes), Optional.ToList(dataStores), Optional.ToList(validationErrors), Optional.ToList(healthErrors), Optional.ToNullable(diskCount), osVersion.Value, Optional.ToNullable(agentExpireOn), marsAgentVersion.Value, Optional.ToNullable(marsAgentExpireOn), agentVersionDetails.Value, marsAgentVersionDetails.Value);
         }
     }
 }
