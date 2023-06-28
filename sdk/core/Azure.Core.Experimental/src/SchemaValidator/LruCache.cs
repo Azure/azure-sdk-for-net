@@ -6,14 +6,14 @@ using System.Collections.Generic;
 
 #nullable enable
 
-namespace Azure.Core
+namespace Azure.Core.Experimental
 {
     /// <summary>
     /// A simple LRU cache implementation using a doubly linked list and dictionary.
     /// </summary>
-    /// <typeparam name="TKey">The type of key</typeparam>
-    /// <typeparam name="TValue">The type of value</typeparam>
-    internal class LruCache<TKey, TValue> : IEnumerable<KeyValuePair<TKey, TValue>>
+    /// <typeparam name="TKey">The type of key.</typeparam>
+    /// <typeparam name="TValue">The type of value.</typeparam>
+    public class LruCache<TKey, TValue> : IEnumerable<KeyValuePair<TKey, TValue>>
         where TKey : notnull
     {
         private readonly int _capacity;
@@ -21,10 +21,20 @@ namespace Azure.Core
         private readonly Dictionary<TKey, (LinkedListNode<KeyValuePair<TKey, TValue>> Node, int Length)> _map;
         private readonly object _syncLock;
 
-        internal int Count => _linkedList.Count;
+        /// <summary>
+        /// Gets the number of key/value pairs contained in the <see cref="LruCache{TKey, TValue}"/>.
+        /// </summary>
+        public int Count => _linkedList.Count;
 
+        /// <summary>
+        /// Gets the total length of all values currently stored in the <see cref="LruCache{TKey, TValue}"/>.
+        /// </summary>
         internal int TotalLength { get; private set; }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="LruCache{TKey, TValue}"/> class.
+        /// </summary>
+        /// <param name="capacity"></param>
         public LruCache(int capacity)
         {
             _capacity = capacity;
@@ -33,7 +43,17 @@ namespace Azure.Core
             _syncLock = new object();
         }
 
-        public bool TryGet(TKey key, out TValue value)
+        /// <summary>
+        /// Tries to get the value associated with the specified key. If the key exists, it moves
+        /// it to the front of the cache.
+        /// </summary>
+        /// <param name="key">The key of the value to get.</param>
+        /// <param name="value">When this method returns, contains the value associated with
+        /// the specified key, if the key is found; otherwise, the default value for the type of
+        /// the type of the <paramref name="value"/> parameter.</param>
+        /// <returns><c>true</c> if the <see cref="LruCache{TKey, TValue}"/> contains an element
+        /// with the specified key; otherwise, <c>false</c>.</returns>
+        public bool TryGet(TKey key, out TValue? value)
         {
             lock (_syncLock)
             {
@@ -46,12 +66,18 @@ namespace Azure.Core
                     return true;
                 }
 
-                value = default(TValue)!;
+                value = default(TValue);
                 return false;
             }
         }
 
-        public void AddOrUpdate(TKey key, TValue val, int length)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="key"></param>
+        /// <param name="val"></param>
+        /// <param name="length"></param>
+        public void AddOrUpdate(TKey key, TValue? val, int length)
         {
             lock (_syncLock)
             {
@@ -80,6 +106,10 @@ namespace Azure.Core
             }
         }
 
+        /// <summary>
+        /// Returns an enumerator that iterates through the <see cref="LruCache{TKey, TValue}"/>
+        /// </summary>
+        /// <returns></returns>
         public IEnumerator<KeyValuePair<TKey, TValue>> GetEnumerator() => _linkedList.GetEnumerator();
 
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();

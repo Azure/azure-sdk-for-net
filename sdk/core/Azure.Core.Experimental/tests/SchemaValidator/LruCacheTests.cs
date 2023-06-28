@@ -4,7 +4,7 @@
 using NUnit.Framework;
 using Azure.Core;
 
-namespace Azure.Core.Tests
+namespace Azure.Core.Experimental.Tests
 {
     public class LruCacheTests
     {
