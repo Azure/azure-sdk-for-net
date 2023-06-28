@@ -39,6 +39,8 @@ namespace Azure.Identity.Tests.Mock
             OnBehalfOfFactory = (_, _, _, _, _) => throw exception;
         }
 
+        public TokenCache Cache => TokenCache;
+
         public MockMsalConfidentialClient WithClientFactory(Func<string[], string, AuthenticationResult> clientFactory)
         {
             ClientFactory = clientFactory;
@@ -109,11 +111,16 @@ namespace Azure.Identity.Tests.Mock
             return CreateClientAsync(enableCae, async, cancellationToken);
         }
 
+        internal ValueTask<IConfidentialClientApplication> CallBaseGetClientAsync(bool enableCae, bool async, CancellationToken cancellationToken)
+        {
+            return GetClientAsync(enableCae, async, cancellationToken);
+        }
+
         protected override ValueTask<IConfidentialClientApplication> CreateClientCoreAsync(bool enableCae, bool async, CancellationToken cancellationToken)
         {
             if (ClientAppFactory == null)
             {
-                throw new NotImplementedException();
+                return base.CreateClientCoreAsync(enableCae, async, cancellationToken);
             }
 
             return new ValueTask<IConfidentialClientApplication>(ClientAppFactory(enableCae));

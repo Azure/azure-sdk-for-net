@@ -40,6 +40,8 @@ namespace Azure.Identity.Tests.Mock
         public MockMsalPublicClient(CredentialPipeline pipeline, string tenantId, string clientId, string redirectUrl, TokenCredentialOptions options)
             : base(pipeline, tenantId, clientId, redirectUrl, options) { }
 
+        public TokenCache Cache => TokenCache;
+
         protected override ValueTask<List<IAccount>> GetAccountsCoreAsync(bool enableCae, bool async, CancellationToken cancellationToken)
         {
             return new(Accounts);
@@ -152,6 +154,11 @@ namespace Azure.Identity.Tests.Mock
             throw new NotImplementedException();
         }
 
+        internal ValueTask<IPublicClientApplication> CallBaseGetClientAsync(bool enableCae, bool async, CancellationToken cancellationToken)
+        {
+            return GetClientAsync(enableCae, async, cancellationToken);
+        }
+
         internal ValueTask<IPublicClientApplication> CallCreateClientAsync(bool enableCae, bool async, CancellationToken cancellationToken)
         {
             return CreateClientAsync(enableCae, async, cancellationToken);
@@ -161,7 +168,7 @@ namespace Azure.Identity.Tests.Mock
         {
             if (ClientAppFactory == null)
             {
-                throw new NotImplementedException();
+                return base.CreateClientCoreAsync(enableCae, async, cancellationToken);
             }
 
             return new ValueTask<IPublicClientApplication>(ClientAppFactory(enableCae));

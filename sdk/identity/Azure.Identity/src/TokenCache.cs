@@ -29,11 +29,19 @@ namespace Azure.Identity
         private readonly bool _persistToDisk;
         private AsyncLockWithValue<MsalCacheHelperWrapper> cacheHelperLock = new AsyncLockWithValue<MsalCacheHelperWrapper>();
         private readonly MsalCacheHelperWrapper _cacheHelperWrapper;
+        private const string CaeEnabledCacheSuffix = ".cae";
+        private const string CaeDisabledCacheSuffix = ".nocae";
 
         /// <summary>
         /// The internal state of the cache.
         /// </summary>
         internal byte[] Data { get; private set; }
+
+        /// <summary>
+        /// Determines whether the token cache will be associated with CAE enabled requests.
+        /// </summary>
+        /// <value>If true, this cache services only CAE enabled requests.Otherwise, this cache services non-CAE enabled requests.</value>
+        internal bool EnableCae { get; set; }
 
         private class CacheTimestamp
         {
@@ -75,7 +83,7 @@ namespace Azure.Identity
             else
             {
                 _allowUnencryptedStorage = options?.UnsafeAllowUnencryptedStorage ?? false;
-                _name = options?.Name ?? Constants.DefaultMsalTokenCacheName;
+                _name = (options?.Name ?? Constants.DefaultMsalTokenCacheName) + (EnableCae ? CaeEnabledCacheSuffix : CaeDisabledCacheSuffix);
                 _persistToDisk = true;
             }
         }

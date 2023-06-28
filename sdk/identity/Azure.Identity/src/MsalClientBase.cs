@@ -75,6 +75,7 @@ namespace Azure.Identity
 
             if (TokenCache != null)
             {
+                TokenCache.EnableCae = enableCae;
                 await TokenCache.RegisterCache(async, client.UserTokenCache, cancellationToken).ConfigureAwait(false);
 
                 if (client is IConfidentialClientApplication cca)
