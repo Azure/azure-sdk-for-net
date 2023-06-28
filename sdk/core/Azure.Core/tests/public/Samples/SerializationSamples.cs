@@ -43,36 +43,6 @@ namespace Azure.Core.Samples
 
         [Test]
         [Ignore("Only verifying that the sample builds")]
-        public void StjSerialize()
-        {
-            #region Snippet:Stj_Serialize
-            DogListProperty dog = new DogListProperty
-            {
-                Name = "Doggo",
-                IsHungry = false,
-                Weight = 1.1,
-                FoodConsumed = { "kibble", "egg", "peanut butter" },
-            };
-
-            //STJ example
-            string json = System.Text.Json.JsonSerializer.Serialize(dog);
-            #endregion
-        }
-
-        [Test]
-        [Ignore("Only verifying that the sample builds")]
-        public void StjDeserialize()
-        {
-            #region Snippet:Stj_Deserialize
-            string json = "{\"latinName\":\"Animalia\",\"weight\":1.1,\"name\":\"Doggo\",\"isHungry\":false,\"foodConsumed\":[\"kibble\",\"egg\",\"peanut butter\"],\"numberOfLegs\":4}";
-
-            //stj example
-            DogListProperty dog = System.Text.Json.JsonSerializer.Deserialize<DogListProperty>(json);
-            #endregion
-        }
-
-        [Test]
-        [Ignore("Only verifying that the sample builds")]
         public void NewtonSoftSerialize()
         {
             #region Snippet:NewtonSoft_Serialize
@@ -86,7 +56,7 @@ namespace Azure.Core.Samples
             ModelSerializerOptions options = new ModelSerializerOptions();
             options.Serializers.Add(typeof(DogListProperty), new NewtonsoftJsonObjectSerializer());
 
-            Stream stream = ModelSerializer.SerializeJson(dog, options);
+            BinaryData data = ModelSerializer.Serialize(dog, options);
             #endregion
         }
 
@@ -99,35 +69,7 @@ namespace Azure.Core.Samples
             options.Serializers.Add(typeof(DogListProperty), new NewtonsoftJsonObjectSerializer());
             string json = @"[{""LatinName"":""Animalia"",""Weight"":1.1,""Name"":""Doggo"",""IsHungry"":false,""FoodConsumed"":[""kibble"",""egg"",""peanut butter""],""NumberOfLegs"":4}]";
 
-            DogListProperty dog = ModelSerializer.DeserializeJson<DogListProperty>(json, options);
-            #endregion
-        }
-
-        [Test]
-        [Ignore("Only verifying that the sample builds")]
-        public void ModelSerializerSerialize()
-        {
-            #region Snippet:ModelSerializer_Serialize
-            DogListProperty dog = new DogListProperty
-            {
-                Name = "Doggo",
-                IsHungry = true,
-                Weight = 1.1,
-                FoodConsumed = { "kibble", "egg", "peanut butter" },
-            };
-
-            Stream stream = ModelSerializer.SerializeJson(dog);
-            #endregion
-        }
-
-        [Test]
-        [Ignore("Only verifying that the sample builds")]
-        public void ModelSerializerDeserialize()
-        {
-            #region Snippet:ModelSerializer_Deserialize
-            string json = @"[{""LatinName"":""Animalia"",""Weight"":1.1,""Name"":""Doggo"",""IsHungry"":false,""FoodConsumed"":[""kibble"",""egg"",""peanut butter""],""NumberOfLegs"":4}]";
-
-            DogListProperty dog = ModelSerializer.DeserializeJson<DogListProperty>(json);
+            DogListProperty dog = ModelSerializer.Deserialize<DogListProperty>(BinaryData.FromString(json), options);
             #endregion
         }
 
@@ -175,7 +117,7 @@ namespace Azure.Core.Samples
             envelope.ModelT = new ModelT { Name = "Fluffy", Age = 10 };
             ModelSerializerOptions options = new ModelSerializerOptions();
             options.Serializers.Add(typeof(ModelT), new NewtonsoftJsonObjectSerializer());
-            Stream stream = ModelSerializer.SerializeJson(envelope, options);
+            BinaryData data = ModelSerializer.Serialize(envelope, options);
             #endregion
         }
 
@@ -193,34 +135,7 @@ namespace Azure.Core.Samples
             ModelSerializerOptions options = new ModelSerializerOptions();
             options.Serializers.Add(typeof(ModelT), new NewtonsoftJsonObjectSerializer());
 
-            Envelope<ModelT> model = ModelSerializer.DeserializeJson<Envelope<ModelT>>(new MemoryStream(Encoding.UTF8.GetBytes(serviceResponse)), options: options);
-            #endregion
-        }
-
-        [Test]
-        [Ignore("Only verifying that the sample builds")]
-        public void XmlModelSerialize()
-        {
-            #region Snippet:XmlModelSerialize
-            ModelXml modelXml = new ModelXml("Color", "Red", "ReadOnly");
-            var stream = ModelSerializer.SerializeXml(modelXml);
-            stream.Position = 0;
-            string roundTrip = new StreamReader(stream).ReadToEnd();
-            #endregion
-        }
-
-        [Test]
-        [Ignore("Only verifying that the sample builds")]
-        public void XmlModelDeserialize()
-        {
-            #region Snippet:XmlModelDeserialize
-            string serviceResponse =
-                "<Tag>" +
-                "<Key>Color</Key>" +
-                "<Value>Red</Value>" +
-                "</Tag>";
-
-            ModelXml model = ModelSerializer.DeserializeXml<ModelXml>(new MemoryStream(Encoding.UTF8.GetBytes(serviceResponse)));
+            Envelope<ModelT> model = ModelSerializer.Deserialize<Envelope<ModelT>>(new BinaryData(Encoding.UTF8.GetBytes(serviceResponse)), options: options);
             #endregion
         }
 
@@ -230,14 +145,12 @@ namespace Azure.Core.Samples
         {
             #region Snippet:ModelSerializer_IModelSerializable_Serialize
             XmlModelForCombinedInterface xmlModel = new XmlModelForCombinedInterface("Color", "Red", "ReadOnly");
-            var stream = ModelSerializer.Serialize(xmlModel);
-            stream.Position = 0;
-            string xmlString = new StreamReader(stream).ReadToEnd();
+            var data = ModelSerializer.Serialize(xmlModel);
+            string xmlString = data.ToString();
 
             JsonModelForCombinedInterface jsonModel = new JsonModelForCombinedInterface("Color", "Red", "ReadOnly");
-            stream = ModelSerializer.Serialize(jsonModel);
-            stream.Position = 0;
-            string jsonString = new StreamReader(stream).ReadToEnd();
+            data = ModelSerializer.Serialize(jsonModel);
+            string jsonString = data.ToString();
             #endregion
         }
 
@@ -247,10 +160,10 @@ namespace Azure.Core.Samples
         {
             #region Snippet:ModelSerializer_IModelSerializable_Deserialize
             string xmlResponse = "<Tag><Key>Color</Key><Value>Red</Value></Tag>";
-            XmlModelForCombinedInterface xmlModel = ModelSerializer.Deserialize<XmlModelForCombinedInterface>(new MemoryStream(Encoding.UTF8.GetBytes(xmlResponse)));
+            XmlModelForCombinedInterface xmlModel = ModelSerializer.Deserialize<XmlModelForCombinedInterface>(new BinaryData(Encoding.UTF8.GetBytes(xmlResponse)));
 
             string jsonResponse = "{\"key\":\"Color\",\"value\":\"Red\",\"readOnlyProperty\":\"ReadOnly\",\"x\":\"extra\"}";
-            JsonModelForCombinedInterface jsonModel = ModelSerializer.Deserialize<JsonModelForCombinedInterface>(new MemoryStream(Encoding.UTF8.GetBytes(jsonResponse)));
+            JsonModelForCombinedInterface jsonModel = ModelSerializer.Deserialize<JsonModelForCombinedInterface>(new BinaryData(Encoding.UTF8.GetBytes(jsonResponse)));
             #endregion
         }
 

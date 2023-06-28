@@ -10,7 +10,7 @@ using Azure.Core.Serialization;
 
 namespace Azure.Core.Tests.Public.ModelSerializationTests
 {
-    public class Animal : IUtf8JsonSerializable, IJsonSerializableModel
+    public class Animal : IUtf8JsonSerializable, IModelSerializable
     {
         private Dictionary<string, BinaryData> RawData { get; set; } = new Dictionary<string, BinaryData>();
 
@@ -46,10 +46,20 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
         }
 
         #region Serialization
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonSerializableModel)this).Serialize(writer, new ModelSerializerOptions());
-
-        void IJsonSerializableModel.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
+            BinaryData data = ((IModelSerializable)this).Serialize(new ModelSerializerOptions());
+#if NET6_0_OR_GREATER
+            writer.WriteRawValue(data);
+#else
+            JsonSerializer.Serialize(writer, JsonDocument.Parse(data.ToString()).RootElement);
+#endif
+        }
+
+        BinaryData IModelSerializable.Serialize(ModelSerializerOptions options)
+        {
+            MemoryStream stream = new MemoryStream();
+            Utf8JsonWriter writer = new Utf8JsonWriter(stream);
             writer.WriteStartObject();
             if (!options.IgnoreReadOnlyProperties)
             {
@@ -77,6 +87,9 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
                 }
             }
             writer.WriteEndObject();
+            writer.Flush();
+            stream.Position = 0;
+            return new BinaryData(stream.ToArray());
         }
 
         internal static Animal DeserializeAnimal(JsonElement element, ModelSerializerOptions options)
@@ -122,13 +135,9 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
 
         #region InterfaceImplementation
 
-        private void CopyModel(Animal model)
+        object IModelSerializable.Deserialize(BinaryData data, ModelSerializerOptions options)
         {
-            this.LatinName = model.LatinName;
-            this.Weight = model.Weight;
-            this.IsHungry = model.IsHungry;
-            this.Name = model.Name;
-            this.RawData = model.RawData;
+            return DeserializeAnimal(JsonDocument.Parse(data.ToString()).RootElement, options);
         }
 
         #endregion

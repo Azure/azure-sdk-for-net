@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Text.Json;
@@ -11,17 +12,27 @@ using Azure.Core.Serialization;
 
 namespace Azure.Core.Tests.Public.ModelSerializationTests.Models
 {
-    internal abstract class BaseModel : IUtf8JsonSerializable, IJsonSerializableModel
+    internal abstract class BaseModel : IUtf8JsonSerializable, IModelSerializable
     {
         private Dictionary<string, BinaryData> RawData { get; set; } = new Dictionary<string, BinaryData>();
 
         public string Kind { get; internal set; }
         public string Name { get; set; }
 
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonSerializableModel)this).Serialize(writer, new ModelSerializerOptions());
-
-        void IJsonSerializableModel.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
+            BinaryData data = ((IModelSerializable)this).Serialize(new ModelSerializerOptions());
+#if NET6_0_OR_GREATER
+            writer.WriteRawValue(data);
+#else
+            JsonSerializer.Serialize(writer, JsonDocument.Parse(data.ToString()).RootElement);
+#endif
+        }
+
+        BinaryData IModelSerializable.Serialize(ModelSerializerOptions options)
+        {
+            MemoryStream stream = new MemoryStream();
+            Utf8JsonWriter writer = new Utf8JsonWriter(stream);
             writer.WriteStartObject();
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind);
@@ -44,7 +55,13 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests.Models
                 }
             }
             writer.WriteEndObject();
+            writer.Flush();
+            stream.Position = 0;
+            return new BinaryData(stream.ToArray());
         }
+
+        internal static BaseModel DeserializeBaseModel(BinaryData data, ModelSerializerOptions options)
+            => DeserializeBaseModel(JsonDocument.Parse(data.ToString()).RootElement, options);
 
         internal static BaseModel DeserializeBaseModel(JsonElement element, ModelSerializerOptions options = default)
         {
@@ -65,6 +82,7 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests.Models
             return UnknownBaseModel.DeserializeUnknownBaseModel(element, options);
         }
 
-        protected abstract void CopyModel(BaseModel model);
+        object IModelSerializable.Deserialize(BinaryData data, ModelSerializerOptions options)
+            => DeserializeBaseModel(JsonDocument.Parse(data.ToString()).RootElement, options);
     }
 }

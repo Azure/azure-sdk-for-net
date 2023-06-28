@@ -8,12 +8,16 @@ using Azure.Core.Serialization;
 using NUnit.Framework;
 using System.Xml.Serialization;
 using System.Collections.Generic;
+using System.IO;
+using System.Text.Json;
 
 namespace Azure.Core.Tests.Public.ModelSerializationTests.Models
 {
     [XmlRoot("Tag")]
-    internal class ModelXml : IXmlSerializable, IXmlSerializableModel
+    internal class ModelXml : IXmlSerializable, IModelSerializable
     {
+        internal ModelXml() { }
+
         /// <summary> Initializes a new instance of ModelXml for testing. </summary>
         /// <param name="key"></param>
         /// <param name="value"></param>
@@ -38,7 +42,25 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests.Models
         [XmlElement("ReadOnlyProperty")]
         public string ReadOnlyProperty { get; }
 
-        void IXmlSerializable.Write(XmlWriter writer, string nameHint) => ((IXmlSerializableModel)this).Serialize(writer, new ModelSerializerOptions() {NameHint = nameHint});
+        void IXmlSerializable.Write(XmlWriter writer, string nameHint) => Serialize(writer, new ModelSerializerOptions() {NameHint = nameHint});
+
+        private void Serialize(XmlWriter writer, ModelSerializerOptions options)
+        {
+            writer.WriteStartElement(options.NameHint ?? "Tag");
+            writer.WriteStartElement("Key");
+            writer.WriteValue(Key);
+            writer.WriteEndElement();
+            writer.WriteStartElement("Value");
+            writer.WriteValue(Value);
+            writer.WriteEndElement();
+            if (!options.IgnoreReadOnlyProperties)
+            {
+                writer.WriteStartElement("ReadOnlyProperty");
+                writer.WriteValue(ReadOnlyProperty);
+                writer.WriteEndElement();
+            }
+            writer.WriteEndElement();
+        }
 
         internal static ModelXml DeserializeModelXml(XElement element, ModelSerializerOptions options = default)
         {
@@ -60,22 +82,19 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests.Models
             return new ModelXml(key, value, readonlyProperty);
         }
 
-        void IXmlSerializableModel.Serialize(XmlWriter writer, ModelSerializerOptions options)
+        BinaryData IModelSerializable.Serialize(ModelSerializerOptions options)
         {
-            writer.WriteStartElement(options.NameHint ?? "Tag");
-            writer.WriteStartElement("Key");
-            writer.WriteValue(Key);
-            writer.WriteEndElement();
-            writer.WriteStartElement("Value");
-            writer.WriteValue(Value);
-            writer.WriteEndElement();
-            if (!options.IgnoreReadOnlyProperties)
-            {
-                writer.WriteStartElement("ReadOnlyProperty");
-                writer.WriteValue(ReadOnlyProperty);
-                writer.WriteEndElement();
-            }
-            writer.WriteEndElement();
+            MemoryStream stream = new MemoryStream();
+            XmlWriter writer = XmlWriter.Create(stream);
+            Serialize(writer, options);
+            writer.Flush();
+            stream.Position = 0;
+            return new BinaryData(stream.ToArray());
+        }
+
+        object IModelSerializable.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            return DeserializeModelXml(XElement.Load(data.ToStream()), options);
         }
     }
 }

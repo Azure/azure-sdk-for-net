@@ -15,6 +15,8 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests.Models
     {
         private Dictionary<string, BinaryData> RawData { get; set; } = new Dictionary<string, BinaryData>();
 
+        public JsonModelForCombinedInterface() { }
+
         /// <summary> Initializes a new instance of ModelXml for testing. </summary>
         /// <param name="key"></param>
         /// <param name="value"></param>
@@ -43,7 +45,15 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests.Models
         public string Value { get; set; }
         public string ReadOnlyProperty { get; }
 
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelSerializable)this).Serialize(new ModelSerializerOptions());
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        {
+            BinaryData data = ((IModelSerializable)this).Serialize(new ModelSerializerOptions());
+#if NET6_0_OR_GREATER
+            writer.WriteRawValue(data);
+#else
+            JsonSerializer.Serialize(writer, JsonDocument.Parse(data.ToString()).RootElement);
+#endif
+        }
 
         internal static JsonModelForCombinedInterface DeserializeJsonModelForCombinedInterface(JsonElement element, ModelSerializerOptions options)
         {
@@ -78,23 +88,10 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests.Models
             return new JsonModelForCombinedInterface(key, value, readOnlyProperty, rawData);
         }
 
-        Stream IModelSerializable.Serialize(ModelSerializerOptions options)
+        BinaryData IModelSerializable.Serialize(ModelSerializerOptions options)
         {
-            Stream s = new MemoryStream();
-            Utf8JsonWriter writer = new Utf8JsonWriter(s);
-            SerializeWithWriter(writer, options);
-            writer.Flush();
-            return s;
-        }
-
-        internal static JsonModelForCombinedInterface DeserializeJsonModelForCombinedInterface(Stream s, ModelSerializerOptions options)
-        {
-            var json = JsonDocument.Parse(s);
-            return DeserializeJsonModelForCombinedInterface(json.RootElement, options);
-        }
-
-        private void SerializeWithWriter(Utf8JsonWriter writer, ModelSerializerOptions options)
-        {
+            MemoryStream stream = new MemoryStream();
+            Utf8JsonWriter writer = new Utf8JsonWriter(stream);
             writer.WriteStartObject();
             writer.WritePropertyName("key"u8);
             writer.WriteStringValue(Key);
@@ -119,6 +116,14 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests.Models
                 }
             }
             writer.WriteEndObject();
+            writer.Flush();
+            stream.Position = 0;
+            return new BinaryData(stream.ToArray());
+        }
+
+        object IModelSerializable.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            return DeserializeJsonModelForCombinedInterface(JsonDocument.Parse(data.ToString()).RootElement, options);
         }
     }
 }

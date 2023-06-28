@@ -7,10 +7,12 @@ using System.IO;
 using System.Text;
 using System.Text.Json;
 using Azure.Core.Serialization;
+using Microsoft.Extensions.Options;
+using Newtonsoft.Json.Linq;
 
 namespace Azure.Core.Tests.Public.ModelSerializationTests
 {
-    public class Envelope<T> : IJsonSerializableModel, IUtf8JsonSerializable
+    public class Envelope<T> : IModelSerializable, IUtf8JsonSerializable
     {
         private Dictionary<string, BinaryData> RawData { get; set; } = new Dictionary<string, BinaryData>();
 
@@ -37,10 +39,20 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
         public T ModelT { get; set; }
 
         #region Serialization
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonSerializableModel)this).Serialize(writer, new ModelSerializerOptions());
-
-        void IJsonSerializableModel.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
+            BinaryData data = ((IModelSerializable)this).Serialize(new ModelSerializerOptions());
+#if NET6_0_OR_GREATER
+            writer.WriteRawValue(data);
+#else
+            JsonSerializer.Serialize(writer, JsonDocument.Parse(data.ToString()).RootElement);
+#endif
+        }
+
+        BinaryData IModelSerializable.Serialize(ModelSerializerOptions options)
+        {
+            MemoryStream stream = new MemoryStream();
+            Utf8JsonWriter writer = new Utf8JsonWriter(stream);
             writer.WriteStartObject();
             if (!options.IgnoreReadOnlyProperties)
             {
@@ -49,7 +61,12 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
             }
 
             writer.WritePropertyName("modelA"u8);
-            ((IJsonSerializableModel)ModelA).Serialize(writer, options);
+            BinaryData data = ((IModelSerializable)ModelA).Serialize(options);
+#if NET6_0_OR_GREATER
+            writer.WriteRawValue(data);
+#else
+            JsonSerializer.Serialize(writer, JsonDocument.Parse(data.ToString()).RootElement);
+#endif
             writer.WritePropertyName("modelC"u8);
             SerializeT(writer, options);
 
@@ -67,6 +84,9 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
                 }
             }
             writer.WriteEndObject();
+            writer.Flush();
+            stream.Position = 0;
+            return new BinaryData(stream.ToArray());
         }
 
         internal static Envelope<T> DeserializeEnvelope(JsonElement element, ModelSerializerOptions options)
@@ -136,6 +156,11 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
             m.Position = 0;
             return (T)serializer.Deserialize(m, typeof(T), default);
         }
-#endregion
+
+        object IModelSerializable.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            return DeserializeEnvelope(JsonDocument.Parse(data.ToString()).RootElement, options);
+        }
+        #endregion
     }
 }

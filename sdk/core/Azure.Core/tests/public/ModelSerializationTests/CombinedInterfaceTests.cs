@@ -15,12 +15,10 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
     {
         [TestCase(true)]
         [TestCase(false)]
-        public void CanRoundTripFutureVersionWithoutLoss(bool ignoreReadOnlyProperties)
+        public void CanRoundTripFutureVersionWithoutLossXml(bool ignoreReadOnlyProperties)
         {
             ModelSerializerOptions options = new ModelSerializerOptions();
             options.IgnoreReadOnlyProperties = ignoreReadOnlyProperties;
-
-            Stream stream = new MemoryStream();
 
             string serviceResponse =
                 "<Tag>" +
@@ -29,23 +27,22 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
                 "<ReadOnlyProperty>ReadOnly</ReadOnlyProperty>" +
                 "</Tag>";
 
-            var expectedSerializedString = "<?xml version=\"1.0\" encoding=\"utf-8\"?><Tag><Key>Color</Key><Value>Red</Value>";
+            var expectedSerializedString = "\uFEFF<?xml version=\"1.0\" encoding=\"utf-8\"?><Tag><Key>Color</Key><Value>Red</Value>";
             if (!ignoreReadOnlyProperties)
                 expectedSerializedString += "<ReadOnlyProperty>ReadOnly</ReadOnlyProperty>";
             expectedSerializedString += "</Tag>";
 
-            XmlModelForCombinedInterface model = ModelSerializer.Deserialize<XmlModelForCombinedInterface>(new MemoryStream(Encoding.UTF8.GetBytes(serviceResponse)), options);
+            XmlModelForCombinedInterface model = ModelSerializer.Deserialize<XmlModelForCombinedInterface>(new BinaryData(Encoding.UTF8.GetBytes(serviceResponse)), options);
 
             Assert.AreEqual("Color", model.Key);
             Assert.AreEqual("Red", model.Value);
             Assert.AreEqual("ReadOnly", model.ReadOnlyProperty);
-            stream = ModelSerializer.Serialize(model, options);
-            stream.Position = 0;
-            string roundTrip = new StreamReader(stream).ReadToEnd();
+            var data = ModelSerializer.Serialize(model, options);
+            string roundTrip = data.ToString();
 
             Assert.That(roundTrip, Is.EqualTo(expectedSerializedString));
 
-            XmlModelForCombinedInterface model2 = ModelSerializer.Deserialize<XmlModelForCombinedInterface>(new MemoryStream(Encoding.UTF8.GetBytes(roundTrip)), options);
+            XmlModelForCombinedInterface model2 = ModelSerializer.Deserialize<XmlModelForCombinedInterface>(new BinaryData(Encoding.UTF8.GetBytes(roundTrip)), options);
             VerifyModelXmlModelForCombinedInterface(model, model2, ignoreReadOnlyProperties);
         }
 
@@ -59,8 +56,6 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
             options.IgnoreAdditionalProperties = ignoreAdditionalProperties;
             options.IgnoreReadOnlyProperties = ignoreReadOnlyProperties;
 
-            Stream stream = new MemoryStream();
-
             string serviceResponse = "{\"key\":\"Color\",\"value\":\"Red\",\"readOnlyProperty\":\"ReadOnly\",\"x\":\"extra\"}";
 
             var expectedSerializedString = "{\"key\":\"Color\",\"value\":\"Red\"";
@@ -70,7 +65,7 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
                 expectedSerializedString += ",\"x\":\"extra\"";
             expectedSerializedString += "}";
 
-            JsonModelForCombinedInterface model = ModelSerializer.Deserialize<JsonModelForCombinedInterface>(new MemoryStream(Encoding.UTF8.GetBytes(serviceResponse)), options);
+            JsonModelForCombinedInterface model = ModelSerializer.Deserialize<JsonModelForCombinedInterface>(new BinaryData(Encoding.UTF8.GetBytes(serviceResponse)), options);
 
             Assert.AreEqual("Color", model.Key);
             Assert.AreEqual("Red", model.Value);
@@ -78,13 +73,12 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
             var additionalProperties = typeof(JsonModelForCombinedInterface).GetProperty("RawData", System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic).GetValue(model) as Dictionary<string, BinaryData>;
             Assert.IsNotNull(additionalProperties);
             Assert.AreEqual(!ignoreAdditionalProperties, additionalProperties.ContainsKey("x"));
-            stream = ModelSerializer.Serialize(model, options);
-            stream.Position = 0;
-            string roundTrip = new StreamReader(stream).ReadToEnd();
+            var data = ModelSerializer.Serialize(model, options);
+            string roundTrip = data.ToString();
 
             Assert.That(roundTrip, Is.EqualTo(expectedSerializedString));
 
-            JsonModelForCombinedInterface model2 = ModelSerializer.Deserialize<JsonModelForCombinedInterface>(new MemoryStream(Encoding.UTF8.GetBytes(roundTrip)), options);
+            JsonModelForCombinedInterface model2 = ModelSerializer.Deserialize<JsonModelForCombinedInterface>(new BinaryData(Encoding.UTF8.GetBytes(roundTrip)), options);
             VerifyModelJsonModelForCombinedInterface(model, model2, ignoreReadOnlyProperties, ignoreAdditionalProperties);
         }
 
