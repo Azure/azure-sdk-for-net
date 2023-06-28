@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.EventGrid
         /// <param name="description"> Description for the Topic Space resource. </param>
         /// <param name="topicTemplates">
         /// The topic filters in the topic space.
-        /// Example: "topicTemplates": [ 
+        /// Example: "topicTemplates": [
         ///               "devices/foo/bar",
         ///               "devices/topic1/+",
         ///               "devices/${principal.name}/${principal.attributes.keyName}" ].
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.EventGrid
         public string Description { get; set; }
         /// <summary>
         /// The topic filters in the topic space.
-        /// Example: "topicTemplates": [ 
+        /// Example: "topicTemplates": [
         ///               "devices/foo/bar",
         ///               "devices/topic1/+",
         ///               "devices/${principal.name}/${principal.attributes.keyName}" ].
