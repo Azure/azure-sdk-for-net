@@ -448,7 +448,7 @@ namespace Azure.ResourceManager.CostManagement.Models
         public static Azure.ResourceManager.CostManagement.CostManagementExportData CostManagementExportData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.CostManagement.Models.ExportFormatType? format = default(Azure.ResourceManager.CostManagement.Models.ExportFormatType?), Azure.ResourceManager.CostManagement.Models.ExportDeliveryDestination deliveryInfoDestination = null, Azure.ResourceManager.CostManagement.Models.ExportDefinition definition = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.CostManagement.Models.ExportRun> runHistoryValue = null, bool? partitionData = default(bool?), System.DateTimeOffset? nextRunTimeEstimate = default(System.DateTimeOffset?), Azure.ResourceManager.CostManagement.Models.ExportSchedule schedule = null, Azure.ETag? eTag = default(Azure.ETag?)) { throw null; }
         public static Azure.ResourceManager.CostManagement.CostManagementViewData CostManagementViewData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string displayName = null, Azure.Core.ResourceIdentifier scope = null, System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), System.DateTimeOffset? modifiedOn = default(System.DateTimeOffset?), string dateRange = null, string currency = null, Azure.ResourceManager.CostManagement.Models.ViewChartType? chart = default(Azure.ResourceManager.CostManagement.Models.ViewChartType?), Azure.ResourceManager.CostManagement.Models.AccumulatedType? accumulated = default(Azure.ResourceManager.CostManagement.Models.AccumulatedType?), Azure.ResourceManager.CostManagement.Models.ViewMetricType? metric = default(Azure.ResourceManager.CostManagement.Models.ViewMetricType?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.CostManagement.Models.ViewKpiProperties> kpis = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.CostManagement.Models.ViewPivotProperties> pivots = null, Azure.ResourceManager.CostManagement.Models.ViewReportType? typePropertiesQueryType = default(Azure.ResourceManager.CostManagement.Models.ViewReportType?), Azure.ResourceManager.CostManagement.Models.ReportTimeframeType? timeframe = default(Azure.ResourceManager.CostManagement.Models.ReportTimeframeType?), Azure.ResourceManager.CostManagement.Models.ReportConfigTimePeriod timePeriod = null, Azure.ResourceManager.CostManagement.Models.ReportConfigDataset dataSet = null, bool? includeMonetaryCommitment = default(bool?), Azure.ETag? eTag = default(Azure.ETag?)) { throw null; }
         public static Azure.ResourceManager.CostManagement.Models.DownloadURL DownloadURL(System.DateTimeOffset? expiryOn = default(System.DateTimeOffset?), System.DateTimeOffset? validTill = default(System.DateTimeOffset?), System.Uri downloadUri = null) { throw null; }
-        public static Azure.ResourceManager.CostManagement.Models.ExportRun ExportRun(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.CostManagement.Models.ExecutionType? executionType = default(Azure.ResourceManager.CostManagement.Models.ExecutionType?), Azure.ResourceManager.CostManagement.Models.ExecutionStatus? status = default(Azure.ResourceManager.CostManagement.Models.ExecutionStatus?), string submittedBy = null, System.DateTimeOffset? submittedOn = default(System.DateTimeOffset?), System.DateTimeOffset? processingStartOn = default(System.DateTimeOffset?), System.DateTimeOffset? processingEndOn = default(System.DateTimeOffset?), string fileName = null, Azure.ResourceManager.CostManagement.Models.CommonExportProperties runSettings = null, Azure.ResourceManager.CostManagement.Models.ExportRunErrorDetails error = null, Azure.ETag? eTag = default(Azure.ETag?)) { throw null; }
+        public static Azure.ResourceManager.CostManagement.Models.ExportRun ExportRun(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.CostManagement.Models.ExportRunExecutionType? executionType = default(Azure.ResourceManager.CostManagement.Models.ExportRunExecutionType?), Azure.ResourceManager.CostManagement.Models.ExportRunExecutionStatus? status = default(Azure.ResourceManager.CostManagement.Models.ExportRunExecutionStatus?), string submittedBy = null, System.DateTimeOffset? submittedOn = default(System.DateTimeOffset?), System.DateTimeOffset? processingStartOn = default(System.DateTimeOffset?), System.DateTimeOffset? processingEndOn = default(System.DateTimeOffset?), string fileName = null, Azure.ResourceManager.CostManagement.Models.CommonExportProperties runSettings = null, Azure.ResourceManager.CostManagement.Models.ExportRunErrorDetails error = null, Azure.ETag? eTag = default(Azure.ETag?)) { throw null; }
         public static Azure.ResourceManager.CostManagement.Models.ExportRunErrorDetails ExportRunErrorDetails(string code = null, string message = null) { throw null; }
         public static Azure.ResourceManager.CostManagement.Models.ForecastColumn ForecastColumn(string name = null, string forecastColumnType = null) { throw null; }
         public static Azure.ResourceManager.CostManagement.Models.ForecastResult ForecastResult(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string nextLink = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.CostManagement.Models.ForecastColumn> columns = null, System.Collections.Generic.IEnumerable<System.Collections.Generic.IList<System.BinaryData>> rows = null, Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?), string sku = null, Azure.ETag? eTag = default(Azure.ETag?), System.Collections.Generic.IReadOnlyDictionary<string, string> tags = null) { throw null; }
@@ -797,47 +797,6 @@ namespace Azure.ResourceManager.CostManagement.Models
         public System.DateTimeOffset? ExpiryOn { get { throw null; } }
         public System.DateTimeOffset? ValidTill { get { throw null; } }
     }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct ExecutionStatus : System.IEquatable<Azure.ResourceManager.CostManagement.Models.ExecutionStatus>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public ExecutionStatus(string value) { throw null; }
-        public static Azure.ResourceManager.CostManagement.Models.ExecutionStatus Completed { get { throw null; } }
-        public static Azure.ResourceManager.CostManagement.Models.ExecutionStatus DataNotAvailable { get { throw null; } }
-        public static Azure.ResourceManager.CostManagement.Models.ExecutionStatus Failed { get { throw null; } }
-        public static Azure.ResourceManager.CostManagement.Models.ExecutionStatus InProgress { get { throw null; } }
-        public static Azure.ResourceManager.CostManagement.Models.ExecutionStatus NewDataNotAvailable { get { throw null; } }
-        public static Azure.ResourceManager.CostManagement.Models.ExecutionStatus Queued { get { throw null; } }
-        public static Azure.ResourceManager.CostManagement.Models.ExecutionStatus Timeout { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.CostManagement.Models.ExecutionStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.CostManagement.Models.ExecutionStatus left, Azure.ResourceManager.CostManagement.Models.ExecutionStatus right) { throw null; }
-        public static implicit operator Azure.ResourceManager.CostManagement.Models.ExecutionStatus (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.CostManagement.Models.ExecutionStatus left, Azure.ResourceManager.CostManagement.Models.ExecutionStatus right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct ExecutionType : System.IEquatable<Azure.ResourceManager.CostManagement.Models.ExecutionType>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public ExecutionType(string value) { throw null; }
-        public static Azure.ResourceManager.CostManagement.Models.ExecutionType OnDemand { get { throw null; } }
-        public static Azure.ResourceManager.CostManagement.Models.ExecutionType Scheduled { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.CostManagement.Models.ExecutionType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.CostManagement.Models.ExecutionType left, Azure.ResourceManager.CostManagement.Models.ExecutionType right) { throw null; }
-        public static implicit operator Azure.ResourceManager.CostManagement.Models.ExecutionType (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.CostManagement.Models.ExecutionType left, Azure.ResourceManager.CostManagement.Models.ExecutionType right) { throw null; }
-        public override string ToString() { throw null; }
-    }
     public partial class ExportDataset
     {
         public ExportDataset() { }
@@ -894,12 +853,12 @@ namespace Azure.ResourceManager.CostManagement.Models
         public ExportRun() { }
         public Azure.ResourceManager.CostManagement.Models.ExportRunErrorDetails Error { get { throw null; } set { } }
         public Azure.ETag? ETag { get { throw null; } set { } }
-        public Azure.ResourceManager.CostManagement.Models.ExecutionType? ExecutionType { get { throw null; } set { } }
+        public Azure.ResourceManager.CostManagement.Models.ExportRunExecutionType? ExecutionType { get { throw null; } set { } }
         public string FileName { get { throw null; } set { } }
         public System.DateTimeOffset? ProcessingEndOn { get { throw null; } set { } }
         public System.DateTimeOffset? ProcessingStartOn { get { throw null; } set { } }
         public Azure.ResourceManager.CostManagement.Models.CommonExportProperties RunSettings { get { throw null; } set { } }
-        public Azure.ResourceManager.CostManagement.Models.ExecutionStatus? Status { get { throw null; } set { } }
+        public Azure.ResourceManager.CostManagement.Models.ExportRunExecutionStatus? Status { get { throw null; } set { } }
         public string SubmittedBy { get { throw null; } set { } }
         public System.DateTimeOffset? SubmittedOn { get { throw null; } set { } }
     }
@@ -908,6 +867,47 @@ namespace Azure.ResourceManager.CostManagement.Models
         public ExportRunErrorDetails() { }
         public string Code { get { throw null; } }
         public string Message { get { throw null; } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct ExportRunExecutionStatus : System.IEquatable<Azure.ResourceManager.CostManagement.Models.ExportRunExecutionStatus>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public ExportRunExecutionStatus(string value) { throw null; }
+        public static Azure.ResourceManager.CostManagement.Models.ExportRunExecutionStatus Completed { get { throw null; } }
+        public static Azure.ResourceManager.CostManagement.Models.ExportRunExecutionStatus DataNotAvailable { get { throw null; } }
+        public static Azure.ResourceManager.CostManagement.Models.ExportRunExecutionStatus Failed { get { throw null; } }
+        public static Azure.ResourceManager.CostManagement.Models.ExportRunExecutionStatus InProgress { get { throw null; } }
+        public static Azure.ResourceManager.CostManagement.Models.ExportRunExecutionStatus NewDataNotAvailable { get { throw null; } }
+        public static Azure.ResourceManager.CostManagement.Models.ExportRunExecutionStatus Queued { get { throw null; } }
+        public static Azure.ResourceManager.CostManagement.Models.ExportRunExecutionStatus Timeout { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.CostManagement.Models.ExportRunExecutionStatus other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.CostManagement.Models.ExportRunExecutionStatus left, Azure.ResourceManager.CostManagement.Models.ExportRunExecutionStatus right) { throw null; }
+        public static implicit operator Azure.ResourceManager.CostManagement.Models.ExportRunExecutionStatus (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.CostManagement.Models.ExportRunExecutionStatus left, Azure.ResourceManager.CostManagement.Models.ExportRunExecutionStatus right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct ExportRunExecutionType : System.IEquatable<Azure.ResourceManager.CostManagement.Models.ExportRunExecutionType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public ExportRunExecutionType(string value) { throw null; }
+        public static Azure.ResourceManager.CostManagement.Models.ExportRunExecutionType OnDemand { get { throw null; } }
+        public static Azure.ResourceManager.CostManagement.Models.ExportRunExecutionType Scheduled { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.CostManagement.Models.ExportRunExecutionType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.CostManagement.Models.ExportRunExecutionType left, Azure.ResourceManager.CostManagement.Models.ExportRunExecutionType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.CostManagement.Models.ExportRunExecutionType (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.CostManagement.Models.ExportRunExecutionType left, Azure.ResourceManager.CostManagement.Models.ExportRunExecutionType right) { throw null; }
+        public override string ToString() { throw null; }
     }
     public partial class ExportSchedule
     {

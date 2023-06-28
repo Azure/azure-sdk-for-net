@@ -83,6 +83,8 @@ rename-mapping:
   KpiProperties: ViewKpiProperties
   ChartType: ViewChartType
   PivotProperties: ViewPivotProperties
+  ExecutionType: ExportRunExecutionType
+  ExecutionStatus: ExportRunExecutionStatus
   ErrorDetails: ExportRunErrorDetails
   BenefitKind: BillingAccountBenefitKind
   DaysOfWeek: ScheduledActionDaysOfWeek

@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.CostManagement.Models
         /// <param name="error"> The details of any error. </param>
         /// <param name="eTag"> eTag of the resource. To handle concurrent update scenario, this field will be used to determine whether the user is updating the latest version or not. </param>
         /// <returns> A new <see cref="Models.ExportRun"/> instance for mocking. </returns>
-        public static ExportRun ExportRun(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ExecutionType? executionType = null, ExecutionStatus? status = null, string submittedBy = null, DateTimeOffset? submittedOn = null, DateTimeOffset? processingStartOn = null, DateTimeOffset? processingEndOn = null, string fileName = null, CommonExportProperties runSettings = null, ExportRunErrorDetails error = null, ETag? eTag = null)
+        public static ExportRun ExportRun(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ExportRunExecutionType? executionType = null, ExportRunExecutionStatus? status = null, string submittedBy = null, DateTimeOffset? submittedOn = null, DateTimeOffset? processingStartOn = null, DateTimeOffset? processingEndOn = null, string fileName = null, CommonExportProperties runSettings = null, ExportRunErrorDetails error = null, ETag? eTag = null)
         {
             return new ExportRun(id, name, resourceType, systemData, executionType, status, submittedBy, submittedOn, processingStartOn, processingEndOn, fileName, runSettings, error, eTag);
         }
