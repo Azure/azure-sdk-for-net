@@ -42,6 +42,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         internal static HybridComputeSettingsProperties DeserializeHybridComputeSettingsProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<HybridComputeProvisioningState> hybridComputeProvisioningState = default;
             AutoProvisionState autoProvision = default;
             Optional<string> resourceGroupName = default;
@@ -54,7 +58,6 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     hybridComputeProvisioningState = new HybridComputeProvisioningState(property.Value.GetString());
@@ -79,7 +82,6 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     proxyServer = ProxyServerProperties.DeserializeProxyServerProperties(property.Value);
@@ -89,7 +91,6 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     servicePrincipal = ServicePrincipalProperties.DeserializeServicePrincipalProperties(property.Value);

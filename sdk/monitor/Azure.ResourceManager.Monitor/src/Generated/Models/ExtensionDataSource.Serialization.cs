@@ -58,6 +58,10 @@ namespace Azure.ResourceManager.Monitor.Models
 
         internal static ExtensionDataSource DeserializeExtensionDataSource(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<ExtensionDataSourceStream>> streams = default;
             string extensionName = default;
             Optional<BinaryData> extensionSettings = default;
@@ -69,7 +73,6 @@ namespace Azure.ResourceManager.Monitor.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<ExtensionDataSourceStream> array = new List<ExtensionDataSourceStream>();
@@ -89,7 +92,6 @@ namespace Azure.ResourceManager.Monitor.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     extensionSettings = BinaryData.FromString(property.Value.GetRawText());
@@ -99,7 +101,6 @@ namespace Azure.ResourceManager.Monitor.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();

@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
     {
         internal static RedisEnterpriseClusterList DeserializeRedisEnterpriseClusterList(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<RedisEnterpriseClusterData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
@@ -24,7 +28,6 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<RedisEnterpriseClusterData> array = new List<RedisEnterpriseClusterData>();

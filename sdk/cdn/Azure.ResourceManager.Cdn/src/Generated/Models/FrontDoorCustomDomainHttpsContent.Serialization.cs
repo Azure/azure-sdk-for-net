@@ -39,6 +39,10 @@ namespace Azure.ResourceManager.Cdn.Models
 
         internal static FrontDoorCustomDomainHttpsContent DeserializeFrontDoorCustomDomainHttpsContent(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             FrontDoorCertificateType certificateType = default;
             Optional<FrontDoorMinimumTlsVersion> minimumTlsVersion = default;
             Optional<FrontDoorCustomDomainHttpsContentSecret> secret = default;
@@ -53,7 +57,6 @@ namespace Azure.ResourceManager.Cdn.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     minimumTlsVersion = property.Value.GetString().ToFrontDoorMinimumTlsVersion();

@@ -15,6 +15,10 @@ namespace Azure.Maps.Rendering
     {
         internal static RenderCopyright DeserializeRenderCopyright(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> formatVersion = default;
             Optional<IReadOnlyList<string>> generalCopyrights = default;
             Optional<IReadOnlyList<RegionalCopyright>> regions = default;
@@ -29,7 +33,6 @@ namespace Azure.Maps.Rendering
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();
@@ -44,7 +47,6 @@ namespace Azure.Maps.Rendering
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<RegionalCopyright> array = new List<RegionalCopyright>();

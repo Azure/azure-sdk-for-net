@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.Compute.Models
     {
         internal static ResourceUriList DeserializeResourceUriList(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             IReadOnlyList<string> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())

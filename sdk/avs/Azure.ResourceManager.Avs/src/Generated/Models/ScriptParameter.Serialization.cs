@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.Avs.Models
     {
         internal static ScriptParameter DeserializeScriptParameter(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ScriptParameterType> type = default;
             Optional<string> name = default;
             Optional<string> description = default;
@@ -25,7 +29,6 @@ namespace Azure.ResourceManager.Avs.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     type = new ScriptParameterType(property.Value.GetString());
@@ -45,7 +48,6 @@ namespace Azure.ResourceManager.Avs.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     visibility = new ParameterVisibilityStatus(property.Value.GetString());
@@ -55,7 +57,6 @@ namespace Azure.ResourceManager.Avs.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     optional = new ParameterOptionalityStatus(property.Value.GetString());

@@ -8,11 +8,11 @@ using System;
 namespace Azure.Core
 {
     /// <summary>
-    /// Implementation of a <see cref="DelayStrategy"/> with 0 interval.
+    /// Implementation of a delay strategy with 0 interval.
     /// This is normally used for testing, like record playback.
     /// </summary>
     internal class ZeroPollingStrategy : DelayStrategy
     {
-        public override TimeSpan GetNextDelay(Response response, TimeSpan? suggestedInterval) => TimeSpan.Zero;
+        protected override TimeSpan GetNextDelayCore(Response? response, int retryNumber) => TimeSpan.Zero;
     }
 }

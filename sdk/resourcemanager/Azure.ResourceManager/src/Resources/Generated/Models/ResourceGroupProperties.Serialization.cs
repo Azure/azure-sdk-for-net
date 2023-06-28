@@ -20,6 +20,10 @@ namespace Azure.ResourceManager.Resources.Models
 
         internal static ResourceGroupProperties DeserializeResourceGroupProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {

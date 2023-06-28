@@ -14,6 +14,10 @@ namespace Azure.Communication.Sms
     {
         internal static SmsSendResult DeserializeSmsSendResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string to = default;
             Optional<string> messageId = default;
             int httpStatusCode = default;
@@ -41,7 +45,6 @@ namespace Azure.Communication.Sms
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     repeatabilityResult = new SmsSendResponseItemRepeatabilityResult(property.Value.GetString());

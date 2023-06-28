@@ -31,6 +31,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 
         internal static RecoveryPlanScriptActionDetails DeserializeRecoveryPlanScriptActionDetails(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string path = default;
             Optional<string> timeout = default;
             RecoveryPlanActionLocation fabricLocation = default;

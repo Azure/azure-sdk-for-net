@@ -24,6 +24,10 @@ namespace Azure.ResourceManager.Logic.Models
 
         internal static AS2ErrorSettings DeserializeAS2ErrorSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             bool suspendDuplicateMessage = default;
             bool resendIfMdnNotReceived = default;
             foreach (var property in element.EnumerateObject())

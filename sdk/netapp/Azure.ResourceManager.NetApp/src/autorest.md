@@ -5,11 +5,10 @@ Run `dotnet build /t:GenerateCode` to generate code.
 ``` yaml
 
 azure-arm: true
-generate-model-factory: false
 csharp: true
 library-name: NetApp
 namespace: Azure.ResourceManager.NetApp
-require: https://github.com/Azure/azure-rest-api-specs/blob/e31e3938529269e0e6a81f60b2fdc6d2aec5b9df/specification/netapp/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/7dcd41cd28d46eb256bac034760a7e2f0a036238/specification/netapp/resource-manager/readme.md
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 skip-csproj: true
@@ -99,7 +98,7 @@ rename-mapping:
   FilePathAvailabilityRequest.subnetId: -|arm-id
   MountTargetProperties.mountTargetId: -|uuid
   MountTargetProperties.fileSystemId: -|uuid
-  MountTargetProperties.ipAddress: -|ip-address
+  MountTargetProperties.ipAddress: -|ip-address  
   ActiveDirectory.kdcIP: -|ip-address
   ReplicationSchedule._10minutely: TenMinutely
   EndpointType.src: Source
@@ -128,6 +127,7 @@ rename-mapping:
   Volume.properties.smbContinuouslyAvailable: IsSmbContinuouslyAvailable
   Volume.properties.ldapEnabled: IsLdapEnabled
   Volume.properties.encrypted: IsEncrypted
+  Volume.properties.dataStoreResourceId: -|arm-id  
   VolumeGroupVolumeProperties.properties.proximityPlacementGroup: ProximityPlacementGroupId|arm-id
   VolumeGroupVolumeProperties.properties.coolAccess: IsCoolAccessEnabled
   VolumeGroupVolumeProperties.properties.snapshotDirectoryVisible: IsSnapshotDirectoryVisible
@@ -213,7 +213,14 @@ rename-mapping:
   VolumeGroupMetaData: NetAppVolumeGroupMetadata
   VolumeGroup: NetAppVolumeGroupResult
   RegionInfoAvailabilityZoneMappingsItem: AvailabilityZoneMapping
-
+  VolumeRelocationProperties.readyToBeFinalized: IsReadyToBeFinalized
+  VolumeRelocationProperties.relocationRequested: IsRelocationRequested
+  BreakFileLocksRequest.clientIp: -|ip-address
+  BreakFileLocksRequest: NetAppVolumeBreakFileLocksContent  
+  BackupRestoreFiles.destinationVolumeId: -|arm-id
+  BackupRestoreFiles: NetAppVolumeBackupBackupRestoreFilesContent
+  VolumeRelocationProperties: NetAppVolumeRelocationProperties
+  FileAccessLogs: NetAppFileAccessLog
 list-exception:
   - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetApp/netAppAccounts/{accountName}/volumeGroups/{volumeGroupName}
 

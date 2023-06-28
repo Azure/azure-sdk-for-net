@@ -32,6 +32,10 @@ namespace Azure.ResourceManager.HDInsight.Models
 
         internal static HDInsightPrivateLinkServiceConnectionState DeserializeHDInsightPrivateLinkServiceConnectionState(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             HDInsightPrivateLinkServiceConnectionStatus status = default;
             Optional<string> description = default;
             Optional<string> actionsRequired = default;

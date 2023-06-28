@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.Kubernetes.Models
     {
         internal static HybridConnectionConfig DeserializeHybridConnectionConfig(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<long> expirationTime = default;
             Optional<string> hybridConnectionName = default;
             Optional<string> relay = default;
@@ -24,7 +28,6 @@ namespace Azure.ResourceManager.Kubernetes.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     expirationTime = property.Value.GetInt64();

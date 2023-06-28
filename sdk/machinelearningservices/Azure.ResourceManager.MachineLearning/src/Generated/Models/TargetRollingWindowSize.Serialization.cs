@@ -22,6 +22,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static TargetRollingWindowSize DeserializeTargetRollingWindowSize(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             if (element.TryGetProperty("mode", out JsonElement discriminator))
             {
                 switch (discriminator.GetString())

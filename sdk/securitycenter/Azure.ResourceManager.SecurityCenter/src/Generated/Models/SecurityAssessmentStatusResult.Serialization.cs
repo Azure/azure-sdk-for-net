@@ -33,6 +33,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         internal static SecurityAssessmentStatusResult DeserializeSecurityAssessmentStatusResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<DateTimeOffset> firstEvaluationDate = default;
             Optional<DateTimeOffset> statusChangeDate = default;
             SecurityAssessmentStatusCode code = default;
@@ -44,7 +48,6 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     firstEvaluationDate = property.Value.GetDateTimeOffset("O");
@@ -54,7 +57,6 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     statusChangeDate = property.Value.GetDateTimeOffset("O");

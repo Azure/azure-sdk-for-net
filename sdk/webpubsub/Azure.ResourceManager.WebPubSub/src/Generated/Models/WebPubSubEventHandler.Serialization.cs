@@ -43,6 +43,10 @@ namespace Azure.ResourceManager.WebPubSub.Models
 
         internal static WebPubSubEventHandler DeserializeWebPubSubEventHandler(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string urlTemplate = default;
             Optional<string> userEventPattern = default;
             Optional<IList<string>> systemEvents = default;
@@ -63,7 +67,6 @@ namespace Azure.ResourceManager.WebPubSub.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();
@@ -78,7 +81,6 @@ namespace Azure.ResourceManager.WebPubSub.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     auth = UpstreamAuthSettings.DeserializeUpstreamAuthSettings(property.Value);

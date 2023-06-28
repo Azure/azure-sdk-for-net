@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.ContainerService.Models
     {
         internal static ContainerServiceOSOptionProperty DeserializeContainerServiceOSOptionProperty(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string osType = default;
             bool enableFipsImage = default;
             foreach (var property in element.EnumerateObject())

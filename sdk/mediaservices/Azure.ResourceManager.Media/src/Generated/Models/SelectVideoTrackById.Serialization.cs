@@ -24,6 +24,10 @@ namespace Azure.ResourceManager.Media.Models
 
         internal static SelectVideoTrackById DeserializeSelectVideoTrackById(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             long trackId = default;
             string odataType = default;
             foreach (var property in element.EnumerateObject())

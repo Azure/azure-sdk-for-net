@@ -35,9 +35,13 @@ namespace Azure.ResourceManager.IotHub.Models
 
         internal static IotHubCertificateProperties DeserializeIotHubCertificateProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> subject = default;
             Optional<DateTimeOffset> expiry = default;
-            Optional<BinaryData> thumbprint = default;
+            Optional<string> thumbprint = default;
             Optional<bool> isVerified = default;
             Optional<DateTimeOffset> created = default;
             Optional<DateTimeOffset> updated = default;
@@ -53,7 +57,6 @@ namespace Azure.ResourceManager.IotHub.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     expiry = property.Value.GetDateTimeOffset("R");
@@ -61,19 +64,13 @@ namespace Azure.ResourceManager.IotHub.Models
                 }
                 if (property.NameEquals("thumbprint"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    thumbprint = BinaryData.FromString(property.Value.GetRawText());
+                    thumbprint = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("isVerified"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     isVerified = property.Value.GetBoolean();
@@ -83,7 +80,6 @@ namespace Azure.ResourceManager.IotHub.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     created = property.Value.GetDateTimeOffset("R");
@@ -93,7 +89,6 @@ namespace Azure.ResourceManager.IotHub.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     updated = property.Value.GetDateTimeOffset("R");
@@ -103,7 +98,6 @@ namespace Azure.ResourceManager.IotHub.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     certificate = BinaryData.FromString(property.Value.GetRawText());

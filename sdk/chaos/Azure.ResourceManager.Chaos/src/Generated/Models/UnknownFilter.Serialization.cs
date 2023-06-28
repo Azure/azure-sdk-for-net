@@ -22,6 +22,10 @@ namespace Azure.ResourceManager.Chaos.Models
 
         internal static UnknownFilter DeserializeUnknownFilter(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             FilterType type = "Unknown";
             foreach (var property in element.EnumerateObject())
             {

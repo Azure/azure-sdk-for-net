@@ -46,6 +46,10 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static IPv6ExpressRouteCircuitPeeringConfig DeserializeIPv6ExpressRouteCircuitPeeringConfig(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> primaryPeerAddressPrefix = default;
             Optional<string> secondaryPeerAddressPrefix = default;
             Optional<ExpressRouteCircuitPeeringConfig> microsoftPeeringConfig = default;
@@ -67,7 +71,6 @@ namespace Azure.ResourceManager.Network.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     microsoftPeeringConfig = ExpressRouteCircuitPeeringConfig.DeserializeExpressRouteCircuitPeeringConfig(property.Value);
@@ -77,7 +80,6 @@ namespace Azure.ResourceManager.Network.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     routeFilter = JsonSerializer.Deserialize<WritableSubResource>(property.Value.GetRawText());
@@ -87,7 +89,6 @@ namespace Azure.ResourceManager.Network.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     state = new ExpressRouteCircuitPeeringState(property.Value.GetString());

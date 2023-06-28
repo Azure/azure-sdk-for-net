@@ -42,6 +42,10 @@ namespace Azure.ResourceManager.NetApp.Models
 
         internal static NetAppReplicationObject DeserializeNetAppReplicationObject(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> replicationId = default;
             Optional<NetAppEndpointType> endpointType = default;
             Optional<NetAppReplicationSchedule> replicationSchedule = default;
@@ -58,7 +62,6 @@ namespace Azure.ResourceManager.NetApp.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     endpointType = new NetAppEndpointType(property.Value.GetString());
@@ -68,7 +71,6 @@ namespace Azure.ResourceManager.NetApp.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     replicationSchedule = new NetAppReplicationSchedule(property.Value.GetString());

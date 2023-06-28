@@ -15,10 +15,10 @@ namespace Azure.ResourceManager.BotService.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(EnableCalling))
+            if (Optional.IsDefined(IsCallingEnabled))
             {
                 writer.WritePropertyName("enableCalling"u8);
-                writer.WriteBooleanValue(EnableCalling.Value);
+                writer.WriteBooleanValue(IsCallingEnabled.Value);
             }
             if (Optional.IsDefined(CallingWebhook))
             {
@@ -54,6 +54,10 @@ namespace Azure.ResourceManager.BotService.Models
 
         internal static MsTeamsChannelProperties DeserializeMsTeamsChannelProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<bool> enableCalling = default;
             Optional<string> callingWebhook = default;
             bool isEnabled = default;
@@ -66,7 +70,6 @@ namespace Azure.ResourceManager.BotService.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     enableCalling = property.Value.GetBoolean();

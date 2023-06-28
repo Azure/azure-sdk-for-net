@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.HDInsight.Models
     {
         internal static HDInsightBillingMeters DeserializeHDInsightBillingMeters(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> meterParameter = default;
             Optional<string> meter = default;
             Optional<string> unit = default;

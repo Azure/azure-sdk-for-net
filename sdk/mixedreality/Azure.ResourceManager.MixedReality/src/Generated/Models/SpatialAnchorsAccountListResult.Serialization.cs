@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.MixedReality.Models
     {
         internal static SpatialAnchorsAccountListResult DeserializeSpatialAnchorsAccountListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<SpatialAnchorsAccountData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
@@ -24,7 +28,6 @@ namespace Azure.ResourceManager.MixedReality.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<SpatialAnchorsAccountData> array = new List<SpatialAnchorsAccountData>();

@@ -711,6 +711,10 @@ namespace Azure.AI.TextAnalytics
         /// <para>For document length limits, maximum batch size, and supported text encoding, see
         /// <see href="https://aka.ms/azsdk/textanalytics/data-limits"/>.</para>
         /// </summary>
+        /// <param name="waitUntil">
+        /// <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service;
+        /// <see cref="WaitUntil.Started"/> if it should return after starting the operation.
+        /// </param>
         /// <param name="documents">The documents to analyze.</param>
         /// <param name="projectName">The name of the project which owns the models being consumed.</param>
         /// <param name="deploymentName">The name of the deployment being consumed.</param>
@@ -730,6 +734,175 @@ namespace Azure.AI.TextAnalytics
         /// <exception cref="RequestFailedException">Service returned a non-success
         /// status code.</exception>
         /// <exception cref="NotSupportedException">This method is only supported in service API version 2022-05-01 and newer.</exception>
+        public virtual RecognizeCustomEntitiesOperation RecognizeCustomEntities(
+            WaitUntil waitUntil,
+            IEnumerable<string> documents,
+            string projectName,
+            string deploymentName,
+            string language = default,
+            RecognizeCustomEntitiesOptions options = default,
+            CancellationToken cancellationToken = default)
+        {
+            return _serviceClient.RecognizeCustomEntities(waitUntil, documents, projectName, deploymentName, language, options, cancellationToken);
+        }
+
+        /// <summary>
+        /// Runs a predictive model to identify a collection of custom named entities
+        /// in the passed-in documents, and categorize those entities into custom types
+        /// such as contracts or financial documents.
+        /// <para>For more information on available categories, see
+        /// <see href="https://docs.microsoft.com/azure/cognitive-services/language-service/custom-named-entity-recognition/overview"/>.</para>
+        /// <para>For a list of languages supported by this operation, see
+        /// <see href="https://aka.ms/talangs"/>.</para>
+        /// <para>For document length limits, maximum batch size, and supported text encoding, see
+        /// <see href="https://aka.ms/azsdk/textanalytics/data-limits"/>.</para>
+        /// </summary>
+        /// <param name="waitUntil">
+        /// <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service;
+        /// <see cref="WaitUntil.Started"/> if it should return after starting the operation.
+        /// </param>
+        /// <param name="documents">The documents to analyze.</param>
+        /// <param name="projectName">The name of the project which owns the models being consumed.</param>
+        /// <param name="deploymentName">The name of the deployment being consumed.</param>
+        /// <param name="options"><see cref="TextAnalyticsRequestOptions"/> used to
+        /// select the version of the predictive model to run, and whether
+        /// statistics are returned in the response.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/>
+        /// controlling the request lifetime.</param>
+        /// <returns>A result containing the collection of entities identified
+        /// for each of the documents, as well as scores indicating the confidence
+        /// that a given entity correctly matches the identified substring.</returns>
+        /// <exception cref="RequestFailedException">Service returned a non-success
+        /// status code.</exception>
+        /// <exception cref="NotSupportedException">This method is only supported in service API version 2022-05-01 and newer.</exception>
+        public virtual RecognizeCustomEntitiesOperation RecognizeCustomEntities(
+            WaitUntil waitUntil,
+            IEnumerable<TextDocumentInput> documents,
+            string projectName,
+            string deploymentName,
+            RecognizeCustomEntitiesOptions options = default,
+            CancellationToken cancellationToken = default)
+        {
+            return _serviceClient.RecognizeCustomEntities(waitUntil, documents, projectName, deploymentName, options, cancellationToken);
+        }
+
+        /// <summary>
+        /// Runs a predictive model to identify a collection of custom named entities
+        /// in the passed-in documents, and categorize those entities into custom types
+        /// such as contracts or financial documents.
+        /// <para>For more information on available categories, see
+        /// <see href="https://docs.microsoft.com/azure/cognitive-services/language-service/custom-named-entity-recognition/overview"/>.</para>
+        /// <para>For a list of languages supported by this operation, see
+        /// <see href="https://aka.ms/talangs"/>.</para>
+        /// <para>For document length limits, maximum batch size, and supported text encoding, see
+        /// <see href="https://aka.ms/azsdk/textanalytics/data-limits"/>.</para>
+        /// </summary>
+        /// <param name="waitUntil">
+        /// <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service;
+        /// <see cref="WaitUntil.Started"/> if it should return after starting the operation.
+        /// </param>
+        /// <param name="documents">The documents to analyze.</param>
+        /// <param name="projectName">The name of the project which owns the models being consumed.</param>
+        /// <param name="deploymentName">The name of the deployment being consumed.</param>
+        /// <param name="language">The language that all the documents are
+        /// written in. If unspecified, this value will be set to the default
+        /// language in <see cref="TextAnalyticsClientOptions.DefaultLanguage"/> in the request
+        /// sent to the service. If set to an empty string, the service will apply a model
+        /// where the language is explicitly set to "None".</param>
+        /// <param name="options"><see cref="TextAnalyticsRequestOptions"/> used to
+        /// select the version of the predictive model to run, and whether
+        /// statistics are returned in the response.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/>
+        /// controlling the request lifetime.</param>
+        /// <returns>A result containing the collection of entities identified
+        /// for each of the documents, as well as scores indicating the confidence
+        /// that a given entity correctly matches the identified substring.</returns>
+        /// <exception cref="RequestFailedException">Service returned a non-success
+        /// status code.</exception>
+        /// <exception cref="NotSupportedException">This method is only supported in service API version 2022-05-01 and newer.</exception>
+        public virtual async Task<RecognizeCustomEntitiesOperation> RecognizeCustomEntitiesAsync(
+            WaitUntil waitUntil,
+            IEnumerable<string> documents,
+            string projectName,
+            string deploymentName,
+            string language = default,
+            RecognizeCustomEntitiesOptions options = default,
+            CancellationToken cancellationToken = default)
+        {
+            return await _serviceClient.RecognizeCustomEntitiesAsync(waitUntil, documents, projectName, deploymentName, language, options, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Runs a predictive model to identify a collection of custom named entities
+        /// in the passed-in documents, and categorize those entities into custom types
+        /// such as contracts or financial documents.
+        /// <para>For more information on available categories, see
+        /// <see href="https://docs.microsoft.com/azure/cognitive-services/language-service/custom-named-entity-recognition/overview"/>.</para>
+        /// <para>For a list of languages supported by this operation, see
+        /// <see href="https://aka.ms/talangs"/>.</para>
+        /// <para>For document length limits, maximum batch size, and supported text encoding, see
+        /// <see href="https://aka.ms/azsdk/textanalytics/data-limits"/>.</para>
+        /// </summary>
+        /// <param name="waitUntil">
+        /// <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service;
+        /// <see cref="WaitUntil.Started"/> if it should return after starting the operation.
+        /// </param>
+        /// <param name="documents">The documents to analyze.</param>
+        /// <param name="projectName">The name of the project which owns the models being consumed.</param>
+        /// <param name="deploymentName">The name of the deployment being consumed.</param>
+        /// <param name="options"><see cref="TextAnalyticsRequestOptions"/> used to
+        /// select the version of the predictive model to run, and whether
+        /// statistics are returned in the response.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/>
+        /// controlling the request lifetime.</param>
+        /// <returns>A result containing the collection of entities identified
+        /// for each of the documents, as well as scores indicating the confidence
+        /// that a given entity correctly matches the identified substring.</returns>
+        /// <exception cref="RequestFailedException">Service returned a non-success
+        /// status code.</exception>
+        /// <exception cref="NotSupportedException">This method is only supported in service API version 2022-05-01 and newer.</exception>
+        public virtual async Task<RecognizeCustomEntitiesOperation> RecognizeCustomEntitiesAsync(
+            WaitUntil waitUntil,
+            IEnumerable<TextDocumentInput> documents,
+            string projectName,
+            string deploymentName,
+            RecognizeCustomEntitiesOptions options = default,
+            CancellationToken cancellationToken = default)
+        {
+            return await _serviceClient.RecognizeCustomEntitiesAsync(waitUntil, documents, projectName, deploymentName, options, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Runs a predictive model to identify a collection of custom named entities
+        /// in the passed-in documents, and categorize those entities into custom types
+        /// such as contracts or financial documents.
+        /// <para>For more information on available categories, see
+        /// <see href="https://docs.microsoft.com/azure/cognitive-services/language-service/custom-named-entity-recognition/overview"/>.</para>
+        /// <para>For a list of languages supported by this operation, see
+        /// <see href="https://aka.ms/talangs"/>.</para>
+        /// <para>For document length limits, maximum batch size, and supported text encoding, see
+        /// <see href="https://aka.ms/azsdk/textanalytics/data-limits"/>.</para>
+        /// </summary>
+        /// <param name="documents">The documents to analyze.</param>
+        /// <param name="projectName">The name of the project which owns the models being consumed.</param>
+        /// <param name="deploymentName">The name of the deployment being consumed.</param>
+        /// <param name="language">The language that all the documents are
+        /// written in. If unspecified, this value will be set to the default
+        /// language in <see cref="TextAnalyticsClientOptions.DefaultLanguage"/> in the request
+        /// sent to the service. If set to an empty string, the service will apply a model
+        /// where the language is explicitly set to "None".</param>
+        /// <param name="options"><see cref="TextAnalyticsRequestOptions"/> used to
+        /// select the version of the predictive model to run, and whether
+        /// statistics are returned in the response.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/>
+        /// controlling the request lifetime.</param>
+        /// <returns>A result containing the collection of entities identified
+        /// for each of the documents, as well as scores indicating the confidence
+        /// that a given entity correctly matches the identified substring.</returns>
+        /// <exception cref="RequestFailedException">Service returned a non-success
+        /// status code.</exception>
+        /// <exception cref="NotSupportedException">This method is only supported in service API version 2022-05-01 and newer.</exception>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual RecognizeCustomEntitiesOperation StartRecognizeCustomEntities(
             IEnumerable<string> documents,
             string projectName,
@@ -738,7 +911,6 @@ namespace Azure.AI.TextAnalytics
             RecognizeCustomEntitiesOptions options = default,
             CancellationToken cancellationToken = default)
         {
-            options?.CheckSupported(ServiceVersion);
             return _serviceClient.StartRecognizeCustomEntities(documents, projectName, deploymentName, language, options, cancellationToken);
         }
 
@@ -767,6 +939,7 @@ namespace Azure.AI.TextAnalytics
         /// <exception cref="RequestFailedException">Service returned a non-success
         /// status code.</exception>
         /// <exception cref="NotSupportedException">This method is only supported in service API version 2022-05-01 and newer.</exception>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual RecognizeCustomEntitiesOperation StartRecognizeCustomEntities(
             IEnumerable<TextDocumentInput> documents,
             string projectName,
@@ -774,7 +947,6 @@ namespace Azure.AI.TextAnalytics
             RecognizeCustomEntitiesOptions options = default,
             CancellationToken cancellationToken = default)
         {
-            options?.CheckSupported(ServiceVersion);
             return _serviceClient.StartRecognizeCustomEntities(documents, projectName, deploymentName, options, cancellationToken);
         }
 
@@ -808,6 +980,7 @@ namespace Azure.AI.TextAnalytics
         /// <exception cref="RequestFailedException">Service returned a non-success
         /// status code.</exception>
         /// <exception cref="NotSupportedException">This method is only supported in service API version 2022-05-01 and newer.</exception>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<RecognizeCustomEntitiesOperation> StartRecognizeCustomEntitiesAsync(
             IEnumerable<string> documents,
             string projectName,
@@ -816,7 +989,6 @@ namespace Azure.AI.TextAnalytics
             RecognizeCustomEntitiesOptions options = default,
             CancellationToken cancellationToken = default)
         {
-            options?.CheckSupported(ServiceVersion);
             return await _serviceClient.StartRecognizeCustomEntitiesAsync(documents, projectName, deploymentName, language, options, cancellationToken).ConfigureAwait(false);
         }
 
@@ -845,6 +1017,7 @@ namespace Azure.AI.TextAnalytics
         /// <exception cref="RequestFailedException">Service returned a non-success
         /// status code.</exception>
         /// <exception cref="NotSupportedException">This method is only supported in service API version 2022-05-01 and newer.</exception>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<RecognizeCustomEntitiesOperation> StartRecognizeCustomEntitiesAsync(
             IEnumerable<TextDocumentInput> documents,
             string projectName,
@@ -852,7 +1025,6 @@ namespace Azure.AI.TextAnalytics
             RecognizeCustomEntitiesOptions options = default,
             CancellationToken cancellationToken = default)
         {
-            options?.CheckSupported(ServiceVersion);
             return await _serviceClient.StartRecognizeCustomEntitiesAsync(documents, projectName, deploymentName, options, cancellationToken).ConfigureAwait(false);
         }
 
@@ -1587,6 +1759,10 @@ namespace Azure.AI.TextAnalytics
         /// <remarks>
         /// This method is only available for <see cref="TextAnalyticsClientOptions.ServiceVersion.V3_1"/>, <see cref="TextAnalyticsClientOptions.ServiceVersion.V2022_05_01"/>, and newer.
         /// </remarks>
+        /// <param name="waitUntil">
+        /// <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service;
+        /// <see cref="WaitUntil.Started"/> if it should return after starting the operation.
+        /// </param>
         /// <param name="documents">The documents to analyze.</param>
         /// <param name="language">The language that the document is written in.</param>
         /// <param name="options">The additional configurable <see cref="AnalyzeHealthcareEntitiesOptions"/> </param>
@@ -1595,6 +1771,130 @@ namespace Azure.AI.TextAnalytics
         /// <exception cref="NotSupportedException">This method is only supported in service API version v3.1 and newer.</exception>
         /// <exception cref="RequestFailedException">Service returned a non-success
         /// status code.</exception>
+        public virtual async Task<AnalyzeHealthcareEntitiesOperation> AnalyzeHealthcareEntitiesAsync(WaitUntil waitUntil, IEnumerable<string> documents, string language = default, AnalyzeHealthcareEntitiesOptions options = default, CancellationToken cancellationToken = default)
+        {
+            options?.CheckSupported(ServiceVersion);
+            return await _serviceClient.AnalyzeHealthcareEntitiesAsync(waitUntil, documents, language, options, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Runs a predictive model to identify a collection of healthcare entities
+        /// found in the passed-in document, and include information linking the
+        /// entities to their corresponding entries in a well-known knowledge base.
+        /// For a list of languages supported by this operation, see
+        /// <see href="https://aka.ms/talangs"/>.
+        /// For document length limits, maximum batch size, and supported text encoding, see
+        /// <see href="https://aka.ms/azsdk/textanalytics/data-limits"/>.
+        /// </summary>
+        /// <remarks>
+        /// This method is only available for <see cref="TextAnalyticsClientOptions.ServiceVersion.V3_1"/>, <see cref="TextAnalyticsClientOptions.ServiceVersion.V2022_05_01"/>, and newer.
+        /// </remarks>
+        /// <param name="waitUntil">
+        /// <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service;
+        /// <see cref="WaitUntil.Started"/> if it should return after starting the operation.
+        /// </param>
+        /// <param name="documents">The documents to analyze.</param>
+        /// <param name="language">The language that the document is written in.
+        /// If unspecified, this value will be set to the default language in
+        /// <see cref="TextAnalyticsClientOptions"/> in the request sent to the
+        /// service.  If set to an empty string, the service will apply a model
+        /// where the language is explicitly set to "None".</param>
+        /// <param name="options">The additional configurable options<see cref="AnalyzeHealthcareEntitiesOptions"/></param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/>
+        /// controlling the request lifetime.</param>
+        /// <returns>A result containing the collection of entities identified
+        /// for each of the documents, as well as scores indicating the confidence
+        /// that a given entity correctly matches the identified substring.</returns>
+        /// <exception cref="NotSupportedException">This method is only supported in service API version v3.1 and newer.</exception>
+        /// <exception cref="RequestFailedException">Service returned a non-success
+        /// status code.</exception>
+        public virtual AnalyzeHealthcareEntitiesOperation AnalyzeHealthcareEntities(WaitUntil waitUntil, IEnumerable<string> documents, string language = default, AnalyzeHealthcareEntitiesOptions options = default, CancellationToken cancellationToken = default)
+        {
+            options?.CheckSupported(ServiceVersion);
+            return _serviceClient.AnalyzeHealthcareEntities(waitUntil, documents, language, options, cancellationToken);
+        }
+
+        /// <summary>
+        /// Runs a predictive model to identify a collection of healthcare entities
+        /// found in the passed-in document, and include information linking the
+        /// entities to their corresponding entries in a well-known knowledge base.
+        /// For a list of languages supported by this operation, see
+        /// <see href="https://aka.ms/talangs"/>.
+        /// For document length limits, maximum batch size, and supported text encoding, see
+        /// <see href="https://aka.ms/azsdk/textanalytics/data-limits"/>.
+        /// </summary>
+        /// <remarks>
+        /// This method is only available for <see cref="TextAnalyticsClientOptions.ServiceVersion.V3_1"/>, <see cref="TextAnalyticsClientOptions.ServiceVersion.V2022_05_01"/>, and newer.
+        /// </remarks>
+        /// <param name="waitUntil">
+        /// <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service;
+        /// <see cref="WaitUntil.Started"/> if it should return after starting the operation.
+        /// </param>
+        /// <param name="documents">The documents to analyze.</param>
+        /// <param name="options">The additional configurable options<see cref="AnalyzeHealthcareEntitiesOptions"/></param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns>A <see cref="AnalyzeHealthcareEntitiesOperation"/> to wait on this long-running operation.  Its <see cref="AnalyzeHealthcareEntitiesOperation.Value"/> upon successful
+        /// completion will contain layout elements extracted from the form.</returns>
+        /// <exception cref="NotSupportedException">This method is only supported in service API version v3.1 and newer.</exception>
+        /// <exception cref="RequestFailedException">Service returned a non-success
+        /// status code.</exception>
+        public virtual AnalyzeHealthcareEntitiesOperation AnalyzeHealthcareEntities(WaitUntil waitUntil, IEnumerable<TextDocumentInput> documents, AnalyzeHealthcareEntitiesOptions options, CancellationToken cancellationToken = default)
+        {
+            options?.CheckSupported(ServiceVersion);
+            return _serviceClient.AnalyzeHealthcareEntities(waitUntil, documents, options, cancellationToken);
+        }
+
+        /// <summary>
+        /// Runs a predictive model to identify a collection of healthcare entities
+        /// found in the passed-in document, and include information linking the
+        /// entities to their corresponding entries in a well-known knowledge base.
+        /// For a list of languages supported by this operation, see
+        /// <see href="https://aka.ms/talangs"/>.
+        /// For document length limits, maximum batch size, and supported text encoding, see
+        /// <see href="https://aka.ms/azsdk/textanalytics/data-limits"/>.
+        /// </summary>
+        /// <remarks>
+        /// This method is only available for <see cref="TextAnalyticsClientOptions.ServiceVersion.V3_1"/>, <see cref="TextAnalyticsClientOptions.ServiceVersion.V2022_05_01"/>, and newer.
+        /// </remarks>
+        /// <param name="waitUntil">
+        /// <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service;
+        /// <see cref="WaitUntil.Started"/> if it should return after starting the operation.
+        /// </param>
+        /// <param name="documents">The documents to analyze.</param>
+        /// <param name="options">The additional configurable options<see cref="AnalyzeHealthcareEntitiesOptions"/></param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns>A <see cref="AnalyzeHealthcareEntitiesOperation"/> to wait on this long-running operation.  Its <see cref="AnalyzeHealthcareEntitiesOperation.Value"/> upon successful
+        /// completion will contain layout elements extracted from the form.</returns>
+        /// <exception cref="NotSupportedException">This method is only supported in service API version v3.1 and newer.</exception>
+        /// <exception cref="RequestFailedException">Service returned a non-success
+        /// status code.</exception>
+        public virtual async Task<AnalyzeHealthcareEntitiesOperation> AnalyzeHealthcareEntitiesAsync(WaitUntil waitUntil, IEnumerable<TextDocumentInput> documents, AnalyzeHealthcareEntitiesOptions options = default, CancellationToken cancellationToken = default)
+        {
+            options?.CheckSupported(ServiceVersion);
+            return await _serviceClient.AnalyzeHealthcareEntitiesAsync(waitUntil, documents, options, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Runs a predictive model to identify a collection of healthcare entities
+        /// found in the passed-in document, and include information linking the
+        /// entities to their corresponding entries in a well-known knowledge base.
+        /// For a list of languages supported by this operation, see
+        /// <see href="https://aka.ms/talangs"/>.
+        /// For document length limits, maximum batch size, and supported text encoding, see
+        /// <see href="https://aka.ms/azsdk/textanalytics/data-limits"/>.
+        /// </summary>
+        /// <remarks>
+        /// This method is only available for <see cref="TextAnalyticsClientOptions.ServiceVersion.V3_1"/>, <see cref="TextAnalyticsClientOptions.ServiceVersion.V2022_05_01"/>, and newer.
+        /// </remarks>
+        /// <param name="documents">The documents to analyze.</param>
+        /// <param name="language">The language that the document is written in.</param>
+        /// <param name="options">The additional configurable <see cref="AnalyzeHealthcareEntitiesOptions"/> </param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/>
+        /// controlling the request lifetime.</param>
+        /// <exception cref="NotSupportedException">This method is only supported in service API version v3.1 and newer.</exception>
+        /// <exception cref="RequestFailedException">Service returned a non-success
+        /// status code.</exception>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<AnalyzeHealthcareEntitiesOperation> StartAnalyzeHealthcareEntitiesAsync(IEnumerable<string> documents, string language = default, AnalyzeHealthcareEntitiesOptions options = default, CancellationToken cancellationToken = default)
         {
             options?.CheckSupported(ServiceVersion);
@@ -1628,6 +1928,7 @@ namespace Azure.AI.TextAnalytics
         /// <exception cref="NotSupportedException">This method is only supported in service API version v3.1 and newer.</exception>
         /// <exception cref="RequestFailedException">Service returned a non-success
         /// status code.</exception>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual AnalyzeHealthcareEntitiesOperation StartAnalyzeHealthcareEntities(IEnumerable<string> documents, string language = default, AnalyzeHealthcareEntitiesOptions options = default, CancellationToken cancellationToken = default)
         {
             options?.CheckSupported(ServiceVersion);
@@ -1654,6 +1955,7 @@ namespace Azure.AI.TextAnalytics
         /// <exception cref="NotSupportedException">This method is only supported in service API version v3.1 and newer.</exception>
         /// <exception cref="RequestFailedException">Service returned a non-success
         /// status code.</exception>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual AnalyzeHealthcareEntitiesOperation StartAnalyzeHealthcareEntities(IEnumerable<TextDocumentInput> documents, AnalyzeHealthcareEntitiesOptions options, CancellationToken cancellationToken = default)
         {
             options?.CheckSupported(ServiceVersion);
@@ -1680,6 +1982,7 @@ namespace Azure.AI.TextAnalytics
         /// <exception cref="NotSupportedException">This method is only supported in service API version v3.1 and newer.</exception>
         /// <exception cref="RequestFailedException">Service returned a non-success
         /// status code.</exception>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<AnalyzeHealthcareEntitiesOperation> StartAnalyzeHealthcareEntitiesAsync(IEnumerable<TextDocumentInput> documents, AnalyzeHealthcareEntitiesOptions options = default, CancellationToken cancellationToken = default)
         {
             options?.CheckSupported(ServiceVersion);
@@ -1689,6 +1992,206 @@ namespace Azure.AI.TextAnalytics
         #endregion
 
         #region Analyze Operation
+
+        /// <summary>
+        /// Performs one or more text analysis actions on a set of documents. The list of supported actions includes:
+        /// <list type="bullet">
+        /// <item><description>Entity Recognition (Named, Linked, and Personally Identifiable Information (PII) entities)</description></item>
+        /// <item><description>Key Phrases Extraction</description></item>
+        /// <item><description>Sentiment Analysis</description></item>
+        /// <item><description>Custom Entity Recognition</description></item>
+        /// <item><description>Custom Single and Multi Label Classification</description></item>
+        /// <item><description>Extractive Summarization</description></item>
+        /// <item><description>Abstractive Summarization</description></item>
+        /// </list>
+        /// <para>For document length limits, maximum batch size, and supported text encoding, see more information
+        /// <see href="https://aka.ms/azsdk/textanalytics/data-limits">here</see>.
+        /// </para>
+        /// </summary>
+        /// <remarks>
+        /// This method is only available for <see cref="TextAnalyticsClientOptions.ServiceVersion.V3_1"/>,
+        /// <see cref="TextAnalyticsClientOptions.ServiceVersion.V2022_05_01"/>, and newer. See the service
+        /// <see href="https://aka.ms/azsdk/textanalytics/customfunctionalities">documentation</see> for regional
+        /// support of custom action features.
+        /// </remarks>
+        /// <param name="waitUntil">
+        /// <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service;
+        /// <see cref="WaitUntil.Started"/> if it should return after starting the operation.
+        /// </param>
+        /// <param name="documents">The list of documents to analyze.</param>
+        /// <param name="actions">The <see cref="TextAnalyticsActions"/> to perform on the list of documents.</param>
+        /// <param name="language">The language that the document is written in.</param>
+        /// <param name="options">The <see cref="AnalyzeActionsOptions"/> used to configure the operation.</param>
+        /// <param name="cancellationToken">The <see cref="CancellationToken"/> controlling the lifetime of the request.</param>
+        /// <exception cref="NotSupportedException">
+        /// This method is only supported in service API version v3.1 and newer. The
+        /// <see cref="AnalyzeHealthcareEntitiesAction"/>, <see cref="MultiLabelClassifyAction"/>,
+        /// <see cref="RecognizeCustomEntitiesAction"/>, and <see cref="SingleLabelClassifyAction"/> are only supported
+        /// in service API version 2022-05-01 and newer. The <see cref="ExtractiveSummarizeAction"/> and
+        /// <see cref="AbstractiveSummarizeAction"/> are only supported in service API version 2023-04-01 and newer.
+        /// </exception>
+        /// <exception cref="RequestFailedException">
+        /// Service returned a non-success status code.
+        /// </exception>
+        public virtual async Task<AnalyzeActionsOperation> AnalyzeActionsAsync(
+            WaitUntil waitUntil,
+            IEnumerable<string> documents,
+            TextAnalyticsActions actions,
+            string language = default,
+            AnalyzeActionsOptions options = default,
+            CancellationToken cancellationToken = default)
+        {
+            return await _serviceClient.AnalyzeActionsAsync(waitUntil, documents, actions, language, options, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Performs one or more text analysis actions on a set of documents. The list of supported actions includes:
+        /// <list type="bullet">
+        /// <item><description>Entity Recognition (Named, Linked, and Personally Identifiable Information (PII) entities)</description></item>
+        /// <item><description>Key Phrases Extraction</description></item>
+        /// <item><description>Sentiment Analysis</description></item>
+        /// <item><description>Custom Entity Recognition</description></item>
+        /// <item><description>Custom Single and Multi Label Classification</description></item>
+        /// <item><description>Extractive Summarization</description></item>
+        /// <item><description>Abstractive Summarization</description></item>
+        /// </list>
+        /// <para>For document length limits, maximum batch size, and supported text encoding, see
+        /// <see href="https://aka.ms/azsdk/textanalytics/data-limits">here</see>.
+        /// </para>
+        /// </summary>
+        /// <remarks>
+        /// This method is only available for <see cref="TextAnalyticsClientOptions.ServiceVersion.V3_1"/>,
+        /// <see cref="TextAnalyticsClientOptions.ServiceVersion.V2022_05_01"/>, and newer. See the service
+        /// <see href="https://aka.ms/azsdk/textanalytics/customfunctionalities">documentation</see> for regional
+        /// support of custom action features.
+        /// </remarks>
+        /// <param name="waitUntil">
+        /// <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service;
+        /// <see cref="WaitUntil.Started"/> if it should return after starting the operation.
+        /// </param>
+        /// <param name="documents">The list of documents to analyze.</param>
+        /// <param name="actions"> The <see cref="TextAnalyticsActions"/> to perform on the list of documents.</param>
+        /// <param name="language">The language that the document is written in.</param>
+        /// <param name="options">The <see cref="AnalyzeActionsOptions"/> used to configure the operation.</param>
+        /// <param name="cancellationToken">The <see cref="CancellationToken"/> controlling the lifetime of the request.</param>
+        /// <exception cref="NotSupportedException">
+        /// This method is only supported in service API version v3.1 and newer. The
+        /// <see cref="AnalyzeHealthcareEntitiesAction"/>, <see cref="MultiLabelClassifyAction"/>,
+        /// <see cref="RecognizeCustomEntitiesAction"/>, and <see cref="SingleLabelClassifyAction"/> are only supported
+        /// in service API version 2022-05-01 and newer. The <see cref="ExtractiveSummarizeAction"/> and
+        /// <see cref="AbstractiveSummarizeAction"/> are only supported in service API version 2023-04-01 and newer.
+        /// </exception>
+        /// <exception cref="RequestFailedException">
+        /// Service returned a non-success status code.
+        /// </exception>
+        public virtual AnalyzeActionsOperation AnalyzeActions(
+            WaitUntil waitUntil,
+            IEnumerable<string> documents,
+            TextAnalyticsActions actions,
+            string language = default,
+            AnalyzeActionsOptions options = default,
+            CancellationToken cancellationToken = default)
+        {
+            return _serviceClient.AnalyzeActions(waitUntil, documents, actions, language, options, cancellationToken);
+        }
+
+        /// <summary>
+        /// Performs one or more text analysis actions on a set of documents. The list of supported actions includes:
+        /// <list type="bullet">
+        /// <item><description>Entity Recognition (Named, Linked, and Personally Identifiable Information (PII) entities)</description></item>
+        /// <item><description>Key Phrases Extraction</description></item>
+        /// <item><description>Sentiment Analysis</description></item>
+        /// <item><description>Custom Entity Recognition</description></item>
+        /// <item><description>Custom Single and Multi Label Classification</description></item>
+        /// <item><description>Extractive Summarization</description></item>
+        /// <item><description>Abstractive Summarization</description></item>
+        /// </list>
+        /// <para>For document length limits, maximum batch size, and supported text encoding, see
+        /// <see href="https://aka.ms/azsdk/textanalytics/data-limits">here</see>.
+        /// </para>
+        /// </summary>
+        /// <remarks>
+        /// This method is only available for <see cref="TextAnalyticsClientOptions.ServiceVersion.V3_1"/>,
+        /// <see cref="TextAnalyticsClientOptions.ServiceVersion.V2022_05_01"/>, and newer. See the service
+        /// <see href="https://aka.ms/azsdk/textanalytics/customfunctionalities">documentation</see> for regional
+        /// support of custom action features.
+        /// </remarks>
+        /// <param name="waitUntil">
+        /// <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service;
+        /// <see cref="WaitUntil.Started"/> if it should return after starting the operation.
+        /// </param>
+        /// <param name="documents">The list of documents to analyze.</param>
+        /// <param name="actions"> The <see cref="TextAnalyticsActions"/> to perform on the list of documents.</param>
+        /// <param name="options">The <see cref="AnalyzeActionsOptions"/> used to configure the operation.</param>
+        /// <param name="cancellationToken">The <see cref="CancellationToken"/> controlling the lifetime of the request.</param>
+        /// <exception cref="NotSupportedException">
+        /// This method is only supported in service API version v3.1 and newer. The
+        /// <see cref="AnalyzeHealthcareEntitiesAction"/>, <see cref="MultiLabelClassifyAction"/>,
+        /// <see cref="RecognizeCustomEntitiesAction"/>, and <see cref="SingleLabelClassifyAction"/> are only supported
+        /// in service API version 2022-05-01 and newer. The <see cref="ExtractiveSummarizeAction"/> and
+        /// <see cref="AbstractiveSummarizeAction"/> are only supported in service API version 2023-04-01 and newer.
+        /// </exception>
+        /// <exception cref="RequestFailedException">
+        /// Service returned a non-success status code.
+        /// </exception>
+        public virtual AnalyzeActionsOperation AnalyzeActions(
+            WaitUntil waitUntil,
+            IEnumerable<TextDocumentInput> documents,
+            TextAnalyticsActions actions,
+            AnalyzeActionsOptions options = default,
+            CancellationToken cancellationToken = default)
+        {
+            return _serviceClient.AnalyzeActions(waitUntil, documents, actions, options, cancellationToken);
+        }
+
+        /// <summary>
+        /// Performs one or more text analysis actions on a set of documents. The list of supported actions includes:
+        /// <list type="bullet">
+        /// <item><description>Entity Recognition (Named, Linked, and Personally Identifiable Information (PII) entities)</description></item>
+        /// <item><description>Key Phrases Extraction</description></item>
+        /// <item><description>Sentiment Analysis</description></item>
+        /// <item><description>Custom Entity Recognition</description></item>
+        /// <item><description>Custom Single and Multi Label Classification</description></item>
+        /// <item><description>Extractive Summarization</description></item>
+        /// <item><description>Abstractive Summarization</description></item>
+        /// </list>
+        /// <para>For document length limits, maximum batch size, and supported text encoding, see
+        /// <see href="https://aka.ms/azsdk/textanalytics/data-limits">here</see>.
+        /// </para>
+        /// </summary>
+        /// <remarks>
+        /// This method is only available for <see cref="TextAnalyticsClientOptions.ServiceVersion.V3_1"/>,
+        /// <see cref="TextAnalyticsClientOptions.ServiceVersion.V2022_05_01"/>, and newer. See the service
+        /// <see href="https://aka.ms/azsdk/textanalytics/customfunctionalities">documentation</see> for regional
+        /// support of custom action features.
+        /// </remarks>
+        /// <param name="waitUntil">
+        /// <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service;
+        /// <see cref="WaitUntil.Started"/> if it should return after starting the operation.
+        /// </param>
+        /// <param name="documents">The list of documents to analyze.</param>
+        /// <param name="actions"> The <see cref="TextAnalyticsActions"/> to perform on the list of documents.</param>
+        /// <param name="options">The <see cref="AnalyzeActionsOptions"/> used to configure the operation.</param>
+        /// <param name="cancellationToken">The <see cref="CancellationToken"/> controlling the lifetime of the request.</param>
+        /// <exception cref="NotSupportedException">
+        /// This method is only supported in service API version v3.1 and newer. The
+        /// <see cref="AnalyzeHealthcareEntitiesAction"/>, <see cref="MultiLabelClassifyAction"/>,
+        /// <see cref="RecognizeCustomEntitiesAction"/>, and <see cref="SingleLabelClassifyAction"/> are only supported
+        /// in service API version 2022-05-01 and newer. The <see cref="ExtractiveSummarizeAction"/> and
+        /// <see cref="AbstractiveSummarizeAction"/> are only supported in service API version 2023-04-01 and newer.
+        /// </exception>
+        /// <exception cref="RequestFailedException">
+        /// Service returned a non-success status code.
+        /// </exception>
+        public virtual async Task<AnalyzeActionsOperation> AnalyzeActionsAsync(
+            WaitUntil waitUntil,
+            IEnumerable<TextDocumentInput> documents,
+            TextAnalyticsActions actions,
+            AnalyzeActionsOptions options = default,
+            CancellationToken cancellationToken = default)
+        {
+            return await _serviceClient.AnalyzeActionsAsync(waitUntil, documents, actions, options, cancellationToken).ConfigureAwait(false);
+        }
 
         /// <summary>
         /// Performs one or more text analysis actions on a set of documents. The list of supported actions includes:
@@ -1721,11 +2224,12 @@ namespace Azure.AI.TextAnalytics
         /// <see cref="AnalyzeHealthcareEntitiesAction"/>, <see cref="MultiLabelClassifyAction"/>,
         /// <see cref="RecognizeCustomEntitiesAction"/>, and <see cref="SingleLabelClassifyAction"/> are only supported
         /// in service API version 2022-05-01 and newer. The <see cref="ExtractiveSummarizeAction"/> and
-        /// <see cref="AbstractiveSummarizeAction"/> are only supported in service API version 2022-10-01-preview and newer.
+        /// <see cref="AbstractiveSummarizeAction"/> are only supported in service API version 2023-04-01 and newer.
         /// </exception>
         /// <exception cref="RequestFailedException">
         /// Service returned a non-success status code.
         /// </exception>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<AnalyzeActionsOperation> StartAnalyzeActionsAsync(
             IEnumerable<string> documents,
             TextAnalyticsActions actions,
@@ -1733,7 +2237,6 @@ namespace Azure.AI.TextAnalytics
             AnalyzeActionsOptions options = default,
             CancellationToken cancellationToken = default)
         {
-            options?.CheckSupported(ServiceVersion);
             return await _serviceClient.StartAnalyzeActionsAsync(documents, actions, language, options, cancellationToken).ConfigureAwait(false);
         }
 
@@ -1768,11 +2271,12 @@ namespace Azure.AI.TextAnalytics
         /// <see cref="AnalyzeHealthcareEntitiesAction"/>, <see cref="MultiLabelClassifyAction"/>,
         /// <see cref="RecognizeCustomEntitiesAction"/>, and <see cref="SingleLabelClassifyAction"/> are only supported
         /// in service API version 2022-05-01 and newer. The <see cref="ExtractiveSummarizeAction"/> and
-        /// <see cref="AbstractiveSummarizeAction"/> are only supported in service API version 2022-10-01-preview and newer.
+        /// <see cref="AbstractiveSummarizeAction"/> are only supported in service API version 2023-04-01 and newer.
         /// </exception>
         /// <exception cref="RequestFailedException">
         /// Service returned a non-success status code.
         /// </exception>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual AnalyzeActionsOperation StartAnalyzeActions(
             IEnumerable<string> documents,
             TextAnalyticsActions actions,
@@ -1780,7 +2284,6 @@ namespace Azure.AI.TextAnalytics
             AnalyzeActionsOptions options = default,
             CancellationToken cancellationToken = default)
         {
-            options?.CheckSupported(ServiceVersion);
             return _serviceClient.StartAnalyzeActions(documents, actions, language, options, cancellationToken);
         }
 
@@ -1814,18 +2317,18 @@ namespace Azure.AI.TextAnalytics
         /// <see cref="AnalyzeHealthcareEntitiesAction"/>, <see cref="MultiLabelClassifyAction"/>,
         /// <see cref="RecognizeCustomEntitiesAction"/>, and <see cref="SingleLabelClassifyAction"/> are only supported
         /// in service API version 2022-05-01 and newer. The <see cref="ExtractiveSummarizeAction"/> and
-        /// <see cref="AbstractiveSummarizeAction"/> are only supported in service API version 2022-10-01-preview and newer.
+        /// <see cref="AbstractiveSummarizeAction"/> are only supported in service API version 2023-04-01 and newer.
         /// </exception>
         /// <exception cref="RequestFailedException">
         /// Service returned a non-success status code.
         /// </exception>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual AnalyzeActionsOperation StartAnalyzeActions(
             IEnumerable<TextDocumentInput> documents,
             TextAnalyticsActions actions,
             AnalyzeActionsOptions options = default,
             CancellationToken cancellationToken = default)
         {
-            options?.CheckSupported(ServiceVersion);
             return _serviceClient.StartAnalyzeActions(documents, actions, options, cancellationToken);
         }
 
@@ -1859,24 +2362,204 @@ namespace Azure.AI.TextAnalytics
         /// <see cref="AnalyzeHealthcareEntitiesAction"/>, <see cref="MultiLabelClassifyAction"/>,
         /// <see cref="RecognizeCustomEntitiesAction"/>, and <see cref="SingleLabelClassifyAction"/> are only supported
         /// in service API version 2022-05-01 and newer. The <see cref="ExtractiveSummarizeAction"/> and
-        /// <see cref="AbstractiveSummarizeAction"/> are only supported in service API version 2022-10-01-preview and newer.
+        /// <see cref="AbstractiveSummarizeAction"/> are only supported in service API version 2023-04-01 and newer.
         /// </exception>
         /// <exception cref="RequestFailedException">
         /// Service returned a non-success status code.
         /// </exception>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<AnalyzeActionsOperation> StartAnalyzeActionsAsync(
             IEnumerable<TextDocumentInput> documents,
             TextAnalyticsActions actions,
             AnalyzeActionsOptions options = default,
             CancellationToken cancellationToken = default)
         {
-            options?.CheckSupported(ServiceVersion);
             return await _serviceClient.StartAnalyzeActionsAsync(documents, actions, options, cancellationToken).ConfigureAwait(false);
         }
 
         #endregion
 
         #region Single Label Classify
+
+        /// <summary>
+        /// Runs a predictive model to identify a classify each document with a single label
+        /// in the passed-in documents.
+        /// <para>For more information on available categories, see
+        /// <see href="https://docs.microsoft.com/azure/cognitive-services/language-service/custom-text-classification/overview"/>.</para>
+        /// <para>For a list of languages supported by this operation, see
+        /// <see href="https://aka.ms/talangs"/>.</para>
+        /// <para>For document length limits, maximum batch size, and supported text encoding, see
+        /// <see href="https://aka.ms/azsdk/textanalytics/data-limits"/>.</para>
+        /// </summary>
+        /// <remarks>
+        /// This method is only available for <see cref="TextAnalyticsClientOptions.ServiceVersion.V2022_05_01"/> and newer.
+        /// </remarks>
+        /// <param name="waitUntil">
+        /// <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service;
+        /// <see cref="WaitUntil.Started"/> if it should return after starting the operation.
+        /// </param>
+        /// <param name="documents">The documents to analyze.</param>
+        /// <param name="projectName">The name of the project which owns the models being consumed.</param>
+        /// <param name="deploymentName">The name of the deployment being consumed.</param>
+        /// <param name="language">The language that all the documents are
+        /// written in. If unspecified, this value will be set to the default
+        /// language in <see cref="TextAnalyticsClientOptions.DefaultLanguage"/> in the request
+        /// sent to the service. If set to an empty string, the service will apply a model
+        /// where the language is explicitly set to "None".</param>
+        /// <param name="options"><see cref="TextAnalyticsRequestOptions"/> used to
+        /// select the version of the predictive model to run, and whether
+        /// statistics are returned in the response.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/>
+        /// controlling the request lifetime.</param>
+        /// <returns>A result containing the collection of entities identified
+        /// for each of the documents, as well as scores indicating the confidence
+        /// that a given entity correctly matches the identified substring.</returns>
+        /// <exception cref="RequestFailedException">Service returned a non-success
+        /// status code.</exception>
+        /// <exception cref="NotSupportedException">This method is only supported in service API version 2022-05-01 and newer.</exception>
+        public virtual ClassifyDocumentOperation SingleLabelClassify(
+            WaitUntil waitUntil,
+            IEnumerable<string> documents,
+            string projectName,
+            string deploymentName,
+            string language = default,
+            SingleLabelClassifyOptions options = default,
+            CancellationToken cancellationToken = default)
+        {
+            return _serviceClient.SingleLabelClassify(waitUntil, documents, projectName, deploymentName, language, options, cancellationToken);
+        }
+
+        /// <summary>
+        /// Runs a predictive model to identify a classify each document with a single label
+        /// in the passed-in documents.
+        /// <para>For more information on available categories, see
+        /// <see href="https://docs.microsoft.com/azure/cognitive-services/language-service/custom-text-classification/overview"/>.</para>
+        /// <para>For a list of languages supported by this operation, see
+        /// <see href="https://aka.ms/talangs"/>.</para>
+        /// <para>For document length limits, maximum batch size, and supported text encoding, see
+        /// <see href="https://aka.ms/azsdk/textanalytics/data-limits"/>.</para>
+        /// </summary>
+        /// <remarks>
+        /// This method is only available for <see cref="TextAnalyticsClientOptions.ServiceVersion.V2022_05_01"/> and newer.
+        /// </remarks>
+        /// <param name="waitUntil">
+        /// <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service;
+        /// <see cref="WaitUntil.Started"/> if it should return after starting the operation.
+        /// </param>
+        /// <param name="documents">The documents to analyze.</param>
+        /// <param name="projectName">The name of the project which owns the models being consumed.</param>
+        /// <param name="deploymentName">The name of the deployment being consumed.</param>
+        /// <param name="options"><see cref="TextAnalyticsRequestOptions"/> used to
+        /// select the version of the predictive model to run, and whether
+        /// statistics are returned in the response.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/>
+        /// controlling the request lifetime.</param>
+        /// <returns>A result containing the collection of entities identified
+        /// for each of the documents, as well as scores indicating the confidence
+        /// that a given entity correctly matches the identified substring.</returns>
+        /// <exception cref="RequestFailedException">Service returned a non-success
+        /// status code.</exception>
+        /// <exception cref="NotSupportedException">This method is only supported in service API version 2022-05-01 and newer.</exception>
+        public virtual ClassifyDocumentOperation SingleLabelClassify(
+            WaitUntil waitUntil,
+            IEnumerable<TextDocumentInput> documents,
+            string projectName,
+            string deploymentName,
+            SingleLabelClassifyOptions options = default,
+            CancellationToken cancellationToken = default)
+        {
+            return _serviceClient.SingleLabelClassify(waitUntil, documents, projectName, deploymentName, options, cancellationToken);
+        }
+
+        /// <summary>
+        /// Runs a predictive model to identify a classify each document with a single label
+        /// in the passed-in documents.
+        /// <para>For more information on available categories, see
+        /// <see href="https://docs.microsoft.com/azure/cognitive-services/language-service/custom-text-classification/overview"/>.</para>
+        /// <para>For a list of languages supported by this operation, see
+        /// <see href="https://aka.ms/talangs"/>.</para>
+        /// <para>For document length limits, maximum batch size, and supported text encoding, see
+        /// <see href="https://aka.ms/azsdk/textanalytics/data-limits"/>.</para>
+        /// </summary>
+        /// <remarks>
+        /// This method is only available for <see cref="TextAnalyticsClientOptions.ServiceVersion.V2022_05_01"/> and newer.
+        /// </remarks>
+        /// <param name="waitUntil">
+        /// <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service;
+        /// <see cref="WaitUntil.Started"/> if it should return after starting the operation.
+        /// </param>
+        /// <param name="documents">The documents to analyze.</param>
+        /// <param name="projectName">The name of the project which owns the models being consumed.</param>
+        /// <param name="deploymentName">The name of the deployment being consumed.</param>
+        /// <param name="language">The language that all the documents are
+        /// written in. If unspecified, this value will be set to the default
+        /// language in <see cref="TextAnalyticsClientOptions.DefaultLanguage"/> in the request
+        /// sent to the service. If set to an empty string, the service will apply a model
+        /// where the language is explicitly set to "None".</param>
+        /// <param name="options"><see cref="TextAnalyticsRequestOptions"/> used to
+        /// select the version of the predictive model to run, and whether
+        /// statistics are returned in the response.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/>
+        /// controlling the request lifetime.</param>
+        /// <returns>A result containing the collection of entities identified
+        /// for each of the documents, as well as scores indicating the confidence
+        /// that a given entity correctly matches the identified substring.</returns>
+        /// <exception cref="RequestFailedException">Service returned a non-success
+        /// status code.</exception>
+        /// <exception cref="NotSupportedException">This method is only supported in service API version 2022-05-01 and newer.</exception>
+        public virtual async Task<ClassifyDocumentOperation> SingleLabelClassifyAsync(
+            WaitUntil waitUntil,
+            IEnumerable<string> documents,
+            string projectName,
+            string deploymentName,
+            string language = default,
+            SingleLabelClassifyOptions options = default,
+            CancellationToken cancellationToken = default)
+        {
+            return await _serviceClient.SingleLabelClassifyAsync(waitUntil, documents, projectName, deploymentName, language, options, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Runs a predictive model to identify a classify each document with a single label
+        /// in the passed-in documents.
+        /// <para>For more information on available categories, see
+        /// <see href="https://docs.microsoft.com/azure/cognitive-services/language-service/custom-text-classification/overview"/>.</para>
+        /// <para>For a list of languages supported by this operation, see
+        /// <see href="https://aka.ms/talangs"/>.</para>
+        /// <para>For document length limits, maximum batch size, and supported text encoding, see
+        /// <see href="https://aka.ms/azsdk/textanalytics/data-limits"/>.</para>
+        /// </summary>
+        /// <remarks>
+        /// This method is only available for <see cref="TextAnalyticsClientOptions.ServiceVersion.V2022_05_01"/> and newer.
+        /// </remarks>
+        /// <param name="waitUntil">
+        /// <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service;
+        /// <see cref="WaitUntil.Started"/> if it should return after starting the operation.
+        /// </param>
+        /// <param name="documents">The documents to analyze.</param>
+        /// <param name="projectName">The name of the project which owns the models being consumed.</param>
+        /// <param name="deploymentName">The name of the deployment being consumed.</param>
+        /// <param name="options"><see cref="TextAnalyticsRequestOptions"/> used to
+        /// select the version of the predictive model to run, and whether
+        /// statistics are returned in the response.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/>
+        /// controlling the request lifetime.</param>
+        /// <returns>A result containing the collection of entities identified
+        /// for each of the documents, as well as scores indicating the confidence
+        /// that a given entity correctly matches the identified substring.</returns>
+        /// <exception cref="RequestFailedException">Service returned a non-success
+        /// status code.</exception>
+        /// <exception cref="NotSupportedException">This method is only supported in service API version 2022-05-01 and newer.</exception>
+        public virtual async Task<ClassifyDocumentOperation> SingleLabelClassifyAsync(
+            WaitUntil waitUntil,
+            IEnumerable<TextDocumentInput> documents,
+            string projectName,
+            string deploymentName,
+            SingleLabelClassifyOptions options = default,
+            CancellationToken cancellationToken = default)
+        {
+            return await _serviceClient.SingleLabelClassifyAsync(waitUntil, documents, projectName, deploymentName, options, cancellationToken).ConfigureAwait(false);
+        }
 
         /// <summary>
         /// Runs a predictive model to identify a classify each document with a single label
@@ -1910,6 +2593,7 @@ namespace Azure.AI.TextAnalytics
         /// <exception cref="RequestFailedException">Service returned a non-success
         /// status code.</exception>
         /// <exception cref="NotSupportedException">This method is only supported in service API version 2022-05-01 and newer.</exception>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual ClassifyDocumentOperation StartSingleLabelClassify(
             IEnumerable<string> documents,
             string projectName,
@@ -1918,7 +2602,6 @@ namespace Azure.AI.TextAnalytics
             SingleLabelClassifyOptions options = default,
             CancellationToken cancellationToken = default)
         {
-            options?.CheckSupported(ServiceVersion);
             return _serviceClient.StartSingleLabelClassify(documents, projectName, deploymentName, language, options, cancellationToken);
         }
 
@@ -1949,6 +2632,7 @@ namespace Azure.AI.TextAnalytics
         /// <exception cref="RequestFailedException">Service returned a non-success
         /// status code.</exception>
         /// <exception cref="NotSupportedException">This method is only supported in service API version 2022-05-01 and newer.</exception>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual ClassifyDocumentOperation StartSingleLabelClassify(
             IEnumerable<TextDocumentInput> documents,
             string projectName,
@@ -1956,7 +2640,6 @@ namespace Azure.AI.TextAnalytics
             SingleLabelClassifyOptions options = default,
             CancellationToken cancellationToken = default)
         {
-            options?.CheckSupported(ServiceVersion);
             return _serviceClient.StartSingleLabelClassify(documents, projectName, deploymentName, options, cancellationToken);
         }
 
@@ -1992,6 +2675,7 @@ namespace Azure.AI.TextAnalytics
         /// <exception cref="RequestFailedException">Service returned a non-success
         /// status code.</exception>
         /// <exception cref="NotSupportedException">This method is only supported in service API version 2022-05-01 and newer.</exception>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<ClassifyDocumentOperation> StartSingleLabelClassifyAsync(
             IEnumerable<string> documents,
             string projectName,
@@ -2000,7 +2684,6 @@ namespace Azure.AI.TextAnalytics
             SingleLabelClassifyOptions options = default,
             CancellationToken cancellationToken = default)
         {
-            options?.CheckSupported(ServiceVersion);
             return await _serviceClient.StartSingleLabelClassifyAsync(documents, projectName, deploymentName, language, options, cancellationToken).ConfigureAwait(false);
         }
 
@@ -2031,6 +2714,7 @@ namespace Azure.AI.TextAnalytics
         /// <exception cref="RequestFailedException">Service returned a non-success
         /// status code.</exception>
         /// <exception cref="NotSupportedException">This method is only supported in service API version 2022-05-01 and newer.</exception>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<ClassifyDocumentOperation> StartSingleLabelClassifyAsync(
             IEnumerable<TextDocumentInput> documents,
             string projectName,
@@ -2038,13 +2722,192 @@ namespace Azure.AI.TextAnalytics
             SingleLabelClassifyOptions options = default,
             CancellationToken cancellationToken = default)
         {
-            options?.CheckSupported(ServiceVersion);
             return await _serviceClient.StartSingleLabelClassifyAsync(documents, projectName, deploymentName, options, cancellationToken).ConfigureAwait(false);
         }
 
         #endregion
 
         #region Multi Label Classify
+
+        /// <summary>
+        /// Runs a predictive model to identify a classify each document with multiple labels
+        /// in the passed-in documents.
+        /// <para>For more information on available categories, see
+        /// <see href="https://docs.microsoft.com/azure/cognitive-services/language-service/custom-text-classification/overview"/>.</para>
+        /// <para>For a list of languages supported by this operation, see
+        /// <see href="https://aka.ms/talangs"/>.</para>
+        /// <para>For document length limits, maximum batch size, and supported text encoding, see
+        /// <see href="https://aka.ms/azsdk/textanalytics/data-limits"/>.</para>
+        /// </summary>
+        /// <remarks>
+        /// This method is only available for <see cref="TextAnalyticsClientOptions.ServiceVersion.V2022_05_01"/> and newer.
+        /// </remarks>
+        /// <param name="waitUntil">
+        /// <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service;
+        /// <see cref="WaitUntil.Started"/> if it should return after starting the operation.
+        /// </param>
+        /// <param name="documents">The documents to analyze.</param>
+        /// <param name="projectName">The name of the project which owns the models being consumed.</param>
+        /// <param name="deploymentName">The name of the deployment being consumed.</param>
+        /// <param name="language">The language that all the documents are
+        /// written in. If unspecified, this value will be set to the default
+        /// language in <see cref="TextAnalyticsClientOptions.DefaultLanguage"/> in the request
+        /// sent to the service. If set to an empty string, the service will apply a model
+        /// where the language is explicitly set to "None".</param>
+        /// <param name="options"><see cref="TextAnalyticsRequestOptions"/> used to
+        /// select the version of the predictive model to run, and whether
+        /// statistics are returned in the response.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/>
+        /// controlling the request lifetime.</param>
+        /// <returns>A result containing the collection of entities identified
+        /// for each of the documents, as well as scores indicating the confidence
+        /// that a given entity correctly matches the identified substring.</returns>
+        /// <exception cref="RequestFailedException">Service returned a non-success
+        /// status code.</exception>
+        /// <exception cref="NotSupportedException">This method is only supported in service API version 2022-05-01 and newer.</exception>
+        public virtual ClassifyDocumentOperation MultiLabelClassify(
+            WaitUntil waitUntil,
+            IEnumerable<string> documents,
+            string projectName,
+            string deploymentName,
+            string language = default,
+            MultiLabelClassifyOptions options = default,
+            CancellationToken cancellationToken = default)
+        {
+            return _serviceClient.MultiLabelClassify(waitUntil, documents, projectName, deploymentName, language, options, cancellationToken);
+        }
+
+        /// <summary>
+        /// Runs a predictive model to identify a classify each document with multiple labels
+        /// in the passed-in documents.
+        /// <para>For more information on available categories, see
+        /// <see href="https://docs.microsoft.com/azure/cognitive-services/language-service/custom-text-classification/overview"/>.</para>
+        /// <para>For a list of languages supported by this operation, see
+        /// <see href="https://aka.ms/talangs"/>.</para>
+        /// <para>For document length limits, maximum batch size, and supported text encoding, see
+        /// <see href="https://aka.ms/azsdk/textanalytics/data-limits"/>.</para>
+        /// </summary>
+        /// <remarks>
+        /// This method is only available for <see cref="TextAnalyticsClientOptions.ServiceVersion.V2022_05_01"/> and newer.
+        /// </remarks>
+        /// <param name="waitUntil">
+        /// <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service;
+        /// <see cref="WaitUntil.Started"/> if it should return after starting the operation.
+        /// </param>
+        /// <param name="documents">The documents to analyze.</param>
+        /// <param name="projectName">The name of the project which owns the models being consumed.</param>
+        /// <param name="deploymentName">The name of the deployment being consumed.</param>
+        /// <param name="options"><see cref="TextAnalyticsRequestOptions"/> used to
+        /// select the version of the predictive model to run, and whether
+        /// statistics are returned in the response.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/>
+        /// controlling the request lifetime.</param>
+        /// <returns>A result containing the collection of entities identified
+        /// for each of the documents, as well as scores indicating the confidence
+        /// that a given entity correctly matches the identified substring.</returns>
+        /// <exception cref="RequestFailedException">Service returned a non-success
+        /// status code.</exception>
+        /// <exception cref="NotSupportedException">This method is only supported in service API version 2022-05-01 and newer.</exception>
+        public virtual ClassifyDocumentOperation MultiLabelClassify(
+            WaitUntil waitUntil,
+            IEnumerable<TextDocumentInput> documents,
+            string projectName,
+            string deploymentName,
+            MultiLabelClassifyOptions options = default,
+            CancellationToken cancellationToken = default)
+        {
+            return _serviceClient.MultiLabelClassify(waitUntil, documents, projectName, deploymentName, options, cancellationToken);
+        }
+
+        /// <summary>
+        /// Runs a predictive model to identify a classify each document with multiple labels
+        /// in the passed-in documents.
+        /// <para>For more information on available categories, see
+        /// <see href="https://docs.microsoft.com/azure/cognitive-services/language-service/custom-text-classification/overview"/>.</para>
+        /// <para>For a list of languages supported by this operation, see
+        /// <see href="https://aka.ms/talangs"/>.</para>
+        /// <para>For document length limits, maximum batch size, and supported text encoding, see
+        /// <see href="https://aka.ms/azsdk/textanalytics/data-limits"/>.</para>
+        /// </summary>
+        /// <remarks>
+        /// This method is only available for <see cref="TextAnalyticsClientOptions.ServiceVersion.V2022_05_01"/> and newer.
+        /// </remarks>
+        /// <param name="waitUntil">
+        /// <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service;
+        /// <see cref="WaitUntil.Started"/> if it should return after starting the operation.
+        /// </param>
+        /// <param name="documents">The documents to analyze.</param>
+        /// <param name="projectName">The name of the project which owns the models being consumed.</param>
+        /// <param name="deploymentName">The name of the deployment being consumed.</param>
+        /// <param name="language">The language that all the documents are
+        /// written in. If unspecified, this value will be set to the default
+        /// language in <see cref="TextAnalyticsClientOptions.DefaultLanguage"/> in the request
+        /// sent to the service. If set to an empty string, the service will apply a model
+        /// where the language is explicitly set to "None".</param>
+        /// <param name="options"><see cref="TextAnalyticsRequestOptions"/> used to
+        /// select the version of the predictive model to run, and whether
+        /// statistics are returned in the response.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/>
+        /// controlling the request lifetime.</param>
+        /// <returns>A result containing the collection of entities identified
+        /// for each of the documents, as well as scores indicating the confidence
+        /// that a given entity correctly matches the identified substring.</returns>
+        /// <exception cref="RequestFailedException">Service returned a non-success
+        /// status code.</exception>
+        /// <exception cref="NotSupportedException">This method is only supported in service API version 2022-05-01 and newer.</exception>
+        public virtual async Task<ClassifyDocumentOperation> MultiLabelClassifyAsync(
+            WaitUntil waitUntil,
+            IEnumerable<string> documents,
+            string projectName,
+            string deploymentName,
+            string language = default,
+            MultiLabelClassifyOptions options = default,
+            CancellationToken cancellationToken = default)
+        {
+            return await _serviceClient.MultiLabelClassifyAsync(waitUntil, documents, projectName, deploymentName, language, options, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Runs a predictive model to identify a classify each document with multiple labels
+        /// in the passed-in documents.
+        /// <para>For more information on available categories, see
+        /// <see href="https://docs.microsoft.com/azure/cognitive-services/language-service/custom-text-classification/overview"/>.</para>
+        /// <para>For a list of languages supported by this operation, see
+        /// <see href="https://aka.ms/talangs"/>.</para>
+        /// <para>For document length limits, maximum batch size, and supported text encoding, see
+        /// <see href="https://aka.ms/azsdk/textanalytics/data-limits"/>.</para>
+        /// </summary>
+        /// <remarks>
+        /// This method is only available for <see cref="TextAnalyticsClientOptions.ServiceVersion.V2022_05_01"/> and newer.
+        /// </remarks>
+        /// <param name="waitUntil">
+        /// <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service;
+        /// <see cref="WaitUntil.Started"/> if it should return after starting the operation.
+        /// </param>
+        /// <param name="documents">The documents to analyze.</param>
+        /// <param name="projectName">The name of the project which owns the models being consumed.</param>
+        /// <param name="deploymentName">The name of the deployment being consumed.</param>
+        /// <param name="options"><see cref="TextAnalyticsRequestOptions"/> used to
+        /// select the version of the predictive model to run, and whether
+        /// statistics are returned in the response.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/>
+        /// controlling the request lifetime.</param>
+        /// <returns>A result containing the collection of entities identified
+        /// for each of the documents, as well as scores indicating the confidence
+        /// that a given entity correctly matches the identified substring.</returns>
+        /// <exception cref="RequestFailedException">Service returned a non-success
+        /// status code.</exception>
+        /// <exception cref="NotSupportedException">This method is only supported in service API version 2022-05-01 and newer.</exception>
+        public virtual async Task<ClassifyDocumentOperation> MultiLabelClassifyAsync(
+            WaitUntil waitUntil,
+            IEnumerable<TextDocumentInput> documents,
+            string projectName,
+            string deploymentName,
+            MultiLabelClassifyOptions options = default,
+            CancellationToken cancellationToken = default)
+        {
+            return await _serviceClient.MultiLabelClassifyAsync(waitUntil, documents, projectName, deploymentName, options, cancellationToken).ConfigureAwait(false);
+        }
 
         /// <summary>
         /// Runs a predictive model to identify a classify each document with multiple labels
@@ -2078,6 +2941,7 @@ namespace Azure.AI.TextAnalytics
         /// <exception cref="RequestFailedException">Service returned a non-success
         /// status code.</exception>
         /// <exception cref="NotSupportedException">This method is only supported in service API version 2022-05-01 and newer.</exception>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual ClassifyDocumentOperation StartMultiLabelClassify(
             IEnumerable<string> documents,
             string projectName,
@@ -2086,7 +2950,6 @@ namespace Azure.AI.TextAnalytics
             MultiLabelClassifyOptions options = default,
             CancellationToken cancellationToken = default)
         {
-            options?.CheckSupported(ServiceVersion);
             return _serviceClient.StartMultiLabelClassify(documents, projectName, deploymentName, language, options, cancellationToken);
         }
 
@@ -2117,6 +2980,7 @@ namespace Azure.AI.TextAnalytics
         /// <exception cref="RequestFailedException">Service returned a non-success
         /// status code.</exception>
         /// <exception cref="NotSupportedException">This method is only supported in service API version 2022-05-01 and newer.</exception>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual ClassifyDocumentOperation StartMultiLabelClassify(
             IEnumerable<TextDocumentInput> documents,
             string projectName,
@@ -2124,7 +2988,6 @@ namespace Azure.AI.TextAnalytics
             MultiLabelClassifyOptions options = default,
             CancellationToken cancellationToken = default)
         {
-            options?.CheckSupported(ServiceVersion);
             return _serviceClient.StartMultiLabelClassify(documents, projectName, deploymentName, options, cancellationToken);
         }
 
@@ -2160,6 +3023,7 @@ namespace Azure.AI.TextAnalytics
         /// <exception cref="RequestFailedException">Service returned a non-success
         /// status code.</exception>
         /// <exception cref="NotSupportedException">This method is only supported in service API version 2022-05-01 and newer.</exception>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<ClassifyDocumentOperation> StartMultiLabelClassifyAsync(
             IEnumerable<string> documents,
             string projectName,
@@ -2168,7 +3032,6 @@ namespace Azure.AI.TextAnalytics
             MultiLabelClassifyOptions options = default,
             CancellationToken cancellationToken = default)
         {
-            options?.CheckSupported(ServiceVersion);
             return await _serviceClient.StartMultiLabelClassifyAsync(documents, projectName, deploymentName, language, options, cancellationToken).ConfigureAwait(false);
         }
 
@@ -2199,6 +3062,7 @@ namespace Azure.AI.TextAnalytics
         /// <exception cref="RequestFailedException">Service returned a non-success
         /// status code.</exception>
         /// <exception cref="NotSupportedException">This method is only supported in service API version 2022-05-01 and newer.</exception>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<ClassifyDocumentOperation> StartMultiLabelClassifyAsync(
             IEnumerable<TextDocumentInput> documents,
             string projectName,
@@ -2206,196 +3070,7 @@ namespace Azure.AI.TextAnalytics
             MultiLabelClassifyOptions options = default,
             CancellationToken cancellationToken = default)
         {
-            options?.CheckSupported(ServiceVersion);
             return await _serviceClient.StartMultiLabelClassifyAsync(documents, projectName, deploymentName, options, cancellationToken).ConfigureAwait(false);
-        }
-
-        #endregion
-
-        #region Dynamic Classify
-
-        /// <summary>
-        /// Performs dynamic classification on the given document.
-        /// For document length limits, maximum batch size, and supported text encoding, see
-        /// <see href="https://aka.ms/azsdk/textanalytics/data-limits"/>.
-        /// </summary>
-        /// <remarks>
-        /// This method is only available for <see cref="TextAnalyticsClientOptions.ServiceVersion.V2022_10_01_Preview"/>, and newer.
-        /// </remarks>
-        /// <param name="document">The document to analyze.</param>
-        /// <param name="categories">The categories that the documents can be classified with.</param>
-        /// <param name="classificationType">The type of classification to perform.</param>
-        /// <param name="language">The language that the documents are written in.</param>
-        /// <param name="cancellationToken">The <see cref="CancellationToken"/> controlling the lifetime of the request.</param>
-        /// <returns>
-        /// The collection of categories used to classify each document that was successfully analyzed.
-        /// </returns>
-        /// <exception cref="NotSupportedException">This method is only supported in service API version 2022-10-01-preview and newer.</exception>
-        /// <exception cref="RequestFailedException">The service returned a non-success status code.</exception>
-        /// <exception cref="ArgumentException"><paramref name="document"/> is an empty string or <paramref name="categories"/> is an empty collection.</exception>
-        /// <exception cref="ArgumentNullException"><paramref name="document"/> or <paramref name="categories"/> is null.</exception>
-        public virtual Response<ClassificationCategoryCollection> DynamicClassify(
-            string document,
-            IEnumerable<string> categories,
-            ClassificationType? classificationType = default,
-            string language = default,
-            CancellationToken cancellationToken = default) =>
-            _serviceClient.DynamicClassify(document, categories, classificationType, language, cancellationToken);
-
-        /// <summary>
-        /// Performs dynamic classification on the given documents.
-        /// For document length limits, maximum batch size, and supported text encoding, see
-        /// <see href="https://aka.ms/azsdk/textanalytics/data-limits"/>.
-        /// </summary>
-        /// <remarks>
-        /// This method is only available for <see cref="TextAnalyticsClientOptions.ServiceVersion.V2022_10_01_Preview"/>, and newer.
-        /// </remarks>
-        /// <param name="documents">The documents to analyze.</param>
-        /// <param name="categories">The categories that the documents can be classified with.</param>
-        /// <param name="classificationType">The type of classification to perform.</param>
-        /// <param name="language">The language that the documents are written in.</param>
-        /// <param name="options">The additional <see cref="TextAnalyticsRequestOptions"/> used to configure the operation.</param>
-        /// <param name="cancellationToken">The <see cref="CancellationToken"/> controlling the lifetime of the request.</param>
-        /// <returns>
-        /// The collection of categories used to classify each document that was successfully analyzed.
-        /// </returns>
-        /// <exception cref="NotSupportedException">This method is only supported in service API version 2022-10-01-preview and newer.</exception>
-        /// <exception cref="RequestFailedException">The service returned a non-success status code.</exception>
-        /// <exception cref="ArgumentException"><paramref name="documents"/> or <paramref name="categories"/> is an empty collection.</exception>
-        /// <exception cref="ArgumentNullException"><paramref name="documents"/> or <paramref name="categories"/> is null.</exception>
-        public virtual Response<DynamicClassifyDocumentResultCollection> DynamicClassifyBatch(
-            IEnumerable<string> documents,
-            IEnumerable<string> categories,
-            ClassificationType? classificationType = default,
-            string language = default,
-            TextAnalyticsRequestOptions options = default,
-            CancellationToken cancellationToken = default)
-        {
-            options?.CheckSupported(ServiceVersion);
-            return _serviceClient.DynamicClassifyBatch(documents, categories, classificationType, language, options, cancellationToken);
-        }
-
-        /// <summary>
-        /// Performs dynamic classification on the given documents.
-        /// For document length limits, maximum batch size, and supported text encoding, see
-        /// <see href="https://aka.ms/azsdk/textanalytics/data-limits"/>.
-        /// </summary>
-        /// <remarks>
-        /// This method is only available for <see cref="TextAnalyticsClientOptions.ServiceVersion.V2022_10_01_Preview"/>, and newer.
-        /// </remarks>
-        /// <param name="documents">The documents to analyze.</param>
-        /// <param name="categories">The categories that the documents can be classified with.</param>
-        /// <param name="classificationType">The type of classification to perform.</param>
-        /// <param name="options">The additional <see cref="TextAnalyticsRequestOptions"/> used to configure the operation.</param>
-        /// <param name="cancellationToken">The <see cref="CancellationToken"/> controlling the lifetime of the request.</param>
-        /// <returns>
-        /// The collection of categories used to classify each document that was successfully analyzed.
-        /// </returns>
-        /// <exception cref="NotSupportedException">This method is only supported in service API version 2022-10-01-preview and newer.</exception>
-        /// <exception cref="RequestFailedException">The service returned a non-success status code.</exception>
-        /// <exception cref="ArgumentException"><paramref name="documents"/> or <paramref name="categories"/> is an empty collection.</exception>
-        /// <exception cref="ArgumentNullException"><paramref name="documents"/> or <paramref name="categories"/> is null.</exception>
-        public virtual Response<DynamicClassifyDocumentResultCollection> DynamicClassifyBatch(
-            IEnumerable<TextDocumentInput> documents,
-            IEnumerable<string> categories,
-            ClassificationType? classificationType = default,
-            TextAnalyticsRequestOptions options = default,
-            CancellationToken cancellationToken = default)
-        {
-            options?.CheckSupported(ServiceVersion);
-            return _serviceClient.DynamicClassifyBatch(documents, categories, classificationType, options, cancellationToken);
-        }
-
-        /// <summary>
-        /// Performs dynamic classification on the given document.
-        /// For document length limits, maximum batch size, and supported text encoding, see
-        /// <see href="https://aka.ms/azsdk/textanalytics/data-limits"/>.
-        /// </summary>
-        /// <remarks>
-        /// This method is only available for <see cref="TextAnalyticsClientOptions.ServiceVersion.V2022_10_01_Preview"/>, and newer.
-        /// </remarks>
-        /// <param name="document">The document to analyze.</param>
-        /// <param name="categories">The categories that the documents can be classified with.</param>
-        /// <param name="classificationType">The type of classification to perform.</param>
-        /// <param name="language">The language that the documents are written in.</param>
-        /// <param name="cancellationToken">The <see cref="CancellationToken"/> controlling the lifetime of the request.</param>
-        /// <returns>
-        /// The collection of categories used to classify each document that was successfully analyzed.
-        /// </returns>
-        /// <exception cref="NotSupportedException">This method is only supported in service API version 2022-10-01-preview and newer.</exception>
-        /// <exception cref="RequestFailedException">The service returned a non-success status code.</exception>
-        /// <exception cref="ArgumentException"><paramref name="document"/> is an empty string or <paramref name="categories"/> is an empty collection.</exception>
-        /// <exception cref="ArgumentNullException"><paramref name="document"/> or <paramref name="categories"/> is null.</exception>
-        public virtual async Task<Response<ClassificationCategoryCollection>> DynamicClassifyAsync(
-            string document,
-            IEnumerable<string> categories,
-            ClassificationType? classificationType = default,
-            string language = default,
-            CancellationToken cancellationToken = default) =>
-            await _serviceClient.DynamicClassifyAsync(document, categories, classificationType, language, cancellationToken).ConfigureAwait(false);
-
-        /// <summary>
-        /// Performs dynamic classification on the given documents.
-        /// For document length limits, maximum batch size, and supported text encoding, see
-        /// <see href="https://aka.ms/azsdk/textanalytics/data-limits"/>.
-        /// </summary>
-        /// <remarks>
-        /// This method is only available for <see cref="TextAnalyticsClientOptions.ServiceVersion.V2022_10_01_Preview"/>, and newer.
-        /// </remarks>
-        /// <param name="documents">The documents to analyze.</param>
-        /// <param name="categories">The categories that the documents can be classified with.</param>
-        /// <param name="classificationType">The type of classification to perform.</param>
-        /// <param name="language">The language that the documents are written in.</param>
-        /// <param name="options">The additional <see cref="TextAnalyticsRequestOptions"/> used to configure the operation.</param>
-        /// <param name="cancellationToken">The <see cref="CancellationToken"/> controlling the lifetime of the request.</param>
-        /// <returns>
-        /// The collection of categories used to classify each document that was successfully analyzed.
-        /// </returns>
-        /// <exception cref="NotSupportedException">This method is only supported in service API version 2022-10-01-preview and newer.</exception>
-        /// <exception cref="RequestFailedException">The service returned a non-success status code.</exception>
-        /// <exception cref="ArgumentException"><paramref name="documents"/> or <paramref name="categories"/> is an empty collection.</exception>
-        /// <exception cref="ArgumentNullException"><paramref name="documents"/> or <paramref name="categories"/> is null.</exception>
-        public virtual async Task<Response<DynamicClassifyDocumentResultCollection>> DynamicClassifyBatchAsync(
-            IEnumerable<string> documents,
-            IEnumerable<string> categories,
-            ClassificationType? classificationType = default,
-            string language = default,
-            TextAnalyticsRequestOptions options = default,
-            CancellationToken cancellationToken = default)
-        {
-            options?.CheckSupported(ServiceVersion);
-            return await _serviceClient.DynamicClassifyBatchAsync(documents, categories, classificationType, language, options,cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Performs dynamic classification on the given documents.
-        /// For document length limits, maximum batch size, and supported text encoding, see
-        /// <see href="https://aka.ms/azsdk/textanalytics/data-limits"/>.
-        /// </summary>
-        /// <remarks>
-        /// This method is only available for <see cref="TextAnalyticsClientOptions.ServiceVersion.V2022_10_01_Preview"/>, and newer.
-        /// </remarks>
-        /// <param name="documents">The documents to analyze.</param>
-        /// <param name="categories">The categories that the documents can be classified with.</param>
-        /// <param name="classificationType">The type of classification to perform.</param>
-        /// <param name="options">The additional <see cref="TextAnalyticsRequestOptions"/> used to configure the operation.</param>
-        /// <param name="cancellationToken">The <see cref="CancellationToken"/> controlling the lifetime of the request.</param>
-        /// <returns>
-        /// The collection of categories used to classify each document that was successfully analyzed.
-        /// </returns>
-        /// <exception cref="NotSupportedException">This method is only supported in service API version 2022-10-01-preview and newer.</exception>
-        /// <exception cref="RequestFailedException">The service returned a non-success status code.</exception>
-        /// <exception cref="ArgumentException"><paramref name="documents"/> or <paramref name="categories"/> is an empty collection.</exception>
-        /// <exception cref="ArgumentNullException"><paramref name="documents"/> or <paramref name="categories"/> is null.</exception>
-        public virtual async Task<Response<DynamicClassifyDocumentResultCollection>> DynamicClassifyBatchAsync(
-            IEnumerable<TextDocumentInput> documents,
-            IEnumerable<string> categories,
-            ClassificationType? classificationType = default,
-            TextAnalyticsRequestOptions options = default,
-            CancellationToken cancellationToken = default)
-        {
-            options?.CheckSupported(ServiceVersion);
-            return await _serviceClient.DynamicClassifyBatchAsync(documents, categories, classificationType, options, cancellationToken).ConfigureAwait(false);
         }
 
         #endregion
@@ -2411,8 +3086,12 @@ namespace Azure.AI.TextAnalytics
         /// <see href="https://aka.ms/azsdk/textanalytics/data-limits"/>.
         /// </summary>
         /// <remarks>
-        /// This method is only available for <see cref="TextAnalyticsClientOptions.ServiceVersion.V2022_10_01_Preview"/>, and newer.
+        /// This method is only available for <see cref="TextAnalyticsClientOptions.ServiceVersion.V2023_04_01"/>, and newer.
         /// </remarks>
+        /// <param name="waitUntil">
+        /// <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service;
+        /// <see cref="WaitUntil.Started"/> if it should return after starting the operation.
+        /// </param>
         /// <param name="documents">The documents to analyze.</param>
         /// <param name="language">The language that the documents are written in.</param>
         /// <param name="options">The additional <see cref="ExtractiveSummarizeOptions"/> used to configure the operation.</param>
@@ -2422,18 +3101,19 @@ namespace Azure.AI.TextAnalytics
         /// summarization. Upon completion, the operation will contain the collections of extracted summary sentences
         /// for each document that was successfully analyzed.
         /// </returns>
-        /// <exception cref="NotSupportedException">This method is only supported in service API version 2022-10-01-preview and newer.</exception>
+        /// <exception cref="NotSupportedException">This method is only supported in service API version 2023-04-01 and newer.</exception>
         /// <exception cref="RequestFailedException">The service returned a non-success status code.</exception>
         /// <exception cref="ArgumentException"><paramref name="documents"/> is an empty collection.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="documents"/> is null.</exception>
-        public virtual ExtractiveSummarizeOperation StartExtractiveSummarize(
+        public virtual ExtractiveSummarizeOperation ExtractiveSummarize(
+            WaitUntil waitUntil,
             IEnumerable<string> documents,
             string language = default,
             ExtractiveSummarizeOptions options = default,
             CancellationToken cancellationToken = default)
         {
             options?.CheckSupported(ServiceVersion);
-            return _serviceClient.StartExtractiveSummarize(documents, language, options, cancellationToken);
+            return _serviceClient.ExtractiveSummarize(waitUntil, documents, language, options, cancellationToken);
         }
 
         /// <summary>
@@ -2445,8 +3125,12 @@ namespace Azure.AI.TextAnalytics
         /// <see href="https://aka.ms/azsdk/textanalytics/data-limits"/>.
         /// </summary>
         /// <remarks>
-        /// This method is only available for <see cref="TextAnalyticsClientOptions.ServiceVersion.V2022_10_01_Preview"/>, and newer.
+        /// This method is only available for <see cref="TextAnalyticsClientOptions.ServiceVersion.V2023_04_01"/>, and newer.
         /// </remarks>
+        /// <param name="waitUntil">
+        /// <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service;
+        /// <see cref="WaitUntil.Started"/> if it should return after starting the operation.
+        /// </param>
         /// <param name="documents">The documents to analyze.</param>
         /// <param name="options">The additional <see cref="ExtractiveSummarizeOptions"/> used to configure the operation.</param>
         /// <param name="cancellationToken">The <see cref="CancellationToken"/> controlling the lifetime of the request.</param>
@@ -2455,17 +3139,18 @@ namespace Azure.AI.TextAnalytics
         /// summarization. Upon completion, the operation will contain the collections of extracted summary sentences
         /// for each document that was successfully analyzed.
         /// </returns>
-        /// <exception cref="NotSupportedException">This method is only supported in service API version 2022-10-01-preview and newer.</exception>
+        /// <exception cref="NotSupportedException">This method is only supported in service API version 2023-04-01 and newer.</exception>
         /// <exception cref="RequestFailedException">The service returned a non-success status code.</exception>
         /// <exception cref="ArgumentException"><paramref name="documents"/> is an empty collection.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="documents"/> is null.</exception>
-        public virtual ExtractiveSummarizeOperation StartExtractiveSummarize(
+        public virtual ExtractiveSummarizeOperation ExtractiveSummarize(
+            WaitUntil waitUntil,
             IEnumerable<TextDocumentInput> documents,
             ExtractiveSummarizeOptions options = default,
             CancellationToken cancellationToken = default)
         {
             options?.CheckSupported(ServiceVersion);
-            return _serviceClient.StartExtractiveSummarize(documents, options, cancellationToken);
+            return _serviceClient.ExtractiveSummarize(waitUntil, documents, options, cancellationToken);
         }
 
         /// <summary>
@@ -2477,8 +3162,12 @@ namespace Azure.AI.TextAnalytics
         /// <see href="https://aka.ms/azsdk/textanalytics/data-limits"/>.
         /// </summary>
         /// <remarks>
-        /// This method is only available for <see cref="TextAnalyticsClientOptions.ServiceVersion.V2022_10_01_Preview"/>, and newer.
+        /// This method is only available for <see cref="TextAnalyticsClientOptions.ServiceVersion.V2023_04_01"/>, and newer.
         /// </remarks>
+        /// <param name="waitUntil">
+        /// <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service;
+        /// <see cref="WaitUntil.Started"/> if it should return after starting the operation.
+        /// </param>
         /// <param name="documents">The documents to analyze.</param>
         /// <param name="language">The language that the documents are written in.</param>
         /// <param name="options">The additional <see cref="ExtractiveSummarizeOptions"/> used to configure the operation.</param>
@@ -2488,18 +3177,19 @@ namespace Azure.AI.TextAnalytics
         /// summarization. Upon completion, the operation will contain the collections of extracted summary sentences
         /// for each document that was successfully analyzed.
         /// </returns>
-        /// <exception cref="NotSupportedException">This method is only supported in service API version 2022-10-01-preview and newer.</exception>
+        /// <exception cref="NotSupportedException">This method is only supported in service API version 2023-04-01 and newer.</exception>
         /// <exception cref="RequestFailedException">The service returned a non-success status code.</exception>
         /// <exception cref="ArgumentException"><paramref name="documents"/> is an empty collection.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="documents"/> is null.</exception>
-        public virtual async Task<ExtractiveSummarizeOperation> StartExtractiveSummarizeAsync(
+        public virtual async Task<ExtractiveSummarizeOperation> ExtractiveSummarizeAsync(
+            WaitUntil waitUntil,
             IEnumerable<string> documents,
             string language = default,
             ExtractiveSummarizeOptions options = default,
             CancellationToken cancellationToken = default)
         {
             options?.CheckSupported(ServiceVersion);
-            return await _serviceClient.StartExtractiveSummarizeAsync(documents, language, options, cancellationToken).ConfigureAwait(false);
+            return await _serviceClient.ExtractiveSummarizeAsync(waitUntil, documents, language, options, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -2511,8 +3201,12 @@ namespace Azure.AI.TextAnalytics
         /// <see href="https://aka.ms/azsdk/textanalytics/data-limits"/>.
         /// </summary>
         /// <remarks>
-        /// This method is only available for <see cref="TextAnalyticsClientOptions.ServiceVersion.V2022_10_01_Preview"/>, and newer.
+        /// This method is only available for <see cref="TextAnalyticsClientOptions.ServiceVersion.V2023_04_01"/>, and newer.
         /// </remarks>
+        /// <param name="waitUntil">
+        /// <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service;
+        /// <see cref="WaitUntil.Started"/> if it should return after starting the operation.
+        /// </param>
         /// <param name="documents">The documents to analyze.</param>
         /// <param name="options">The additional <see cref="ExtractiveSummarizeOptions"/> used to configure the operation.</param>
         /// <param name="cancellationToken">The <see cref="CancellationToken"/> controlling the lifetime of the request.</param>
@@ -2521,17 +3215,18 @@ namespace Azure.AI.TextAnalytics
         /// summarization. Upon completion, the operation will contain the collections of extracted summary sentences
         /// for each document that was successfully analyzed.
         /// </returns>
-        /// <exception cref="NotSupportedException">This method is only supported in service API version 2022-10-01-preview and newer.</exception>
+        /// <exception cref="NotSupportedException">This method is only supported in service API version 2023-04-01 and newer.</exception>
         /// <exception cref="RequestFailedException">The service returned a non-success status code.</exception>
         /// <exception cref="ArgumentException"><paramref name="documents"/> is an empty collection.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="documents"/> is null.</exception>
-        public virtual async Task<ExtractiveSummarizeOperation> StartExtractiveSummarizeAsync(
+        public virtual async Task<ExtractiveSummarizeOperation> ExtractiveSummarizeAsync(
+            WaitUntil waitUntil,
             IEnumerable<TextDocumentInput> documents,
             ExtractiveSummarizeOptions options = default,
             CancellationToken cancellationToken = default)
         {
             options?.CheckSupported(ServiceVersion);
-            return await _serviceClient.StartExtractiveSummarizeAsync(documents, options, cancellationToken).ConfigureAwait(false);
+            return await _serviceClient.ExtractiveSummarizeAsync(waitUntil, documents, options, cancellationToken).ConfigureAwait(false);
         }
 
         #endregion
@@ -2547,8 +3242,12 @@ namespace Azure.AI.TextAnalytics
         /// <see href="https://aka.ms/azsdk/textanalytics/data-limits"/>.
         /// </summary>
         /// <remarks>
-        /// This method is only available for <see cref="TextAnalyticsClientOptions.ServiceVersion.V2022_10_01_Preview"/>, and newer.
+        /// This method is only available for <see cref="TextAnalyticsClientOptions.ServiceVersion.V2023_04_01"/>, and newer.
         /// </remarks>
+        /// <param name="waitUntil">
+        /// <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service;
+        /// <see cref="WaitUntil.Started"/> if it should return after starting the operation.
+        /// </param>
         /// <param name="documents">The documents to analyze.</param>
         /// <param name="language">The language that the documents are written in.</param>
         /// <param name="options">The additional <see cref="AbstractiveSummarizeOptions"/> used to configure the operation.</param>
@@ -2558,18 +3257,19 @@ namespace Azure.AI.TextAnalytics
         /// summarization. Upon completion, the operation will contain the collections of summaries that were generated
         /// for each document that was successfully analyzed.
         /// </returns>
-        /// <exception cref="NotSupportedException">This method is only supported in service API version 2022-10-01-preview and newer.</exception>
+        /// <exception cref="NotSupportedException">This method is only supported in service API version 2023-04-01 and newer.</exception>
         /// <exception cref="RequestFailedException">The service returned a non-success status code.</exception>
         /// <exception cref="ArgumentException"><paramref name="documents"/> is an empty collection.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="documents"/> is null.</exception>
-        public virtual AbstractiveSummarizeOperation StartAbstractiveSummarize(
+        public virtual AbstractiveSummarizeOperation AbstractiveSummarize(
+            WaitUntil waitUntil,
             IEnumerable<string> documents,
             string language = default,
             AbstractiveSummarizeOptions options = default,
             CancellationToken cancellationToken = default)
         {
             options?.CheckSupported(ServiceVersion);
-            return _serviceClient.StartAbstractiveSummarize(documents, language, options, cancellationToken);
+            return _serviceClient.AbstractiveSummarize(waitUntil, documents, language, options, cancellationToken);
         }
 
         /// <summary>
@@ -2581,8 +3281,12 @@ namespace Azure.AI.TextAnalytics
         /// <see href="https://aka.ms/azsdk/textanalytics/data-limits"/>.
         /// </summary>
         /// <remarks>
-        /// This method is only available for <see cref="TextAnalyticsClientOptions.ServiceVersion.V2022_10_01_Preview"/>, and newer.
+        /// This method is only available for <see cref="TextAnalyticsClientOptions.ServiceVersion.V2023_04_01"/>, and newer.
         /// </remarks>
+        /// <param name="waitUntil">
+        /// <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service;
+        /// <see cref="WaitUntil.Started"/> if it should return after starting the operation.
+        /// </param>
         /// <param name="documents">The documents to analyze.</param>
         /// <param name="options">The additional <see cref="AbstractiveSummarizeOptions"/> used to configure the operation.</param>
         /// <param name="cancellationToken">The <see cref="CancellationToken"/> controlling the lifetime of the request.</param>
@@ -2591,17 +3295,18 @@ namespace Azure.AI.TextAnalytics
         /// summarization. Upon completion, the operation will contain the collections of summaries that were generated
         /// for each document that was successfully analyzed.
         /// </returns>
-        /// <exception cref="NotSupportedException">This method is only supported in service API version 2022-10-01-preview and newer.</exception>
+        /// <exception cref="NotSupportedException">This method is only supported in service API version 2023-04-01 and newer.</exception>
         /// <exception cref="RequestFailedException">The service returned a non-success status code.</exception>
         /// <exception cref="ArgumentException"><paramref name="documents"/> is an empty collection.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="documents"/> is null.</exception>
-        public virtual AbstractiveSummarizeOperation StartAbstractiveSummarize(
+        public virtual AbstractiveSummarizeOperation AbstractiveSummarize(
+            WaitUntil waitUntil,
             IEnumerable<TextDocumentInput> documents,
             AbstractiveSummarizeOptions options = default,
             CancellationToken cancellationToken = default)
         {
             options?.CheckSupported(ServiceVersion);
-            return _serviceClient.StartAbstractiveSummarize(documents, options, cancellationToken);
+            return _serviceClient.AbstractiveSummarize(waitUntil, documents, options, cancellationToken);
         }
 
         /// <summary>
@@ -2613,8 +3318,12 @@ namespace Azure.AI.TextAnalytics
         /// <see href="https://aka.ms/azsdk/textanalytics/data-limits"/>.
         /// </summary>
         /// <remarks>
-        /// This method is only available for <see cref="TextAnalyticsClientOptions.ServiceVersion.V2022_10_01_Preview"/>, and newer.
+        /// This method is only available for <see cref="TextAnalyticsClientOptions.ServiceVersion.V2023_04_01"/>, and newer.
         /// </remarks>
+        /// <param name="waitUntil">
+        /// <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service;
+        /// <see cref="WaitUntil.Started"/> if it should return after starting the operation.
+        /// </param>
         /// <param name="documents">The documents to analyze.</param>
         /// <param name="language">The language that the documents are written in.</param>
         /// <param name="options">The additional <see cref="AbstractiveSummarizeOptions"/> used to configure the operation.</param>
@@ -2624,18 +3333,19 @@ namespace Azure.AI.TextAnalytics
         /// summarization. Upon completion, the operation will contain the collections of summaries that were generated
         /// for each document that was successfully analyzed.
         /// </returns>
-        /// <exception cref="NotSupportedException">This method is only supported in service API version 2022-10-01-preview and newer.</exception>
+        /// <exception cref="NotSupportedException">This method is only supported in service API version 2023-04-01 and newer.</exception>
         /// <exception cref="RequestFailedException">The service returned a non-success status code.</exception>
         /// <exception cref="ArgumentException"><paramref name="documents"/> is an empty collection.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="documents"/> is null.</exception>
-        public virtual async Task<AbstractiveSummarizeOperation> StartAbstractiveSummarizeAsync(
+        public virtual async Task<AbstractiveSummarizeOperation> AbstractiveSummarizeAsync(
+            WaitUntil waitUntil,
             IEnumerable<string> documents,
             string language = default,
             AbstractiveSummarizeOptions options = default,
             CancellationToken cancellationToken = default)
         {
             options?.CheckSupported(ServiceVersion);
-            return await _serviceClient.StartAbstractiveSummarizeAsync(documents, language, options, cancellationToken).ConfigureAwait(false);
+            return await _serviceClient.AbstractiveSummarizeAsync(waitUntil, documents, language, options, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -2647,8 +3357,12 @@ namespace Azure.AI.TextAnalytics
         /// <see href="https://aka.ms/azsdk/textanalytics/data-limits"/>.
         /// </summary>
         /// <remarks>
-        /// This method is only available for <see cref="TextAnalyticsClientOptions.ServiceVersion.V2022_10_01_Preview"/>, and newer.
+        /// This method is only available for <see cref="TextAnalyticsClientOptions.ServiceVersion.V2023_04_01"/>, and newer.
         /// </remarks>
+        /// <param name="waitUntil">
+        /// <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service;
+        /// <see cref="WaitUntil.Started"/> if it should return after starting the operation.
+        /// </param>
         /// <param name="documents">The documents to analyze.</param>
         /// <param name="options">The additional <see cref="AbstractiveSummarizeOptions"/> used to configure the operation.</param>
         /// <param name="cancellationToken">The <see cref="CancellationToken"/> controlling the lifetime of the request.</param>
@@ -2657,17 +3371,18 @@ namespace Azure.AI.TextAnalytics
         /// summarization. Upon completion, the operation will contain the collections of summaries that were generated
         /// for each document that was successfully analyzed.
         /// </returns>
-        /// <exception cref="NotSupportedException">This method is only supported in service API version 2022-10-01-preview and newer.</exception>
+        /// <exception cref="NotSupportedException">This method is only supported in service API version 2023-04-01 and newer.</exception>
         /// <exception cref="RequestFailedException">The service returned a non-success status code.</exception>
         /// <exception cref="ArgumentException"><paramref name="documents"/> is an empty collection.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="documents"/> is null.</exception>
-        public virtual async Task<AbstractiveSummarizeOperation> StartAbstractiveSummarizeAsync(
+        public virtual async Task<AbstractiveSummarizeOperation> AbstractiveSummarizeAsync(
+            WaitUntil waitUntil,
             IEnumerable<TextDocumentInput> documents,
             AbstractiveSummarizeOptions options = default,
             CancellationToken cancellationToken = default)
         {
             options?.CheckSupported(ServiceVersion);
-            return await _serviceClient.StartAbstractiveSummarizeAsync(documents, options, cancellationToken).ConfigureAwait(false);
+            return await _serviceClient.AbstractiveSummarizeAsync(waitUntil, documents, options, cancellationToken).ConfigureAwait(false);
         }
 
         #endregion

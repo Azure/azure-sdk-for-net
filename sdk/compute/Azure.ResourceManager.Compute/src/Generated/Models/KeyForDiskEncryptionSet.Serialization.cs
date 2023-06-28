@@ -29,6 +29,10 @@ namespace Azure.ResourceManager.Compute.Models
 
         internal static KeyForDiskEncryptionSet DeserializeKeyForDiskEncryptionSet(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<WritableSubResource> sourceVault = default;
             Uri keyUrl = default;
             foreach (var property in element.EnumerateObject())
@@ -37,7 +41,6 @@ namespace Azure.ResourceManager.Compute.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     sourceVault = JsonSerializer.Deserialize<WritableSubResource>(property.Value.GetRawText());

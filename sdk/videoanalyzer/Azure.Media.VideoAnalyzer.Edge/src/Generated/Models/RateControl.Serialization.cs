@@ -40,6 +40,10 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
 
         internal static RateControl DeserializeRateControl(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<float> bitRateLimit = default;
             Optional<float> encodingInterval = default;
             Optional<float> frameRateLimit = default;
@@ -50,7 +54,6 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     bitRateLimit = property.Value.GetSingle();
@@ -60,7 +63,6 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     encodingInterval = property.Value.GetSingle();
@@ -70,7 +72,6 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     frameRateLimit = property.Value.GetSingle();
@@ -80,7 +81,6 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     guaranteedFrameRate = property.Value.GetBoolean();

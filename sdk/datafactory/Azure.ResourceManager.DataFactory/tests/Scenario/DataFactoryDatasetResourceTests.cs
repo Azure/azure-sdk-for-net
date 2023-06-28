@@ -80,12 +80,12 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             }
         }
 
-        private async Task<FactoryDatasetResource> CreateDefaultDataset(string datasetName)
+        private async Task<DataFactoryDatasetResource> CreateDefaultDataset(string datasetName)
         {
-            FactoryLinkedServiceReference linkedServiceReference = new FactoryLinkedServiceReference(FactoryLinkedServiceReferenceType.LinkedServiceReference, _linkedServiceName);
-            FactoryDatasetDefinition properties = new FactoryDatasetDefinition(linkedServiceReference);
-            FactoryDatasetData data = new FactoryDatasetData(properties);
-            var dataset = await _dataFactory.GetFactoryDatasets().CreateOrUpdateAsync(WaitUntil.Completed, datasetName, data);
+            DataFactoryLinkedServiceReference linkedServiceReference = new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, _linkedServiceName);
+            DataFactoryDatasetDefinition properties = new DataFactoryDatasetDefinition(linkedServiceReference);
+            DataFactoryDatasetData data = new DataFactoryDatasetData(properties);
+            var dataset = await _dataFactory.GetDataFactoryDatasets().CreateOrUpdateAsync(WaitUntil.Completed, datasetName, data);
             return dataset.Value;
         }
 
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
         {
             string datasetName = Recording.GenerateAssetName("dataset");
             await CreateDefaultDataset(datasetName);
-            bool flag = await _dataFactory.GetFactoryDatasets().ExistsAsync(datasetName);
+            bool flag = await _dataFactory.GetDataFactoryDatasets().ExistsAsync(datasetName);
             Assert.IsTrue(flag);
         }
 
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
         {
             string datasetName = Recording.GenerateAssetName("dataset");
             await CreateDefaultDataset(datasetName);
-            var dataset = await _dataFactory.GetFactoryDatasets().GetAsync(datasetName);
+            var dataset = await _dataFactory.GetDataFactoryDatasets().GetAsync(datasetName);
             Assert.IsNotNull(dataset);
             Assert.AreEqual(datasetName, dataset.Value.Data.Name);
         }
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
         {
             string datasetName = Recording.GenerateAssetName("dataset");
             await CreateDefaultDataset(datasetName);
-            var list = await _dataFactory.GetFactoryDatasets().GetAllAsync().ToEnumerableAsync();
+            var list = await _dataFactory.GetDataFactoryDatasets().GetAllAsync().ToEnumerableAsync();
             Assert.IsNotEmpty(list);
             Assert.AreEqual(1,list.Count);
         }
@@ -137,11 +137,11 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
         {
             string datasetName = Recording.GenerateAssetName("dataset");
             var dataset = await CreateDefaultDataset(datasetName);
-            bool flag = await _dataFactory.GetFactoryDatasets().ExistsAsync(datasetName);
+            bool flag = await _dataFactory.GetDataFactoryDatasets().ExistsAsync(datasetName);
             Assert.IsTrue(flag);
 
             await dataset.DeleteAsync(WaitUntil.Completed);
-            flag = await _dataFactory.GetFactoryDatasets().ExistsAsync(datasetName);
+            flag = await _dataFactory.GetDataFactoryDatasets().ExistsAsync(datasetName);
             Assert.IsFalse(flag);
         }
     }

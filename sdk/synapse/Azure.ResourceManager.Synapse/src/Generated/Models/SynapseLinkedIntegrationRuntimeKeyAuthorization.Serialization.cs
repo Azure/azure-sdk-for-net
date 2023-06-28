@@ -24,6 +24,10 @@ namespace Azure.ResourceManager.Synapse.Models
 
         internal static SynapseLinkedIntegrationRuntimeKeyAuthorization DeserializeSynapseLinkedIntegrationRuntimeKeyAuthorization(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             SynapseSecureString key = default;
             string authorizationType = default;
             foreach (var property in element.EnumerateObject())

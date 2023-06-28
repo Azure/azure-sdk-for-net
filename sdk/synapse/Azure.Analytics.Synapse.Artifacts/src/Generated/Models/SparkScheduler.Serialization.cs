@@ -17,6 +17,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     {
         internal static SparkScheduler DeserializeSparkScheduler(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<DateTimeOffset?> submittedAt = default;
             Optional<DateTimeOffset?> scheduledAt = default;
             Optional<DateTimeOffset?> endedAt = default;
@@ -68,7 +72,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     currentState = new SchedulerCurrentState(property.Value.GetString());

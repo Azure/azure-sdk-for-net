@@ -32,6 +32,10 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static AzureReachabilityReportLocation DeserializeAzureReachabilityReportLocation(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string country = default;
             Optional<string> state = default;
             Optional<string> city = default;

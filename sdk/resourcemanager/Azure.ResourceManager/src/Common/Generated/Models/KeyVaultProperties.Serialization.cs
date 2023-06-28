@@ -33,6 +33,10 @@ namespace Azure.ResourceManager.Models
 
         internal static KeyVaultProperties DeserializeKeyVaultProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> keyIdentifier = default;
             Optional<string> identity = default;
             foreach (var property in element.EnumerateObject())

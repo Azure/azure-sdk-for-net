@@ -25,6 +25,10 @@ namespace Azure.ResourceManager.Search.Models
 
         internal static SearchServiceIPRule DeserializeSearchServiceIPRule(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> value = default;
             foreach (var property in element.EnumerateObject())
             {

@@ -15,6 +15,10 @@ namespace Azure.Messaging.EventGrid.Models
     {
         internal static UnknownMediaJobOutput DeserializeUnknownMediaJobOutput(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string odataType = "Unknown";
             Optional<MediaJobError> error = default;
             Optional<string> label = default;
@@ -31,7 +35,6 @@ namespace Azure.Messaging.EventGrid.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     error = MediaJobError.DeserializeMediaJobError(property.Value);

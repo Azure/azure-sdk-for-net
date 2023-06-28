@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
     {
         internal static KubernetesObjectStatusCondition DeserializeKubernetesObjectStatusCondition(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<DateTimeOffset> lastTransitionTime = default;
             Optional<string> message = default;
             Optional<string> reason = default;
@@ -26,7 +30,6 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     lastTransitionTime = property.Value.GetDateTimeOffset("O");

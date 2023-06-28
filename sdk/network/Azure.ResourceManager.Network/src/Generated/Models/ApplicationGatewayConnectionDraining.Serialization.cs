@@ -24,6 +24,10 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static ApplicationGatewayConnectionDraining DeserializeApplicationGatewayConnectionDraining(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             bool enabled = default;
             int drainTimeoutInSec = default;
             foreach (var property in element.EnumerateObject())

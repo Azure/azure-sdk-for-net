@@ -47,6 +47,10 @@ namespace Azure.ResourceManager.Storage
 
         internal static ObjectReplicationPolicyData DeserializeObjectReplicationPolicyData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -77,7 +81,6 @@ namespace Azure.ResourceManager.Storage
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
@@ -101,7 +104,6 @@ namespace Azure.ResourceManager.Storage
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             enabledTime = property0.Value.GetDateTimeOffset("O");
@@ -121,7 +123,6 @@ namespace Azure.ResourceManager.Storage
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<ObjectReplicationPolicyRule> array = new List<ObjectReplicationPolicyRule>();

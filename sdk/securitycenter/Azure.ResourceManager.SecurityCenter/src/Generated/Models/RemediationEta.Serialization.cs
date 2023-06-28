@@ -25,6 +25,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         internal static RemediationEta DeserializeRemediationEta(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             DateTimeOffset eta = default;
             string justification = default;
             foreach (var property in element.EnumerateObject())

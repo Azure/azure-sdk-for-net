@@ -14,6 +14,10 @@ namespace Azure.Quantum.Jobs.Models
     {
         internal static UsageEvent DeserializeUsageEvent(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> dimensionId = default;
             Optional<string> dimensionName = default;
             Optional<string> measureUnit = default;
@@ -41,7 +45,6 @@ namespace Azure.Quantum.Jobs.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     amountBilled = property.Value.GetSingle();
@@ -51,7 +54,6 @@ namespace Azure.Quantum.Jobs.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     amountConsumed = property.Value.GetSingle();
@@ -61,7 +63,6 @@ namespace Azure.Quantum.Jobs.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     unitPrice = property.Value.GetSingle();

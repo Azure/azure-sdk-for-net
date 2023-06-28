@@ -32,6 +32,10 @@ namespace Azure.ResourceManager.Compute.Models
 
         internal static GalleryDataDiskImage DeserializeGalleryDataDiskImage(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             int lun = default;
             Optional<int> sizeInGB = default;
             Optional<HostCaching> hostCaching = default;
@@ -47,7 +51,6 @@ namespace Azure.ResourceManager.Compute.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     sizeInGB = property.Value.GetInt32();
@@ -57,7 +60,6 @@ namespace Azure.ResourceManager.Compute.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     hostCaching = property.Value.GetString().ToHostCaching();
@@ -67,7 +69,6 @@ namespace Azure.ResourceManager.Compute.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     source = GalleryDiskImageSource.DeserializeGalleryDiskImageSource(property.Value);

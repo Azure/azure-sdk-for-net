@@ -25,6 +25,10 @@ namespace Azure.ResourceManager.DevTestLabs.Models
 
         internal static FormulaPropertiesFromVm DeserializeFormulaPropertiesFromVm(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> labVmId = default;
             foreach (var property in element.EnumerateObject())
             {

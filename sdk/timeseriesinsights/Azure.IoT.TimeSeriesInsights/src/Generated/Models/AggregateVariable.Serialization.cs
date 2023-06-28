@@ -29,6 +29,10 @@ namespace Azure.IoT.TimeSeriesInsights
 
         internal static AggregateVariable DeserializeAggregateVariable(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             TimeSeriesExpression aggregation = default;
             string kind = default;
             Optional<TimeSeriesExpression> filter = default;
@@ -48,7 +52,6 @@ namespace Azure.IoT.TimeSeriesInsights
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     filter = TimeSeriesExpression.DeserializeTimeSeriesExpression(property.Value);

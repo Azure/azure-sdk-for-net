@@ -77,6 +77,10 @@ namespace Azure.ResourceManager.HybridData
 
         internal static HybridDataJobDefinitionData DeserializeHybridDataJobDefinitionData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -111,7 +115,6 @@ namespace Azure.ResourceManager.HybridData
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
@@ -140,7 +143,6 @@ namespace Azure.ResourceManager.HybridData
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<HybridDataJobRunSchedule> array = new List<HybridDataJobRunSchedule>();
@@ -160,7 +162,6 @@ namespace Azure.ResourceManager.HybridData
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             lastModifiedTime = property0.Value.GetDateTimeOffset("O");
@@ -170,7 +171,6 @@ namespace Azure.ResourceManager.HybridData
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             runLocation = property0.Value.GetString().ToHybridDataJobRunLocation();
@@ -180,7 +180,6 @@ namespace Azure.ResourceManager.HybridData
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             userConfirmation = property0.Value.GetString().ToUserConfirmationSetting();
@@ -190,7 +189,6 @@ namespace Azure.ResourceManager.HybridData
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             dataServiceInput = BinaryData.FromString(property0.Value.GetRawText());
@@ -200,7 +198,6 @@ namespace Azure.ResourceManager.HybridData
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<HybridDataCustomerSecret> array = new List<HybridDataCustomerSecret>();

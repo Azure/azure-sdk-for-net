@@ -28,6 +28,10 @@ namespace Azure.Search.Documents.Indexes.Models
 
         internal static PatternReplaceTokenFilter DeserializePatternReplaceTokenFilter(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string pattern = default;
             string replacement = default;
             string odataType = default;

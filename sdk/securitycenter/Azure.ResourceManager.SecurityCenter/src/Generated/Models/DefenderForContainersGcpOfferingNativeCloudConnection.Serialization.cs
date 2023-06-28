@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         internal static DefenderForContainersGcpOfferingNativeCloudConnection DeserializeDefenderForContainersGcpOfferingNativeCloudConnection(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> serviceAccountEmailAddress = default;
             Optional<string> workloadIdentityProviderId = default;
             foreach (var property in element.EnumerateObject())

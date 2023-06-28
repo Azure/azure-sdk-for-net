@@ -47,6 +47,10 @@ namespace Azure.ResourceManager.DataProtectionBackup
 
         internal static ResourceGuardData DeserializeResourceGuardData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ResourceGuardProperties> properties = default;
             Optional<ETag> eTag = default;
             Optional<IDictionary<string, string>> tags = default;
@@ -61,7 +65,6 @@ namespace Azure.ResourceManager.DataProtectionBackup
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     properties = ResourceGuardProperties.DeserializeResourceGuardProperties(property.Value);
@@ -71,7 +74,6 @@ namespace Azure.ResourceManager.DataProtectionBackup
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     eTag = new ETag(property.Value.GetString());
@@ -81,7 +83,6 @@ namespace Azure.ResourceManager.DataProtectionBackup
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -116,7 +117,6 @@ namespace Azure.ResourceManager.DataProtectionBackup
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());

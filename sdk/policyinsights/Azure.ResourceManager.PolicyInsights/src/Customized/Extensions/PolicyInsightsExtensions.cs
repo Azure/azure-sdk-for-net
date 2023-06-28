@@ -11,6 +11,9 @@ using Azure.Core;
 using Azure.ResourceManager.PolicyInsights.Models;
 using Azure.ResourceManager.Resources;
 
+// we have these CodeGenSuppress attribute here because we would like to convert those extension methods from extending ResourceGroup or Subscription to extending PolicyDefinitionResource or PolicyAssignmentResource instead
+// but the generator currently cannot do that, therefore we manually written those methods and suppress their generated versions.
+
 namespace Azure.ResourceManager.PolicyInsights
 {
     /// <summary> A class to add extension methods to Azure.ResourceManager.PolicyInsights. </summary>

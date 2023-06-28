@@ -29,6 +29,10 @@ namespace Azure.AI.MetricsAdvisor.Models
 
         internal static UnknownDataSourceCredential DeserializeUnknownDataSourceCredential(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             DataSourceCredentialKind dataSourceCredentialType = "Unknown";
             Optional<string> dataSourceCredentialId = default;
             string dataSourceCredentialName = default;

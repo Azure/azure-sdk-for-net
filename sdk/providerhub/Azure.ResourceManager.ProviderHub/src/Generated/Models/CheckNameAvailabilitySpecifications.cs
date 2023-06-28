@@ -20,16 +20,16 @@ namespace Azure.ResourceManager.ProviderHub.Models
         }
 
         /// <summary> Initializes a new instance of CheckNameAvailabilitySpecifications. </summary>
-        /// <param name="enableDefaultValidation"></param>
+        /// <param name="isDefaultValidationEnabled"></param>
         /// <param name="resourceTypesWithCustomValidation"></param>
-        internal CheckNameAvailabilitySpecifications(bool? enableDefaultValidation, IList<string> resourceTypesWithCustomValidation)
+        internal CheckNameAvailabilitySpecifications(bool? isDefaultValidationEnabled, IList<string> resourceTypesWithCustomValidation)
         {
-            EnableDefaultValidation = enableDefaultValidation;
+            IsDefaultValidationEnabled = isDefaultValidationEnabled;
             ResourceTypesWithCustomValidation = resourceTypesWithCustomValidation;
         }
 
-        /// <summary> Gets or sets the enable default validation. </summary>
-        public bool? EnableDefaultValidation { get; set; }
+        /// <summary> Gets or sets the is default validation enabled. </summary>
+        public bool? IsDefaultValidationEnabled { get; set; }
         /// <summary> Gets the resource types with custom validation. </summary>
         public IList<string> ResourceTypesWithCustomValidation { get; }
     }

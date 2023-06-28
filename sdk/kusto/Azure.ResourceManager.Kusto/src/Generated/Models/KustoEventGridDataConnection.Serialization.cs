@@ -87,6 +87,10 @@ namespace Azure.ResourceManager.Kusto.Models
 
         internal static KustoEventGridDataConnection DeserializeKustoEventGridDataConnection(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<AzureLocation> location = default;
             DataConnectionKind kind = default;
             ResourceIdentifier id = default;
@@ -112,7 +116,6 @@ namespace Azure.ResourceManager.Kusto.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     location = new AzureLocation(property.Value.GetString());
@@ -142,7 +145,6 @@ namespace Azure.ResourceManager.Kusto.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
@@ -161,7 +163,6 @@ namespace Azure.ResourceManager.Kusto.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             storageAccountResourceId = new ResourceIdentifier(property0.Value.GetString());
@@ -171,7 +172,6 @@ namespace Azure.ResourceManager.Kusto.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             eventGridResourceId = new ResourceIdentifier(property0.Value.GetString());
@@ -181,7 +181,6 @@ namespace Azure.ResourceManager.Kusto.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             eventHubResourceId = new ResourceIdentifier(property0.Value.GetString());
@@ -206,7 +205,6 @@ namespace Azure.ResourceManager.Kusto.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             dataFormat = new KustoEventGridDataFormat(property0.Value.GetString());
@@ -216,7 +214,6 @@ namespace Azure.ResourceManager.Kusto.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             ignoreFirstRecord = property0.Value.GetBoolean();
@@ -226,7 +223,6 @@ namespace Azure.ResourceManager.Kusto.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             blobStorageEventType = new BlobStorageEventType(property0.Value.GetString());
@@ -236,7 +232,6 @@ namespace Azure.ResourceManager.Kusto.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             managedIdentityResourceId = new ResourceIdentifier(property0.Value.GetString());
@@ -246,7 +241,6 @@ namespace Azure.ResourceManager.Kusto.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             managedIdentityObjectId = property0.Value.GetGuid();
@@ -256,7 +250,6 @@ namespace Azure.ResourceManager.Kusto.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             databaseRouting = new KustoDatabaseRouting(property0.Value.GetString());
@@ -266,7 +259,6 @@ namespace Azure.ResourceManager.Kusto.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             provisioningState = new KustoProvisioningState(property0.Value.GetString());

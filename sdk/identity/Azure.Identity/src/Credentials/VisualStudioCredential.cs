@@ -35,7 +35,7 @@ namespace Azure.Identity
         private readonly bool _logPII;
         private readonly bool _logAccountDetails;
 
-        internal TimeSpan VisualStudioProcessTimeout { get; private set; }
+        internal TimeSpan ProcessTimeout { get; private set; }
 
         /// <summary>
         /// Creates a new instance of the <see cref="VisualStudioCredential"/>.
@@ -59,7 +59,7 @@ namespace Azure.Identity
             _fileSystem = fileSystem ?? FileSystemService.Default;
             _processService = processService ?? ProcessService.Default;
             AdditionallyAllowedTenantIds = TenantIdResolver.ResolveAddionallyAllowedTenantIds((options as ISupportsAdditionallyAllowedTenants)?.AdditionallyAllowedTenants);
-            VisualStudioProcessTimeout = options?.VisualStudioProcessTimeout ?? TimeSpan.FromSeconds(30);
+            ProcessTimeout = options?.ProcessTimeout ?? TimeSpan.FromSeconds(30);
         }
 
         /// <inheritdoc />
@@ -102,9 +102,13 @@ namespace Azure.Identity
 
                 return scope.Succeeded(accessToken);
             }
-            catch (Exception e)
+            catch (CredentialUnavailableException e)
             {
                 throw scope.FailWrapAndThrow(e);
+            }
+            catch (Exception e)
+            {
+                throw scope.FailWrapAndThrow(e, isCredentialUnavailable: true);
             }
         }
 
@@ -140,7 +144,7 @@ namespace Azure.Identity
                 string output = string.Empty;
                 try
                 {
-                    using var processRunner = new ProcessRunner(_processService.Create(processStartInfo), VisualStudioProcessTimeout, _logPII, cancellationToken);
+                    using var processRunner = new ProcessRunner(_processService.Create(processStartInfo), ProcessTimeout, _logPII, cancellationToken);
                     output = async
                         ? await processRunner.RunAsync().ConfigureAwait(false)
                         : processRunner.Run();
@@ -152,7 +156,7 @@ namespace Azure.Identity
                 }
                 catch (OperationCanceledException) when (!cancellationToken.IsCancellationRequested)
                 {
-                    exceptions.Add(new CredentialUnavailableException($"Process \"{processStartInfo.FileName}\" has failed to get access token in {VisualStudioProcessTimeout.TotalSeconds} seconds."));
+                    exceptions.Add(new CredentialUnavailableException($"Process \"{processStartInfo.FileName}\" has failed to get access token in {ProcessTimeout.TotalSeconds} seconds."));
                 }
                 catch (JsonException exception)
                 {
@@ -192,21 +196,21 @@ namespace Azure.Identity
                 }
 
                 arguments.Clear();
+                // Add the arguments set in the token provider file.
+                if (tokenProvider.Arguments?.Length > 0)
+                {
+                    foreach (var argument in tokenProvider.Arguments)
+                    {
+                        arguments.Append(argument).Append(' ');
+                    }
+                }
+
                 arguments.Append(ResourceArgumentName).Append(' ').Append(resource);
 
                 var tenantId = TenantIdResolver.Resolve(TenantId, requestContext, AdditionallyAllowedTenantIds);
                 if (tenantId != default)
                 {
                     arguments.Append(' ').Append(TenantArgumentName).Append(' ').Append(tenantId);
-                }
-
-                // Add the arguments set in the token provider file.
-                if (tokenProvider.Arguments?.Length > 0)
-                {
-                    foreach (var argument in tokenProvider.Arguments)
-                    {
-                        arguments.Append(' ').Append(argument);
-                    }
                 }
 
                 var startInfo = new ProcessStartInfo

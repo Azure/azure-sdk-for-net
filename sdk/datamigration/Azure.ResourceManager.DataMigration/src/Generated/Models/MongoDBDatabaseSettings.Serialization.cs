@@ -34,6 +34,10 @@ namespace Azure.ResourceManager.DataMigration.Models
 
         internal static MongoDBDatabaseSettings DeserializeMongoDBDatabaseSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             IDictionary<string, MongoDBCollectionSettings> collections = default;
             Optional<int> targetRUs = default;
             foreach (var property in element.EnumerateObject())
@@ -52,7 +56,6 @@ namespace Azure.ResourceManager.DataMigration.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     targetRUs = property.Value.GetInt32();

@@ -63,8 +63,8 @@ namespace Azure.Maps.Geolocation
 
         /// <summary>
         /// **Applies to:** see pricing [tiers](https://aka.ms/AzureMapsPricingTier).
-        /// 
-        /// 
+        ///
+        ///
         /// This service will return the ISO country code for the provided IP address. Developers can use this information  to block or alter certain content based on geographical locations where the application is being viewed from.
         /// </summary>
         /// <param name="ipAddress"> The IP address. Both IPv4 and IPv6 are allowed. </param>
@@ -91,14 +91,14 @@ namespace Azure.Maps.Geolocation
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
         /// <summary>
         /// **Applies to:** see pricing [tiers](https://aka.ms/AzureMapsPricingTier).
-        /// 
-        /// 
+        ///
+        ///
         /// This service will return the ISO country code for the provided IP address. Developers can use this information  to block or alter certain content based on geographical locations where the application is being viewed from.
         /// </summary>
         /// <param name="ipAddress"> The IP address. Both IPv4 and IPv6 are allowed. </param>
@@ -125,7 +125,7 @@ namespace Azure.Maps.Geolocation
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw new RequestFailedException(message.Response);
             }
         }
     }

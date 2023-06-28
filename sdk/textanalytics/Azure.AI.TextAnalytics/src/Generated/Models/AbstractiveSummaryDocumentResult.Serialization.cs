@@ -43,6 +43,10 @@ namespace Azure.AI.TextAnalytics.Models
 
         internal static AbstractiveSummaryDocumentResult DeserializeAbstractiveSummaryDocumentResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             IList<AbstractiveSummaryInternal> summaries = default;
             string id = default;
             IList<DocumentWarning> warnings = default;
@@ -78,7 +82,6 @@ namespace Azure.AI.TextAnalytics.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     statistics = TextDocumentStatistics.DeserializeTextDocumentStatistics(property.Value);

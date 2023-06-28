@@ -41,6 +41,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         internal static ContainerIdentityInfo DeserializeContainerIdentityInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> uniqueName = default;
             Optional<Guid> aadTenantId = default;
             Optional<string> servicePrincipalClientId = default;
@@ -56,7 +60,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     aadTenantId = property.Value.GetGuid();

@@ -38,6 +38,10 @@ namespace Azure.ResourceManager.EventGrid.Models
 
         internal static StringInAdvancedFilter DeserializeStringInAdvancedFilter(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<string>> values = default;
             AdvancedFilterOperatorType operatorType = default;
             Optional<string> key = default;
@@ -47,7 +51,6 @@ namespace Azure.ResourceManager.EventGrid.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();

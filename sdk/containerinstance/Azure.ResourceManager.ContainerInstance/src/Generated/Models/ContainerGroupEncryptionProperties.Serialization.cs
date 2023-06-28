@@ -32,6 +32,10 @@ namespace Azure.ResourceManager.ContainerInstance.Models
 
         internal static ContainerGroupEncryptionProperties DeserializeContainerGroupEncryptionProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Uri vaultBaseUrl = default;
             string keyName = default;
             string keyVersion = default;

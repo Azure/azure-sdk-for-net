@@ -35,6 +35,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         internal static KeyAndSecretDetails DeserializeKeyAndSecretDetails(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<KekDetails> kekDetails = default;
             Optional<BekDetails> bekDetails = default;
             Optional<string> encryptionMechanism = default;
@@ -44,7 +48,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     kekDetails = KekDetails.DeserializeKekDetails(property.Value);
@@ -54,7 +57,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     bekDetails = BekDetails.DeserializeBekDetails(property.Value);

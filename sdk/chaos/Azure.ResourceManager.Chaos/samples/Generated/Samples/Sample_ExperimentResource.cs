@@ -151,9 +151,6 @@ new KeyValuePair("abruptShutdown","false")
 new Selector(SelectorType.List,"selector1",new TargetReference[]
 {
 new TargetReference("/subscriptions/6b052e15-03d3-4f17-b2e1-be7f07588291/resourceGroups/exampleRG/providers/Microsoft.Compute/virtualMachines/exampleVM/providers/Microsoft.Chaos/targets/Microsoft-VirtualMachine")
-{
-ReferenceType = TargetReferenceType.ChaosTarget,
-}
 })
             })
             {

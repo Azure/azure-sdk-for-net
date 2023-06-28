@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.Media.Models
 
         internal static CrossSiteAccessPolicies DeserializeCrossSiteAccessPolicies(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> clientAccessPolicy = default;
             Optional<string> crossDomainPolicy = default;
             foreach (var property in element.EnumerateObject())

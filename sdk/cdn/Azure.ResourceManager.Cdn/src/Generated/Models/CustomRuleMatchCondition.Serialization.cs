@@ -52,6 +52,10 @@ namespace Azure.ResourceManager.Cdn.Models
 
         internal static CustomRuleMatchCondition DeserializeCustomRuleMatchCondition(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             WafMatchVariable matchVariable = default;
             Optional<string> selector = default;
             MatchOperator @operator = default;
@@ -79,7 +83,6 @@ namespace Azure.ResourceManager.Cdn.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     negateCondition = property.Value.GetBoolean();
@@ -99,7 +102,6 @@ namespace Azure.ResourceManager.Cdn.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<TransformType> array = new List<TransformType>();

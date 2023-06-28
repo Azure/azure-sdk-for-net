@@ -36,6 +36,10 @@ namespace Azure.ResourceManager.EnergyServices.Models
 
         internal static EnergyServiceProperties DeserializeEnergyServiceProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> dnsName = default;
             Optional<ProvisioningState> provisioningState = default;
             Optional<string> authAppId = default;
@@ -51,7 +55,6 @@ namespace Azure.ResourceManager.EnergyServices.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     provisioningState = new ProvisioningState(property.Value.GetString());
@@ -66,7 +69,6 @@ namespace Azure.ResourceManager.EnergyServices.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<DataPartitionName> array = new List<DataPartitionName>();

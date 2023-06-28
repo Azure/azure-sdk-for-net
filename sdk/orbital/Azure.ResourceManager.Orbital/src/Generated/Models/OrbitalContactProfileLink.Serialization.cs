@@ -44,6 +44,10 @@ namespace Azure.ResourceManager.Orbital.Models
 
         internal static OrbitalContactProfileLink DeserializeOrbitalContactProfileLink(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string name = default;
             OrbitalLinkPolarization polarization = default;
             OrbitalLinkDirection direction = default;
@@ -71,7 +75,6 @@ namespace Azure.ResourceManager.Orbital.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     gainOverTemperature = property.Value.GetSingle();
@@ -81,7 +84,6 @@ namespace Azure.ResourceManager.Orbital.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     eirpdBW = property.Value.GetSingle();

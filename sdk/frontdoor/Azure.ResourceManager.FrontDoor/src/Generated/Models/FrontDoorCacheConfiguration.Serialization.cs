@@ -41,6 +41,10 @@ namespace Azure.ResourceManager.FrontDoor.Models
 
         internal static FrontDoorCacheConfiguration DeserializeFrontDoorCacheConfiguration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<FrontDoorQuery> queryParameterStripDirective = default;
             Optional<string> queryParameters = default;
             Optional<DynamicCompressionEnabled> dynamicCompression = default;
@@ -51,7 +55,6 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     queryParameterStripDirective = new FrontDoorQuery(property.Value.GetString());
@@ -66,7 +69,6 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     dynamicCompression = new DynamicCompressionEnabled(property.Value.GetString());
@@ -76,7 +78,6 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     cacheDuration = property.Value.GetTimeSpan("P");

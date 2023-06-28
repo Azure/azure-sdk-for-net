@@ -29,6 +29,11 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                 writer.WritePropertyName("azureBlobSource"u8);
                 writer.WriteObjectValue(AzureBlobSource);
             }
+            if (Optional.IsDefined(AzureBlobFileListSource))
+            {
+                writer.WritePropertyName("azureBlobFileListSource"u8);
+                writer.WriteObjectValue(AzureBlobFileListSource);
+            }
             if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);

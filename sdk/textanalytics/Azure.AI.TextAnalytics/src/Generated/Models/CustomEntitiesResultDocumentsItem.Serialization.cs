@@ -17,11 +17,6 @@ namespace Azure.AI.TextAnalytics.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(DetectedLanguage))
-            {
-                writer.WritePropertyName("detectedLanguage"u8);
-                writer.WriteObjectValue(DetectedLanguage.Value);
-            }
             writer.WritePropertyName("entities"u8);
             writer.WriteStartArray();
             foreach (var item in Entities)
@@ -48,29 +43,22 @@ namespace Azure.AI.TextAnalytics.Models
 
         internal static CustomEntitiesResultDocumentsItem DeserializeCustomEntitiesResultDocumentsItem(JsonElement element)
         {
-            Optional<DetectedLanguageInternal> detectedLanguage = default;
-            IList<EntityWithResolution> entities = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            IList<Entity> entities = default;
             string id = default;
             IList<DocumentWarning> warnings = default;
             Optional<TextDocumentStatistics> statistics = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("detectedLanguage"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    detectedLanguage = DetectedLanguageInternal.DeserializeDetectedLanguageInternal(property.Value);
-                    continue;
-                }
                 if (property.NameEquals("entities"u8))
                 {
-                    List<EntityWithResolution> array = new List<EntityWithResolution>();
+                    List<Entity> array = new List<Entity>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(EntityWithResolution.DeserializeEntityWithResolution(item));
+                        array.Add(Entity.DeserializeEntity(item));
                     }
                     entities = array;
                     continue;
@@ -94,14 +82,13 @@ namespace Azure.AI.TextAnalytics.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     statistics = TextDocumentStatistics.DeserializeTextDocumentStatistics(property.Value);
                     continue;
                 }
             }
-            return new CustomEntitiesResultDocumentsItem(id, warnings, Optional.ToNullable(statistics), entities, Optional.ToNullable(detectedLanguage));
+            return new CustomEntitiesResultDocumentsItem(id, warnings, Optional.ToNullable(statistics), entities);
         }
     }
 }

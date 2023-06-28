@@ -107,6 +107,10 @@ namespace Azure.ResourceManager.DigitalTwins.Models
 
         internal static DataExplorerConnectionProperties DeserializeDataExplorerConnectionProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ResourceIdentifier adxResourceId = default;
             Uri adxEndpointUri = default;
             string adxDatabaseName = default;
@@ -212,7 +216,6 @@ namespace Azure.ResourceManager.DigitalTwins.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     provisioningState = new TimeSeriesDatabaseConnectionState(property.Value.GetString());

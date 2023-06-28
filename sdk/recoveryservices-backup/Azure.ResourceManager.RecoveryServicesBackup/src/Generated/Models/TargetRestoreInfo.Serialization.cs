@@ -40,6 +40,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         internal static TargetRestoreInfo DeserializeTargetRestoreInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<RestoreOverwriteOption> overwriteOption = default;
             Optional<string> containerId = default;
             Optional<string> databaseName = default;
@@ -50,7 +54,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     overwriteOption = new RestoreOverwriteOption(property.Value.GetString());

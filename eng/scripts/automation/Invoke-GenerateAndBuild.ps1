@@ -22,7 +22,7 @@ $downloadUrlPrefix = $inputJson.installInstructionInput.downloadUrlPrefix
 $autorestConfig = $inputJson.autorestConfig
 
 $autorestConfig = $inputJson.autorestConfig
-$relatedCadlProjectFolder = $inputJson.relatedCadlProjectFolder
+$relatedTypeSpecProjectFolder = $inputJson.relatedTypeSpecProjectFolder
 
 $autorestConfigYaml = ""
 if ($autorestConfig) {
@@ -69,22 +69,22 @@ if ($readmeFile) {
   Invoke-GenerateAndBuildSDK -readmeAbsolutePath $readme -sdkRootPath $sdkPath -autorestConfigYaml "$autorestConfigYaml" -downloadUrlPrefix "$downloadUrlPrefix" -generatedSDKPackages $generatedSDKPackages
 }
 
-if ($relatedCadlProjectFolder) {
-  $cadlFolder = Resolve-Path (Join-Path $swaggerDir $relatedCadlProjectFolder)
+if ($relatedTypeSpecProjectFolder) {
+  $typespecFolder = Resolve-Path (Join-Path $swaggerDir $relatedTypeSpecProjectFolder)
   $newPackageOutput = "newPackageOutput.json"
 
-  $cadlProjectYaml = Get-Content -Path (Join-Path "$cadlFolder" "cadl-project.yaml") -Raw
+  $tspConfigYaml = Get-Content -Path (Join-Path "$typespecFolder" "tspconfig.yaml") -Raw
 
   Install-ModuleIfNotInstalled "powershell-yaml" "0.4.1" | Import-Module
-  $yml = ConvertFrom-YAML $cadlProjectYaml
+  $yml = ConvertFrom-YAML $tspConfigYaml
   $service = ""
   $namespace = ""
   if ($yml) {
       if ($yml["parameters"] -And $yml["parameters"]["service-directory-name"]) {
           $service = $yml["parameters"]["service-directory-name"]["default"];
       }
-      if ($yml["options"] -And $yml["options"]["@azure-tools/cadl-csharp"] -And $yml["options"]["@azure-tools/cadl-csharp"]["namespace"]) {
-          $namespace = $yml["options"]["@azure-tools/cadl-csharp"]["namespace"]
+      if ($yml["options"] -And $yml["options"]["@azure-tools/typespec-csharp"] -And $yml["options"]["@azure-tools/typespec-csharp"]["namespace"]) {
+          $namespace = $yml["options"]["@azure-tools/typespec-csharp"]["namespace"]
       }
   }
   if (!$service || !$namespace) {
@@ -92,16 +92,16 @@ if ($relatedCadlProjectFolder) {
   }
   $projectFolder = (Join-Path $sdkPath "sdk" $service $namespace)
   $specRoot = $swaggerDir
-  if ((-Not $relatedCadlProjectFolder.Contains("specification")) -And $swaggerDir.Contains("specification"))
+  if ((-Not $relatedTypeSpecProjectFolder.Contains("specification")) -And $swaggerDir.Contains("specification"))
   {
-    $relatedCadlProjectFolder = "specification/$relatedCadlProjectFolder"
+    $relatedTypeSpecProjectFolder = "specification/$relatedTypeSpecProjectFolder"
     $specRoot = Split-Path $specRoot
   }
-  New-CADLPackageFolder `
+  New-TypeSpecPackageFolder `
       -service $service `
       -namespace $namespace `
       -sdkPath $sdkPath `
-      -relatedCadlProjectFolder $relatedCadlProjectFolder `
+      -relatedTypeSpecProjectFolder $relatedTypeSpecProjectFolder `
       -specRoot $specRoot `
       -outputJsonFile $newpackageoutput
   $newPackageOutputJson = Get-Content $newPackageOutput -Raw | ConvertFrom-Json

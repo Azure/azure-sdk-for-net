@@ -103,6 +103,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static MachineLearningAksComputeProperties DeserializeMachineLearningAksComputeProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> clusterFqdn = default;
             Optional<IReadOnlyList<MachineLearningComputeSystemService>> systemServices = default;
             Optional<int?> agentCount = default;
@@ -163,7 +167,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     clusterPurpose = new MachineLearningClusterPurpose(property.Value.GetString());
@@ -193,7 +196,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     loadBalancerType = new MachineLearningLoadBalancerType(property.Value.GetString());

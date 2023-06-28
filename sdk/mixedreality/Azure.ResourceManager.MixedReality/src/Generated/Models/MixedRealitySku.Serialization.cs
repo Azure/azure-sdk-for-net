@@ -42,6 +42,10 @@ namespace Azure.ResourceManager.MixedReality.Models
 
         internal static MixedRealitySku DeserializeMixedRealitySku(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string name = default;
             Optional<MixedRealitySkuTier> tier = default;
             Optional<string> size = default;
@@ -58,7 +62,6 @@ namespace Azure.ResourceManager.MixedReality.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     tier = property.Value.GetString().ToMixedRealitySkuTier();
@@ -78,7 +81,6 @@ namespace Azure.ResourceManager.MixedReality.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     capacity = property.Value.GetInt32();

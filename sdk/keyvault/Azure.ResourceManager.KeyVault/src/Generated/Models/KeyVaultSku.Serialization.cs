@@ -24,6 +24,10 @@ namespace Azure.ResourceManager.KeyVault.Models
 
         internal static KeyVaultSku DeserializeKeyVaultSku(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             KeyVaultSkuFamily family = default;
             KeyVaultSkuName name = default;
             foreach (var property in element.EnumerateObject())

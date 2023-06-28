@@ -34,6 +34,10 @@ namespace Azure.ResourceManager.Chaos.Models
 
         internal static DiscreteAction DeserializeDiscreteAction(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             IList<KeyValuePair> parameters = default;
             string selectorId = default;
             string type = default;

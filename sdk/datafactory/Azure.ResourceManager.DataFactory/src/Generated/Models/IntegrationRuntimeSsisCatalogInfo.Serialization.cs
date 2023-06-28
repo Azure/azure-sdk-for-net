@@ -56,9 +56,13 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static IntegrationRuntimeSsisCatalogInfo DeserializeIntegrationRuntimeSsisCatalogInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> catalogServerEndpoint = default;
             Optional<string> catalogAdminUserName = default;
-            Optional<FactorySecretString> catalogAdminPassword = default;
+            Optional<DataFactorySecretString> catalogAdminPassword = default;
             Optional<IntegrationRuntimeSsisCatalogPricingTier> catalogPricingTier = default;
             Optional<string> dualStandbyPairName = default;
             IDictionary<string, BinaryData> additionalProperties = default;
@@ -79,17 +83,15 @@ namespace Azure.ResourceManager.DataFactory.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    catalogAdminPassword = FactorySecretString.DeserializeFactorySecretString(property.Value);
+                    catalogAdminPassword = DataFactorySecretString.DeserializeDataFactorySecretString(property.Value);
                     continue;
                 }
                 if (property.NameEquals("catalogPricingTier"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     catalogPricingTier = new IntegrationRuntimeSsisCatalogPricingTier(property.Value.GetString());

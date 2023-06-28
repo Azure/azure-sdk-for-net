@@ -16,6 +16,10 @@ namespace Azure.Security.KeyVault.Storage.Models
     {
         internal static DeletedStorageAccountItem DeserializeDeletedStorageAccountItem(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> recoveryId = default;
             Optional<DateTimeOffset> scheduledPurgeDate = default;
             Optional<DateTimeOffset> deletedDate = default;
@@ -34,7 +38,6 @@ namespace Azure.Security.KeyVault.Storage.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     scheduledPurgeDate = property.Value.GetDateTimeOffset("U");
@@ -44,7 +47,6 @@ namespace Azure.Security.KeyVault.Storage.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     deletedDate = property.Value.GetDateTimeOffset("U");
@@ -64,7 +66,6 @@ namespace Azure.Security.KeyVault.Storage.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     attributes = StorageAccountAttributes.DeserializeStorageAccountAttributes(property.Value);
@@ -74,7 +75,6 @@ namespace Azure.Security.KeyVault.Storage.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();

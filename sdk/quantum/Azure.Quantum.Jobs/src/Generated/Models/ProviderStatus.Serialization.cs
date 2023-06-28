@@ -15,6 +15,10 @@ namespace Azure.Quantum.Jobs.Models
     {
         internal static ProviderStatus DeserializeProviderStatus(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> id = default;
             Optional<ProviderAvailability> currentAvailability = default;
             Optional<IReadOnlyList<TargetStatus>> targets = default;
@@ -29,7 +33,6 @@ namespace Azure.Quantum.Jobs.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     currentAvailability = new ProviderAvailability(property.Value.GetString());
@@ -39,7 +42,6 @@ namespace Azure.Quantum.Jobs.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<TargetStatus> array = new List<TargetStatus>();

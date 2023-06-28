@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.PostgreSql.Models
     {
         internal static PostgreSqlLogFileListResult DeserializePostgreSqlLogFileListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<PostgreSqlLogFile>> value = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -22,7 +26,6 @@ namespace Azure.ResourceManager.PostgreSql.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<PostgreSqlLogFile> array = new List<PostgreSqlLogFile>();

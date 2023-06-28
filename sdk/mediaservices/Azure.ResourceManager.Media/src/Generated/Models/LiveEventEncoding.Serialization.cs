@@ -55,6 +55,10 @@ namespace Azure.ResourceManager.Media.Models
 
         internal static LiveEventEncoding DeserializeLiveEventEncoding(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<LiveEventEncodingType> encodingType = default;
             Optional<string> presetName = default;
             Optional<InputVideoStretchMode?> stretchMode = default;
@@ -65,7 +69,6 @@ namespace Azure.ResourceManager.Media.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     encodingType = new LiveEventEncodingType(property.Value.GetString());

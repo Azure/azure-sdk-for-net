@@ -66,6 +66,10 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
 
         internal static BlobStreamInputDataSource DeserializeBlobStreamInputDataSource(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string type = default;
             Optional<IList<StreamAnalyticsStorageAccount>> storageAccounts = default;
             Optional<string> container = default;
@@ -94,7 +98,6 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<StreamAnalyticsStorageAccount> array = new List<StreamAnalyticsStorageAccount>();
@@ -129,7 +132,6 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             authenticationMode = new StreamAnalyticsAuthenticationMode(property0.Value.GetString());
@@ -139,7 +141,6 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             sourcePartitionCount = property0.Value.GetInt32();

@@ -556,7 +556,7 @@ namespace Azure.ResourceManager.Marketplace
         }
 
         /// <summary>
-        /// List of user&apos;s approved offers for the provided offers and subscriptions
+        /// List of user's approved offers for the provided offers and subscriptions
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -578,7 +578,7 @@ namespace Azure.ResourceManager.Marketplace
         }
 
         /// <summary>
-        /// List of user&apos;s approved offers for the provided offers and subscriptions
+        /// List of user's approved offers for the provided offers and subscriptions
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>

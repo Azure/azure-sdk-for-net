@@ -48,6 +48,10 @@ namespace Azure.ResourceManager.Maps
 
         internal static MapsAccountData DeserializeMapsAccountData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             MapsSku sku = default;
             Optional<MapsAccountKind> kind = default;
             Optional<MapsAccountProperties> properties = default;
@@ -68,7 +72,6 @@ namespace Azure.ResourceManager.Maps
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     kind = new MapsAccountKind(property.Value.GetString());
@@ -78,7 +81,6 @@ namespace Azure.ResourceManager.Maps
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     properties = MapsAccountProperties.DeserializeMapsAccountProperties(property.Value);
@@ -88,7 +90,6 @@ namespace Azure.ResourceManager.Maps
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -123,7 +124,6 @@ namespace Azure.ResourceManager.Maps
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());

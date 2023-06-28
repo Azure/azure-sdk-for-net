@@ -111,13 +111,6 @@ namespace Azure.Messaging.EventHubs.Amqp
         private static TimeSpan AuthorizationTokenExpirationBuffer { get; } = AuthorizationRefreshBuffer.Add(TimeSpan.FromMinutes(2));
 
         /// <summary>
-        ///   The recommended timeout to associate with an AMQP session.  It is recommended that this
-        ///   interval be used when creating or opening AMQP links and related constructs.
-        /// </summary>
-        ///
-        public TimeSpan SessionTimeout { get; } = TimeSpan.FromSeconds(30);
-
-        /// <summary>
         ///   The amount of time to allow a connection to have no observed traffic before considering it idle.
         /// </summary>
         ///
@@ -285,8 +278,7 @@ namespace Azure.Messaging.EventHubs.Amqp
         /// <returns>A link for use with management operations.</returns>
         ///
         /// <remarks>
-        ///   The authorization for this link does not require periodic
-        ///   refreshing.
+        ///   The authorization for this link does not require periodic refreshing.
         /// </remarks>
         ///
         public virtual async Task<RequestResponseAmqpLink> OpenManagementLinkAsync(TimeSpan operationTimeout,
@@ -593,7 +585,6 @@ namespace Azure.Messaging.EventHubs.Amqp
 
             var session = default(AmqpSession);
             var link = default(RequestResponseAmqpLink);
-            var stopWatch = ValueStopwatch.StartNew();
 
             try
             {
@@ -607,7 +598,7 @@ namespace Azure.Messaging.EventHubs.Amqp
                 // Create and open the link.
 
                 var linkSettings = new AmqpLinkSettings { OperationTimeout = operationTimeout };
-                linkSettings.AddProperty(AmqpProperty.Timeout, (uint)linkTimeout.CalculateRemaining(stopWatch.GetElapsedTime()).TotalMilliseconds);
+                linkSettings.AddProperty(AmqpProperty.Timeout, (uint)linkTimeout.TotalMilliseconds);
 
                 link = new RequestResponseAmqpLink(AmqpManagement.LinkType, session, AmqpManagement.Address, linkSettings.Properties);
 
@@ -663,14 +654,13 @@ namespace Azure.Messaging.EventHubs.Amqp
             var session = default(AmqpSession);
             var link = default(ReceivingAmqpLink);
             var refreshTimer = default(Timer);
-            var stopWatch = ValueStopwatch.StartNew();
 
             try
             {
                 // Perform the initial authorization for the link.
 
                 var authClaims = new[] { EventHubsClaim.Listen };
-                var authExpirationUtc = await RequestAuthorizationUsingCbsAsync(connection, TokenProvider, endpoint, endpoint.AbsoluteUri, endpoint.AbsoluteUri, authClaims, linkTimeout.CalculateRemaining(stopWatch.GetElapsedTime())).ConfigureAwait(false);
+                var authExpirationUtc = await RequestAuthorizationUsingCbsAsync(connection, TokenProvider, endpoint, endpoint.AbsoluteUri, endpoint.AbsoluteUri, authClaims, linkTimeout).ConfigureAwait(false);
                 cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
 
                 // Create and open the AMQP session associated with the link.
@@ -782,14 +772,15 @@ namespace Azure.Messaging.EventHubs.Amqp
             var session = default(AmqpSession);
             var link = default(SendingAmqpLink);
             var refreshTimer = default(Timer);
-            var stopWatch = ValueStopwatch.StartNew();
 
             try
             {
+                var stopWatch = ValueStopwatch.StartNew();
+
                 // Perform the initial authorization for the link.
 
                 var authClaims = new[] { EventHubsClaim.Send };
-                var authExpirationUtc = await RequestAuthorizationUsingCbsAsync(connection, TokenProvider, endpoint, endpoint.AbsoluteUri, endpoint.AbsoluteUri, authClaims, linkTimeout.CalculateRemaining(stopWatch.GetElapsedTime())).ConfigureAwait(false);
+                var authExpirationUtc = await RequestAuthorizationUsingCbsAsync(connection, TokenProvider, endpoint, endpoint.AbsoluteUri, endpoint.AbsoluteUri, authClaims, linkTimeout).ConfigureAwait(false);
                 cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
 
                 // Create and open the AMQP session associated with the link.

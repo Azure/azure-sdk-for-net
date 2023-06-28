@@ -1,20 +1,86 @@
 # Release History
 
-## 1.0.0-beta.8 (Unreleased)
+## 1.0.0-beta.13 (Unreleased)
+
+### Features Added
+
+* Added `ApplicationInsightsSampler` to the exporter, enabling users to customize the sampling rate using the `SamplingRatio` property.
+  ([#36972](https://github.com/Azure/azure-sdk-for-net/pull/36972))
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+* Update OpenTelemetry dependencies
+  ([#36859](https://github.com/Azure/azure-sdk-for-net/pull/36859))
+  - OpenTelemetry 1.5.0
+* Remove metric namespace mapping.
+  ([#36968](https://github.com/Azure/azure-sdk-for-net/pull/36968))
+
+## 1.0.0-beta.12 (2023-06-06)
+
+### Features Added
+
+* Add support for Authenticated User Id.
+  ([#36509](https://github.com/Azure/azure-sdk-for-net/pull/36509))
+* Add `db.name` to custom properties.
+  ([#36389](https://github.com/Azure/azure-sdk-for-net/pull/36389))
+ 
+### Bugs Fixed
+
+* Fixed an issue which resulted in standard metrics getting exported to backends other than Azure Monitor, when Azure Monitor metric exporter was used with other exporters such as otlp side by side.
+  ([#36369](https://github.com/Azure/azure-sdk-for-net/pull/36369))
+
+### Other Changes
+
+* Removed `_OTELRESOURCE_` export from Logs and Metrics.
+  ([#36430](https://github.com/Azure/azure-sdk-for-net/pull/36430))
+
+## 1.0.0-beta.11 (2023-05-09)
+
+### Features Added
+
+* [Resource](https://github.com/open-telemetry/opentelemetry-specification/blob/main/specification/resource/sdk.md) attributes will now be exported as custom dimensions on Metric telemetry with the name `_OTELRESOURCE_`. This Metric will be included in every batch of telemetry items sent to the ingestion service. ([#36063](https://github.com/Azure/azure-sdk-for-net/pull/36063))
+
+### Other Changes
+
+* Update OpenTelemetry dependencies
+  ([#35664](https://github.com/Azure/azure-sdk-for-net/pull/35664))
+  - OpenTelemetry.PersistentStorage.FileSystem 1.0.0-beta2
+
+## 1.0.0-beta.10 (2023-04-11)
+
+### Bugs Fixed
+
+- Fixed an issue of when using ILogger to log an Exception a custom message would override the exception message.
+  ([#33860](https://github.com/Azure/azure-sdk-for-net/pull/33860))
+
+## 1.0.0-beta.9 (2023-03-14)
+
+### Other Changes
+
+- Changed Attach Statsbeat name as per spec
+- Upgraded dependent `Azure.Core` to `1.30.0` due to an [issue in `ArrayBackedPropertyBag`](https://github.com/Azure/azure-sdk-for-net/pull/34800) in `Azure.Core` version `1.29.0`.
+
+## 1.0.0-beta.8 (2023-03-07)
 
 ### Features Added
 
 * AAD can now be configured via `AzureMonitorExporterOptions`
   ([#34555](https://github.com/Azure/azure-sdk-for-net/pull/34555))
 
+* Connection String can now be provided via
+  `APPLICATIONINSIGHTS_CONNECTION_STRING` environment variable
+  ([#34275](https://github.com/Azure/azure-sdk-for-net/pull/34275))
+
 * `dependencies\duration` and `requests\duration` standard metrics will now be
   exported by default when trace exporter is used alongside metric exporter
   ([#34010](https://github.com/Azure/azure-sdk-for-net/pull/34010))
-  ([#33999](https://github.com/Azure/azure-sdk-for-net/pull/33999))
+  ([#33955](https://github.com/Azure/azure-sdk-for-net/pull/33955))
 
 * Added support for named options ([#33803](https://github.com/Azure/azure-sdk-for-net/pull/33803))
-
-### Breaking Changes
 
 ### Bugs Fixed
 

@@ -24,6 +24,10 @@ namespace Azure.ResourceManager.Avs.Models
 
         internal static UnknownScriptExecutionParameter DeserializeUnknownScriptExecutionParameter(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string name = default;
             ScriptExecutionParameterType type = "Unknown";
             foreach (var property in element.EnumerateObject())

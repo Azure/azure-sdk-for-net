@@ -30,7 +30,7 @@ parameters:
   default: azsdk-pool-mms-ubuntu-2204-general
 - name: OsVmImage
   type: string
-  default: MMSUbuntu22.04
+  default: ubuntu-22.04
 # This parameter is only necessary if there are multiple invocations of this template within the SAME STAGE.
 # When that occurs, provide a name other than the default value.
 - name: GenerateJobName

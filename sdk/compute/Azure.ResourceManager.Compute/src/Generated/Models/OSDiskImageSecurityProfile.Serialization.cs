@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.Compute.Models
 
         internal static OSDiskImageSecurityProfile DeserializeOSDiskImageSecurityProfile(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ConfidentialVmEncryptionType> confidentialVmEncryptionType = default;
             Optional<string> secureVmDiskEncryptionSetId = default;
             foreach (var property in element.EnumerateObject())
@@ -38,7 +42,6 @@ namespace Azure.ResourceManager.Compute.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     confidentialVmEncryptionType = new ConfidentialVmEncryptionType(property.Value.GetString());

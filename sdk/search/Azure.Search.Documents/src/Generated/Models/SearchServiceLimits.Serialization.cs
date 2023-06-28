@@ -14,6 +14,10 @@ namespace Azure.Search.Documents.Indexes.Models
     {
         internal static SearchServiceLimits DeserializeSearchServiceLimits(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int?> maxFieldsPerIndex = default;
             Optional<int?> maxFieldNestingDepthPerIndex = default;
             Optional<int?> maxComplexCollectionFieldsPerIndex = default;

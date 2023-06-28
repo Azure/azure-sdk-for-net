@@ -22,6 +22,10 @@ namespace Azure.ResourceManager.Sql.Models
 
         internal static ServerTrustGroupServerInfo DeserializeServerTrustGroupServerInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ResourceIdentifier serverId = default;
             foreach (var property in element.EnumerateObject())
             {

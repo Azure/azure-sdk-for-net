@@ -32,6 +32,10 @@ namespace Azure.ResourceManager.Media.Models
 
         internal static ContentKeyPolicySymmetricTokenKey DeserializeContentKeyPolicySymmetricTokenKey(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             byte[] keyValue = default;
             string odataType = default;
             foreach (var property in element.EnumerateObject())

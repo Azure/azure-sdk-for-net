@@ -32,6 +32,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         internal static GcpMemberOrganizationalInfo DeserializeGcpMemberOrganizationalInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> parentHierarchyId = default;
             Optional<string> managementProjectNumber = default;
             OrganizationMembershipType organizationMembershipType = default;

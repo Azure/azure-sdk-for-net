@@ -14,6 +14,10 @@ namespace Azure.Security.KeyVault.Administration.Models
     {
         internal static KeyVaultServiceError DeserializeKeyVaultServiceError(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> code = default;
             Optional<string> message = default;
             Optional<KeyVaultServiceError> innererror = default;

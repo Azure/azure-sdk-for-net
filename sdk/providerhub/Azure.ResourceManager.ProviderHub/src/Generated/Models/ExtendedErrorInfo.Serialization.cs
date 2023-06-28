@@ -56,6 +56,10 @@ namespace Azure.ResourceManager.ProviderHub.Models
 
         internal static ExtendedErrorInfo DeserializeExtendedErrorInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> code = default;
             Optional<string> target = default;
             Optional<string> message = default;
@@ -82,7 +86,6 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<ExtendedErrorInfo> array = new List<ExtendedErrorInfo>();
@@ -97,7 +100,6 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<TypedErrorInfo> array = new List<TypedErrorInfo>();

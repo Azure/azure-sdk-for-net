@@ -14,6 +14,10 @@ namespace Azure.Maps.Search.Models
     {
         internal static FacilityEntryPoint DeserializeFacilityEntryPoint(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<EntryPointType> type = default;
             Optional<LatLongPairAbbreviated> position = default;
             foreach (var property in element.EnumerateObject())
@@ -22,7 +26,6 @@ namespace Azure.Maps.Search.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     type = new EntryPointType(property.Value.GetString());
@@ -32,7 +35,6 @@ namespace Azure.Maps.Search.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     position = LatLongPairAbbreviated.DeserializeLatLongPairAbbreviated(property.Value);

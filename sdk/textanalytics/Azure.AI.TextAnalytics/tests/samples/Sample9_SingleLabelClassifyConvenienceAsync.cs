@@ -14,9 +14,11 @@ namespace Azure.AI.TextAnalytics.Samples
         [Test]
         public async Task SingleLabelClassifyConvenienceAsync()
         {
+            TestEnvironment.IgnoreIfNotPublicCloud();
+
             Uri endpoint = new(TestEnvironment.StaticEndpoint);
             AzureKeyCredential credential = new(TestEnvironment.StaticApiKey);
-            TextAnalyticsClient client = new(endpoint, credential, CreateSampleOptions());
+            TextAnalyticsClient client = new(endpoint, credential, CreateSampleOptions(true));
 
             #region Snippet:Sample9_SingleLabelClassifyConvenienceAsync
             string document =
@@ -39,22 +41,14 @@ namespace Azure.AI.TextAnalytics.Samples
             string projectName = TestEnvironment.SingleClassificationProjectName;
             string deploymentName = TestEnvironment.SingleClassificationDeploymentName;
 #endif
-            SingleLabelClassifyAction singleLabelClassifyAction = new(projectName, deploymentName);
-
-            TextAnalyticsActions actions = new()
-            {
-                SingleLabelClassifyActions = new List<SingleLabelClassifyAction>() { singleLabelClassifyAction }
-            };
 
             // Perform the text analysis operation.
-            AnalyzeActionsOperation operation = await client.StartAnalyzeActionsAsync(batchedDocuments, actions);
-            await operation.WaitForCompletionAsync();
+            ClassifyDocumentOperation operation = await client.SingleLabelClassifyAsync(WaitUntil.Completed, batchedDocuments, projectName, deploymentName);
             #endregion
 
             Console.WriteLine($"The operation has completed.");
             Console.WriteLine();
 
-            #region Snippet:Sample9_SingleLabelClassifyConvenienceAsync_ViewOperationStatus
             // View the operation status.
             Console.WriteLine($"Created On   : {operation.CreatedOn}");
             Console.WriteLine($"Expires On   : {operation.ExpiresOn}");
@@ -62,22 +56,28 @@ namespace Azure.AI.TextAnalytics.Samples
             Console.WriteLine($"Status       : {operation.Status}");
             Console.WriteLine($"Last Modified: {operation.LastModified}");
             Console.WriteLine();
-            #endregion
 
             #region Snippet:Sample9_SingleLabelClassifyConvenienceAsync_ViewResults
             // View the operation results.
-            await foreach (AnalyzeActionsResult documentsInPage in operation.Value)
+            await foreach (ClassifyDocumentResultCollection documentsInPage in operation.Value)
             {
-                IReadOnlyCollection<SingleLabelClassifyActionResult> singleClassificationActionResults = documentsInPage.SingleLabelClassifyResults;
-
-                foreach (SingleLabelClassifyActionResult classificationActionResults in singleClassificationActionResults)
+                foreach (ClassifyDocumentResult documentResult in documentsInPage)
                 {
-                    Console.WriteLine($" Action name: {classificationActionResults.ActionName}");
-                    foreach (ClassifyDocumentResult documentResult in classificationActionResults.DocumentsResults)
+                    if (documentResult.HasError)
                     {
-                        ClassificationCategory classification = documentResult.ClassificationCategories.First();
+                        Console.WriteLine($"  Error!");
+                        Console.WriteLine($"  Document error code: {documentResult.Error.ErrorCode}");
+                        Console.WriteLine($"  Message: {documentResult.Error.Message}");
+                        continue;
+                    }
 
-                        Console.WriteLine($"  Class label \"{classification.Category}\" predicted with a confidence score of {classification.ConfidenceScore}.");
+                    Console.WriteLine($"  Predicted the following class:");
+                    Console.WriteLine();
+
+                    foreach (ClassificationCategory classification in documentResult.ClassificationCategories)
+                    {
+                        Console.WriteLine($"  Category: {classification.Category}");
+                        Console.WriteLine($"  Confidence score: {classification.ConfidenceScore}");
                         Console.WriteLine();
                     }
                 }

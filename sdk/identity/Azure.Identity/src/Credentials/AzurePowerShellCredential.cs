@@ -22,7 +22,7 @@ namespace Azure.Identity
     {
         private readonly CredentialPipeline _pipeline;
         private readonly IProcessService _processService;
-        internal TimeSpan PowerShellProcessTimeout { get; private set; }
+        internal TimeSpan ProcessTimeout { get; private set; }
         internal bool UseLegacyPowerShell { get; set; }
 
         private const string Troubleshooting = "See the troubleshooting guide for more information. https://aka.ms/azsdk/net/identity/powershellcredential/troubleshoot";
@@ -66,7 +66,7 @@ namespace Azure.Identity
             _pipeline = pipeline ?? CredentialPipeline.GetInstance(options);
             _processService = processService ?? ProcessService.Default;
             AdditionallyAllowedTenantIds = TenantIdResolver.ResolveAddionallyAllowedTenantIds((options as ISupportsAdditionallyAllowedTenants)?.AdditionallyAllowedTenants);
-            PowerShellProcessTimeout = options?.PowerShellProcessTimeout ?? TimeSpan.FromSeconds(10);
+            ProcessTimeout = options?.ProcessTimeout ?? TimeSpan.FromSeconds(10);
         }
 
         /// <summary>
@@ -124,12 +124,12 @@ namespace Azure.Identity
                 }
                 catch (Exception e)
                 {
-                    throw scope.FailWrapAndThrow(e);
+                    throw scope.FailWrapAndThrow(e, isCredentialUnavailable: true);
                 }
             }
             catch (Exception e)
             {
-                throw scope.FailWrapAndThrow(e);
+                throw scope.FailWrapAndThrow(e, isCredentialUnavailable: true);
             }
         }
 
@@ -144,7 +144,7 @@ namespace Azure.Identity
             ProcessStartInfo processStartInfo = GetAzurePowerShellProcessStartInfo(fileName, argument);
             using var processRunner = new ProcessRunner(
                 _processService.Create(processStartInfo),
-                PowerShellProcessTimeout,
+                ProcessTimeout,
                 _logPII,
                 cancellationToken);
 
@@ -162,7 +162,7 @@ namespace Azure.Identity
             catch (InvalidOperationException exception)
             {
                 CheckForErrors(exception.Message);
-                throw new AuthenticationFailedException($"{AzurePowerShellFailedError} {exception.Message}");
+                throw new CredentialUnavailableException($"{AzurePowerShellFailedError} {exception.Message}");
             }
             return DeserializeOutput(output);
         }
@@ -247,7 +247,7 @@ return $x.Objects.FirstChild.OuterXml
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
             {
                 fileName = Path.Combine(DefaultWorkingDirWindows, "cmd.exe");
-                argument = $"/c \"{powershellExe} \"{commandBase64}\" \"";
+                argument = $"/d /c \"{powershellExe} \"{commandBase64}\" \"";
             }
             else
             {

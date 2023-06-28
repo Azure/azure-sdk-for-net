@@ -28,6 +28,10 @@ namespace Azure.ResourceManager.Consumption.Models
 
         internal static BudgetTimePeriod DeserializeBudgetTimePeriod(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             DateTimeOffset startDate = default;
             Optional<DateTimeOffset> endDate = default;
             foreach (var property in element.EnumerateObject())
@@ -41,7 +45,6 @@ namespace Azure.ResourceManager.Consumption.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     endDate = property.Value.GetDateTimeOffset("O");

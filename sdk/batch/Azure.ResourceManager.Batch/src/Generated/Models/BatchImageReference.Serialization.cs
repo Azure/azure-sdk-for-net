@@ -45,6 +45,10 @@ namespace Azure.ResourceManager.Batch.Models
 
         internal static BatchImageReference DeserializeBatchImageReference(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> publisher = default;
             Optional<string> offer = default;
             Optional<string> sku = default;
@@ -76,7 +80,6 @@ namespace Azure.ResourceManager.Batch.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     id = new ResourceIdentifier(property.Value.GetString());

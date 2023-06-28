@@ -15,9 +15,13 @@ namespace Azure.ResourceManager.ResourceHealth.Models
     {
         internal static MetadataSupportedValueDetail DeserializeMetadataSupportedValueDetail(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> id = default;
             Optional<string> displayName = default;
-            Optional<IReadOnlyList<string>> resourceTypes = default;
+            Optional<IReadOnlyList<ResourceType>> resourceTypes = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -34,13 +38,12 @@ namespace Azure.ResourceManager.ResourceHealth.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<string> array = new List<string>();
+                    List<ResourceType> array = new List<ResourceType>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(item.GetString());
+                        array.Add(new ResourceType(item.GetString()));
                     }
                     resourceTypes = array;
                     continue;

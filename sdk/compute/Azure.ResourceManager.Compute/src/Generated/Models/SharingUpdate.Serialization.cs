@@ -33,6 +33,10 @@ namespace Azure.ResourceManager.Compute.Models
 
         internal static SharingUpdate DeserializeSharingUpdate(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             SharingUpdateOperationType operationType = default;
             Optional<IList<SharingProfileGroup>> groups = default;
             foreach (var property in element.EnumerateObject())
@@ -46,7 +50,6 @@ namespace Azure.ResourceManager.Compute.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<SharingProfileGroup> array = new List<SharingProfileGroup>();

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <doc>
   <members>
-    <member name="GetRoleDefinitionsAsync(Boolean,String,RequestContext)">
+    <member name="GetRoleDefinitionsAsync(bool?,string,RequestContext)">
 <example>
 This sample shows how to call GetRoleDefinitionsAsync and parse the result.
 <code><![CDATA[
@@ -35,33 +35,8 @@ Console.WriteLine(result[0].GetProperty("scopes")[0].ToString());
 Console.WriteLine(result[0].GetProperty("availabilityStatus").ToString());
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the response payload.
-
-Response Body:
-
-Schema for <c>SynapseRoleDefinition</c>:
-<code>{
-  id: Guid, # Optional. Role Definition ID
-  name: string, # Optional. Name of the Synapse role
-  isBuiltIn: boolean, # Optional. Is a built-in role or not
-  description: string, # Optional. Description for the Synapse role
-  permissions: [
-    {
-      actions: [string], # Optional. List of actions
-      notActions: [string], # Optional. List of Not actions
-      dataActions: [string], # Optional. List of data actions
-      notDataActions: [string], # Optional. List of Not data actions
-    }
-  ], # Optional. Permissions for the Synapse role
-  scopes: [string], # Optional. Allowed scopes for the Synapse role
-  availabilityStatus: string, # Optional. Availability of the Synapse role
-}
-</code>
-
-</remarks>
     </member>
-    <member name="GetRoleDefinitions(Boolean,String,RequestContext)">
+    <member name="GetRoleDefinitions(bool?,string,RequestContext)">
 <example>
 This sample shows how to call GetRoleDefinitions and parse the result.
 <code><![CDATA[
@@ -95,33 +70,8 @@ Console.WriteLine(result[0].GetProperty("scopes")[0].ToString());
 Console.WriteLine(result[0].GetProperty("availabilityStatus").ToString());
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the response payload.
-
-Response Body:
-
-Schema for <c>SynapseRoleDefinition</c>:
-<code>{
-  id: Guid, # Optional. Role Definition ID
-  name: string, # Optional. Name of the Synapse role
-  isBuiltIn: boolean, # Optional. Is a built-in role or not
-  description: string, # Optional. Description for the Synapse role
-  permissions: [
-    {
-      actions: [string], # Optional. List of actions
-      notActions: [string], # Optional. List of Not actions
-      dataActions: [string], # Optional. List of data actions
-      notDataActions: [string], # Optional. List of Not data actions
-    }
-  ], # Optional. Permissions for the Synapse role
-  scopes: [string], # Optional. Allowed scopes for the Synapse role
-  availabilityStatus: string, # Optional. Availability of the Synapse role
-}
-</code>
-
-</remarks>
     </member>
-    <member name="GetRoleDefinitionByIdAsync(String,RequestContext)">
+    <member name="GetRoleDefinitionByIdAsync(string,RequestContext)">
 <example>
 This sample shows how to call GetRoleDefinitionByIdAsync with required parameters and parse the result.
 <code><![CDATA[
@@ -144,33 +94,8 @@ Console.WriteLine(result.GetProperty("scopes")[0].ToString());
 Console.WriteLine(result.GetProperty("availabilityStatus").ToString());
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the response payload.
-
-Response Body:
-
-Schema for <c>SynapseRoleDefinition</c>:
-<code>{
-  id: Guid, # Optional. Role Definition ID
-  name: string, # Optional. Name of the Synapse role
-  isBuiltIn: boolean, # Optional. Is a built-in role or not
-  description: string, # Optional. Description for the Synapse role
-  permissions: [
-    {
-      actions: [string], # Optional. List of actions
-      notActions: [string], # Optional. List of Not actions
-      dataActions: [string], # Optional. List of data actions
-      notDataActions: [string], # Optional. List of Not data actions
-    }
-  ], # Optional. Permissions for the Synapse role
-  scopes: [string], # Optional. Allowed scopes for the Synapse role
-  availabilityStatus: string, # Optional. Availability of the Synapse role
-}
-</code>
-
-</remarks>
     </member>
-    <member name="GetRoleDefinitionById(String,RequestContext)">
+    <member name="GetRoleDefinitionById(string,RequestContext)">
 <example>
 This sample shows how to call GetRoleDefinitionById with required parameters and parse the result.
 <code><![CDATA[
@@ -193,31 +118,6 @@ Console.WriteLine(result.GetProperty("scopes")[0].ToString());
 Console.WriteLine(result.GetProperty("availabilityStatus").ToString());
 ]]></code>
 </example>
-<remarks>
-Below is the JSON schema for the response payload.
-
-Response Body:
-
-Schema for <c>SynapseRoleDefinition</c>:
-<code>{
-  id: Guid, # Optional. Role Definition ID
-  name: string, # Optional. Name of the Synapse role
-  isBuiltIn: boolean, # Optional. Is a built-in role or not
-  description: string, # Optional. Description for the Synapse role
-  permissions: [
-    {
-      actions: [string], # Optional. List of actions
-      notActions: [string], # Optional. List of Not actions
-      dataActions: [string], # Optional. List of data actions
-      notDataActions: [string], # Optional. List of Not data actions
-    }
-  ], # Optional. Permissions for the Synapse role
-  scopes: [string], # Optional. Allowed scopes for the Synapse role
-  availabilityStatus: string, # Optional. Availability of the Synapse role
-}
-</code>
-
-</remarks>
     </member>
     <member name="GetScopesAsync(RequestContext)">
 <example>

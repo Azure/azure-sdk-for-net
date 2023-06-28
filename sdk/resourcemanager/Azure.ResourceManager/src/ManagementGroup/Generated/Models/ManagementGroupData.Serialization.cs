@@ -18,6 +18,10 @@ namespace Azure.ResourceManager.ManagementGroups
     {
         internal static ManagementGroupData DeserializeManagementGroupData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -47,7 +51,6 @@ namespace Azure.ResourceManager.ManagementGroups
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
@@ -66,7 +69,6 @@ namespace Azure.ResourceManager.ManagementGroups
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             tenantId = property0.Value.GetGuid();
@@ -81,7 +83,6 @@ namespace Azure.ResourceManager.ManagementGroups
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             details = ManagementGroupInfo.DeserializeManagementGroupInfo(property0.Value);

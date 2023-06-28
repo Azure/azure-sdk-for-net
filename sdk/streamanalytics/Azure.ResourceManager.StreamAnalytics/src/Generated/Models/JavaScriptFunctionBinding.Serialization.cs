@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
 
         internal static JavaScriptFunctionBinding DeserializeJavaScriptFunctionBinding(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string type = default;
             Optional<string> script = default;
             foreach (var property in element.EnumerateObject())

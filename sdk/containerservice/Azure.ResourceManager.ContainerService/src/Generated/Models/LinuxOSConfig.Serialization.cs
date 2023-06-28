@@ -40,6 +40,10 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         internal static LinuxOSConfig DeserializeLinuxOSConfig(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<SysctlConfig> sysctls = default;
             Optional<string> transparentHugePageEnabled = default;
             Optional<string> transparentHugePageDefrag = default;
@@ -50,7 +54,6 @@ namespace Azure.ResourceManager.ContainerService.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     sysctls = SysctlConfig.DeserializeSysctlConfig(property.Value);
@@ -70,7 +73,6 @@ namespace Azure.ResourceManager.ContainerService.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     swapFileSizeMB = property.Value.GetInt32();

@@ -35,6 +35,10 @@ namespace Azure.ResourceManager.AppService.Models
 
         internal static RegistrationAddressInfo DeserializeRegistrationAddressInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string address1 = default;
             Optional<string> address2 = default;
             string city = default;

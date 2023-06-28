@@ -14,6 +14,10 @@ namespace Azure.Communication.CallAutomation
     {
         internal static MuteParticipantsResponse DeserializeMuteParticipantsResponse(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> operationContext = default;
             foreach (var property in element.EnumerateObject())
             {

@@ -14,6 +14,10 @@ namespace Azure.Communication.CallingServer
     {
         internal static TransferCallToParticipantResult DeserializeTransferCallToParticipantResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> operationContext = default;
             foreach (var property in element.EnumerateObject())
             {

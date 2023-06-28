@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.EnergyServices.Models
     {
         internal static DataPartition DeserializeDataPartition(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> name = default;
             Optional<string> provisioningState = default;
             foreach (var property in element.EnumerateObject())

@@ -24,6 +24,10 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
 
         internal static DataStoreInfoBase DeserializeDataStoreInfoBase(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             DataStoreType dataStoreType = default;
             string objectType = default;
             foreach (var property in element.EnumerateObject())

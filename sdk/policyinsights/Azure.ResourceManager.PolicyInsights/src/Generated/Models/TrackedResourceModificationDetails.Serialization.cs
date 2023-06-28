@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.PolicyInsights.Models
     {
         internal static TrackedResourceModificationDetails DeserializeTrackedResourceModificationDetails(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<PolicyDetails> policyDetails = default;
             Optional<ResourceIdentifier> deploymentId = default;
             Optional<DateTimeOffset> deploymentTime = default;
@@ -24,7 +28,6 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     policyDetails = PolicyDetails.DeserializePolicyDetails(property.Value);
@@ -34,7 +37,6 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     deploymentId = new ResourceIdentifier(property.Value.GetString());
@@ -44,7 +46,6 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     deploymentTime = property.Value.GetDateTimeOffset("O");

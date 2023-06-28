@@ -22,6 +22,10 @@ namespace Azure.ResourceManager.Workloads.Models
 
         internal static UnknownProviderSpecificProperties DeserializeUnknownProviderSpecificProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string providerType = "Unknown";
             foreach (var property in element.EnumerateObject())
             {

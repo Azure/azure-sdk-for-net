@@ -22,6 +22,10 @@ namespace Azure.ResourceManager.DataMigration.Models
 
         internal static DatabaseInfo DeserializeDatabaseInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string sourceDatabaseName = default;
             foreach (var property in element.EnumerateObject())
             {

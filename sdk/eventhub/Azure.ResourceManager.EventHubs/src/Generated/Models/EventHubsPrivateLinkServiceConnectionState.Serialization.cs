@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.EventHubs.Models
 
         internal static EventHubsPrivateLinkServiceConnectionState DeserializeEventHubsPrivateLinkServiceConnectionState(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<EventHubsPrivateLinkConnectionStatus> status = default;
             Optional<string> description = default;
             foreach (var property in element.EnumerateObject())
@@ -38,7 +42,6 @@ namespace Azure.ResourceManager.EventHubs.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     status = new EventHubsPrivateLinkConnectionStatus(property.Value.GetString());

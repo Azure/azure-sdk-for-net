@@ -26,6 +26,10 @@ namespace Azure.ResourceManager.DataBox.Models
 
         internal static ImportDiskDetails DeserializeImportDiskDetails(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string manifestFile = default;
             string manifestHash = default;
             string bitLockerKey = default;

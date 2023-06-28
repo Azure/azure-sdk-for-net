@@ -33,6 +33,10 @@ namespace Azure.Communication.MediaComposition.Models
 
         internal static ParticipantInput DeserializeParticipantInput(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             CommunicationIdentifierModel id = default;
             string call = default;
             MediaInputType kind = default;

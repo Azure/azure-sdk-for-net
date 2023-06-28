@@ -86,6 +86,10 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
 
         internal static KubernetesServicePrincipal DeserializeKubernetesServicePrincipal(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<Guid?> clientId = default;
             Optional<Guid?> tenantId = default;
             Optional<string> clientSecret = default;
@@ -148,7 +152,6 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     clientCertificateSendChain = property.Value.GetBoolean();

@@ -40,6 +40,10 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         internal static ContainerServiceNetworkProfileKubeProxyIPVSConfig DeserializeContainerServiceNetworkProfileKubeProxyIPVSConfig(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ContainerServiceNetworkProfileKubeProxyIPVSScheduler> scheduler = default;
             Optional<int> tcpTimeoutSeconds = default;
             Optional<int> tcpFinTimeoutSeconds = default;
@@ -50,7 +54,6 @@ namespace Azure.ResourceManager.ContainerService.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     scheduler = new ContainerServiceNetworkProfileKubeProxyIPVSScheduler(property.Value.GetString());
@@ -60,7 +63,6 @@ namespace Azure.ResourceManager.ContainerService.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     tcpTimeoutSeconds = property.Value.GetInt32();
@@ -70,7 +72,6 @@ namespace Azure.ResourceManager.ContainerService.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     tcpFinTimeoutSeconds = property.Value.GetInt32();
@@ -80,7 +81,6 @@ namespace Azure.ResourceManager.ContainerService.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     udpTimeoutSeconds = property.Value.GetInt32();

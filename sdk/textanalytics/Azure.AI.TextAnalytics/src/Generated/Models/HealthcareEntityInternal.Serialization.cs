@@ -57,6 +57,10 @@ namespace Azure.AI.TextAnalytics.Models
 
         internal static HealthcareEntityInternal DeserializeHealthcareEntityInternal(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string text = default;
             HealthcareEntityCategory category = default;
             Optional<string> subcategory = default;
@@ -102,7 +106,6 @@ namespace Azure.AI.TextAnalytics.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     assertion = HealthcareEntityAssertion.DeserializeHealthcareEntityAssertion(property.Value);
@@ -117,7 +120,6 @@ namespace Azure.AI.TextAnalytics.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<EntityDataSource> array = new List<EntityDataSource>();

@@ -32,6 +32,10 @@ namespace Azure.ResourceManager.Storage.Models
 
         internal static FilesIdentityBasedAuthentication DeserializeFilesIdentityBasedAuthentication(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             DirectoryServiceOption directoryServiceOptions = default;
             Optional<StorageActiveDirectoryProperties> activeDirectoryProperties = default;
             Optional<DefaultSharePermission> defaultSharePermission = default;
@@ -46,7 +50,6 @@ namespace Azure.ResourceManager.Storage.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     activeDirectoryProperties = StorageActiveDirectoryProperties.DeserializeStorageActiveDirectoryProperties(property.Value);
@@ -56,7 +59,6 @@ namespace Azure.ResourceManager.Storage.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     defaultSharePermission = new DefaultSharePermission(property.Value.GetString());

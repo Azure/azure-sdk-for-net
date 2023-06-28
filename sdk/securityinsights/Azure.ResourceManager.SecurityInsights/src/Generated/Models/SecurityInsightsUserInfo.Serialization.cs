@@ -33,6 +33,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 
         internal static SecurityInsightsUserInfo DeserializeSecurityInsightsUserInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> email = default;
             Optional<string> name = default;
             Optional<Guid?> objectId = default;

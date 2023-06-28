@@ -30,6 +30,10 @@ namespace Azure.IoT.TimeSeriesInsights
 
         internal static TimeSeriesInterpolation DeserializeTimeSeriesInterpolation(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<InterpolationKind> kind = default;
             Optional<InterpolationBoundary> boundary = default;
             foreach (var property in element.EnumerateObject())
@@ -38,7 +42,6 @@ namespace Azure.IoT.TimeSeriesInsights
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     kind = new InterpolationKind(property.Value.GetString());
@@ -48,7 +51,6 @@ namespace Azure.IoT.TimeSeriesInsights
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     boundary = InterpolationBoundary.DeserializeInterpolationBoundary(property.Value);

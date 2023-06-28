@@ -28,17 +28,6 @@ namespace Azure.ResourceManager.Communication.Models
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(ValidSenderUsernames))
-            {
-                writer.WritePropertyName("validSenderUsernames"u8);
-                writer.WriteStartObject();
-                foreach (var item in ValidSenderUsernames)
-                {
-                    writer.WritePropertyName(item.Key);
-                    writer.WriteStringValue(item.Value);
-                }
-                writer.WriteEndObject();
-            }
             if (Optional.IsDefined(UserEngagementTracking))
             {
                 writer.WritePropertyName("userEngagementTracking"u8);

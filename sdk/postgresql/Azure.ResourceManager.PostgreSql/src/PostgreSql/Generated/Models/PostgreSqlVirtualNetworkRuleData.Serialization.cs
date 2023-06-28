@@ -35,6 +35,10 @@ namespace Azure.ResourceManager.PostgreSql
 
         internal static PostgreSqlVirtualNetworkRuleData DeserializePostgreSqlVirtualNetworkRuleData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -63,7 +67,6 @@ namespace Azure.ResourceManager.PostgreSql
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
@@ -82,7 +85,6 @@ namespace Azure.ResourceManager.PostgreSql
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             virtualNetworkSubnetId = new ResourceIdentifier(property0.Value.GetString());
@@ -92,7 +94,6 @@ namespace Azure.ResourceManager.PostgreSql
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             ignoreMissingVnetServiceEndpoint = property0.Value.GetBoolean();
@@ -102,7 +103,6 @@ namespace Azure.ResourceManager.PostgreSql
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             state = new PostgreSqlVirtualNetworkRuleState(property0.Value.GetString());

@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     {
         internal static ActionsList DeserializeActionsList(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> nextLink = default;
             IReadOnlyList<SecurityInsightsAlertRuleActionData> value = default;
             foreach (var property in element.EnumerateObject())

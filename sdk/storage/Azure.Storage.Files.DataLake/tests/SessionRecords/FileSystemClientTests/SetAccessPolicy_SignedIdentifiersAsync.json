@@ -70,7 +70,7 @@
       "ResponseBody": []
     },
     {
-      "RequestUri": "https://seannse.dfs.core.windows.net/test-filesystem-9f00b4e3-00a4-91c6-681a-e6db350a90d4/test-directory-65ca305b-ac91-6b62-0d19-6b07b9f04548?sv=2022-11-02&si=eaowomsgmygaoriyltxo&sr=c&sig=Sanitized&resource=directory",
+      "RequestUri": "https://seannse.dfs.core.windows.net/test-filesystem-9f00b4e3-00a4-91c6-681a-e6db350a90d4/test-directory-65ca305b-ac91-6b62-0d19-6b07b9f04548?sv=2023-01-03&si=eaowomsgmygaoriyltxo&sr=c&sig=Sanitized&resource=directory",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/json",

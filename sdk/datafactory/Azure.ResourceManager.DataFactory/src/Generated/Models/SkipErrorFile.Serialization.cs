@@ -5,9 +5,9 @@
 
 #nullable disable
 
-using System;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -19,48 +19,42 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(FileMissing))
             {
                 writer.WritePropertyName("fileMissing"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(FileMissing);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(FileMissing.ToString()).RootElement);
-#endif
+                JsonSerializer.Serialize(writer, FileMissing);
             }
             if (Optional.IsDefined(DataInconsistency))
             {
                 writer.WritePropertyName("dataInconsistency"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(DataInconsistency);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(DataInconsistency.ToString()).RootElement);
-#endif
+                JsonSerializer.Serialize(writer, DataInconsistency);
             }
             writer.WriteEndObject();
         }
 
         internal static SkipErrorFile DeserializeSkipErrorFile(JsonElement element)
         {
-            Optional<BinaryData> fileMissing = default;
-            Optional<BinaryData> dataInconsistency = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<DataFactoryElement<bool>> fileMissing = default;
+            Optional<DataFactoryElement<bool>> dataInconsistency = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("fileMissing"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    fileMissing = BinaryData.FromString(property.Value.GetRawText());
+                    fileMissing = JsonSerializer.Deserialize<DataFactoryElement<bool>>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("dataInconsistency"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    dataInconsistency = BinaryData.FromString(property.Value.GetRawText());
+                    dataInconsistency = JsonSerializer.Deserialize<DataFactoryElement<bool>>(property.Value.GetRawText());
                     continue;
                 }
             }

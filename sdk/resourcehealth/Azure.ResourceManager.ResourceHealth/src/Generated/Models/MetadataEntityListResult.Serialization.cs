@@ -16,7 +16,11 @@ namespace Azure.ResourceManager.ResourceHealth.Models
     {
         internal static MetadataEntityListResult DeserializeMetadataEntityListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<MetadataEntityData>> value = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<IReadOnlyList<ResourceHealthMetadataEntityData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -24,13 +28,12 @@ namespace Azure.ResourceManager.ResourceHealth.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<MetadataEntityData> array = new List<MetadataEntityData>();
+                    List<ResourceHealthMetadataEntityData> array = new List<ResourceHealthMetadataEntityData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MetadataEntityData.DeserializeMetadataEntityData(item));
+                        array.Add(ResourceHealthMetadataEntityData.DeserializeResourceHealthMetadataEntityData(item));
                     }
                     value = array;
                     continue;

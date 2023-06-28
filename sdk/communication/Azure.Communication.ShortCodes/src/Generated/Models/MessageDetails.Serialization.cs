@@ -76,6 +76,10 @@ namespace Azure.Communication.ShortCodes.Models
 
         internal static MessageDetails DeserializeMessageDetails(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<MessageProtocol>> supportedProtocols = default;
             Optional<MessageRecurrence> recurrence = default;
             Optional<string> helpMessage = default;
@@ -91,7 +95,6 @@ namespace Azure.Communication.ShortCodes.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<MessageProtocol> array = new List<MessageProtocol>();
@@ -106,7 +109,6 @@ namespace Azure.Communication.ShortCodes.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     recurrence = new MessageRecurrence(property.Value.GetString());
@@ -141,7 +143,6 @@ namespace Azure.Communication.ShortCodes.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     directionality = new MessageDirectionality(property.Value.GetString());
@@ -151,7 +152,6 @@ namespace Azure.Communication.ShortCodes.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<UseCase> array = new List<UseCase>();

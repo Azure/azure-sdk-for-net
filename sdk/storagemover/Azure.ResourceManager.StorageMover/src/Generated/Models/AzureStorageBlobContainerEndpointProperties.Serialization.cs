@@ -31,6 +31,10 @@ namespace Azure.ResourceManager.StorageMover.Models
 
         internal static AzureStorageBlobContainerEndpointProperties DeserializeAzureStorageBlobContainerEndpointProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string storageAccountResourceId = default;
             string blobContainerName = default;
             EndpointType endpointType = default;
@@ -62,7 +66,6 @@ namespace Azure.ResourceManager.StorageMover.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     provisioningState = new StorageMoverProvisioningState(property.Value.GetString());

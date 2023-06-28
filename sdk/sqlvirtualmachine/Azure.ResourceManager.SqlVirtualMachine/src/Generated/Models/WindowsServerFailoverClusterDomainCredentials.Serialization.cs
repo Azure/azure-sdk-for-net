@@ -35,6 +35,10 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
 
         internal static WindowsServerFailoverClusterDomainCredentials DeserializeWindowsServerFailoverClusterDomainCredentials(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> clusterBootstrapAccountPassword = default;
             Optional<string> clusterOperatorAccountPassword = default;
             Optional<string> sqlServiceAccountPassword = default;

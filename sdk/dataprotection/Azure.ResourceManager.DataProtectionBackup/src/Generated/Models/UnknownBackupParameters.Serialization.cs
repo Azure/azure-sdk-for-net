@@ -22,6 +22,10 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
 
         internal static UnknownBackupParameters DeserializeUnknownBackupParameters(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string objectType = "Unknown";
             foreach (var property in element.EnumerateObject())
             {

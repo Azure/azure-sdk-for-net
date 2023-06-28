@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.Synapse.Models
     {
         internal static SynapseServerUsageListResult DeserializeSynapseServerUsageListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             IReadOnlyList<SynapseServerUsage> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())

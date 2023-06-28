@@ -32,6 +32,10 @@ namespace Azure.ResourceManager.AppPlatform.Models
 
         internal static AppPlatformCustomContainerUserSourceInfo DeserializeAppPlatformCustomContainerUserSourceInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<AppPlatformCustomContainer> customContainer = default;
             string type = default;
             Optional<string> version = default;
@@ -41,7 +45,6 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     customContainer = AppPlatformCustomContainer.DeserializeAppPlatformCustomContainer(property.Value);

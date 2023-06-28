@@ -22,6 +22,10 @@ namespace Azure.ResourceManager.DeploymentManager.Models
 
         internal static Authentication DeserializeAuthentication(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             if (element.TryGetProperty("type", out JsonElement discriminator))
             {
                 switch (discriminator.GetString())

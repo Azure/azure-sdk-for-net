@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.Media.Models
 
         internal static ContentKeyPolicyOption DeserializeContentKeyPolicyOption(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<Guid> policyOptionId = default;
             Optional<string> name = default;
             ContentKeyPolicyConfiguration configuration = default;
@@ -40,7 +44,6 @@ namespace Azure.ResourceManager.Media.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     policyOptionId = property.Value.GetGuid();

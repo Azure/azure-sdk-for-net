@@ -76,6 +76,10 @@ namespace Azure.Search.Documents.Indexes.Models
 
         internal static LanguageDetectionSkill DeserializeLanguageDetectionSkill(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> defaultCountryHint = default;
             Optional<string> modelVersion = default;
             string odataType = default;

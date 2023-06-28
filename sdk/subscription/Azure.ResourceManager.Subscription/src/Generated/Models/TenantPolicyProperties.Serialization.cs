@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.Subscription.Models
     {
         internal static TenantPolicyProperties DeserializeTenantPolicyProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> policyId = default;
             Optional<bool> blockSubscriptionsLeavingTenant = default;
             Optional<bool> blockSubscriptionsIntoTenant = default;
@@ -31,7 +35,6 @@ namespace Azure.ResourceManager.Subscription.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     blockSubscriptionsLeavingTenant = property.Value.GetBoolean();
@@ -41,7 +44,6 @@ namespace Azure.ResourceManager.Subscription.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     blockSubscriptionsIntoTenant = property.Value.GetBoolean();
@@ -51,7 +53,6 @@ namespace Azure.ResourceManager.Subscription.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<Guid> array = new List<Guid>();

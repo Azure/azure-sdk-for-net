@@ -27,6 +27,10 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         internal static ManagedClusterMonitorProfileMetrics DeserializeManagedClusterMonitorProfileMetrics(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             bool enabled = default;
             Optional<ManagedClusterMonitorProfileKubeStateMetrics> kubeStateMetrics = default;
             foreach (var property in element.EnumerateObject())
@@ -40,7 +44,6 @@ namespace Azure.ResourceManager.ContainerService.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     kubeStateMetrics = ManagedClusterMonitorProfileKubeStateMetrics.DeserializeManagedClusterMonitorProfileKubeStateMetrics(property.Value);

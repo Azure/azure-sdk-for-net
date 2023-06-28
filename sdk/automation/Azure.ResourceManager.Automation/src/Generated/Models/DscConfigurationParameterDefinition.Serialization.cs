@@ -40,6 +40,10 @@ namespace Azure.ResourceManager.Automation.Models
 
         internal static DscConfigurationParameterDefinition DeserializeDscConfigurationParameterDefinition(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> type = default;
             Optional<bool> isMandatory = default;
             Optional<int> position = default;
@@ -55,7 +59,6 @@ namespace Azure.ResourceManager.Automation.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     isMandatory = property.Value.GetBoolean();
@@ -65,7 +68,6 @@ namespace Azure.ResourceManager.Automation.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     position = property.Value.GetInt32();

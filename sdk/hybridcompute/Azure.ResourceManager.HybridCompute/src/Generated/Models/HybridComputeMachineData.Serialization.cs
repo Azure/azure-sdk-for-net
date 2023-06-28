@@ -46,6 +46,10 @@ namespace Azure.ResourceManager.HybridCompute
 
         internal static HybridComputeMachineData DeserializeHybridComputeMachineData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<MachineProperties> properties = default;
             Optional<IReadOnlyList<HybridComputeMachineExtensionData>> resources = default;
             Optional<ManagedServiceIdentity> identity = default;
@@ -61,7 +65,6 @@ namespace Azure.ResourceManager.HybridCompute
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     properties = MachineProperties.DeserializeMachineProperties(property.Value);
@@ -71,7 +74,6 @@ namespace Azure.ResourceManager.HybridCompute
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<HybridComputeMachineExtensionData> array = new List<HybridComputeMachineExtensionData>();
@@ -86,7 +88,6 @@ namespace Azure.ResourceManager.HybridCompute
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText());
@@ -96,7 +97,6 @@ namespace Azure.ResourceManager.HybridCompute
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -131,7 +131,6 @@ namespace Azure.ResourceManager.HybridCompute
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());

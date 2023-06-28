@@ -29,6 +29,10 @@ namespace Azure.ResourceManager.BotService.Models
 
         internal static LineChannelProperties DeserializeLineChannelProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             IList<LineRegistration> lineRegistrations = default;
             Optional<Uri> callbackUrl = default;
             Optional<bool> isValidated = default;
@@ -48,7 +52,6 @@ namespace Azure.ResourceManager.BotService.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        callbackUrl = null;
                         continue;
                     }
                     callbackUrl = new Uri(property.Value.GetString());
@@ -58,7 +61,6 @@ namespace Azure.ResourceManager.BotService.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     isValidated = property.Value.GetBoolean();

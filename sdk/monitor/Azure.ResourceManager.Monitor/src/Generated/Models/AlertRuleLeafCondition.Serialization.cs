@@ -41,6 +41,10 @@ namespace Azure.ResourceManager.Monitor.Models
 
         internal static AlertRuleLeafCondition DeserializeAlertRuleLeafCondition(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> field = default;
             Optional<string> @equals = default;
             Optional<IList<string>> containsAny = default;
@@ -60,7 +64,6 @@ namespace Azure.ResourceManager.Monitor.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();

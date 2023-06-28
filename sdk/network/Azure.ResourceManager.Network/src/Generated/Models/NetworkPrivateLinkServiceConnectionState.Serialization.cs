@@ -35,6 +35,10 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static NetworkPrivateLinkServiceConnectionState DeserializeNetworkPrivateLinkServiceConnectionState(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> status = default;
             Optional<string> description = default;
             Optional<string> actionsRequired = default;

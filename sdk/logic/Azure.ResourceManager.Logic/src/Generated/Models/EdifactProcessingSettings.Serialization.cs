@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.Logic.Models
 
         internal static EdifactProcessingSettings DeserializeEdifactProcessingSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             bool maskSecurityInfo = default;
             bool preserveInterchange = default;
             bool suspendInterchangeOnError = default;

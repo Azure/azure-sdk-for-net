@@ -28,6 +28,10 @@ namespace Azure.ResourceManager.Monitor.Models
 
         internal static AlertRuleAllOfCondition DeserializeAlertRuleAllOfCondition(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             IList<ActivityLogAlertAnyOfOrLeafCondition> allOf = default;
             foreach (var property in element.EnumerateObject())
             {

@@ -127,6 +127,10 @@ namespace Azure.Search.Documents.Indexes.Models
 
         internal static PiiDetectionSkill DeserializePiiDetectionSkill(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> defaultLanguageCode = default;
             Optional<double?> minimumPrecision = default;
             Optional<PiiDetectionSkillMaskingMode> maskingMode = default;
@@ -166,7 +170,6 @@ namespace Azure.Search.Documents.Indexes.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     maskingMode = new PiiDetectionSkillMaskingMode(property.Value.GetString());
@@ -196,7 +199,6 @@ namespace Azure.Search.Documents.Indexes.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();

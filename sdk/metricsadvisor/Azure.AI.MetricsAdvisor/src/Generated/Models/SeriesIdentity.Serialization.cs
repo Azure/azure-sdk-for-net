@@ -29,6 +29,10 @@ namespace Azure.AI.MetricsAdvisor.Models
 
         internal static SeriesIdentity DeserializeSeriesIdentity(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             IDictionary<string, string> dimension = default;
             foreach (var property in element.EnumerateObject())
             {

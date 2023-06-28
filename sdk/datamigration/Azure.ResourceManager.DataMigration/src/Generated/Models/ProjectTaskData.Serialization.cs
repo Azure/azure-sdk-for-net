@@ -33,6 +33,10 @@ namespace Azure.ResourceManager.DataMigration
 
         internal static ProjectTaskData DeserializeProjectTaskData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ETag> etag = default;
             Optional<ProjectTaskProperties> properties = default;
             ResourceIdentifier id = default;
@@ -45,7 +49,6 @@ namespace Azure.ResourceManager.DataMigration
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     etag = new ETag(property.Value.GetString());
@@ -55,7 +58,6 @@ namespace Azure.ResourceManager.DataMigration
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     properties = ProjectTaskProperties.DeserializeProjectTaskProperties(property.Value);
@@ -80,7 +82,6 @@ namespace Azure.ResourceManager.DataMigration
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());

@@ -25,6 +25,10 @@ namespace Azure.ResourceManager.Reservations.Models
 
         internal static ReservationResourceName DeserializeReservationResourceName(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> value = default;
             Optional<string> localizedValue = default;
             foreach (var property in element.EnumerateObject())

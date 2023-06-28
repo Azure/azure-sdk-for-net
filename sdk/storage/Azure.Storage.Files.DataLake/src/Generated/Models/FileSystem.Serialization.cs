@@ -14,6 +14,10 @@ namespace Azure.Storage.Files.DataLake.Models
     {
         internal static FileSystem DeserializeFileSystem(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> name = default;
             Optional<string> lastModified = default;
             Optional<string> eTag = default;

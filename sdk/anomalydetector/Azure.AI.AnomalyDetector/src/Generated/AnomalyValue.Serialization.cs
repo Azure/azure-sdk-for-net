@@ -16,6 +16,10 @@ namespace Azure.AI.AnomalyDetector
     {
         internal static AnomalyValue DeserializeAnomalyValue(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             bool isAnomaly = default;
             float severity = default;
             float score = default;
@@ -41,7 +45,6 @@ namespace Azure.AI.AnomalyDetector
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<AnomalyInterpretation> array = new List<AnomalyInterpretation>();

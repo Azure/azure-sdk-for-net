@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.HybridContainerService.Models
 
         internal static ArcAgentProfile DeserializeArcAgentProfile(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> agentVersion = default;
             Optional<AutoUpgradeOption> agentAutoUpgrade = default;
             foreach (var property in element.EnumerateObject())
@@ -43,7 +47,6 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     agentAutoUpgrade = new AutoUpgradeOption(property.Value.GetString());

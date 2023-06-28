@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.ServiceFabric.Models
     {
         internal static ClusterVersionDetails DeserializeClusterVersionDetails(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> codeVersion = default;
             Optional<DateTimeOffset> supportExpiryUtc = default;
             Optional<ClusterEnvironment> environment = default;
@@ -29,7 +33,6 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     supportExpiryUtc = property.Value.GetDateTimeOffset("O");
@@ -39,7 +42,6 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     environment = new ClusterEnvironment(property.Value.GetString());

@@ -33,6 +33,10 @@ namespace Azure.ResourceManager.Batch.Models
 
         internal static BatchCifsMountConfiguration DeserializeBatchCifsMountConfiguration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string userName = default;
             string source = default;
             string relativeMountPath = default;

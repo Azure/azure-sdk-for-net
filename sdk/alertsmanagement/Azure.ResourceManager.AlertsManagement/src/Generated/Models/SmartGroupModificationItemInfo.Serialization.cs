@@ -56,6 +56,10 @@ namespace Azure.ResourceManager.AlertsManagement.Models
 
         internal static SmartGroupModificationItemInfo DeserializeSmartGroupModificationItemInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<SmartGroupModificationEvent> modificationEvent = default;
             Optional<string> oldValue = default;
             Optional<string> newValue = default;
@@ -69,7 +73,6 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     modificationEvent = property.Value.GetString().ToSmartGroupModificationEvent();
@@ -89,7 +92,6 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     modifiedAt = property.Value.GetDateTimeOffset("O");

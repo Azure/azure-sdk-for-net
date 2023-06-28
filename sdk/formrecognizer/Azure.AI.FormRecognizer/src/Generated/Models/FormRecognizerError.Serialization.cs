@@ -14,6 +14,10 @@ namespace Azure.AI.FormRecognizer.Models
     {
         internal static FormRecognizerError DeserializeFormRecognizerError(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string code = default;
             string message = default;
             foreach (var property in element.EnumerateObject())

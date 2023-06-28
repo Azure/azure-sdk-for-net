@@ -41,6 +41,10 @@ namespace Azure.ResourceManager.Support.Models
 
         internal static QuotaTicketDetails DeserializeQuotaTicketDetails(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> quotaChangeRequestSubType = default;
             Optional<string> quotaChangeRequestVersion = default;
             Optional<IList<SupportQuotaChangeContent>> quotaChangeRequests = default;
@@ -60,7 +64,6 @@ namespace Azure.ResourceManager.Support.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<SupportQuotaChangeContent> array = new List<SupportQuotaChangeContent>();

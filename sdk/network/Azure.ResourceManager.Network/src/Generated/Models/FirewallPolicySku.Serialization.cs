@@ -25,6 +25,10 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static FirewallPolicySku DeserializeFirewallPolicySku(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<FirewallPolicySkuTier> tier = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -32,7 +36,6 @@ namespace Azure.ResourceManager.Network.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     tier = new FirewallPolicySkuTier(property.Value.GetString());

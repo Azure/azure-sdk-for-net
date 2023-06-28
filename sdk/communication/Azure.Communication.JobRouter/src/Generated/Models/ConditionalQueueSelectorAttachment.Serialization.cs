@@ -18,9 +18,9 @@ namespace Azure.Communication.JobRouter
             writer.WriteStartObject();
             writer.WritePropertyName("condition"u8);
             writer.WriteObjectValue(Condition);
-            writer.WritePropertyName("labelSelectors"u8);
+            writer.WritePropertyName("queueSelectors"u8);
             writer.WriteStartArray();
-            foreach (var item in LabelSelectors)
+            foreach (var item in QueueSelectors)
             {
                 writer.WriteObjectValue(item);
             }
@@ -32,8 +32,12 @@ namespace Azure.Communication.JobRouter
 
         internal static ConditionalQueueSelectorAttachment DeserializeConditionalQueueSelectorAttachment(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             RouterRule condition = default;
-            IList<QueueSelector> labelSelectors = default;
+            IList<RouterQueueSelector> queueSelectors = default;
             string kind = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -42,14 +46,14 @@ namespace Azure.Communication.JobRouter
                     condition = RouterRule.DeserializeRouterRule(property.Value);
                     continue;
                 }
-                if (property.NameEquals("labelSelectors"u8))
+                if (property.NameEquals("queueSelectors"u8))
                 {
-                    List<QueueSelector> array = new List<QueueSelector>();
+                    List<RouterQueueSelector> array = new List<RouterQueueSelector>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(QueueSelector.DeserializeQueueSelector(item));
+                        array.Add(RouterQueueSelector.DeserializeRouterQueueSelector(item));
                     }
-                    labelSelectors = array;
+                    queueSelectors = array;
                     continue;
                 }
                 if (property.NameEquals("kind"u8))
@@ -58,7 +62,7 @@ namespace Azure.Communication.JobRouter
                     continue;
                 }
             }
-            return new ConditionalQueueSelectorAttachment(kind, condition, labelSelectors);
+            return new ConditionalQueueSelectorAttachment(kind, condition, queueSelectors);
         }
     }
 }

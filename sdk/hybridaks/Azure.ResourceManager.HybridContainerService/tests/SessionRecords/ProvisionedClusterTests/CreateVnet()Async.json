@@ -85,7 +85,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/0709bd7a-8383-4e1d-98c8-f81d1b3443fc/resourceGroups/hybridaksresgrp-netsdk/providers/Microsoft.HybridContainerService/virtualNetworks/azvnet-sdk?api-version=2022-05-01-preview",
+      "RequestUri": "https://management.azure.com/subscriptions/0709bd7a-8383-4e1d-98c8-f81d1b3443fc/resourceGroups/hybridaksresgrp-netsdk/providers/Microsoft.HybridContainerService/virtualNetworks/azvnet-sdk?api-version=2022-09-01-preview",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -115,7 +115,7 @@
       },
       "StatusCode": 201,
       "ResponseHeaders": {
-        "Azure-AsyncOperation": "https://management.azure.com/providers/Microsoft.HybridContainerService/locations/WESTEUROPE/operationStatuses/f7534370-f1fb-4ff9-bcd8-2ae90873117c*0AFCAAD481379EA7F4FAB4356758EF11F84E14D9408619D13B67C8F295D918E5?api-version=2022-05-01-preview",
+        "Azure-AsyncOperation": "https://management.azure.com/providers/Microsoft.HybridContainerService/locations/WESTEUROPE/operationStatuses/f7534370-f1fb-4ff9-bcd8-2ae90873117c*0AFCAAD481379EA7F4FAB4356758EF11F84E14D9408619D13B67C8F295D918E5?api-version=2022-09-01-preview",
         "Cache-Control": "no-cache",
         "Content-Length": "957",
         "Content-Type": "application/json; charset=utf-8",
@@ -164,7 +164,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/providers/Microsoft.HybridContainerService/locations/WESTEUROPE/operationStatuses/f7534370-f1fb-4ff9-bcd8-2ae90873117c*0AFCAAD481379EA7F4FAB4356758EF11F84E14D9408619D13B67C8F295D918E5?api-version=2022-05-01-preview",
+      "RequestUri": "https://management.azure.com/providers/Microsoft.HybridContainerService/locations/WESTEUROPE/operationStatuses/f7534370-f1fb-4ff9-bcd8-2ae90873117c*0AFCAAD481379EA7F4FAB4356758EF11F84E14D9408619D13B67C8F295D918E5?api-version=2022-09-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -199,7 +199,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/providers/Microsoft.HybridContainerService/locations/WESTEUROPE/operationStatuses/f7534370-f1fb-4ff9-bcd8-2ae90873117c*0AFCAAD481379EA7F4FAB4356758EF11F84E14D9408619D13B67C8F295D918E5?api-version=2022-05-01-preview",
+      "RequestUri": "https://management.azure.com/providers/Microsoft.HybridContainerService/locations/WESTEUROPE/operationStatuses/f7534370-f1fb-4ff9-bcd8-2ae90873117c*0AFCAAD481379EA7F4FAB4356758EF11F84E14D9408619D13B67C8F295D918E5?api-version=2022-09-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -234,7 +234,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/providers/Microsoft.HybridContainerService/locations/WESTEUROPE/operationStatuses/f7534370-f1fb-4ff9-bcd8-2ae90873117c*0AFCAAD481379EA7F4FAB4356758EF11F84E14D9408619D13B67C8F295D918E5?api-version=2022-05-01-preview",
+      "RequestUri": "https://management.azure.com/providers/Microsoft.HybridContainerService/locations/WESTEUROPE/operationStatuses/f7534370-f1fb-4ff9-bcd8-2ae90873117c*0AFCAAD481379EA7F4FAB4356758EF11F84E14D9408619D13B67C8F295D918E5?api-version=2022-09-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -269,7 +269,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/providers/Microsoft.HybridContainerService/locations/WESTEUROPE/operationStatuses/f7534370-f1fb-4ff9-bcd8-2ae90873117c*0AFCAAD481379EA7F4FAB4356758EF11F84E14D9408619D13B67C8F295D918E5?api-version=2022-05-01-preview",
+      "RequestUri": "https://management.azure.com/providers/Microsoft.HybridContainerService/locations/WESTEUROPE/operationStatuses/f7534370-f1fb-4ff9-bcd8-2ae90873117c*0AFCAAD481379EA7F4FAB4356758EF11F84E14D9408619D13B67C8F295D918E5?api-version=2022-09-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -304,7 +304,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/providers/Microsoft.HybridContainerService/locations/WESTEUROPE/operationStatuses/f7534370-f1fb-4ff9-bcd8-2ae90873117c*0AFCAAD481379EA7F4FAB4356758EF11F84E14D9408619D13B67C8F295D918E5?api-version=2022-05-01-preview",
+      "RequestUri": "https://management.azure.com/providers/Microsoft.HybridContainerService/locations/WESTEUROPE/operationStatuses/f7534370-f1fb-4ff9-bcd8-2ae90873117c*0AFCAAD481379EA7F4FAB4356758EF11F84E14D9408619D13B67C8F295D918E5?api-version=2022-09-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -339,7 +339,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/providers/Microsoft.HybridContainerService/locations/WESTEUROPE/operationStatuses/f7534370-f1fb-4ff9-bcd8-2ae90873117c*0AFCAAD481379EA7F4FAB4356758EF11F84E14D9408619D13B67C8F295D918E5?api-version=2022-05-01-preview",
+      "RequestUri": "https://management.azure.com/providers/Microsoft.HybridContainerService/locations/WESTEUROPE/operationStatuses/f7534370-f1fb-4ff9-bcd8-2ae90873117c*0AFCAAD481379EA7F4FAB4356758EF11F84E14D9408619D13B67C8F295D918E5?api-version=2022-09-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -377,7 +377,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/0709bd7a-8383-4e1d-98c8-f81d1b3443fc/resourceGroups/hybridaksresgrp-netsdk/providers/Microsoft.HybridContainerService/virtualNetworks/azvnet-sdk?api-version=2022-05-01-preview",
+      "RequestUri": "https://management.azure.com/subscriptions/0709bd7a-8383-4e1d-98c8-f81d1b3443fc/resourceGroups/hybridaksresgrp-netsdk/providers/Microsoft.HybridContainerService/virtualNetworks/azvnet-sdk?api-version=2022-09-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",

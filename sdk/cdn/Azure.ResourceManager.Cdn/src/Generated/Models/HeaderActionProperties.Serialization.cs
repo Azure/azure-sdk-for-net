@@ -31,6 +31,10 @@ namespace Azure.ResourceManager.Cdn.Models
 
         internal static HeaderActionProperties DeserializeHeaderActionProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             HeaderActionType typeName = default;
             HeaderAction headerAction = default;
             string headerName = default;

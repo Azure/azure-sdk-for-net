@@ -47,6 +47,10 @@ namespace Azure.ResourceManager.HDInsight.Models
 
         internal static HDInsightAzureMonitorSelectedConfigurations DeserializeHDInsightAzureMonitorSelectedConfigurations(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> configurationVersion = default;
             Optional<IDictionary<string, string>> globalConfigurations = default;
             Optional<IList<HDInsightAzureMonitorTableConfiguration>> tableList = default;
@@ -61,7 +65,6 @@ namespace Azure.ResourceManager.HDInsight.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -76,7 +79,6 @@ namespace Azure.ResourceManager.HDInsight.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<HDInsightAzureMonitorTableConfiguration> array = new List<HDInsightAzureMonitorTableConfiguration>();

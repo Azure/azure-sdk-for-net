@@ -35,6 +35,10 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         internal static ContainerServiceNetworkProfileKubeProxyConfig DeserializeContainerServiceNetworkProfileKubeProxyConfig(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<bool> enabled = default;
             Optional<ContainerServiceNetworkProfileKubeProxyMode> mode = default;
             Optional<ContainerServiceNetworkProfileKubeProxyIPVSConfig> ipvsConfig = default;
@@ -44,7 +48,6 @@ namespace Azure.ResourceManager.ContainerService.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     enabled = property.Value.GetBoolean();
@@ -54,7 +57,6 @@ namespace Azure.ResourceManager.ContainerService.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     mode = new ContainerServiceNetworkProfileKubeProxyMode(property.Value.GetString());
@@ -64,7 +66,6 @@ namespace Azure.ResourceManager.ContainerService.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     ipvsConfig = ContainerServiceNetworkProfileKubeProxyIPVSConfig.DeserializeContainerServiceNetworkProfileKubeProxyIPVSConfig(property.Value);

@@ -20,6 +20,10 @@ namespace Azure.ResourceManager.Chaos.Models
 
         internal static CapabilityTypePropertiesRuntimeProperties DeserializeCapabilityTypePropertiesRuntimeProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> kind = default;
             foreach (var property in element.EnumerateObject())
             {

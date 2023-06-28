@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.Grafana.Models
     {
         internal static ManagedGrafanaListResponse DeserializeManagedGrafanaListResponse(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<ManagedGrafanaData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
@@ -24,7 +28,6 @@ namespace Azure.ResourceManager.Grafana.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<ManagedGrafanaData> array = new List<ManagedGrafanaData>();

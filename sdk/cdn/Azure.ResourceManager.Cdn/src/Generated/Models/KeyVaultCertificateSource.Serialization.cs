@@ -39,6 +39,10 @@ namespace Azure.ResourceManager.Cdn.Models
 
         internal static KeyVaultCertificateSource DeserializeKeyVaultCertificateSource(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             KeyVaultCertificateSourceType typeName = default;
             string subscriptionId = default;
             string resourceGroupName = default;

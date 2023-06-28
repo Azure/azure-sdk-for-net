@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.Batch.Models
     {
         internal static BatchVmFamilyCoreQuota DeserializeBatchVmFamilyCoreQuota(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> name = default;
             Optional<int> coreQuota = default;
             foreach (var property in element.EnumerateObject())
@@ -27,7 +31,6 @@ namespace Azure.ResourceManager.Batch.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     coreQuota = property.Value.GetInt32();

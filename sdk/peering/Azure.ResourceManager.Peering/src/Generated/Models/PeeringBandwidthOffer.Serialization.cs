@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.Peering.Models
 
         internal static PeeringBandwidthOffer DeserializePeeringBandwidthOffer(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> offerName = default;
             Optional<int> valueInMbps = default;
             foreach (var property in element.EnumerateObject())
@@ -43,7 +47,6 @@ namespace Azure.ResourceManager.Peering.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     valueInMbps = property.Value.GetInt32();

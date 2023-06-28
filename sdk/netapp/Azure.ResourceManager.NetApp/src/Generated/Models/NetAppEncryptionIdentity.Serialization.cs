@@ -25,6 +25,10 @@ namespace Azure.ResourceManager.NetApp.Models
 
         internal static NetAppEncryptionIdentity DeserializeNetAppEncryptionIdentity(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> principalId = default;
             Optional<string> userAssignedIdentity = default;
             foreach (var property in element.EnumerateObject())

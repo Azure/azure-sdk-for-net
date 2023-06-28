@@ -1,0 +1,42 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://api.cognitive.microsofttranslator.com/translate?to=es\u0026from=en\u0026api-version=3.0",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Content-Length": "153",
+        "Content-Type": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "Ocp-Apim-Subscription-Region": "westus",
+        "traceparent": "00-6bc7b8f09bd822ec404d81ce10386b83-1b4e67d4ebdaa71a-00",
+        "User-Agent": "azsdk-net-AI.Translation.Text/1.0.0-alpha.20230403.1 (.NET 6.0.15; Microsoft Windows 10.0.22624)",
+        "x-ms-client-request-id": "5afa96d4a8d1eff30420c7832bdbaa1e",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": "[{\u0022Text\u0022:\u0022The word \\u003C mstrans:dictionary translation =\\u0022wordomatic\\u0022\\u003Ewordomatic\\u003C/mstrans:dictionary\\u003E is a dictionary entry.\u0022}]",
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Access-Control-Expose-Headers": [
+          "X-RequestId",
+          "X-Metered-Usage"
+        ],
+        "Content-Length": "164",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 03 Apr 2023 21:50:16 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "X-Metered-Usage": "110",
+        "X-MT-System": "Microsoft",
+        "X-RequestId": "TRAN.MW1P.99BF.0403T2150.2F088C2"
+      },
+      "ResponseBody": "[{\u0022translations\u0022:[{\u0022text\u0022:\u0022La palabra \u003C mstrans:dictionary translation =\\\u0022wordomatic\\\u0022\u003Ewordomatic\u003C/mstrans:dictionary\u003E es una entrada de diccionario.\u0022,\u0022to\u0022:\u0022es\u0022}]}]"
+    }
+  ],
+  "Variables": {
+    "RandomSeed": "1852603014",
+    "TEXT_TRANSLATION_API_KEY": "Sanitized",
+    "TEXT_TRANSLATION_ENDPOINT": "https://api.cognitive.microsofttranslator.com",
+    "TEXT_TRANSLATION_REGION": "westus"
+  }
+}

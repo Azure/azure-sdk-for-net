@@ -34,6 +34,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         internal static ScriptAction DeserializeScriptAction(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string name = default;
             string uri = default;
             object roles = default;

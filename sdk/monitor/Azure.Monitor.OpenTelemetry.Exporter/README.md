@@ -62,7 +62,34 @@ The following examples demonstrate how to add the `AzureMonitorExporter` to your
 
 ### Authenticate the client
 
-Exporter does not use authentication. 
+Azure Active Directory (AAD) authentication is an optional feature that can be used with the Azure Monitor Exporter.
+This is made easy with the [Azure Identity library](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/identity/Azure.Identity/README.md), which provides support for authenticating Azure SDK clients with their corresponding Azure services.
+
+There are two options to enable AAD authentication. Note that if both have been set AzureMonitorExporterOptions will take precedence.
+
+1. Set your `Credential` to the `AzureMonitorExporterOptions`.
+
+    ```csharp
+    var credential = new DefaultAzureCredential();
+
+    Sdk.CreateTracerProviderBuilder()
+        .AddAzureMonitorTraceExporter(o =>
+        {
+            o.ConnectionString = "InstrumentationKey=00000000-0000-0000-0000-000000000000";
+            o.Credential = credential;
+        })
+        .Build();
+    ```
+
+2. Provide your `Credential` to the AddAzureMonitorExporter method.
+
+    ```csharp
+    var credential = new DefaultAzureCredential();
+
+    Sdk.CreateTracerProviderBuilder()
+        .AddAzureMonitorTraceExporter(o => o.ConnectionString = "InstrumentationKey=00000000-0000-0000-0000-000000000000", credential)
+        .Build();
+    ```
 
 ## Key concepts
 

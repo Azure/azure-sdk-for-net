@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.Media.Models
     {
         internal static MediaAssetFileEncryptionMetadata DeserializeMediaAssetFileEncryptionMetadata(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> initializationVector = default;
             Optional<string> assetFileName = default;
             Guid assetFileId = default;

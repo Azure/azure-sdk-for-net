@@ -3,19 +3,20 @@
 Run `dotnet build /t:GenerateCode` to generate code.
 
 ``` yaml
-
 azure-arm: true
-generate-model-factory: false
 csharp: true
 library-name: Workloads
 namespace: Azure.ResourceManager.Workloads
-# default tag is a preview version
-require: https://github.com/Azure/azure-rest-api-specs/blob/30b6221c12cc4014ee5142660d09cd48049ee388/specification/workloads/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/c9a6e0a98a51ebc0c7a346f4fd425ba185f44b31/specification/workloads/resource-manager/readme.md
+tag: package-2023-04
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
+
+# mgmt-debug: 
+#  show-serialized-names: true
 
 format-by-name-rules:
   'tenantId': 'uuid'
@@ -49,7 +50,6 @@ rename-rules:
   URI: Uri
   Etag: ETag|etag
   SAP: Sap
-  PHP: Php
   ERS: Ers
   Db: DB|db
   LRS: Lrs
@@ -58,9 +58,45 @@ rename-rules:
   SSD: Ssd
   Ha: HA|ha
   ECC: Ecc
-  Wordpress: WordPress
+
+rename-mapping:
+  DiskDetails: SupportedConfigurationsDiskDetails
+  DiskSkuName: DiskDetailsDiskSkuName
+  StopRequest: SapStopContent
+  # VirtualMachineConfiguration.vmSize: -|int
+  Monitor.properties.monitorSubnet: monitorSubnetId|arm-id
+  Monitor.properties.logAnalyticsWorkspaceArmId: -|arm-id
+  Monitor.properties.msiArmId: -|arm-id
+  Monitor.properties.storageAccountArmId: -|arm-id
+  Monitor: SapMonitor
+  ProviderInstance: SapProviderInstance
+  ErrorDefinition: SapVirtualInstanceErrorDetail
+  DiskSku: SapDiskSku
+  ImageReference: SapImageReference
+  LinuxConfiguration: SapLinuxConfiguration
+  NamingPatternType: SapNamingPatternType
+  OSConfiguration: SapOSConfiguration
+  OSProfile: SapOSProfile
+  OSType: SapOSType
+  RoutingPreference: SapRoutingPreference
+  SoftwareConfiguration: SapSoftwareConfiguration
+  SshConfiguration: SapSshConfiguration
+  SshKeyPair: SapSshKeyPair
+  SshPublicKey: SapSshPublicKey
+  SslPreference: SapSslPreference
+  StorageConfiguration: SapStorageConfiguration
+  VirtualMachineConfiguration: SapVirtualMachineConfiguration
+  WindowsConfiguration: SapWindowsConfiguration
+  DeployerVmPackages.url: PackageUri
+  ExternalInstallationSoftwareConfiguration.centralServerVmId: -|arm-id
+  DiscoveryConfiguration.centralServerVmId: -|arm-id
+  DiskVolumeConfiguration.sizeGB: SizeInGB
+  DiskDetails.sizeGB: SizeInGB
+  MountFileShareConfiguration.id: fileShareId|arm-id
+  MountFileShareConfiguration.privateEndpointId: -|arm-id
 
 directive:
+  - remove-operation: Operations_List
   - from: swagger-document
     where: $.definitions..subnetId
     transform: >
@@ -81,31 +117,9 @@ directive:
             '$ref': '#/definitions/RestrictionInfo',
             'description': 'The restriction information.'
           };
-  - from: SAPVirtualInstance.json
-    where: $.definitions
-    transform: >
-      $.ErrorDefinition['x-ms-client-name'] = 'SapVirtualInstanceErrorDetail';
   - from: monitors.json
     where: $.definitions
     transform: >
-      $.Monitor['x-ms-client-name'] = 'SapMonitor';
-      $.MonitorProperties.properties.logAnalyticsWorkspaceArmId['x-ms-format'] = 'arm-id';
-      $.MonitorProperties.properties.monitorSubnet['x-ms-format'] = 'arm-id';
-      $.MonitorProperties.properties.monitorSubnet['x-ms-client-name'] = 'monitorSubnetId';
-      $.MonitorProperties.properties.msiArmId['x-ms-format'] = 'arm-id';
-      $.ProviderInstance['x-ms-client-name'] = 'SapProviderInstance';
-  - from: phpWorkloads.json
-    where: $.definitions
-    transform: >
-      $.nodeProfile.properties.nodeResourceIds.items['x-ms-format'] = 'arm-id';
-      $.networkProfile.properties.vNetResourceId['x-ms-format'] = 'arm-id';
-      $.networkProfile.properties.loadBalancerResourceId['x-ms-format'] = 'arm-id';
-      $.networkProfile.properties.azureFrontDoorResourceId['x-ms-format'] = 'arm-id';
-      $.networkProfile.properties.frontEndPublicIpResourceId['x-ms-format'] = 'arm-id';
-      $.networkProfile.properties.outboundPublicIpResourceIds['x-ms-format'] = 'arm-id';
-      $.databaseProfile.properties.serverResourceId['x-ms-format'] = 'arm-id';
-      $.fileshareProfile.properties.storageResourceId['x-ms-format'] = 'arm-id';
-      $.cacheProfile.properties.cacheResourceId['x-ms-format'] = 'arm-id';
-      $.backupProfile.properties.vaultResourceId['x-ms-format'] = 'arm-id';
-      $.wordpressInstanceResourceProperties.properties.version['x-ms-enum']['name'] = 'WordpressVersion';
+      delete $.OperationsDefinition.properties.display['allOf'];
+      $.OperationsDefinition.properties.display['$ref'] = '#/definitions/OperationsDisplayDefinition';
 ```

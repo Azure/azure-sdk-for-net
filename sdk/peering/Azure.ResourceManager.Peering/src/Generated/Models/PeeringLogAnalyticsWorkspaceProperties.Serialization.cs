@@ -21,6 +21,10 @@ namespace Azure.ResourceManager.Peering.Models
 
         internal static PeeringLogAnalyticsWorkspaceProperties DeserializePeeringLogAnalyticsWorkspaceProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> workspaceId = default;
             Optional<string> key = default;
             Optional<IReadOnlyList<string>> connectedAgents = default;
@@ -40,7 +44,6 @@ namespace Azure.ResourceManager.Peering.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();

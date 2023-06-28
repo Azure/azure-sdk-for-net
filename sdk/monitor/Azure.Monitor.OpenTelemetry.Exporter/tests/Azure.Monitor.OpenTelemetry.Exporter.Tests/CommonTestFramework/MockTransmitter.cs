@@ -1,9 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System.Collections.Concurrent;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -16,11 +14,11 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.CommonTestFramework
 {
     internal class MockTransmitter : ITransmitter
     {
-        public readonly ConcurrentBag<TelemetryItem> TelemetryItems;
+        public readonly IList<TelemetryItem> TelemetryItems;
 
         public string InstrumentationKey => "00000000-0000-0000-0000-000000000000";
 
-        public MockTransmitter(ConcurrentBag<TelemetryItem> telemetryItems)
+        public MockTransmitter(IList<TelemetryItem> telemetryItems)
         {
             this.TelemetryItems = telemetryItems;
         }
@@ -35,9 +33,13 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.CommonTestFramework
             return new ValueTask<ExportResult>(Task.FromResult(ExportResult.Success));
         }
 
-        public ValueTask TransmitFromStorage(long maxFileToTransmit, bool aysnc, CancellationToken cancellationToken)
+        public ValueTask TransmitFromStorage(long maxFileToTransmit, bool async, CancellationToken cancellationToken)
         {
             throw new System.NotImplementedException();
+        }
+
+        public void Dispose()
+        {
         }
     }
 }

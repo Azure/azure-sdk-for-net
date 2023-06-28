@@ -32,6 +32,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static BatchEndpointDefaults DeserializeBatchEndpointDefaults(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> deploymentName = default;
             foreach (var property in element.EnumerateObject())
             {

@@ -16,6 +16,10 @@ namespace Azure.Communication.Chat
     {
         internal static ChatThreadPropertiesInternal DeserializeChatThreadPropertiesInternal(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string id = default;
             string topic = default;
             DateTimeOffset createdOn = default;
@@ -47,7 +51,6 @@ namespace Azure.Communication.Chat
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     deletedOn = property.Value.GetDateTimeOffset("O");

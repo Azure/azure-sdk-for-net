@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.Logic.Models
 
         internal static FlowEndpointsConfiguration DeserializeFlowEndpointsConfiguration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<FlowEndpoints> workflow = default;
             Optional<FlowEndpoints> connector = default;
             foreach (var property in element.EnumerateObject())
@@ -38,7 +42,6 @@ namespace Azure.ResourceManager.Logic.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     workflow = FlowEndpoints.DeserializeFlowEndpoints(property.Value);
@@ -48,7 +51,6 @@ namespace Azure.ResourceManager.Logic.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     connector = FlowEndpoints.DeserializeFlowEndpoints(property.Value);

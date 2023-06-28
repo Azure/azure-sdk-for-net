@@ -35,6 +35,10 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
 
         internal static SourceCodeRepoProperties DeserializeSourceCodeRepoProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             SourceControlType sourceControlType = default;
             Uri repositoryUrl = default;
             Optional<string> branch = default;
@@ -60,7 +64,6 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     sourceControlAuthProperties = SourceCodeRepoAuthInfo.DeserializeSourceCodeRepoAuthInfo(property.Value);

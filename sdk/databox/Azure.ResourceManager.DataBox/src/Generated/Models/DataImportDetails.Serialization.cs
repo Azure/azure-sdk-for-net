@@ -27,6 +27,10 @@ namespace Azure.ResourceManager.DataBox.Models
 
         internal static DataImportDetails DeserializeDataImportDetails(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             DataAccountDetails accountDetails = default;
             Optional<LogCollectionLevel> logCollectionLevel = default;
             foreach (var property in element.EnumerateObject())
@@ -40,7 +44,6 @@ namespace Azure.ResourceManager.DataBox.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     logCollectionLevel = property.Value.GetString().ToLogCollectionLevel();

@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.ElasticSan.Models
     {
         internal static ElasticSanVolumeGroupList DeserializeElasticSanVolumeGroupList(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             IReadOnlyList<ElasticSanVolumeGroupData> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())

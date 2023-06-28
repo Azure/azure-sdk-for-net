@@ -35,6 +35,10 @@ namespace Azure.ResourceManager.HealthBot.Models
 
         internal static HealthBotKeyVaultProperties DeserializeHealthBotKeyVaultProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string keyName = default;
             Optional<string> keyVersion = default;
             Uri keyVaultUri = default;

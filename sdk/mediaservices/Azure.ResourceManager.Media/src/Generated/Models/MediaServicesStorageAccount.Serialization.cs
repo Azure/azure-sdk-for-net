@@ -32,6 +32,10 @@ namespace Azure.ResourceManager.Media.Models
 
         internal static MediaServicesStorageAccount DeserializeMediaServicesStorageAccount(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ResourceIdentifier> id = default;
             MediaServicesStorageAccountType type = default;
             Optional<ResourceIdentity> identity = default;
@@ -42,7 +46,6 @@ namespace Azure.ResourceManager.Media.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     id = new ResourceIdentifier(property.Value.GetString());
@@ -57,7 +60,6 @@ namespace Azure.ResourceManager.Media.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     identity = ResourceIdentity.DeserializeResourceIdentity(property.Value);

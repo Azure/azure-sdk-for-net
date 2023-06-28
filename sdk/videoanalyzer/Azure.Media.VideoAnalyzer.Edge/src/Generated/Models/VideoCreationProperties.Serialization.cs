@@ -40,6 +40,10 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
 
         internal static VideoCreationProperties DeserializeVideoCreationProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> title = default;
             Optional<string> description = default;
             Optional<string> segmentLength = default;

@@ -24,6 +24,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         internal static RecommendationConfigurationProperties DeserializeRecommendationConfigurationProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             IotSecurityRecommendationType recommendationType = default;
             Optional<string> name = default;
             RecommendationConfigStatus status = default;

@@ -14,10 +14,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     {
         internal static InMageRcmEventDetails DeserializeInMageRcmEventDetails(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> protectedItemName = default;
             Optional<string> vmName = default;
             Optional<string> latestAgentVersion = default;
-            Optional<string> jobId = default;
+            Optional<ResourceIdentifier> jobId = default;
             Optional<string> fabricName = default;
             Optional<string> applianceName = default;
             Optional<string> serverType = default;
@@ -42,7 +46,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 if (property.NameEquals("jobId"u8))
                 {
-                    jobId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    jobId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("fabricName"u8))

@@ -50,6 +50,10 @@ namespace Azure.ResourceManager.DevTestLabs
 
         internal static DevTestLabUserData DeserializeDevTestLabUserData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
@@ -67,7 +71,6 @@ namespace Azure.ResourceManager.DevTestLabs
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -102,7 +105,6 @@ namespace Azure.ResourceManager.DevTestLabs
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
@@ -121,7 +123,6 @@ namespace Azure.ResourceManager.DevTestLabs
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             identity = DevTestLabUserIdentity.DeserializeDevTestLabUserIdentity(property0.Value);
@@ -131,7 +132,6 @@ namespace Azure.ResourceManager.DevTestLabs
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             secretStore = DevTestLabUserSecretStore.DeserializeDevTestLabUserSecretStore(property0.Value);
@@ -141,7 +141,6 @@ namespace Azure.ResourceManager.DevTestLabs
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             createdDate = property0.Value.GetDateTimeOffset("O");
@@ -156,7 +155,6 @@ namespace Azure.ResourceManager.DevTestLabs
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             uniqueIdentifier = property0.Value.GetGuid();

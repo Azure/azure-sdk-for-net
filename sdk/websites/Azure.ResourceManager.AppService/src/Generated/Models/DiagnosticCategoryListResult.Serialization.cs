@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.AppService.Models
     {
         internal static DiagnosticCategoryListResult DeserializeDiagnosticCategoryListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             IReadOnlyList<DiagnosticCategoryData> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())

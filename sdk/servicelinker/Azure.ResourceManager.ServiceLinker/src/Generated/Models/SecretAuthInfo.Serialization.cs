@@ -46,6 +46,10 @@ namespace Azure.ResourceManager.ServiceLinker.Models
 
         internal static SecretAuthInfo DeserializeSecretAuthInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> name = default;
             Optional<SecretBaseInfo> secretInfo = default;
             LinkerAuthType authType = default;

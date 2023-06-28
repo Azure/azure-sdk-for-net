@@ -34,6 +34,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static MachineLearningCodeConfiguration DeserializeMachineLearningCodeConfiguration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ResourceIdentifier> codeId = default;
             string scoringScript = default;
             foreach (var property in element.EnumerateObject())

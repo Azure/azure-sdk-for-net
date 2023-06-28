@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.Automation.Models
     {
         internal static AgentRegistrationKeys DeserializeAgentRegistrationKeys(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> primary = default;
             Optional<string> secondary = default;
             foreach (var property in element.EnumerateObject())

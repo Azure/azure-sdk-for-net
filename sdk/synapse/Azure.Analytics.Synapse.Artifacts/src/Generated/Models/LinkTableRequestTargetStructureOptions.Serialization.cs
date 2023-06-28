@@ -28,6 +28,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         internal static LinkTableRequestTargetStructureOptions DeserializeLinkTableRequestTargetStructureOptions(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> type = default;
             foreach (var property in element.EnumerateObject())
             {

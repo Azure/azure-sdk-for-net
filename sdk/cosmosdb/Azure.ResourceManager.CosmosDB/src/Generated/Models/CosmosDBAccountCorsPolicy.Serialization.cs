@@ -42,6 +42,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         internal static CosmosDBAccountCorsPolicy DeserializeCosmosDBAccountCorsPolicy(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string allowedOrigins = default;
             Optional<string> allowedMethods = default;
             Optional<string> allowedHeaders = default;
@@ -73,7 +77,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     maxAgeInSeconds = property.Value.GetInt64();

@@ -36,6 +36,10 @@ namespace Azure.ResourceManager.Monitor.Models
 
         internal static ManagementEventAggregationCondition DeserializeManagementEventAggregationCondition(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<MonitorConditionOperator> @operator = default;
             Optional<double> threshold = default;
             Optional<TimeSpan> windowSize = default;
@@ -45,7 +49,6 @@ namespace Azure.ResourceManager.Monitor.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     @operator = property.Value.GetString().ToMonitorConditionOperator();
@@ -55,7 +58,6 @@ namespace Azure.ResourceManager.Monitor.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     threshold = property.Value.GetDouble();
@@ -65,7 +67,6 @@ namespace Azure.ResourceManager.Monitor.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     windowSize = property.Value.GetTimeSpan("P");

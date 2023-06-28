@@ -16,6 +16,10 @@ namespace Azure.AI.MetricsAdvisor.Models
     {
         internal static DataPointAnomaly DeserializeDataPointAnomaly(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> dataFeedId = default;
             Optional<string> metricId = default;
             Optional<string> anomalyDetectionConfigurationId = default;
@@ -50,7 +54,6 @@ namespace Azure.AI.MetricsAdvisor.Models
                 {
                     if (property0.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property0.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     createdTime = property0.Value.GetDateTimeOffset("O");
@@ -60,7 +63,6 @@ namespace Azure.AI.MetricsAdvisor.Models
                 {
                     if (property0.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property0.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     modifiedTime = property0.Value.GetDateTimeOffset("O");

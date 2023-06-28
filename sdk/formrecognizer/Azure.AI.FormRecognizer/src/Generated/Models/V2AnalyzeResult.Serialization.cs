@@ -15,6 +15,10 @@ namespace Azure.AI.FormRecognizer.Models
     {
         internal static V2AnalyzeResult DeserializeV2AnalyzeResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string version = default;
             Optional<IReadOnlyList<ReadResult>> readResults = default;
             Optional<IReadOnlyList<PageResult>> pageResults = default;
@@ -76,7 +80,6 @@ namespace Azure.AI.FormRecognizer.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<FormRecognizerError> array = new List<FormRecognizerError>();

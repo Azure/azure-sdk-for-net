@@ -69,6 +69,10 @@ namespace Azure.ResourceManager.DeploymentManager
 
         internal static RolloutData DeserializeRolloutData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<Identity> identity = default;
             Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
@@ -90,7 +94,6 @@ namespace Azure.ResourceManager.DeploymentManager
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     identity = Identity.DeserializeIdentity(property.Value);
@@ -100,7 +103,6 @@ namespace Azure.ResourceManager.DeploymentManager
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -135,7 +137,6 @@ namespace Azure.ResourceManager.DeploymentManager
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
@@ -169,7 +170,6 @@ namespace Azure.ResourceManager.DeploymentManager
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<StepGroup> array = new List<StepGroup>();
@@ -189,7 +189,6 @@ namespace Azure.ResourceManager.DeploymentManager
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             totalRetryAttempts = property0.Value.GetInt32();
@@ -199,7 +198,6 @@ namespace Azure.ResourceManager.DeploymentManager
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             operationInfo = RolloutOperationInfo.DeserializeRolloutOperationInfo(property0.Value);
@@ -209,7 +207,6 @@ namespace Azure.ResourceManager.DeploymentManager
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<Service> array = new List<Service>();

@@ -16,7 +16,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
     {
         internal static ReplicationEligibilityResultData DeserializeReplicationEligibilityResultData(JsonElement element)
         {
-            Optional<ReplicationEligibilityResultsProperties> properties = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<ReplicationEligibilityResultProperties> properties = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -27,10 +31,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    properties = ReplicationEligibilityResultsProperties.DeserializeReplicationEligibilityResultsProperties(property.Value);
+                    properties = ReplicationEligibilityResultProperties.DeserializeReplicationEligibilityResultProperties(property.Value);
                     continue;
                 }
                 if (property.NameEquals("id"u8))
@@ -52,7 +55,6 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());

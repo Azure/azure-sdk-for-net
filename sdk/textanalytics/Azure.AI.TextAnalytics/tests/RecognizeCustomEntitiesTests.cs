@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Azure.AI.TextAnalytics.Tests.Infrastructure;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
 
@@ -70,159 +71,49 @@ namespace Azure.AI.TextAnalytics.Tests
             { "1", s_englishExpectedOutput2 },
         };
 
+        [SetUp]
+        public void TestSetup()
+        {
+            // These tests require a pre-trained, static resource,
+            // which is currently only available in the public cloud.
+            TestEnvironment.IgnoreIfNotPublicCloud();
+        }
+
         [RecordedTest]
+        [RetryOnInternalServerError]
         public async Task RecognizeCustomEntitiesWithAADTest()
         {
             TextAnalyticsClient client = GetClient(useTokenCredential: true, useStaticResource: true);
 
-            TextAnalyticsActions batchActions = new TextAnalyticsActions()
-            {
-                RecognizeCustomEntitiesActions = new List<RecognizeCustomEntitiesAction>()
-                {
-                    new RecognizeCustomEntitiesAction(TestEnvironment.RecognizeCustomEntitiesProjectName, TestEnvironment.RecognizeCustomEntitiesDeploymentName)
-                }
-            };
+            RecognizeCustomEntitiesOperation operation = await client.RecognizeCustomEntitiesAsync(
+                WaitUntil.Completed,
+                new List<string> { EnglishDocument1 },
+                TestEnvironment.RecognizeCustomEntitiesProjectName,
+                TestEnvironment.RecognizeCustomEntitiesDeploymentName);
+            ValidateOperationProperties(operation);
 
-            var operation = await client.StartAnalyzeActionsAsync(new List<string> { EnglishDocument1 }, batchActions);
+            List<RecognizeCustomEntitiesResultCollection> resultInPages = operation.Value.ToEnumerableAsync().Result;
+            Assert.AreEqual(1, resultInPages.Count);
 
-            await PollUntilTimeout(operation);
-            Assert.IsTrue(operation.HasCompleted);
-
-            RecognizeCustomEntitiesResultCollection results = ExtractDocumentsResultsFromResponse(operation);
-            RecognizeEntitiesResult firstResult = results.First();
-            CategorizedEntityCollection entites = firstResult.Entities;
-            ValidateInDocumentResult(entites, s_englishExpectedOutput1);
+            // Take the first page.
+            RecognizeCustomEntitiesResultCollection resultCollection = resultInPages.FirstOrDefault();
+            RecognizeEntitiesResult firstResult = resultCollection.First();
+            CategorizedEntityCollection entities = firstResult.Entities;
+            ValidateDocumentResult(entities, s_englishExpectedOutput1);
         }
 
         [RecordedTest]
-        public async Task RecognizeCustomEntitiesTest()
-        {
-            TextAnalyticsClient client = GetClient(useStaticResource: true);
-
-            TextAnalyticsActions batchActions = new TextAnalyticsActions()
-            {
-                RecognizeCustomEntitiesActions = new List<RecognizeCustomEntitiesAction>()
-                {
-                    new RecognizeCustomEntitiesAction(TestEnvironment.RecognizeCustomEntitiesProjectName, TestEnvironment.RecognizeCustomEntitiesDeploymentName)
-                }
-            };
-
-            var operation = await client.StartAnalyzeActionsAsync(new List<string> { EnglishDocument1 }, batchActions);
-
-            await PollUntilTimeout(operation);
-            Assert.IsTrue(operation.HasCompleted);
-
-            RecognizeCustomEntitiesResultCollection results = ExtractDocumentsResultsFromResponse(operation);
-            RecognizeEntitiesResult firstResult = results.First();
-            CategorizedEntityCollection entites = firstResult.Entities;
-            ValidateInDocumentResult(entites, s_englishExpectedOutput1);
-        }
-
-        [RecordedTest]
-        public async Task RecognizeCustomEntitiesWithLanguageTest()
-        {
-            TextAnalyticsClient client = GetClient(useStaticResource: true);
-
-            TextAnalyticsActions batchActions = new TextAnalyticsActions()
-            {
-                RecognizeCustomEntitiesActions = new List<RecognizeCustomEntitiesAction>()
-                {
-                    new RecognizeCustomEntitiesAction(TestEnvironment.RecognizeCustomEntitiesProjectName, TestEnvironment.RecognizeCustomEntitiesDeploymentName)
-                }
-            };
-
-            List<TextDocumentInput> documentsBatch = new List<TextDocumentInput>
-            {
-                new TextDocumentInput("1", SpanishDocument1) { Language = "es" }
-            };
-
-            var operation = await client.StartAnalyzeActionsAsync(documentsBatch, batchActions);
-
-            await PollUntilTimeout(operation);
-            Assert.IsTrue(operation.HasCompleted);
-
-            RecognizeCustomEntitiesResultCollection results = ExtractDocumentsResultsFromResponse(operation);
-            RecognizeEntitiesResult firstResult = results.First();
-            CategorizedEntityCollection entites = firstResult.Entities;
-            ValidateInDocumentResult(entites, s_spanishExpectedOutput1);
-        }
-
-        [RecordedTest]
-        public async Task RecognizeCustomEntitiesBatchWithErrorTest()
-        {
-            TextAnalyticsClient client = GetClient(useStaticResource: true);
-            var documents = new List<string>
-            {
-                "Microsoft was founded by Bill Gates and Paul Allen.",
-                 "",
-                "My cat might need to see a veterinarian."
-            };
-
-            TextAnalyticsActions batchActions = new TextAnalyticsActions()
-            {
-                RecognizeCustomEntitiesActions = new List<RecognizeCustomEntitiesAction>()
-                {
-                    new RecognizeCustomEntitiesAction(TestEnvironment.RecognizeCustomEntitiesProjectName, TestEnvironment.RecognizeCustomEntitiesDeploymentName)
-                }
-            };
-
-            var operation = await client.StartAnalyzeActionsAsync(documents, batchActions);
-
-            await PollUntilTimeout(operation);
-            Assert.IsTrue(operation.HasCompleted);
-
-            var results = ExtractDocumentsResultsFromResponse(operation);
-
-            Assert.IsTrue(!results[0].HasError);
-            Assert.IsTrue(!results[2].HasError);
-
-            var exceptionMessage = "Cannot access result for document 1, due to error InvalidDocument: Document text is empty.";
-            Assert.IsTrue(results[1].HasError);
-            InvalidOperationException ex = Assert.Throws<InvalidOperationException>(() => results[1].Entities.GetType());
-            Assert.AreEqual(exceptionMessage, ex.Message);
-        }
-
-        [RecordedTest]
-        public async Task RecognizeCustomEntitiesBatchConvenienceTest()
-        {
-            TextAnalyticsClient client = GetClient(useStaticResource: true);
-            Dictionary<string, List<string>> expectedOutput = s_englishExpectedBatchOutput;
-            TextAnalyticsActions batchActions = new TextAnalyticsActions()
-            {
-                RecognizeCustomEntitiesActions = new List<RecognizeCustomEntitiesAction>()
-                {
-                    new RecognizeCustomEntitiesAction(TestEnvironment.RecognizeCustomEntitiesProjectName, TestEnvironment.RecognizeCustomEntitiesDeploymentName)
-                }
-            };
-
-            var operation = await client.StartAnalyzeActionsAsync(s_englishBatchConvenienceDocuments, batchActions);
-
-            await PollUntilTimeout(operation);
-            Assert.IsTrue(operation.HasCompleted);
-
-            var results = ExtractDocumentsResultsFromResponse(operation);
-
-            ValidateBatchDocumentsResult(results, expectedOutput);
-        }
-
-        [RecordedTest]
+        [RetryOnInternalServerError]
         public async Task RecognizeCustomEntitiesBatchTest()
         {
             TextAnalyticsClient client = GetClient(useStaticResource: true);
-            TextAnalyticsActions batchActions = new TextAnalyticsActions()
-            {
-                RecognizeCustomEntitiesActions = new List<RecognizeCustomEntitiesAction>()
-                {
-                    new RecognizeCustomEntitiesAction(TestEnvironment.RecognizeCustomEntitiesProjectName, TestEnvironment.RecognizeCustomEntitiesDeploymentName)
-                }
-            };
 
-            var operation = await client.StartAnalyzeActionsAsync(s_batchDocuments, batchActions);
-
-            await PollUntilTimeout(operation);
-            Assert.IsTrue(operation.HasCompleted);
-
-            var results = ExtractDocumentsResultsFromResponse(operation);
+            RecognizeCustomEntitiesOperation operation = await client.RecognizeCustomEntitiesAsync(
+                WaitUntil.Completed,
+                s_batchDocuments,
+                TestEnvironment.RecognizeCustomEntitiesProjectName,
+                TestEnvironment.RecognizeCustomEntitiesDeploymentName);
+            ValidateOperationProperties(operation);
 
             var expectedOutput = new Dictionary<string, List<string>>()
             {
@@ -230,15 +121,189 @@ namespace Azure.AI.TextAnalytics.Tests
                 { "2", s_spanishExpectedOutput1 },
             };
 
-            ValidateBatchDocumentsResult(results, expectedOutput);
+            List<RecognizeCustomEntitiesResultCollection> resultInPages = operation.Value.ToEnumerableAsync().Result;
+            Assert.AreEqual(1, resultInPages.Count);
+
+            // Take the first page.
+            RecognizeCustomEntitiesResultCollection resultCollection = resultInPages.FirstOrDefault();
+            ValidateBatchResult(resultCollection, expectedOutput);
         }
 
         [RecordedTest]
+        [RetryOnInternalServerError]
+        public async Task RecognizeCustomEntitiesBatchWaitUntilStartedTest()
+        {
+            TextAnalyticsClient client = GetClient(useStaticResource: true);
+
+            RecognizeCustomEntitiesOperation operation = await client.RecognizeCustomEntitiesAsync(
+                WaitUntil.Started,
+                s_batchDocuments,
+                TestEnvironment.RecognizeCustomEntitiesProjectName,
+                TestEnvironment.RecognizeCustomEntitiesDeploymentName);
+            Assert.IsFalse(operation.HasCompleted);
+            Assert.IsFalse(operation.HasValue);
+            Assert.ThrowsAsync<InvalidOperationException>(async () => await Task.Run(() => operation.Value));
+            Assert.ThrowsAsync<InvalidOperationException>(async () => await Task.Run(() => operation.GetValuesAsync()));
+            await operation.WaitForCompletionAsync();
+            Assert.IsTrue(operation.HasCompleted);
+            Assert.IsTrue(operation.HasValue);
+            ValidateOperationProperties(operation);
+        }
+
+        [RecordedTest]
+        [RetryOnInternalServerError]
+        public async Task RecognizeCustomEntitiesBatchWithNameTest()
+        {
+            TextAnalyticsClient client = GetClient(useStaticResource: true);
+
+            RecognizeCustomEntitiesOptions options = new RecognizeCustomEntitiesOptions
+            {
+                DisplayName = "StartRecognizeCustomEntitiesWithName",
+            };
+
+            RecognizeCustomEntitiesOperation operation = await client.RecognizeCustomEntitiesAsync(
+                WaitUntil.Completed,
+                s_batchDocuments,
+                TestEnvironment.RecognizeCustomEntitiesProjectName,
+                TestEnvironment.RecognizeCustomEntitiesDeploymentName,
+                options);
+            ValidateOperationProperties(operation);
+
+            Assert.AreEqual("StartRecognizeCustomEntitiesWithName", operation.DisplayName);
+
+            var expectedOutput = new Dictionary<string, List<string>>()
+            {
+                { "1", s_englishExpectedOutput1 },
+                { "2", s_spanishExpectedOutput1 },
+            };
+
+            List<RecognizeCustomEntitiesResultCollection> resultInPages = operation.Value.ToEnumerableAsync().Result;
+            Assert.AreEqual(1, resultInPages.Count);
+
+            // Take the first page.
+            RecognizeCustomEntitiesResultCollection resultCollection = resultInPages.FirstOrDefault();
+            ValidateBatchResult(resultCollection, expectedOutput);
+        }
+
+        [RecordedTest]
+        [RetryOnInternalServerError]
         public void RecognizeCustomEntitiesBatchWithNullIdTest()
         {
             TextAnalyticsClient client = GetClient(useStaticResource: true);
             var documents = new List<TextDocumentInput> { new TextDocumentInput(null, "Hello world") };
 
+            RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () =>
+                await client.RecognizeCustomEntitiesAsync(
+                    WaitUntil.Completed,
+                    documents,
+                    TestEnvironment.RecognizeCustomEntitiesProjectName,
+                    TestEnvironment.RecognizeCustomEntitiesDeploymentName));
+            Assert.AreEqual(TextAnalyticsErrorCode.InvalidDocument, ex.ErrorCode);
+        }
+
+        [RecordedTest]
+        [RetryOnInternalServerError]
+        public async Task RecognizeCustomEntitiesBatchWithLanguageTest()
+        {
+            TextAnalyticsClient client = GetClient(useStaticResource: true);
+
+            List<TextDocumentInput> documentsBatch = new List<TextDocumentInput>
+            {
+                new TextDocumentInput("1", SpanishDocument1) { Language = "es" }
+            };
+
+            RecognizeCustomEntitiesOperation operation = await client.RecognizeCustomEntitiesAsync(
+                WaitUntil.Completed,
+                documentsBatch,
+                TestEnvironment.RecognizeCustomEntitiesProjectName,
+                TestEnvironment.RecognizeCustomEntitiesDeploymentName);
+            ValidateOperationProperties(operation);
+
+            List<RecognizeCustomEntitiesResultCollection> resultInPages = operation.Value.ToEnumerableAsync().Result;
+            Assert.AreEqual(1, resultInPages.Count);
+
+            // Take the first page.
+            RecognizeCustomEntitiesResultCollection resultCollection = resultInPages.FirstOrDefault();
+            RecognizeEntitiesResult firstResult = resultCollection.First();
+            CategorizedEntityCollection entities = firstResult.Entities;
+            ValidateDocumentResult(entities, s_spanishExpectedOutput1);
+        }
+
+        [RecordedTest]
+        [RetryOnInternalServerError]
+        public async Task RecognizeCustomEntitiesBatchWithErrorTest()
+        {
+            TextAnalyticsClient client = GetClient(useStaticResource: true);
+
+            var documents = new List<string>
+            {
+                "Microsoft was founded by Bill Gates and Paul Allen.",
+                 "",
+                "My cat might need to see a veterinarian."
+            };
+
+            RecognizeCustomEntitiesOperation operation = await client.RecognizeCustomEntitiesAsync(
+                WaitUntil.Completed,
+                documents,
+                TestEnvironment.RecognizeCustomEntitiesProjectName,
+                TestEnvironment.RecognizeCustomEntitiesDeploymentName);
+            ValidateOperationProperties(operation);
+
+            // Take the first page.
+            RecognizeCustomEntitiesResultCollection resultCollection = operation.Value.ToEnumerableAsync().Result.FirstOrDefault();
+            Assert.IsFalse(resultCollection[0].HasError);
+            Assert.IsTrue(resultCollection[1].HasError);
+            Assert.IsFalse(resultCollection[2].HasError);
+            Assert.AreEqual(TextAnalyticsErrorCode.InvalidDocument, resultCollection[1].Error.ErrorCode.ToString());
+        }
+
+        [RecordedTest]
+        [RetryOnInternalServerError]
+        public async Task RecognizeCustomEntitiesBatchConvenienceTest()
+        {
+            TextAnalyticsClient client = GetClient(useStaticResource: true);
+
+            RecognizeCustomEntitiesOperation operation = await client.RecognizeCustomEntitiesAsync(
+                WaitUntil.Completed,
+                s_englishBatchConvenienceDocuments,
+                TestEnvironment.RecognizeCustomEntitiesProjectName,
+                TestEnvironment.RecognizeCustomEntitiesDeploymentName);
+            ValidateOperationProperties(operation);
+
+            List<RecognizeCustomEntitiesResultCollection> resultInPages = operation.Value.ToEnumerableAsync().Result;
+            Assert.AreEqual(1, resultInPages.Count);
+
+            // Take the first page.
+            RecognizeCustomEntitiesResultCollection resultCollection = resultInPages.FirstOrDefault();
+            ValidateBatchResult(resultCollection, s_englishExpectedBatchOutput);
+        }
+
+        [RecordedTest]
+        [RetryOnInternalServerError]
+        public async Task RecognizeCustomEntitiesBatchConvenienceWaitUntilStartedTest()
+        {
+            TextAnalyticsClient client = GetClient(useStaticResource: true);
+
+            RecognizeCustomEntitiesOperation operation = await client.RecognizeCustomEntitiesAsync(
+                WaitUntil.Started,
+                s_englishBatchConvenienceDocuments,
+                TestEnvironment.RecognizeCustomEntitiesProjectName,
+                TestEnvironment.RecognizeCustomEntitiesDeploymentName);
+            Assert.IsFalse(operation.HasCompleted);
+            Assert.IsFalse(operation.HasValue);
+            Assert.ThrowsAsync<InvalidOperationException>(async () => await Task.Run(() => operation.Value));
+            Assert.ThrowsAsync<InvalidOperationException>(async () => await Task.Run(() => operation.GetValuesAsync()));
+            await operation.WaitForCompletionAsync();
+            Assert.IsTrue(operation.HasCompleted);
+            Assert.IsTrue(operation.HasValue);
+            ValidateOperationProperties(operation);
+        }
+
+        [RecordedTest]
+        [RetryOnInternalServerError]
+        public async Task AnalyzeOperationRecognizeCustomEntities()
+        {
+            TextAnalyticsClient client = GetClient(useStaticResource: true);
             TextAnalyticsActions batchActions = new TextAnalyticsActions()
             {
                 RecognizeCustomEntitiesActions = new List<RecognizeCustomEntitiesAction>()
@@ -247,16 +312,24 @@ namespace Azure.AI.TextAnalytics.Tests
                 }
             };
 
-            RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () => await client.StartAnalyzeActionsAsync(documents, batchActions));
-            Assert.AreEqual(TextAnalyticsErrorCode.InvalidDocument, ex.ErrorCode);
+            AnalyzeActionsOperation operation = await client.AnalyzeActionsAsync(WaitUntil.Completed, s_englishBatchConvenienceDocuments, batchActions);
+            Assert.IsTrue(operation.HasCompleted);
+
+            // Take the first page.
+            AnalyzeActionsResult actionsResult = operation.Value.ToEnumerableAsync().Result.FirstOrDefault();
+            IReadOnlyCollection<RecognizeCustomEntitiesActionResult> recognizeCustomEntitiesActionsResults = actionsResult.RecognizeCustomEntitiesResults;
+            Assert.IsNotNull(recognizeCustomEntitiesActionsResults);
+
+            RecognizeCustomEntitiesResultCollection resultCollection = recognizeCustomEntitiesActionsResults.FirstOrDefault().DocumentsResults;
+            ValidateBatchResult(resultCollection, s_englishExpectedBatchOutput);
         }
 
         [RecordedTest]
+        [RetryOnInternalServerError]
         [Ignore("Issue https://github.com/Azure/azure-sdk-for-net/issues/25152")]
-        public async Task RecognizeCustomEntitiesWithMultipleActions()
+        public async Task AnalyzeOperationRecognizeCustomEntitiesWithMultipleActions()
         {
             TextAnalyticsClient client = GetClient(useStaticResource: true);
-
             TextAnalyticsActions batchActions = new TextAnalyticsActions()
             {
                 RecognizeCustomEntitiesActions = new List<RecognizeCustomEntitiesAction>()
@@ -273,33 +346,36 @@ namespace Azure.AI.TextAnalytics.Tests
                 }
             };
 
-            AnalyzeActionsOperation operation = await client.StartAnalyzeActionsAsync(s_englishBatchConvenienceDocuments, batchActions);
-
-            await PollUntilTimeout(operation);
+            AnalyzeActionsOperation operation = await client.AnalyzeActionsAsync(WaitUntil.Completed, s_englishBatchConvenienceDocuments, batchActions);
             Assert.IsTrue(operation.HasCompleted);
 
-            // Take the first page
-            AnalyzeActionsResult resultCollection = operation.Value.ToEnumerableAsync().Result.FirstOrDefault();
-
-            IReadOnlyCollection<RecognizeCustomEntitiesActionResult> RecognizeCustomEntitiesActionsResults = resultCollection.RecognizeCustomEntitiesResults;
-
-            Assert.IsNotNull(RecognizeCustomEntitiesActionsResults);
+            // Take the first page.
+            AnalyzeActionsResult actionsResult = operation.Value.ToEnumerableAsync().Result.FirstOrDefault();
+            IReadOnlyCollection<RecognizeCustomEntitiesActionResult> recognizeCustomEntitiesActionsResults = actionsResult.RecognizeCustomEntitiesResults;
+            Assert.IsNotNull(recognizeCustomEntitiesActionsResults);
 
             IList<string> expected = new List<string> { "RecognizeCustomEntities", "RecognizeCustomEntitiesWithDisabledServiceLogs" };
-            CollectionAssert.AreEquivalent(expected, RecognizeCustomEntitiesActionsResults.Select(result => result.ActionName));
+            CollectionAssert.AreEquivalent(expected, recognizeCustomEntitiesActionsResults.Select(result => result.ActionName));
         }
 
         [RecordedTest]
-        public async Task StartRecognizeCustomEntities()
+        [RetryOnInternalServerError]
+        public async Task StartRecognizeCustomEntitiesBatchTest()
         {
             TextAnalyticsClient client = GetClient(useStaticResource: true);
-            RecognizeCustomEntitiesOperation operation = await client.StartRecognizeCustomEntitiesAsync(s_batchDocuments, TestEnvironment.RecognizeCustomEntitiesProjectName, TestEnvironment.RecognizeCustomEntitiesDeploymentName);
 
-            await PollUntilTimeout(operation);
+            RecognizeCustomEntitiesOperation operation = await client.StartRecognizeCustomEntitiesAsync(
+                s_batchDocuments,
+                TestEnvironment.RecognizeCustomEntitiesProjectName,
+                TestEnvironment.RecognizeCustomEntitiesDeploymentName);
+            Assert.IsFalse(operation.HasCompleted);
+            Assert.IsFalse(operation.HasValue);
+            Assert.ThrowsAsync<InvalidOperationException>(async () => await Task.Run(() => operation.Value));
+            Assert.ThrowsAsync<InvalidOperationException>(async () => await Task.Run(() => operation.GetValuesAsync()));
+            await operation.WaitForCompletionAsync();
             Assert.IsTrue(operation.HasCompleted);
-
-            // Take the first page.
-            RecognizeCustomEntitiesResultCollection resultCollection = operation.Value.ToEnumerableAsync().Result.FirstOrDefault();
+            Assert.IsTrue(operation.HasValue);
+            ValidateOperationProperties(operation);
 
             var expectedOutput = new Dictionary<string, List<string>>()
             {
@@ -307,118 +383,55 @@ namespace Azure.AI.TextAnalytics.Tests
                 { "2", s_spanishExpectedOutput1 },
             };
 
-            ValidateBatchDocumentsResult(resultCollection, expectedOutput);
-        }
-
-        [RecordedTest]
-        public async Task StartRecognizeCustomEntitiesWithName()
-        {
-            TextAnalyticsClient client = GetClient(useStaticResource: true);
-            RecognizeCustomEntitiesOperation operation = await client.StartRecognizeCustomEntitiesAsync(s_batchDocuments, TestEnvironment.RecognizeCustomEntitiesProjectName, TestEnvironment.RecognizeCustomEntitiesDeploymentName, new RecognizeCustomEntitiesOptions
-            {
-                DisplayName = "StartRecognizeCustomEntitiesWithName",
-            });
-
-            await PollUntilTimeout(operation);
-            Assert.IsTrue(operation.HasCompleted);
-            Assert.AreEqual("StartRecognizeCustomEntitiesWithName", operation.DisplayName);
+            List<RecognizeCustomEntitiesResultCollection> resultInPages = operation.Value.ToEnumerableAsync().Result;
+            Assert.AreEqual(1, resultInPages.Count);
 
             // Take the first page.
-            RecognizeCustomEntitiesResultCollection resultCollection = operation.Value.ToEnumerableAsync().Result.FirstOrDefault();
-
-            var expectedOutput = new Dictionary<string, List<string>>()
-            {
-                { "1", s_englishExpectedOutput1 },
-                { "2", s_spanishExpectedOutput1 },
-            };
-
-            ValidateBatchDocumentsResult(resultCollection, expectedOutput);
+            RecognizeCustomEntitiesResultCollection resultCollection = resultInPages.FirstOrDefault();
+            ValidateBatchResult(resultCollection, expectedOutput);
         }
 
         [RecordedTest]
-        [ServiceVersion(Min = TextAnalyticsClientOptions.ServiceVersion.V2022_10_01_Preview)]
-        public async Task RecognizeCustomEntitiesBatchConvenienceWithAutoDetectedLanguageTest()
+        [RetryOnInternalServerError]
+        public async Task StartRecognizeCustomEntitiesBatchConvenienceTest()
         {
             TextAnalyticsClient client = GetClient(useStaticResource: true);
-            RecognizeCustomEntitiesOptions options = new()
-            {
-                AutoDetectionDefaultLanguage = "en"
-            };
 
             RecognizeCustomEntitiesOperation operation = await client.StartRecognizeCustomEntitiesAsync(
                 s_englishBatchConvenienceDocuments,
                 TestEnvironment.RecognizeCustomEntitiesProjectName,
-                TestEnvironment.RecognizeCustomEntitiesDeploymentName,
-                "auto",
-                options);
-
+                TestEnvironment.RecognizeCustomEntitiesDeploymentName);
+            Assert.IsFalse(operation.HasCompleted);
+            Assert.IsFalse(operation.HasValue);
+            Assert.ThrowsAsync<InvalidOperationException>(async () => await Task.Run(() => operation.Value));
+            Assert.ThrowsAsync<InvalidOperationException>(async () => await Task.Run(() => operation.GetValuesAsync()));
             await operation.WaitForCompletionAsync();
+            Assert.IsTrue(operation.HasCompleted);
+            Assert.IsTrue(operation.HasValue);
+            ValidateOperationProperties(operation);
+
+            List<RecognizeCustomEntitiesResultCollection> resultInPages = operation.Value.ToEnumerableAsync().Result;
+            Assert.AreEqual(1, resultInPages.Count);
 
             // Take the first page.
-            RecognizeCustomEntitiesResultCollection resultCollection = operation.Value.ToEnumerableAsync().Result.FirstOrDefault();
-            ValidateBatchDocumentsResult(resultCollection, s_englishExpectedBatchOutput, isLanguageAutoDetected: true);
+            RecognizeCustomEntitiesResultCollection resultCollection = resultInPages.FirstOrDefault();
+            ValidateBatchResult(resultCollection, s_englishExpectedBatchOutput);
         }
 
-        [RecordedTest]
-        [ServiceVersion(Min = TextAnalyticsClientOptions.ServiceVersion.V2022_10_01_Preview)]
-        public async Task AnalyzeOperationRecognizeCustomEntitiesWithAutoDetectedLanguageTest()
+        private void ValidateOperationProperties(RecognizeCustomEntitiesOperation operation)
         {
-            TextAnalyticsClient client = GetClient(useStaticResource: true);
-            List<string> documents = s_englishBatchConvenienceDocuments;
-            Dictionary<string, List<string>> expectedOutput = s_englishExpectedBatchOutput;
-            TextAnalyticsActions actions = new()
+            Assert.IsTrue(operation.HasCompleted);
+            Assert.AreNotEqual(new DateTimeOffset(), operation.CreatedOn);
+            // TODO: Re-enable this check (https://github.com/Azure/azure-sdk-for-net/issues/31855).
+            // Assert.AreNotEqual(new DateTimeOffset(), operation.LastModified);
+
+            if (operation.ExpiresOn.HasValue)
             {
-                RecognizeCustomEntitiesActions = new List<RecognizeCustomEntitiesAction>()
-                {
-                    new RecognizeCustomEntitiesAction(TestEnvironment.RecognizeCustomEntitiesProjectName, TestEnvironment.RecognizeCustomEntitiesDeploymentName)
-                },
-                DisplayName = "RecognizeCustomEntitiesWithAutoDetectedLanguageTest",
-            };
-
-            AnalyzeActionsOperation operation = await client.StartAnalyzeActionsAsync(documents, actions, "auto");
-            await operation.WaitForCompletionAsync();
-
-            // Take the first page.
-            AnalyzeActionsResult resultCollection = operation.Value.ToEnumerableAsync().Result.FirstOrDefault();
-            IReadOnlyCollection<RecognizeCustomEntitiesActionResult> actionResults = resultCollection.RecognizeCustomEntitiesResults;
-            Assert.IsNotNull(actionResults);
-
-            RecognizeCustomEntitiesResultCollection results = actionResults.FirstOrDefault().DocumentsResults;
-            ValidateBatchDocumentsResult(results, expectedOutput, isLanguageAutoDetected: true);
+                Assert.AreNotEqual(new DateTimeOffset(), operation.ExpiresOn.Value);
+            }
         }
 
-        [RecordedTest]
-        [ServiceVersion(Max = TextAnalyticsClientOptions.ServiceVersion.V2022_05_01)]
-        public void RecognizeCustomEntitiesBatchWithDefaultLanguageThrows()
-        {
-            TestDiagnostics = false;
-
-            TextAnalyticsClient client = GetClient();
-            RecognizeCustomEntitiesOptions options = new()
-            {
-                AutoDetectionDefaultLanguage = "en"
-            };
-
-            NotSupportedException ex = Assert.ThrowsAsync<NotSupportedException>(
-                async () => await client.StartRecognizeCustomEntitiesAsync(
-                s_englishBatchConvenienceDocuments,
-                TestEnvironment.RecognizeCustomEntitiesProjectName,
-                TestEnvironment.RecognizeCustomEntitiesDeploymentName,
-                "auto",
-                options));
-
-            Assert.That(ex.Message.EndsWith("Use service API version 2022-10-01-preview or newer."));
-        }
-
-        private RecognizeCustomEntitiesResultCollection ExtractDocumentsResultsFromResponse(AnalyzeActionsOperation analyzeActionOperation)
-        {
-            var resultCollection = analyzeActionOperation.Value.ToEnumerableAsync().Result.FirstOrDefault();
-            var recognizeCustomEntitiesActionResult = resultCollection.RecognizeCustomEntitiesResults;
-            var actionResult = recognizeCustomEntitiesActionResult.First();
-            return actionResult.DocumentsResults;
-        }
-
-        private void ValidateInDocumentResult(CategorizedEntityCollection entities, List<string> minimumExpectedOutput)
+        private void ValidateDocumentResult(CategorizedEntityCollection entities, List<string> minimumExpectedOutput)
         {
             Assert.IsNotNull(entities.Warnings);
             Assert.GreaterOrEqual(entities.Count, minimumExpectedOutput.Count);
@@ -435,16 +448,13 @@ namespace Azure.AI.TextAnalytics.Tests
                 {
                     Assert.IsNotEmpty(entity.SubCategory);
                 }
-
-                Assert.IsNotNull(entity.Resolutions);
             }
         }
 
-        private void ValidateBatchDocumentsResult(
+        private void ValidateBatchResult(
             RecognizeCustomEntitiesResultCollection results,
             Dictionary<string, List<string>> minimumExpectedOutput,
-            bool includeStatistics = default,
-            bool isLanguageAutoDetected = default)
+            bool includeStatistics = default)
         {
             if (includeStatistics)
             {
@@ -477,22 +487,7 @@ namespace Azure.AI.TextAnalytics.Tests
                     Assert.AreEqual(0, result.Statistics.TransactionCount);
                 }
 
-                if (isLanguageAutoDetected)
-                {
-                    Assert.IsNotNull(result.DetectedLanguage);
-                    Assert.That(result.DetectedLanguage.Value.Name, Is.Not.Null.And.Not.Empty);
-                    Assert.That(result.DetectedLanguage.Value.Iso6391Name, Is.Not.Null.And.Not.Empty);
-                    Assert.GreaterOrEqual(result.DetectedLanguage.Value.ConfidenceScore, 0.0);
-                    Assert.LessOrEqual(result.DetectedLanguage.Value.ConfidenceScore, 1.0);
-                    Assert.IsNotNull(result.DetectedLanguage.Value.Warnings);
-                    Assert.IsEmpty(result.DetectedLanguage.Value.Warnings);
-                }
-                else
-                {
-                    Assert.IsNull(result.DetectedLanguage);
-                }
-
-                ValidateInDocumentResult(result.Entities, minimumExpectedOutput[result.Id]);
+                ValidateDocumentResult(result.Entities, minimumExpectedOutput[result.Id]);
             }
         }
     }

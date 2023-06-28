@@ -52,6 +52,10 @@ namespace Azure.ResourceManager.DataBox.Models
 
         internal static DataBoxContactDetails DeserializeDataBoxContactDetails(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string contactName = default;
             string phone = default;
             Optional<string> phoneExtension = default;
@@ -94,7 +98,6 @@ namespace Azure.ResourceManager.DataBox.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<NotificationPreference> array = new List<NotificationPreference>();

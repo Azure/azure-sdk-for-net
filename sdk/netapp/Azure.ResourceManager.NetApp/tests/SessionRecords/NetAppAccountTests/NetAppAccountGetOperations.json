@@ -1,42 +1,52 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://management.azure.com/subscriptions/69a75bda-882e-44d5-8431-63421204132a?api-version=2021-01-01",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c?api-version=2021-01-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-9317c0f7813d004388aab45f41228fc9-d823c994bcce118d-00",
-        "User-Agent": "azsdk-net-ResourceManager/1.3.1 (.NET 6.0.8; Microsoft Windows 10.0.19044)",
-        "x-ms-client-request-id": "450d69b0d07ec5f433e7fad6f6a6a4e0",
+        "traceparent": "00-64e5a99c21af891394f657ccd8f6a6c9-0286b4e32a75a938-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET 6.0.16; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "e1dbf669eaab47bebba74570adb2fb61",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "422",
+        "Content-Length": "748",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 14 Sep 2022 13:43:33 GMT",
+        "Date": "Mon, 24 Apr 2023 16:33:19 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "6549f4e3-7178-4390-8d76-32e28fd32163",
-        "x-ms-ratelimit-remaining-subscription-reads": "11960",
-        "x-ms-request-id": "6549f4e3-7178-4390-8d76-32e28fd32163",
-        "x-ms-routing-request-id": "WESTEUROPE:20220914T134334Z:6549f4e3-7178-4390-8d76-32e28fd32163"
+        "x-ms-correlation-request-id": "7049e149-5bb6-4e34-9a79-1dc5c6db80ef",
+        "x-ms-ratelimit-remaining-subscription-reads": "11959",
+        "x-ms-request-id": "7049e149-5bb6-4e34-9a79-1dc5c6db80ef",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20230424T163319Z:7049e149-5bb6-4e34-9a79-1dc5c6db80ef"
       },
       "ResponseBody": {
-        "id": "/subscriptions/69a75bda-882e-44d5-8431-63421204132a",
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c",
         "authorizationSource": "RoleBased",
         "managedByTenants": [],
         "tags": {
-          "SkipNRMSNSG": "true"
+          "TagKey-9823": "TagValue-1254",
+          "TagKey-3481": "TagValue-320",
+          "TagKey-4926": "TagValue-1187",
+          "TagKey-751": "TagValue-3921",
+          "TagKey-1866": "TagValue-8559",
+          "TagKey-3094": "TagValue-9190",
+          "TagKey-2449": "TagValue-9",
+          "TagKey-8379": "TagValue-164",
+          "TagKey-7470": "TagValue-2205",
+          "TagKey-4236": "TagValue-3698",
+          "TagKey-5316": "TagValue-2725"
         },
-        "subscriptionId": "69a75bda-882e-44d5-8431-63421204132a",
+        "subscriptionId": "db1ab6f0-4769-4b27-930e-01e2ef9c123c",
         "tenantId": "72f988bf-86f1-41af-91ab-2d7cd011db47",
-        "displayName": "QATest02-SVL",
+        "displayName": ".NET Mgmt SDK Test with TTL = 1 Day",
         "state": "Enabled",
         "subscriptionPolicies": {
           "locationPlacementId": "Internal_2014-09-01",
@@ -46,34 +56,34 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/69a75bda-882e-44d5-8431-63421204132a/providers/Microsoft.NetApp?api-version=**",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.NetApp?api-version=**",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-78a95a35c93856dc1211ec22a8c3c9cb-0b285079709aadb9-00",
-        "User-Agent": "azsdk-net-ResourceManager/1.3.1 (.NET 6.0.8; Microsoft Windows 10.0.19044)",
-        "x-ms-client-request-id": "8a27681dfae42db064f3a46cce3bc87b",
+        "traceparent": "00-27e32c7db121a1373cd275f52c329cab-7c38fc820431734d-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET 6.0.16; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "f96003d9437580fd1e2c7bb060358777",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "22420",
+        "Content-Length": "19058",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 14 Sep 2022 13:43:33 GMT",
+        "Date": "Mon, 24 Apr 2023 16:33:19 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "0ff75f12-2e20-4b72-8fe7-586751a05329",
-        "x-ms-ratelimit-remaining-subscription-reads": "11959",
-        "x-ms-request-id": "0ff75f12-2e20-4b72-8fe7-586751a05329",
-        "x-ms-routing-request-id": "WESTEUROPE:20220914T134334Z:0ff75f12-2e20-4b72-8fe7-586751a05329"
+        "x-ms-correlation-request-id": "94cec897-f5ea-4af5-836a-dcece48ddcc7",
+        "x-ms-ratelimit-remaining-subscription-reads": "11958",
+        "x-ms-request-id": "94cec897-f5ea-4af5-836a-dcece48ddcc7",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20230424T163320Z:94cec897-f5ea-4af5-836a-dcece48ddcc7"
       },
       "ResponseBody": {
-        "id": "/subscriptions/69a75bda-882e-44d5-8431-63421204132a/providers/Microsoft.NetApp",
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.NetApp",
         "namespace": "Microsoft.NetApp",
         "authorizations": [
           {
@@ -112,7 +122,9 @@
               "North Europe",
               "Norway East",
               "Norway West",
+              "Qatar Central",
               "South Central US",
+              "South Africa North",
               "South India",
               "Southeast Asia",
               "Sweden Central",
@@ -125,17 +137,12 @@
               "West Europe",
               "West US",
               "West US 2",
-              "West US 3",
-              "West US (Stage)",
-              "East US 2 EUAP",
-              "South Central US (Stage)",
-              "West Central US",
-              "West US 2 (Stage)",
-              "Brazil Southeast",
-              "Central US EUAP",
-              "Sweden South"
+              "West US 3"
             ],
             "apiVersions": [
+              "2022-11-01",
+              "2022-09-01",
+              "2022-07-01",
               "2022-05-01",
               "2022-03-01",
               "2022-01-01",
@@ -190,7 +197,9 @@
               "North Europe",
               "Norway East",
               "Norway West",
+              "Qatar Central",
               "South Central US",
+              "South Africa North",
               "South India",
               "Southeast Asia",
               "Sweden Central",
@@ -203,17 +212,12 @@
               "West Europe",
               "West US",
               "West US 2",
-              "West US 3",
-              "West US (Stage)",
-              "East US 2 EUAP",
-              "South Central US (Stage)",
-              "West Central US",
-              "West US 2 (Stage)",
-              "Brazil Southeast",
-              "Central US EUAP",
-              "Sweden South"
+              "West US 3"
             ],
             "apiVersions": [
+              "2022-11-01",
+              "2022-09-01",
+              "2022-07-01",
               "2022-05-01",
               "2022-03-01",
               "2022-01-01",
@@ -259,7 +263,9 @@
               "North Europe",
               "Norway East",
               "Norway West",
+              "Qatar Central",
               "South Central US",
+              "South Africa North",
               "South India",
               "Southeast Asia",
               "Sweden Central",
@@ -272,17 +278,12 @@
               "West Europe",
               "West US",
               "West US 2",
-              "West US 3",
-              "West US (Stage)",
-              "East US 2 EUAP",
-              "South Central US (Stage)",
-              "West Central US",
-              "West US 2 (Stage)",
-              "Brazil Southeast",
-              "Central US EUAP",
-              "Sweden South"
+              "West US 3"
             ],
             "apiVersions": [
+              "2022-11-01",
+              "2022-09-01",
+              "2022-07-01",
               "2022-05-01",
               "2022-03-01",
               "2022-01-01",
@@ -320,7 +321,9 @@
               "North Europe",
               "Norway East",
               "Norway West",
+              "Qatar Central",
               "South Central US",
+              "South Africa North",
               "South India",
               "Southeast Asia",
               "Sweden Central",
@@ -333,17 +336,13 @@
               "West Europe",
               "West US",
               "West US 2",
-              "West US 3",
-              "West US (Stage)",
-              "East US 2 EUAP",
-              "South Central US (Stage)",
-              "West Central US",
-              "West US 2 (Stage)",
-              "Brazil Southeast",
-              "Central US EUAP",
-              "Sweden South"
+              "West US 3"
             ],
             "apiVersions": [
+              "2022-11-01",
+              "2022-09-01",
+              "2022-07-01-preview",
+              "2022-07-01",
               "2022-05-01",
               "2022-03-01",
               "2022-01-01",
@@ -398,7 +397,9 @@
               "North Europe",
               "Norway East",
               "Norway West",
+              "Qatar Central",
               "South Central US",
+              "South Africa North",
               "South India",
               "Southeast Asia",
               "Sweden Central",
@@ -411,17 +412,13 @@
               "West Europe",
               "West US",
               "West US 2",
-              "West US 3",
-              "West US (Stage)",
-              "East US 2 EUAP",
-              "South Central US (Stage)",
-              "West Central US",
-              "West US 2 (Stage)",
-              "Brazil Southeast",
-              "Central US EUAP",
-              "Sweden South"
+              "West US 3"
             ],
             "apiVersions": [
+              "2022-11-01",
+              "2022-09-01",
+              "2022-07-01-preview",
+              "2022-07-01",
               "2022-05-01",
               "2022-03-01",
               "2022-01-01",
@@ -452,109 +449,97 @@
               {
                 "location": "Australia East",
                 "zones": [
-                  "3",
+                  "2",
                   "1",
-                  "2"
+                  "3"
                 ]
               },
               {
                 "location": "Brazil South",
                 "zones": [
-                  "3",
+                  "2",
                   "1",
-                  "2"
+                  "3"
                 ]
               },
               {
                 "location": "Canada Central",
                 "zones": [
-                  "3",
+                  "2",
                   "1",
-                  "2"
+                  "3"
                 ]
               },
               {
                 "location": "Central India",
                 "zones": [
-                  "3",
+                  "2",
                   "1",
-                  "2"
+                  "3"
                 ]
               },
               {
                 "location": "Central US",
                 "zones": [
-                  "3",
+                  "2",
                   "1",
-                  "2"
+                  "3"
                 ]
-              },
-              {
-                "location": "Central US EUAP",
-                "zones": []
               },
               {
                 "location": "East Asia",
                 "zones": [
-                  "3",
+                  "2",
                   "1",
-                  "2"
+                  "3"
                 ]
               },
               {
                 "location": "East US",
                 "zones": [
-                  "3",
+                  "2",
                   "1",
-                  "2"
+                  "3"
                 ]
               },
               {
                 "location": "East US 2",
                 "zones": [
-                  "3",
+                  "2",
                   "1",
-                  "2"
-                ]
-              },
-              {
-                "location": "East US 2 EUAP",
-                "zones": [
-                  "3",
-                  "1",
-                  "2"
+                  "3"
                 ]
               },
               {
                 "location": "France Central",
                 "zones": [
-                  "3",
+                  "2",
                   "1",
-                  "2"
+                  "3"
                 ]
               },
               {
                 "location": "Germany West Central",
                 "zones": [
-                  "3",
+                  "2",
                   "1",
-                  "2"
+                  "3"
                 ]
               },
               {
                 "location": "Japan East",
                 "zones": [
-                  "3",
+                  "2",
                   "1",
-                  "2"
+                  "3"
                 ]
               },
               {
                 "location": "Korea Central",
                 "zones": [
-                  "3",
+                  "2",
                   "1",
-                  "2"
+                  "3"
                 ]
               },
               {
@@ -564,89 +549,109 @@
               {
                 "location": "North Europe",
                 "zones": [
-                  "3",
+                  "2",
                   "1",
-                  "2"
+                  "3"
                 ]
               },
               {
                 "location": "Norway East",
                 "zones": [
-                  "3",
+                  "2",
                   "1",
-                  "2"
+                  "3"
+                ]
+              },
+              {
+                "location": "Qatar Central",
+                "zones": [
+                  "2",
+                  "1",
+                  "3"
+                ]
+              },
+              {
+                "location": "South Africa North",
+                "zones": [
+                  "2",
+                  "1",
+                  "3"
                 ]
               },
               {
                 "location": "South Central US",
                 "zones": [
-                  "3",
+                  "2",
                   "1",
-                  "2"
+                  "3"
                 ]
               },
               {
                 "location": "Southeast Asia",
                 "zones": [
-                  "3",
+                  "2",
                   "1",
-                  "2"
+                  "3"
                 ]
               },
               {
                 "location": "Sweden Central",
                 "zones": [
-                  "3",
+                  "2",
                   "1",
-                  "2"
+                  "3"
                 ]
               },
               {
                 "location": "Switzerland North",
                 "zones": [
-                  "3",
+                  "2",
                   "1",
-                  "2"
+                  "3"
                 ]
               },
               {
                 "location": "UAE North",
                 "zones": [
-                  "3",
+                  "2",
                   "1",
-                  "2"
+                  "3"
                 ]
               },
               {
                 "location": "UK South",
                 "zones": [
-                  "3",
+                  "2",
                   "1",
-                  "2"
+                  "3"
                 ]
               },
               {
                 "location": "West Europe",
                 "zones": [
-                  "3",
+                  "2",
                   "1",
-                  "2"
+                  "3"
                 ]
+              },
+              {
+                "location": "West US",
+                "zones": []
               },
               {
                 "location": "West US 2",
                 "zones": [
-                  "3",
+                  "2",
                   "1",
-                  "2"
+                  "3"
                 ]
               },
               {
                 "location": "West US 3",
                 "zones": [
-                  "3",
+                  "2",
                   "1",
-                  "2"
+                  "3"
                 ]
               }
             ],
@@ -678,7 +683,9 @@
               "North Europe",
               "Norway East",
               "Norway West",
+              "Qatar Central",
               "South Central US",
+              "South Africa North",
               "South India",
               "Southeast Asia",
               "Sweden Central",
@@ -691,15 +698,7 @@
               "West Europe",
               "West US",
               "West US 2",
-              "West US 3",
-              "West US (Stage)",
-              "East US 2 EUAP",
-              "South Central US (Stage)",
-              "West Central US",
-              "West US 2 (Stage)",
-              "Brazil Southeast",
-              "Central US EUAP",
-              "Sweden South"
+              "West US 3"
             ],
             "apiVersions": [
               "2019-10-01",
@@ -737,7 +736,9 @@
               "North Europe",
               "Norway East",
               "Norway West",
+              "Qatar Central",
               "South Central US",
+              "South Africa North",
               "South India",
               "Southeast Asia",
               "Sweden Central",
@@ -750,17 +751,12 @@
               "West Europe",
               "West US",
               "West US 2",
-              "West US 3",
-              "West US (Stage)",
-              "East US 2 EUAP",
-              "South Central US (Stage)",
-              "West Central US",
-              "West US 2 (Stage)",
-              "Brazil Southeast",
-              "Central US EUAP",
-              "Sweden South"
+              "West US 3"
             ],
             "apiVersions": [
+              "2022-11-01",
+              "2022-09-01",
+              "2022-07-01",
               "2022-05-01",
               "2022-03-01",
               "2022-01-01",
@@ -815,6 +811,8 @@
               "North Europe",
               "Norway East",
               "Norway West",
+              "Qatar Central",
+              "South Africa North",
               "South Central US",
               "South India",
               "Southeast Asia",
@@ -825,20 +823,15 @@
               "UAE North",
               "UK South",
               "UK West",
+              "West Europe",
               "West US",
               "West US 2",
-              "West US 3",
-              "West Europe",
-              "West Central US",
-              "West US (Stage)",
-              "West US 2 (Stage)",
-              "South Central US (Stage)",
-              "Brazil Southeast",
-              "Sweden South",
-              "Central US EUAP",
-              "East US 2 EUAP"
+              "West US 3"
             ],
             "apiVersions": [
+              "2022-11-01",
+              "2022-09-01",
+              "2022-07-01",
               "2022-05-01",
               "2022-03-01",
               "2022-01-01",
@@ -860,6 +853,7 @@
               "2019-11-01",
               "2019-10-01",
               "2019-08-01",
+              "2019-07-15-preview",
               "2019-07-01",
               "2019-06-01",
               "2019-05-01",
@@ -893,7 +887,9 @@
               "North Europe",
               "Norway East",
               "Norway West",
+              "Qatar Central",
               "South Central US",
+              "South Africa North",
               "South India",
               "Southeast Asia",
               "Sweden Central",
@@ -906,17 +902,20 @@
               "West Europe",
               "West US",
               "West US 2",
-              "West US 3",
-              "West US (Stage)",
-              "East US 2 EUAP",
-              "South Central US (Stage)",
-              "West Central US",
-              "West US 2 (Stage)",
-              "Brazil Southeast",
-              "Central US EUAP",
-              "Sweden South"
+              "West US 3"
             ],
             "apiVersions": [
+              "2022-11-01",
+              "2022-09-01",
+              "2022-07-01",
+              "2022-05-01",
+              "2022-03-01",
+              "2022-01-01",
+              "2021-10-01",
+              "2021-08-01",
+              "2021-06-01",
+              "2021-04-01",
+              "2021-02-01",
               "2020-12-01",
               "2020-11-01",
               "2020-10-01",
@@ -963,7 +962,9 @@
               "North Europe",
               "Norway East",
               "Norway West",
+              "Qatar Central",
               "South Central US",
+              "South Africa North",
               "South India",
               "Southeast Asia",
               "Sweden Central",
@@ -976,17 +977,12 @@
               "West Europe",
               "West US",
               "West US 2",
-              "West US 3",
-              "West US (Stage)",
-              "East US 2 EUAP",
-              "South Central US (Stage)",
-              "West Central US",
-              "West US 2 (Stage)",
-              "Brazil Southeast",
-              "Central US EUAP",
-              "Sweden South"
+              "West US 3"
             ],
             "apiVersions": [
+              "2022-11-01",
+              "2022-09-01",
+              "2022-07-01",
               "2022-05-01",
               "2022-03-01",
               "2022-01-01",
@@ -1042,7 +1038,10 @@
               "North Europe",
               "Norway East",
               "Norway West",
+              "Qatar Central",
+              "South Africa North",
               "South Central US",
+              "South Central US (Stage)",
               "South India",
               "Southeast Asia",
               "Sweden Central",
@@ -1055,18 +1054,18 @@
               "West Central US",
               "West Europe",
               "West US",
-              "West US 2",
-              "West US 3",
               "West US (Stage)",
+              "West US 2",
               "West US 2 (Stage)",
-              "South Central US (Stage)",
-              "Central US EUAP",
-              "East US 2 EUAP"
+              "West US 3"
             ],
             "apiVersions": [
+              "2022-09-01",
+              "2022-07-01",
               "2022-05-01",
               "2022-03-01",
               "2022-01-01",
+              "2021-12-01-preview",
               "2021-10-01",
               "2021-08-01",
               "2021-06-01",
@@ -1085,6 +1084,7 @@
               "2019-11-01",
               "2019-10-01",
               "2019-08-01",
+              "2019-07-15-preview",
               "2019-07-01",
               "2019-06-01",
               "2019-05-01",
@@ -1118,7 +1118,9 @@
               "North Europe",
               "Norway East",
               "Norway West",
+              "Qatar Central",
               "South Central US",
+              "South Africa North",
               "South India",
               "Southeast Asia",
               "Sweden Central",
@@ -1131,17 +1133,12 @@
               "West Europe",
               "West US",
               "West US 2",
-              "West US 3",
-              "West US (Stage)",
-              "East US 2 EUAP",
-              "South Central US (Stage)",
-              "West Central US",
-              "West US 2 (Stage)",
-              "Brazil Southeast",
-              "Central US EUAP",
-              "Sweden South"
+              "West US 3"
             ],
             "apiVersions": [
+              "2022-11-01",
+              "2022-09-01",
+              "2022-07-01",
               "2022-05-01",
               "2022-03-01",
               "2022-01-01",
@@ -1157,6 +1154,102 @@
               "2020-08-01",
               "2020-07-01",
               "2020-06-01"
+            ],
+            "capabilities": "None"
+          },
+          {
+            "resourceType": "locations/queryNetworkSiblingSet",
+            "locations": [
+              "Australia Central",
+              "Australia Central 2",
+              "Australia East",
+              "Australia Southeast",
+              "Brazil South",
+              "Canada Central",
+              "Canada East",
+              "Central India",
+              "Central US",
+              "East Asia",
+              "East US",
+              "East US 2",
+              "France Central",
+              "Germany North",
+              "Germany West Central",
+              "Japan East",
+              "Japan West",
+              "Korea Central",
+              "Korea South",
+              "North Central US",
+              "North Europe",
+              "Norway East",
+              "Norway West",
+              "Qatar Central",
+              "South Central US",
+              "South Africa North",
+              "South India",
+              "Southeast Asia",
+              "Sweden Central",
+              "Switzerland North",
+              "Switzerland West",
+              "UAE North",
+              "UAE Central",
+              "UK South",
+              "UK West",
+              "West Europe",
+              "West US",
+              "West US 2",
+              "West US 3"
+            ],
+            "apiVersions": [
+              "2022-11-01"
+            ],
+            "capabilities": "None"
+          },
+          {
+            "resourceType": "locations/updateNetworkSiblingSet",
+            "locations": [
+              "Australia Central",
+              "Australia Central 2",
+              "Australia East",
+              "Australia Southeast",
+              "Brazil South",
+              "Canada Central",
+              "Canada East",
+              "Central India",
+              "Central US",
+              "East Asia",
+              "East US",
+              "East US 2",
+              "France Central",
+              "Germany North",
+              "Germany West Central",
+              "Japan East",
+              "Japan West",
+              "Korea Central",
+              "Korea South",
+              "North Central US",
+              "North Europe",
+              "Norway East",
+              "Norway West",
+              "Qatar Central",
+              "South Central US",
+              "South Africa North",
+              "South India",
+              "Southeast Asia",
+              "Sweden Central",
+              "Switzerland North",
+              "Switzerland West",
+              "UAE North",
+              "UAE Central",
+              "UK South",
+              "UK West",
+              "West Europe",
+              "West US",
+              "West US 2",
+              "West US 3"
+            ],
+            "apiVersions": [
+              "2022-11-01"
             ],
             "capabilities": "None"
           },
@@ -1186,7 +1279,9 @@
               "North Europe",
               "Norway East",
               "Norway West",
+              "Qatar Central",
               "South Central US",
+              "South Africa North",
               "South India",
               "Southeast Asia",
               "Sweden Central",
@@ -1199,17 +1294,10 @@
               "West Europe",
               "West US",
               "West US 2",
-              "West US 3",
-              "West US (Stage)",
-              "East US 2 EUAP",
-              "South Central US (Stage)",
-              "West Central US",
-              "West US 2 (Stage)",
-              "Brazil Southeast",
-              "Central US EUAP",
-              "Sweden South"
+              "West US 3"
             ],
             "apiVersions": [
+              "2022-11-01",
               "2021-04-01-preview"
             ],
             "capabilities": "None"
@@ -1240,7 +1328,9 @@
               "North Europe",
               "Norway East",
               "Norway West",
+              "Qatar Central",
               "South Central US",
+              "South Africa North",
               "South India",
               "Southeast Asia",
               "Sweden Central",
@@ -1253,17 +1343,12 @@
               "West Europe",
               "West US",
               "West US 2",
-              "West US 3",
-              "West US (Stage)",
-              "East US 2 EUAP",
-              "South Central US (Stage)",
-              "West Central US",
-              "West US 2 (Stage)",
-              "Brazil Southeast",
-              "Central US EUAP",
-              "Sweden South"
+              "West US 3"
             ],
             "apiVersions": [
+              "2022-11-01",
+              "2022-09-01",
+              "2022-07-01",
               "2022-05-01",
               "2022-03-01",
               "2022-01-01",
@@ -1299,7 +1384,9 @@
               "North Europe",
               "Norway East",
               "Norway West",
+              "Qatar Central",
               "South Central US",
+              "South Africa North",
               "South India",
               "Southeast Asia",
               "Sweden Central",
@@ -1312,17 +1399,12 @@
               "West Europe",
               "West US",
               "West US 2",
-              "West US 3",
-              "West US (Stage)",
-              "East US 2 EUAP",
-              "South Central US (Stage)",
-              "West Central US",
-              "West US 2 (Stage)",
-              "Brazil Southeast",
-              "Central US EUAP",
-              "Sweden South"
+              "West US 3"
             ],
             "apiVersions": [
+              "2022-11-01",
+              "2022-09-01",
+              "2022-07-01",
               "2022-05-01",
               "2022-03-01",
               "2022-01-01",
@@ -1357,7 +1439,9 @@
               "North Europe",
               "Norway East",
               "Norway West",
+              "Qatar Central",
               "South Central US",
+              "South Africa North",
               "South India",
               "Southeast Asia",
               "Sweden Central",
@@ -1370,17 +1454,13 @@
               "West Europe",
               "West US",
               "West US 2",
-              "West US 3",
-              "West US (Stage)",
-              "East US 2 EUAP",
-              "South Central US (Stage)",
-              "West Central US",
-              "West US 2 (Stage)",
-              "Brazil Southeast",
-              "Central US EUAP",
-              "Sweden South"
+              "West US 3"
             ],
             "apiVersions": [
+              "2022-11-01",
+              "2022-09-01",
+              "2022-07-01-preview",
+              "2022-07-01",
               "2022-05-01",
               "2022-03-01",
               "2022-01-01",
@@ -1408,268 +1488,6 @@
               "2017-08-15"
             ],
             "capabilities": "None"
-          },
-          {
-            "resourceType": "netAppAccounts/accountBackups",
-            "locations": [
-              "West US (Stage)",
-              "East US 2 EUAP",
-              "South Central US (Stage)",
-              "West Central US",
-              "West US 2 (Stage)",
-              "Australia East",
-              "France Central",
-              "East US",
-              "East US 2",
-              "Japan East",
-              "North Europe",
-              "South Central US",
-              "Southeast Asia",
-              "UK South",
-              "West Europe",
-              "West US",
-              "West US 2"
-            ],
-            "apiVersions": [
-              "2022-05-01",
-              "2022-03-01",
-              "2022-01-01",
-              "2021-10-01",
-              "2021-08-01",
-              "2021-06-01",
-              "2021-04-01",
-              "2021-02-01",
-              "2020-12-01",
-              "2020-11-01",
-              "2020-10-01",
-              "2020-08-01",
-              "2020-07-01",
-              "2020-06-01",
-              "2020-05-01"
-            ],
-            "capabilities": "None"
-          },
-          {
-            "resourceType": "netAppAccounts/backupPolicies",
-            "locations": [
-              "West US (Stage)",
-              "East US 2 EUAP",
-              "South Central US (Stage)",
-              "West Central US",
-              "West US 2 (Stage)",
-              "Australia East",
-              "France Central",
-              "East US",
-              "East US 2",
-              "Japan East",
-              "North Europe",
-              "South Central US",
-              "Southeast Asia",
-              "UK South",
-              "West Europe",
-              "West US",
-              "West US 2"
-            ],
-            "apiVersions": [
-              "2022-05-01",
-              "2022-03-01",
-              "2022-01-01",
-              "2021-10-01",
-              "2021-08-01",
-              "2021-06-01",
-              "2021-04-01",
-              "2021-02-01",
-              "2020-12-01",
-              "2020-11-01",
-              "2020-10-01",
-              "2020-07-01",
-              "2020-06-01",
-              "2020-05-01"
-            ],
-            "capabilities": "SupportsTags, SupportsLocation"
-          },
-          {
-            "resourceType": "netAppAccounts/vaults",
-            "locations": [
-              "West US (Stage)",
-              "East US 2 EUAP",
-              "South Central US (Stage)",
-              "West Central US",
-              "West US 2 (Stage)",
-              "Australia East",
-              "France Central",
-              "East US",
-              "East US 2",
-              "Japan East",
-              "North Europe",
-              "South Central US",
-              "Southeast Asia",
-              "UK South",
-              "West Europe",
-              "West US",
-              "West US 2"
-            ],
-            "apiVersions": [
-              "2022-05-01",
-              "2022-03-01",
-              "2022-01-01",
-              "2021-10-01",
-              "2021-08-01",
-              "2021-06-01",
-              "2021-04-01",
-              "2021-02-01",
-              "2020-12-01",
-              "2020-11-01",
-              "2020-10-01",
-              "2020-09-01",
-              "2020-08-01",
-              "2020-07-01",
-              "2020-06-01",
-              "2020-05-01"
-            ],
-            "capabilities": "None"
-          },
-          {
-            "resourceType": "netAppAccounts/capacityPools/volumes/backups",
-            "locations": [
-              "West US (Stage)",
-              "East US 2 EUAP",
-              "South Central US (Stage)",
-              "West Central US",
-              "West US 2 (Stage)",
-              "Australia East",
-              "France Central",
-              "East US",
-              "East US 2",
-              "Japan East",
-              "North Europe",
-              "South Central US",
-              "Southeast Asia",
-              "UK South",
-              "West Europe",
-              "West US",
-              "West US 2"
-            ],
-            "apiVersions": [
-              "2022-05-01",
-              "2022-03-01",
-              "2022-01-01",
-              "2021-10-01",
-              "2021-08-01",
-              "2021-06-01",
-              "2021-04-01",
-              "2021-02-01",
-              "2020-12-01",
-              "2020-11-01",
-              "2020-10-01",
-              "2020-09-01",
-              "2020-08-01",
-              "2020-07-01",
-              "2020-06-01",
-              "2020-05-01"
-            ],
-            "capabilities": "None"
-          },
-          {
-            "resourceType": "netAppAccounts/capacityPools/volumes/subvolumes",
-            "locations": [
-              "West US (Stage)",
-              "East US 2 EUAP",
-              "South Central US (Stage)",
-              "West Central US",
-              "West US 2 (Stage)",
-              "Australia Central",
-              "Australia Central 2",
-              "Australia East",
-              "Australia Southeast",
-              "Brazil South",
-              "Brazil Southeast",
-              "Canada Central",
-              "Canada East",
-              "Central India",
-              "Central US",
-              "Central US EUAP",
-              "East Asia",
-              "East US",
-              "East US 2",
-              "France Central",
-              "Germany North",
-              "Germany West Central",
-              "Japan East",
-              "Japan West",
-              "Korea Central",
-              "Korea South",
-              "North Central US",
-              "North Europe",
-              "Norway East",
-              "Norway West",
-              "South Central US",
-              "South India",
-              "Southeast Asia",
-              "Sweden Central",
-              "Sweden South",
-              "Switzerland North",
-              "Switzerland West",
-              "UAE North",
-              "UAE Central",
-              "UK South",
-              "UK West",
-              "West Europe",
-              "West US",
-              "West US 2",
-              "West US 3"
-            ],
-            "apiVersions": [
-              "2022-05-01",
-              "2022-03-01",
-              "2022-01-01",
-              "2021-10-01"
-            ],
-            "capabilities": "None"
-          },
-          {
-            "resourceType": "netAppAccounts/capacityPools/volumes/volumeQuotaRules",
-            "locations": [
-              "West US (Stage)",
-              "East US 2 EUAP",
-              "South Central US (Stage)",
-              "West Central US",
-              "West US 2 (Stage)"
-            ],
-            "apiVersions": [
-              "2022-05-01",
-              "2022-03-01",
-              "2022-01-01"
-            ],
-            "capabilities": "None"
-          },
-          {
-            "resourceType": "locations/queryNetworkSiblingSet",
-            "locations": [
-              "West US (Stage)",
-              "East US 2 EUAP",
-              "South Central US (Stage)",
-              "West Central US",
-              "West US 2 (Stage)"
-            ],
-            "apiVersions": [
-              "2021-12-01-preview"
-            ],
-            "capabilities": "None"
-          },
-          {
-            "resourceType": "locations/updateNetworkSiblingSet",
-            "locations": [
-              "West US (Stage)",
-              "East US 2 EUAP",
-              "South Central US (Stage)",
-              "West Central US",
-              "West US 2 (Stage)"
-            ],
-            "apiVersions": [
-              "2021-12-01-preview"
-            ],
-            "capabilities": "None"
           }
         ],
         "registrationState": "Registered",
@@ -1677,32 +1495,32 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/providers/Microsoft.NetApp/operations?api-version=2022-05-01",
+      "RequestUri": "https://management.azure.com/providers/Microsoft.NetApp/operations?api-version=2022-09-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-78a95a35c93856dc1211ec22a8c3c9cb-9ef72971b03f3b0c-00",
-        "User-Agent": "azsdk-net-ResourceManager/1.3.1 (.NET 6.0.8; Microsoft Windows 10.0.19044)",
-        "x-ms-client-request-id": "41503781f2d86a6f30137dc4f5ffb67e",
+        "traceparent": "00-27e32c7db121a1373cd275f52c329cab-7cb800a7e518e7ea-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET 6.0.16; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "afd6e49cc52f5170c90fb0964adbf225",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "41962",
+        "Content-Length": "44285",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 14 Sep 2022 13:43:33 GMT",
+        "Date": "Mon, 24 Apr 2023 16:33:21 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Server": "Microsoft-IIS/10.0",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "2ec18765-9338-400f-871f-a5d36dc05bf4",
+        "x-ms-correlation-request-id": "8532413b-0bed-44ff-96a9-a67b6437d330",
         "x-ms-ratelimit-remaining-tenant-reads": "11999",
-        "x-ms-request-id": "672fce70-5416-4d2d-86e2-63e0c896045e",
-        "x-ms-routing-request-id": "WESTEUROPE:20220914T134334Z:2ec18765-9338-400f-871f-a5d36dc05bf4",
+        "x-ms-request-id": "99c170a2-aa00-46f1-81b1-a0017047882d",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20230424T163321Z:8532413b-0bed-44ff-96a9-a67b6437d330",
         "X-Powered-By": "ASP.NET"
       },
       "ResponseBody": {
@@ -2384,6 +2202,58 @@
                     "dimensions": []
                   },
                   {
+                    "name": "CbsVolumeOperationBackupTransferredBytes",
+                    "displayName": "Volume Backup Operation Last Transferred Bytes",
+                    "displayDescription": "Total bytes transferred for last backup operation.",
+                    "unit": "Bytes",
+                    "aggregationType": "Average",
+                    "supportedAggregationTypes": [
+                      "Average"
+                    ],
+                    "supportedTimeGrainTypes": [
+                      "PT5M",
+                      "PT15M",
+                      "PT30M",
+                      "PT1H",
+                      "PT6H",
+                      "PT12H",
+                      "P1D"
+                    ],
+                    "internalMetricName": "CbsVolumeOperationBackupTransferredBytes",
+                    "enableRegionalMdmAccount": true,
+                    "sourceMdmAccount": "MicrosoftNetAppShoebox2",
+                    "sourceMdmNamespace": "NetAppUsageAndMetrics",
+                    "fillGapWithZero": false,
+                    "isInternal": false,
+                    "dimensions": []
+                  },
+                  {
+                    "name": "CbsVolumeOperationRestoreTransferredBytes",
+                    "displayName": "Volume Backup Restore Operation Last Transferred Bytes",
+                    "displayDescription": "Total bytes transferred for last backup restore operation.",
+                    "unit": "Bytes",
+                    "aggregationType": "Average",
+                    "supportedAggregationTypes": [
+                      "Average"
+                    ],
+                    "supportedTimeGrainTypes": [
+                      "PT5M",
+                      "PT15M",
+                      "PT30M",
+                      "PT1H",
+                      "PT6H",
+                      "PT12H",
+                      "P1D"
+                    ],
+                    "internalMetricName": "CbsVolumeOperationRestoreTransferredBytes",
+                    "enableRegionalMdmAccount": true,
+                    "sourceMdmAccount": "MicrosoftNetAppShoebox2",
+                    "sourceMdmNamespace": "NetAppUsageAndMetrics",
+                    "fillGapWithZero": false,
+                    "isInternal": false,
+                    "dimensions": []
+                  },
+                  {
                     "name": "VolumeConsumedSizePercentage",
                     "displayName": "Percentage Volume Consumed Size",
                     "displayDescription": "The percentage of the volume consumed including snapshots.",
@@ -2682,6 +2552,26 @@
               "resource": "Volumes resource type",
               "operation": "Populates availability zone for a volume",
               "description": "Populates logical availability zone for a volume in a zone aware region and storage."
+            },
+            "origin": "user,system"
+          },
+          {
+            "name": "Microsoft.NetApp/netAppAccounts/capacityPools/volumes/GetGroupIdListForLdapUser/action",
+            "display": {
+              "provider": "Microsoft.NetApp Resource Provider",
+              "resource": "Volumes resource type",
+              "operation": "Get group Id list for Ldap User",
+              "description": "Get group Id list for a given user for an Ldap enabled volume"
+            },
+            "origin": "user,system"
+          },
+          {
+            "name": "Microsoft.NetApp/netAppAccounts/capacityPools/volumes/ReestablishReplication/action",
+            "display": {
+              "provider": "Microsoft.NetApp Resource Provider",
+              "resource": "Volumes resource type",
+              "operation": "Re-establish volume replication",
+              "description": "Re-establish a previously deleted replication between 2 volumes that have a common ad-hoc or policy-based snapshots"
             },
             "origin": "user,system"
           },
@@ -3024,8 +2914,8 @@
             "display": {
               "provider": "Microsoft.NetApp Resource Provider",
               "resource": "Subvolume resource type.",
-              "operation": "",
-              "description": ""
+              "operation": "Read subvolume resource",
+              "description": "Read a subvolume resource."
             },
             "origin": "user,system"
           },
@@ -3044,8 +2934,8 @@
             "display": {
               "provider": "Microsoft.NetApp Resource Provider",
               "resource": "Subvolume resource type.",
-              "operation": "",
-              "description": ""
+              "operation": "Delete subvolume resource",
+              "description": "Delete a subvolume resource."
             },
             "origin": "user,system"
           },
@@ -3400,12 +3290,22 @@
             "origin": "user,system"
           },
           {
-            "name": "Microsoft.NetApp/locations/checkinventory/action",
+            "name": "Microsoft.NetApp.Reservations/locations/CheckInventory/action",
             "display": {
               "provider": "Microsoft.NetApp Resource Provider",
               "resource": "ReservedCapacity reservation resource.",
               "operation": "Checks ReservedCapacity inventory.",
               "description": "Checks ReservedCapacity inventory."
+            },
+            "origin": "user,system"
+          },
+          {
+            "name": "Microsoft.NetApp/locations/checkquotaavailability/action",
+            "display": {
+              "provider": "Microsoft.NetApp Resource Provider",
+              "resource": "NetApp resources",
+              "operation": "Check quota availability",
+              "description": "Check if a quota is available."
             },
             "origin": "user,system"
           }
@@ -3414,8 +3314,9 @@
     }
   ],
   "Variables": {
-    "RandomSeed": "1417700138",
+    "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com",
+    "RandomSeed": "687439027",
     "RESOURCE_MANAGER_URL": null,
-    "SUBSCRIPTION_ID": "69a75bda-882e-44d5-8431-63421204132a"
+    "SUBSCRIPTION_ID": "db1ab6f0-4769-4b27-930e-01e2ef9c123c"
   }
 }

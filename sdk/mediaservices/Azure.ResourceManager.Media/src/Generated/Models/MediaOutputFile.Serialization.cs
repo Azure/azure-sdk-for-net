@@ -28,6 +28,10 @@ namespace Azure.ResourceManager.Media.Models
 
         internal static MediaOutputFile DeserializeMediaOutputFile(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             IList<string> labels = default;
             foreach (var property in element.EnumerateObject())
             {

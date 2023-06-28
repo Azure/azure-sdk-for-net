@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Search.Models
         }
 
         /// <summary> Initializes a new instance of SearchServiceListResult. </summary>
-        /// <param name="value"> The list of search services. </param>
+        /// <param name="value"> The list of Search services. </param>
         /// <param name="nextLink"> Request URL that can be used to query next page of search services. Returned when the total number of requested search services exceed maximum page size. </param>
         internal SearchServiceListResult(IReadOnlyList<SearchServiceData> value, string nextLink)
         {
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Search.Models
             NextLink = nextLink;
         }
 
-        /// <summary> The list of search services. </summary>
+        /// <summary> The list of Search services. </summary>
         public IReadOnlyList<SearchServiceData> Value { get; }
         /// <summary> Request URL that can be used to query next page of search services. Returned when the total number of requested search services exceed maximum page size. </summary>
         public string NextLink { get; }

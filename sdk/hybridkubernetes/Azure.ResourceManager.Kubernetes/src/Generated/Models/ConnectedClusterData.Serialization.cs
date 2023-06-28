@@ -68,6 +68,10 @@ namespace Azure.ResourceManager.Kubernetes
 
         internal static ConnectedClusterData DeserializeConnectedClusterData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ManagedServiceIdentity identity = default;
             Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
@@ -100,7 +104,6 @@ namespace Azure.ResourceManager.Kubernetes
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -135,7 +138,6 @@ namespace Azure.ResourceManager.Kubernetes
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
@@ -164,7 +166,6 @@ namespace Azure.ResourceManager.Kubernetes
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             totalNodeCount = property0.Value.GetInt32();
@@ -174,7 +175,6 @@ namespace Azure.ResourceManager.Kubernetes
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             totalCoreCount = property0.Value.GetInt32();
@@ -189,7 +189,6 @@ namespace Azure.ResourceManager.Kubernetes
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             provisioningState = new ProvisioningState(property0.Value.GetString());
@@ -214,7 +213,6 @@ namespace Azure.ResourceManager.Kubernetes
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             managedIdentityCertificateExpirationTime = property0.Value.GetDateTimeOffset("O");
@@ -224,7 +222,6 @@ namespace Azure.ResourceManager.Kubernetes
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             lastConnectivityTime = property0.Value.GetDateTimeOffset("O");
@@ -234,7 +231,6 @@ namespace Azure.ResourceManager.Kubernetes
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             connectivityStatus = new ConnectivityStatus(property0.Value.GetString());
@@ -244,7 +240,6 @@ namespace Azure.ResourceManager.Kubernetes
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             privateLinkState = new PrivateLinkState(property0.Value.GetString());

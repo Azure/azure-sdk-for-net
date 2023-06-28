@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
     {
         internal static ServiceFabricManagedClusterVersion DeserializeServiceFabricManagedClusterVersion(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -44,7 +48,6 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
@@ -68,7 +71,6 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             supportExpiryUtc = property0.Value.GetDateTimeOffset("O");
@@ -78,7 +80,6 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             osType = new ServiceFabricManagedClusterOSType(property0.Value.GetString());

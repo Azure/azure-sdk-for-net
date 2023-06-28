@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.AppService.Models
 
         internal static GitHubActionCodeConfiguration DeserializeGitHubActionCodeConfiguration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> runtimeStack = default;
             Optional<string> runtimeVersion = default;
             foreach (var property in element.EnumerateObject())

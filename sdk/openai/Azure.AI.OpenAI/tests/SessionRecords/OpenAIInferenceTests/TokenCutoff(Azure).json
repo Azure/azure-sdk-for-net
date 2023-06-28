@@ -1,0 +1,66 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://sdk8428.openai.azure.com/openai/deployments/text-davinci-002/completions?api-version=2023-03-15-preview",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "api-key": "***********",
+        "Content-Length": "119",
+        "Content-Type": "application/json",
+        "traceparent": "00-b532a816f41433489204f8786b40d6f0-fe1266541b0ccc73-00",
+        "User-Agent": "azsdk-net-AI.OpenAI/1.0.0-alpha.20230320.1 (.NET 7.0.4; Microsoft Windows 10.0.25300)",
+        "x-ms-client-request-id": "84bbd3f4e1dba6fa425d0b77f94b7d86",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "prompt": [
+          "How long would it take an unladen swallow to travel between Seattle, WA and New York, NY?"
+        ],
+        "max_tokens": 3
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Access-Control-Allow-Origin": "*",
+        "apim-request-id": "784e0f74-265b-4639-9629-7807b26a761e",
+        "Cache-Control": "must-revalidate, no-cache",
+        "Content-Length": "272",
+        "Content-Type": "application/json",
+        "Date": "Tue, 21 Mar 2023 00:36:42 GMT",
+        "openai-model": "text-davinci-002",
+        "openai-processing-ms": "200.5903",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "x-accel-buffering": "no",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "84bbd3f4e1dba6fa425d0b77f94b7d86",
+        "x-ms-region": "East US",
+        "X-Request-ID": "dd1343e4-4684-4665-bfdd-d06714b3f6b8"
+      },
+      "ResponseBody": {
+        "id": "cmpl-6wKHSM08alIhLQM7Qz4vWkhJwRjQl",
+        "object": "text_completion",
+        "created": 1679359002,
+        "model": "text-davinci-002",
+        "choices": [
+          {
+            "text": "\n\nThere",
+            "index": 0,
+            "finish_reason": "length",
+            "logprobs": null
+          }
+        ],
+        "usage": {
+          "completion_tokens": 3,
+          "prompt_tokens": 21,
+          "total_tokens": 24
+        }
+      }
+    }
+  ],
+  "Variables": {
+    "OPENAI_DEPLOYMENT_ID": "text-davinci-002",
+    "OPENAI_EMBEDDINGS_DEPLOYMENT_ID": "text-similarity-curie-001",
+    "OPENAI_ENDPOINT": "https://sdk8428.openai.azure.com/",
+    "RandomSeed": "1717195702"
+  }
+}

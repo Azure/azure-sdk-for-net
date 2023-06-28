@@ -14,6 +14,10 @@ namespace Azure.Communication.PhoneNumbers
     {
         internal static PhoneNumberCountry DeserializePhoneNumberCountry(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string localizedName = default;
             string countryCode = default;
             foreach (var property in element.EnumerateObject())

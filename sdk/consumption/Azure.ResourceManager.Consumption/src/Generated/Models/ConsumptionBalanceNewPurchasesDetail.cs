@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.Consumption.Models
 {
-    /// <summary> The ConsumptionBalanceNewPurchasesDetail. </summary>
+    /// <summary>
+    /// The ConsumptionBalanceNewPurchasesDetail.
+    /// Serialized Name: BalancePropertiesNewPurchasesDetailsItem
+    /// </summary>
     public partial class ConsumptionBalanceNewPurchasesDetail
     {
         /// <summary> Initializes a new instance of ConsumptionBalanceNewPurchasesDetail. </summary>
@@ -16,17 +19,29 @@ namespace Azure.ResourceManager.Consumption.Models
         }
 
         /// <summary> Initializes a new instance of ConsumptionBalanceNewPurchasesDetail. </summary>
-        /// <param name="name"> the name of new purchase. </param>
-        /// <param name="value"> the value of new purchase. </param>
+        /// <param name="name">
+        /// the name of new purchase.
+        /// Serialized Name: BalancePropertiesNewPurchasesDetailsItem.name
+        /// </param>
+        /// <param name="value">
+        /// the value of new purchase.
+        /// Serialized Name: BalancePropertiesNewPurchasesDetailsItem.value
+        /// </param>
         internal ConsumptionBalanceNewPurchasesDetail(string name, decimal? value)
         {
             Name = name;
             Value = value;
         }
 
-        /// <summary> the name of new purchase. </summary>
+        /// <summary>
+        /// the name of new purchase.
+        /// Serialized Name: BalancePropertiesNewPurchasesDetailsItem.name
+        /// </summary>
         public string Name { get; }
-        /// <summary> the value of new purchase. </summary>
+        /// <summary>
+        /// the value of new purchase.
+        /// Serialized Name: BalancePropertiesNewPurchasesDetailsItem.value
+        /// </summary>
         public decimal? Value { get; }
     }
 }

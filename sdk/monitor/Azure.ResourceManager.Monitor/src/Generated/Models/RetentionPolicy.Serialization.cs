@@ -24,6 +24,10 @@ namespace Azure.ResourceManager.Monitor.Models
 
         internal static RetentionPolicy DeserializeRetentionPolicy(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             bool enabled = default;
             int days = default;
             foreach (var property in element.EnumerateObject())

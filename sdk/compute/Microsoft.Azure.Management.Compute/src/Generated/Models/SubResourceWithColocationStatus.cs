@@ -10,10 +10,12 @@
 
 namespace Microsoft.Azure.Management.Compute.Models
 {
+    using Microsoft.Rest;
+    using Microsoft.Rest.Azure;
     using Newtonsoft.Json;
     using System.Linq;
 
-    public partial class SubResourceWithColocationStatus : SubResource
+    public partial class SubResourceWithColocationStatus : IResource
     {
         /// <summary>
         /// Initializes a new instance of the SubResourceWithColocationStatus
@@ -28,11 +30,9 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// Initializes a new instance of the SubResourceWithColocationStatus
         /// class.
         /// </summary>
-        /// <param name="id">Resource Id</param>
         /// <param name="colocationStatus">Describes colocation status of a
         /// resource in the Proximity Placement Group.</param>
-        public SubResourceWithColocationStatus(string id = default(string), InstanceViewStatus colocationStatus = default(InstanceViewStatus))
-            : base(id)
+        public SubResourceWithColocationStatus(InstanceViewStatus colocationStatus = default(InstanceViewStatus))
         {
             ColocationStatus = colocationStatus;
             CustomInit();

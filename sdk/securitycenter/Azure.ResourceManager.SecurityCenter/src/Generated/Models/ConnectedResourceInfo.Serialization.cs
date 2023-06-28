@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     {
         internal static ConnectedResourceInfo DeserializeConnectedResourceInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ResourceIdentifier> connectedResourceId = default;
             Optional<string> tcpPorts = default;
             Optional<string> udpPorts = default;
@@ -23,7 +27,6 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     connectedResourceId = new ResourceIdentifier(property.Value.GetString());

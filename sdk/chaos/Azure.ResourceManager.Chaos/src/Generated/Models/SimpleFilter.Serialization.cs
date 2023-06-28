@@ -27,6 +27,10 @@ namespace Azure.ResourceManager.Chaos.Models
 
         internal static SimpleFilter DeserializeSimpleFilter(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<SimpleFilterParameters> parameters = default;
             FilterType type = default;
             foreach (var property in element.EnumerateObject())
@@ -35,7 +39,6 @@ namespace Azure.ResourceManager.Chaos.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     parameters = SimpleFilterParameters.DeserializeSimpleFilterParameters(property.Value);

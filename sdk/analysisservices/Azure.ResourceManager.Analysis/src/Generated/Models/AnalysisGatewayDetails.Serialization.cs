@@ -26,6 +26,10 @@ namespace Azure.ResourceManager.Analysis.Models
 
         internal static AnalysisGatewayDetails DeserializeAnalysisGatewayDetails(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> gatewayResourceId = default;
             Optional<string> gatewayObjectId = default;
             Optional<Uri> dmtsClusterUri = default;
@@ -45,7 +49,6 @@ namespace Azure.ResourceManager.Analysis.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        dmtsClusterUri = null;
                         continue;
                     }
                     dmtsClusterUri = new Uri(property.Value.GetString());

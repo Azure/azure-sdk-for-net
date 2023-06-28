@@ -22,6 +22,10 @@ namespace Azure.ResourceManager.Workloads.Models
 
         internal static HighAvailabilityConfiguration DeserializeHighAvailabilityConfiguration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             SapHighAvailabilityType highAvailabilityType = default;
             foreach (var property in element.EnumerateObject())
             {

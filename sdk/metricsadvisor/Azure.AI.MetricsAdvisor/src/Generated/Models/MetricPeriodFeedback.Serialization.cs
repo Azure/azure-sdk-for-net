@@ -30,6 +30,10 @@ namespace Azure.AI.MetricsAdvisor
 
         internal static MetricPeriodFeedback DeserializeMetricPeriodFeedback(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             PeriodFeedbackValue value = default;
             MetricFeedbackKind feedbackType = default;
             Optional<string> feedbackId = default;
@@ -58,7 +62,6 @@ namespace Azure.AI.MetricsAdvisor
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     createdTime = property.Value.GetDateTimeOffset("O");

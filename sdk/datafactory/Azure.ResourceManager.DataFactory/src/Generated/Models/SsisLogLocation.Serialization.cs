@@ -5,9 +5,9 @@
 
 #nullable disable
 
-using System;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -17,11 +17,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("logPath"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(LogPath);
-#else
-            JsonSerializer.Serialize(writer, JsonDocument.Parse(LogPath.ToString()).RootElement);
-#endif
+            JsonSerializer.Serialize(writer, LogPath);
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(LocationType.ToString());
             writer.WritePropertyName("typeProperties"u8);
@@ -34,11 +30,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(LogRefreshInterval))
             {
                 writer.WritePropertyName("logRefreshInterval"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(LogRefreshInterval);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(LogRefreshInterval.ToString()).RootElement);
-#endif
+                JsonSerializer.Serialize(writer, LogRefreshInterval);
             }
             writer.WriteEndObject();
             writer.WriteEndObject();
@@ -46,15 +38,19 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static SsisLogLocation DeserializeSsisLogLocation(JsonElement element)
         {
-            BinaryData logPath = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            DataFactoryElement<string> logPath = default;
             SsisLogLocationType type = default;
             Optional<SsisAccessCredential> accessCredential = default;
-            Optional<BinaryData> logRefreshInterval = default;
+            Optional<DataFactoryElement<string>> logRefreshInterval = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("logPath"u8))
                 {
-                    logPath = BinaryData.FromString(property.Value.GetRawText());
+                    logPath = JsonSerializer.Deserialize<DataFactoryElement<string>>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("type"u8))
@@ -75,7 +71,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             accessCredential = SsisAccessCredential.DeserializeSsisAccessCredential(property0.Value);
@@ -85,10 +80,9 @@ namespace Azure.ResourceManager.DataFactory.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            logRefreshInterval = BinaryData.FromString(property0.Value.GetRawText());
+                            logRefreshInterval = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
                             continue;
                         }
                     }

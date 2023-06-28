@@ -20,10 +20,10 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                 writer.WritePropertyName("hci"u8);
                 writer.WriteObjectValue(Hci);
             }
-            if (Optional.IsDefined(Kubevirt))
+            if (Optional.IsDefined(NetworkCloud))
             {
-                writer.WritePropertyName("kubevirt"u8);
-                writer.WriteObjectValue(Kubevirt);
+                writer.WritePropertyName("networkCloud"u8);
+                writer.WriteObjectValue(NetworkCloud);
             }
             if (Optional.IsDefined(Vmware))
             {
@@ -35,8 +35,12 @@ namespace Azure.ResourceManager.HybridContainerService.Models
 
         internal static VirtualNetworksPropertiesInfraVnetProfile DeserializeVirtualNetworksPropertiesInfraVnetProfile(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<VirtualNetworksPropertiesInfraVnetProfileHci> hci = default;
-            Optional<VirtualNetworksPropertiesInfraVnetProfileKubevirt> kubevirt = default;
+            Optional<VirtualNetworksPropertiesInfraVnetProfileNetworkCloud> networkCloud = default;
             Optional<VirtualNetworksPropertiesInfraVnetProfileVmware> vmware = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -44,34 +48,31 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     hci = VirtualNetworksPropertiesInfraVnetProfileHci.DeserializeVirtualNetworksPropertiesInfraVnetProfileHci(property.Value);
                     continue;
                 }
-                if (property.NameEquals("kubevirt"u8))
+                if (property.NameEquals("networkCloud"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    kubevirt = VirtualNetworksPropertiesInfraVnetProfileKubevirt.DeserializeVirtualNetworksPropertiesInfraVnetProfileKubevirt(property.Value);
+                    networkCloud = VirtualNetworksPropertiesInfraVnetProfileNetworkCloud.DeserializeVirtualNetworksPropertiesInfraVnetProfileNetworkCloud(property.Value);
                     continue;
                 }
                 if (property.NameEquals("vmware"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     vmware = VirtualNetworksPropertiesInfraVnetProfileVmware.DeserializeVirtualNetworksPropertiesInfraVnetProfileVmware(property.Value);
                     continue;
                 }
             }
-            return new VirtualNetworksPropertiesInfraVnetProfile(hci.Value, kubevirt.Value, vmware.Value);
+            return new VirtualNetworksPropertiesInfraVnetProfile(hci.Value, networkCloud.Value, vmware.Value);
         }
     }
 }

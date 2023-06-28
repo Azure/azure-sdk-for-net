@@ -25,6 +25,10 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
 
         internal static UnknownMethodRequest DeserializeUnknownMethodRequest(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string methodName = "Unknown";
             Optional<string> apiVersion = default;
             foreach (var property in element.EnumerateObject())

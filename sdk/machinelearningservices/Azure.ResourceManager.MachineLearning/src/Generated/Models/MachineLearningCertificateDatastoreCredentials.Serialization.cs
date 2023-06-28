@@ -55,6 +55,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static MachineLearningCertificateDatastoreCredentials DeserializeMachineLearningCertificateDatastoreCredentials(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<Uri> authorityUrl = default;
             Guid clientId = default;
             Optional<Uri> resourceUrl = default;

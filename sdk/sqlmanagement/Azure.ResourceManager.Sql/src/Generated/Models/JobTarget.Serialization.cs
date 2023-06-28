@@ -52,6 +52,10 @@ namespace Azure.ResourceManager.Sql.Models
 
         internal static JobTarget DeserializeJobTarget(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<JobTargetGroupMembershipType> membershipType = default;
             JobTargetType type = default;
             Optional<string> serverName = default;
@@ -65,7 +69,6 @@ namespace Azure.ResourceManager.Sql.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     membershipType = property.Value.GetString().ToJobTargetGroupMembershipType();

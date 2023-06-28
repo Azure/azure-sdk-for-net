@@ -36,6 +36,10 @@ namespace Azure.ResourceManager.ServiceFabric.Models
 
         internal static ClusterServerCertificateCommonNames DeserializeClusterServerCertificateCommonNames(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<ClusterServerCertificateCommonName>> commonNames = default;
             Optional<ClusterCertificateStoreName> x509StoreName = default;
             foreach (var property in element.EnumerateObject())
@@ -44,7 +48,6 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<ClusterServerCertificateCommonName> array = new List<ClusterServerCertificateCommonName>();
@@ -59,7 +62,6 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     x509StoreName = new ClusterCertificateStoreName(property.Value.GetString());

@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.SecurityInsights
 
         internal static SecurityInsightsDataConnectorData DeserializeSecurityInsightsDataConnectorData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             if (element.TryGetProperty("kind", out JsonElement discriminator))
             {
                 switch (discriminator.GetString())
@@ -61,7 +65,6 @@ namespace Azure.ResourceManager.SecurityInsights
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     etag = new ETag(property.Value.GetString());
@@ -86,7 +89,6 @@ namespace Azure.ResourceManager.SecurityInsights
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());

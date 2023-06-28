@@ -15,6 +15,10 @@ namespace Azure.Maps.Routing.Models
     {
         internal static RouteMatrixResult DeserializeRouteMatrixResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> formatVersion = default;
             Optional<IReadOnlyList<IList<RouteMatrix>>> matrix = default;
             Optional<RouteMatrixSummary> summary = default;
@@ -29,18 +33,24 @@ namespace Azure.Maps.Routing.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<IList<RouteMatrix>> array = new List<IList<RouteMatrix>>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        List<RouteMatrix> array0 = new List<RouteMatrix>();
-                        foreach (var item0 in item.EnumerateArray())
+                        if (item.ValueKind == JsonValueKind.Null)
                         {
-                            array0.Add(RouteMatrix.DeserializeRouteMatrix(item0));
+                            array.Add(null);
                         }
-                        array.Add(array0);
+                        else
+                        {
+                            List<RouteMatrix> array0 = new List<RouteMatrix>();
+                            foreach (var item0 in item.EnumerateArray())
+                            {
+                                array0.Add(RouteMatrix.DeserializeRouteMatrix(item0));
+                            }
+                            array.Add(array0);
+                        }
                     }
                     matrix = array;
                     continue;
@@ -49,7 +59,6 @@ namespace Azure.Maps.Routing.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     summary = RouteMatrixSummary.DeserializeRouteMatrixSummary(property.Value);

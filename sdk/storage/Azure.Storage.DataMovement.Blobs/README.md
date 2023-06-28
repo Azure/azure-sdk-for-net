@@ -41,24 +41,7 @@ az storage account create --name MyStorageAccount --resource-group MyResourceGro
 ```
 
 ### Authenticate the client
-In order to interact with the Data Movement library you have to create an instance with the TransferManager class.
-
-### Create Instance of TransferManager
-```C# Snippet:CreateTransferManagerSimple
-TransferManager transferManager = new TransferManager(new TransferManagerOptions());
-```
-
-### Create Instance of TransferManager with Options
-```C# Snippet:CreateTransferManagerWithOptions
-// Create BlobTransferManager with event handler in Options bag
-TransferManagerOptions transferManagerOptions = new TransferManagerOptions();
-ContainerTransferOptions options = new ContainerTransferOptions()
-{
-    MaximumTransferChunkSize = 4 * Constants.MB,
-    CreateMode = StorageResourceCreateMode.Overwrite,
-};
-TransferManager transferManager = new TransferManager(transferManagerOptions);
-```
+The Azure.Storage.DataMovement.Blobs library uses clients from the Azure.Storage.Blobs package to communicate with the Azure Blob Storage service. For more information see the Azure.Storage.Blobs [authentication documentation](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/storage/Azure.Storage.Blobs#authenticate-the-client). 
 
 ## Key concepts
 
@@ -81,17 +64,103 @@ We guarantee that all client instance methods are thread-safe and independent of
 
 ## Examples
 
-Please see the examples for [Blobs][blobs_examples].
+### Examples using BlobContainerClient extension methods to upload and download directories.
 
-### Start Upload from Local File to Block Blob
+Instantiate the BlobContainerClient
+```C# Snippet:ExtensionMethodCreateContainerClient
+BlobServiceClient service = new BlobServiceClient(serviceUri, credential);
+
+BlobContainerClient container = service.GetBlobContainerClient(containerName);
+```
+
+Upload a local directory to the root of the container
+```C# Snippet:ExtensionMethodSimpleUploadToRoot
+DataTransfer transfer = await container.StartUploadDirectoryAsync(localPath);
+
+await transfer.AwaitCompletion();
+```
+
+Upload a local directory to a virtual directory in the container by specifying a directory prefix
+```C# Snippet:ExtensionMethodSimpleUploadToDirectoryPrefix
+DataTransfer transfer = await container.StartUploadDirectoryAsync(localPath, blobDirectoryPrefix);
+
+await transfer.AwaitCompletion();
+```
+
+Upload a local directory to a virtual directory in the container specifying more advanced options
+```C# Snippet:ExtensionMethodSimpleUploadWithOptions
+BlobContainerClientTransferOptions options = new BlobContainerClientTransferOptions
+{
+    BlobContainerOptions = new BlobStorageResourceContainerOptions
+    {
+        DirectoryPrefix = blobDirectoryPrefix
+    },
+    TransferOptions = new TransferOptions()
+    {
+        CreateMode = StorageResourceCreateMode.Overwrite,
+    }
+};
+
+DataTransfer transfer = await container.StartUploadDirectoryAsync(localPath, options);
+
+await transfer.AwaitCompletion();
+```
+
+Download the entire container to a local directory
+```C# Snippet:ExtensionMethodSimpleDownloadContainer
+DataTransfer transfer = await container.StartDownloadToDirectoryAsync(localDirectoryPath);
+
+await transfer.AwaitCompletion();
+```
+
+Download a directory in the container by specifying a directory prefix
+```C# Snippet:ExtensionMethodSimpleDownloadContainerDirectory
+DataTransfer tranfer = await container.StartDownloadToDirectoryAsync(localDirectoryPath2, blobDirectoryPrefix);
+
+await tranfer.AwaitCompletion();
+```
+
+Download from the container specifying more advanced options
+```C# Snippet:ExtensionMethodSimpleDownloadContainerDirectoryWithOptions
+BlobContainerClientTransferOptions options = new BlobContainerClientTransferOptions
+{
+    BlobContainerOptions = new BlobStorageResourceContainerOptions
+    {
+        DirectoryPrefix = blobDirectoryPrefix
+    },
+    TransferOptions = new TransferOptions()
+    {
+        CreateMode = StorageResourceCreateMode.Overwrite,
+    }
+};
+
+DataTransfer tranfer = await container.StartDownloadToDirectoryAsync(localDirectoryPath2, options);
+
+await tranfer.AwaitCompletion();
+```
+
+### Examples using BlobContainerClient extension methods to upload and download directories.
+
+Create Instance of TransferManager with Options
+```C# Snippet:CreateTransferManagerWithOptions
+// Create BlobTransferManager with event handler in Options bag
+TransferManagerOptions transferManagerOptions = new TransferManagerOptions();
+TransferOptions options = new TransferOptions()
+{
+    MaximumTransferChunkSize = 4 * Constants.MB,
+    CreateMode = StorageResourceCreateMode.Overwrite,
+};
+TransferManager transferManager = new TransferManager(transferManagerOptions);
+```
+
+Start Upload from Local File to Block Blob
 ```C# Snippet:SimpleBlobUpload
 DataTransfer dataTransfer = await transferManager.StartTransferAsync(
     sourceResource: new LocalFileStorageResource(sourceLocalPath),
     destinationResource: new BlockBlobStorageResource(destinationBlob));
 await dataTransfer.AwaitCompletion();
 ```
-
-### Apply Options to Block Blob Download
+Apply Options to Block Blob Download
 ```C# Snippet:BlockBlobDownloadOptions
 await transferManager.StartTransferAsync(
     sourceResource: new BlockBlobStorageResource(sourceBlob, new BlockBlobStorageResourceOptions()
@@ -101,28 +170,30 @@ await transferManager.StartTransferAsync(
     destinationResource: new LocalFileStorageResource(downloadPath2));
 ```
 
-### Start Directory Upload
+Start Directory Upload
 ```C# Snippet:SimpleDirectoryUpload
 // Create simple transfer directory upload job which uploads the directory and the contents of that directory
 DataTransfer dataTransfer = await transferManager.StartTransferAsync(
     sourceResource: new LocalDirectoryStorageResourceContainer(sourcePath),
-    destinationResource: new BlobDirectoryStorageResourceContainer(container, "sample-directory2"),
+    destinationResource: new BlobStorageResourceContainer(
+        container,
+        new BlobStorageResourceContainerOptions() { DirectoryPrefix = "sample-directory2" }),
     transferOptions: options);
 ```
 
-### Start Directory Download
+Start Directory Download
 ```C# Snippet:SimpleDirectoryDownload
 DataTransfer downloadDirectoryJobId2 = await transferManager.StartTransferAsync(
     sourceDirectory2,
     destinationDirectory2);
 ```
 
-### Simple Logger Sample for Transfer Manager Options
+Simple Logger Sample for Transfer Manager Options
 ```C# Snippet:SimpleLoggingSample
 // Create BlobTransferManager with event handler in Options bag
 TransferManagerOptions options = new TransferManagerOptions();
-ContainerTransferOptions containerTransferOptions = new ContainerTransferOptions();
-containerTransferOptions.SingleTransferCompleted += (SingleTransferCompletedEventArgs args) =>
+TransferOptions transferOptions = new TransferOptions();
+transferOptions.SingleTransferCompleted += (SingleTransferCompletedEventArgs args) =>
 {
     using (StreamWriter logStream = File.AppendText(logFile))
     {
@@ -132,9 +203,9 @@ containerTransferOptions.SingleTransferCompleted += (SingleTransferCompletedEven
 };
 ```
 
-### Simple Failed Event Delegation for Container Transfer Options
+Simple Failed Event Delegation for Container Transfer Options
 ```C# Snippet:FailedEventDelegation
-containerTransferOptions.TransferFailed += (TransferFailedEventArgs args) =>
+transferOptions.TransferFailed += (TransferFailedEventArgs args) =>
 {
     using (StreamWriter logStream = File.AppendText(logFile))
     {

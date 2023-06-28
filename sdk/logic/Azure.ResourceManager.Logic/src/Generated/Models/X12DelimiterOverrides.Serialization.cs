@@ -47,6 +47,10 @@ namespace Azure.ResourceManager.Logic.Models
 
         internal static X12DelimiterOverrides DeserializeX12DelimiterOverrides(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> protocolVersion = default;
             Optional<string> messageId = default;
             int dataElementSeparator = default;

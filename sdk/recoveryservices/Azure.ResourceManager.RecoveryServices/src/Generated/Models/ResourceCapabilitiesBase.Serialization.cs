@@ -22,6 +22,10 @@ namespace Azure.ResourceManager.RecoveryServices.Models
 
         internal static ResourceCapabilitiesBase DeserializeResourceCapabilitiesBase(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ResourceType type = default;
             foreach (var property in element.EnumerateObject())
             {

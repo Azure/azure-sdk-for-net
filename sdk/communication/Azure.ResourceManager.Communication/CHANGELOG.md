@@ -1,6 +1,6 @@
 # Release History
 
-## 1.1.0-beta.7 (Unreleased)
+## 1.2.0-beta.2 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,28 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.2.0-beta.1 (2023-05-29)
+
+### Features Added
+
+- Enable the model factory feature for model mocking, more information can be found [here](https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-mocking-factory-builder).
+
+### Other Changes
+
+- Upgraded dependent Azure.Core to 1.32.0.
+- Upgraded dependent Azure.ResourceManager to 1.6.0.
+
+## 1.1.0 (2023-03-31)
+
+### Features Added
+- Added SenderUsernameResource, SenderUsernameResourceCollection and SenderUsernameResourceData to support the new resource type.
+
+### Breaking Changes
+- This refresh updates `Azure.ResourceManager.Communication` library to the Azure resource management SDK standards and matches the patterns in the rest of the new Azure management libraries. [Resource management using the Azure SDK for .NET](https://learn.microsoft.com/dotnet/azure/sdk/resource-management?tabs=PowerShell)
+- Removed ValidSenderUsernames property from CommunicationServiceResourceData.
+- CommunicationResource RegenerateKey and RegenerateKeyAsync are no longer marked as long running operations.
+- CommunicationResource Update and UpdateAsync are no longer marked as long running operations.
 
 ## 1.1.0-beta.6 (2023-02-14)
 

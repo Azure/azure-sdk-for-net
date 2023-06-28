@@ -27,6 +27,10 @@ namespace Azure.AI.MetricsAdvisor.Models
 
         internal static AzureEventHubsParameter DeserializeAzureEventHubsParameter(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> connectionString = default;
             string consumerGroup = default;
             foreach (var property in element.EnumerateObject())

@@ -50,6 +50,10 @@ namespace Azure.ResourceManager.FrontDoor.Models
 
         internal static ForwardingConfiguration DeserializeForwardingConfiguration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> customForwardingPath = default;
             Optional<FrontDoorForwardingProtocol> forwardingProtocol = default;
             Optional<FrontDoorCacheConfiguration> cacheConfiguration = default;
@@ -66,7 +70,6 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     forwardingProtocol = new FrontDoorForwardingProtocol(property.Value.GetString());
@@ -86,7 +89,6 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     backendPool = JsonSerializer.Deserialize<WritableSubResource>(property.Value.GetRawText());

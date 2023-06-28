@@ -18,7 +18,7 @@ namespace Azure.Communication.JobRouter
             writer.WritePropertyName("key"u8);
             writer.WriteStringValue(Key);
             writer.WritePropertyName("labelOperator"u8);
-            writer.WriteStringValue(LabelOperator.ToSerialString());
+            writer.WriteStringValue(LabelOperator.ToString());
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind);
             writer.WriteEndObject();
@@ -26,6 +26,10 @@ namespace Azure.Communication.JobRouter
 
         internal static PassThroughQueueSelectorAttachment DeserializePassThroughQueueSelectorAttachment(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string key = default;
             LabelOperator labelOperator = default;
             string kind = default;
@@ -38,7 +42,7 @@ namespace Azure.Communication.JobRouter
                 }
                 if (property.NameEquals("labelOperator"u8))
                 {
-                    labelOperator = property.Value.GetString().ToLabelOperator();
+                    labelOperator = new LabelOperator(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("kind"u8))

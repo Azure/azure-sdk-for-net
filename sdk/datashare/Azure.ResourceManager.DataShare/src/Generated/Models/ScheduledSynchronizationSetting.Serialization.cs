@@ -31,6 +31,10 @@ namespace Azure.ResourceManager.DataShare.Models
 
         internal static ScheduledSynchronizationSetting DeserializeScheduledSynchronizationSetting(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             SynchronizationSettingKind kind = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -67,7 +71,6 @@ namespace Azure.ResourceManager.DataShare.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
@@ -86,7 +89,6 @@ namespace Azure.ResourceManager.DataShare.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             createdAt = property0.Value.GetDateTimeOffset("O");
@@ -96,7 +98,6 @@ namespace Azure.ResourceManager.DataShare.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             provisioningState = new DataShareProvisioningState(property0.Value.GetString());

@@ -13,29 +13,5 @@ namespace Azure.Communication.PhoneNumbers
 {
     internal partial class PhoneNumberAreaCodes
     {
-        internal static PhoneNumberAreaCodes DeserializePhoneNumberAreaCodes(JsonElement element)
-        {
-            IReadOnlyList<PhoneNumberAreaCode> areaCodes = default;
-            Optional<string> nextLink = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("areaCodes"u8))
-                {
-                    List<PhoneNumberAreaCode> array = new List<PhoneNumberAreaCode>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        array.Add(PhoneNumberAreaCode.DeserializePhoneNumberAreaCode(item));
-                    }
-                    areaCodes = array;
-                    continue;
-                }
-                if (property.NameEquals("nextLink"u8))
-                {
-                    nextLink = property.Value.GetString();
-                    continue;
-                }
-            }
-            return new PhoneNumberAreaCodes(areaCodes, nextLink.Value);
-        }
     }
 }

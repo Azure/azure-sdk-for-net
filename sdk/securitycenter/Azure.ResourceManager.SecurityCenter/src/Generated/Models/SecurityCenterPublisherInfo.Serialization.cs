@@ -40,6 +40,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         internal static SecurityCenterPublisherInfo DeserializeSecurityCenterPublisherInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> publisherName = default;
             Optional<string> productName = default;
             Optional<string> binaryName = default;

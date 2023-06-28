@@ -35,6 +35,10 @@ namespace Azure.ResourceManager.HybridContainerService.Models
 
         internal static ProvisionedClustersPropertiesWithoutSecrets DeserializeProvisionedClustersPropertiesWithoutSecrets(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<AADProfileResponse> aadProfile = default;
             Optional<WindowsProfileResponse> windowsProfile = default;
             Optional<HttpProxyConfigResponse> httpProxyConfig = default;
@@ -44,7 +48,6 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     aadProfile = AADProfileResponse.DeserializeAADProfileResponse(property.Value);
@@ -54,7 +57,6 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     windowsProfile = WindowsProfileResponse.DeserializeWindowsProfileResponse(property.Value);
@@ -64,7 +66,6 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     httpProxyConfig = HttpProxyConfigResponse.DeserializeHttpProxyConfigResponse(property.Value);

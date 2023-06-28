@@ -22,6 +22,10 @@ namespace Azure.ResourceManager.ServiceLinker.Models
 
         internal static UnknownTargetServiceBase DeserializeUnknownTargetServiceBase(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             TargetServiceType type = "Unknown";
             foreach (var property in element.EnumerateObject())
             {

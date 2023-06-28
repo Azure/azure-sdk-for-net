@@ -5,13 +5,46 @@
 
 #nullable disable
 
+using System;
+using System.ComponentModel;
+
 namespace Azure.AI.AnomalyDetector
 {
-    public enum AlignMode
+    public readonly partial struct AlignMode : IEquatable<AlignMode>
     {
+        private readonly string _value;
+
+        /// <summary> Initializes a new instance of <see cref="AlignMode"/>. </summary>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public AlignMode(string value)
+        {
+            _value = value ?? throw new ArgumentNullException(nameof(value));
+        }
+
+        private const string InnerValue = "Inner";
+        private const string OuterValue = "Outer";
+
         /// <summary> Inner. </summary>
-        Inner,
+        public static AlignMode Inner { get; } = new AlignMode(InnerValue);
         /// <summary> Outer. </summary>
-        Outer
+        public static AlignMode Outer { get; } = new AlignMode(OuterValue);
+        /// <summary> Determines if two <see cref="AlignMode"/> values are the same. </summary>
+        public static bool operator ==(AlignMode left, AlignMode right) => left.Equals(right);
+        /// <summary> Determines if two <see cref="AlignMode"/> values are not the same. </summary>
+        public static bool operator !=(AlignMode left, AlignMode right) => !left.Equals(right);
+        /// <summary> Converts a string to a <see cref="AlignMode"/>. </summary>
+        public static implicit operator AlignMode(string value) => new AlignMode(value);
+
+        /// <inheritdoc />
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => obj is AlignMode other && Equals(other);
+        /// <inheritdoc />
+        public bool Equals(AlignMode other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+
+        /// <inheritdoc />
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        /// <inheritdoc />
+        public override string ToString() => _value;
     }
 }

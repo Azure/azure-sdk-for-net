@@ -105,6 +105,10 @@ namespace Azure.ResourceManager.ServiceFabric
 
         internal static ServiceFabricServiceData DeserializeServiceFabricServiceData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ETag> etag = default;
             Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
@@ -129,7 +133,6 @@ namespace Azure.ResourceManager.ServiceFabric
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     etag = new ETag(property.Value.GetString());
@@ -139,7 +142,6 @@ namespace Azure.ResourceManager.ServiceFabric
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -174,7 +176,6 @@ namespace Azure.ResourceManager.ServiceFabric
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
@@ -198,7 +199,6 @@ namespace Azure.ResourceManager.ServiceFabric
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<ServiceCorrelationDescription> array = new List<ServiceCorrelationDescription>();
@@ -213,7 +213,6 @@ namespace Azure.ResourceManager.ServiceFabric
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<ServiceLoadMetricDescription> array = new List<ServiceLoadMetricDescription>();
@@ -228,7 +227,6 @@ namespace Azure.ResourceManager.ServiceFabric
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<ServicePlacementPolicyDescription> array = new List<ServicePlacementPolicyDescription>();
@@ -243,7 +241,6 @@ namespace Azure.ResourceManager.ServiceFabric
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             defaultMoveCost = new ApplicationMoveCost(property0.Value.GetString());
@@ -258,7 +255,6 @@ namespace Azure.ResourceManager.ServiceFabric
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             serviceKind = new ApplicationServiceKind(property0.Value.GetString());
@@ -273,7 +269,6 @@ namespace Azure.ResourceManager.ServiceFabric
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             partitionDescription = PartitionSchemeDescription.DeserializePartitionSchemeDescription(property0.Value);
@@ -283,7 +278,6 @@ namespace Azure.ResourceManager.ServiceFabric
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             servicePackageActivationMode = new ArmServicePackageActivationMode(property0.Value.GetString());

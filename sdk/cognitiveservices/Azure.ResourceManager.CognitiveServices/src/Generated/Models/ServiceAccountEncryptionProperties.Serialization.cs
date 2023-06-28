@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.CognitiveServices.Models
 
         internal static ServiceAccountEncryptionProperties DeserializeServiceAccountEncryptionProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<CognitiveServicesKeyVaultProperties> keyVaultProperties = default;
             Optional<ServiceAccountEncryptionKeySource> keySource = default;
             foreach (var property in element.EnumerateObject())
@@ -38,7 +42,6 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     keyVaultProperties = CognitiveServicesKeyVaultProperties.DeserializeCognitiveServicesKeyVaultProperties(property.Value);
@@ -48,7 +51,6 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     keySource = new ServiceAccountEncryptionKeySource(property.Value.GetString());

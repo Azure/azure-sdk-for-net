@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.ResourceGraph.Models
     {
         internal static UnknownFacet DeserializeUnknownFacet(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string expression = default;
             string resultType = "Unknown";
             foreach (var property in element.EnumerateObject())

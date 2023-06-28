@@ -14,8 +14,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     {
         internal static A2ACrossClusterMigrationReplicationDetails DeserializeA2ACrossClusterMigrationReplicationDetails(JsonElement element)
         {
-            Optional<string> fabricObjectId = default;
-            Optional<string> primaryFabricLocation = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<ResourceIdentifier> fabricObjectId = default;
+            Optional<AzureLocation> primaryFabricLocation = default;
             Optional<string> osType = default;
             Optional<string> vmProtectionState = default;
             Optional<string> vmProtectionStateDescription = default;
@@ -25,12 +29,20 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 if (property.NameEquals("fabricObjectId"u8))
                 {
-                    fabricObjectId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    fabricObjectId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("primaryFabricLocation"u8))
                 {
-                    primaryFabricLocation = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    primaryFabricLocation = new AzureLocation(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("osType"u8))
@@ -59,7 +71,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     continue;
                 }
             }
-            return new A2ACrossClusterMigrationReplicationDetails(instanceType, fabricObjectId.Value, primaryFabricLocation.Value, osType.Value, vmProtectionState.Value, vmProtectionStateDescription.Value, lifecycleId.Value);
+            return new A2ACrossClusterMigrationReplicationDetails(instanceType, fabricObjectId.Value, Optional.ToNullable(primaryFabricLocation), osType.Value, vmProtectionState.Value, vmProtectionStateDescription.Value, lifecycleId.Value);
         }
     }
 }

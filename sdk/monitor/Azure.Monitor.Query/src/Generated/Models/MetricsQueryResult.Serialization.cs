@@ -16,6 +16,10 @@ namespace Azure.Monitor.Query.Models
     {
         internal static MetricsQueryResult DeserializeMetricsQueryResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int> cost = default;
             string timespan = default;
             Optional<TimeSpan> interval = default;
@@ -28,7 +32,6 @@ namespace Azure.Monitor.Query.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     cost = property.Value.GetInt32();
@@ -43,7 +46,6 @@ namespace Azure.Monitor.Query.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     interval = property.Value.GetTimeSpan("P");

@@ -24,6 +24,10 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
 
         internal static SourceNodeBase DeserializeSourceNodeBase(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             if (element.TryGetProperty("@type", out JsonElement discriminator))
             {
                 switch (discriminator.GetString())

@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
     {
         internal static SourceControlConfigurationList DeserializeSourceControlConfigurationList(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<KubernetesSourceControlConfigurationData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
@@ -24,7 +28,6 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<KubernetesSourceControlConfigurationData> array = new List<KubernetesSourceControlConfigurationData>();

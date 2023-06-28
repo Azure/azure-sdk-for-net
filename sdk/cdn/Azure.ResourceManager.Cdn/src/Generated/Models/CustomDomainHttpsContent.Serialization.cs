@@ -29,6 +29,10 @@ namespace Azure.ResourceManager.Cdn.Models
 
         internal static CustomDomainHttpsContent DeserializeCustomDomainHttpsContent(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             if (element.TryGetProperty("certificateSource", out JsonElement discriminator))
             {
                 switch (discriminator.GetString())

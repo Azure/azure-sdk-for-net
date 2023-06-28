@@ -51,6 +51,10 @@ namespace Azure.ResourceManager.Datadog.Models
 
         internal static DatadogOrganizationProperties DeserializeDatadogOrganizationProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> name = default;
             Optional<string> id = default;
             Optional<string> linkingAuthCode = default;
@@ -85,7 +89,6 @@ namespace Azure.ResourceManager.Datadog.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        redirectUri = null;
                         continue;
                     }
                     redirectUri = new Uri(property.Value.GetString());

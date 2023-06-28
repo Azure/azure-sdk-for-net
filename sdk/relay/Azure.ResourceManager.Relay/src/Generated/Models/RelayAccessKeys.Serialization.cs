@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.Relay.Models
     {
         internal static RelayAccessKeys DeserializeRelayAccessKeys(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> primaryConnectionString = default;
             Optional<string> secondaryConnectionString = default;
             Optional<string> primaryKey = default;

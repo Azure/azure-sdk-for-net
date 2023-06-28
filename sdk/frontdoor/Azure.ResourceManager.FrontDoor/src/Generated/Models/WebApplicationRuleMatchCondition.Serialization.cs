@@ -52,6 +52,10 @@ namespace Azure.ResourceManager.FrontDoor.Models
 
         internal static WebApplicationRuleMatchCondition DeserializeWebApplicationRuleMatchCondition(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             WebApplicationRuleMatchVariable matchVariable = default;
             Optional<string> selector = default;
             WebApplicationRuleMatchOperator @operator = default;
@@ -79,7 +83,6 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     negateCondition = property.Value.GetBoolean();
@@ -99,7 +102,6 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<WebApplicationRuleMatchTransformType> array = new List<WebApplicationRuleMatchTransformType>();

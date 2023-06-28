@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.FrontDoor.Models
     {
         internal static RulesEngineListResult DeserializeRulesEngineListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<FrontDoorRulesEngineData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
@@ -24,7 +28,6 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<FrontDoorRulesEngineData> array = new List<FrontDoorRulesEngineData>();

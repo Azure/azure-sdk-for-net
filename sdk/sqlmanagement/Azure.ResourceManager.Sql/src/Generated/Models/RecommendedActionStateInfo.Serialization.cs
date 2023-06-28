@@ -23,6 +23,10 @@ namespace Azure.ResourceManager.Sql.Models
 
         internal static RecommendedActionStateInfo DeserializeRecommendedActionStateInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             RecommendedActionCurrentState currentValue = default;
             Optional<RecommendedActionInitiatedBy> actionInitiatedBy = default;
             Optional<DateTimeOffset> lastModified = default;
@@ -37,7 +41,6 @@ namespace Azure.ResourceManager.Sql.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     actionInitiatedBy = property.Value.GetString().ToRecommendedActionInitiatedBy();
@@ -47,7 +50,6 @@ namespace Azure.ResourceManager.Sql.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     lastModified = property.Value.GetDateTimeOffset("O");

@@ -27,6 +27,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         internal static CosmosDBSqlUserDefinedFunctionResourceInfo DeserializeCosmosDBSqlUserDefinedFunctionResourceInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string id = default;
             Optional<string> body = default;
             foreach (var property in element.EnumerateObject())

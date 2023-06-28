@@ -41,6 +41,10 @@ namespace Azure.ResourceManager.Logic.Models
 
         internal static FlowEndpoints DeserializeFlowEndpoints(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<FlowEndpointIPAddress>> outgoingIPAddresses = default;
             Optional<IList<FlowEndpointIPAddress>> accessEndpointIPAddresses = default;
             foreach (var property in element.EnumerateObject())
@@ -49,7 +53,6 @@ namespace Azure.ResourceManager.Logic.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<FlowEndpointIPAddress> array = new List<FlowEndpointIPAddress>();
@@ -64,7 +67,6 @@ namespace Azure.ResourceManager.Logic.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<FlowEndpointIPAddress> array = new List<FlowEndpointIPAddress>();

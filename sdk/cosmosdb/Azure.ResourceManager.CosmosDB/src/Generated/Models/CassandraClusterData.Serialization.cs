@@ -46,6 +46,10 @@ namespace Azure.ResourceManager.CosmosDB
 
         internal static CassandraClusterData DeserializeCassandraClusterData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<CassandraClusterProperties> properties = default;
             Optional<ManagedServiceIdentity> identity = default;
             Optional<IDictionary<string, string>> tags = default;
@@ -60,7 +64,6 @@ namespace Azure.ResourceManager.CosmosDB
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     properties = CassandraClusterProperties.DeserializeCassandraClusterProperties(property.Value);
@@ -70,7 +73,6 @@ namespace Azure.ResourceManager.CosmosDB
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText());
@@ -80,7 +82,6 @@ namespace Azure.ResourceManager.CosmosDB
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -115,7 +116,6 @@ namespace Azure.ResourceManager.CosmosDB
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());

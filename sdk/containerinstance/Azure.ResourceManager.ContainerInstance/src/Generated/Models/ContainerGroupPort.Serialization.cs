@@ -27,6 +27,10 @@ namespace Azure.ResourceManager.ContainerInstance.Models
 
         internal static ContainerGroupPort DeserializeContainerGroupPort(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ContainerGroupNetworkProtocol> protocol = default;
             int port = default;
             foreach (var property in element.EnumerateObject())
@@ -35,7 +39,6 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     protocol = new ContainerGroupNetworkProtocol(property.Value.GetString());

@@ -26,6 +26,10 @@ namespace Azure.AI.MetricsAdvisor.Models
 
         internal static TopNGroupScope DeserializeTopNGroupScope(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             int top = default;
             int period = default;
             int minTopCount = default;

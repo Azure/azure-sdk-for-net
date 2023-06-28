@@ -31,6 +31,10 @@ namespace Azure.ResourceManager.Compute.Models
 
         internal static WinRMListener DeserializeWinRMListener(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<WinRMListenerProtocolType> protocol = default;
             Optional<Uri> certificateUrl = default;
             foreach (var property in element.EnumerateObject())
@@ -39,7 +43,6 @@ namespace Azure.ResourceManager.Compute.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     protocol = property.Value.GetString().ToWinRMListenerProtocolType();
@@ -49,7 +52,6 @@ namespace Azure.ResourceManager.Compute.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        certificateUrl = null;
                         continue;
                     }
                     certificateUrl = new Uri(property.Value.GetString());

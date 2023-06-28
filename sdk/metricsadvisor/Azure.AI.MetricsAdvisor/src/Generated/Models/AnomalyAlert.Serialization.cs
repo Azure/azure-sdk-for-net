@@ -15,6 +15,10 @@ namespace Azure.AI.MetricsAdvisor.Models
     {
         internal static AnomalyAlert DeserializeAnomalyAlert(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string alertId = default;
             DateTimeOffset timestamp = default;
             DateTimeOffset createdTime = default;

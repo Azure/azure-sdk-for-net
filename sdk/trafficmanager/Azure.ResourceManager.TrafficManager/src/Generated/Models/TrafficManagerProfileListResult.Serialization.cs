@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.TrafficManager.Models
     {
         internal static TrafficManagerProfileListResult DeserializeTrafficManagerProfileListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<TrafficManagerProfileData>> value = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -23,7 +27,6 @@ namespace Azure.ResourceManager.TrafficManager.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<TrafficManagerProfileData> array = new List<TrafficManagerProfileData>();

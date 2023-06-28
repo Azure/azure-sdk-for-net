@@ -22,6 +22,10 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
 
         internal static ImmediateCopySetting DeserializeImmediateCopySetting(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string objectType = default;
             foreach (var property in element.EnumerateObject())
             {

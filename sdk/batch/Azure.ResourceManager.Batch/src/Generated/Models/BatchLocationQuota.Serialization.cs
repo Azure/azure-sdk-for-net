@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.Batch.Models
     {
         internal static BatchLocationQuota DeserializeBatchLocationQuota(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int> accountQuota = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -21,7 +25,6 @@ namespace Azure.ResourceManager.Batch.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     accountQuota = property.Value.GetInt32();

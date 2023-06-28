@@ -41,6 +41,10 @@ namespace Azure.ResourceManager.Synapse.Models
 
         internal static SynapseDataLakeStorageAccountDetails DeserializeSynapseDataLakeStorageAccountDetails(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<Uri> accountUrl = default;
             Optional<string> filesystem = default;
             Optional<ResourceIdentifier> resourceId = default;
@@ -51,7 +55,6 @@ namespace Azure.ResourceManager.Synapse.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        accountUrl = null;
                         continue;
                     }
                     accountUrl = new Uri(property.Value.GetString());
@@ -66,7 +69,6 @@ namespace Azure.ResourceManager.Synapse.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     resourceId = new ResourceIdentifier(property.Value.GetString());
@@ -76,7 +78,6 @@ namespace Azure.ResourceManager.Synapse.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     createManagedPrivateEndpoint = property.Value.GetBoolean();

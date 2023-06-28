@@ -22,6 +22,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         internal static LongTermSchedulePolicy DeserializeLongTermSchedulePolicy(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string schedulePolicyType = default;
             foreach (var property in element.EnumerateObject())
             {

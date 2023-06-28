@@ -5,23 +5,14 @@
 
 #nullable disable
 
-using System.Threading;
-using Azure;
 using Azure.Core;
-using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.SecurityInsights.Models;
 
 namespace Azure.ResourceManager.SecurityInsights
 {
     /// <summary> A class to add extension methods to ResourceGroupResource. </summary>
     internal partial class ResourceGroupResourceExtensionClient : ArmResource
     {
-        private ClientDiagnostics _threatIntelligenceIndicatorClientDiagnostics;
-        private ThreatIntelligenceIndicatorRestOperations _threatIntelligenceIndicatorRestClient;
-        private ClientDiagnostics _threatIntelligenceIndicatorMetricsClientDiagnostics;
-        private ThreatIntelligenceIndicatorMetricsRestOperations _threatIntelligenceIndicatorMetricsRestClient;
-
         /// <summary> Initializes a new instance of the <see cref="ResourceGroupResourceExtensionClient"/> class for mocking. </summary>
         protected ResourceGroupResourceExtensionClient()
         {
@@ -33,11 +24,6 @@ namespace Azure.ResourceManager.SecurityInsights
         internal ResourceGroupResourceExtensionClient(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
-
-        private ClientDiagnostics ThreatIntelligenceIndicatorClientDiagnostics => _threatIntelligenceIndicatorClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.SecurityInsights", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-        private ThreatIntelligenceIndicatorRestOperations ThreatIntelligenceIndicatorRestClient => _threatIntelligenceIndicatorRestClient ??= new ThreatIntelligenceIndicatorRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-        private ClientDiagnostics ThreatIntelligenceIndicatorMetricsClientDiagnostics => _threatIntelligenceIndicatorMetricsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.SecurityInsights", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-        private ThreatIntelligenceIndicatorMetricsRestOperations ThreatIntelligenceIndicatorMetricsRestClient => _threatIntelligenceIndicatorMetricsRestClient ??= new ThreatIntelligenceIndicatorMetricsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
 
         private string GetApiVersionOrNull(ResourceType resourceType)
         {

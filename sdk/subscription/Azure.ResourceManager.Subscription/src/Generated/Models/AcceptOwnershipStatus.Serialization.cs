@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.Subscription.Models
     {
         internal static AcceptOwnershipStatus DeserializeAcceptOwnershipStatus(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> subscriptionId = default;
             Optional<AcceptOwnershipState> acceptOwnershipState = default;
             Optional<AcceptOwnershipProvisioningState> provisioningState = default;
@@ -34,7 +38,6 @@ namespace Azure.ResourceManager.Subscription.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     acceptOwnershipState = new AcceptOwnershipState(property.Value.GetString());
@@ -44,7 +47,6 @@ namespace Azure.ResourceManager.Subscription.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     provisioningState = new AcceptOwnershipProvisioningState(property.Value.GetString());
@@ -59,7 +61,6 @@ namespace Azure.ResourceManager.Subscription.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     subscriptionTenantId = property.Value.GetGuid();
@@ -74,7 +75,6 @@ namespace Azure.ResourceManager.Subscription.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();

@@ -13,9 +13,11 @@ namespace Azure.AI.TextAnalytics.Samples
         [Test]
         public async Task MultiLabelClassifyAsync()
         {
+            TestEnvironment.IgnoreIfNotPublicCloud();
+
             Uri endpoint = new(TestEnvironment.StaticEndpoint);
             AzureKeyCredential credential = new(TestEnvironment.StaticApiKey);
-            TextAnalyticsClient client = new(endpoint, credential, CreateSampleOptions());
+            TextAnalyticsClient client = new(endpoint, credential, CreateSampleOptions(true));
 
             string document =
                 "I need a reservation for an indoor restaurant in China. Please don't stop the music. Play music and"
@@ -35,16 +37,9 @@ namespace Azure.AI.TextAnalytics.Samples
             // classify your documents, see https://aka.ms/azsdk/textanalytics/customfunctionalities.
             string projectName = TestEnvironment.MultiClassificationProjectName;
             string deploymentName = TestEnvironment.MultiClassificationDeploymentName;
-            MultiLabelClassifyAction multiLabelClassifyAction = new(projectName, deploymentName);
-
-            TextAnalyticsActions actions = new()
-            {
-                MultiLabelClassifyActions = new List<MultiLabelClassifyAction>() { multiLabelClassifyAction }
-            };
 
             // Perform the text analysis operation.
-            AnalyzeActionsOperation operation = await client.StartAnalyzeActionsAsync(batchedDocuments, actions);
-            await operation.WaitForCompletionAsync();
+            ClassifyDocumentOperation operation = await client.MultiLabelClassifyAsync(WaitUntil.Completed, batchedDocuments, projectName, deploymentName);
 
             Console.WriteLine($"The operation has completed.");
             Console.WriteLine();
@@ -58,26 +53,26 @@ namespace Azure.AI.TextAnalytics.Samples
             Console.WriteLine();
 
             // View the operation results.
-            await foreach (AnalyzeActionsResult documentsInPage in operation.Value)
+            await foreach (ClassifyDocumentResultCollection documentsInPage in operation.Value)
             {
-                IReadOnlyCollection<MultiLabelClassifyActionResult> multiClassificationActionResults = documentsInPage.MultiLabelClassifyResults;
-
-                foreach (MultiLabelClassifyActionResult classificationActionResults in multiClassificationActionResults)
+                foreach (ClassifyDocumentResult documentResult in documentsInPage)
                 {
-                    Console.WriteLine($" Action name: {classificationActionResults.ActionName}");
-                    foreach (ClassifyDocumentResult documentResult in classificationActionResults.DocumentsResults)
+                    if (documentResult.HasError)
                     {
-                        if (documentResult.ClassificationCategories.Count > 0)
-                        {
-                            Console.WriteLine($"  The following classes were predicted for this document:");
+                        Console.WriteLine($"  Error!");
+                        Console.WriteLine($"  Document error code: {documentResult.Error.ErrorCode}");
+                        Console.WriteLine($"  Message: {documentResult.Error.Message}");
+                        continue;
+                    }
 
-                            foreach (ClassificationCategory classification in documentResult.ClassificationCategories)
-                            {
-                                Console.WriteLine($"  Class label \"{classification.Category}\" predicted with a confidence score of {classification.ConfidenceScore}.");
-                            }
+                    Console.WriteLine($"  Predicted the following classes:");
+                    Console.WriteLine();
 
-                            Console.WriteLine();
-                        }
+                    foreach (ClassificationCategory classification in documentResult.ClassificationCategories)
+                    {
+                        Console.WriteLine($"  Category: {classification.Category}");
+                        Console.WriteLine($"  Confidence score: {classification.ConfidenceScore}");
+                        Console.WriteLine();
                     }
                 }
             }

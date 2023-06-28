@@ -14,6 +14,10 @@ namespace Azure.Communication.CallAutomation
     {
         internal static ChoiceResult DeserializeChoiceResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> label = default;
             Optional<string> recognizedPhrase = default;
             foreach (var property in element.EnumerateObject())

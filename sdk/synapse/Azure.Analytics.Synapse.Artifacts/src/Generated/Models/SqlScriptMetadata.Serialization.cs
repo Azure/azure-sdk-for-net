@@ -34,6 +34,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         internal static SqlScriptMetadata DeserializeSqlScriptMetadata(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> language = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();

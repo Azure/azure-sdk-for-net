@@ -46,6 +46,10 @@ namespace Azure.ResourceManager.Peering
 
         internal static ConnectionMonitorTestData DeserializeConnectionMonitorTestData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -78,7 +82,6 @@ namespace Azure.ResourceManager.Peering
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
@@ -107,7 +110,6 @@ namespace Azure.ResourceManager.Peering
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             destinationPort = property0.Value.GetInt32();
@@ -117,7 +119,6 @@ namespace Azure.ResourceManager.Peering
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             testFrequencyInSec = property0.Value.GetInt32();
@@ -127,7 +128,6 @@ namespace Azure.ResourceManager.Peering
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             isTestSuccessful = property0.Value.GetBoolean();
@@ -137,7 +137,6 @@ namespace Azure.ResourceManager.Peering
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<string> array = new List<string>();
@@ -152,7 +151,6 @@ namespace Azure.ResourceManager.Peering
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             provisioningState = new PeeringProvisioningState(property0.Value.GetString());

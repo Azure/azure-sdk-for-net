@@ -23,6 +23,7 @@
 
   <ItemGroup>
     <Folder Include="SessionRecords\" />
+    <Folder Include="SessionRecords\OpenAIInferenceTests\" />
   </ItemGroup>
 
 </Project>

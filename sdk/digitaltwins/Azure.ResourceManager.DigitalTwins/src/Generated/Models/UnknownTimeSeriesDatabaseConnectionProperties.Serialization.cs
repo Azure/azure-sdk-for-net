@@ -34,6 +34,10 @@ namespace Azure.ResourceManager.DigitalTwins.Models
 
         internal static UnknownTimeSeriesDatabaseConnectionProperties DeserializeUnknownTimeSeriesDatabaseConnectionProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ConnectionType connectionType = "Unknown";
             Optional<TimeSeriesDatabaseConnectionState> provisioningState = default;
             Optional<DigitalTwinsManagedIdentityReference> identity = default;
@@ -48,7 +52,6 @@ namespace Azure.ResourceManager.DigitalTwins.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     provisioningState = new TimeSeriesDatabaseConnectionState(property.Value.GetString());

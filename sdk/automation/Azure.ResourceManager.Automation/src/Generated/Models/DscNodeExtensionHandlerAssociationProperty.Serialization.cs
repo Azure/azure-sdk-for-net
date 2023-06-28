@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.Automation.Models
 
         internal static DscNodeExtensionHandlerAssociationProperty DeserializeDscNodeExtensionHandlerAssociationProperty(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> name = default;
             Optional<string> version = default;
             foreach (var property in element.EnumerateObject())

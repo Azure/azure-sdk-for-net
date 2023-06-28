@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
 
         internal static BlobBackupDataSourceSettings DeserializeBlobBackupDataSourceSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             IList<string> containersList = default;
             string objectType = default;
             foreach (var property in element.EnumerateObject())

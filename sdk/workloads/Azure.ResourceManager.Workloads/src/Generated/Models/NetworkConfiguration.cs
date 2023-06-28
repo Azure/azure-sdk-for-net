@@ -7,7 +7,7 @@
 
 namespace Azure.ResourceManager.Workloads.Models
 {
-    /// <summary> Defines the network configuration for SAP infrastructure. </summary>
+    /// <summary> Defines the network configuration type for SAP system infrastructure that is being deployed. </summary>
     internal partial class NetworkConfiguration
     {
         /// <summary> Initializes a new instance of NetworkConfiguration. </summary>
@@ -16,13 +16,13 @@ namespace Azure.ResourceManager.Workloads.Models
         }
 
         /// <summary> Initializes a new instance of NetworkConfiguration. </summary>
-        /// <param name="isSecondaryIPEnabled"> Specifies whether a secondary IP address should be added to the network interface on all VMs. </param>
+        /// <param name="isSecondaryIPEnabled"> Specifies whether a secondary IP address should be added to the network interface on all VMs of the SAP system being deployed. </param>
         internal NetworkConfiguration(bool? isSecondaryIPEnabled)
         {
             IsSecondaryIPEnabled = isSecondaryIPEnabled;
         }
 
-        /// <summary> Specifies whether a secondary IP address should be added to the network interface on all VMs. </summary>
+        /// <summary> Specifies whether a secondary IP address should be added to the network interface on all VMs of the SAP system being deployed. </summary>
         public bool? IsSecondaryIPEnabled { get; set; }
     }
 }

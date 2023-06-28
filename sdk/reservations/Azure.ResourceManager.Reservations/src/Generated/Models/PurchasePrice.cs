@@ -7,11 +7,11 @@
 
 namespace Azure.ResourceManager.Reservations.Models
 {
-    /// <summary> The PurchasePrice. </summary>
+    /// <summary> Pricing information containing the amount and the currency code. </summary>
     public partial class PurchasePrice
     {
         /// <summary> Initializes a new instance of PurchasePrice. </summary>
-        internal PurchasePrice()
+        public PurchasePrice()
         {
         }
 
@@ -25,8 +25,8 @@ namespace Azure.ResourceManager.Reservations.Models
         }
 
         /// <summary> The ISO 4217 3-letter currency code for the currency used by this purchase record. </summary>
-        public string CurrencyCode { get; }
-        /// <summary> Gets the amount. </summary>
-        public double? Amount { get; }
+        public string CurrencyCode { get; set; }
+        /// <summary> Gets or sets the amount. </summary>
+        public double? Amount { get; set; }
     }
 }

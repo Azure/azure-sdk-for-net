@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 using System.Collections.Generic;
-using Azure.Core;
+using Azure.Monitor.OpenTelemetry.Exporter.Internals.Platform;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 {
@@ -14,22 +14,23 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
     /// </summary>
     internal class TransmitterFactory
     {
-        public static TransmitterFactory Instance = new();
+        public static readonly TransmitterFactory Instance = new();
+        public static readonly IPlatform platform = new DefaultPlatform();
 
         internal readonly Dictionary<string, AzureMonitorTransmitter> _transmitters = new();
         private readonly object _lockObj = new();
 
-        public AzureMonitorTransmitter Get(AzureMonitorExporterOptions azureMonitorExporterOptions, TokenCredential? tokenCredential = null)
+        public AzureMonitorTransmitter Get(AzureMonitorExporterOptions azureMonitorExporterOptions)
         {
             var key = azureMonitorExporterOptions.ConnectionString ?? string.Empty;
 
-            if (!_transmitters.TryGetValue(key, out AzureMonitorTransmitter transmitter))
+            if (!_transmitters.TryGetValue(key, out AzureMonitorTransmitter? transmitter))
             {
                 lock (_lockObj)
                 {
                     if (!_transmitters.TryGetValue(key, out transmitter))
                     {
-                        transmitter = new AzureMonitorTransmitter(azureMonitorExporterOptions, tokenCredential);
+                        transmitter = new AzureMonitorTransmitter(azureMonitorExporterOptions, platform);
 
                         _transmitters.Add(key, transmitter);
                     }

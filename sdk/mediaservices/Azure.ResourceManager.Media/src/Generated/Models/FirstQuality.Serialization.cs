@@ -22,6 +22,10 @@ namespace Azure.ResourceManager.Media.Models
 
         internal static FirstQuality DeserializeFirstQuality(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             int bitrate = default;
             foreach (var property in element.EnumerateObject())
             {

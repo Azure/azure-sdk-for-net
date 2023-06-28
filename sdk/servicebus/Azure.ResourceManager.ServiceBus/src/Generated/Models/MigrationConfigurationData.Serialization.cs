@@ -34,6 +34,10 @@ namespace Azure.ResourceManager.ServiceBus
 
         internal static MigrationConfigurationData DeserializeMigrationConfigurationData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<AzureLocation> location = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -50,7 +54,6 @@ namespace Azure.ResourceManager.ServiceBus
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     location = new AzureLocation(property.Value.GetString());
@@ -75,7 +78,6 @@ namespace Azure.ResourceManager.ServiceBus
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
@@ -99,7 +101,6 @@ namespace Azure.ResourceManager.ServiceBus
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             pendingReplicationOperationsCount = property0.Value.GetInt64();
@@ -109,7 +110,6 @@ namespace Azure.ResourceManager.ServiceBus
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             targetNamespace = new ResourceIdentifier(property0.Value.GetString());

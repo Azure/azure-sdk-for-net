@@ -243,7 +243,7 @@ namespace Azure.Communication.Identity.Samples
         {
             if (TestEnvironment.ShouldIgnoreIdentityExchangeTokenTest)
             {
-                Assert.Ignore("Ignore exchange teams token test if flag is enabled.");
+                Assert.Pass("Ignore exchange teams token test if flag is enabled.");
             }
 
             var options = CreateTeamsUserParams().Result;
@@ -266,7 +266,7 @@ namespace Azure.Communication.Identity.Samples
         {
             if (TestEnvironment.ShouldIgnoreIdentityExchangeTokenTest)
             {
-                Assert.Ignore("Ignore exchange teams token test if flag is enabled.");
+                Assert.Pass("Ignore exchange teams token test if flag is enabled.");
             }
 
             var options = await CreateTeamsUserParams();

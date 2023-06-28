@@ -40,6 +40,10 @@ namespace Azure.Messaging.EventGrid.Models
 
         internal static EventGridEventInternal DeserializeEventGridEventInternal(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string id = default;
             Optional<string> topic = default;
             string subject = default;

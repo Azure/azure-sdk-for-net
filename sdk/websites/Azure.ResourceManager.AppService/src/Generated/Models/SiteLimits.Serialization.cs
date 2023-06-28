@@ -35,6 +35,10 @@ namespace Azure.ResourceManager.AppService.Models
 
         internal static SiteLimits DeserializeSiteLimits(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<double> maxPercentageCpu = default;
             Optional<long> maxMemoryInMb = default;
             Optional<long> maxDiskSizeInMb = default;
@@ -44,7 +48,6 @@ namespace Azure.ResourceManager.AppService.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     maxPercentageCpu = property.Value.GetDouble();
@@ -54,7 +57,6 @@ namespace Azure.ResourceManager.AppService.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     maxMemoryInMb = property.Value.GetInt64();
@@ -64,7 +66,6 @@ namespace Azure.ResourceManager.AppService.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     maxDiskSizeInMb = property.Value.GetInt64();

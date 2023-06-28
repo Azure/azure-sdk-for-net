@@ -5,10 +5,10 @@ using OpenTelemetry.Trace;
 using System;
 using System.Reflection;
 
+using Azure.Monitor.OpenTelemetry.Exporter.Internals;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.ConnectionString;
 
 using Xunit;
-using Azure.Monitor.OpenTelemetry.Exporter.Internals;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
 {
@@ -37,20 +37,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             GetInternalFields(exporter, out string? ikey, out string? endpoint);
             Assert.Equal(testIkey, ikey);
             Assert.Equal(Constants.DefaultIngestionEndpoint, endpoint);
-        }
-
-        [Fact]
-        public void VerifyConnectionString_ThrowsExceptionWhenInvalid()
-        {
-            Assert.Throws<InvalidOperationException>(() => new AzureMonitorTraceExporter(new AzureMonitorExporterOptions { ConnectionString = null }));
-        }
-
-        [Fact]
-        public void VerifyConnectionString_ThrowsExceptionWhenMissingInstrumentationKey()
-        {
-            var testEndpoint = "https://www.bing.com/";
-
-            Assert.Throws<InvalidOperationException>(() => new AzureMonitorTraceExporter(new AzureMonitorExporterOptions { ConnectionString = $"IngestionEndpoint={testEndpoint}" }));
         }
 
         [Fact]

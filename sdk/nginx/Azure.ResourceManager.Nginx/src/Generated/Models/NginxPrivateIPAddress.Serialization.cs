@@ -35,6 +35,10 @@ namespace Azure.ResourceManager.Nginx.Models
 
         internal static NginxPrivateIPAddress DeserializeNginxPrivateIPAddress(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> privateIPAddress = default;
             Optional<NginxPrivateIPAllocationMethod> privateIPAllocationMethod = default;
             Optional<string> subnetId = default;
@@ -49,7 +53,6 @@ namespace Azure.ResourceManager.Nginx.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     privateIPAllocationMethod = new NginxPrivateIPAllocationMethod(property.Value.GetString());

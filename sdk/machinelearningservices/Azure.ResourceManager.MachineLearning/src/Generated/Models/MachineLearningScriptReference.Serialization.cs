@@ -40,6 +40,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static MachineLearningScriptReference DeserializeMachineLearningScriptReference(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> scriptSource = default;
             Optional<string> scriptData = default;
             Optional<string> scriptArguments = default;

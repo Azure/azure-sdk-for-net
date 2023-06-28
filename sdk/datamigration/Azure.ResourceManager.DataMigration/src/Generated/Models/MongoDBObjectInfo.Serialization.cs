@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.DataMigration.Models
     {
         internal static MongoDBObjectInfo DeserializeMongoDBObjectInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             long averageDocumentSize = default;
             long dataSize = default;
             long documentCount = default;

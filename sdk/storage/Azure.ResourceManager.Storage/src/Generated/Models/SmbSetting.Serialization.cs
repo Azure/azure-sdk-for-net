@@ -45,6 +45,10 @@ namespace Azure.ResourceManager.Storage.Models
 
         internal static SmbSetting DeserializeSmbSetting(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<Multichannel> multichannel = default;
             Optional<string> versions = default;
             Optional<string> authenticationMethods = default;
@@ -56,7 +60,6 @@ namespace Azure.ResourceManager.Storage.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     multichannel = Multichannel.DeserializeMultichannel(property.Value);

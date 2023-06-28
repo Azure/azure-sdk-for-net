@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
-            writer.WriteStringValue(RuntimeType.ToString());
+            writer.WriteStringValue(IntegrationRuntimeType.ToString());
             if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
@@ -38,6 +38,10 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static UnknownIntegrationRuntime DeserializeUnknownIntegrationRuntime(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             IntegrationRuntimeType type = "Unknown";
             Optional<string> description = default;
             IDictionary<string, BinaryData> additionalProperties = default;

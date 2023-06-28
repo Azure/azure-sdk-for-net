@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.EdgeOrder.Models
     {
         internal static ProductFamily DeserializeProductFamily(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> displayName = default;
             Optional<ProductDescription> description = default;
             Optional<IReadOnlyList<EdgeOrderProductImageInformation>> imageInformation = default;
@@ -44,7 +48,6 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             description = ProductDescription.DeserializeProductDescription(property0.Value);
@@ -54,7 +57,6 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<EdgeOrderProductImageInformation> array = new List<EdgeOrderProductImageInformation>();
@@ -69,7 +71,6 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             costInformation = EdgeOrderProductCostInformation.DeserializeEdgeOrderProductCostInformation(property0.Value);
@@ -79,7 +80,6 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             availabilityInformation = ProductAvailabilityInformation.DeserializeProductAvailabilityInformation(property0.Value);
@@ -89,7 +89,6 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             hierarchyInformation = HierarchyInformation.DeserializeHierarchyInformation(property0.Value);
@@ -99,7 +98,6 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<FilterableProperty> array = new List<FilterableProperty>();
@@ -114,7 +112,6 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<ProductLine> array = new List<ProductLine>();
@@ -129,7 +126,6 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<ResourceProviderDetails> array = new List<ResourceProviderDetails>();

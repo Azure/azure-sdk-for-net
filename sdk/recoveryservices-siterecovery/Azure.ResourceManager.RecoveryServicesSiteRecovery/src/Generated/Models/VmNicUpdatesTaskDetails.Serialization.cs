@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     {
         internal static VmNicUpdatesTaskDetails DeserializeVmNicUpdatesTaskDetails(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> vmId = default;
             Optional<string> nicId = default;
             Optional<string> name = default;

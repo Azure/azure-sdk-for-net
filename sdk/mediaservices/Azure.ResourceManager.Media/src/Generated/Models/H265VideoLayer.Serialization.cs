@@ -62,6 +62,10 @@ namespace Azure.ResourceManager.Media.Models
 
         internal static H265VideoLayer DeserializeH265VideoLayer(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             int bitrate = default;
             Optional<int> maxBitrate = default;
             Optional<int> bFrames = default;
@@ -82,7 +86,6 @@ namespace Azure.ResourceManager.Media.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     maxBitrate = property.Value.GetInt32();
@@ -92,7 +95,6 @@ namespace Azure.ResourceManager.Media.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     bFrames = property.Value.GetInt32();
@@ -107,7 +109,6 @@ namespace Azure.ResourceManager.Media.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     slices = property.Value.GetInt32();
@@ -117,7 +118,6 @@ namespace Azure.ResourceManager.Media.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     adaptiveBFrame = property.Value.GetBoolean();

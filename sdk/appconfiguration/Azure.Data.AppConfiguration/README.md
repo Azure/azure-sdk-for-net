@@ -153,31 +153,7 @@ client.DeleteConfigurationSetting("some_key");
 
 ## Troubleshooting
 
-When you interact with Azure App Configuration using the .NET SDK, errors returned by the service correspond to the same HTTP status codes returned for [REST API][azconfig_rest] requests.
-
-For example, if you try to retrieve a Configuration Setting that doesn't exist in your Configuration Store, a `404` error is returned, indicating `Not Found`.
-
-```C# Snippet:ThrowNotFoundError
-string connectionString = "<connection_string>";
-var client = new ConfigurationClient(connectionString);
-ConfigurationSetting setting = client.GetConfigurationSetting("nonexistent_key");
-```
-
-You will notice that additional information is logged, like the Client Request ID of the operation.
-
-```shell
-Message: Azure.RequestFailedException : StatusCode: 404, ReasonPhrase: 'Not Found', Version: 1.1, Content: System.Net.Http.NoWriteNoSeekStreamContent, Headers:
-{
-  Connection: keep-alive
-  Date: Thu, 11 Apr 2019 00:16:57 GMT
-  Server: nginx/1.13.9
-  x-ms-client-request-id: cc49570c-9143-411e-a6c8-3287dd114034
-  x-ms-request-id: 2ad025f7-1fe8-4da0-8648-8290e774ed61
-  x-ms-correlation-request-id: 2ad025f7-1fe8-4da0-8648-8290e774ed61
-  Strict-Transport-Security: max-age=15724800; includeSubDomains;
-  Content-Length: 0
-}
-```
+See our [troubleshooting guide](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/appconfiguration/Azure.Data.AppConfiguration/TROUBLESHOOTING.md) for details on how to diagnose various failure scenarios.
 
 ## Next steps
 
@@ -220,7 +196,6 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 [source_root]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/appconfiguration/Azure.Data.AppConfiguration/src
 [source_samples]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/appconfiguration/Azure.Data.AppConfiguration/samples
 [reference_docs]: https://azure.github.io/azure-sdk-for-net/appconfiguration.html
-[azconfig_rest]: https://docs.microsoft.com/azure/azure-app-configuration/rest-api
 [azure_cli]: https://docs.microsoft.com/cli/azure
 [azure_sub]: https://azure.microsoft.com/free/dotnet/
 [configuration_client_class]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/appconfiguration/Azure.Data.AppConfiguration/src/ConfigurationClient.cs

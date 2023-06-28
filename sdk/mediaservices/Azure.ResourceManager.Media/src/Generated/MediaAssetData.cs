@@ -36,7 +36,8 @@ namespace Azure.ResourceManager.Media
         /// <param name="container"> The name of the asset blob container. </param>
         /// <param name="storageAccountName"> The name of the storage account. </param>
         /// <param name="storageEncryptionFormat"> The Asset encryption format. One of None or MediaStorageEncryption. </param>
-        internal MediaAssetData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, Guid? assetId, DateTimeOffset? createdOn, DateTimeOffset? lastModifiedOn, string alternateId, string description, string container, string storageAccountName, MediaAssetStorageEncryptionFormat? storageEncryptionFormat) : base(id, name, resourceType, systemData)
+        /// <param name="encryptionScope"> The Asset container encryption scope in the storage account. </param>
+        internal MediaAssetData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, Guid? assetId, DateTimeOffset? createdOn, DateTimeOffset? lastModifiedOn, string alternateId, string description, string container, string storageAccountName, MediaAssetStorageEncryptionFormat? storageEncryptionFormat, string encryptionScope) : base(id, name, resourceType, systemData)
         {
             AssetId = assetId;
             CreatedOn = createdOn;
@@ -46,6 +47,7 @@ namespace Azure.ResourceManager.Media
             Container = container;
             StorageAccountName = storageAccountName;
             StorageEncryptionFormat = storageEncryptionFormat;
+            EncryptionScope = encryptionScope;
         }
 
         /// <summary> The Asset ID. </summary>
@@ -64,5 +66,7 @@ namespace Azure.ResourceManager.Media
         public string StorageAccountName { get; set; }
         /// <summary> The Asset encryption format. One of None or MediaStorageEncryption. </summary>
         public MediaAssetStorageEncryptionFormat? StorageEncryptionFormat { get; }
+        /// <summary> The Asset container encryption scope in the storage account. </summary>
+        public string EncryptionScope { get; set; }
     }
 }

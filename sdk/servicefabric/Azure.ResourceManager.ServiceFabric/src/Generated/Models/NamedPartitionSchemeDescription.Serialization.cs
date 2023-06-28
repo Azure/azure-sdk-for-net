@@ -32,6 +32,10 @@ namespace Azure.ResourceManager.ServiceFabric.Models
 
         internal static NamedPartitionSchemeDescription DeserializeNamedPartitionSchemeDescription(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             int count = default;
             IList<string> names = default;
             ApplicationPartitionScheme partitionScheme = default;

@@ -30,6 +30,10 @@ namespace Azure.Communication.ShortCodes.Models
 
         internal static CustomerCareInformation DeserializeCustomerCareInformation(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> tollFreeNumber = default;
             Optional<string> email = default;
             foreach (var property in element.EnumerateObject())

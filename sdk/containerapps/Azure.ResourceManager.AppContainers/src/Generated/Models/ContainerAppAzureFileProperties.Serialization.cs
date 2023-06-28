@@ -40,6 +40,10 @@ namespace Azure.ResourceManager.AppContainers.Models
 
         internal static ContainerAppAzureFileProperties DeserializeContainerAppAzureFileProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> accountName = default;
             Optional<string> accountKey = default;
             Optional<ContainerAppAccessMode> accessMode = default;
@@ -60,7 +64,6 @@ namespace Azure.ResourceManager.AppContainers.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     accessMode = new ContainerAppAccessMode(property.Value.GetString());

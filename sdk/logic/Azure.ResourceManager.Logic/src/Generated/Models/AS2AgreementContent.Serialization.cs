@@ -24,6 +24,10 @@ namespace Azure.ResourceManager.Logic.Models
 
         internal static AS2AgreementContent DeserializeAS2AgreementContent(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             AS2OneWayAgreement receiveAgreement = default;
             AS2OneWayAgreement sendAgreement = default;
             foreach (var property in element.EnumerateObject())

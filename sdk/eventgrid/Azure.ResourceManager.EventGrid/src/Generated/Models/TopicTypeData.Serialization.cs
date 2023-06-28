@@ -70,12 +70,21 @@ namespace Azure.ResourceManager.EventGrid
                 }
                 writer.WriteEndArray();
             }
+            if (Optional.IsDefined(AreRegionalAndGlobalSourcesSupported))
+            {
+                writer.WritePropertyName("areRegionalAndGlobalSourcesSupported"u8);
+                writer.WriteBooleanValue(AreRegionalAndGlobalSourcesSupported.Value);
+            }
             writer.WriteEndObject();
             writer.WriteEndObject();
         }
 
         internal static TopicTypeData DeserializeTopicTypeData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -88,6 +97,7 @@ namespace Azure.ResourceManager.EventGrid
             Optional<IList<string>> supportedLocations = default;
             Optional<string> sourceResourceFormat = default;
             Optional<IList<TopicTypeSourceScope>> supportedScopesForSource = default;
+            Optional<bool> areRegionalAndGlobalSourcesSupported = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -109,7 +119,6 @@ namespace Azure.ResourceManager.EventGrid
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
@@ -143,7 +152,6 @@ namespace Azure.ResourceManager.EventGrid
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             resourceRegionType = new EventGridResourceRegionType(property0.Value.GetString());
@@ -153,7 +161,6 @@ namespace Azure.ResourceManager.EventGrid
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             provisioningState = new TopicTypeProvisioningState(property0.Value.GetString());
@@ -163,7 +170,6 @@ namespace Azure.ResourceManager.EventGrid
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<string> array = new List<string>();
@@ -183,7 +189,6 @@ namespace Azure.ResourceManager.EventGrid
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<TopicTypeSourceScope> array = new List<TopicTypeSourceScope>();
@@ -194,11 +199,20 @@ namespace Azure.ResourceManager.EventGrid
                             supportedScopesForSource = array;
                             continue;
                         }
+                        if (property0.NameEquals("areRegionalAndGlobalSourcesSupported"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            areRegionalAndGlobalSourcesSupported = property0.Value.GetBoolean();
+                            continue;
+                        }
                     }
                     continue;
                 }
             }
-            return new TopicTypeData(id, name, type, systemData.Value, provider.Value, displayName.Value, description.Value, Optional.ToNullable(resourceRegionType), Optional.ToNullable(provisioningState), Optional.ToList(supportedLocations), sourceResourceFormat.Value, Optional.ToList(supportedScopesForSource));
+            return new TopicTypeData(id, name, type, systemData.Value, provider.Value, displayName.Value, description.Value, Optional.ToNullable(resourceRegionType), Optional.ToNullable(provisioningState), Optional.ToList(supportedLocations), sourceResourceFormat.Value, Optional.ToList(supportedScopesForSource), Optional.ToNullable(areRegionalAndGlobalSourcesSupported));
         }
     }
 }

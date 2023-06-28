@@ -119,6 +119,10 @@ namespace Azure.ResourceManager.KubernetesConfiguration
 
         internal static KubernetesFluxConfigurationData DeserializeKubernetesFluxConfigurationData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -161,7 +165,6 @@ namespace Azure.ResourceManager.KubernetesConfiguration
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
@@ -180,7 +183,6 @@ namespace Azure.ResourceManager.KubernetesConfiguration
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             scope = new KubernetesConfigurationScope(property0.Value.GetString());
@@ -195,7 +197,6 @@ namespace Azure.ResourceManager.KubernetesConfiguration
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             sourceKind = new KubernetesConfigurationSourceKind(property0.Value.GetString());
@@ -205,7 +206,6 @@ namespace Azure.ResourceManager.KubernetesConfiguration
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             suspend = property0.Value.GetBoolean();
@@ -251,14 +251,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration
                             Dictionary<string, Kustomization> dictionary = new Dictionary<string, Kustomization>();
                             foreach (var property1 in property0.Value.EnumerateObject())
                             {
-                                if (property1.Value.ValueKind == JsonValueKind.Null)
-                                {
-                                    dictionary.Add(property1.Name, null);
-                                }
-                                else
-                                {
-                                    dictionary.Add(property1.Name, Kustomization.DeserializeKustomization(property1.Value));
-                                }
+                                dictionary.Add(property1.Name, Kustomization.DeserializeKustomization(property1.Value));
                             }
                             kustomizations = dictionary;
                             continue;
@@ -288,14 +281,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration
                             List<KubernetesObjectStatus> array = new List<KubernetesObjectStatus>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                if (item.ValueKind == JsonValueKind.Null)
-                                {
-                                    array.Add(null);
-                                }
-                                else
-                                {
-                                    array.Add(KubernetesObjectStatus.DeserializeKubernetesObjectStatus(item));
-                                }
+                                array.Add(KubernetesObjectStatus.DeserializeKubernetesObjectStatus(item));
                             }
                             statuses = array;
                             continue;
@@ -344,7 +330,6 @@ namespace Azure.ResourceManager.KubernetesConfiguration
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             complianceState = new KubernetesFluxComplianceState(property0.Value.GetString());
@@ -354,7 +339,6 @@ namespace Azure.ResourceManager.KubernetesConfiguration
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             provisioningState = new KubernetesConfigurationProvisioningState(property0.Value.GetString());

@@ -49,6 +49,10 @@ namespace Azure.ResourceManager.Sql.Models
 
         internal static JobStepOutput DeserializeJobStepOutput(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<JobStepOutputType> type = default;
             Optional<Guid> subscriptionId = default;
             Optional<string> resourceGroupName = default;
@@ -63,7 +67,6 @@ namespace Azure.ResourceManager.Sql.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     type = new JobStepOutputType(property.Value.GetString());
@@ -73,7 +76,6 @@ namespace Azure.ResourceManager.Sql.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     subscriptionId = property.Value.GetGuid();

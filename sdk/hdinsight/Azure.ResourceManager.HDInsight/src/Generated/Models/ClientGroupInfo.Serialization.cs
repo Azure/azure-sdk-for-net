@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.HDInsight.Models
 
         internal static ClientGroupInfo DeserializeClientGroupInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> groupName = default;
             Optional<string> groupId = default;
             foreach (var property in element.EnumerateObject())

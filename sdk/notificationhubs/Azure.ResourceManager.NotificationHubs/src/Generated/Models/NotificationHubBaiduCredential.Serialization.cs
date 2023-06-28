@@ -39,6 +39,10 @@ namespace Azure.ResourceManager.NotificationHubs.Models
 
         internal static NotificationHubBaiduCredential DeserializeNotificationHubBaiduCredential(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> baiduApiKey = default;
             Optional<Uri> baiduEndPoint = default;
             Optional<string> baiduSecretKey = default;
@@ -62,7 +66,6 @@ namespace Azure.ResourceManager.NotificationHubs.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                baiduEndPoint = null;
                                 continue;
                             }
                             baiduEndPoint = new Uri(property0.Value.GetString());

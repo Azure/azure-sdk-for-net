@@ -24,6 +24,10 @@ namespace Azure.DigitalTwins.Core
 
         internal static DigitalTwinsEventRoute DeserializeDigitalTwinsEventRoute(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> id = default;
             string endpointName = default;
             string filter = default;

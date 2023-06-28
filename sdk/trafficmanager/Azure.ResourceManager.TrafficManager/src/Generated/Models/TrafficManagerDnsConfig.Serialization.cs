@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.TrafficManager.Models
 
         internal static TrafficManagerDnsConfig DeserializeTrafficManagerDnsConfig(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> relativeName = default;
             Optional<string> fqdn = default;
             Optional<long> ttl = default;
@@ -49,7 +53,6 @@ namespace Azure.ResourceManager.TrafficManager.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     ttl = property.Value.GetInt64();

@@ -22,6 +22,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static MachineLearningOnlineScaleSettings DeserializeMachineLearningOnlineScaleSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             if (element.TryGetProperty("scaleType", out JsonElement discriminator))
             {
                 switch (discriminator.GetString())

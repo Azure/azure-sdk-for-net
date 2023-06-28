@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         internal static KeyVaultContractCreateProperties DeserializeKeyVaultContractCreateProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> secretIdentifier = default;
             Optional<string> identityClientId = default;
             foreach (var property in element.EnumerateObject())

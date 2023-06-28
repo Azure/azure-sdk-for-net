@@ -5,9 +5,9 @@
 
 #nullable disable
 
-using System;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -19,11 +19,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(Count))
             {
                 writer.WritePropertyName("count"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(Count);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(Count.ToString()).RootElement);
-#endif
+                JsonSerializer.Serialize(writer, Count);
             }
             if (Optional.IsDefined(IntervalInSeconds))
             {
@@ -35,7 +31,11 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static RetryPolicy DeserializeRetryPolicy(JsonElement element)
         {
-            Optional<BinaryData> count = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<DataFactoryElement<int>> count = default;
             Optional<int> intervalInSeconds = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -43,17 +43,15 @@ namespace Azure.ResourceManager.DataFactory.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    count = BinaryData.FromString(property.Value.GetRawText());
+                    count = JsonSerializer.Deserialize<DataFactoryElement<int>>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("intervalInSeconds"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     intervalInSeconds = property.Value.GetInt32();

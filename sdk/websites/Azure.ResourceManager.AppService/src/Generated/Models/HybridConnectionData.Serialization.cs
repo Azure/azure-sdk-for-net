@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -34,10 +33,10 @@ namespace Azure.ResourceManager.AppService
                 writer.WritePropertyName("relayName"u8);
                 writer.WriteStringValue(RelayName);
             }
-            if (Optional.IsDefined(RelayArmUri))
+            if (Optional.IsDefined(RelayArmId))
             {
                 writer.WritePropertyName("relayArmUri"u8);
-                writer.WriteStringValue(RelayArmUri.AbsoluteUri);
+                writer.WriteStringValue(RelayArmId);
             }
             if (Optional.IsDefined(Hostname))
             {
@@ -70,6 +69,10 @@ namespace Azure.ResourceManager.AppService
 
         internal static HybridConnectionData DeserializeHybridConnectionData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> kind = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -77,7 +80,7 @@ namespace Azure.ResourceManager.AppService
             Optional<SystemData> systemData = default;
             Optional<string> serviceBusNamespace = default;
             Optional<string> relayName = default;
-            Optional<Uri> relayArmUri = default;
+            Optional<ResourceIdentifier> relayArmUri = default;
             Optional<string> hostname = default;
             Optional<int> port = default;
             Optional<string> sendKeyName = default;
@@ -109,7 +112,6 @@ namespace Azure.ResourceManager.AppService
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
@@ -138,10 +140,9 @@ namespace Azure.ResourceManager.AppService
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                relayArmUri = null;
                                 continue;
                             }
-                            relayArmUri = new Uri(property0.Value.GetString());
+                            relayArmUri = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("hostname"u8))
@@ -153,7 +154,6 @@ namespace Azure.ResourceManager.AppService
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             port = property0.Value.GetInt32();

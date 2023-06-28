@@ -46,11 +46,9 @@ namespace Azure.Communication.JobRouter
         public RouterRule PrioritizationRule { get; set; }
 
         /// <summary> The queue selectors to resolve a queue for a given job. </summary>
-#pragma warning disable CA2227 // Collection properties should be read only
-        public IList<QueueSelectorAttachment> QueueSelectors { get; set; } = new List<QueueSelectorAttachment>();
+        public List<QueueSelectorAttachment> QueueSelectors { get; } = new List<QueueSelectorAttachment>();
 
         /// <summary> The worker label selectors to attach to a given job. </summary>
-        public IList<WorkerSelectorAttachment> WorkerSelectors { get; set; } = new List<WorkerSelectorAttachment>();
-#pragma warning restore CA2227 // Collection properties should be read only
+        public List<WorkerSelectorAttachment> WorkerSelectors { get; } = new List<WorkerSelectorAttachment>();
     }
 }

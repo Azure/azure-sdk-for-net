@@ -17,6 +17,10 @@ namespace Azure.ResourceManager.Authorization
     {
         internal static AuthorizationProviderOperationsMetadataData DeserializeAuthorizationProviderOperationsMetadataData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> displayName = default;
             Optional<IReadOnlyList<AuthorizationProviderResourceType>> resourceTypes = default;
             Optional<IReadOnlyList<AuthorizationProviderOperationInfo>> operations = default;
@@ -35,7 +39,6 @@ namespace Azure.ResourceManager.Authorization
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<AuthorizationProviderResourceType> array = new List<AuthorizationProviderResourceType>();
@@ -50,7 +53,6 @@ namespace Azure.ResourceManager.Authorization
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<AuthorizationProviderOperationInfo> array = new List<AuthorizationProviderOperationInfo>();
@@ -80,7 +82,6 @@ namespace Azure.ResourceManager.Authorization
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());

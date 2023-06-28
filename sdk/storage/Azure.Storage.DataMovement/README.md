@@ -48,7 +48,7 @@ TransferManager transferManager = new TransferManager(new TransferManagerOptions
 ```C# Snippet:CreateTransferManagerWithOptions
 // Create BlobTransferManager with event handler in Options bag
 TransferManagerOptions transferManagerOptions = new TransferManagerOptions();
-ContainerTransferOptions options = new ContainerTransferOptions()
+TransferOptions options = new TransferOptions()
 {
     MaximumTransferChunkSize = 4 * Constants.MB,
     CreateMode = StorageResourceCreateMode.Overwrite,
@@ -78,6 +78,51 @@ We guarantee that all client instance methods are thread-safe and independent of
 ## Examples
 
 Please see the examples for [Blobs DataMovement][blobs_examples].
+
+Pause a transfer using the TransferManager using the respective DataTransfer object
+```C# Snippet:TransferManagerTryPause_Async
+DataTransfer dataTransfer = await transferManager.StartTransferAsync(
+    sourceResource: sourceResource,
+    destinationResource: destinationResource);
+
+// Pause from the Transfer Manager using the DataTransfer object
+await transferManager.PauseTransferIfRunningAsync(dataTransfer);
+```
+
+Pause a transfer using the TransferManager using the respective transfer ID
+```C# Snippet:TransferManagerTryPauseId_Async
+DataTransfer dataTransfer = await transferManager.StartTransferAsync(
+    sourceResource: sourceResource,
+    destinationResource: destinationResource);
+string transferId = dataTransfer.Id;
+
+// Pause from the Transfer Manager using the Transfer Id
+await transferManager.PauseTransferIfRunningAsync(transferId);
+```
+
+Pause a transfer using the respective DataTransfer
+```C# Snippet:DataTransferTryPause_Async
+DataTransfer dataTransfer = await transferManager.StartTransferAsync(
+    sourceResource: sourceResource,
+    destinationResource: destinationResource);
+
+// Pause from the DataTransfer object
+await dataTransfer.PauseIfRunningAsync();
+```
+
+Resume a transfer
+```C# Snippet:TransferManagerResume_Async
+// Resume from checkpoint id
+TransferOptions optionsWithResumeTransferId = new TransferOptions()
+{
+    ResumeFromCheckpointId = dataTransfer.Id
+};
+
+DataTransfer resumedTransfer = await transferManager.StartTransferAsync(
+    sourceResource: sourceResource,
+    destinationResource: destinationResource,
+    transferOptions: optionsWithResumeTransferId);
+```
 
 ## Troubleshooting
 

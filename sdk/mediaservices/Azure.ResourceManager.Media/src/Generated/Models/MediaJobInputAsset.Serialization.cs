@@ -60,6 +60,10 @@ namespace Azure.ResourceManager.Media.Models
 
         internal static MediaJobInputAsset DeserializeMediaJobInputAsset(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string assetName = default;
             Optional<IList<string>> files = default;
             Optional<ClipTime> start = default;
@@ -78,7 +82,6 @@ namespace Azure.ResourceManager.Media.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();
@@ -93,7 +96,6 @@ namespace Azure.ResourceManager.Media.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     start = ClipTime.DeserializeClipTime(property.Value);
@@ -103,7 +105,6 @@ namespace Azure.ResourceManager.Media.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     end = ClipTime.DeserializeClipTime(property.Value);
@@ -118,7 +119,6 @@ namespace Azure.ResourceManager.Media.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<MediaJobInputDefinition> array = new List<MediaJobInputDefinition>();

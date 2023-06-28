@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.AppService.Models
     {
         internal static CsmOperationDisplay DeserializeCsmOperationDisplay(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> provider = default;
             Optional<string> resource = default;
             Optional<string> operation = default;

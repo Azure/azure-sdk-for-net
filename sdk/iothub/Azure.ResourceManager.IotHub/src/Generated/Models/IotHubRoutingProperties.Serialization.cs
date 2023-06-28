@@ -51,6 +51,10 @@ namespace Azure.ResourceManager.IotHub.Models
 
         internal static IotHubRoutingProperties DeserializeIotHubRoutingProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<RoutingEndpoints> endpoints = default;
             Optional<IList<RoutingRuleProperties>> routes = default;
             Optional<IotHubFallbackRouteProperties> fallbackRoute = default;
@@ -61,7 +65,6 @@ namespace Azure.ResourceManager.IotHub.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     endpoints = RoutingEndpoints.DeserializeRoutingEndpoints(property.Value);
@@ -71,7 +74,6 @@ namespace Azure.ResourceManager.IotHub.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<RoutingRuleProperties> array = new List<RoutingRuleProperties>();
@@ -86,7 +88,6 @@ namespace Azure.ResourceManager.IotHub.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     fallbackRoute = IotHubFallbackRouteProperties.DeserializeIotHubFallbackRouteProperties(property.Value);
@@ -96,7 +97,6 @@ namespace Azure.ResourceManager.IotHub.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<IotHubEnrichmentProperties> array = new List<IotHubEnrichmentProperties>();

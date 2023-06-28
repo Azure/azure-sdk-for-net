@@ -35,6 +35,10 @@ namespace Azure.ResourceManager.Batch.Models
 
         internal static BatchAccountAutoStorageConfiguration DeserializeBatchAccountAutoStorageConfiguration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             DateTimeOffset lastKeySync = default;
             ResourceIdentifier storageAccountId = default;
             Optional<BatchAutoStorageAuthenticationMode> authenticationMode = default;
@@ -55,7 +59,6 @@ namespace Azure.ResourceManager.Batch.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     authenticationMode = property.Value.GetString().ToBatchAutoStorageAuthenticationMode();
@@ -65,7 +68,6 @@ namespace Azure.ResourceManager.Batch.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     nodeIdentityReference = ComputeNodeIdentityReference.DeserializeComputeNodeIdentityReference(property.Value);

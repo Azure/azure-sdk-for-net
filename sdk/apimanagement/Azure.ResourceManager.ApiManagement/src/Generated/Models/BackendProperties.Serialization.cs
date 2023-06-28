@@ -25,6 +25,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         internal static BackendProperties DeserializeBackendProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<BackendServiceFabricClusterProperties> serviceFabricCluster = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -32,7 +36,6 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     serviceFabricCluster = BackendServiceFabricClusterProperties.DeserializeBackendServiceFabricClusterProperties(property.Value);

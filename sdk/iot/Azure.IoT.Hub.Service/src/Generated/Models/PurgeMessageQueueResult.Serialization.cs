@@ -14,6 +14,10 @@ namespace Azure.IoT.Hub.Service.Models
     {
         internal static PurgeMessageQueueResult DeserializePurgeMessageQueueResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int> totalMessagesPurged = default;
             Optional<string> deviceId = default;
             Optional<string> moduleId = default;
@@ -23,7 +27,6 @@ namespace Azure.IoT.Hub.Service.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     totalMessagesPurged = property.Value.GetInt32();

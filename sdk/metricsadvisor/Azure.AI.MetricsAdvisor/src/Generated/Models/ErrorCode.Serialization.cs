@@ -14,6 +14,10 @@ namespace Azure.AI.MetricsAdvisor.Models
     {
         internal static ErrorCode DeserializeErrorCode(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> message = default;
             Optional<string> code = default;
             foreach (var property in element.EnumerateObject())

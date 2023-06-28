@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 {
-    internal partial class ServiceFabricManagedClustersSku : IUtf8JsonSerializable
+    public partial class ServiceFabricManagedClustersSku : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -22,6 +22,10 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 
         internal static ServiceFabricManagedClustersSku DeserializeServiceFabricManagedClustersSku(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ServiceFabricManagedClustersSkuName name = default;
             foreach (var property in element.EnumerateObject())
             {

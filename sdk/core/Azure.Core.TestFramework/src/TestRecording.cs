@@ -3,12 +3,8 @@
 
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.IO;
-using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Security.Cryptography;
-using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.Pipeline;
@@ -65,6 +61,8 @@ namespace Azure.Core.TestFramework
                     catch (RequestFailedException ex)
                         when (ex.Status == 404)
                     {
+                        // We don't throw the exception here because Playback only tests that are testing the
+                        // recording infrastructure itself will not have session records.
                         MismatchException = new TestRecordingMismatchException(ex.Message, ex);
                         return;
                     }
@@ -180,6 +178,7 @@ namespace Azure.Core.TestFramework
                             _random = new TestRandom(Mode, seed);
                             break;
                         case RecordedTestMode.Playback:
+                            ValidateVariables();
                             _random = new TestRandom(Mode, int.Parse(Variables[RandomSeedVariableKey]));
                             break;
                         default:
@@ -325,14 +324,22 @@ namespace Azure.Core.TestFramework
                 case RecordedTestMode.Live:
                     return defaultValue;
                 case RecordedTestMode.Playback:
-                    if (Variables.Count == 0)
-                    {
-                        throw new TestRecordingMismatchException("The recording contains no variables.");
-                    }
+                    ValidateVariables();
                     Variables.TryGetValue(variableName, out string value);
                     return value;
                 default:
                     throw new ArgumentOutOfRangeException();
+            }
+        }
+
+        private void ValidateVariables()
+        {
+            if (Variables.Count == 0)
+            {
+                throw new TestRecordingMismatchException(
+                    "The record session does not exist or is missing the Variables section. If the test is " +
+                    "attributed with 'RecordedTest', it will be recorded automatically. Otherwise, set the " +
+                    "RecordedTestMode to 'Record' and attempt to record the test.");
             }
         }
 

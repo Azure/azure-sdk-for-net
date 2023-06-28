@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.DevTestLabs.Models
     {
         internal static DevTestLabResourceCost DeserializeDevTestLabResourceCost(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> resourcename = default;
             Optional<string> resourceUId = default;
             Optional<double> resourceCost = default;
@@ -39,7 +43,6 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     resourceCost = property.Value.GetDouble();

@@ -39,6 +39,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 
         internal static RecoveryPlanAction DeserializeRecoveryPlanAction(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string actionName = default;
             IList<ReplicationProtectedItemOperation> failoverTypes = default;
             IList<PossibleOperationsDirection> failoverDirections = default;

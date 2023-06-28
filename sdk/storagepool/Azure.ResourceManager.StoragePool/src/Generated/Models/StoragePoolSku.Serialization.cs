@@ -27,6 +27,10 @@ namespace Azure.ResourceManager.StoragePool.Models
 
         internal static StoragePoolSku DeserializeStoragePoolSku(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string name = default;
             Optional<string> tier = default;
             foreach (var property in element.EnumerateObject())

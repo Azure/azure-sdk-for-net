@@ -22,6 +22,10 @@ namespace Azure.ResourceManager.AppComplianceAutomation
 
         internal static SnapshotResourceData DeserializeSnapshotResourceData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<SnapshotProperties> properties = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -33,7 +37,6 @@ namespace Azure.ResourceManager.AppComplianceAutomation
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     properties = SnapshotProperties.DeserializeSnapshotProperties(property.Value);
@@ -58,7 +61,6 @@ namespace Azure.ResourceManager.AppComplianceAutomation
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());

@@ -26,6 +26,10 @@ namespace Azure.ResourceManager.Monitor.Models
 
         internal static MonitorSmsReceiver DeserializeMonitorSmsReceiver(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string name = default;
             string countryCode = default;
             string phoneNumber = default;
@@ -51,7 +55,6 @@ namespace Azure.ResourceManager.Monitor.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     status = property.Value.GetString().ToMonitorReceiverStatus();

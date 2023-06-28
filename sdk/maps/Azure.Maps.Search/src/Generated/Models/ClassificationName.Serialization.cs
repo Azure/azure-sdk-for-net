@@ -14,6 +14,10 @@ namespace Azure.Maps.Search.Models
     {
         internal static ClassificationName DeserializeClassificationName(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> nameLocale = default;
             Optional<string> name = default;
             foreach (var property in element.EnumerateObject())

@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.Resources
     {
         internal static FeatureData DeserializeFeatureData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<FeatureProperties> properties = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -27,7 +31,6 @@ namespace Azure.ResourceManager.Resources
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     properties = FeatureProperties.DeserializeFeatureProperties(property.Value);
@@ -52,7 +55,6 @@ namespace Azure.ResourceManager.Resources
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());

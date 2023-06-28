@@ -36,6 +36,10 @@ namespace Azure.ResourceManager.Compute.Models
 
         internal static ImageDeprecationStatus DeserializeImageDeprecationStatus(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ImageState> imageState = default;
             Optional<DateTimeOffset> scheduledDeprecationTime = default;
             Optional<ImageAlternativeOption> alternativeOption = default;
@@ -45,7 +49,6 @@ namespace Azure.ResourceManager.Compute.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     imageState = new ImageState(property.Value.GetString());
@@ -55,7 +58,6 @@ namespace Azure.ResourceManager.Compute.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     scheduledDeprecationTime = property.Value.GetDateTimeOffset("O");
@@ -65,7 +67,6 @@ namespace Azure.ResourceManager.Compute.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     alternativeOption = ImageAlternativeOption.DeserializeImageAlternativeOption(property.Value);

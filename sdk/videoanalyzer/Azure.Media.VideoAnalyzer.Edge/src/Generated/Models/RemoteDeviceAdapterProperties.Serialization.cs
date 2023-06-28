@@ -29,6 +29,10 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
 
         internal static RemoteDeviceAdapterProperties DeserializeRemoteDeviceAdapterProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> description = default;
             RemoteDeviceAdapterTarget target = default;
             IotHubDeviceConnection iotHubDeviceConnection = default;

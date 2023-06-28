@@ -11,36 +11,58 @@ using Azure.Core;
 namespace Azure.AI.AnomalyDetector
 {
     /// <summary>
-    /// Detection request for batch inference. This is an asynchronous inference which
+    /// Detection request for batch inference. This is an asynchronous inference that
     /// will need another API to get detection results.
     /// </summary>
     public partial class MultivariateBatchDetectionOptions
     {
         /// <summary> Initializes a new instance of MultivariateBatchDetectionOptions. </summary>
         /// <param name="dataSource">
-        /// Source link to the input data to indicate an accessible Azure storage Uri,
-        /// either pointed to an Azure blob storage folder, or pointed to a CSV file in
-        /// Azure blob storage based on you data schema selection. The data schema should
-        /// be exactly the same with those used in the training phase.
-        /// </param>
-        /// <param name="topContributorCount">
-        /// An optional field, which is used to specify the number of top contributed
-        /// variables for one anomalous timestamp in the response. The default number is
-        /// 10.
+        /// Source link to the input data to indicate an accessible Azure Storage URI.
+        /// It either points to an Azure Blob Storage folder or points to a CSV file in
+        /// Azure Blob Storage, based on your data schema selection. The data schema should
+        /// be exactly the same as those used in the training phase. The input data must
+        /// contain at least slidingWindow entries preceding the start time of the data
+        /// to be detected.
         /// </param>
         /// <param name="startTime">
-        /// A required field, indicating the start time of data for detection, which should
-        /// be date-time of ISO 8601 format.
+        /// Start date/time of data for detection, which should
+        /// be in ISO 8601 format.
         /// </param>
         /// <param name="endTime">
-        /// A required field, indicating the end time of data for detection, which should
-        /// be date-time of ISO 8601 format.
+        /// End date/time of data for detection, which should
+        /// be in ISO 8601 format.
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="dataSource"/> is null. </exception>
-        public MultivariateBatchDetectionOptions(string dataSource, int topContributorCount, DateTimeOffset startTime, DateTimeOffset endTime)
+        public MultivariateBatchDetectionOptions(Uri dataSource, DateTimeOffset startTime, DateTimeOffset endTime)
         {
             Argument.AssertNotNull(dataSource, nameof(dataSource));
 
+            DataSource = dataSource;
+            StartTime = startTime;
+            EndTime = endTime;
+        }
+
+        /// <summary> Initializes a new instance of MultivariateBatchDetectionOptions. </summary>
+        /// <param name="dataSource">
+        /// Source link to the input data to indicate an accessible Azure Storage URI.
+        /// It either points to an Azure Blob Storage folder or points to a CSV file in
+        /// Azure Blob Storage, based on your data schema selection. The data schema should
+        /// be exactly the same as those used in the training phase. The input data must
+        /// contain at least slidingWindow entries preceding the start time of the data
+        /// to be detected.
+        /// </param>
+        /// <param name="topContributorCount"> Number of top contributed variables for one anomalous time stamp in the response. </param>
+        /// <param name="startTime">
+        /// Start date/time of data for detection, which should
+        /// be in ISO 8601 format.
+        /// </param>
+        /// <param name="endTime">
+        /// End date/time of data for detection, which should
+        /// be in ISO 8601 format.
+        /// </param>
+        internal MultivariateBatchDetectionOptions(Uri dataSource, int? topContributorCount, DateTimeOffset startTime, DateTimeOffset endTime)
+        {
             DataSource = dataSource;
             TopContributorCount = topContributorCount;
             StartTime = startTime;
@@ -48,26 +70,24 @@ namespace Azure.AI.AnomalyDetector
         }
 
         /// <summary>
-        /// Source link to the input data to indicate an accessible Azure storage Uri,
-        /// either pointed to an Azure blob storage folder, or pointed to a CSV file in
-        /// Azure blob storage based on you data schema selection. The data schema should
-        /// be exactly the same with those used in the training phase.
+        /// Source link to the input data to indicate an accessible Azure Storage URI.
+        /// It either points to an Azure Blob Storage folder or points to a CSV file in
+        /// Azure Blob Storage, based on your data schema selection. The data schema should
+        /// be exactly the same as those used in the training phase. The input data must
+        /// contain at least slidingWindow entries preceding the start time of the data
+        /// to be detected.
         /// </summary>
-        public string DataSource { get; set; }
+        public Uri DataSource { get; set; }
+        /// <summary> Number of top contributed variables for one anomalous time stamp in the response. </summary>
+        public int? TopContributorCount { get; set; }
         /// <summary>
-        /// An optional field, which is used to specify the number of top contributed
-        /// variables for one anomalous timestamp in the response. The default number is
-        /// 10.
-        /// </summary>
-        public int TopContributorCount { get; set; }
-        /// <summary>
-        /// A required field, indicating the start time of data for detection, which should
-        /// be date-time of ISO 8601 format.
+        /// Start date/time of data for detection, which should
+        /// be in ISO 8601 format.
         /// </summary>
         public DateTimeOffset StartTime { get; set; }
         /// <summary>
-        /// A required field, indicating the end time of data for detection, which should
-        /// be date-time of ISO 8601 format.
+        /// End date/time of data for detection, which should
+        /// be in ISO 8601 format.
         /// </summary>
         public DateTimeOffset EndTime { get; set; }
     }

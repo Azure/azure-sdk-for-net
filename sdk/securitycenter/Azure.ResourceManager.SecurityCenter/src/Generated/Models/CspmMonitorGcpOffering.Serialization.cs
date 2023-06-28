@@ -27,6 +27,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         internal static CspmMonitorGcpOffering DeserializeCspmMonitorGcpOffering(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<CspmMonitorGcpOfferingNativeCloudConnection> nativeCloudConnection = default;
             OfferingType offeringType = default;
             Optional<string> description = default;
@@ -36,7 +40,6 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     nativeCloudConnection = CspmMonitorGcpOfferingNativeCloudConnection.DeserializeCspmMonitorGcpOfferingNativeCloudConnection(property.Value);

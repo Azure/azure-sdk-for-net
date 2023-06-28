@@ -41,6 +41,10 @@ namespace Azure.ResourceManager.ProviderHub.Models
 
         internal static ExtensionOptions DeserializeExtensionOptions(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<ExtensionOptionType>> request = default;
             Optional<IList<ExtensionOptionType>> response = default;
             foreach (var property in element.EnumerateObject())
@@ -49,7 +53,6 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<ExtensionOptionType> array = new List<ExtensionOptionType>();
@@ -64,7 +67,6 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<ExtensionOptionType> array = new List<ExtensionOptionType>();

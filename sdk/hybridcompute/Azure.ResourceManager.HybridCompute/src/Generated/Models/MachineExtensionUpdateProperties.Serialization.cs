@@ -52,6 +52,11 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 foreach (var item in Settings)
                 {
                     writer.WritePropertyName(item.Key);
+                    if (item.Value == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
@@ -67,6 +72,11 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 foreach (var item in ProtectedSettings)
                 {
                     writer.WritePropertyName(item.Key);
+                    if (item.Value == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else

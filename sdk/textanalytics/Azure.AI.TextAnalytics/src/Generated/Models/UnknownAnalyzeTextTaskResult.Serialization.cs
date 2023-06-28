@@ -14,6 +14,10 @@ namespace Azure.AI.TextAnalytics.Models
     {
         internal static UnknownAnalyzeTextTaskResult DeserializeUnknownAnalyzeTextTaskResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             AnalyzeTextTaskResultsKind kind = "Unknown";
             foreach (var property in element.EnumerateObject())
             {

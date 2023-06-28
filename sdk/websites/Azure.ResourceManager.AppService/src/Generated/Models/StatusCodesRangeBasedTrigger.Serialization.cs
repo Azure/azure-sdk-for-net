@@ -40,6 +40,10 @@ namespace Azure.ResourceManager.AppService.Models
 
         internal static StatusCodesRangeBasedTrigger DeserializeStatusCodesRangeBasedTrigger(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> statusCodes = default;
             Optional<string> path = default;
             Optional<int> count = default;
@@ -60,7 +64,6 @@ namespace Azure.ResourceManager.AppService.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     count = property.Value.GetInt32();

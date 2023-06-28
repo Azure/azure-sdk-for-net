@@ -25,6 +25,10 @@ namespace Azure.ResourceManager.Dns.Models
 
         internal static DnsPtrRecordInfo DeserializeDnsPtrRecordInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> ptrdname = default;
             foreach (var property in element.EnumerateObject())
             {

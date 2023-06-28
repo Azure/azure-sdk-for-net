@@ -25,6 +25,10 @@ namespace Azure.ResourceManager.Synapse
 
         internal static SynapseIntegrationRuntimeData DeserializeSynapseIntegrationRuntimeData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             SynapseIntegrationRuntimeProperties properties = default;
             Optional<ETag> etag = default;
             ResourceIdentifier id = default;
@@ -42,7 +46,6 @@ namespace Azure.ResourceManager.Synapse
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     etag = new ETag(property.Value.GetString());
@@ -67,7 +70,6 @@ namespace Azure.ResourceManager.Synapse
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());

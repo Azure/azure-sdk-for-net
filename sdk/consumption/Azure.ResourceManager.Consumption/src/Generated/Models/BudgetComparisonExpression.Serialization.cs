@@ -32,6 +32,10 @@ namespace Azure.ResourceManager.Consumption.Models
 
         internal static BudgetComparisonExpression DeserializeBudgetComparisonExpression(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string name = default;
             BudgetOperatorType @operator = default;
             IList<string> values = default;

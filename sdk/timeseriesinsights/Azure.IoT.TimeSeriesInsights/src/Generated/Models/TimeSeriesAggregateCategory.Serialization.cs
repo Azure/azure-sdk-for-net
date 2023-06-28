@@ -22,6 +22,11 @@ namespace Azure.IoT.TimeSeriesInsights
             writer.WriteStartArray();
             foreach (var item in Values)
             {
+                if (item == null)
+                {
+                    writer.WriteNullValue();
+                    continue;
+                }
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
@@ -30,6 +35,10 @@ namespace Azure.IoT.TimeSeriesInsights
 
         internal static TimeSeriesAggregateCategory DeserializeTimeSeriesAggregateCategory(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string label = default;
             IList<object> values = default;
             foreach (var property in element.EnumerateObject())
@@ -44,7 +53,14 @@ namespace Azure.IoT.TimeSeriesInsights
                     List<object> array = new List<object>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(item.GetObject());
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(item.GetObject());
+                        }
                     }
                     values = array;
                     continue;

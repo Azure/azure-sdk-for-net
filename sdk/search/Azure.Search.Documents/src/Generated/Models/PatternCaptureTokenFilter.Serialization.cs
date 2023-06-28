@@ -37,6 +37,10 @@ namespace Azure.Search.Documents.Indexes.Models
 
         internal static PatternCaptureTokenFilter DeserializePatternCaptureTokenFilter(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             IList<string> patterns = default;
             Optional<bool> preserveOriginal = default;
             string odataType = default;
@@ -57,7 +61,6 @@ namespace Azure.Search.Documents.Indexes.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     preserveOriginal = property.Value.GetBoolean();

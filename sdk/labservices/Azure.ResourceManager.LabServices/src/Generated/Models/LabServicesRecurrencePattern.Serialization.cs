@@ -41,6 +41,10 @@ namespace Azure.ResourceManager.LabServices.Models
 
         internal static LabServicesRecurrencePattern DeserializeLabServicesRecurrencePattern(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             LabServicesRecurrenceFrequency frequency = default;
             Optional<IList<LabServicesDayOfWeek>> weekDays = default;
             Optional<int> interval = default;
@@ -56,7 +60,6 @@ namespace Azure.ResourceManager.LabServices.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<LabServicesDayOfWeek> array = new List<LabServicesDayOfWeek>();
@@ -71,7 +74,6 @@ namespace Azure.ResourceManager.LabServices.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     interval = property.Value.GetInt32();

@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.StorageCache.Models
 
         internal static StorageCacheDirectorySettings DeserializeStorageCacheDirectorySettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<StorageCacheActiveDirectorySettings> activeDirectory = default;
             Optional<StorageCacheUsernameDownloadSettings> usernameDownload = default;
             foreach (var property in element.EnumerateObject())
@@ -38,7 +42,6 @@ namespace Azure.ResourceManager.StorageCache.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     activeDirectory = StorageCacheActiveDirectorySettings.DeserializeStorageCacheActiveDirectorySettings(property.Value);
@@ -48,7 +51,6 @@ namespace Azure.ResourceManager.StorageCache.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     usernameDownload = StorageCacheUsernameDownloadSettings.DeserializeStorageCacheUsernameDownloadSettings(property.Value);

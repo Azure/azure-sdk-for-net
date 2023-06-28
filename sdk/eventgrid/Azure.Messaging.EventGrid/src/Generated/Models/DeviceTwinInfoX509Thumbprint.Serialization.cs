@@ -14,6 +14,10 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     {
         internal static DeviceTwinInfoX509Thumbprint DeserializeDeviceTwinInfoX509Thumbprint(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> primaryThumbprint = default;
             Optional<string> secondaryThumbprint = default;
             foreach (var property in element.EnumerateObject())

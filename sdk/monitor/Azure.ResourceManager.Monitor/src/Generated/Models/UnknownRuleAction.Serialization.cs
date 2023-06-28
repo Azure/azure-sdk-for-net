@@ -22,6 +22,10 @@ namespace Azure.ResourceManager.Monitor.Models
 
         internal static UnknownRuleAction DeserializeUnknownRuleAction(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string odataType = "Unknown";
             foreach (var property in element.EnumerateObject())
             {

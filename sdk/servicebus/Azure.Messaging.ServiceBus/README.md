@@ -56,41 +56,9 @@ await using var client = new ServiceBusClient(connectionString);
 
 To see how to authenticate using Azure.Identity, view this [example](#authenticating-with-azureidentity).
 
+For examples of how to authenticate for an ASP.NET Core application, view this [example](#registering-with-aspnet-core-dependency-injection).
+
 To see how to initiate the connection with a custom endpoint, view this [sample](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/servicebus/Azure.Messaging.ServiceBus/samples/Sample13_AdvancedConfiguration.md#initiating-the-connection-with-a-custom-endpoint).
-
-### ASP.NET Core
-
-To inject `ServiceBusClient` as a dependency in an ASP.NET Core app, install the Azure client library integration for ASP.NET Core package.
-
-```dotnetcli
-dotnet add package Microsoft.Extensions.Azure
-```
-
-Then register the client in the `Startup.ConfigureServices` method:
-
-```csharp
-public void ConfigureServices(IServiceCollection services)
-{
-    services.AddAzureClients(builder =>
-    {
-        builder.AddServiceBusClient(Configuration.GetConnectionString("ServiceBus"));
-    });
-  
-    services.AddControllers();
-}
-```
-
-To use the preceding code, add this to your configuration:
-
-```json
-{
-  "ConnectionStrings": {
-    "ServiceBus": "<connection_string>"
-  }
-}
-```
-
-For more details, see [Dependency injection with the Azure SDK for .NET](https://docs.microsoft.com/dotnet/azure/sdk/dependency-injection).
 
 ## Key concepts
 
@@ -261,7 +229,7 @@ foreach (ServiceBusReceivedMessage receivedMessage in receivedMessages)
 
 ### Complete a message
 
-In order to remove a message from a queue or subscription, we can call the `CompleteAsync` method.
+In order to remove a message from a queue or subscription, we can call the `CompleteMessageAsync` method.
 
 ```C# Snippet:ServiceBusCompleteMessage
 string connectionString = "<connection_string>";
@@ -337,6 +305,8 @@ ServiceBusReceivedMessage dlqMessage = await dlqReceiver.ReceiveMessageAsync();
 string reason = dlqMessage.DeadLetterReason;
 string description = dlqMessage.DeadLetterErrorDescription;
 ```
+
+For more information, see the [overview of ServiceBus dead letter queues](https://learn.microsoft.com/azure/service-bus-messaging/service-bus-dead-letter-queues).
 
 ### Using the Processor
 
@@ -417,6 +387,62 @@ The [Azure Identity library](https://github.com/Azure/azure-sdk-for-net/tree/mai
 string fullyQualifiedNamespace = "yournamespace.servicebus.windows.net";
 await using var client = new ServiceBusClient(fullyQualifiedNamespace, new DefaultAzureCredential());
 ```
+
+### Registering with ASP.NET Core dependency injection
+
+To inject `ServiceBusClient` as a dependency in an ASP.NET Core app, install the Azure client library integration for ASP.NET Core package.
+
+```dotnetcli
+dotnet add package Microsoft.Extensions.Azure
+```
+
+Then register the client in the `Startup.ConfigureServices` method:
+
+```csharp
+public void ConfigureServices(IServiceCollection services)
+{
+    services.AddAzureClients(builder =>
+    {
+        builder.AddServiceBusClient(Configuration.GetConnectionString("ServiceBus"));
+    });
+  
+    services.AddControllers();
+}
+```
+
+To use the preceding code, add this to the configuration for your application:
+
+```json
+{
+  "ConnectionStrings": {
+    "ServiceBus": "<connection_string>"
+  }
+}
+```
+
+For applications that prefer using a shared `Azure.Identity` credential for their clients, registration looks slightly different:
+
+```csharp
+var fullyQualifiedNamespace = "yournamespace.servicebus.windows.net";
+
+public void ConfigureServices(IServiceCollection services)
+{
+    services.AddAzureClients(builder =>
+    {
+        // This will register the ServiceBusClient using the default credential.
+        builder.AddServiceBusClientWithNamespace(fullyQualifiedNamespace);
+
+        // By default, DefaultAzureCredential is used, which is likely desired for most
+        // scenarios. If you need to restrict to a specific credential instance, you could
+        // register that instance as the default credential instead.
+        builder.UseCredential(new ManagedIdentityCredential());
+    });
+  
+    services.AddControllers();
+}
+```
+
+For more details, see [Dependency injection with the Azure SDK for .NET](https://docs.microsoft.com/dotnet/azure/sdk/dependency-injection).
 
 ### Working with Sessions
 

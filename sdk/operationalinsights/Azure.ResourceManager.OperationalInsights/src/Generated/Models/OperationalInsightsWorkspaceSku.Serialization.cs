@@ -28,6 +28,10 @@ namespace Azure.ResourceManager.OperationalInsights.Models
 
         internal static OperationalInsightsWorkspaceSku DeserializeOperationalInsightsWorkspaceSku(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             OperationalInsightsWorkspaceSkuName name = default;
             Optional<OperationalInsightsWorkspaceCapacityReservationLevel> capacityReservationLevel = default;
             Optional<DateTimeOffset> lastSkuUpdate = default;
@@ -42,7 +46,6 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     capacityReservationLevel = property.Value.GetInt32().ToOperationalInsightsWorkspaceCapacityReservationLevel();
@@ -52,7 +55,6 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     lastSkuUpdate = property.Value.GetDateTimeOffset("O");

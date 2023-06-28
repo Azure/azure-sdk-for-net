@@ -97,7 +97,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/SecurityCenterRG3888/providers/Microsoft.Network/networkSecurityGroups/nsg7769?api-version=2021-02-01",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/SecurityCenterRG3888/providers/Microsoft.Network/networkSecurityGroups/nsg891?api-version=**",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -116,7 +116,7 @@
       "StatusCode": 201,
       "ResponseHeaders": {
         "Azure-AsyncNotification": "Enabled",
-        "Azure-AsyncOperation": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Network/locations/eastus/operations/6efa1bc8-765d-4733-8eb0-0ad9d8c0c1f1?api-version=2021-02-01",
+        "Azure-AsyncOperation": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Network/locations/eastus/operations/6efa1bc8-765d-4733-8eb0-0ad9d8c0c1f1?api-version=**",
         "Cache-Control": "no-cache",
         "Content-Length": "6564",
         "Content-Type": "application/json; charset=utf-8",
@@ -138,8 +138,8 @@
         "x-ms-routing-request-id": "SOUTHEASTASIA:20221013T061804Z:5e66278b-7b89-4baa-af47-cf0387336645"
       },
       "ResponseBody": {
-        "name": "nsg7769",
-        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/SecurityCenterRG3888/providers/Microsoft.Network/networkSecurityGroups/nsg7769",
+        "name": "nsg891",
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/SecurityCenterRG3888/providers/Microsoft.Network/networkSecurityGroups/nsg891",
         "etag": "W/\u00221ebfd68f-5a8b-4d5e-a9d9-1808a5077fa9\u0022",
         "type": "Microsoft.Network/networkSecurityGroups",
         "location": "eastus",
@@ -150,7 +150,7 @@
           "defaultSecurityRules": [
             {
               "name": "AllowVnetInBound",
-              "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/SecurityCenterRG3888/providers/Microsoft.Network/networkSecurityGroups/nsg7769/defaultSecurityRules/AllowVnetInBound",
+              "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/SecurityCenterRG3888/providers/Microsoft.Network/networkSecurityGroups/nsg891/defaultSecurityRules/AllowVnetInBound",
               "etag": "W/\u00221ebfd68f-5a8b-4d5e-a9d9-1808a5077fa9\u0022",
               "type": "Microsoft.Network/networkSecurityGroups/defaultSecurityRules",
               "properties": {
@@ -172,7 +172,7 @@
             },
             {
               "name": "AllowAzureLoadBalancerInBound",
-              "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/SecurityCenterRG3888/providers/Microsoft.Network/networkSecurityGroups/nsg7769/defaultSecurityRules/AllowAzureLoadBalancerInBound",
+              "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/SecurityCenterRG3888/providers/Microsoft.Network/networkSecurityGroups/nsg891/defaultSecurityRules/AllowAzureLoadBalancerInBound",
               "etag": "W/\u00221ebfd68f-5a8b-4d5e-a9d9-1808a5077fa9\u0022",
               "type": "Microsoft.Network/networkSecurityGroups/defaultSecurityRules",
               "properties": {
@@ -194,7 +194,7 @@
             },
             {
               "name": "DenyAllInBound",
-              "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/SecurityCenterRG3888/providers/Microsoft.Network/networkSecurityGroups/nsg7769/defaultSecurityRules/DenyAllInBound",
+              "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/SecurityCenterRG3888/providers/Microsoft.Network/networkSecurityGroups/nsg891/defaultSecurityRules/DenyAllInBound",
               "etag": "W/\u00221ebfd68f-5a8b-4d5e-a9d9-1808a5077fa9\u0022",
               "type": "Microsoft.Network/networkSecurityGroups/defaultSecurityRules",
               "properties": {
@@ -216,7 +216,7 @@
             },
             {
               "name": "AllowVnetOutBound",
-              "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/SecurityCenterRG3888/providers/Microsoft.Network/networkSecurityGroups/nsg7769/defaultSecurityRules/AllowVnetOutBound",
+              "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/SecurityCenterRG3888/providers/Microsoft.Network/networkSecurityGroups/nsg891/defaultSecurityRules/AllowVnetOutBound",
               "etag": "W/\u00221ebfd68f-5a8b-4d5e-a9d9-1808a5077fa9\u0022",
               "type": "Microsoft.Network/networkSecurityGroups/defaultSecurityRules",
               "properties": {
@@ -238,7 +238,7 @@
             },
             {
               "name": "AllowInternetOutBound",
-              "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/SecurityCenterRG3888/providers/Microsoft.Network/networkSecurityGroups/nsg7769/defaultSecurityRules/AllowInternetOutBound",
+              "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/SecurityCenterRG3888/providers/Microsoft.Network/networkSecurityGroups/nsg891/defaultSecurityRules/AllowInternetOutBound",
               "etag": "W/\u00221ebfd68f-5a8b-4d5e-a9d9-1808a5077fa9\u0022",
               "type": "Microsoft.Network/networkSecurityGroups/defaultSecurityRules",
               "properties": {
@@ -260,7 +260,7 @@
             },
             {
               "name": "DenyAllOutBound",
-              "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/SecurityCenterRG3888/providers/Microsoft.Network/networkSecurityGroups/nsg7769/defaultSecurityRules/DenyAllOutBound",
+              "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/SecurityCenterRG3888/providers/Microsoft.Network/networkSecurityGroups/nsg891/defaultSecurityRules/DenyAllOutBound",
               "etag": "W/\u00221ebfd68f-5a8b-4d5e-a9d9-1808a5077fa9\u0022",
               "type": "Microsoft.Network/networkSecurityGroups/defaultSecurityRules",
               "properties": {
@@ -285,7 +285,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Network/locations/eastus/operations/6efa1bc8-765d-4733-8eb0-0ad9d8c0c1f1?api-version=2021-02-01",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Network/locations/eastus/operations/6efa1bc8-765d-4733-8eb0-0ad9d8c0c1f1?api-version=**",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -321,7 +321,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/SecurityCenterRG3888/providers/Microsoft.Network/networkSecurityGroups/nsg7769?api-version=2021-02-01",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/SecurityCenterRG3888/providers/Microsoft.Network/networkSecurityGroups/nsg891?api-version=**",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -354,8 +354,8 @@
         "x-ms-routing-request-id": "SOUTHEASTASIA:20221013T061805Z:9237dd7f-4c00-4ae9-b85a-5932ad4dfbb3"
       },
       "ResponseBody": {
-        "name": "nsg7769",
-        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/SecurityCenterRG3888/providers/Microsoft.Network/networkSecurityGroups/nsg7769",
+        "name": "nsg891",
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/SecurityCenterRG3888/providers/Microsoft.Network/networkSecurityGroups/nsg891",
         "etag": "W/\u0022b81c0f69-20b6-42e5-8da8-4df1ef188b29\u0022",
         "type": "Microsoft.Network/networkSecurityGroups",
         "location": "eastus",
@@ -366,7 +366,7 @@
           "defaultSecurityRules": [
             {
               "name": "AllowVnetInBound",
-              "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/SecurityCenterRG3888/providers/Microsoft.Network/networkSecurityGroups/nsg7769/defaultSecurityRules/AllowVnetInBound",
+              "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/SecurityCenterRG3888/providers/Microsoft.Network/networkSecurityGroups/nsg891/defaultSecurityRules/AllowVnetInBound",
               "etag": "W/\u0022b81c0f69-20b6-42e5-8da8-4df1ef188b29\u0022",
               "type": "Microsoft.Network/networkSecurityGroups/defaultSecurityRules",
               "properties": {
@@ -388,7 +388,7 @@
             },
             {
               "name": "AllowAzureLoadBalancerInBound",
-              "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/SecurityCenterRG3888/providers/Microsoft.Network/networkSecurityGroups/nsg7769/defaultSecurityRules/AllowAzureLoadBalancerInBound",
+              "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/SecurityCenterRG3888/providers/Microsoft.Network/networkSecurityGroups/nsg891/defaultSecurityRules/AllowAzureLoadBalancerInBound",
               "etag": "W/\u0022b81c0f69-20b6-42e5-8da8-4df1ef188b29\u0022",
               "type": "Microsoft.Network/networkSecurityGroups/defaultSecurityRules",
               "properties": {
@@ -410,7 +410,7 @@
             },
             {
               "name": "DenyAllInBound",
-              "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/SecurityCenterRG3888/providers/Microsoft.Network/networkSecurityGroups/nsg7769/defaultSecurityRules/DenyAllInBound",
+              "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/SecurityCenterRG3888/providers/Microsoft.Network/networkSecurityGroups/nsg891/defaultSecurityRules/DenyAllInBound",
               "etag": "W/\u0022b81c0f69-20b6-42e5-8da8-4df1ef188b29\u0022",
               "type": "Microsoft.Network/networkSecurityGroups/defaultSecurityRules",
               "properties": {
@@ -432,7 +432,7 @@
             },
             {
               "name": "AllowVnetOutBound",
-              "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/SecurityCenterRG3888/providers/Microsoft.Network/networkSecurityGroups/nsg7769/defaultSecurityRules/AllowVnetOutBound",
+              "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/SecurityCenterRG3888/providers/Microsoft.Network/networkSecurityGroups/nsg891/defaultSecurityRules/AllowVnetOutBound",
               "etag": "W/\u0022b81c0f69-20b6-42e5-8da8-4df1ef188b29\u0022",
               "type": "Microsoft.Network/networkSecurityGroups/defaultSecurityRules",
               "properties": {
@@ -454,7 +454,7 @@
             },
             {
               "name": "AllowInternetOutBound",
-              "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/SecurityCenterRG3888/providers/Microsoft.Network/networkSecurityGroups/nsg7769/defaultSecurityRules/AllowInternetOutBound",
+              "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/SecurityCenterRG3888/providers/Microsoft.Network/networkSecurityGroups/nsg891/defaultSecurityRules/AllowInternetOutBound",
               "etag": "W/\u0022b81c0f69-20b6-42e5-8da8-4df1ef188b29\u0022",
               "type": "Microsoft.Network/networkSecurityGroups/defaultSecurityRules",
               "properties": {
@@ -476,7 +476,7 @@
             },
             {
               "name": "DenyAllOutBound",
-              "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/SecurityCenterRG3888/providers/Microsoft.Network/networkSecurityGroups/nsg7769/defaultSecurityRules/DenyAllOutBound",
+              "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/SecurityCenterRG3888/providers/Microsoft.Network/networkSecurityGroups/nsg891/defaultSecurityRules/DenyAllOutBound",
               "etag": "W/\u0022b81c0f69-20b6-42e5-8da8-4df1ef188b29\u0022",
               "type": "Microsoft.Network/networkSecurityGroups/defaultSecurityRules",
               "properties": {
@@ -501,7 +501,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/SecurityCenterRG3888/providers/Microsoft.Network/virtualNetworks/vnet2444?api-version=2021-02-01",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/SecurityCenterRG3888/providers/Microsoft.Network/virtualNetworks/vnet3565?api-version=**",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -527,7 +527,7 @@
               "properties": {
                 "addressPrefix": "10.10.1.0/24",
                 "networkSecurityGroup": {
-                  "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/SecurityCenterRG3888/providers/Microsoft.Network/networkSecurityGroups/nsg7769",
+                  "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/SecurityCenterRG3888/providers/Microsoft.Network/networkSecurityGroups/nsg891",
                   "location": "eastus",
                   "properties": {
                     "securityRules": []
@@ -548,7 +548,7 @@
       "StatusCode": 201,
       "ResponseHeaders": {
         "Azure-AsyncNotification": "Enabled",
-        "Azure-AsyncOperation": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Network/locations/eastus/operations/64d73c8a-3736-47b3-8f07-d305479c715c?api-version=2021-02-01",
+        "Azure-AsyncOperation": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Network/locations/eastus/operations/64d73c8a-3736-47b3-8f07-d305479c715c?api-version=**",
         "Cache-Control": "no-cache",
         "Content-Length": "2071",
         "Content-Type": "application/json; charset=utf-8",
@@ -570,8 +570,8 @@
         "x-ms-routing-request-id": "SOUTHEASTASIA:20221013T061808Z:6046b206-917f-45e3-9540-8668f7ba6047"
       },
       "ResponseBody": {
-        "name": "vnet2444",
-        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/SecurityCenterRG3888/providers/Microsoft.Network/virtualNetworks/vnet2444",
+        "name": "vnet3565",
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/SecurityCenterRG3888/providers/Microsoft.Network/virtualNetworks/vnet3565",
         "etag": "W/\u0022726cdb88-be7b-42b6-bf08-e10a99b3c8e7\u0022",
         "type": "Microsoft.Network/virtualNetworks",
         "location": "eastus",
@@ -586,13 +586,13 @@
           "subnets": [
             {
               "name": "subnet1",
-              "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/SecurityCenterRG3888/providers/Microsoft.Network/virtualNetworks/vnet2444/subnets/subnet1",
+              "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/SecurityCenterRG3888/providers/Microsoft.Network/virtualNetworks/vnet3565/subnets/subnet1",
               "etag": "W/\u0022726cdb88-be7b-42b6-bf08-e10a99b3c8e7\u0022",
               "properties": {
                 "provisioningState": "Updating",
                 "addressPrefix": "10.10.1.0/24",
                 "networkSecurityGroup": {
-                  "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/SecurityCenterRG3888/providers/Microsoft.Network/networkSecurityGroups/nsg7769"
+                  "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/SecurityCenterRG3888/providers/Microsoft.Network/networkSecurityGroups/nsg891"
                 },
                 "delegations": [],
                 "privateEndpointNetworkPolicies": "Disabled",
@@ -602,7 +602,7 @@
             },
             {
               "name": "subnet2",
-              "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/SecurityCenterRG3888/providers/Microsoft.Network/virtualNetworks/vnet2444/subnets/subnet2",
+              "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/SecurityCenterRG3888/providers/Microsoft.Network/virtualNetworks/vnet3565/subnets/subnet2",
               "etag": "W/\u0022726cdb88-be7b-42b6-bf08-e10a99b3c8e7\u0022",
               "properties": {
                 "provisioningState": "Updating",
@@ -620,7 +620,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Network/locations/eastus/operations/64d73c8a-3736-47b3-8f07-d305479c715c?api-version=2021-02-01",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Network/locations/eastus/operations/64d73c8a-3736-47b3-8f07-d305479c715c?api-version=**",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -657,7 +657,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Network/locations/eastus/operations/64d73c8a-3736-47b3-8f07-d305479c715c?api-version=2021-02-01",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Network/locations/eastus/operations/64d73c8a-3736-47b3-8f07-d305479c715c?api-version=**",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -693,7 +693,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/SecurityCenterRG3888/providers/Microsoft.Network/virtualNetworks/vnet2444?api-version=2021-02-01",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/SecurityCenterRG3888/providers/Microsoft.Network/virtualNetworks/vnet3565?api-version=**",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -726,8 +726,8 @@
         "x-ms-routing-request-id": "SOUTHEASTASIA:20221013T061820Z:abc074e5-dc29-4914-917f-77578135589e"
       },
       "ResponseBody": {
-        "name": "vnet2444",
-        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/SecurityCenterRG3888/providers/Microsoft.Network/virtualNetworks/vnet2444",
+        "name": "vnet3565",
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/SecurityCenterRG3888/providers/Microsoft.Network/virtualNetworks/vnet3565",
         "etag": "W/\u002291c6e5c7-2beb-48fb-b195-2ffc65e0078f\u0022",
         "type": "Microsoft.Network/virtualNetworks",
         "location": "eastus",
@@ -742,13 +742,13 @@
           "subnets": [
             {
               "name": "subnet1",
-              "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/SecurityCenterRG3888/providers/Microsoft.Network/virtualNetworks/vnet2444/subnets/subnet1",
+              "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/SecurityCenterRG3888/providers/Microsoft.Network/virtualNetworks/vnet3565/subnets/subnet1",
               "etag": "W/\u002291c6e5c7-2beb-48fb-b195-2ffc65e0078f\u0022",
               "properties": {
                 "provisioningState": "Succeeded",
                 "addressPrefix": "10.10.1.0/24",
                 "networkSecurityGroup": {
-                  "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/SecurityCenterRG3888/providers/Microsoft.Network/networkSecurityGroups/nsg7769"
+                  "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/SecurityCenterRG3888/providers/Microsoft.Network/networkSecurityGroups/nsg891"
                 },
                 "delegations": [],
                 "privateEndpointNetworkPolicies": "Disabled",
@@ -758,7 +758,7 @@
             },
             {
               "name": "subnet2",
-              "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/SecurityCenterRG3888/providers/Microsoft.Network/virtualNetworks/vnet2444/subnets/subnet2",
+              "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/SecurityCenterRG3888/providers/Microsoft.Network/virtualNetworks/vnet3565/subnets/subnet2",
               "etag": "W/\u002291c6e5c7-2beb-48fb-b195-2ffc65e0078f\u0022",
               "properties": {
                 "provisioningState": "Succeeded",
@@ -776,7 +776,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/SecurityCenterRG3888/providers/Microsoft.Network/publicIPAddresses/publicIP3602?api-version=2021-02-01",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/SecurityCenterRG3888/providers/Microsoft.Network/publicIPAddresses/publicIP662?api-version=**",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -797,7 +797,7 @@
       "StatusCode": 201,
       "ResponseHeaders": {
         "Azure-AsyncNotification": "Enabled",
-        "Azure-AsyncOperation": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Network/locations/eastus/operations/c04b5076-996e-464b-9e35-072902daebc8?api-version=2021-02-01",
+        "Azure-AsyncOperation": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Network/locations/eastus/operations/c04b5076-996e-464b-9e35-072902daebc8?api-version=**",
         "Cache-Control": "no-cache",
         "Content-Length": "642",
         "Content-Type": "application/json; charset=utf-8",
@@ -819,8 +819,8 @@
         "x-ms-routing-request-id": "SOUTHEASTASIA:20221013T061824Z:cf586ce1-6e64-4a27-bd41-8f7ed94c036e"
       },
       "ResponseBody": {
-        "name": "publicIP3602",
-        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/SecurityCenterRG3888/providers/Microsoft.Network/publicIPAddresses/publicIP3602",
+        "name": "publicIP662",
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/SecurityCenterRG3888/providers/Microsoft.Network/publicIPAddresses/publicIP662",
         "etag": "W/\u0022a7972121-b460-40e3-a176-0c538ee897a2\u0022",
         "location": "eastus",
         "properties": {
@@ -839,7 +839,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Network/locations/eastus/operations/c04b5076-996e-464b-9e35-072902daebc8?api-version=2021-02-01",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Network/locations/eastus/operations/c04b5076-996e-464b-9e35-072902daebc8?api-version=**",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -875,7 +875,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/SecurityCenterRG3888/providers/Microsoft.Network/publicIPAddresses/publicIP3602?api-version=2021-02-01",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/SecurityCenterRG3888/providers/Microsoft.Network/publicIPAddresses/publicIP662?api-version=**",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -908,8 +908,8 @@
         "x-ms-routing-request-id": "SOUTHEASTASIA:20221013T061825Z:653ef8ce-3d7a-4224-9020-39062deb8fb9"
       },
       "ResponseBody": {
-        "name": "publicIP3602",
-        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/SecurityCenterRG3888/providers/Microsoft.Network/publicIPAddresses/publicIP3602",
+        "name": "publicIP662",
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/SecurityCenterRG3888/providers/Microsoft.Network/publicIPAddresses/publicIP662",
         "etag": "W/\u0022a0e53465-3be0-445d-b318-39f54d25fa36\u0022",
         "location": "eastus",
         "properties": {
@@ -928,7 +928,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/SecurityCenterRG3888/providers/Microsoft.Network/virtualNetworks/vnet2444/subnets?api-version=2021-02-01",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/SecurityCenterRG3888/providers/Microsoft.Network/virtualNetworks/vnet3565/subnets?api-version=**",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -964,13 +964,13 @@
         "value": [
           {
             "name": "subnet1",
-            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/SecurityCenterRG3888/providers/Microsoft.Network/virtualNetworks/vnet2444/subnets/subnet1",
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/SecurityCenterRG3888/providers/Microsoft.Network/virtualNetworks/vnet3565/subnets/subnet1",
             "etag": "W/\u002291c6e5c7-2beb-48fb-b195-2ffc65e0078f\u0022",
             "properties": {
               "provisioningState": "Succeeded",
               "addressPrefix": "10.10.1.0/24",
               "networkSecurityGroup": {
-                "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/SecurityCenterRG3888/providers/Microsoft.Network/networkSecurityGroups/nsg7769"
+                "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/SecurityCenterRG3888/providers/Microsoft.Network/networkSecurityGroups/nsg891"
               },
               "delegations": [],
               "privateEndpointNetworkPolicies": "Disabled",
@@ -980,7 +980,7 @@
           },
           {
             "name": "subnet2",
-            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/SecurityCenterRG3888/providers/Microsoft.Network/virtualNetworks/vnet2444/subnets/subnet2",
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/SecurityCenterRG3888/providers/Microsoft.Network/virtualNetworks/vnet3565/subnets/subnet2",
             "etag": "W/\u002291c6e5c7-2beb-48fb-b195-2ffc65e0078f\u0022",
             "properties": {
               "provisioningState": "Succeeded",
@@ -995,7 +995,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/SecurityCenterRG3888/providers/Microsoft.Network/networkInterfaces/networkInterface7353?api-version=2021-02-01",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/SecurityCenterRG3888/providers/Microsoft.Network/networkInterfaces/networkInterface7769?api-version=**",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -1012,15 +1012,15 @@
         "properties": {
           "ipConfigurations": [
             {
-              "name": "ipconfig2244",
+              "name": "ipconfig9601",
               "properties": {
                 "privateIPAllocationMethod": "Dynamic",
                 "subnet": {
-                  "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/SecurityCenterRG3888/providers/Microsoft.Network/virtualNetworks/vnet2444/subnets/subnet1",
+                  "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/SecurityCenterRG3888/providers/Microsoft.Network/virtualNetworks/vnet3565/subnets/subnet1",
                   "properties": {}
                 },
                 "publicIPAddress": {
-                  "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/SecurityCenterRG3888/providers/Microsoft.Network/publicIPAddresses/publicIP3602",
+                  "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/SecurityCenterRG3888/providers/Microsoft.Network/publicIPAddresses/publicIP662",
                   "properties": {}
                 }
               }
@@ -1031,7 +1031,7 @@
       "StatusCode": 201,
       "ResponseHeaders": {
         "Azure-AsyncNotification": "Enabled",
-        "Azure-AsyncOperation": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Network/locations/eastus/operations/b3f7539c-d9b3-4630-8857-0ef95e768847?api-version=2021-02-01",
+        "Azure-AsyncOperation": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Network/locations/eastus/operations/b3f7539c-d9b3-4630-8857-0ef95e768847?api-version=**",
         "Cache-Control": "no-cache",
         "Content-Length": "1942",
         "Content-Type": "application/json; charset=utf-8",
@@ -1052,16 +1052,16 @@
         "x-ms-routing-request-id": "SOUTHEASTASIA:20221013T061829Z:13a82be5-970a-4a7c-8940-d915b54ffd80"
       },
       "ResponseBody": {
-        "name": "networkInterface7353",
-        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/SecurityCenterRG3888/providers/Microsoft.Network/networkInterfaces/networkInterface7353",
+        "name": "networkInterface7769",
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/SecurityCenterRG3888/providers/Microsoft.Network/networkInterfaces/networkInterface7769",
         "etag": "W/\u002217bf15b9-f827-4ab7-9b17-4c2b2761d61a\u0022",
         "properties": {
           "provisioningState": "Succeeded",
           "resourceGuid": "f27f3a6b-acde-4d8b-976b-9639ccc88d38",
           "ipConfigurations": [
             {
-              "name": "ipconfig2244",
-              "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/SecurityCenterRG3888/providers/Microsoft.Network/networkInterfaces/networkInterface7353/ipConfigurations/ipconfig2244",
+              "name": "ipconfig9601",
+              "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/SecurityCenterRG3888/providers/Microsoft.Network/networkInterfaces/networkInterface7769/ipConfigurations/ipconfig9601",
               "etag": "W/\u002217bf15b9-f827-4ab7-9b17-4c2b2761d61a\u0022",
               "type": "Microsoft.Network/networkInterfaces/ipConfigurations",
               "properties": {
@@ -1069,10 +1069,10 @@
                 "privateIPAddress": "10.10.1.4",
                 "privateIPAllocationMethod": "Dynamic",
                 "publicIPAddress": {
-                  "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/SecurityCenterRG3888/providers/Microsoft.Network/publicIPAddresses/publicIP3602"
+                  "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/SecurityCenterRG3888/providers/Microsoft.Network/publicIPAddresses/publicIP662"
                 },
                 "subnet": {
-                  "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/SecurityCenterRG3888/providers/Microsoft.Network/virtualNetworks/vnet2444/subnets/subnet1"
+                  "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/SecurityCenterRG3888/providers/Microsoft.Network/virtualNetworks/vnet3565/subnets/subnet1"
                 },
                 "primary": true,
                 "privateIPAddressVersion": "IPv4"
@@ -1096,7 +1096,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Network/locations/eastus/operations/b3f7539c-d9b3-4630-8857-0ef95e768847?api-version=2021-02-01",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Network/locations/eastus/operations/b3f7539c-d9b3-4630-8857-0ef95e768847?api-version=**",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -1132,7 +1132,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/SecurityCenterRG3888/providers/Microsoft.Network/networkInterfaces/networkInterface7353?api-version=2021-02-01",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/SecurityCenterRG3888/providers/Microsoft.Network/networkInterfaces/networkInterface7769?api-version=**",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -1165,16 +1165,16 @@
         "x-ms-routing-request-id": "SOUTHEASTASIA:20221013T061831Z:3903aa43-427d-4ad3-ac43-a24362d38c51"
       },
       "ResponseBody": {
-        "name": "networkInterface7353",
-        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/SecurityCenterRG3888/providers/Microsoft.Network/networkInterfaces/networkInterface7353",
+        "name": "networkInterface7769",
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/SecurityCenterRG3888/providers/Microsoft.Network/networkInterfaces/networkInterface7769",
         "etag": "W/\u002217bf15b9-f827-4ab7-9b17-4c2b2761d61a\u0022",
         "properties": {
           "provisioningState": "Succeeded",
           "resourceGuid": "f27f3a6b-acde-4d8b-976b-9639ccc88d38",
           "ipConfigurations": [
             {
-              "name": "ipconfig2244",
-              "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/SecurityCenterRG3888/providers/Microsoft.Network/networkInterfaces/networkInterface7353/ipConfigurations/ipconfig2244",
+              "name": "ipconfig9601",
+              "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/SecurityCenterRG3888/providers/Microsoft.Network/networkInterfaces/networkInterface7769/ipConfigurations/ipconfig9601",
               "etag": "W/\u002217bf15b9-f827-4ab7-9b17-4c2b2761d61a\u0022",
               "type": "Microsoft.Network/networkInterfaces/ipConfigurations",
               "properties": {
@@ -1182,10 +1182,10 @@
                 "privateIPAddress": "10.10.1.4",
                 "privateIPAllocationMethod": "Dynamic",
                 "publicIPAddress": {
-                  "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/SecurityCenterRG3888/providers/Microsoft.Network/publicIPAddresses/publicIP3602"
+                  "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/SecurityCenterRG3888/providers/Microsoft.Network/publicIPAddresses/publicIP662"
                 },
                 "subnet": {
-                  "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/SecurityCenterRG3888/providers/Microsoft.Network/virtualNetworks/vnet2444/subnets/subnet1"
+                  "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/SecurityCenterRG3888/providers/Microsoft.Network/virtualNetworks/vnet3565/subnets/subnet1"
                 },
                 "primary": true,
                 "privateIPAddressVersion": "IPv4"
@@ -1262,7 +1262,7 @@
           "networkProfile": {
             "networkInterfaces": [
               {
-                "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/SecurityCenterRG3888/providers/Microsoft.Network/networkInterfaces/networkInterface7353",
+                "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/SecurityCenterRG3888/providers/Microsoft.Network/networkInterfaces/networkInterface7769",
                 "properties": {
                   "primary": true
                 }
@@ -1356,7 +1356,7 @@
           "networkProfile": {
             "networkInterfaces": [
               {
-                "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/SecurityCenterRG3888/providers/Microsoft.Network/networkInterfaces/networkInterface7353",
+                "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/SecurityCenterRG3888/providers/Microsoft.Network/networkInterfaces/networkInterface7769",
                 "properties": {
                   "primary": true
                 }
@@ -1579,7 +1579,7 @@
           "networkProfile": {
             "networkInterfaces": [
               {
-                "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/SecurityCenterRG3888/providers/Microsoft.Network/networkInterfaces/networkInterface7353",
+                "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/SecurityCenterRG3888/providers/Microsoft.Network/networkInterfaces/networkInterface7769",
                 "properties": {
                   "primary": true
                 }

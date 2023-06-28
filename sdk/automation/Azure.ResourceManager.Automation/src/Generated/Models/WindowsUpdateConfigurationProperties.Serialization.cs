@@ -51,6 +51,10 @@ namespace Azure.ResourceManager.Automation.Models
 
         internal static WindowsUpdateConfigurationProperties DeserializeWindowsUpdateConfigurationProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<WindowsUpdateClassification> includedUpdateClassifications = default;
             Optional<IList<string>> excludedKbNumbers = default;
             Optional<IList<string>> includedKbNumbers = default;
@@ -61,7 +65,6 @@ namespace Azure.ResourceManager.Automation.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     includedUpdateClassifications = new WindowsUpdateClassification(property.Value.GetString());
@@ -71,7 +74,6 @@ namespace Azure.ResourceManager.Automation.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();
@@ -86,7 +88,6 @@ namespace Azure.ResourceManager.Automation.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();

@@ -27,6 +27,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         internal static RedshiftUnloadSettings DeserializeRedshiftUnloadSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             LinkedServiceReference s3LinkedServiceName = default;
             object bucketName = default;
             foreach (var property in element.EnumerateObject())

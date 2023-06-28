@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.NetApp.Models
     {
         internal static NetAppVolumeReplication DeserializeNetAppVolumeReplication(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<NetAppEndpointType> endpointType = default;
             Optional<NetAppReplicationSchedule> replicationSchedule = default;
             ResourceIdentifier remoteVolumeResourceId = default;
@@ -24,7 +28,6 @@ namespace Azure.ResourceManager.NetApp.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     endpointType = new NetAppEndpointType(property.Value.GetString());
@@ -34,7 +37,6 @@ namespace Azure.ResourceManager.NetApp.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     replicationSchedule = new NetAppReplicationSchedule(property.Value.GetString());

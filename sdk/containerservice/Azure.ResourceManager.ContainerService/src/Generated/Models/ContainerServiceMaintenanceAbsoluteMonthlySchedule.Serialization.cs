@@ -24,6 +24,10 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         internal static ContainerServiceMaintenanceAbsoluteMonthlySchedule DeserializeContainerServiceMaintenanceAbsoluteMonthlySchedule(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             int intervalMonths = default;
             int dayOfMonth = default;
             foreach (var property in element.EnumerateObject())

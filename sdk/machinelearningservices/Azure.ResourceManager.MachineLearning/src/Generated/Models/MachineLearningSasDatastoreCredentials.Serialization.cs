@@ -24,6 +24,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static MachineLearningSasDatastoreCredentials DeserializeMachineLearningSasDatastoreCredentials(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             MachineLearningSasDatastoreSecrets secrets = default;
             CredentialsType credentialsType = default;
             foreach (var property in element.EnumerateObject())

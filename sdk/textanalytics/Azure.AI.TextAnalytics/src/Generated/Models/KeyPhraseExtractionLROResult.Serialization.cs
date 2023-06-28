@@ -35,6 +35,10 @@ namespace Azure.AI.TextAnalytics.Models
 
         internal static KeyPhraseExtractionLROResult DeserializeKeyPhraseExtractionLROResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             KeyPhraseResult results = default;
             AnalyzeTextLROResultsKind kind = default;
             Optional<string> taskName = default;

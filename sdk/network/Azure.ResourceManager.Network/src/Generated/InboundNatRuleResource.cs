@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary>
-        /// Gets the specified load balancer inbound nat rule.
+        /// Gets the specified load balancer inbound NAT rule.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary>
-        /// Gets the specified load balancer inbound nat rule.
+        /// Gets the specified load balancer inbound NAT rule.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary>
-        /// Deletes the specified load balancer inbound nat rule.
+        /// Deletes the specified load balancer inbound NAT rule.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary>
-        /// Deletes the specified load balancer inbound nat rule.
+        /// Deletes the specified load balancer inbound NAT rule.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -221,7 +221,7 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary>
-        /// Creates or updates a load balancer inbound nat rule.
+        /// Creates or updates a load balancer inbound NAT rule.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -234,7 +234,7 @@ namespace Azure.ResourceManager.Network
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="data"> Parameters supplied to the create or update inbound nat rule operation. </param>
+        /// <param name="data"> Parameters supplied to the create or update inbound NAT rule operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<InboundNatRuleResource>> UpdateAsync(WaitUntil waitUntil, InboundNatRuleData data, CancellationToken cancellationToken = default)
@@ -259,7 +259,7 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary>
-        /// Creates or updates a load balancer inbound nat rule.
+        /// Creates or updates a load balancer inbound NAT rule.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -272,7 +272,7 @@ namespace Azure.ResourceManager.Network
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="data"> Parameters supplied to the create or update inbound nat rule operation. </param>
+        /// <param name="data"> Parameters supplied to the create or update inbound NAT rule operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<InboundNatRuleResource> Update(WaitUntil waitUntil, InboundNatRuleData data, CancellationToken cancellationToken = default)

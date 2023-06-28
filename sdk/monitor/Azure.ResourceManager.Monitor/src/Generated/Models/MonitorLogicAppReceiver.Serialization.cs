@@ -32,6 +32,10 @@ namespace Azure.ResourceManager.Monitor.Models
 
         internal static MonitorLogicAppReceiver DeserializeMonitorLogicAppReceiver(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string name = default;
             ResourceIdentifier resourceId = default;
             Uri callbackUrl = default;
@@ -57,7 +61,6 @@ namespace Azure.ResourceManager.Monitor.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     useCommonAlertSchema = property.Value.GetBoolean();

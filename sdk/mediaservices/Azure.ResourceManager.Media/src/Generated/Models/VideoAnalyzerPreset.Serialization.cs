@@ -49,6 +49,10 @@ namespace Azure.ResourceManager.Media.Models
 
         internal static VideoAnalyzerPreset DeserializeVideoAnalyzerPreset(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<InsightsType> insightsToExtract = default;
             Optional<string> audioLanguage = default;
             Optional<AudioAnalysisMode> mode = default;
@@ -60,7 +64,6 @@ namespace Azure.ResourceManager.Media.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     insightsToExtract = new InsightsType(property.Value.GetString());
@@ -75,7 +78,6 @@ namespace Azure.ResourceManager.Media.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     mode = new AudioAnalysisMode(property.Value.GetString());
@@ -85,7 +87,6 @@ namespace Azure.ResourceManager.Media.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();

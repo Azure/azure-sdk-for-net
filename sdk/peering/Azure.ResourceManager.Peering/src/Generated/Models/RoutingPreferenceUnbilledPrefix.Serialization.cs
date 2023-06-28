@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.Peering.Models
     {
         internal static RoutingPreferenceUnbilledPrefix DeserializeRoutingPreferenceUnbilledPrefix(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> prefix = default;
             Optional<AzureLocation> azureRegion = default;
             Optional<int> peerAsn = default;
@@ -28,7 +32,6 @@ namespace Azure.ResourceManager.Peering.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     azureRegion = new AzureLocation(property.Value.GetString());
@@ -38,7 +41,6 @@ namespace Azure.ResourceManager.Peering.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     peerAsn = property.Value.GetInt32();

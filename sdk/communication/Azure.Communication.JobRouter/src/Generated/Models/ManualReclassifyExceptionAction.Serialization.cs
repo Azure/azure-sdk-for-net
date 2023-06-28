@@ -43,9 +43,13 @@ namespace Azure.Communication.JobRouter
 
         internal static ManualReclassifyExceptionAction DeserializeManualReclassifyExceptionAction(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> queueId = default;
             Optional<int> priority = default;
-            Optional<IList<WorkerSelector>> workerSelectors = default;
+            Optional<IList<RouterWorkerSelector>> workerSelectors = default;
             string kind = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -58,7 +62,6 @@ namespace Azure.Communication.JobRouter
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     priority = property.Value.GetInt32();
@@ -68,13 +71,12 @@ namespace Azure.Communication.JobRouter
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<WorkerSelector> array = new List<WorkerSelector>();
+                    List<RouterWorkerSelector> array = new List<RouterWorkerSelector>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(WorkerSelector.DeserializeWorkerSelector(item));
+                        array.Add(RouterWorkerSelector.DeserializeRouterWorkerSelector(item));
                     }
                     workerSelectors = array;
                     continue;

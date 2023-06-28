@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     {
         internal static SentinelOnboardingStatesList DeserializeSentinelOnboardingStatesList(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             IReadOnlyList<SecurityInsightsSentinelOnboardingStateData> value = default;
             foreach (var property in element.EnumerateObject())
             {

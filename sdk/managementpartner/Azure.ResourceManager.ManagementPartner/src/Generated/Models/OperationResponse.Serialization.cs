@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.ManagementPartner.Models
     {
         internal static OperationResponse DeserializeOperationResponse(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> name = default;
             Optional<OperationDisplay> display = default;
             Optional<string> origin = default;
@@ -28,7 +32,6 @@ namespace Azure.ResourceManager.ManagementPartner.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     display = OperationDisplay.DeserializeOperationDisplay(property.Value);

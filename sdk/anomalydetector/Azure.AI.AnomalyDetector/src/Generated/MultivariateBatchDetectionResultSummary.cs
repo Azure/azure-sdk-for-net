@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using Azure.Core;
 
 namespace Azure.AI.AnomalyDetector
@@ -16,9 +15,9 @@ namespace Azure.AI.AnomalyDetector
     public partial class MultivariateBatchDetectionResultSummary
     {
         /// <summary> Initializes a new instance of MultivariateBatchDetectionResultSummary. </summary>
-        /// <param name="status"> Status of detection results. One of CREATED, RUNNING, READY, and FAILED. </param>
+        /// <param name="status"> Status of detection results. </param>
         /// <param name="setupInfo">
-        /// Detection request for batch inference. This is an asynchronous inference which
+        /// Detection request for batch inference. This is an asynchronous inference that
         /// will need another API to get detection results.
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="setupInfo"/> is null. </exception>
@@ -33,29 +32,29 @@ namespace Azure.AI.AnomalyDetector
         }
 
         /// <summary> Initializes a new instance of MultivariateBatchDetectionResultSummary. </summary>
-        /// <param name="status"> Status of detection results. One of CREATED, RUNNING, READY, and FAILED. </param>
-        /// <param name="errors"> Error message when detection is failed. </param>
-        /// <param name="variableStates"> Variable Status. </param>
+        /// <param name="status"> Status of detection results. </param>
+        /// <param name="errors"> Error message when detection fails. </param>
+        /// <param name="variableStates"> Variable status. </param>
         /// <param name="setupInfo">
-        /// Detection request for batch inference. This is an asynchronous inference which
+        /// Detection request for batch inference. This is an asynchronous inference that
         /// will need another API to get detection results.
         /// </param>
         internal MultivariateBatchDetectionResultSummary(MultivariateBatchDetectionStatus status, IReadOnlyList<ErrorResponse> errors, IReadOnlyList<VariableState> variableStates, MultivariateBatchDetectionOptions setupInfo)
         {
             Status = status;
-            Errors = errors.ToList();
-            VariableStates = variableStates.ToList();
+            Errors = errors;
+            VariableStates = variableStates;
             SetupInfo = setupInfo;
         }
 
-        /// <summary> Status of detection results. One of CREATED, RUNNING, READY, and FAILED. </summary>
+        /// <summary> Status of detection results. </summary>
         public MultivariateBatchDetectionStatus Status { get; }
-        /// <summary> Error message when detection is failed. </summary>
+        /// <summary> Error message when detection fails. </summary>
         public IReadOnlyList<ErrorResponse> Errors { get; }
-        /// <summary> Variable Status. </summary>
+        /// <summary> Variable status. </summary>
         public IReadOnlyList<VariableState> VariableStates { get; }
         /// <summary>
-        /// Detection request for batch inference. This is an asynchronous inference which
+        /// Detection request for batch inference. This is an asynchronous inference that
         /// will need another API to get detection results.
         /// </summary>
         public MultivariateBatchDetectionOptions SetupInfo { get; }

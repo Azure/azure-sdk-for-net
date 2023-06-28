@@ -25,6 +25,10 @@ namespace Azure.ResourceManager.BotService.Models
 
         internal static AlexaChannelProperties DeserializeAlexaChannelProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string alexaSkillId = default;
             Optional<string> urlFragment = default;
             Optional<Uri> serviceEndpointUri = default;
@@ -45,7 +49,6 @@ namespace Azure.ResourceManager.BotService.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        serviceEndpointUri = null;
                         continue;
                     }
                     serviceEndpointUri = new Uri(property.Value.GetString());

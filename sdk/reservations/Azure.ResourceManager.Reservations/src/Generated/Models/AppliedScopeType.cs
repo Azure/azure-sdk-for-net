@@ -24,11 +24,14 @@ namespace Azure.ResourceManager.Reservations.Models
 
         private const string SingleValue = "Single";
         private const string SharedValue = "Shared";
+        private const string ManagementGroupValue = "ManagementGroup";
 
         /// <summary> Single. </summary>
         public static AppliedScopeType Single { get; } = new AppliedScopeType(SingleValue);
         /// <summary> Shared. </summary>
         public static AppliedScopeType Shared { get; } = new AppliedScopeType(SharedValue);
+        /// <summary> ManagementGroup. </summary>
+        public static AppliedScopeType ManagementGroup { get; } = new AppliedScopeType(ManagementGroupValue);
         /// <summary> Determines if two <see cref="AppliedScopeType"/> values are the same. </summary>
         public static bool operator ==(AppliedScopeType left, AppliedScopeType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AppliedScopeType"/> values are not the same. </summary>

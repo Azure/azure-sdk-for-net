@@ -33,6 +33,10 @@ namespace Azure.ResourceManager.Media.Models
 
         internal static MediaJobInputs DeserializeMediaJobInputs(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<MediaJobInputBasicProperties>> inputs = default;
             string odataType = default;
             foreach (var property in element.EnumerateObject())
@@ -41,7 +45,6 @@ namespace Azure.ResourceManager.Media.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<MediaJobInputBasicProperties> array = new List<MediaJobInputBasicProperties>();

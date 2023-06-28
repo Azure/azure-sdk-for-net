@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.HDInsight.Models
     {
         internal static HDInsightClusterHostInfo DeserializeHDInsightClusterHostInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> name = default;
             Optional<string> fqdn = default;
             Optional<Uri> effectiveDiskEncryptionKeyUrl = default;
@@ -34,7 +38,6 @@ namespace Azure.ResourceManager.HDInsight.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        effectiveDiskEncryptionKeyUrl = null;
                         continue;
                     }
                     effectiveDiskEncryptionKeyUrl = new Uri(property.Value.GetString());

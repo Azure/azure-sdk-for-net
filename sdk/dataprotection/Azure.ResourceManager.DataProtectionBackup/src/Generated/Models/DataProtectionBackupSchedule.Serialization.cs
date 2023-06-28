@@ -33,6 +33,10 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
 
         internal static DataProtectionBackupSchedule DeserializeDataProtectionBackupSchedule(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             IList<string> repeatingTimeIntervals = default;
             Optional<string> timeZone = default;
             foreach (var property in element.EnumerateObject())

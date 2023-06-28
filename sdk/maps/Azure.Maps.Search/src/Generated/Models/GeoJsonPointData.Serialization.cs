@@ -28,6 +28,10 @@ namespace Azure.Maps.Search.Models
 
         internal static GeoJsonPointData DeserializeGeoJsonPointData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             IList<double> coordinates = default;
             foreach (var property in element.EnumerateObject())
             {

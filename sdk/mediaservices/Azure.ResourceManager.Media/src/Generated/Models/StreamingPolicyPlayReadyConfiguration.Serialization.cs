@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.Media.Models
 
         internal static StreamingPolicyPlayReadyConfiguration DeserializeStreamingPolicyPlayReadyConfiguration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> customLicenseAcquisitionUriTemplate = default;
             Optional<string> playReadyCustomAttributes = default;
             foreach (var property in element.EnumerateObject())

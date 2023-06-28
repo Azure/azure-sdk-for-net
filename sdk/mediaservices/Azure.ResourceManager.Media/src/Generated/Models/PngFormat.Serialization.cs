@@ -24,6 +24,10 @@ namespace Azure.ResourceManager.Media.Models
 
         internal static PngFormat DeserializePngFormat(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string odataType = default;
             string filenamePattern = default;
             foreach (var property in element.EnumerateObject())

@@ -35,6 +35,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         internal static KqlScriptContent DeserializeKqlScriptContent(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> query = default;
             Optional<KqlScriptContentMetadata> metadata = default;
             Optional<KqlScriptContentCurrentConnection> currentConnection = default;
@@ -49,7 +53,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     metadata = KqlScriptContentMetadata.DeserializeKqlScriptContentMetadata(property.Value);
@@ -59,7 +62,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     currentConnection = KqlScriptContentCurrentConnection.DeserializeKqlScriptContentCurrentConnection(property.Value);

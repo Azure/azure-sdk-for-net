@@ -17,6 +17,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     {
         internal static SparkServicePlugin DeserializeSparkServicePlugin(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<DateTimeOffset?> preparationStartedAt = default;
             Optional<DateTimeOffset?> resourceAcquisitionStartedAt = default;
             Optional<DateTimeOffset?> submissionStartedAt = default;
@@ -79,7 +83,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     currentState = new PluginCurrentState(property.Value.GetString());

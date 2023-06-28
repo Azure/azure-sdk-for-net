@@ -66,6 +66,10 @@ namespace Azure.ResourceManager.AppService.Models
 
         internal static ApplicationStack DeserializeApplicationStack(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> name = default;
             Optional<string> display = default;
             Optional<string> dependency = default;
@@ -93,7 +97,6 @@ namespace Azure.ResourceManager.AppService.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<StackMajorVersion> array = new List<StackMajorVersion>();
@@ -108,7 +111,6 @@ namespace Azure.ResourceManager.AppService.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<ApplicationStack> array = new List<ApplicationStack>();
@@ -123,7 +125,6 @@ namespace Azure.ResourceManager.AppService.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<ApplicationStack> array = new List<ApplicationStack>();

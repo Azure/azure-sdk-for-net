@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.Storage.Files.Shares.Models
@@ -35,6 +36,7 @@ namespace Azure.Storage.Files.Shares.Models
             SessionId = sessionId;
             ClientIp = clientIp;
             OpenTime = openTime;
+            AccessRightList = new ChangeTrackingList<AccessRight>();
         }
 
         /// <summary> Initializes a new instance of HandleItem. </summary>
@@ -46,7 +48,8 @@ namespace Azure.Storage.Files.Shares.Models
         /// <param name="clientIp"> Client IP that opened the handle. </param>
         /// <param name="openTime"> Time when the session that previously opened the handle has last been reconnected. (UTC). </param>
         /// <param name="lastReconnectTime"> Time handle was last connected to (UTC). </param>
-        internal HandleItem(string handleId, StringEncoded path, string fileId, string parentId, string sessionId, string clientIp, DateTimeOffset openTime, DateTimeOffset? lastReconnectTime)
+        /// <param name="accessRightList"></param>
+        internal HandleItem(string handleId, StringEncoded path, string fileId, string parentId, string sessionId, string clientIp, DateTimeOffset openTime, DateTimeOffset? lastReconnectTime, IReadOnlyList<AccessRight> accessRightList)
         {
             HandleId = handleId;
             Path = path;
@@ -56,6 +59,7 @@ namespace Azure.Storage.Files.Shares.Models
             ClientIp = clientIp;
             OpenTime = openTime;
             LastReconnectTime = lastReconnectTime;
+            AccessRightList = accessRightList;
         }
 
         /// <summary> XSMB service handle ID. </summary>
@@ -74,5 +78,7 @@ namespace Azure.Storage.Files.Shares.Models
         public DateTimeOffset OpenTime { get; }
         /// <summary> Time handle was last connected to (UTC). </summary>
         public DateTimeOffset? LastReconnectTime { get; }
+        /// <summary> Gets the access right list. </summary>
+        public IReadOnlyList<AccessRight> AccessRightList { get; }
     }
 }

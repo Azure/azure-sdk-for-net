@@ -25,6 +25,10 @@ namespace Azure.ResourceManager.Synapse.Models
 
         internal static SynapseLanguageExtension DeserializeSynapseLanguageExtension(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<SynapseLanguageExtensionName> languageExtensionName = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -32,7 +36,6 @@ namespace Azure.ResourceManager.Synapse.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     languageExtensionName = new SynapseLanguageExtensionName(property.Value.GetString());

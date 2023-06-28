@@ -22,6 +22,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         internal static SecurityCenterCloudOffering DeserializeSecurityCenterCloudOffering(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             if (element.TryGetProperty("offeringType", out JsonElement discriminator))
             {
                 switch (discriminator.GetString())

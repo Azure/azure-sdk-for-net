@@ -22,6 +22,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static AmlToken DeserializeAmlToken(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             IdentityConfigurationType identityType = default;
             foreach (var property in element.EnumerateObject())
             {

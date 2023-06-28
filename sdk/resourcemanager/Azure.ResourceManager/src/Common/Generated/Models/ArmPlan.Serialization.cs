@@ -39,6 +39,10 @@ namespace Azure.ResourceManager.Models
 
         internal static ArmPlan DeserializeArmPlan(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string name = default;
             string publisher = default;
             string product = default;

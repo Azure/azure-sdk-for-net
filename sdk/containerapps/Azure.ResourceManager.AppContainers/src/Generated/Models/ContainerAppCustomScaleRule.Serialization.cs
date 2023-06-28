@@ -47,6 +47,10 @@ namespace Azure.ResourceManager.AppContainers.Models
 
         internal static ContainerAppCustomScaleRule DeserializeContainerAppCustomScaleRule(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> type = default;
             Optional<IDictionary<string, string>> metadata = default;
             Optional<IList<ContainerAppScaleRuleAuth>> auth = default;
@@ -61,7 +65,6 @@ namespace Azure.ResourceManager.AppContainers.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -76,7 +79,6 @@ namespace Azure.ResourceManager.AppContainers.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<ContainerAppScaleRuleAuth> array = new List<ContainerAppScaleRuleAuth>();

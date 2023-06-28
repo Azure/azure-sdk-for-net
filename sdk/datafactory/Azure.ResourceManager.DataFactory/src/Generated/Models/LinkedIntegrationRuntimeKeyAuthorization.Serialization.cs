@@ -24,13 +24,17 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static LinkedIntegrationRuntimeKeyAuthorization DeserializeLinkedIntegrationRuntimeKeyAuthorization(JsonElement element)
         {
-            FactorySecretString key = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            DataFactorySecretString key = default;
             string authorizationType = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("key"u8))
                 {
-                    key = FactorySecretString.DeserializeFactorySecretString(property.Value);
+                    key = DataFactorySecretString.DeserializeDataFactorySecretString(property.Value);
                     continue;
                 }
                 if (property.NameEquals("authorizationType"u8))

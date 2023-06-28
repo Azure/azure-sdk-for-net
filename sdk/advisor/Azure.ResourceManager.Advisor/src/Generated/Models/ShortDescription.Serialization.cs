@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.Advisor.Models
 
         internal static ShortDescription DeserializeShortDescription(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> problem = default;
             Optional<string> solution = default;
             foreach (var property in element.EnumerateObject())

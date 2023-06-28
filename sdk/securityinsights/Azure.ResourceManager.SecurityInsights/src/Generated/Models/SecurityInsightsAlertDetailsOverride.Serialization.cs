@@ -40,6 +40,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 
         internal static SecurityInsightsAlertDetailsOverride DeserializeSecurityInsightsAlertDetailsOverride(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> alertDisplayNameFormat = default;
             Optional<string> alertDescriptionFormat = default;
             Optional<string> alertTacticsColumnName = default;

@@ -4,7 +4,7 @@
 namespace Azure.Data.AppConfiguration
 {
     /// <summary> Parameters used to update a snapshot. </summary>
-    public partial class SnapshotUpdateParameters
+    internal partial class SnapshotUpdateParameters
     {
         /// <summary> Initializes a new instance of SnapshotUpdateParameters. </summary>
         public SnapshotUpdateParameters()

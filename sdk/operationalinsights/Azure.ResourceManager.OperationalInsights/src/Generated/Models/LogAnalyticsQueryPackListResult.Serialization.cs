@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.OperationalInsights.Models
     {
         internal static LogAnalyticsQueryPackListResult DeserializeLogAnalyticsQueryPackListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             IReadOnlyList<LogAnalyticsQueryPackData> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())

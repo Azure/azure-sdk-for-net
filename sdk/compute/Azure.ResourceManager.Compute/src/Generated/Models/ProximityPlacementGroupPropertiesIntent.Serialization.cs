@@ -31,6 +31,10 @@ namespace Azure.ResourceManager.Compute.Models
 
         internal static ProximityPlacementGroupPropertiesIntent DeserializeProximityPlacementGroupPropertiesIntent(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<string>> vmSizes = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -38,7 +42,6 @@ namespace Azure.ResourceManager.Compute.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();

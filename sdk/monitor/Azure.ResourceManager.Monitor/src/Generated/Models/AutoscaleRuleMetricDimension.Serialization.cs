@@ -32,6 +32,10 @@ namespace Azure.ResourceManager.Monitor.Models
 
         internal static AutoscaleRuleMetricDimension DeserializeAutoscaleRuleMetricDimension(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string dimensionName = default;
             ScaleRuleMetricDimensionOperationType @operator = default;
             IList<string> values = default;

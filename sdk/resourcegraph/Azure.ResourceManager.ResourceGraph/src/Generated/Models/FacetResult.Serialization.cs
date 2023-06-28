@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.ResourceGraph.Models
     {
         internal static FacetResult DeserializeFacetResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             long totalRecords = default;
             int count = default;
             BinaryData data = default;

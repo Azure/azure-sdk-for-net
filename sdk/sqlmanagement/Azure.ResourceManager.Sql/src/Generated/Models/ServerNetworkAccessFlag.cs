@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Sql.Models
 {
-    /// <summary> Whether or not public endpoint access is allowed for this server.  Value is optional but if passed in, must be &apos;Enabled&apos; or &apos;Disabled&apos;. </summary>
+    /// <summary> Whether or not public endpoint access is allowed for this server.  Value is optional but if passed in, must be 'Enabled' or 'Disabled' or 'SecuredByPerimeter'. </summary>
     public readonly partial struct ServerNetworkAccessFlag : IEquatable<ServerNetworkAccessFlag>
     {
         private readonly string _value;
@@ -24,11 +24,14 @@ namespace Azure.ResourceManager.Sql.Models
 
         private const string EnabledValue = "Enabled";
         private const string DisabledValue = "Disabled";
+        private const string SecuredByPerimeterValue = "SecuredByPerimeter";
 
         /// <summary> Enabled. </summary>
         public static ServerNetworkAccessFlag Enabled { get; } = new ServerNetworkAccessFlag(EnabledValue);
         /// <summary> Disabled. </summary>
         public static ServerNetworkAccessFlag Disabled { get; } = new ServerNetworkAccessFlag(DisabledValue);
+        /// <summary> SecuredByPerimeter. </summary>
+        public static ServerNetworkAccessFlag SecuredByPerimeter { get; } = new ServerNetworkAccessFlag(SecuredByPerimeterValue);
         /// <summary> Determines if two <see cref="ServerNetworkAccessFlag"/> values are the same. </summary>
         public static bool operator ==(ServerNetworkAccessFlag left, ServerNetworkAccessFlag right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ServerNetworkAccessFlag"/> values are not the same. </summary>

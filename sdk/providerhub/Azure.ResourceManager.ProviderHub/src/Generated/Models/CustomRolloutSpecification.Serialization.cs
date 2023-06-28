@@ -39,31 +39,33 @@ namespace Azure.ResourceManager.ProviderHub.Models
 
         internal static CustomRolloutSpecification DeserializeCustomRolloutSpecification(JsonElement element)
         {
-            CustomRolloutSpecificationCanary canary = default;
-            Optional<CustomRolloutSpecificationProviderRegistration> providerRegistration = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            TrafficRegions canary = default;
+            Optional<ProviderRegistrationData> providerRegistration = default;
             Optional<IList<ResourceTypeRegistrationData>> resourceTypeRegistrations = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("canary"u8))
                 {
-                    canary = CustomRolloutSpecificationCanary.DeserializeCustomRolloutSpecificationCanary(property.Value);
+                    canary = TrafficRegions.DeserializeTrafficRegions(property.Value);
                     continue;
                 }
                 if (property.NameEquals("providerRegistration"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    providerRegistration = CustomRolloutSpecificationProviderRegistration.DeserializeCustomRolloutSpecificationProviderRegistration(property.Value);
+                    providerRegistration = ProviderRegistrationData.DeserializeProviderRegistrationData(property.Value);
                     continue;
                 }
                 if (property.NameEquals("resourceTypeRegistrations"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<ResourceTypeRegistrationData> array = new List<ResourceTypeRegistrationData>();

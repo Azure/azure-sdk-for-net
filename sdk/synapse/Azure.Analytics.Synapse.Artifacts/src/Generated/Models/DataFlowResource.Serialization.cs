@@ -25,6 +25,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         internal static DataFlowResource DeserializeDataFlowResource(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             DataFlow properties = default;
             Optional<string> etag = default;
             Optional<string> id = default;

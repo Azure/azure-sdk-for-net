@@ -42,8 +42,12 @@ namespace Azure.ResourceManager.ProviderHub.Models
 
         internal static ResourceTypeExtension DeserializeResourceTypeExtension(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<Uri> endpointUri = default;
-            Optional<IList<ExtensionCategory>> extensionCategories = default;
+            Optional<IList<ResourceTypeExtensionCategory>> extensionCategories = default;
             Optional<TimeSpan> timeout = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -51,7 +55,6 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        endpointUri = null;
                         continue;
                     }
                     endpointUri = new Uri(property.Value.GetString());
@@ -61,13 +64,12 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<ExtensionCategory> array = new List<ExtensionCategory>();
+                    List<ResourceTypeExtensionCategory> array = new List<ResourceTypeExtensionCategory>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(new ExtensionCategory(item.GetString()));
+                        array.Add(new ResourceTypeExtensionCategory(item.GetString()));
                     }
                     extensionCategories = array;
                     continue;
@@ -76,7 +78,6 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     timeout = property.Value.GetTimeSpan("P");

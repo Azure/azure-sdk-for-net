@@ -14,6 +14,10 @@ namespace Azure.Communication.CallAutomation
     {
         internal static AddParticipantResponseInternal DeserializeAddParticipantResponseInternal(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<CallParticipantInternal> participant = default;
             Optional<string> operationContext = default;
             foreach (var property in element.EnumerateObject())
@@ -22,7 +26,6 @@ namespace Azure.Communication.CallAutomation
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     participant = CallParticipantInternal.DeserializeCallParticipantInternal(property.Value);

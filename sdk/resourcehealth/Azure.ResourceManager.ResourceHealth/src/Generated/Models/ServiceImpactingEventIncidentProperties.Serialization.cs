@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.ResourceHealth.Models
     {
         internal static ServiceImpactingEventIncidentProperties DeserializeServiceImpactingEventIncidentProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> title = default;
             Optional<string> service = default;
             Optional<string> region = default;

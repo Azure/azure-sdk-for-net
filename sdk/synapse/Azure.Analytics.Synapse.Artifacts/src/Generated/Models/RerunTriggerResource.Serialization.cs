@@ -25,6 +25,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         internal static RerunTriggerResource DeserializeRerunTriggerResource(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             RerunTumblingWindowTrigger properties = default;
             Optional<string> etag = default;
             Optional<string> id = default;

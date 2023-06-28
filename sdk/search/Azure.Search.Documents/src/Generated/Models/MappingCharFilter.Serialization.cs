@@ -32,6 +32,10 @@ namespace Azure.Search.Documents.Indexes.Models
 
         internal static MappingCharFilter DeserializeMappingCharFilter(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             IList<string> mappings = default;
             string odataType = default;
             string name = default;

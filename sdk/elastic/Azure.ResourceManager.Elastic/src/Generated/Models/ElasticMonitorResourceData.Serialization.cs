@@ -51,6 +51,10 @@ namespace Azure.ResourceManager.Elastic
 
         internal static ElasticMonitorResourceData DeserializeElasticMonitorResourceData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ResourceSku> sku = default;
             Optional<MonitorProperties> properties = default;
             Optional<ManagedServiceIdentity> identity = default;
@@ -66,7 +70,6 @@ namespace Azure.ResourceManager.Elastic
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     sku = ResourceSku.DeserializeResourceSku(property.Value);
@@ -76,7 +79,6 @@ namespace Azure.ResourceManager.Elastic
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     properties = MonitorProperties.DeserializeMonitorProperties(property.Value);
@@ -86,7 +88,6 @@ namespace Azure.ResourceManager.Elastic
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText());
@@ -96,7 +97,6 @@ namespace Azure.ResourceManager.Elastic
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -131,7 +131,6 @@ namespace Azure.ResourceManager.Elastic
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());

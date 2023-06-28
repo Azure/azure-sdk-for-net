@@ -32,6 +32,10 @@ namespace Azure.ResourceManager.Cdn.Models
 
         internal static KeyVaultSigningKey DeserializeKeyVaultSigningKey(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             KeyVaultSigningKeyType typeName = default;
             string subscriptionId = default;
             string resourceGroupName = default;

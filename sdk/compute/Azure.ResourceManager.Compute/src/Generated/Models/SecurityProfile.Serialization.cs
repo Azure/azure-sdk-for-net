@@ -35,6 +35,10 @@ namespace Azure.ResourceManager.Compute.Models
 
         internal static SecurityProfile DeserializeSecurityProfile(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<UefiSettings> uefiSettings = default;
             Optional<bool> encryptionAtHost = default;
             Optional<SecurityType> securityType = default;
@@ -44,7 +48,6 @@ namespace Azure.ResourceManager.Compute.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     uefiSettings = UefiSettings.DeserializeUefiSettings(property.Value);
@@ -54,7 +57,6 @@ namespace Azure.ResourceManager.Compute.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     encryptionAtHost = property.Value.GetBoolean();
@@ -64,7 +66,6 @@ namespace Azure.ResourceManager.Compute.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     securityType = new SecurityType(property.Value.GetString());

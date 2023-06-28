@@ -40,6 +40,10 @@ namespace Azure.ResourceManager.Synapse.Models
 
         internal static SynapseCmdkeySetup DeserializeSynapseCmdkeySetup(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string type = default;
             BinaryData targetName = default;
             BinaryData userName = default;

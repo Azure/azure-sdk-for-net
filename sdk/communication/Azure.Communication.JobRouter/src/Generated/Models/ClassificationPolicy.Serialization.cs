@@ -27,11 +27,11 @@ namespace Azure.Communication.JobRouter.Models
                 writer.WritePropertyName("fallbackQueueId"u8);
                 writer.WriteStringValue(FallbackQueueId);
             }
-            if (Optional.IsCollectionDefined(QueueSelectors))
+            if (Optional.IsCollectionDefined(_queueSelectors))
             {
                 writer.WritePropertyName("queueSelectors"u8);
                 writer.WriteStartArray();
-                foreach (var item in QueueSelectors)
+                foreach (var item in _queueSelectors)
                 {
                     writer.WriteObjectValue(item);
                 }
@@ -42,11 +42,11 @@ namespace Azure.Communication.JobRouter.Models
                 writer.WritePropertyName("prioritizationRule"u8);
                 writer.WriteObjectValue(PrioritizationRule);
             }
-            if (Optional.IsCollectionDefined(WorkerSelectors))
+            if (Optional.IsCollectionDefined(_workerSelectors))
             {
                 writer.WritePropertyName("workerSelectors"u8);
                 writer.WriteStartArray();
-                foreach (var item in WorkerSelectors)
+                foreach (var item in _workerSelectors)
                 {
                     writer.WriteObjectValue(item);
                 }
@@ -57,6 +57,10 @@ namespace Azure.Communication.JobRouter.Models
 
         internal static ClassificationPolicy DeserializeClassificationPolicy(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> id = default;
             Optional<string> name = default;
             Optional<string> fallbackQueueId = default;
@@ -84,7 +88,6 @@ namespace Azure.Communication.JobRouter.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<QueueSelectorAttachment> array = new List<QueueSelectorAttachment>();
@@ -99,7 +102,6 @@ namespace Azure.Communication.JobRouter.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     prioritizationRule = RouterRule.DeserializeRouterRule(property.Value);
@@ -109,7 +111,6 @@ namespace Azure.Communication.JobRouter.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<WorkerSelectorAttachment> array = new List<WorkerSelectorAttachment>();

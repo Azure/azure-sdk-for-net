@@ -25,6 +25,10 @@ namespace Azure.ResourceManager.Logic.Models
 
         internal static IntegrationAccountMapPropertiesParametersSchema DeserializeIntegrationAccountMapPropertiesParametersSchema(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> @ref = default;
             foreach (var property in element.EnumerateObject())
             {

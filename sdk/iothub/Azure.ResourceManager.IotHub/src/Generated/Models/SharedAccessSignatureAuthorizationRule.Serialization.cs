@@ -34,6 +34,10 @@ namespace Azure.ResourceManager.IotHub.Models
 
         internal static SharedAccessSignatureAuthorizationRule DeserializeSharedAccessSignatureAuthorizationRule(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string keyName = default;
             Optional<string> primaryKey = default;
             Optional<string> secondaryKey = default;

@@ -35,6 +35,10 @@ namespace Azure.ResourceManager.DeploymentManager.Models
 
         internal static UnknownHealthCheckStepAttributes DeserializeUnknownHealthCheckStepAttributes(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string type = "Unknown";
             Optional<TimeSpan> waitDuration = default;
             Optional<TimeSpan> maxElasticDuration = default;
@@ -50,7 +54,6 @@ namespace Azure.ResourceManager.DeploymentManager.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     waitDuration = property.Value.GetTimeSpan("P");
@@ -60,7 +63,6 @@ namespace Azure.ResourceManager.DeploymentManager.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     maxElasticDuration = property.Value.GetTimeSpan("P");

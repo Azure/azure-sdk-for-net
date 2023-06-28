@@ -14,6 +14,10 @@ namespace Azure.Search.Documents.Models
     {
         internal static AutocompleteItem DeserializeAutocompleteItem(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string text = default;
             string queryPlusText = default;
             foreach (var property in element.EnumerateObject())

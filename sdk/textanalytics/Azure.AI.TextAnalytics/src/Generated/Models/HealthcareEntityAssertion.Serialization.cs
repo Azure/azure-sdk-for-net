@@ -35,6 +35,10 @@ namespace Azure.AI.TextAnalytics
 
         internal static HealthcareEntityAssertion DeserializeHealthcareEntityAssertion(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<EntityConditionality> conditionality = default;
             Optional<EntityCertainty> certainty = default;
             Optional<EntityAssociation> association = default;
@@ -44,7 +48,6 @@ namespace Azure.AI.TextAnalytics
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     conditionality = property.Value.GetString().ToEntityConditionality();
@@ -54,7 +57,6 @@ namespace Azure.AI.TextAnalytics
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     certainty = property.Value.GetString().ToEntityCertainty();
@@ -64,7 +66,6 @@ namespace Azure.AI.TextAnalytics
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     association = property.Value.GetString().ToEntityAssociation();

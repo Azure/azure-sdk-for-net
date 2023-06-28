@@ -15,35 +15,35 @@ namespace Azure.ResourceManager.BotService.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(EnableMessaging))
+            if (Optional.IsDefined(IsMessagingEnabled))
             {
                 writer.WritePropertyName("enableMessaging"u8);
-                writer.WriteBooleanValue(EnableMessaging.Value);
+                writer.WriteBooleanValue(IsMessagingEnabled.Value);
             }
-            if (Optional.IsDefined(EnableMediaCards))
+            if (Optional.IsDefined(IsMediaCardsEnabled))
             {
                 writer.WritePropertyName("enableMediaCards"u8);
-                writer.WriteBooleanValue(EnableMediaCards.Value);
+                writer.WriteBooleanValue(IsMediaCardsEnabled.Value);
             }
-            if (Optional.IsDefined(EnableVideo))
+            if (Optional.IsDefined(IsVideoEnabled))
             {
                 writer.WritePropertyName("enableVideo"u8);
-                writer.WriteBooleanValue(EnableVideo.Value);
+                writer.WriteBooleanValue(IsVideoEnabled.Value);
             }
-            if (Optional.IsDefined(EnableCalling))
+            if (Optional.IsDefined(IsCallingEnabled))
             {
                 writer.WritePropertyName("enableCalling"u8);
-                writer.WriteBooleanValue(EnableCalling.Value);
+                writer.WriteBooleanValue(IsCallingEnabled.Value);
             }
-            if (Optional.IsDefined(EnableScreenSharing))
+            if (Optional.IsDefined(IsScreenSharingEnabled))
             {
                 writer.WritePropertyName("enableScreenSharing"u8);
-                writer.WriteBooleanValue(EnableScreenSharing.Value);
+                writer.WriteBooleanValue(IsScreenSharingEnabled.Value);
             }
-            if (Optional.IsDefined(EnableGroups))
+            if (Optional.IsDefined(IsGroupsEnabled))
             {
                 writer.WritePropertyName("enableGroups"u8);
-                writer.WriteBooleanValue(EnableGroups.Value);
+                writer.WriteBooleanValue(IsGroupsEnabled.Value);
             }
             if (Optional.IsDefined(GroupsMode))
             {
@@ -67,6 +67,10 @@ namespace Azure.ResourceManager.BotService.Models
 
         internal static SkypeChannelProperties DeserializeSkypeChannelProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<bool> enableMessaging = default;
             Optional<bool> enableMediaCards = default;
             Optional<bool> enableVideo = default;
@@ -83,7 +87,6 @@ namespace Azure.ResourceManager.BotService.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     enableMessaging = property.Value.GetBoolean();
@@ -93,7 +96,6 @@ namespace Azure.ResourceManager.BotService.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     enableMediaCards = property.Value.GetBoolean();
@@ -103,7 +105,6 @@ namespace Azure.ResourceManager.BotService.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     enableVideo = property.Value.GetBoolean();
@@ -113,7 +114,6 @@ namespace Azure.ResourceManager.BotService.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     enableCalling = property.Value.GetBoolean();
@@ -123,7 +123,6 @@ namespace Azure.ResourceManager.BotService.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     enableScreenSharing = property.Value.GetBoolean();
@@ -133,7 +132,6 @@ namespace Azure.ResourceManager.BotService.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     enableGroups = property.Value.GetBoolean();

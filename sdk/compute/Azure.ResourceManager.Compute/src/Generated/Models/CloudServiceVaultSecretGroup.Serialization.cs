@@ -37,6 +37,10 @@ namespace Azure.ResourceManager.Compute.Models
 
         internal static CloudServiceVaultSecretGroup DeserializeCloudServiceVaultSecretGroup(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<WritableSubResource> sourceVault = default;
             Optional<IList<CloudServiceVaultCertificate>> vaultCertificates = default;
             foreach (var property in element.EnumerateObject())
@@ -45,7 +49,6 @@ namespace Azure.ResourceManager.Compute.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     sourceVault = JsonSerializer.Deserialize<WritableSubResource>(property.Value.GetRawText());
@@ -55,7 +58,6 @@ namespace Azure.ResourceManager.Compute.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<CloudServiceVaultCertificate> array = new List<CloudServiceVaultCertificate>();

@@ -24,6 +24,10 @@ namespace Azure.Communication.JobRouter
 
         internal static RuleEngineQueueSelectorAttachment DeserializeRuleEngineQueueSelectorAttachment(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             RouterRule rule = default;
             string kind = default;
             foreach (var property in element.EnumerateObject())

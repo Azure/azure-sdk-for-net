@@ -22,6 +22,10 @@ namespace Azure.ResourceManager.ServiceLinker.Models
 
         internal static SecretBaseInfo DeserializeSecretBaseInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             if (element.TryGetProperty("secretType", out JsonElement discriminator))
             {
                 switch (discriminator.GetString())

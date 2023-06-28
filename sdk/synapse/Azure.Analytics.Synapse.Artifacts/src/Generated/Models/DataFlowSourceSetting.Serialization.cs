@@ -39,6 +39,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         internal static DataFlowSourceSetting DeserializeDataFlowSourceSetting(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> sourceName = default;
             Optional<int> rowLimit = default;
             IDictionary<string, object> additionalProperties = default;
@@ -54,7 +58,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     rowLimit = property.Value.GetInt32();

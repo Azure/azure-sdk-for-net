@@ -28,6 +28,10 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
 
         internal static CustomCopySetting DeserializeCustomCopySetting(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<TimeSpan> duration = default;
             string objectType = default;
             foreach (var property in element.EnumerateObject())
@@ -36,7 +40,6 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     duration = property.Value.GetTimeSpan("P");

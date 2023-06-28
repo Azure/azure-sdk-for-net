@@ -53,6 +53,10 @@ namespace Azure.ResourceManager.CognitiveServices
 
         internal static CognitiveServicesPrivateEndpointConnectionData DeserializeCognitiveServicesPrivateEndpointConnectionData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<AzureLocation> location = default;
             Optional<ETag> etag = default;
             ResourceIdentifier id = default;
@@ -69,7 +73,6 @@ namespace Azure.ResourceManager.CognitiveServices
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     location = new AzureLocation(property.Value.GetString());
@@ -79,7 +82,6 @@ namespace Azure.ResourceManager.CognitiveServices
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     etag = new ETag(property.Value.GetString());
@@ -104,7 +106,6 @@ namespace Azure.ResourceManager.CognitiveServices
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
@@ -123,7 +124,6 @@ namespace Azure.ResourceManager.CognitiveServices
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             privateEndpoint = JsonSerializer.Deserialize<SubResource>(property0.Value.GetRawText());
@@ -133,7 +133,6 @@ namespace Azure.ResourceManager.CognitiveServices
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             privateLinkServiceConnectionState = CognitiveServicesPrivateLinkServiceConnectionState.DeserializeCognitiveServicesPrivateLinkServiceConnectionState(property0.Value);
@@ -143,7 +142,6 @@ namespace Azure.ResourceManager.CognitiveServices
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             provisioningState = new CognitiveServicesPrivateEndpointConnectionProvisioningState(property0.Value.GetString());
@@ -153,7 +151,6 @@ namespace Azure.ResourceManager.CognitiveServices
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<string> array = new List<string>();

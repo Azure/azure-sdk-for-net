@@ -27,6 +27,10 @@ namespace Azure.ResourceManager.IotHub.Models
 
         internal static IotHubSkuInfo DeserializeIotHubSkuInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             IotHubSku name = default;
             Optional<IotHubSkuTier> tier = default;
             Optional<long> capacity = default;
@@ -41,7 +45,6 @@ namespace Azure.ResourceManager.IotHub.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     tier = property.Value.GetString().ToIotHubSkuTier();
@@ -51,7 +54,6 @@ namespace Azure.ResourceManager.IotHub.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     capacity = property.Value.GetInt64();

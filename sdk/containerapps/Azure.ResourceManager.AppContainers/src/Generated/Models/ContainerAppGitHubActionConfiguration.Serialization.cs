@@ -60,6 +60,10 @@ namespace Azure.ResourceManager.AppContainers.Models
 
         internal static ContainerAppGitHubActionConfiguration DeserializeContainerAppGitHubActionConfiguration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ContainerAppRegistryInfo> registryInfo = default;
             Optional<ContainerAppCredentials> azureCredentials = default;
             Optional<string> contextPath = default;
@@ -74,7 +78,6 @@ namespace Azure.ResourceManager.AppContainers.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     registryInfo = ContainerAppRegistryInfo.DeserializeContainerAppRegistryInfo(property.Value);
@@ -84,7 +87,6 @@ namespace Azure.ResourceManager.AppContainers.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     azureCredentials = ContainerAppCredentials.DeserializeContainerAppCredentials(property.Value);

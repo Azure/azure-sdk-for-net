@@ -24,6 +24,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         internal static TokenBodyParameterContract DeserializeTokenBodyParameterContract(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string name = default;
             string value = default;
             foreach (var property in element.EnumerateObject())

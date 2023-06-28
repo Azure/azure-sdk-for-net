@@ -77,49 +77,6 @@ namespace Azure.ResourceManager.Cdn.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // LogAnalytics_GetLogAnalyticsMetrics
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetLogAnalyticsMetrics_LogAnalyticsGetLogAnalyticsMetrics()
-        {
-            // Generated from example definition: specification/cdn/resource-manager/Microsoft.Cdn/stable/2021-06-01/examples/LogAnalytics_GetLogAnalyticsMetrics.json
-            // this example is just showing the usage of "LogAnalytics_GetLogAnalyticsMetrics" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this ProfileResource created on azure
-            // for more information of creating ProfileResource, please refer to the document of ProfileResource
-            string subscriptionId = "subid";
-            string resourceGroupName = "RG";
-            string profileName = "profile1";
-            ResourceIdentifier profileResourceId = ProfileResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, profileName);
-            ProfileResource profile = client.GetProfileResource(profileResourceId);
-
-            // invoke the operation
-            ProfileResourceGetLogAnalyticsMetricsOptions options = new ProfileResourceGetLogAnalyticsMetricsOptions(metrics: new LogMetric[]
-            {
-LogMetric.ClientRequestCount
-            }, dateTimeBegin: DateTimeOffset.Parse("2020-11-04T04:30:00.000Z"), dateTimeEnd: DateTimeOffset.Parse("2020-11-04T05:00:00.000Z"), granularity: LogMetricsGranularity.PT5M, customDomains: new string[]
-            {
-"customdomain1.azurecdn.net","customdomain2.azurecdn.net"
-            }, protocols: new string[]
-            {
-"https"
-            })
-            {
-                GroupBy = new LogMetricsGroupBy[]
-            {
-LogMetricsGroupBy.Protocol
-            }
-            };
-            MetricsResponse result = await profile.GetLogAnalyticsMetricsAsync(options);
-
-            Console.WriteLine($"Succeeded: {result}");
-        }
-
         // LogAnalytics_GetLogAnalyticsRankings
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
@@ -205,43 +162,6 @@ LogRankingMetric.ClientRequestCount
 
             // invoke the operation
             ResourcesResponse result = await profile.GetLogAnalyticsResourcesAsync();
-
-            Console.WriteLine($"Succeeded: {result}");
-        }
-
-        // LogAnalytics_GetWafLogAnalyticsMetrics
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetWafLogAnalyticsMetrics_LogAnalyticsGetWafLogAnalyticsMetrics()
-        {
-            // Generated from example definition: specification/cdn/resource-manager/Microsoft.Cdn/stable/2021-06-01/examples/LogAnalytics_GetWafLogAnalyticsMetrics.json
-            // this example is just showing the usage of "LogAnalytics_GetWafLogAnalyticsMetrics" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this ProfileResource created on azure
-            // for more information of creating ProfileResource, please refer to the document of ProfileResource
-            string subscriptionId = "subid";
-            string resourceGroupName = "RG";
-            string profileName = "profile1";
-            ResourceIdentifier profileResourceId = ProfileResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, profileName);
-            ProfileResource profile = client.GetProfileResource(profileResourceId);
-
-            // invoke the operation
-            ProfileResourceGetWafLogAnalyticsMetricsOptions options = new ProfileResourceGetWafLogAnalyticsMetricsOptions(metrics: new WafMetric[]
-            {
-WafMetric.ClientRequestCount
-            }, dateTimeBegin: DateTimeOffset.Parse("2020-11-04T06:49:27.554Z"), dateTimeEnd: DateTimeOffset.Parse("2020-11-04T09:49:27.554Z"), granularity: WafGranularity.PT5M)
-            {
-                Actions = new WafAction[]
-            {
-WafAction.Block,WafAction.Log
-            }
-            };
-            WafMetricsResponse result = await profile.GetWafLogAnalyticsMetricsAsync(options);
 
             Console.WriteLine($"Succeeded: {result}");
         }

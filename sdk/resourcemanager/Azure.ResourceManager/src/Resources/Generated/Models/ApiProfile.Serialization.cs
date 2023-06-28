@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.Resources.Models
     {
         internal static ApiProfile DeserializeApiProfile(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> profileVersion = default;
             Optional<string> apiVersion = default;
             foreach (var property in element.EnumerateObject())

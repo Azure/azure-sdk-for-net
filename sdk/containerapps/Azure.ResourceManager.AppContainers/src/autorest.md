@@ -4,11 +4,10 @@ Run `dotnet build /t:GenerateCode` to generate code.
 
 ``` yaml
 azure-arm: true
-generate-model-factory: false
 csharp: true
 library-name: AppContainers
 namespace: Azure.ResourceManager.AppContainers
-require: https://github.com/Azure/azure-rest-api-specs/blob/e812b54127fad6c9bc2407b33980b0fe385b7717/specification/app/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/905a9ad794ea9a1565ebe3857497b3a24872d553/specification/app/resource-manager/readme.md
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 skip-csproj: true
@@ -198,6 +197,26 @@ rename-mapping:
   VnetConfiguration.infrastructureSubnetId: -|arm-id
   VnetConfiguration.internal: IsInternal
   ContainerApp.properties.eventStreamEndpoint: -|uri
+  ContainerApp.properties.outboundIpAddresses: OutboundIPAddressList|ip-address
+  ContainerAppProbe.type: ProbeType
+  Type: ContainerAppProbeType
+  Scheme: ContainerAppHttpScheme
+  ContainerAppProbeHttpGetHttpHeadersItem: ContainerAppHttpHeaderInfo
+  RegistryInfo.registryUrl: RegistryServer
+  WorkloadProfile.maximumCount: MaximumNodeCount
+  WorkloadProfile.minimumCount: MinimumNodeCount
+  BillingMeterProperties.category: WorkloadProfileCategory
+  TriggerType: ContainerAppJobTriggerType
+  JobTemplate: ContainerAppJobTemplate
+  JobProvisioningState: ContainerAppJobProvisioningState
+  JobPatchPropertiesProperties: ContainerAppJobPatchProperties
+  JobExecution: ContainerAppJobExecution
+  JobExecutionBase: ContainerAppJobExecutionBase
+  JobExecutionTemplate: ContainerAppJobExecutionTemplate
+  JobConfiguration: ContainerAppJobConfiguration
+  Job: ContainerAppJob
+  JobsCollection: ContainerAppJobsCollection
+  ManagedCertificate: ContainerAppManagedCertificate
 
 request-path-to-resource-name:
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/connectedEnvironments/{connectedEnvironmentName}/certificates/{certificateName}: ContainerAppConnectedEnvironmentCertificate
@@ -211,22 +230,13 @@ request-path-to-resource-name:
 override-operation-name:
     Namespaces_CheckNameAvailability: CheckContainerAppNameAvailability
 
+# mgmt-debug:
+#   show-serialized-names: true
+
 directive:
-  - from: CommonDefinitions.json
-    where: $.definitions
-    transform: >
-      $.ContainerAppProbe.properties.type['x-ms-enum']['name'] = 'ContainerAppProbeType';
-      $.ContainerAppProbe.properties.httpGet.properties.scheme['x-ms-enum']['name'] = 'ContainerAppHttpScheme';
-      $.ContainerAppProbe.properties.httpGet.properties.httpHeaders.items['x-ms-client-name'] = 'ContainerAppHttpHeaderInfo';
-      $.DefaultErrorResponse.properties.error.properties.innererror['x-ms-client-name'] = 'InnerError';
   - from: swagger-document
     where: $.definitions..enabled
     transform: >
       if ($['type'] === 'boolean')
         $['x-ms-client-name'] = 'IsEnabled'
-  - from: ContainerApps.json
-    where: $.definitions.ContainerApp
-    transform: >
-      $.properties.properties.properties.outboundIpAddresses['x-ms-client-name'] = 'outboundIpAddressList';
-      $.properties.properties.properties.outboundIpAddresses.items['x-ms-format'] = 'ip-address';
 ```

@@ -32,6 +32,10 @@ namespace Azure.ResourceManager.Logic.Models
 
         internal static X12ProcessingSettings DeserializeX12ProcessingSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             bool maskSecurityInfo = default;
             bool convertImpliedDecimal = default;
             bool preserveInterchange = default;

@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         /// <summary> Initializes a new instance of CustomRolloutSpecification. </summary>
         /// <param name="canary"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="canary"/> is null. </exception>
-        public CustomRolloutSpecification(CustomRolloutSpecificationCanary canary)
+        public CustomRolloutSpecification(TrafficRegions canary)
         {
             Argument.AssertNotNull(canary, nameof(canary));
 
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         /// <param name="canary"></param>
         /// <param name="providerRegistration"></param>
         /// <param name="resourceTypeRegistrations"></param>
-        internal CustomRolloutSpecification(CustomRolloutSpecificationCanary canary, CustomRolloutSpecificationProviderRegistration providerRegistration, IList<ResourceTypeRegistrationData> resourceTypeRegistrations)
+        internal CustomRolloutSpecification(TrafficRegions canary, ProviderRegistrationData providerRegistration, IList<ResourceTypeRegistrationData> resourceTypeRegistrations)
         {
             Canary = canary;
             ProviderRegistration = providerRegistration;
@@ -38,20 +38,20 @@ namespace Azure.ResourceManager.ProviderHub.Models
         }
 
         /// <summary> Gets or sets the canary. </summary>
-        internal CustomRolloutSpecificationCanary Canary { get; set; }
+        internal TrafficRegions Canary { get; set; }
         /// <summary> Gets the canary regions. </summary>
-        public IList<string> CanaryRegions
+        public IList<AzureLocation> CanaryRegions
         {
             get
             {
                 if (Canary is null)
-                    Canary = new CustomRolloutSpecificationCanary();
+                    Canary = new TrafficRegions();
                 return Canary.Regions;
             }
         }
 
         /// <summary> Gets or sets the provider registration. </summary>
-        public CustomRolloutSpecificationProviderRegistration ProviderRegistration { get; set; }
+        public ProviderRegistrationData ProviderRegistration { get; set; }
         /// <summary> Gets the resource type registrations. </summary>
         public IList<ResourceTypeRegistrationData> ResourceTypeRegistrations { get; }
     }

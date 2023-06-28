@@ -25,6 +25,10 @@ namespace Azure.Analytics.Synapse.ManagedPrivateEndpoints.Models
 
         internal static ManagedPrivateEndpoint DeserializeManagedPrivateEndpoint(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> id = default;
             Optional<string> name = default;
             Optional<string> type = default;
@@ -50,7 +54,6 @@ namespace Azure.Analytics.Synapse.ManagedPrivateEndpoints.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     properties = ManagedPrivateEndpointProperties.DeserializeManagedPrivateEndpointProperties(property.Value);

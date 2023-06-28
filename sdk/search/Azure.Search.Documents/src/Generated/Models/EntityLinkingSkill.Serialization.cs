@@ -88,6 +88,10 @@ namespace Azure.Search.Documents.Indexes.Models
 
         internal static EntityLinkingSkill DeserializeEntityLinkingSkill(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> defaultLanguageCode = default;
             Optional<double?> minimumPrecision = default;
             Optional<string> modelVersion = default;

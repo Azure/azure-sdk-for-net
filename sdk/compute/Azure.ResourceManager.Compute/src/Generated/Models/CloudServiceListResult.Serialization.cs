@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.Compute.Models
     {
         internal static CloudServiceListResult DeserializeCloudServiceListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             IReadOnlyList<CloudServiceData> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())

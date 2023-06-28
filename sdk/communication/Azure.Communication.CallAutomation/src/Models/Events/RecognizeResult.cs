@@ -1,8 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.Core;
-using System.Text.Json;
+using System.Runtime.Serialization;
 
 namespace Azure.Communication.CallAutomation
 {
@@ -11,5 +10,7 @@ namespace Azure.Communication.CallAutomation
     /// </summary>
     public abstract class RecognizeResult
     {
+        /// <summary> The type of recognize result. </summary>
+        public abstract RecognizeResultType ResultType { get; }
     }
 }

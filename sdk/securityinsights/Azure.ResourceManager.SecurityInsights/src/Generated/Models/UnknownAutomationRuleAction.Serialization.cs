@@ -24,6 +24,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 
         internal static UnknownAutomationRuleAction DeserializeUnknownAutomationRuleAction(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             int order = default;
             ActionType actionType = "Unknown";
             foreach (var property in element.EnumerateObject())

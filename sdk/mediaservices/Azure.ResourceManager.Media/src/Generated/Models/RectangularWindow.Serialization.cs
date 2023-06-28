@@ -40,6 +40,10 @@ namespace Azure.ResourceManager.Media.Models
 
         internal static RectangularWindow DeserializeRectangularWindow(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> left = default;
             Optional<string> top = default;
             Optional<string> width = default;

@@ -25,6 +25,10 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
 
         internal static ScopeNamespace DeserializeScopeNamespace(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> targetNamespace = default;
             foreach (var property in element.EnumerateObject())
             {

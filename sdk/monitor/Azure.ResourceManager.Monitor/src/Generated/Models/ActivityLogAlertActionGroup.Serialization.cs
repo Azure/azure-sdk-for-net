@@ -34,6 +34,10 @@ namespace Azure.ResourceManager.Monitor.Models
 
         internal static ActivityLogAlertActionGroup DeserializeActivityLogAlertActionGroup(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ResourceIdentifier actionGroupId = default;
             Optional<IDictionary<string, string>> webhookProperties = default;
             foreach (var property in element.EnumerateObject())
@@ -47,7 +51,6 @@ namespace Azure.ResourceManager.Monitor.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();

@@ -31,13 +31,17 @@ namespace Azure.Communication.JobRouter
 
         internal static ExceptionRule DeserializeExceptionRule(JsonElement element)
         {
-            JobExceptionTrigger trigger = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            ExceptionTrigger trigger = default;
             IDictionary<string, ExceptionAction> actions = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("trigger"u8))
                 {
-                    trigger = JobExceptionTrigger.DeserializeJobExceptionTrigger(property.Value);
+                    trigger = ExceptionTrigger.DeserializeExceptionTrigger(property.Value);
                     continue;
                 }
                 if (property.NameEquals("actions"u8))

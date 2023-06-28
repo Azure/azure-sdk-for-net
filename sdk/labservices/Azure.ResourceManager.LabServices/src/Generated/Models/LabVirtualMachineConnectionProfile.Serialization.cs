@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.LabServices.Models
     {
         internal static LabVirtualMachineConnectionProfile DeserializeLabVirtualMachineConnectionProfile(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IPAddress> privateIPAddress = default;
             Optional<string> sshAuthority = default;
             Optional<Uri> sshInBrowserUrl = default;
@@ -29,7 +33,6 @@ namespace Azure.ResourceManager.LabServices.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     privateIPAddress = IPAddress.Parse(property.Value.GetString());
@@ -44,7 +47,6 @@ namespace Azure.ResourceManager.LabServices.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        sshInBrowserUrl = null;
                         continue;
                     }
                     sshInBrowserUrl = new Uri(property.Value.GetString());
@@ -59,7 +61,6 @@ namespace Azure.ResourceManager.LabServices.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        rdpInBrowserUrl = null;
                         continue;
                     }
                     rdpInBrowserUrl = new Uri(property.Value.GetString());

@@ -65,7 +65,7 @@
       "ResponseBody": []
     },
     {
-      "RequestUri": "https://kasobolcanadanetoauth.blob.core.windows.net/90185bea-b711-4aae-a98f-bb14f2a40111/test-blob-1ab23876-62f0-4422-6da4-8b8ebf523c50?snapshot=2021-08-11T19%3A42%3A39.3298442Z\u0026sv=2022-11-02\u0026se=2021-08-12T19%3A42%3A39Z\u0026sr=bs\u0026sp=i\u0026sig=Sanitized\u0026comp=immutabilityPolicies",
+      "RequestUri": "https://kasobolcanadanetoauth.blob.core.windows.net/90185bea-b711-4aae-a98f-bb14f2a40111/test-blob-1ab23876-62f0-4422-6da4-8b8ebf523c50?snapshot=2021-08-11T19%3A42%3A39.3298442Z\u0026sv=2023-01-03\u0026se=2021-08-12T19%3A42%3A39Z\u0026sr=bs\u0026sp=i\u0026sig=Sanitized\u0026comp=immutabilityPolicies",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/xml",
@@ -92,7 +92,7 @@
       "ResponseBody": []
     },
     {
-      "RequestUri": "https://kasobolcanadanetoauth.blob.core.windows.net/90185bea-b711-4aae-a98f-bb14f2a40111/test-blob-1ab23876-62f0-4422-6da4-8b8ebf523c50?snapshot=2021-08-11T19%3A42%3A39.3298442Z\u0026sv=2022-11-02\u0026se=2021-08-12T19%3A42%3A39Z\u0026sr=bs\u0026sp=i\u0026sig=Sanitized\u0026comp=legalhold",
+      "RequestUri": "https://kasobolcanadanetoauth.blob.core.windows.net/90185bea-b711-4aae-a98f-bb14f2a40111/test-blob-1ab23876-62f0-4422-6da4-8b8ebf523c50?snapshot=2021-08-11T19%3A42%3A39.3298442Z\u0026sv=2023-01-03\u0026se=2021-08-12T19%3A42%3A39Z\u0026sr=bs\u0026sp=i\u0026sig=Sanitized\u0026comp=legalhold",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/xml",
@@ -117,7 +117,7 @@
       "ResponseBody": []
     },
     {
-      "RequestUri": "https://kasobolcanadanetoauth.blob.core.windows.net/90185bea-b711-4aae-a98f-bb14f2a40111/test-blob-1ab23876-62f0-4422-6da4-8b8ebf523c50?snapshot=2021-08-11T19%3A42%3A39.3298442Z\u0026sv=2022-11-02\u0026se=2021-08-12T19%3A42%3A39Z\u0026sr=bs\u0026sp=i\u0026sig=Sanitized\u0026comp=immutabilityPolicies",
+      "RequestUri": "https://kasobolcanadanetoauth.blob.core.windows.net/90185bea-b711-4aae-a98f-bb14f2a40111/test-blob-1ab23876-62f0-4422-6da4-8b8ebf523c50?snapshot=2021-08-11T19%3A42%3A39.3298442Z\u0026sv=2023-01-03\u0026se=2021-08-12T19%3A42%3A39Z\u0026sr=bs\u0026sp=i\u0026sig=Sanitized\u0026comp=immutabilityPolicies",
       "RequestMethod": "DELETE",
       "RequestHeaders": {
         "Accept": "application/xml",

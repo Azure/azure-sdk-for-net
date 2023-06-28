@@ -35,6 +35,10 @@ namespace Azure.ResourceManager.SignalR.Models
 
         internal static SignalRPrivateLinkServiceConnectionState DeserializeSignalRPrivateLinkServiceConnectionState(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<PrivateLinkServiceConnectionStatus> status = default;
             Optional<string> description = default;
             Optional<string> actionsRequired = default;
@@ -44,7 +48,6 @@ namespace Azure.ResourceManager.SignalR.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     status = new PrivateLinkServiceConnectionStatus(property.Value.GetString());

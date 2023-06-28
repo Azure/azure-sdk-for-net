@@ -28,6 +28,10 @@ namespace Azure.ResourceManager.Resources.Models
 
         internal static ArmDeploymentParametersLink DeserializeArmDeploymentParametersLink(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Uri uri = default;
             Optional<string> contentVersion = default;
             foreach (var property in element.EnumerateObject())

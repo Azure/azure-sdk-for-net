@@ -38,6 +38,10 @@ namespace Azure.ResourceManager.Media.Models
 
         internal static MediaJobInputFile DeserializeMediaJobInputFile(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> filename = default;
             string odataType = default;
             Optional<IList<TrackDescriptor>> includedTracks = default;
@@ -57,7 +61,6 @@ namespace Azure.ResourceManager.Media.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<TrackDescriptor> array = new List<TrackDescriptor>();

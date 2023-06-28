@@ -36,6 +36,10 @@ namespace Azure.ResourceManager.AppService.Models
 
         internal static OpenIdConnectLogin DeserializeOpenIdConnectLogin(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> nameClaimType = default;
             Optional<IList<string>> scopes = default;
             foreach (var property in element.EnumerateObject())
@@ -49,7 +53,6 @@ namespace Azure.ResourceManager.AppService.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();

@@ -1,0 +1,6 @@
+directory: specification/cognitiveservices/HealthInsights/healthinsights.trialmatcher/
+additionalDirectories:
+  - specification/cognitiveservices/HealthInsights/healthinsights.openapi/
+  - specification/cognitiveservices/HealthInsights/healthinsights.common/
+commit: 288b01a5f4a884ab0de729d2607dde94ad9c8885
+repo: azure/azure-rest-api-specs

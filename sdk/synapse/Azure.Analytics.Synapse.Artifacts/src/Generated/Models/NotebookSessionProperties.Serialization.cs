@@ -33,6 +33,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         internal static NotebookSessionProperties DeserializeNotebookSessionProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string driverMemory = default;
             int driverCores = default;
             string executorMemory = default;

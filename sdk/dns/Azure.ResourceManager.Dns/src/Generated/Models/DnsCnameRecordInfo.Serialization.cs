@@ -25,6 +25,10 @@ namespace Azure.ResourceManager.Dns.Models
 
         internal static DnsCnameRecordInfo DeserializeDnsCnameRecordInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> cname = default;
             foreach (var property in element.EnumerateObject())
             {

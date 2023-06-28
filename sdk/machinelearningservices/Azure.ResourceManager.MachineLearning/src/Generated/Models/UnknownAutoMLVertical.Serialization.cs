@@ -41,6 +41,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static UnknownAutoMLVertical DeserializeUnknownAutoMLVertical(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<MachineLearningLogVerbosity> logVerbosity = default;
             Optional<string> targetColumnName = default;
             TaskType taskType = "Unknown";
@@ -51,7 +55,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     logVerbosity = new MachineLearningLogVerbosity(property.Value.GetString());

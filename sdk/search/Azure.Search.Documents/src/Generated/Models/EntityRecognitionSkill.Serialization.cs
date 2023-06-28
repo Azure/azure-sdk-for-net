@@ -98,6 +98,10 @@ namespace Azure.Search.Documents.Indexes.Models
 
         internal static EntityRecognitionSkill DeserializeEntityRecognitionSkill(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<EntityCategory>> categories = default;
             Optional<EntityRecognitionSkillLanguage?> defaultLanguageCode = default;
             Optional<bool?> includeTypelessEntities = default;
@@ -114,7 +118,6 @@ namespace Azure.Search.Documents.Indexes.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<EntityCategory> array = new List<EntityCategory>();

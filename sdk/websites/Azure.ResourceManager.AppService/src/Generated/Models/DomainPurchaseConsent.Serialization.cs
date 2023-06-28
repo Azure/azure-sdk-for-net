@@ -42,6 +42,10 @@ namespace Azure.ResourceManager.AppService.Models
 
         internal static DomainPurchaseConsent DeserializeDomainPurchaseConsent(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<string>> agreementKeys = default;
             Optional<string> agreedBy = default;
             Optional<DateTimeOffset> agreedAt = default;
@@ -51,7 +55,6 @@ namespace Azure.ResourceManager.AppService.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();
@@ -71,7 +74,6 @@ namespace Azure.ResourceManager.AppService.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     agreedAt = property.Value.GetDateTimeOffset("O");

@@ -24,6 +24,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static MachineLearningJobScheduleAction DeserializeMachineLearningJobScheduleAction(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             MachineLearningJobProperties jobDefinition = default;
             ScheduleActionType actionType = default;
             foreach (var property in element.EnumerateObject())

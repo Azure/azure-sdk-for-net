@@ -38,6 +38,8 @@ namespace Azure.Storage.DataMovement.Tests
         public string GetNewBlobDirectoryName() => BlobsClientBuilder.GetNewBlobDirectoryName();
         public string GetNewBlockName() => BlobsClientBuilder.GetNewBlockName();
 
+        public List<string> FailureMessages { get; } = new List<string>();
+
         public DataMovementBlobTestBase(bool async, BlobClientOptions.ServiceVersion serviceVersion, RecordedTestMode? mode = null)
             : base(async, mode /* RecordedTestMode.Record /* to re-record */)
         {
@@ -436,13 +438,6 @@ namespace Azure.Storage.DataMovement.Tests
             } while (properties.Value.DeleteRetentionPolicy.Enabled);
         }
 
-        public Dictionary<string, string> BuildTags()
-            => new Dictionary<string, string>
-            {
-                { "tagKey0", "tagValue0" },
-                { "tagKey1", "tagValue1" }
-            };
-
         public class BlobQueryErrorHandler
         {
             private readonly BlobQueryError _expectedBlobQueryError;
@@ -581,6 +576,42 @@ namespace Azure.Storage.DataMovement.Tests
             }
         }
 
+        /// <summary>
+        /// Verifies Upload blob contents
+        /// </summary>
+        /// <param name="stream"></param>
+        /// <param name="blob"></param>
+        /// <returns></returns>
+        internal static async Task DownloadCopyBlobAndAssert(BlobBaseClient sourceBlob, BlobBaseClient destinationBlob)
+        {
+            var source = new byte[Constants.DefaultBufferSize];
+            using var sourceStream = new MemoryStream(source);
+            var destination = new byte[Constants.DefaultBufferSize];
+            using var destinationStream = new MemoryStream(destination);
+
+            BlobProperties properties = await destinationBlob.GetPropertiesAsync();
+            long size = properties.ContentLength;
+            // we are testing Upload, not download: so we download in partitions to avoid the default timeout
+            for (var i = 0; i < size; i += Constants.DefaultBufferSize * 5 / 2)
+            {
+                var startIndex = i;
+                var count = Math.Min(Constants.DefaultBufferSize, (int)(size - startIndex));
+
+                Response<BlobDownloadInfo> sourceDownload = await sourceBlob.DownloadAsync(new HttpRange(startIndex, count));
+                Response<BlobDownloadInfo> destinationDownload = await destinationBlob.DownloadAsync(new HttpRange(startIndex, count));
+
+                sourceStream.Seek(0, SeekOrigin.Begin);
+                await sourceDownload.Value.Content.CopyToAsync(sourceStream);
+
+                destinationStream.Seek(0, SeekOrigin.Begin);
+                await destinationDownload.Value.Content.CopyToAsync(destinationStream);
+
+                TestHelper.AssertSequenceEqual(
+                    source.AsSpan(0, count).ToArray(),
+                    destination.AsSpan(0, count).ToArray());
+            }
+        }
+
         internal async Task<AppendBlobClient> CreateAppendBlob(
             BlobContainerClient containerClient,
             string localSourceFile,
@@ -607,6 +638,10 @@ namespace Azure.Storage.DataMovement.Tests
                         offset += blockSize;
                     }
                 }
+            }
+            else
+            {
+                File.Create(localSourceFile).Close();
             }
             return blobClient;
         }
@@ -661,6 +696,10 @@ namespace Azure.Storage.DataMovement.Tests
                     await blobClient.UploadPagesAsync(partStream, offset);
                     offset += blockSize;
                 }
+            }
+            else
+            {
+                File.Create(localSourceFile).Close();
             }
             return blobClient;
         }

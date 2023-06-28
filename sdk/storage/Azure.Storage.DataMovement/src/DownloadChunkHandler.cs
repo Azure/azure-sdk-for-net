@@ -52,8 +52,7 @@ namespace Azure.Storage.DataMovement
         /// waiting to update the bytesTransferredand other required operations.
         /// </summary>
         private readonly Channel<DownloadRangeEventArgs> _downloadRangeChannel;
-        private readonly CancellationTokenSource _channelCancellationSource;
-        private CancellationToken _cancellationToken => _channelCancellationSource.Token;
+        private CancellationToken _cancellationToken;
 
         private readonly SemaphoreSlim _currentBytesSemaphore;
         private long _bytesTransferred;
@@ -90,12 +89,17 @@ namespace Azure.Storage.DataMovement
         /// <param name="behaviors">
         /// Contains all the supported function calls.
         /// </param>
+        /// <param name="cancellationToken">
+        /// Cancellation token of the job part or job to cancel any ongoing waiting in the
+        /// download chunk handler to prevent infinite waiting.
+        /// </param>
         /// <exception cref="ArgumentException"></exception>
         public DownloadChunkHandler(
             long currentTransferred,
             long expectedLength,
             IList<HttpRange> ranges,
-            Behaviors behaviors)
+            Behaviors behaviors,
+            CancellationToken cancellationToken)
         {
             // Create channel of finished Stage Chunk Args to update the bytesTransferred
             // and for ending tasks like commit block.
@@ -107,14 +111,16 @@ namespace Azure.Storage.DataMovement
                     // Single reader is required as we can only read and write to bytesTransferred value
                     SingleReader = true,
                 });
-            _channelCancellationSource = new CancellationTokenSource();
             _processDownloadRangeEvents = Task.Run(() => NotifyOfPendingChunkDownloadEvents());
+            _cancellationToken = cancellationToken;
 
             _expectedLength = expectedLength;
             _ranges = ranges;
 
             if (expectedLength <= 0)
-                throw new ArgumentException("Cannot initiate Commit Block List function with File that has a negative or zero length");
+            {
+                throw Errors.InvalidExpectedLength(expectedLength);
+            }
             Argument.AssertNotNullOrEmpty(ranges, nameof(ranges));
             Argument.AssertNotNull(behaviors, nameof(behaviors));
 
@@ -144,13 +150,8 @@ namespace Azure.Storage.DataMovement
 
         public async ValueTask DisposeAsync()
         {
-            _downloadRangeChannel.Writer.Complete();
+            _downloadRangeChannel.Writer.TryComplete();
             await _downloadRangeChannel.Reader.Completion.ConfigureAwait(false);
-            if (!_channelCancellationSource.IsCancellationRequested)
-            {
-                _channelCancellationSource.Cancel();
-            }
-            _channelCancellationSource.Dispose();
 
             if (_currentBytesSemaphore != default)
             {
@@ -160,22 +161,28 @@ namespace Azure.Storage.DataMovement
             DisposeHandlers();
         }
 
-        public void DisposeHandlers()
+        private void DisposeHandlers()
         {
             _downloadChunkEventHandler -= DownloadChunkEvent;
         }
 
         private async Task DownloadChunkEvent(DownloadRangeEventArgs args)
         {
-            if (args.Success)
+            try
             {
-                await _downloadRangeChannel.Writer.WriteAsync(args, _cancellationToken).ConfigureAwait(false);
+                if (args.Success)
+                {
+                    await _downloadRangeChannel.Writer.WriteAsync(args, _cancellationToken).ConfigureAwait(false);
+                }
+                else
+                {
+                    // Report back failed event.
+                    throw args.Exception;
+                }
             }
-            else
+            catch (Exception ex)
             {
-                // Report back failed event.
-                await InvokeFailedEvent(new Exception("Unexpected error: Experienced failed download range argument. " +
-                    $"Range: {args.Offset} - {args.BytesTransferred} with Transfer ID: {args.TransferId}")).ConfigureAwait(false);
+                await InvokeFailedEvent(ex).ConfigureAwait(false);
             }
         }
 
@@ -212,10 +219,7 @@ namespace Azure.Storage.DataMovement
                             // Throw an error here that we were unable to idenity the
                             // the range that has come back to us. We should never see this error
                             // since we were the ones who calculated the range.
-                            await InvokeFailedEvent(
-                                new ArgumentException($"Cannot find offset returned by Successful Download Range" +
-                                    $"in the expected Ranges: \"{args.Offset}\""))
-                            .ConfigureAwait(false);
+                            throw Errors.InvalidDownloadOffset(args.Offset, args.BytesTransferred);
                         }
                     }
                     else if (currentRangeOffset == args.Offset)
@@ -246,27 +250,32 @@ namespace Azure.Storage.DataMovement
                         // We should never reach this point because that means
                         // the range that came back was less than the next range that is supposed
                         // to be copied to the file
-                        await InvokeFailedEvent(
-                            new ArgumentException($"Offset returned by Successful Download Range" +
-                                $"was not in the expected Ranges: \"{args.Offset}\""))
-                        .ConfigureAwait(false);
+                        throw Errors.InvalidDownloadOffset(args.Offset, args.BytesTransferred);
                     }
                     _currentBytesSemaphore.Release();
                 }
             }
-            catch (OperationCanceledException)
-            {
-                // If operation cancelled, no need to log the exception. As it's logged by whoever called the cancellation (e.g. disposal)
-            }
             catch (Exception ex)
             {
-                await _invokeFailedEventHandler(ex).ConfigureAwait(false);
+                if (_currentBytesSemaphore.CurrentCount == 0)
+                {
+                    _currentBytesSemaphore.Release();
+                }
+                // Invoke the failed event argument here after we've released the semaphore
+                // or else we risk disposing the semaphore and releasing it after.
+                await InvokeFailedEvent(ex).ConfigureAwait(false);
             }
         }
 
         public async Task InvokeEvent(DownloadRangeEventArgs args)
         {
-            await _downloadChunkEventHandler.Invoke(args).ConfigureAwait(false);
+            // There's a race condition where the event handler was disposed and an event
+            // was already invoked, we should skip over this as the download chunk handler
+            // was already disposed, and we should just ignore any more incoming events.
+            if (_downloadChunkEventHandler != null)
+            {
+                await _downloadChunkEventHandler.Invoke(args).ConfigureAwait(false);
+            }
         }
 
         private async Task AppendEarlyChunksToFile()
@@ -280,45 +289,30 @@ namespace Azure.Storage.DataMovement
                 HttpRange currentRange = _ranges[_currentRangeIndex];
                 if (_rangesCompleted.TryRemove(currentRange.Offset, out string chunkFilePath))
                 {
-                    try
+                    if (File.Exists(chunkFilePath))
                     {
-                        if (File.Exists(chunkFilePath))
+                        using (Stream content = File.OpenRead(chunkFilePath))
                         {
-                            using (Stream content = File.OpenRead(chunkFilePath))
-                            {
-                                await _copyToDestinationFile(
-                                    currentRange.Offset,
-                                    (long) currentRange.Length,
-                                    content,
-                                    _expectedLength).ConfigureAwait(false);
-                            }
-                            // Delete the temporary chunk file that's no longer needed
-                            File.Delete(chunkFilePath);
+                            await _copyToDestinationFile(
+                                currentRange.Offset,
+                                currentRange.Length.Value,
+                                content,
+                                _expectedLength).ConfigureAwait(false);
                         }
-                        else
-                        {
-                            await InvokeFailedEvent(new FileNotFoundException(
-                                $"Could not append chunk to destination file at Offset: " +
-                                $"\"{currentRange.Offset}\" and Length: \"{currentRange.Length}\"," +
-                                $"due to the chunk file missing: \"{chunkFilePath}\"")).ConfigureAwait(false);
-                        }
+                        // Delete the temporary chunk file that's no longer needed
+                        File.Delete(chunkFilePath);
                     }
-                    catch
+                    else
                     {
-                        await InvokeFailedEvent(new Exception(
-                            $"Could not append chunk to destination file at Offset: " +
-                            $"\"{currentRange.Offset}\" and Length: \"{currentRange.Length}\""))
-                            .ConfigureAwait(false);
+                        throw Errors.TempChunkFileNotFound(
+                            offset: currentRange.Offset,
+                            length: currentRange.Length.Value,
+                            filePath: chunkFilePath);
                     }
                 }
                 else
                 {
-                    await InvokeFailedEvent(new ArgumentOutOfRangeException(
-                        "Offset",
-                        currentRange,
-                        $"Cannot find offset returned by Successful Download Range at Offset: " +
-                        $"\"{currentRange.Offset}\" and Length: \"{currentRange.Length}\""))
-                        .ConfigureAwait(false);
+                    throw Errors.InvalidDownloadOffset(currentRange.Offset, currentRange.Length.Value);
                 }
 
                 // Increment the current range we are expect, if it's null then
@@ -356,8 +350,8 @@ namespace Azure.Storage.DataMovement
         private void UpdateBytesAndRange(long bytesDownloaded)
         {
             Interlocked.Add(ref _bytesTransferred, bytesDownloaded);
-            _reportProgressInBytes(_bytesTransferred);
             Interlocked.Increment(ref _currentRangeIndex);
+            _reportProgressInBytes(bytesDownloaded);
         }
     }
 }

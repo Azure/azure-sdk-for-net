@@ -9,11 +9,26 @@ using Azure.ResourceManager.Compute.Models;
 using Azure.ResourceManager.Resources;
 using System.Threading;
 using System.Threading.Tasks;
+using System.ComponentModel;
 
 namespace Azure.ResourceManager.Compute
 {
     public static partial class ComputeExtensions
     {
+        /// <summary> Lists all of the virtual machines in the specified subscription. Use the nextLink property in the response to get the next page of virtual machines. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static AsyncPageable<VirtualMachineResource> GetVirtualMachinesAsync(this SubscriptionResource subscriptionResource, string statusOnly, string filter, CancellationToken cancellationToken)
+        {
+            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetVirtualMachinesAsync(statusOnly, filter, null, cancellationToken);
+        }
+
+        /// <summary> Lists all of the virtual machines in the specified subscription. Use the nextLink property in the response to get the next page of virtual machines. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static Pageable<VirtualMachineResource> GetVirtualMachines(this SubscriptionResource subscriptionResource, string statusOnly, string filter, CancellationToken cancellationToken)
+        {
+            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetVirtualMachines(statusOnly, filter, null, cancellationToken);
+        }
+
         /// <summary>
         /// Gets a list of all virtual machine image versions for the specified location, publisher, offer, and SKU.
         /// <list type="bullet">

@@ -67,6 +67,10 @@ namespace Azure.ResourceManager.BillingBenefits
 
         internal static BillingBenefitsSavingsPlanOrderAliasData DeserializeBillingBenefitsSavingsPlanOrderAliasData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             BillingBenefitsSku sku = default;
             Optional<string> kind = default;
             ResourceIdentifier id = default;
@@ -113,7 +117,6 @@ namespace Azure.ResourceManager.BillingBenefits
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
@@ -137,7 +140,6 @@ namespace Azure.ResourceManager.BillingBenefits
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             savingsPlanOrderId = new ResourceIdentifier(property0.Value.GetString());
@@ -147,7 +149,6 @@ namespace Azure.ResourceManager.BillingBenefits
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             provisioningState = new BillingBenefitsProvisioningState(property0.Value.GetString());
@@ -157,7 +158,6 @@ namespace Azure.ResourceManager.BillingBenefits
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             billingScopeId = new ResourceIdentifier(property0.Value.GetString());
@@ -167,7 +167,6 @@ namespace Azure.ResourceManager.BillingBenefits
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             term = new BillingBenefitsTerm(property0.Value.GetString());
@@ -177,7 +176,6 @@ namespace Azure.ResourceManager.BillingBenefits
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             billingPlan = new BillingBenefitsBillingPlan(property0.Value.GetString());
@@ -187,7 +185,6 @@ namespace Azure.ResourceManager.BillingBenefits
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             appliedScopeType = new BillingBenefitsAppliedScopeType(property0.Value.GetString());
@@ -197,7 +194,6 @@ namespace Azure.ResourceManager.BillingBenefits
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             appliedScopeProperties = BillingBenefitsAppliedScopeProperties.DeserializeBillingBenefitsAppliedScopeProperties(property0.Value);
@@ -207,7 +203,6 @@ namespace Azure.ResourceManager.BillingBenefits
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             commitment = BillingBenefitsCommitment.DeserializeBillingBenefitsCommitment(property0.Value);

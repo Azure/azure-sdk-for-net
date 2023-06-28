@@ -22,6 +22,10 @@ namespace Azure.ResourceManager.AppPlatform.Models
 
         internal static AppPlatformStorageProperties DeserializeAppPlatformStorageProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             if (element.TryGetProperty("storageType", out JsonElement discriminator))
             {
                 switch (discriminator.GetString())

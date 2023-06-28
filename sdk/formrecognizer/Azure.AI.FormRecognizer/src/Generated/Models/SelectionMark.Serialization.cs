@@ -15,6 +15,10 @@ namespace Azure.AI.FormRecognizer.Models
     {
         internal static SelectionMark DeserializeSelectionMark(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             IReadOnlyList<float> boundingBox = default;
             float confidence = default;
             SelectionMarkState state = default;

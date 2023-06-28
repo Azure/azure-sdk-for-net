@@ -48,6 +48,10 @@ namespace Azure.Communication.MediaComposition
 
         internal static UnknownInputGroup DeserializeUnknownInputGroup(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             InputGroupType kind = "Unknown";
             Optional<InputPosition> position = default;
             Optional<string> width = default;
@@ -65,7 +69,6 @@ namespace Azure.Communication.MediaComposition
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     position = InputPosition.DeserializeInputPosition(property.Value);
@@ -90,7 +93,6 @@ namespace Azure.Communication.MediaComposition
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     scalingMode = new ScalingMode(property.Value.GetString());

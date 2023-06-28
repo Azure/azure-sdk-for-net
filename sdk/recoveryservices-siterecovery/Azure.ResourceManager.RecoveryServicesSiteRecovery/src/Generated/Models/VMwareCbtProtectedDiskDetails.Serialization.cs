@@ -15,15 +15,19 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     {
         internal static VMwareCbtProtectedDiskDetails DeserializeVMwareCbtProtectedDiskDetails(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> diskId = default;
             Optional<string> diskName = default;
-            Optional<DiskAccountType> diskType = default;
+            Optional<SiteRecoveryDiskAccountType> diskType = default;
             Optional<string> diskPath = default;
             Optional<string> isOSDisk = default;
             Optional<long> capacityInBytes = default;
-            Optional<string> logStorageAccountId = default;
+            Optional<ResourceIdentifier> logStorageAccountId = default;
             Optional<string> logStorageAccountSasSecretName = default;
-            Optional<string> diskEncryptionSetId = default;
+            Optional<ResourceIdentifier> diskEncryptionSetId = default;
             Optional<string> seedManagedDiskId = default;
             Optional<Uri> seedBlobUri = default;
             Optional<string> targetManagedDiskId = default;
@@ -45,10 +49,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    diskType = new DiskAccountType(property.Value.GetString());
+                    diskType = new SiteRecoveryDiskAccountType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("diskPath"u8))
@@ -65,7 +68,6 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     capacityInBytes = property.Value.GetInt64();
@@ -73,7 +75,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 if (property.NameEquals("logStorageAccountId"u8))
                 {
-                    logStorageAccountId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    logStorageAccountId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("logStorageAccountSasSecretName"u8))
@@ -83,7 +89,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 if (property.NameEquals("diskEncryptionSetId"u8))
                 {
-                    diskEncryptionSetId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    diskEncryptionSetId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("seedManagedDiskId"u8))
@@ -95,7 +105,6 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        seedBlobUri = null;
                         continue;
                     }
                     seedBlobUri = new Uri(property.Value.GetString());
@@ -110,7 +119,6 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        targetBlobUri = null;
                         continue;
                     }
                     targetBlobUri = new Uri(property.Value.GetString());

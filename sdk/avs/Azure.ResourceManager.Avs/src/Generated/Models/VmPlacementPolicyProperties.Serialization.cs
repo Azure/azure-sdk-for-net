@@ -20,6 +20,11 @@ namespace Azure.ResourceManager.Avs.Models
             writer.WriteStartArray();
             foreach (var item in VmMembers)
             {
+                if (item == null)
+                {
+                    writer.WriteNullValue();
+                    continue;
+                }
                 writer.WriteStringValue(item);
             }
             writer.WriteEndArray();
@@ -42,6 +47,10 @@ namespace Azure.ResourceManager.Avs.Models
 
         internal static VmPlacementPolicyProperties DeserializeVmPlacementPolicyProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             IList<ResourceIdentifier> vmMembers = default;
             AvsPlacementPolicyAffinityType affinityType = default;
             PlacementPolicyType type = default;
@@ -55,7 +64,14 @@ namespace Azure.ResourceManager.Avs.Models
                     List<ResourceIdentifier> array = new List<ResourceIdentifier>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(new ResourceIdentifier(item.GetString()));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(new ResourceIdentifier(item.GetString()));
+                        }
                     }
                     vmMembers = array;
                     continue;
@@ -74,7 +90,6 @@ namespace Azure.ResourceManager.Avs.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     state = new PlacementPolicyState(property.Value.GetString());
@@ -89,7 +104,6 @@ namespace Azure.ResourceManager.Avs.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     provisioningState = new PlacementPolicyProvisioningState(property.Value.GetString());

@@ -43,6 +43,10 @@ namespace Azure.Search.Documents.Indexes.Models
 
         internal static InputFieldMappingEntry DeserializeInputFieldMappingEntry(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string name = default;
             Optional<string> source = default;
             Optional<string> sourceContext = default;
@@ -68,7 +72,6 @@ namespace Azure.Search.Documents.Indexes.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<InputFieldMappingEntry> array = new List<InputFieldMappingEntry>();

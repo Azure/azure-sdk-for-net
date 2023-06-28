@@ -25,6 +25,10 @@ namespace Azure.ResourceManager.EdgeOrder.Models
 
         internal static EncryptionPreferences DeserializeEncryptionPreferences(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<DoubleEncryptionStatus> doubleEncryptionStatus = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -32,7 +36,6 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     doubleEncryptionStatus = new DoubleEncryptionStatus(property.Value.GetString());

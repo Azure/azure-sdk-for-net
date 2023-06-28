@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.Compute.Models
 
         internal static SshPublicKeyConfiguration DeserializeSshPublicKeyConfiguration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> path = default;
             Optional<string> keyData = default;
             foreach (var property in element.EnumerateObject())

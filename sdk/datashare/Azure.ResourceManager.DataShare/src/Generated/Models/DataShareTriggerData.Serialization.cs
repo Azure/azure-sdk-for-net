@@ -24,6 +24,10 @@ namespace Azure.ResourceManager.DataShare
 
         internal static DataShareTriggerData DeserializeDataShareTriggerData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             if (element.TryGetProperty("kind", out JsonElement discriminator))
             {
                 switch (discriminator.GetString())
@@ -62,7 +66,6 @@ namespace Azure.ResourceManager.DataShare
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());

@@ -15,8 +15,8 @@ namespace Azure.Communication.JobRouter
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("labelSelector"u8);
-            writer.WriteObjectValue(LabelSelector);
+            writer.WritePropertyName("queueSelector"u8);
+            writer.WriteObjectValue(QueueSelector);
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind);
             writer.WriteEndObject();
@@ -24,13 +24,17 @@ namespace Azure.Communication.JobRouter
 
         internal static StaticQueueSelectorAttachment DeserializeStaticQueueSelectorAttachment(JsonElement element)
         {
-            QueueSelector labelSelector = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            RouterQueueSelector queueSelector = default;
             string kind = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("labelSelector"u8))
+                if (property.NameEquals("queueSelector"u8))
                 {
-                    labelSelector = QueueSelector.DeserializeQueueSelector(property.Value);
+                    queueSelector = RouterQueueSelector.DeserializeRouterQueueSelector(property.Value);
                     continue;
                 }
                 if (property.NameEquals("kind"u8))
@@ -39,7 +43,7 @@ namespace Azure.Communication.JobRouter
                     continue;
                 }
             }
-            return new StaticQueueSelectorAttachment(kind, labelSelector);
+            return new StaticQueueSelectorAttachment(kind, queueSelector);
         }
     }
 }

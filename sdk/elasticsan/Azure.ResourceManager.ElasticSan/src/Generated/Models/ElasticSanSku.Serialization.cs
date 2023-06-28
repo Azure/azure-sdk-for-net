@@ -27,6 +27,10 @@ namespace Azure.ResourceManager.ElasticSan.Models
 
         internal static ElasticSanSku DeserializeElasticSanSku(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ElasticSanSkuName name = default;
             Optional<ElasticSanSkuTier> tier = default;
             foreach (var property in element.EnumerateObject())
@@ -40,7 +44,6 @@ namespace Azure.ResourceManager.ElasticSan.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     tier = new ElasticSanSkuTier(property.Value.GetString());

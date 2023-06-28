@@ -25,6 +25,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         internal static DefenderForContainersAwsOfferingKinesisToS3 DeserializeDefenderForContainersAwsOfferingKinesisToS3(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> cloudRoleArn = default;
             foreach (var property in element.EnumerateObject())
             {

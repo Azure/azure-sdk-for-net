@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
     {
         internal static MachineLearningComputeSystemService DeserializeMachineLearningComputeSystemService(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> systemServiceType = default;
             Optional<string> publicIPAddress = default;
             Optional<string> version = default;

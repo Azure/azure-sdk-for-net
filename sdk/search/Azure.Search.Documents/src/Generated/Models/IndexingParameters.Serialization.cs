@@ -61,6 +61,10 @@ namespace Azure.Search.Documents.Indexes.Models
 
         internal static IndexingParameters DeserializeIndexingParameters(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int?> batchSize = default;
             Optional<int?> maxFailedItems = default;
             Optional<int?> maxFailedItemsPerBatch = default;
@@ -101,7 +105,6 @@ namespace Azure.Search.Documents.Indexes.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     configuration = Models.IndexingParametersConfiguration.DeserializeIndexingParametersConfiguration(property.Value);

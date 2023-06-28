@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.StorageCache.Models
 
         internal static NfsAccessPolicy DeserializeNfsAccessPolicy(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string name = default;
             IList<NfsAccessRule> accessRules = default;
             foreach (var property in element.EnumerateObject())

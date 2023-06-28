@@ -22,6 +22,10 @@ namespace Azure.ResourceManager.Storage.Models
 
         internal static StorageAccountKeyPolicy DeserializeStorageAccountKeyPolicy(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             int keyExpirationPeriodInDays = default;
             foreach (var property in element.EnumerateObject())
             {

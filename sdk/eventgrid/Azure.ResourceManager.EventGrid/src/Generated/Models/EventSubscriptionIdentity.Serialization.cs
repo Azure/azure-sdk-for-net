@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.EventGrid.Models
 
         internal static EventSubscriptionIdentity DeserializeEventSubscriptionIdentity(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<EventSubscriptionIdentityType> type = default;
             Optional<string> userAssignedIdentity = default;
             foreach (var property in element.EnumerateObject())
@@ -38,7 +42,6 @@ namespace Azure.ResourceManager.EventGrid.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     type = new EventSubscriptionIdentityType(property.Value.GetString());

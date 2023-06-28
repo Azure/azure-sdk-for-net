@@ -46,6 +46,10 @@ namespace Azure.ResourceManager.AppPlatform.Models
 
         internal static AppPlatformGatewayApiMetadataProperties DeserializeAppPlatformGatewayApiMetadataProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> title = default;
             Optional<string> description = default;
             Optional<string> documentation = default;
@@ -77,7 +81,6 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        serverUri = null;
                         continue;
                     }
                     serverUri = new Uri(property.Value.GetString());

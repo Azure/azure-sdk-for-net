@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
     {
         internal static VirtualMachineTemplatesList DeserializeVirtualMachineTemplatesList(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> nextLink = default;
             IReadOnlyList<VirtualMachineTemplateData> value = default;
             foreach (var property in element.EnumerateObject())

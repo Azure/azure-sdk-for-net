@@ -26,6 +26,10 @@ namespace Azure.ResourceManager.Dns.Models
 
         internal static DnsAaaaRecordInfo DeserializeDnsAaaaRecordInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IPAddress> ipv6Address = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -33,7 +37,6 @@ namespace Azure.ResourceManager.Dns.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     ipv6Address = IPAddress.Parse(property.Value.GetString());

@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.Resources.Models
     {
         internal static ArmApplicationBillingDetails DeserializeArmApplicationBillingDetails(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> resourceUsageId = default;
             foreach (var property in element.EnumerateObject())
             {

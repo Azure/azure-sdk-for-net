@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.LoadTesting.Models
     {
         internal static LoadTestResourcePageList DeserializeLoadTestResourcePageList(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<LoadTestingResourceData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
@@ -24,7 +28,6 @@ namespace Azure.ResourceManager.LoadTesting.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<LoadTestingResourceData> array = new List<LoadTestingResourceData>();

@@ -41,6 +41,10 @@ namespace Azure.ResourceManager.Maintenance
 
         internal static MaintenanceApplyUpdateData DeserializeMaintenanceApplyUpdateData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -69,7 +73,6 @@ namespace Azure.ResourceManager.Maintenance
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
@@ -88,7 +91,6 @@ namespace Azure.ResourceManager.Maintenance
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             status = new MaintenanceUpdateStatus(property0.Value.GetString());
@@ -98,7 +100,6 @@ namespace Azure.ResourceManager.Maintenance
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             resourceId = new ResourceIdentifier(property0.Value.GetString());
@@ -108,7 +109,6 @@ namespace Azure.ResourceManager.Maintenance
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             lastUpdateTime = property0.Value.GetDateTimeOffset("O");

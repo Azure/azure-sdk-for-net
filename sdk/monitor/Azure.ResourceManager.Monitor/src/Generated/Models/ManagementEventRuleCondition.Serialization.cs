@@ -32,6 +32,10 @@ namespace Azure.ResourceManager.Monitor.Models
 
         internal static ManagementEventRuleCondition DeserializeManagementEventRuleCondition(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ManagementEventAggregationCondition> aggregation = default;
             string odataType = default;
             Optional<RuleDataSource> dataSource = default;
@@ -41,7 +45,6 @@ namespace Azure.ResourceManager.Monitor.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     aggregation = ManagementEventAggregationCondition.DeserializeManagementEventAggregationCondition(property.Value);
@@ -56,7 +59,6 @@ namespace Azure.ResourceManager.Monitor.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     dataSource = RuleDataSource.DeserializeRuleDataSource(property.Value);

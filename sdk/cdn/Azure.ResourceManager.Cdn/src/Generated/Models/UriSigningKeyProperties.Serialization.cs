@@ -31,6 +31,10 @@ namespace Azure.ResourceManager.Cdn.Models
 
         internal static UriSigningKeyProperties DeserializeUriSigningKeyProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string keyId = default;
             WritableSubResource secretSource = default;
             Optional<string> secretVersion = default;

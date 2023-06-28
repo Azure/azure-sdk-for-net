@@ -37,6 +37,10 @@ namespace Azure.ResourceManager.AppService.Models
 
         internal static AppServiceDatabaseBackupSetting DeserializeAppServiceDatabaseBackupSetting(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             AppServiceDatabaseType databaseType = default;
             Optional<string> name = default;
             Optional<string> connectionStringName = default;

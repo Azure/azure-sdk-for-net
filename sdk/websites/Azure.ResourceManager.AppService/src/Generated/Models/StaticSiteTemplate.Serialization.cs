@@ -46,6 +46,10 @@ namespace Azure.ResourceManager.AppService.Models
 
         internal static StaticSiteTemplate DeserializeStaticSiteTemplate(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<Uri> templateRepositoryUrl = default;
             Optional<string> owner = default;
             Optional<string> repositoryName = default;
@@ -57,7 +61,6 @@ namespace Azure.ResourceManager.AppService.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        templateRepositoryUrl = null;
                         continue;
                     }
                     templateRepositoryUrl = new Uri(property.Value.GetString());
@@ -82,7 +85,6 @@ namespace Azure.ResourceManager.AppService.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     isPrivate = property.Value.GetBoolean();

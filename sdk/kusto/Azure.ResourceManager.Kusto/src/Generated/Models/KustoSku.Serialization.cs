@@ -29,6 +29,10 @@ namespace Azure.ResourceManager.Kusto.Models
 
         internal static KustoSku DeserializeKustoSku(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             KustoSkuName name = default;
             Optional<int> capacity = default;
             KustoSkuTier tier = default;
@@ -43,7 +47,6 @@ namespace Azure.ResourceManager.Kusto.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     capacity = property.Value.GetInt32();

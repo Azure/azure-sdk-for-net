@@ -26,8 +26,12 @@ namespace Azure.ResourceManager.Workloads.Models
 
         internal static CentralServerConfiguration DeserializeCentralServerConfiguration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ResourceIdentifier subnetId = default;
-            VirtualMachineConfiguration virtualMachineConfiguration = default;
+            SapVirtualMachineConfiguration virtualMachineConfiguration = default;
             long instanceCount = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -38,7 +42,7 @@ namespace Azure.ResourceManager.Workloads.Models
                 }
                 if (property.NameEquals("virtualMachineConfiguration"u8))
                 {
-                    virtualMachineConfiguration = VirtualMachineConfiguration.DeserializeVirtualMachineConfiguration(property.Value);
+                    virtualMachineConfiguration = SapVirtualMachineConfiguration.DeserializeSapVirtualMachineConfiguration(property.Value);
                     continue;
                 }
                 if (property.NameEquals("instanceCount"u8))

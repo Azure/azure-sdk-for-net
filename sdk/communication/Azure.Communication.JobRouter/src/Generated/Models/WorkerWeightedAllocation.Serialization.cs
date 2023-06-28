@@ -18,9 +18,9 @@ namespace Azure.Communication.JobRouter
             writer.WriteStartObject();
             writer.WritePropertyName("weight"u8);
             writer.WriteNumberValue(Weight);
-            writer.WritePropertyName("labelSelectors"u8);
+            writer.WritePropertyName("workerSelectors"u8);
             writer.WriteStartArray();
-            foreach (var item in LabelSelectors)
+            foreach (var item in WorkerSelectors)
             {
                 writer.WriteObjectValue(item);
             }
@@ -30,8 +30,12 @@ namespace Azure.Communication.JobRouter
 
         internal static WorkerWeightedAllocation DeserializeWorkerWeightedAllocation(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             double weight = default;
-            IList<WorkerSelector> labelSelectors = default;
+            IList<RouterWorkerSelector> workerSelectors = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("weight"u8))
@@ -39,18 +43,18 @@ namespace Azure.Communication.JobRouter
                     weight = property.Value.GetDouble();
                     continue;
                 }
-                if (property.NameEquals("labelSelectors"u8))
+                if (property.NameEquals("workerSelectors"u8))
                 {
-                    List<WorkerSelector> array = new List<WorkerSelector>();
+                    List<RouterWorkerSelector> array = new List<RouterWorkerSelector>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(WorkerSelector.DeserializeWorkerSelector(item));
+                        array.Add(RouterWorkerSelector.DeserializeRouterWorkerSelector(item));
                     }
-                    labelSelectors = array;
+                    workerSelectors = array;
                     continue;
                 }
             }
-            return new WorkerWeightedAllocation(weight, labelSelectors);
+            return new WorkerWeightedAllocation(weight, workerSelectors);
         }
     }
 }

@@ -56,6 +56,10 @@ namespace Azure.ResourceManager.DataMigration.Models
 
         internal static MySqlConnectionInfo DeserializeMySqlConnectionInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string serverName = default;
             Optional<string> dataSource = default;
             int port = default;
@@ -86,7 +90,6 @@ namespace Azure.ResourceManager.DataMigration.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     encryptConnection = property.Value.GetBoolean();
@@ -96,7 +99,6 @@ namespace Azure.ResourceManager.DataMigration.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     authentication = new AuthenticationType(property.Value.GetString());

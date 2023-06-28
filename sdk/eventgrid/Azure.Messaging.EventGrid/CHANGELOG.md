@@ -1,6 +1,6 @@
 # Release History
 
-## 4.14.0-beta.1 (Unreleased)
+## 4.18.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,55 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 4.17.0 (2023-06-08)
+
+### Features Added
+
+- Added new system events for Container Service. 
+
+### Breaking Changes
+
+- `EventGridClient` has been removed for the stable release. It will be included in a subsequent release.
+
+## 4.17.0-beta.2 (2023-06-06)
+
+### Other Changes
+
+- Docs updated to remove example that was causing the doc build to fail.
+
+## 4.17.0-beta.1 (2023-05-22)
+
+### Features Added
+
+- Added `EventGridClient` for interacting with topic and subscription namespaces.
+
+## 4.16.0 (2023-05-09)
+
+### Features Added
+
+- Added `AcsIncomingCallEventData` event.
+- Added `DeliveryStatusDetails` property to `AcsEmailDeliveryReportReceivedEventData` event.
+- Added `HealthCareDicomImageUpdatedEventData` event.
+- Added `PartionName` property to Dicom events.
+
+## 4.15.0 (2023-04-13)
+
+### Features Added
+
+- Added new Storage events, `StorageTaskCompletedEventData` and `StorageTaskQueuedEventData`.
+
+## 4.14.1 (2023-03-13)
+
+### Other Changes
+
+- Upgraded dependent `Azure.Core` to `1.30.0` due to an [issue in `ArrayBackedPropertyBag`](https://github.com/Azure/azure-sdk-for-net/pull/34800) in `Azure.Core` version `1.29.0`.
+
+## 4.14.0 (2023-03-06)
+
+### Features Added
+
+- Added new Communication events, `AcsEmailDeliveryReportReceivedEventData` and `AcsEmailEngagementTrackingReportReceivedEventData`.
 
 ## 4.13.0 (2023-01-19)
 

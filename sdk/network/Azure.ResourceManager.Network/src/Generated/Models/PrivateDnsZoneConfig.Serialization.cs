@@ -34,6 +34,10 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static PrivateDnsZoneConfig DeserializePrivateDnsZoneConfig(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> name = default;
             Optional<string> privateDnsZoneId = default;
             Optional<IReadOnlyList<RecordSet>> recordSets = default;
@@ -62,7 +66,6 @@ namespace Azure.ResourceManager.Network.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<RecordSet> array = new List<RecordSet>();

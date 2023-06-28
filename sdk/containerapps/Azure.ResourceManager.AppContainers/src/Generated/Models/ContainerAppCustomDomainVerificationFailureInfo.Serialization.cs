@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.AppContainers.Models
     {
         internal static ContainerAppCustomDomainVerificationFailureInfo DeserializeContainerAppCustomDomainVerificationFailureInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> code = default;
             Optional<string> message = default;
             Optional<string> target = default;
@@ -40,7 +44,6 @@ namespace Azure.ResourceManager.AppContainers.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<ContainerAppCustomDomainVerificationFailureInfoDetailsItem> array = new List<ContainerAppCustomDomainVerificationFailureInfoDetailsItem>();

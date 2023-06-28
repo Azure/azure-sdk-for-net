@@ -24,6 +24,10 @@ namespace Azure.AI.MetricsAdvisor.Models
 
         internal static SuppressCondition DeserializeSuppressCondition(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             int minNumber = default;
             double minRatio = default;
             foreach (var property in element.EnumerateObject())

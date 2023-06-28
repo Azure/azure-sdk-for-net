@@ -7,7 +7,6 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager;
@@ -22,9 +21,9 @@ namespace Azure.ResourceManager.BotService.Samples
         // List QnAMaker Endpoint Keys
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetQnAMakerEndpointKey_ListQnAMakerEndpointKeys()
+        public async Task GetBotServiceQnAMakerEndpointKey_ListQnAMakerEndpointKeys()
         {
-            // Generated from example definition: specification/botservice/resource-manager/Microsoft.BotService/preview/2022-06-15-preview/examples/ListQnAMakerEndpointKeys.json
+            // Generated from example definition: specification/botservice/resource-manager/Microsoft.BotService/stable/2022-09-15/examples/ListQnAMakerEndpointKeys.json
             // this example is just showing the usage of "QnAMakerEndpointKeys_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -39,12 +38,12 @@ namespace Azure.ResourceManager.BotService.Samples
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
             // invoke the operation
-            QnAMakerEndpointKeysRequestBody qnAMakerEndpointKeysRequestBody = new QnAMakerEndpointKeysRequestBody()
+            GetBotServiceQnAMakerEndpointKeyContent content = new GetBotServiceQnAMakerEndpointKeyContent()
             {
                 Hostname = "https://xxx.cognitiveservices.azure.com/",
                 Authkey = "testAuthKey",
             };
-            QnAMakerEndpointKeysResponse result = await subscriptionResource.GetQnAMakerEndpointKeyAsync(qnAMakerEndpointKeysRequestBody);
+            GetBotServiceQnAMakerEndpointKeyResult result = await subscriptionResource.GetBotServiceQnAMakerEndpointKeyAsync(content);
 
             Console.WriteLine($"Succeeded: {result}");
         }
@@ -52,9 +51,9 @@ namespace Azure.ResourceManager.BotService.Samples
         // Get Bot Host Settings
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetHostSetting_GetBotHostSettings()
+        public async Task GetBotServiceHostSettings_GetBotHostSettings()
         {
-            // Generated from example definition: specification/botservice/resource-manager/Microsoft.BotService/preview/2022-06-15-preview/examples/GetHostSettings.json
+            // Generated from example definition: specification/botservice/resource-manager/Microsoft.BotService/stable/2022-09-15/examples/GetHostSettings.json
             // this example is just showing the usage of "HostSettings_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -69,34 +68,7 @@ namespace Azure.ResourceManager.BotService.Samples
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
             // invoke the operation
-            HostSettingsResponse result = await subscriptionResource.GetHostSettingAsync();
-
-            Console.WriteLine($"Succeeded: {result}");
-        }
-
-        // Get operation result
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetOperationResult_GetOperationResult()
-        {
-            // Generated from example definition: specification/botservice/resource-manager/Microsoft.BotService/preview/2022-06-15-preview/examples/OperationResultsGet.json
-            // this example is just showing the usage of "OperationResults_Get" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this SubscriptionResource created on azure
-            // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "subid";
-            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
-            SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
-
-            // invoke the operation
-            string operationResultId = "exampleid";
-            ArmOperation<OperationResultsDescription> lro = await subscriptionResource.GetOperationResultAsync(WaitUntil.Completed, operationResultId);
-            OperationResultsDescription result = lro.Value;
+            BotServiceHostSettingsResult result = await subscriptionResource.GetBotServiceHostSettingsAsync();
 
             Console.WriteLine($"Succeeded: {result}");
         }

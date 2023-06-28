@@ -15,6 +15,10 @@ namespace Azure.Search.Documents.Indexes.Models
     {
         internal static SearchIndexerLimits DeserializeSearchIndexerLimits(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<TimeSpan> maxRunTime = default;
             Optional<long> maxDocumentExtractionSize = default;
             Optional<long> maxDocumentContentCharactersToExtract = default;
@@ -24,7 +28,6 @@ namespace Azure.Search.Documents.Indexes.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     maxRunTime = property.Value.GetTimeSpan("P");
@@ -34,7 +37,6 @@ namespace Azure.Search.Documents.Indexes.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     maxDocumentExtractionSize = property.Value.GetInt64();
@@ -44,7 +46,6 @@ namespace Azure.Search.Documents.Indexes.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     maxDocumentContentCharactersToExtract = property.Value.GetInt64();

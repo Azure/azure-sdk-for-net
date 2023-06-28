@@ -48,6 +48,10 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
 
         internal static DataBoxEdgeMetricCounter DeserializeDataBoxEdgeMetricCounter(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string name = default;
             Optional<string> instance = default;
             Optional<IList<DataBoxEdgeMetricDimension>> dimensionFilter = default;
@@ -68,7 +72,6 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<DataBoxEdgeMetricDimension> array = new List<DataBoxEdgeMetricDimension>();
@@ -83,7 +86,6 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<DataBoxEdgeMetricDimension> array = new List<DataBoxEdgeMetricDimension>();

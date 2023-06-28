@@ -69,6 +69,10 @@ namespace Azure.ResourceManager.BillingBenefits
 
         internal static BillingBenefitsSavingsPlanOrderData DeserializeBillingBenefitsSavingsPlanOrderData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             BillingBenefitsSku sku = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -113,7 +117,6 @@ namespace Azure.ResourceManager.BillingBenefits
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
@@ -137,7 +140,6 @@ namespace Azure.ResourceManager.BillingBenefits
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             provisioningState = new BillingBenefitsProvisioningState(property0.Value.GetString());
@@ -147,7 +149,6 @@ namespace Azure.ResourceManager.BillingBenefits
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             billingScopeId = new ResourceIdentifier(property0.Value.GetString());
@@ -157,7 +158,6 @@ namespace Azure.ResourceManager.BillingBenefits
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             billingProfileId = new ResourceIdentifier(property0.Value.GetString());
@@ -172,7 +172,6 @@ namespace Azure.ResourceManager.BillingBenefits
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             billingAccountId = new ResourceIdentifier(property0.Value.GetString());
@@ -182,7 +181,6 @@ namespace Azure.ResourceManager.BillingBenefits
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             term = new BillingBenefitsTerm(property0.Value.GetString());
@@ -192,7 +190,6 @@ namespace Azure.ResourceManager.BillingBenefits
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             billingPlan = new BillingBenefitsBillingPlan(property0.Value.GetString());
@@ -202,7 +199,6 @@ namespace Azure.ResourceManager.BillingBenefits
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             expiryDateTime = property0.Value.GetDateTimeOffset("O");
@@ -212,7 +208,6 @@ namespace Azure.ResourceManager.BillingBenefits
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             benefitStartTime = property0.Value.GetDateTimeOffset("O");
@@ -222,7 +217,6 @@ namespace Azure.ResourceManager.BillingBenefits
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             planInformation = BillingPlanInformation.DeserializeBillingPlanInformation(property0.Value);
@@ -232,7 +226,6 @@ namespace Azure.ResourceManager.BillingBenefits
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<string> array = new List<string>();
@@ -247,7 +240,6 @@ namespace Azure.ResourceManager.BillingBenefits
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             extendedStatusInfo = BillingBenefitsExtendedStatusInfo.DeserializeBillingBenefitsExtendedStatusInfo(property0.Value);

@@ -31,6 +31,10 @@ namespace Azure.ResourceManager.AppContainers.Models
 
         internal static ContainerAppIPSecurityRestrictionRule DeserializeContainerAppIPSecurityRestrictionRule(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string name = default;
             Optional<string> description = default;
             string ipAddressRange = default;

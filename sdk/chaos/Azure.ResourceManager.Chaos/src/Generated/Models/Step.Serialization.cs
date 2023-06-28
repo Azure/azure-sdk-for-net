@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.Chaos.Models
 
         internal static Step DeserializeStep(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string name = default;
             IList<Branch> branches = default;
             foreach (var property in element.EnumerateObject())

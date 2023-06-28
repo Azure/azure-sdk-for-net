@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
 
         internal static UnknownBaseBackupPolicy DeserializeUnknownBaseBackupPolicy(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             IList<string> datasourceTypes = default;
             string objectType = "Unknown";
             foreach (var property in element.EnumerateObject())

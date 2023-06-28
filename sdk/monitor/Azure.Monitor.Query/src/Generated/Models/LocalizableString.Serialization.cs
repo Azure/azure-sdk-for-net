@@ -14,6 +14,10 @@ namespace Azure.Monitor.Query.Models
     {
         internal static LocalizableString DeserializeLocalizableString(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string value = default;
             Optional<string> localizedValue = default;
             foreach (var property in element.EnumerateObject())

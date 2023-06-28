@@ -82,6 +82,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         internal static BackupGenericEngine DeserializeBackupGenericEngine(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             if (element.TryGetProperty("backupEngineType", out JsonElement discriminator))
             {
                 switch (discriminator.GetString())

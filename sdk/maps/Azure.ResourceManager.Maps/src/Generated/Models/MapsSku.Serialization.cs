@@ -22,6 +22,10 @@ namespace Azure.ResourceManager.Maps.Models
 
         internal static MapsSku DeserializeMapsSku(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             MapsSkuName name = default;
             Optional<string> tier = default;
             foreach (var property in element.EnumerateObject())

@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
     {
         internal static HostsList DeserializeHostsList(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> nextLink = default;
             IReadOnlyList<VMwareHostData> value = default;
             foreach (var property in element.EnumerateObject())

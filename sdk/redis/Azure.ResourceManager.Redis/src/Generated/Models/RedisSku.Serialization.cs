@@ -26,6 +26,10 @@ namespace Azure.ResourceManager.Redis.Models
 
         internal static RedisSku DeserializeRedisSku(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             RedisSkuName name = default;
             RedisSkuFamily family = default;
             int capacity = default;

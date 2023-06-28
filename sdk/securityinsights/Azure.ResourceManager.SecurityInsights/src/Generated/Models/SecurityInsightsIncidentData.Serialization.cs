@@ -93,6 +93,10 @@ namespace Azure.ResourceManager.SecurityInsights
 
         internal static SecurityInsightsIncidentData DeserializeSecurityInsightsIncidentData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ETag> etag = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -121,7 +125,6 @@ namespace Azure.ResourceManager.SecurityInsights
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     etag = new ETag(property.Value.GetString());
@@ -146,7 +149,6 @@ namespace Azure.ResourceManager.SecurityInsights
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
@@ -165,7 +167,6 @@ namespace Azure.ResourceManager.SecurityInsights
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             additionalData = SecurityInsightsIncidentAdditionalInfo.DeserializeSecurityInsightsIncidentAdditionalInfo(property0.Value);
@@ -175,7 +176,6 @@ namespace Azure.ResourceManager.SecurityInsights
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             classification = new SecurityInsightsIncidentClassification(property0.Value.GetString());
@@ -190,7 +190,6 @@ namespace Azure.ResourceManager.SecurityInsights
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             classificationReason = new SecurityInsightsIncidentClassificationReason(property0.Value.GetString());
@@ -200,7 +199,6 @@ namespace Azure.ResourceManager.SecurityInsights
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             createdTimeUtc = property0.Value.GetDateTimeOffset("O");
@@ -215,7 +213,6 @@ namespace Azure.ResourceManager.SecurityInsights
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             firstActivityTimeUtc = property0.Value.GetDateTimeOffset("O");
@@ -225,7 +222,6 @@ namespace Azure.ResourceManager.SecurityInsights
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                incidentUrl = null;
                                 continue;
                             }
                             incidentUrl = new Uri(property0.Value.GetString());
@@ -235,7 +231,6 @@ namespace Azure.ResourceManager.SecurityInsights
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             incidentNumber = property0.Value.GetInt32();
@@ -245,7 +240,6 @@ namespace Azure.ResourceManager.SecurityInsights
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<SecurityInsightsIncidentLabel> array = new List<SecurityInsightsIncidentLabel>();
@@ -260,7 +254,6 @@ namespace Azure.ResourceManager.SecurityInsights
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             lastActivityTimeUtc = property0.Value.GetDateTimeOffset("O");
@@ -270,7 +263,6 @@ namespace Azure.ResourceManager.SecurityInsights
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             lastModifiedTimeUtc = property0.Value.GetDateTimeOffset("O");
@@ -280,7 +272,6 @@ namespace Azure.ResourceManager.SecurityInsights
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             owner = SecurityInsightsIncidentOwnerInfo.DeserializeSecurityInsightsIncidentOwnerInfo(property0.Value);
@@ -290,13 +281,19 @@ namespace Azure.ResourceManager.SecurityInsights
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<ResourceIdentifier> array = new List<ResourceIdentifier>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(new ResourceIdentifier(item.GetString()));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(new ResourceIdentifier(item.GetString()));
+                                }
                             }
                             relatedAnalyticRuleIds = array;
                             continue;
@@ -305,7 +302,6 @@ namespace Azure.ResourceManager.SecurityInsights
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             severity = new SecurityInsightsIncidentSeverity(property0.Value.GetString());
@@ -315,7 +311,6 @@ namespace Azure.ResourceManager.SecurityInsights
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             status = new SecurityInsightsIncidentStatus(property0.Value.GetString());

@@ -29,6 +29,10 @@ namespace Azure.ResourceManager.FrontDoor.Models
 
         internal static RulesEngineHeaderAction DeserializeRulesEngineHeaderAction(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             RulesEngineHeaderActionType headerActionType = default;
             string headerName = default;
             Optional<string> value = default;

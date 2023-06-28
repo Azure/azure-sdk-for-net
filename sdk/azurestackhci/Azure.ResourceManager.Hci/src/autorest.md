@@ -5,16 +5,18 @@ Run `dotnet build /t:GenerateCode` to generate code.
 ``` yaml
 
 azure-arm: true
-generate-model-factory: false
 csharp: true
 library-name: Hci
 namespace: Azure.ResourceManager.Hci
-require: https://github.com/Azure/azure-rest-api-specs/blob/324a148497f28ef7588eee7bdb61dcd28b74f505/specification/azurestackhci/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/d82babc9bd0fa25260d04e52d841c2a6f59792c8/specification/azurestackhci/resource-manager/readme.md
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
+
+# mgmt-debug:
+#   show-serialized-names: true
 
 format-by-name-rules:
   '*TenantId': 'uuid'
@@ -55,6 +57,21 @@ prepend-rp-prefix:
   - ClusterDesiredProperties
   - ClusterNode
   - ClusterReportedProperties
+  - AvailabilityType
+  - HealthState
+  - ManagedServiceIdentityType
+  - OfferList
+  - PackageVersionInfo
+  - PrecheckResult
+  - PrecheckResultTags
+  - PublisherList
+  - SkuList
+  - SkuMappings
+  - UpdateList
+  - PublisherCollection
+  - ExtensionInstanceView
+  - StatusLevelTypes
+
 rename-mapping:
   Extension: ArcExtension
   Extension.properties.extensionParameters.autoUpgradeMinorVersion: ShouldAutoUpgradeMinorVersion
@@ -74,9 +91,20 @@ rename-mapping:
   UploadCertificateRequest: HciClusterCertificateContent
   RawCertificateData: HciClusterRawCertificate
   PerNodeState: PerNodeArcState
+  RebootRequirement: HciNodeRebootRequirement
+  Severity: UpdateSeverity
+  State: HciUpdateState
+  Step: HciUpdateStep
+  OfferCollection: HciOfferCollection
+  OfferData: HciOfferData
+
 
 directive:
   - from: swagger-document
     where: $.definitions..systemData
     transform: $["x-ms-client-flatten"] = false
+  - from: updateRuns.json
+    where: $.definitions.UpdateRunProperties.properties
+    transform: >
+      $.duration['x-ms-format'] = 'string';
 ```

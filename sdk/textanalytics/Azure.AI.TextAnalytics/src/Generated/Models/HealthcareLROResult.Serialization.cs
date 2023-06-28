@@ -35,6 +35,10 @@ namespace Azure.AI.TextAnalytics.Models
 
         internal static HealthcareLROResult DeserializeHealthcareLROResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             HealthcareResult results = default;
             AnalyzeTextLROResultsKind kind = default;
             Optional<string> taskName = default;

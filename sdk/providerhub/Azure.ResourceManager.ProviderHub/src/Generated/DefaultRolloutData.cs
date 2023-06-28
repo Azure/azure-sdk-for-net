@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.ProviderHub
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties"> Properties of the rollout. </param>
-        internal DefaultRolloutData(ResourceIdentifier id, string name, Core.ResourceType resourceType, SystemData systemData, DefaultRolloutProperties properties) : base(id, name, resourceType, systemData)
+        internal DefaultRolloutData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DefaultRolloutProperties properties) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
         }

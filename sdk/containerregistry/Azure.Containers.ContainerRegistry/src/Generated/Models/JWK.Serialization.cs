@@ -14,6 +14,10 @@ namespace Azure.Containers.ContainerRegistry
     {
         internal static JWK DeserializeJWK(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<JWKHeader> jwk = default;
             Optional<string> alg = default;
             foreach (var property in element.EnumerateObject())
@@ -22,7 +26,6 @@ namespace Azure.Containers.ContainerRegistry
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     jwk = JWKHeader.DeserializeJWKHeader(property.Value);

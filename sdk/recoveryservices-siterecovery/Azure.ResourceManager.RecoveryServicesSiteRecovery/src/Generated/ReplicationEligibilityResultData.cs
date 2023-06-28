@@ -28,12 +28,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties"> Gets properties model for replication eligibility results API. </param>
-        internal ReplicationEligibilityResultData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ReplicationEligibilityResultsProperties properties) : base(id, name, resourceType, systemData)
+        internal ReplicationEligibilityResultData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ReplicationEligibilityResultProperties properties) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
         }
 
         /// <summary> Gets properties model for replication eligibility results API. </summary>
-        public ReplicationEligibilityResultsProperties Properties { get; }
+        public ReplicationEligibilityResultProperties Properties { get; }
     }
 }

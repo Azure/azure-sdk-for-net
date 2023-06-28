@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.ArcScVmm.Models
     {
         internal static StorageQoSPolicy DeserializeStorageQoSPolicy(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> name = default;
             Optional<string> id = default;
             Optional<long> iopsMaximum = default;
@@ -36,7 +40,6 @@ namespace Azure.ResourceManager.ArcScVmm.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     iopsMaximum = property.Value.GetInt64();
@@ -46,7 +49,6 @@ namespace Azure.ResourceManager.ArcScVmm.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     iopsMinimum = property.Value.GetInt64();
@@ -56,7 +58,6 @@ namespace Azure.ResourceManager.ArcScVmm.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     bandwidthLimit = property.Value.GetInt64();

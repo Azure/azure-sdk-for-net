@@ -25,6 +25,10 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
 
         internal static StreamingJobInputWatermarkProperties DeserializeStreamingJobInputWatermarkProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<StreamingJobInputWatermarkMode> watermarkMode = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -32,7 +36,6 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     watermarkMode = new StreamingJobInputWatermarkMode(property.Value.GetString());

@@ -47,6 +47,10 @@ namespace Azure.Search.Documents.Indexes.Models
 
         internal static CustomAnalyzer DeserializeCustomAnalyzer(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             LexicalTokenizerName tokenizer = default;
             Optional<IList<TokenFilterName>> tokenFilters = default;
             Optional<IList<string>> charFilters = default;
@@ -63,7 +67,6 @@ namespace Azure.Search.Documents.Indexes.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<TokenFilterName> array = new List<TokenFilterName>();
@@ -78,7 +81,6 @@ namespace Azure.Search.Documents.Indexes.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();

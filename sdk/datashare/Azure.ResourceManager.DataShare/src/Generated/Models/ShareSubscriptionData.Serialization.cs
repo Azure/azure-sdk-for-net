@@ -35,6 +35,10 @@ namespace Azure.ResourceManager.DataShare
 
         internal static ShareSubscriptionData DeserializeShareSubscriptionData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -75,7 +79,6 @@ namespace Azure.ResourceManager.DataShare
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
@@ -94,7 +97,6 @@ namespace Azure.ResourceManager.DataShare
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             createdAt = property0.Value.GetDateTimeOffset("O");
@@ -104,7 +106,6 @@ namespace Azure.ResourceManager.DataShare
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             expirationDate = property0.Value.GetDateTimeOffset("O");
@@ -134,7 +135,6 @@ namespace Azure.ResourceManager.DataShare
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             provisioningState = new DataShareProvisioningState(property0.Value.GetString());
@@ -149,7 +149,6 @@ namespace Azure.ResourceManager.DataShare
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             shareKind = new DataShareKind(property0.Value.GetString());
@@ -164,7 +163,6 @@ namespace Azure.ResourceManager.DataShare
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             shareSubscriptionStatus = new ShareSubscriptionStatus(property0.Value.GetString());

@@ -40,6 +40,10 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
 
         internal static ContainerRegistryImageDescriptor DeserializeContainerRegistryImageDescriptor(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> registry = default;
             Optional<string> repository = default;
             Optional<string> tag = default;

@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.NetApp.Models
     {
         internal static NetAppVolumeBackupStatus DeserializeNetAppVolumeBackupStatus(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<bool> healthy = default;
             Optional<NetAppRelationshipStatus> relationshipStatus = default;
             Optional<NetAppMirrorState> mirrorState = default;
@@ -28,7 +32,6 @@ namespace Azure.ResourceManager.NetApp.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     healthy = property.Value.GetBoolean();
@@ -38,7 +41,6 @@ namespace Azure.ResourceManager.NetApp.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     relationshipStatus = new NetAppRelationshipStatus(property.Value.GetString());
@@ -48,7 +50,6 @@ namespace Azure.ResourceManager.NetApp.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     mirrorState = new NetAppMirrorState(property.Value.GetString());
@@ -68,7 +69,6 @@ namespace Azure.ResourceManager.NetApp.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     lastTransferSize = property.Value.GetInt64();
@@ -83,7 +83,6 @@ namespace Azure.ResourceManager.NetApp.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     totalTransferBytes = property.Value.GetInt64();

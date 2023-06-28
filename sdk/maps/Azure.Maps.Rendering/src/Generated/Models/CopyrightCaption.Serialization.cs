@@ -14,6 +14,10 @@ namespace Azure.Maps.Rendering
     {
         internal static CopyrightCaption DeserializeCopyrightCaption(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> formatVersion = default;
             Optional<string> copyrightsCaption = default;
             foreach (var property in element.EnumerateObject())

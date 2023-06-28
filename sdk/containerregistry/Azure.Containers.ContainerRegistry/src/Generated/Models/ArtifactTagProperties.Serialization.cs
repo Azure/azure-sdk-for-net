@@ -15,6 +15,10 @@ namespace Azure.Containers.ContainerRegistry
     {
         internal static ArtifactTagProperties DeserializeArtifactTagProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string registry = default;
             string imageName = default;
             string name = default;
@@ -79,7 +83,6 @@ namespace Azure.Containers.ContainerRegistry
                                 {
                                     if (property1.Value.ValueKind == JsonValueKind.Null)
                                     {
-                                        property1.ThrowNonNullablePropertyIsNull();
                                         continue;
                                     }
                                     deleteEnabled = property1.Value.GetBoolean();
@@ -89,7 +92,6 @@ namespace Azure.Containers.ContainerRegistry
                                 {
                                     if (property1.Value.ValueKind == JsonValueKind.Null)
                                     {
-                                        property1.ThrowNonNullablePropertyIsNull();
                                         continue;
                                     }
                                     writeEnabled = property1.Value.GetBoolean();
@@ -99,7 +101,6 @@ namespace Azure.Containers.ContainerRegistry
                                 {
                                     if (property1.Value.ValueKind == JsonValueKind.Null)
                                     {
-                                        property1.ThrowNonNullablePropertyIsNull();
                                         continue;
                                     }
                                     listEnabled = property1.Value.GetBoolean();
@@ -109,7 +110,6 @@ namespace Azure.Containers.ContainerRegistry
                                 {
                                     if (property1.Value.ValueKind == JsonValueKind.Null)
                                     {
-                                        property1.ThrowNonNullablePropertyIsNull();
                                         continue;
                                     }
                                     readEnabled = property1.Value.GetBoolean();

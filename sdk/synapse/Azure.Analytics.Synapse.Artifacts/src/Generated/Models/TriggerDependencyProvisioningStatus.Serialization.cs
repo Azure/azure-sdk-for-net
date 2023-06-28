@@ -27,6 +27,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         internal static TriggerDependencyProvisioningStatus DeserializeTriggerDependencyProvisioningStatus(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string triggerName = default;
             string provisioningStatus = default;
             foreach (var property in element.EnumerateObject())

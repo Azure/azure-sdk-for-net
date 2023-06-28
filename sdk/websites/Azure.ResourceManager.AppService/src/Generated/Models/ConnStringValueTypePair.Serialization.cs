@@ -24,6 +24,10 @@ namespace Azure.ResourceManager.AppService.Models
 
         internal static ConnStringValueTypePair DeserializeConnStringValueTypePair(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string value = default;
             ConnectionStringType type = default;
             foreach (var property in element.EnumerateObject())

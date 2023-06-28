@@ -22,7 +22,11 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
         /// </summary>
         /// <param name="builder"><see cref="TracerProviderBuilder"/> builder to use.</param>
         /// <param name="configure">Callback action for configuring <see cref="AzureMonitorExporterOptions"/>.</param>
-        /// <param name="credential"><see cref="TokenCredential" /></param>
+        /// <param name="credential">
+        /// An Azure <see cref="TokenCredential" /> capable of providing an OAuth token.
+        /// Note: if a credential is provided to both <see cref="AzureMonitorExporterOptions"/> and this parameter,
+        /// the Options will take precedence.
+        /// </param>
         /// <param name="name">Name which is used when retrieving options.</param>
         /// <returns>The instance of <see cref="TracerProviderBuilder"/> to chain the calls.</returns>
         public static TracerProviderBuilder AddAzureMonitorTraceExporter(
@@ -45,10 +49,15 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
                 builder.ConfigureServices(services => services.Configure(finalOptionsName, configure));
             }
 
-            return builder.AddProcessor(sp =>
+            var deferredBuilder = builder as IDeferredTracerProviderBuilder;
+            if (deferredBuilder == null)
+            {
+                throw new InvalidOperationException("The provided TracerProviderBuilder does not implement IDeferredTracerProviderBuilder.");
+            }
+
+            return deferredBuilder.Configure((sp, builder) =>
             {
                 var exporterOptions = sp.GetRequiredService<IOptionsMonitor<AzureMonitorExporterOptions>>().Get(finalOptionsName);
-
                 if (name == null && configure != null)
                 {
                     // If we are NOT using named options, we execute the
@@ -59,11 +68,20 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
                     configure(exporterOptions);
                 }
 
-                return new CompositeProcessor<Activity>(new BaseProcessor<Activity>[]
+                builder.SetSampler(new ApplicationInsightsSampler(exporterOptions.SamplingRatio));
+
+                if (credential != null)
                 {
-                    new StandardMetricsExtractionProcessor(),
-                    new BatchActivityExportProcessor(new AzureMonitorTraceExporter(exporterOptions, exporterOptions.Credential?? credential))
-                });
+                    // Credential can be set by either AzureMonitorExporterOptions or Extension Method Parameter.
+                    // Options should take precedence.
+                    exporterOptions.Credential ??= credential;
+                }
+
+                builder.AddProcessor(new CompositeProcessor<Activity>(new BaseProcessor<Activity>[]
+                {
+                    new StandardMetricsExtractionProcessor(new AzureMonitorMetricExporter(exporterOptions)),
+                    new BatchActivityExportProcessor(new AzureMonitorTraceExporter(exporterOptions))
+                }));
             });
         }
     }

@@ -12,9 +12,11 @@ namespace Azure.AI.TextAnalytics.Samples
         [Test]
         public void RecognizeCustomEntities()
         {
+            TestEnvironment.IgnoreIfNotPublicCloud();
+
             Uri endpoint = new(TestEnvironment.StaticEndpoint);
             AzureKeyCredential credential = new(TestEnvironment.StaticApiKey);
-            TextAnalyticsClient client = new(endpoint, credential, CreateSampleOptions());
+            TextAnalyticsClient client = new(endpoint, credential, CreateSampleOptions(true));
 
             string documentA =
                 "A recent report by the Government Accountability Office (GAO) found that the dramatic increase in oil"
@@ -43,16 +45,9 @@ namespace Azure.AI.TextAnalytics.Samples
             // recognize custom entities, see https://aka.ms/azsdk/textanalytics/customentityrecognition.
             string projectName = TestEnvironment.RecognizeCustomEntitiesProjectName;
             string deploymentName = TestEnvironment.RecognizeCustomEntitiesDeploymentName;
-            RecognizeCustomEntitiesAction recognizeCustomEntitiesAction = new(projectName, deploymentName);
-
-            TextAnalyticsActions actions = new()
-            {
-                RecognizeCustomEntitiesActions = new List<RecognizeCustomEntitiesAction>() { recognizeCustomEntitiesAction }
-            };
 
             // Perform the text analysis operation.
-            AnalyzeActionsOperation operation = client.StartAnalyzeActions(batchedDocuments, actions);
-            operation.WaitForCompletion();
+            RecognizeCustomEntitiesOperation operation = client.RecognizeCustomEntities(WaitUntil.Completed, batchedDocuments, projectName, deploymentName);
 
             Console.WriteLine($"The operation has completed.");
             Console.WriteLine();
@@ -66,40 +61,35 @@ namespace Azure.AI.TextAnalytics.Samples
             Console.WriteLine();
 
             // View the operation results.
-            foreach (AnalyzeActionsResult documentsInPage in operation.GetValues())
+            foreach (RecognizeCustomEntitiesResultCollection documentsInPage in operation.GetValues())
             {
-                IReadOnlyCollection<RecognizeCustomEntitiesActionResult> customEntitiesActionResults = documentsInPage.RecognizeCustomEntitiesResults;
-                foreach (RecognizeCustomEntitiesActionResult customEntitiesActionResult in customEntitiesActionResults)
+                foreach (RecognizeEntitiesResult documentResult in documentsInPage)
                 {
-                    Console.WriteLine($"Action name: {customEntitiesActionResult.ActionName}");
+                    Console.WriteLine($"Result for document with Id = \"{documentResult.Id}\":");
 
-                    foreach (RecognizeEntitiesResult documentResult in customEntitiesActionResult.DocumentsResults)
+                    if (documentResult.HasError)
                     {
-                        Console.WriteLine($"Result for document with Id = \"{documentResult.Id}\":");
+                        Console.WriteLine($"  Error!");
+                        Console.WriteLine($"  Document error code: {documentResult.Error.ErrorCode}");
+                        Console.WriteLine($"  Message: {documentResult.Error.Message}");
+                        Console.WriteLine();
+                        continue;
+                    }
 
-                        if (documentResult.HasError)
-                        {
-                            Console.WriteLine($"  Error!");
-                            Console.WriteLine($"  Document error code: {documentResult.Error.ErrorCode}");
-                            Console.WriteLine($"  Message: {documentResult.Error.Message}");
-                            Console.WriteLine();
-                            continue;
-                        }
+                    Console.WriteLine($"  Recognized {documentResult.Entities.Count} entities:");
 
-                        Console.WriteLine($"  Recognized {documentResult.Entities.Count} entities:");
-
-                        foreach (CategorizedEntity entity in documentResult.Entities)
-                        {
-                            Console.WriteLine($"  Entity: {entity.Text}");
-                            Console.WriteLine($"  Category: {entity.Category}");
-                            Console.WriteLine($"  Offset: {entity.Offset}");
-                            Console.WriteLine($"  Length: {entity.Length}");
-                            Console.WriteLine($"  ConfidenceScore: {entity.ConfidenceScore}");
-                            Console.WriteLine($"  SubCategory: {entity.SubCategory}");
-                            Console.WriteLine();
-                        }
+                    foreach (CategorizedEntity entity in documentResult.Entities)
+                    {
+                        Console.WriteLine($"  Entity: {entity.Text}");
+                        Console.WriteLine($"  Category: {entity.Category}");
+                        Console.WriteLine($"  Offset: {entity.Offset}");
+                        Console.WriteLine($"  Length: {entity.Length}");
+                        Console.WriteLine($"  ConfidenceScore: {entity.ConfidenceScore}");
+                        Console.WriteLine($"  SubCategory: {entity.SubCategory}");
                         Console.WriteLine();
                     }
+
+                    Console.WriteLine();
                 }
             }
         }

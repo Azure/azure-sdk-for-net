@@ -48,6 +48,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static MachineLearningSharedPrivateLinkResource DeserializeMachineLearningSharedPrivateLinkResource(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> name = default;
             Optional<ResourceIdentifier> privateLinkResourceId = default;
             Optional<string> groupId = default;
@@ -73,7 +77,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             privateLinkResourceId = new ResourceIdentifier(property0.Value.GetString());
@@ -93,7 +96,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             status = new MachineLearningPrivateEndpointServiceConnectionStatus(property0.Value.GetString());

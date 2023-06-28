@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.Purview.Models
     {
         internal static AccountList DeserializeAccountList(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<long> count = default;
             Optional<string> nextLink = default;
             IReadOnlyList<PurviewAccountData> value = default;
@@ -25,7 +29,6 @@ namespace Azure.ResourceManager.Purview.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     count = property.Value.GetInt64();

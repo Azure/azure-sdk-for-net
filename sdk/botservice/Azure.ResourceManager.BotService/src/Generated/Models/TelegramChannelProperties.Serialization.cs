@@ -32,6 +32,10 @@ namespace Azure.ResourceManager.BotService.Models
 
         internal static TelegramChannelProperties DeserializeTelegramChannelProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> accessToken = default;
             Optional<bool> isValidated = default;
             bool isEnabled = default;
@@ -46,7 +50,6 @@ namespace Azure.ResourceManager.BotService.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     isValidated = property.Value.GetBoolean();

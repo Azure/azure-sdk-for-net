@@ -5,8 +5,6 @@
 
 #nullable disable
 
-using System;
-
 namespace Azure.ResourceManager.AppPlatform.Models
 {
     /// <summary> Service properties payload. </summary>
@@ -22,17 +20,17 @@ namespace Azure.ResourceManager.AppPlatform.Models
         /// <param name="networkProfile"> Network profile of the Service. </param>
         /// <param name="vnetAddons"> Additional Service settings in vnet injection instance. </param>
         /// <param name="version"> Version of the Service. </param>
-        /// <param name="serviceId"> ServiceInstanceEntity GUID which uniquely identifies a created resource. </param>
+        /// <param name="serviceInstanceId"> ServiceInstanceEntity GUID which uniquely identifies a created resource. </param>
         /// <param name="powerState"> Power state of the Service. </param>
         /// <param name="isZoneRedundant"></param>
         /// <param name="fqdn"> Fully qualified dns name of the service instance. </param>
-        internal AppPlatformServiceProperties(AppPlatformServiceProvisioningState? provisioningState, AppPlatformServiceNetworkProfile networkProfile, ServiceVnetAddons vnetAddons, int? version, Guid? serviceId, AppPlatformServicePowerState? powerState, bool? isZoneRedundant, string fqdn)
+        internal AppPlatformServiceProperties(AppPlatformServiceProvisioningState? provisioningState, AppPlatformServiceNetworkProfile networkProfile, ServiceVnetAddons vnetAddons, int? version, string serviceInstanceId, AppPlatformServicePowerState? powerState, bool? isZoneRedundant, string fqdn)
         {
             ProvisioningState = provisioningState;
             NetworkProfile = networkProfile;
             VnetAddons = vnetAddons;
             Version = version;
-            ServiceId = serviceId;
+            ServiceInstanceId = serviceInstanceId;
             PowerState = powerState;
             IsZoneRedundant = isZoneRedundant;
             Fqdn = fqdn;
@@ -59,7 +57,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
         /// <summary> Version of the Service. </summary>
         public int? Version { get; }
         /// <summary> ServiceInstanceEntity GUID which uniquely identifies a created resource. </summary>
-        public Guid? ServiceId { get; }
+        public string ServiceInstanceId { get; }
         /// <summary> Power state of the Service. </summary>
         public AppPlatformServicePowerState? PowerState { get; }
         /// <summary> Gets or sets the is zone redundant. </summary>

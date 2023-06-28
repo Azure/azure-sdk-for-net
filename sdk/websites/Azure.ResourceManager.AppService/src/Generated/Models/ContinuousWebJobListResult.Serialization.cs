@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.AppService.Models
     {
         internal static ContinuousWebJobListResult DeserializeContinuousWebJobListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             IReadOnlyList<ContinuousWebJobData> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())

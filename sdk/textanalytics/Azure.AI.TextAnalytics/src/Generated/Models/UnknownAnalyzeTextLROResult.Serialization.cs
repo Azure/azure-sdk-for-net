@@ -33,6 +33,10 @@ namespace Azure.AI.TextAnalytics.Models
 
         internal static UnknownAnalyzeTextLROResult DeserializeUnknownAnalyzeTextLROResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             AnalyzeTextLROResultsKind kind = "Unknown";
             Optional<string> taskName = default;
             DateTimeOffset lastUpdateDateTime = default;

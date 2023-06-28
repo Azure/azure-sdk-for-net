@@ -48,6 +48,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         internal static ResponseContract DeserializeResponseContract(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             int statusCode = default;
             Optional<string> description = default;
             Optional<IList<RepresentationContract>> representations = default;
@@ -68,7 +72,6 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<RepresentationContract> array = new List<RepresentationContract>();
@@ -83,7 +86,6 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<ParameterContract> array = new List<ParameterContract>();

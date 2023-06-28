@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.Chaos.Models
     {
         internal static ExperimentStartOperationResult DeserializeExperimentStartOperationResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> name = default;
             Optional<string> statusUrl = default;
             foreach (var property in element.EnumerateObject())

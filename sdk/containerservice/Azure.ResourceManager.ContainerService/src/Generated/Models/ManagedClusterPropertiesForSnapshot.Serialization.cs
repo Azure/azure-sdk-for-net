@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.ContainerService.Models
     {
         internal static ManagedClusterPropertiesForSnapshot DeserializeManagedClusterPropertiesForSnapshot(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> kubernetesVersion = default;
             Optional<ManagedClusterSku> sku = default;
             Optional<bool> enableRbac = default;
@@ -29,7 +33,6 @@ namespace Azure.ResourceManager.ContainerService.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     sku = ManagedClusterSku.DeserializeManagedClusterSku(property.Value);
@@ -39,7 +42,6 @@ namespace Azure.ResourceManager.ContainerService.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     enableRbac = property.Value.GetBoolean();
@@ -49,7 +51,6 @@ namespace Azure.ResourceManager.ContainerService.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     networkProfile = ContainerServiceNetworkProfileForSnapshot.DeserializeContainerServiceNetworkProfileForSnapshot(property.Value);

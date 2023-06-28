@@ -16,6 +16,10 @@ namespace Azure.AI.AnomalyDetector
     {
         internal static MultivariateBatchDetectionResultSummary DeserializeMultivariateBatchDetectionResultSummary(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             MultivariateBatchDetectionStatus status = default;
             Optional<IReadOnlyList<ErrorResponse>> errors = default;
             Optional<IReadOnlyList<VariableState>> variableStates = default;
@@ -24,14 +28,13 @@ namespace Azure.AI.AnomalyDetector
             {
                 if (property.NameEquals("status"u8))
                 {
-                    status = property.Value.GetString().ToMultivariateBatchDetectionStatus();
+                    status = new MultivariateBatchDetectionStatus(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("errors"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<ErrorResponse> array = new List<ErrorResponse>();
@@ -46,7 +49,6 @@ namespace Azure.AI.AnomalyDetector
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<VariableState> array = new List<VariableState>();

@@ -47,6 +47,10 @@ namespace Azure.ResourceManager.AppPlatform.Models
 
         internal static AppPlatformSsoProperties DeserializeAppPlatformSsoProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<string>> scope = default;
             Optional<string> clientId = default;
             Optional<string> clientSecret = default;
@@ -57,7 +61,6 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();
@@ -82,7 +85,6 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        issuerUri = null;
                         continue;
                     }
                     issuerUri = new Uri(property.Value.GetString());

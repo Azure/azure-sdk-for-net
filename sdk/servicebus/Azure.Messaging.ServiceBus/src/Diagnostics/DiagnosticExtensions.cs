@@ -71,7 +71,7 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
                     AddLinkedDiagnostics(scope, message.ApplicationProperties);
                 }
 
-                if (messages.Count > 1)
+                if (messages.Count > 1 && ActivityExtensions.SupportsActivitySource())
                 {
                     scope.AddIntegerAttribute(MessagingClientDiagnostics.BatchCount, messages.Count);
                 }
@@ -87,7 +87,7 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
                     AddLinkedDiagnostics(scope, message.ApplicationProperties.Map);
                 }
 
-                if (messages.Count > 1)
+                if (messages.Count > 1 && ActivityExtensions.SupportsActivitySource())
                 {
                     scope.AddIntegerAttribute(MessagingClientDiagnostics.BatchCount, messages.Count);
                 }
@@ -111,7 +111,7 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
                     AddLinkedDiagnostics(scope, message.ApplicationProperties);
                 }
 
-                if (messages.Count > 1)
+                if (messages.Count > 1 && ActivityExtensions.SupportsActivitySource())
                 {
                     scope.AddIntegerAttribute(MessagingClientDiagnostics.BatchCount, messages.Count);
                 }

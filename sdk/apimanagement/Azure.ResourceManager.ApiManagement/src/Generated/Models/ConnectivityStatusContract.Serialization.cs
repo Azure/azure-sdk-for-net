@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
     {
         internal static ConnectivityStatusContract DeserializeConnectivityStatusContract(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string name = default;
             ConnectivityStatusType status = default;
             Optional<string> error = default;

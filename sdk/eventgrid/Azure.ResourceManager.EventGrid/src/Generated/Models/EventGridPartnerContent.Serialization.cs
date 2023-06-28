@@ -36,6 +36,10 @@ namespace Azure.ResourceManager.EventGrid.Models
 
         internal static EventGridPartnerContent DeserializeEventGridPartnerContent(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<Guid> partnerRegistrationImmutableId = default;
             Optional<string> partnerName = default;
             Optional<DateTimeOffset> authorizationExpirationTimeInUtc = default;
@@ -45,7 +49,6 @@ namespace Azure.ResourceManager.EventGrid.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     partnerRegistrationImmutableId = property.Value.GetGuid();
@@ -60,7 +63,6 @@ namespace Azure.ResourceManager.EventGrid.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     authorizationExpirationTimeInUtc = property.Value.GetDateTimeOffset("O");

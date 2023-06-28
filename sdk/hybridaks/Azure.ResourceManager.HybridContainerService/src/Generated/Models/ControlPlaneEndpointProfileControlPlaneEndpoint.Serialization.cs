@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.HybridContainerService.Models
 
         internal static ControlPlaneEndpointProfileControlPlaneEndpoint DeserializeControlPlaneEndpointProfileControlPlaneEndpoint(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> hostIP = default;
             Optional<string> port = default;
             foreach (var property in element.EnumerateObject())

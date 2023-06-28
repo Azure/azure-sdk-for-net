@@ -46,6 +46,10 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
 
         internal static FederatedIdentityCredentialData DeserializeFederatedIdentityCredentialData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -74,7 +78,6 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
@@ -93,7 +96,6 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                issuer = null;
                                 continue;
                             }
                             issuer = new Uri(property0.Value.GetString());
@@ -108,7 +110,6 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<string> array = new List<string>();

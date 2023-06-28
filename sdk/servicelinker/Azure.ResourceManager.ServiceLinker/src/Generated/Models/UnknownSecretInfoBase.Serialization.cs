@@ -22,6 +22,10 @@ namespace Azure.ResourceManager.ServiceLinker.Models
 
         internal static UnknownSecretInfoBase DeserializeUnknownSecretInfoBase(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             LinkerSecretType secretType = "Unknown";
             foreach (var property in element.EnumerateObject())
             {

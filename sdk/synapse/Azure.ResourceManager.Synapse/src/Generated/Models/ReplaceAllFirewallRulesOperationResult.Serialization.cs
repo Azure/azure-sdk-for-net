@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.Synapse.Models
     {
         internal static ReplaceAllFirewallRulesOperationResult DeserializeReplaceAllFirewallRulesOperationResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> operationId = default;
             foreach (var property in element.EnumerateObject())
             {

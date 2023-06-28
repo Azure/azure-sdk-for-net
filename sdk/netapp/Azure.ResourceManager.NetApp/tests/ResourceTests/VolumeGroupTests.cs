@@ -67,29 +67,19 @@ namespace Azure.ResourceManager.NetApp.Tests
                     {
                         await volume.DeleteAsync(WaitUntil.Completed);
                     }
-                    if (Mode != RecordedTestMode.Playback)
-                    {
-                        await Task.Delay(30000);
-                    }
+                    await LiveDelay(30000);
                     await pool.DeleteAsync(WaitUntil.Completed);
                 }
 
-                if (Mode != RecordedTestMode.Playback)
-                {
-                    await Task.Delay(40000);
-                }
+                await LiveDelay(40000);
                 //remove
                 //await _capacityPool.DeleteAsync(WaitUntil.Completed);
-                if (Mode != RecordedTestMode.Playback)
-                {
-                    await Task.Delay(40000);
-                }
+                //await LiveDelay(40000);
                 await _netAppAccount.DeleteAsync(WaitUntil.Completed);
             }
             _resourceGroup = null;
         }
 
-        [Test]
         [Ignore("Ignore for now due to service side issue, re-enable when service side issue is fixed")]
         [RecordedTest]
         public async Task CreateDeleteVolumeGroup()

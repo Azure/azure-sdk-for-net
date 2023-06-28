@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.Media.Models
     {
         internal static EdgeUsageDataCollectionPolicy DeserializeEdgeUsageDataCollectionPolicy(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> dataCollectionFrequency = default;
             Optional<string> dataReportingFrequency = default;
             Optional<TimeSpan> maxAllowedUnreportedUsageDuration = default;
@@ -35,7 +39,6 @@ namespace Azure.ResourceManager.Media.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     maxAllowedUnreportedUsageDuration = property.Value.GetTimeSpan("P");
@@ -45,7 +48,6 @@ namespace Azure.ResourceManager.Media.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     eventHubDetails = EdgeUsageDataEventHub.DeserializeEdgeUsageDataEventHub(property.Value);

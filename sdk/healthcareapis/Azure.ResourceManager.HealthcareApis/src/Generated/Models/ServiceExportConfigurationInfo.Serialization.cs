@@ -25,6 +25,10 @@ namespace Azure.ResourceManager.HealthcareApis.Models
 
         internal static ServiceExportConfigurationInfo DeserializeServiceExportConfigurationInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> storageAccountName = default;
             foreach (var property in element.EnumerateObject())
             {

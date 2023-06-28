@@ -28,6 +28,10 @@ namespace Azure.ResourceManager.Resources.Models
 
         internal static ArmApplicationNotificationPolicy DeserializeArmApplicationNotificationPolicy(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             IList<ArmApplicationNotificationEndpoint> notificationEndpoints = default;
             foreach (var property in element.EnumerateObject())
             {

@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.ChangeAnalysis.Models
     {
         internal static ChangeProperties DeserializeChangeProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ResourceIdentifier> resourceId = default;
             Optional<DateTimeOffset> timeStamp = default;
             Optional<IReadOnlyList<string>> initiatedByList = default;
@@ -27,7 +31,6 @@ namespace Azure.ResourceManager.ChangeAnalysis.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     resourceId = new ResourceIdentifier(property.Value.GetString());
@@ -37,7 +40,6 @@ namespace Azure.ResourceManager.ChangeAnalysis.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     timeStamp = property.Value.GetDateTimeOffset("O");
@@ -47,7 +49,6 @@ namespace Azure.ResourceManager.ChangeAnalysis.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();
@@ -62,7 +63,6 @@ namespace Azure.ResourceManager.ChangeAnalysis.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     changeType = new ChangeType(property.Value.GetString());
@@ -72,7 +72,6 @@ namespace Azure.ResourceManager.ChangeAnalysis.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<PropertyChange> array = new List<PropertyChange>();

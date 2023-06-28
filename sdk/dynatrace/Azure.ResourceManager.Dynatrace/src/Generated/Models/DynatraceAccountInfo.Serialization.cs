@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.Dynatrace.Models
 
         internal static DynatraceAccountInfo DeserializeDynatraceAccountInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> accountId = default;
             Optional<string> regionId = default;
             foreach (var property in element.EnumerateObject())

@@ -33,6 +33,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         internal static BackendProxyContract DeserializeBackendProxyContract(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Uri uri = default;
             Optional<string> username = default;
             Optional<string> password = default;

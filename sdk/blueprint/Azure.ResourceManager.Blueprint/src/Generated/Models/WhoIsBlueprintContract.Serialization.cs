@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.Blueprint.Models
     {
         internal static WhoIsBlueprintContract DeserializeWhoIsBlueprintContract(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> objectId = default;
             foreach (var property in element.EnumerateObject())
             {

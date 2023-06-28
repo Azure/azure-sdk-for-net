@@ -35,6 +35,10 @@ namespace Azure.ResourceManager.ProviderHub.Models
 
         internal static ResourceProviderAuthorization DeserializeResourceProviderAuthorization(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> applicationId = default;
             Optional<string> roleDefinitionId = default;
             Optional<string> managedByRoleDefinitionId = default;

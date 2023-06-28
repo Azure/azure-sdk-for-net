@@ -48,6 +48,10 @@ namespace Azure.ResourceManager.Orbital.Models
 
         internal static OrbitalContactProfileLinkChannel DeserializeOrbitalContactProfileLinkChannel(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string name = default;
             float centerFrequencyMHz = default;
             float bandwidthMHz = default;

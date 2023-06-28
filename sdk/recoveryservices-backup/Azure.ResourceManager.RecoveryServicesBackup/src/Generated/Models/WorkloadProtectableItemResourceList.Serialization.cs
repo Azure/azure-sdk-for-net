@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     {
         internal static WorkloadProtectableItemResourceList DeserializeWorkloadProtectableItemResourceList(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<WorkloadProtectableItemResource>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
@@ -23,7 +27,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<WorkloadProtectableItemResource> array = new List<WorkloadProtectableItemResource>();

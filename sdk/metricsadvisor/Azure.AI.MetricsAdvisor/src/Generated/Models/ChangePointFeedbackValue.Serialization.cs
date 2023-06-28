@@ -22,6 +22,10 @@ namespace Azure.AI.MetricsAdvisor.Models
 
         internal static ChangePointFeedbackValue DeserializeChangePointFeedbackValue(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ChangePointValue changePointValue = default;
             foreach (var property in element.EnumerateObject())
             {

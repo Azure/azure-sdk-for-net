@@ -32,6 +32,10 @@ namespace Azure.ResourceManager.Media.Models
 
         internal static MediaTransformOutput DeserializeMediaTransformOutput(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<MediaTransformOnErrorType> onError = default;
             Optional<MediaJobPriority> relativePriority = default;
             MediaTransformPreset preset = default;
@@ -41,7 +45,6 @@ namespace Azure.ResourceManager.Media.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     onError = new MediaTransformOnErrorType(property.Value.GetString());
@@ -51,7 +54,6 @@ namespace Azure.ResourceManager.Media.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     relativePriority = new MediaJobPriority(property.Value.GetString());

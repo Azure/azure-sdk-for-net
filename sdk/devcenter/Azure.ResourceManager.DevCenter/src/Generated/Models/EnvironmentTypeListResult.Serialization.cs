@@ -16,7 +16,11 @@ namespace Azure.ResourceManager.DevCenter.Models
     {
         internal static EnvironmentTypeListResult DeserializeEnvironmentTypeListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<EnvironmentTypeData>> value = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<IReadOnlyList<DevCenterEnvironmentTypeData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -24,13 +28,12 @@ namespace Azure.ResourceManager.DevCenter.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<EnvironmentTypeData> array = new List<EnvironmentTypeData>();
+                    List<DevCenterEnvironmentTypeData> array = new List<DevCenterEnvironmentTypeData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(EnvironmentTypeData.DeserializeEnvironmentTypeData(item));
+                        array.Add(DevCenterEnvironmentTypeData.DeserializeDevCenterEnvironmentTypeData(item));
                     }
                     value = array;
                     continue;

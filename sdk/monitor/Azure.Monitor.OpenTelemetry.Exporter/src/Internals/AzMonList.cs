@@ -1,8 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-#nullable disable // TODO: remove and fix errors
-
 using System;
 using System.Buffers;
 using System.Collections;
@@ -14,9 +12,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
     {
         private static int s_allocationSize = 8;
 
-        private readonly KeyValuePair<string, object>[] data;
+        private readonly KeyValuePair<string, object?>[] data;
 
-        private AzMonList(KeyValuePair<string, object>[] data, int length)
+        private AzMonList(KeyValuePair<string, object?>[] data, int length)
         {
             this.data = data;
             this.Length = length;
@@ -24,35 +22,30 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 
         public int Length { get; }
 
-        public ref KeyValuePair<string, object> this[int index]
+        public ref KeyValuePair<string, object?> this[int index]
         {
             get => ref this.data[index];
         }
 
         public static AzMonList Initialize()
         {
-            return new AzMonList(ArrayPool<KeyValuePair<string, object>>.Shared.Rent(s_allocationSize), 0);
+            return new AzMonList(ArrayPool<KeyValuePair<string, object?>>.Shared.Rent(s_allocationSize), 0);
         }
 
-        public static void Add(ref AzMonList list, KeyValuePair<string, object> keyValuePair)
+        public static void Add(ref AzMonList list, KeyValuePair<string, object?> keyValuePair)
         {
-            var data = list.data;
-
-            if (data == null)
-            {
-                throw new InvalidOperationException("AzMonList instance is not initialized.");
-            }
+            var data = list.data ?? throw new InvalidOperationException("AzMonList instance is not initialized.");
 
             if (list.Length >= data.Length)
             {
                 s_allocationSize = data.Length * 2;
                 var previousData = data;
 
-                data = ArrayPool<KeyValuePair<string, object>>.Shared.Rent(s_allocationSize);
+                data = ArrayPool<KeyValuePair<string, object?>>.Shared.Rent(s_allocationSize);
 
                 var span = previousData.AsSpan();
                 span.CopyTo(data);
-                ArrayPool<KeyValuePair<string, object>>.Shared.Return(previousData);
+                ArrayPool<KeyValuePair<string, object?>>.Shared.Return(previousData);
             }
 
             data[list.Length] = keyValuePair;
@@ -64,7 +57,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             list = new AzMonList(list.data, 0);
         }
 
-        public static object GetTagValue(ref AzMonList list, string tagName)
+        public static object? GetTagValue(ref AzMonList list, string tagName)
         {
             int length = list.Length;
 
@@ -79,11 +72,11 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             return null;
         }
 
-        internal static object[] GetTagValues(ref AzMonList list, params string[] tagNames)
+        internal static object?[] GetTagValues(ref AzMonList list, params string[] tagNames)
         {
             int lengthTagNames = tagNames.Length;
             int lengthList = list.Length;
-            object[] values = new object[lengthTagNames];
+            object?[] values = new object[lengthTagNames];
 
             for (int i = 0; i < lengthList; i++)
             {
@@ -108,7 +101,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             var data = this.data;
             if (data != null)
             {
-                ArrayPool<KeyValuePair<string, object>>.Shared.Return(data);
+                ArrayPool<KeyValuePair<string, object?>>.Shared.Return(data);
             }
         }
 
@@ -119,10 +112,10 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 
         public struct Enumerator : IEnumerator
         {
-            private readonly KeyValuePair<string, object>[] data;
+            private readonly KeyValuePair<string, object?>[] data;
             private readonly int length;
             private int index;
-            private KeyValuePair<string, object> current;
+            private KeyValuePair<string, object?> current;
 
             public Enumerator(in AzMonList list)
             {

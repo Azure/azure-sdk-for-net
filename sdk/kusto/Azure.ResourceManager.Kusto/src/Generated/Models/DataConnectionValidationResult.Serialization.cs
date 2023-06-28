@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.Kusto.Models
     {
         internal static DataConnectionValidationResult DeserializeDataConnectionValidationResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> errorMessage = default;
             foreach (var property in element.EnumerateObject())
             {
