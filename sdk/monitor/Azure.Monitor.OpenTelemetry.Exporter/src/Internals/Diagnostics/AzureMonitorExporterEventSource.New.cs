@@ -51,13 +51,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics
         public void TransmissionFailed(string message, string retryDetails, string metaData) => WriteEvent(8, message, retryDetails, metaData);
 
         [Event(9, Message = "{0} has been disposed.", Level = EventLevel.Informational)]
-        public void DisposedObject(string name)
-        {
-            if (IsEnabled(EventLevel.Informational))
-            {
-                WriteEvent(9, name);
-            }
-        }
+        public void DisposedObject(string name) => WriteEvent(9, name);
 
         [NonEvent]
         public void VmMetadataFailed(Exception ex)
@@ -96,13 +90,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics
         public void FailedToParseConnectionString(string exceptionMessage) => WriteEvent(12, exceptionMessage);
 
         [Event(13, Message = "Unsupported Metric Type '{0}' cannot be exported.", Level = EventLevel.Warning)]
-        public void UnsupportedMetricType(string metricTypeName)
-        {
-            if (IsEnabled(EventLevel.Warning))
-            {
-                WriteEvent(13, metricTypeName);
-            }
-        }
+        public void UnsupportedMetricType(string metricTypeName) => WriteEvent(13, metricTypeName);
 
         [NonEvent]
         public void FailedToConvertLogRecord(Exception ex)
@@ -153,12 +141,75 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics
         public void FailedToExtractActivityEvent(string activitySourceName, string activityDisplayName, string exceptionMessage) => WriteEvent(17, activitySourceName, activityDisplayName, exceptionMessage);
 
         [Event(18, Message = "Maximum count of {0} Activity Links reached. Excess Links are dropped. ActivitySource: {1}. Activity: {2}.", Level = EventLevel.Warning)]
-        public void ActivityLinksIgnored(int maxLinksAllowed, string activitySourceName, string activityDisplayName)
+        public void ActivityLinksIgnored(int maxLinksAllowed, string activitySourceName, string activityDisplayName) => WriteEvent(18, maxLinksAllowed, activitySourceName, activityDisplayName);
+
+        [Event(19, Message = "Failed to parse redirect headers. Not user actionable.", Level = EventLevel.Warning)]
+        public void RedirectHeaderParseFailed() => WriteEvent(19);
+
+        [Event(20, Message = "Failed to parse redirect cache, using default. Not user actionable.", Level = EventLevel.Warning)]
+        public void ParseRedirectCacheFailed() => WriteEvent(20);
+
+        [NonEvent]
+        public void ErrorCreatingStorageFolder(string path, Exception ex)
+        {
+            if (IsEnabled(EventLevel.Error))
+            {
+                ErrorCreatingStorageFolder(path, ex.FlattenException().ToInvariantString());
+            }
+        }
+
+        [Event(21, Message = "Failed to create a storage directory at path '{0}' due to an exception. If a storage directory cannot be created, telemetry may be lost. {1}", Level = EventLevel.Error)]
+        public void ErrorCreatingStorageFolder(string path, string exceptionMessage) => WriteEvent(21, path, exceptionMessage);
+
+        [NonEvent]
+        public void ErrorInitializingRoleInstanceToHostName(Exception ex)
+        {
+            if (IsEnabled(EventLevel.Error))
+            {
+                ErrorInitializingRoleInstanceToHostName(ex.FlattenException().ToInvariantString());
+            }
+        }
+
+        [Event(22, Message = "Failed to initialize Role Instance due to an exception. Role Instance will be missing from telemetry. {0}", Level = EventLevel.Error)]
+        public void ErrorInitializingRoleInstanceToHostName(string exceptionMessage) => WriteEvent(22, exceptionMessage);
+
+        [NonEvent]
+        public void ErrorInitializingPartOfSdkVersion(string typeName, Exception ex)
         {
             if (IsEnabled(EventLevel.Warning))
             {
-                WriteEvent(18, maxLinksAllowed, activitySourceName, activityDisplayName);
+                ErrorInitializingPartOfSdkVersion(typeName, ex.FlattenException().ToInvariantString());
             }
         }
+
+        [Event(23, Message = "Failed to get Type version while initialize SDK version due to an exception. Not user actionable. Type: {0}. {1}", Level = EventLevel.Warning)]
+        public void ErrorInitializingPartOfSdkVersion(string typeName, string exceptionMessage) => WriteEvent(23, typeName, exceptionMessage);
+
+        [NonEvent]
+        public void SdkVersionCreateFailed(Exception ex)
+        {
+            if (IsEnabled(EventLevel.Warning))
+            {
+                SdkVersionCreateFailed(ex.FlattenException().ToInvariantString());
+            }
+        }
+
+        [Event(24, Message = "Failed to create an SDK version due to an exception. Not user actionable. {0}", Level = EventLevel.Warning)]
+        public void SdkVersionCreateFailed(string exceptionMessage) => WriteEvent(24, exceptionMessage);
+
+        [NonEvent]
+        public void FailedToTransmitFromStorage(Exception ex)
+        {
+            if (IsEnabled(EventLevel.Error))
+            {
+                FailedToTransmitFromStorage(ex.FlattenException().ToInvariantString());
+            }
+        }
+
+        [Event(25, Message = "Failed to transmit from storage due to an exception: {0}", Level = EventLevel.Error)]
+        public void FailedToTransmitFromStorage(string exceptionMessage) => WriteEvent(25, exceptionMessage);
+
+        [Event(26, Message = "Successfully transmitted a blob from storage.", Level = EventLevel.Informational)]
+        public void TransmitFromStorageSuccess() => WriteEvent(26);
     }
 }

@@ -29,15 +29,15 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="conditions"> Access Control List conditions. </param>
         /// <param name="provisioningState"> Gets the provisioning state of the resource. </param>
         /// <returns> A new <see cref="ManagedNetworkFabric.AccessControlListData"/> instance for mocking. </returns>
-        public static AccessControlListData AccessControlListData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, string annotation = null, AddressFamily addressFamily = default, IEnumerable<AccessControlListPropertiesConditionsItem> conditions = null, ProvisioningState? provisioningState = null)
+        public static AccessControlListData AccessControlListData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, string annotation = null, AddressFamily addressFamily = default, IEnumerable<AccessControlListConditionProperties> conditions = null, ProvisioningState? provisioningState = null)
         {
             tags ??= new Dictionary<string, string>();
-            conditions ??= new List<AccessControlListPropertiesConditionsItem>();
+            conditions ??= new List<AccessControlListConditionProperties>();
 
             return new AccessControlListData(id, name, resourceType, systemData, tags, location, annotation, addressFamily, conditions?.ToList(), provisioningState);
         }
 
-        /// <summary> Initializes a new instance of IPCommunityListData. </summary>
+        /// <summary> Initializes a new instance of IPCommunityData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -45,26 +45,21 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
         /// <param name="annotation"> Switch configuration description. </param>
-        /// <param name="action"> action. Example: allow | deny. </param>
-        /// <param name="localAS"> Local Autonomous System. Example: true | false. </param>
-        /// <param name="gshut"> Graceful Shutdown (GSHUT). Example: true | false. </param>
-        /// <param name="internet"> Internet access. Example: true | false. </param>
-        /// <param name="advertise"> noAdvertise. Example: true | false. </param>
-        /// <param name="export"> noExport. Example: true | false. </param>
-        /// <param name="communityMembers"> Ip Community List communityMembers. </param>
-        /// <param name="evpnEsImportRouteTargets"> Ip Community List evpnEsImportRouteTargets. </param>
+        /// <param name="action"> Action to be taken on the configuration. Example: Permit | Deny. </param>
+        /// <param name="wellKnownCommunities"> Supported well known Community List. </param>
+        /// <param name="communityMembers"> List the communityMembers of IP Community . </param>
         /// <param name="provisioningState"> Gets the provisioning state of the resource. </param>
-        /// <returns> A new <see cref="ManagedNetworkFabric.IPCommunityListData"/> instance for mocking. </returns>
-        public static IPCommunityListData IPCommunityListData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, string annotation = null, CommunityActionType? action = null, LocalASBoolean? localAS = null, GshutBoolean? gshut = null, InternetBoolean? internet = null, AdvertiseBoolean? advertise = null, ExportBoolean? export = null, IEnumerable<IPCommunityListPropertiesCommunityMembersItem> communityMembers = null, IEnumerable<IPCommunityListPropertiesEvpnEsImportRouteTargetsItem> evpnEsImportRouteTargets = null, ProvisioningState? provisioningState = null)
+        /// <returns> A new <see cref="ManagedNetworkFabric.IPCommunityData"/> instance for mocking. </returns>
+        public static IPCommunityData IPCommunityData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, string annotation = null, CommunityActionType? action = null, IEnumerable<WellKnownCommunity> wellKnownCommunities = null, IEnumerable<string> communityMembers = null, ProvisioningState? provisioningState = null)
         {
             tags ??= new Dictionary<string, string>();
-            communityMembers ??= new List<IPCommunityListPropertiesCommunityMembersItem>();
-            evpnEsImportRouteTargets ??= new List<IPCommunityListPropertiesEvpnEsImportRouteTargetsItem>();
+            wellKnownCommunities ??= new List<WellKnownCommunity>();
+            communityMembers ??= new List<string>();
 
-            return new IPCommunityListData(id, name, resourceType, systemData, tags, location, annotation, action, localAS, gshut, internet, advertise, export, communityMembers?.ToList(), evpnEsImportRouteTargets?.ToList(), provisioningState);
+            return new IPCommunityData(id, name, resourceType, systemData, tags, location, annotation, action, wellKnownCommunities?.ToList(), communityMembers?.ToList(), provisioningState);
         }
 
-        /// <summary> Initializes a new instance of IPPrefixListData. </summary>
+        /// <summary> Initializes a new instance of IPExtendedCommunityData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -72,16 +67,35 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
         /// <param name="annotation"> Switch configuration description. </param>
-        /// <param name="action"> action. Example: allow | deny. </param>
-        /// <param name="sequenceNumber"> sequenceNumber of the Ip Prefix List. </param>
-        /// <param name="networkAddress"> networkAddress. Example:1.1.1.0/24 | 1.1.10.10. </param>
+        /// <param name="action"> Action to be taken on the configuration. Example: Permit | Deny. </param>
+        /// <param name="routeTargets"> Route Target List.The expected formats are ASN(plain):NN &gt;&gt; example 4294967294:50, ASN.ASN:NN &gt;&gt; example 65533.65333:40, IP-address:NN &gt;&gt; example 10.10.10.10:65535. The possible values of ASN,NN are in range of 0-65535, ASN(plain) is in range of 0-4294967295. </param>
         /// <param name="provisioningState"> Gets the provisioning state of the resource. </param>
-        /// <returns> A new <see cref="ManagedNetworkFabric.IPPrefixListData"/> instance for mocking. </returns>
-        public static IPPrefixListData IPPrefixListData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, string annotation = null, PrefixActionType action = default, int sequenceNumber = default, string networkAddress = null, ProvisioningState? provisioningState = null)
+        /// <returns> A new <see cref="ManagedNetworkFabric.IPExtendedCommunityData"/> instance for mocking. </returns>
+        public static IPExtendedCommunityData IPExtendedCommunityData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, string annotation = null, CommunityActionType? action = null, IEnumerable<string> routeTargets = null, ProvisioningState? provisioningState = null)
         {
             tags ??= new Dictionary<string, string>();
+            routeTargets ??= new List<string>();
 
-            return new IPPrefixListData(id, name, resourceType, systemData, tags, location, annotation, action, sequenceNumber, networkAddress, provisioningState);
+            return new IPExtendedCommunityData(id, name, resourceType, systemData, tags, location, annotation, action, routeTargets?.ToList(), provisioningState);
+        }
+
+        /// <summary> Initializes a new instance of IPPrefixData. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="annotation"> Switch configuration description. </param>
+        /// <param name="ipPrefixRules"> IpPrefix contains the list of IP PrefixRules objects. </param>
+        /// <param name="provisioningState"> Gets the provisioning state of the resource. </param>
+        /// <returns> A new <see cref="ManagedNetworkFabric.IPPrefixData"/> instance for mocking. </returns>
+        public static IPPrefixData IPPrefixData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, string annotation = null, IEnumerable<IPPrefixPropertiesIPPrefixRulesItem> ipPrefixRules = null, ProvisioningState? provisioningState = null)
+        {
+            tags ??= new Dictionary<string, string>();
+            ipPrefixRules ??= new List<IPPrefixPropertiesIPPrefixRulesItem>();
+
+            return new IPPrefixData(id, name, resourceType, systemData, tags, location, annotation, ipPrefixRules?.ToList(), provisioningState);
         }
 
         /// <summary> Initializes a new instance of L2IsolationDomainData. </summary>
@@ -138,7 +152,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="optionBDisabledOnResources"> List of resources the OptionB is disabled on. Can be either entire NetworkFabric or NetworkRack. </param>
         /// <param name="provisioningState"> Gets the provisioning state of the resource. </param>
         /// <returns> A new <see cref="ManagedNetworkFabric.L3IsolationDomainData"/> instance for mocking. </returns>
-        public static L3IsolationDomainData L3IsolationDomainData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, string annotation = null, RedistributeConnectedSubnet? redistributeConnectedSubnets = null, RedistributeStaticRoute? redistributeStaticRoutes = null, L3IsolationDomainPatchPropertiesAggregateRouteConfiguration aggregateRouteConfiguration = null, string description = null, L3IsolationDomainPatchPropertiesConnectedSubnetRoutePolicy connectedSubnetRoutePolicy = null, string networkFabricId = null, IEnumerable<string> disabledOnResources = null, EnabledDisabledState? administrativeState = null, IEnumerable<string> optionBDisabledOnResources = null, ProvisioningState? provisioningState = null)
+        public static L3IsolationDomainData L3IsolationDomainData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, string annotation = null, RedistributeConnectedSubnet? redistributeConnectedSubnets = null, RedistributeStaticRoute? redistributeStaticRoutes = null, AggregateRouteConfiguration aggregateRouteConfiguration = null, string description = null, L3IsolationDomainPatchPropertiesConnectedSubnetRoutePolicy connectedSubnetRoutePolicy = null, string networkFabricId = null, IEnumerable<string> disabledOnResources = null, EnabledDisabledState? administrativeState = null, IEnumerable<string> optionBDisabledOnResources = null, ProvisioningState? provisioningState = null)
         {
             tags ??= new Dictionary<string, string>();
             disabledOnResources ??= new List<string>();
@@ -163,9 +177,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="systemData"> The systemData. </param>
         /// <param name="annotation"> Switch configuration description. </param>
         /// <param name="mtu"> Maximum transmission unit. Default value is 1500. </param>
-        /// <param name="connectedIPv4Subnets"> List with object connectedIPv4Subnets. </param>
-        /// <param name="connectedIPv6Subnets"> List with object connectedIPv6Subnets. </param>
-        /// <param name="staticRouteConfiguration"> staticRouteConfiguration model. </param>
+        /// <param name="connectedIPv4Subnets"> List with object connected IPv4 Subnets. </param>
+        /// <param name="connectedIPv6Subnets"> List with object connected IPv6 Subnets. </param>
+        /// <param name="staticRouteConfiguration"> Static Route Configuration properties. </param>
         /// <param name="bgpConfiguration"> BGP configuration properties. </param>
         /// <param name="importRoutePolicyId"> ARM resource ID of importRoutePolicy. </param>
         /// <param name="exportRoutePolicyId"> ARM resource ID of importRoutePolicy. </param>
@@ -177,10 +191,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="provisioningState"> Gets the provisioning state of the resource. </param>
         /// <param name="vlanId"> Vlan identifier. Example: 1001. </param>
         /// <returns> A new <see cref="ManagedNetworkFabric.InternalNetworkData"/> instance for mocking. </returns>
-        public static InternalNetworkData InternalNetworkData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string annotation = null, int? mtu = null, IEnumerable<InternalNetworkPatchablePropertiesConnectedIPv4SubnetsItem> connectedIPv4Subnets = null, IEnumerable<InternalNetworkPatchablePropertiesConnectedIPv6SubnetsItem> connectedIPv6Subnets = null, InternalNetworkPatchablePropertiesStaticRouteConfiguration staticRouteConfiguration = null, InternalNetworkPatchablePropertiesBgpConfiguration bgpConfiguration = null, string importRoutePolicyId = null, string exportRoutePolicyId = null, IEnumerable<string> disabledOnResources = null, EnabledDisabledState? administrativeState = null, IEnumerable<string> bgpDisabledOnResources = null, IEnumerable<string> bfdDisabledOnResources = null, IEnumerable<string> bfdForStaticRoutesDisabledOnResources = null, ProvisioningState? provisioningState = null, int vlanId = default)
+        public static InternalNetworkData InternalNetworkData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string annotation = null, int? mtu = null, IEnumerable<ConnectedSubnet> connectedIPv4Subnets = null, IEnumerable<ConnectedSubnet> connectedIPv6Subnets = null, StaticRouteConfiguration staticRouteConfiguration = null, BgpConfiguration bgpConfiguration = null, string importRoutePolicyId = null, string exportRoutePolicyId = null, IEnumerable<string> disabledOnResources = null, EnabledDisabledState? administrativeState = null, IEnumerable<string> bgpDisabledOnResources = null, IEnumerable<string> bfdDisabledOnResources = null, IEnumerable<string> bfdForStaticRoutesDisabledOnResources = null, ProvisioningState? provisioningState = null, int vlanId = default)
         {
-            connectedIPv4Subnets ??= new List<InternalNetworkPatchablePropertiesConnectedIPv4SubnetsItem>();
-            connectedIPv6Subnets ??= new List<InternalNetworkPatchablePropertiesConnectedIPv6SubnetsItem>();
+            connectedIPv4Subnets ??= new List<ConnectedSubnet>();
+            connectedIPv6Subnets ??= new List<ConnectedSubnet>();
             disabledOnResources ??= new List<string>();
             bgpDisabledOnResources ??= new List<string>();
             bfdDisabledOnResources ??= new List<string>();
@@ -199,7 +213,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             return new BfdConfiguration(administrativeState, interval, multiplier);
         }
 
-        /// <summary> Initializes a new instance of InternalNetworkPatchablePropertiesBgpConfiguration. </summary>
+        /// <summary> Initializes a new instance of BgpConfiguration. </summary>
         /// <param name="annotation"> Switch configuration description. </param>
         /// <param name="bfdConfiguration"> BFD configuration properties. </param>
         /// <param name="defaultRouteOriginate"> Originate a defaultRoute. Ex: "True" | "False". </param>
@@ -210,34 +224,25 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="ipv4ListenRangePrefixes"> BGP Ipv4 ListenRange. </param>
         /// <param name="ipv6ListenRangePrefixes"> BGP Ipv6 ListenRange. </param>
         /// <param name="ipv4NeighborAddress"> List with stringified ipv4NeighborAddresses. </param>
-        /// <param name="ipv6NeighborAddress"> List with stringified ipv6NeighborAddress. </param>
-        /// <returns> A new <see cref="Models.InternalNetworkPatchablePropertiesBgpConfiguration"/> instance for mocking. </returns>
-        public static InternalNetworkPatchablePropertiesBgpConfiguration InternalNetworkPatchablePropertiesBgpConfiguration(string annotation = null, BfdConfiguration bfdConfiguration = null, BooleanEnumProperty? defaultRouteOriginate = null, int? allowAS = null, AllowASOverride? allowASOverride = null, int? fabricASN = null, int peerASN = default, IEnumerable<string> ipv4ListenRangePrefixes = null, IEnumerable<string> ipv6ListenRangePrefixes = null, IEnumerable<InternalNetworkPatchablePropertiesBgpConfigurationIPv4NeighborAddressItem> ipv4NeighborAddress = null, IEnumerable<InternalNetworkPatchablePropertiesBgpConfigurationIPv6NeighborAddressItem> ipv6NeighborAddress = null)
+        /// <param name="ipv6NeighborAddress"> List with stringified IPv6 Neighbor Address. </param>
+        /// <returns> A new <see cref="Models.BgpConfiguration"/> instance for mocking. </returns>
+        public static BgpConfiguration BgpConfiguration(string annotation = null, BfdConfiguration bfdConfiguration = null, BooleanEnumProperty? defaultRouteOriginate = null, int? allowAS = null, AllowASOverride? allowASOverride = null, int? fabricASN = null, int peerASN = default, IEnumerable<string> ipv4ListenRangePrefixes = null, IEnumerable<string> ipv6ListenRangePrefixes = null, IEnumerable<NeighborAddress> ipv4NeighborAddress = null, IEnumerable<NeighborAddress> ipv6NeighborAddress = null)
         {
             ipv4ListenRangePrefixes ??= new List<string>();
             ipv6ListenRangePrefixes ??= new List<string>();
-            ipv4NeighborAddress ??= new List<InternalNetworkPatchablePropertiesBgpConfigurationIPv4NeighborAddressItem>();
-            ipv6NeighborAddress ??= new List<InternalNetworkPatchablePropertiesBgpConfigurationIPv6NeighborAddressItem>();
+            ipv4NeighborAddress ??= new List<NeighborAddress>();
+            ipv6NeighborAddress ??= new List<NeighborAddress>();
 
-            return new InternalNetworkPatchablePropertiesBgpConfiguration(annotation, bfdConfiguration, defaultRouteOriginate, allowAS, allowASOverride, fabricASN, peerASN, ipv4ListenRangePrefixes?.ToList(), ipv6ListenRangePrefixes?.ToList(), ipv4NeighborAddress?.ToList(), ipv6NeighborAddress?.ToList());
+            return new BgpConfiguration(annotation, bfdConfiguration, defaultRouteOriginate, allowAS, allowASOverride, fabricASN, peerASN, ipv4ListenRangePrefixes?.ToList(), ipv6ListenRangePrefixes?.ToList(), ipv4NeighborAddress?.ToList(), ipv6NeighborAddress?.ToList());
         }
 
-        /// <summary> Initializes a new instance of InternalNetworkPatchablePropertiesBgpConfigurationIPv4NeighborAddressItem. </summary>
-        /// <param name="address"> IP Address of the IPv4NeighborAddress. </param>
-        /// <param name="operationalState"> operationalState of the IPv4NeighborAddress. </param>
-        /// <returns> A new <see cref="Models.InternalNetworkPatchablePropertiesBgpConfigurationIPv4NeighborAddressItem"/> instance for mocking. </returns>
-        public static InternalNetworkPatchablePropertiesBgpConfigurationIPv4NeighborAddressItem InternalNetworkPatchablePropertiesBgpConfigurationIPv4NeighborAddressItem(string address = null, string operationalState = null)
+        /// <summary> Initializes a new instance of NeighborAddress. </summary>
+        /// <param name="address"> IP Address. </param>
+        /// <param name="operationalState"> OperationalState of the NeighborAddress. </param>
+        /// <returns> A new <see cref="Models.NeighborAddress"/> instance for mocking. </returns>
+        public static NeighborAddress NeighborAddress(string address = null, string operationalState = null)
         {
-            return new InternalNetworkPatchablePropertiesBgpConfigurationIPv4NeighborAddressItem(address, operationalState);
-        }
-
-        /// <summary> Initializes a new instance of InternalNetworkPatchablePropertiesBgpConfigurationIPv6NeighborAddressItem. </summary>
-        /// <param name="address"> ip address of the ipv6NeighborAddress. </param>
-        /// <param name="operationalState"> operationalState of the ipv6NeighborAddress. </param>
-        /// <returns> A new <see cref="Models.InternalNetworkPatchablePropertiesBgpConfigurationIPv6NeighborAddressItem"/> instance for mocking. </returns>
-        public static InternalNetworkPatchablePropertiesBgpConfigurationIPv6NeighborAddressItem InternalNetworkPatchablePropertiesBgpConfigurationIPv6NeighborAddressItem(string address = null, string operationalState = null)
-        {
-            return new InternalNetworkPatchablePropertiesBgpConfigurationIPv6NeighborAddressItem(address, operationalState);
+            return new NeighborAddress(address, operationalState);
         }
 
         /// <summary> Initializes a new instance of ExternalNetworkData. </summary>
@@ -264,10 +269,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         }
 
         /// <summary> Initializes a new instance of ExternalNetworkPropertiesOptionAProperties. </summary>
-        /// <param name="primaryIPv4Prefix"> IPv4 Address Prefix of CE-PE interconnect links. Default value is 172.23.1.0/31. The values can be specified at the time of creation or can be updated afterwards. Any update to the values post-provisioning may disrupt traffic. The 1st and 3rd IPs are to be configured on CE1 and CE2 for Option B interfaces. The 2nd and 4th IPs are to be configured on PE1 and PE2 for Option B interfaces. </param>
-        /// <param name="primaryIPv6Prefix"> IPv6 Address Prefix of CE-PE interconnect links. Default value is 3FFE:FFFF:0:CD30::a1/126. The values can be specified at the time of creation or can be updated afterwards. Any update to the values post-provisioning may disrupt traffic. The 1st and 3rd IPs are to be configured on CE1 and CE2 for Option B interfaces. The 2nd and 4th IPs are to be configured on PE1 and PE2 for Option B interfaces. </param>
-        /// <param name="secondaryIPv4Prefix"> Secondary IPv4 Address Prefix of CE-PE interconnect links. Default value is 172.23.1.2/31. The values can be specified at the time of creation or can be updated afterwards. Any update to the values post-provisioning may disrupt traffic. The 1st and 3rd IPs are to be configured on CE1 and CE2 for Option B interfaces. The 2nd and 4th IPs are to be configured on PE1 and PE2 for Option B interfaces. </param>
-        /// <param name="secondaryIPv6Prefix"> Secondary IPv6 Address Prefix of CE-PE interconnect links. Default value is 3FFE:FFFF:0:CD30::a1/126. The values can be specified at the time of creation or can be updated afterwards. Any update to the values post-provisioning may disrupt traffic. The 1st and 3rd IPs are to be configured on CE1 and CE2 for Option B interfaces. The 2nd and 4th IPs are to be configured on PE1 and PE2 for Option B interfaces. </param>
+        /// <param name="primaryIPv4Prefix"> IPv4 Address Prefix of CE-PE interconnect links. Example: 172.31.0.0/31. The values can be specified at the time of creation or can be updated afterwards. Any update to the values post-provisioning may disrupt traffic. The 1st and 3rd IPs are to be configured on CE1 and CE2 for Option B interfaces. The 2nd and 4th IPs are to be configured on PE1 and PE2 for Option B interfaces. </param>
+        /// <param name="primaryIPv6Prefix"> IPv6 Address Prefix of CE-PE interconnect links. Example: 3FFE:FFFF:0:CD30::a0/126. The values can be specified at the time of creation or can be updated afterwards. Any update to the values post-provisioning may disrupt traffic. The 1st and 3rd IPs are to be configured on CE1 and CE2 for Option B interfaces. The 2nd and 4th IPs are to be configured on PE1 and PE2 for Option B interfaces. </param>
+        /// <param name="secondaryIPv4Prefix"> Secondary IPv4 Address Prefix of CE-PE interconnect links. Example: 172.31.0.20/31. The values can be specified at the time of creation or can be updated afterwards. Any update to the values post-provisioning may disrupt traffic. The 1st and 3rd IPs are to be configured on CE1 and CE2 for Option B interfaces. The 2nd and 4th IPs are to be configured on PE1 and PE2 for Option B interfaces. </param>
+        /// <param name="secondaryIPv6Prefix"> Secondary IPv6 Address Prefix of CE-PE interconnect links. Example: 3FFE:FFFF:0:CD30::a4/126. The values can be specified at the time of creation or can be updated afterwards. Any update to the values post-provisioning may disrupt traffic. The 1st and 3rd IPs are to be configured on CE1 and CE2 for Option B interfaces. The 2nd and 4th IPs are to be configured on PE1 and PE2 for Option B interfaces. </param>
         /// <param name="mtu"> MTU to use for option A peering. </param>
         /// <param name="vlanId"> Vlan identifier. Example : 501. </param>
         /// <param name="fabricASN"> Fabric ASN number. Example 65001. </param>
@@ -279,20 +284,20 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             return new ExternalNetworkPropertiesOptionAProperties(primaryIPv4Prefix, primaryIPv6Prefix, secondaryIPv4Prefix, secondaryIPv6Prefix, mtu, vlanId, fabricASN, peerASN, bfdConfiguration);
         }
 
-        /// <summary> Initializes a new instance of OptionAProperties. </summary>
-        /// <param name="primaryIPv4Prefix"> IPv4 Address Prefix of CE-PE interconnect links. Default value is 172.23.1.0/31. The values can be specified at the time of creation or can be updated afterwards. Any update to the values post-provisioning may disrupt traffic. The 1st and 3rd IPs are to be configured on CE1 and CE2 for Option B interfaces. The 2nd and 4th IPs are to be configured on PE1 and PE2 for Option B interfaces. </param>
-        /// <param name="primaryIPv6Prefix"> IPv6 Address Prefix of CE-PE interconnect links. Default value is 3FFE:FFFF:0:CD30::a1/126. The values can be specified at the time of creation or can be updated afterwards. Any update to the values post-provisioning may disrupt traffic. The 1st and 3rd IPs are to be configured on CE1 and CE2 for Option B interfaces. The 2nd and 4th IPs are to be configured on PE1 and PE2 for Option B interfaces. </param>
-        /// <param name="secondaryIPv4Prefix"> Secondary IPv4 Address Prefix of CE-PE interconnect links. Default value is 172.23.1.2/31. The values can be specified at the time of creation or can be updated afterwards. Any update to the values post-provisioning may disrupt traffic. The 1st and 3rd IPs are to be configured on CE1 and CE2 for Option B interfaces. The 2nd and 4th IPs are to be configured on PE1 and PE2 for Option B interfaces. </param>
-        /// <param name="secondaryIPv6Prefix"> Secondary IPv6 Address Prefix of CE-PE interconnect links. Default value is 3FFE:FFFF:0:CD30::a1/126. The values can be specified at the time of creation or can be updated afterwards. Any update to the values post-provisioning may disrupt traffic. The 1st and 3rd IPs are to be configured on CE1 and CE2 for Option B interfaces. The 2nd and 4th IPs are to be configured on PE1 and PE2 for Option B interfaces. </param>
+        /// <summary> Initializes a new instance of Layer3OptionAProperties. </summary>
+        /// <param name="primaryIPv4Prefix"> IPv4 Address Prefix of CE-PE interconnect links. Example: 172.31.0.0/31. The values can be specified at the time of creation or can be updated afterwards. Any update to the values post-provisioning may disrupt traffic. The 1st and 3rd IPs are to be configured on CE1 and CE2 for Option B interfaces. The 2nd and 4th IPs are to be configured on PE1 and PE2 for Option B interfaces. </param>
+        /// <param name="primaryIPv6Prefix"> IPv6 Address Prefix of CE-PE interconnect links. Example: 3FFE:FFFF:0:CD30::a0/126. The values can be specified at the time of creation or can be updated afterwards. Any update to the values post-provisioning may disrupt traffic. The 1st and 3rd IPs are to be configured on CE1 and CE2 for Option B interfaces. The 2nd and 4th IPs are to be configured on PE1 and PE2 for Option B interfaces. </param>
+        /// <param name="secondaryIPv4Prefix"> Secondary IPv4 Address Prefix of CE-PE interconnect links. Example: 172.31.0.20/31. The values can be specified at the time of creation or can be updated afterwards. Any update to the values post-provisioning may disrupt traffic. The 1st and 3rd IPs are to be configured on CE1 and CE2 for Option B interfaces. The 2nd and 4th IPs are to be configured on PE1 and PE2 for Option B interfaces. </param>
+        /// <param name="secondaryIPv6Prefix"> Secondary IPv6 Address Prefix of CE-PE interconnect links. Example: 3FFE:FFFF:0:CD30::a4/126. The values can be specified at the time of creation or can be updated afterwards. Any update to the values post-provisioning may disrupt traffic. The 1st and 3rd IPs are to be configured on CE1 and CE2 for Option B interfaces. The 2nd and 4th IPs are to be configured on PE1 and PE2 for Option B interfaces. </param>
         /// <param name="mtu"> MTU to use for option A peering. </param>
         /// <param name="vlanId"> Vlan identifier. Example : 501. </param>
         /// <param name="fabricASN"> Fabric ASN number. Example 65001. </param>
         /// <param name="peerASN"> Peer ASN number.Example : 28. </param>
         /// <param name="bfdConfiguration"> BFD configuration properties. </param>
-        /// <returns> A new <see cref="Models.OptionAProperties"/> instance for mocking. </returns>
-        public static OptionAProperties OptionAProperties(string primaryIPv4Prefix = null, string primaryIPv6Prefix = null, string secondaryIPv4Prefix = null, string secondaryIPv6Prefix = null, int? mtu = null, int? vlanId = null, int? fabricASN = null, int? peerASN = null, BfdConfiguration bfdConfiguration = null)
+        /// <returns> A new <see cref="Models.Layer3OptionAProperties"/> instance for mocking. </returns>
+        public static Layer3OptionAProperties Layer3OptionAProperties(string primaryIPv4Prefix = null, string primaryIPv6Prefix = null, string secondaryIPv4Prefix = null, string secondaryIPv6Prefix = null, int? mtu = null, int? vlanId = null, int? fabricASN = null, int? peerASN = null, BfdConfiguration bfdConfiguration = null)
         {
-            return new OptionAProperties(primaryIPv4Prefix, primaryIPv6Prefix, secondaryIPv4Prefix, secondaryIPv6Prefix, mtu, vlanId, fabricASN, peerASN, bfdConfiguration);
+            return new Layer3OptionAProperties(primaryIPv4Prefix, primaryIPv6Prefix, secondaryIPv4Prefix, secondaryIPv6Prefix, mtu, vlanId, fabricASN, peerASN, bfdConfiguration);
         }
 
         /// <summary> Initializes a new instance of NetworkDeviceSkuData. </summary>
@@ -308,11 +313,11 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="interfaces"> List of network device interfaces. </param>
         /// <param name="provisioningState"> Gets the provisioning state of the resource. </param>
         /// <returns> A new <see cref="ManagedNetworkFabric.NetworkDeviceSkuData"/> instance for mocking. </returns>
-        public static NetworkDeviceSkuData NetworkDeviceSkuData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string model = null, string manufacturer = null, IEnumerable<NetworkDeviceSkuPropertiesSupportedVersionsItem> supportedVersions = null, NetworkDeviceSkuPropertiesLimits limits = null, IEnumerable<NetworkDeviceRoleName> supportedRoleTypes = null, IEnumerable<NetworkDeviceSkuPropertiesInterfacesItem> interfaces = null, ProvisioningState? provisioningState = null)
+        public static NetworkDeviceSkuData NetworkDeviceSkuData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string model = null, string manufacturer = null, IEnumerable<SupportedVersionProperties> supportedVersions = null, DeviceLimits limits = null, IEnumerable<NetworkDeviceRoleName> supportedRoleTypes = null, IEnumerable<DeviceInterfaceProperties> interfaces = null, ProvisioningState? provisioningState = null)
         {
-            supportedVersions ??= new List<NetworkDeviceSkuPropertiesSupportedVersionsItem>();
+            supportedVersions ??= new List<SupportedVersionProperties>();
             supportedRoleTypes ??= new List<NetworkDeviceRoleName>();
-            interfaces ??= new List<NetworkDeviceSkuPropertiesInterfacesItem>();
+            interfaces ??= new List<DeviceInterfaceProperties>();
 
             return new NetworkDeviceSkuData(id, name, resourceType, systemData, model, manufacturer, supportedVersions?.ToList(), limits, supportedRoleTypes?.ToList(), interfaces?.ToList(), provisioningState);
         }
@@ -421,7 +426,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="operationalState"> The Operational Status would always be NULL. Look only in to the Provisioning state for the latest status. </param>
         /// <param name="provisioningState"> Provides you the latest status of the NFC service, whether it is Accepted, updating, Succeeded or Failed. During this process, the states keep changing based on the status of NFC provisioning. </param>
         /// <returns> A new <see cref="ManagedNetworkFabric.NetworkFabricControllerData"/> instance for mocking. </returns>
-        public static NetworkFabricControllerData NetworkFabricControllerData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, string annotation = null, IEnumerable<ExpressRouteConnectionInformation> infrastructureExpressRouteConnections = null, IEnumerable<ExpressRouteConnectionInformation> workloadExpressRouteConnections = null, NetworkFabricControllerPropertiesInfrastructureServices infrastructureServices = null, NetworkFabricControllerPropertiesWorkloadServices workloadServices = null, NetworkFabricControllerPropertiesManagedResourceGroupConfiguration managedResourceGroupConfiguration = null, IEnumerable<string> networkFabricIds = null, bool? workloadManagementNetwork = null, string ipv4AddressSpace = null, string ipv6AddressSpace = null, NetworkFabricControllerOperationalState? operationalState = null, ProvisioningState? provisioningState = null)
+        public static NetworkFabricControllerData NetworkFabricControllerData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, string annotation = null, IEnumerable<ExpressRouteConnectionInformation> infrastructureExpressRouteConnections = null, IEnumerable<ExpressRouteConnectionInformation> workloadExpressRouteConnections = null, InfrastructureServices infrastructureServices = null, WorkloadServices workloadServices = null, ManagedResourceGroupConfiguration managedResourceGroupConfiguration = null, IEnumerable<string> networkFabricIds = null, bool? workloadManagementNetwork = null, string ipv4AddressSpace = null, string ipv6AddressSpace = null, NetworkFabricControllerOperationalState? operationalState = null, ProvisioningState? provisioningState = null)
         {
             tags ??= new Dictionary<string, string>();
             infrastructureExpressRouteConnections ??= new List<ExpressRouteConnectionInformation>();
@@ -431,28 +436,28 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             return new NetworkFabricControllerData(id, name, resourceType, systemData, tags, location, annotation, infrastructureExpressRouteConnections?.ToList(), workloadExpressRouteConnections?.ToList(), infrastructureServices, workloadServices, managedResourceGroupConfiguration, networkFabricIds?.ToList(), workloadManagementNetwork, ipv4AddressSpace, ipv6AddressSpace, operationalState, provisioningState);
         }
 
-        /// <summary> Initializes a new instance of NetworkFabricControllerPropertiesInfrastructureServices. </summary>
+        /// <summary> Initializes a new instance of InfrastructureServices. </summary>
         /// <param name="ipv4AddressSpaces"> The IPv4 Address space is optional, if the value is not defined at the time of NFC creation, then the default value 10.0.0.0/19 is considered. The IPV4 address subnet is an optional attribute. </param>
         /// <param name="ipv6AddressSpaces"> The IPv6 is not supported right now. </param>
-        /// <returns> A new <see cref="Models.NetworkFabricControllerPropertiesInfrastructureServices"/> instance for mocking. </returns>
-        public static NetworkFabricControllerPropertiesInfrastructureServices NetworkFabricControllerPropertiesInfrastructureServices(IEnumerable<string> ipv4AddressSpaces = null, IEnumerable<string> ipv6AddressSpaces = null)
+        /// <returns> A new <see cref="Models.InfrastructureServices"/> instance for mocking. </returns>
+        public static InfrastructureServices InfrastructureServices(IEnumerable<string> ipv4AddressSpaces = null, IEnumerable<string> ipv6AddressSpaces = null)
         {
             ipv4AddressSpaces ??= new List<string>();
             ipv6AddressSpaces ??= new List<string>();
 
-            return new NetworkFabricControllerPropertiesInfrastructureServices(ipv4AddressSpaces?.ToList(), ipv6AddressSpaces?.ToList());
+            return new InfrastructureServices(ipv4AddressSpaces?.ToList(), ipv6AddressSpaces?.ToList());
         }
 
-        /// <summary> Initializes a new instance of NetworkFabricControllerPropertiesWorkloadServices. </summary>
+        /// <summary> Initializes a new instance of WorkloadServices. </summary>
         /// <param name="ipv4AddressSpaces"> The IPv4 Address space is optional, if the value is defined at the time of NFC creation, then the default value 10.0.0.0/19 is considered. The IPV4 address subnet is an optional attribute. </param>
         /// <param name="ipv6AddressSpaces"> The IPv6 is not supported right now. </param>
-        /// <returns> A new <see cref="Models.NetworkFabricControllerPropertiesWorkloadServices"/> instance for mocking. </returns>
-        public static NetworkFabricControllerPropertiesWorkloadServices NetworkFabricControllerPropertiesWorkloadServices(IEnumerable<string> ipv4AddressSpaces = null, IEnumerable<string> ipv6AddressSpaces = null)
+        /// <returns> A new <see cref="Models.WorkloadServices"/> instance for mocking. </returns>
+        public static WorkloadServices WorkloadServices(IEnumerable<string> ipv4AddressSpaces = null, IEnumerable<string> ipv6AddressSpaces = null)
         {
             ipv4AddressSpaces ??= new List<string>();
             ipv6AddressSpaces ??= new List<string>();
 
-            return new NetworkFabricControllerPropertiesWorkloadServices(ipv4AddressSpaces?.ToList(), ipv6AddressSpaces?.ToList());
+            return new WorkloadServices(ipv4AddressSpaces?.ToList(), ipv6AddressSpaces?.ToList());
         }
 
         /// <summary> Initializes a new instance of NetworkFabricSkuData. </summary>
@@ -486,8 +491,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="networkFabricSku"> Supported Network Fabric SKU.Example: Compute / Aggregate racks. Once the user chooses a particular SKU, only supported racks can be added to the Network Fabric. The SKU determines whether it is a single / multi rack Network Fabric. </param>
         /// <param name="rackCount"> Number of racks associated to Network Fabric.Possible values are from 2-8. </param>
         /// <param name="serverCountPerRack"> Number of servers.Possible values are from 1-16. </param>
-        /// <param name="ipv4Prefix"> IPv4Prefix for Management Network. Default value : 10.1.0.0/19. </param>
-        /// <param name="ipv6Prefix"> IPv6Prefix for Management Network. Default value 3FFE:FFFF:0:CD40::/59. </param>
+        /// <param name="ipv4Prefix"> IPv4Prefix for Management Network. Example: 10.1.0.0/19. </param>
+        /// <param name="ipv6Prefix"> IPv6Prefix for Management Network. Example: 3FFE:FFFF:0:CD40::/59. </param>
         /// <param name="routerId"> Router Id of CE to be used for MP-BGP between PE and CE. </param>
         /// <param name="fabricASN"> ASN of CE devices for CE/PE connectivity. </param>
         /// <param name="networkFabricControllerId"> Azure resource ID for the NetworkFabricController the NetworkFabric belongs. </param>
@@ -496,7 +501,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="operationalState"> Gets the operational state of the resource. </param>
         /// <param name="provisioningState"> Gets the provisioning state of the resource. </param>
         /// <returns> A new <see cref="ManagedNetworkFabric.NetworkFabricData"/> instance for mocking. </returns>
-        public static NetworkFabricData NetworkFabricData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, string annotation = null, IEnumerable<string> racks = null, IEnumerable<string> l2IsolationDomains = null, IEnumerable<string> l3IsolationDomains = null, string networkFabricSku = null, int? rackCount = null, int? serverCountPerRack = null, string ipv4Prefix = null, string ipv6Prefix = null, string routerId = null, int? fabricASN = null, string networkFabricControllerId = null, NetworkFabricPropertiesTerminalServerConfiguration terminalServerConfiguration = null, NetworkFabricPropertiesManagementNetworkConfiguration managementNetworkConfiguration = null, NetworkFabricOperationalState? operationalState = null, ProvisioningState? provisioningState = null)
+        public static NetworkFabricData NetworkFabricData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, string annotation = null, IEnumerable<string> racks = null, IEnumerable<string> l2IsolationDomains = null, IEnumerable<string> l3IsolationDomains = null, string networkFabricSku = null, int? rackCount = null, int? serverCountPerRack = null, string ipv4Prefix = null, string ipv6Prefix = null, string routerId = null, int? fabricASN = null, string networkFabricControllerId = null, TerminalServerConfiguration terminalServerConfiguration = null, ManagementNetworkConfiguration managementNetworkConfiguration = null, NetworkFabricOperationalState? operationalState = null, ProvisioningState? provisioningState = null)
         {
             tags ??= new Dictionary<string, string>();
             racks ??= new List<string>();
@@ -506,52 +511,40 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             return new NetworkFabricData(id, name, resourceType, systemData, tags, location, annotation, racks?.ToList(), l2IsolationDomains?.ToList(), l3IsolationDomains?.ToList(), networkFabricSku, rackCount, serverCountPerRack, ipv4Prefix, ipv6Prefix, routerId, fabricASN, networkFabricControllerId, terminalServerConfiguration, managementNetworkConfiguration, operationalState, provisioningState);
         }
 
-        /// <summary> Initializes a new instance of NetworkFabricPropertiesTerminalServerConfiguration. </summary>
-        /// <param name="primaryIPv4Prefix"> IPv4 Address Prefix of CE-PE interconnect links. Default value is 172.31.0.0/31. The values can be specified at the time of creation or can be updated afterwards. Any update to the values post-provisioning may disrupt traffic. The 1st and 3rd IPs are to be configured on CE1 and CE2 for Option B interfaces. The 2nd and 4th IPs are to be configured on PE1 and PE2 for Option B interfaces. </param>
-        /// <param name="primaryIPv6Prefix"> IPv6 Address Prefix of CE-PE interconnect links. Default value is 3FFE:FFFF:0:CD30::a0/126. The values can be specified at the time of creation or can be updated afterwards. Any update to the values post-provisioning may disrupt traffic. The 1st and 3rd IPs are to be configured on CE1 and CE2 for Option B interfaces. The 2nd and 4th IPs are to be configured on PE1 and PE2 for Option B interfaces. </param>
-        /// <param name="secondaryIPv4Prefix"> Secondary IPv4 Address Prefix of CE-PE interconnect links. Default value is 172.31.0.20/31. The values can be specified at the time of creation or can be updated afterwards. Any update to the values post-provisioning may disrupt traffic. The 1st and 3rd IPs are to be configured on CE1 and CE2 for Option B interfaces. The 2nd and 4th IPs are to be configured on PE1 and PE2 for Option B interfaces. </param>
-        /// <param name="secondaryIPv6Prefix"> Secondary IPv6 Address Prefix of CE-PE interconnect links. Default value is 3FFE:FFFF:0:CD30::a4/126. The values can be specified at the time of creation or can be updated afterwards. Any update to the values post-provisioning may disrupt traffic. The 1st and 3rd IPs are to be configured on CE1 and CE2 for Option B interfaces. The 2nd and 4th IPs are to be configured on PE1 and PE2 for Option B interfaces. </param>
+        /// <summary> Initializes a new instance of TerminalServerConfiguration. </summary>
+        /// <param name="primaryIPv4Prefix"> IPv4 Address Prefix of CE-PE interconnect links. Example: 172.31.0.0/31. The values can be specified at the time of creation or can be updated afterwards. Any update to the values post-provisioning may disrupt traffic. The 1st and 3rd IPs are to be configured on CE1 and CE2 for Option B interfaces. The 2nd and 4th IPs are to be configured on PE1 and PE2 for Option B interfaces. </param>
+        /// <param name="primaryIPv6Prefix"> IPv6 Address Prefix of CE-PE interconnect links. Example: 3FFE:FFFF:0:CD30::a0/126. The values can be specified at the time of creation or can be updated afterwards. Any update to the values post-provisioning may disrupt traffic. The 1st and 3rd IPs are to be configured on CE1 and CE2 for Option B interfaces. The 2nd and 4th IPs are to be configured on PE1 and PE2 for Option B interfaces. </param>
+        /// <param name="secondaryIPv4Prefix"> Secondary IPv4 Address Prefix of CE-PE interconnect links. Example: 172.31.0.20/31. The values can be specified at the time of creation or can be updated afterwards. Any update to the values post-provisioning may disrupt traffic. The 1st and 3rd IPs are to be configured on CE1 and CE2 for Option B interfaces. The 2nd and 4th IPs are to be configured on PE1 and PE2 for Option B interfaces. </param>
+        /// <param name="secondaryIPv6Prefix"> Secondary IPv6 Address Prefix of CE-PE interconnect links. Example: 3FFE:FFFF:0:CD30::a4/126. The values can be specified at the time of creation or can be updated afterwards. Any update to the values post-provisioning may disrupt traffic. The 1st and 3rd IPs are to be configured on CE1 and CE2 for Option B interfaces. The 2nd and 4th IPs are to be configured on PE1 and PE2 for Option B interfaces. </param>
         /// <param name="networkDeviceId"> ARM Resource ID used for the NetworkDevice. </param>
         /// <param name="username"> Username for the terminal server connection. </param>
         /// <param name="password"> Password for the terminal server connection. </param>
         /// <param name="serialNumber"> Serial Number of Terminal server. </param>
-        /// <returns> A new <see cref="Models.NetworkFabricPropertiesTerminalServerConfiguration"/> instance for mocking. </returns>
-        public static NetworkFabricPropertiesTerminalServerConfiguration NetworkFabricPropertiesTerminalServerConfiguration(string primaryIPv4Prefix = null, string primaryIPv6Prefix = null, string secondaryIPv4Prefix = null, string secondaryIPv6Prefix = null, string networkDeviceId = null, string username = null, string password = null, string serialNumber = null)
+        /// <returns> A new <see cref="Models.TerminalServerConfiguration"/> instance for mocking. </returns>
+        public static TerminalServerConfiguration TerminalServerConfiguration(string primaryIPv4Prefix = null, string primaryIPv6Prefix = null, string secondaryIPv4Prefix = null, string secondaryIPv6Prefix = null, string networkDeviceId = null, string username = null, string password = null, string serialNumber = null)
         {
-            return new NetworkFabricPropertiesTerminalServerConfiguration(primaryIPv4Prefix, primaryIPv6Prefix, secondaryIPv4Prefix, secondaryIPv6Prefix, networkDeviceId, username, password, serialNumber);
+            return new TerminalServerConfiguration(primaryIPv4Prefix, primaryIPv6Prefix, secondaryIPv4Prefix, secondaryIPv6Prefix, networkDeviceId, username, password, serialNumber);
         }
 
-        /// <summary> Initializes a new instance of NetworkFabricPropertiesManagementNetworkConfigurationInfrastructureVpnConfiguration. </summary>
+        /// <summary> Initializes a new instance of VpnConfigurationProperties. </summary>
         /// <param name="administrativeState"> Indicates configuration state. Example: Enabled | Disabled. </param>
         /// <param name="networkToNetworkInterconnectId"> Gets the networkToNetworkInterconnectId of the resource. </param>
         /// <param name="peeringOption"> Peering option list. </param>
         /// <param name="optionBProperties"> option B properties. </param>
         /// <param name="optionAProperties"> option A properties. </param>
-        /// <returns> A new <see cref="Models.NetworkFabricPropertiesManagementNetworkConfigurationInfrastructureVpnConfiguration"/> instance for mocking. </returns>
-        public static NetworkFabricPropertiesManagementNetworkConfigurationInfrastructureVpnConfiguration NetworkFabricPropertiesManagementNetworkConfigurationInfrastructureVpnConfiguration(EnabledDisabledState? administrativeState = null, string networkToNetworkInterconnectId = null, PeeringOption? peeringOption = null, NetworkFabricOptionBProperties optionBProperties = null, NetworkFabricOptionAProperties optionAProperties = null)
+        /// <returns> A new <see cref="Models.VpnConfigurationProperties"/> instance for mocking. </returns>
+        public static VpnConfigurationProperties VpnConfigurationProperties(EnabledDisabledState? administrativeState = null, string networkToNetworkInterconnectId = null, PeeringOption peeringOption = default, NetworkFabricOptionBProperties optionBProperties = null, NetworkFabricOptionAProperties optionAProperties = null)
         {
-            return new NetworkFabricPropertiesManagementNetworkConfigurationInfrastructureVpnConfiguration(administrativeState, networkToNetworkInterconnectId, peeringOption, optionBProperties, optionAProperties);
+            return new VpnConfigurationProperties(administrativeState, networkToNetworkInterconnectId, peeringOption, optionBProperties, optionAProperties);
         }
 
-        /// <summary> Initializes a new instance of OptionAPropertiesBfdConfiguration. </summary>
+        /// <summary> Initializes a new instance of FabricBfdConfiguration. </summary>
         /// <param name="interval"> interval in seconds. Example: 300. </param>
         /// <param name="multiplier"> multiplier. Example: 3. </param>
-        /// <returns> A new <see cref="Models.OptionAPropertiesBfdConfiguration"/> instance for mocking. </returns>
-        public static OptionAPropertiesBfdConfiguration OptionAPropertiesBfdConfiguration(int? interval = null, int? multiplier = null)
+        /// <returns> A new <see cref="Models.FabricBfdConfiguration"/> instance for mocking. </returns>
+        public static FabricBfdConfiguration FabricBfdConfiguration(int? interval = null, int? multiplier = null)
         {
-            return new OptionAPropertiesBfdConfiguration(interval, multiplier);
-        }
-
-        /// <summary> Initializes a new instance of NetworkFabricPropertiesManagementNetworkConfigurationWorkloadVpnConfiguration. </summary>
-        /// <param name="administrativeState"> Indicates configuration state. Example: enabled | disabled. </param>
-        /// <param name="peeringOption"> Peering option list. </param>
-        /// <param name="networkToNetworkInterconnectId"> Gets the networkToNetworkInterconnectId of the resource. </param>
-        /// <param name="optionAProperties"> option A properties object. </param>
-        /// <param name="optionBProperties"> option B properties object. </param>
-        /// <returns> A new <see cref="Models.NetworkFabricPropertiesManagementNetworkConfigurationWorkloadVpnConfiguration"/> instance for mocking. </returns>
-        public static NetworkFabricPropertiesManagementNetworkConfigurationWorkloadVpnConfiguration NetworkFabricPropertiesManagementNetworkConfigurationWorkloadVpnConfiguration(EnabledDisabledState? administrativeState = null, PeeringOption? peeringOption = null, string networkToNetworkInterconnectId = null, NetworkFabricOptionAProperties optionAProperties = null, NetworkFabricOptionBProperties optionBProperties = null)
-        {
-            return new NetworkFabricPropertiesManagementNetworkConfigurationWorkloadVpnConfiguration(administrativeState, peeringOption, networkToNetworkInterconnectId, optionAProperties, optionBProperties);
+            return new FabricBfdConfiguration(interval, multiplier);
         }
 
         /// <summary> Initializes a new instance of NetworkToNetworkInterconnectData. </summary>
@@ -559,6 +552,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
+        /// <param name="nniType"> Type of NNI used. Example: CE | NPB. </param>
         /// <param name="administrativeState"> Gets the administrativeState of the resource. Example -Enabled/Disabled. </param>
         /// <param name="isManagementType"> Configuration to use NNI for Infrastructure Management. Example: True/False. </param>
         /// <param name="useOptionB"> Based on this parameter the layer2/layer3 is made as mandatory. Example: True/False. </param>
@@ -566,21 +560,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="layer3Configuration"> Common properties for Layer3Configuration. </param>
         /// <param name="provisioningState"> Gets the provisioning state of the resource. </param>
         /// <returns> A new <see cref="ManagedNetworkFabric.NetworkToNetworkInterconnectData"/> instance for mocking. </returns>
-        public static NetworkToNetworkInterconnectData NetworkToNetworkInterconnectData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, EnabledDisabledState? administrativeState = null, BooleanEnumProperty? isManagementType = null, BooleanEnumProperty? useOptionB = null, NetworkToNetworkInterconnectPropertiesLayer2Configuration layer2Configuration = null, Layer3Configuration layer3Configuration = null, ProvisioningState? provisioningState = null)
+        public static NetworkToNetworkInterconnectData NetworkToNetworkInterconnectData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, NniType? nniType = null, EnabledDisabledState? administrativeState = null, BooleanEnumProperty? isManagementType = null, BooleanEnumProperty? useOptionB = null, Layer2Configuration layer2Configuration = null, Layer3Configuration layer3Configuration = null, ProvisioningState? provisioningState = null)
         {
-            return new NetworkToNetworkInterconnectData(id, name, resourceType, systemData, administrativeState, isManagementType, useOptionB, layer2Configuration, layer3Configuration, provisioningState);
-        }
-
-        /// <summary> Initializes a new instance of NetworkToNetworkInterconnectPropertiesLayer2Configuration. </summary>
-        /// <param name="portCount"> Number of ports connected between PE/CE. Maximum value depends on FabricSKU. </param>
-        /// <param name="mtu"> MTU of the packets between PE &amp; CE. </param>
-        /// <param name="interfaces"> List of network device interfaces resource IDs. </param>
-        /// <returns> A new <see cref="Models.NetworkToNetworkInterconnectPropertiesLayer2Configuration"/> instance for mocking. </returns>
-        public static NetworkToNetworkInterconnectPropertiesLayer2Configuration NetworkToNetworkInterconnectPropertiesLayer2Configuration(int? portCount = null, int mtu = default, IEnumerable<string> interfaces = null)
-        {
-            interfaces ??= new List<string>();
-
-            return new NetworkToNetworkInterconnectPropertiesLayer2Configuration(portCount, mtu, interfaces?.ToList());
+            return new NetworkToNetworkInterconnectData(id, name, resourceType, systemData, nniType, administrativeState, isManagementType, useOptionB, layer2Configuration, layer3Configuration, provisioningState);
         }
 
         /// <summary> Initializes a new instance of Layer2Configuration. </summary>
@@ -596,10 +578,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         }
 
         /// <summary> Initializes a new instance of Layer3Configuration. </summary>
-        /// <param name="primaryIPv4Prefix"> IPv4 Address Prefix of CE-PE interconnect links. Default value is 172.31.0.0/31. The values can be specified at the time of creation or can be updated afterwards. Any update to the values post-provisioning may disrupt traffic. The 1st and 3rd IPs are to be configured on CE1 and CE2 for Option B interfaces. The 2nd and 4th IPs are to be configured on PE1 and PE2 for Option B interfaces. </param>
-        /// <param name="primaryIPv6Prefix"> IPv6 Address Prefix of CE-PE interconnect links. Default value is 3FFE:FFFF:0:CD30::a0/126. The values can be specified at the time of creation or can be updated afterwards. Any update to the values post-provisioning may disrupt traffic. The 1st and 3rd IPs are to be configured on CE1 and CE2 for Option B interfaces. The 2nd and 4th IPs are to be configured on PE1 and PE2 for Option B interfaces. </param>
-        /// <param name="secondaryIPv4Prefix"> Secondary IPv4 Address Prefix of CE-PE interconnect links. Default value is 172.31.0.20/31. The values can be specified at the time of creation or can be updated afterwards. Any update to the values post-provisioning may disrupt traffic. The 1st and 3rd IPs are to be configured on CE1 and CE2 for Option B interfaces. The 2nd and 4th IPs are to be configured on PE1 and PE2 for Option B interfaces. </param>
-        /// <param name="secondaryIPv6Prefix"> Secondary IPv6 Address Prefix of CE-PE interconnect links. Default value is 3FFE:FFFF:0:CD30::a4/126. The values can be specified at the time of creation or can be updated afterwards. Any update to the values post-provisioning may disrupt traffic. The 1st and 3rd IPs are to be configured on CE1 and CE2 for Option B interfaces. The 2nd and 4th IPs are to be configured on PE1 and PE2 for Option B interfaces. </param>
+        /// <param name="primaryIPv4Prefix"> IPv4 Address Prefix of CE-PE interconnect links. Example: 172.31.0.0/31. The values can be specified at the time of creation or can be updated afterwards. Any update to the values post-provisioning may disrupt traffic. The 1st and 3rd IPs are to be configured on CE1 and CE2 for Option B interfaces. The 2nd and 4th IPs are to be configured on PE1 and PE2 for Option B interfaces. </param>
+        /// <param name="primaryIPv6Prefix"> IPv6 Address Prefix of CE-PE interconnect links. Example: 3FFE:FFFF:0:CD30::a0/126. The values can be specified at the time of creation or can be updated afterwards. Any update to the values post-provisioning may disrupt traffic. The 1st and 3rd IPs are to be configured on CE1 and CE2 for Option B interfaces. The 2nd and 4th IPs are to be configured on PE1 and PE2 for Option B interfaces. </param>
+        /// <param name="secondaryIPv4Prefix"> Secondary IPv4 Address Prefix of CE-PE interconnect links. Example: 172.31.0.20/31. The values can be specified at the time of creation or can be updated afterwards. Any update to the values post-provisioning may disrupt traffic. The 1st and 3rd IPs are to be configured on CE1 and CE2 for Option B interfaces. The 2nd and 4th IPs are to be configured on PE1 and PE2 for Option B interfaces. </param>
+        /// <param name="secondaryIPv6Prefix"> Secondary IPv6 Address Prefix of CE-PE interconnect links. Example: 3FFE:FFFF:0:CD30::a4/126. The values can be specified at the time of creation or can be updated afterwards. Any update to the values post-provisioning may disrupt traffic. The 1st and 3rd IPs are to be configured on CE1 and CE2 for Option B interfaces. The 2nd and 4th IPs are to be configured on PE1 and PE2 for Option B interfaces. </param>
         /// <param name="importRoutePolicyId"> importRoutePolicyId. </param>
         /// <param name="exportRoutePolicyId"> exportRoutePolicyId. </param>
         /// <param name="peerASN"> ASN of PE devices for CE/PE connectivity.Example : 28. </param>
@@ -623,9 +605,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="networkDevices"> List of network device properties / role for the Network Rack. </param>
         /// <param name="provisioningState"> Gets the provisioning state of the resource. </param>
         /// <returns> A new <see cref="ManagedNetworkFabric.NetworkRackSkuData"/> instance for mocking. </returns>
-        public static NetworkRackSkuData NetworkRackSkuData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, NetworkRackRoleName roleName = default, int? maximumServerCount = null, int? maximumStorageCount = null, int? maximumUplinks = null, IEnumerable<NetworkRackSkuPropertiesNetworkDevicesItem> networkDevices = null, ProvisioningState? provisioningState = null)
+        public static NetworkRackSkuData NetworkRackSkuData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, NetworkRackRoleName roleName = default, int? maximumServerCount = null, int? maximumStorageCount = null, int? maximumUplinks = null, IEnumerable<NetworkDeviceRoleProperties> networkDevices = null, ProvisioningState? provisioningState = null)
         {
-            networkDevices ??= new List<NetworkRackSkuPropertiesNetworkDevicesItem>();
+            networkDevices ??= new List<NetworkDeviceRoleProperties>();
 
             return new NetworkRackSkuData(id, name, resourceType, systemData, roleName, maximumServerCount, maximumStorageCount, maximumUplinks, networkDevices?.ToList(), provisioningState);
         }
@@ -659,16 +641,15 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
         /// <param name="annotation"> Switch configuration description. </param>
-        /// <param name="description"> Route Policy description. </param>
-        /// <param name="conditions"> Route Policy conditions. </param>
+        /// <param name="statements"> Route Policy statements. </param>
         /// <param name="provisioningState"> Gets the provisioning state of the resource. </param>
         /// <returns> A new <see cref="ManagedNetworkFabric.RoutePolicyData"/> instance for mocking. </returns>
-        public static RoutePolicyData RoutePolicyData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, string annotation = null, string description = null, IEnumerable<RoutePolicyPropertiesConditionsItem> conditions = null, ProvisioningState? provisioningState = null)
+        public static RoutePolicyData RoutePolicyData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, string annotation = null, IEnumerable<RoutePolicyStatementProperties> statements = null, ProvisioningState? provisioningState = null)
         {
             tags ??= new Dictionary<string, string>();
-            conditions ??= new List<RoutePolicyPropertiesConditionsItem>();
+            statements ??= new List<RoutePolicyStatementProperties>();
 
-            return new RoutePolicyData(id, name, resourceType, systemData, tags, location, annotation, description, conditions?.ToList(), provisioningState);
+            return new RoutePolicyData(id, name, resourceType, systemData, tags, location, annotation, statements?.ToList(), provisioningState);
         }
     }
 }

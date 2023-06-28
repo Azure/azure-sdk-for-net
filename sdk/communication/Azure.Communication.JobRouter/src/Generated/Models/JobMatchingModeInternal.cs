@@ -10,7 +10,6 @@ namespace Azure.Communication.JobRouter
     /// <summary> The JobMatchingModeInternal. </summary>
     internal partial class JobMatchingModeInternal
     {
-
         /// <summary> Initializes a new instance of JobMatchingModeInternal. </summary>
         /// <param name="modeType"></param>
         /// <param name="queueAndMatchMode"> Any object. </param>

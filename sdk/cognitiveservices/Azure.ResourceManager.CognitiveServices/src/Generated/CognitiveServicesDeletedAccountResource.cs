@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.CognitiveServices
         }
 
         /// <summary>
-        /// Deletes a Cognitive Services account from the resource group. 
+        /// Deletes a Cognitive Services account from the resource group.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.CognitiveServices
         }
 
         /// <summary>
-        /// Deletes a Cognitive Services account from the resource group. 
+        /// Deletes a Cognitive Services account from the resource group.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>

@@ -4,10 +4,9 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Text;
 using System.Threading;
+using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Storage.DataMovement.Models;
 
@@ -75,6 +74,30 @@ namespace Azure.Storage.DataMovement
                     yield return new LocalFileStorageResource(fileSystemInfo.FullName);
                 }
             }
+        }
+
+        /// <summary>
+        /// Rehydrates from Checkpointer.
+        /// </summary>
+        /// <param name="transferProperties">
+        /// The properties of the transfer to rehydrate.
+        /// </param>
+        /// <param name="isSource">
+        /// Whether or not we are rehydrating the source or destination. True if the source, false if the destination.
+        /// </param>
+        /// <returns>
+        /// The <see cref="Task"/> to rehdyrate a <see cref="LocalFileStorageResource"/> from
+        /// a stored checkpointed transfer state.
+        /// </returns>
+        internal static LocalDirectoryStorageResourceContainer RehydrateResource(
+            DataTransferProperties transferProperties,
+            bool isSource)
+        {
+            Argument.AssertNotNull(transferProperties, nameof(transferProperties));
+
+            string storedPath = isSource ? transferProperties.SourcePath : transferProperties.DestinationPath;
+
+            return new LocalDirectoryStorageResourceContainer(storedPath);
         }
     }
 }

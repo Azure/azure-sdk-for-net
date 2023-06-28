@@ -34,23 +34,23 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="state"> Subscription state. Possible states are * active – the subscription is active, * suspended – the subscription is blocked, and the subscriber cannot call any APIs of the product, * submitted – the subscription request has been made by the developer, but has not yet been approved or rejected, * rejected – the subscription request has been denied by an administrator, * cancelled – the subscription has been cancelled by the developer or administrator, * expired – the subscription reached its expiration date and was deactivated. </param>
         /// <param name="createdOn">
         /// Subscription creation date. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard.
-        /// 
+        ///
         /// </param>
         /// <param name="startOn">
         /// Subscription activation date. The setting is for audit purposes only and the subscription is not automatically activated. The subscription lifecycle can be managed by using the `state` property. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard.
-        /// 
+        ///
         /// </param>
         /// <param name="expireOn">
         /// Subscription expiration date. The setting is for audit purposes only and the subscription is not automatically expired. The subscription lifecycle can be managed by using the `state` property. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard.
-        /// 
+        ///
         /// </param>
         /// <param name="endOn">
         /// Date when subscription was cancelled or expired. The setting is for audit purposes only and the subscription is not automatically cancelled. The subscription lifecycle can be managed by using the `state` property. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard.
-        /// 
+        ///
         /// </param>
         /// <param name="notifiesOn">
         /// Upcoming subscription expiration notification date. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard.
-        /// 
+        ///
         /// </param>
         /// <param name="primaryKey"> Subscription primary key. This property will not be filled on 'GET' operations! Use '/listSecrets' POST request to get the value. </param>
         /// <param name="secondaryKey"> Subscription secondary key. This property will not be filled on 'GET' operations! Use '/listSecrets' POST request to get the value. </param>
@@ -83,27 +83,27 @@ namespace Azure.ResourceManager.ApiManagement
         public SubscriptionState? State { get; set; }
         /// <summary>
         /// Subscription creation date. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard.
-        /// 
+        ///
         /// </summary>
         public DateTimeOffset? CreatedOn { get; }
         /// <summary>
         /// Subscription activation date. The setting is for audit purposes only and the subscription is not automatically activated. The subscription lifecycle can be managed by using the `state` property. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard.
-        /// 
+        ///
         /// </summary>
         public DateTimeOffset? StartOn { get; set; }
         /// <summary>
         /// Subscription expiration date. The setting is for audit purposes only and the subscription is not automatically expired. The subscription lifecycle can be managed by using the `state` property. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard.
-        /// 
+        ///
         /// </summary>
         public DateTimeOffset? ExpireOn { get; set; }
         /// <summary>
         /// Date when subscription was cancelled or expired. The setting is for audit purposes only and the subscription is not automatically cancelled. The subscription lifecycle can be managed by using the `state` property. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard.
-        /// 
+        ///
         /// </summary>
         public DateTimeOffset? EndOn { get; set; }
         /// <summary>
         /// Upcoming subscription expiration notification date. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard.
-        /// 
+        ///
         /// </summary>
         public DateTimeOffset? NotifiesOn { get; set; }
         /// <summary> Subscription primary key. This property will not be filled on 'GET' operations! Use '/listSecrets' POST request to get the value. </summary>

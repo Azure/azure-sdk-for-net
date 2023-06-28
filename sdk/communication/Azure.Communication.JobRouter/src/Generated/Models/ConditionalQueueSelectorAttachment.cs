@@ -18,7 +18,7 @@ namespace Azure.Communication.JobRouter
         /// <summary> Initializes a new instance of ConditionalQueueSelectorAttachment. </summary>
         /// <param name="condition">
         /// A rule of one of the following types:
-        ///             
+        ///
         /// StaticRule:  A rule providing static rules that always return the same result, regardless of input.
         /// DirectMapRule:  A rule that return the same labels as the input labels.
         /// ExpressionRule: A rule providing inline expression rules.
@@ -43,7 +43,7 @@ namespace Azure.Communication.JobRouter
         /// <param name="kind"> The type discriminator describing the type of queue selector attachment. </param>
         /// <param name="condition">
         /// A rule of one of the following types:
-        ///             
+        ///
         /// StaticRule:  A rule providing static rules that always return the same result, regardless of input.
         /// DirectMapRule:  A rule that return the same labels as the input labels.
         /// ExpressionRule: A rule providing inline expression rules.
@@ -62,7 +62,7 @@ namespace Azure.Communication.JobRouter
 
         /// <summary>
         /// A rule of one of the following types:
-        ///             
+        ///
         /// StaticRule:  A rule providing static rules that always return the same result, regardless of input.
         /// DirectMapRule:  A rule that return the same labels as the input labels.
         /// ExpressionRule: A rule providing inline expression rules.

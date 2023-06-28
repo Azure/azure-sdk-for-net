@@ -22,8 +22,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <param name="vlanId"> Vlan identifier. Example: 1001. </param>
         public InternalNetworkData(int vlanId)
         {
-            ConnectedIPv4Subnets = new ChangeTrackingList<InternalNetworkPatchablePropertiesConnectedIPv4SubnetsItem>();
-            ConnectedIPv6Subnets = new ChangeTrackingList<InternalNetworkPatchablePropertiesConnectedIPv6SubnetsItem>();
+            ConnectedIPv4Subnets = new ChangeTrackingList<ConnectedSubnet>();
+            ConnectedIPv6Subnets = new ChangeTrackingList<ConnectedSubnet>();
             DisabledOnResources = new ChangeTrackingList<string>();
             BgpDisabledOnResources = new ChangeTrackingList<string>();
             BfdDisabledOnResources = new ChangeTrackingList<string>();
@@ -38,9 +38,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <param name="systemData"> The systemData. </param>
         /// <param name="annotation"> Switch configuration description. </param>
         /// <param name="mtu"> Maximum transmission unit. Default value is 1500. </param>
-        /// <param name="connectedIPv4Subnets"> List with object connectedIPv4Subnets. </param>
-        /// <param name="connectedIPv6Subnets"> List with object connectedIPv6Subnets. </param>
-        /// <param name="staticRouteConfiguration"> staticRouteConfiguration model. </param>
+        /// <param name="connectedIPv4Subnets"> List with object connected IPv4 Subnets. </param>
+        /// <param name="connectedIPv6Subnets"> List with object connected IPv6 Subnets. </param>
+        /// <param name="staticRouteConfiguration"> Static Route Configuration properties. </param>
         /// <param name="bgpConfiguration"> BGP configuration properties. </param>
         /// <param name="importRoutePolicyId"> ARM resource ID of importRoutePolicy. </param>
         /// <param name="exportRoutePolicyId"> ARM resource ID of importRoutePolicy. </param>
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <param name="bfdForStaticRoutesDisabledOnResources"> List of resources the BFD of StaticRoutes is disabled on. Can be either entire NetworkFabric or NetworkRack. </param>
         /// <param name="provisioningState"> Gets the provisioning state of the resource. </param>
         /// <param name="vlanId"> Vlan identifier. Example: 1001. </param>
-        internal InternalNetworkData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string annotation, int? mtu, IList<InternalNetworkPatchablePropertiesConnectedIPv4SubnetsItem> connectedIPv4Subnets, IList<InternalNetworkPatchablePropertiesConnectedIPv6SubnetsItem> connectedIPv6Subnets, InternalNetworkPatchablePropertiesStaticRouteConfiguration staticRouteConfiguration, InternalNetworkPatchablePropertiesBgpConfiguration bgpConfiguration, string importRoutePolicyId, string exportRoutePolicyId, IReadOnlyList<string> disabledOnResources, EnabledDisabledState? administrativeState, IReadOnlyList<string> bgpDisabledOnResources, IReadOnlyList<string> bfdDisabledOnResources, IReadOnlyList<string> bfdForStaticRoutesDisabledOnResources, ProvisioningState? provisioningState, int vlanId) : base(id, name, resourceType, systemData)
+        internal InternalNetworkData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string annotation, int? mtu, IList<ConnectedSubnet> connectedIPv4Subnets, IList<ConnectedSubnet> connectedIPv6Subnets, StaticRouteConfiguration staticRouteConfiguration, BgpConfiguration bgpConfiguration, string importRoutePolicyId, string exportRoutePolicyId, IReadOnlyList<string> disabledOnResources, EnabledDisabledState? administrativeState, IReadOnlyList<string> bgpDisabledOnResources, IReadOnlyList<string> bfdDisabledOnResources, IReadOnlyList<string> bfdForStaticRoutesDisabledOnResources, ProvisioningState? provisioningState, int vlanId) : base(id, name, resourceType, systemData)
         {
             Annotation = annotation;
             Mtu = mtu;
@@ -74,14 +74,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         public string Annotation { get; set; }
         /// <summary> Maximum transmission unit. Default value is 1500. </summary>
         public int? Mtu { get; set; }
-        /// <summary> List with object connectedIPv4Subnets. </summary>
-        public IList<InternalNetworkPatchablePropertiesConnectedIPv4SubnetsItem> ConnectedIPv4Subnets { get; }
-        /// <summary> List with object connectedIPv6Subnets. </summary>
-        public IList<InternalNetworkPatchablePropertiesConnectedIPv6SubnetsItem> ConnectedIPv6Subnets { get; }
-        /// <summary> staticRouteConfiguration model. </summary>
-        public InternalNetworkPatchablePropertiesStaticRouteConfiguration StaticRouteConfiguration { get; set; }
+        /// <summary> List with object connected IPv4 Subnets. </summary>
+        public IList<ConnectedSubnet> ConnectedIPv4Subnets { get; }
+        /// <summary> List with object connected IPv6 Subnets. </summary>
+        public IList<ConnectedSubnet> ConnectedIPv6Subnets { get; }
+        /// <summary> Static Route Configuration properties. </summary>
+        public StaticRouteConfiguration StaticRouteConfiguration { get; set; }
         /// <summary> BGP configuration properties. </summary>
-        public InternalNetworkPatchablePropertiesBgpConfiguration BgpConfiguration { get; set; }
+        public BgpConfiguration BgpConfiguration { get; set; }
         /// <summary> ARM resource ID of importRoutePolicy. </summary>
         public string ImportRoutePolicyId { get; set; }
         /// <summary> ARM resource ID of importRoutePolicy. </summary>

@@ -14,7 +14,6 @@ namespace Azure.Communication.JobRouter.Models
     /// <summary> A policy that defines actions to execute when exception are triggered. </summary>
     public partial class ExceptionPolicy
     {
-
         /// <summary> Initializes a new instance of ExceptionPolicy. </summary>
         /// <param name="id"> The Id of the exception policy. </param>
         /// <param name="name"> (Optional) The name of the exception policy. </param>

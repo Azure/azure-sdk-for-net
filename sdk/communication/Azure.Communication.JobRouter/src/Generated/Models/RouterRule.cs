@@ -9,7 +9,7 @@ namespace Azure.Communication.JobRouter
 {
     /// <summary>
     /// A rule of one of the following types:
-    ///             
+    ///
     /// StaticRule:  A rule providing static rules that always return the same result, regardless of input.
     /// DirectMapRule:  A rule that return the same labels as the input labels.
     /// ExpressionRule: A rule providing inline expression rules.
@@ -20,7 +20,6 @@ namespace Azure.Communication.JobRouter
     /// </summary>
     public abstract partial class RouterRule
     {
-
         /// <summary> Initializes a new instance of RouterRule. </summary>
         /// <param name="kind"> The type discriminator describing a sub-type of Rule. </param>
         internal RouterRule(string kind)
