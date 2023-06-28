@@ -104,123 +104,124 @@ namespace Azure.Storage.DataMovement
             internal const int SourceResourceIdLengthIndex = PartNumberIndex + LongSizeInBytes;
             /// <summary>Index: 94</summary>
             internal const int SourceResourceIdIndex = SourceResourceIdLengthIndex + UShortSizeInBytes;
-            /// <summary>Index: 114</summary>
-            internal const int SourcePathLengthIndex = SourceResourceIdIndex + ResourceIdMaxStrLength;
-            /// <summary>Index: 116</summary>
+
+            /// <summary>Index: 134</summary>
+            internal const int SourcePathLengthIndex = SourceResourceIdIndex + ResourceIdNumBytes;
+            /// <summary>Index: 136</summary>
             internal const int SourcePathIndex = SourcePathLengthIndex + UShortSizeInBytes;
-            /// <summary>Index: 8308</summary>
+            /// <summary>Index: 8328</summary>
             internal const int SourceExtraQueryLengthIndex = SourcePathIndex + PathStrNumBytes;
-            /// <summary>Index: 8310</summary>
+            /// <summary>Index: 8330</summary>
             internal const int SourceExtraQueryIndex = SourceExtraQueryLengthIndex + UShortSizeInBytes;
-            /// <summary>Index: 8312</summary>
-            internal const int DestinationResourceIdLengthIndex = SourceExtraQueryIndex + UShortSizeInBytes;
-            /// <summary>Index: 8332</summary>
-            internal const int DestinationResourceIdIndex = DestinationResourceIdLengthIndex + ResourceIdMaxStrLength;
+            /// <summary>Index: 10330</summary>
+            internal const int DestinationResourceIdLengthIndex = SourceExtraQueryIndex + ExtraQueryNumBytes;
             /// <summary>Index: 10332</summary>
-            internal const int DestinationPathLengthIndex = DestinationResourceIdIndex + ExtraQueryNumBytes;
-            /// <summary>Index: 10334</summary>
+            internal const int DestinationResourceIdIndex = DestinationResourceIdLengthIndex + UShortSizeInBytes;
+            /// <summary>Index: 10372</summary>
+            internal const int DestinationPathLengthIndex = DestinationResourceIdIndex + ResourceIdNumBytes;
+            /// <summary>Index: 10374</summary>
             internal const int DestinationPathIndex = DestinationPathLengthIndex + UShortSizeInBytes;
-            /// <summary>Index: 18526</summary>
+            /// <summary>Index: 18566</summary>
             internal const int DestinationExtraQueryLengthIndex = DestinationPathIndex + PathStrNumBytes;
-            /// <summary>Index: 18528</summary>
+            /// <summary>Index: 18568</summary>
             internal const int DestinationExtraQueryIndex = DestinationExtraQueryLengthIndex + UShortSizeInBytes;
-            /// <summary>Index: 20528</summary>
+            /// <summary>Index: 20568</summary>
             internal const int IsFinalPartIndex = DestinationExtraQueryIndex + ExtraQueryNumBytes;
-            /// <summary>Index: 20529</summary>
+            /// <summary>Index: 20569</summary>
             internal const int ForceWriteIndex = IsFinalPartIndex + OneByte;
-            /// <summary>Index: 20530</summary>
+            /// <summary>Index: 20570</summary>
             internal const int ForceIfReadOnlyIndex = ForceWriteIndex + OneByte;
-            /// <summary>Index: 20531</summary>
+            /// <summary>Index: 20571</summary>
             internal const int AutoDecompressIndex = ForceIfReadOnlyIndex + OneByte;
-            /// <summary>Index: 20532</summary>
+            /// <summary>Index: 20572</summary>
             internal const int PriorityIndex = AutoDecompressIndex + OneByte;
-            /// <summary>Index: 20533</summary>
+            /// <summary>Index: 20573</summary>
             internal const int TTLAfterCompletionIndex = PriorityIndex + OneByte;
-            /// <summary>Index: 20541</summary>
+            /// <summary>Index: 20581</summary>
             internal const int FromToIndex = TTLAfterCompletionIndex + LongSizeInBytes;
-            /// <summary>Index: 20542</summary>
+            /// <summary>Index: 20582</summary>
             internal const int FolderPropertyModeIndex = FromToIndex + OneByte;
-            /// <summary>Index: 20543</summary>
+            /// <summary>Index: 20583</summary>
             internal const int NumberChunksIndex = FolderPropertyModeIndex + OneByte;
 
             // JobPartPlanDestinationBlob Indexes
-            /// <summary>Index: 20544</summary>
+            /// <summary>Index: 20591</summary>
             internal const int DstBlobTypeIndex = NumberChunksIndex + LongSizeInBytes;
-            /// <summary>Index: 20545</summary>
+            /// <summary>Index: 20592</summary>
             internal const int DstBlobNoGuessMimeTypeIndex = DstBlobTypeIndex + OneByte;
-            /// <summary>Index: 20546</summary>
+            /// <summary>Index: 20593</summary>
             internal const int DstBlobContentTypeLengthIndex = DstBlobNoGuessMimeTypeIndex + OneByte;
-            /// <summary>Index: 20548</summary>
+            /// <summary>Index: 20595</summary>
             internal const int DstBlobContentTypeIndex = DstBlobContentTypeLengthIndex + UShortSizeInBytes;
-            /// <summary>Index: 22548</summary>
+            /// <summary>Index: 22595</summary>
             internal const int DstBlobContentEncodingLengthIndex = DstBlobContentTypeIndex + HeaderValueNumBytes;
-            /// <summary>Index: 22550</summary>
+            /// <summary>Index: 22597</summary>
             internal const int DstBlobContentEncodingIndex = DstBlobContentEncodingLengthIndex + UShortSizeInBytes;
-            /// <summary>Index: 24550</summary>
+            /// <summary>Index: 24597</summary>
             internal const int DstBlobContentLanguageLengthIndex = DstBlobContentEncodingIndex + HeaderValueNumBytes;
-            /// <summary>Index: 24552</summary>
+            /// <summary>Index: 24599</summary>
             internal const int DstBlobContentLanguageIndex = DstBlobContentLanguageLengthIndex + UShortSizeInBytes;
-            /// <summary>Index: 26552</summary>
+            /// <summary>Index: 26599</summary>
             internal const int DstBlobContentDispositionLengthIndex = DstBlobContentLanguageIndex + HeaderValueNumBytes;
-            /// <summary>Index: 26554</summary>
+            /// <summary>Index: 26601</summary>
             internal const int DstBlobContentDispositionIndex = DstBlobContentDispositionLengthIndex + UShortSizeInBytes;
-            /// <summary>Index: 28554</summary>
+            /// <summary>Index: 28601</summary>
             internal const int DstBlobCacheControlLengthIndex = DstBlobContentDispositionIndex + HeaderValueNumBytes;
-            /// <summary>Index: 28556</summary>
+            /// <summary>Index: 28603</summary>
             internal const int DstBlobCacheControlIndex = DstBlobCacheControlLengthIndex + UShortSizeInBytes;
-            /// <summary>Index: 30556</summary>
+            /// <summary>Index: 30603</summary>
             internal const int DstBlobBlockBlobTierIndex = DstBlobCacheControlIndex + HeaderValueNumBytes;
-            /// <summary>Index: 30557</summary>
+            /// <summary>Index: 30604</summary>
             internal const int DstBlobPageBlobTierIndex = DstBlobBlockBlobTierIndex + OneByte;
-            /// <summary>Index: 30558</summary>
+            /// <summary>Index: 30605</summary>
             internal const int DstBlobPutMd5Index = DstBlobPageBlobTierIndex + OneByte;
-            /// <summary>Index: 30559</summary>
+            /// <summary>Index: 30606</summary>
             internal const int DstBlobMetadataLengthIndex = DstBlobPutMd5Index + OneByte;
-            /// <summary>Index: 30561</summary>
+            /// <summary>Index: 30608</summary>
             internal const int DstBlobMetadataIndex = DstBlobMetadataLengthIndex + UShortSizeInBytes;
-            /// <summary>Index: 38753</summary>
+            /// <summary>Index: 38800</summary>
             internal const int DstBlobTagsLengthIndex = DstBlobMetadataIndex + MetadataStrNumBytes;
-            /// <summary>Index: 38761</summary>
+            /// <summary>Index: 38808</summary>
             internal const int DstBlobTagsIndex = DstBlobTagsLengthIndex + LongSizeInBytes;
-            /// <summary>Index: 46953</summary>
+            /// <summary>Index: 47000</summary>
             internal const int DstBlobIsSourceEncrypted = DstBlobTagsIndex + BlobTagsStrNumBytes;
-            /// <summary>Index: 46954</summary>
+            /// <summary>Index: 47001</summary>
             internal const int DstBlobCpkScopeInfoLengthIndex = DstBlobIsSourceEncrypted + OneByte;
-            /// <summary>Index: 46956</summary>
+            /// <summary>Index: 47003</summary>
             internal const int DstBlobCpkScopeInfoIndex = DstBlobCpkScopeInfoLengthIndex + UShortSizeInBytes;
-            /// <summary>Index: 48956</summary>
+            /// <summary>Index: 49003</summary>
             internal const int DstBlobBlockSizeIndex = DstBlobCpkScopeInfoIndex + HeaderValueNumBytes;
 
             // JobPartPlanDestinationLocal Indexes
-            /// <summary>Index: 48964</summary>
+            /// <summary>Index: 49011</summary>
             internal const int DstLocalPreserveLastModifiedTimeIndex = DstBlobBlockSizeIndex + LongSizeInBytes;
-            /// <summary>Index: 48965</summary>
+            /// <summary>Index: 49012</summary>
             internal const int DstLocalMD5VerificationOptionIndex = DstLocalPreserveLastModifiedTimeIndex + OneByte;
 
-            /// <summary>Index: 48966</summary>
+            /// <summary>Index: 49013</summary>
             internal const int PreserveSMBPermissionsIndex = DstLocalMD5VerificationOptionIndex + OneByte;
-            /// <summary>Index: 48967</summary>
+            /// <summary>Index: 49014</summary>
             internal const int PreserveSMBInfoIndex = PreserveSMBPermissionsIndex + OneByte;
-            /// <summary>Index: 48968</summary>
+            /// <summary>Index: 49015</summary>
             internal const int S2SGetPropertiesInBackendIndex = PreserveSMBInfoIndex + OneByte;
-            /// <summary>Index: 48969</summary>
+            /// <summary>Index: 49016</summary>
             internal const int S2SSourceChangeValidationIndex = S2SGetPropertiesInBackendIndex + OneByte;
-            /// <summary>Index: 48970</summary>
+            /// <summary>Index: 49017</summary>
             internal const int DestLengthValidationIndex = S2SSourceChangeValidationIndex + OneByte;
-            /// <summary>Index: 48971</summary>
+            /// <summary>Index: 49018</summary>
             internal const int S2SInvalidMetadataHandleOptionIndex = DestLengthValidationIndex + OneByte;
-            /// <summary>Index: 48972</summary>
+            /// <summary>Index: 49019</summary>
             internal const int DeleteSnapshotsOptionIndex = S2SInvalidMetadataHandleOptionIndex + OneByte;
-            /// <summary>Index: 48973</summary>
+            /// <summary>Index: 49020</summary>
             internal const int PermanentDeleteOptionIndex = DeleteSnapshotsOptionIndex + OneByte;
-            /// <summary>Index: 48974</summary>
+            /// <summary>Index: 49021</summary>
             internal const int RehydratePriorityTypeIndex = PermanentDeleteOptionIndex + OneByte;
-            /// <summary>Index: 48975</summary>
+            /// <summary>Index: 49022</summary>
             internal const int AtomicJobStatusIndex = RehydratePriorityTypeIndex + OneByte;
-            /// <summary>Index: 48976</summary>
+            /// <summary>Index: 49023</summary>
             internal const int AtomicPartStatusIndex = AtomicJobStatusIndex + OneByte;
             /// <summary>
-            /// Size of the JobPart Header: 48977
+            /// Size of the JobPart Header: 49024
             /// </summary>
             internal const int JobPartHeaderSizeInBytes = AtomicPartStatusIndex + OneByte;
         }
