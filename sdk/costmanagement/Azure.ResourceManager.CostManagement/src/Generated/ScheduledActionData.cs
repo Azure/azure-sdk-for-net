@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.CostManagement
         /// <param name="viewId"> Cost analysis viewId used for scheduled action. For example, '/providers/Microsoft.CostManagement/views/swaggerExample'. </param>
         /// <param name="eTag"> Resource Etag. For update calls, eTag is optional and can be specified to achieve optimistic concurrency. Fetch the resource's eTag by doing a 'GET' call first and then including the latest eTag as part of the request body or 'If-Match' header while performing the update. For create calls, eTag is not required. </param>
         /// <param name="kind"> Kind of the scheduled action. </param>
-        internal ScheduledActionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string displayName, FileDestination fileDestination, NotificationProperties notification, string notificationEmail, ScheduleProperties schedule, string scope, ScheduledActionStatus? status, string viewId, ETag? eTag, ScheduledActionKind? kind) : base(id, name, resourceType, systemData)
+        internal ScheduledActionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string displayName, FileDestination fileDestination, NotificationProperties notification, string notificationEmail, ScheduleProperties schedule, ResourceIdentifier scope, ScheduledActionStatus? status, ResourceIdentifier viewId, ETag? eTag, ScheduledActionKind? kind) : base(id, name, resourceType, systemData)
         {
             DisplayName = displayName;
             FileDestination = fileDestination;
@@ -75,11 +75,11 @@ namespace Azure.ResourceManager.CostManagement
         /// <summary> Schedule of the scheduled action. </summary>
         public ScheduleProperties Schedule { get; set; }
         /// <summary> Cost Management scope like 'subscriptions/{subscriptionId}' for subscription scope, 'subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}' for resourceGroup scope, 'providers/Microsoft.Billing/billingAccounts/{billingAccountId}' for Billing Account scope, 'providers/Microsoft.Billing/billingAccounts/{billingAccountId}/departments/{departmentId}' for Department scope, 'providers/Microsoft.Billing/billingAccounts/{billingAccountId}/enrollmentAccounts/{enrollmentAccountId}' for EnrollmentAccount scope, 'providers/Microsoft.Billing/billingAccounts/{billingAccountId}/billingProfiles/{billingProfileId}' for BillingProfile scope, 'providers/Microsoft.Billing/billingAccounts/{billingAccountId}/invoiceSections/{invoiceSectionId}' for InvoiceSection scope, '/providers/Microsoft.CostManagement/externalBillingAccounts/{externalBillingAccountName}' for ExternalBillingAccount scope, and '/providers/Microsoft.CostManagement/externalSubscriptions/{externalSubscriptionName}' for ExternalSubscription scope. </summary>
-        public string Scope { get; set; }
+        public ResourceIdentifier Scope { get; set; }
         /// <summary> Status of the scheduled action. </summary>
         public ScheduledActionStatus? Status { get; set; }
         /// <summary> Cost analysis viewId used for scheduled action. For example, '/providers/Microsoft.CostManagement/views/swaggerExample'. </summary>
-        public string ViewId { get; set; }
+        public ResourceIdentifier ViewId { get; set; }
         /// <summary> Resource Etag. For update calls, eTag is optional and can be specified to achieve optimistic concurrency. Fetch the resource's eTag by doing a 'GET' call first and then including the latest eTag as part of the request body or 'If-Match' header while performing the update. For create calls, eTag is not required. </summary>
         public ETag? ETag { get; }
         /// <summary> Kind of the scheduled action. </summary>

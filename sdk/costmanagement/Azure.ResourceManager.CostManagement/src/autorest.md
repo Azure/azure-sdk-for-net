@@ -30,7 +30,6 @@ format-by-name-rules:
   'location': 'azure-location'
   '*Uri': 'Uri'
   '*Uris': 'Uri'
-  # '*Time': 'datetime'
 
 rename-rules:
   CPU: Cpu
@@ -98,6 +97,12 @@ rename-mapping:
   Alert.properties.modificationTime: -|datetime
   Alert.properties.creationTime: -|datetime
   Alert.properties.statusModificationTime: -|datetime
+  View.properties.scope: -|arm-id
+  ScheduledAction.properties.scope: -|arm-id
+  ScheduledAction.properties.viewId: -|arm-id
+  ExportDeliveryDestination.resourceId: DestinationId|arm-id
+  KpiProperties.id: KpiId|arm-id
+
 
 directive:
   # [Error][Linked: https://github.com/Azure/autorest.csharp/issues/3288] Found more than 1 candidate for XX 

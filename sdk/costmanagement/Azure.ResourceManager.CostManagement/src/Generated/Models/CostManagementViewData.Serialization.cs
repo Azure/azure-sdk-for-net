@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.CostManagement
             ResourceType type = default;
             Optional<SystemData> systemData = default;
             Optional<string> displayName = default;
-            Optional<string> scope = default;
+            Optional<ResourceIdentifier> scope = default;
             Optional<DateTimeOffset> createdOn = default;
             Optional<DateTimeOffset> modifiedOn = default;
             Optional<string> dateRange = default;
@@ -182,7 +182,11 @@ namespace Azure.ResourceManager.CostManagement
                         }
                         if (property0.NameEquals("scope"u8))
                         {
-                            scope = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            scope = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("createdOn"u8))

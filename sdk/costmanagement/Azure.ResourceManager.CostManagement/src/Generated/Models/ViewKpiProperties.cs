@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using Azure.Core;
+
 namespace Azure.ResourceManager.CostManagement.Models
 {
     /// <summary> Each KPI must contain a 'type' and 'enabled' key. </summary>
@@ -17,19 +19,19 @@ namespace Azure.ResourceManager.CostManagement.Models
 
         /// <summary> Initializes a new instance of ViewKpiProperties. </summary>
         /// <param name="kpiType"> KPI type (Forecast, Budget). </param>
-        /// <param name="id"> ID of resource related to metric (budget). </param>
+        /// <param name="kpiId"> ID of resource related to metric (budget). </param>
         /// <param name="enabled"> show the KPI in the UI?. </param>
-        internal ViewKpiProperties(ViewKpiType? kpiType, string id, bool? enabled)
+        internal ViewKpiProperties(ViewKpiType? kpiType, ResourceIdentifier kpiId, bool? enabled)
         {
             KpiType = kpiType;
-            Id = id;
+            KpiId = kpiId;
             Enabled = enabled;
         }
 
         /// <summary> KPI type (Forecast, Budget). </summary>
         public ViewKpiType? KpiType { get; set; }
         /// <summary> ID of resource related to metric (budget). </summary>
-        public string Id { get; set; }
+        public ResourceIdentifier KpiId { get; set; }
         /// <summary> show the KPI in the UI?. </summary>
         public bool? Enabled { get; set; }
     }

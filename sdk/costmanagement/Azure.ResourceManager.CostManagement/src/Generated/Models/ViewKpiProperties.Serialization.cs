@@ -20,10 +20,10 @@ namespace Azure.ResourceManager.CostManagement.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(KpiType.Value.ToString());
             }
-            if (Optional.IsDefined(Id))
+            if (Optional.IsDefined(KpiId))
             {
                 writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
+                writer.WriteStringValue(KpiId);
             }
             if (Optional.IsDefined(Enabled))
             {
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                 return null;
             }
             Optional<ViewKpiType> type = default;
-            Optional<string> id = default;
+            Optional<ResourceIdentifier> id = default;
             Optional<bool> enabled = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -55,7 +55,11 @@ namespace Azure.ResourceManager.CostManagement.Models
                 }
                 if (property.NameEquals("id"u8))
                 {
-                    id = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("enabled"u8))
