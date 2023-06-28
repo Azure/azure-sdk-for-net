@@ -16,7 +16,6 @@ using Azure.Storage.DataMovement.Models;
 using Azure.Storage.Blobs.Models;
 using Azure.Storage.Blobs;
 using Microsoft.CodeAnalysis.Diagnostics;
-using System.Linq;
 
 namespace Azure.Storage.DataMovement.Blobs.Samples
 {
@@ -716,51 +715,21 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
                 await transferManager.PauseTransferIfRunningAsync(dataTransfer);
                 #endregion Snippet:TransferManagerTryPause_Async
 
-                // API for use in below sample
-                StorageSharedKeyCredential ProvideMyCredential(Uri uri)
-                    // Customer should actually get their scoped credential, but shared key still lets sample run
-                    => new StorageSharedKeyCredential(StorageAccountName, StorageAccountKey);
-
                 #region Snippet:TransferManagerResume_Async
-                (StorageResource Source, StorageResource Destination) GetResources(DataTransferProperties info)
+                // Resume from checkpoint id
+                TransferOptions optionsWithResumeTransferId = new TransferOptions()
                 {
-                    StorageResource source = default, destination = default;
-                    if (AzureBlobStorageResources.TryGetResourceProviders(
-                        info,
-                        out AzureBlobStorageResourceProvider azureSourceProvider,
-                        out AzureBlobStorageResourceProvider azureDestinationProvider))
-                    {
-                        source ??= azureSourceProvider?.MakeResource(ProvideMyCredential(new Uri(info.SourcePath)));
-                        destination ??= azureSourceProvider?.MakeResource(ProvideMyCredential(new Uri(info.DestinationPath)));
-                    }
-                    if (LocalStorageResources.TryGetResourceProviders(
-                        info,
-                        out LocalStorageResourceProvider localSourceProvider,
-                        out LocalStorageResourceProvider localDestinationProvider))
-                    {
-                        source ??= localSourceProvider?.MakeResource();
-                        destination ??= localDestinationProvider?.MakeResource();
-                    }
-                    return (source, destination);
-                }
+                    ResumeFromCheckpointId = dataTransfer.Id
+                };
 
-                List<DataTransfer> resumedTransfers = new();
-                await foreach (DataTransfer transfer in transferManager.GetTransfersAsync(
-                    new StorageTransferStatus[] { StorageTransferStatus.Paused, StorageTransferStatus.Queued }))
-                {
-                    (StorageResource resumeSource, StorageResource resumeDestination) = GetResources(null);
-                    resumedTransfers.Add(await transferManager.StartTransferAsync(
-                        resumeSource,
-                        resumeDestination,
-                        new TransferOptions() // should there be a separate factory method for resume options?
-                        {
-                            ResumeFromCheckpointId = transfer.Id
-                        }));
-                }
+                DataTransfer resumedTransfer = await transferManager.StartTransferAsync(
+                    sourceResource: sourceResource,
+                    destinationResource: destinationResource,
+                    transferOptions: optionsWithResumeTransferId);
                 #endregion Snippet:TransferManagerResume_Async
 
                 // Wait for download to finish
-                await Task.WhenAll(resumedTransfers.Select(t => t.AwaitCompletion()));
+                await resumedTransfer.AwaitCompletion();
             }
             finally
             {
