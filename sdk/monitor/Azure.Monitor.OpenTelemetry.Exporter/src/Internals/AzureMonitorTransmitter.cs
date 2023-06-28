@@ -122,7 +122,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                     // Remove this when we add an option to disable offline storage.
                     // So if someone opts in for storage and we cannot initialize, we can throw.
                     // Change needed on persistent storage side to throw if not able to create storage directory.
-                    AzureMonitorExporterEventSource.Log.FailedToInitializePersistentStorage(ex);
+                    AzureMonitorExporterEventSource.Log.FailedToInitializePersistentStorage(connectionVars.InstrumentationKey, ex);
 
                     return null;
                 }
