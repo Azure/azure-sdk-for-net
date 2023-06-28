@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <param name="administrativeState"> Administrative state of the IsolationDomain. Example: Enabled | Disabled. </param>
         /// <param name="optionBDisabledOnResources"> List of resources the OptionB is disabled on. Can be either entire NetworkFabric or NetworkRack. </param>
         /// <param name="provisioningState"> Gets the provisioning state of the resource. </param>
-        internal L3IsolationDomainData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string annotation, RedistributeConnectedSubnet? redistributeConnectedSubnets, RedistributeStaticRoute? redistributeStaticRoutes, L3IsolationDomainPatchPropertiesAggregateRouteConfiguration aggregateRouteConfiguration, string description, L3IsolationDomainPatchPropertiesConnectedSubnetRoutePolicy connectedSubnetRoutePolicy, string networkFabricId, IReadOnlyList<string> disabledOnResources, EnabledDisabledState? administrativeState, IReadOnlyList<string> optionBDisabledOnResources, ProvisioningState? provisioningState) : base(id, name, resourceType, systemData, tags, location)
+        internal L3IsolationDomainData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string annotation, RedistributeConnectedSubnet? redistributeConnectedSubnets, RedistributeStaticRoute? redistributeStaticRoutes, AggregateRouteConfiguration aggregateRouteConfiguration, string description, L3IsolationDomainPatchPropertiesConnectedSubnetRoutePolicy connectedSubnetRoutePolicy, string networkFabricId, IReadOnlyList<string> disabledOnResources, EnabledDisabledState? administrativeState, IReadOnlyList<string> optionBDisabledOnResources, ProvisioningState? provisioningState) : base(id, name, resourceType, systemData, tags, location)
         {
             Annotation = annotation;
             RedistributeConnectedSubnets = redistributeConnectedSubnets;
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <summary> Advertise Static Routes. Ex: "True" | "False". </summary>
         public RedistributeStaticRoute? RedistributeStaticRoutes { get; set; }
         /// <summary> List of Ipv4 and Ipv6 route configurations. </summary>
-        public L3IsolationDomainPatchPropertiesAggregateRouteConfiguration AggregateRouteConfiguration { get; set; }
+        public AggregateRouteConfiguration AggregateRouteConfiguration { get; set; }
         /// <summary> L3 Isolation Domain description. </summary>
         public string Description { get; set; }
         /// <summary> Connected Subnet RoutePolicy. </summary>

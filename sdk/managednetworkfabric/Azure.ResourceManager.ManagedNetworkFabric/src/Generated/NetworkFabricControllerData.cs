@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <param name="ipv6AddressSpace"> IPv6 Network Fabric Controller Address Space. </param>
         /// <param name="operationalState"> The Operational Status would always be NULL. Look only in to the Provisioning state for the latest status. </param>
         /// <param name="provisioningState"> Provides you the latest status of the NFC service, whether it is Accepted, updating, Succeeded or Failed. During this process, the states keep changing based on the status of NFC provisioning. </param>
-        internal NetworkFabricControllerData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string annotation, IList<ExpressRouteConnectionInformation> infrastructureExpressRouteConnections, IList<ExpressRouteConnectionInformation> workloadExpressRouteConnections, NetworkFabricControllerPropertiesInfrastructureServices infrastructureServices, NetworkFabricControllerPropertiesWorkloadServices workloadServices, NetworkFabricControllerPropertiesManagedResourceGroupConfiguration managedResourceGroupConfiguration, IReadOnlyList<string> networkFabricIds, bool? workloadManagementNetwork, string ipv4AddressSpace, string ipv6AddressSpace, NetworkFabricControllerOperationalState? operationalState, ProvisioningState? provisioningState) : base(id, name, resourceType, systemData, tags, location)
+        internal NetworkFabricControllerData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string annotation, IList<ExpressRouteConnectionInformation> infrastructureExpressRouteConnections, IList<ExpressRouteConnectionInformation> workloadExpressRouteConnections, InfrastructureServices infrastructureServices, WorkloadServices workloadServices, ManagedResourceGroupConfiguration managedResourceGroupConfiguration, IReadOnlyList<string> networkFabricIds, bool? workloadManagementNetwork, string ipv4AddressSpace, string ipv6AddressSpace, NetworkFabricControllerOperationalState? operationalState, ProvisioningState? provisioningState) : base(id, name, resourceType, systemData, tags, location)
         {
             Annotation = annotation;
             InfrastructureExpressRouteConnections = infrastructureExpressRouteConnections;
@@ -69,11 +69,11 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <summary> As part of an update, the workload ExpressRoute CircuitID should be provided to create and Provision a NFC. This Express route is dedicated for Workload services. (This is a Mandatory attribute). </summary>
         public IList<ExpressRouteConnectionInformation> WorkloadExpressRouteConnections { get; }
         /// <summary> InfrastructureServices IP ranges. </summary>
-        public NetworkFabricControllerPropertiesInfrastructureServices InfrastructureServices { get; }
+        public InfrastructureServices InfrastructureServices { get; }
         /// <summary> WorkloadServices IP ranges. </summary>
-        public NetworkFabricControllerPropertiesWorkloadServices WorkloadServices { get; }
+        public WorkloadServices WorkloadServices { get; }
         /// <summary> Managed Resource Group configuration properties. </summary>
-        public NetworkFabricControllerPropertiesManagedResourceGroupConfiguration ManagedResourceGroupConfiguration { get; set; }
+        public ManagedResourceGroupConfiguration ManagedResourceGroupConfiguration { get; set; }
         /// <summary> The NF-ID will be an input parameter used by the NF to link and get associated with the parent NFC Service. </summary>
         public IReadOnlyList<string> NetworkFabricIds { get; }
         /// <summary> A workload management network is required for all the tenant (workload) traffic. This traffic is only dedicated for Tenant workloads which are required to access internet or any other MSFT/Public endpoints. </summary>
