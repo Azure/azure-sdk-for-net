@@ -25,6 +25,9 @@ namespace Azure.Communication.CallAutomation
         {
             try
             {
+                // establish hmac here
+                CallAutomationEventProcessor.customHMACAuthenticationWebSocket?.AddHmacHeaders(_client, new Uri(webSocketUrl), Core.RequestMethod.Get, string.Empty);
+
                 await _client.ConnectAsync(new Uri(webSocketUrl), CancellationToken.None).ConfigureAwait(false);
                 await SendPayload(connectionId).ConfigureAwait(false);
                 await ReceiveResponses().ConfigureAwait(false);
