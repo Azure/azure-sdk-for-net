@@ -10,7 +10,7 @@ using System;
 namespace Azure.Data.Tables.Models
 {
     /// <summary> Model factory for models. </summary>
-    public static partial class TableModelFactory
+    public static partial class DataTablesModelFactory
     {
         /// <summary> Initializes a new instance of TableServiceStatistics. </summary>
         /// <param name="geoReplication"> Geo-Replication information for the Secondary Storage Service. </param>

@@ -12,7 +12,7 @@ using System.Linq;
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     /// <summary> Model factory for models. </summary>
-    public static partial class ArtifactsModelFactory
+    public static partial class AnalyticsSynapseArtifactsModelFactory
     {
         /// <summary> Initializes a new instance of CloudError. </summary>
         /// <param name="code"> Error code. </param>
