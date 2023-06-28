@@ -35,7 +35,7 @@ using AzureEventSourceListener listener = AzureEventSourceListener.CreateConsole
 If you get an error with HTTP status code 403 (Forbidden), it means that the provided credentials have insufficient permissions to upload logs to the specified Data Collection Endpoint (DCE) and Data Collection Rule (DCR) ID.
 
 ```text
-com.azure.core.exception.HttpResponseException: Status code 403, "{"error":{"code":"OperationFailed","message":"The 
+Status code 403, "{"error":{"code":"OperationFailed","message":"The 
 authentication token provided does not have access to ingest data for the data collection rule with immutable Id 
 '<REDACTED>' PipelineAccessResult: AccessGranted: False, IsRbacPresent: False, IsDcrDceBindingValid: , DcrArmId: <REDACTED>,
  Message: Required authorization action was not found for tenantId <REDACTED> objectId <REDACTED> on resourceId <REDACTED>
@@ -68,8 +68,7 @@ If you experience delays when uploading logs, it could be due to reaching servic
 
 To enable client logging and to troubleshoot this issue further, see the instructions provided in the section titled [Enable client logging](#enable-client-logging).
 
-If there are no throttling errors, then consider increasing the concurrency to upload multiple log requests in parallel.
-To set the concurrency, use the `UploadLogsOptions.MaxConcurrency` property.
+If there are no throttling errors, then consider increasing the concurrency to upload multiple log requests in parallel. To set the concurrency, use the `UploadLogsOptions.MaxConcurrency` property.
 
 ```C# Snippet:UploadWithMaxConcurrency
 var endpoint = new Uri("<data_collection_endpoint_uri>");
@@ -77,7 +76,7 @@ var ruleId = "<data_collection_rule_id>";
 var streamName = "<stream_name>";
 
 var credential = new DefaultAzureCredential();
-LogsIngestionClient client = new(endpoint, credential);
+LogsIngestionClient client = new LogsIngestionClient(endpoint, credential);
 
 DateTimeOffset currentTime = DateTimeOffset.UtcNow;
 
@@ -93,8 +92,11 @@ for (int i = 0; i < 100; i++)
     );
 }
 // Set concurrency in LogsUploadOptions
-LogsUploadOptions options = new LogsUploadOptions(MaxConcurreny = 10);
+LogsUploadOptions options = new LogsUploadOptions
+{
+    MaxConcurrency = 10
+};
 
 // Upload our logs
-Response response = await client.Upload(ruleId, streamName, entries, options);
+Response response = client.Upload(ruleId, streamName, entries, options);
 ```

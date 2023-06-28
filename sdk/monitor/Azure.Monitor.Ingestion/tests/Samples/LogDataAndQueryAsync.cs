@@ -184,7 +184,7 @@ namespace Azure.Monitor.Ingestion.Tests.Samples
             #endregion
         }
 
-        public void UploadWithMaxConcurrencyAsync(){
+        public async Task UploadWithMaxConcurrencyAsync(){
             #region Snippet:UploadWithMaxConcurrencyAsync
             var endpoint = new Uri("<data_collection_endpoint_uri>");
             var ruleId = "<data_collection_rule_id>";
@@ -197,7 +197,7 @@ namespace Azure.Monitor.Ingestion.Tests.Samples
             endpoint = new Uri(TestEnvironment.DCREndpoint);
             credential = TestEnvironment.Credential;
 #endif
-            LogsIngestionClient client = new(endpoint, credential);
+            LogsIngestionClient client = new LogsIngestionClient(endpoint, credential);
 
             DateTimeOffset currentTime = DateTimeOffset.UtcNow;
 
@@ -213,7 +213,10 @@ namespace Azure.Monitor.Ingestion.Tests.Samples
                 );
             }
             // Set concurrency in LogsUploadOptions
-            LogsUploadOptions options = new LogsUploadOptions(MaxConcurreny = 10);
+            LogsUploadOptions options = new LogsUploadOptions
+            {
+                MaxConcurrency = 10
+            };
 
             // Upload our logs
             Response response = await client.UploadAsync(ruleId, streamName, entries, options).ConfigureAwait(false);

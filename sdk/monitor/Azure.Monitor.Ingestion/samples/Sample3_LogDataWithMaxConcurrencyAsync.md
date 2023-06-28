@@ -12,7 +12,7 @@ var ruleId = "<data_collection_rule_id>";
 var streamName = "<stream_name>";
 
 var credential = new DefaultAzureCredential();
-LogsIngestionClient client = new(endpoint, credential);
+LogsIngestionClient client = new LogsIngestionClient(endpoint, credential);
 
 DateTimeOffset currentTime = DateTimeOffset.UtcNow;
 
@@ -28,7 +28,10 @@ for (int i = 0; i < 100; i++)
     );
 }
 // Set concurrency in LogsUploadOptions
-LogsUploadOptions options = new LogsUploadOptions(MaxConcurreny = 10);
+LogsUploadOptions options = new LogsUploadOptions
+{
+    MaxConcurrency = 10
+};
 
 // Upload our logs
 Response response = await client.UploadAsync(ruleId, streamName, entries, options).ConfigureAwait(false);
