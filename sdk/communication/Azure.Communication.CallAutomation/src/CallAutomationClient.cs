@@ -500,6 +500,11 @@ namespace Azure.Communication.CallAutomation
                     new CallConnectionProperties(createCallResponse.Value));
                 result.SetEventProcessor(EventProcessor, createCallResponse.Value.CallConnectionId, request.OperationContext);
 
+                if (request.WebsocketEnable == true)
+                {
+                    EventProcessor.SetUpWebSocketEventClient(result.CallConnectionProperties.WebsocketUrl, result.CallConnectionProperties.CallConnectionId);
+                }
+
                 return Response.FromValue(result,
                     createCallResponse.GetRawResponse());
             }
@@ -560,6 +565,11 @@ namespace Azure.Communication.CallAutomation
                     new CallConnectionProperties(createCallResponse.Value));
                 result.SetEventProcessor(EventProcessor, createCallResponse.Value.CallConnectionId, request.OperationContext);
 
+                if (request.WebsocketEnable == true)
+                {
+                    EventProcessor.SetUpWebSocketEventClient(result.CallConnectionProperties.WebsocketUrl, result.CallConnectionProperties.CallConnectionId);
+                }
+
                 return Response.FromValue(result,
                     createCallResponse.GetRawResponse());
             }
@@ -604,6 +614,11 @@ namespace Azure.Communication.CallAutomation
                     GetCallConnection(createCallResponse.Value.CallConnectionId),
                     new CallConnectionProperties(createCallResponse.Value));
                 result.SetEventProcessor(EventProcessor, createCallResponse.Value.CallConnectionId, request.OperationContext);
+
+                if (request.WebsocketEnable == true)
+                {
+                    EventProcessor.SetUpWebSocketEventClient(result.CallConnectionProperties.WebsocketUrl, result.CallConnectionProperties.CallConnectionId);
+                }
 
                 return Response.FromValue(result,
                     createCallResponse.GetRawResponse());
@@ -650,6 +665,11 @@ namespace Azure.Communication.CallAutomation
                     new CallConnectionProperties(createCallResponse.Value));
                 result.SetEventProcessor(EventProcessor, createCallResponse.Value.CallConnectionId, request.OperationContext);
 
+                if (request.WebsocketEnable == true)
+                {
+                    EventProcessor.SetUpWebSocketEventClient(result.CallConnectionProperties.WebsocketUrl, result.CallConnectionProperties.CallConnectionId);
+                }
+
                 return Response.FromValue(result,
                     createCallResponse.GetRawResponse());
             }
@@ -663,14 +683,15 @@ namespace Azure.Communication.CallAutomation
         private CreateCallRequestInternal CreateCallRequest(CreateCallOptions options)
         {
             CreateCallRequestInternal request = new(
-                targets: new List<CommunicationIdentifierModel>() { { CommunicationIdentifierSerializer.Serialize(options.CallInvite.Target) } },
-                callbackUri: options.CallbackUri.AbsoluteUri)
+                targets: new List<CommunicationIdentifierModel>() { { CommunicationIdentifierSerializer.Serialize(options.CallInvite.Target) } })
             {
                 SourceCallerIdNumber = options?.CallInvite?.SourceCallerIdNumber == null
                     ? null
                     : new PhoneNumberIdentifierModel(options?.CallInvite?.SourceCallerIdNumber?.PhoneNumber),
                 SourceDisplayName = options?.CallInvite?.SourceDisplayName,
                 SourceIdentity = Source == null ? null : new CommunicationUserIdentifierModel(Source.Id),
+                CallbackUri = options?.CallbackUri?.AbsoluteUri,
+                WebsocketEnable = options?.WebSocketEnable
             };
 
             request.CustomContext = new CustomContextInternal(
@@ -695,14 +716,15 @@ namespace Azure.Communication.CallAutomation
         private CreateCallRequestInternal CreateCallRequest(CreateGroupCallOptions options)
         {
             CreateCallRequestInternal request = new(
-                targets: options.Targets.Select(t => CommunicationIdentifierSerializer.Serialize(t)),
-                callbackUri: options.CallbackUri.AbsoluteUri)
+                targets: options.Targets.Select(t => CommunicationIdentifierSerializer.Serialize(t)))
             {
                 SourceCallerIdNumber = options?.SourceCallerIdNumber == null
                     ? null
                     : new PhoneNumberIdentifierModel(options?.SourceCallerIdNumber?.PhoneNumber),
                 SourceDisplayName = options?.SourceDisplayName,
                 SourceIdentity = Source == null ? null : new CommunicationUserIdentifierModel(Source.Id),
+                CallbackUri = options?.CallbackUri?.AbsoluteUri,
+                WebsocketEnable = options?.WebSocketEnable
             };
 
             request.CustomContext = new CustomContextInternal(

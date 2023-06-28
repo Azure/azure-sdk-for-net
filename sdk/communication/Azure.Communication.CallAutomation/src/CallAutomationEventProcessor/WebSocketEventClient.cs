@@ -1,16 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+using System;
 using System.Net.WebSockets;
 using System.Text;
 using System.Threading.Tasks;
 using System.Threading;
 
-namespace Azure.Communication.CallAutomation.CallAutomationEventProcessor
+namespace Azure.Communication.CallAutomation
 {
     internal class WebSocketEventClient
     {
         private readonly ClientWebSocket _client = new();
         private volatile bool _isEstablished = false;
+
         public bool IsEstablished
         {
             get { return _isEstablished; }

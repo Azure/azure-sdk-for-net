@@ -65,5 +65,10 @@ namespace Azure.Communication.CallAutomation
         /// Custom Context for Voip targets.
         /// </summary>
         public IDictionary<string, string> VoipHeaders { get; set; }
+
+        /// <summary>
+        /// Enable Websocket for events.
+        /// </summary>
+        public bool WebSocketEnable { get; set; } = false;
     }
 }

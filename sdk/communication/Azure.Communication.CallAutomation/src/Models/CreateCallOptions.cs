@@ -44,5 +44,10 @@ namespace Azure.Communication.CallAutomation
         /// The endpoint URL of the Azure Cognitive Services resource attached
         /// </summary>
         public Uri AzureCognitiveServicesEndpointUrl { get; set; }
+
+        /// <summary>
+        /// Enable Websocket for events.
+        /// </summary>
+        public bool WebSocketEnable { get; set; } = false;
     }
 }

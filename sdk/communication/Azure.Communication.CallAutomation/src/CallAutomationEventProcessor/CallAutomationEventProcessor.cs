@@ -19,11 +19,53 @@ namespace Azure.Communication.CallAutomation
         private EventBacklog _eventBacklog;
         private ConcurrentDictionary<(string, Type), EventHandler<EventProcessorArgs>> _ongoingEvents;
         private event EventHandler<EventProcessorArgs> _eventReceived;
+        private ConcurrentDictionary<string, WebSocketEventClient> _wsEventClients;
 
         internal CallAutomationEventProcessor()
         {
             _eventBacklog = new EventBacklog();
             _ongoingEvents = new ConcurrentDictionary<(string, Type), EventHandler<EventProcessorArgs>>();
+            _wsEventClients = new ConcurrentDictionary<string, WebSocketEventClient>();
+        }
+
+        /// <summary>
+        /// Set up the WebSocketEventClient and then put it into a dictionary to hold until the end of this EventProcessor's lifecycle.
+        /// </summary>
+        /// <param name="webSocketUrl">Url of the websocket.</param>
+        /// <param name="connectionId">Call connectionId.</param>
+        public void SetUpWebSocketEventClient(string webSocketUrl, string connectionId)
+        {
+            if (webSocketUrl == null || _wsEventClients.ContainsKey(connectionId))
+            {
+                return;
+            }
+
+            WebSocketEventClient wsEventClient = new WebSocketEventClient();
+
+            // Starting another thread to keep this client running. There is a while loop inside the logic to keep listening ws responses.
+            _ = Task.Run(async () =>
+            {
+                await wsEventClient.TryToEstablishWebsocketConnection(webSocketUrl, connectionId).ConfigureAwait(false);
+            });
+
+            // Wait for the websocket event client to be established.
+            while (!wsEventClient.IsEstablished)
+            {
+                Thread.Sleep(100);
+            }
+
+            // Save this client in the memory so that it is not terminated.
+            _wsEventClients.AddOrUpdate(connectionId, wsEventClient, (_, _) => wsEventClient);
+        }
+
+        /// <summary>
+        /// Remove WebSocketEventClient of target callConnectionId.
+        /// </summary>
+        /// <param name="connectionId">Call connectionId.</param>
+        public void RemoveWebSocketEventClient(string connectionId)
+        {
+            // Remove this client from the list.
+            _wsEventClients.TryRemove(connectionId, out _);
         }
 
         /// <summary>

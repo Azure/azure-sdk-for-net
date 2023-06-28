@@ -59,6 +59,8 @@ namespace Azure.Communication.CallAutomation
             {
                 SourceCallerIdNumber = new PhoneNumberIdentifier(callConnectionPropertiesDtoInternal.SourceCallerIdNumber.Value);
             }
+
+            WebsocketUrl = callConnectionPropertiesDtoInternal.WebsocketUrl;
         }
 
         /// <summary> The call connection id. </summary>
@@ -95,5 +97,8 @@ namespace Azure.Communication.CallAutomation
         /// Identity of the answering entity. Only populated when identity is provided in the request.
         /// </summary>
         public CommunicationUserIdentifier AnsweredByIdentifier { get; }
+
+        /// <summary> The Websocket URI. </summary>
+        public string WebsocketUrl { get; }
     }
 }
