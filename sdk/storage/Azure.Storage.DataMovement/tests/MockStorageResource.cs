@@ -14,6 +14,8 @@ namespace Azure.Storage.DataMovement.Tests
     {
         private readonly Stream _readStream;
 
+        public override string ResourceId => "Mock";
+
         public override TransferType TransferType => TransferType.Sequential;
 
         private readonly long _maxChunkSize;

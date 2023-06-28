@@ -18,6 +18,11 @@ namespace Azure.Storage.DataMovement
         private string _path;
 
         /// <summary>
+        /// The identifier for the type of storage resource.
+        /// </summary>
+        public override string ResourceId => "LocalFile";
+
+        /// <summary>
         /// Returns URL
         /// </summary>
         public override Uri Uri => throw new NotSupportedException();
