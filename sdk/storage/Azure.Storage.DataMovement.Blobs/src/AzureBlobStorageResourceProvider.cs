@@ -2,9 +2,9 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Threading;
+using System.Threading.Tasks;
 using Azure.Core;
-using Azure.Storage.Blobs;
-using Azure.Storage.Blobs.Specialized;
 using Azure.Storage.DataMovement.Models;
 
 namespace Azure.Storage.DataMovement.Blobs
@@ -14,31 +14,46 @@ namespace Azure.Storage.DataMovement.Blobs
     /// </summary>
     public class AzureBlobStorageResourceProvider
     {
+        private readonly DataTransferProperties _properties;
+        private readonly bool _asSource;
         private readonly AzureBlobStorageResources.ResourceType _resourceType;
-        private readonly Uri _uri;
 
-        internal AzureBlobStorageResourceProvider(AzureBlobStorageResources.ResourceType resourceType, Uri uri)
+        internal AzureBlobStorageResourceProvider(
+            DataTransferProperties properties,
+            bool asSource,
+            AzureBlobStorageResources.ResourceType resourceType)
         {
+            Argument.AssertNotNull(properties, nameof(properties));
             if (resourceType == AzureBlobStorageResources.ResourceType.Unknown)
             {
                 throw BadResourceTypeException(resourceType);
             }
+
+            _properties = properties;
+            _asSource = asSource;
             _resourceType = resourceType;
-            _uri = uri;
         }
 
         /// <summary>
         ///
         /// </summary>
         /// <returns></returns>
-        public StorageResource MakeResource(StorageSharedKeyCredential credential)
+        public async Task<StorageResource> MakeResourceAsync(StorageSharedKeyCredential credential, CancellationToken cancellationToken = default)
         {
             return _resourceType switch
             {
-                AzureBlobStorageResources.ResourceType.BlockBlob => MakeResource(new BlockBlobClient(_uri, credential)),
-                AzureBlobStorageResources.ResourceType.PageBlob => MakeResource(new PageBlobClient(_uri, credential)),
-                AzureBlobStorageResources.ResourceType.AppendBlob => MakeResource(new AppendBlobClient(_uri, credential)),
-                AzureBlobStorageResources.ResourceType.BlobContainer => MakeResource(new BlobContainerClient(_uri, credential)),
+                AzureBlobStorageResources.ResourceType.BlockBlob => await BlockBlobStorageResource
+                    .RehydrateResourceAsync(_properties, _asSource, credential, cancellationToken)
+                    .ConfigureAwait(false),
+                AzureBlobStorageResources.ResourceType.PageBlob => await PageBlobStorageResource
+                    .RehydrateResourceAsync(_properties, _asSource, credential, cancellationToken)
+                    .ConfigureAwait(false),
+                AzureBlobStorageResources.ResourceType.AppendBlob => await AppendBlobStorageResource
+                    .RehydrateResourceAsync(_properties, _asSource, credential, cancellationToken)
+                    .ConfigureAwait(false),
+                AzureBlobStorageResources.ResourceType.BlobContainer => await BlobStorageResourceContainer
+                    .RehydrateResourceAsync(_properties, _asSource, credential, cancellationToken)
+                    .ConfigureAwait(false),
                 _ => throw BadResourceTypeException(_resourceType)
             };
         }
@@ -47,14 +62,22 @@ namespace Azure.Storage.DataMovement.Blobs
         ///
         /// </summary>
         /// <returns></returns>
-        public StorageResource MakeResource(AzureSasCredential credential)
+        public async Task<StorageResource> MakeResourceAsync(AzureSasCredential credential, CancellationToken cancellationToken = default)
         {
             return _resourceType switch
             {
-                AzureBlobStorageResources.ResourceType.BlockBlob => MakeResource(new BlockBlobClient(_uri, credential)),
-                AzureBlobStorageResources.ResourceType.PageBlob => MakeResource(new PageBlobClient(_uri, credential)),
-                AzureBlobStorageResources.ResourceType.AppendBlob => MakeResource(new AppendBlobClient(_uri, credential)),
-                AzureBlobStorageResources.ResourceType.BlobContainer => MakeResource(new BlobContainerClient(_uri, credential)),
+                AzureBlobStorageResources.ResourceType.BlockBlob => await BlockBlobStorageResource
+                    .RehydrateResourceAsync(_properties, _asSource, credential, cancellationToken)
+                    .ConfigureAwait(false),
+                AzureBlobStorageResources.ResourceType.PageBlob => await BlockBlobStorageResource
+                    .RehydrateResourceAsync(_properties, _asSource, credential, cancellationToken)
+                    .ConfigureAwait(false),
+                AzureBlobStorageResources.ResourceType.AppendBlob => await BlockBlobStorageResource
+                    .RehydrateResourceAsync(_properties, _asSource, credential, cancellationToken)
+                    .ConfigureAwait(false),
+                AzureBlobStorageResources.ResourceType.BlobContainer => await BlockBlobStorageResource
+                    .RehydrateResourceAsync(_properties, _asSource, credential, cancellationToken)
+                    .ConfigureAwait(false),
                 _ => throw BadResourceTypeException(_resourceType)
             };
         }
@@ -63,14 +86,22 @@ namespace Azure.Storage.DataMovement.Blobs
         ///
         /// </summary>
         /// <returns></returns>
-        public StorageResource MakeResource(TokenCredential credential)
+        public async Task<StorageResource> MakeResourceAsync(TokenCredential credential, CancellationToken cancellationToken = default)
         {
             return _resourceType switch
             {
-                AzureBlobStorageResources.ResourceType.BlockBlob => MakeResource(new BlockBlobClient(_uri, credential)),
-                AzureBlobStorageResources.ResourceType.PageBlob => MakeResource(new PageBlobClient(_uri, credential)),
-                AzureBlobStorageResources.ResourceType.AppendBlob => MakeResource(new AppendBlobClient(_uri, credential)),
-                AzureBlobStorageResources.ResourceType.BlobContainer => MakeResource(new BlobContainerClient(_uri, credential)),
+                AzureBlobStorageResources.ResourceType.BlockBlob => await BlockBlobStorageResource
+                    .RehydrateResourceAsync(_properties, _asSource, credential, cancellationToken)
+                    .ConfigureAwait(false),
+                AzureBlobStorageResources.ResourceType.PageBlob => await BlockBlobStorageResource
+                    .RehydrateResourceAsync(_properties, _asSource, credential, cancellationToken)
+                    .ConfigureAwait(false),
+                AzureBlobStorageResources.ResourceType.AppendBlob => await BlockBlobStorageResource
+                    .RehydrateResourceAsync(_properties, _asSource, credential, cancellationToken)
+                    .ConfigureAwait(false),
+                AzureBlobStorageResources.ResourceType.BlobContainer => await BlockBlobStorageResource
+                    .RehydrateResourceAsync(_properties, _asSource, credential, cancellationToken)
+                    .ConfigureAwait(false),
                 _ => throw BadResourceTypeException(_resourceType)
             };
         }
@@ -79,36 +110,24 @@ namespace Azure.Storage.DataMovement.Blobs
         ///
         /// </summary>
         /// <returns></returns>
-        public StorageResource MakeResource()
+        public async Task<StorageResource> MakeResourceAsync(CancellationToken cancellationToken = default)
         {
             return _resourceType switch
             {
-                AzureBlobStorageResources.ResourceType.BlockBlob => MakeResource(new BlockBlobClient(_uri)),
-                AzureBlobStorageResources.ResourceType.PageBlob => MakeResource(new PageBlobClient(_uri)),
-                AzureBlobStorageResources.ResourceType.AppendBlob => MakeResource(new AppendBlobClient(_uri)),
-                AzureBlobStorageResources.ResourceType.BlobContainer => MakeResource(new BlobContainerClient(_uri)),
+                AzureBlobStorageResources.ResourceType.BlockBlob => await BlockBlobStorageResource
+                    .RehydrateResourceAsync(_properties, _asSource, cancellationToken)
+                    .ConfigureAwait(false),
+                AzureBlobStorageResources.ResourceType.PageBlob => await BlockBlobStorageResource
+                    .RehydrateResourceAsync(_properties, _asSource, cancellationToken)
+                    .ConfigureAwait(false),
+                AzureBlobStorageResources.ResourceType.AppendBlob => await BlockBlobStorageResource
+                    .RehydrateResourceAsync(_properties, _asSource, cancellationToken)
+                    .ConfigureAwait(false),
+                AzureBlobStorageResources.ResourceType.BlobContainer => await BlockBlobStorageResource
+                    .RehydrateResourceAsync(_properties, _asSource, cancellationToken)
+                    .ConfigureAwait(false),
                 _ => throw BadResourceTypeException(_resourceType)
             };
-        }
-
-        private BlobStorageResourceContainer MakeResource(BlobContainerClient client)
-        {
-            return new BlobStorageResourceContainer(client); // TODO get options
-        }
-
-        private BlockBlobStorageResource MakeResource(BlockBlobClient client)
-        {
-            return new BlockBlobStorageResource(client);
-        }
-
-        private PageBlobStorageResource MakeResource(PageBlobClient client)
-        {
-            return new PageBlobStorageResource(client);
-        }
-
-        private AppendBlobStorageResource MakeResource(AppendBlobClient client)
-        {
-            return new AppendBlobStorageResource(client);
         }
 
         private static ArgumentException BadResourceTypeException(AzureBlobStorageResources.ResourceType resourceType)

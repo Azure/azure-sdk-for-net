@@ -38,7 +38,7 @@ namespace Azure.Storage.DataMovement.Blobs
 
             if (sourceType != ResourceType.Unknown)
             {
-                sourceProvider = new AzureBlobStorageResourceProvider(sourceType, new Uri(info.SourcePath));
+                sourceProvider = new AzureBlobStorageResourceProvider(info, asSource: true, sourceType);
                 result = true;
             }
             else
@@ -48,7 +48,7 @@ namespace Azure.Storage.DataMovement.Blobs
 
             if (destinationType != ResourceType.Unknown)
             {
-                destinationProvider = new AzureBlobStorageResourceProvider(destinationType, new Uri(info.DestinationPath));
+                destinationProvider = new AzureBlobStorageResourceProvider(info, asSource: false, destinationType);
                 result = true;
             }
             else

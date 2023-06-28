@@ -29,7 +29,7 @@ namespace Azure.Storage.DataMovement
 
             if (sourceIsFilesystem)
             {
-                sourceProvider = new LocalStorageResourceProvider(info.IsContainer, info.SourcePath);
+                sourceProvider = new LocalStorageResourceProvider(info, asSource: true, info.IsContainer);
                 result = true;
             }
             else
@@ -39,7 +39,7 @@ namespace Azure.Storage.DataMovement
 
             if (destinationIsFilesystem)
             {
-                destinationProvider = new LocalStorageResourceProvider(info.IsContainer, info.DestinationPath);
+                destinationProvider = new LocalStorageResourceProvider(info, asSource: false, info.IsContainer);
                 result = true;
             }
             else

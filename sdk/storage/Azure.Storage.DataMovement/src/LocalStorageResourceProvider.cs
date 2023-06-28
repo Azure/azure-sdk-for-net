@@ -1,6 +1,9 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using Azure.Core;
+using Azure.Storage.DataMovement.Models;
+
 namespace Azure.Storage.DataMovement
 {
     /// <summary>
@@ -8,13 +11,19 @@ namespace Azure.Storage.DataMovement
     /// </summary>
     public class LocalStorageResourceProvider
     {
+        private readonly DataTransferProperties _properties;
+        private readonly bool _asSource;
         private readonly bool _isFolder;
-        private readonly string _path;
 
-        internal LocalStorageResourceProvider(bool isFolder, string path)
+        internal LocalStorageResourceProvider(
+            DataTransferProperties properties,
+            bool asSource,
+            bool isFolder)
         {
+            Argument.AssertNotNull(properties, nameof(properties));
+            _properties = properties;
+            _asSource = asSource;
             _isFolder = isFolder;
-            _path = path;
         }
 
         /// <summary>
@@ -27,11 +36,11 @@ namespace Azure.Storage.DataMovement
         {
             if (_isFolder)
             {
-                return new LocalDirectoryStorageResourceContainer(_path);
+                return LocalDirectoryStorageResourceContainer.RehydrateResource(_properties, _asSource);
             }
             else
             {
-                return new LocalFileStorageResource(_path);
+                return LocalFileStorageResource.RehydrateResource(_properties, _asSource);
             }
         }
     }
