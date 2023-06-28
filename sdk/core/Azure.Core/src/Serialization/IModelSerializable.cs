@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.IO;
 
 namespace Azure.Core.Serialization
@@ -13,8 +14,14 @@ namespace Azure.Core.Serialization
         /// <summary>
         /// .
         /// </summary>
-#pragma warning disable AZC0014 // Avoid using banned types in public API
-        Stream Serialize(ModelSerializerOptions options);
-#pragma warning restore AZC0014 // Avoid using banned types in public API
+        BinaryData Serialize(ModelSerializerOptions options);
+
+        /// <summary>
+        /// .
+        /// </summary>
+        /// <param name="data"></param>
+        /// <param name="options"></param>
+        /// <returns></returns>
+        object Deserialize(BinaryData data, ModelSerializerOptions options);
     }
 }

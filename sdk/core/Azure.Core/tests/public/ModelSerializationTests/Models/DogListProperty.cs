@@ -12,7 +12,7 @@ using Azure.Core.Serialization;
 namespace Azure.Core.Tests.Public.ModelSerializationTests
 {
     [JsonConverter(typeof(DogListPropertyConverter))]
-    public class DogListProperty : Animal, IJsonSerializableModel, IUtf8JsonSerializable
+    public class DogListProperty : Animal, IModelSerializable, IUtf8JsonSerializable
     {
         private Dictionary<string, BinaryData> RawData { get; set; } = new Dictionary<string, BinaryData>();
         public IList<string> FoodConsumed { get; private set; }
@@ -55,10 +55,20 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
         }
 
         #region Serialization
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonSerializableModel)this).Serialize(writer, new ModelSerializerOptions());
-
-        void IJsonSerializableModel.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
+            BinaryData data = ((IModelSerializable)this).Serialize(new ModelSerializerOptions());
+#if NET6_0_OR_GREATER
+            writer.WriteRawValue(data);
+#else
+            JsonSerializer.Serialize(writer, JsonDocument.Parse(data.ToString()).RootElement);
+#endif
+        }
+
+        BinaryData IModelSerializable.Serialize(ModelSerializerOptions options)
+        {
+            MemoryStream stream = new MemoryStream();
+            Utf8JsonWriter writer = new Utf8JsonWriter(stream);
             writer.WriteStartObject();
             if (!options.IgnoreReadOnlyProperties)
             {
@@ -97,6 +107,9 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
                 }
             }
             writer.WriteEndObject();
+            writer.Flush();
+            stream.Position = 0;
+            return new BinaryData(stream.ToArray());
         }
 
         internal static DogListProperty DeserializeDogListProperty(JsonElement element, ModelSerializerOptions options)
@@ -160,7 +173,12 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
 
             public override void Write(Utf8JsonWriter writer, DogListProperty value, JsonSerializerOptions options)
             {
-                ((IJsonSerializableModel)value).Serialize(writer, ConvertOptions(options));
+                BinaryData data = ((IModelSerializable)value).Serialize(ConvertOptions(options));
+#if NET6_0_OR_GREATER
+                writer.WriteRawValue(data);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(data.ToString()).RootElement);
+#endif
             }
 
             private ModelSerializerOptions ConvertOptions(JsonSerializerOptions options)
@@ -173,6 +191,10 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
                 serializableOptions.IgnoreReadOnlyProperties = options.IgnoreReadOnlyProperties;
                 return serializableOptions;
             }
+        }
+        object IModelSerializable.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            return DeserializeDogListProperty(JsonDocument.Parse(data.ToString()).RootElement, options);
         }
     }
 }

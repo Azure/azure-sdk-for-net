@@ -6,6 +6,7 @@ using System.Text;
 using NUnit.Framework;
 using Azure.Core.Tests.Public.ModelSerializationTests.Models;
 using Azure.Core.Serialization;
+using System;
 
 namespace Azure.Core.Tests.Public.ModelSerializationTests
 {
@@ -27,23 +28,22 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
                 "<ReadOnlyProperty>ReadOnly</ReadOnlyProperty>" +
                 "</Tag>";
 
-            var expectedSerializedString = "<Tag>\r\n  <Key>Color</Key>\r\n  <Value>Red</Value>\r\n";
+            var expectedSerializedString = "\uFEFF<?xml version=\"1.0\" encoding=\"utf-8\"?><Tag><Key>Color</Key><Value>Red</Value>";
             if (!ignoreReadonlyProperites)
-                expectedSerializedString += "  <ReadOnlyProperty>ReadOnly</ReadOnlyProperty>\r\n";
+                expectedSerializedString += "<ReadOnlyProperty>ReadOnly</ReadOnlyProperty>";
             expectedSerializedString += "</Tag>";
 
-            ModelXml model = ModelSerializer.DeserializeXml<ModelXml>(new MemoryStream(Encoding.UTF8.GetBytes(serviceResponse)), options);
+            ModelXml model = ModelSerializer.Deserialize<ModelXml>(new BinaryData(Encoding.UTF8.GetBytes(serviceResponse)), options);
 
             Assert.AreEqual("Color", model.Key);
             Assert.AreEqual("Red", model.Value);
             Assert.AreEqual("ReadOnly", model.ReadOnlyProperty);
-            stream = ModelSerializer.SerializeXml(model, options);
-            stream.Position = 0;
-            string roundTrip = new StreamReader(stream).ReadToEnd();
+            var data = ModelSerializer.Serialize(model, options);
+            string roundTrip = data.ToString();
 
             Assert.That(roundTrip, Is.EqualTo(expectedSerializedString));
 
-            ModelXml model2 = ModelSerializer.DeserializeXml<ModelXml>(new MemoryStream(Encoding.UTF8.GetBytes(roundTrip)), options);
+            ModelXml model2 = ModelSerializer.Deserialize<ModelXml>(new BinaryData(Encoding.UTF8.GetBytes(roundTrip)), options);
             VerifyModelXml(model, model2, ignoreReadonlyProperites);
         }
 

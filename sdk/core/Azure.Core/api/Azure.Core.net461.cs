@@ -1102,21 +1102,14 @@ namespace Azure.Core.Serialization
         System.Dynamic.DynamicMetaObject System.Dynamic.IDynamicMetaObjectProvider.GetMetaObject(System.Linq.Expressions.Expression parameter) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial interface IJsonSerializableModel
-    {
-        void Serialize(System.Text.Json.Utf8JsonWriter writer, Azure.Core.Serialization.ModelSerializerOptions options);
-    }
     public partial interface IMemberNameConverter
     {
         string? ConvertMemberName(System.Reflection.MemberInfo member);
     }
     public partial interface IModelSerializable
     {
-        System.IO.Stream Serialize(Azure.Core.Serialization.ModelSerializerOptions options);
-    }
-    public partial interface IXmlSerializableModel
-    {
-        void Serialize(System.Xml.XmlWriter writer, Azure.Core.Serialization.ModelSerializerOptions options);
+        object Deserialize(System.BinaryData data, Azure.Core.Serialization.ModelSerializerOptions options);
+        System.BinaryData Serialize(Azure.Core.Serialization.ModelSerializerOptions options);
     }
     public partial class JsonObjectSerializer : Azure.Core.Serialization.ObjectSerializer, Azure.Core.Serialization.IMemberNameConverter
     {
@@ -1136,24 +1129,19 @@ namespace Azure.Core.Serialization
         UseExact = 0,
         CamelCase = 1,
     }
-    public partial class ModelJsonConverter : System.Text.Json.Serialization.JsonConverter<Azure.Core.Serialization.IJsonSerializableModel>
+    public partial class ModelJsonConverter : System.Text.Json.Serialization.JsonConverter<Azure.Core.Serialization.IModelSerializable>
     {
         public ModelJsonConverter() { }
         public ModelJsonConverter(bool ignoreAdditionalProperties) { }
         public bool IgnoreAdditionalProperties { get { throw null; } set { } }
         public override bool CanConvert(System.Type typeToConvert) { throw null; }
-        public override Azure.Core.Serialization.IJsonSerializableModel Read(ref System.Text.Json.Utf8JsonReader reader, System.Type typeToConvert, System.Text.Json.JsonSerializerOptions options) { throw null; }
-        public override void Write(System.Text.Json.Utf8JsonWriter writer, Azure.Core.Serialization.IJsonSerializableModel value, System.Text.Json.JsonSerializerOptions options) { }
+        public override Azure.Core.Serialization.IModelSerializable Read(ref System.Text.Json.Utf8JsonReader reader, System.Type typeToConvert, System.Text.Json.JsonSerializerOptions options) { throw null; }
+        public override void Write(System.Text.Json.Utf8JsonWriter writer, Azure.Core.Serialization.IModelSerializable value, System.Text.Json.JsonSerializerOptions options) { }
     }
     public static partial class ModelSerializer
     {
-        public static T DeserializeJson<T>(System.IO.Stream stream, Azure.Core.Serialization.ModelSerializerOptions? options = null) where T : class, Azure.Core.Serialization.IJsonSerializableModel { throw null; }
-        public static T DeserializeJson<T>(string json, Azure.Core.Serialization.ModelSerializerOptions? options = null) where T : class, Azure.Core.Serialization.IJsonSerializableModel { throw null; }
-        public static T DeserializeXml<T>(System.IO.Stream stream, Azure.Core.Serialization.ModelSerializerOptions? options = null) where T : class, Azure.Core.Serialization.IXmlSerializableModel { throw null; }
-        public static T Deserialize<T>(System.IO.Stream stream, Azure.Core.Serialization.ModelSerializerOptions? options = null) where T : class, Azure.Core.Serialization.IModelSerializable { throw null; }
-        public static System.IO.Stream SerializeJson<T>(T model, Azure.Core.Serialization.ModelSerializerOptions? options = null) where T : class, Azure.Core.Serialization.IJsonSerializableModel { throw null; }
-        public static System.IO.Stream SerializeXml<T>(T model, Azure.Core.Serialization.ModelSerializerOptions? options = null) where T : class, Azure.Core.Serialization.IXmlSerializableModel { throw null; }
-        public static System.IO.Stream Serialize<T>(T model, Azure.Core.Serialization.ModelSerializerOptions? options = null) where T : class, Azure.Core.Serialization.IModelSerializable { throw null; }
+        public static T Deserialize<T>(System.BinaryData data, Azure.Core.Serialization.ModelSerializerOptions? options = null) where T : class, Azure.Core.Serialization.IModelSerializable { throw null; }
+        public static System.BinaryData Serialize<T>(T model, Azure.Core.Serialization.ModelSerializerOptions? options = null) where T : class, Azure.Core.Serialization.IModelSerializable { throw null; }
     }
     public partial class ModelSerializerOptions
     {

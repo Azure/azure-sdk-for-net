@@ -8,12 +8,15 @@ using Azure.Core.Serialization;
 using NUnit.Framework;
 using System.Xml.Serialization;
 using System.IO;
+using System.Text.Json;
 
 namespace Azure.Core.Tests.Public.ModelSerializationTests.Models
 {
     [XmlRoot("Tag")]
     internal class XmlModelForCombinedInterface : IXmlSerializable, IModelSerializable
     {
+        public XmlModelForCombinedInterface() { }
+
         /// <summary> Initializes a new instance of ModelXml for testing. </summary>
         /// <param name="key"></param>
         /// <param name="value"></param>
@@ -38,10 +41,7 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests.Models
         [XmlElement("ReadOnlyProperty")]
         public string ReadOnlyProperty { get; }
 
-        void IXmlSerializable.Write(XmlWriter writer, string nameHint) => ((IModelSerializable)this).Serialize(new ModelSerializerOptions() { NameHint = nameHint });
-
-        internal static XmlModelForCombinedInterface DeserializeXmlModelForCombinedInterface(Stream stream, ModelSerializerOptions options = default)
-            => DeserializeXmlModelForCombinedInterface(XElement.Load(stream), options);
+        void IXmlSerializable.Write(XmlWriter writer, string nameHint) => Serialize(writer, new ModelSerializerOptions() { NameHint = nameHint });
 
         internal static XmlModelForCombinedInterface DeserializeXmlModelForCombinedInterface(XElement element, ModelSerializerOptions options = default)
         {
@@ -63,16 +63,7 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests.Models
             return new XmlModelForCombinedInterface(key, value, readOnlyProperty);
         }
 
-        Stream IModelSerializable.Serialize(ModelSerializerOptions options)
-        {
-            Stream stream = new MemoryStream();
-            XmlWriter writer = XmlWriter.Create(stream);
-            SerializeWithWriter(writer, options);
-            writer.Flush();
-            return stream;
-        }
-
-        private void SerializeWithWriter(XmlWriter writer, ModelSerializerOptions options)
+        private void Serialize(XmlWriter writer, ModelSerializerOptions options)
         {
             writer.WriteStartElement(options.NameHint ?? "Tag");
             writer.WriteStartElement("Key");
@@ -89,5 +80,17 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests.Models
             }
             writer.WriteEndElement();
         }
+
+        BinaryData IModelSerializable.Serialize(ModelSerializerOptions options)
+        {
+            MemoryStream stream = new MemoryStream();
+            XmlWriter writer = XmlWriter.Create(stream);
+            Serialize(writer, options);
+            writer.Flush();
+            stream.Position = 0;
+            return new BinaryData(stream.ToArray());
+        }
+
+        object IModelSerializable.Deserialize(BinaryData data, ModelSerializerOptions options) => DeserializeXmlModelForCombinedInterface(XElement.Load(data.ToStream()), options);
     }
 }
