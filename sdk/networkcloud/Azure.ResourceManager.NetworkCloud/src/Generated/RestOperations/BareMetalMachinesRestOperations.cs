@@ -365,7 +365,7 @@ namespace Azure.ResourceManager.NetworkCloud
             return message;
         }
 
-        /// <summary> Cordon the provided bare metal machine&apos;s Kubernetes node. </summary>
+        /// <summary> Cordon the provided bare metal machine's Kubernetes node. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="bareMetalMachineName"> The name of the bare metal machine. </param>
@@ -391,7 +391,7 @@ namespace Azure.ResourceManager.NetworkCloud
             }
         }
 
-        /// <summary> Cordon the provided bare metal machine&apos;s Kubernetes node. </summary>
+        /// <summary> Cordon the provided bare metal machine's Kubernetes node. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="bareMetalMachineName"> The name of the bare metal machine. </param>
@@ -1048,7 +1048,7 @@ namespace Azure.ResourceManager.NetworkCloud
             return message;
         }
 
-        /// <summary> Uncordon the provided bare metal machine&apos;s Kubernetes node. </summary>
+        /// <summary> Uncordon the provided bare metal machine's Kubernetes node. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="bareMetalMachineName"> The name of the bare metal machine. </param>
@@ -1073,7 +1073,7 @@ namespace Azure.ResourceManager.NetworkCloud
             }
         }
 
-        /// <summary> Uncordon the provided bare metal machine&apos;s Kubernetes node. </summary>
+        /// <summary> Uncordon the provided bare metal machine's Kubernetes node. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="bareMetalMachineName"> The name of the bare metal machine. </param>

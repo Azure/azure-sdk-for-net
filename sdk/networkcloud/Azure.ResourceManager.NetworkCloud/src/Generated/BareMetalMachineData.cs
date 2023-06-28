@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <param name="hardwareInventory"> The hardware inventory, including information acquired from the model/sku information and from the ironic inspector. </param>
         /// <param name="hardwareValidationStatus"> The details of the latest hardware validation performed for this bare metal machine. </param>
         /// <param name="hybridAksClustersAssociatedIds"> Field Deprecated. These fields will be empty/omitted. The list of the resource IDs for the HybridAksClusters that have nodes hosted on this bare metal machine. </param>
-        /// <param name="kubernetesNodeName"> The name of this machine represented by the host object in the Cluster&apos;s Kubernetes control plane. </param>
+        /// <param name="kubernetesNodeName"> The name of this machine represented by the host object in the Cluster's Kubernetes control plane. </param>
         /// <param name="kubernetesVersion"> The version of Kubernetes running on this machine. </param>
         /// <param name="machineDetails"> The custom details provided by the customer. </param>
         /// <param name="machineName"> The OS-level hostname assigned to this machine. </param>
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <param name="rackSlot"> The rack slot in which this bare metal machine is located, ordered from the bottom up i.e. the lowest slot is 1. </param>
         /// <param name="readyState"> The indicator of whether the bare metal machine is ready to receive workloads. </param>
         /// <param name="serialNumber"> The serial number of the bare metal machine. </param>
-        /// <param name="serviceTag"> The discovered value of the machine&apos;s service tag. </param>
+        /// <param name="serviceTag"> The discovered value of the machine's service tag. </param>
         /// <param name="virtualMachinesAssociatedIds"> Field Deprecated. These fields will be empty/omitted. The list of the resource IDs for the VirtualMachines that are hosted on this bare metal machine. </param>
         internal BareMetalMachineData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ExtendedLocation extendedLocation, IReadOnlyList<string> associatedResourceIds, string bmcConnectionString, AdministrativeCredentials bmcCredentials, string bmcMacAddress, string bootMacAddress, string clusterId, BareMetalMachineCordonStatus? cordonStatus, BareMetalMachineDetailedStatus? detailedStatus, string detailedStatusMessage, HardwareInventory hardwareInventory, HardwareValidationStatus hardwareValidationStatus, IReadOnlyList<string> hybridAksClustersAssociatedIds, string kubernetesNodeName, string kubernetesVersion, string machineDetails, string machineName, string machineSkuId, string oamIPv4Address, string oamIPv6Address, string osImage, BareMetalMachinePowerState? powerState, BareMetalMachineProvisioningState? provisioningState, string rackId, long rackSlot, BareMetalMachineReadyState? readyState, string serialNumber, string serviceTag, IReadOnlyList<string> virtualMachinesAssociatedIds) : base(id, name, resourceType, systemData, tags, location)
         {
