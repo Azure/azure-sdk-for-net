@@ -71,6 +71,7 @@ namespace Azure.Communication.CallAutomation
                         else
                         {
                             // Handle the event
+                            Console.WriteLine(msg);
                         }
                     }
                 }
