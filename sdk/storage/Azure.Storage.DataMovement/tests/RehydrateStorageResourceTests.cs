@@ -107,9 +107,10 @@ namespace Azure.Storage.DataMovement.Tests
         }
 
         [Test]
-        [TestCase(true)]
-        [TestCase(false)]
-        public async Task RehydrateLocalFile(bool isSource)
+        [Combinatorial]
+        public async Task RehydrateLocalFile(
+            [Values(true, false)] bool isSource,
+            [Values(true, false)] bool useProvider)
         {
             using DisposingLocalDirectory test = DisposingLocalDirectory.GetTestDirectory();
             TransferCheckpointer checkpointer = new LocalTransferCheckpointer(test.DirectoryPath);
@@ -135,16 +136,19 @@ namespace Azure.Storage.DataMovement.Tests
                 destinationType,
                 new List<string>() { destinationPath } );
 
-            LocalFileStorageResource storageResource =
-                LocalFileStorageResource.RehydrateResource(transferProperties, isSource);
+            LocalFileStorageResource storageResource = useProvider
+                ? (LocalFileStorageResource) new LocalStorageResourceProvider(
+                    transferProperties, isSource, isFolder: false).MakeResource()
+                : LocalFileStorageResource.RehydrateResource(transferProperties, isSource);
 
             Assert.AreEqual(originalPath, storageResource.Path);
         }
 
         [Test]
-        [TestCase(true)]
-        [TestCase(false)]
-        public async Task RehydrateLocalDirectory(bool isSource)
+        [Combinatorial]
+        public async Task RehydrateLocalDirectory(
+            [Values(true, false)] bool isSource,
+            [Values(true, false)] bool useProvider)
         {
             using DisposingLocalDirectory test = DisposingLocalDirectory.GetTestDirectory();
             TransferCheckpointer checkpointer = new LocalTransferCheckpointer(test.DirectoryPath);
@@ -180,8 +184,10 @@ namespace Azure.Storage.DataMovement.Tests
                 destinationPaths,
                 jobPartCount);
 
-            LocalDirectoryStorageResourceContainer storageResource =
-                LocalDirectoryStorageResourceContainer.RehydrateResource(transferProperties, isSource);
+            LocalDirectoryStorageResourceContainer storageResource = useProvider
+                ? (LocalDirectoryStorageResourceContainer) new LocalStorageResourceProvider(
+                    transferProperties, isSource, isFolder: true).MakeResource()
+                : LocalDirectoryStorageResourceContainer.RehydrateResource(transferProperties, isSource);
 
             Assert.AreEqual(originalPath, storageResource.Path);
         }
