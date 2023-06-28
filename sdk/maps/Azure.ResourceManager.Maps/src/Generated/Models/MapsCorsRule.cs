@@ -13,21 +13,21 @@ using Azure.Core;
 namespace Azure.ResourceManager.Maps.Models
 {
     /// <summary> Specifies a CORS rule for the Map Account. </summary>
-    public partial class CorsRule
+    public partial class MapsCorsRule
     {
-        /// <summary> Initializes a new instance of CorsRule. </summary>
+        /// <summary> Initializes a new instance of MapsCorsRule. </summary>
         /// <param name="allowedOrigins"> Required if CorsRule element is present. A list of origin domains that will be allowed via CORS, or "*" to allow all domains. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="allowedOrigins"/> is null. </exception>
-        public CorsRule(IEnumerable<string> allowedOrigins)
+        public MapsCorsRule(IEnumerable<string> allowedOrigins)
         {
             Argument.AssertNotNull(allowedOrigins, nameof(allowedOrigins));
 
             AllowedOrigins = allowedOrigins.ToList();
         }
 
-        /// <summary> Initializes a new instance of CorsRule. </summary>
+        /// <summary> Initializes a new instance of MapsCorsRule. </summary>
         /// <param name="allowedOrigins"> Required if CorsRule element is present. A list of origin domains that will be allowed via CORS, or "*" to allow all domains. </param>
-        internal CorsRule(IList<string> allowedOrigins)
+        internal MapsCorsRule(IList<string> allowedOrigins)
         {
             AllowedOrigins = allowedOrigins;
         }

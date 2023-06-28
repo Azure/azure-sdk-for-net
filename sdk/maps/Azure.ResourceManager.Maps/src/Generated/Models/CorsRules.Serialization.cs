@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Maps.Models
             {
                 return null;
             }
-            Optional<IList<CorsRule>> corsRules = default;
+            Optional<IList<MapsCorsRule>> corsRules = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("corsRules"u8))
@@ -44,10 +44,10 @@ namespace Azure.ResourceManager.Maps.Models
                     {
                         continue;
                     }
-                    List<CorsRule> array = new List<CorsRule>();
+                    List<MapsCorsRule> array = new List<MapsCorsRule>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CorsRule.DeserializeCorsRule(item));
+                        array.Add(MapsCorsRule.DeserializeMapsCorsRule(item));
                     }
                     corsRules = array;
                     continue;

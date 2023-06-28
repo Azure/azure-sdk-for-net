@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Maps.Models
         public MapsAccountPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
-            LinkedResources = new ChangeTrackingList<LinkedResource>();
+            LinkedResources = new ChangeTrackingList<MapsLinkedResource>();
         }
 
         /// <summary> Gets or sets a list of key value pairs that describe the resource. These tags can be used in viewing and grouping this resource (across resource groups). A maximum of 15 tags can be provided for a resource. Each tag must have a key no greater than 128 characters and value no greater than 256 characters. </summary>
@@ -37,11 +37,11 @@ namespace Azure.ResourceManager.Maps.Models
         /// <summary> The provisioning state of the Map account resource. </summary>
         public string ProvisioningState { get; }
         /// <summary> Sets the resources to be used for Managed Identities based operations for the Map account resource. </summary>
-        public IList<LinkedResource> LinkedResources { get; }
+        public IList<MapsLinkedResource> LinkedResources { get; }
         /// <summary> Specifies CORS rules for the Blob service. You can include up to five CorsRule elements in the request. If no CorsRule elements are included in the request body, all CORS rules will be deleted, and CORS will be disabled for the Blob service. </summary>
         internal CorsRules Cors { get; set; }
         /// <summary> The list of CORS rules. You can include up to five CorsRule elements in the request. </summary>
-        public IList<CorsRule> CorsRulesValue
+        public IList<MapsCorsRule> CorsRulesValue
         {
             get
             {

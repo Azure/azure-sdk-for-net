@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Maps.Models
             Optional<Guid> uniqueId = default;
             Optional<bool> disableLocalAuth = default;
             Optional<string> provisioningState = default;
-            Optional<IList<LinkedResource>> linkedResources = default;
+            Optional<IList<MapsLinkedResource>> linkedResources = default;
             Optional<CorsRules> cors = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -82,10 +82,10 @@ namespace Azure.ResourceManager.Maps.Models
                     {
                         continue;
                     }
-                    List<LinkedResource> array = new List<LinkedResource>();
+                    List<MapsLinkedResource> array = new List<MapsLinkedResource>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(LinkedResource.DeserializeLinkedResource(item));
+                        array.Add(MapsLinkedResource.DeserializeMapsLinkedResource(item));
                     }
                     linkedResources = array;
                     continue;

@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Maps.Models
 {
-    public partial class LinkedResource : IUtf8JsonSerializable
+    public partial class MapsLinkedResource : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Maps.Models
             writer.WriteEndObject();
         }
 
-        internal static LinkedResource DeserializeLinkedResource(JsonElement element)
+        internal static MapsLinkedResource DeserializeMapsLinkedResource(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Maps.Models
                     continue;
                 }
             }
-            return new LinkedResource(uniqueName, id);
+            return new MapsLinkedResource(uniqueName, id);
         }
     }
 }

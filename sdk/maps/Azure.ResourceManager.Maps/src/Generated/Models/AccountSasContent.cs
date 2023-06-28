@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Maps.Models
         /// <param name="start"> The date time offset of when the token validity begins. For example "2017-05-24T10:42:03.1567373Z". </param>
         /// <param name="expiry"> The date time offset of when the token validity expires. For example "2017-05-24T10:42:03.1567373Z". </param>
         /// <exception cref="ArgumentNullException"> <paramref name="principalId"/>, <paramref name="start"/> or <paramref name="expiry"/> is null. </exception>
-        public AccountSasContent(SigningKey signingKey, string principalId, int maxRatePerSecond, string start, string expiry)
+        public AccountSasContent(MapsSigningKey signingKey, string principalId, int maxRatePerSecond, string start, string expiry)
         {
             Argument.AssertNotNull(principalId, nameof(principalId));
             Argument.AssertNotNull(start, nameof(start));
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Maps.Models
         }
 
         /// <summary> The Map account key to use for signing. </summary>
-        public SigningKey SigningKey { get; }
+        public MapsSigningKey SigningKey { get; }
         /// <summary> The principal Id also known as the object Id of a User Assigned Managed Identity currently assigned to the Map Account. To assign a Managed Identity of the account, use operation Create or Update an assign a User Assigned Identity resource Id. </summary>
         public string PrincipalId { get; }
         /// <summary> Optional, allows control of which region locations are permitted access to Azure Maps REST APIs with the SAS token. Example: "eastus", "westus2". Omitting this parameter will allow all region locations to be accessible. </summary>

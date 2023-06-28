@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Maps.Models
 {
-    public partial class CorsRule : IUtf8JsonSerializable
+    public partial class MapsCorsRule : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Maps.Models
             writer.WriteEndObject();
         }
 
-        internal static CorsRule DeserializeCorsRule(JsonElement element)
+        internal static MapsCorsRule DeserializeMapsCorsRule(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Maps.Models
                     continue;
                 }
             }
-            return new CorsRule(allowedOrigins);
+            return new MapsCorsRule(allowedOrigins);
         }
     }
 }

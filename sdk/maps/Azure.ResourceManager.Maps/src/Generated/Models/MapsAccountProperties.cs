@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Maps.Models
         /// <summary> Initializes a new instance of MapsAccountProperties. </summary>
         public MapsAccountProperties()
         {
-            LinkedResources = new ChangeTrackingList<LinkedResource>();
+            LinkedResources = new ChangeTrackingList<MapsLinkedResource>();
         }
 
         /// <summary> Initializes a new instance of MapsAccountProperties. </summary>
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Maps.Models
         /// <param name="provisioningState"> The provisioning state of the Map account resource. </param>
         /// <param name="linkedResources"> Sets the resources to be used for Managed Identities based operations for the Map account resource. </param>
         /// <param name="cors"> Specifies CORS rules for the Blob service. You can include up to five CorsRule elements in the request. If no CorsRule elements are included in the request body, all CORS rules will be deleted, and CORS will be disabled for the Blob service. </param>
-        internal MapsAccountProperties(Guid? uniqueId, bool? disableLocalAuth, string provisioningState, IList<LinkedResource> linkedResources, CorsRules cors)
+        internal MapsAccountProperties(Guid? uniqueId, bool? disableLocalAuth, string provisioningState, IList<MapsLinkedResource> linkedResources, CorsRules cors)
         {
             UniqueId = uniqueId;
             DisableLocalAuth = disableLocalAuth;
@@ -42,11 +42,11 @@ namespace Azure.ResourceManager.Maps.Models
         /// <summary> The provisioning state of the Map account resource. </summary>
         public string ProvisioningState { get; }
         /// <summary> Sets the resources to be used for Managed Identities based operations for the Map account resource. </summary>
-        public IList<LinkedResource> LinkedResources { get; }
+        public IList<MapsLinkedResource> LinkedResources { get; }
         /// <summary> Specifies CORS rules for the Blob service. You can include up to five CorsRule elements in the request. If no CorsRule elements are included in the request body, all CORS rules will be deleted, and CORS will be disabled for the Blob service. </summary>
         internal CorsRules Cors { get; set; }
         /// <summary> The list of CORS rules. You can include up to five CorsRule elements in the request. </summary>
-        public IList<CorsRule> CorsRulesValue
+        public IList<MapsCorsRule> CorsRulesValue
         {
             get
             {

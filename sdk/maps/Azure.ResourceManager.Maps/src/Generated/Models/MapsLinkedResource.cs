@@ -11,13 +11,13 @@ using Azure.Core;
 namespace Azure.ResourceManager.Maps.Models
 {
     /// <summary> Linked resource is reference to a resource deployed in an Azure subscription, add the linked resource `uniqueName` value as an optional parameter for operations on Azure Maps Geospatial REST APIs. </summary>
-    public partial class LinkedResource
+    public partial class MapsLinkedResource
     {
-        /// <summary> Initializes a new instance of LinkedResource. </summary>
+        /// <summary> Initializes a new instance of MapsLinkedResource. </summary>
         /// <param name="uniqueName"> A provided name which uniquely identifies the linked resource. </param>
         /// <param name="id"> ARM resource id in the form: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/accounts/{storageName}'. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="uniqueName"/> or <paramref name="id"/> is null. </exception>
-        public LinkedResource(string uniqueName, string id)
+        public MapsLinkedResource(string uniqueName, string id)
         {
             Argument.AssertNotNull(uniqueName, nameof(uniqueName));
             Argument.AssertNotNull(id, nameof(id));

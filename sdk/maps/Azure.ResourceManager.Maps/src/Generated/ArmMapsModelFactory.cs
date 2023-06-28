@@ -52,10 +52,10 @@ namespace Azure.ResourceManager.Maps.Models
         /// <param name="linkedResources"> Sets the resources to be used for Managed Identities based operations for the Map account resource. </param>
         /// <param name="corsRulesValue"> Specifies CORS rules for the Blob service. You can include up to five CorsRule elements in the request. If no CorsRule elements are included in the request body, all CORS rules will be deleted, and CORS will be disabled for the Blob service. </param>
         /// <returns> A new <see cref="Models.MapsAccountProperties"/> instance for mocking. </returns>
-        public static MapsAccountProperties MapsAccountProperties(Guid? uniqueId = null, bool? disableLocalAuth = null, string provisioningState = null, IEnumerable<LinkedResource> linkedResources = null, IEnumerable<CorsRule> corsRulesValue = null)
+        public static MapsAccountProperties MapsAccountProperties(Guid? uniqueId = null, bool? disableLocalAuth = null, string provisioningState = null, IEnumerable<MapsLinkedResource> linkedResources = null, IEnumerable<MapsCorsRule> corsRulesValue = null)
         {
-            linkedResources ??= new List<LinkedResource>();
-            corsRulesValue ??= new List<CorsRule>();
+            linkedResources ??= new List<MapsLinkedResource>();
+            corsRulesValue ??= new List<MapsCorsRule>();
 
             return new MapsAccountProperties(uniqueId, disableLocalAuth, provisioningState, linkedResources?.ToList(), corsRulesValue != null ? new CorsRules(corsRulesValue?.ToList()) : null);
         }
