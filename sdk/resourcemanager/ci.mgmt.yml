@@ -81,7 +81,7 @@ trigger:
     - sdk/grafana/Azure.ResourceManager.Grafana
     - sdk/graphservices/Azure.ResourceManager.GraphServices
     - sdk/guestconfiguration/Azure.ResourceManager.GuestConfiguration
-    - sdk/hardwaresecuritymodules/Azure.ResourceManager.Hardwaresecuritymodules
+    - sdk/hardwaresecuritymodules/Azure.ResourceManager.HardwareSecurityModules
     - sdk/hdinsight/Azure.ResourceManager.HDInsight
     - sdk/healthbot/Azure.ResourceManager.HealthBot
     - sdk/healthcareapis/Azure.ResourceManager.HealthcareApis
@@ -259,7 +259,7 @@ pr:
     - sdk/grafana/Azure.ResourceManager.Grafana
     - sdk/graphservices/Azure.ResourceManager.GraphServices
     - sdk/guestconfiguration/Azure.ResourceManager.GuestConfiguration
-    - sdk/hardwaresecuritymodules/Azure.ResourceManager.Hardwaresecuritymodules
+    - sdk/hardwaresecuritymodules/Azure.ResourceManager.HardwareSecurityModules
     - sdk/hdinsight/Azure.ResourceManager.HDInsight
     - sdk/healthbot/Azure.ResourceManager.HealthBot
     - sdk/healthcareapis/Azure.ResourceManager.HealthcareApis
