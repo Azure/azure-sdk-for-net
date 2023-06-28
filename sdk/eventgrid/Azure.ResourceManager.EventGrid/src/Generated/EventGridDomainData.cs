@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.EventGrid
         /// <param name="endpoint"> Endpoint for the Event Grid Domain Resource which is used for publishing the events. </param>
         /// <param name="inputSchema"> This determines the format that Event Grid should expect for incoming events published to the Event Grid Domain Resource. </param>
         /// <param name="eventTypeInfo">
-        /// Event Type Information for the domain. This information is provided by the publisher and can be used by the 
+        /// Event Type Information for the domain. This information is provided by the publisher and can be used by the
         /// subscriber to view different types of events that are published.
         /// </param>
         /// <param name="inputSchemaMapping">
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.EventGrid
         /// <summary> This determines the format that Event Grid should expect for incoming events published to the Event Grid Domain Resource. </summary>
         public EventGridInputSchema? InputSchema { get; set; }
         /// <summary>
-        /// Event Type Information for the domain. This information is provided by the publisher and can be used by the 
+        /// Event Type Information for the domain. This information is provided by the publisher and can be used by the
         /// subscriber to view different types of events that are published.
         /// </summary>
         public PartnerTopicEventTypeInfo EventTypeInfo { get; set; }
