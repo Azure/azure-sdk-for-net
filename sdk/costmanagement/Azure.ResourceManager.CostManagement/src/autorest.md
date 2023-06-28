@@ -78,6 +78,7 @@ rename-mapping:
   PivotType: ViewPivotType
   MetricType: ViewMetricType
   KpiType: ViewKpiType
+  KpiProperties: ViewKpiProperties
   ChartType: ViewChartType
   PivotProperties: ViewPivotProperties
   ErrorDetails: ExportRunErrorDetails
