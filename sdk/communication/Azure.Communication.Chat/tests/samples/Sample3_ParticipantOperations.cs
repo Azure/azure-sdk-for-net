@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
 using Azure.Communication.Identity;
 using Azure.Core;
@@ -10,6 +11,7 @@ using NUnit.Framework;
 
 namespace Azure.Communication.Chat.Tests.samples
 {
+    [ExcludeFromCodeCoverage]
     public partial class Sample3_ParticipantOperations : SamplesBase<ChatTestEnvironment>
     {
         // This sample demonstrates the operations that can be performed on a thread for participants: add, get and remove participants
