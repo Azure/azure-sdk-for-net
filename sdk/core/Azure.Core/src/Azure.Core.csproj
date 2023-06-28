@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <Description>This is the implementation of the Azure Client Pipeline</Description>
     <AssemblyTitle>Microsoft Azure Client Pipeline</AssemblyTitle>
@@ -59,6 +59,7 @@
     <Compile Include="Shared\HttpMessageSanitizer.cs" />
     <Compile Include="Shared\InitializationConstructorAttribute.cs" />
     <Compile Include="Shared\Multipart\MemoryResponse.cs" />
+    <Compile Include="Shared\MutableJsonPatchNode.cs" />
     <Compile Include="Shared\MutableJsonChange.cs" />
     <Compile Include="Shared\MutableJsonChangeKind.cs" />
     <Compile Include="Shared\MutableJsonDocument.ChangeTracker.cs" />
