@@ -15,10 +15,10 @@ namespace Azure.Communication.JobRouter
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(WaitForActivation))
+            if (Optional.IsDefined(SuspendMatching))
             {
-                writer.WritePropertyName("waitForActivation"u8);
-                writer.WriteBooleanValue(WaitForActivation.Value);
+                writer.WritePropertyName("suspendMatching"u8);
+                writer.WriteBooleanValue(SuspendMatching.Value);
             }
             writer.WriteEndObject();
         }

@@ -70,11 +70,11 @@ namespace Azure.ResourceManager.SignalR.Models
         /// <param name="hostNamePrefix"> Deprecated. </param>
         /// <param name="features">
         /// List of the featureFlags.
-        /// 
+        ///
         /// FeatureFlags that are not included in the parameters for the update operation will not be modified.
-        /// And the response will only include featureFlags that are explicitly set. 
+        /// And the response will only include featureFlags that are explicitly set.
         /// When a featureFlag is not explicitly set, its globally default value will be used
-        /// But keep in mind, the default value doesn&apos;t mean &quot;false&quot;. It varies in terms of different FeatureFlags.
+        /// But keep in mind, the default value doesn't mean "false". It varies in terms of different FeatureFlags.
         /// </param>
         /// <param name="liveTraceConfiguration"> Live trace configuration of a Microsoft.SignalRService resource. </param>
         /// <param name="resourceLogCategories"> Resource log configuration of a Microsoft.SignalRService resource. </param>
@@ -82,19 +82,19 @@ namespace Azure.ResourceManager.SignalR.Models
         /// <param name="upstreamTemplates"> The settings for the Upstream when the service is in server-less mode. </param>
         /// <param name="networkACLs"> Network ACLs for the resource. </param>
         /// <param name="publicNetworkAccess">
-        /// Enable or disable public network access. Default to &quot;Enabled&quot;.
-        /// When it&apos;s Enabled, network ACLs still apply.
-        /// When it&apos;s Disabled, public network access is always disabled no matter what you set in network ACLs.
+        /// Enable or disable public network access. Default to "Enabled".
+        /// When it's Enabled, network ACLs still apply.
+        /// When it's Disabled, public network access is always disabled no matter what you set in network ACLs.
         /// </param>
         /// <param name="disableLocalAuth">
         /// DisableLocalAuth
         /// Enable or disable local auth with AccessKey
-        /// When set as true, connection with AccessKey=xxx won&apos;t work.
+        /// When set as true, connection with AccessKey=xxx won't work.
         /// </param>
         /// <param name="disableAadAuth">
         /// DisableLocalAuth
         /// Enable or disable aad auth
-        /// When set as true, connection with AuthType=aad won&apos;t work.
+        /// When set as true, connection with AuthType=aad won't work.
         /// </param>
         /// <returns> A new <see cref="SignalR.SignalRData"/> instance for mocking. </returns>
         public static SignalRData SignalRData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, SignalRResourceSku sku = null, SignalRServiceKind? kind = null, ManagedServiceIdentity identity = null, SignalRProvisioningState? provisioningState = null, string externalIP = null, string hostName = null, int? publicPort = null, int? serverPort = null, string version = null, IEnumerable<SignalRPrivateEndpointConnectionData> privateEndpointConnections = null, IEnumerable<SignalRSharedPrivateLinkResourceData> sharedPrivateLinkResources = null, bool? isClientCertEnabled = null, string hostNamePrefix = null, IEnumerable<SignalRFeature> features = null, SignalRLiveTraceConfiguration liveTraceConfiguration = null, IEnumerable<SignalRResourceLogCategory> resourceLogCategories = null, IEnumerable<string> corsAllowedOrigins = null, IEnumerable<SignalRUpstreamTemplate> upstreamTemplates = null, SignalRNetworkAcls networkACLs = null, string publicNetworkAccess = null, bool? disableLocalAuth = null, bool? disableAadAuth = null)
@@ -113,19 +113,19 @@ namespace Azure.ResourceManager.SignalR.Models
         /// <summary> Initializes a new instance of SignalRResourceSku. </summary>
         /// <param name="name">
         /// The name of the SKU. Required.
-        /// 
+        ///
         /// Allowed values: Standard_S1, Free_F1
         /// </param>
         /// <param name="tier">
-        /// Optional tier of this particular SKU. &apos;Standard&apos; or &apos;Free&apos;. 
-        /// 
+        /// Optional tier of this particular SKU. 'Standard' or 'Free'.
+        ///
         /// `Basic` is deprecated, use `Standard` instead.
         /// </param>
         /// <param name="size"> Not used. Retained for future use. </param>
         /// <param name="family"> Not used. Retained for future use. </param>
         /// <param name="capacity">
         /// Optional, integer. The unit count of the resource. 1 by default.
-        /// 
+        ///
         /// If present, following values are allowed:
         ///     Free: 1
         ///     Standard: 1,2,5,10,20,50,100

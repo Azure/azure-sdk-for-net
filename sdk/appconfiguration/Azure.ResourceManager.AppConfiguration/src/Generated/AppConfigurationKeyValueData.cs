@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.AppConfiguration
         /// </param>
         /// <param name="value"> The value of the key-value. </param>
         /// <param name="contentType">
-        /// The content type of the key-value&apos;s value.
+        /// The content type of the key-value's value.
         /// Providing a proper content-type can enable transformations of values when they are retrieved by applications.
         /// </param>
         /// <param name="eTag"> An ETag indicating the state of a key-value within a configuration store. </param>
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <summary> The value of the key-value. </summary>
         public string Value { get; set; }
         /// <summary>
-        /// The content type of the key-value&apos;s value.
+        /// The content type of the key-value's value.
         /// Providing a proper content-type can enable transformations of values when they are retrieved by applications.
         /// </summary>
         public string ContentType { get; set; }

@@ -130,13 +130,13 @@ namespace Azure.ResourceManager.Quota
         /// </list>
         /// </summary>
         /// <param name="filter">
-        /// | Field                    | Supported operators  
+        /// | Field                    | Supported operators
         /// |---------------------|------------------------
-        /// 
+        ///
         /// |requestSubmitTime | ge, le, eq, gt, lt
         ///  |provisioningState eq {QuotaRequestState}
         ///  |resourceName eq {resourceName}
-        /// 
+        ///
         /// </param>
         /// <param name="top"> Number of records to return. </param>
         /// <param name="skiptoken"> The **Skiptoken** parameter is used only if a previous operation returned a partial result. If a previous response contains a **nextLink** element, its value includes a **skiptoken** parameter that specifies a starting point to use for subsequent calls. </param>
@@ -163,13 +163,13 @@ namespace Azure.ResourceManager.Quota
         /// </list>
         /// </summary>
         /// <param name="filter">
-        /// | Field                    | Supported operators  
+        /// | Field                    | Supported operators
         /// |---------------------|------------------------
-        /// 
+        ///
         /// |requestSubmitTime | ge, le, eq, gt, lt
         ///  |provisioningState eq {QuotaRequestState}
         ///  |resourceName eq {resourceName}
-        /// 
+        ///
         /// </param>
         /// <param name="top"> Number of records to return. </param>
         /// <param name="skiptoken"> The **Skiptoken** parameter is used only if a previous operation returned a partial result. If a previous response contains a **nextLink** element, its value includes a **skiptoken** parameter that specifies a starting point to use for subsequent calls. </param>

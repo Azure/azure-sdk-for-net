@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.CostManagement.Models
         }
 
         /// <summary> Initializes a new instance of CommonExportProperties. </summary>
-        /// <param name="format"> The format of the export being delivered. Currently only &apos;Csv&apos; is supported. </param>
+        /// <param name="format"> The format of the export being delivered. Currently only 'Csv' is supported. </param>
         /// <param name="deliveryInfo"> Has delivery information for the export. </param>
         /// <param name="definition"> Has the definition for the export. </param>
         /// <param name="runHistory"> If requested, has the most recent run history for the export. </param>
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.CostManagement.Models
             NextRunTimeEstimate = nextRunTimeEstimate;
         }
 
-        /// <summary> The format of the export being delivered. Currently only &apos;Csv&apos; is supported. </summary>
+        /// <summary> The format of the export being delivered. Currently only 'Csv' is supported. </summary>
         public ExportFormatType? Format { get; set; }
         /// <summary> Has delivery information for the export. </summary>
         internal ExportDeliveryInfo DeliveryInfo { get; set; }

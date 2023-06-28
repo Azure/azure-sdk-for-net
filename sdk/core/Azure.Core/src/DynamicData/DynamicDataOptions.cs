@@ -1,13 +1,11 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Azure.Core.Serialization;
 
-namespace Azure.Core.Dynamic
+namespace Azure.Core.Serialization
 {
     internal class DynamicDataOptions
     {
@@ -27,7 +25,7 @@ namespace Azure.Core.Dynamic
             DateTimeFormat = options.DateTimeFormat;
         }
 
-        public PropertyNameFormat PropertyNameFormat { get; set; }
+        public JsonPropertyNames PropertyNameFormat { get; set; }
 
         public string DateTimeFormat { get; set; }
 
@@ -45,10 +43,10 @@ namespace Azure.Core.Dynamic
 
             switch (options.PropertyNameFormat)
             {
-                case PropertyNameFormat.CamelCase:
+                case JsonPropertyNames.CamelCase:
                     serializerOptions.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
                     break;
-                case PropertyNameFormat.None:
+                case JsonPropertyNames.UseExact:
                 default:
                     break;
             }
@@ -68,7 +66,7 @@ namespace Azure.Core.Dynamic
 
             if (options.PropertyNamingPolicy == JsonNamingPolicy.CamelCase)
             {
-                value.PropertyNameFormat = PropertyNameFormat.CamelCase;
+                value.PropertyNameFormat = JsonPropertyNames.CamelCase;
             }
 
             return value;

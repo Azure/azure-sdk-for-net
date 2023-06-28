@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Redis.Models
         /// <param name="aofStorageConnectionString0"> First storage account connection string. </param>
         /// <param name="aofStorageConnectionString1"> Second storage account connection string. </param>
         /// <param name="maxFragmentationMemoryReserved"> Value in megabytes reserved for fragmentation per shard. </param>
-        /// <param name="maxMemoryPolicy"> The eviction strategy used when your data won&apos;t fit within its memory limit. </param>
+        /// <param name="maxMemoryPolicy"> The eviction strategy used when your data won't fit within its memory limit. </param>
         /// <param name="maxMemoryReserved"> Value in megabytes reserved for non-cache usage per shard e.g. failover. </param>
         /// <param name="maxMemoryDelta"> Value in megabytes reserved for non-cache usage per shard e.g. failover. </param>
         /// <param name="maxClients"> The max clients config. </param>
@@ -37,8 +37,9 @@ namespace Azure.ResourceManager.Redis.Models
         /// <param name="preferredDataPersistenceAuthMethod"> Preferred auth method to communicate to storage account used for data persistence, specify SAS or ManagedIdentity, default value is SAS. </param>
         /// <param name="zonalConfiguration"> Zonal Configuration. </param>
         /// <param name="authNotRequired"> Specifies whether the authentication is disabled. Setting this property is highly discouraged from security point of view. </param>
+        /// <param name="storageSubscriptionId"> SubscriptionId of the storage account for persistence (aof/rdb) using ManagedIdentity. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        internal RedisCommonConfiguration(bool? isRdbBackupEnabled, string rdbBackupFrequency, int? rdbBackupMaxSnapshotCount, string rdbStorageConnectionString, bool? isAofBackupEnabled, string aofStorageConnectionString0, string aofStorageConnectionString1, string maxFragmentationMemoryReserved, string maxMemoryPolicy, string maxMemoryReserved, string maxMemoryDelta, string maxClients, string preferredDataArchiveAuthMethod, string preferredDataPersistenceAuthMethod, string zonalConfiguration, string authNotRequired, IDictionary<string, BinaryData> additionalProperties)
+        internal RedisCommonConfiguration(bool? isRdbBackupEnabled, string rdbBackupFrequency, int? rdbBackupMaxSnapshotCount, string rdbStorageConnectionString, bool? isAofBackupEnabled, string aofStorageConnectionString0, string aofStorageConnectionString1, string maxFragmentationMemoryReserved, string maxMemoryPolicy, string maxMemoryReserved, string maxMemoryDelta, string maxClients, string preferredDataArchiveAuthMethod, string preferredDataPersistenceAuthMethod, string zonalConfiguration, string authNotRequired, string storageSubscriptionId, IDictionary<string, BinaryData> additionalProperties)
         {
             IsRdbBackupEnabled = isRdbBackupEnabled;
             RdbBackupFrequency = rdbBackupFrequency;
@@ -56,6 +57,7 @@ namespace Azure.ResourceManager.Redis.Models
             PreferredDataPersistenceAuthMethod = preferredDataPersistenceAuthMethod;
             ZonalConfiguration = zonalConfiguration;
             AuthNotRequired = authNotRequired;
+            StorageSubscriptionId = storageSubscriptionId;
             AdditionalProperties = additionalProperties;
         }
 
@@ -75,7 +77,7 @@ namespace Azure.ResourceManager.Redis.Models
         public string AofStorageConnectionString1 { get; set; }
         /// <summary> Value in megabytes reserved for fragmentation per shard. </summary>
         public string MaxFragmentationMemoryReserved { get; set; }
-        /// <summary> The eviction strategy used when your data won&apos;t fit within its memory limit. </summary>
+        /// <summary> The eviction strategy used when your data won't fit within its memory limit. </summary>
         public string MaxMemoryPolicy { get; set; }
         /// <summary> Value in megabytes reserved for non-cache usage per shard e.g. failover. </summary>
         public string MaxMemoryReserved { get; set; }
@@ -91,6 +93,8 @@ namespace Azure.ResourceManager.Redis.Models
         public string ZonalConfiguration { get; }
         /// <summary> Specifies whether the authentication is disabled. Setting this property is highly discouraged from security point of view. </summary>
         public string AuthNotRequired { get; set; }
+        /// <summary> SubscriptionId of the storage account for persistence (aof/rdb) using ManagedIdentity. </summary>
+        public string StorageSubscriptionId { get; set; }
         /// <summary>
         /// Additional Properties
         /// <para>

@@ -298,7 +298,7 @@ namespace Azure.ResourceManager.AppService
         /// </summary>
         /// <param name="name"> Name of the recommendation. </param>
         /// <param name="updateSeen"> Specify &lt;code&gt;true&lt;/code&gt; to update the last-seen timestamp of the recommendation object. </param>
-        /// <param name="recommendationId"> The GUID of the recommendation object if you query an expired one. You don&apos;t need to specify it to query an active entry. </param>
+        /// <param name="recommendationId"> The GUID of the recommendation object if you query an expired one. You don't need to specify it to query an active entry. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
@@ -323,7 +323,7 @@ namespace Azure.ResourceManager.AppService
         /// </summary>
         /// <param name="name"> Name of the recommendation. </param>
         /// <param name="updateSeen"> Specify &lt;code&gt;true&lt;/code&gt; to update the last-seen timestamp of the recommendation object. </param>
-        /// <param name="recommendationId"> The GUID of the recommendation object if you query an expired one. You don&apos;t need to specify it to query an active entry. </param>
+        /// <param name="recommendationId"> The GUID of the recommendation object if you query an expired one. You don't need to specify it to query an active entry. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
@@ -1040,7 +1040,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="filter"> Return only usages/metrics specified in the filter. Filter conforms to odata syntax. Example: $filter=(name.value eq &apos;Metric1&apos; or name.value eq &apos;Metric2&apos;) and startTime eq 2014-01-01T00:00:00Z and endTime eq 2014-12-31T23:59:59Z and timeGrain eq duration&apos;[Hour|Minute|Day]&apos;. </param>
+        /// <param name="filter"> Return only usages/metrics specified in the filter. Filter conforms to odata syntax. Example: $filter=(name.value eq 'Metric1' or name.value eq 'Metric2') and startTime eq 2014-01-01T00:00:00Z and endTime eq 2014-12-31T23:59:59Z and timeGrain eq duration'[Hour|Minute|Day]'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="CsmUsageQuota" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<CsmUsageQuota> GetUsagesAsync(string filter = null, CancellationToken cancellationToken = default)
@@ -1063,7 +1063,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="filter"> Return only usages/metrics specified in the filter. Filter conforms to odata syntax. Example: $filter=(name.value eq &apos;Metric1&apos; or name.value eq &apos;Metric2&apos;) and startTime eq 2014-01-01T00:00:00Z and endTime eq 2014-12-31T23:59:59Z and timeGrain eq duration&apos;[Hour|Minute|Day]&apos;. </param>
+        /// <param name="filter"> Return only usages/metrics specified in the filter. Filter conforms to odata syntax. Example: $filter=(name.value eq 'Metric1' or name.value eq 'Metric2') and startTime eq 2014-01-01T00:00:00Z and endTime eq 2014-12-31T23:59:59Z and timeGrain eq duration'[Hour|Minute|Day]'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="CsmUsageQuota" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<CsmUsageQuota> GetUsages(string filter = null, CancellationToken cancellationToken = default)
@@ -1087,7 +1087,7 @@ namespace Azure.ResourceManager.AppService
         /// </list>
         /// </summary>
         /// <param name="expiredOnly"> Specify &lt;code&gt;false&lt;/code&gt; to return all recommendations. The default is &lt;code&gt;true&lt;/code&gt;, which returns only expired recommendations. </param>
-        /// <param name="filter"> Filter is specified by using OData syntax. Example: $filter=channel eq &apos;Api&apos; or channel eq &apos;Notification&apos; and startTime eq 2014-01-01T00:00:00Z and endTime eq 2014-12-31T23:59:59Z and timeGrain eq duration&apos;[PT1H|PT1M|P1D]. </param>
+        /// <param name="filter"> Filter is specified by using OData syntax. Example: $filter=channel eq 'Api' or channel eq 'Notification' and startTime eq 2014-01-01T00:00:00Z and endTime eq 2014-12-31T23:59:59Z and timeGrain eq duration'[PT1H|PT1M|P1D]. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="AppServiceRecommendation" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<AppServiceRecommendation> GetHistoryForHostingEnvironmentRecommendationsAsync(bool? expiredOnly = null, string filter = null, CancellationToken cancellationToken = default)
@@ -1111,7 +1111,7 @@ namespace Azure.ResourceManager.AppService
         /// </list>
         /// </summary>
         /// <param name="expiredOnly"> Specify &lt;code&gt;false&lt;/code&gt; to return all recommendations. The default is &lt;code&gt;true&lt;/code&gt;, which returns only expired recommendations. </param>
-        /// <param name="filter"> Filter is specified by using OData syntax. Example: $filter=channel eq &apos;Api&apos; or channel eq &apos;Notification&apos; and startTime eq 2014-01-01T00:00:00Z and endTime eq 2014-12-31T23:59:59Z and timeGrain eq duration&apos;[PT1H|PT1M|P1D]. </param>
+        /// <param name="filter"> Filter is specified by using OData syntax. Example: $filter=channel eq 'Api' or channel eq 'Notification' and startTime eq 2014-01-01T00:00:00Z and endTime eq 2014-12-31T23:59:59Z and timeGrain eq duration'[PT1H|PT1M|P1D]. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="AppServiceRecommendation" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<AppServiceRecommendation> GetHistoryForHostingEnvironmentRecommendations(bool? expiredOnly = null, string filter = null, CancellationToken cancellationToken = default)
@@ -1135,7 +1135,7 @@ namespace Azure.ResourceManager.AppService
         /// </list>
         /// </summary>
         /// <param name="featured"> Specify &lt;code&gt;true&lt;/code&gt; to return only the most critical recommendations. The default is &lt;code&gt;false&lt;/code&gt;, which returns all recommendations. </param>
-        /// <param name="filter"> Return only channels specified in the filter. Filter is specified by using OData syntax. Example: $filter=channel eq &apos;Api&apos; or channel eq &apos;Notification&apos;. </param>
+        /// <param name="filter"> Return only channels specified in the filter. Filter is specified by using OData syntax. Example: $filter=channel eq 'Api' or channel eq 'Notification'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="AppServiceRecommendation" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<AppServiceRecommendation> GetRecommendedRulesForHostingEnvironmentRecommendationsAsync(bool? featured = null, string filter = null, CancellationToken cancellationToken = default)
@@ -1159,7 +1159,7 @@ namespace Azure.ResourceManager.AppService
         /// </list>
         /// </summary>
         /// <param name="featured"> Specify &lt;code&gt;true&lt;/code&gt; to return only the most critical recommendations. The default is &lt;code&gt;false&lt;/code&gt;, which returns all recommendations. </param>
-        /// <param name="filter"> Return only channels specified in the filter. Filter is specified by using OData syntax. Example: $filter=channel eq &apos;Api&apos; or channel eq &apos;Notification&apos;. </param>
+        /// <param name="filter"> Return only channels specified in the filter. Filter is specified by using OData syntax. Example: $filter=channel eq 'Api' or channel eq 'Notification'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="AppServiceRecommendation" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<AppServiceRecommendation> GetRecommendedRulesForHostingEnvironmentRecommendations(bool? featured = null, string filter = null, CancellationToken cancellationToken = default)

@@ -17,31 +17,6 @@ namespace Azure.AI.OpenAI
     /// </summary>
     public partial class Choice
     {
-        /// <summary> Initializes a new instance of Choice. </summary>
-        /// <param name="text"> The generated text for a given completions prompt. </param>
-        /// <param name="index"> The ordered index associated with this completions choice. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="text"/> is null. </exception>
-        internal Choice(string text, int index)
-        {
-            Argument.AssertNotNull(text, nameof(text));
-
-            Text = text;
-            Index = index;
-        }
-
-        /// <summary> Initializes a new instance of Choice. </summary>
-        /// <param name="text"> The generated text for a given completions prompt. </param>
-        /// <param name="index"> The ordered index associated with this completions choice. </param>
-        /// <param name="logProbabilityModel"> The log probabilities model for tokens associated with this completions choice. </param>
-        /// <param name="finishReason"> Reason for finishing. </param>
-        internal Choice(string text, int index, CompletionsLogProbabilityModel logProbabilityModel, CompletionsFinishReason? finishReason)
-        {
-            Text = text;
-            Index = index;
-            LogProbabilityModel = logProbabilityModel;
-            FinishReason = finishReason;
-        }
-
         /// <summary> The generated text for a given completions prompt. </summary>
         public string Text { get; }
         /// <summary> The ordered index associated with this completions choice. </summary>
@@ -49,6 +24,6 @@ namespace Azure.AI.OpenAI
         /// <summary> The log probabilities model for tokens associated with this completions choice. </summary>
         public CompletionsLogProbabilityModel LogProbabilityModel { get; }
         /// <summary> Reason for finishing. </summary>
-        public CompletionsFinishReason? FinishReason { get; }
+        public CompletionsFinishReason FinishReason { get; }
     }
 }

@@ -48,7 +48,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             }
             catch (Exception ex)
             {
-                AzureMonitorExporterEventSource.Log.WriteError("FailedToExport", ex);
+                AzureMonitorExporterEventSource.Log.FailedToExport(ex);
             }
 
             return exportResult;
@@ -60,6 +60,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             {
                 if (disposing)
                 {
+                    AzureMonitorExporterEventSource.Log.DisposedObject(nameof(AzureMonitorLogExporter));
                     _transmitter?.Dispose();
                 }
 

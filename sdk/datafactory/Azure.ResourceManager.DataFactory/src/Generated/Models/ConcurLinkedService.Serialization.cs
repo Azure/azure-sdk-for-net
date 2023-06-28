@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -71,17 +72,9 @@ namespace Azure.ResourceManager.DataFactory.Models
 #endif
             }
             writer.WritePropertyName("clientId"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(ClientId);
-#else
-            JsonSerializer.Serialize(writer, JsonDocument.Parse(ClientId.ToString()).RootElement);
-#endif
+            JsonSerializer.Serialize(writer, ClientId);
             writer.WritePropertyName("username"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(Username);
-#else
-            JsonSerializer.Serialize(writer, JsonDocument.Parse(Username.ToString()).RootElement);
-#endif
+            JsonSerializer.Serialize(writer, Username);
             if (Optional.IsDefined(Password))
             {
                 writer.WritePropertyName("password"u8);
@@ -90,29 +83,17 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(UseEncryptedEndpoints))
             {
                 writer.WritePropertyName("useEncryptedEndpoints"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(UseEncryptedEndpoints);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(UseEncryptedEndpoints.ToString()).RootElement);
-#endif
+                JsonSerializer.Serialize(writer, UseEncryptedEndpoints);
             }
             if (Optional.IsDefined(UseHostVerification))
             {
                 writer.WritePropertyName("useHostVerification"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(UseHostVerification);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(UseHostVerification.ToString()).RootElement);
-#endif
+                JsonSerializer.Serialize(writer, UseHostVerification);
             }
             if (Optional.IsDefined(UsePeerVerification))
             {
                 writer.WritePropertyName("usePeerVerification"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(UsePeerVerification);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(UsePeerVerification.ToString()).RootElement);
-#endif
+                JsonSerializer.Serialize(writer, UsePeerVerification);
             }
             if (Optional.IsDefined(EncryptedCredential))
             {
@@ -148,12 +129,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             Optional<IDictionary<string, EntityParameterSpecification>> parameters = default;
             Optional<IList<BinaryData>> annotations = default;
             Optional<BinaryData> connectionProperties = default;
-            BinaryData clientId = default;
-            BinaryData username = default;
-            Optional<FactorySecretBaseDefinition> password = default;
-            Optional<BinaryData> useEncryptedEndpoints = default;
-            Optional<BinaryData> useHostVerification = default;
-            Optional<BinaryData> usePeerVerification = default;
+            DataFactoryElement<string> clientId = default;
+            DataFactoryElement<string> username = default;
+            Optional<DataFactorySecretBaseDefinition> password = default;
+            Optional<DataFactoryElement<bool>> useEncryptedEndpoints = default;
+            Optional<DataFactoryElement<bool>> useHostVerification = default;
+            Optional<DataFactoryElement<bool>> usePeerVerification = default;
             Optional<BinaryData> encryptedCredential = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -233,12 +214,12 @@ namespace Azure.ResourceManager.DataFactory.Models
                         }
                         if (property0.NameEquals("clientId"u8))
                         {
-                            clientId = BinaryData.FromString(property0.Value.GetRawText());
+                            clientId = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("username"u8))
                         {
-                            username = BinaryData.FromString(property0.Value.GetRawText());
+                            username = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("password"u8))
@@ -247,7 +228,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            password = FactorySecretBaseDefinition.DeserializeFactorySecretBaseDefinition(property0.Value);
+                            password = DataFactorySecretBaseDefinition.DeserializeDataFactorySecretBaseDefinition(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("useEncryptedEndpoints"u8))
@@ -256,7 +237,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            useEncryptedEndpoints = BinaryData.FromString(property0.Value.GetRawText());
+                            useEncryptedEndpoints = JsonSerializer.Deserialize<DataFactoryElement<bool>>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("useHostVerification"u8))
@@ -265,7 +246,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            useHostVerification = BinaryData.FromString(property0.Value.GetRawText());
+                            useHostVerification = JsonSerializer.Deserialize<DataFactoryElement<bool>>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("usePeerVerification"u8))
@@ -274,7 +255,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            usePeerVerification = BinaryData.FromString(property0.Value.GetRawText());
+                            usePeerVerification = JsonSerializer.Deserialize<DataFactoryElement<bool>>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("encryptedCredential"u8))

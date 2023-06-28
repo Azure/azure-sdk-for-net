@@ -26,7 +26,7 @@ namespace Azure.Communication.CallingServer
             ParticipantsToAdd = participantsToAdd.ToList();
         }
 
-        /// <summary> The source caller Id that&apos;s shown to the PSTN participant being invited. Required only when inviting a PSTN participant. </summary>
+        /// <summary> The source caller Id that's shown to the PSTN participant being invited. Required only when inviting a PSTN participant. </summary>
         public PhoneNumberIdentifierModel SourceCallerId { get; set; }
         /// <summary> The participants to invite. </summary>
         public IList<CommunicationIdentifierModel> ParticipantsToAdd { get; }

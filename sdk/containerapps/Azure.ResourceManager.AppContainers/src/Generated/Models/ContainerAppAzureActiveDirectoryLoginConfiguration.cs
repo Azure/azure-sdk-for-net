@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// <summary> Initializes a new instance of ContainerAppAzureActiveDirectoryLoginConfiguration. </summary>
         /// <param name="loginParameters">
         /// Login parameters to send to the OpenID Connect authorization endpoint when
-        /// a user logs in. Each parameter must be in the form &quot;key=value&quot;.
+        /// a user logs in. Each parameter must be in the form "key=value".
         /// </param>
         /// <param name="isWwwAuthenticationDisabled"> &lt;code&gt;true&lt;/code&gt; if the www-authenticate provider should be omitted from the request; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
         internal ContainerAppAzureActiveDirectoryLoginConfiguration(IList<string> loginParameters, bool? isWwwAuthenticationDisabled)
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.AppContainers.Models
 
         /// <summary>
         /// Login parameters to send to the OpenID Connect authorization endpoint when
-        /// a user logs in. Each parameter must be in the form &quot;key=value&quot;.
+        /// a user logs in. Each parameter must be in the form "key=value".
         /// </summary>
         public IList<string> LoginParameters { get; }
         /// <summary> &lt;code&gt;true&lt;/code&gt; if the www-authenticate provider should be omitted from the request; otherwise, &lt;code&gt;false&lt;/code&gt;. </summary>
