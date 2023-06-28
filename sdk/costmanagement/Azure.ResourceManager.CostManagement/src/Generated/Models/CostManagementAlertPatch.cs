@@ -36,8 +36,8 @@ namespace Azure.ResourceManager.CostManagement.Models
         /// <summary> dateTime in which alert was last modified. </summary>
         public DateTimeOffset? ModifiedOn { get; set; }
         /// <summary> User who last modified the alert. </summary>
-        public DateTimeOffset? StatusModificationUserName { get; set; }
+        public string StatusModificationUserName { get; set; }
         /// <summary> dateTime in which the alert status was last modified. </summary>
-        public string StatusModificationTime { get; set; }
+        public DateTimeOffset? StatusModificationOn { get; set; }
     }
 }

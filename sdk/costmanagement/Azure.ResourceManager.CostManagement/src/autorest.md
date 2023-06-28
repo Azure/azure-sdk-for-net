@@ -13,7 +13,9 @@ clear-output-folder: true
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
-
+# mgmt-debug:
+#   show-serialized-names: true
+  
 list-exception:
 - /providers/Microsoft.CostManagement/views/{viewName}
 - /{scope}/providers/Microsoft.CostManagement/costDetailsOperationResults/{operationId}
@@ -28,6 +30,7 @@ format-by-name-rules:
   'location': 'azure-location'
   '*Uri': 'Uri'
   '*Uris': 'Uri'
+  # '*Time': 'datetime'
 
 rename-rules:
   CPU: Cpu
@@ -90,6 +93,11 @@ rename-mapping:
   Scope: BenefitRecommendationScope
   Grain: BenefitRecommendationUsageGrain
   OperatorType: ComparisonOperatorType
+  DismissAlertPayload.properties.closeTime: -|datetime
+  DismissAlertPayload.properties.statusModificationTime: -|datetime
+  Alert.properties.modificationTime: -|datetime
+  Alert.properties.creationTime: -|datetime
+  Alert.properties.statusModificationTime: -|datetime
 
 directive:
   # [Error][Linked: https://github.com/Azure/autorest.csharp/issues/3288] Found more than 1 candidate for XX 

@@ -74,12 +74,12 @@ namespace Azure.ResourceManager.CostManagement
             if (Optional.IsDefined(StatusModificationUserName))
             {
                 writer.WritePropertyName("statusModificationUserName"u8);
-                writer.WriteStringValue(StatusModificationUserName.Value);
+                writer.WriteStringValue(StatusModificationUserName);
             }
-            if (Optional.IsDefined(StatusModificationTime))
+            if (Optional.IsDefined(StatusModificationOn))
             {
                 writer.WritePropertyName("statusModificationTime"u8);
-                writer.WriteStringValue(StatusModificationTime);
+                writer.WriteStringValue(StatusModificationOn.Value);
             }
             writer.WriteEndObject();
             writer.WriteEndObject();
@@ -105,8 +105,8 @@ namespace Azure.ResourceManager.CostManagement
             Optional<DateTimeOffset> creationTime = default;
             Optional<DateTimeOffset> closeTime = default;
             Optional<DateTimeOffset> modificationTime = default;
-            Optional<DateTimeOffset> statusModificationUserName = default;
-            Optional<string> statusModificationTime = default;
+            Optional<string> statusModificationUserName = default;
+            Optional<DateTimeOffset> statusModificationTime = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("eTag"u8))
@@ -226,23 +226,23 @@ namespace Azure.ResourceManager.CostManagement
                         }
                         if (property0.NameEquals("statusModificationUserName"u8))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            statusModificationUserName = property0.Value.GetDateTimeOffset();
+                            statusModificationUserName = property0.Value.GetString();
                             continue;
                         }
                         if (property0.NameEquals("statusModificationTime"u8))
                         {
-                            statusModificationTime = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            statusModificationTime = property0.Value.GetDateTimeOffset();
                             continue;
                         }
                     }
                     continue;
                 }
             }
-            return new CostManagementAlertData(id, name, type, systemData.Value, definition.Value, description.Value, Optional.ToNullable(source), details.Value, costEntityId.Value, Optional.ToNullable(status), Optional.ToNullable(creationTime), Optional.ToNullable(closeTime), Optional.ToNullable(modificationTime), Optional.ToNullable(statusModificationUserName), statusModificationTime.Value, Optional.ToNullable(eTag));
+            return new CostManagementAlertData(id, name, type, systemData.Value, definition.Value, description.Value, Optional.ToNullable(source), details.Value, costEntityId.Value, Optional.ToNullable(status), Optional.ToNullable(creationTime), Optional.ToNullable(closeTime), Optional.ToNullable(modificationTime), statusModificationUserName.Value, Optional.ToNullable(statusModificationTime), Optional.ToNullable(eTag));
         }
     }
 }

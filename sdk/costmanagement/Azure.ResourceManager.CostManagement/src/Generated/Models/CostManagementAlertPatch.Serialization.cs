@@ -65,12 +65,12 @@ namespace Azure.ResourceManager.CostManagement.Models
             if (Optional.IsDefined(StatusModificationUserName))
             {
                 writer.WritePropertyName("statusModificationUserName"u8);
-                writer.WriteStringValue(StatusModificationUserName.Value);
+                writer.WriteStringValue(StatusModificationUserName);
             }
-            if (Optional.IsDefined(StatusModificationTime))
+            if (Optional.IsDefined(StatusModificationOn))
             {
                 writer.WritePropertyName("statusModificationTime"u8);
-                writer.WriteStringValue(StatusModificationTime);
+                writer.WriteStringValue(StatusModificationOn.Value);
             }
             writer.WriteEndObject();
             writer.WriteEndObject();
