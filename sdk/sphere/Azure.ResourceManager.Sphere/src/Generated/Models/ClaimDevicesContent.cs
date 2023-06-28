@@ -12,11 +12,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Sphere.Models
 {
-    /// <summary> Request to the action call to bulk claim devices. </summary>
+    /// <summary>
+    /// Request to the action call to bulk claim devices.
+    /// Serialized Name: ClaimDevicesRequest
+    /// </summary>
     public partial class ClaimDevicesContent
     {
         /// <summary> Initializes a new instance of ClaimDevicesContent. </summary>
-        /// <param name="deviceIdentifiers"> Device identifiers of the devices to be claimed. </param>
+        /// <param name="deviceIdentifiers">
+        /// Device identifiers of the devices to be claimed.
+        /// Serialized Name: ClaimDevicesRequest.deviceIdentifiers
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="deviceIdentifiers"/> is null. </exception>
         public ClaimDevicesContent(IEnumerable<string> deviceIdentifiers)
         {
@@ -25,7 +31,10 @@ namespace Azure.ResourceManager.Sphere.Models
             DeviceIdentifiers = deviceIdentifiers.ToList();
         }
 
-        /// <summary> Device identifiers of the devices to be claimed. </summary>
+        /// <summary>
+        /// Device identifiers of the devices to be claimed.
+        /// Serialized Name: ClaimDevicesRequest.deviceIdentifiers
+        /// </summary>
         public IList<string> DeviceIdentifiers { get; }
     }
 }

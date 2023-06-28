@@ -14,7 +14,8 @@ skip-csproj: true
 modelerfour:
   flatten-payloads: false
 
- 
+mgmt-debug:
+  show-serialized-names: true
 
 format-by-name-rules:
   'tenantId': 'uuid'
@@ -45,5 +46,26 @@ rename-rules:
   SSO: Sso
   URI: Uri
   Etag: ETag|etag
+
+rename-mapping:
+  Catalog: SphereCatalog
+  ProvisioningState: SphereProvisioningState
+  Certificate: SphereCertificate
+  CertificateStatus: SphereCertificateStatus
+  CertificateProperties: SphereCertificateProperties
+  Deployment: SphereDeployment
+  Device: SphereDevice
+  DeviceGroup: SphereDeviceGroup
+  Image: SphereImage
+  Product: SphereProduct
+  AllowCrashDumpCollection: SphereAllowCrashDumpCollectionStatus
+  CapabilityType: SphereCapabilityType
+  CertificateChainResponse: SphereCertificateChainResult
+  CountDeviceResponse: CountDeviceResult
+  CountElementsResponse: CountElementsResult
+  DeviceInsight: SphereDeviceInsight
+  ImageType: SphereImageType
+  OSFeedType: SphereOSFeedType
+  UpdatePolicy: SphereUpdatePolicy
 
 ```

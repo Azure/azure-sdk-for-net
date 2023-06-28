@@ -40,10 +40,10 @@ namespace Azure.ResourceManager.Sphere.Tests
             return lro.Value;
         }
 
-        protected async Task<CatalogResource> CreateCatalog(ResourceGroupResource resourceGroup, string catalogName)
+        protected async Task<SphereCatalogResource> CreateCatalog(ResourceGroupResource resourceGroup, string catalogName)
         {
-            CatalogData data = new CatalogData("global");
-            var catalog = await resourceGroup.GetCatalogs().CreateOrUpdateAsync(WaitUntil.Completed, catalogName, data);
+            SphereCatalogData data = new SphereCatalogData("global");
+            var catalog = await resourceGroup.GetSphereCatalogs().CreateOrUpdateAsync(WaitUntil.Completed, catalogName, data);
             return catalog.Value;
         }
     }

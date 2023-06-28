@@ -16,8 +16,8 @@ namespace Azure.ResourceManager.Sphere
     /// <summary> A class to add extension methods to SubscriptionResource. </summary>
     internal partial class SubscriptionResourceExtensionClient : ArmResource
     {
-        private ClientDiagnostics _catalogClientDiagnostics;
-        private CatalogsRestOperations _catalogRestClient;
+        private ClientDiagnostics _sphereCatalogCatalogsClientDiagnostics;
+        private CatalogsRestOperations _sphereCatalogCatalogsRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="SubscriptionResourceExtensionClient"/> class for mocking. </summary>
         protected SubscriptionResourceExtensionClient()
@@ -31,8 +31,8 @@ namespace Azure.ResourceManager.Sphere
         {
         }
 
-        private ClientDiagnostics CatalogClientDiagnostics => _catalogClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Sphere", CatalogResource.ResourceType.Namespace, Diagnostics);
-        private CatalogsRestOperations CatalogRestClient => _catalogRestClient ??= new CatalogsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(CatalogResource.ResourceType));
+        private ClientDiagnostics SphereCatalogCatalogsClientDiagnostics => _sphereCatalogCatalogsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Sphere", SphereCatalogResource.ResourceType.Namespace, Diagnostics);
+        private CatalogsRestOperations SphereCatalogCatalogsRestClient => _sphereCatalogCatalogsRestClient ??= new CatalogsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(SphereCatalogResource.ResourceType));
 
         private string GetApiVersionOrNull(ResourceType resourceType)
         {
@@ -54,12 +54,12 @@ namespace Azure.ResourceManager.Sphere
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="CatalogResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<CatalogResource> GetCatalogsAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="SphereCatalogResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<SphereCatalogResource> GetSphereCatalogsAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CatalogRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CatalogRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new CatalogResource(Client, CatalogData.DeserializeCatalogData(e)), CatalogClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetCatalogs", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => SphereCatalogCatalogsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => SphereCatalogCatalogsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SphereCatalogResource(Client, SphereCatalogData.DeserializeSphereCatalogData(e)), SphereCatalogCatalogsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetSphereCatalogs", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -76,12 +76,12 @@ namespace Azure.ResourceManager.Sphere
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="CatalogResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<CatalogResource> GetCatalogs(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="SphereCatalogResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<SphereCatalogResource> GetSphereCatalogs(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CatalogRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CatalogRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new CatalogResource(Client, CatalogData.DeserializeCatalogData(e)), CatalogClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetCatalogs", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => SphereCatalogCatalogsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => SphereCatalogCatalogsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SphereCatalogResource(Client, SphereCatalogData.DeserializeSphereCatalogData(e)), SphereCatalogCatalogsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetSphereCatalogs", "value", "nextLink", cancellationToken);
         }
     }
 }

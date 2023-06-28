@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Sphere
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="catalogName"/> or <paramref name="serialNumber"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="catalogName"/> or <paramref name="serialNumber"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<CertificateData>> GetAsync(string subscriptionId, string resourceGroupName, string catalogName, string serialNumber, CancellationToken cancellationToken = default)
+        public async Task<Response<SphereCertificateData>> GetAsync(string subscriptionId, string resourceGroupName, string catalogName, string serialNumber, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -183,13 +183,13 @@ namespace Azure.ResourceManager.Sphere
             {
                 case 200:
                     {
-                        CertificateData value = default;
+                        SphereCertificateData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = CertificateData.DeserializeCertificateData(document.RootElement);
+                        value = SphereCertificateData.DeserializeSphereCertificateData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((CertificateData)null, message.Response);
+                    return Response.FromValue((SphereCertificateData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.Sphere
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="catalogName"/> or <paramref name="serialNumber"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="catalogName"/> or <paramref name="serialNumber"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<CertificateData> Get(string subscriptionId, string resourceGroupName, string catalogName, string serialNumber, CancellationToken cancellationToken = default)
+        public Response<SphereCertificateData> Get(string subscriptionId, string resourceGroupName, string catalogName, string serialNumber, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -216,13 +216,13 @@ namespace Azure.ResourceManager.Sphere
             {
                 case 200:
                     {
-                        CertificateData value = default;
+                        SphereCertificateData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = CertificateData.DeserializeCertificateData(document.RootElement);
+                        value = SphereCertificateData.DeserializeSphereCertificateData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((CertificateData)null, message.Response);
+                    return Response.FromValue((SphereCertificateData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -259,7 +259,7 @@ namespace Azure.ResourceManager.Sphere
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="catalogName"/> or <paramref name="serialNumber"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="catalogName"/> or <paramref name="serialNumber"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<CertificateChainResponse>> RetrieveCertChainAsync(string subscriptionId, string resourceGroupName, string catalogName, string serialNumber, CancellationToken cancellationToken = default)
+        public async Task<Response<SphereCertificateChainResult>> RetrieveCertChainAsync(string subscriptionId, string resourceGroupName, string catalogName, string serialNumber, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -272,9 +272,9 @@ namespace Azure.ResourceManager.Sphere
             {
                 case 200:
                     {
-                        CertificateChainResponse value = default;
+                        SphereCertificateChainResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = CertificateChainResponse.DeserializeCertificateChainResponse(document.RootElement);
+                        value = SphereCertificateChainResult.DeserializeSphereCertificateChainResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -290,7 +290,7 @@ namespace Azure.ResourceManager.Sphere
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="catalogName"/> or <paramref name="serialNumber"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="catalogName"/> or <paramref name="serialNumber"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<CertificateChainResponse> RetrieveCertChain(string subscriptionId, string resourceGroupName, string catalogName, string serialNumber, CancellationToken cancellationToken = default)
+        public Response<SphereCertificateChainResult> RetrieveCertChain(string subscriptionId, string resourceGroupName, string catalogName, string serialNumber, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -303,9 +303,9 @@ namespace Azure.ResourceManager.Sphere
             {
                 case 200:
                     {
-                        CertificateChainResponse value = default;
+                        SphereCertificateChainResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = CertificateChainResponse.DeserializeCertificateChainResponse(document.RootElement);
+                        value = SphereCertificateChainResult.DeserializeSphereCertificateChainResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

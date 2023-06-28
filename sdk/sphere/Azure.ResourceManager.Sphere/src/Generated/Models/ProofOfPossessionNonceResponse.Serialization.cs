@@ -20,12 +20,12 @@ namespace Azure.ResourceManager.Sphere.Models
                 return null;
             }
             Optional<string> certificate = default;
-            Optional<CertificateStatus> status = default;
+            Optional<SphereCertificateStatus> status = default;
             Optional<string> subject = default;
             Optional<string> thumbprint = default;
             Optional<DateTimeOffset> expiryUtc = default;
             Optional<DateTimeOffset> notBeforeUtc = default;
-            Optional<ProvisioningState> provisioningState = default;
+            Optional<SphereProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("certificate"u8))
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Sphere.Models
                     {
                         continue;
                     }
-                    status = new CertificateStatus(property.Value.GetString());
+                    status = new SphereCertificateStatus(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("subject"u8))
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.Sphere.Models
                     {
                         continue;
                     }
-                    provisioningState = new ProvisioningState(property.Value.GetString());
+                    provisioningState = new SphereProvisioningState(property.Value.GetString());
                     continue;
                 }
             }

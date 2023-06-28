@@ -10,11 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Sphere.Models
 {
-    /// <summary> Request for the proof of possession nonce. </summary>
+    /// <summary>
+    /// Request for the proof of possession nonce
+    /// Serialized Name: ProofOfPossessionNonceRequest
+    /// </summary>
     public partial class ProofOfPossessionNonceContent
     {
         /// <summary> Initializes a new instance of ProofOfPossessionNonceContent. </summary>
-        /// <param name="proofOfPossessionNonce"> The proof of possession nonce. </param>
+        /// <param name="proofOfPossessionNonce">
+        /// The proof of possession nonce
+        /// Serialized Name: ProofOfPossessionNonceRequest.proofOfPossessionNonce
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="proofOfPossessionNonce"/> is null. </exception>
         public ProofOfPossessionNonceContent(string proofOfPossessionNonce)
         {
@@ -23,7 +29,10 @@ namespace Azure.ResourceManager.Sphere.Models
             ProofOfPossessionNonce = proofOfPossessionNonce;
         }
 
-        /// <summary> The proof of possession nonce. </summary>
+        /// <summary>
+        /// The proof of possession nonce
+        /// Serialized Name: ProofOfPossessionNonceRequest.proofOfPossessionNonce
+        /// </summary>
         public string ProofOfPossessionNonce { get; }
     }
 }

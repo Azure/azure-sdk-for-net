@@ -13,13 +13,19 @@ using Azure.ResourceManager.Sphere;
 
 namespace Azure.ResourceManager.Sphere.Models
 {
-    /// <summary> The response of a Device list operation. </summary>
+    /// <summary>
+    /// The response of a Device list operation.
+    /// Serialized Name: DeviceListResult
+    /// </summary>
     internal partial class DeviceListResult
     {
         /// <summary> Initializes a new instance of DeviceListResult. </summary>
-        /// <param name="value"> The Device items on this page. </param>
+        /// <param name="value">
+        /// The Device items on this page
+        /// Serialized Name: DeviceListResult.value
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal DeviceListResult(IEnumerable<DeviceData> value)
+        internal DeviceListResult(IEnumerable<SphereDeviceData> value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -27,17 +33,29 @@ namespace Azure.ResourceManager.Sphere.Models
         }
 
         /// <summary> Initializes a new instance of DeviceListResult. </summary>
-        /// <param name="value"> The Device items on this page. </param>
-        /// <param name="nextLink"> The link to the next page of items. </param>
-        internal DeviceListResult(IReadOnlyList<DeviceData> value, Uri nextLink)
+        /// <param name="value">
+        /// The Device items on this page
+        /// Serialized Name: DeviceListResult.value
+        /// </param>
+        /// <param name="nextLink">
+        /// The link to the next page of items
+        /// Serialized Name: DeviceListResult.nextLink
+        /// </param>
+        internal DeviceListResult(IReadOnlyList<SphereDeviceData> value, Uri nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
-        /// <summary> The Device items on this page. </summary>
-        public IReadOnlyList<DeviceData> Value { get; }
-        /// <summary> The link to the next page of items. </summary>
+        /// <summary>
+        /// The Device items on this page
+        /// Serialized Name: DeviceListResult.value
+        /// </summary>
+        public IReadOnlyList<SphereDeviceData> Value { get; }
+        /// <summary>
+        /// The link to the next page of items
+        /// Serialized Name: DeviceListResult.nextLink
+        /// </summary>
         public Uri NextLink { get; }
     }
 }

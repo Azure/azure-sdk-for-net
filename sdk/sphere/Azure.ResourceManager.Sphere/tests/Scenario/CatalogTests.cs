@@ -37,8 +37,8 @@ namespace Azure.ResourceManager.Sphere.Tests.Scenario
         public async Task CreateOrUpdate()
         {
             string catalogName = Recording.GenerateAssetName("catalog-");
-            CatalogData data = new CatalogData("global");
-            var catalog = await _resourceGroup.GetCatalogs().CreateOrUpdateAsync(WaitUntil.Completed, catalogName, data);
+            SphereCatalogData data = new SphereCatalogData("global");
+            var catalog = await _resourceGroup.GetSphereCatalogs().CreateOrUpdateAsync(WaitUntil.Completed, catalogName, data);
             Assert.IsNotNull(catalog);
             Assert.AreEqual(catalogName, catalog.Value.Data.Name);
 
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Sphere.Tests.Scenario
         {
             string catalogName = Recording.GenerateAssetName("catalog-");
             var catalog = await CreateCatalog(_resourceGroup, catalogName);
-            bool flag = await _resourceGroup.GetCatalogs().ExistsAsync(catalogName);
+            bool flag = await _resourceGroup.GetSphereCatalogs().ExistsAsync(catalogName);
             Assert.IsTrue(flag);
 
             await catalog.DeleteAsync(WaitUntil.Completed);
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Sphere.Tests.Scenario
         {
             string catalogName = Recording.GenerateAssetName("catalog-");
             await CreateCatalog(_resourceGroup, catalogName);
-            var catalog = await _resourceGroup.GetCatalogs().GetAsync(catalogName);
+            var catalog = await _resourceGroup.GetSphereCatalogs().GetAsync(catalogName);
             Assert.IsNotNull(catalog);
             Assert.AreEqual(catalogName, catalog.Value.Data.Name);
 
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.Sphere.Tests.Scenario
         {
             string catalogName = Recording.GenerateAssetName("catalog-");
             var catalog = await CreateCatalog(_resourceGroup, catalogName);
-            var list = await _resourceGroup.GetCatalogs().GetAllAsync().ToEnumerableAsync();
+            var list = await _resourceGroup.GetSphereCatalogs().GetAllAsync().ToEnumerableAsync();
             Assert.IsNotEmpty(list);
 
             await catalog.DeleteAsync(WaitUntil.Completed);
@@ -88,10 +88,10 @@ namespace Azure.ResourceManager.Sphere.Tests.Scenario
         {
             string catalogName = Recording.GenerateAssetName("catalog-");
             var catalog = await CreateCatalog(_resourceGroup, catalogName);
-            bool flag = await _resourceGroup.GetCatalogs().ExistsAsync(catalogName);
+            bool flag = await _resourceGroup.GetSphereCatalogs().ExistsAsync(catalogName);
             Assert.IsTrue(flag);
             await catalog.DeleteAsync(WaitUntil.Completed);
-            flag = await _resourceGroup.GetCatalogs().ExistsAsync(catalogName);
+            flag = await _resourceGroup.GetSphereCatalogs().ExistsAsync(catalogName);
             Assert.IsFalse(flag);
         }
     }

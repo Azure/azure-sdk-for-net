@@ -31,11 +31,11 @@ namespace Azure.ResourceManager.Sphere
             return apiVersion;
         }
 
-        /// <summary> Gets a collection of CatalogResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of CatalogResources and their operations over a CatalogResource. </returns>
-        public virtual CatalogCollection GetCatalogs()
+        /// <summary> Gets a collection of SphereCatalogResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of SphereCatalogResources and their operations over a SphereCatalogResource. </returns>
+        public virtual SphereCatalogCollection GetSphereCatalogs()
         {
-            return GetCachedClient(Client => new CatalogCollection(Client, Id));
+            return GetCachedClient(Client => new SphereCatalogCollection(Client, Id));
         }
     }
 }

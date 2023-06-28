@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.Sphere
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="catalogName"/> or <paramref name="productName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="catalogName"/> or <paramref name="productName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ProductData>> GetAsync(string subscriptionId, string resourceGroupName, string catalogName, string productName, CancellationToken cancellationToken = default)
+        public async Task<Response<SphereProductData>> GetAsync(string subscriptionId, string resourceGroupName, string catalogName, string productName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -159,13 +159,13 @@ namespace Azure.ResourceManager.Sphere
             {
                 case 200:
                     {
-                        ProductData value = default;
+                        SphereProductData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ProductData.DeserializeProductData(document.RootElement);
+                        value = SphereProductData.DeserializeSphereProductData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((ProductData)null, message.Response);
+                    return Response.FromValue((SphereProductData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.Sphere
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="catalogName"/> or <paramref name="productName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="catalogName"/> or <paramref name="productName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ProductData> Get(string subscriptionId, string resourceGroupName, string catalogName, string productName, CancellationToken cancellationToken = default)
+        public Response<SphereProductData> Get(string subscriptionId, string resourceGroupName, string catalogName, string productName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -192,19 +192,19 @@ namespace Azure.ResourceManager.Sphere
             {
                 case 200:
                     {
-                        ProductData value = default;
+                        SphereProductData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ProductData.DeserializeProductData(document.RootElement);
+                        value = SphereProductData.DeserializeSphereProductData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((ProductData)null, message.Response);
+                    return Response.FromValue((SphereProductData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string catalogName, string productName, ProductData data)
+        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string catalogName, string productName, SphereProductData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -239,7 +239,7 @@ namespace Azure.ResourceManager.Sphere
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="catalogName"/>, <paramref name="productName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="catalogName"/> or <paramref name="productName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string catalogName, string productName, ProductData data, CancellationToken cancellationToken = default)
+        public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string catalogName, string productName, SphereProductData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -268,7 +268,7 @@ namespace Azure.ResourceManager.Sphere
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="catalogName"/>, <paramref name="productName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="catalogName"/> or <paramref name="productName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response CreateOrUpdate(string subscriptionId, string resourceGroupName, string catalogName, string productName, ProductData data, CancellationToken cancellationToken = default)
+        public Response CreateOrUpdate(string subscriptionId, string resourceGroupName, string catalogName, string productName, SphereProductData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -366,7 +366,7 @@ namespace Azure.ResourceManager.Sphere
             }
         }
 
-        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string catalogName, string productName, ProductPatch patch)
+        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string catalogName, string productName, SphereProductPatch patch)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -401,7 +401,7 @@ namespace Azure.ResourceManager.Sphere
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="catalogName"/>, <paramref name="productName"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="catalogName"/> or <paramref name="productName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> UpdateAsync(string subscriptionId, string resourceGroupName, string catalogName, string productName, ProductPatch patch, CancellationToken cancellationToken = default)
+        public async Task<Response> UpdateAsync(string subscriptionId, string resourceGroupName, string catalogName, string productName, SphereProductPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -430,7 +430,7 @@ namespace Azure.ResourceManager.Sphere
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="catalogName"/>, <paramref name="productName"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="catalogName"/> or <paramref name="productName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response Update(string subscriptionId, string resourceGroupName, string catalogName, string productName, ProductPatch patch, CancellationToken cancellationToken = default)
+        public Response Update(string subscriptionId, string resourceGroupName, string catalogName, string productName, SphereProductPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -481,7 +481,7 @@ namespace Azure.ResourceManager.Sphere
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="catalogName"/> or <paramref name="productName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="catalogName"/> or <paramref name="productName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<CountDeviceResponse>> CountDevicesAsync(string subscriptionId, string resourceGroupName, string catalogName, string productName, CancellationToken cancellationToken = default)
+        public async Task<Response<CountDeviceResult>> CountDevicesAsync(string subscriptionId, string resourceGroupName, string catalogName, string productName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -494,9 +494,9 @@ namespace Azure.ResourceManager.Sphere
             {
                 case 200:
                     {
-                        CountDeviceResponse value = default;
+                        CountDeviceResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = CountDeviceResponse.DeserializeCountDeviceResponse(document.RootElement);
+                        value = CountDeviceResult.DeserializeCountDeviceResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -512,7 +512,7 @@ namespace Azure.ResourceManager.Sphere
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="catalogName"/> or <paramref name="productName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="catalogName"/> or <paramref name="productName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<CountDeviceResponse> CountDevices(string subscriptionId, string resourceGroupName, string catalogName, string productName, CancellationToken cancellationToken = default)
+        public Response<CountDeviceResult> CountDevices(string subscriptionId, string resourceGroupName, string catalogName, string productName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -525,9 +525,9 @@ namespace Azure.ResourceManager.Sphere
             {
                 case 200:
                     {
-                        CountDeviceResponse value = default;
+                        CountDeviceResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = CountDeviceResponse.DeserializeCountDeviceResponse(document.RootElement);
+                        value = CountDeviceResult.DeserializeCountDeviceResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

@@ -21,16 +21,16 @@ namespace Azure.ResourceManager.Sphere.Models
             {
                 return null;
             }
-            IReadOnlyList<ImageData> value = default;
+            IReadOnlyList<SphereImageData> value = default;
             Optional<Uri> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
                 {
-                    List<ImageData> array = new List<ImageData>();
+                    List<SphereImageData> array = new List<SphereImageData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ImageData.DeserializeImageData(item));
+                        array.Add(SphereImageData.DeserializeSphereImageData(item));
                     }
                     value = array;
                     continue;

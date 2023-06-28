@@ -13,13 +13,19 @@ using Azure.ResourceManager.Sphere;
 
 namespace Azure.ResourceManager.Sphere.Models
 {
-    /// <summary> The response of a Product list operation. </summary>
+    /// <summary>
+    /// The response of a Product list operation.
+    /// Serialized Name: ProductListResult
+    /// </summary>
     internal partial class ProductListResult
     {
         /// <summary> Initializes a new instance of ProductListResult. </summary>
-        /// <param name="value"> The Product items on this page. </param>
+        /// <param name="value">
+        /// The Product items on this page
+        /// Serialized Name: ProductListResult.value
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal ProductListResult(IEnumerable<ProductData> value)
+        internal ProductListResult(IEnumerable<SphereProductData> value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -27,17 +33,29 @@ namespace Azure.ResourceManager.Sphere.Models
         }
 
         /// <summary> Initializes a new instance of ProductListResult. </summary>
-        /// <param name="value"> The Product items on this page. </param>
-        /// <param name="nextLink"> The link to the next page of items. </param>
-        internal ProductListResult(IReadOnlyList<ProductData> value, Uri nextLink)
+        /// <param name="value">
+        /// The Product items on this page
+        /// Serialized Name: ProductListResult.value
+        /// </param>
+        /// <param name="nextLink">
+        /// The link to the next page of items
+        /// Serialized Name: ProductListResult.nextLink
+        /// </param>
+        internal ProductListResult(IReadOnlyList<SphereProductData> value, Uri nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
-        /// <summary> The Product items on this page. </summary>
-        public IReadOnlyList<ProductData> Value { get; }
-        /// <summary> The link to the next page of items. </summary>
+        /// <summary>
+        /// The Product items on this page
+        /// Serialized Name: ProductListResult.value
+        /// </summary>
+        public IReadOnlyList<SphereProductData> Value { get; }
+        /// <summary>
+        /// The link to the next page of items
+        /// Serialized Name: ProductListResult.nextLink
+        /// </summary>
         public Uri NextLink { get; }
     }
 }
