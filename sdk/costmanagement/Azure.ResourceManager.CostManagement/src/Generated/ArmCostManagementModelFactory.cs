@@ -233,16 +233,16 @@ namespace Azure.ResourceManager.CostManagement.Models
         /// <param name="details"> Alert details. </param>
         /// <param name="costEntityId"> related budget. </param>
         /// <param name="status"> alert status. </param>
-        /// <param name="creationTime"> dateTime in which alert was created. </param>
-        /// <param name="closeTime"> dateTime in which alert was closed. </param>
-        /// <param name="modificationTime"> dateTime in which alert was last modified. </param>
+        /// <param name="createdOn"> dateTime in which alert was created. </param>
+        /// <param name="closeOn"> dateTime in which alert was closed. </param>
+        /// <param name="modifiedOn"> dateTime in which alert was last modified. </param>
         /// <param name="statusModificationUserName"> User who last modified the alert. </param>
         /// <param name="statusModificationTime"> dateTime in which the alert status was last modified. </param>
         /// <param name="eTag"> eTag of the resource. To handle concurrent update scenario, this field will be used to determine whether the user is updating the latest version or not. </param>
         /// <returns> A new <see cref="CostManagement.CostManagementAlertData"/> instance for mocking. </returns>
-        public static CostManagementAlertData CostManagementAlertData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, AlertPropertiesDefinition definition = null, string description = null, CostManagementAlertSource? source = null, AlertPropertiesDetails details = null, string costEntityId = null, CostManagementAlertStatus? status = null, string creationTime = null, string closeTime = null, string modificationTime = null, string statusModificationUserName = null, string statusModificationTime = null, ETag? eTag = null)
+        public static CostManagementAlertData CostManagementAlertData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, AlertPropertiesDefinition definition = null, string description = null, CostManagementAlertSource? source = null, AlertPropertiesDetails details = null, string costEntityId = null, CostManagementAlertStatus? status = null, DateTimeOffset? createdOn = null, DateTimeOffset? closeOn = null, DateTimeOffset? modifiedOn = null, DateTimeOffset? statusModificationUserName = null, string statusModificationTime = null, ETag? eTag = null)
         {
-            return new CostManagementAlertData(id, name, resourceType, systemData, definition, description, source, details, costEntityId, status, creationTime, closeTime, modificationTime, statusModificationUserName, statusModificationTime, eTag);
+            return new CostManagementAlertData(id, name, resourceType, systemData, definition, description, source, details, costEntityId, status, createdOn, closeOn, modifiedOn, statusModificationUserName, statusModificationTime, eTag);
         }
 
         /// <summary> Initializes a new instance of ForecastResult. </summary>

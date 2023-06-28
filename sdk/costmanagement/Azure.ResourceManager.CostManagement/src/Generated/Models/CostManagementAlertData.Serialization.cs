@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
@@ -55,25 +56,25 @@ namespace Azure.ResourceManager.CostManagement
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
-            if (Optional.IsDefined(CreationTime))
+            if (Optional.IsDefined(CreatedOn))
             {
                 writer.WritePropertyName("creationTime"u8);
-                writer.WriteStringValue(CreationTime);
+                writer.WriteStringValue(CreatedOn.Value);
             }
-            if (Optional.IsDefined(CloseTime))
+            if (Optional.IsDefined(CloseOn))
             {
                 writer.WritePropertyName("closeTime"u8);
-                writer.WriteStringValue(CloseTime);
+                writer.WriteStringValue(CloseOn.Value);
             }
-            if (Optional.IsDefined(ModificationTime))
+            if (Optional.IsDefined(ModifiedOn))
             {
                 writer.WritePropertyName("modificationTime"u8);
-                writer.WriteStringValue(ModificationTime);
+                writer.WriteStringValue(ModifiedOn.Value);
             }
             if (Optional.IsDefined(StatusModificationUserName))
             {
                 writer.WritePropertyName("statusModificationUserName"u8);
-                writer.WriteStringValue(StatusModificationUserName);
+                writer.WriteStringValue(StatusModificationUserName.Value);
             }
             if (Optional.IsDefined(StatusModificationTime))
             {
@@ -101,10 +102,10 @@ namespace Azure.ResourceManager.CostManagement
             Optional<AlertPropertiesDetails> details = default;
             Optional<string> costEntityId = default;
             Optional<CostManagementAlertStatus> status = default;
-            Optional<string> creationTime = default;
-            Optional<string> closeTime = default;
-            Optional<string> modificationTime = default;
-            Optional<string> statusModificationUserName = default;
+            Optional<DateTimeOffset> creationTime = default;
+            Optional<DateTimeOffset> closeTime = default;
+            Optional<DateTimeOffset> modificationTime = default;
+            Optional<DateTimeOffset> statusModificationUserName = default;
             Optional<string> statusModificationTime = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -198,22 +199,38 @@ namespace Azure.ResourceManager.CostManagement
                         }
                         if (property0.NameEquals("creationTime"u8))
                         {
-                            creationTime = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            creationTime = property0.Value.GetDateTimeOffset();
                             continue;
                         }
                         if (property0.NameEquals("closeTime"u8))
                         {
-                            closeTime = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            closeTime = property0.Value.GetDateTimeOffset();
                             continue;
                         }
                         if (property0.NameEquals("modificationTime"u8))
                         {
-                            modificationTime = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            modificationTime = property0.Value.GetDateTimeOffset();
                             continue;
                         }
                         if (property0.NameEquals("statusModificationUserName"u8))
                         {
-                            statusModificationUserName = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            statusModificationUserName = property0.Value.GetDateTimeOffset();
                             continue;
                         }
                         if (property0.NameEquals("statusModificationTime"u8))
@@ -225,7 +242,7 @@ namespace Azure.ResourceManager.CostManagement
                     continue;
                 }
             }
-            return new CostManagementAlertData(id, name, type, systemData.Value, definition.Value, description.Value, Optional.ToNullable(source), details.Value, costEntityId.Value, Optional.ToNullable(status), creationTime.Value, closeTime.Value, modificationTime.Value, statusModificationUserName.Value, statusModificationTime.Value, Optional.ToNullable(eTag));
+            return new CostManagementAlertData(id, name, type, systemData.Value, definition.Value, description.Value, Optional.ToNullable(source), details.Value, costEntityId.Value, Optional.ToNullable(status), Optional.ToNullable(creationTime), Optional.ToNullable(closeTime), Optional.ToNullable(modificationTime), Optional.ToNullable(statusModificationUserName), statusModificationTime.Value, Optional.ToNullable(eTag));
         }
     }
 }
