@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.StorageCache.Models
                 return null;
             }
             Optional<string> nextLink = default;
-            Optional<IReadOnlyList<AmlFilesystemData>> value = default;
+            Optional<IReadOnlyList<AmlFileSystemData>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("nextLink"u8))
@@ -35,10 +35,10 @@ namespace Azure.ResourceManager.StorageCache.Models
                     {
                         continue;
                     }
-                    List<AmlFilesystemData> array = new List<AmlFilesystemData>();
+                    List<AmlFileSystemData> array = new List<AmlFileSystemData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AmlFilesystemData.DeserializeAmlFilesystemData(item));
+                        array.Add(AmlFileSystemData.DeserializeAmlFileSystemData(item));
                     }
                     value = array;
                     continue;

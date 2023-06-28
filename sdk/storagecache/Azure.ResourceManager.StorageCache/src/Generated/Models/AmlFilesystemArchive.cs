@@ -8,17 +8,17 @@
 namespace Azure.ResourceManager.StorageCache.Models
 {
     /// <summary> Information about the AML file system archive. </summary>
-    public partial class AmlFilesystemArchive
+    public partial class AmlFileSystemArchive
     {
-        /// <summary> Initializes a new instance of AmlFilesystemArchive. </summary>
-        internal AmlFilesystemArchive()
+        /// <summary> Initializes a new instance of AmlFileSystemArchive. </summary>
+        internal AmlFileSystemArchive()
         {
         }
 
-        /// <summary> Initializes a new instance of AmlFilesystemArchive. </summary>
+        /// <summary> Initializes a new instance of AmlFileSystemArchive. </summary>
         /// <param name="filesystemPath"> Lustre file system path to archive relative to the file system root.  Specify '/' to archive all modified data. </param>
         /// <param name="status"> The status of the archive. </param>
-        internal AmlFilesystemArchive(string filesystemPath, AmlFilesystemArchiveStatus status)
+        internal AmlFileSystemArchive(string filesystemPath, AmlFileSystemArchiveStatus status)
         {
             FilesystemPath = filesystemPath;
             Status = status;
@@ -27,6 +27,6 @@ namespace Azure.ResourceManager.StorageCache.Models
         /// <summary> Lustre file system path to archive relative to the file system root.  Specify '/' to archive all modified data. </summary>
         public string FilesystemPath { get; }
         /// <summary> The status of the archive. </summary>
-        public AmlFilesystemArchiveStatus Status { get; }
+        public AmlFileSystemArchiveStatus Status { get; }
     }
 }

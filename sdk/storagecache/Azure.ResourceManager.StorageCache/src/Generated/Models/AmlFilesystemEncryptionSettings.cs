@@ -8,16 +8,16 @@
 namespace Azure.ResourceManager.StorageCache.Models
 {
     /// <summary> AML file system encryption settings. </summary>
-    internal partial class AmlFilesystemEncryptionSettings
+    internal partial class AmlFileSystemEncryptionSettings
     {
-        /// <summary> Initializes a new instance of AmlFilesystemEncryptionSettings. </summary>
-        public AmlFilesystemEncryptionSettings()
+        /// <summary> Initializes a new instance of AmlFileSystemEncryptionSettings. </summary>
+        public AmlFileSystemEncryptionSettings()
         {
         }
 
-        /// <summary> Initializes a new instance of AmlFilesystemEncryptionSettings. </summary>
+        /// <summary> Initializes a new instance of AmlFileSystemEncryptionSettings. </summary>
         /// <param name="keyEncryptionKey"> Specifies the location of the encryption key in Key Vault. </param>
-        internal AmlFilesystemEncryptionSettings(StorageCacheEncryptionKeyVaultKeyReference keyEncryptionKey)
+        internal AmlFileSystemEncryptionSettings(StorageCacheEncryptionKeyVaultKeyReference keyEncryptionKey)
         {
             KeyEncryptionKey = keyEncryptionKey;
         }

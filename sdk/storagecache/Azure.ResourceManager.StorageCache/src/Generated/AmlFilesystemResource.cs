@@ -20,46 +20,46 @@ using Azure.ResourceManager.StorageCache.Models;
 namespace Azure.ResourceManager.StorageCache
 {
     /// <summary>
-    /// A Class representing an AmlFilesystem along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="AmlFilesystemResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetAmlFilesystemResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetAmlFilesystem method.
+    /// A Class representing an AmlFileSystem along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="AmlFileSystemResource" />
+    /// from an instance of <see cref="ArmClient" /> using the GetAmlFileSystemResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetAmlFileSystem method.
     /// </summary>
-    public partial class AmlFilesystemResource : ArmResource
+    public partial class AmlFileSystemResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="AmlFilesystemResource"/> instance. </summary>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string amlFilesystemName)
+        /// <summary> Generate the resource identifier of a <see cref="AmlFileSystemResource"/> instance. </summary>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string amlFileSystemName)
         {
-            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageCache/amlFilesystems/{amlFilesystemName}";
+            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageCache/amlFilesystems/{amlFileSystemName}";
             return new ResourceIdentifier(resourceId);
         }
 
-        private readonly ClientDiagnostics _amlFilesystemamlFilesystemsClientDiagnostics;
-        private readonly AmlFilesystemsRestOperations _amlFilesystemamlFilesystemsRestClient;
-        private readonly AmlFilesystemData _data;
+        private readonly ClientDiagnostics _amlFileSystemamlFilesystemsClientDiagnostics;
+        private readonly AmlFilesystemsRestOperations _amlFileSystemamlFilesystemsRestClient;
+        private readonly AmlFileSystemData _data;
 
-        /// <summary> Initializes a new instance of the <see cref="AmlFilesystemResource"/> class for mocking. </summary>
-        protected AmlFilesystemResource()
+        /// <summary> Initializes a new instance of the <see cref="AmlFileSystemResource"/> class for mocking. </summary>
+        protected AmlFileSystemResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "AmlFilesystemResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref = "AmlFileSystemResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal AmlFilesystemResource(ArmClient client, AmlFilesystemData data) : this(client, data.Id)
+        internal AmlFileSystemResource(ArmClient client, AmlFileSystemData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="AmlFilesystemResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="AmlFileSystemResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal AmlFilesystemResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal AmlFileSystemResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _amlFilesystemamlFilesystemsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.StorageCache", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string amlFilesystemamlFilesystemsApiVersion);
-            _amlFilesystemamlFilesystemsRestClient = new AmlFilesystemsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, amlFilesystemamlFilesystemsApiVersion);
+            _amlFileSystemamlFilesystemsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.StorageCache", ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ResourceType, out string amlFileSystemamlFilesystemsApiVersion);
+            _amlFileSystemamlFilesystemsRestClient = new AmlFilesystemsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, amlFileSystemamlFilesystemsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.StorageCache
 
         /// <summary> Gets the data representing this Feature. </summary>
         /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
-        public virtual AmlFilesystemData Data
+        public virtual AmlFileSystemData Data
         {
             get
             {
@@ -103,16 +103,16 @@ namespace Azure.ResourceManager.StorageCache
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<AmlFilesystemResource>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AmlFileSystemResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _amlFilesystemamlFilesystemsClientDiagnostics.CreateScope("AmlFilesystemResource.Get");
+            using var scope = _amlFileSystemamlFilesystemsClientDiagnostics.CreateScope("AmlFileSystemResource.Get");
             scope.Start();
             try
             {
-                var response = await _amlFilesystemamlFilesystemsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _amlFileSystemamlFilesystemsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new AmlFilesystemResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new AmlFileSystemResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -135,16 +135,16 @@ namespace Azure.ResourceManager.StorageCache
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<AmlFilesystemResource> Get(CancellationToken cancellationToken = default)
+        public virtual Response<AmlFileSystemResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _amlFilesystemamlFilesystemsClientDiagnostics.CreateScope("AmlFilesystemResource.Get");
+            using var scope = _amlFileSystemamlFilesystemsClientDiagnostics.CreateScope("AmlFileSystemResource.Get");
             scope.Start();
             try
             {
-                var response = _amlFilesystemamlFilesystemsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                var response = _amlFileSystemamlFilesystemsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new AmlFilesystemResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new AmlFileSystemResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -170,12 +170,12 @@ namespace Azure.ResourceManager.StorageCache
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _amlFilesystemamlFilesystemsClientDiagnostics.CreateScope("AmlFilesystemResource.Delete");
+            using var scope = _amlFileSystemamlFilesystemsClientDiagnostics.CreateScope("AmlFileSystemResource.Delete");
             scope.Start();
             try
             {
-                var response = await _amlFilesystemamlFilesystemsRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new StorageCacheArmOperation(_amlFilesystemamlFilesystemsClientDiagnostics, Pipeline, _amlFilesystemamlFilesystemsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var response = await _amlFileSystemamlFilesystemsRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var operation = new StorageCacheArmOperation(_amlFileSystemamlFilesystemsClientDiagnostics, Pipeline, _amlFileSystemamlFilesystemsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -204,12 +204,12 @@ namespace Azure.ResourceManager.StorageCache
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _amlFilesystemamlFilesystemsClientDiagnostics.CreateScope("AmlFilesystemResource.Delete");
+            using var scope = _amlFileSystemamlFilesystemsClientDiagnostics.CreateScope("AmlFileSystemResource.Delete");
             scope.Start();
             try
             {
-                var response = _amlFilesystemamlFilesystemsRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new StorageCacheArmOperation(_amlFilesystemamlFilesystemsClientDiagnostics, Pipeline, _amlFilesystemamlFilesystemsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var response = _amlFileSystemamlFilesystemsRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                var operation = new StorageCacheArmOperation(_amlFileSystemamlFilesystemsClientDiagnostics, Pipeline, _amlFileSystemamlFilesystemsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -238,16 +238,16 @@ namespace Azure.ResourceManager.StorageCache
         /// <param name="patch"> Object containing the user-selectable properties of the AML file system. If read-only properties are included, they must match the existing values of those properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual async Task<ArmOperation<AmlFilesystemResource>> UpdateAsync(WaitUntil waitUntil, AmlFilesystemPatch patch, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<AmlFileSystemResource>> UpdateAsync(WaitUntil waitUntil, AmlFileSystemPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using var scope = _amlFilesystemamlFilesystemsClientDiagnostics.CreateScope("AmlFilesystemResource.Update");
+            using var scope = _amlFileSystemamlFilesystemsClientDiagnostics.CreateScope("AmlFileSystemResource.Update");
             scope.Start();
             try
             {
-                var response = await _amlFilesystemamlFilesystemsRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken).ConfigureAwait(false);
-                var operation = new StorageCacheArmOperation<AmlFilesystemResource>(new AmlFilesystemOperationSource(Client), _amlFilesystemamlFilesystemsClientDiagnostics, Pipeline, _amlFilesystemamlFilesystemsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = await _amlFileSystemamlFilesystemsRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken).ConfigureAwait(false);
+                var operation = new StorageCacheArmOperation<AmlFileSystemResource>(new AmlFileSystemOperationSource(Client), _amlFileSystemamlFilesystemsClientDiagnostics, Pipeline, _amlFileSystemamlFilesystemsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -276,16 +276,16 @@ namespace Azure.ResourceManager.StorageCache
         /// <param name="patch"> Object containing the user-selectable properties of the AML file system. If read-only properties are included, they must match the existing values of those properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual ArmOperation<AmlFilesystemResource> Update(WaitUntil waitUntil, AmlFilesystemPatch patch, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<AmlFileSystemResource> Update(WaitUntil waitUntil, AmlFileSystemPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using var scope = _amlFilesystemamlFilesystemsClientDiagnostics.CreateScope("AmlFilesystemResource.Update");
+            using var scope = _amlFileSystemamlFilesystemsClientDiagnostics.CreateScope("AmlFileSystemResource.Update");
             scope.Start();
             try
             {
-                var response = _amlFilesystemamlFilesystemsRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken);
-                var operation = new StorageCacheArmOperation<AmlFilesystemResource>(new AmlFilesystemOperationSource(Client), _amlFilesystemamlFilesystemsClientDiagnostics, Pipeline, _amlFilesystemamlFilesystemsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = _amlFileSystemamlFilesystemsRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken);
+                var operation = new StorageCacheArmOperation<AmlFileSystemResource>(new AmlFileSystemOperationSource(Client), _amlFileSystemamlFilesystemsClientDiagnostics, Pipeline, _amlFileSystemamlFilesystemsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -312,13 +312,13 @@ namespace Azure.ResourceManager.StorageCache
         /// </summary>
         /// <param name="content"> Information about the archive operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response> ArchiveAsync(AmlFilesystemArchiveContent content = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> ArchiveAsync(AmlFileSystemArchiveContent content = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _amlFilesystemamlFilesystemsClientDiagnostics.CreateScope("AmlFilesystemResource.Archive");
+            using var scope = _amlFileSystemamlFilesystemsClientDiagnostics.CreateScope("AmlFileSystemResource.Archive");
             scope.Start();
             try
             {
-                var response = await _amlFilesystemamlFilesystemsRestClient.ArchiveAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken).ConfigureAwait(false);
+                var response = await _amlFileSystemamlFilesystemsRestClient.ArchiveAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -343,13 +343,13 @@ namespace Azure.ResourceManager.StorageCache
         /// </summary>
         /// <param name="content"> Information about the archive operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response Archive(AmlFilesystemArchiveContent content = null, CancellationToken cancellationToken = default)
+        public virtual Response Archive(AmlFileSystemArchiveContent content = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _amlFilesystemamlFilesystemsClientDiagnostics.CreateScope("AmlFilesystemResource.Archive");
+            using var scope = _amlFileSystemamlFilesystemsClientDiagnostics.CreateScope("AmlFileSystemResource.Archive");
             scope.Start();
             try
             {
-                var response = _amlFilesystemamlFilesystemsRestClient.Archive(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken);
+                var response = _amlFileSystemamlFilesystemsRestClient.Archive(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -375,11 +375,11 @@ namespace Azure.ResourceManager.StorageCache
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response> CancelArchiveAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _amlFilesystemamlFilesystemsClientDiagnostics.CreateScope("AmlFilesystemResource.CancelArchive");
+            using var scope = _amlFileSystemamlFilesystemsClientDiagnostics.CreateScope("AmlFileSystemResource.CancelArchive");
             scope.Start();
             try
             {
-                var response = await _amlFilesystemamlFilesystemsRestClient.CancelArchiveAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _amlFileSystemamlFilesystemsRestClient.CancelArchiveAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -405,11 +405,11 @@ namespace Azure.ResourceManager.StorageCache
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response CancelArchive(CancellationToken cancellationToken = default)
         {
-            using var scope = _amlFilesystemamlFilesystemsClientDiagnostics.CreateScope("AmlFilesystemResource.CancelArchive");
+            using var scope = _amlFileSystemamlFilesystemsClientDiagnostics.CreateScope("AmlFileSystemResource.CancelArchive");
             scope.Start();
             try
             {
-                var response = _amlFilesystemamlFilesystemsRestClient.CancelArchive(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                var response = _amlFileSystemamlFilesystemsRestClient.CancelArchive(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -436,12 +436,12 @@ namespace Azure.ResourceManager.StorageCache
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
-        public virtual async Task<Response<AmlFilesystemResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AmlFileSystemResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using var scope = _amlFilesystemamlFilesystemsClientDiagnostics.CreateScope("AmlFilesystemResource.AddTag");
+            using var scope = _amlFileSystemamlFilesystemsClientDiagnostics.CreateScope("AmlFileSystemResource.AddTag");
             scope.Start();
             try
             {
@@ -450,13 +450,13 @@ namespace Azure.ResourceManager.StorageCache
                     var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                     originalTags.Value.Data.TagValues[key] = value;
                     await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalResponse = await _amlFilesystemamlFilesystemsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                    return Response.FromValue(new AmlFilesystemResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    var originalResponse = await _amlFileSystemamlFilesystemsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                    return Response.FromValue(new AmlFileSystemResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
                 {
                     var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    var patch = new AmlFilesystemPatch();
+                    var patch = new AmlFileSystemPatch();
                     foreach (var tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -490,12 +490,12 @@ namespace Azure.ResourceManager.StorageCache
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
-        public virtual Response<AmlFilesystemResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
+        public virtual Response<AmlFileSystemResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using var scope = _amlFilesystemamlFilesystemsClientDiagnostics.CreateScope("AmlFilesystemResource.AddTag");
+            using var scope = _amlFileSystemamlFilesystemsClientDiagnostics.CreateScope("AmlFileSystemResource.AddTag");
             scope.Start();
             try
             {
@@ -504,13 +504,13 @@ namespace Azure.ResourceManager.StorageCache
                     var originalTags = GetTagResource().Get(cancellationToken);
                     originalTags.Value.Data.TagValues[key] = value;
                     GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                    var originalResponse = _amlFilesystemamlFilesystemsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                    return Response.FromValue(new AmlFilesystemResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    var originalResponse = _amlFileSystemamlFilesystemsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                    return Response.FromValue(new AmlFileSystemResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
                 {
                     var current = Get(cancellationToken: cancellationToken).Value.Data;
-                    var patch = new AmlFilesystemPatch();
+                    var patch = new AmlFileSystemPatch();
                     foreach (var tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -543,11 +543,11 @@ namespace Azure.ResourceManager.StorageCache
         /// <param name="tags"> The set of tags to use as replacement. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
-        public virtual async Task<Response<AmlFilesystemResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AmlFileSystemResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using var scope = _amlFilesystemamlFilesystemsClientDiagnostics.CreateScope("AmlFilesystemResource.SetTags");
+            using var scope = _amlFileSystemamlFilesystemsClientDiagnostics.CreateScope("AmlFileSystemResource.SetTags");
             scope.Start();
             try
             {
@@ -557,13 +557,13 @@ namespace Azure.ResourceManager.StorageCache
                     var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                     originalTags.Value.Data.TagValues.ReplaceWith(tags);
                     await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalResponse = await _amlFilesystemamlFilesystemsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                    return Response.FromValue(new AmlFilesystemResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    var originalResponse = await _amlFileSystemamlFilesystemsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                    return Response.FromValue(new AmlFileSystemResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
                 {
                     var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    var patch = new AmlFilesystemPatch();
+                    var patch = new AmlFileSystemPatch();
                     patch.Tags.ReplaceWith(tags);
                     var result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
@@ -592,11 +592,11 @@ namespace Azure.ResourceManager.StorageCache
         /// <param name="tags"> The set of tags to use as replacement. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
-        public virtual Response<AmlFilesystemResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
+        public virtual Response<AmlFileSystemResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using var scope = _amlFilesystemamlFilesystemsClientDiagnostics.CreateScope("AmlFilesystemResource.SetTags");
+            using var scope = _amlFileSystemamlFilesystemsClientDiagnostics.CreateScope("AmlFileSystemResource.SetTags");
             scope.Start();
             try
             {
@@ -606,13 +606,13 @@ namespace Azure.ResourceManager.StorageCache
                     var originalTags = GetTagResource().Get(cancellationToken);
                     originalTags.Value.Data.TagValues.ReplaceWith(tags);
                     GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                    var originalResponse = _amlFilesystemamlFilesystemsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                    return Response.FromValue(new AmlFilesystemResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    var originalResponse = _amlFileSystemamlFilesystemsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                    return Response.FromValue(new AmlFileSystemResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
                 {
                     var current = Get(cancellationToken: cancellationToken).Value.Data;
-                    var patch = new AmlFilesystemPatch();
+                    var patch = new AmlFileSystemPatch();
                     patch.Tags.ReplaceWith(tags);
                     var result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
@@ -641,11 +641,11 @@ namespace Azure.ResourceManager.StorageCache
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
-        public virtual async Task<Response<AmlFilesystemResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AmlFileSystemResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using var scope = _amlFilesystemamlFilesystemsClientDiagnostics.CreateScope("AmlFilesystemResource.RemoveTag");
+            using var scope = _amlFileSystemamlFilesystemsClientDiagnostics.CreateScope("AmlFileSystemResource.RemoveTag");
             scope.Start();
             try
             {
@@ -654,13 +654,13 @@ namespace Azure.ResourceManager.StorageCache
                     var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                     originalTags.Value.Data.TagValues.Remove(key);
                     await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalResponse = await _amlFilesystemamlFilesystemsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                    return Response.FromValue(new AmlFilesystemResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    var originalResponse = await _amlFileSystemamlFilesystemsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                    return Response.FromValue(new AmlFileSystemResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
                 {
                     var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    var patch = new AmlFilesystemPatch();
+                    var patch = new AmlFileSystemPatch();
                     foreach (var tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -693,11 +693,11 @@ namespace Azure.ResourceManager.StorageCache
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
-        public virtual Response<AmlFilesystemResource> RemoveTag(string key, CancellationToken cancellationToken = default)
+        public virtual Response<AmlFileSystemResource> RemoveTag(string key, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using var scope = _amlFilesystemamlFilesystemsClientDiagnostics.CreateScope("AmlFilesystemResource.RemoveTag");
+            using var scope = _amlFileSystemamlFilesystemsClientDiagnostics.CreateScope("AmlFileSystemResource.RemoveTag");
             scope.Start();
             try
             {
@@ -706,13 +706,13 @@ namespace Azure.ResourceManager.StorageCache
                     var originalTags = GetTagResource().Get(cancellationToken);
                     originalTags.Value.Data.TagValues.Remove(key);
                     GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                    var originalResponse = _amlFilesystemamlFilesystemsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                    return Response.FromValue(new AmlFilesystemResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    var originalResponse = _amlFileSystemamlFilesystemsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                    return Response.FromValue(new AmlFileSystemResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
                 {
                     var current = Get(cancellationToken: cancellationToken).Value.Data;
-                    var patch = new AmlFilesystemPatch();
+                    var patch = new AmlFileSystemPatch();
                     foreach (var tag in current.Tags)
                     {
                         patch.Tags.Add(tag);

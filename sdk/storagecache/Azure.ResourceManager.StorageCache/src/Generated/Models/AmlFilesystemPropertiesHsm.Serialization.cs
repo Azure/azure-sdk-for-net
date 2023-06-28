@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.StorageCache.Models
 {
-    public partial class AmlFilesystemPropertiesHsm : IUtf8JsonSerializable
+    public partial class AmlFileSystemPropertiesHsm : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -24,14 +24,14 @@ namespace Azure.ResourceManager.StorageCache.Models
             writer.WriteEndObject();
         }
 
-        internal static AmlFilesystemPropertiesHsm DeserializeAmlFilesystemPropertiesHsm(JsonElement element)
+        internal static AmlFileSystemPropertiesHsm DeserializeAmlFileSystemPropertiesHsm(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<AmlFilesystemHsmSettings> settings = default;
-            Optional<IReadOnlyList<AmlFilesystemArchive>> archiveStatus = default;
+            Optional<AmlFileSystemHsmSettings> settings = default;
+            Optional<IReadOnlyList<AmlFileSystemArchive>> archiveStatus = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("settings"u8))
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.StorageCache.Models
                     {
                         continue;
                     }
-                    settings = AmlFilesystemHsmSettings.DeserializeAmlFilesystemHsmSettings(property.Value);
+                    settings = AmlFileSystemHsmSettings.DeserializeAmlFileSystemHsmSettings(property.Value);
                     continue;
                 }
                 if (property.NameEquals("archiveStatus"u8))
@@ -49,16 +49,16 @@ namespace Azure.ResourceManager.StorageCache.Models
                     {
                         continue;
                     }
-                    List<AmlFilesystemArchive> array = new List<AmlFilesystemArchive>();
+                    List<AmlFileSystemArchive> array = new List<AmlFileSystemArchive>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AmlFilesystemArchive.DeserializeAmlFilesystemArchive(item));
+                        array.Add(AmlFileSystemArchive.DeserializeAmlFileSystemArchive(item));
                     }
                     archiveStatus = array;
                     continue;
                 }
             }
-            return new AmlFilesystemPropertiesHsm(settings.Value, Optional.ToList(archiveStatus));
+            return new AmlFileSystemPropertiesHsm(settings.Value, Optional.ToList(archiveStatus));
         }
     }
 }

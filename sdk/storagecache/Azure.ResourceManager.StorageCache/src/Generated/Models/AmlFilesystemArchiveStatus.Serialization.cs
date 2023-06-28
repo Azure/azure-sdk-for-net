@@ -11,9 +11,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.StorageCache.Models
 {
-    public partial class AmlFilesystemArchiveStatus
+    public partial class AmlFileSystemArchiveStatus
     {
-        internal static AmlFilesystemArchiveStatus DeserializeAmlFilesystemArchiveStatus(JsonElement element)
+        internal static AmlFileSystemArchiveStatus DeserializeAmlFileSystemArchiveStatus(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.StorageCache.Models
                     continue;
                 }
             }
-            return new AmlFilesystemArchiveStatus(Optional.ToNullable(state), Optional.ToNullable(lastCompletionTime), Optional.ToNullable(lastStartedTime), Optional.ToNullable(percentComplete), errorCode.Value, errorMessage.Value);
+            return new AmlFileSystemArchiveStatus(Optional.ToNullable(state), Optional.ToNullable(lastCompletionTime), Optional.ToNullable(lastStartedTime), Optional.ToNullable(percentComplete), errorCode.Value, errorMessage.Value);
         }
     }
 }

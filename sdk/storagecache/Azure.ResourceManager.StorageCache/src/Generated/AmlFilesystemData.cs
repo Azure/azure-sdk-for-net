@@ -13,19 +13,19 @@ using Azure.ResourceManager.StorageCache.Models;
 namespace Azure.ResourceManager.StorageCache
 {
     /// <summary>
-    /// A class representing the AmlFilesystem data model.
+    /// A class representing the AmlFileSystem data model.
     /// An AML file system instance. Follows Azure Resource Manager standards: https://github.com/Azure/azure-resource-manager-rpc/blob/master/v1.0/resource-api-reference.md
     /// </summary>
-    public partial class AmlFilesystemData : TrackedResourceData
+    public partial class AmlFileSystemData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of AmlFilesystemData. </summary>
+        /// <summary> Initializes a new instance of AmlFileSystemData. </summary>
         /// <param name="location"> The location. </param>
-        public AmlFilesystemData(AzureLocation location) : base(location)
+        public AmlFileSystemData(AzureLocation location) : base(location)
         {
             Zones = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of AmlFilesystemData. </summary>
+        /// <summary> Initializes a new instance of AmlFileSystemData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.StorageCache
         /// <param name="encryptionSettings"> Specifies encryption settings of the AML file system. </param>
         /// <param name="maintenanceWindow"> Start time of a 30-minute weekly maintenance window. </param>
         /// <param name="hsm"> Hydration and archive settings and status. </param>
-        internal AmlFilesystemData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, StorageCacheSkuName sku, IList<string> zones, float? storageCapacityTiB, AmlFilesystemHealth health, AmlFilesystemProvisioningStateType? provisioningState, string filesystemSubnet, AmlFilesystemClientInfo clientInfo, int? throughputProvisionedMBps, AmlFilesystemEncryptionSettings encryptionSettings, AmlFilesystemPropertiesMaintenanceWindow maintenanceWindow, AmlFilesystemPropertiesHsm hsm) : base(id, name, resourceType, systemData, tags, location)
+        internal AmlFileSystemData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, StorageCacheSkuName sku, IList<string> zones, float? storageCapacityTiB, AmlFileSystemHealth health, AmlFileSystemProvisioningStateType? provisioningState, string filesystemSubnet, AmlFileSystemClientInfo clientInfo, int? throughputProvisionedMBps, AmlFileSystemEncryptionSettings encryptionSettings, AmlFileSystemPropertiesMaintenanceWindow maintenanceWindow, AmlFileSystemPropertiesHsm hsm) : base(id, name, resourceType, systemData, tags, location)
         {
             Identity = identity;
             Sku = sku;
@@ -81,17 +81,17 @@ namespace Azure.ResourceManager.StorageCache
         /// <summary> The size of the AML file system, in TiB. This might be rounded up. </summary>
         public float? StorageCapacityTiB { get; set; }
         /// <summary> Health of the AML file system. </summary>
-        public AmlFilesystemHealth Health { get; }
+        public AmlFileSystemHealth Health { get; }
         /// <summary> ARM provisioning state. </summary>
-        public AmlFilesystemProvisioningStateType? ProvisioningState { get; }
+        public AmlFileSystemProvisioningStateType? ProvisioningState { get; }
         /// <summary> Subnet used for managing the AML file system and for client-facing operations. This subnet should have at least a /24 subnet mask within the VNET's address space. </summary>
         public string FilesystemSubnet { get; set; }
         /// <summary> Client information for the AML file system. </summary>
-        public AmlFilesystemClientInfo ClientInfo { get; }
+        public AmlFileSystemClientInfo ClientInfo { get; }
         /// <summary> Throughput provisioned in MB per sec, calculated as storageCapacityTiB * per-unit storage throughput. </summary>
         public int? ThroughputProvisionedMBps { get; }
         /// <summary> Specifies encryption settings of the AML file system. </summary>
-        internal AmlFilesystemEncryptionSettings EncryptionSettings { get; set; }
+        internal AmlFileSystemEncryptionSettings EncryptionSettings { get; set; }
         /// <summary> Specifies the location of the encryption key in Key Vault. </summary>
         public StorageCacheEncryptionKeyVaultKeyReference KeyEncryptionKey
         {
@@ -99,14 +99,14 @@ namespace Azure.ResourceManager.StorageCache
             set
             {
                 if (EncryptionSettings is null)
-                    EncryptionSettings = new AmlFilesystemEncryptionSettings();
+                    EncryptionSettings = new AmlFileSystemEncryptionSettings();
                 EncryptionSettings.KeyEncryptionKey = value;
             }
         }
 
         /// <summary> Start time of a 30-minute weekly maintenance window. </summary>
-        public AmlFilesystemPropertiesMaintenanceWindow MaintenanceWindow { get; set; }
+        public AmlFileSystemPropertiesMaintenanceWindow MaintenanceWindow { get; set; }
         /// <summary> Hydration and archive settings and status. </summary>
-        public AmlFilesystemPropertiesHsm Hsm { get; set; }
+        public AmlFileSystemPropertiesHsm Hsm { get; set; }
     }
 }

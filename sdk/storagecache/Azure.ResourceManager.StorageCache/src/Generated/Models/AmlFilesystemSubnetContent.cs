@@ -10,10 +10,10 @@ using Azure.Core;
 namespace Azure.ResourceManager.StorageCache.Models
 {
     /// <summary> Information required to validate the subnet that will be used in AML file system create. </summary>
-    public partial class AmlFilesystemSubnetContent
+    public partial class AmlFileSystemSubnetContent
     {
-        /// <summary> Initializes a new instance of AmlFilesystemSubnetContent. </summary>
-        public AmlFilesystemSubnetContent()
+        /// <summary> Initializes a new instance of AmlFileSystemSubnetContent. </summary>
+        public AmlFileSystemSubnetContent()
         {
         }
 

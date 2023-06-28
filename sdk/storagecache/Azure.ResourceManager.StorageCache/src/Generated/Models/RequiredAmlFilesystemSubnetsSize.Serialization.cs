@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.StorageCache.Models
 {
-    public partial class RequiredAmlFilesystemSubnetsSize
+    public partial class RequiredAmlFileSystemSubnetsSize
     {
-        internal static RequiredAmlFilesystemSubnetsSize DeserializeRequiredAmlFilesystemSubnetsSize(JsonElement element)
+        internal static RequiredAmlFileSystemSubnetsSize DeserializeRequiredAmlFileSystemSubnetsSize(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.StorageCache.Models
                     continue;
                 }
             }
-            return new RequiredAmlFilesystemSubnetsSize(Optional.ToNullable(filesystemSubnetSize));
+            return new RequiredAmlFileSystemSubnetsSize(Optional.ToNullable(filesystemSubnetSize));
         }
     }
 }

@@ -19,17 +19,17 @@ namespace Azure.ResourceManager.StorageCache.Tests.Scenario
         public async Task CreateOrUpdate()
         {
             string name = Recording.GenerateAssetName("testamlFS");
-            AmlFilesystemResource amlFSResource = await this.CreateOrUpdateAmlFilesystem(name, verifyResult: true);
+            AmlFileSystemResource amlFSResource = await this.CreateOrUpdateAmlFilesystem(name, verifyResult: true);
         }
 
         [TestCase]
         [RecordedTest]
         public async Task Get()
         {
-            AmlFilesystemResource amlFSResource = await this.CreateOrUpdateAmlFilesystem();
-            AmlFilesystemResource result = await this.DefaultResourceGroup.GetAmlFilesystems().GetAsync(amlFilesystemName: amlFSResource.Id.Name);
+            AmlFileSystemResource amlFSResource = await this.CreateOrUpdateAmlFilesystem();
+            AmlFileSystemResource result = await this.DefaultResourceGroup.GetAmlFileSystems().GetAsync(amlFileSystemName: amlFSResource.Id.Name);
 
-            this.VerifyAmlFilesystem(result, amlFSResource.Data);
+            this.VerifyAmlFileSystem(result, amlFSResource.Data);
         }
 
         [TestCase]
@@ -37,19 +37,19 @@ namespace Azure.ResourceManager.StorageCache.Tests.Scenario
         public async Task Exists()
         {
             string name = Recording.GenerateAssetName("testamlFS");
-            await AzureResourceTestHelper.TestExists<AmlFilesystemResource>(
+            await AzureResourceTestHelper.TestExists<AmlFileSystemResource>(
                 async () => await this.CreateOrUpdateAmlFilesystem(name),
-                async () => await this.DefaultResourceGroup.GetAmlFilesystems().ExistsAsync(name));
+                async () => await this.DefaultResourceGroup.GetAmlFileSystems().ExistsAsync(name));
         }
 
         [TestCase]
         [RecordedTest]
         public async Task GetAll()
         {
-            await AzureResourceTestHelper.TestGetAll<AmlFilesystemResource>(
+            await AzureResourceTestHelper.TestGetAll<AmlFileSystemResource>(
                 count: 2,
                 async (i) => await this.CreateOrUpdateAmlFilesystem(),
-                () => this.DefaultResourceGroup.GetAmlFilesystems().GetAllAsync());
+                () => this.DefaultResourceGroup.GetAmlFileSystems().GetAllAsync());
         }
     }
 }

@@ -8,10 +8,10 @@
 namespace Azure.ResourceManager.StorageCache.Models
 {
     /// <summary> Start time of a 30-minute weekly maintenance window. </summary>
-    public partial class AmlFilesystemUpdatePropertiesMaintenanceWindow
+    public partial class AmlFileSystemUpdatePropertiesMaintenanceWindow
     {
-        /// <summary> Initializes a new instance of AmlFilesystemUpdatePropertiesMaintenanceWindow. </summary>
-        public AmlFilesystemUpdatePropertiesMaintenanceWindow()
+        /// <summary> Initializes a new instance of AmlFileSystemUpdatePropertiesMaintenanceWindow. </summary>
+        public AmlFileSystemUpdatePropertiesMaintenanceWindow()
         {
         }
 

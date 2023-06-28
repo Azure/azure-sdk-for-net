@@ -18,12 +18,12 @@ using Azure.ResourceManager.StorageCache.Models;
 
 namespace Azure.ResourceManager.StorageCache.Samples
 {
-    public partial class Sample_AmlFilesystemResource
+    public partial class Sample_AmlFileSystemResource
     {
         // amlFilesystems_List
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetAmlFilesystems_AmlFilesystemsList()
+        public async Task GetAmlFileSystems_AmlFilesystemsList()
         {
             // Generated from example definition: specification/storagecache/resource-manager/Microsoft.StorageCache/stable/2023-05-01/examples/amlFilesystems_List.json
             // this example is just showing the usage of "amlFilesystems_List" operation, for the dependent resources, they will have to be created separately.
@@ -40,11 +40,11 @@ namespace Azure.ResourceManager.StorageCache.Samples
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
             // invoke the operation and iterate over the result
-            await foreach (AmlFilesystemResource item in subscriptionResource.GetAmlFilesystemsAsync())
+            await foreach (AmlFileSystemResource item in subscriptionResource.GetAmlFileSystemsAsync())
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                AmlFilesystemData resourceData = item.Data;
+                AmlFileSystemData resourceData = item.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
@@ -65,16 +65,16 @@ namespace Azure.ResourceManager.StorageCache.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this AmlFilesystemResource created on azure
-            // for more information of creating AmlFilesystemResource, please refer to the document of AmlFilesystemResource
+            // this example assumes you already have this AmlFileSystemResource created on azure
+            // for more information of creating AmlFileSystemResource, please refer to the document of AmlFileSystemResource
             string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "scgroup";
-            string amlFilesystemName = "fs1";
-            ResourceIdentifier amlFilesystemResourceId = AmlFilesystemResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, amlFilesystemName);
-            AmlFilesystemResource amlFilesystem = client.GetAmlFilesystemResource(amlFilesystemResourceId);
+            string amlFileSystemName = "fs1";
+            ResourceIdentifier amlFileSystemResourceId = AmlFileSystemResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, amlFileSystemName);
+            AmlFileSystemResource amlFileSystem = client.GetAmlFileSystemResource(amlFileSystemResourceId);
 
             // invoke the operation
-            await amlFilesystem.DeleteAsync(WaitUntil.Completed);
+            await amlFileSystem.DeleteAsync(WaitUntil.Completed);
 
             Console.WriteLine($"Succeeded");
         }
@@ -92,20 +92,20 @@ namespace Azure.ResourceManager.StorageCache.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this AmlFilesystemResource created on azure
-            // for more information of creating AmlFilesystemResource, please refer to the document of AmlFilesystemResource
+            // this example assumes you already have this AmlFileSystemResource created on azure
+            // for more information of creating AmlFileSystemResource, please refer to the document of AmlFileSystemResource
             string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "scgroup";
-            string amlFilesystemName = "fs1";
-            ResourceIdentifier amlFilesystemResourceId = AmlFilesystemResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, amlFilesystemName);
-            AmlFilesystemResource amlFilesystem = client.GetAmlFilesystemResource(amlFilesystemResourceId);
+            string amlFileSystemName = "fs1";
+            ResourceIdentifier amlFileSystemResourceId = AmlFileSystemResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, amlFileSystemName);
+            AmlFileSystemResource amlFileSystem = client.GetAmlFileSystemResource(amlFileSystemResourceId);
 
             // invoke the operation
-            AmlFilesystemResource result = await amlFilesystem.GetAsync();
+            AmlFileSystemResource result = await amlFileSystem.GetAsync();
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            AmlFilesystemData resourceData = result.Data;
+            AmlFileSystemData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -123,16 +123,16 @@ namespace Azure.ResourceManager.StorageCache.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this AmlFilesystemResource created on azure
-            // for more information of creating AmlFilesystemResource, please refer to the document of AmlFilesystemResource
+            // this example assumes you already have this AmlFileSystemResource created on azure
+            // for more information of creating AmlFileSystemResource, please refer to the document of AmlFileSystemResource
             string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "scgroup";
-            string amlFilesystemName = "fs1";
-            ResourceIdentifier amlFilesystemResourceId = AmlFilesystemResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, amlFilesystemName);
-            AmlFilesystemResource amlFilesystem = client.GetAmlFilesystemResource(amlFilesystemResourceId);
+            string amlFileSystemName = "fs1";
+            ResourceIdentifier amlFileSystemResourceId = AmlFileSystemResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, amlFileSystemName);
+            AmlFileSystemResource amlFileSystem = client.GetAmlFileSystemResource(amlFileSystemResourceId);
 
             // invoke the operation
-            AmlFilesystemPatch patch = new AmlFilesystemPatch()
+            AmlFileSystemPatch patch = new AmlFileSystemPatch()
             {
                 Tags =
 {
@@ -142,18 +142,18 @@ namespace Azure.ResourceManager.StorageCache.Samples
                 {
                     Id = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/scgroup/providers/Microsoft.KeyVault/vaults/keyvault-cmk"),
                 }),
-                MaintenanceWindow = new AmlFilesystemUpdatePropertiesMaintenanceWindow()
+                MaintenanceWindow = new AmlFileSystemUpdatePropertiesMaintenanceWindow()
                 {
                     DayOfWeek = MaintenanceDayOfWeekType.Friday,
                     TimeOfDayUTC = "22:00",
                 },
             };
-            ArmOperation<AmlFilesystemResource> lro = await amlFilesystem.UpdateAsync(WaitUntil.Completed, patch);
-            AmlFilesystemResource result = lro.Value;
+            ArmOperation<AmlFileSystemResource> lro = await amlFileSystem.UpdateAsync(WaitUntil.Completed, patch);
+            AmlFileSystemResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            AmlFilesystemData resourceData = result.Data;
+            AmlFileSystemData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -171,20 +171,20 @@ namespace Azure.ResourceManager.StorageCache.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this AmlFilesystemResource created on azure
-            // for more information of creating AmlFilesystemResource, please refer to the document of AmlFilesystemResource
+            // this example assumes you already have this AmlFileSystemResource created on azure
+            // for more information of creating AmlFileSystemResource, please refer to the document of AmlFileSystemResource
             string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "scgroup";
-            string amlFilesystemName = "sc";
-            ResourceIdentifier amlFilesystemResourceId = AmlFilesystemResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, amlFilesystemName);
-            AmlFilesystemResource amlFilesystem = client.GetAmlFilesystemResource(amlFilesystemResourceId);
+            string amlFileSystemName = "sc";
+            ResourceIdentifier amlFileSystemResourceId = AmlFileSystemResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, amlFileSystemName);
+            AmlFileSystemResource amlFileSystem = client.GetAmlFileSystemResource(amlFileSystemResourceId);
 
             // invoke the operation
-            AmlFilesystemArchiveContent content = new AmlFilesystemArchiveContent()
+            AmlFileSystemArchiveContent content = new AmlFileSystemArchiveContent()
             {
                 FilesystemPath = "/",
             };
-            await amlFilesystem.ArchiveAsync(content: content);
+            await amlFileSystem.ArchiveAsync(content: content);
 
             Console.WriteLine($"Succeeded");
         }
@@ -202,16 +202,16 @@ namespace Azure.ResourceManager.StorageCache.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this AmlFilesystemResource created on azure
-            // for more information of creating AmlFilesystemResource, please refer to the document of AmlFilesystemResource
+            // this example assumes you already have this AmlFileSystemResource created on azure
+            // for more information of creating AmlFileSystemResource, please refer to the document of AmlFileSystemResource
             string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "scgroup";
-            string amlFilesystemName = "sc";
-            ResourceIdentifier amlFilesystemResourceId = AmlFilesystemResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, amlFilesystemName);
-            AmlFilesystemResource amlFilesystem = client.GetAmlFilesystemResource(amlFilesystemResourceId);
+            string amlFileSystemName = "sc";
+            ResourceIdentifier amlFileSystemResourceId = AmlFileSystemResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, amlFileSystemName);
+            AmlFileSystemResource amlFileSystem = client.GetAmlFileSystemResource(amlFileSystemResourceId);
 
             // invoke the operation
-            await amlFilesystem.CancelArchiveAsync();
+            await amlFileSystem.CancelArchiveAsync();
 
             Console.WriteLine($"Succeeded");
         }

@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.StorageCache
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
-        internal HttpMessage CreateCheckAmlFSSubnetsRequest(string subscriptionId, AmlFilesystemSubnetContent content)
+        internal HttpMessage CreateCheckAmlFSSubnetsRequest(string subscriptionId, AmlFileSystemSubnetContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.StorageCache
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> CheckAmlFSSubnetsAsync(string subscriptionId, AmlFilesystemSubnetContent content = null, CancellationToken cancellationToken = default)
+        public async Task<Response> CheckAmlFSSubnetsAsync(string subscriptionId, AmlFileSystemSubnetContent content = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.StorageCache
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response CheckAmlFSSubnets(string subscriptionId, AmlFilesystemSubnetContent content = null, CancellationToken cancellationToken = default)
+        public Response CheckAmlFSSubnets(string subscriptionId, AmlFileSystemSubnetContent content = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.StorageCache
             }
         }
 
-        internal HttpMessage CreateGetRequiredAmlFSSubnetsSizeRequest(string subscriptionId, RequiredAmlFilesystemSubnetsSizeContent content)
+        internal HttpMessage CreateGetRequiredAmlFSSubnetsSizeRequest(string subscriptionId, RequiredAmlFileSystemSubnetsSizeContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.StorageCache
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<RequiredAmlFilesystemSubnetsSize>> GetRequiredAmlFSSubnetsSizeAsync(string subscriptionId, RequiredAmlFilesystemSubnetsSizeContent content = null, CancellationToken cancellationToken = default)
+        public async Task<Response<RequiredAmlFileSystemSubnetsSize>> GetRequiredAmlFSSubnetsSizeAsync(string subscriptionId, RequiredAmlFileSystemSubnetsSizeContent content = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
@@ -143,9 +143,9 @@ namespace Azure.ResourceManager.StorageCache
             {
                 case 200:
                     {
-                        RequiredAmlFilesystemSubnetsSize value = default;
+                        RequiredAmlFileSystemSubnetsSize value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = RequiredAmlFilesystemSubnetsSize.DeserializeRequiredAmlFilesystemSubnetsSize(document.RootElement);
+                        value = RequiredAmlFileSystemSubnetsSize.DeserializeRequiredAmlFileSystemSubnetsSize(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.StorageCache
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<RequiredAmlFilesystemSubnetsSize> GetRequiredAmlFSSubnetsSize(string subscriptionId, RequiredAmlFilesystemSubnetsSizeContent content = null, CancellationToken cancellationToken = default)
+        public Response<RequiredAmlFileSystemSubnetsSize> GetRequiredAmlFSSubnetsSize(string subscriptionId, RequiredAmlFileSystemSubnetsSizeContent content = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
@@ -169,9 +169,9 @@ namespace Azure.ResourceManager.StorageCache
             {
                 case 200:
                     {
-                        RequiredAmlFilesystemSubnetsSize value = default;
+                        RequiredAmlFileSystemSubnetsSize value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = RequiredAmlFilesystemSubnetsSize.DeserializeRequiredAmlFilesystemSubnetsSize(document.RootElement);
+                        value = RequiredAmlFileSystemSubnetsSize.DeserializeRequiredAmlFileSystemSubnetsSize(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

@@ -11,13 +11,13 @@ using System.ComponentModel;
 namespace Azure.ResourceManager.StorageCache.Models
 {
     /// <summary> List of AML file system health states. </summary>
-    public readonly partial struct AmlFilesystemHealthStateType : IEquatable<AmlFilesystemHealthStateType>
+    public readonly partial struct AmlFileSystemHealthStateType : IEquatable<AmlFileSystemHealthStateType>
     {
         private readonly string _value;
 
-        /// <summary> Initializes a new instance of <see cref="AmlFilesystemHealthStateType"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="AmlFileSystemHealthStateType"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public AmlFilesystemHealthStateType(string value)
+        public AmlFileSystemHealthStateType(string value)
         {
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
@@ -29,27 +29,27 @@ namespace Azure.ResourceManager.StorageCache.Models
         private const string MaintenanceValue = "Maintenance";
 
         /// <summary> Unavailable. </summary>
-        public static AmlFilesystemHealthStateType Unavailable { get; } = new AmlFilesystemHealthStateType(UnavailableValue);
+        public static AmlFileSystemHealthStateType Unavailable { get; } = new AmlFileSystemHealthStateType(UnavailableValue);
         /// <summary> Available. </summary>
-        public static AmlFilesystemHealthStateType Available { get; } = new AmlFilesystemHealthStateType(AvailableValue);
+        public static AmlFileSystemHealthStateType Available { get; } = new AmlFileSystemHealthStateType(AvailableValue);
         /// <summary> Degraded. </summary>
-        public static AmlFilesystemHealthStateType Degraded { get; } = new AmlFilesystemHealthStateType(DegradedValue);
+        public static AmlFileSystemHealthStateType Degraded { get; } = new AmlFileSystemHealthStateType(DegradedValue);
         /// <summary> Transitioning. </summary>
-        public static AmlFilesystemHealthStateType Transitioning { get; } = new AmlFilesystemHealthStateType(TransitioningValue);
+        public static AmlFileSystemHealthStateType Transitioning { get; } = new AmlFileSystemHealthStateType(TransitioningValue);
         /// <summary> Maintenance. </summary>
-        public static AmlFilesystemHealthStateType Maintenance { get; } = new AmlFilesystemHealthStateType(MaintenanceValue);
-        /// <summary> Determines if two <see cref="AmlFilesystemHealthStateType"/> values are the same. </summary>
-        public static bool operator ==(AmlFilesystemHealthStateType left, AmlFilesystemHealthStateType right) => left.Equals(right);
-        /// <summary> Determines if two <see cref="AmlFilesystemHealthStateType"/> values are not the same. </summary>
-        public static bool operator !=(AmlFilesystemHealthStateType left, AmlFilesystemHealthStateType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="AmlFilesystemHealthStateType"/>. </summary>
-        public static implicit operator AmlFilesystemHealthStateType(string value) => new AmlFilesystemHealthStateType(value);
+        public static AmlFileSystemHealthStateType Maintenance { get; } = new AmlFileSystemHealthStateType(MaintenanceValue);
+        /// <summary> Determines if two <see cref="AmlFileSystemHealthStateType"/> values are the same. </summary>
+        public static bool operator ==(AmlFileSystemHealthStateType left, AmlFileSystemHealthStateType right) => left.Equals(right);
+        /// <summary> Determines if two <see cref="AmlFileSystemHealthStateType"/> values are not the same. </summary>
+        public static bool operator !=(AmlFileSystemHealthStateType left, AmlFileSystemHealthStateType right) => !left.Equals(right);
+        /// <summary> Converts a string to a <see cref="AmlFileSystemHealthStateType"/>. </summary>
+        public static implicit operator AmlFileSystemHealthStateType(string value) => new AmlFileSystemHealthStateType(value);
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is AmlFilesystemHealthStateType other && Equals(other);
+        public override bool Equals(object obj) => obj is AmlFileSystemHealthStateType other && Equals(other);
         /// <inheritdoc />
-        public bool Equals(AmlFilesystemHealthStateType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(AmlFileSystemHealthStateType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]

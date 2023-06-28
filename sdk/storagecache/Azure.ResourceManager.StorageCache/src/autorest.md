@@ -100,6 +100,7 @@ rename-rules:
   SSO: Sso
   URI: Uri
   Etag: ETag|etag
+  AmlFilesystem: AmlFileSystem
 
 override-operation-name:
   Caches_SpaceAllocation: UpdateSpaceAllocation

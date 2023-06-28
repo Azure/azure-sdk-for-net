@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.StorageCache.Models
     /// <summary> Model factory for models. </summary>
     public static partial class ArmStorageCacheModelFactory
     {
-        /// <summary> Initializes a new instance of AmlFilesystemData. </summary>
+        /// <summary> Initializes a new instance of AmlFileSystemData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -37,85 +37,85 @@ namespace Azure.ResourceManager.StorageCache.Models
         /// <param name="keyEncryptionKey"> Specifies encryption settings of the AML file system. </param>
         /// <param name="maintenanceWindow"> Start time of a 30-minute weekly maintenance window. </param>
         /// <param name="hsm"> Hydration and archive settings and status. </param>
-        /// <returns> A new <see cref="StorageCache.AmlFilesystemData"/> instance for mocking. </returns>
-        public static AmlFilesystemData AmlFilesystemData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ManagedServiceIdentity identity = null, string skuName = null, IEnumerable<string> zones = null, float? storageCapacityTiB = null, AmlFilesystemHealth health = null, AmlFilesystemProvisioningStateType? provisioningState = null, string filesystemSubnet = null, AmlFilesystemClientInfo clientInfo = null, int? throughputProvisionedMBps = null, StorageCacheEncryptionKeyVaultKeyReference keyEncryptionKey = null, AmlFilesystemPropertiesMaintenanceWindow maintenanceWindow = null, AmlFilesystemPropertiesHsm hsm = null)
+        /// <returns> A new <see cref="StorageCache.AmlFileSystemData"/> instance for mocking. </returns>
+        public static AmlFileSystemData AmlFileSystemData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ManagedServiceIdentity identity = null, string skuName = null, IEnumerable<string> zones = null, float? storageCapacityTiB = null, AmlFileSystemHealth health = null, AmlFileSystemProvisioningStateType? provisioningState = null, string filesystemSubnet = null, AmlFileSystemClientInfo clientInfo = null, int? throughputProvisionedMBps = null, StorageCacheEncryptionKeyVaultKeyReference keyEncryptionKey = null, AmlFileSystemPropertiesMaintenanceWindow maintenanceWindow = null, AmlFileSystemPropertiesHsm hsm = null)
         {
             tags ??= new Dictionary<string, string>();
             zones ??= new List<string>();
 
-            return new AmlFilesystemData(id, name, resourceType, systemData, tags, location, identity, skuName != null ? new StorageCacheSkuName(skuName) : null, zones?.ToList(), storageCapacityTiB, health, provisioningState, filesystemSubnet, clientInfo, throughputProvisionedMBps, keyEncryptionKey != null ? new AmlFilesystemEncryptionSettings(keyEncryptionKey) : null, maintenanceWindow, hsm);
+            return new AmlFileSystemData(id, name, resourceType, systemData, tags, location, identity, skuName != null ? new StorageCacheSkuName(skuName) : null, zones?.ToList(), storageCapacityTiB, health, provisioningState, filesystemSubnet, clientInfo, throughputProvisionedMBps, keyEncryptionKey != null ? new AmlFileSystemEncryptionSettings(keyEncryptionKey) : null, maintenanceWindow, hsm);
         }
 
-        /// <summary> Initializes a new instance of AmlFilesystemHealth. </summary>
+        /// <summary> Initializes a new instance of AmlFileSystemHealth. </summary>
         /// <param name="state"> List of AML file system health states. </param>
         /// <param name="statusCode"> Server-defined error code for the AML file system health. </param>
         /// <param name="statusDescription"> Describes the health state. </param>
-        /// <returns> A new <see cref="Models.AmlFilesystemHealth"/> instance for mocking. </returns>
-        public static AmlFilesystemHealth AmlFilesystemHealth(AmlFilesystemHealthStateType? state = null, string statusCode = null, string statusDescription = null)
+        /// <returns> A new <see cref="Models.AmlFileSystemHealth"/> instance for mocking. </returns>
+        public static AmlFileSystemHealth AmlFileSystemHealth(AmlFileSystemHealthStateType? state = null, string statusCode = null, string statusDescription = null)
         {
-            return new AmlFilesystemHealth(state, statusCode, statusDescription);
+            return new AmlFileSystemHealth(state, statusCode, statusDescription);
         }
 
-        /// <summary> Initializes a new instance of AmlFilesystemClientInfo. </summary>
+        /// <summary> Initializes a new instance of AmlFileSystemClientInfo. </summary>
         /// <param name="mgsAddress"> The IPv4 address used by clients to mount the AML file system's Lustre Management Service (MGS). </param>
         /// <param name="mountCommand"> Recommended command to mount the AML file system. </param>
         /// <param name="lustreVersion"> The version of Lustre running in the AML file system. </param>
         /// <param name="containerStorageInterface"> Container Storage Interface information for the AML file system. </param>
-        /// <returns> A new <see cref="Models.AmlFilesystemClientInfo"/> instance for mocking. </returns>
-        public static AmlFilesystemClientInfo AmlFilesystemClientInfo(string mgsAddress = null, string mountCommand = null, string lustreVersion = null, AmlFilesystemContainerStorageInterface containerStorageInterface = null)
+        /// <returns> A new <see cref="Models.AmlFileSystemClientInfo"/> instance for mocking. </returns>
+        public static AmlFileSystemClientInfo AmlFileSystemClientInfo(string mgsAddress = null, string mountCommand = null, string lustreVersion = null, AmlFileSystemContainerStorageInterface containerStorageInterface = null)
         {
-            return new AmlFilesystemClientInfo(mgsAddress, mountCommand, lustreVersion, containerStorageInterface);
+            return new AmlFileSystemClientInfo(mgsAddress, mountCommand, lustreVersion, containerStorageInterface);
         }
 
-        /// <summary> Initializes a new instance of AmlFilesystemContainerStorageInterface. </summary>
+        /// <summary> Initializes a new instance of AmlFileSystemContainerStorageInterface. </summary>
         /// <param name="persistentVolumeClaim"> Recommended AKS Persistent Volume Claim for the CSI driver, in Base64 encoded YAML. </param>
         /// <param name="persistentVolume"> Recommended AKS Persistent Volume for the CSI driver, in Base64 encoded YAML. </param>
         /// <param name="storageClass"> Recommended AKS Storage Class for the CSI driver, in Base64 encoded YAML. </param>
-        /// <returns> A new <see cref="Models.AmlFilesystemContainerStorageInterface"/> instance for mocking. </returns>
-        public static AmlFilesystemContainerStorageInterface AmlFilesystemContainerStorageInterface(string persistentVolumeClaim = null, string persistentVolume = null, string storageClass = null)
+        /// <returns> A new <see cref="Models.AmlFileSystemContainerStorageInterface"/> instance for mocking. </returns>
+        public static AmlFileSystemContainerStorageInterface AmlFileSystemContainerStorageInterface(string persistentVolumeClaim = null, string persistentVolume = null, string storageClass = null)
         {
-            return new AmlFilesystemContainerStorageInterface(persistentVolumeClaim, persistentVolume, storageClass);
+            return new AmlFileSystemContainerStorageInterface(persistentVolumeClaim, persistentVolume, storageClass);
         }
 
-        /// <summary> Initializes a new instance of AmlFilesystemPropertiesHsm. </summary>
+        /// <summary> Initializes a new instance of AmlFileSystemPropertiesHsm. </summary>
         /// <param name="settings"> Specifies HSM settings of the AML file system. </param>
         /// <param name="archiveStatus"> Archive status. </param>
-        /// <returns> A new <see cref="Models.AmlFilesystemPropertiesHsm"/> instance for mocking. </returns>
-        public static AmlFilesystemPropertiesHsm AmlFilesystemPropertiesHsm(AmlFilesystemHsmSettings settings = null, IEnumerable<AmlFilesystemArchive> archiveStatus = null)
+        /// <returns> A new <see cref="Models.AmlFileSystemPropertiesHsm"/> instance for mocking. </returns>
+        public static AmlFileSystemPropertiesHsm AmlFileSystemPropertiesHsm(AmlFileSystemHsmSettings settings = null, IEnumerable<AmlFileSystemArchive> archiveStatus = null)
         {
-            archiveStatus ??= new List<AmlFilesystemArchive>();
+            archiveStatus ??= new List<AmlFileSystemArchive>();
 
-            return new AmlFilesystemPropertiesHsm(settings, archiveStatus?.ToList());
+            return new AmlFileSystemPropertiesHsm(settings, archiveStatus?.ToList());
         }
 
-        /// <summary> Initializes a new instance of AmlFilesystemArchive. </summary>
+        /// <summary> Initializes a new instance of AmlFileSystemArchive. </summary>
         /// <param name="filesystemPath"> Lustre file system path to archive relative to the file system root.  Specify '/' to archive all modified data. </param>
         /// <param name="status"> The status of the archive. </param>
-        /// <returns> A new <see cref="Models.AmlFilesystemArchive"/> instance for mocking. </returns>
-        public static AmlFilesystemArchive AmlFilesystemArchive(string filesystemPath = null, AmlFilesystemArchiveStatus status = null)
+        /// <returns> A new <see cref="Models.AmlFileSystemArchive"/> instance for mocking. </returns>
+        public static AmlFileSystemArchive AmlFileSystemArchive(string filesystemPath = null, AmlFileSystemArchiveStatus status = null)
         {
-            return new AmlFilesystemArchive(filesystemPath, status);
+            return new AmlFileSystemArchive(filesystemPath, status);
         }
 
-        /// <summary> Initializes a new instance of AmlFilesystemArchiveStatus. </summary>
+        /// <summary> Initializes a new instance of AmlFileSystemArchiveStatus. </summary>
         /// <param name="state"> The state of the archive operation. </param>
         /// <param name="lastCompletionOn"> The time of the last completed archive operation. </param>
         /// <param name="lastStartedOn"> The time the latest archive operation started. </param>
         /// <param name="percentComplete"> The completion percentage of the archive operation. </param>
         /// <param name="errorCode"> Server-defined error code for the archive operation. </param>
         /// <param name="errorMessage"> Server-defined error message for the archive operation. </param>
-        /// <returns> A new <see cref="Models.AmlFilesystemArchiveStatus"/> instance for mocking. </returns>
-        public static AmlFilesystemArchiveStatus AmlFilesystemArchiveStatus(ArchiveStatusType? state = null, DateTimeOffset? lastCompletionOn = null, DateTimeOffset? lastStartedOn = null, int? percentComplete = null, string errorCode = null, string errorMessage = null)
+        /// <returns> A new <see cref="Models.AmlFileSystemArchiveStatus"/> instance for mocking. </returns>
+        public static AmlFileSystemArchiveStatus AmlFileSystemArchiveStatus(ArchiveStatusType? state = null, DateTimeOffset? lastCompletionOn = null, DateTimeOffset? lastStartedOn = null, int? percentComplete = null, string errorCode = null, string errorMessage = null)
         {
-            return new AmlFilesystemArchiveStatus(state, lastCompletionOn, lastStartedOn, percentComplete, errorCode, errorMessage);
+            return new AmlFileSystemArchiveStatus(state, lastCompletionOn, lastStartedOn, percentComplete, errorCode, errorMessage);
         }
 
-        /// <summary> Initializes a new instance of RequiredAmlFilesystemSubnetsSize. </summary>
+        /// <summary> Initializes a new instance of RequiredAmlFileSystemSubnetsSize. </summary>
         /// <param name="filesystemSubnetSize"> The number of available IP addresses that are required for the AML file system. </param>
-        /// <returns> A new <see cref="Models.RequiredAmlFilesystemSubnetsSize"/> instance for mocking. </returns>
-        public static RequiredAmlFilesystemSubnetsSize RequiredAmlFilesystemSubnetsSize(int? filesystemSubnetSize = null)
+        /// <returns> A new <see cref="Models.RequiredAmlFileSystemSubnetsSize"/> instance for mocking. </returns>
+        public static RequiredAmlFileSystemSubnetsSize RequiredAmlFileSystemSubnetsSize(int? filesystemSubnetSize = null)
         {
-            return new RequiredAmlFilesystemSubnetsSize(filesystemSubnetSize);
+            return new RequiredAmlFileSystemSubnetsSize(filesystemSubnetSize);
         }
 
         /// <summary> Initializes a new instance of StorageCacheSku. </summary>

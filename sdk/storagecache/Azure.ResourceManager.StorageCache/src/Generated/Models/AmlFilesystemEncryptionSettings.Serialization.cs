@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.StorageCache.Models
 {
-    internal partial class AmlFilesystemEncryptionSettings : IUtf8JsonSerializable
+    internal partial class AmlFileSystemEncryptionSettings : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.StorageCache.Models
             writer.WriteEndObject();
         }
 
-        internal static AmlFilesystemEncryptionSettings DeserializeAmlFilesystemEncryptionSettings(JsonElement element)
+        internal static AmlFileSystemEncryptionSettings DeserializeAmlFileSystemEncryptionSettings(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.StorageCache.Models
                     continue;
                 }
             }
-            return new AmlFilesystemEncryptionSettings(keyEncryptionKey.Value);
+            return new AmlFileSystemEncryptionSettings(keyEncryptionKey.Value);
         }
     }
 }

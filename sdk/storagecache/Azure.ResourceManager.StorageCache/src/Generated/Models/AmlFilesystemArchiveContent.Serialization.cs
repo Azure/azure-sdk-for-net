@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.StorageCache.Models
 {
-    public partial class AmlFilesystemArchiveContent : IUtf8JsonSerializable
+    public partial class AmlFileSystemArchiveContent : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {

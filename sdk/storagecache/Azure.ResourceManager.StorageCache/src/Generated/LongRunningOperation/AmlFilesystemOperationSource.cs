@@ -14,27 +14,27 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.StorageCache
 {
-    internal class AmlFilesystemOperationSource : IOperationSource<AmlFilesystemResource>
+    internal class AmlFileSystemOperationSource : IOperationSource<AmlFileSystemResource>
     {
         private readonly ArmClient _client;
 
-        internal AmlFilesystemOperationSource(ArmClient client)
+        internal AmlFileSystemOperationSource(ArmClient client)
         {
             _client = client;
         }
 
-        AmlFilesystemResource IOperationSource<AmlFilesystemResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        AmlFileSystemResource IOperationSource<AmlFileSystemResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            var data = AmlFilesystemData.DeserializeAmlFilesystemData(document.RootElement);
-            return new AmlFilesystemResource(_client, data);
+            var data = AmlFileSystemData.DeserializeAmlFileSystemData(document.RootElement);
+            return new AmlFileSystemResource(_client, data);
         }
 
-        async ValueTask<AmlFilesystemResource> IOperationSource<AmlFilesystemResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<AmlFileSystemResource> IOperationSource<AmlFileSystemResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = AmlFilesystemData.DeserializeAmlFilesystemData(document.RootElement);
-            return new AmlFilesystemResource(_client, data);
+            var data = AmlFileSystemData.DeserializeAmlFileSystemData(document.RootElement);
+            return new AmlFileSystemResource(_client, data);
         }
     }
 }

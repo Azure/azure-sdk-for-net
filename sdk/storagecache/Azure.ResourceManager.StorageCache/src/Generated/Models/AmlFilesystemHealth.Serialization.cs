@@ -10,15 +10,15 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.StorageCache.Models
 {
-    public partial class AmlFilesystemHealth
+    public partial class AmlFileSystemHealth
     {
-        internal static AmlFilesystemHealth DeserializeAmlFilesystemHealth(JsonElement element)
+        internal static AmlFileSystemHealth DeserializeAmlFileSystemHealth(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<AmlFilesystemHealthStateType> state = default;
+            Optional<AmlFileSystemHealthStateType> state = default;
             Optional<string> statusCode = default;
             Optional<string> statusDescription = default;
             foreach (var property in element.EnumerateObject())
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.StorageCache.Models
                     {
                         continue;
                     }
-                    state = new AmlFilesystemHealthStateType(property.Value.GetString());
+                    state = new AmlFileSystemHealthStateType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("statusCode"u8))
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.StorageCache.Models
                     continue;
                 }
             }
-            return new AmlFilesystemHealth(Optional.ToNullable(state), statusCode.Value, statusDescription.Value);
+            return new AmlFileSystemHealth(Optional.ToNullable(state), statusCode.Value, statusDescription.Value);
         }
     }
 }

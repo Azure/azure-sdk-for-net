@@ -40,10 +40,10 @@ namespace Azure.ResourceManager.StorageCache.Tests
         {
             Client = GetArmClient();
             DefaultSubscription = await Client.GetDefaultSubscriptionAsync().ConfigureAwait(false);
-            DefaultResourceGroup = await this.DefaultSubscription.GetResourceGroupAsync(TestEnvironment.ResourceGroup);
+            DefaultResourceGroup = await this.DefaultSubscription.GetResourceGroupAsync("rg-rdupuisstoragecache");
             amlFSResourceGroup = DefaultResourceGroup;
-            amlFSStorageAccountId = "/subscriptions/" + DefaultSubscription.Id.SubscriptionId +"/resourceGroups/"+ DefaultResourceGroup.Id.Name +"/providers/Microsoft.Storage/storageAccounts/" + TestEnvironment.storageAccountName;
-            amlFSSubnetResourceId = this.amlFSResourceGroup.Id + "/providers/Microsoft.Network/virtualNetworks/" + TestEnvironment.vnetName + "/subnets/fsSubnet";
+            amlFSStorageAccountId = "/subscriptions/" + DefaultSubscription.Id.SubscriptionId +"/resourceGroups/"+ DefaultResourceGroup.Id.Name +"/providers/Microsoft.Storage/storageAccounts/" + "sdktestingstorageaccount";
+            amlFSSubnetResourceId = this.amlFSResourceGroup.Id + "/providers/Microsoft.Network/virtualNetworks/" + "vnet1" + "/subnets/fsSubnet";
         }
 
         [TearDown]
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.StorageCache.Tests
         {
             // this clean up is needed when running in live mode because at most 4 storagecache can be created in one subscription
             // enable it in live mode
-            bool enableCleanup = true;
+            bool enableCleanup = false;
             while (enableCleanup && this.CleanupActions.Count > 0)
             {
                 var action = this.CleanupActions.Pop();
@@ -153,14 +153,14 @@ namespace Azure.ResourceManager.StorageCache.Tests
                 Assert.AreEqual(actual.Data.Zones[i], expected.Zones[i]);
         }
 
-        protected async Task<AmlFilesystemResource> CreateOrUpdateAmlFilesystem(string name = null, string zone = "1", bool verifyResult = false)
+        protected async Task<AmlFileSystemResource> CreateOrUpdateAmlFilesystem(string name = null, string zone = "1", bool verifyResult = false)
         {
-            AmlFilesystemCollection amlFSCollectionVar = this.amlFSResourceGroup.GetAmlFilesystems();
+            AmlFileSystemCollection amlFSCollectionVar = this.amlFSResourceGroup.GetAmlFileSystems();
             string amlFSName = name ?? Recording.GenerateAssetName("testamlFS");
             string subnetId = this.amlFSResourceGroup.Id + "/providers/Microsoft.Network/virtualNetworks/" + TestEnvironment.vnetName +"/subnets/fsSubnet";
             string amlFSHsmContainer = amlFSStorageAccountId + "/blobServices/default/containers/importcontainer";
             string amlFSHsmLoggingContainer = amlFSStorageAccountId + "/blobServices/default/containers/loggingcontainer";
-            AmlFilesystemData dataVar = new AmlFilesystemData(this.DefaultLocation)
+            AmlFileSystemData dataVar = new AmlFileSystemData(this.DefaultLocation)
             {
                 Sku = new StorageCacheSkuName
                 {
@@ -168,33 +168,33 @@ namespace Azure.ResourceManager.StorageCache.Tests
                 },
                 StorageCapacityTiB = (float?)16.0,
                 FilesystemSubnet = subnetId,
-                MaintenanceWindow = new AmlFilesystemPropertiesMaintenanceWindow
+                MaintenanceWindow = new AmlFileSystemPropertiesMaintenanceWindow
                 {
                     DayOfWeek = MaintenanceDayOfWeekType.Monday,
                     TimeOfDayUTC = @"23:25"
                 },
-                Hsm = new AmlFilesystemPropertiesHsm
+                Hsm = new AmlFileSystemPropertiesHsm
                 {
-                    Settings = new AmlFilesystemHsmSettings(amlFSHsmContainer, amlFSHsmLoggingContainer)
+                    Settings = new AmlFileSystemHsmSettings(amlFSHsmContainer, amlFSHsmLoggingContainer)
                 },
                 Zones =
                 {
                     zone,
                 }
             };
-            ArmOperation<AmlFilesystemResource> lro = await amlFSCollectionVar.CreateOrUpdateAsync(
+            ArmOperation<AmlFileSystemResource> lro = await amlFSCollectionVar.CreateOrUpdateAsync(
                 waitUntil: WaitUntil.Completed,
-                amlFilesystemName: amlFSName,
+                amlFileSystemName: amlFSName,
                 data: dataVar);
             this.CleanupActions.Push(async () => await lro.Value.DeleteAsync(WaitUntil.Completed));
             if (verifyResult)
             {
-                this.VerifyAmlFilesystem(lro.Value, dataVar);
+                this.VerifyAmlFileSystem(lro.Value, dataVar);
             }
             return lro.Value;
         }
 
-        protected void VerifyAmlFilesystem(AmlFilesystemResource actual, AmlFilesystemData expected)
+        protected void VerifyAmlFileSystem(AmlFileSystemResource actual, AmlFileSystemData expected)
         {
             Assert.AreEqual(actual.Data.Sku.Name, expected.Sku.Name);
             Assert.AreEqual(actual.Data.StorageCapacityTiB, expected.StorageCapacityTiB);

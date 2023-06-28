@@ -8,19 +8,19 @@
 namespace Azure.ResourceManager.StorageCache.Models
 {
     /// <summary> AML file system client information. </summary>
-    public partial class AmlFilesystemClientInfo
+    public partial class AmlFileSystemClientInfo
     {
-        /// <summary> Initializes a new instance of AmlFilesystemClientInfo. </summary>
-        internal AmlFilesystemClientInfo()
+        /// <summary> Initializes a new instance of AmlFileSystemClientInfo. </summary>
+        internal AmlFileSystemClientInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of AmlFilesystemClientInfo. </summary>
+        /// <summary> Initializes a new instance of AmlFileSystemClientInfo. </summary>
         /// <param name="mgsAddress"> The IPv4 address used by clients to mount the AML file system's Lustre Management Service (MGS). </param>
         /// <param name="mountCommand"> Recommended command to mount the AML file system. </param>
         /// <param name="lustreVersion"> The version of Lustre running in the AML file system. </param>
         /// <param name="containerStorageInterface"> Container Storage Interface information for the AML file system. </param>
-        internal AmlFilesystemClientInfo(string mgsAddress, string mountCommand, string lustreVersion, AmlFilesystemContainerStorageInterface containerStorageInterface)
+        internal AmlFileSystemClientInfo(string mgsAddress, string mountCommand, string lustreVersion, AmlFileSystemContainerStorageInterface containerStorageInterface)
         {
             MgsAddress = mgsAddress;
             MountCommand = mountCommand;
@@ -35,6 +35,6 @@ namespace Azure.ResourceManager.StorageCache.Models
         /// <summary> The version of Lustre running in the AML file system. </summary>
         public string LustreVersion { get; }
         /// <summary> Container Storage Interface information for the AML file system. </summary>
-        public AmlFilesystemContainerStorageInterface ContainerStorageInterface { get; }
+        public AmlFileSystemContainerStorageInterface ContainerStorageInterface { get; }
     }
 }

@@ -10,21 +10,21 @@ using System;
 namespace Azure.ResourceManager.StorageCache.Models
 {
     /// <summary> The status of the archive. </summary>
-    public partial class AmlFilesystemArchiveStatus
+    public partial class AmlFileSystemArchiveStatus
     {
-        /// <summary> Initializes a new instance of AmlFilesystemArchiveStatus. </summary>
-        internal AmlFilesystemArchiveStatus()
+        /// <summary> Initializes a new instance of AmlFileSystemArchiveStatus. </summary>
+        internal AmlFileSystemArchiveStatus()
         {
         }
 
-        /// <summary> Initializes a new instance of AmlFilesystemArchiveStatus. </summary>
+        /// <summary> Initializes a new instance of AmlFileSystemArchiveStatus. </summary>
         /// <param name="state"> The state of the archive operation. </param>
         /// <param name="lastCompletionOn"> The time of the last completed archive operation. </param>
         /// <param name="lastStartedOn"> The time the latest archive operation started. </param>
         /// <param name="percentComplete"> The completion percentage of the archive operation. </param>
         /// <param name="errorCode"> Server-defined error code for the archive operation. </param>
         /// <param name="errorMessage"> Server-defined error message for the archive operation. </param>
-        internal AmlFilesystemArchiveStatus(ArchiveStatusType? state, DateTimeOffset? lastCompletionOn, DateTimeOffset? lastStartedOn, int? percentComplete, string errorCode, string errorMessage)
+        internal AmlFileSystemArchiveStatus(ArchiveStatusType? state, DateTimeOffset? lastCompletionOn, DateTimeOffset? lastStartedOn, int? percentComplete, string errorCode, string errorMessage)
         {
             State = state;
             LastCompletionOn = lastCompletionOn;

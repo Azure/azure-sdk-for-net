@@ -19,8 +19,8 @@ namespace Azure.ResourceManager.StorageCache
     /// <summary> A class to add extension methods to SubscriptionResource. </summary>
     internal partial class SubscriptionResourceExtensionClient : ArmResource
     {
-        private ClientDiagnostics _amlFilesystemamlFilesystemsClientDiagnostics;
-        private AmlFilesystemsRestOperations _amlFilesystemamlFilesystemsRestClient;
+        private ClientDiagnostics _amlFileSystemamlFilesystemsClientDiagnostics;
+        private AmlFilesystemsRestOperations _amlFileSystemamlFilesystemsRestClient;
         private ClientDiagnostics _defaultClientDiagnostics;
         private StorageCacheManagementRestOperations _defaultRestClient;
         private ClientDiagnostics _skusClientDiagnostics;
@@ -44,8 +44,8 @@ namespace Azure.ResourceManager.StorageCache
         {
         }
 
-        private ClientDiagnostics AmlFilesystemamlFilesystemsClientDiagnostics => _amlFilesystemamlFilesystemsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.StorageCache", AmlFilesystemResource.ResourceType.Namespace, Diagnostics);
-        private AmlFilesystemsRestOperations AmlFilesystemamlFilesystemsRestClient => _amlFilesystemamlFilesystemsRestClient ??= new AmlFilesystemsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(AmlFilesystemResource.ResourceType));
+        private ClientDiagnostics AmlFileSystemamlFilesystemsClientDiagnostics => _amlFileSystemamlFilesystemsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.StorageCache", AmlFileSystemResource.ResourceType.Namespace, Diagnostics);
+        private AmlFilesystemsRestOperations AmlFileSystemamlFilesystemsRestClient => _amlFileSystemamlFilesystemsRestClient ??= new AmlFilesystemsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(AmlFileSystemResource.ResourceType));
         private ClientDiagnostics DefaultClientDiagnostics => _defaultClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.StorageCache", ProviderConstants.DefaultProviderNamespace, Diagnostics);
         private StorageCacheManagementRestOperations DefaultRestClient => _defaultRestClient ??= new StorageCacheManagementRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
         private ClientDiagnostics SkusClientDiagnostics => _skusClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.StorageCache", ProviderConstants.DefaultProviderNamespace, Diagnostics);
@@ -77,12 +77,12 @@ namespace Azure.ResourceManager.StorageCache
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="AmlFilesystemResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<AmlFilesystemResource> GetAmlFilesystemsAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="AmlFileSystemResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<AmlFileSystemResource> GetAmlFileSystemsAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => AmlFilesystemamlFilesystemsRestClient.CreateListRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => AmlFilesystemamlFilesystemsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new AmlFilesystemResource(Client, AmlFilesystemData.DeserializeAmlFilesystemData(e)), AmlFilesystemamlFilesystemsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetAmlFilesystems", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => AmlFileSystemamlFilesystemsRestClient.CreateListRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => AmlFileSystemamlFilesystemsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new AmlFileSystemResource(Client, AmlFileSystemData.DeserializeAmlFileSystemData(e)), AmlFileSystemamlFilesystemsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetAmlFileSystems", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -99,12 +99,12 @@ namespace Azure.ResourceManager.StorageCache
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="AmlFilesystemResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<AmlFilesystemResource> GetAmlFilesystems(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="AmlFileSystemResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<AmlFileSystemResource> GetAmlFileSystems(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => AmlFilesystemamlFilesystemsRestClient.CreateListRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => AmlFilesystemamlFilesystemsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new AmlFilesystemResource(Client, AmlFilesystemData.DeserializeAmlFilesystemData(e)), AmlFilesystemamlFilesystemsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetAmlFilesystems", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => AmlFileSystemamlFilesystemsRestClient.CreateListRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => AmlFileSystemamlFilesystemsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new AmlFileSystemResource(Client, AmlFileSystemData.DeserializeAmlFileSystemData(e)), AmlFileSystemamlFilesystemsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetAmlFileSystems", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.StorageCache
         /// </summary>
         /// <param name="content"> Information about the subnets to validate. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response> CheckAmlFSSubnetsAsync(AmlFilesystemSubnetContent content = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> CheckAmlFSSubnetsAsync(AmlFileSystemSubnetContent content = null, CancellationToken cancellationToken = default)
         {
             using var scope = DefaultClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckAmlFSSubnets");
             scope.Start();
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.StorageCache
         /// </summary>
         /// <param name="content"> Information about the subnets to validate. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response CheckAmlFSSubnets(AmlFilesystemSubnetContent content = null, CancellationToken cancellationToken = default)
+        public virtual Response CheckAmlFSSubnets(AmlFileSystemSubnetContent content = null, CancellationToken cancellationToken = default)
         {
             using var scope = DefaultClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckAmlFSSubnets");
             scope.Start();
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.StorageCache
         /// </summary>
         /// <param name="content"> Information to determine the number of available IPs a subnet will need to host the AML file system. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<RequiredAmlFilesystemSubnetsSize>> GetRequiredAmlFSSubnetsSizeAsync(RequiredAmlFilesystemSubnetsSizeContent content = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<RequiredAmlFileSystemSubnetsSize>> GetRequiredAmlFSSubnetsSizeAsync(RequiredAmlFileSystemSubnetsSizeContent content = null, CancellationToken cancellationToken = default)
         {
             using var scope = DefaultClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetRequiredAmlFSSubnetsSize");
             scope.Start();
@@ -215,7 +215,7 @@ namespace Azure.ResourceManager.StorageCache
         /// </summary>
         /// <param name="content"> Information to determine the number of available IPs a subnet will need to host the AML file system. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<RequiredAmlFilesystemSubnetsSize> GetRequiredAmlFSSubnetsSize(RequiredAmlFilesystemSubnetsSizeContent content = null, CancellationToken cancellationToken = default)
+        public virtual Response<RequiredAmlFileSystemSubnetsSize> GetRequiredAmlFSSubnetsSize(RequiredAmlFileSystemSubnetsSizeContent content = null, CancellationToken cancellationToken = default)
         {
             using var scope = DefaultClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetRequiredAmlFSSubnetsSize");
             scope.Start();

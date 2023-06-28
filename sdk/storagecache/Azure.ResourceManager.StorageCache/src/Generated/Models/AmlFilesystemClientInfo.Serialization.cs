@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.StorageCache.Models
 {
-    public partial class AmlFilesystemClientInfo
+    public partial class AmlFileSystemClientInfo
     {
-        internal static AmlFilesystemClientInfo DeserializeAmlFilesystemClientInfo(JsonElement element)
+        internal static AmlFileSystemClientInfo DeserializeAmlFileSystemClientInfo(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.StorageCache.Models
             Optional<string> mgsAddress = default;
             Optional<string> mountCommand = default;
             Optional<string> lustreVersion = default;
-            Optional<AmlFilesystemContainerStorageInterface> containerStorageInterface = default;
+            Optional<AmlFileSystemContainerStorageInterface> containerStorageInterface = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("mgsAddress"u8))
@@ -45,11 +45,11 @@ namespace Azure.ResourceManager.StorageCache.Models
                     {
                         continue;
                     }
-                    containerStorageInterface = AmlFilesystemContainerStorageInterface.DeserializeAmlFilesystemContainerStorageInterface(property.Value);
+                    containerStorageInterface = AmlFileSystemContainerStorageInterface.DeserializeAmlFileSystemContainerStorageInterface(property.Value);
                     continue;
                 }
             }
-            return new AmlFilesystemClientInfo(mgsAddress.Value, mountCommand.Value, lustreVersion.Value, containerStorageInterface.Value);
+            return new AmlFileSystemClientInfo(mgsAddress.Value, mountCommand.Value, lustreVersion.Value, containerStorageInterface.Value);
         }
     }
 }

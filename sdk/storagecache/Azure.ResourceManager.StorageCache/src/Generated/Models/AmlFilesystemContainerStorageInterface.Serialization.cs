@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.StorageCache.Models
 {
-    public partial class AmlFilesystemContainerStorageInterface
+    public partial class AmlFileSystemContainerStorageInterface
     {
-        internal static AmlFilesystemContainerStorageInterface DeserializeAmlFilesystemContainerStorageInterface(JsonElement element)
+        internal static AmlFileSystemContainerStorageInterface DeserializeAmlFileSystemContainerStorageInterface(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.StorageCache.Models
                     continue;
                 }
             }
-            return new AmlFilesystemContainerStorageInterface(persistentVolumeClaim.Value, persistentVolume.Value, storageClass.Value);
+            return new AmlFileSystemContainerStorageInterface(persistentVolumeClaim.Value, persistentVolume.Value, storageClass.Value);
         }
     }
 }

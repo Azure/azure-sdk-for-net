@@ -8,18 +8,18 @@
 namespace Azure.ResourceManager.StorageCache.Models
 {
     /// <summary> AML file system container storage interface information. </summary>
-    public partial class AmlFilesystemContainerStorageInterface
+    public partial class AmlFileSystemContainerStorageInterface
     {
-        /// <summary> Initializes a new instance of AmlFilesystemContainerStorageInterface. </summary>
-        internal AmlFilesystemContainerStorageInterface()
+        /// <summary> Initializes a new instance of AmlFileSystemContainerStorageInterface. </summary>
+        internal AmlFileSystemContainerStorageInterface()
         {
         }
 
-        /// <summary> Initializes a new instance of AmlFilesystemContainerStorageInterface. </summary>
+        /// <summary> Initializes a new instance of AmlFileSystemContainerStorageInterface. </summary>
         /// <param name="persistentVolumeClaim"> Recommended AKS Persistent Volume Claim for the CSI driver, in Base64 encoded YAML. </param>
         /// <param name="persistentVolume"> Recommended AKS Persistent Volume for the CSI driver, in Base64 encoded YAML. </param>
         /// <param name="storageClass"> Recommended AKS Storage Class for the CSI driver, in Base64 encoded YAML. </param>
-        internal AmlFilesystemContainerStorageInterface(string persistentVolumeClaim, string persistentVolume, string storageClass)
+        internal AmlFileSystemContainerStorageInterface(string persistentVolumeClaim, string persistentVolume, string storageClass)
         {
             PersistentVolumeClaim = persistentVolumeClaim;
             PersistentVolume = persistentVolume;

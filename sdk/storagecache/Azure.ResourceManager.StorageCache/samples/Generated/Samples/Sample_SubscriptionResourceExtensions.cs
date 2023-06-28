@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.StorageCache.Samples
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
             // invoke the operation
-            AmlFilesystemSubnetContent content = new AmlFilesystemSubnetContent()
+            AmlFileSystemSubnetContent content = new AmlFileSystemSubnetContent()
             {
                 FilesystemSubnet = "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/scgroup/providers/Microsoft.Network/virtualNetworks/scvnet/subnets/fsSub",
                 StorageCapacityTiB = 16,
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.StorageCache.Samples
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
             // invoke the operation
-            RequiredAmlFilesystemSubnetsSize result = await subscriptionResource.GetRequiredAmlFSSubnetsSizeAsync();
+            RequiredAmlFileSystemSubnetsSize result = await subscriptionResource.GetRequiredAmlFSSubnetsSizeAsync();
 
             Console.WriteLine($"Succeeded: {result}");
         }

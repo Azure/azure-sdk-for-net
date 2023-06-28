@@ -17,13 +17,13 @@ namespace Azure.ResourceManager.StorageCache.Models
         /// <summary> Initializes a new instance of AmlFilesystemsListResult. </summary>
         internal AmlFilesystemsListResult()
         {
-            Value = new ChangeTrackingList<AmlFilesystemData>();
+            Value = new ChangeTrackingList<AmlFileSystemData>();
         }
 
         /// <summary> Initializes a new instance of AmlFilesystemsListResult. </summary>
         /// <param name="nextLink"> URL to get the next set of AML file system list results, if there are any. </param>
         /// <param name="value"> List of AML file systems. </param>
-        internal AmlFilesystemsListResult(string nextLink, IReadOnlyList<AmlFilesystemData> value)
+        internal AmlFilesystemsListResult(string nextLink, IReadOnlyList<AmlFileSystemData> value)
         {
             NextLink = nextLink;
             Value = value;
@@ -32,6 +32,6 @@ namespace Azure.ResourceManager.StorageCache.Models
         /// <summary> URL to get the next set of AML file system list results, if there are any. </summary>
         public string NextLink { get; }
         /// <summary> List of AML file systems. </summary>
-        public IReadOnlyList<AmlFilesystemData> Value { get; }
+        public IReadOnlyList<AmlFileSystemData> Value { get; }
     }
 }

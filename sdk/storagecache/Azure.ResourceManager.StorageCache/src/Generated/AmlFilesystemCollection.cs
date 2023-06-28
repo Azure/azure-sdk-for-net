@@ -20,28 +20,28 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.StorageCache
 {
     /// <summary>
-    /// A class representing a collection of <see cref="AmlFilesystemResource" /> and their operations.
-    /// Each <see cref="AmlFilesystemResource" /> in the collection will belong to the same instance of <see cref="ResourceGroupResource" />.
-    /// To get an <see cref="AmlFilesystemCollection" /> instance call the GetAmlFilesystems method from an instance of <see cref="ResourceGroupResource" />.
+    /// A class representing a collection of <see cref="AmlFileSystemResource" /> and their operations.
+    /// Each <see cref="AmlFileSystemResource" /> in the collection will belong to the same instance of <see cref="ResourceGroupResource" />.
+    /// To get an <see cref="AmlFileSystemCollection" /> instance call the GetAmlFileSystems method from an instance of <see cref="ResourceGroupResource" />.
     /// </summary>
-    public partial class AmlFilesystemCollection : ArmCollection, IEnumerable<AmlFilesystemResource>, IAsyncEnumerable<AmlFilesystemResource>
+    public partial class AmlFileSystemCollection : ArmCollection, IEnumerable<AmlFileSystemResource>, IAsyncEnumerable<AmlFileSystemResource>
     {
-        private readonly ClientDiagnostics _amlFilesystemamlFilesystemsClientDiagnostics;
-        private readonly AmlFilesystemsRestOperations _amlFilesystemamlFilesystemsRestClient;
+        private readonly ClientDiagnostics _amlFileSystemamlFilesystemsClientDiagnostics;
+        private readonly AmlFilesystemsRestOperations _amlFileSystemamlFilesystemsRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="AmlFilesystemCollection"/> class for mocking. </summary>
-        protected AmlFilesystemCollection()
+        /// <summary> Initializes a new instance of the <see cref="AmlFileSystemCollection"/> class for mocking. </summary>
+        protected AmlFileSystemCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="AmlFilesystemCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="AmlFileSystemCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
-        internal AmlFilesystemCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal AmlFileSystemCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _amlFilesystemamlFilesystemsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.StorageCache", AmlFilesystemResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(AmlFilesystemResource.ResourceType, out string amlFilesystemamlFilesystemsApiVersion);
-            _amlFilesystemamlFilesystemsRestClient = new AmlFilesystemsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, amlFilesystemamlFilesystemsApiVersion);
+            _amlFileSystemamlFilesystemsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.StorageCache", AmlFileSystemResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(AmlFileSystemResource.ResourceType, out string amlFileSystemamlFilesystemsApiVersion);
+            _amlFileSystemamlFilesystemsRestClient = new AmlFilesystemsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, amlFileSystemamlFilesystemsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -67,22 +67,22 @@ namespace Azure.ResourceManager.StorageCache
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="amlFilesystemName"> Name for the AML file system. Allows alphanumerics, underscores, and hyphens. Start and end with alphanumeric. </param>
+        /// <param name="amlFileSystemName"> Name for the AML file system. Allows alphanumerics, underscores, and hyphens. Start and end with alphanumeric. </param>
         /// <param name="data"> Object containing the user-selectable properties of the AML file system. If read-only properties are included, they must match the existing values of those properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="amlFilesystemName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="amlFilesystemName"/> or <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<AmlFilesystemResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string amlFilesystemName, AmlFilesystemData data, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="amlFileSystemName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="amlFileSystemName"/> or <paramref name="data"/> is null. </exception>
+        public virtual async Task<ArmOperation<AmlFileSystemResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string amlFileSystemName, AmlFileSystemData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(amlFilesystemName, nameof(amlFilesystemName));
+            Argument.AssertNotNullOrEmpty(amlFileSystemName, nameof(amlFileSystemName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _amlFilesystemamlFilesystemsClientDiagnostics.CreateScope("AmlFilesystemCollection.CreateOrUpdate");
+            using var scope = _amlFileSystemamlFilesystemsClientDiagnostics.CreateScope("AmlFileSystemCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _amlFilesystemamlFilesystemsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, amlFilesystemName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new StorageCacheArmOperation<AmlFilesystemResource>(new AmlFilesystemOperationSource(Client), _amlFilesystemamlFilesystemsClientDiagnostics, Pipeline, _amlFilesystemamlFilesystemsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, amlFilesystemName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = await _amlFileSystemamlFilesystemsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, amlFileSystemName, data, cancellationToken).ConfigureAwait(false);
+                var operation = new StorageCacheArmOperation<AmlFileSystemResource>(new AmlFileSystemOperationSource(Client), _amlFileSystemamlFilesystemsClientDiagnostics, Pipeline, _amlFileSystemamlFilesystemsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, amlFileSystemName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -108,22 +108,22 @@ namespace Azure.ResourceManager.StorageCache
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="amlFilesystemName"> Name for the AML file system. Allows alphanumerics, underscores, and hyphens. Start and end with alphanumeric. </param>
+        /// <param name="amlFileSystemName"> Name for the AML file system. Allows alphanumerics, underscores, and hyphens. Start and end with alphanumeric. </param>
         /// <param name="data"> Object containing the user-selectable properties of the AML file system. If read-only properties are included, they must match the existing values of those properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="amlFilesystemName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="amlFilesystemName"/> or <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<AmlFilesystemResource> CreateOrUpdate(WaitUntil waitUntil, string amlFilesystemName, AmlFilesystemData data, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="amlFileSystemName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="amlFileSystemName"/> or <paramref name="data"/> is null. </exception>
+        public virtual ArmOperation<AmlFileSystemResource> CreateOrUpdate(WaitUntil waitUntil, string amlFileSystemName, AmlFileSystemData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(amlFilesystemName, nameof(amlFilesystemName));
+            Argument.AssertNotNullOrEmpty(amlFileSystemName, nameof(amlFileSystemName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _amlFilesystemamlFilesystemsClientDiagnostics.CreateScope("AmlFilesystemCollection.CreateOrUpdate");
+            using var scope = _amlFileSystemamlFilesystemsClientDiagnostics.CreateScope("AmlFileSystemCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _amlFilesystemamlFilesystemsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, amlFilesystemName, data, cancellationToken);
-                var operation = new StorageCacheArmOperation<AmlFilesystemResource>(new AmlFilesystemOperationSource(Client), _amlFilesystemamlFilesystemsClientDiagnostics, Pipeline, _amlFilesystemamlFilesystemsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, amlFilesystemName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = _amlFileSystemamlFilesystemsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, amlFileSystemName, data, cancellationToken);
+                var operation = new StorageCacheArmOperation<AmlFileSystemResource>(new AmlFileSystemOperationSource(Client), _amlFileSystemamlFilesystemsClientDiagnostics, Pipeline, _amlFileSystemamlFilesystemsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, amlFileSystemName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -148,22 +148,22 @@ namespace Azure.ResourceManager.StorageCache
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="amlFilesystemName"> Name for the AML file system. Allows alphanumerics, underscores, and hyphens. Start and end with alphanumeric. </param>
+        /// <param name="amlFileSystemName"> Name for the AML file system. Allows alphanumerics, underscores, and hyphens. Start and end with alphanumeric. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="amlFilesystemName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="amlFilesystemName"/> is null. </exception>
-        public virtual async Task<Response<AmlFilesystemResource>> GetAsync(string amlFilesystemName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="amlFileSystemName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="amlFileSystemName"/> is null. </exception>
+        public virtual async Task<Response<AmlFileSystemResource>> GetAsync(string amlFileSystemName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(amlFilesystemName, nameof(amlFilesystemName));
+            Argument.AssertNotNullOrEmpty(amlFileSystemName, nameof(amlFileSystemName));
 
-            using var scope = _amlFilesystemamlFilesystemsClientDiagnostics.CreateScope("AmlFilesystemCollection.Get");
+            using var scope = _amlFileSystemamlFilesystemsClientDiagnostics.CreateScope("AmlFileSystemCollection.Get");
             scope.Start();
             try
             {
-                var response = await _amlFilesystemamlFilesystemsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, amlFilesystemName, cancellationToken).ConfigureAwait(false);
+                var response = await _amlFileSystemamlFilesystemsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, amlFileSystemName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new AmlFilesystemResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new AmlFileSystemResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -185,22 +185,22 @@ namespace Azure.ResourceManager.StorageCache
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="amlFilesystemName"> Name for the AML file system. Allows alphanumerics, underscores, and hyphens. Start and end with alphanumeric. </param>
+        /// <param name="amlFileSystemName"> Name for the AML file system. Allows alphanumerics, underscores, and hyphens. Start and end with alphanumeric. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="amlFilesystemName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="amlFilesystemName"/> is null. </exception>
-        public virtual Response<AmlFilesystemResource> Get(string amlFilesystemName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="amlFileSystemName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="amlFileSystemName"/> is null. </exception>
+        public virtual Response<AmlFileSystemResource> Get(string amlFileSystemName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(amlFilesystemName, nameof(amlFilesystemName));
+            Argument.AssertNotNullOrEmpty(amlFileSystemName, nameof(amlFileSystemName));
 
-            using var scope = _amlFilesystemamlFilesystemsClientDiagnostics.CreateScope("AmlFilesystemCollection.Get");
+            using var scope = _amlFileSystemamlFilesystemsClientDiagnostics.CreateScope("AmlFileSystemCollection.Get");
             scope.Start();
             try
             {
-                var response = _amlFilesystemamlFilesystemsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, amlFilesystemName, cancellationToken);
+                var response = _amlFileSystemamlFilesystemsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, amlFileSystemName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new AmlFilesystemResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new AmlFileSystemResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -223,12 +223,12 @@ namespace Azure.ResourceManager.StorageCache
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="AmlFilesystemResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<AmlFilesystemResource> GetAllAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="AmlFileSystemResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<AmlFileSystemResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _amlFilesystemamlFilesystemsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _amlFilesystemamlFilesystemsRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new AmlFilesystemResource(Client, AmlFilesystemData.DeserializeAmlFilesystemData(e)), _amlFilesystemamlFilesystemsClientDiagnostics, Pipeline, "AmlFilesystemCollection.GetAll", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _amlFileSystemamlFilesystemsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _amlFileSystemamlFilesystemsRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new AmlFileSystemResource(Client, AmlFileSystemData.DeserializeAmlFileSystemData(e)), _amlFileSystemamlFilesystemsClientDiagnostics, Pipeline, "AmlFileSystemCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -245,12 +245,12 @@ namespace Azure.ResourceManager.StorageCache
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="AmlFilesystemResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<AmlFilesystemResource> GetAll(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="AmlFileSystemResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<AmlFileSystemResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _amlFilesystemamlFilesystemsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _amlFilesystemamlFilesystemsRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new AmlFilesystemResource(Client, AmlFilesystemData.DeserializeAmlFilesystemData(e)), _amlFilesystemamlFilesystemsClientDiagnostics, Pipeline, "AmlFilesystemCollection.GetAll", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _amlFileSystemamlFilesystemsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _amlFileSystemamlFilesystemsRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new AmlFileSystemResource(Client, AmlFileSystemData.DeserializeAmlFileSystemData(e)), _amlFileSystemamlFilesystemsClientDiagnostics, Pipeline, "AmlFileSystemCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -266,19 +266,19 @@ namespace Azure.ResourceManager.StorageCache
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="amlFilesystemName"> Name for the AML file system. Allows alphanumerics, underscores, and hyphens. Start and end with alphanumeric. </param>
+        /// <param name="amlFileSystemName"> Name for the AML file system. Allows alphanumerics, underscores, and hyphens. Start and end with alphanumeric. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="amlFilesystemName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="amlFilesystemName"/> is null. </exception>
-        public virtual async Task<Response<bool>> ExistsAsync(string amlFilesystemName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="amlFileSystemName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="amlFileSystemName"/> is null. </exception>
+        public virtual async Task<Response<bool>> ExistsAsync(string amlFileSystemName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(amlFilesystemName, nameof(amlFilesystemName));
+            Argument.AssertNotNullOrEmpty(amlFileSystemName, nameof(amlFileSystemName));
 
-            using var scope = _amlFilesystemamlFilesystemsClientDiagnostics.CreateScope("AmlFilesystemCollection.Exists");
+            using var scope = _amlFileSystemamlFilesystemsClientDiagnostics.CreateScope("AmlFileSystemCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _amlFilesystemamlFilesystemsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, amlFilesystemName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _amlFileSystemamlFilesystemsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, amlFileSystemName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -301,19 +301,19 @@ namespace Azure.ResourceManager.StorageCache
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="amlFilesystemName"> Name for the AML file system. Allows alphanumerics, underscores, and hyphens. Start and end with alphanumeric. </param>
+        /// <param name="amlFileSystemName"> Name for the AML file system. Allows alphanumerics, underscores, and hyphens. Start and end with alphanumeric. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="amlFilesystemName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="amlFilesystemName"/> is null. </exception>
-        public virtual Response<bool> Exists(string amlFilesystemName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="amlFileSystemName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="amlFileSystemName"/> is null. </exception>
+        public virtual Response<bool> Exists(string amlFileSystemName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(amlFilesystemName, nameof(amlFilesystemName));
+            Argument.AssertNotNullOrEmpty(amlFileSystemName, nameof(amlFileSystemName));
 
-            using var scope = _amlFilesystemamlFilesystemsClientDiagnostics.CreateScope("AmlFilesystemCollection.Exists");
+            using var scope = _amlFileSystemamlFilesystemsClientDiagnostics.CreateScope("AmlFileSystemCollection.Exists");
             scope.Start();
             try
             {
-                var response = _amlFilesystemamlFilesystemsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, amlFilesystemName, cancellationToken: cancellationToken);
+                var response = _amlFileSystemamlFilesystemsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, amlFileSystemName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -323,7 +323,7 @@ namespace Azure.ResourceManager.StorageCache
             }
         }
 
-        IEnumerator<AmlFilesystemResource> IEnumerable<AmlFilesystemResource>.GetEnumerator()
+        IEnumerator<AmlFileSystemResource> IEnumerable<AmlFileSystemResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -333,7 +333,7 @@ namespace Azure.ResourceManager.StorageCache
             return GetAll().GetEnumerator();
         }
 
-        IAsyncEnumerator<AmlFilesystemResource> IAsyncEnumerable<AmlFilesystemResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<AmlFileSystemResource> IAsyncEnumerable<AmlFileSystemResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }

@@ -13,7 +13,7 @@ using Azure.ResourceManager.StorageCache.Models;
 
 namespace Azure.ResourceManager.StorageCache
 {
-    public partial class AmlFilesystemData : IUtf8JsonSerializable
+    public partial class AmlFileSystemData : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.StorageCache
             writer.WriteEndObject();
         }
 
-        internal static AmlFilesystemData DeserializeAmlFilesystemData(JsonElement element)
+        internal static AmlFileSystemData DeserializeAmlFileSystemData(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -98,14 +98,14 @@ namespace Azure.ResourceManager.StorageCache
             ResourceType type = default;
             Optional<SystemData> systemData = default;
             Optional<float> storageCapacityTiB = default;
-            Optional<AmlFilesystemHealth> health = default;
-            Optional<AmlFilesystemProvisioningStateType> provisioningState = default;
+            Optional<AmlFileSystemHealth> health = default;
+            Optional<AmlFileSystemProvisioningStateType> provisioningState = default;
             Optional<string> filesystemSubnet = default;
-            Optional<AmlFilesystemClientInfo> clientInfo = default;
+            Optional<AmlFileSystemClientInfo> clientInfo = default;
             Optional<int> throughputProvisionedMBps = default;
-            Optional<AmlFilesystemEncryptionSettings> encryptionSettings = default;
-            Optional<AmlFilesystemPropertiesMaintenanceWindow> maintenanceWindow = default;
-            Optional<AmlFilesystemPropertiesHsm> hsm = default;
+            Optional<AmlFileSystemEncryptionSettings> encryptionSettings = default;
+            Optional<AmlFileSystemPropertiesMaintenanceWindow> maintenanceWindow = default;
+            Optional<AmlFileSystemPropertiesHsm> hsm = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("identity"u8))
@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.StorageCache
                             {
                                 continue;
                             }
-                            health = AmlFilesystemHealth.DeserializeAmlFilesystemHealth(property0.Value);
+                            health = AmlFileSystemHealth.DeserializeAmlFileSystemHealth(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"u8))
@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.StorageCache
                             {
                                 continue;
                             }
-                            provisioningState = new AmlFilesystemProvisioningStateType(property0.Value.GetString());
+                            provisioningState = new AmlFileSystemProvisioningStateType(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("filesystemSubnet"u8))
@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.StorageCache
                             {
                                 continue;
                             }
-                            clientInfo = AmlFilesystemClientInfo.DeserializeAmlFilesystemClientInfo(property0.Value);
+                            clientInfo = AmlFileSystemClientInfo.DeserializeAmlFileSystemClientInfo(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("throughputProvisionedMBps"u8))
@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.StorageCache
                             {
                                 continue;
                             }
-                            encryptionSettings = AmlFilesystemEncryptionSettings.DeserializeAmlFilesystemEncryptionSettings(property0.Value);
+                            encryptionSettings = AmlFileSystemEncryptionSettings.DeserializeAmlFileSystemEncryptionSettings(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("maintenanceWindow"u8))
@@ -257,7 +257,7 @@ namespace Azure.ResourceManager.StorageCache
                             {
                                 continue;
                             }
-                            maintenanceWindow = AmlFilesystemPropertiesMaintenanceWindow.DeserializeAmlFilesystemPropertiesMaintenanceWindow(property0.Value);
+                            maintenanceWindow = AmlFileSystemPropertiesMaintenanceWindow.DeserializeAmlFileSystemPropertiesMaintenanceWindow(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("hsm"u8))
@@ -266,14 +266,14 @@ namespace Azure.ResourceManager.StorageCache
                             {
                                 continue;
                             }
-                            hsm = AmlFilesystemPropertiesHsm.DeserializeAmlFilesystemPropertiesHsm(property0.Value);
+                            hsm = AmlFileSystemPropertiesHsm.DeserializeAmlFileSystemPropertiesHsm(property0.Value);
                             continue;
                         }
                     }
                     continue;
                 }
             }
-            return new AmlFilesystemData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, identity, sku.Value, Optional.ToList(zones), Optional.ToNullable(storageCapacityTiB), health.Value, Optional.ToNullable(provisioningState), filesystemSubnet.Value, clientInfo.Value, Optional.ToNullable(throughputProvisionedMBps), encryptionSettings.Value, maintenanceWindow.Value, hsm.Value);
+            return new AmlFileSystemData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, identity, sku.Value, Optional.ToList(zones), Optional.ToNullable(storageCapacityTiB), health.Value, Optional.ToNullable(provisioningState), filesystemSubnet.Value, clientInfo.Value, Optional.ToNullable(throughputProvisionedMBps), encryptionSettings.Value, maintenanceWindow.Value, hsm.Value);
         }
     }
 }

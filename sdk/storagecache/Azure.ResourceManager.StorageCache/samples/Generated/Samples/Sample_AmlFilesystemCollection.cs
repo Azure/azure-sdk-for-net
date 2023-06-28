@@ -19,7 +19,7 @@ using Azure.ResourceManager.StorageCache.Models;
 
 namespace Azure.ResourceManager.StorageCache.Samples
 {
-    public partial class Sample_AmlFilesystemCollection
+    public partial class Sample_AmlFileSystemCollection
     {
         // amlFilesystems_ListByResourceGroup
         [NUnit.Framework.Test]
@@ -41,15 +41,15 @@ namespace Azure.ResourceManager.StorageCache.Samples
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
-            // get the collection of this AmlFilesystemResource
-            AmlFilesystemCollection collection = resourceGroupResource.GetAmlFilesystems();
+            // get the collection of this AmlFileSystemResource
+            AmlFileSystemCollection collection = resourceGroupResource.GetAmlFileSystems();
 
             // invoke the operation and iterate over the result
-            await foreach (AmlFilesystemResource item in collection.GetAllAsync())
+            await foreach (AmlFileSystemResource item in collection.GetAllAsync())
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                AmlFilesystemData resourceData = item.Data;
+                AmlFileSystemData resourceData = item.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
@@ -77,16 +77,16 @@ namespace Azure.ResourceManager.StorageCache.Samples
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
-            // get the collection of this AmlFilesystemResource
-            AmlFilesystemCollection collection = resourceGroupResource.GetAmlFilesystems();
+            // get the collection of this AmlFileSystemResource
+            AmlFileSystemCollection collection = resourceGroupResource.GetAmlFileSystems();
 
             // invoke the operation
-            string amlFilesystemName = "fs1";
-            AmlFilesystemResource result = await collection.GetAsync(amlFilesystemName);
+            string amlFileSystemName = "fs1";
+            AmlFileSystemResource result = await collection.GetAsync(amlFileSystemName);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            AmlFilesystemData resourceData = result.Data;
+            AmlFileSystemData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -111,12 +111,12 @@ namespace Azure.ResourceManager.StorageCache.Samples
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
-            // get the collection of this AmlFilesystemResource
-            AmlFilesystemCollection collection = resourceGroupResource.GetAmlFilesystems();
+            // get the collection of this AmlFileSystemResource
+            AmlFileSystemCollection collection = resourceGroupResource.GetAmlFileSystems();
 
             // invoke the operation
-            string amlFilesystemName = "fs1";
-            bool result = await collection.ExistsAsync(amlFilesystemName);
+            string amlFileSystemName = "fs1";
+            bool result = await collection.ExistsAsync(amlFileSystemName);
 
             Console.WriteLine($"Succeeded: {result}");
         }
@@ -141,12 +141,12 @@ namespace Azure.ResourceManager.StorageCache.Samples
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
-            // get the collection of this AmlFilesystemResource
-            AmlFilesystemCollection collection = resourceGroupResource.GetAmlFilesystems();
+            // get the collection of this AmlFileSystemResource
+            AmlFileSystemCollection collection = resourceGroupResource.GetAmlFileSystems();
 
             // invoke the operation
-            string amlFilesystemName = "fs1";
-            AmlFilesystemData data = new AmlFilesystemData(new AzureLocation("eastus"))
+            string amlFileSystemName = "fs1";
+            AmlFileSystemData data = new AmlFileSystemData(new AzureLocation("eastus"))
             {
                 Identity = new ManagedServiceIdentity("UserAssigned")
                 {
@@ -166,14 +166,14 @@ namespace Azure.ResourceManager.StorageCache.Samples
                 {
                     Id = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/scgroup/providers/Microsoft.KeyVault/vaults/keyvault-cmk"),
                 }),
-                MaintenanceWindow = new AmlFilesystemPropertiesMaintenanceWindow()
+                MaintenanceWindow = new AmlFileSystemPropertiesMaintenanceWindow()
                 {
                     DayOfWeek = MaintenanceDayOfWeekType.Friday,
                     TimeOfDayUTC = "22:00",
                 },
-                Hsm = new AmlFilesystemPropertiesHsm()
+                Hsm = new AmlFileSystemPropertiesHsm()
                 {
-                    Settings = new AmlFilesystemHsmSettings("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/scgroup/providers/Microsoft.Storage/storageAccounts/storageaccountname/blobServices/default/containers/containername", "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/scgroup/providers/Microsoft.Storage/storageAccounts/storageaccountname/blobServices/default/containers/loggingcontainername")
+                    Settings = new AmlFileSystemHsmSettings("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/scgroup/providers/Microsoft.Storage/storageAccounts/storageaccountname/blobServices/default/containers/containername", "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/scgroup/providers/Microsoft.Storage/storageAccounts/storageaccountname/blobServices/default/containers/loggingcontainername")
                     {
                         ImportPrefix = "/",
                     },
@@ -183,12 +183,12 @@ namespace Azure.ResourceManager.StorageCache.Samples
 ["Dept"] = "ContosoAds",
 },
             };
-            ArmOperation<AmlFilesystemResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, amlFilesystemName, data);
-            AmlFilesystemResource result = lro.Value;
+            ArmOperation<AmlFileSystemResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, amlFileSystemName, data);
+            AmlFileSystemResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            AmlFilesystemData resourceData = result.Data;
+            AmlFileSystemData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }

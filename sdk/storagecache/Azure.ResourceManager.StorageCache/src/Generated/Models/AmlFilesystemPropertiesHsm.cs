@@ -11,26 +11,26 @@ using Azure.Core;
 namespace Azure.ResourceManager.StorageCache.Models
 {
     /// <summary> Hydration and archive settings and status. </summary>
-    public partial class AmlFilesystemPropertiesHsm
+    public partial class AmlFileSystemPropertiesHsm
     {
-        /// <summary> Initializes a new instance of AmlFilesystemPropertiesHsm. </summary>
-        public AmlFilesystemPropertiesHsm()
+        /// <summary> Initializes a new instance of AmlFileSystemPropertiesHsm. </summary>
+        public AmlFileSystemPropertiesHsm()
         {
-            ArchiveStatus = new ChangeTrackingList<AmlFilesystemArchive>();
+            ArchiveStatus = new ChangeTrackingList<AmlFileSystemArchive>();
         }
 
-        /// <summary> Initializes a new instance of AmlFilesystemPropertiesHsm. </summary>
+        /// <summary> Initializes a new instance of AmlFileSystemPropertiesHsm. </summary>
         /// <param name="settings"> Specifies HSM settings of the AML file system. </param>
         /// <param name="archiveStatus"> Archive status. </param>
-        internal AmlFilesystemPropertiesHsm(AmlFilesystemHsmSettings settings, IReadOnlyList<AmlFilesystemArchive> archiveStatus)
+        internal AmlFileSystemPropertiesHsm(AmlFileSystemHsmSettings settings, IReadOnlyList<AmlFileSystemArchive> archiveStatus)
         {
             Settings = settings;
             ArchiveStatus = archiveStatus;
         }
 
         /// <summary> Specifies HSM settings of the AML file system. </summary>
-        public AmlFilesystemHsmSettings Settings { get; set; }
+        public AmlFileSystemHsmSettings Settings { get; set; }
         /// <summary> Archive status. </summary>
-        public IReadOnlyList<AmlFilesystemArchive> ArchiveStatus { get; }
+        public IReadOnlyList<AmlFileSystemArchive> ArchiveStatus { get; }
     }
 }

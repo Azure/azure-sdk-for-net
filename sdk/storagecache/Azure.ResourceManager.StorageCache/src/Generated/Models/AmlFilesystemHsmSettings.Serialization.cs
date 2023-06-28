@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.StorageCache.Models
 {
-    public partial class AmlFilesystemHsmSettings : IUtf8JsonSerializable
+    public partial class AmlFileSystemHsmSettings : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.StorageCache.Models
             writer.WriteEndObject();
         }
 
-        internal static AmlFilesystemHsmSettings DeserializeAmlFilesystemHsmSettings(JsonElement element)
+        internal static AmlFileSystemHsmSettings DeserializeAmlFileSystemHsmSettings(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.StorageCache.Models
                     continue;
                 }
             }
-            return new AmlFilesystemHsmSettings(container, loggingContainer, importPrefix.Value);
+            return new AmlFileSystemHsmSettings(container, loggingContainer, importPrefix.Value);
         }
     }
 }

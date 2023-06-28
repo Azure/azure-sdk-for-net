@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.StorageCache
             }
         }
 
-        internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string amlFilesystemName)
+        internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string amlFileSystemName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.StorageCache
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.StorageCache/amlFilesystems/", false);
-            uri.AppendPath(amlFilesystemName, true);
+            uri.AppendPath(amlFileSystemName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -200,17 +200,17 @@ namespace Azure.ResourceManager.StorageCache
         /// <summary> Schedules an AML file system for deletion. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="amlFilesystemName"> Name for the AML file system. Allows alphanumerics, underscores, and hyphens. Start and end with alphanumeric. </param>
+        /// <param name="amlFileSystemName"> Name for the AML file system. Allows alphanumerics, underscores, and hyphens. Start and end with alphanumeric. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="amlFilesystemName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="amlFilesystemName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string amlFilesystemName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="amlFileSystemName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="amlFileSystemName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string amlFileSystemName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(amlFilesystemName, nameof(amlFilesystemName));
+            Argument.AssertNotNullOrEmpty(amlFileSystemName, nameof(amlFileSystemName));
 
-            using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, amlFilesystemName);
+            using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, amlFileSystemName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -226,17 +226,17 @@ namespace Azure.ResourceManager.StorageCache
         /// <summary> Schedules an AML file system for deletion. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="amlFilesystemName"> Name for the AML file system. Allows alphanumerics, underscores, and hyphens. Start and end with alphanumeric. </param>
+        /// <param name="amlFileSystemName"> Name for the AML file system. Allows alphanumerics, underscores, and hyphens. Start and end with alphanumeric. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="amlFilesystemName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="amlFilesystemName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response Delete(string subscriptionId, string resourceGroupName, string amlFilesystemName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="amlFileSystemName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="amlFileSystemName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response Delete(string subscriptionId, string resourceGroupName, string amlFileSystemName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(amlFilesystemName, nameof(amlFilesystemName));
+            Argument.AssertNotNullOrEmpty(amlFileSystemName, nameof(amlFileSystemName));
 
-            using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, amlFilesystemName);
+            using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, amlFileSystemName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.StorageCache
             }
         }
 
-        internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string amlFilesystemName)
+        internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string amlFileSystemName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -261,7 +261,7 @@ namespace Azure.ResourceManager.StorageCache
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.StorageCache/amlFilesystems/", false);
-            uri.AppendPath(amlFilesystemName, true);
+            uri.AppendPath(amlFileSystemName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -272,29 +272,29 @@ namespace Azure.ResourceManager.StorageCache
         /// <summary> Returns an AML file system. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="amlFilesystemName"> Name for the AML file system. Allows alphanumerics, underscores, and hyphens. Start and end with alphanumeric. </param>
+        /// <param name="amlFileSystemName"> Name for the AML file system. Allows alphanumerics, underscores, and hyphens. Start and end with alphanumeric. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="amlFilesystemName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="amlFilesystemName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<AmlFilesystemData>> GetAsync(string subscriptionId, string resourceGroupName, string amlFilesystemName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="amlFileSystemName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="amlFileSystemName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<AmlFileSystemData>> GetAsync(string subscriptionId, string resourceGroupName, string amlFileSystemName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(amlFilesystemName, nameof(amlFilesystemName));
+            Argument.AssertNotNullOrEmpty(amlFileSystemName, nameof(amlFileSystemName));
 
-            using var message = CreateGetRequest(subscriptionId, resourceGroupName, amlFilesystemName);
+            using var message = CreateGetRequest(subscriptionId, resourceGroupName, amlFileSystemName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        AmlFilesystemData value = default;
+                        AmlFileSystemData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = AmlFilesystemData.DeserializeAmlFilesystemData(document.RootElement);
+                        value = AmlFileSystemData.DeserializeAmlFileSystemData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((AmlFilesystemData)null, message.Response);
+                    return Response.FromValue((AmlFileSystemData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -303,35 +303,35 @@ namespace Azure.ResourceManager.StorageCache
         /// <summary> Returns an AML file system. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="amlFilesystemName"> Name for the AML file system. Allows alphanumerics, underscores, and hyphens. Start and end with alphanumeric. </param>
+        /// <param name="amlFileSystemName"> Name for the AML file system. Allows alphanumerics, underscores, and hyphens. Start and end with alphanumeric. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="amlFilesystemName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="amlFilesystemName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<AmlFilesystemData> Get(string subscriptionId, string resourceGroupName, string amlFilesystemName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="amlFileSystemName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="amlFileSystemName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<AmlFileSystemData> Get(string subscriptionId, string resourceGroupName, string amlFileSystemName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(amlFilesystemName, nameof(amlFilesystemName));
+            Argument.AssertNotNullOrEmpty(amlFileSystemName, nameof(amlFileSystemName));
 
-            using var message = CreateGetRequest(subscriptionId, resourceGroupName, amlFilesystemName);
+            using var message = CreateGetRequest(subscriptionId, resourceGroupName, amlFileSystemName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        AmlFilesystemData value = default;
+                        AmlFileSystemData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = AmlFilesystemData.DeserializeAmlFilesystemData(document.RootElement);
+                        value = AmlFileSystemData.DeserializeAmlFileSystemData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((AmlFilesystemData)null, message.Response);
+                    return Response.FromValue((AmlFileSystemData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string amlFilesystemName, AmlFilesystemData data)
+        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string amlFileSystemName, AmlFileSystemData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -343,7 +343,7 @@ namespace Azure.ResourceManager.StorageCache
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.StorageCache/amlFilesystems/", false);
-            uri.AppendPath(amlFilesystemName, true);
+            uri.AppendPath(amlFileSystemName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -358,19 +358,19 @@ namespace Azure.ResourceManager.StorageCache
         /// <summary> Create or update an AML file system. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="amlFilesystemName"> Name for the AML file system. Allows alphanumerics, underscores, and hyphens. Start and end with alphanumeric. </param>
+        /// <param name="amlFileSystemName"> Name for the AML file system. Allows alphanumerics, underscores, and hyphens. Start and end with alphanumeric. </param>
         /// <param name="data"> Object containing the user-selectable properties of the AML file system. If read-only properties are included, they must match the existing values of those properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="amlFilesystemName"/> or <paramref name="data"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="amlFilesystemName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string amlFilesystemName, AmlFilesystemData data, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="amlFileSystemName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="amlFileSystemName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string amlFileSystemName, AmlFileSystemData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(amlFilesystemName, nameof(amlFilesystemName));
+            Argument.AssertNotNullOrEmpty(amlFileSystemName, nameof(amlFileSystemName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, amlFilesystemName, data);
+            using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, amlFileSystemName, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -385,19 +385,19 @@ namespace Azure.ResourceManager.StorageCache
         /// <summary> Create or update an AML file system. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="amlFilesystemName"> Name for the AML file system. Allows alphanumerics, underscores, and hyphens. Start and end with alphanumeric. </param>
+        /// <param name="amlFileSystemName"> Name for the AML file system. Allows alphanumerics, underscores, and hyphens. Start and end with alphanumeric. </param>
         /// <param name="data"> Object containing the user-selectable properties of the AML file system. If read-only properties are included, they must match the existing values of those properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="amlFilesystemName"/> or <paramref name="data"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="amlFilesystemName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response CreateOrUpdate(string subscriptionId, string resourceGroupName, string amlFilesystemName, AmlFilesystemData data, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="amlFileSystemName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="amlFileSystemName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response CreateOrUpdate(string subscriptionId, string resourceGroupName, string amlFileSystemName, AmlFileSystemData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(amlFilesystemName, nameof(amlFilesystemName));
+            Argument.AssertNotNullOrEmpty(amlFileSystemName, nameof(amlFileSystemName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, amlFilesystemName, data);
+            using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, amlFileSystemName, data);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -409,7 +409,7 @@ namespace Azure.ResourceManager.StorageCache
             }
         }
 
-        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string amlFilesystemName, AmlFilesystemPatch patch)
+        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string amlFileSystemName, AmlFileSystemPatch patch)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -421,7 +421,7 @@ namespace Azure.ResourceManager.StorageCache
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.StorageCache/amlFilesystems/", false);
-            uri.AppendPath(amlFilesystemName, true);
+            uri.AppendPath(amlFileSystemName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -436,19 +436,19 @@ namespace Azure.ResourceManager.StorageCache
         /// <summary> Update an AML file system instance. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="amlFilesystemName"> Name for the AML file system. Allows alphanumerics, underscores, and hyphens. Start and end with alphanumeric. </param>
+        /// <param name="amlFileSystemName"> Name for the AML file system. Allows alphanumerics, underscores, and hyphens. Start and end with alphanumeric. </param>
         /// <param name="patch"> Object containing the user-selectable properties of the AML file system. If read-only properties are included, they must match the existing values of those properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="amlFilesystemName"/> or <paramref name="patch"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="amlFilesystemName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> UpdateAsync(string subscriptionId, string resourceGroupName, string amlFilesystemName, AmlFilesystemPatch patch, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="amlFileSystemName"/> or <paramref name="patch"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="amlFileSystemName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response> UpdateAsync(string subscriptionId, string resourceGroupName, string amlFileSystemName, AmlFileSystemPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(amlFilesystemName, nameof(amlFilesystemName));
+            Argument.AssertNotNullOrEmpty(amlFileSystemName, nameof(amlFileSystemName));
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, amlFilesystemName, patch);
+            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, amlFileSystemName, patch);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -463,19 +463,19 @@ namespace Azure.ResourceManager.StorageCache
         /// <summary> Update an AML file system instance. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="amlFilesystemName"> Name for the AML file system. Allows alphanumerics, underscores, and hyphens. Start and end with alphanumeric. </param>
+        /// <param name="amlFileSystemName"> Name for the AML file system. Allows alphanumerics, underscores, and hyphens. Start and end with alphanumeric. </param>
         /// <param name="patch"> Object containing the user-selectable properties of the AML file system. If read-only properties are included, they must match the existing values of those properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="amlFilesystemName"/> or <paramref name="patch"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="amlFilesystemName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response Update(string subscriptionId, string resourceGroupName, string amlFilesystemName, AmlFilesystemPatch patch, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="amlFileSystemName"/> or <paramref name="patch"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="amlFileSystemName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response Update(string subscriptionId, string resourceGroupName, string amlFileSystemName, AmlFileSystemPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(amlFilesystemName, nameof(amlFilesystemName));
+            Argument.AssertNotNullOrEmpty(amlFileSystemName, nameof(amlFileSystemName));
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, amlFilesystemName, patch);
+            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, amlFileSystemName, patch);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -487,7 +487,7 @@ namespace Azure.ResourceManager.StorageCache
             }
         }
 
-        internal HttpMessage CreateArchiveRequest(string subscriptionId, string resourceGroupName, string amlFilesystemName, AmlFilesystemArchiveContent content)
+        internal HttpMessage CreateArchiveRequest(string subscriptionId, string resourceGroupName, string amlFileSystemName, AmlFileSystemArchiveContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -499,7 +499,7 @@ namespace Azure.ResourceManager.StorageCache
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.StorageCache/amlFilesystems/", false);
-            uri.AppendPath(amlFilesystemName, true);
+            uri.AppendPath(amlFileSystemName, true);
             uri.AppendPath("/archive", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
@@ -518,18 +518,18 @@ namespace Azure.ResourceManager.StorageCache
         /// <summary> Archive data from the AML file system. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="amlFilesystemName"> Name for the AML file system. Allows alphanumerics, underscores, and hyphens. Start and end with alphanumeric. </param>
+        /// <param name="amlFileSystemName"> Name for the AML file system. Allows alphanumerics, underscores, and hyphens. Start and end with alphanumeric. </param>
         /// <param name="content"> Information about the archive operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="amlFilesystemName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="amlFilesystemName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> ArchiveAsync(string subscriptionId, string resourceGroupName, string amlFilesystemName, AmlFilesystemArchiveContent content = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="amlFileSystemName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="amlFileSystemName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response> ArchiveAsync(string subscriptionId, string resourceGroupName, string amlFileSystemName, AmlFileSystemArchiveContent content = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(amlFilesystemName, nameof(amlFilesystemName));
+            Argument.AssertNotNullOrEmpty(amlFileSystemName, nameof(amlFileSystemName));
 
-            using var message = CreateArchiveRequest(subscriptionId, resourceGroupName, amlFilesystemName, content);
+            using var message = CreateArchiveRequest(subscriptionId, resourceGroupName, amlFileSystemName, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -543,18 +543,18 @@ namespace Azure.ResourceManager.StorageCache
         /// <summary> Archive data from the AML file system. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="amlFilesystemName"> Name for the AML file system. Allows alphanumerics, underscores, and hyphens. Start and end with alphanumeric. </param>
+        /// <param name="amlFileSystemName"> Name for the AML file system. Allows alphanumerics, underscores, and hyphens. Start and end with alphanumeric. </param>
         /// <param name="content"> Information about the archive operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="amlFilesystemName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="amlFilesystemName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response Archive(string subscriptionId, string resourceGroupName, string amlFilesystemName, AmlFilesystemArchiveContent content = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="amlFileSystemName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="amlFileSystemName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response Archive(string subscriptionId, string resourceGroupName, string amlFileSystemName, AmlFileSystemArchiveContent content = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(amlFilesystemName, nameof(amlFilesystemName));
+            Argument.AssertNotNullOrEmpty(amlFileSystemName, nameof(amlFileSystemName));
 
-            using var message = CreateArchiveRequest(subscriptionId, resourceGroupName, amlFilesystemName, content);
+            using var message = CreateArchiveRequest(subscriptionId, resourceGroupName, amlFileSystemName, content);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -565,7 +565,7 @@ namespace Azure.ResourceManager.StorageCache
             }
         }
 
-        internal HttpMessage CreateCancelArchiveRequest(string subscriptionId, string resourceGroupName, string amlFilesystemName)
+        internal HttpMessage CreateCancelArchiveRequest(string subscriptionId, string resourceGroupName, string amlFileSystemName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -577,7 +577,7 @@ namespace Azure.ResourceManager.StorageCache
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.StorageCache/amlFilesystems/", false);
-            uri.AppendPath(amlFilesystemName, true);
+            uri.AppendPath(amlFileSystemName, true);
             uri.AppendPath("/cancelArchive", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
@@ -589,17 +589,17 @@ namespace Azure.ResourceManager.StorageCache
         /// <summary> Cancel archiving data from the AML file system. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="amlFilesystemName"> Name for the AML file system. Allows alphanumerics, underscores, and hyphens. Start and end with alphanumeric. </param>
+        /// <param name="amlFileSystemName"> Name for the AML file system. Allows alphanumerics, underscores, and hyphens. Start and end with alphanumeric. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="amlFilesystemName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="amlFilesystemName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> CancelArchiveAsync(string subscriptionId, string resourceGroupName, string amlFilesystemName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="amlFileSystemName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="amlFileSystemName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response> CancelArchiveAsync(string subscriptionId, string resourceGroupName, string amlFileSystemName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(amlFilesystemName, nameof(amlFilesystemName));
+            Argument.AssertNotNullOrEmpty(amlFileSystemName, nameof(amlFileSystemName));
 
-            using var message = CreateCancelArchiveRequest(subscriptionId, resourceGroupName, amlFilesystemName);
+            using var message = CreateCancelArchiveRequest(subscriptionId, resourceGroupName, amlFileSystemName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -613,17 +613,17 @@ namespace Azure.ResourceManager.StorageCache
         /// <summary> Cancel archiving data from the AML file system. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="amlFilesystemName"> Name for the AML file system. Allows alphanumerics, underscores, and hyphens. Start and end with alphanumeric. </param>
+        /// <param name="amlFileSystemName"> Name for the AML file system. Allows alphanumerics, underscores, and hyphens. Start and end with alphanumeric. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="amlFilesystemName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="amlFilesystemName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response CancelArchive(string subscriptionId, string resourceGroupName, string amlFilesystemName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="amlFileSystemName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="amlFileSystemName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response CancelArchive(string subscriptionId, string resourceGroupName, string amlFileSystemName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(amlFilesystemName, nameof(amlFilesystemName));
+            Argument.AssertNotNullOrEmpty(amlFileSystemName, nameof(amlFileSystemName));
 
-            using var message = CreateCancelArchiveRequest(subscriptionId, resourceGroupName, amlFilesystemName);
+            using var message = CreateCancelArchiveRequest(subscriptionId, resourceGroupName, amlFileSystemName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

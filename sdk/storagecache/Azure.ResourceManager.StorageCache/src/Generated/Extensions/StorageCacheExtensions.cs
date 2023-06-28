@@ -50,20 +50,20 @@ namespace Azure.ResourceManager.StorageCache
                 return new SubscriptionResourceExtensionClient(client, scope);
             });
         }
-        #region AmlFilesystemResource
+        #region AmlFileSystemResource
         /// <summary>
-        /// Gets an object representing an <see cref="AmlFilesystemResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="AmlFilesystemResource.CreateResourceIdentifier" /> to create an <see cref="AmlFilesystemResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing an <see cref="AmlFileSystemResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="AmlFileSystemResource.CreateResourceIdentifier" /> to create an <see cref="AmlFileSystemResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="AmlFilesystemResource" /> object. </returns>
-        public static AmlFilesystemResource GetAmlFilesystemResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="AmlFileSystemResource" /> object. </returns>
+        public static AmlFileSystemResource GetAmlFileSystemResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                AmlFilesystemResource.ValidateResourceId(id);
-                return new AmlFilesystemResource(client, id);
+                AmlFileSystemResource.ValidateResourceId(id);
+                return new AmlFileSystemResource(client, id);
             }
             );
         }
@@ -107,12 +107,12 @@ namespace Azure.ResourceManager.StorageCache
         }
         #endregion
 
-        /// <summary> Gets a collection of AmlFilesystemResources in the ResourceGroupResource. </summary>
+        /// <summary> Gets a collection of AmlFileSystemResources in the ResourceGroupResource. </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of AmlFilesystemResources and their operations over a AmlFilesystemResource. </returns>
-        public static AmlFilesystemCollection GetAmlFilesystems(this ResourceGroupResource resourceGroupResource)
+        /// <returns> An object representing collection of AmlFileSystemResources and their operations over a AmlFileSystemResource. </returns>
+        public static AmlFileSystemCollection GetAmlFileSystems(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetAmlFilesystems();
+            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetAmlFileSystems();
         }
 
         /// <summary>
@@ -129,14 +129,14 @@ namespace Azure.ResourceManager.StorageCache
         /// </list>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="amlFilesystemName"> Name for the AML file system. Allows alphanumerics, underscores, and hyphens. Start and end with alphanumeric. </param>
+        /// <param name="amlFileSystemName"> Name for the AML file system. Allows alphanumerics, underscores, and hyphens. Start and end with alphanumeric. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="amlFilesystemName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="amlFilesystemName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="amlFileSystemName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="amlFileSystemName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<AmlFilesystemResource>> GetAmlFilesystemAsync(this ResourceGroupResource resourceGroupResource, string amlFilesystemName, CancellationToken cancellationToken = default)
+        public static async Task<Response<AmlFileSystemResource>> GetAmlFileSystemAsync(this ResourceGroupResource resourceGroupResource, string amlFileSystemName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetAmlFilesystems().GetAsync(amlFilesystemName, cancellationToken).ConfigureAwait(false);
+            return await resourceGroupResource.GetAmlFileSystems().GetAsync(amlFileSystemName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -153,14 +153,14 @@ namespace Azure.ResourceManager.StorageCache
         /// </list>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="amlFilesystemName"> Name for the AML file system. Allows alphanumerics, underscores, and hyphens. Start and end with alphanumeric. </param>
+        /// <param name="amlFileSystemName"> Name for the AML file system. Allows alphanumerics, underscores, and hyphens. Start and end with alphanumeric. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="amlFilesystemName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="amlFilesystemName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="amlFileSystemName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="amlFileSystemName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<AmlFilesystemResource> GetAmlFilesystem(this ResourceGroupResource resourceGroupResource, string amlFilesystemName, CancellationToken cancellationToken = default)
+        public static Response<AmlFileSystemResource> GetAmlFileSystem(this ResourceGroupResource resourceGroupResource, string amlFileSystemName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetAmlFilesystems().Get(amlFilesystemName, cancellationToken);
+            return resourceGroupResource.GetAmlFileSystems().Get(amlFileSystemName, cancellationToken);
         }
 
         /// <summary> Gets a collection of StorageCacheResources in the ResourceGroupResource. </summary>
@@ -234,10 +234,10 @@ namespace Azure.ResourceManager.StorageCache
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="AmlFilesystemResource" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<AmlFilesystemResource> GetAmlFilesystemsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="AmlFileSystemResource" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<AmlFileSystemResource> GetAmlFileSystemsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetAmlFilesystemsAsync(cancellationToken);
+            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetAmlFileSystemsAsync(cancellationToken);
         }
 
         /// <summary>
@@ -255,10 +255,10 @@ namespace Azure.ResourceManager.StorageCache
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="AmlFilesystemResource" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<AmlFilesystemResource> GetAmlFilesystems(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="AmlFileSystemResource" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<AmlFileSystemResource> GetAmlFileSystems(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetAmlFilesystems(cancellationToken);
+            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetAmlFileSystems(cancellationToken);
         }
 
         /// <summary>
@@ -277,7 +277,7 @@ namespace Azure.ResourceManager.StorageCache
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="content"> Information about the subnets to validate. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public static async Task<Response> CheckAmlFSSubnetsAsync(this SubscriptionResource subscriptionResource, AmlFilesystemSubnetContent content = null, CancellationToken cancellationToken = default)
+        public static async Task<Response> CheckAmlFSSubnetsAsync(this SubscriptionResource subscriptionResource, AmlFileSystemSubnetContent content = null, CancellationToken cancellationToken = default)
         {
             return await GetSubscriptionResourceExtensionClient(subscriptionResource).CheckAmlFSSubnetsAsync(content, cancellationToken).ConfigureAwait(false);
         }
@@ -298,7 +298,7 @@ namespace Azure.ResourceManager.StorageCache
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="content"> Information about the subnets to validate. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public static Response CheckAmlFSSubnets(this SubscriptionResource subscriptionResource, AmlFilesystemSubnetContent content = null, CancellationToken cancellationToken = default)
+        public static Response CheckAmlFSSubnets(this SubscriptionResource subscriptionResource, AmlFileSystemSubnetContent content = null, CancellationToken cancellationToken = default)
         {
             return GetSubscriptionResourceExtensionClient(subscriptionResource).CheckAmlFSSubnets(content, cancellationToken);
         }
@@ -319,7 +319,7 @@ namespace Azure.ResourceManager.StorageCache
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="content"> Information to determine the number of available IPs a subnet will need to host the AML file system. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public static async Task<Response<RequiredAmlFilesystemSubnetsSize>> GetRequiredAmlFSSubnetsSizeAsync(this SubscriptionResource subscriptionResource, RequiredAmlFilesystemSubnetsSizeContent content = null, CancellationToken cancellationToken = default)
+        public static async Task<Response<RequiredAmlFileSystemSubnetsSize>> GetRequiredAmlFSSubnetsSizeAsync(this SubscriptionResource subscriptionResource, RequiredAmlFileSystemSubnetsSizeContent content = null, CancellationToken cancellationToken = default)
         {
             return await GetSubscriptionResourceExtensionClient(subscriptionResource).GetRequiredAmlFSSubnetsSizeAsync(content, cancellationToken).ConfigureAwait(false);
         }
@@ -340,7 +340,7 @@ namespace Azure.ResourceManager.StorageCache
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="content"> Information to determine the number of available IPs a subnet will need to host the AML file system. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public static Response<RequiredAmlFilesystemSubnetsSize> GetRequiredAmlFSSubnetsSize(this SubscriptionResource subscriptionResource, RequiredAmlFilesystemSubnetsSizeContent content = null, CancellationToken cancellationToken = default)
+        public static Response<RequiredAmlFileSystemSubnetsSize> GetRequiredAmlFSSubnetsSize(this SubscriptionResource subscriptionResource, RequiredAmlFileSystemSubnetsSizeContent content = null, CancellationToken cancellationToken = default)
         {
             return GetSubscriptionResourceExtensionClient(subscriptionResource).GetRequiredAmlFSSubnetsSize(content, cancellationToken);
         }

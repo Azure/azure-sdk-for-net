@@ -10,16 +10,16 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.StorageCache.Models
 {
-    public partial class AmlFilesystemArchive
+    public partial class AmlFileSystemArchive
     {
-        internal static AmlFilesystemArchive DeserializeAmlFilesystemArchive(JsonElement element)
+        internal static AmlFileSystemArchive DeserializeAmlFileSystemArchive(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<string> filesystemPath = default;
-            Optional<AmlFilesystemArchiveStatus> status = default;
+            Optional<AmlFileSystemArchiveStatus> status = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("filesystemPath"u8))
@@ -33,11 +33,11 @@ namespace Azure.ResourceManager.StorageCache.Models
                     {
                         continue;
                     }
-                    status = AmlFilesystemArchiveStatus.DeserializeAmlFilesystemArchiveStatus(property.Value);
+                    status = AmlFileSystemArchiveStatus.DeserializeAmlFileSystemArchiveStatus(property.Value);
                     continue;
                 }
             }
-            return new AmlFilesystemArchive(filesystemPath.Value, status.Value);
+            return new AmlFileSystemArchive(filesystemPath.Value, status.Value);
         }
     }
 }

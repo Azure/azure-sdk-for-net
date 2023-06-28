@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.StorageCache.Tests.Scenario
         [RecordedTest]
         public async Task Delete()
         {
-            await AzureResourceTestHelper.TestDelete<AmlFilesystemResource>(
+            await AzureResourceTestHelper.TestDelete<AmlFileSystemResource>(
                 async () => await this.CreateOrUpdateAmlFilesystem(),
                 async (cache) => await cache.DeleteAsync(WaitUntil.Completed),
                 async (cache) => await cache.GetAsync());
@@ -32,19 +32,19 @@ namespace Azure.ResourceManager.StorageCache.Tests.Scenario
         [RecordedTest]
         public async Task Update()
         {
-            AmlFilesystemResource amlFSResource = await this.CreateOrUpdateAmlFilesystem();
+            AmlFileSystemResource amlFSResource = await this.CreateOrUpdateAmlFilesystem();
 
             //create AMLFilesystemPatch object with random maintenance window
-            AmlFilesystemPatch amlFilesystemPatch = new AmlFilesystemPatch()
+            AmlFileSystemPatch amlFilesystemPatch = new AmlFileSystemPatch()
             {
-                MaintenanceWindow = new AmlFilesystemUpdatePropertiesMaintenanceWindow()
+                MaintenanceWindow = new AmlFileSystemUpdatePropertiesMaintenanceWindow()
                 {
                     DayOfWeek = MaintenanceDayOfWeekType.Tuesday,
                     TimeOfDayUTC = @"05:25"
                 },
             };
 
-            ArmOperation<AmlFilesystemResource> lro = await amlFSResource.UpdateAsync(
+            ArmOperation<AmlFileSystemResource> lro = await amlFSResource.UpdateAsync(
                 waitUntil: WaitUntil.Completed,
                 patch: amlFilesystemPatch);
 
@@ -56,9 +56,9 @@ namespace Azure.ResourceManager.StorageCache.Tests.Scenario
         [RecordedTest]
         public async Task AmlFSArchiveOperations()
         {
-            AmlFilesystemResource amlFSResource = await this.CreateOrUpdateAmlFilesystem();
+            AmlFileSystemResource amlFSResource = await this.CreateOrUpdateAmlFilesystem();
             //archive
-            AmlFilesystemArchiveContent amlFilesystemArchiveContent = new AmlFilesystemArchiveContent()
+            AmlFileSystemArchiveContent amlFilesystemArchiveContent = new AmlFileSystemArchiveContent()
             {
                 FilesystemPath = @"/",
             };
