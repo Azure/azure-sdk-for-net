@@ -4,12 +4,10 @@
 
 This release is the first stable release of the Azure CostManagement library.
 
-### Features Added
-
 ### Breaking Changes
 
 Polishing since last public beta release:
-- Prepended `SelfHelp` prefix to all single / simple model names.
+- Prepended `CostManagement` prefix to all single / simple model names.
 - Corrected the format of all `Guid` type properties / parameters.
 - Corrected the format of all `ResourceIdentifier` type properties / parameters.
 - Corrected the format of all `ResouceType` type properties / parameters.
@@ -21,10 +19,6 @@ Polishing since last public beta release:
 - Corrected the suffix of `DateTimeOffset` properties / parameters.
 - Corrected the name of interval / duration properties / parameters that end with units.
 - Optimized the name of some models and functions.
-
-### Bugs Fixed
-
-### Other Changes
 
 ## 1.0.0-beta.1 (2023-06-02)
 
