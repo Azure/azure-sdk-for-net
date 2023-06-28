@@ -14,9 +14,9 @@ namespace Azure.Storage.DataMovement.Blobs
     /// </summary>
     public class AzureBlobStorageResourceProvider
     {
-        private readonly DataTransferProperties _properties;
-        private readonly bool _asSource;
-        private readonly AzureBlobStorageResources.ResourceType _resourceType;
+        internal DataTransferProperties Properties { get; }
+        internal bool MakesSource { get; }
+        internal AzureBlobStorageResources.ResourceType ResourceType { get; }
 
         internal AzureBlobStorageResourceProvider(
             DataTransferProperties properties,
@@ -29,9 +29,9 @@ namespace Azure.Storage.DataMovement.Blobs
                 throw BadResourceTypeException(resourceType);
             }
 
-            _properties = properties;
-            _asSource = asSource;
-            _resourceType = resourceType;
+            Properties = properties;
+            MakesSource = asSource;
+            ResourceType = resourceType;
         }
 
         /// <summary>
@@ -40,21 +40,21 @@ namespace Azure.Storage.DataMovement.Blobs
         /// <returns></returns>
         public async Task<StorageResource> MakeResourceAsync(StorageSharedKeyCredential credential, CancellationToken cancellationToken = default)
         {
-            return _resourceType switch
+            return ResourceType switch
             {
                 AzureBlobStorageResources.ResourceType.BlockBlob => await BlockBlobStorageResource
-                    .RehydrateResourceAsync(_properties, _asSource, credential, cancellationToken)
+                    .RehydrateResourceAsync(Properties, MakesSource, credential, cancellationToken)
                     .ConfigureAwait(false),
                 AzureBlobStorageResources.ResourceType.PageBlob => await PageBlobStorageResource
-                    .RehydrateResourceAsync(_properties, _asSource, credential, cancellationToken)
+                    .RehydrateResourceAsync(Properties, MakesSource, credential, cancellationToken)
                     .ConfigureAwait(false),
                 AzureBlobStorageResources.ResourceType.AppendBlob => await AppendBlobStorageResource
-                    .RehydrateResourceAsync(_properties, _asSource, credential, cancellationToken)
+                    .RehydrateResourceAsync(Properties, MakesSource, credential, cancellationToken)
                     .ConfigureAwait(false),
                 AzureBlobStorageResources.ResourceType.BlobContainer => await BlobStorageResourceContainer
-                    .RehydrateResourceAsync(_properties, _asSource, credential, cancellationToken)
+                    .RehydrateResourceAsync(Properties, MakesSource, credential, cancellationToken)
                     .ConfigureAwait(false),
-                _ => throw BadResourceTypeException(_resourceType)
+                _ => throw BadResourceTypeException(ResourceType)
             };
         }
 
@@ -64,21 +64,21 @@ namespace Azure.Storage.DataMovement.Blobs
         /// <returns></returns>
         public async Task<StorageResource> MakeResourceAsync(AzureSasCredential credential, CancellationToken cancellationToken = default)
         {
-            return _resourceType switch
+            return ResourceType switch
             {
                 AzureBlobStorageResources.ResourceType.BlockBlob => await BlockBlobStorageResource
-                    .RehydrateResourceAsync(_properties, _asSource, credential, cancellationToken)
+                    .RehydrateResourceAsync(Properties, MakesSource, credential, cancellationToken)
                     .ConfigureAwait(false),
                 AzureBlobStorageResources.ResourceType.PageBlob => await BlockBlobStorageResource
-                    .RehydrateResourceAsync(_properties, _asSource, credential, cancellationToken)
+                    .RehydrateResourceAsync(Properties, MakesSource, credential, cancellationToken)
                     .ConfigureAwait(false),
                 AzureBlobStorageResources.ResourceType.AppendBlob => await BlockBlobStorageResource
-                    .RehydrateResourceAsync(_properties, _asSource, credential, cancellationToken)
+                    .RehydrateResourceAsync(Properties, MakesSource, credential, cancellationToken)
                     .ConfigureAwait(false),
                 AzureBlobStorageResources.ResourceType.BlobContainer => await BlockBlobStorageResource
-                    .RehydrateResourceAsync(_properties, _asSource, credential, cancellationToken)
+                    .RehydrateResourceAsync(Properties, MakesSource, credential, cancellationToken)
                     .ConfigureAwait(false),
-                _ => throw BadResourceTypeException(_resourceType)
+                _ => throw BadResourceTypeException(ResourceType)
             };
         }
 
@@ -88,21 +88,21 @@ namespace Azure.Storage.DataMovement.Blobs
         /// <returns></returns>
         public async Task<StorageResource> MakeResourceAsync(TokenCredential credential, CancellationToken cancellationToken = default)
         {
-            return _resourceType switch
+            return ResourceType switch
             {
                 AzureBlobStorageResources.ResourceType.BlockBlob => await BlockBlobStorageResource
-                    .RehydrateResourceAsync(_properties, _asSource, credential, cancellationToken)
+                    .RehydrateResourceAsync(Properties, MakesSource, credential, cancellationToken)
                     .ConfigureAwait(false),
                 AzureBlobStorageResources.ResourceType.PageBlob => await BlockBlobStorageResource
-                    .RehydrateResourceAsync(_properties, _asSource, credential, cancellationToken)
+                    .RehydrateResourceAsync(Properties, MakesSource, credential, cancellationToken)
                     .ConfigureAwait(false),
                 AzureBlobStorageResources.ResourceType.AppendBlob => await BlockBlobStorageResource
-                    .RehydrateResourceAsync(_properties, _asSource, credential, cancellationToken)
+                    .RehydrateResourceAsync(Properties, MakesSource, credential, cancellationToken)
                     .ConfigureAwait(false),
                 AzureBlobStorageResources.ResourceType.BlobContainer => await BlockBlobStorageResource
-                    .RehydrateResourceAsync(_properties, _asSource, credential, cancellationToken)
+                    .RehydrateResourceAsync(Properties, MakesSource, credential, cancellationToken)
                     .ConfigureAwait(false),
-                _ => throw BadResourceTypeException(_resourceType)
+                _ => throw BadResourceTypeException(ResourceType)
             };
         }
 
@@ -112,21 +112,21 @@ namespace Azure.Storage.DataMovement.Blobs
         /// <returns></returns>
         public async Task<StorageResource> MakeResourceAsync(CancellationToken cancellationToken = default)
         {
-            return _resourceType switch
+            return ResourceType switch
             {
                 AzureBlobStorageResources.ResourceType.BlockBlob => await BlockBlobStorageResource
-                    .RehydrateResourceAsync(_properties, _asSource, cancellationToken)
+                    .RehydrateResourceAsync(Properties, MakesSource, cancellationToken)
                     .ConfigureAwait(false),
                 AzureBlobStorageResources.ResourceType.PageBlob => await BlockBlobStorageResource
-                    .RehydrateResourceAsync(_properties, _asSource, cancellationToken)
+                    .RehydrateResourceAsync(Properties, MakesSource, cancellationToken)
                     .ConfigureAwait(false),
                 AzureBlobStorageResources.ResourceType.AppendBlob => await BlockBlobStorageResource
-                    .RehydrateResourceAsync(_properties, _asSource, cancellationToken)
+                    .RehydrateResourceAsync(Properties, MakesSource, cancellationToken)
                     .ConfigureAwait(false),
                 AzureBlobStorageResources.ResourceType.BlobContainer => await BlockBlobStorageResource
-                    .RehydrateResourceAsync(_properties, _asSource, cancellationToken)
+                    .RehydrateResourceAsync(Properties, MakesSource, cancellationToken)
                     .ConfigureAwait(false),
-                _ => throw BadResourceTypeException(_resourceType)
+                _ => throw BadResourceTypeException(ResourceType)
             };
         }
 
