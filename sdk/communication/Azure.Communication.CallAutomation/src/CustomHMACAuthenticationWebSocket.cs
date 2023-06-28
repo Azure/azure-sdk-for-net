@@ -30,7 +30,7 @@ namespace Azure.Communication.CallAutomation
             webSocket.Options.SetRequestHeader("x-ms-date", utcNowString);
 
             // adding x-ms-host
-            webSocket.Options.SetRequestHeader("x-ms-host", wsEndpoint.Host);
+            webSocket.Options.SetRequestHeader("x-ms-host", _acsEndpoint.Host);
 
             // adding x-ms-content-sha256
             var contentHash = CalculateSHA256Base64(content);
