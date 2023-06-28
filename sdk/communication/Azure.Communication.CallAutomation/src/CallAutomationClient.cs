@@ -87,7 +87,7 @@ namespace Azure.Communication.CallAutomation
 
         #region private constructors
         private CallAutomationClient(ConnectionString connectionString, CallAutomationClientOptions options)
-            : this(new Uri(connectionString.GetRequired("endpoint")), options.BuildHttpPipeline(connectionString), options)
+            : this(new Uri(connectionString.GetRequired("endpoint")), options.BuildHttpPipeline(connectionString), options, connectionString)
         { }
 
         private CallAutomationClient(string endpoint, TokenCredential tokenCredential, CallAutomationClientOptions options)
@@ -98,10 +98,11 @@ namespace Azure.Communication.CallAutomation
         : this(
         endpoint: endpoint,
         httpPipeline: options.CustomBuildHttpPipeline(connectionString),
-        options: options)
+        options: options,
+        connectionString)
         { }
 
-        private CallAutomationClient(Uri endpoint, HttpPipeline httpPipeline, CallAutomationClientOptions options)
+        private CallAutomationClient(Uri endpoint, HttpPipeline httpPipeline, CallAutomationClientOptions options, ConnectionString connectionString = null)
         {
             _pipeline = httpPipeline;
             _resourceEndpoint = endpoint.AbsoluteUri;
@@ -111,7 +112,7 @@ namespace Azure.Communication.CallAutomation
             CallMediaRestClient = new CallMediaRestClient(_clientDiagnostics, httpPipeline, endpoint, options.ApiVersion);
             CallRecordingRestClient = new CallRecordingRestClient(_clientDiagnostics, httpPipeline, endpoint, options.ApiVersion);
             CallDialogRestClient = new CallDialogRestClient(_clientDiagnostics, httpPipeline, endpoint, options.ApiVersion);
-            EventProcessor = new CallAutomationEventProcessor();
+            EventProcessor = new CallAutomationEventProcessor(connectionString);
             Source = options.Source;
         }
 

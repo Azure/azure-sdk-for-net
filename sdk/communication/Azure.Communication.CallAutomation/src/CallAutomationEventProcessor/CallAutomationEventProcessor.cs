@@ -8,6 +8,7 @@ using System.Threading;
 using Azure.Messaging;
 using System.Linq;
 using System.Collections.Concurrent;
+using Azure.Core;
 
 namespace Azure.Communication.CallAutomation
 {
@@ -21,11 +22,20 @@ namespace Azure.Communication.CallAutomation
         private event EventHandler<EventProcessorArgs> _eventReceived;
         private ConcurrentDictionary<string, WebSocketEventClient> _wsEventClients;
 
-        internal CallAutomationEventProcessor()
+        internal static CustomHMACAuthenticationWebSocket customHMACAuthenticationWebSocket;
+
+        internal CallAutomationEventProcessor(ConnectionString connectionString)
         {
             _eventBacklog = new EventBacklog();
             _ongoingEvents = new ConcurrentDictionary<(string, Type), EventHandler<EventProcessorArgs>>();
             _wsEventClients = new ConcurrentDictionary<string, WebSocketEventClient>();
+
+            if (connectionString is not null)
+            {
+                customHMACAuthenticationWebSocket = new CustomHMACAuthenticationWebSocket(
+                new AzureKeyCredential(connectionString.GetRequired("accesskey")),
+                new Uri(connectionString.GetRequired("endpoint")));
+            }
         }
 
         /// <summary>
