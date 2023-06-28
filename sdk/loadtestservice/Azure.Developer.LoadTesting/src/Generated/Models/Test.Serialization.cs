@@ -6,10 +6,10 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Json;
 
 namespace Azure.Developer.LoadTesting.Models
 {
@@ -85,160 +85,34 @@ namespace Azure.Developer.LoadTesting.Models
 
         internal void WritePatch(Stream stream)
         {
-            _json.WriteTo(stream, 'P');
+            _element.WriteTo(stream, 'P');
         }
 
         internal static Test DeserializeTest(JsonElement element)
         {
-            // TODO: Can we get the raw bytes instead of a JsonElement?
-            return new Test(element);
+            // TODO: Get the raw bytes instead of a JsonElement to avoid the
+            // cost of a conversion.
+            BinaryData utf8Json = GetBytes(element);
+            MutableJsonElement mje = MutableJsonDocument.Parse(utf8Json).RootElement;
 
-            //if (element.ValueKind == JsonValueKind.Null)
-            //{
-            //    return null;
-            //}
-            //Optional<PassFailCriteria> passFailCriteria = default;
-            //Optional<IDictionary<string, Secret>> secrets = default;
-            //Optional<CertificateMetadata> certificate = default;
-            //Optional<IDictionary<string, string>> environmentVariables = default;
-            //Optional<LoadTestConfiguration> loadTestConfiguration = default;
-            //Optional<TestInputArtifacts> inputArtifacts = default;
-            //Optional<string> testId = default;
-            //Optional<string> description = default;
-            //Optional<string> displayName = default;
-            //Optional<string> subnetId = default;
-            //Optional<string> keyvaultReferenceIdentityType = default;
-            //Optional<string> keyvaultReferenceIdentityId = default;
-            //Optional<DateTimeOffset> createdDateTime = default;
-            //Optional<string> createdBy = default;
-            //Optional<DateTimeOffset> lastModifiedDateTime = default;
-            //Optional<string> lastModifiedBy = default;
-            //foreach (var property in element.EnumerateObject())
-            //{
-            //    if (property.NameEquals("passFailCriteria"u8))
-            //    {
-            //        if (property.Value.ValueKind == JsonValueKind.Null)
-            //        {
-            //            continue;
-            //        }
-            //        passFailCriteria = PassFailCriteria.DeserializePassFailCriteria(property.Value);
-            //        continue;
-            //    }
-            //    if (property.NameEquals("secrets"u8))
-            //    {
-            //        if (property.Value.ValueKind == JsonValueKind.Null)
-            //        {
-            //            continue;
-            //        }
-            //        Dictionary<string, Secret> dictionary = new Dictionary<string, Secret>();
-            //        foreach (var property0 in property.Value.EnumerateObject())
-            //        {
-            //            dictionary.Add(property0.Name, Secret.DeserializeSecret(property0.Value));
-            //        }
-            //        secrets = dictionary;
-            //        continue;
-            //    }
-            //    if (property.NameEquals("certificate"u8))
-            //    {
-            //        if (property.Value.ValueKind == JsonValueKind.Null)
-            //        {
-            //            continue;
-            //        }
-            //        certificate = CertificateMetadata.DeserializeCertificateMetadata(property.Value);
-            //        continue;
-            //    }
-            //    if (property.NameEquals("environmentVariables"u8))
-            //    {
-            //        if (property.Value.ValueKind == JsonValueKind.Null)
-            //        {
-            //            continue;
-            //        }
-            //        Dictionary<string, string> dictionary = new Dictionary<string, string>();
-            //        foreach (var property0 in property.Value.EnumerateObject())
-            //        {
-            //            dictionary.Add(property0.Name, property0.Value.GetString());
-            //        }
-            //        environmentVariables = dictionary;
-            //        continue;
-            //    }
-            //    if (property.NameEquals("loadTestConfiguration"u8))
-            //    {
-            //        if (property.Value.ValueKind == JsonValueKind.Null)
-            //        {
-            //            continue;
-            //        }
-            //        loadTestConfiguration = LoadTestConfiguration.DeserializeLoadTestConfiguration(property.Value);
-            //        continue;
-            //    }
-            //    if (property.NameEquals("inputArtifacts"u8))
-            //    {
-            //        if (property.Value.ValueKind == JsonValueKind.Null)
-            //        {
-            //            continue;
-            //        }
-            //        inputArtifacts = TestInputArtifacts.DeserializeTestInputArtifacts(property.Value);
-            //        continue;
-            //    }
-            //    if (property.NameEquals("testId"u8))
-            //    {
-            //        testId = property.Value.GetString();
-            //        continue;
-            //    }
-            //    if (property.NameEquals("description"u8))
-            //    {
-            //        description = property.Value.GetString();
-            //        continue;
-            //    }
-            //    if (property.NameEquals("displayName"u8))
-            //    {
-            //        displayName = property.Value.GetString();
-            //        continue;
-            //    }
-            //    if (property.NameEquals("subnetId"u8))
-            //    {
-            //        subnetId = property.Value.GetString();
-            //        continue;
-            //    }
-            //    if (property.NameEquals("keyvaultReferenceIdentityType"u8))
-            //    {
-            //        keyvaultReferenceIdentityType = property.Value.GetString();
-            //        continue;
-            //    }
-            //    if (property.NameEquals("keyvaultReferenceIdentityId"u8))
-            //    {
-            //        keyvaultReferenceIdentityId = property.Value.GetString();
-            //        continue;
-            //    }
-            //    if (property.NameEquals("createdDateTime"u8))
-            //    {
-            //        if (property.Value.ValueKind == JsonValueKind.Null)
-            //        {
-            //            continue;
-            //        }
-            //        createdDateTime = property.Value.GetDateTimeOffset("O");
-            //        continue;
-            //    }
-            //    if (property.NameEquals("createdBy"u8))
-            //    {
-            //        createdBy = property.Value.GetString();
-            //        continue;
-            //    }
-            //    if (property.NameEquals("lastModifiedDateTime"u8))
-            //    {
-            //        if (property.Value.ValueKind == JsonValueKind.Null)
-            //        {
-            //            continue;
-            //        }
-            //        lastModifiedDateTime = property.Value.GetDateTimeOffset("O");
-            //        continue;
-            //    }
-            //    if (property.NameEquals("lastModifiedBy"u8))
-            //    {
-            //        lastModifiedBy = property.Value.GetString();
-            //        continue;
-            //    }
-            //}
-            //return new Test(passFailCriteria.Value, Optional.ToDictionary(secrets), certificate.Value, Optional.ToDictionary(environmentVariables), loadTestConfiguration.Value, inputArtifacts.Value, testId.Value, description.Value, displayName.Value, subnetId.Value, keyvaultReferenceIdentityType.Value, keyvaultReferenceIdentityId.Value, Optional.ToNullable(createdDateTime), createdBy.Value, Optional.ToNullable(lastModifiedDateTime), lastModifiedBy.Value);
+            return new Test(mje);
+        }
+
+        // TODO: Move this to Core, but hopefully not for long
+        internal static BinaryData GetBytes(JsonElement element)
+        {
+            BinaryData bytes;
+            using (Stream stream = new MemoryStream())
+            {
+                using (Utf8JsonWriter writer = new Utf8JsonWriter(stream))
+                {
+                    element.WriteTo(writer);
+                }
+                stream.Position = 0;
+                bytes = BinaryData.FromStream(stream);
+            }
+
+            return bytes;
         }
     }
 }

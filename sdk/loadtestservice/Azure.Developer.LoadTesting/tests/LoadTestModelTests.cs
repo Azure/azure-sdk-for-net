@@ -3,7 +3,7 @@
 
 using System;
 using System.IO;
-using System.Text.Json;
+using Azure.Core.Json;
 using Azure.Developer.LoadTesting.Models;
 using NUnit.Framework;
 
@@ -25,7 +25,7 @@ namespace Azure.Developer.LoadTesting.Tests
         [Test]
         public void CanGetTestId()
         {
-            JsonDocument doc = JsonDocument.Parse("""{"testId":"abc"}""");
+            MutableJsonDocument doc = MutableJsonDocument.Parse("""{"testId":"abc"}""");
             Test test = new(doc.RootElement);
 
             Assert.AreEqual("abc", test.TestId);
@@ -34,7 +34,7 @@ namespace Azure.Developer.LoadTesting.Tests
         [Test]
         public void CanPatchTestId_NoChanges()
         {
-            JsonDocument doc = JsonDocument.Parse("""{"testId":"abc"}""");
+            MutableJsonDocument doc = MutableJsonDocument.Parse("""{"testId":"abc"}""");
             Test test = new(doc.RootElement);
 
             BinaryData utf8;
@@ -51,7 +51,7 @@ namespace Azure.Developer.LoadTesting.Tests
         [Test]
         public void CanPatchTestId_OneChange()
         {
-            JsonDocument doc = JsonDocument.Parse("""{"testId":"abc"}""");
+            MutableJsonDocument doc = MutableJsonDocument.Parse("""{"testId":"abc"}""");
             Test test = new(doc.RootElement);
 
             test.TestId = "def";
@@ -65,6 +65,16 @@ namespace Azure.Developer.LoadTesting.Tests
             }
 
             Assert.AreEqual("""{"testId":"def"}""", utf8.ToString());
+        }
+
+        [Test]
+        public void CanSetTestPassFailMetric()
+        {
+            Test test = new();
+            test.TestId = "abc";
+            test.PassFailCriteria.PassFailMetrics.Add("a", new PassFailMetric() { RequestName = "a"});
+
+            Assert.AreEqual("a", test.PassFailCriteria.PassFailMetrics["a"].RequestName);
         }
     }
 }

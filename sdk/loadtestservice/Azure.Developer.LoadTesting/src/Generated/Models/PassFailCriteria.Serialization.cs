@@ -5,9 +5,10 @@
 
 #nullable disable
 
-using System.Collections.Generic;
+using System;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Json;
 
 namespace Azure.Developer.LoadTesting.Models
 {
@@ -32,29 +33,10 @@ namespace Azure.Developer.LoadTesting.Models
 
         internal static PassFailCriteria DeserializePassFailCriteria(JsonElement element)
         {
-            if (element.ValueKind == JsonValueKind.Null)
-            {
-                return null;
-            }
-            Optional<IDictionary<string, PassFailMetric>> passFailMetrics = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("passFailMetrics"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    Dictionary<string, PassFailMetric> dictionary = new Dictionary<string, PassFailMetric>();
-                    foreach (var property0 in property.Value.EnumerateObject())
-                    {
-                        dictionary.Add(property0.Name, PassFailMetric.DeserializePassFailMetric(property0.Value));
-                    }
-                    passFailMetrics = dictionary;
-                    continue;
-                }
-            }
-            return new PassFailCriteria(Optional.ToDictionary(passFailMetrics));
+            BinaryData utf8Json = Test.GetBytes(element);
+            MutableJsonElement mje = MutableJsonDocument.Parse(utf8Json).RootElement;
+
+            return new PassFailCriteria(mje);
         }
     }
 }

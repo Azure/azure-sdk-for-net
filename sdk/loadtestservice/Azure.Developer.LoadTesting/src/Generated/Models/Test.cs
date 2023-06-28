@@ -7,8 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Text.Json;
 using Azure.Core;
 using Azure.Core.Json;
 
@@ -17,78 +15,37 @@ namespace Azure.Developer.LoadTesting.Models
     /// <summary> Load test model. </summary>
     public partial class Test
     {
-        private MutableJsonDocument _json;
+        private MutableJsonElement _element;
 
         /// <summary> Initializes a new instance of Test. </summary>
         public Test()
         {
             // TODO: Store a way to make an empty MJD - avoid the ToArray() allocation below.
-            _json = MutableJsonDocument.Parse(BinaryData.FromBytes("{}"u8.ToArray()));
+            //_element = MutableJsonDocument.Parse(BinaryData.FromBytes("{}"u8.ToArray())).RootElement;
+
+            // TODO: Or do we want to initialize it with some basic JSON, e.g. child values?
+            _element = MutableJsonDocument.Parse(BinaryData.FromBytes("""
+                {
+                    "passFailCriteria": {
+                        "passFailMetrics": {
+                        }
+                    }
+                }
+                """u8.ToArray())).RootElement;
+
+            PassFailCriteria = new PassFailCriteria(_element.GetProperty("passFailCriteria"));
 
             Secrets = new ChangeTrackingDictionary<string, Secret>();
             EnvironmentVariables = new ChangeTrackingDictionary<string, string>();
         }
 
-        internal Test(JsonElement element)
+        internal Test(MutableJsonElement element)
         {
-            // TODO: use raw bytes instead of JsonElement
-            BinaryData utf8Json = GetBytes(element);
+            _element = element;
 
-            _json = MutableJsonDocument.Parse(utf8Json);
+            // TODO: if passFailCriteria is optional, we'll want to use TryGetProperty here instead.
+            PassFailCriteria = new PassFailCriteria(_element.GetProperty("passFailCriteria"));
         }
-
-        private BinaryData GetBytes(JsonElement element)
-        {
-            BinaryData bytes;
-            using (Stream stream = new MemoryStream())
-            {
-                using (Utf8JsonWriter writer = new Utf8JsonWriter(stream))
-                {
-                    element.WriteTo(writer);
-                }
-                stream.Position = 0;
-                bytes = BinaryData.FromStream(stream);
-            }
-
-            return bytes;
-        }
-
-        ///// <summary> Initializes a new instance of Test. </summary>
-        ///// <param name="passFailCriteria"> Pass fail criteria for a test. </param>
-        ///// <param name="secrets"> Secrets can be stored in an Azure Key Vault or any other secret store. If the secret is stored in an Azure Key Vault, the value should be the secret identifier and the type should be AKV_SECRET_URI. If the secret is stored elsewhere, the secret value should be provided directly and the type should be SECRET_VALUE. </param>
-        ///// <param name="certificate"> Certificates metadata. </param>
-        ///// <param name="environmentVariables"> Environment variables which are defined as a set of &lt;name,value&gt; pairs. </param>
-        ///// <param name="loadTestConfiguration"> The load test configuration. </param>
-        ///// <param name="inputArtifacts"> The input artifacts for the test. </param>
-        ///// <param name="testId"> Unique test name as identifier. </param>
-        ///// <param name="description"> The test description. </param>
-        ///// <param name="displayName"> Display name of a test. </param>
-        ///// <param name="subnetId"> Subnet ID on which the load test instances should run. </param>
-        ///// <param name="keyvaultReferenceIdentityType"> Type of the managed identity referencing the Key vault. </param>
-        ///// <param name="keyvaultReferenceIdentityId"> Resource Id of the managed identity referencing the Key vault. </param>
-        ///// <param name="createdDateTime"> The creation datetime(ISO 8601 literal format). </param>
-        ///// <param name="createdBy"> The user that created. </param>
-        ///// <param name="lastModifiedDateTime"> The last Modified datetime(ISO 8601 literal format). </param>
-        ///// <param name="lastModifiedBy"> The user that last modified. </param>
-        //internal Test(PassFailCriteria passFailCriteria, IDictionary<string, Secret> secrets, CertificateMetadata certificate, IDictionary<string, string> environmentVariables, LoadTestConfiguration loadTestConfiguration, TestInputArtifacts inputArtifacts, string testId, string description, string displayName, string subnetId, string keyvaultReferenceIdentityType, string keyvaultReferenceIdentityId, DateTimeOffset? createdDateTime, string createdBy, DateTimeOffset? lastModifiedDateTime, string lastModifiedBy)
-        //{
-        //    PassFailCriteria = passFailCriteria;
-        //    Secrets = secrets;
-        //    Certificate = certificate;
-        //    EnvironmentVariables = environmentVariables;
-        //    LoadTestConfiguration = loadTestConfiguration;
-        //    InputArtifacts = inputArtifacts;
-        //    TestId = testId;
-        //    Description = description;
-        //    DisplayName = displayName;
-        //    SubnetId = subnetId;
-        //    KeyvaultReferenceIdentityType = keyvaultReferenceIdentityType;
-        //    KeyvaultReferenceIdentityId = keyvaultReferenceIdentityId;
-        //    CreatedDateTime = createdDateTime;
-        //    CreatedBy = createdBy;
-        //    LastModifiedDateTime = lastModifiedDateTime;
-        //    LastModifiedBy = lastModifiedBy;
-        //}
 
         /// <summary> Pass fail criteria for a test. </summary>
         public PassFailCriteria PassFailCriteria { get; set; }
@@ -111,69 +68,69 @@ namespace Azure.Developer.LoadTesting.Models
         /// <summary> Unique test name as identifier. </summary>
         public string TestId
         {
-            get => _json.RootElement.GetProperty("testId").GetString();
-            set => _json.RootElement.SetProperty("testId", value);
+            get => _element.GetProperty("testId").GetString();
+            set => _element.SetProperty("testId", value);
         }
 
         /// <summary> The test description. </summary>
         public string Description
         {
-            get => _json.RootElement.GetProperty("description").GetString();
-            set => _json.RootElement.SetProperty("description", value);
+            get => _element.GetProperty("description").GetString();
+            set => _element.SetProperty("description", value);
         }
 
         /// <summary> Display name of a test. </summary>
         public string DisplayName
         {
-            get => _json.RootElement.GetProperty("displayName").GetString();
-            set => _json.RootElement.SetProperty("displayName", value);
+            get => _element.GetProperty("displayName").GetString();
+            set => _element.SetProperty("displayName", value);
         }
 
         /// <summary> Subnet ID on which the load test instances should run. </summary>
         public string SubnetId
         {
-            get => _json.RootElement.GetProperty("subnetId").GetString();
-            set => _json.RootElement.SetProperty("subnetId", value);
+            get => _element.GetProperty("subnetId").GetString();
+            set => _element.SetProperty("subnetId", value);
         }
 
         /// <summary> Type of the managed identity referencing the Key vault. </summary>
         public string KeyvaultReferenceIdentityType
         {
-            get => _json.RootElement.GetProperty("keyvaultReferenceIdentityType").GetString();
-            set => _json.RootElement.SetProperty("keyvaultReferenceIdentityType", value);
+            get => _element.GetProperty("keyvaultReferenceIdentityType").GetString();
+            set => _element.SetProperty("keyvaultReferenceIdentityType", value);
         }
 
         /// <summary> Resource Id of the managed identity referencing the Key vault. </summary>
         public string KeyvaultReferenceIdentityId
         {
-            get => _json.RootElement.GetProperty("keyvaultReferenceIdentityId").GetString();
-            set => _json.RootElement.SetProperty("keyvaultReferenceIdentityId", value);
+            get => _element.GetProperty("keyvaultReferenceIdentityId").GetString();
+            set => _element.SetProperty("keyvaultReferenceIdentityId", value);
         }
 
         /// <summary> The creation datetime(ISO 8601 literal format). </summary>
         public DateTimeOffset? CreatedDateTime
         {
-            get => _json.RootElement.GetProperty("createdDateTime").GetDateTimeOffset();
+            get => _element.GetProperty("createdDateTime").GetDateTimeOffset();
         }
 
         /// <summary> The user that created. </summary>
         public string CreatedBy
         {
-            get => _json.RootElement.GetProperty("createdBy").GetString();
-            set => _json.RootElement.SetProperty("createdBy", value);
+            get => _element.GetProperty("createdBy").GetString();
+            set => _element.SetProperty("createdBy", value);
         }
 
         /// <summary> The last Modified datetime(ISO 8601 literal format). </summary>
         public DateTimeOffset? LastModifiedDateTime
         {
-            get => _json.RootElement.GetProperty("lastModifiedDateTime").GetDateTimeOffset();
+            get => _element.GetProperty("lastModifiedDateTime").GetDateTimeOffset();
         }
 
         /// <summary> The user that last modified. </summary>
         public string LastModifiedBy
         {
-            get => _json.RootElement.GetProperty("lastModifiedBy").GetString();
-            set => _json.RootElement.SetProperty("lastModifiedBy", value);
+            get => _element.GetProperty("lastModifiedBy").GetString();
+            set => _element.SetProperty("lastModifiedBy", value);
         }
     }
 }
