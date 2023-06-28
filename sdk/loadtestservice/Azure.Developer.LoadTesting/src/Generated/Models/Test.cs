@@ -116,30 +116,64 @@ namespace Azure.Developer.LoadTesting.Models
         }
 
         /// <summary> The test description. </summary>
-        public string Description { get; set; }
+        public string Description
+        {
+            get => _json.RootElement.GetProperty("description").GetString();
+            set => _json.RootElement.SetProperty("description", value);
+        }
 
         /// <summary> Display name of a test. </summary>
-        public string DisplayName { get; set; }
+        public string DisplayName
+        {
+            get => _json.RootElement.GetProperty("displayName").GetString();
+            set => _json.RootElement.SetProperty("displayName", value);
+        }
 
         /// <summary> Subnet ID on which the load test instances should run. </summary>
-        public string SubnetId { get; set; }
+        public string SubnetId
+        {
+            get => _json.RootElement.GetProperty("subnetId").GetString();
+            set => _json.RootElement.SetProperty("subnetId", value);
+        }
 
         /// <summary> Type of the managed identity referencing the Key vault. </summary>
-        public string KeyvaultReferenceIdentityType { get; set; }
+        public string KeyvaultReferenceIdentityType
+        {
+            get => _json.RootElement.GetProperty("keyvaultReferenceIdentityType").GetString();
+            set => _json.RootElement.SetProperty("keyvaultReferenceIdentityType", value);
+        }
 
         /// <summary> Resource Id of the managed identity referencing the Key vault. </summary>
-        public string KeyvaultReferenceIdentityId { get; set; }
+        public string KeyvaultReferenceIdentityId
+        {
+            get => _json.RootElement.GetProperty("keyvaultReferenceIdentityId").GetString();
+            set => _json.RootElement.SetProperty("keyvaultReferenceIdentityId", value);
+        }
 
         /// <summary> The creation datetime(ISO 8601 literal format). </summary>
-        public DateTimeOffset? CreatedDateTime { get; }
+        public DateTimeOffset? CreatedDateTime
+        {
+            get => _json.RootElement.GetProperty("createdDateTime").GetDateTimeOffset();
+        }
 
         /// <summary> The user that created. </summary>
-        public string CreatedBy { get; }
+        public string CreatedBy
+        {
+            get => _json.RootElement.GetProperty("createdBy").GetString();
+            set => _json.RootElement.SetProperty("createdBy", value);
+        }
 
         /// <summary> The last Modified datetime(ISO 8601 literal format). </summary>
-        public DateTimeOffset? LastModifiedDateTime { get; }
+        public DateTimeOffset? LastModifiedDateTime
+        {
+            get => _json.RootElement.GetProperty("lastModifiedDateTime").GetDateTimeOffset();
+        }
 
         /// <summary> The user that last modified. </summary>
-        public string LastModifiedBy { get; }
+        public string LastModifiedBy
+        {
+            get => _json.RootElement.GetProperty("lastModifiedBy").GetString();
+            set => _json.RootElement.SetProperty("lastModifiedBy", value);
+        }
     }
 }
