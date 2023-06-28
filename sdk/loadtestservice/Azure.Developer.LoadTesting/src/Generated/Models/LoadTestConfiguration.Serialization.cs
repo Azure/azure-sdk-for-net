@@ -5,8 +5,10 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Json;
 
 namespace Azure.Developer.LoadTesting.Models
 {
@@ -40,54 +42,9 @@ namespace Azure.Developer.LoadTesting.Models
 
         internal static LoadTestConfiguration DeserializeLoadTestConfiguration(JsonElement element)
         {
-            if (element.ValueKind == JsonValueKind.Null)
-            {
-                return null;
-            }
-            Optional<int> engineInstances = default;
-            Optional<bool> splitAllCSVs = default;
-            Optional<bool> quickStartTest = default;
-            Optional<OptionalLoadTestConfig> optionalLoadTestConfig = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("engineInstances"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    engineInstances = property.Value.GetInt32();
-                    continue;
-                }
-                if (property.NameEquals("splitAllCSVs"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    splitAllCSVs = property.Value.GetBoolean();
-                    continue;
-                }
-                if (property.NameEquals("quickStartTest"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    quickStartTest = property.Value.GetBoolean();
-                    continue;
-                }
-                if (property.NameEquals("optionalLoadTestConfig"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    optionalLoadTestConfig = OptionalLoadTestConfig.DeserializeOptionalLoadTestConfig(property.Value);
-                    continue;
-                }
-            }
-            return new LoadTestConfiguration(Optional.ToNullable(engineInstances), Optional.ToNullable(splitAllCSVs), Optional.ToNullable(quickStartTest), optionalLoadTestConfig.Value);
+            BinaryData utf8Json = Test.GetBytes(element);
+            MutableJsonElement mje = MutableJsonDocument.Parse(utf8Json).RootElement;
+            return new LoadTestConfiguration(mje);
         }
     }
 }

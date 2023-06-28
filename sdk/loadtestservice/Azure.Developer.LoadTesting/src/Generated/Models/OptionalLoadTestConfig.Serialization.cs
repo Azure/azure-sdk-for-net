@@ -5,8 +5,10 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Json;
 
 namespace Azure.Developer.LoadTesting.Models
 {
@@ -40,50 +42,9 @@ namespace Azure.Developer.LoadTesting.Models
 
         internal static OptionalLoadTestConfig DeserializeOptionalLoadTestConfig(JsonElement element)
         {
-            if (element.ValueKind == JsonValueKind.Null)
-            {
-                return null;
-            }
-            Optional<string> endpointUrl = default;
-            Optional<int> virtualUsers = default;
-            Optional<int> rampUpTime = default;
-            Optional<int> duration = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("endpointUrl"u8))
-                {
-                    endpointUrl = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("virtualUsers"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    virtualUsers = property.Value.GetInt32();
-                    continue;
-                }
-                if (property.NameEquals("rampUpTime"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    rampUpTime = property.Value.GetInt32();
-                    continue;
-                }
-                if (property.NameEquals("duration"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    duration = property.Value.GetInt32();
-                    continue;
-                }
-            }
-            return new OptionalLoadTestConfig(endpointUrl.Value, Optional.ToNullable(virtualUsers), Optional.ToNullable(rampUpTime), Optional.ToNullable(duration));
+            BinaryData utf8Json = Test.GetBytes(element);
+            MutableJsonElement mje = MutableJsonDocument.Parse(utf8Json).RootElement;
+            return new OptionalLoadTestConfig(mje);
         }
     }
 }

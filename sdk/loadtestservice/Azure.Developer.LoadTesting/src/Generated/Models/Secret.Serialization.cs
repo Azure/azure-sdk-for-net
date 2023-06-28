@@ -5,8 +5,10 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Json;
 
 namespace Azure.Developer.LoadTesting.Models
 {
@@ -30,30 +32,9 @@ namespace Azure.Developer.LoadTesting.Models
 
         internal static Secret DeserializeSecret(JsonElement element)
         {
-            if (element.ValueKind == JsonValueKind.Null)
-            {
-                return null;
-            }
-            Optional<string> value = default;
-            Optional<SecretType> type = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("value"u8))
-                {
-                    value = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("type"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    type = new SecretType(property.Value.GetString());
-                    continue;
-                }
-            }
-            return new Secret(value.Value, Optional.ToNullable(type));
+            BinaryData utf8Json = Test.GetBytes(element);
+            MutableJsonElement mje = MutableJsonDocument.Parse(utf8Json).RootElement;
+            return new Secret(mje);
         }
     }
 }

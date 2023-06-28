@@ -24,19 +24,28 @@ namespace Azure.Developer.LoadTesting.Models
             //_element = MutableJsonDocument.Parse(BinaryData.FromBytes("{}"u8.ToArray())).RootElement;
 
             // TODO: Or do we want to initialize it with some basic JSON, e.g. child values?
+            // The current thinking here is that this initializes nodes in the JSON that contain
+            // dictionary values.  We need to confirm via scenarios whether we would want to do
+            // this and if so, under what conditions it is valid.
+            // TODO: if we use this approach, the initialization JSON will need to be a const
+            // or a static in the model file.  Should children live in the relevant model rather
+            // than at the top level?
             _element = MutableJsonDocument.Parse(BinaryData.FromBytes("""
                 {
                     "passFailCriteria": {
-                        "passFailMetrics": {
-                        }
-                    }
+                        "passFailMetrics": { }
+                    },
+                    "secrets": { },
+                    "environmentVariables": { }
                 }
                 """u8.ToArray())).RootElement;
 
             PassFailCriteria = new PassFailCriteria(_element.GetProperty("passFailCriteria"));
 
-            Secrets = new ChangeTrackingDictionary<string, Secret>();
-            EnvironmentVariables = new ChangeTrackingDictionary<string, string>();
+            // TODO: If we are suggesting a wholesale replacement of ChangeTrackingDictionary,
+            // we will need to confirm that MJD provides the complete set of features this type provides.
+            Secrets = new MutableJsonDictionary<Secret>(_element.GetProperty("secrets"));
+            EnvironmentVariables = new MutableJsonDictionary<string>(_element.GetProperty("environmentVariables"));
         }
 
         internal Test(MutableJsonElement element)
@@ -45,6 +54,10 @@ namespace Azure.Developer.LoadTesting.Models
 
             // TODO: if passFailCriteria is optional, we'll want to use TryGetProperty here instead.
             PassFailCriteria = new PassFailCriteria(_element.GetProperty("passFailCriteria"));
+
+            // TODO: same comment re: optional properties.
+            Secrets = new MutableJsonDictionary<Secret>(_element.GetProperty("secrets"));
+            EnvironmentVariables = new MutableJsonDictionary<string>(_element.GetProperty("environmentVariables"));
         }
 
         /// <summary> Pass fail criteria for a test. </summary>

@@ -35,7 +35,6 @@ namespace Azure.Developer.LoadTesting.Models
         {
             BinaryData utf8Json = Test.GetBytes(element);
             MutableJsonElement mje = MutableJsonDocument.Parse(utf8Json).RootElement;
-
             return new PassFailCriteria(mje);
         }
     }
