@@ -35,8 +35,6 @@ namespace Azure.Maps.Rendering
         private const string MicrosoftImageryValue = "microsoft.imagery";
         private const string MicrosoftWeatherRadarMainValue = "microsoft.weather.radar.main";
         private const string MicrosoftWeatherInfraredMainValue = "microsoft.weather.infrared.main";
-        private const string MicrosoftDemValue = "microsoft.dem";
-        private const string MicrosoftDemContoursValue = "microsoft.dem.contours";
         private const string MicrosoftTrafficAbsoluteValue = "microsoft.traffic.absolute";
         private const string MicrosoftTrafficAbsoluteMainValue = "microsoft.traffic.absolute.main";
         private const string MicrosoftTrafficRelativeValue = "microsoft.traffic.relative";
@@ -125,25 +123,6 @@ namespace Azure.Maps.Rendering
         /// Supports zoom levels 0 through 15. Format: raster (png).
         /// </summary>
         public static MapTileSetId MicrosoftWeatherInfraredMain { get; } = new MapTileSetId(MicrosoftWeatherInfraredMainValue);
-        /// <summary>
-        /// Digital Elevation Model tiles. The tiles are in the GeoTIFF format with a single 32-bit floating point band. The tiles cover the whole landmass of Earth. Some small islands (e.g., atolls) might not be represented accurately.&lt;br&gt;
-        /// * The vertical unit for measurement of elevation height is meters. An elevation value of -32767.0 is used for points that have no data value, most often returned where there isn't landmass (i.e. water).&lt;br&gt;
-        /// * The horizontal reference datum is the World Geodetic System 1984 (WGS84-G1150) and the vertical reference datum is the Earth Gravitational Model 2008 (EGM2008).&lt;br&gt;
-        /// * Tiles are 258x258 pixel squares rather than the standard 256 x 256. This is done to allow for accurate interpolation of values at the tile edges. As such adjacent tiles overlap by 1 pixel along all edges.&lt;br&gt;
-        /// * Tile data comes from the [Airbus WorldDEM4Ortho product](https://www.intelligence-airbusds.com/worlddem-streaming/). Urban areas are approximately leveled down to ground level. All other areas are represented by the object surface level (e.g., trees). &lt;br&gt;
-        ///
-        /// Supports zoom level 13 only. Format: raster (tiff).
-        /// </summary>
-        public static MapTileSetId MicrosoftDem { get; } = new MapTileSetId(MicrosoftDemValue);
-        /// <summary>
-        /// Digital elevation contour line tiles. Compared to the microsoft.dem option, these tiles are in vector format and intended for visualization purpose. The tiles cover the whole landmass of Earth. Some small islands (e.g., atolls) might not be represented accurately.&lt;br&gt;
-        /// * The vertical unit for measurement of elevation height is meters.&lt;br&gt;
-        /// * The horizontal reference datum is the World Geodetic System 1984 (WGS84-G1150) and the vertical reference datum is the Earth Gravitational Model 2008 (EGM2008).&lt;br&gt;
-        /// * Tile data comes from the [Airbus WorldDEM4Ortho product](https://www.intelligence-airbusds.com/worlddem-streaming/). Urban areas are approximately leveled down to ground level. All other areas are represented by the object surface level (e.g., trees).&lt;br&gt;
-        ///
-        /// Supports zoom levels 9 through 14. Format: vector (pbf).
-        /// </summary>
-        public static MapTileSetId MicrosoftDemContours { get; } = new MapTileSetId(MicrosoftDemContoursValue);
         /// <summary> absolute traffic tiles in vector. </summary>
         public static MapTileSetId MicrosoftTrafficAbsolute { get; } = new MapTileSetId(MicrosoftTrafficAbsoluteValue);
         /// <summary> absolute traffic tiles in raster in our main style. </summary>

@@ -149,8 +149,8 @@ namespace Azure.Storage.DataMovement.Models.JobPlan
                 blockBlobTier: blockBlobTier,
                 pageBlobTier: pageBlobTier,
                 putMd5: putMd5,
-                metadata: StringToDictionary(metadata, nameof(metadata)),
-                blobTags: StringToDictionary(blobTags, nameof(blobTags)),
+                metadata: metadata.ToDictionary(nameof(metadata)),
+                blobTags: blobTags.ToDictionary(nameof(blobTags)),
                 isSourceEncrypted: isSourceEncrypted,
                 cpkScopeInfo: cpkScopeInfo,
                 blockSize: blockSize)
@@ -239,7 +239,7 @@ namespace Azure.Storage.DataMovement.Models.JobPlan
             BlockBlobTier = blockBlobTier;
             PageBlobTier = pageBlobTier;
             PutMd5 = putMd5;
-            string metadataConvert = DictionaryToString(metadata);
+            string metadataConvert = metadata.DictionaryToString();
             if (metadataConvert.Length <= DataMovementConstants.PlanFile.MetadataStrMaxLength)
             {
                 Metadata = metadataConvert;
@@ -252,7 +252,7 @@ namespace Azure.Storage.DataMovement.Models.JobPlan
                     expectedSize: DataMovementConstants.PlanFile.MetadataStrMaxLength,
                     actualSize: metadataConvert.Length);
             }
-            string blobTagsConvert = DictionaryToString(blobTags);
+            string blobTagsConvert = blobTags.DictionaryToString();
             if (blobTagsConvert.Length <= DataMovementConstants.PlanFile.BlobTagsStrMaxLength)
             {
                 BlobTags = blobTagsConvert;
@@ -279,36 +279,6 @@ namespace Azure.Storage.DataMovement.Models.JobPlan
                     actualSize: cpkScopeInfo.Length);
             }
             BlockSize = blockSize;
-        }
-
-        private static IDictionary<string, string> StringToDictionary(string str, string elementName)
-        {
-            IDictionary<string, string> dictionary = new Dictionary<string, string>();
-            string[] splitSemiColon = str.Split(';');
-            foreach (string value in splitSemiColon)
-            {
-                if (!string.IsNullOrEmpty(value))
-                {
-                    string[] splitEqual = value.Split('=');
-                    if (splitEqual.Length != 2)
-                    {
-                        throw Errors.InvalidStringToDictionary(elementName, str);
-                    }
-                    dictionary.Add(splitEqual[0], splitEqual[1]);
-                }
-            }
-            return dictionary;
-        }
-
-        private static string DictionaryToString(IDictionary<string, string> dict)
-        {
-            string concatStr = "";
-            foreach (KeyValuePair<string, string> kv in dict)
-            {
-                // e.g. store like "header=value;"
-                concatStr = string.Concat(concatStr, $"{kv.Key}={kv.Value};");
-            }
-            return concatStr;
         }
     }
 }

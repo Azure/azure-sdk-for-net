@@ -101,7 +101,7 @@ namespace Azure.Maps.Rendering
         /// Please refer to [Supported Languages](https://docs.microsoft.com/azure/azure-maps/supported-languages) for details.
         /// </param>
         /// <param name="localizedMapView">
-        /// The View parameter (also called the "user region" parameter) allows you to show the correct maps for a certain country/region for geopolitically disputed regions. Different countries have different views of such regions, and the View parameter allows your application to comply with the view required by the country your application will be serving. By default, the View parameter is set to “Unified” even if you haven’t defined it in  the request. It is your responsibility to determine the location of your users, and then set the View parameter correctly for that location. Alternatively, you have the option to set ‘View=Auto’, which will return the map data based on the IP  address of the request. The View parameter in Azure Maps must be used in compliance with applicable laws, including those  regarding mapping, of the country where maps, images and other data and third party content that you are authorized to  access via Azure Maps is made available. Example: view=IN.
+        /// The View parameter (also called the "user region" parameter) allows you to show the correct maps for a certain country/region for geopolitically disputed regions. Different countries/regions have different views of such regions, and the View parameter allows your application to comply with the view required by the country/region your application will be serving. By default, the View parameter is set to “Unified” even if you haven’t defined it in  the request. It is your responsibility to determine the location of your users, and then set the View parameter correctly for that location. Alternatively, you have the option to set ‘View=Auto’, which will return the map data based on the IP  address of the request. The View parameter in Azure Maps must be used in compliance with applicable laws, including those  regarding mapping, of the country/region where maps, images and other data and third party content that you are authorized to  access via Azure Maps is made available. Example: view=IN.
         ///
         /// Please refer to [Supported Views](https://aka.ms/AzureMapsLocalizationViews) for details and to see the available Views.
         /// </param>
@@ -149,7 +149,7 @@ namespace Azure.Maps.Rendering
         /// Please refer to [Supported Languages](https://docs.microsoft.com/azure/azure-maps/supported-languages) for details.
         /// </param>
         /// <param name="localizedMapView">
-        /// The View parameter (also called the "user region" parameter) allows you to show the correct maps for a certain country/region for geopolitically disputed regions. Different countries have different views of such regions, and the View parameter allows your application to comply with the view required by the country your application will be serving. By default, the View parameter is set to “Unified” even if you haven’t defined it in  the request. It is your responsibility to determine the location of your users, and then set the View parameter correctly for that location. Alternatively, you have the option to set ‘View=Auto’, which will return the map data based on the IP  address of the request. The View parameter in Azure Maps must be used in compliance with applicable laws, including those  regarding mapping, of the country where maps, images and other data and third party content that you are authorized to  access via Azure Maps is made available. Example: view=IN.
+        /// The View parameter (also called the "user region" parameter) allows you to show the correct maps for a certain country/region for geopolitically disputed regions. Different countries/regions have different views of such regions, and the View parameter allows your application to comply with the view required by the country/region your application will be serving. By default, the View parameter is set to “Unified” even if you haven’t defined it in  the request. It is your responsibility to determine the location of your users, and then set the View parameter correctly for that location. Alternatively, you have the option to set ‘View=Auto’, which will return the map data based on the IP  address of the request. The View parameter in Azure Maps must be used in compliance with applicable laws, including those  regarding mapping, of the country/region where maps, images and other data and third party content that you are authorized to  access via Azure Maps is made available. Example: view=IN.
         ///
         /// Please refer to [Supported Views](https://aka.ms/AzureMapsLocalizationViews) for details and to see the available Views.
         /// </param>
@@ -655,7 +655,7 @@ namespace Azure.Maps.Rendering
         /// Please refer to [Supported Languages](https://docs.microsoft.com/azure/azure-maps/supported-languages) for details.
         /// </param>
         /// <param name="localizedMapView">
-        /// The View parameter (also called the "user region" parameter) allows you to show the correct maps for a certain country/region for geopolitically disputed regions. Different countries have different views of such regions, and the View parameter allows your application to comply with the view required by the country your application will be serving. By default, the View parameter is set to “Unified” even if you haven’t defined it in  the request. It is your responsibility to determine the location of your users, and then set the View parameter correctly for that location. Alternatively, you have the option to set ‘View=Auto’, which will return the map data based on the IP  address of the request. The View parameter in Azure Maps must be used in compliance with applicable laws, including those  regarding mapping, of the country where maps, images and other data and third party content that you are authorized to  access via Azure Maps is made available. Example: view=IN.
+        /// The View parameter (also called the "user region" parameter) allows you to show the correct maps for a certain country/region for geopolitically disputed regions. Different countries/regions have different views of such regions, and the View parameter allows your application to comply with the view required by the country/region your application will be serving. By default, the View parameter is set to “Unified” even if you haven’t defined it in  the request. It is your responsibility to determine the location of your users, and then set the View parameter correctly for that location. Alternatively, you have the option to set ‘View=Auto’, which will return the map data based on the IP  address of the request. The View parameter in Azure Maps must be used in compliance with applicable laws, including those  regarding mapping, of the country/region where maps, images and other data and third party content that you are authorized to  access via Azure Maps is made available. Example: view=IN.
         ///
         /// Please refer to [Supported Views](https://aka.ms/AzureMapsLocalizationViews) for details and to see the available Views.
         /// </param>
@@ -944,7 +944,7 @@ namespace Azure.Maps.Rendering
         /// Please refer to [Supported Languages](https://docs.microsoft.com/azure/azure-maps/supported-languages) for details.
         /// </param>
         /// <param name="localizedMapView">
-        /// The View parameter (also called the "user region" parameter) allows you to show the correct maps for a certain country/region for geopolitically disputed regions. Different countries have different views of such regions, and the View parameter allows your application to comply with the view required by the country your application will be serving. By default, the View parameter is set to “Unified” even if you haven’t defined it in  the request. It is your responsibility to determine the location of your users, and then set the View parameter correctly for that location. Alternatively, you have the option to set ‘View=Auto’, which will return the map data based on the IP  address of the request. The View parameter in Azure Maps must be used in compliance with applicable laws, including those  regarding mapping, of the country where maps, images and other data and third party content that you are authorized to  access via Azure Maps is made available. Example: view=IN.
+        /// The View parameter (also called the "user region" parameter) allows you to show the correct maps for a certain country/region for geopolitically disputed regions. Different countries/regions have different views of such regions, and the View parameter allows your application to comply with the view required by the country/region your application will be serving. By default, the View parameter is set to “Unified” even if you haven’t defined it in  the request. It is your responsibility to determine the location of your users, and then set the View parameter correctly for that location. Alternatively, you have the option to set ‘View=Auto’, which will return the map data based on the IP  address of the request. The View parameter in Azure Maps must be used in compliance with applicable laws, including those  regarding mapping, of the country/region where maps, images and other data and third party content that you are authorized to  access via Azure Maps is made available. Example: view=IN.
         ///
         /// Please refer to [Supported Views](https://aka.ms/AzureMapsLocalizationViews) for details and to see the available Views.
         /// </param>
@@ -1196,7 +1196,7 @@ namespace Azure.Maps.Rendering
         /// </summary>
         /// <param name="boundingBox"> Parameter group. </param>
         /// <param name="format"> Desired format of the response. Value can be either _json_ or _xml_. </param>
-        /// <param name="includeText"> Yes/no value to exclude textual data from response. Only images and country names will be in response. </param>
+        /// <param name="includeText"> Yes/no value to exclude textual data from response. Only images and country/region names will be in response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="boundingBox"/> is null. </exception>
         public async Task<Response<RenderCopyright>> GetCopyrightFromBoundingBoxAsync(BoundingBox boundingBox, ResponseFormat? format = null, IncludeText? includeText = null, CancellationToken cancellationToken = default)
@@ -1230,7 +1230,7 @@ namespace Azure.Maps.Rendering
         /// </summary>
         /// <param name="boundingBox"> Parameter group. </param>
         /// <param name="format"> Desired format of the response. Value can be either _json_ or _xml_. </param>
-        /// <param name="includeText"> Yes/no value to exclude textual data from response. Only images and country names will be in response. </param>
+        /// <param name="includeText"> Yes/no value to exclude textual data from response. Only images and country/region names will be in response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="boundingBox"/> is null. </exception>
         public Response<RenderCopyright> GetCopyrightFromBoundingBox(BoundingBox boundingBox, ResponseFormat? format = null, IncludeText? includeText = null, CancellationToken cancellationToken = default)
@@ -1291,7 +1291,7 @@ namespace Azure.Maps.Rendering
         /// </summary>
         /// <param name="tileIndex"> Parameter group. </param>
         /// <param name="format"> Desired format of the response. Value can be either _json_ or _xml_. </param>
-        /// <param name="includeText"> Yes/no value to exclude textual data from response. Only images and country names will be in response. </param>
+        /// <param name="includeText"> Yes/no value to exclude textual data from response. Only images and country/region names will be in response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tileIndex"/> is null. </exception>
         public async Task<Response<RenderCopyright>> GetCopyrightForTileAsync(MapTileIndex tileIndex, ResponseFormat? format = null, IncludeText? includeText = null, CancellationToken cancellationToken = default)
@@ -1326,7 +1326,7 @@ namespace Azure.Maps.Rendering
         /// </summary>
         /// <param name="tileIndex"> Parameter group. </param>
         /// <param name="format"> Desired format of the response. Value can be either _json_ or _xml_. </param>
-        /// <param name="includeText"> Yes/no value to exclude textual data from response. Only images and country names will be in response. </param>
+        /// <param name="includeText"> Yes/no value to exclude textual data from response. Only images and country/region names will be in response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tileIndex"/> is null. </exception>
         public Response<RenderCopyright> GetCopyrightForTile(MapTileIndex tileIndex, ResponseFormat? format = null, IncludeText? includeText = null, CancellationToken cancellationToken = default)
@@ -1383,7 +1383,7 @@ namespace Azure.Maps.Rendering
         /// Returns the copyright information for the world. To obtain the default copyright information for the whole world, do not specify a tile or bounding box.
         /// </summary>
         /// <param name="format"> Desired format of the response. Value can be either _json_ or _xml_. </param>
-        /// <param name="includeText"> Yes/no value to exclude textual data from response. Only images and country names will be in response. </param>
+        /// <param name="includeText"> Yes/no value to exclude textual data from response. Only images and country/region names will be in response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async Task<Response<RenderCopyright>> GetCopyrightForWorldAsync(ResponseFormat? format = null, IncludeText? includeText = null, CancellationToken cancellationToken = default)
         {
@@ -1412,7 +1412,7 @@ namespace Azure.Maps.Rendering
         /// Returns the copyright information for the world. To obtain the default copyright information for the whole world, do not specify a tile or bounding box.
         /// </summary>
         /// <param name="format"> Desired format of the response. Value can be either _json_ or _xml_. </param>
-        /// <param name="includeText"> Yes/no value to exclude textual data from response. Only images and country names will be in response. </param>
+        /// <param name="includeText"> Yes/no value to exclude textual data from response. Only images and country/region names will be in response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public Response<RenderCopyright> GetCopyrightForWorld(ResponseFormat? format = null, IncludeText? includeText = null, CancellationToken cancellationToken = default)
         {

@@ -1,0 +1,914 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/l3IsolationDomains/nfa-tool-ts-sdk-l3domain062223?api-version=2023-02-01-preview",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "617",
+        "Content-Type": "application/json",
+        "traceparent": "00-eb1a67d9b3edd43342ccd92cbbbbd4d6-4fbb193439874d76-00",
+        "User-Agent": "azsdk-net-ResourceManager.ManagedNetworkFabric/1.0.0-alpha.20230622.1 (.NET 7.0.7; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "1c75c1adfb0307da96efa8a055cf9abc",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "tags": {},
+        "location": "eastus",
+        "properties": {
+          "redistributeConnectedSubnets": "True",
+          "redistributeStaticRoutes": "False",
+          "aggregateRouteConfiguration": {
+            "ipv4Routes": [
+              {
+                "prefix": "10.0.0.1/27"
+              }
+            ],
+            "ipv6Routes": [
+              {
+                "prefix": "2fff::/59"
+              }
+            ]
+          },
+          "connectedSubnetRoutePolicy": {
+            "exportRoutePolicyId": "/subscriptions/subscriptionId/resourceGroups/resourceGroupName/providers/Microsoft.ManagedNetworkFabric/routePolicies/routePolicyName2"
+          },
+          "networkFabricId": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/networkFabrics/nfa-tool-ts-nf060523"
+        }
+      },
+      "StatusCode": 201,
+      "ResponseHeaders": {
+        "Azure-AsyncOperation": "https://management.azure.com/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/providers/Microsoft.ManagedNetworkFabric/locations/EASTUS/operationStatuses/b20f7dca-0046-4e93-826f-2643809ba177*8B4C110148E6FBC1F7C2F0CE8CF287D3B112FE862A3E5B58F98EBAC87C59BF8A?api-version=2023-02-01-preview",
+        "Cache-Control": "no-cache",
+        "Content-Length": "1256",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 22 Jun 2023 09:20:56 GMT",
+        "ETag": "\u0022d80d3c48-0000-0100-0000-649412770000\u0022",
+        "Expires": "-1",
+        "mise-correlation-id": "faa14bf8-93e4-4b9f-86d4-791d0dbf8924",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "1c75c1adfb0307da96efa8a055cf9abc",
+        "x-ms-correlation-request-id": "385472c9-eb2a-4cb5-82f6-b8b5c17bd1f6",
+        "x-ms-providerhub-traffic": "True",
+        "x-ms-ratelimit-remaining-subscription-writes": "1199",
+        "x-ms-request-id": "fe646ed9-1ba1-476d-8366-8d3a6eaadfc0",
+        "x-ms-routing-request-id": "JIOINDIAWEST:20230622T092056Z:385472c9-eb2a-4cb5-82f6-b8b5c17bd1f6"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/l3IsolationDomains/nfa-tool-ts-sdk-l3domain062223",
+        "name": "nfa-tool-ts-sdk-l3domain062223",
+        "type": "microsoft.managednetworkfabric/l3isolationdomains",
+        "location": "eastus",
+        "tags": {},
+        "systemData": {
+          "createdBy": "v-rmarimuthu@microsoft.com",
+          "createdByType": "User",
+          "createdAt": "2023-06-22T09:20:53.7622262Z",
+          "lastModifiedBy": "v-rmarimuthu@microsoft.com",
+          "lastModifiedByType": "User",
+          "lastModifiedAt": "2023-06-22T09:20:53.7622262Z"
+        },
+        "properties": {
+          "networkFabricId": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/networkFabrics/nfa-tool-ts-nf060523",
+          "provisioningState": "Accepted",
+          "administrativeState": "Disabled",
+          "redistributeConnectedSubnets": "True",
+          "redistributeStaticRoutes": "False",
+          "aggregateRouteConfiguration": {
+            "ipv4Routes": [
+              {
+                "prefix": "10.0.0.1/27"
+              }
+            ],
+            "ipv6Routes": [
+              {
+                "prefix": "2fff::/59"
+              }
+            ]
+          },
+          "connectedSubnetRoutePolicy": {
+            "exportRoutePolicyId": "/subscriptions/subscriptionId/resourceGroups/resourceGroupName/providers/Microsoft.ManagedNetworkFabric/routePolicies/routePolicyName2",
+            "administrativeState": "Disabled"
+          }
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/providers/Microsoft.ManagedNetworkFabric/locations/EASTUS/operationStatuses/b20f7dca-0046-4e93-826f-2643809ba177*8B4C110148E6FBC1F7C2F0CE8CF287D3B112FE862A3E5B58F98EBAC87C59BF8A?api-version=2023-02-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-eb1a67d9b3edd43342ccd92cbbbbd4d6-70ba31d35e93a880-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.6.0 (.NET 7.0.7; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "1f898e429037f9efc3343bb41b382264",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "619",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 22 Jun 2023 09:20:57 GMT",
+        "ETag": "\u002245047ba7-0000-0100-0000-649412790000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "1f898e429037f9efc3343bb41b382264",
+        "x-ms-correlation-request-id": "b5d44458-3ee2-4553-8c24-efc7aff50d13",
+        "x-ms-ratelimit-remaining-subscription-reads": "11999",
+        "x-ms-request-id": "04b7a6fc-2509-426e-961e-b99b6111e24d",
+        "x-ms-routing-request-id": "JIOINDIAWEST:20230622T092057Z:b5d44458-3ee2-4553-8c24-efc7aff50d13"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/providers/Microsoft.ManagedNetworkFabric/locations/EASTUS/operationStatuses/b20f7dca-0046-4e93-826f-2643809ba177*8B4C110148E6FBC1F7C2F0CE8CF287D3B112FE862A3E5B58F98EBAC87C59BF8A",
+        "name": "b20f7dca-0046-4e93-826f-2643809ba177*8B4C110148E6FBC1F7C2F0CE8CF287D3B112FE862A3E5B58F98EBAC87C59BF8A",
+        "resourceId": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/l3IsolationDomains/nfa-tool-ts-sdk-l3domain062223",
+        "status": "Updating",
+        "startTime": "2023-06-22T09:20:54.9123598Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/providers/Microsoft.ManagedNetworkFabric/locations/EASTUS/operationStatuses/b20f7dca-0046-4e93-826f-2643809ba177*8B4C110148E6FBC1F7C2F0CE8CF287D3B112FE862A3E5B58F98EBAC87C59BF8A?api-version=2023-02-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-eb1a67d9b3edd43342ccd92cbbbbd4d6-be269746a38d87c9-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.6.0 (.NET 7.0.7; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "93eadaebd7276ec6e2444a9d3124dbc6",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "678",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 22 Jun 2023 09:20:58 GMT",
+        "ETag": "\u0022450481a7-0000-0100-0000-649412790000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "93eadaebd7276ec6e2444a9d3124dbc6",
+        "x-ms-correlation-request-id": "711b0ea2-a393-46bd-b98e-32e50539e55e",
+        "x-ms-ratelimit-remaining-subscription-reads": "11998",
+        "x-ms-request-id": "2e5de725-13c0-4475-badc-41b5d200b86a",
+        "x-ms-routing-request-id": "JIOINDIAWEST:20230622T092058Z:711b0ea2-a393-46bd-b98e-32e50539e55e"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/providers/Microsoft.ManagedNetworkFabric/locations/EASTUS/operationStatuses/b20f7dca-0046-4e93-826f-2643809ba177*8B4C110148E6FBC1F7C2F0CE8CF287D3B112FE862A3E5B58F98EBAC87C59BF8A",
+        "name": "b20f7dca-0046-4e93-826f-2643809ba177*8B4C110148E6FBC1F7C2F0CE8CF287D3B112FE862A3E5B58F98EBAC87C59BF8A",
+        "resourceId": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/l3IsolationDomains/nfa-tool-ts-sdk-l3domain062223",
+        "status": "Succeeded",
+        "startTime": "2023-06-22T09:20:54.9123598Z",
+        "endTime": "2023-06-22T09:20:57.850942Z",
+        "properties": null
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/l3IsolationDomains/nfa-tool-ts-sdk-l3domain062223?api-version=2023-02-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-eb1a67d9b3edd43342ccd92cbbbbd4d6-964a9075735bf9c4-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.6.0 (.NET 7.0.7; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "c65e86e47b45ca84081d60d2032a1599",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "1274",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 22 Jun 2023 09:20:59 GMT",
+        "ETag": "\u0022d80dba48-0000-0100-0000-6494127a0000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "c65e86e47b45ca84081d60d2032a1599",
+        "x-ms-correlation-request-id": "bcbc786d-d60d-492c-b37a-c7de33fae063",
+        "x-ms-providerhub-traffic": "True",
+        "x-ms-ratelimit-remaining-subscription-reads": "11997",
+        "x-ms-request-id": "8238d243-cc8b-4917-8102-74709f41d84e",
+        "x-ms-routing-request-id": "JIOINDIAWEST:20230622T092059Z:bcbc786d-d60d-492c-b37a-c7de33fae063"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/l3IsolationDomains/nfa-tool-ts-sdk-l3domain062223",
+        "name": "nfa-tool-ts-sdk-l3domain062223",
+        "type": "microsoft.managednetworkfabric/l3isolationdomains",
+        "location": "eastus",
+        "tags": {},
+        "systemData": {
+          "createdBy": "v-rmarimuthu@microsoft.com",
+          "createdByType": "User",
+          "createdAt": "2023-06-22T09:20:53.7622262Z",
+          "lastModifiedBy": "d1bd24c7-b27f-477e-86dd-939e107873d7",
+          "lastModifiedByType": "Application",
+          "lastModifiedAt": "2023-06-22T09:20:58.4097072Z"
+        },
+        "properties": {
+          "networkFabricId": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/networkFabrics/nfa-tool-ts-nf060523",
+          "provisioningState": "Succeeded",
+          "administrativeState": "Disabled",
+          "redistributeConnectedSubnets": "True",
+          "redistributeStaticRoutes": "False",
+          "aggregateRouteConfiguration": {
+            "ipv4Routes": [
+              {
+                "prefix": "10.0.0.1/27"
+              }
+            ],
+            "ipv6Routes": [
+              {
+                "prefix": "2fff::/59"
+              }
+            ]
+          },
+          "connectedSubnetRoutePolicy": {
+            "exportRoutePolicyId": "/subscriptions/subscriptionId/resourceGroups/resourceGroupName/providers/Microsoft.ManagedNetworkFabric/routePolicies/routePolicyName2",
+            "administrativeState": "Disabled"
+          }
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/l3IsolationDomains/nfa-tool-ts-sdk-l3domain062223?api-version=2023-02-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-a3e53904d0602393eacaf9d5ec9f6eb0-d78a8eb84d8270d0-00",
+        "User-Agent": "azsdk-net-ResourceManager.ManagedNetworkFabric/1.0.0-alpha.20230622.1 (.NET 7.0.7; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "51ca654377e56bfbc81a3df34651c79f",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "1274",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 22 Jun 2023 09:20:59 GMT",
+        "ETag": "\u0022d80dba48-0000-0100-0000-6494127a0000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "51ca654377e56bfbc81a3df34651c79f",
+        "x-ms-correlation-request-id": "0401cc54-55ec-456f-bc47-ae2d1f4351f2",
+        "x-ms-providerhub-traffic": "True",
+        "x-ms-ratelimit-remaining-subscription-reads": "11996",
+        "x-ms-request-id": "1a1ddae1-4f3f-4d00-b3be-b4e565b385ab",
+        "x-ms-routing-request-id": "JIOINDIAWEST:20230622T092100Z:0401cc54-55ec-456f-bc47-ae2d1f4351f2"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/l3IsolationDomains/nfa-tool-ts-sdk-l3domain062223",
+        "name": "nfa-tool-ts-sdk-l3domain062223",
+        "type": "microsoft.managednetworkfabric/l3isolationdomains",
+        "location": "eastus",
+        "tags": {},
+        "systemData": {
+          "createdBy": "v-rmarimuthu@microsoft.com",
+          "createdByType": "User",
+          "createdAt": "2023-06-22T09:20:53.7622262Z",
+          "lastModifiedBy": "d1bd24c7-b27f-477e-86dd-939e107873d7",
+          "lastModifiedByType": "Application",
+          "lastModifiedAt": "2023-06-22T09:20:58.4097072Z"
+        },
+        "properties": {
+          "networkFabricId": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/networkFabrics/nfa-tool-ts-nf060523",
+          "provisioningState": "Succeeded",
+          "administrativeState": "Disabled",
+          "redistributeConnectedSubnets": "True",
+          "redistributeStaticRoutes": "False",
+          "aggregateRouteConfiguration": {
+            "ipv4Routes": [
+              {
+                "prefix": "10.0.0.1/27"
+              }
+            ],
+            "ipv6Routes": [
+              {
+                "prefix": "2fff::/59"
+              }
+            ]
+          },
+          "connectedSubnetRoutePolicy": {
+            "exportRoutePolicyId": "/subscriptions/subscriptionId/resourceGroups/resourceGroupName/providers/Microsoft.ManagedNetworkFabric/routePolicies/routePolicyName2",
+            "administrativeState": "Disabled"
+          }
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/l3IsolationDomains?api-version=2023-02-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "User-Agent": "azsdk-net-ResourceManager.ManagedNetworkFabric/1.0.0-alpha.20230622.1 (.NET 7.0.7; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "95cf74595bda701e56208b0977f46bb7",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "2489",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 22 Jun 2023 09:21:01 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "61204c04-ed10-45f5-b720-fb539d5b6938",
+        "x-ms-original-request-ids": [
+          "5f0f4b3e-bcb2-4909-acad-1939b6faf6ae",
+          "75c1fc6c-6f92-48a4-a25b-5d9d08ad04bc",
+          "9fa238ee-09fb-41e5-b6ed-bdd64dafd652",
+          "030151da-349e-4443-b4d0-bb9603eb09d9"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": "11995",
+        "x-ms-request-id": "61204c04-ed10-45f5-b720-fb539d5b6938",
+        "x-ms-routing-request-id": "JIOINDIAWEST:20230622T092101Z:61204c04-ed10-45f5-b720-fb539d5b6938"
+      },
+      "ResponseBody": {
+        "value": [
+          {
+            "id": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/l3IsolationDomains/nfa-tool-ts-cli-l3domain1-061223",
+            "name": "nfa-tool-ts-cli-l3domain1-061223",
+            "type": "microsoft.managednetworkfabric/l3isolationdomains",
+            "location": "eastus",
+            "systemData": {
+              "createdBy": "v-rmarimuthu@microsoft.com",
+              "createdByType": "User",
+              "createdAt": "2023-06-12T10:28:05.8232857Z",
+              "lastModifiedBy": "d1bd24c7-b27f-477e-86dd-939e107873d7",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-06-12T10:31:33.5671461Z"
+            },
+            "properties": {
+              "networkFabricId": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/networkFabrics/nfa-tool-ts-nf060523",
+              "provisioningState": "Succeeded",
+              "administrativeState": "Disabled",
+              "redistributeConnectedSubnets": "True",
+              "redistributeStaticRoutes": "True",
+              "aggregateRouteConfiguration": {
+                "ipv4Routes": [
+                  {
+                    "prefix": "10.0.0.1/28"
+                  },
+                  {
+                    "prefix": "10.0.0.2/28"
+                  }
+                ],
+                "ipv6Routes": [
+                  {
+                    "prefix": "2fff::/64"
+                  },
+                  {
+                    "prefix": "2fff::/65"
+                  }
+                ]
+              },
+              "connectedSubnetRoutePolicy": {
+                "exportRoutePolicyId": "\u003CexportRoutePolicyId\u003E",
+                "administrativeState": "Disabled"
+              }
+            }
+          },
+          {
+            "id": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/l3IsolationDomains/nfa-tool-ts-sdk-l3domain062223",
+            "name": "nfa-tool-ts-sdk-l3domain062223",
+            "type": "microsoft.managednetworkfabric/l3isolationdomains",
+            "location": "eastus",
+            "tags": {},
+            "systemData": {
+              "createdBy": "v-rmarimuthu@microsoft.com",
+              "createdByType": "User",
+              "createdAt": "2023-06-22T09:20:53.7622262Z",
+              "lastModifiedBy": "d1bd24c7-b27f-477e-86dd-939e107873d7",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-06-22T09:20:58.4097072Z"
+            },
+            "properties": {
+              "networkFabricId": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/networkFabrics/nfa-tool-ts-nf060523",
+              "provisioningState": "Succeeded",
+              "administrativeState": "Disabled",
+              "redistributeConnectedSubnets": "True",
+              "redistributeStaticRoutes": "False",
+              "aggregateRouteConfiguration": {
+                "ipv4Routes": [
+                  {
+                    "prefix": "10.0.0.1/27"
+                  }
+                ],
+                "ipv6Routes": [
+                  {
+                    "prefix": "2fff::/59"
+                  }
+                ]
+              },
+              "connectedSubnetRoutePolicy": {
+                "exportRoutePolicyId": "/subscriptions/subscriptionId/resourceGroups/resourceGroupName/providers/Microsoft.ManagedNetworkFabric/routePolicies/routePolicyName2",
+                "administrativeState": "Disabled"
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/providers/Microsoft.ManagedNetworkFabric/l3IsolationDomains?api-version=2023-02-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "User-Agent": "azsdk-net-ResourceManager.ManagedNetworkFabric/1.0.0-alpha.20230622.1 (.NET 7.0.7; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "cc59b12f8a596ce08af2fe2b3e9084b6",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "8950",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 22 Jun 2023 09:21:01 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "0ae09c16-b2a8-44fa-b22b-6b8f66fb0b2c",
+        "x-ms-original-request-ids": [
+          "0692f812-32e4-4738-a968-29b9e036eb5c",
+          "9a834747-4247-46a9-89f8-9cc15dd3ceba",
+          "27cc71f1-a4e9-46bf-bb40-6fc48175628d",
+          "fe00df28-648d-4dc1-99cd-41d2ff4a5f8f"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": "11994",
+        "x-ms-request-id": "0ae09c16-b2a8-44fa-b22b-6b8f66fb0b2c",
+        "x-ms-routing-request-id": "JIOINDIAWEST:20230622T092102Z:0ae09c16-b2a8-44fa-b22b-6b8f66fb0b2c"
+      },
+      "ResponseBody": {
+        "value": [
+          {
+            "id": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/l3IsolationDomains/nfa-tool-ts-cli-l3domain1-061223",
+            "name": "nfa-tool-ts-cli-l3domain1-061223",
+            "type": "microsoft.managednetworkfabric/l3isolationdomains",
+            "location": "eastus",
+            "systemData": {
+              "createdBy": "v-rmarimuthu@microsoft.com",
+              "createdByType": "User",
+              "createdAt": "2023-06-12T10:28:05.8232857Z",
+              "lastModifiedBy": "d1bd24c7-b27f-477e-86dd-939e107873d7",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-06-12T10:31:33.5671461Z"
+            },
+            "properties": {
+              "networkFabricId": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/networkFabrics/nfa-tool-ts-nf060523",
+              "provisioningState": "Succeeded",
+              "administrativeState": "Disabled",
+              "redistributeConnectedSubnets": "True",
+              "redistributeStaticRoutes": "True",
+              "aggregateRouteConfiguration": {
+                "ipv4Routes": [
+                  {
+                    "prefix": "10.0.0.1/28"
+                  },
+                  {
+                    "prefix": "10.0.0.2/28"
+                  }
+                ],
+                "ipv6Routes": [
+                  {
+                    "prefix": "2fff::/64"
+                  },
+                  {
+                    "prefix": "2fff::/65"
+                  }
+                ]
+              },
+              "connectedSubnetRoutePolicy": {
+                "exportRoutePolicyId": "\u003CexportRoutePolicyId\u003E",
+                "administrativeState": "Disabled"
+              }
+            }
+          },
+          {
+            "id": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/microsoft.managednetworkfabric/L3IsolationDomains/nfcfab3200623-nf1fab3200623-l3domain-v4-2601-2602",
+            "name": "nfcfab3200623-nf1fab3200623-l3domain-v4-2601-2602",
+            "type": "microsoft.managednetworkfabric/l3isolationdomains",
+            "location": "eastus",
+            "systemData": {
+              "createdBy": "edf733ea-9067-4115-8588-b12c62d25d45",
+              "createdByType": "Application",
+              "createdAt": "2023-06-22T05:34:47.2658862Z",
+              "lastModifiedBy": "d1bd24c7-b27f-477e-86dd-939e107873d7",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-06-22T08:43:04.3368883Z"
+            },
+            "properties": {
+              "networkFabricId": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/Microsoft.ManagedNetworkFabric/networkFabrics/nf1fab3200623",
+              "provisioningState": "Succeeded",
+              "administrativeState": "Enabled",
+              "redistributeConnectedSubnets": "True",
+              "redistributeStaticRoutes": "True",
+              "aggregateRouteConfiguration": {
+                "ipv4Routes": [
+                  {
+                    "prefix": "10.18.32.0/22"
+                  }
+                ],
+                "ipv6Routes": [
+                  {
+                    "prefix": "fda0:d59c:da02:20::/62"
+                  }
+                ]
+              },
+              "connectedSubnetRoutePolicy": {
+                "exportRoutePolicyId": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/Microsoft.ManagedNetworkFabric/routePolicies/rcf-nf1fab3200623-l3domain-v4-connsubnet-ext-policy-2601-2602",
+                "administrativeState": "Disabled"
+              }
+            }
+          },
+          {
+            "id": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/microsoft.managednetworkfabric/L3IsolationDomains/nfcfab3200623-nf1fab3200623-l3domain-v4-2603-2604",
+            "name": "nfcfab3200623-nf1fab3200623-l3domain-v4-2603-2604",
+            "type": "microsoft.managednetworkfabric/l3isolationdomains",
+            "location": "eastus",
+            "systemData": {
+              "createdBy": "edf733ea-9067-4115-8588-b12c62d25d45",
+              "createdByType": "Application",
+              "createdAt": "2023-06-22T05:36:00.06383Z",
+              "lastModifiedBy": "d1bd24c7-b27f-477e-86dd-939e107873d7",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-06-22T08:44:44.8472361Z"
+            },
+            "properties": {
+              "networkFabricId": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/Microsoft.ManagedNetworkFabric/networkFabrics/nf1fab3200623",
+              "provisioningState": "Succeeded",
+              "administrativeState": "Enabled",
+              "redistributeConnectedSubnets": "True",
+              "redistributeStaticRoutes": "True",
+              "aggregateRouteConfiguration": {
+                "ipv4Routes": [
+                  {
+                    "prefix": "10.18.55.0/22"
+                  }
+                ],
+                "ipv6Routes": [
+                  {
+                    "prefix": "fda0:d59c:da02:20::/62"
+                  }
+                ]
+              },
+              "connectedSubnetRoutePolicy": {
+                "exportRoutePolicyId": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/Microsoft.ManagedNetworkFabric/routePolicies/rcf-nf1fab3200623-l3domain-v4-connsubnet-ext-policy-2601-2602",
+                "administrativeState": "Disabled"
+              }
+            }
+          },
+          {
+            "id": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/microsoft.managednetworkfabric/L3IsolationDomains/nfcfab3200623-nf1fab3200623-l3domain-v6-2605-2606",
+            "name": "nfcfab3200623-nf1fab3200623-l3domain-v6-2605-2606",
+            "type": "microsoft.managednetworkfabric/l3isolationdomains",
+            "location": "eastus",
+            "systemData": {
+              "createdBy": "edf733ea-9067-4115-8588-b12c62d25d45",
+              "createdByType": "Application",
+              "createdAt": "2023-06-22T05:37:12.0493113Z",
+              "lastModifiedBy": "d1bd24c7-b27f-477e-86dd-939e107873d7",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-06-22T08:48:16.1613817Z"
+            },
+            "properties": {
+              "networkFabricId": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/Microsoft.ManagedNetworkFabric/networkFabrics/nf1fab3200623",
+              "provisioningState": "Succeeded",
+              "administrativeState": "Enabled",
+              "redistributeConnectedSubnets": "True",
+              "redistributeStaticRoutes": "True",
+              "aggregateRouteConfiguration": {
+                "ipv6Routes": [
+                  {
+                    "prefix": "fda0:d59c:da12:20::/61"
+                  },
+                  {
+                    "prefix": "fda0:d59c:da12:30::/61"
+                  }
+                ]
+              },
+              "connectedSubnetRoutePolicy": {
+                "exportRoutePolicyId": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/Microsoft.ManagedNetworkFabric/routePolicies/rcf-nf1fab3200623-l3domain-v6-connsubnet-ext-policy-2605-2606",
+                "administrativeState": "Disabled"
+              }
+            }
+          },
+          {
+            "id": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/microsoft.managednetworkfabric/L3IsolationDomains/nfcfab3200623-nf1fab3200623-l3domain-v6-2607-2608",
+            "name": "nfcfab3200623-nf1fab3200623-l3domain-v6-2607-2608",
+            "type": "microsoft.managednetworkfabric/l3isolationdomains",
+            "location": "eastus",
+            "systemData": {
+              "createdBy": "edf733ea-9067-4115-8588-b12c62d25d45",
+              "createdByType": "Application",
+              "createdAt": "2023-06-22T05:38:23.6910347Z",
+              "lastModifiedBy": "d1bd24c7-b27f-477e-86dd-939e107873d7",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-06-22T08:54:16.5222167Z"
+            },
+            "properties": {
+              "networkFabricId": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/Microsoft.ManagedNetworkFabric/networkFabrics/nf1fab3200623",
+              "provisioningState": "Succeeded",
+              "administrativeState": "Enabled",
+              "redistributeConnectedSubnets": "True",
+              "redistributeStaticRoutes": "True",
+              "aggregateRouteConfiguration": {
+                "ipv6Routes": [
+                  {
+                    "prefix": "fda0:d59c:da12:40::/61"
+                  },
+                  {
+                    "prefix": "fda0:d59c:da12:48::/61"
+                  }
+                ]
+              },
+              "connectedSubnetRoutePolicy": {
+                "exportRoutePolicyId": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/Microsoft.ManagedNetworkFabric/routePolicies/rcf-nf1fab3200623-l3domain-v6-connsubnet-ext-policy-2607-2608",
+                "administrativeState": "Disabled"
+              }
+            }
+          },
+          {
+            "id": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/microsoft.managednetworkfabric/L3IsolationDomains/nfcfab3200623-nf1fab3200623-l3domain-v4-2609-2610",
+            "name": "nfcfab3200623-nf1fab3200623-l3domain-v4-2609-2610",
+            "type": "microsoft.managednetworkfabric/l3isolationdomains",
+            "location": "eastus",
+            "systemData": {
+              "createdBy": "edf733ea-9067-4115-8588-b12c62d25d45",
+              "createdByType": "Application",
+              "createdAt": "2023-06-22T05:39:27.3326263Z",
+              "lastModifiedBy": "d1bd24c7-b27f-477e-86dd-939e107873d7",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-06-22T05:39:30.4243151Z"
+            },
+            "properties": {
+              "networkFabricId": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/Microsoft.ManagedNetworkFabric/networkFabrics/nf1fab3200623",
+              "provisioningState": "Succeeded",
+              "administrativeState": "Disabled",
+              "redistributeConnectedSubnets": "True",
+              "redistributeStaticRoutes": "True",
+              "aggregateRouteConfiguration": {
+                "ipv4Routes": [
+                  {
+                    "prefix": "10.18.66.0/22"
+                  }
+                ],
+                "ipv6Routes": null
+              },
+              "connectedSubnetRoutePolicy": null
+            }
+          },
+          {
+            "id": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/l3IsolationDomains/nfa-tool-ts-sdk-l3domain062223",
+            "name": "nfa-tool-ts-sdk-l3domain062223",
+            "type": "microsoft.managednetworkfabric/l3isolationdomains",
+            "location": "eastus",
+            "tags": {},
+            "systemData": {
+              "createdBy": "v-rmarimuthu@microsoft.com",
+              "createdByType": "User",
+              "createdAt": "2023-06-22T09:20:53.7622262Z",
+              "lastModifiedBy": "d1bd24c7-b27f-477e-86dd-939e107873d7",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-06-22T09:20:58.4097072Z"
+            },
+            "properties": {
+              "networkFabricId": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/networkFabrics/nfa-tool-ts-nf060523",
+              "provisioningState": "Succeeded",
+              "administrativeState": "Disabled",
+              "redistributeConnectedSubnets": "True",
+              "redistributeStaticRoutes": "False",
+              "aggregateRouteConfiguration": {
+                "ipv4Routes": [
+                  {
+                    "prefix": "10.0.0.1/27"
+                  }
+                ],
+                "ipv6Routes": [
+                  {
+                    "prefix": "2fff::/59"
+                  }
+                ]
+              },
+              "connectedSubnetRoutePolicy": {
+                "exportRoutePolicyId": "/subscriptions/subscriptionId/resourceGroups/resourceGroupName/providers/Microsoft.ManagedNetworkFabric/routePolicies/routePolicyName2",
+                "administrativeState": "Disabled"
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/l3IsolationDomains/nfa-tool-ts-sdk-l3domain062223/updateAdministrativeState?api-version=2023-02-01-preview",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "18",
+        "Content-Type": "application/json",
+        "traceparent": "00-3d46dadbdf03203e2d94b274aabeb06e-85200a5bcc94faef-00",
+        "User-Agent": "azsdk-net-ResourceManager.ManagedNetworkFabric/1.0.0-alpha.20230622.1 (.NET 7.0.7; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "8e78c0567f5ae8be465afbc5ecf2f4d4",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "state": "Enable"
+      },
+      "StatusCode": 202,
+      "ResponseHeaders": {
+        "Azure-AsyncOperation": "https://management.azure.com/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/providers/Microsoft.ManagedNetworkFabric/locations/EASTUS/operationStatuses/19e2bbad-a10d-478b-afb5-d8e5a00d5b59*8B4C110148E6FBC1F7C2F0CE8CF287D3B112FE862A3E5B58F98EBAC87C59BF8A?api-version=2023-02-01-preview",
+        "Cache-Control": "no-cache",
+        "Content-Length": "4",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 22 Jun 2023 09:21:02 GMT",
+        "Expires": "-1",
+        "Location": "https://management.azure.com/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/providers/Microsoft.ManagedNetworkFabric/locations/EASTUS/operationStatuses/19e2bbad-a10d-478b-afb5-d8e5a00d5b59*8B4C110148E6FBC1F7C2F0CE8CF287D3B112FE862A3E5B58F98EBAC87C59BF8A?api-version=2023-02-01-preview",
+        "mise-correlation-id": "0664162e-f7d3-4585-bd2c-89b7fa25efb8",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "8e78c0567f5ae8be465afbc5ecf2f4d4",
+        "x-ms-correlation-request-id": "7bc8497b-daae-44a9-9171-33cdc25c84b7",
+        "x-ms-providerhub-traffic": "True",
+        "x-ms-ratelimit-remaining-subscription-writes": "1199",
+        "x-ms-request-id": "f61c374d-374a-4609-aa86-3b4b365ad1eb",
+        "x-ms-routing-request-id": "JIOINDIAWEST:20230622T092103Z:7bc8497b-daae-44a9-9171-33cdc25c84b7"
+      },
+      "ResponseBody": "null"
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/l3IsolationDomains/nfa-tool-ts-sdk-l3domain062223/updateAdministrativeState?api-version=2023-02-01-preview",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "19",
+        "Content-Type": "application/json",
+        "traceparent": "00-d5fb2c20572536a0f88e06f5e45004cf-caa6f1a6a3f120d8-00",
+        "User-Agent": "azsdk-net-ResourceManager.ManagedNetworkFabric/1.0.0-alpha.20230622.1 (.NET 7.0.7; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "b6b2d59bdd7baf5df27185ff8e1b8097",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "state": "Disable"
+      },
+      "StatusCode": 202,
+      "ResponseHeaders": {
+        "Azure-AsyncOperation": "https://management.azure.com/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/providers/Microsoft.ManagedNetworkFabric/locations/EASTUS/operationStatuses/49aa5f7f-1341-4c2d-9b2b-6435d94da634*8B4C110148E6FBC1F7C2F0CE8CF287D3B112FE862A3E5B58F98EBAC87C59BF8A?api-version=2023-02-01-preview",
+        "Cache-Control": "no-cache",
+        "Content-Length": "4",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 22 Jun 2023 09:21:03 GMT",
+        "Expires": "-1",
+        "Location": "https://management.azure.com/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/providers/Microsoft.ManagedNetworkFabric/locations/EASTUS/operationStatuses/49aa5f7f-1341-4c2d-9b2b-6435d94da634*8B4C110148E6FBC1F7C2F0CE8CF287D3B112FE862A3E5B58F98EBAC87C59BF8A?api-version=2023-02-01-preview",
+        "mise-correlation-id": "ff52c6b7-4fe3-411e-bb1a-3853fb0a242f",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "b6b2d59bdd7baf5df27185ff8e1b8097",
+        "x-ms-correlation-request-id": "14c5cb31-0042-4c80-bef5-4b84c81b91f5",
+        "x-ms-providerhub-traffic": "True",
+        "x-ms-ratelimit-remaining-subscription-writes": "1198",
+        "x-ms-request-id": "84f9aebd-fade-442a-95c6-515428ac35d8",
+        "x-ms-routing-request-id": "JIOINDIAWEST:20230622T092104Z:14c5cb31-0042-4c80-bef5-4b84c81b91f5"
+      },
+      "ResponseBody": "null"
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/l3IsolationDomains/nfa-tool-ts-sdk-l3domain062223?api-version=2023-02-01-preview",
+      "RequestMethod": "DELETE",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-6404f560a9299d1ed4d5925cdfd0dc76-df8b7a672ffa777f-00",
+        "User-Agent": "azsdk-net-ResourceManager.ManagedNetworkFabric/1.0.0-alpha.20230622.1 (.NET 7.0.7; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "172935273d3fd1582814a18775464078",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 202,
+      "ResponseHeaders": {
+        "Azure-AsyncOperation": "https://management.azure.com/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/providers/Microsoft.ManagedNetworkFabric/locations/EASTUS/operationStatuses/a6ea3391-31dc-4297-935d-feeb7a698eac*8B4C110148E6FBC1F7C2F0CE8CF287D3B112FE862A3E5B58F98EBAC87C59BF8A?api-version=2023-02-01-preview",
+        "Cache-Control": "no-cache",
+        "Content-Length": "4",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 22 Jun 2023 09:21:05 GMT",
+        "ETag": "\u0022d80dbd49-0000-0100-0000-649412810000\u0022",
+        "Expires": "-1",
+        "Location": "https://management.azure.com/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/providers/Microsoft.ManagedNetworkFabric/locations/EASTUS/operationStatuses/a6ea3391-31dc-4297-935d-feeb7a698eac*8B4C110148E6FBC1F7C2F0CE8CF287D3B112FE862A3E5B58F98EBAC87C59BF8A?api-version=2023-02-01-preview",
+        "mise-correlation-id": "d9f8769c-7ad6-45f5-a342-f104c0d9dfeb",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "172935273d3fd1582814a18775464078",
+        "x-ms-correlation-request-id": "dca9c4f3-75ae-4809-9a4a-0ae181f326f7",
+        "x-ms-providerhub-traffic": "True",
+        "x-ms-ratelimit-remaining-subscription-deletes": "14999",
+        "x-ms-request-id": "e2907b27-d6a4-4786-aadc-2fb2633924db",
+        "x-ms-routing-request-id": "JIOINDIAWEST:20230622T092105Z:dca9c4f3-75ae-4809-9a4a-0ae181f326f7"
+      },
+      "ResponseBody": "null"
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/providers/Microsoft.ManagedNetworkFabric/locations/EASTUS/operationStatuses/a6ea3391-31dc-4297-935d-feeb7a698eac*8B4C110148E6FBC1F7C2F0CE8CF287D3B112FE862A3E5B58F98EBAC87C59BF8A?api-version=2023-02-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-6404f560a9299d1ed4d5925cdfd0dc76-133bf243c5a51d6c-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.6.0 (.NET 7.0.7; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "59d731e569f1c158d1ab90b74e36e534",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 202,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "619",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 22 Jun 2023 09:21:05 GMT",
+        "ETag": "\u0022450499a7-0000-0100-0000-649412810000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "59d731e569f1c158d1ab90b74e36e534",
+        "x-ms-correlation-request-id": "75cb8ca4-8465-4ba1-ab3e-2c897b6f3813",
+        "x-ms-ratelimit-remaining-subscription-reads": "11993",
+        "x-ms-request-id": "3e34d268-386b-40db-ad84-4637d5a9808c",
+        "x-ms-routing-request-id": "JIOINDIAWEST:20230622T092105Z:75cb8ca4-8465-4ba1-ab3e-2c897b6f3813"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/providers/Microsoft.ManagedNetworkFabric/locations/EASTUS/operationStatuses/a6ea3391-31dc-4297-935d-feeb7a698eac*8B4C110148E6FBC1F7C2F0CE8CF287D3B112FE862A3E5B58F98EBAC87C59BF8A",
+        "name": "a6ea3391-31dc-4297-935d-feeb7a698eac*8B4C110148E6FBC1F7C2F0CE8CF287D3B112FE862A3E5B58F98EBAC87C59BF8A",
+        "resourceId": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/l3IsolationDomains/nfa-tool-ts-sdk-l3domain062223",
+        "status": "Deleting",
+        "startTime": "2023-06-22T09:21:05.4062975Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/providers/Microsoft.ManagedNetworkFabric/locations/EASTUS/operationStatuses/a6ea3391-31dc-4297-935d-feeb7a698eac*8B4C110148E6FBC1F7C2F0CE8CF287D3B112FE862A3E5B58F98EBAC87C59BF8A?api-version=2023-02-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-6404f560a9299d1ed4d5925cdfd0dc76-680192ac92c4cf1c-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.6.0 (.NET 7.0.7; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "ff15816859efaede3b7d00e70186eec2",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "679",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 22 Jun 2023 09:21:06 GMT",
+        "ETag": "\u00224504a0a7-0000-0100-0000-649412820000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "ff15816859efaede3b7d00e70186eec2",
+        "x-ms-correlation-request-id": "7a1cffdd-17f7-465f-8b41-a97c9c449ae1",
+        "x-ms-ratelimit-remaining-subscription-reads": "11992",
+        "x-ms-request-id": "bfb1ff48-2b12-4278-9d93-54e73462a502",
+        "x-ms-routing-request-id": "JIOINDIAWEST:20230622T092107Z:7a1cffdd-17f7-465f-8b41-a97c9c449ae1"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/providers/Microsoft.ManagedNetworkFabric/locations/EASTUS/operationStatuses/a6ea3391-31dc-4297-935d-feeb7a698eac*8B4C110148E6FBC1F7C2F0CE8CF287D3B112FE862A3E5B58F98EBAC87C59BF8A",
+        "name": "a6ea3391-31dc-4297-935d-feeb7a698eac*8B4C110148E6FBC1F7C2F0CE8CF287D3B112FE862A3E5B58F98EBAC87C59BF8A",
+        "resourceId": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/l3IsolationDomains/nfa-tool-ts-sdk-l3domain062223",
+        "status": "Succeeded",
+        "startTime": "2023-06-22T09:21:05.4062975Z",
+        "endTime": "2023-06-22T09:21:06.2131049Z",
+        "properties": null
+      }
+    }
+  ],
+  "Variables": {
+    "L3_Isolation_Domain_Name": "nfa-tool-ts-sdk-l3domain062223",
+    "RandomSeed": "1142079992",
+    "RESOURCE_GROUP_NAME": "nfa-tool-ts-clisdktest-nfrg060523",
+    "RESOURCE_MANAGER_URL": null,
+    "SUBSCRIPTION_ID": "61065ccc-9543-4b91-b2d1-0ce42a914507",
+    "Valid_Network_Fabric_Id": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/networkFabrics/nfa-tool-ts-nf060523"
+  }
+}
