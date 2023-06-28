@@ -211,5 +211,53 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics
 
         [Event(26, Message = "Successfully transmitted a blob from storage.", Level = EventLevel.Informational)]
         public void TransmitFromStorageSuccess() => WriteEvent(26);
+
+        [Event(27, Message = "HttpPipelineBuilder is built with AAD Credentials. TokenCredential: {0} Scope: {1}", Level = EventLevel.Informational)]
+        public void SetAADCredentialsToPipeline(string credentialTypeName, string scope) => WriteEvent(27, credentialTypeName, scope);
+
+        [Event(28, Message = "Storage initialized. Data for Instrumentation Key '{0}' will be stored at: {1}", Level = EventLevel.Informational)]
+        public void InitializedPersistentStorage(string instrumentationKey, string storageDirectory) => WriteEvent(28, instrumentationKey, storageDirectory);
+
+        [NonEvent]
+        public void FailedToInitializePersistentStorage(Exception ex)
+        {
+            if (IsEnabled(EventLevel.Error))
+            {
+                FailedToInitializePersistentStorage(ex.FlattenException().ToInvariantString());
+            }
+        }
+
+        [Event(29, Message = "Failed to initialize PersistentStorage due to an exception: {0}", Level = EventLevel.Error)]
+        public void FailedToInitializePersistentStorage(string exceptionMessage) => WriteEvent(29, exceptionMessage);
+
+        [Event(30, Message = "Statsbeat was disabled via environment variable.", Level = EventLevel.Informational)]
+        public void StatsbeatDisabled() => WriteEvent(30);
+
+        [NonEvent]
+        public void ErrorInitializingStatsbeat(string instrumentationKey, Exception ex)
+        {
+            if (IsEnabled(EventLevel.Error))
+            {
+                ErrorInitializingStatsbeat(instrumentationKey, ex.FlattenException().ToInvariantString());
+            }
+        }
+
+        [Event(31, Message = "Failed to initialize Statsbeat due to an exception. Instrumentation Key: {0}. {1}", Level = EventLevel.Error)]
+        public void ErrorInitializingStatsbeat(string instrumentationKey, string exceptionMessage) => WriteEvent(31, instrumentationKey, exceptionMessage);
+
+        [Event(32, Message = "Successfully transmitted a batch of telemetry Items. Instrumentation Key: {0}", Level = EventLevel.Verbose)]
+        public void TransmissionSuccess(string instrumentationKey) => WriteEvent(32, instrumentationKey);
+
+        [NonEvent]
+        public void TransmitterFailed(string instrumentationKey, Exception ex)
+        {
+            if (IsEnabled(EventLevel.Error))
+            {
+                TransmitterFailed(instrumentationKey, ex.FlattenException().ToInvariantString());
+            }
+        }
+
+        [Event(33, Message = "Transmitter failed due to an exception. Instrumentation Key: {0}. {1}", Level = EventLevel.Error)]
+        public void TransmitterFailed(string instrumentationKey, string exceptionMessage) => WriteEvent(33, instrumentationKey, exceptionMessage);
     }
 }
