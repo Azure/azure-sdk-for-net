@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 #region Snippet:SearchImportNamespace
+using Azure.Core;
 using Azure.Core.GeoJson;
 using Azure.Maps.Search;
 using Azure.Maps.Search.Models;
@@ -34,6 +35,15 @@ namespace Azure.Maps.Search.Tests
             DefaultAzureCredential credential = new DefaultAzureCredential();
             string clientId = "<My Map Account Client Id>";
             MapsSearchClient client = new MapsSearchClient(credential, clientId);
+            #endregion
+        }
+
+        public void SearchClientViaSas()
+        {
+            #region Snippet:InstantiateSearchClientViaSas
+            // Create a SearchClient that will authenticate through SAS token
+            AzureSasCredential sasCredential = new AzureSasCredential("<SAS Token>");
+            MapsSearchClient client = new MapsSearchClient(sasCredential);
             #endregion
         }
 

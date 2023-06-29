@@ -54,6 +54,18 @@ string clientId = "<My Map Account Client Id>";
 MapsSearchClient client = new MapsSearchClient(credential, clientId);
 ```
 
+#### Shared Access Signature (SAS) Authentication
+
+Shared access signature (SAS) tokens are authentication tokens created using the JSON Web token (JWT) format and are cryptographically signed to prove authentication for an application to the Azure Maps REST API.
+
+To use SAS token authentication, get a SAS token via [List Sas](https://learn.microsoft.com/rest/api/maps-management/accounts/list-sas?tabs=HTTP) API and assign it in `MapsSearchClient`:
+
+```C# Snippet:InstantiateSearchClientViaSas
+// Create a SearchClient that will authenticate through SAS token
+AzureSasCredential sasCredential = new AzureSasCredential("<SAS Token>");
+MapsSearchClient client = new MapsSearchClient(sasCredential);
+```
+
 ## Key concepts
 
 `MapsSearchClient` is designed to:

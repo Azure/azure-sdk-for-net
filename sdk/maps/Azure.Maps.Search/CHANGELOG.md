@@ -4,6 +4,8 @@
 
 ### Features Added
 
+- Support SAS authentication
+
 ### Breaking Changes
 
 ### Bugs Fixed
