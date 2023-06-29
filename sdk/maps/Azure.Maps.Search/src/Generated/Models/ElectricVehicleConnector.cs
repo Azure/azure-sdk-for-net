@@ -36,7 +36,7 @@ namespace Azure.Maps.Search
 
         /// <summary>
         /// These are the standard household connectors for a certain region. They are all AC single phase and the standard Voltage and standard Amperage.
-        /// 
+        ///
         /// See also: [Plug &amp; socket types - World Standards](https://www.worldstandards.eu/electricity/plugs-and-sockets)
         /// </summary>
         public static ElectricVehicleConnector StandardHouseholdCountrySpecific { get; } = new ElectricVehicleConnector(StandardHouseholdCountrySpecificValue);

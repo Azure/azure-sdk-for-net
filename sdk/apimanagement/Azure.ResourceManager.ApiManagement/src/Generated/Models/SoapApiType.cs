@@ -11,10 +11,10 @@ using System.ComponentModel;
 namespace Azure.ResourceManager.ApiManagement.Models
 {
     /// <summary>
-    /// Type of API to create. 
-    ///  * `http` creates a REST API 
-    ///  * `soap` creates a SOAP pass-through API  
-    ///  * `websocket` creates websocket API 
+    /// Type of API to create.
+    ///  * `http` creates a REST API
+    ///  * `soap` creates a SOAP pass-through API
+    ///  * `websocket` creates websocket API
     ///  * `graphql` creates GraphQL API.
     /// </summary>
     public readonly partial struct SoapApiType : IEquatable<SoapApiType>

@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <summary> Azure Monitor Metrics destination. </summary>
         internal DestinationsSpecAzureMonitorMetrics AzureMonitorMetrics { get; set; }
         /// <summary>
-        /// A friendly name for the destination. 
+        /// A friendly name for the destination.
         /// This name should be unique across all destinations (regardless of type) within the data collection rule.
         /// </summary>
         public string AzureMonitorMetricsName

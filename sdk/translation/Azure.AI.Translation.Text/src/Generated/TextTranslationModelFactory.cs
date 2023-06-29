@@ -169,13 +169,13 @@ namespace Azure.AI.Translation.Text
         /// <summary> Initializes a new instance of TranslatedTextItem. </summary>
         /// <param name="detectedLanguage"> The detectedLanguage property is only present in the result object when language auto-detection is requested. </param>
         /// <param name="translations">
-        /// An array of translation results. The size of the array matches the number of target 
+        /// An array of translation results. The size of the array matches the number of target
         /// languages specified through the to query parameter.
         /// </param>
         /// <param name="sourceText">
-        /// Input text in the default script of the source language. sourceText property is present only when 
-        /// the input is expressed in a script that's not the usual script for the language. For example, 
-        /// if the input were Arabic written in Latin script, then sourceText.text would be the same Arabic text 
+        /// Input text in the default script of the source language. sourceText property is present only when
+        /// the input is expressed in a script that's not the usual script for the language. For example,
+        /// if the input were Arabic written in Latin script, then sourceText.text would be the same Arabic text
         /// converted into Arab script.
         /// </param>
         /// <returns> A new <see cref="Text.TranslatedTextItem"/> instance for mocking. </returns>
@@ -237,11 +237,11 @@ namespace Azure.AI.Translation.Text
 
         /// <summary> Initializes a new instance of TranslatedTextAlignment. </summary>
         /// <param name="proj">
-        /// Maps input text to translated text. The alignment information is only provided when the request 
-        /// parameter includeAlignment is true. Alignment is returned as a string value of the following 
-        /// format: [[SourceTextStartIndex]:[SourceTextEndIndex]–[TgtTextStartIndex]:[TgtTextEndIndex]]. 
-        /// The colon separates start and end index, the dash separates the languages, and space separates the words. 
-        /// One word may align with zero, one, or multiple words in the other language, and the aligned words may 
+        /// Maps input text to translated text. The alignment information is only provided when the request
+        /// parameter includeAlignment is true. Alignment is returned as a string value of the following
+        /// format: [[SourceTextStartIndex]:[SourceTextEndIndex]–[TgtTextStartIndex]:[TgtTextEndIndex]].
+        /// The colon separates start and end index, the dash separates the languages, and space separates the words.
+        /// One word may align with zero, one, or multiple words in the other language, and the aligned words may
         /// be non-contiguous. When no alignment information is available, the alignment element will be empty.
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="proj"/> is null. </exception>
@@ -258,11 +258,11 @@ namespace Azure.AI.Translation.Text
 
         /// <summary> Initializes a new instance of SentenceLength. </summary>
         /// <param name="srcSentLen">
-        /// An integer array representing the lengths of the sentences in the input text. 
+        /// An integer array representing the lengths of the sentences in the input text.
         /// The length of the array is the number of sentences, and the values are the length of each sentence.
         /// </param>
         /// <param name="transSentLen">
-        /// An integer array representing the lengths of the sentences in the translated text. 
+        /// An integer array representing the lengths of the sentences in the translated text.
         /// The length of the array is the number of sentences, and the values are the length of each sentence.
         /// </param>
         /// <returns> A new <see cref="Text.SentenceLength"/> instance for mocking. </returns>
@@ -335,15 +335,15 @@ namespace Azure.AI.Translation.Text
         /// </param>
         /// <param name="posTag"> A string associating this term with a part-of-speech tag. </param>
         /// <param name="confidence">
-        /// A value between 0.0 and 1.0 which represents the "confidence" 
-        /// (or perhaps more accurately, "probability in the training data") of that translation pair. 
+        /// A value between 0.0 and 1.0 which represents the "confidence"
+        /// (or perhaps more accurately, "probability in the training data") of that translation pair.
         /// The sum of confidence scores for one source word may or may not sum to 1.0.
         /// </param>
         /// <param name="prefixWord">
         /// A string giving the word to display as a prefix of the translation. Currently,
         /// this is the gendered determiner of nouns, in languages that have gendered determiners.
-        /// For example, the prefix of the Spanish word "mosca" is "la", since "mosca" is a feminine noun in Spanish. 
-        /// This is only dependent on the translation, and not on the source. 
+        /// For example, the prefix of the Spanish word "mosca" is "la", since "mosca" is a feminine noun in Spanish.
+        /// This is only dependent on the translation, and not on the source.
         /// If there is no prefix, it will be the empty string.
         /// </param>
         /// <param name="backTranslations">

@@ -5,9 +5,10 @@
 
 #nullable disable
 
-using System;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -19,20 +20,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(InterimSchemaName))
             {
                 writer.WritePropertyName("interimSchemaName"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(InterimSchemaName);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(InterimSchemaName.ToString()).RootElement);
-#endif
+                JsonSerializer.Serialize(writer, InterimSchemaName);
             }
             if (Optional.IsDefined(Keys))
             {
                 writer.WritePropertyName("keys"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(Keys);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(Keys.ToString()).RootElement);
-#endif
+                JsonSerializer.Serialize(writer, Keys);
             }
             writer.WriteEndObject();
         }
@@ -43,8 +36,8 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            Optional<BinaryData> interimSchemaName = default;
-            Optional<BinaryData> keys = default;
+            Optional<DataFactoryElement<string>> interimSchemaName = default;
+            Optional<DataFactoryElement<IList<string>>> keys = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("interimSchemaName"u8))
@@ -53,7 +46,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    interimSchemaName = BinaryData.FromString(property.Value.GetRawText());
+                    interimSchemaName = JsonSerializer.Deserialize<DataFactoryElement<string>>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("keys"u8))
@@ -62,7 +55,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    keys = BinaryData.FromString(property.Value.GetRawText());
+                    keys = JsonSerializer.Deserialize<DataFactoryElement<IList<string>>>(property.Value.GetRawText());
                     continue;
                 }
             }

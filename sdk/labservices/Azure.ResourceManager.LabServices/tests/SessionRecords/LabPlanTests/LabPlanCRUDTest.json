@@ -1,0 +1,1012 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c?api-version=2021-01-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-fcef206c2077c2bca0b0e676f70b1c64-2307dffdbbf1305d-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET 7.0.2; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "55e05bc18168c9d190fa004200194b71",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "748",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 17 Feb 2023 09:08:17 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "35f5ec47-e924-4d59-9cf8-911d67506465",
+        "x-ms-ratelimit-remaining-subscription-reads": "11999",
+        "x-ms-request-id": "35f5ec47-e924-4d59-9cf8-911d67506465",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20230217T090817Z:35f5ec47-e924-4d59-9cf8-911d67506465"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c",
+        "authorizationSource": "RoleBased",
+        "managedByTenants": [],
+        "tags": {
+          "TagKey-9823": "TagValue-1254",
+          "TagKey-3481": "TagValue-320",
+          "TagKey-4926": "TagValue-1187",
+          "TagKey-751": "TagValue-3921",
+          "TagKey-1866": "TagValue-8559",
+          "TagKey-3094": "TagValue-9190",
+          "TagKey-2449": "TagValue-9",
+          "TagKey-8379": "TagValue-164",
+          "TagKey-7470": "TagValue-2205",
+          "TagKey-4236": "TagValue-3698",
+          "TagKey-5316": "TagValue-2725"
+        },
+        "subscriptionId": "db1ab6f0-4769-4b27-930e-01e2ef9c123c",
+        "tenantId": "72f988bf-86f1-41af-91ab-2d7cd011db47",
+        "displayName": ".NET Mgmt SDK Test with TTL = 1 Day",
+        "state": "Enabled",
+        "subscriptionPolicies": {
+          "locationPlacementId": "Internal_2014-09-01",
+          "quotaId": "Internal_2014-09-01",
+          "spendingLimit": "Off"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/testRG-7644?api-version=**",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "43",
+        "Content-Type": "application/json",
+        "traceparent": "00-caa38dbc54f6af06233cf846f6ebc3f5-7ee6c22d8c409ccc-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET 7.0.2; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "eb589d0951c3e22dbd2fdd549fb69b58",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "tags": {
+          "test": "env"
+        },
+        "location": "eastus"
+      },
+      "StatusCode": 201,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "241",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 17 Feb 2023 09:08:22 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "b128d5f9-e3ef-4f73-9923-41970f6b7d65",
+        "x-ms-ratelimit-remaining-subscription-writes": "1199",
+        "x-ms-request-id": "b128d5f9-e3ef-4f73-9923-41970f6b7d65",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20230217T090822Z:b128d5f9-e3ef-4f73-9923-41970f6b7d65"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-7644",
+        "name": "testRG-7644",
+        "type": "Microsoft.Resources/resourceGroups",
+        "location": "eastus",
+        "tags": {
+          "test": "env"
+        },
+        "properties": {
+          "provisioningState": "Succeeded"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-7644/providers/Microsoft.LabServices/labPlans/sdklabplan-2624?api-version=2022-08-01",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "564",
+        "Content-Type": "application/json",
+        "traceparent": "00-ed3ef8067ec7199c814ee3bdce2fce09-b77cb8d482f32f6e-00",
+        "User-Agent": "azsdk-net-ResourceManager.LabServices/1.1.0-alpha.20230217.1 (.NET 7.0.2; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "0a1b8532827c6086b6ea3f71b145f1d4",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "tags": {},
+        "location": "eastus",
+        "properties": {
+          "defaultConnectionProfile": {
+            "webSshAccess": "None",
+            "webRdpAccess": "None",
+            "clientSshAccess": "Public",
+            "clientRdpAccess": "Public"
+          },
+          "defaultAutoShutdownProfile": {
+            "shutdownOnDisconnect": "Enabled",
+            "shutdownWhenNotConnected": "Enabled",
+            "shutdownOnIdle": "UserAbsence",
+            "disconnectDelay": "PT15M",
+            "noConnectDelay": "PT15M",
+            "idleDelay": "PT15M"
+          },
+          "allowedRegions": [
+            "eastus",
+            "eastus2"
+          ],
+          "supportInfo": {
+            "url": "http://help.contoso.com/",
+            "email": "help@contoso.com",
+            "phone": "\u002B1-202-555-0123",
+            "instructions": "Contact support for help."
+          }
+        }
+      },
+      "StatusCode": 201,
+      "ResponseHeaders": {
+        "api-supported-versions": "2020-05-01-preview, 2021-10-01-preview, 2021-11-15-preview, 2022-05-01-preview, 2022-08-01",
+        "Azure-AsyncOperation": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.LabServices/locations/eastus/operationResults/e40b596c-b453-4587-aaaa-1e55a21d9768?api-version=2022-08-01",
+        "Cache-Control": "no-cache",
+        "Content-Length": "1076",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 17 Feb 2023 09:08:28 GMT",
+        "Expires": "-1",
+        "Location": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-7644/providers/Microsoft.LabServices/labPlans/sdklabplan-2624?api-version=2022-08-01",
+        "Operation-Location": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.LabServices/locations/eastus/operationResults/e40b596c-b453-4587-aaaa-1e55a21d9768?api-version=2022-08-01",
+        "Pragma": "no-cache",
+        "Request-Context": "appId=cid-v1:7a6e27f5-4c72-4f69-b2c3-dcc03e975107",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "traceparent": "00-ed3ef8067ec7199c814ee3bdce2fce09-1b569637fa9d1399-01",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "0a1b8532827c6086b6ea3f71b145f1d4",
+        "x-ms-correlation-request-id": "c6f2edd2-17ef-4294-ac24-e09623289920",
+        "x-ms-ratelimit-remaining-subscription-writes": "1198",
+        "x-ms-request-id": "0HMOG7C9OHKCS:00000006",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20230217T090828Z:c6f2edd2-17ef-4294-ac24-e09623289920"
+      },
+      "ResponseBody": {
+        "systemData": {
+          "createdBy": "8e6d47e0-7969-4fde-a62c-4fea4f165e98",
+          "createdByType": "Application",
+          "createdAt": "2023-02-17T09:08:26.3711855Z",
+          "lastModifiedBy": "8e6d47e0-7969-4fde-a62c-4fea4f165e98",
+          "lastModifiedByType": "Application",
+          "lastModifiedAt": "2023-02-17T09:08:26.3711855Z"
+        },
+        "properties": {
+          "provisioningState": "Creating",
+          "defaultConnectionProfile": {
+            "webSshAccess": "None",
+            "webRdpAccess": "None",
+            "clientSshAccess": "Public",
+            "clientRdpAccess": "Public"
+          },
+          "defaultAutoShutdownProfile": {
+            "shutdownOnDisconnect": "Enabled",
+            "shutdownWhenNotConnected": "Enabled",
+            "shutdownOnIdle": "UserAbsence",
+            "disconnectDelay": "PT15M",
+            "noConnectDelay": "PT15M",
+            "idleDelay": "PT15M"
+          },
+          "allowedRegions": [
+            "eastus",
+            "eastus2"
+          ],
+          "supportInfo": {
+            "url": "http://help.contoso.com/",
+            "email": "help@contoso.com",
+            "phone": "\u002B1-202-555-0123",
+            "instructions": "Contact support for help."
+          }
+        },
+        "tags": {},
+        "location": "eastus",
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-7644/providers/Microsoft.LabServices/labPlans/sdklabplan-2624",
+        "name": "sdklabplan-2624",
+        "type": "Microsoft.LabServices/labPlans"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.LabServices/locations/eastus/operationResults/e40b596c-b453-4587-aaaa-1e55a21d9768?api-version=2022-08-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-ed3ef8067ec7199c814ee3bdce2fce09-45f54105e2f7fa34-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET 7.0.2; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "c5e6a9ea37551a8dd28a0d67ee710cea",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "api-supported-versions": "2020-05-01-preview, 2021-10-01-preview, 2021-11-15-preview, 2022-05-01-preview, 2022-08-01",
+        "Cache-Control": "no-cache",
+        "Content-Length": "274",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 17 Feb 2023 09:08:29 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Request-Context": "appId=cid-v1:7a6e27f5-4c72-4f69-b2c3-dcc03e975107",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "traceparent": "00-ed3ef8067ec7199c814ee3bdce2fce09-80835c55addf8046-01",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "c5e6a9ea37551a8dd28a0d67ee710cea",
+        "x-ms-correlation-request-id": "5c5c740b-5dc9-4e35-a185-46c9828ca32e",
+        "x-ms-ratelimit-remaining-subscription-reads": "11998",
+        "x-ms-request-id": "0HMOG7CRMF7GM:00000005",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20230217T090829Z:5c5c740b-5dc9-4e35-a185-46c9828ca32e"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.LabServices/locations/eastus/operationResults/e40b596c-b453-4587-aaaa-1e55a21d9768",
+        "name": "e40b596c-b453-4587-aaaa-1e55a21d9768",
+        "status": "InProgress",
+        "startTime": "2023-02-17T09:08:27.2738443Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.LabServices/locations/eastus/operationResults/e40b596c-b453-4587-aaaa-1e55a21d9768?api-version=2022-08-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-ed3ef8067ec7199c814ee3bdce2fce09-4544ae1b824126fc-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET 7.0.2; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "bead80eb890735587a6897d13191ecc6",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "api-supported-versions": "2020-05-01-preview, 2021-10-01-preview, 2021-11-15-preview, 2022-05-01-preview, 2022-08-01",
+        "Cache-Control": "no-cache",
+        "Content-Length": "314",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 17 Feb 2023 09:08:30 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Request-Context": "appId=cid-v1:7a6e27f5-4c72-4f69-b2c3-dcc03e975107",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "traceparent": "00-ed3ef8067ec7199c814ee3bdce2fce09-88b50c4e13fd22af-01",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "bead80eb890735587a6897d13191ecc6",
+        "x-ms-correlation-request-id": "228e7f5d-752b-44e6-a4d1-6a7ff6fd7fc1",
+        "x-ms-ratelimit-remaining-subscription-reads": "11997",
+        "x-ms-request-id": "0HMOG7C9OHKD7:00000005",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20230217T090831Z:228e7f5d-752b-44e6-a4d1-6a7ff6fd7fc1"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.LabServices/locations/eastus/operationResults/e40b596c-b453-4587-aaaa-1e55a21d9768",
+        "name": "e40b596c-b453-4587-aaaa-1e55a21d9768",
+        "status": "Succeeded",
+        "startTime": "2023-02-17T09:08:27.2738443Z",
+        "endTime": "2023-02-17T09:08:29.8763414Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-7644/providers/Microsoft.LabServices/labPlans/sdklabplan-2624?api-version=2022-08-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-ed3ef8067ec7199c814ee3bdce2fce09-bbd53b55246a4e32-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET 7.0.2; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "0886d9a52c5eba7f6979fc74f0a3c401",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "api-supported-versions": "2020-05-01-preview, 2021-10-01-preview, 2021-11-15-preview, 2022-05-01-preview, 2022-08-01",
+        "Cache-Control": "no-cache",
+        "Content-Length": "1077",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 17 Feb 2023 09:08:31 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Request-Context": "appId=cid-v1:7a6e27f5-4c72-4f69-b2c3-dcc03e975107",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "traceparent": "00-ed3ef8067ec7199c814ee3bdce2fce09-f8468502dc1389b3-01",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "0886d9a52c5eba7f6979fc74f0a3c401",
+        "x-ms-correlation-request-id": "07f01082-a147-42cb-9ea4-1ecf5e8f7ad7",
+        "x-ms-ratelimit-remaining-subscription-reads": "11996",
+        "x-ms-request-id": "0HMOG7CRMF7GB:00000007",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20230217T090831Z:07f01082-a147-42cb-9ea4-1ecf5e8f7ad7"
+      },
+      "ResponseBody": {
+        "systemData": {
+          "createdBy": "8e6d47e0-7969-4fde-a62c-4fea4f165e98",
+          "createdByType": "Application",
+          "createdAt": "2023-02-17T09:08:26.3711855Z",
+          "lastModifiedBy": "8e6d47e0-7969-4fde-a62c-4fea4f165e98",
+          "lastModifiedByType": "Application",
+          "lastModifiedAt": "2023-02-17T09:08:26.3711855Z"
+        },
+        "properties": {
+          "provisioningState": "Succeeded",
+          "defaultConnectionProfile": {
+            "webSshAccess": "None",
+            "webRdpAccess": "None",
+            "clientSshAccess": "Public",
+            "clientRdpAccess": "Public"
+          },
+          "defaultAutoShutdownProfile": {
+            "shutdownOnDisconnect": "Enabled",
+            "shutdownWhenNotConnected": "Enabled",
+            "shutdownOnIdle": "UserAbsence",
+            "disconnectDelay": "PT15M",
+            "noConnectDelay": "PT15M",
+            "idleDelay": "PT15M"
+          },
+          "allowedRegions": [
+            "eastus",
+            "eastus2"
+          ],
+          "supportInfo": {
+            "url": "http://help.contoso.com/",
+            "email": "help@contoso.com",
+            "phone": "\u002B1-202-555-0123",
+            "instructions": "Contact support for help."
+          }
+        },
+        "tags": {},
+        "location": "eastus",
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-7644/providers/Microsoft.LabServices/labPlans/sdklabplan-2624",
+        "name": "sdklabplan-2624",
+        "type": "Microsoft.LabServices/labPlans"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-7644/providers/Microsoft.LabServices/labPlans/sdklabplan-2624?api-version=2022-08-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-fbb49c041ca0591596aea381097c6e85-00878c45006eda2e-00",
+        "User-Agent": "azsdk-net-ResourceManager.LabServices/1.1.0-alpha.20230217.1 (.NET 7.0.2; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "f408669e8543615d51b14beda0bbe941",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "api-supported-versions": "2020-05-01-preview, 2021-10-01-preview, 2021-11-15-preview, 2022-05-01-preview, 2022-08-01",
+        "Cache-Control": "no-cache",
+        "Content-Length": "1077",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 17 Feb 2023 09:08:32 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Request-Context": "appId=cid-v1:7a6e27f5-4c72-4f69-b2c3-dcc03e975107",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "traceparent": "00-fbb49c041ca0591596aea381097c6e85-730ddbf5e185b6cb-01",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "f408669e8543615d51b14beda0bbe941",
+        "x-ms-correlation-request-id": "b94c665d-c656-4e2e-a3c2-c71b23c81a84",
+        "x-ms-ratelimit-remaining-subscription-reads": "11995",
+        "x-ms-request-id": "0HMOG7C9OHKCS:00000007",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20230217T090832Z:b94c665d-c656-4e2e-a3c2-c71b23c81a84"
+      },
+      "ResponseBody": {
+        "systemData": {
+          "createdBy": "8e6d47e0-7969-4fde-a62c-4fea4f165e98",
+          "createdByType": "Application",
+          "createdAt": "2023-02-17T09:08:26.3711855Z",
+          "lastModifiedBy": "8e6d47e0-7969-4fde-a62c-4fea4f165e98",
+          "lastModifiedByType": "Application",
+          "lastModifiedAt": "2023-02-17T09:08:26.3711855Z"
+        },
+        "properties": {
+          "provisioningState": "Succeeded",
+          "defaultConnectionProfile": {
+            "webSshAccess": "None",
+            "webRdpAccess": "None",
+            "clientSshAccess": "Public",
+            "clientRdpAccess": "Public"
+          },
+          "defaultAutoShutdownProfile": {
+            "shutdownOnDisconnect": "Enabled",
+            "shutdownWhenNotConnected": "Enabled",
+            "shutdownOnIdle": "UserAbsence",
+            "disconnectDelay": "PT15M",
+            "noConnectDelay": "PT15M",
+            "idleDelay": "PT15M"
+          },
+          "allowedRegions": [
+            "eastus",
+            "eastus2"
+          ],
+          "supportInfo": {
+            "url": "http://help.contoso.com/",
+            "email": "help@contoso.com",
+            "phone": "\u002B1-202-555-0123",
+            "instructions": "Contact support for help."
+          }
+        },
+        "tags": {},
+        "location": "eastus",
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-7644/providers/Microsoft.LabServices/labPlans/sdklabplan-2624",
+        "name": "sdklabplan-2624",
+        "type": "Microsoft.LabServices/labPlans"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-7644/providers/Microsoft.LabServices/labPlans/sdklabplan-2624?api-version=2022-08-01",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "567",
+        "Content-Type": "application/json",
+        "traceparent": "00-cddb65fa19fd74da5fb6f7e3499779b6-a216be8c7323ade4-00",
+        "User-Agent": "azsdk-net-ResourceManager.LabServices/1.1.0-alpha.20230217.1 (.NET 7.0.2; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "14c1469e03eabf8b00f2558e8de444d7",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "tags": {},
+        "location": "eastus",
+        "properties": {
+          "defaultConnectionProfile": {
+            "webSshAccess": "Private",
+            "webRdpAccess": "None",
+            "clientSshAccess": "Public",
+            "clientRdpAccess": "Public"
+          },
+          "defaultAutoShutdownProfile": {
+            "shutdownOnDisconnect": "Enabled",
+            "shutdownWhenNotConnected": "Enabled",
+            "shutdownOnIdle": "UserAbsence",
+            "disconnectDelay": "PT15M",
+            "noConnectDelay": "PT15M",
+            "idleDelay": "PT15M"
+          },
+          "allowedRegions": [
+            "eastus",
+            "eastus2"
+          ],
+          "supportInfo": {
+            "url": "http://help.contoso.com/",
+            "email": "help@contoso.com",
+            "phone": "\u002B1-202-555-0123",
+            "instructions": "Contact support for help."
+          }
+        }
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "api-supported-versions": "2020-05-01-preview, 2021-10-01-preview, 2021-11-15-preview, 2022-05-01-preview, 2022-08-01",
+        "Cache-Control": "no-cache",
+        "Content-Length": "1080",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 17 Feb 2023 09:08:33 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Request-Context": "appId=cid-v1:7a6e27f5-4c72-4f69-b2c3-dcc03e975107",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "traceparent": "00-cddb65fa19fd74da5fb6f7e3499779b6-b298ccdbba1dd05b-01",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "14c1469e03eabf8b00f2558e8de444d7",
+        "x-ms-correlation-request-id": "a7f101ff-00d9-4529-8bed-97a3bb9b88fc",
+        "x-ms-ratelimit-remaining-subscription-writes": "1197",
+        "x-ms-request-id": "0HMOG7DMLEUPJ:00000008",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20230217T090833Z:a7f101ff-00d9-4529-8bed-97a3bb9b88fc"
+      },
+      "ResponseBody": {
+        "systemData": {
+          "createdBy": "8e6d47e0-7969-4fde-a62c-4fea4f165e98",
+          "createdByType": "Application",
+          "createdAt": "2023-02-17T09:08:26.3711855Z",
+          "lastModifiedBy": "8e6d47e0-7969-4fde-a62c-4fea4f165e98",
+          "lastModifiedByType": "Application",
+          "lastModifiedAt": "2023-02-17T09:08:33.0679539Z"
+        },
+        "properties": {
+          "provisioningState": "Succeeded",
+          "defaultConnectionProfile": {
+            "webSshAccess": "Private",
+            "webRdpAccess": "None",
+            "clientSshAccess": "Public",
+            "clientRdpAccess": "Public"
+          },
+          "defaultAutoShutdownProfile": {
+            "shutdownOnDisconnect": "Enabled",
+            "shutdownWhenNotConnected": "Enabled",
+            "shutdownOnIdle": "UserAbsence",
+            "disconnectDelay": "PT15M",
+            "noConnectDelay": "PT15M",
+            "idleDelay": "PT15M"
+          },
+          "allowedRegions": [
+            "eastus",
+            "eastus2"
+          ],
+          "supportInfo": {
+            "url": "http://help.contoso.com/",
+            "email": "help@contoso.com",
+            "phone": "\u002B1-202-555-0123",
+            "instructions": "Contact support for help."
+          }
+        },
+        "tags": {},
+        "location": "eastus",
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-7644/providers/Microsoft.LabServices/labPlans/sdklabplan-2624",
+        "name": "sdklabplan-2624",
+        "type": "Microsoft.LabServices/labPlans"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-7644/providers/Microsoft.LabServices/labPlans/sdklabplan-2624?api-version=2022-08-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-1afac7f4eb8d417790a5fe49b22bb1c3-157276fd174c0ba8-00",
+        "User-Agent": "azsdk-net-ResourceManager.LabServices/1.1.0-alpha.20230217.1 (.NET 7.0.2; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "a9d5bb8fafe19a16da49f35030ced36c",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "api-supported-versions": "2020-05-01-preview, 2021-10-01-preview, 2021-11-15-preview, 2022-05-01-preview, 2022-08-01",
+        "Cache-Control": "no-cache",
+        "Content-Length": "1080",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 17 Feb 2023 09:08:33 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Request-Context": "appId=cid-v1:7a6e27f5-4c72-4f69-b2c3-dcc03e975107",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "traceparent": "00-1afac7f4eb8d417790a5fe49b22bb1c3-800456a478a6374b-01",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "a9d5bb8fafe19a16da49f35030ced36c",
+        "x-ms-correlation-request-id": "deb28ec2-ae48-4f47-899c-8ae9fa0e5409",
+        "x-ms-ratelimit-remaining-subscription-reads": "11994",
+        "x-ms-request-id": "0HMOG7CRMF7GB:00000008",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20230217T090833Z:deb28ec2-ae48-4f47-899c-8ae9fa0e5409"
+      },
+      "ResponseBody": {
+        "systemData": {
+          "createdBy": "8e6d47e0-7969-4fde-a62c-4fea4f165e98",
+          "createdByType": "Application",
+          "createdAt": "2023-02-17T09:08:26.3711855Z",
+          "lastModifiedBy": "8e6d47e0-7969-4fde-a62c-4fea4f165e98",
+          "lastModifiedByType": "Application",
+          "lastModifiedAt": "2023-02-17T09:08:33.0679539Z"
+        },
+        "properties": {
+          "provisioningState": "Succeeded",
+          "defaultConnectionProfile": {
+            "webSshAccess": "Private",
+            "webRdpAccess": "None",
+            "clientSshAccess": "Public",
+            "clientRdpAccess": "Public"
+          },
+          "defaultAutoShutdownProfile": {
+            "shutdownOnDisconnect": "Enabled",
+            "shutdownWhenNotConnected": "Enabled",
+            "shutdownOnIdle": "UserAbsence",
+            "disconnectDelay": "PT15M",
+            "noConnectDelay": "PT15M",
+            "idleDelay": "PT15M"
+          },
+          "allowedRegions": [
+            "eastus",
+            "eastus2"
+          ],
+          "supportInfo": {
+            "url": "http://help.contoso.com/",
+            "email": "help@contoso.com",
+            "phone": "\u002B1-202-555-0123",
+            "instructions": "Contact support for help."
+          }
+        },
+        "tags": {},
+        "location": "eastus",
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-7644/providers/Microsoft.LabServices/labPlans/sdklabplan-2624",
+        "name": "sdklabplan-2624",
+        "type": "Microsoft.LabServices/labPlans"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-7644/providers/Microsoft.LabServices/labPlans/sdklabplan-2624?api-version=2022-08-01",
+      "RequestMethod": "PATCH",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "145",
+        "Content-Type": "application/json",
+        "traceparent": "00-944ab5d882df9a6288afde2eca540451-3eb7c3466d97c514-00",
+        "User-Agent": "azsdk-net-ResourceManager.LabServices/1.1.0-alpha.20230217.1 (.NET 7.0.2; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "0b48736c1e88a7b8c3a198c54cdede6e",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "properties": {
+          "defaultConnectionProfile": {
+            "webSshAccess": "Public",
+            "webRdpAccess": "None",
+            "clientSshAccess": "Public",
+            "clientRdpAccess": "Public"
+          }
+        }
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "api-supported-versions": "2020-05-01-preview, 2021-10-01-preview, 2021-11-15-preview, 2022-05-01-preview, 2022-08-01",
+        "Cache-Control": "no-cache",
+        "Content-Length": "1079",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 17 Feb 2023 09:08:34 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Request-Context": "appId=cid-v1:7a6e27f5-4c72-4f69-b2c3-dcc03e975107",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "traceparent": "00-944ab5d882df9a6288afde2eca540451-de7f8b204fc3dca0-01",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "0b48736c1e88a7b8c3a198c54cdede6e",
+        "x-ms-correlation-request-id": "a974f1e1-76ff-43a2-8b16-becd6345a3b8",
+        "x-ms-ratelimit-remaining-subscription-writes": "1196",
+        "x-ms-request-id": "0HMOG7C9OHKCS:00000008",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20230217T090834Z:a974f1e1-76ff-43a2-8b16-becd6345a3b8"
+      },
+      "ResponseBody": {
+        "systemData": {
+          "createdBy": "8e6d47e0-7969-4fde-a62c-4fea4f165e98",
+          "createdByType": "Application",
+          "createdAt": "2023-02-17T09:08:26.3711855Z",
+          "lastModifiedBy": "8e6d47e0-7969-4fde-a62c-4fea4f165e98",
+          "lastModifiedByType": "Application",
+          "lastModifiedAt": "2023-02-17T09:08:34.2874438Z"
+        },
+        "properties": {
+          "provisioningState": "Succeeded",
+          "defaultConnectionProfile": {
+            "webSshAccess": "Public",
+            "webRdpAccess": "None",
+            "clientSshAccess": "Public",
+            "clientRdpAccess": "Public"
+          },
+          "defaultAutoShutdownProfile": {
+            "shutdownOnDisconnect": "Enabled",
+            "shutdownWhenNotConnected": "Enabled",
+            "shutdownOnIdle": "UserAbsence",
+            "disconnectDelay": "PT15M",
+            "noConnectDelay": "PT15M",
+            "idleDelay": "PT15M"
+          },
+          "allowedRegions": [
+            "eastus",
+            "eastus2"
+          ],
+          "supportInfo": {
+            "url": "http://help.contoso.com/",
+            "email": "help@contoso.com",
+            "phone": "\u002B1-202-555-0123",
+            "instructions": "Contact support for help."
+          }
+        },
+        "tags": {},
+        "location": "eastus",
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-7644/providers/Microsoft.LabServices/labPlans/sdklabplan-2624",
+        "name": "sdklabplan-2624",
+        "type": "Microsoft.LabServices/labPlans"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-7644/providers/Microsoft.LabServices/labPlans/sdklabplan-2624?api-version=2022-08-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-56f7295a183fe1d01694ff4f47f0258b-eddafcc832a78618-00",
+        "User-Agent": "azsdk-net-ResourceManager.LabServices/1.1.0-alpha.20230217.1 (.NET 7.0.2; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "6d404a510e497125022ee64017514efc",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "api-supported-versions": "2020-05-01-preview, 2021-10-01-preview, 2021-11-15-preview, 2022-05-01-preview, 2022-08-01",
+        "Cache-Control": "no-cache",
+        "Content-Length": "1079",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 17 Feb 2023 09:08:34 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Request-Context": "appId=cid-v1:7a6e27f5-4c72-4f69-b2c3-dcc03e975107",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "traceparent": "00-56f7295a183fe1d01694ff4f47f0258b-9c4ab5fb29da662d-01",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "6d404a510e497125022ee64017514efc",
+        "x-ms-correlation-request-id": "14cfb9c0-0ce7-493a-91fa-a53aeec5f41e",
+        "x-ms-ratelimit-remaining-subscription-reads": "11993",
+        "x-ms-request-id": "0HMOG7CRMF7GB:00000009",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20230217T090835Z:14cfb9c0-0ce7-493a-91fa-a53aeec5f41e"
+      },
+      "ResponseBody": {
+        "systemData": {
+          "createdBy": "8e6d47e0-7969-4fde-a62c-4fea4f165e98",
+          "createdByType": "Application",
+          "createdAt": "2023-02-17T09:08:26.3711855Z",
+          "lastModifiedBy": "8e6d47e0-7969-4fde-a62c-4fea4f165e98",
+          "lastModifiedByType": "Application",
+          "lastModifiedAt": "2023-02-17T09:08:34.2874438Z"
+        },
+        "properties": {
+          "provisioningState": "Succeeded",
+          "defaultConnectionProfile": {
+            "webSshAccess": "Public",
+            "webRdpAccess": "None",
+            "clientSshAccess": "Public",
+            "clientRdpAccess": "Public"
+          },
+          "defaultAutoShutdownProfile": {
+            "shutdownOnDisconnect": "Enabled",
+            "shutdownWhenNotConnected": "Enabled",
+            "shutdownOnIdle": "UserAbsence",
+            "disconnectDelay": "PT15M",
+            "noConnectDelay": "PT15M",
+            "idleDelay": "PT15M"
+          },
+          "allowedRegions": [
+            "eastus",
+            "eastus2"
+          ],
+          "supportInfo": {
+            "url": "http://help.contoso.com/",
+            "email": "help@contoso.com",
+            "phone": "\u002B1-202-555-0123",
+            "instructions": "Contact support for help."
+          }
+        },
+        "tags": {},
+        "location": "eastus",
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-7644/providers/Microsoft.LabServices/labPlans/sdklabplan-2624",
+        "name": "sdklabplan-2624",
+        "type": "Microsoft.LabServices/labPlans"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-7644/providers/Microsoft.LabServices/labPlans?api-version=2022-08-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-5a0628eb858f9c6c991e078a33e54bfb-fed823fa88d3b330-00",
+        "User-Agent": "azsdk-net-ResourceManager.LabServices/1.1.0-alpha.20230217.1 (.NET 7.0.2; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "8978846b02d0d15d7e538cf02e79a391",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "api-supported-versions": "2020-05-01-preview, 2021-10-01-preview, 2021-11-15-preview, 2022-05-01-preview, 2022-08-01",
+        "Cache-Control": "no-cache",
+        "Content-Length": "1091",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 17 Feb 2023 09:08:35 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Request-Context": "appId=cid-v1:7a6e27f5-4c72-4f69-b2c3-dcc03e975107",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "traceparent": "00-5a0628eb858f9c6c991e078a33e54bfb-13a5bbc52421ad7e-01",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "8978846b02d0d15d7e538cf02e79a391",
+        "x-ms-correlation-request-id": "152d6d21-7870-400f-80d9-66ae5cf2f508",
+        "x-ms-ratelimit-remaining-subscription-reads": "11992",
+        "x-ms-request-id": "0HMOG7C9OHKCS:00000009",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20230217T090835Z:152d6d21-7870-400f-80d9-66ae5cf2f508"
+      },
+      "ResponseBody": {
+        "value": [
+          {
+            "systemData": {
+              "createdBy": "8e6d47e0-7969-4fde-a62c-4fea4f165e98",
+              "createdByType": "Application",
+              "createdAt": "2023-02-17T09:08:26.3711855Z",
+              "lastModifiedBy": "8e6d47e0-7969-4fde-a62c-4fea4f165e98",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-02-17T09:08:34.2874438Z"
+            },
+            "properties": {
+              "provisioningState": "Succeeded",
+              "defaultConnectionProfile": {
+                "webSshAccess": "Public",
+                "webRdpAccess": "None",
+                "clientSshAccess": "Public",
+                "clientRdpAccess": "Public"
+              },
+              "defaultAutoShutdownProfile": {
+                "shutdownOnDisconnect": "Enabled",
+                "shutdownWhenNotConnected": "Enabled",
+                "shutdownOnIdle": "UserAbsence",
+                "disconnectDelay": "PT15M",
+                "noConnectDelay": "PT15M",
+                "idleDelay": "PT15M"
+              },
+              "allowedRegions": [
+                "eastus",
+                "eastus2"
+              ],
+              "supportInfo": {
+                "url": "http://help.contoso.com/",
+                "email": "help@contoso.com",
+                "phone": "\u002B1-202-555-0123",
+                "instructions": "Contact support for help."
+              }
+            },
+            "tags": {},
+            "location": "eastus",
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-7644/providers/Microsoft.LabServices/labPlans/sdklabplan-2624",
+            "name": "sdklabplan-2624",
+            "type": "Microsoft.LabServices/labPlans"
+          }
+        ]
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-7644/providers/Microsoft.LabServices/labPlans/sdklabplan-2624?api-version=2022-08-01",
+      "RequestMethod": "DELETE",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-755c14a163d96ce60cc328c5c24fb392-33e3899d06e6cfd9-00",
+        "User-Agent": "azsdk-net-ResourceManager.LabServices/1.1.0-alpha.20230217.1 (.NET 7.0.2; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "0273ebb2709dc925828dcfe0b4b5dd2d",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 202,
+      "ResponseHeaders": {
+        "api-supported-versions": "2020-05-01-preview, 2021-10-01-preview, 2021-11-15-preview, 2022-05-01-preview, 2022-08-01",
+        "Azure-AsyncOperation": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.LabServices/locations/eastus/operationResults/dbf5c0f5-43db-4aa4-bc36-ca841b7f81af?api-version=2022-08-01",
+        "Cache-Control": "no-cache",
+        "Content-Length": "274",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 17 Feb 2023 09:08:36 GMT",
+        "Expires": "-1",
+        "Location": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.LabServices/locations/eastus/operationResults/dbf5c0f5-43db-4aa4-bc36-ca841b7f81af?api-version=2022-08-01\u0026monitor=true",
+        "Operation-Location": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.LabServices/locations/eastus/operationResults/dbf5c0f5-43db-4aa4-bc36-ca841b7f81af?api-version=2022-08-01",
+        "Pragma": "no-cache",
+        "Request-Context": "appId=cid-v1:7a6e27f5-4c72-4f69-b2c3-dcc03e975107",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "traceparent": "00-755c14a163d96ce60cc328c5c24fb392-7decde44561e022e-01",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "0273ebb2709dc925828dcfe0b4b5dd2d",
+        "x-ms-correlation-request-id": "f6ecf070-f72e-46f3-8395-91c92f7801f3",
+        "x-ms-ratelimit-remaining-subscription-deletes": "14999",
+        "x-ms-request-id": "0HMOG7DMLEUPJ:0000000A",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20230217T090836Z:f6ecf070-f72e-46f3-8395-91c92f7801f3"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.LabServices/locations/eastus/operationResults/dbf5c0f5-43db-4aa4-bc36-ca841b7f81af",
+        "name": "dbf5c0f5-43db-4aa4-bc36-ca841b7f81af",
+        "status": "InProgress",
+        "startTime": "2023-02-17T09:08:36.4759392Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.LabServices/locations/eastus/operationResults/dbf5c0f5-43db-4aa4-bc36-ca841b7f81af?api-version=2022-08-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-755c14a163d96ce60cc328c5c24fb392-f37c83a3bac8823a-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET 7.0.2; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "2b8d548a4cddfa5e5faf0742327d1dc8",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "api-supported-versions": "2020-05-01-preview, 2021-10-01-preview, 2021-11-15-preview, 2022-05-01-preview, 2022-08-01",
+        "Cache-Control": "no-cache",
+        "Content-Length": "274",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 17 Feb 2023 09:08:36 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Request-Context": "appId=cid-v1:7a6e27f5-4c72-4f69-b2c3-dcc03e975107",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "traceparent": "00-755c14a163d96ce60cc328c5c24fb392-43754ca79f32b5cb-01",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "2b8d548a4cddfa5e5faf0742327d1dc8",
+        "x-ms-correlation-request-id": "26196cfb-b48e-4d2d-b2b2-35bacce50481",
+        "x-ms-ratelimit-remaining-subscription-reads": "11991",
+        "x-ms-request-id": "0HMOG7DMLEUQ1:00000006",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20230217T090837Z:26196cfb-b48e-4d2d-b2b2-35bacce50481"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.LabServices/locations/eastus/operationResults/dbf5c0f5-43db-4aa4-bc36-ca841b7f81af",
+        "name": "dbf5c0f5-43db-4aa4-bc36-ca841b7f81af",
+        "status": "InProgress",
+        "startTime": "2023-02-17T09:08:36.4759392Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.LabServices/locations/eastus/operationResults/dbf5c0f5-43db-4aa4-bc36-ca841b7f81af?api-version=2022-08-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-755c14a163d96ce60cc328c5c24fb392-65a43c20c03b33e8-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET 7.0.2; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "3ba75f7624a54bd80e24152f812f464d",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "api-supported-versions": "2020-05-01-preview, 2021-10-01-preview, 2021-11-15-preview, 2022-05-01-preview, 2022-08-01",
+        "Cache-Control": "no-cache",
+        "Content-Length": "314",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 17 Feb 2023 09:08:37 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Request-Context": "appId=cid-v1:7a6e27f5-4c72-4f69-b2c3-dcc03e975107",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "traceparent": "00-755c14a163d96ce60cc328c5c24fb392-f0b424e8b1156e99-01",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "3ba75f7624a54bd80e24152f812f464d",
+        "x-ms-correlation-request-id": "51645151-9c2c-42be-8ec8-844a01a9af58",
+        "x-ms-ratelimit-remaining-subscription-reads": "11990",
+        "x-ms-request-id": "0HMOG7CRMF7GM:00000006",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20230217T090838Z:51645151-9c2c-42be-8ec8-844a01a9af58"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.LabServices/locations/eastus/operationResults/dbf5c0f5-43db-4aa4-bc36-ca841b7f81af",
+        "name": "dbf5c0f5-43db-4aa4-bc36-ca841b7f81af",
+        "status": "Succeeded",
+        "startTime": "2023-02-17T09:08:36.4759392Z",
+        "endTime": "2023-02-17T09:08:37.2704163Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-7644/providers/Microsoft.LabServices/labPlans/sdklabplan-2624?api-version=2022-08-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-63b6e9bdf3aebffa9ffc444f460b3f5b-73d3a29a54445a4f-00",
+        "User-Agent": "azsdk-net-ResourceManager.LabServices/1.1.0-alpha.20230217.1 (.NET 7.0.2; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "6055454bb227fd4f94d91f095f9a1c6f",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 404,
+      "ResponseHeaders": {
+        "api-supported-versions": "2020-05-01-preview, 2021-10-01-preview, 2021-11-15-preview, 2022-05-01-preview, 2022-08-01",
+        "Cache-Control": "no-cache",
+        "Content-Length": "161",
+        "Content-Type": "application/problem\u002Bjson; charset=utf-8",
+        "Date": "Fri, 17 Feb 2023 09:08:38 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Request-Context": "appId=cid-v1:7a6e27f5-4c72-4f69-b2c3-dcc03e975107",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "traceparent": "00-63b6e9bdf3aebffa9ffc444f460b3f5b-c054a2c1716def80-01",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "6055454bb227fd4f94d91f095f9a1c6f",
+        "x-ms-correlation-request-id": "e7a8f5f3-3cbe-44ee-9612-d6766276273c",
+        "x-ms-ratelimit-remaining-subscription-reads": "11989",
+        "x-ms-request-id": "0HMOG7CRMF7GB:0000000A",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20230217T090838Z:e7a8f5f3-3cbe-44ee-9612-d6766276273c"
+      },
+      "ResponseBody": {
+        "type": "https://tools.ietf.org/html/rfc7231#section-6.5.4",
+        "title": "Not Found",
+        "status": 404,
+        "traceId": "00-63b6e9bdf3aebffa9ffc444f460b3f5b-c054a2c1716def80-01"
+      }
+    }
+  ],
+  "Variables": {
+    "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com",
+    "RandomSeed": "1185755682",
+    "RESOURCE_MANAGER_URL": null,
+    "SUBSCRIPTION_ID": "db1ab6f0-4769-4b27-930e-01e2ef9c123c"
+  }
+}

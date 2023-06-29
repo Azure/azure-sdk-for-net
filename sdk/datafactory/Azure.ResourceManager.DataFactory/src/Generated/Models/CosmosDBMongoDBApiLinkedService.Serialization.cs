@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -64,24 +65,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(IsServerVersionAbove32))
             {
                 writer.WritePropertyName("isServerVersionAbove32"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(IsServerVersionAbove32);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(IsServerVersionAbove32.ToString()).RootElement);
-#endif
+                JsonSerializer.Serialize(writer, IsServerVersionAbove32);
             }
             writer.WritePropertyName("connectionString"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(ConnectionString);
-#else
-            JsonSerializer.Serialize(writer, JsonDocument.Parse(ConnectionString.ToString()).RootElement);
-#endif
+            JsonSerializer.Serialize(writer, ConnectionString);
             writer.WritePropertyName("database"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(Database);
-#else
-            JsonSerializer.Serialize(writer, JsonDocument.Parse(Database.ToString()).RootElement);
-#endif
+            JsonSerializer.Serialize(writer, Database);
             writer.WriteEndObject();
             foreach (var item in AdditionalProperties)
             {
@@ -106,9 +95,9 @@ namespace Azure.ResourceManager.DataFactory.Models
             Optional<string> description = default;
             Optional<IDictionary<string, EntityParameterSpecification>> parameters = default;
             Optional<IList<BinaryData>> annotations = default;
-            Optional<BinaryData> isServerVersionAbove32 = default;
-            BinaryData connectionString = default;
-            BinaryData database = default;
+            Optional<DataFactoryElement<bool>> isServerVersionAbove32 = default;
+            DataFactoryElement<string> connectionString = default;
+            DataFactoryElement<string> database = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -182,17 +171,17 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            isServerVersionAbove32 = BinaryData.FromString(property0.Value.GetRawText());
+                            isServerVersionAbove32 = JsonSerializer.Deserialize<DataFactoryElement<bool>>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("connectionString"u8))
                         {
-                            connectionString = BinaryData.FromString(property0.Value.GetRawText());
+                            connectionString = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("database"u8))
                         {
-                            database = BinaryData.FromString(property0.Value.GetRawText());
+                            database = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
                             continue;
                         }
                     }

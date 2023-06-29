@@ -13,7 +13,6 @@ namespace Azure.Communication.JobRouter
     /// <summary> A rule providing a binding to an HTTP Triggered Azure Function. </summary>
     public partial class FunctionRule : RouterRule
     {
-
         /// <summary> Initializes a new instance of FunctionRule. </summary>
         /// <param name="kind"> The type discriminator describing a sub-type of Rule. </param>
         /// <param name="functionUri"> URL for Azure Function. </param>

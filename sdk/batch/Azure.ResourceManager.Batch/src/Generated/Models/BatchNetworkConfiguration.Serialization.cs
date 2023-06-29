@@ -35,6 +35,11 @@ namespace Azure.ResourceManager.Batch.Models
                 writer.WritePropertyName("publicIPAddressConfiguration"u8);
                 writer.WriteObjectValue(PublicIPAddressConfiguration);
             }
+            if (Optional.IsDefined(EnableAcceleratedNetworking))
+            {
+                writer.WritePropertyName("enableAcceleratedNetworking"u8);
+                writer.WriteBooleanValue(EnableAcceleratedNetworking.Value);
+            }
             writer.WriteEndObject();
         }
 
@@ -48,6 +53,7 @@ namespace Azure.ResourceManager.Batch.Models
             Optional<DynamicVNetAssignmentScope> dynamicVnetAssignmentScope = default;
             Optional<PoolEndpointConfiguration> endpointConfiguration = default;
             Optional<BatchPublicIPAddressConfiguration> publicIPAddressConfiguration = default;
+            Optional<bool> enableAcceleratedNetworking = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("subnetId"u8))
@@ -86,8 +92,17 @@ namespace Azure.ResourceManager.Batch.Models
                     publicIPAddressConfiguration = BatchPublicIPAddressConfiguration.DeserializeBatchPublicIPAddressConfiguration(property.Value);
                     continue;
                 }
+                if (property.NameEquals("enableAcceleratedNetworking"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    enableAcceleratedNetworking = property.Value.GetBoolean();
+                    continue;
+                }
             }
-            return new BatchNetworkConfiguration(subnetId.Value, Optional.ToNullable(dynamicVnetAssignmentScope), endpointConfiguration.Value, publicIPAddressConfiguration.Value);
+            return new BatchNetworkConfiguration(subnetId.Value, Optional.ToNullable(dynamicVnetAssignmentScope), endpointConfiguration.Value, publicIPAddressConfiguration.Value, Optional.ToNullable(enableAcceleratedNetworking));
         }
     }
 }
