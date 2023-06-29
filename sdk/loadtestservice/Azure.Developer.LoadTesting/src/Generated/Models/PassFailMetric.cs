@@ -5,52 +5,105 @@
 
 #nullable disable
 
+using Azure.Core.Json;
+using System;
+
 namespace Azure.Developer.LoadTesting.Models
 {
     /// <summary> Pass fail metric. </summary>
     public partial class PassFailMetric
     {
+        private MutableJsonElement _element;
         /// <summary> Initializes a new instance of PassFailMetric. </summary>
         public PassFailMetric()
         {
+            _element = MutableJsonDocument.Parse(BinaryData.FromBytes("{}"u8.ToArray())).RootElement;
         }
 
-        /// <summary> Initializes a new instance of PassFailMetric. </summary>
-        /// <param name="clientMetric"> The client metric on which the criteria should be applied. </param>
-        /// <param name="aggregate"> The aggregation function to be applied on the client metric. Allowed functions - ‘percentage’ - for error metric , ‘avg’, ‘p50’, ‘p90’, ‘p95’, ‘p99’, ‘min’, ‘max’ - for response_time_ms and latency metric, ‘avg’ - for requests_per_sec, ‘count’ - for requests. </param>
-        /// <param name="condition"> The comparison operator. Supported types ‘&gt;’, ‘&lt;’. </param>
-        /// <param name="requestName"> Request name for which the Pass fail criteria has to be applied. </param>
-        /// <param name="value"> The value to compare with the client metric. Allowed values - ‘error : [0.0 , 100.0] unit- % ’, response_time_ms and latency : any integer value unit- ms. </param>
-        /// <param name="action"> Action taken after the threshold is met. Default is ‘continue’. </param>
-        /// <param name="actualValue"> The actual value of the client metric for the test run. </param>
-        /// <param name="result"> Outcome of the test run. </param>
-        internal PassFailMetric(PFMetrics? clientMetric, PFAgFunc? aggregate, string condition, string requestName, double? value, PFAction? action, double? actualValue, PFResult? result)
+        internal PassFailMetric(MutableJsonElement element)
         {
-            ClientMetric = clientMetric;
-            Aggregate = aggregate;
-            Condition = condition;
-            RequestName = requestName;
-            Value = value;
-            Action = action;
-            ActualValue = actualValue;
-            Result = result;
+            _element = element;
         }
 
         /// <summary> The client metric on which the criteria should be applied. </summary>
-        public PFMetrics? ClientMetric { get; set; }
+        public PFMetrics? ClientMetric
+        {
+            get => _element.GetProperty("clientMetric").GetString();
+            set => _element.SetProperty("clientMetric", value);
+        }
+
         /// <summary> The aggregation function to be applied on the client metric. Allowed functions - ‘percentage’ - for error metric , ‘avg’, ‘p50’, ‘p90’, ‘p95’, ‘p99’, ‘min’, ‘max’ - for response_time_ms and latency metric, ‘avg’ - for requests_per_sec, ‘count’ - for requests. </summary>
-        public PFAgFunc? Aggregate { get; set; }
+        public PFAgFunc? Aggregate
+        {
+            get => _element.GetProperty("aggregate").GetString();
+            set => _element.SetProperty("aggregate", value);
+        }
+
         /// <summary> The comparison operator. Supported types ‘&gt;’, ‘&lt;’. </summary>
-        public string Condition { get; set; }
+        public string Condition
+        {
+            get => _element.GetProperty("condition").GetString();
+            set => _element.SetProperty("condition", value);
+        }
+
         /// <summary> Request name for which the Pass fail criteria has to be applied. </summary>
-        public string RequestName { get; set; }
+        public string RequestName
+        {
+            get => _element.GetProperty("requestName").GetString();
+            set => _element.SetProperty("requestName", value);
+        }
+
         /// <summary> The value to compare with the client metric. Allowed values - ‘error : [0.0 , 100.0] unit- % ’, response_time_ms and latency : any integer value unit- ms. </summary>
-        public double? Value { get; set; }
+        public double? Value
+        {
+            get
+            {
+                if (!_element.TryGetProperty("value", out MutableJsonElement value))
+                {
+                    return null;
+                }
+
+                if (!value.TryGetDouble(out double d))
+                {
+                    return null;
+                }
+
+                return d;
+            }
+
+            set => _element.SetProperty("value", value);
+        }
+
         /// <summary> Action taken after the threshold is met. Default is ‘continue’. </summary>
-        public PFAction? Action { get; set; }
+        public PFAction? Action
+        {
+            get => _element.GetProperty("action").GetString();
+            set => _element.SetProperty("action", value);
+        }
+
         /// <summary> The actual value of the client metric for the test run. </summary>
-        public double? ActualValue { get; }
+        public double? ActualValue
+        {
+            get
+            {
+                if (!_element.TryGetProperty("actualValue", out MutableJsonElement value))
+                {
+                    return null;
+                }
+
+                if (!value.TryGetDouble(out double d))
+                {
+                    return null;
+                }
+
+                return d;
+            }
+        }
+
         /// <summary> Outcome of the test run. </summary>
-        public PFResult? Result { get; }
+        public PFResult? Result
+        {
+            get => _element.GetProperty("result").GetString();
+        }
     }
 }

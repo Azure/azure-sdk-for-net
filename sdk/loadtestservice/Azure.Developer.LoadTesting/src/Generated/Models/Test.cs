@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 using Azure.Core.Json;
 
 namespace Azure.Developer.LoadTesting.Models

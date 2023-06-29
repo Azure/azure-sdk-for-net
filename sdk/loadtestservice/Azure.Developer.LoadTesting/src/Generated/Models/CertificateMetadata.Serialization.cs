@@ -5,8 +5,10 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Json;
 
 namespace Azure.Developer.LoadTesting.Models
 {
@@ -35,36 +37,9 @@ namespace Azure.Developer.LoadTesting.Models
 
         internal static CertificateMetadata DeserializeCertificateMetadata(JsonElement element)
         {
-            if (element.ValueKind == JsonValueKind.Null)
-            {
-                return null;
-            }
-            Optional<string> value = default;
-            Optional<CertificateType> type = default;
-            Optional<string> name = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("value"u8))
-                {
-                    value = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("type"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    type = new CertificateType(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("name"u8))
-                {
-                    name = property.Value.GetString();
-                    continue;
-                }
-            }
-            return new CertificateMetadata(value.Value, Optional.ToNullable(type), name.Value);
+            BinaryData utf8Json = Test.GetBytes(element);
+            MutableJsonElement mje = MutableJsonDocument.Parse(utf8Json).RootElement;
+            return new CertificateMetadata(mje);
         }
     }
 }
