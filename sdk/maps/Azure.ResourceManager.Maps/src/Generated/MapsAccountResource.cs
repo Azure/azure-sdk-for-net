@@ -362,7 +362,7 @@ namespace Azure.ResourceManager.Maps
         /// <param name="content"> The updated parameters for the Maps Account. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<Response<MapsAccountSasToken>> GetSasAsync(AccountSasContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<MapsAccountSasToken>> GetSasAsync(MapsAccountSasContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -400,7 +400,7 @@ namespace Azure.ResourceManager.Maps
         /// <param name="content"> The updated parameters for the Maps Account. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual Response<MapsAccountSasToken> GetSas(AccountSasContent content, CancellationToken cancellationToken = default)
+        public virtual Response<MapsAccountSasToken> GetSas(MapsAccountSasContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 

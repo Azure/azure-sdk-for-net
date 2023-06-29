@@ -11,18 +11,21 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Maps.Models
 {
-    public partial class MapsCorsRule : IUtf8JsonSerializable
+    internal partial class MapsCorsRule : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("allowedOrigins"u8);
-            writer.WriteStartArray();
-            foreach (var item in AllowedOrigins)
+            if (Optional.IsCollectionDefined(MapsCorsRuleValue))
             {
-                writer.WriteStringValue(item);
+                writer.WritePropertyName("corsRules"u8);
+                writer.WriteStartArray();
+                foreach (var item in MapsCorsRuleValue)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
             }
-            writer.WriteEndArray();
             writer.WriteEndObject();
         }
 
@@ -32,21 +35,25 @@ namespace Azure.ResourceManager.Maps.Models
             {
                 return null;
             }
-            IList<string> allowedOrigins = default;
+            Optional<IList<CorsRule>> mapsCorsRule = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("allowedOrigins"u8))
+                if (property.NameEquals("corsRules"u8))
                 {
-                    List<string> array = new List<string>();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<CorsRule> array = new List<CorsRule>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(item.GetString());
+                        array.Add(CorsRule.DeserializeCorsRule(item));
                     }
-                    allowedOrigins = array;
+                    mapsCorsRule = array;
                     continue;
                 }
             }
-            return new MapsCorsRule(allowedOrigins);
+            return new MapsCorsRule(Optional.ToList(mapsCorsRule));
         }
     }
 }

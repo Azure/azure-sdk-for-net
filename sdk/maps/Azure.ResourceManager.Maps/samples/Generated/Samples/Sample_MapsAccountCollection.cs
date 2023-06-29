@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Maps.Samples
                     DisableLocalAuth = false,
                     LinkedResources =
 {
-new LinkedResource("myBatchStorageAccount","/subscriptions/21a9967a-e8a9-4656-a70b-96ff1c4d05a0/resourceGroups/myResourceGroup/providers/Microsoft.Storage/accounts/mystorageacc"),new LinkedResource("myBlobDataSource","/subscriptions/21a9967a-e8a9-4656-a70b-96ff1c4d05a0/resourceGroups/myResourceGroup/providers/Microsoft.Storage/accounts/mystorageacc")
+new MapsLinkedResource("myBatchStorageAccount","/subscriptions/21a9967a-e8a9-4656-a70b-96ff1c4d05a0/resourceGroups/myResourceGroup/providers/Microsoft.Storage/accounts/mystorageacc"),new MapsLinkedResource("myBlobDataSource","/subscriptions/21a9967a-e8a9-4656-a70b-96ff1c4d05a0/resourceGroups/myResourceGroup/providers/Microsoft.Storage/accounts/mystorageacc")
 },
                 },
                 Tags =
@@ -109,7 +109,7 @@ new LinkedResource("myBatchStorageAccount","/subscriptions/21a9967a-e8a9-4656-a7
                 Properties = new MapsAccountProperties()
                 {
                     DisableLocalAuth = false,
-                    CorsRulesValue =
+                    MapsCorsRuleValue =
 {
 new CorsRule(new string[]
 {
@@ -163,7 +163,7 @@ new CorsRule(new string[]
                 Properties = new MapsAccountProperties()
                 {
                     DisableLocalAuth = true,
-                    CorsRulesValue =
+                    MapsCorsRuleValue =
 {
 new CorsRule(new string[]
 {

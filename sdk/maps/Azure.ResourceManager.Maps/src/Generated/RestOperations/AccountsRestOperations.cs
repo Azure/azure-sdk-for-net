@@ -503,7 +503,7 @@ namespace Azure.ResourceManager.Maps
             }
         }
 
-        internal HttpMessage CreateListSasRequest(string subscriptionId, string resourceGroupName, string accountName, AccountSasContent content)
+        internal HttpMessage CreateListSasRequest(string subscriptionId, string resourceGroupName, string accountName, MapsAccountSasContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -542,7 +542,7 @@ namespace Azure.ResourceManager.Maps
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<MapsAccountSasToken>> ListSasAsync(string subscriptionId, string resourceGroupName, string accountName, AccountSasContent content, CancellationToken cancellationToken = default)
+        public async Task<Response<MapsAccountSasToken>> ListSasAsync(string subscriptionId, string resourceGroupName, string accountName, MapsAccountSasContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -579,7 +579,7 @@ namespace Azure.ResourceManager.Maps
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<MapsAccountSasToken> ListSas(string subscriptionId, string resourceGroupName, string accountName, AccountSasContent content, CancellationToken cancellationToken = default)
+        public Response<MapsAccountSasToken> ListSas(string subscriptionId, string resourceGroupName, string accountName, MapsAccountSasContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));

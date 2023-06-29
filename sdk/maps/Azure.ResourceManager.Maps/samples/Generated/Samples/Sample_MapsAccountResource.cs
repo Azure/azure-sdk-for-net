@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Maps.Samples
                 },
                 LinkedResources =
 {
-new LinkedResource("myBatchStorageAccount","/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/accounts/{storageName}")
+new MapsLinkedResource("myBatchStorageAccount","/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/accounts/{storageName}")
 },
             };
             MapsAccountResource result = await mapsAccount.UpdateAsync(patch);
@@ -289,7 +289,7 @@ new LinkedResource("myBatchStorageAccount","/subscriptions/{subscriptionId}/reso
             MapsAccountResource mapsAccount = client.GetMapsAccountResource(mapsAccountResourceId);
 
             // invoke the operation
-            AccountSasContent content = new AccountSasContent(SigningKey.PrimaryKey, "e917f87b-324d-4728-98ed-e31d311a7d65", 500, "2017-05-24T10:42:03.1567373Z", "2017-05-24T11:42:03.1567373Z")
+            MapsAccountSasContent content = new MapsAccountSasContent(MapsSigningKey.PrimaryKey, "e917f87b-324d-4728-98ed-e31d311a7d65", 500, "2017-05-24T10:42:03.1567373Z", "2017-05-24T11:42:03.1567373Z")
             {
                 Regions =
 {

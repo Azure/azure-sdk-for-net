@@ -30,7 +30,6 @@ prepend-rp-prefix:
   - KeyType
   - LinkedResource
   - SigningKey
-  - CorsRule
 
 format-by-name-rules:
   'tenantId': 'uuid'
@@ -61,6 +60,8 @@ rename-rules:
   SSO: Sso
   URI: Uri
   Etag: ETag|etag
+  CorsRules: MapsCorsRule
+  AccountSasContent: MapsAccountSasContent
 
 directive:
   - remove-operation: 'Maps_ListOperations'

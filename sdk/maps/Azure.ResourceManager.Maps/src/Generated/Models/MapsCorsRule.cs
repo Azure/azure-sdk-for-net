@@ -5,34 +5,28 @@
 
 #nullable disable
 
-using System;
 using System.Collections.Generic;
-using System.Linq;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Maps.Models
 {
-    /// <summary> Specifies a CORS rule for the Map Account. </summary>
-    public partial class MapsCorsRule
+    /// <summary> Sets the CORS rules. You can include up to five CorsRule elements in the request. </summary>
+    internal partial class MapsCorsRule
     {
         /// <summary> Initializes a new instance of MapsCorsRule. </summary>
-        /// <param name="allowedOrigins"> Required if CorsRule element is present. A list of origin domains that will be allowed via CORS, or "*" to allow all domains. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="allowedOrigins"/> is null. </exception>
-        public MapsCorsRule(IEnumerable<string> allowedOrigins)
+        public MapsCorsRule()
         {
-            Argument.AssertNotNull(allowedOrigins, nameof(allowedOrigins));
-
-            AllowedOrigins = allowedOrigins.ToList();
+            MapsCorsRuleValue = new ChangeTrackingList<CorsRule>();
         }
 
         /// <summary> Initializes a new instance of MapsCorsRule. </summary>
-        /// <param name="allowedOrigins"> Required if CorsRule element is present. A list of origin domains that will be allowed via CORS, or "*" to allow all domains. </param>
-        internal MapsCorsRule(IList<string> allowedOrigins)
+        /// <param name="mapsCorsRuleValue"> The list of CORS rules. You can include up to five CorsRule elements in the request. </param>
+        internal MapsCorsRule(IList<CorsRule> mapsCorsRuleValue)
         {
-            AllowedOrigins = allowedOrigins;
+            MapsCorsRuleValue = mapsCorsRuleValue;
         }
 
-        /// <summary> Required if CorsRule element is present. A list of origin domains that will be allowed via CORS, or "*" to allow all domains. </summary>
-        public IList<string> AllowedOrigins { get; }
+        /// <summary> The list of CORS rules. You can include up to five CorsRule elements in the request. </summary>
+        public IList<CorsRule> MapsCorsRuleValue { get; }
     }
 }

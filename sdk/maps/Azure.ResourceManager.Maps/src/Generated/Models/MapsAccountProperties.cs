@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Maps.Models
         /// <param name="provisioningState"> The provisioning state of the Map account resource. </param>
         /// <param name="linkedResources"> Sets the resources to be used for Managed Identities based operations for the Map account resource. </param>
         /// <param name="cors"> Specifies CORS rules for the Blob service. You can include up to five CorsRule elements in the request. If no CorsRule elements are included in the request body, all CORS rules will be deleted, and CORS will be disabled for the Blob service. </param>
-        internal MapsAccountProperties(Guid? uniqueId, bool? disableLocalAuth, string provisioningState, IList<MapsLinkedResource> linkedResources, CorsRules cors)
+        internal MapsAccountProperties(Guid? uniqueId, bool? disableLocalAuth, string provisioningState, IList<MapsLinkedResource> linkedResources, MapsCorsRule cors)
         {
             UniqueId = uniqueId;
             DisableLocalAuth = disableLocalAuth;
@@ -44,15 +44,15 @@ namespace Azure.ResourceManager.Maps.Models
         /// <summary> Sets the resources to be used for Managed Identities based operations for the Map account resource. </summary>
         public IList<MapsLinkedResource> LinkedResources { get; }
         /// <summary> Specifies CORS rules for the Blob service. You can include up to five CorsRule elements in the request. If no CorsRule elements are included in the request body, all CORS rules will be deleted, and CORS will be disabled for the Blob service. </summary>
-        internal CorsRules Cors { get; set; }
+        internal MapsCorsRule Cors { get; set; }
         /// <summary> The list of CORS rules. You can include up to five CorsRule elements in the request. </summary>
-        public IList<MapsCorsRule> CorsRulesValue
+        public IList<CorsRule> MapsCorsRuleValue
         {
             get
             {
                 if (Cors is null)
-                    Cors = new CorsRules();
-                return Cors.CorsRulesValue;
+                    Cors = new MapsCorsRule();
+                return Cors.MapsCorsRuleValue;
             }
         }
     }
