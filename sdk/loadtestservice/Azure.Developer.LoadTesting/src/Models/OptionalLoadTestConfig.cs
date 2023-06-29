@@ -27,9 +27,9 @@ namespace Azure.Developer.LoadTesting.Models
         }
 
         /// <summary> Test URL. Provide the complete HTTP URL. For example, http://contoso-app.azurewebsites.net/login. </summary>
-        public string EndpointUrl
+        public Uri EndpointUrl
         {
-            get => _element.GetProperty("endpointUrl").GetString();
+            get => _element.GetProperty("endpointUrl").ConvertTo<Uri>();
             set => _element.SetProperty("endpointUrl", value);
         }
 
