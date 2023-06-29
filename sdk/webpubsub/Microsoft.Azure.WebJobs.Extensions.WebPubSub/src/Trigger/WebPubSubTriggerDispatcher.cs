@@ -188,7 +188,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
                 // Signature is optional and binding with validation parameter.
                 if (request.Headers.TryGetValues(Constants.Headers.CloudEvents.Signature, out var val))
                 {
-                    signature = string.Join(Constants.HeaderSeparator, val);
+                    signature = string.Join(",", val);
                 }
                 string userId = null;
                 // UserId is optional, e.g. connect
