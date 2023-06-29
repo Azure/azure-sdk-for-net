@@ -5,28 +5,34 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Maps.Models
 {
-    /// <summary> Sets the CORS rules. You can include up to five CorsRule elements in the request. </summary>
-    internal partial class MapsCorsRule
+    /// <summary> Specifies a CORS rule for the Map Account. </summary>
+    public partial class MapsCorsRule
     {
         /// <summary> Initializes a new instance of MapsCorsRule. </summary>
-        public MapsCorsRule()
+        /// <param name="allowedOrigins"> Required if CorsRule element is present. A list of origin domains that will be allowed via CORS, or "*" to allow all domains. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="allowedOrigins"/> is null. </exception>
+        public MapsCorsRule(IEnumerable<string> allowedOrigins)
         {
-            CorsRules = new ChangeTrackingList<CorsRule>();
+            Argument.AssertNotNull(allowedOrigins, nameof(allowedOrigins));
+
+            AllowedOrigins = allowedOrigins.ToList();
         }
 
         /// <summary> Initializes a new instance of MapsCorsRule. </summary>
-        /// <param name="corsRules"> The list of CORS rules. You can include up to five CorsRule elements in the request. </param>
-        internal MapsCorsRule(IList<CorsRule> corsRules)
+        /// <param name="allowedOrigins"> Required if CorsRule element is present. A list of origin domains that will be allowed via CORS, or "*" to allow all domains. </param>
+        internal MapsCorsRule(IList<string> allowedOrigins)
         {
-            CorsRules = corsRules;
+            AllowedOrigins = allowedOrigins;
         }
 
-        /// <summary> The list of CORS rules. You can include up to five CorsRule elements in the request. </summary>
-        public IList<CorsRule> CorsRules { get; }
+        /// <summary> Required if CorsRule element is present. A list of origin domains that will be allowed via CORS, or "*" to allow all domains. </summary>
+        public IList<string> AllowedOrigins { get; }
     }
 }

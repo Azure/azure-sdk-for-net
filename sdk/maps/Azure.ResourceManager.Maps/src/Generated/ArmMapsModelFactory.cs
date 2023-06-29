@@ -50,14 +50,14 @@ namespace Azure.ResourceManager.Maps.Models
         /// <param name="disableLocalAuth"> Allows toggle functionality on Azure Policy to disable Azure Maps local authentication support. This will disable Shared Keys authentication from any usage. </param>
         /// <param name="provisioningState"> The provisioning state of the Map account resource. </param>
         /// <param name="linkedResources"> Sets the resources to be used for Managed Identities based operations for the Map account resource. </param>
-        /// <param name="corsRules"> Specifies CORS rules for the Blob service. You can include up to five CorsRule elements in the request. If no CorsRule elements are included in the request body, all CORS rules will be deleted, and CORS will be disabled for the Blob service. </param>
+        /// <param name="corsRulesValue"> Specifies CORS rules for the Blob service. You can include up to five CorsRule elements in the request. If no CorsRule elements are included in the request body, all CORS rules will be deleted, and CORS will be disabled for the Blob service. </param>
         /// <returns> A new <see cref="Models.MapsAccountProperties"/> instance for mocking. </returns>
-        public static MapsAccountProperties MapsAccountProperties(Guid? uniqueId = null, bool? disableLocalAuth = null, string provisioningState = null, IEnumerable<MapsLinkedResource> linkedResources = null, IEnumerable<CorsRule> corsRules = null)
+        public static MapsAccountProperties MapsAccountProperties(Guid? uniqueId = null, bool? disableLocalAuth = null, string provisioningState = null, IEnumerable<MapsLinkedResource> linkedResources = null, IEnumerable<MapsCorsRule> corsRulesValue = null)
         {
             linkedResources ??= new List<MapsLinkedResource>();
-            corsRules ??= new List<CorsRule>();
+            corsRulesValue ??= new List<MapsCorsRule>();
 
-            return new MapsAccountProperties(uniqueId, disableLocalAuth, provisioningState, linkedResources?.ToList(), corsRules != null ? new MapsCorsRule(corsRules?.ToList()) : null);
+            return new MapsAccountProperties(uniqueId, disableLocalAuth, provisioningState, linkedResources?.ToList(), corsRulesValue != null ? new CorsRules(corsRulesValue?.ToList()) : null);
         }
 
         /// <summary> Initializes a new instance of MapsAccountSasToken. </summary>

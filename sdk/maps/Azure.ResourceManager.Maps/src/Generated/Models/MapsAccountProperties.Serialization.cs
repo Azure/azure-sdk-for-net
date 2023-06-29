@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Maps.Models
             Optional<bool> disableLocalAuth = default;
             Optional<string> provisioningState = default;
             Optional<IList<MapsLinkedResource>> linkedResources = default;
-            Optional<MapsCorsRule> cors = default;
+            Optional<CorsRules> cors = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("uniqueId"u8))
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Maps.Models
                     {
                         continue;
                     }
-                    cors = MapsCorsRule.DeserializeMapsCorsRule(property.Value);
+                    cors = CorsRules.DeserializeCorsRules(property.Value);
                     continue;
                 }
             }

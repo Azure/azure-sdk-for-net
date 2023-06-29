@@ -289,7 +289,7 @@ new MapsLinkedResource("myBatchStorageAccount","/subscriptions/{subscriptionId}/
             MapsAccountResource mapsAccount = client.GetMapsAccountResource(mapsAccountResourceId);
 
             // invoke the operation
-            AccountSasContent content = new AccountSasContent(MapsSigningKey.PrimaryKey, "e917f87b-324d-4728-98ed-e31d311a7d65", 500, "2017-05-24T10:42:03.1567373Z", "2017-05-24T11:42:03.1567373Z")
+            MapsAccountSasContent content = new MapsAccountSasContent(MapsSigningKey.PrimaryKey, "e917f87b-324d-4728-98ed-e31d311a7d65", 500, "2017-05-24T10:42:03.1567373Z", "2017-05-24T11:42:03.1567373Z")
             {
                 Regions =
 {
