@@ -6,12 +6,6 @@
 
 - Support SAS authentication
 
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
-
 ## 1.0.0-beta.3 (2022-11-08)
 
 ### Bugs Fixed
