@@ -10,7 +10,7 @@ namespace Azure.Storage.DataMovement.Blobs
     /// <summary>
     /// Utilities for storage resources with Azure Blob Storage.
     /// </summary>
-    public static class AzureBlobStorageResources
+    public static class BlobStorageResources
     {
         internal enum ResourceType
         {
@@ -30,15 +30,15 @@ namespace Azure.Storage.DataMovement.Blobs
         /// <returns>Whether either source or destination provider was found.</returns>
         public static bool TryGetResourceProviders(
             DataTransferProperties info,
-            out AzureBlobStorageResourceProvider sourceProvider,
-            out AzureBlobStorageResourceProvider destinationProvider)
+            out BlobStorageResourceProvider sourceProvider,
+            out BlobStorageResourceProvider destinationProvider)
         {
             bool result = false;
             (ResourceType sourceType, ResourceType destinationType) = GetTypes(info);
 
             if (sourceType != ResourceType.Unknown)
             {
-                sourceProvider = new AzureBlobStorageResourceProvider(info, asSource: true, sourceType);
+                sourceProvider = new BlobStorageResourceProvider(info, asSource: true, sourceType);
                 result = true;
             }
             else
@@ -48,7 +48,7 @@ namespace Azure.Storage.DataMovement.Blobs
 
             if (destinationType != ResourceType.Unknown)
             {
-                destinationProvider = new AzureBlobStorageResourceProvider(info, asSource: false, destinationType);
+                destinationProvider = new BlobStorageResourceProvider(info, asSource: false, destinationType);
                 result = true;
             }
             else
