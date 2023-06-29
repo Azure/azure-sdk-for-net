@@ -14,10 +14,9 @@ namespace Azure.Communication.CallAutomation
         /// <summary>
         /// Creates a new CreateCallOptions object.
         /// </summary>
-        public CreateGroupCallOptions(IEnumerable<CommunicationIdentifier> targets, Uri callbackUri)
+        public CreateGroupCallOptions(IEnumerable<CommunicationIdentifier> targets)
         {
             Targets = targets;
-            CallbackUri = callbackUri;
         }
 
         /// <summary>
@@ -29,7 +28,7 @@ namespace Azure.Communication.CallAutomation
         /// <summary>
         /// The callback Uri.
         /// </summary>
-        public Uri CallbackUri { get; }
+        public Uri CallbackUri { get; set; }
 
         /// <summary>
         /// The display caller ID number to appear for target PSTN callee.
