@@ -16,7 +16,8 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
         public ClusterManagersTests(bool isAsync, RecordedTestMode mode) : base(isAsync, mode) {}
         public ClusterManagersTests(bool isAsync) : base(isAsync) {}
 
-        [Test]
+        // updated from Test to RecordedTest per pipeline recommendation
+        [RecordedTest]
         public async Task ClusterManagers()
         {
             var clusterManagerCollection = ResourceGroupResource.GetClusterManagers();
