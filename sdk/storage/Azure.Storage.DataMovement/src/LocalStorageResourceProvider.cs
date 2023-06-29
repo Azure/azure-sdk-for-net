@@ -27,7 +27,7 @@ namespace Azure.Storage.DataMovement
         }
 
         /// <summary>
-        /// Gets the resource this provider is configured for.
+        /// Creates the configured <see cref="StorageResource"/> instance.
         /// </summary>
         /// <returns>
         /// The <see cref="StorageResource"/> this provider is configured for.
