@@ -11,7 +11,6 @@ namespace: Azure.Developer.LoadTesting
 security: AADToken
 security-scopes: https://cnt-prod.loadtesting.azure.com/.default
 skip-csproj-packagereference: true
-generation1-convenience-client: true
 directive:
     - from: swagger-document
       where: $["paths"]["/tests/{testId}/files/{fileName}"].put
