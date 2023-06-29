@@ -17,6 +17,10 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics
         internal static readonly AzureMonitorExporterEventListener Listener = new AzureMonitorExporterEventListener();
 
         [NonEvent]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        internal bool IsEnabled(EventLevel eventLevel) => IsEnabled(eventLevel, EventKeywords.All);
+
+        [NonEvent]
         public void FailedToExport(string exporterName, string instrumentationKey, Exception ex)
         {
             if (IsEnabled(EventLevel.Error))
@@ -39,23 +43,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics
 
         [Event(7, Message = "Failed to transmit due to an exception: {0}", Level = EventLevel.Error)]
         public void FailedToTransmit(string exceptionMessage) => WriteEvent(7, exceptionMessage);
-
-        [NonEvent]
-        public void TransmissionFailed(bool fromStorage, int statusCode, ConnectionVars connectionVars, string? requestEndpoint, bool willRetry)
-        {
-            // TODO: INCLUDE EXACT ERROR MESSAGE FROM INGESTION
-            if (IsEnabled(EventLevel.Error))
-            {
-                TransmissionFailed(
-                    message: fromStorage ? "Transmission from storage failed." : "Transmission failed.",
-                    retryDetails: willRetry ? "Telemetry is stored offline for retry." : "Telemetry is dropped.",
-                    metaData: $"Instrumentation Key: {connectionVars.InstrumentationKey}, Configured Endpoint: {connectionVars.IngestionEndpoint}, Actual Endpoint: {requestEndpoint}"
-                    );
-            }
-        }
-
-        [Event(8, Message = "{0} {1} {2}", Level = EventLevel.Error)]
-        public void TransmissionFailed(string message, string retryDetails, string metaData) => WriteEvent(8, message, retryDetails, metaData);
 
         [Event(9, Message = "{0} has been disposed.", Level = EventLevel.Informational)]
         public void DisposedObject(string name) => WriteEvent(9, name);
@@ -268,7 +255,54 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics
         public void TransmitterFailed(string instrumentationKey, string exceptionMessage) => WriteEvent(33, instrumentationKey, exceptionMessage);
 
         [NonEvent]
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        internal bool IsEnabled(EventLevel eventLevel) => IsEnabled(eventLevel, EventKeywords.All);
+        public void FailedToDeserializeIngestionResponse(Exception ex)
+        {
+            if (IsEnabled(EventLevel.Warning))
+            {
+                FailedToDeserializeIngestionResponse(ex.FlattenException().ToInvariantString());
+            }
+        }
+
+        [Event(34, Message="Failed to deserialize response from ingestion due to an exception. This is only used for logging. Not user actionable. {0}", Level = EventLevel.Warning)]
+        public void FailedToDeserializeIngestionResponse(string exceptionMessage) => WriteEvent(34, exceptionMessage);
+
+        [NonEvent]
+        public void TransmissionFailed(int statusCode, bool fromStorage, bool willRetry, ConnectionVars connectionVars, string? requestEndpoint, Response? response)
+        {
+            if (IsEnabled(EventLevel.Critical))
+            {
+                var errorMessages = IngestionResponseHelper.GetErrorsFromResponse(response);
+
+                if (errorMessages == null || errorMessages.Length == 0)
+                {
+                    TransmissionFailed(
+                        statusCode: statusCode,
+                        errorMessage: "N/A",
+                        action: willRetry ? "Telemetry is stored offline for retry." : "Telemetry is dropped.",
+                        origin: fromStorage ? "Storage" : "AzureMonitorExporter",
+                        instrumentationKey: connectionVars.InstrumentationKey,
+                        configuredEndpoint: connectionVars.IngestionEndpoint,
+                        actualEndpoint: requestEndpoint);
+                }
+                else
+                {
+                    foreach (var error in errorMessages)
+                    {
+                        TransmissionFailed(
+                            statusCode: statusCode,
+                            errorMessage: error ?? "N/A",
+                            action: willRetry ? "Telemetry is stored offline for retry." : "Telemetry is dropped.",
+                            origin: fromStorage ? "Storage" : "AzureMonitorExporter",
+                            instrumentationKey: connectionVars.InstrumentationKey,
+                            configuredEndpoint: connectionVars.IngestionEndpoint,
+                            actualEndpoint: requestEndpoint);
+                    }
+                }
+            }
+        }
+
+        [Event(35, Message = "Transmission failed. StatusCode: {0}. Error from Ingestion: {1}. Action: {2}. Origin: {3}. Instrumentation Key: {4}. Configured Endpoint: {5}. Actual Endpoint: {6}", Level = EventLevel.Critical)]
+        public void TransmissionFailed(int statusCode, string errorMessage, string action, string origin, string instrumentationKey, string configuredEndpoint, string? actualEndpoint)
+            => WriteEvent(35, statusCode, errorMessage, action, origin, instrumentationKey, configuredEndpoint, actualEndpoint);
     }
 }
