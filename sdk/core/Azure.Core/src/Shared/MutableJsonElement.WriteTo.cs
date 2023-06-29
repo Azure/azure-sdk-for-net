@@ -176,11 +176,14 @@ namespace Azure.Core.Json
                 current.GetProperty(name).WriteTo(writer);
             }
 
-            // Close off the last one
+            // Close off the last change we wrote
             string[] finalSegments = jsonPath.Split(MutableJsonDocument.ChangeTracker.Delimiter);
             for (int i = 0; i < finalSegments.Length; i++)
             {
-                writer.WriteEndObject();
+                if (finalSegments[i] != string.Empty)
+                {
+                    writer.WriteEndObject();
+                }
             }
 
             writer.WriteEndObject();
