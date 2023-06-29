@@ -128,7 +128,7 @@ namespace Azure.Communication.Chat.Tests.ChatClients
         }
 
         [Test]
-        public async Task OrderInGetReadReceiptsIteratorIsNotAltered()
+        public async Task OrderInGetReadReceiptsAsyncIteratorIsNotAltered()
         {
             //arrange
             var baseSenderId = "8:acs:1b5cc06b-f352-4571-b1e6-d9b259b7c776_00000007-0464-274b-b274-5a3a0d00010";
@@ -141,6 +141,29 @@ namespace Azure.Communication.Chat.Tests.ChatClients
             //assert
             int idCounter = 0;
             await foreach (ChatMessageReadReceipt readReceipt in allReadReceipts)
+            {
+                idCounter++;
+                Assert.AreEqual($"{idCounter}", readReceipt.ChatMessageId);
+                Assert.AreEqual($"{baseSenderId}{idCounter}", ((UnknownIdentifier)readReceipt.Sender).Id);
+                Assert.AreEqual(baseReadOnDate.AddSeconds(idCounter), readReceipt.ReadOn);
+            }
+            Assert.AreEqual(5, idCounter);
+        }
+
+        [Test]
+        public void OrderInGetReadReceiptsIteratorIsNotAltered()
+        {
+            //arrange
+            var baseSenderId = "8:acs:1b5cc06b-f352-4571-b1e6-d9b259b7c776_00000007-0464-274b-b274-5a3a0d00010";
+            var baseReadOnDate = DateTimeOffset.Parse("2020-12-15T00:00:00Z");
+            ChatThreadClient chatThreadClient = CreateMockChatThreadClient(200, AllReadReceiptsApiResponsePayload);
+
+            //act
+           var allReadReceipts = chatThreadClient.GetReadReceipts();
+
+            //assert
+            int idCounter = 0;
+            foreach (ChatMessageReadReceipt readReceipt in allReadReceipts)
             {
                 idCounter++;
                 Assert.AreEqual($"{idCounter}", readReceipt.ChatMessageId);
@@ -555,6 +578,27 @@ namespace Azure.Communication.Chat.Tests.ChatClients
         }
 
         [Test]
+        public async Task GetThreadsASyncWithDateTimeShouldSucceed()
+        {
+            //arrange
+            ChatClient chatClient = CreateMockChatClient(200, GetThreadsApiResponsePayload);
+
+            //act
+            AsyncPageable<ChatThreadItem> chatThreads = chatClient.GetChatThreadsAsync(It.IsAny<DateTimeOffset>());
+
+            //assert
+
+            int idCounter = 0;
+            await foreach (ChatThreadItem chatThread in chatThreads)
+            {
+                idCounter++;
+                Assert.AreEqual($"{idCounter}", chatThread.Id);
+                Assert.AreEqual($"Test Thread {idCounter}", chatThread.Topic);
+            }
+            Assert.AreEqual(3, idCounter);
+        }
+
+        [Test]
         public async Task GetThreadsASyncShouldSucceed()
         {
             //arrange
@@ -718,6 +762,25 @@ namespace Azure.Communication.Chat.Tests.ChatClients
         }
 
         [Test]
+        public void DeleteChatThreadShouldThrowException()
+        {
+            //arrange
+            var threadId = "19:e5e7a3fa5f314a01b2d12c6c7b37f433@thread.v2";
+            ChatClient chatClient = CreateMockChatClient(401);
+
+            try
+            {
+                //act
+                Response deleteChatThreadResponse = chatClient.DeleteChatThread(threadId);
+                throw new Exception("Test failed to throw exception");
+            }
+            catch (Exception ex)
+            {
+                Assert.True(ex.Message.Contains("401"));
+            }
+        }
+
+        [Test]
         public async Task CreateChatThreadShouldExposePartialErrors()
         {
             //arrange
@@ -784,6 +847,30 @@ namespace Azure.Communication.Chat.Tests.ChatClients
 
             var sendChatMessageResult = ChatModelFactory.SendChatMessageResult("id");
             Assert.IsNotNull(sendChatMessageResult);
+
+            var chatError = ChatModelFactory.ChatError("code", "message", "target", It.IsAny<IEnumerable<ChatError>>(), It.IsAny<ChatError>());
+            Assert.IsNotNull(chatError);
+
+            var chatParticipant = ChatModelFactory.ChatParticipant(It.IsAny<CommunicationIdentifier>(), It.IsAny<string>(), It.IsAny<DateTimeOffset>());
+            Assert.IsNotNull(chatParticipant);
+
+            var addChatParticipantsResult = ChatModelFactory.AddChatParticipantsResult(It.IsAny<IEnumerable<ChatError>>());
+            Assert.IsNotNull(addChatParticipantsResult);
+
+            var chatThreadItem = ChatModelFactory.ChatThreadItem("id", "topic", It.IsAny<DateTimeOffset>(), It.IsAny<DateTimeOffset>());
+            Assert.IsNotNull(chatThreadItem);
+
+            var chatMessageContent = ChatModelFactory.ChatMessageContent("id", "topic", It.IsAny<CommunicationUserIdentifier>(), It.IsAny<IEnumerable<ChatParticipant>>());
+            Assert.IsNotNull(chatMessageContent);
+
+            try
+            {
+                var chatMessage = ChatModelFactory.ChatMessage("id", It.IsAny<ChatMessageType>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<ChatMessageContent>(), It.IsAny<string>(), It.IsAny<DateTimeOffset>(), It.IsAny<string>(), It.IsAny<DateTimeOffset>(), It.IsAny<DateTimeOffset>(), It.IsAny<IReadOnlyDictionary<string, string>>());
+            }
+            catch (Exception ex)
+            {
+                Assert.IsNotNull(ex);
+            }
         }
         private void AsssertParticipantError(ChatError chatParticipantError, string expectedMessage, string expectedTarget)
         {
