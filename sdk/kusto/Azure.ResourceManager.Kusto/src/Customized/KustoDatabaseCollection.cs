@@ -115,10 +115,10 @@ namespace Azure.ResourceManager.Kusto
         /// <param name="top"> limit the number of results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="KustoDatabaseResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<KustoDatabaseResource> GetAllAsync(string skiptoken, int? top, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<KustoDatabaseResource> GetAllAsync(int? top, string skiptoken, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _kustoDatabaseDatabasesRestClient.CreateListByClusterRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, skiptoken, top);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _kustoDatabaseDatabasesRestClient.CreateListByClusterNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, skiptoken, top);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _kustoDatabaseDatabasesRestClient.CreateListByClusterRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top, skiptoken);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _kustoDatabaseDatabasesRestClient.CreateListByClusterNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top, skiptoken);
             return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new KustoDatabaseResource(Client, KustoDatabaseData.DeserializeKustoDatabaseData(e)), _kustoDatabaseDatabasesClientDiagnostics, Pipeline, "KustoDatabaseCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
@@ -139,10 +139,10 @@ namespace Azure.ResourceManager.Kusto
         /// <param name="top"> limit the number of results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="KustoDatabaseResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<KustoDatabaseResource> GetAll(string skiptoken, int? top, CancellationToken cancellationToken = default)
+        public virtual Pageable<KustoDatabaseResource> GetAll(int? top, string skiptoken, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _kustoDatabaseDatabasesRestClient.CreateListByClusterRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, skiptoken, top);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _kustoDatabaseDatabasesRestClient.CreateListByClusterNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, skiptoken, top);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _kustoDatabaseDatabasesRestClient.CreateListByClusterRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top, skiptoken);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _kustoDatabaseDatabasesRestClient.CreateListByClusterNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top, skiptoken);
             return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new KustoDatabaseResource(Client, KustoDatabaseData.DeserializeKustoDatabaseData(e)), _kustoDatabaseDatabasesClientDiagnostics, Pipeline, "KustoDatabaseCollection.GetAll", "value", "nextLink", cancellationToken);
         }
     }
