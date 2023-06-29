@@ -1174,6 +1174,13 @@
         "runpath",
         "Cves"
       ]
+    },
+    {
+      "filename": "**/sdk/networkcloud/Azure.ResourceManager.NetworkCloud/**/*.cs",
+      "words": [
+        "Ipvlan",
+        "Macvlan"
+      ]
     }
   ],
   "allowCompoundWords": true
