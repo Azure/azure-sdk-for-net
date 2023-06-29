@@ -14,6 +14,7 @@ namespace Azure.Developer.LoadTesting.Models
     public partial class PassFailMetric
     {
         private MutableJsonElement _element;
+
         /// <summary> Initializes a new instance of PassFailMetric. </summary>
         public PassFailMetric()
         {

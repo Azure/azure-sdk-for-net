@@ -158,9 +158,10 @@ namespace Azure.Core.Json
                         if (!current.TryGetNode(segments[i], out node))
                         {
                             // TODO: How do I know if it's an array?
-                             node = new MutableJsonPatchNode(segments[i], MutableJsonPatchNodeKind.Object);
+                            node = new MutableJsonPatchNode(segments[i], MutableJsonPatchNodeKind.Object);
                             current.Children.Add(node);
                         }
+
                         current = node;
                     }
 

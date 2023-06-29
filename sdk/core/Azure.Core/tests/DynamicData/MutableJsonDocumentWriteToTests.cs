@@ -818,6 +818,53 @@ namespace Azure.Core.Tests
         }
 
         [Test]
+        public void CanWritePatchInterleaveParentAndChildChanges()
+        {
+            string json = """
+                {
+                    "a": {
+                        "aa": 1,
+                        "ab": 2
+                    },
+                    "b": {
+                        "ba": "1",
+                        "bb": "2"
+                    }
+                }
+                """;
+            MutableJsonDocument mdoc = MutableJsonDocument.Parse(json);
+
+            mdoc.RootElement.GetProperty("a").GetProperty("aa").Set(3);
+            mdoc.RootElement.GetProperty("b").GetProperty("ba").Set("3");
+            mdoc.RootElement.GetProperty("b").Set(new { ba = "3", bb = "4" });
+            mdoc.RootElement.GetProperty("a").GetProperty("ab").Set(4);
+            mdoc.RootElement.GetProperty("b").GetProperty("ba").Set("5");
+            mdoc.RootElement.GetProperty("a").GetProperty("aa").Set(5);
+
+            string expected = """
+                {
+                    "a": {
+                        "aa": 5,
+                        "ab": 4
+                    },
+                    "b": {
+                        "ba": "5",
+                        "bb": "4"
+                    }
+                }
+                """;
+
+            using Stream stream = new MemoryStream();
+            mdoc.WriteTo(stream, 'P');
+            stream.Flush();
+            stream.Position = 0;
+
+            string actual = BinaryData.FromStream(stream).ToString();
+
+            AreEqualJson(expected, actual);
+        }
+
+        [Test]
         public void CanWritePatchForNonRootElement()
         {
             throw new NotImplementedException();
