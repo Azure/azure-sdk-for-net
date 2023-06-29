@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.Kusto.Tests.Scenario
 {
     public class KustoClusterTests : KustoManagementTestBase
     {
-        private readonly KustoSku _sku = new(Dev(No SLA)_Standard_E2a_v4, 1, KustoSkuTier.BasicValue);
+        private readonly KustoSku _sku = new(KustoSkuName.DevNoSlaStandardE2aV4, 1, KustoSkuTier.Basic);
 
         public KustoClusterTests(bool isAsync)
             : base(isAsync) //, RecordedTestMode.Record)

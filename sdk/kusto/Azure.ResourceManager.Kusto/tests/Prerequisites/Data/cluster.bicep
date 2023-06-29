@@ -83,6 +83,12 @@ resource migrationCluster 'Microsoft.Kusto/clusters@2023-05-02' = {
     identity: {
         type: 'SystemAssigned'
     }
+
+     resource database 'databases' = {
+            name: 'migrationDb'
+            location: location
+            kind: 'ReadWrite'
+     }
 }
 
 output MIGRATION_CLUSTER_NAME string = migrationClusterName
