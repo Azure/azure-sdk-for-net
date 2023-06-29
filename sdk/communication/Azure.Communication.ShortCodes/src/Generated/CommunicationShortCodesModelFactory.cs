@@ -12,7 +12,7 @@ using System.Linq;
 namespace Azure.Communication.ShortCodes.Models
 {
     /// <summary> Model factory for models. </summary>
-    public static partial class ShortCodesNumbersModelFactory
+    public static partial class CommunicationShortCodesModelFactory
     {
         /// <summary> Initializes a new instance of ShortCode. </summary>
         /// <param name="number"> The value of the ShortCode or the alpha numeric e.g. '555555', 'CONTOSO', etc. </param>

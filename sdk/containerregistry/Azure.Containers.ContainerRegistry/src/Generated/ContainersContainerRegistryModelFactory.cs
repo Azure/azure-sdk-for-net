@@ -12,7 +12,7 @@ using System.Linq;
 namespace Azure.Containers.ContainerRegistry
 {
     /// <summary> Model factory for models. </summary>
-    public static partial class ContainerRegistryModelFactory
+    public static partial class ContainersContainerRegistryModelFactory
     {
         /// <summary> Initializes a new instance of ContainerRepositoryProperties. </summary>
         /// <param name="registryLoginServer"> Registry login server name. This is likely to be similar to {registry-name}.azurecr.io. </param>
