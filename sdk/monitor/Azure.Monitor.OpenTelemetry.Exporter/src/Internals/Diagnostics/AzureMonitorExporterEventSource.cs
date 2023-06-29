@@ -302,7 +302,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics
             }
         }
 
-        [Event(34, Message = "Failed to deserialize response from ingestion due to an exception. This is only used for logging. Not user actionable. {0}", Level = EventLevel.Warning)]
+        [Event(34, Message = "Failed to deserialize response from ingestion due to an exception. Not user actionable. {0}", Level = EventLevel.Warning)]
         public void FailedToDeserializeIngestionResponse(string exceptionMessage) => WriteEvent(34, exceptionMessage);
     }
 }
