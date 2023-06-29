@@ -121,64 +121,147 @@ namespace Azure.Core.Json
 
         internal void WritePatch(Utf8JsonWriter writer)
         {
+            if (!_root.Changes.HasChanges)
+            {
+                return;
+            }
+
             // This version is not efficient; Proof of concept.
 
-            MutableJsonPatchNode root = _root.Changes.BuildPatchTree();
+            // TODO: rewrite using Span, so much win there
+            IEnumerable<string> changed = _root.Changes.GetChangedProperties();
 
-            WritePatchElement(root, writer);
+            string jsonPath = string.Empty;
 
-            // Test case: properties on the same descendant object are updated
-            // between updates to different descendant objects, but they group
-            // together correctly in the PATCH JSON.
+            MutableJsonElement current = _root.RootElement;
 
-            // Test case: ancestor changes then descendant changes
-            // Test case: descendant changes then ancestor changes
-
-            // Test case: array elements change
-            // Test case: enum values change
-            // Test case: new property is added
-            // Test case: property is deleted
-
-            // TODO: this will break on arrays
-        }
-
-        private void WritePatchElement(MutableJsonPatchNode node, Utf8JsonWriter writer)
-        {
-            switch (node.Kind)
-            {
-                case MutableJsonPatchNodeKind.Value:
-                    node.Change!.Value.GetSerializedValue().WriteTo(writer);
-                    break;
-                case MutableJsonPatchNodeKind.Object:
-                    WritePatchObject(node, writer);
-                    break;
-                case MutableJsonPatchNodeKind.Array:
-                    WritePatchArray(node, writer);
-                    break;
-                default:
-                    throw new InvalidOperationException("Unrecognized PATCH kind.");
-            }
-        }
-
-        private void WritePatchObject(MutableJsonPatchNode node, Utf8JsonWriter writer)
-        {
+            // TODO: this breaks for arrays
             writer.WriteStartObject();
-            foreach (MutableJsonPatchNode child in node.Children!)
+
+            foreach (string path in changed)
             {
-                writer.WritePropertyName(child.Name);
-                WritePatchElement(child, writer);
+                string currentPath = string.Empty;
+                string[] segments = path.Split(MutableJsonDocument.ChangeTracker.Delimiter);
+                string name;
+
+                int i = 0;
+                for (; i < segments.Length - 1; i++)
+                {
+                    name = segments[i];
+                    currentPath = MutableJsonDocument.ChangeTracker.PushProperty(currentPath, name);
+
+                    while (!currentPath.StartsWith(jsonPath))
+                    {
+                        writer.WriteEndObject();
+
+                        // Pop path and current
+                        jsonPath = MutableJsonDocument.ChangeTracker.PopProperty(jsonPath);
+                        current = GetPropertyFromRoot(jsonPath);
+                    }
+
+                    if (!jsonPath.StartsWith(currentPath) && currentPath.StartsWith(jsonPath))
+                    {
+                        writer.WritePropertyName(name);
+                        writer.WriteStartObject();
+
+                        jsonPath = MutableJsonDocument.ChangeTracker.PushProperty(jsonPath, name);
+                        current = current.GetProperty(name);
+                        continue;
+                    }
+                }
+
+                name = segments[i];
+                currentPath = MutableJsonDocument.ChangeTracker.PushProperty(currentPath, name);
+                writer.WritePropertyName(name);
+                current.GetProperty(name).WriteTo(writer);
             }
+
+            // Close off the last one
+            string[] finalSegments = jsonPath.Split(MutableJsonDocument.ChangeTracker.Delimiter);
+            for (int i = 0; i < finalSegments.Length; i++)
+            {
+                writer.WriteEndObject();
+            }
+
             writer.WriteEndObject();
         }
 
-        private void WritePatchArray(MutableJsonPatchNode node, Utf8JsonWriter writer)
+        private MutableJsonElement GetPropertyFromRoot(string path)
         {
-            writer.WriteStartArray();
-            foreach (MutableJsonPatchNode child in node.Children!)
+            if (path == string.Empty)
             {
-                WritePatchElement(child, writer);
+                return _root.RootElement;
             }
-            writer.WriteEndArray();
+
+            string[] segments = path.Split(MutableJsonDocument.ChangeTracker.Delimiter);
+            MutableJsonElement current = _root.RootElement;
+            foreach (string segment in segments)
+            {
+                current = current.GetProperty(segment);
+            }
+            return current;
         }
+
+        //internal void WritePatch(Utf8JsonWriter writer)
+        //{
+        //    // This version is not efficient; Proof of concept.
+
+        //    _root.Changes.GetChangedProperties();
+
+        //    WritePatchElement(root, writer);
+
+        //    // Test case: properties on the same descendant object are updated
+        //    // between updates to different descendant objects, but they group
+        //    // together correctly in the PATCH JSON.
+
+        //    // Test case: ancestor changes then descendant changes
+        //    // Test case: descendant changes then ancestor changes
+
+        //    // Test case: array elements change
+        //    // Test case: enum values change
+        //    // Test case: new property is added
+        //    // Test case: property is deleted
+
+        //    // TODO: this will break on arrays
+        //}
+
+        //private void WritePatchElement(MutableJsonPatchNode node, Utf8JsonWriter writer)
+        //{
+        //    switch (node.Kind)
+        //    {
+        //        case MutableJsonPatchNodeKind.Value:
+        //            node.Change!.Value.GetSerializedValue().WriteTo(writer);
+        //            break;
+        //        case MutableJsonPatchNodeKind.Object:
+        //            WritePatchObject(node, writer);
+        //            break;
+        //        case MutableJsonPatchNodeKind.Array:
+        //            WritePatchArray(node, writer);
+        //            break;
+        //        default:
+        //            throw new InvalidOperationException("Unrecognized PATCH kind.");
+        //    }
+        //}
+
+        //private void WritePatchObject(MutableJsonPatchNode node, Utf8JsonWriter writer)
+        //{
+        //    writer.WriteStartObject();
+        //    foreach (MutableJsonPatchNode child in node.Children!)
+        //    {
+        //        writer.WritePropertyName(child.Name);
+        //        WritePatchElement(child, writer);
+        //    }
+        //    writer.WriteEndObject();
+        //}
+
+        //private void WritePatchArray(MutableJsonPatchNode node, Utf8JsonWriter writer)
+        //{
+        //    writer.WriteStartArray();
+        //    foreach (MutableJsonPatchNode child in node.Children!)
+        //    {
+        //        WritePatchElement(child, writer);
+        //    }
+        //    writer.WriteEndArray();
+        //}
     }
 }

@@ -137,58 +137,49 @@ namespace Azure.Core.Json
                 }
             }
 
-            internal MutableJsonPatchNode BuildPatchTree()
-            {
-                MutableJsonPatchNode root = new MutableJsonPatchNode("", MutableJsonPatchNodeKind.Object);
-
-                // Get the list of paths to properties that have changed.
-                // This should consolidate multiple changes to a path down to one.
-                IEnumerable<string> properties = GetChangedProperties();
-
-                foreach (string path in properties)
-                {
-                    string[] segments = path.Split(Delimiter);
-                    MutableJsonPatchNode current = root;
-
-                    // Add the ancestors
-                    MutableJsonPatchNode node;
-                    int i = 0;
-                    for (; i < segments.Length - 1; i++)
-                    {
-                        if (!current.TryGetNode(segments[i], out node))
-                        {
-                            // TODO: How do I know if it's an array?
-                            node = new MutableJsonPatchNode(segments[i], MutableJsonPatchNodeKind.Object);
-                            current.Children.Add(node);
-                        }
-
-                        current = node;
-                    }
-
-                    // Add the change value
-                    TryGetChange(path, -1, out MutableJsonChange change);
-                    current.Children.Add(new MutableJsonPatchNode(segments[i], change));
-                }
-
-                return root;
-            }
-
             internal IEnumerable<string> GetChangedProperties()
             {
-                HashSet<string> properties = new HashSet<string>();
-
+                HashSet<string> unique = new();
                 if (_changes == null)
                 {
-                    return properties;
+                    return unique;
                 }
 
+                // Get unique properties
                 for (int i = _changes!.Count - 1; i >= 0; i--)
                 {
                     MutableJsonChange c = _changes[i];
-                    properties.Add(c.Path);
+                    unique.Add(c.Path);
                 }
 
-                return properties;
+                // Sort them
+                List<string> list = new(unique);
+                list.Sort();
+
+                // Remove descendants if their ancestors changed.
+                if (list.Count > 1)
+                {
+                    // Make a copy we won't mutate
+                    List<string> copy = new(list);
+
+                    string current = copy[0];
+                    for (int i = 1; i < copy.Count; i++)
+                    {
+                        string next = copy[i];
+                        TryGetChange(next, -1, out MutableJsonChange change);
+
+                        if (change.IsDescendant(current))
+                        {
+                            list.Remove(next);
+                        }
+                        else
+                        {
+                            current = next;
+                        }
+                    }
+                }
+
+                return list;
             }
 
             internal bool WasRemoved(string path, int highWaterMark)

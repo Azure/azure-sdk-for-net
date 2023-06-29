@@ -61,7 +61,6 @@
     <Compile Include="Shared\Multipart\MemoryResponse.cs" />
     <Compile Include="Shared\MutableJsonReadOnlyList.cs" />
     <Compile Include="Shared\MutableJsonDictionary.cs" />
-    <Compile Include="Shared\MutableJsonPatchNode.cs" />
     <Compile Include="Shared\MutableJsonChange.cs" />
     <Compile Include="Shared\MutableJsonChangeKind.cs" />
     <Compile Include="Shared\MutableJsonDocument.ChangeTracker.cs" />
