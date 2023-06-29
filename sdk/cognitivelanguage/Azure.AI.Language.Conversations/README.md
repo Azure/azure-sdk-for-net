@@ -44,6 +44,7 @@ Start by importing the namespace for the [`ConversationAnalysisClient`][conversa
 
 ```C# Snippet:ConversationAnalysisClient_Namespaces
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.AI.Language.Conversations;
 ```
 
@@ -140,60 +141,60 @@ string deploymentName = "production";
 
 var data = new
 {
-    analysisInput = new
+    AnalysisInput = new
     {
-        conversationItem = new
+        ConversationItem = new
         {
-            text = "Send an email to Carol about tomorrow's demo",
-            id = "1",
-            participantId = "1",
+            Text = "Send an email to Carol about tomorrow's demo",
+            Id = "1",
+            ParticipantId = "1",
         }
     },
-    parameters = new
+    Parameters = new
     {
-        projectName,
-        deploymentName,
+        ProjectName = projectName,
+        DeploymentName = deploymentName,
 
         // Use Utf16CodeUnit for strings in .NET.
-        stringIndexType = "Utf16CodeUnit",
+        StringIndexType = "Utf16CodeUnit",
     },
-    kind = "Conversation",
+    Kind = "Conversation",
 };
 
-Response response = client.AnalyzeConversation(RequestContent.Create(data));
+Response response = client.AnalyzeConversation(RequestContent.Create(data, JsonPropertyNames.CamelCase));
 
-dynamic conversationalTaskResult = response.Content.ToDynamicFromJson();
-dynamic conversationPrediction = conversationalTaskResult.result.prediction;
+dynamic conversationalTaskResult = response.Content.ToDynamicFromJson(JsonPropertyNames.CamelCase);
+dynamic conversationPrediction = conversationalTaskResult.Result.Prediction;
 
-Console.WriteLine($"Top intent: {conversationPrediction.topIntent}");
+Console.WriteLine($"Top intent: {conversationPrediction.TopIntent}");
 
 Console.WriteLine("Intents:");
-foreach (dynamic intent in conversationPrediction.intents)
+foreach (dynamic intent in conversationPrediction.Intents)
 {
-    Console.WriteLine($"Category: {intent.category}");
-    Console.WriteLine($"Confidence: {intent.confidenceScore}");
+    Console.WriteLine($"Category: {intent.Category}");
+    Console.WriteLine($"Confidence: {intent.ConfidenceScore}");
     Console.WriteLine();
 }
 
 Console.WriteLine("Entities:");
-foreach (dynamic entity in conversationPrediction.entities)
+foreach (dynamic entity in conversationPrediction.Entities)
 {
-    Console.WriteLine($"Category: {entity.category}");
-    Console.WriteLine($"Text: {entity.text}");
-    Console.WriteLine($"Offset: {entity.offset}");
-    Console.WriteLine($"Length: {entity.length}");
-    Console.WriteLine($"Confidence: {entity.confidenceScore}");
+    Console.WriteLine($"Category: {entity.Category}");
+    Console.WriteLine($"Text: {entity.Text}");
+    Console.WriteLine($"Offset: {entity.Offset}");
+    Console.WriteLine($"Length: {entity.Length}");
+    Console.WriteLine($"Confidence: {entity.ConfidenceScore}");
     Console.WriteLine();
 
-    if (entity.resolutions is not null)
+    if (entity.Resolutions is not null)
     {
-        foreach (dynamic resolution in entity.resolutions)
+        foreach (dynamic resolution in entity.Resolutions)
         {
-            if (resolution.resolutionKind == "DateTimeResolution")
+            if (resolution.ResolutionKind == "DateTimeResolution")
             {
-                Console.WriteLine($"Datetime Sub Kind: {resolution.dateTimeSubKind}");
-                Console.WriteLine($"Timex: {resolution.timex}");
-                Console.WriteLine($"Value: {resolution.value}");
+                Console.WriteLine($"Datetime Sub Kind: {resolution.DateTimeSubKind}");
+                Console.WriteLine($"Timex: {resolution.Timex}");
+                Console.WriteLine($"Value: {resolution.Value}");
                 Console.WriteLine();
             }
         }
@@ -209,28 +210,28 @@ string deploymentName = "production";
 
 var data = new
 {
-    analysisInput = new
+    AnalysisInput = new
     {
-        conversationItem = new
+        ConversationItem = new
         {
-            text = "Send an email to Carol about tomorrow's demo",
-            id = "1",
-            participantId = "1",
+            Text = "Send an email to Carol about tomorrow's demo",
+            Id = "1",
+            ParticipantId = "1",
         }
     },
-    parameters = new
+    Parameters = new
     {
-        projectName,
-        deploymentName,
-        verbose = true,
+        ProjectName = projectName,
+        DeploymentName = deploymentName,
+        Verbose = true,
 
         // Use Utf16CodeUnit for strings in .NET.
-        stringIndexType = "Utf16CodeUnit",
+        StringIndexType = "Utf16CodeUnit",
     },
-    kind = "Conversation",
+    Kind = "Conversation",
 };
 
-Response response = client.AnalyzeConversation(RequestContent.Create(data));
+Response response = client.AnalyzeConversation(RequestContent.Create(data, JsonPropertyNames.CamelCase));
 ```
 
 ### Analyze a conversation in a different language
@@ -243,29 +244,29 @@ string deploymentName = "production";
 
 var data = new
 {
-    analysisInput = new
+    AnalysisInput = new
     {
-        conversationItem = new
+        ConversationItem = new
         {
-            text = "Enviar un email a Carol acerca de la presentación de mañana",
-            language = "es",
-            id = "1",
-            participantId = "1",
+            Text = "Enviar un email a Carol acerca de la presentación de mañana",
+            Language = "es",
+            Id = "1",
+            ParticipantId = "1",
         }
     },
-    parameters = new
+    Parameters = new
     {
-        projectName,
-        deploymentName,
-        verbose = true,
+        ProjectName = projectName,
+        DeploymentName = deploymentName,
+        Verbose = true,
 
         // Use Utf16CodeUnit for strings in .NET.
-        stringIndexType = "Utf16CodeUnit",
+        StringIndexType = "Utf16CodeUnit",
     },
-    kind = "Conversation",
+    Kind = "Conversation",
 };
 
-Response response = client.AnalyzeConversation(RequestContent.Create(data));
+Response response = client.AnalyzeConversation(RequestContent.Create(data, JsonPropertyNames.CamelCase));
 ```
 
 ### Analyze a conversation using an orchestration project
@@ -279,30 +280,30 @@ string deploymentName = "production";
 
 var data = new
 {
-    analysisInput = new
+    AnalysisInput = new
     {
-        conversationItem = new
+        ConversationItem = new
         {
-            text = "How are you?",
-            id = "1",
-            participantId = "1",
+            Text = "How are you?",
+            Id = "1",
+            ParticipantId = "1",
         }
     },
-    parameters = new
+    Parameters = new
     {
-        projectName,
-        deploymentName,
+        ProjectName = projectName,
+        DeploymentName = deploymentName,
 
         // Use Utf16CodeUnit for strings in .NET.
-        stringIndexType = "Utf16CodeUnit",
+        StringIndexType = "Utf16CodeUnit",
     },
-    kind = "Conversation",
+    Kind = "Conversation",
 };
 
-Response response = client.AnalyzeConversation(RequestContent.Create(data));
+Response response = client.AnalyzeConversation(RequestContent.Create(data, JsonPropertyNames.CamelCase));
 
-dynamic conversationalTaskResult = response.Content.ToDynamicFromJson();
-dynamic orchestrationPrediction = conversationalTaskResult.result.prediction;
+dynamic conversationalTaskResult = response.Content.ToDynamicFromJson(JsonPropertyNames.CamelCase);
+dynamic orchestrationPrediction = conversationalTaskResult.Result.Prediction;
 ```
 
 #### Question Answering prediction
@@ -310,18 +311,18 @@ dynamic orchestrationPrediction = conversationalTaskResult.result.prediction;
 If your conversation was analyzed by Question Answering, it will include an intent - perhaps even the top intent - from which you can retrieve answers:
 
 ```C# Snippet:ConversationAnalysis_AnalyzeConversationOrchestrationPredictionQnA
-string respondingProjectName = orchestrationPrediction.topIntent;
-dynamic targetIntentResult = orchestrationPrediction.intents[respondingProjectName];
+string respondingProjectName = orchestrationPrediction.TopIntent;
+dynamic targetIntentResult = orchestrationPrediction.Intents[respondingProjectName];
 
-if (targetIntentResult.targetProjectKind == "QuestionAnswering")
+if (targetIntentResult.TargetProjectKind == "QuestionAnswering")
 {
     Console.WriteLine($"Top intent: {respondingProjectName}");
 
-    dynamic questionAnsweringResponse = targetIntentResult.result;
+    dynamic questionAnsweringResponse = targetIntentResult.Result;
     Console.WriteLine($"Question Answering Response:");
-    foreach (dynamic answer in questionAnsweringResponse.answers)
+    foreach (dynamic answer in questionAnsweringResponse.Answers)
     {
-        Console.WriteLine(answer.answer?.ToString());
+        Console.WriteLine(answer.Answer?.ToString());
     }
 }
 ```
@@ -333,51 +334,51 @@ To summarize a conversation, you can use the `AnalyzeConversation` method overlo
 ```C# Snippet:AnalyzeConversation_ConversationSummarization
 var data = new
 {
-    analysisInput = new
+    AnalysisInput = new
     {
-        conversations = new[]
+        Conversations = new[]
         {
             new
             {
-                conversationItems = new[]
+                ConversationItems = new[]
                 {
                     new
                     {
-                        text = "Hello, how can I help you?",
-                        id = "1",
-                        role = "Agent",
-                        participantId = "Agent_1",
+                        Text = "Hello, how can I help you?",
+                        Id = "1",
+                        Role = "Agent",
+                        ParticipantId = "Agent_1",
                     },
                     new
                     {
-                        text = "How to upgrade Office? I am getting error messages the whole day.",
-                        id = "2",
-                        role = "Customer",
-                        participantId = "Customer_1",
+                        Text = "How to upgrade Office? I am getting error messages the whole day.",
+                        Id = "2",
+                        Role = "Customer",
+                        ParticipantId = "Customer_1",
                     },
                     new
                     {
-                        text = "Press the upgrade button please. Then sign in and follow the instructions.",
-                        id = "3",
-                        role = "Agent",
-                        participantId = "Agent_1",
+                        Text = "Press the upgrade button please. Then sign in and follow the instructions.",
+                        Id = "3",
+                        Role = "Agent",
+                        ParticipantId = "Agent_1",
                     },
                 },
-                id = "1",
-                language = "en",
-                modality = "text",
+                Id = "1",
+                Language = "en",
+                Modality = "text",
             },
         }
     },
-    tasks = new[]
+    Tasks = new[]
     {
         new
         {
-            taskName = "Issue task",
-            kind = "ConversationalSummarizationTask",
-            parameters = new
+            TaskName = "Issue task",
+            Kind = "ConversationalSummarizationTask",
+            Parameters = new
             {
-                summaryAspects = new[]
+                SummaryAspects = new[]
                 {
                     "issue",
                 }
@@ -385,11 +386,11 @@ var data = new
         },
         new
         {
-            taskName = "Resolution task",
-            kind = "ConversationalSummarizationTask",
-            parameters = new
+            TaskName = "Resolution task",
+            Kind = "ConversationalSummarizationTask",
+            Parameters = new
             {
-                summaryAspects = new[]
+                SummaryAspects = new[]
                 {
                     "resolution",
                 }
@@ -398,21 +399,21 @@ var data = new
     },
 };
 
-Operation<BinaryData> analyzeConversationOperation = client.AnalyzeConversations(WaitUntil.Completed, RequestContent.Create(data));
+Operation<BinaryData> analyzeConversationOperation = client.AnalyzeConversations(WaitUntil.Completed, RequestContent.Create(data, JsonPropertyNames.CamelCase));
 
-dynamic jobResults = analyzeConversationOperation.Value.ToDynamicFromJson();
-foreach (dynamic task in jobResults.tasks.items)
+dynamic jobResults = analyzeConversationOperation.Value.ToDynamicFromJson(JsonPropertyNames.CamelCase);
+foreach (dynamic task in jobResults.Tasks.Items)
 {
-    Console.WriteLine($"Task name: {task.taskName}");
-    dynamic results = task.results;
-    foreach (dynamic conversation in results.conversations)
+    Console.WriteLine($"Task name: {task.TaskName}");
+    dynamic results = task.Results;
+    foreach (dynamic conversation in results.Conversations)
     {
-        Console.WriteLine($"Conversation: #{conversation.id}");
+        Console.WriteLine($"Conversation: #{conversation.Id}");
         Console.WriteLine("Summaries:");
-        foreach (dynamic summary in conversation.summaries)
+        foreach (dynamic summary in conversation.Summaries)
         {
-            Console.WriteLine($"Text: {summary.text}");
-            Console.WriteLine($"Aspect: {summary.aspect}");
+            Console.WriteLine($"Text: {summary.Text}");
+            Console.WriteLine($"Aspect: {summary.Aspect}");
         }
         Console.WriteLine();
     }

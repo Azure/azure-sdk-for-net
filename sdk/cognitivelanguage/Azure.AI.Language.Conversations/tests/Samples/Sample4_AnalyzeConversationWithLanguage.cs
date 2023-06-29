@@ -4,6 +4,7 @@
 using System;
 using System.Threading.Tasks;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
 
@@ -27,64 +28,64 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
 
             var data = new
             {
-                analysisInput = new
+                AnalysisInput = new
                 {
-                    conversationItem = new
+                    ConversationItem = new
                     {
-                        text = "Enviar un email a Carol acerca de la presentación de mañana",
-                        language = "es",
-                        id = "1",
-                        participantId = "1",
+                        Text = "Enviar un email a Carol acerca de la presentación de mañana",
+                        Language = "es",
+                        Id = "1",
+                        ParticipantId = "1",
                     }
                 },
-                parameters = new
+                Parameters = new
                 {
-                    projectName,
-                    deploymentName,
-                    verbose = true,
+                    ProjectName = projectName,
+                    DeploymentName = deploymentName,
+                    Verbose = true,
 
                     // Use Utf16CodeUnit for strings in .NET.
-                    stringIndexType = "Utf16CodeUnit",
+                    StringIndexType = "Utf16CodeUnit",
                 },
-                kind = "Conversation",
+                Kind = "Conversation",
             };
 
-            Response response = client.AnalyzeConversation(RequestContent.Create(data));
+            Response response = client.AnalyzeConversation(RequestContent.Create(data, JsonPropertyNames.CamelCase));
             #endregion
 
-            dynamic conversationalTaskResult = response.Content.ToDynamicFromJson();
-            dynamic conversationPrediction = conversationalTaskResult.result.prediction;
+            dynamic conversationalTaskResult = response.Content.ToDynamicFromJson(JsonPropertyNames.CamelCase);
+            dynamic conversationPrediction = conversationalTaskResult.Result.Prediction;
 
-            Console.WriteLine($"Project Kind: {conversationPrediction.projectKind}");
-            Console.WriteLine($"Top intent: {conversationPrediction.topIntent}");
+            Console.WriteLine($"Project Kind: {conversationPrediction.ProjectKind}");
+            Console.WriteLine($"Top intent: {conversationPrediction.TopIntent}");
 
             Console.WriteLine("Intents:");
-            foreach (dynamic intent in conversationPrediction.intents)
+            foreach (dynamic intent in conversationPrediction.Intents)
             {
-                Console.WriteLine($"Category: {intent.category}");
-                Console.WriteLine($"Confidence: {intent.confidenceScore}");
+                Console.WriteLine($"Category: {intent.Category}");
+                Console.WriteLine($"Confidence: {intent.ConfidenceScore}");
                 Console.WriteLine();
             }
 
             Console.WriteLine("Entities:");
-            foreach (dynamic entity in conversationPrediction.entities)
+            foreach (dynamic entity in conversationPrediction.Entities)
             {
-                Console.WriteLine($"Category: {entity.category}");
-                Console.WriteLine($"Text: {entity.text}");
-                Console.WriteLine($"Offset: {entity.offset}");
-                Console.WriteLine($"Length: {entity.length}");
-                Console.WriteLine($"Confidence: {entity.confidenceScore}");
+                Console.WriteLine($"Category: {entity.Category}");
+                Console.WriteLine($"Text: {entity.Text}");
+                Console.WriteLine($"Offset: {entity.Offset}");
+                Console.WriteLine($"Length: {entity.Length}");
+                Console.WriteLine($"Confidence: {entity.ConfidenceScore}");
                 Console.WriteLine();
 
-                if (entity.resolutions is not null)
+                if (entity.Resolutions is not null)
                 {
-                    foreach (dynamic resolution in entity.resolutions)
+                    foreach (dynamic resolution in entity.Resolutions)
                     {
-                        if (resolution.resolutionKind == "DateTimeResolution")
+                        if (resolution.ResolutionKind == "DateTimeResolution")
                         {
-                            Console.WriteLine($"Datetime Sub Kind: {resolution.dateTimeSubKind}");
-                            Console.WriteLine($"Timex: {resolution.timex}");
-                            Console.WriteLine($"Value: {resolution.value}");
+                            Console.WriteLine($"Datetime Sub Kind: {resolution.DateTimeSubKind}");
+                            Console.WriteLine($"Timex: {resolution.Timex}");
+                            Console.WriteLine($"Value: {resolution.Value}");
                             Console.WriteLine();
                         }
                     }
@@ -92,7 +93,7 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
             }
 
             Assert.That(response.Status, Is.EqualTo(200));
-            Assert.That(conversationPrediction.topIntent?.ToString(), Is.EqualTo("Send"));
+            Assert.That(conversationPrediction.TopIntent?.ToString(), Is.EqualTo("Send"));
         }
 
         [AsyncOnly]
@@ -106,65 +107,65 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
 
             var data = new
             {
-                analysisInput = new
+                AnalysisInput = new
                 {
-                    conversationItem = new
+                    ConversationItem = new
                     {
-                        text = "Enviar un email a Carol acerca de la presentación de mañana",
-                        language = "es",
-                        id = "1",
-                        participantId = "1",
+                        Text = "Enviar un email a Carol acerca de la presentación de mañana",
+                        Language = "es",
+                        Id = "1",
+                        ParticipantId = "1",
                     }
                 },
-                parameters = new
+                Parameters = new
                 {
-                    projectName,
-                    deploymentName,
-                    verbose = true,
+                    ProjectName = projectName,
+                    DeploymentName = deploymentName,
+                    Verbose = true,
 
                     // Use Utf16CodeUnit for strings in .NET.
-                    stringIndexType = "Utf16CodeUnit",
+                    StringIndexType = "Utf16CodeUnit",
                 },
-                kind = "Conversation",
+                Kind = "Conversation",
             };
 
             #region Snippet:ConversationAnalysis_AnalyzeConversationWithLanguageAsync
-            Response response = await client.AnalyzeConversationAsync(RequestContent.Create(data));
+            Response response = await client.AnalyzeConversationAsync(RequestContent.Create(data, JsonPropertyNames.CamelCase));
             #endregion
 
-            dynamic conversationalTaskResult = response.Content.ToDynamicFromJson();
-            dynamic conversationPrediction = conversationalTaskResult.result.prediction;
+            dynamic conversationalTaskResult = response.Content.ToDynamicFromJson(JsonPropertyNames.CamelCase);
+            dynamic conversationPrediction = conversationalTaskResult.Result.Prediction;
 
-            Console.WriteLine($"Project Kind: {conversationPrediction.projectKind}");
-            Console.WriteLine($"Top intent: {conversationPrediction.topIntent}");
+            Console.WriteLine($"Project Kind: {conversationPrediction.ProjectKind}");
+            Console.WriteLine($"Top intent: {conversationPrediction.TopIntent}");
 
             Console.WriteLine("Intents:");
-            foreach (dynamic intent in conversationPrediction.intents)
+            foreach (dynamic intent in conversationPrediction.Intents)
             {
-                Console.WriteLine($"Category: {intent.category}");
-                Console.WriteLine($"Confidence: {intent.confidenceScore}");
+                Console.WriteLine($"Category: {intent.Category}");
+                Console.WriteLine($"Confidence: {intent.ConfidenceScore}");
                 Console.WriteLine();
             }
 
             Console.WriteLine("Entities:");
-            foreach (dynamic entity in conversationPrediction.entities)
+            foreach (dynamic entity in conversationPrediction.Entities)
             {
-                Console.WriteLine($"Category: {entity.category}");
-                Console.WriteLine($"Text: {entity.text}");
-                Console.WriteLine($"Offset: {entity.offset}");
-                Console.WriteLine($"Length: {entity.length}");
-                Console.WriteLine($"Confidence: {entity.confidenceScore}");
+                Console.WriteLine($"Category: {entity.Category}");
+                Console.WriteLine($"Text: {entity.Text}");
+                Console.WriteLine($"Offset: {entity.Offset}");
+                Console.WriteLine($"Length: {entity.Length}");
+                Console.WriteLine($"Confidence: {entity.ConfidenceScore}");
                 Console.WriteLine();
 
-                if (entity.resolutions is not null)
+                if (entity.Resolutions is not null)
                 {
-                    foreach (dynamic resolution in entity.resolutions)
+                    foreach (dynamic resolution in entity.Resolutions)
                     {
-                        if (resolution.resolutionKind == "DateTimeResolution")
+                        if (resolution.ResolutionKind == "DateTimeResolution")
                         {
-                            Console.WriteLine($"Datetime Sub Kind: {resolution.dateTimeSubKind}");
-                            Console.WriteLine($"Timex: {resolution.timex}");
-                            Console.WriteLine($"Value: {resolution.value}");
+                            Console.WriteLine($"Datetime Sub Kind: {resolution.DateTimeSubKind}");
+                            Console.WriteLine($"Timex: {resolution.Timex}");
+                            Console.WriteLine($"Value: {resolution.Value}");
                             Console.WriteLine();
                         }
                     }
@@ -172,7 +173,7 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
             }
 
             Assert.That(response.Status, Is.EqualTo(200));
-            Assert.That(conversationPrediction.topIntent?.ToString(), Is.EqualTo("Send"));
+            Assert.That(conversationPrediction.TopIntent?.ToString(), Is.EqualTo("Send"));
         }
     }
 }

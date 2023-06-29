@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Specialized;
 using Azure.Storage.Queues;
+using BenchmarkDotNet.Engines;
 using Microsoft.Azure.WebJobs.Extensions.Storage.Common.Tests;
 using Microsoft.Extensions.Azure;
 using Microsoft.Extensions.Configuration;
@@ -41,7 +42,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs
         {
             // Act
             var prog = new BindToCloudBlockBlobProgram();
-            IHost host = new HostBuilder()
+            var host = new HostBuilder()
                 .ConfigureDefaultTestHost<BindToCloudBlockBlobProgram>(prog, builder =>
                 {
                     builder.AddAzureStorageBlobs()
@@ -70,7 +71,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs
         {
             // Act
             var prog = new BindToBlobClientProgram();
-            IHost host = new HostBuilder()
+            var host = new HostBuilder()
                 .ConfigureDefaultTestHost<BindToBlobClientProgram>(prog, builder =>
                 {
                     builder.AddAzureStorageBlobs()
@@ -126,7 +127,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs
                     }).Build();
 
             var program = new BindToParameterBindingData();
-            IHost host = new HostBuilder()
+            var host = new HostBuilder()
                 .ConfigureDefaultTestHost<BindToParameterBindingData>(program, builder =>
                 {
                     builder.AddAzureStorageBlobs()
@@ -155,6 +156,46 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs
         }
 
         [Test]
+        public async Task Blob_IfBoundToParameterBindingData_Container_CreatesParameterBindingData()
+        {
+            // Arrange
+            string connectionString = AzuriteNUnitFixture.Instance.GetAzureAccount().ConnectionString;
+            var configuration = new ConfigurationBuilder()
+                    .AddInMemoryCollection(new Dictionary<string, string>()
+                    {
+                        { "ConnectionStrings:AzureWebJobsStorage", connectionString }
+                    }).Build();
+
+            var program = new BindToParameterBindingDataBlobContainer();
+            var host = new HostBuilder()
+                .ConfigureDefaultTestHost<BindToParameterBindingDataBlobContainer>(program, builder =>
+                {
+                    builder.AddAzureStorageBlobs()
+                    .UseStorageServicesWithConfiguration(blobServiceClient, queueServiceClient, configuration);
+                })
+                .Build();
+
+            var jobHost = host.GetJobHost<BindToParameterBindingDataBlobContainer>();
+
+            // Act
+            await jobHost.CallAsync(nameof(BindToParameterBindingDataBlobContainer.Run));
+            ParameterBindingData result = program.Result;
+
+            Assert.NotNull(result);
+
+            var blobData = result?.Content.ToObjectFromJson<Dictionary<string, string>>();
+
+            // Assert
+            Assert.True(blobData.TryGetValue("Connection", out var resultConnection));
+            Assert.True(blobData.TryGetValue("ContainerName", out var resultContainerName));
+            Assert.True(blobData.TryGetValue("BlobName", out var resultBlobName));
+
+            Assert.AreEqual(ConnectionName, resultConnection);
+            Assert.AreEqual(ContainerName, resultContainerName);
+            Assert.IsEmpty(resultBlobName);
+        }
+
+        [Test]
         public async Task Blob_IfBoundToParameterBindingDataEnumerable_CreatesParameterBindingDataArray()
         {
             string connectionString = AzuriteNUnitFixture.Instance.GetAzureAccount().ConnectionString;
@@ -166,7 +207,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs
 
             // Arrange
             var program = new BindToParameterBindingDataEnumerable();
-            IHost host = new HostBuilder()
+            var host = new HostBuilder()
                 .ConfigureDefaultTestHost<BindToParameterBindingDataEnumerable>(program, builder =>
                 {
                     builder.AddAzureStorageBlobs()
@@ -213,7 +254,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs
 
             // Arrange
             var program = new BindToStringArray();
-            IHost host = new HostBuilder()
+            var host = new HostBuilder()
                 .ConfigureDefaultTestHost<BindToStringArray>(program, builder =>
                 {
                     builder.AddAzureStorageBlobs()
@@ -252,7 +293,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs
 
             // Arrange
             var program = new BindToParameterBindingDataArray();
-            IHost host = new HostBuilder()
+            var host = new HostBuilder()
                 .ConfigureDefaultTestHost<BindToParameterBindingDataArray>(program, builder =>
                 {
                     builder.AddAzureStorageBlobs()
@@ -359,6 +400,17 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs
 
             public void Run(
                 [Blob(BlobPath)] ParameterBindingData blobData)
+            {
+                this.Result = blobData;
+            }
+        }
+
+        private class BindToParameterBindingDataBlobContainer
+        {
+            public ParameterBindingData Result { get; set; }
+
+            public void Run(
+                [Blob(ContainerName)] ParameterBindingData blobData)
             {
                 this.Result = blobData;
             }

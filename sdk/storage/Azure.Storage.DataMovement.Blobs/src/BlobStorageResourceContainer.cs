@@ -6,9 +6,11 @@ using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Models;
 using Azure.Storage.Blobs.Specialized;
+using Azure.Storage.DataMovement.Models;
 
 namespace Azure.Storage.DataMovement.Blobs
 {
@@ -65,7 +67,7 @@ namespace Azure.Storage.DataMovement.Blobs
         /// Retrieves a single blob resource based on this respective resource.
         /// </summary>
         /// <param name="path">The path to the storage resource, relative to the directory prefix if any.</param>
-        public override StorageResource GetChildStorageResource(string path)
+        public override StorageResourceSingle GetChildStorageResource(string path)
             => GetBlobAsStorageResource(ApplyOptionalPrefix(path), type: _options?.BlobType ?? BlobType.Block);
 
         /// <summary>
@@ -76,10 +78,10 @@ namespace Azure.Storage.DataMovement.Blobs
         /// <param name="type">The type of <see cref="BlobType"/> that the storage resource is.</param>
         /// <param name="etagLock">Etag for the resource to lock on.</param>
         /// <returns>
-        /// <see cref="StorageResource"/> which represents the child blob client of
+        /// <see cref="StorageResourceSingle"/> which represents the child blob client of
         /// this respective blob virtual directory resource.
         /// </returns>
-        private StorageResource GetBlobAsStorageResource(
+        private StorageResourceSingle GetBlobAsStorageResource(
             string blobName,
             long? length = default,
             BlobType type = BlobType.Block,
@@ -121,7 +123,7 @@ namespace Azure.Storage.DataMovement.Blobs
         /// Because blobs is a flat namespace, virtual directories will not be returned.
         /// </summary>
         /// <returns>List of the child resources in the storage container.</returns>
-        public override async IAsyncEnumerable<StorageResourceBase> GetStorageResourcesAsync(
+        public override async IAsyncEnumerable<StorageResource> GetStorageResourcesAsync(
             [EnumeratorCancellation] CancellationToken cancellationToken = default)
         {
             AsyncPageable<BlobItem> pages = _blobContainerClient.GetBlobsAsync(
@@ -135,6 +137,186 @@ namespace Azure.Storage.DataMovement.Blobs
                     blobItem.Properties.BlobType.HasValue ? blobItem.Properties.BlobType.Value : BlobType.Block,
                     blobItem.Properties.ETag);
             }
+        }
+
+        /// <summary>
+        /// Rehydrates from Checkpointer.
+        /// </summary>
+        /// <param name="transferProperties">
+        /// The properties of the transfer to rehydrate.
+        /// </param>
+        /// <param name="isSource">
+        /// Whether or not we are rehydrating the source or destination. True if the source, false if the destination.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Whether or not to cancel the operation.
+        /// </param>
+        /// <returns>
+        /// The <see cref="Task"/> to rehdyrate a <see cref="LocalFileStorageResource"/> from
+        /// a stored checkpointed transfer state.
+        /// </returns>
+        internal static async Task<BlobStorageResourceContainer> RehydrateResourceAsync(
+            DataTransferProperties transferProperties,
+            bool isSource,
+            CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(transferProperties, nameof(transferProperties));
+            TransferCheckpointer checkpointer = transferProperties.Checkpointer.GetCheckpointer();
+
+            string storedPath = isSource ? transferProperties.SourcePath : transferProperties.DestinationPath;
+
+            BlobUriBuilder uriBuilder = new BlobUriBuilder(new Uri(storedPath));
+            string prefix = uriBuilder.BlobName;
+            uriBuilder.BlobName = "";
+
+            BlobStorageResourceContainerOptions options =
+                await checkpointer.GetBlobContainerOptionsAsync(
+                    prefix,
+                    transferProperties.TransferId,
+                    isSource,
+                    cancellationToken).ConfigureAwait(false);
+
+            return new BlobStorageResourceContainer(
+                new BlobContainerClient(uriBuilder.ToUri()),
+                options);
+        }
+
+        /// <summary>
+        /// Rehydrates from Checkpointer.
+        /// </summary>
+        /// <param name="transferProperties">
+        /// The properties of the transfer to rehydrate.
+        /// </param>
+        /// <param name="isSource">
+        /// Whether or not we are rehydrating the source or destination. True if the source, false if the destination.
+        /// </param>
+        /// <param name="sharedKeyCredential">
+        /// Credentials which allows the storage resource to authenticate during the transfer.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Whether or not to cancel the operation.
+        /// </param>
+        /// <returns>
+        /// The <see cref="Task"/> to rehdyrate a <see cref="LocalFileStorageResource"/> from
+        /// a stored checkpointed transfer state.
+        /// </returns>
+        internal static async Task<BlobStorageResourceContainer> RehydrateResourceAsync(
+            DataTransferProperties transferProperties,
+            bool isSource,
+            StorageSharedKeyCredential sharedKeyCredential,
+            CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(transferProperties, nameof(transferProperties));
+            TransferCheckpointer checkpointer = transferProperties.Checkpointer.GetCheckpointer();
+
+            string storedPath = isSource ? transferProperties.SourcePath : transferProperties.DestinationPath;
+
+            BlobUriBuilder uriBuilder = new BlobUriBuilder(new Uri(storedPath));
+            string prefix = uriBuilder.BlobName;
+            uriBuilder.BlobName = "";
+
+            BlobStorageResourceContainerOptions options =
+                await checkpointer.GetBlobContainerOptionsAsync(
+                    prefix,
+                    transferProperties.TransferId,
+                    isSource,
+                    cancellationToken).ConfigureAwait(false);
+
+            return new BlobStorageResourceContainer(
+                new BlobContainerClient(uriBuilder.ToUri(), sharedKeyCredential),
+                options);
+        }
+
+        /// <summary>
+        /// Rehydrates from Checkpointer.
+        /// </summary>
+        /// <param name="transferProperties">
+        /// The properties of the transfer to rehydrate.
+        /// </param>
+        /// <param name="isSource">
+        /// Whether or not we are rehydrating the source or destination. True if the source, false if the destination.
+        /// </param>
+        /// <param name="tokenCredential">
+        /// Credentials which allows the storage resource to authenticate during the transfer.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Whether or not to cancel the operation.
+        /// </param>
+        /// <returns>
+        /// The <see cref="Task"/> to rehdyrate a <see cref="LocalFileStorageResource"/> from
+        /// a stored checkpointed transfer state.
+        /// </returns>
+        internal static async Task<BlobStorageResourceContainer> RehydrateResourceAsync(
+            DataTransferProperties transferProperties,
+            bool isSource,
+            TokenCredential tokenCredential,
+            CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(transferProperties, nameof(transferProperties));
+            TransferCheckpointer checkpointer = transferProperties.Checkpointer.GetCheckpointer();
+
+            string storedPath = isSource ? transferProperties.SourcePath : transferProperties.DestinationPath;
+
+            BlobUriBuilder uriBuilder = new BlobUriBuilder(new Uri(storedPath));
+            string prefix = uriBuilder.BlobName;
+            uriBuilder.BlobName = "";
+
+            BlobStorageResourceContainerOptions options =
+                await checkpointer.GetBlobContainerOptionsAsync(
+                    prefix,
+                    transferProperties.TransferId,
+                    isSource,
+                    cancellationToken).ConfigureAwait(false);
+
+            return new BlobStorageResourceContainer(
+                new BlobContainerClient(uriBuilder.ToUri(), tokenCredential),
+                options);
+        }
+
+        /// <summary>
+        /// Rehydrates from Checkpointer.
+        /// </summary>
+        /// <param name="transferProperties">
+        /// The properties of the transfer to rehydrate.
+        /// </param>
+        /// <param name="isSource">
+        /// Whether or not we are rehydrating the source or destination. True if the source, false if the destination.
+        /// </param>
+        /// <param name="sasCredential">
+        /// Credentials which allows the storage resource to authenticate during the transfer.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Whether or not to cancel the operation.
+        /// </param>
+        /// <returns>
+        /// The <see cref="Task"/> to rehdyrate a <see cref="LocalFileStorageResource"/> from
+        /// a stored checkpointed transfer state.
+        /// </returns>
+        internal static async Task<BlobStorageResourceContainer> RehydrateResourceAsync(
+            DataTransferProperties transferProperties,
+            bool isSource,
+            AzureSasCredential sasCredential,
+            CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(transferProperties, nameof(transferProperties));
+            TransferCheckpointer checkpointer = transferProperties.Checkpointer.GetCheckpointer();
+
+            string storedPath = isSource ? transferProperties.SourcePath : transferProperties.DestinationPath;
+
+            BlobUriBuilder uriBuilder = new BlobUriBuilder(new Uri(storedPath));
+            string prefix = uriBuilder.BlobName;
+            uriBuilder.BlobName = "";
+
+            BlobStorageResourceContainerOptions options =
+                await checkpointer.GetBlobContainerOptionsAsync(
+                    prefix,
+                    transferProperties.TransferId,
+                    isSource,
+                    cancellationToken).ConfigureAwait(false);
+
+            return new BlobStorageResourceContainer(
+                new BlobContainerClient(uriBuilder.ToUri(), sasCredential),
+                options);
         }
 
         private string ApplyOptionalPrefix(string path)

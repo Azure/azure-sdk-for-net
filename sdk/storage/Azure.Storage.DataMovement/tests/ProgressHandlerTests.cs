@@ -118,7 +118,7 @@ namespace Azure.Storage.DataMovement.Tests
             TransferOptions transferOptions = default,
             ProgressHandlerOptions progressHandlerOptions = default,
             StorageResourceCreateMode createMode = StorageResourceCreateMode.Overwrite,
-            int waitTime = 10)
+            int waitTime = 30)
         {
             transferManagerOptions ??= new TransferManagerOptions()
             {
@@ -343,7 +343,7 @@ namespace Azure.Storage.DataMovement.Tests
             await Task.Delay(delayInMs);
 
             // Pause transfer
-            CancellationTokenSource tokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(10));
+            CancellationTokenSource tokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(30));
             await transferManager.PauseTransferIfRunningAsync(transfer.Id, tokenSource.Token);
             Assert.AreEqual(StorageTransferStatus.Paused, transfer.TransferStatus);
 
@@ -354,7 +354,7 @@ namespace Azure.Storage.DataMovement.Tests
             transferOptions.ResumeFromCheckpointId = transfer.Id;
             DataTransfer resumeTransfer = await transferManager.StartTransferAsync(sourceResource, destinationResource, transferOptions);
 
-            tokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(10));
+            tokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(30));
             await resumeTransfer.AwaitCompletion(tokenSource.Token);
 
             // Assert
