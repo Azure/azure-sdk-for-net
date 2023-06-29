@@ -12,9 +12,23 @@
 
 ## 1.1.0-beta.2 (2023-06-21)
 
+### Features Added
+
+Cluster features
+- NatGatewayId
+- PublicIpPrefix
+
+NodeType features
+- VmSharedGalleryImageId
+- SecurityType
+- SecureBootEnabled
+- EnableNodePublicIP
+- VmImagePlan 
+
 ### Other Changes
 
 - Upgraded API version to 2023-03-01-preview.
+
 
 ## 1.1.0-beta.1 (2023-05-31)
 
