@@ -64,7 +64,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         }
 
         [RecordedTest]
-        [ServiceVersion(Min = DocumentAnalysisClientOptions.ServiceVersion.V2023_02_28_Preview)]
+        [ServiceVersion(Min = DocumentAnalysisClientOptions.ServiceVersion.V2023_07_31)]
         public async Task BuildClassifierOperationPercentageCompletedValue()
         {
             var client = CreateDocumentModelAdministrationClient(out var nonInstrumentedClient);

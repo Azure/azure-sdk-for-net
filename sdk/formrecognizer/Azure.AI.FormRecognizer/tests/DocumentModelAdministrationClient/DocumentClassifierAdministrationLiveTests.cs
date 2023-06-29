@@ -17,7 +17,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
     /// These tests have a dependency on live Azure services and may incur costs for the associated
     /// Azure subscription.
     /// </remarks>
-    [ServiceVersion(Min = DocumentAnalysisClientOptions.ServiceVersion.V2023_02_28_Preview)]
+    [ServiceVersion(Min = DocumentAnalysisClientOptions.ServiceVersion.V2023_07_31)]
     public class DocumentClassifierAdministrationLiveTests : DocumentAnalysisLiveTestBase
     {
         /// <summary>
