@@ -721,13 +721,26 @@ namespace Azure.Communication.Chat.Tests.ChatClients
         }
 
         [Test]
-        public async Task AddParticipantsShouldSucceed()
+        public async Task AddParticipantsAsyncShouldSucceed()
         {
             //arrange
             ChatThreadClient chatThreadClient = CreateMockChatThreadClient(201, AddParticipantsApiResponsePayload);
 
             //act
             AddChatParticipantsResult AddParticipantsResponse = await chatThreadClient.AddParticipantsAsync(new List<ChatParticipant>());
+
+            //assert
+            Assert.AreEqual(0, AddParticipantsResponse.InvalidParticipants.Count);
+        }
+
+        [Test]
+        public void AddParticipantsShouldSucceed()
+        {
+            //arrange
+            ChatThreadClient chatThreadClient = CreateMockChatThreadClient(201, AddParticipantsApiResponsePayload);
+
+            //act
+            AddChatParticipantsResult AddParticipantsResponse = chatThreadClient.AddParticipants(new List<ChatParticipant>());
 
             //assert
             Assert.AreEqual(0, AddParticipantsResponse.InvalidParticipants.Count);
@@ -857,6 +870,9 @@ namespace Azure.Communication.Chat.Tests.ChatClients
             var addChatParticipantsResult = ChatModelFactory.AddChatParticipantsResult(It.IsAny<IEnumerable<ChatError>>());
             Assert.IsNotNull(addChatParticipantsResult);
 
+            var addChatParticipantsResultEmpty= new AddChatParticipantsResult();
+            Assert.IsNotNull(addChatParticipantsResultEmpty);
+
             var chatThreadItem = ChatModelFactory.ChatThreadItem("id", "topic", It.IsAny<DateTimeOffset>(), It.IsAny<DateTimeOffset>());
             Assert.IsNotNull(chatThreadItem);
 
@@ -872,6 +888,14 @@ namespace Azure.Communication.Chat.Tests.ChatClients
                 Assert.IsNotNull(ex);
             }
         }
+
+        [Test]
+        public void TestChatClientOptions()
+        {
+            var options = new ChatClientOptions(ChatClientOptions.ServiceVersion.V2021_09_07);
+            Assert.IsNotNull(options);
+        }
+
         private void AsssertParticipantError(ChatError chatParticipantError, string expectedMessage, string expectedTarget)
         {
             Assert.AreEqual(expectedMessage, chatParticipantError.Message);
