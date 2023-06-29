@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using Azure.Core.Json;
 
-namespace Azure
+namespace Azure.Core.Serialization
 {
     public partial class DynamicData
     {

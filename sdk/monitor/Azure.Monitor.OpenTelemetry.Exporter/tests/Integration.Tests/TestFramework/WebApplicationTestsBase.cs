@@ -2,28 +2,25 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Concurrent;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 
 using Azure.Monitor.OpenTelemetry.Exporter.Models;
 using Azure.Monitor.OpenTelemetry.Exporter.Tests.CommonTestFramework;
-using Microsoft.AspNetCore.Mvc.Testing;
 
 using Xunit;
 using Xunit.Abstractions;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter.Integration.Tests.TestFramework
 {
-    public abstract class WebApplicationTestsBase : IClassFixture<WebApplicationFactory<AspNetCoreWebApp.Startup>>
+    public abstract class WebApplicationTestsBase
     {
-        protected readonly WebApplicationFactory<AspNetCoreWebApp.Startup> factory;
         protected readonly ITestOutputHelper output;
         internal readonly TelemetryItemOutputHelper telemetryOutput;
 
-        public WebApplicationTestsBase(WebApplicationFactory<AspNetCoreWebApp.Startup> factory, ITestOutputHelper output)
+        public WebApplicationTestsBase(ITestOutputHelper output)
         {
-            this.factory = factory;
             this.output = output;
             this.telemetryOutput = new TelemetryItemOutputHelper(output);
         }
@@ -34,7 +31,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Integration.Tests.TestFramework
         /// <remarks>
         /// Copied from <see href="https://github.com/open-telemetry/opentelemetry-dotnet/blob/f471a9f197d797015123fe95d3e12b6abf8e1f5f/test/OpenTelemetry.Instrumentation.AspNetCore.Tests/BasicTests.cs#L558-L570"/>.
         /// </remarks>
-        internal void WaitForActivityExport(ConcurrentBag<TelemetryItem> telemetryItems)
+        internal void WaitForActivityExport(List<TelemetryItem> telemetryItems)
         {
             var result = SpinWait.SpinUntil(
                 condition: () =>

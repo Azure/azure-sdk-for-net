@@ -3,7 +3,7 @@
 
 namespace Azure.Communication.CallAutomation
 {
-    /// <summary><see cref="StartRecognizingEventResult"/> is returned from WaitForEvent of <see cref="StartRecognizingResult"/>.</summary>
+    /// <summary><see cref="StartRecognizingEventResult"/> is returned from WaitForEvent of <see cref="StartRecognizingCallMediaResult"/>.</summary>
     public class StartRecognizingEventResult
     {
         /// <summary>
@@ -12,16 +12,16 @@ namespace Azure.Communication.CallAutomation
         public bool IsSuccess { get; internal set; }
 
         /// <summary>
-        /// <see cref="RecognizeCompletedEventData"/> event will be returned once the recognize is completed successfully.
+        /// <see cref="RecognizeCompleted"/> event will be returned once the recognize is completed successfully.
         /// </summary>
-        public RecognizeCompletedEventData SuccessResult { get; }
+        public RecognizeCompleted SuccessResult { get; }
 
         /// <summary>
-        /// <see cref="RecognizeFailedEventData"/> event will be returned once the recognize is completed unsuccessfully.
+        /// <see cref="RecognizeFailed"/> event will be returned once the recognize is completed unsuccessfully.
         /// </summary>
-        public RecognizeFailedEventData FailureResult { get; }
+        public RecognizeFailed FailureResult { get; }
 
-        internal StartRecognizingEventResult(bool isSuccess, RecognizeCompletedEventData successResult, RecognizeFailedEventData failureResult)
+        internal StartRecognizingEventResult(bool isSuccess, RecognizeCompleted successResult, RecognizeFailed failureResult)
         {
             IsSuccess = isSuccess;
             SuccessResult = successResult;

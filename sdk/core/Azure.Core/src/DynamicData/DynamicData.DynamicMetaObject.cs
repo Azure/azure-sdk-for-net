@@ -10,7 +10,7 @@ using System.Linq.Expressions;
 using System.Reflection;
 using System.Text.Json;
 
-namespace Azure
+namespace Azure.Core.Serialization
 {
     public partial class DynamicData : IDynamicMetaObjectProvider
     {

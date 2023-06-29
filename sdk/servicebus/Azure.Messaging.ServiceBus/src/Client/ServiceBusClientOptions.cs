@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -65,7 +65,7 @@ namespace Azure.Messaging.ServiceBus
         /// <value>The default idle timeout is 60 seconds.  The timeout must be a positive value.</value>
         ///
         /// <remarks>
-        ///   If a connection is closed due to being idle, the Event Hubs clients will automatically
+        ///   If a connection is closed due to being idle, the <see cref="ServiceBusClient" /> will automatically
         ///   reopen the connection when it is needed for a network operation.  An idle connection
         ///   being closed does not cause client errors or interfere with normal operation.
         ///

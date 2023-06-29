@@ -1,5 +1,5 @@
 {
-  "version": "0.1",
+  "version": "0.2",
   "language": "en_US",
   "languageId": "csharp",
   "dictionaries": [
@@ -31,6 +31,7 @@
     "*.sln",
     "*.user",
     ".vscode/cspell.json",
+    "assets.json",
     // These services are opted out of public API surface spell checking.
     // Spelling issues must be addressed before adding these back in.
     "sdk/agrifood/*/api/*.cs",
@@ -42,11 +43,14 @@
     "sdk/insights/*/api/*.cs",
     "sdk/machinelearningservices/*/api/*.cs",
     "sdk/modelsrepository/*/api/*.cs",
-    "sdk/monitor/*/api/*.cs",
+    "sdk/monitor/Azure.ResourceManager.Monitor/api/*.cs",
+    "sdk/monitor/Microsoft.Azure.Management.Monitor/**/*.cs",
     "sdk/objectanchors/*/api/*.cs",
     "sdk/purview/*/api/*.cs",
     "sdk/remoterendering/*/api/*.cs",
-    "sdk/videoanalyzer/*/api/*.cs"
+    "sdk/videoanalyzer/*/api/*.cs",
+    "sdk/newrelicobservability/*/api/*.cs",
+    "sdk/paloaltonetworks.ngfw/*/api/*.cs"
   ],
   // cspell is not case sensitive
   // Sort words alphabetically to make this list easier to use
@@ -54,6 +58,7 @@
     "apos",
     "azsdk",
     "blazor",
+    "centralus",
     "contoso",
     "cref",
     "deduplication",
@@ -61,20 +66,27 @@
     "deserializes",
     "diagnoser",
     "dicom",
+    "distro",
     "dont",
     "dotnetcli",
     "dtmf",
+    "eastus",
     "epsg",
     "expando",
     "fhir",
     "finalizer",
     "finalizers",
+    "hnsw",
+    "ienumerable",
     "illumos",
     "interventional",
     "ints",
     "kubernetes",
+    "kusto",
     "lucene",
     "mgmt",
+    "msal",
+    "northcentralus",
     "nunit",
     "odata",
     "onco",
@@ -92,6 +104,7 @@
     "retriable",
     "signup",
     "skus",
+    "southcentralus",
     "structs",
     "uints",
     "unbilled",
@@ -99,8 +112,10 @@
     "unformattable",
     "unhold",
     "uninstrumented",
+    "vcpus",
     "vmss",
     "vnet",
+    "westcentralus",
     "westus",
     "xunit"
   ],
@@ -217,6 +232,12 @@
       ]
     },
     {
+      "filename": "**/sdk/confidentialledger/**/*.cs",
+      "words": [
+        "ccfs"
+      ]
+    },
+    {
       "filename": "**/sdk/cognitivelanguage/**/*",
       "words": [
         "apim",
@@ -282,6 +303,19 @@
       ]
     },
     {
+      "filename": "**/sdk/cosmosdbforpostgresql/**/*",
+      "words": [
+        "Citus"
+      ]
+    },
+    {
+      "filename": "**/sdk/costmanagement/**/*",
+      "words": [
+        "ahub",
+        "kpis"
+      ]
+    },
+    {
       "filename": "**/sdk/customer-insights/**/*.cs",
       "words": [
         "kpis"
@@ -313,7 +347,8 @@
     {
       "filename": "**/sdk/newrelic/**/*.cs",
       "words": [
-        "liftr"
+        "liftr",
+        "payg"
       ]
     },
     {
@@ -346,8 +381,7 @@
     {
       "filename": "**/sdk/datashare/**/*.cs",
       "words": [
-        "adls",
-        "kusto"
+        "adls"
       ]
     },
     {
@@ -585,6 +619,23 @@
       ]
     },
     {
+      "filename": "**/sdk/networkcloud/**/*.cs",
+      "words": [
+        "Reimage",
+        "Uncordon",
+        "Uncordoned",
+        "Ipam",
+        "Virtio",
+        "nics",
+        "Lldp",
+        "Nics",
+        "Dpdk",
+        "Sriov",
+        "Sata",
+        "Uefi"
+      ]
+    },
+    {
       "filename": "**/sdk/keyvault/**/*.cs",
       "words": [
         "deletesas",
@@ -601,7 +652,6 @@
     {
       "filename": "**/sdk/kusto/**/*.cs",
       "words": [
-        "kusto",
         "tbps",
         "scsv",
         "sohsv",
@@ -613,6 +663,14 @@
       "words": [
         "reimage",
         "reimaging"
+      ]
+    },
+    {
+      "filename": "**/sdk/managednetworkfabric/**/*.cs",
+      "words": [
+        "evpn",
+        "mbps",
+        "gshut"
       ]
     },
     {
@@ -628,9 +686,46 @@
       ]
     },
     {
+      "filename": "**/sdk/monitor/**/*",
+      "words": [
+        "AMPM",
+        "bcdr",
+        "cikey",
+        "faas",
+        "gzipped",
+        "gzipping",
+        "DDYYYYHHMMSS",
+        "hmac",
+        "HMACSHA",
+        "ikey",
+        "itsm",
+        "jdbc",
+        "jioindiacentral",
+        "jioindiawest",
+        "kaby",
+        "khtml",
+        "Localizable",
+        "Milli",
+        "msdocs",
+        "mslinks",
+        "myvm",
+        "onboarded",
+        "opinsights",
+        "OTELRESOURCE",
+        "otlp",
+        "TMPDIR",
+        "uaecentral",
+        "uaenorth",
+        "uksouth",
+        "ukwest",
+        "webwk"
+      ]
+    },
+    {
       "filename": "**/sdk/mysql/**/*.cs",
       "words": [
-        "byok"
+        "byok",
+        "gtid"
       ]
     },
     {
@@ -957,7 +1052,6 @@
     {
       "filename": "**/sdk/synapse/**/*.cs",
       "words": [
-        "kusto",
         "nchar",
         "ntext",
         "nvarchar",
@@ -1067,6 +1161,18 @@
         "Probs",
         "Logprobs",
         "Logit"
+      ]
+    },
+    {
+      "filename": "**/sdk/iot/Azure.ResourceManager.IotFirmwareDefense/**/*.cs",
+      "words": [
+        "RELRO",
+        "Relro",
+        "relro",
+        "Rpath",
+        "rpath",
+        "runpath",
+        "Cves"
       ]
     }
   ],

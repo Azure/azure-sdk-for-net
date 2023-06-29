@@ -128,20 +128,6 @@ namespace Azure.Analytics.Synapse.AccessControl.Tests
         }
 
         [Test]
-        public async Task CanGetRoleAssignmentViaGrowUpHelper()
-        {
-            RoleAssignmentsClient assignmentsClient = CreateAssignmentClient();
-            RoleDefinitionsClient definitionsClient = CreateDefinitionsClient();
-
-            await using DisposableClientRole role = await DisposableClientRole.Create(assignmentsClient, definitionsClient, TestEnvironment);
-
-            Response<RoleAssignmentDetails> response = await assignmentsClient.GetRoleAssignmentByIdAsync(role.RoleAssignmentId);
-
-            Assert.AreEqual(role.RoleAssignmentRoleDefinitionId, response.Value.RoleDefinitionId.ToString());
-            Assert.AreEqual(role.RoleAssignmentPrincipalId, response.Value.PrincipalId.ToString());
-        }
-
-        [Test]
         public async Task CanListRoleDefinitions()
         {
             RoleAssignmentsClient assignmentsClient = CreateAssignmentClient();
@@ -264,40 +250,6 @@ namespace Azure.Analytics.Synapse.AccessControl.Tests
             Assert.AreEqual(role.RoleAssignmentRoleDefinitionId, roleAssignmentJson.GetProperty("roleDefinitionId").ToString());
             Assert.AreEqual(role.RoleAssignmentPrincipalId, roleAssignmentJson.GetProperty("principalId").ToString());
             Assert.AreEqual(scope, roleAssignmentJson.GetProperty("scope").ToString());
-        }
-
-        [Test]
-        public async Task CanCheckPrincipalAccessViaGrowUpHelper()
-        {
-            // Arrange
-            RoleAssignmentsClient assignmentsClient = CreateAssignmentClient();
-            RoleDefinitionsClient definitionsClient = CreateDefinitionsClient();
-
-            string scope = "workspaces/" + TestEnvironment.WorkspaceName;
-            string actionId = "Microsoft.Synapse/workspaces/read";
-
-            await using DisposableClientRole role = await DisposableClientRole.Create(assignmentsClient, definitionsClient, TestEnvironment);
-
-            // Act
-            CheckPrincipalAccessRequest checkAccessRequest = new CheckPrincipalAccessRequest(
-                new SubjectInfo(new Guid(role.RoleAssignmentPrincipalId)),
-                new List<RequiredAction>() { new RequiredAction(actionId, isDataAction: true) },
-                scope);
-
-            Response<CheckPrincipalAccessResponse> response = await assignmentsClient.CheckPrincipalAccessAsync(checkAccessRequest);
-
-            // Assert
-            var decisions = response.Value.AccessDecisions;
-            Assert.AreEqual(1, decisions.Count);
-
-            var decision = decisions[0];
-
-            Assert.AreEqual("Allowed", decision.AccessDecision);
-            Assert.AreEqual(actionId, decision.ActionId);
-            Assert.AreEqual(role.RoleAssignmentPrincipalId, decision.RoleAssignment.PrincipalId.ToString());
-            Assert.AreEqual(role.RoleAssignmentRoleDefinitionId, decision.RoleAssignment.RoleDefinitionId.ToString());
-            Assert.AreEqual(scope, decision.RoleAssignment.Scope);
-            Assert.AreEqual(role.RoleAssignmentId, decision.RoleAssignment.Id);
         }
     }
 }

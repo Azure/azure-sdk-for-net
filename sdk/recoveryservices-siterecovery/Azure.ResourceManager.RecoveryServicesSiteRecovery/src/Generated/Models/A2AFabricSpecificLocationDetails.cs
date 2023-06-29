@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using Azure.Core;
+
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     /// <summary> ExtendedLocation details data. </summary>
@@ -28,7 +30,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="recoveryExtendedLocation"> The recovery ExtendedLocation. </param>
         /// <param name="primaryFabricLocation"> Primary fabric location info. </param>
         /// <param name="recoveryFabricLocation"> The recovery fabric location info. </param>
-        internal A2AFabricSpecificLocationDetails(string initialPrimaryZone, string initialRecoveryZone, ExtendedLocation initialPrimaryExtendedLocation, ExtendedLocation initialRecoveryExtendedLocation, string initialPrimaryFabricLocation, string initialRecoveryFabricLocation, string primaryZone, string recoveryZone, ExtendedLocation primaryExtendedLocation, ExtendedLocation recoveryExtendedLocation, string primaryFabricLocation, string recoveryFabricLocation)
+        internal A2AFabricSpecificLocationDetails(string initialPrimaryZone, string initialRecoveryZone, SiteRecoveryExtendedLocation initialPrimaryExtendedLocation, SiteRecoveryExtendedLocation initialRecoveryExtendedLocation, AzureLocation? initialPrimaryFabricLocation, AzureLocation? initialRecoveryFabricLocation, string primaryZone, string recoveryZone, SiteRecoveryExtendedLocation primaryExtendedLocation, SiteRecoveryExtendedLocation recoveryExtendedLocation, AzureLocation? primaryFabricLocation, AzureLocation? recoveryFabricLocation)
         {
             InitialPrimaryZone = initialPrimaryZone;
             InitialRecoveryZone = initialRecoveryZone;
@@ -49,24 +51,24 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <summary> The initial target zone info. </summary>
         public string InitialRecoveryZone { get; }
         /// <summary> The initial primary ExtendedLocation. </summary>
-        public ExtendedLocation InitialPrimaryExtendedLocation { get; }
+        public SiteRecoveryExtendedLocation InitialPrimaryExtendedLocation { get; }
         /// <summary> The initial recovery ExtendedLocation. </summary>
-        public ExtendedLocation InitialRecoveryExtendedLocation { get; }
+        public SiteRecoveryExtendedLocation InitialRecoveryExtendedLocation { get; }
         /// <summary> Initial primary fabric location info. </summary>
-        public string InitialPrimaryFabricLocation { get; }
+        public AzureLocation? InitialPrimaryFabricLocation { get; }
         /// <summary> The initial recovery fabric location info. </summary>
-        public string InitialRecoveryFabricLocation { get; }
+        public AzureLocation? InitialRecoveryFabricLocation { get; }
         /// <summary> Source zone info. </summary>
         public string PrimaryZone { get; }
         /// <summary> The target zone info. </summary>
         public string RecoveryZone { get; }
         /// <summary> The primary ExtendedLocation. </summary>
-        public ExtendedLocation PrimaryExtendedLocation { get; }
+        public SiteRecoveryExtendedLocation PrimaryExtendedLocation { get; }
         /// <summary> The recovery ExtendedLocation. </summary>
-        public ExtendedLocation RecoveryExtendedLocation { get; }
+        public SiteRecoveryExtendedLocation RecoveryExtendedLocation { get; }
         /// <summary> Primary fabric location info. </summary>
-        public string PrimaryFabricLocation { get; }
+        public AzureLocation? PrimaryFabricLocation { get; }
         /// <summary> The recovery fabric location info. </summary>
-        public string RecoveryFabricLocation { get; }
+        public AzureLocation? RecoveryFabricLocation { get; }
     }
 }

@@ -5,7 +5,6 @@ Run `dotnet build /t:GenerateCode` to generate code.
 ``` yaml
 
 azure-arm: true
-generate-model-factory: false
 csharp: true
 library-name: DataProtectionBackup
 namespace: Azure.ResourceManager.DataProtectionBackup
@@ -99,7 +98,7 @@ rename-mapping:
   TriggerBackupRequest.backupRuleOptions: BackupRules
   OperationExtendedInfo: DataProtectionOperationExtendedInfo
   OperationJobExtendedInfo: DataProtectionOperationJobExtendedInfo
-  OperationJobExtendedInfo.jobId: -|uuid
+  OperationJobExtendedInfo.jobId: JobResourceId|arm-id
   AzureBackupFindRestorableTimeRangesRequest: BackupFindRestorableTimeRangeContent
   AzureBackupFindRestorableTimeRangesRequest.startTime: StartOn|date-time
   AzureBackupFindRestorableTimeRangesRequest.endTime: EndOn|date-time

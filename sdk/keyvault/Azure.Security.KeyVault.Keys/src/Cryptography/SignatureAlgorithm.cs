@@ -120,6 +120,46 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         /// <inheritdoc/>
         public override string ToString() => _value;
 
+        internal static SignatureAlgorithm FromHashAlgorithmName(HashAlgorithmName algorithm, RSASignaturePadding padding)
+        {
+            if (padding == RSASignaturePadding.Pkcs1)
+            {
+                if (algorithm == HashAlgorithmName.SHA256)
+                {
+                    return RS256;
+                }
+
+                if (algorithm == HashAlgorithmName.SHA384)
+                {
+                    return RS384;
+                }
+
+                if (algorithm == HashAlgorithmName.SHA512)
+                {
+                    return RS512;
+                }
+            }
+            else if (padding == RSASignaturePadding.Pss)
+            {
+                if (algorithm == HashAlgorithmName.SHA256)
+                {
+                    return PS256;
+                }
+
+                if (algorithm == HashAlgorithmName.SHA384)
+                {
+                    return PS384;
+                }
+
+                if (algorithm == HashAlgorithmName.SHA512)
+                {
+                    return PS512;
+                }
+            }
+
+            throw new NotSupportedException($"Hash algorithm {algorithm} with {padding} padding is not supported");
+        }
+
         internal HashAlgorithm GetHashAlgorithm()
         {
             switch (_value)

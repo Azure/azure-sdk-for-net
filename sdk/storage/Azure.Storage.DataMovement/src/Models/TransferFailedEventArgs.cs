@@ -13,14 +13,14 @@ namespace Azure.Storage.DataMovement.Models
     public class TransferFailedEventArgs : StorageTransferEventArgs
     {
         /// <summary>
-        /// Gets the <see cref="StorageResource"/> that was the source resource for the transfer.
+        /// Gets the <see cref="StorageResourceSingle"/> that was the source resource for the transfer.
         /// </summary>
-        public StorageResource SourceResource { get; }
+        public StorageResourceSingle SourceResource { get; }
 
         /// <summary>
-        /// Gets the <see cref="StorageResource"/> that was the destination resource for the transfer.
+        /// Gets the <see cref="StorageResourceSingle"/> that was the destination resource for the transfer.
         /// </summary>
-        public StorageResource DestinationResource { get; }
+        public StorageResourceSingle DestinationResource { get; }
 
         /// <summary>
         /// Gets the <see cref="Exception"/> that was thrown during the job.
@@ -53,8 +53,8 @@ namespace Azure.Storage.DataMovement.Models
         /// </exception>
         public TransferFailedEventArgs(
             string transferId,
-            StorageResource sourceResource,
-            StorageResource destinationResource,
+            StorageResourceSingle sourceResource,
+            StorageResourceSingle destinationResource,
             Exception exception,
             bool isRunningSynchronously,
             CancellationToken cancellationToken)

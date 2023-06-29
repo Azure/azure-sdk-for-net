@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Storage.DataMovement.Models;
 using Azure.Storage.Test.Shared;
 using NUnit.Framework;
@@ -43,6 +44,19 @@ namespace Azure.Storage.DataMovement.Tests
         }
 
         [Test]
+        public void Ctor_Error()
+        {
+            Assert.Catch<ArgumentException>( () =>
+                new LocalDirectoryStorageResourceContainer(""));
+
+            Assert.Catch<ArgumentException>(() =>
+                new LocalDirectoryStorageResourceContainer("   "));
+
+            Assert.Catch<ArgumentException>(() =>
+                new LocalDirectoryStorageResourceContainer(default));
+        }
+
+        [Test]
         public async Task GetStorageResourcesAsync()
         {
             // Arrange
@@ -58,7 +72,7 @@ namespace Azure.Storage.DataMovement.Tests
 
             // Act
             List<string> resultPaths = new List<string>();
-            await foreach (StorageResourceBase resource in containerResource.GetStorageResourcesAsync())
+            await foreach (StorageResource resource in containerResource.GetStorageResourcesAsync())
             {
                 resultPaths.Add(resource.Path);
             }
@@ -87,7 +101,7 @@ namespace Azure.Storage.DataMovement.Tests
             StorageResourceContainer containerResource = new LocalDirectoryStorageResourceContainer(folderPath);
             foreach (string fileName in fileNames)
             {
-                StorageResource resource = containerResource.GetChildStorageResource(fileName);
+                StorageResourceSingle resource = containerResource.GetChildStorageResource(fileName);
                 // Assert
                 await resource.GetPropertiesAsync().ConfigureAwait(false);
             }
@@ -119,7 +133,7 @@ namespace Azure.Storage.DataMovement.Tests
             StorageResourceContainer containerResource = new LocalDirectoryStorageResourceContainer(folderPath);
             foreach (string fileName in fileNames)
             {
-                StorageResource resource = containerResource.GetChildStorageResource(fileName);
+                StorageResourceSingle resource = containerResource.GetChildStorageResource(fileName);
                 // Assert
                 await resource.GetPropertiesAsync().ConfigureAwait(false);
             }

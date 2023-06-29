@@ -39,46 +39,6 @@ Console.WriteLine(result.GetProperty("name").ToString());
 Console.WriteLine(result.GetProperty("type").ToString());
 ]]></code>
 </example>
-<remarks>
-Activates the email registration for current tenant
-
-Below is the JSON schema for the request and response payloads.
-
-Request Body:
-
-Schema for <c>TenantEmailRegistration</c>:
-<code>{
-  properties: {
-    activationCode: string, # Required. Activation code for the registration.
-    activationExpiration: string (ISO 8601 Format), # Optional. Date of the activation expiration.
-    email: string, # Optional. The email to register.
-    registrationStatus: &quot;ActivationPending&quot; | &quot;Activated&quot; | &quot;ActivationAttemptsExhausted&quot;, # Optional. Defines the supported types for registration.
-    tenantId: string, # Optional. The tenant id to register.
-  }, # Optional. Tenant email registration property bag.
-  id: string, # Optional. The resource id of the resource.
-  name: string, # Optional. Name of the resource.
-  type: string, # Optional. Type of the resource.
-}
-</code>
-
-Response Body:
-
-Schema for <c>TenantEmailRegistration</c>:
-<code>{
-  properties: {
-    activationCode: string, # Required. Activation code for the registration.
-    activationExpiration: string (ISO 8601 Format), # Optional. Date of the activation expiration.
-    email: string, # Optional. The email to register.
-    registrationStatus: &quot;ActivationPending&quot; | &quot;Activated&quot; | &quot;ActivationAttemptsExhausted&quot;, # Optional. Defines the supported types for registration.
-    tenantId: string, # Optional. The tenant id to register.
-  }, # Optional. Tenant email registration property bag.
-  id: string, # Optional. The resource id of the resource.
-  name: string, # Optional. Name of the resource.
-  type: string, # Optional. Type of the resource.
-}
-</code>
-
-</remarks>
     </member>
     <member name="Activate(RequestContent,string,RequestContext)">
 <example>
@@ -118,46 +78,6 @@ Console.WriteLine(result.GetProperty("name").ToString());
 Console.WriteLine(result.GetProperty("type").ToString());
 ]]></code>
 </example>
-<remarks>
-Activates the email registration for current tenant
-
-Below is the JSON schema for the request and response payloads.
-
-Request Body:
-
-Schema for <c>TenantEmailRegistration</c>:
-<code>{
-  properties: {
-    activationCode: string, # Required. Activation code for the registration.
-    activationExpiration: string (ISO 8601 Format), # Optional. Date of the activation expiration.
-    email: string, # Optional. The email to register.
-    registrationStatus: &quot;ActivationPending&quot; | &quot;Activated&quot; | &quot;ActivationAttemptsExhausted&quot;, # Optional. Defines the supported types for registration.
-    tenantId: string, # Optional. The tenant id to register.
-  }, # Optional. Tenant email registration property bag.
-  id: string, # Optional. The resource id of the resource.
-  name: string, # Optional. Name of the resource.
-  type: string, # Optional. Type of the resource.
-}
-</code>
-
-Response Body:
-
-Schema for <c>TenantEmailRegistration</c>:
-<code>{
-  properties: {
-    activationCode: string, # Required. Activation code for the registration.
-    activationExpiration: string (ISO 8601 Format), # Optional. Date of the activation expiration.
-    email: string, # Optional. The email to register.
-    registrationStatus: &quot;ActivationPending&quot; | &quot;Activated&quot; | &quot;ActivationAttemptsExhausted&quot;, # Optional. Defines the supported types for registration.
-    tenantId: string, # Optional. The tenant id to register.
-  }, # Optional. Tenant email registration property bag.
-  id: string, # Optional. The resource id of the resource.
-  name: string, # Optional. Name of the resource.
-  type: string, # Optional. Type of the resource.
-}
-</code>
-
-</remarks>
     </member>
     <member name="RegisterAsync(string,RequestContext)">
 <example>
@@ -189,29 +109,6 @@ Console.WriteLine(result.GetProperty("name").ToString());
 Console.WriteLine(result.GetProperty("type").ToString());
 ]]></code>
 </example>
-<remarks>
-Register an email for the current tenant
-
-Below is the JSON schema for the response payload.
-
-Response Body:
-
-Schema for <c>TenantEmailRegistration</c>:
-<code>{
-  properties: {
-    activationCode: string, # Required. Activation code for the registration.
-    activationExpiration: string (ISO 8601 Format), # Optional. Date of the activation expiration.
-    email: string, # Optional. The email to register.
-    registrationStatus: &quot;ActivationPending&quot; | &quot;Activated&quot; | &quot;ActivationAttemptsExhausted&quot;, # Optional. Defines the supported types for registration.
-    tenantId: string, # Optional. The tenant id to register.
-  }, # Optional. Tenant email registration property bag.
-  id: string, # Optional. The resource id of the resource.
-  name: string, # Optional. Name of the resource.
-  type: string, # Optional. Type of the resource.
-}
-</code>
-
-</remarks>
     </member>
     <member name="Register(string,RequestContext)">
 <example>
@@ -243,29 +140,6 @@ Console.WriteLine(result.GetProperty("name").ToString());
 Console.WriteLine(result.GetProperty("type").ToString());
 ]]></code>
 </example>
-<remarks>
-Register an email for the current tenant
-
-Below is the JSON schema for the response payload.
-
-Response Body:
-
-Schema for <c>TenantEmailRegistration</c>:
-<code>{
-  properties: {
-    activationCode: string, # Required. Activation code for the registration.
-    activationExpiration: string (ISO 8601 Format), # Optional. Date of the activation expiration.
-    email: string, # Optional. The email to register.
-    registrationStatus: &quot;ActivationPending&quot; | &quot;Activated&quot; | &quot;ActivationAttemptsExhausted&quot;, # Optional. Defines the supported types for registration.
-    tenantId: string, # Optional. The tenant id to register.
-  }, # Optional. Tenant email registration property bag.
-  id: string, # Optional. The resource id of the resource.
-  name: string, # Optional. Name of the resource.
-  type: string, # Optional. Type of the resource.
-}
-</code>
-
-</remarks>
     </member>
   </members>
 </doc>

@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Synapse
         }
 
         /// <summary>
-        /// Gets an extended Sql pool&apos;s blob auditing policy.
+        /// Gets an extended Sql pool's blob auditing policy.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.Synapse
         }
 
         /// <summary>
-        /// Gets an extended Sql pool&apos;s blob auditing policy.
+        /// Gets an extended Sql pool's blob auditing policy.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.Synapse
         }
 
         /// <summary>
-        /// Creates or updates an extended Sql pool&apos;s blob auditing policy.
+        /// Creates or updates an extended Sql pool's blob auditing policy.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.Synapse
         }
 
         /// <summary>
-        /// Creates or updates an extended Sql pool&apos;s blob auditing policy.
+        /// Creates or updates an extended Sql pool's blob auditing policy.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>

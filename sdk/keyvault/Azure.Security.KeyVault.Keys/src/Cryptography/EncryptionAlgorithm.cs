@@ -132,6 +132,14 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         /// <inheritdoc/>
         public override string ToString() => _value;
 
+        internal static EncryptionAlgorithm FromRsaEncryptionPadding(RSAEncryptionPadding padding) => padding.Mode switch
+        {
+            RSAEncryptionPaddingMode.Pkcs1 => Rsa15,
+            RSAEncryptionPaddingMode.Oaep when padding.OaepHashAlgorithm == HashAlgorithmName.SHA1 => RsaOaep,
+            RSAEncryptionPaddingMode.Oaep when padding.OaepHashAlgorithm == HashAlgorithmName.SHA256 => RsaOaep256,
+            _ => throw new NotSupportedException($"{padding} is not supported"),
+        };
+
         internal RSAEncryptionPadding GetRsaEncryptionPadding() => _value switch
         {
             Rsa15Value => RSAEncryptionPadding.Pkcs1,

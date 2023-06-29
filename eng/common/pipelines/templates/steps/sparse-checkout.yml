@@ -46,6 +46,10 @@ steps:
                 git clone --no-checkout --filter=tree:0 https://github.com/$($repository.Name) .
               }
 
+              # Turn off git GC for sparse checkout. Note: The devops checkout task does this by default
+              Write-Host "git config gc.auto 0"
+              git config gc.auto 0
+
               Write-Host "git sparse-checkout init"
               git sparse-checkout init
 

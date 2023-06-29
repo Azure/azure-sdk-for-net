@@ -22,10 +22,10 @@ namespace Azure.Communication.JobRouter
                 writer.WritePropertyName("dispositionCode"u8);
                 writer.WriteStringValue(DispositionCode);
             }
-            if (Optional.IsDefined(CloseTime))
+            if (Optional.IsDefined(CloseAt))
             {
-                writer.WritePropertyName("closeTime"u8);
-                writer.WriteStringValue(CloseTime.Value, "O");
+                writer.WritePropertyName("closeAt"u8);
+                writer.WriteStringValue(CloseAt.Value, "O");
             }
             if (Optional.IsDefined(Note))
             {

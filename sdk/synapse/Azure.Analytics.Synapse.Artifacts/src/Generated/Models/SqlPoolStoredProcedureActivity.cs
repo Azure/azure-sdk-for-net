@@ -40,7 +40,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="additionalProperties"> Additional Properties. </param>
         /// <param name="sqlPool"> SQL pool stored procedure reference. </param>
         /// <param name="storedProcedureName"> Stored procedure name. Type: string (or Expression with resultType string). </param>
-        /// <param name="storedProcedureParameters"> Value and type setting for stored procedure parameters. Example: &quot;{Parameter1: {value: &quot;1&quot;, type: &quot;int&quot;}}&quot;. </param>
+        /// <param name="storedProcedureParameters"> Value and type setting for stored procedure parameters. Example: "{Parameter1: {value: "1", type: "int"}}". </param>
         internal SqlPoolStoredProcedureActivity(string name, string type, string description, IList<ActivityDependency> dependsOn, IList<UserProperty> userProperties, IDictionary<string, object> additionalProperties, SqlPoolReference sqlPool, object storedProcedureName, IDictionary<string, StoredProcedureParameter> storedProcedureParameters) : base(name, type, description, dependsOn, userProperties, additionalProperties)
         {
             SqlPool = sqlPool;
@@ -53,7 +53,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public SqlPoolReference SqlPool { get; set; }
         /// <summary> Stored procedure name. Type: string (or Expression with resultType string). </summary>
         public object StoredProcedureName { get; set; }
-        /// <summary> Value and type setting for stored procedure parameters. Example: &quot;{Parameter1: {value: &quot;1&quot;, type: &quot;int&quot;}}&quot;. </summary>
+        /// <summary> Value and type setting for stored procedure parameters. Example: "{Parameter1: {value: "1", type: "int"}}". </summary>
         public IDictionary<string, StoredProcedureParameter> StoredProcedureParameters { get; }
     }
 }

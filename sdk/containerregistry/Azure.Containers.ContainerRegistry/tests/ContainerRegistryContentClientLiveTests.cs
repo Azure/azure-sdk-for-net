@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Buffers;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -234,17 +235,19 @@ namespace Azure.Containers.ContainerRegistry.Tests
             // We have imported the library/hello-world image in test set-up,
             // so config and blob files pointed to by the manifest are already in the registry.
 
-            var client = CreateBlobClient("library/hello-world");
+            ContainerRegistryContentClient client = CreateBlobClient("library/hello-world");
+
+            await SetDockerManifestPrerequisites(client);
 
             // Act
-            string path = Path.Combine(TestContext.CurrentContext.TestDirectory, "Data", "docker", "hello-world", "manifest.json");
+            string path = Path.Combine(TestContext.CurrentContext.TestDirectory, "Data", "docker", "manifest.json");
             using FileStream fs = File.OpenRead(path);
             BinaryData manifest = BinaryData.FromStream(fs);
 
             SetManifestResult result = await client.SetManifestAsync(manifest, mediaType: ManifestMediaType.DockerManifest);
 
             // Assert
-            Assert.AreEqual("sha256:e6c1c9dcc9c45a3dbfa654f8c8fad5c91529c137c1e2f6eb0995931c0aa74d99", result.Digest);
+            Assert.AreEqual("sha256:721089ae5c4d90e58e3d7f7e6c652a351621fbf37c26eceae23622173ec5a44d", result.Digest);
 
             // The following fails because the manifest media type is set to OciImageManifest by default
             fs.Position = 0;
@@ -275,6 +278,25 @@ namespace Azure.Containers.ContainerRegistry.Tests
             var layer = "654b93f61054e4ce90ed203bb8d556a6200d5f906cf3eca0620738d6dc18cbed";
             var config = "config.json";
             var basePath = Path.Combine(TestContext.CurrentContext.TestDirectory, "Data", "oci-artifact");
+
+            // Upload config
+            using (var fs = File.OpenRead(Path.Combine(basePath, config)))
+            {
+                var uploadResult = await client.UploadBlobAsync(fs);
+            }
+
+            // Upload layer
+            using (var fs = File.OpenRead(Path.Combine(basePath, layer)))
+            {
+                var uploadResult = await client.UploadBlobAsync(fs);
+            }
+        }
+
+        private async Task SetDockerManifestPrerequisites(ContainerRegistryContentClient client)
+        {
+            var layer = "ec0488e025553d34358768c43e24b1954e0056ec4700883252c74f3eec273016";
+            var config = "config.json";
+            var basePath = Path.Combine(TestContext.CurrentContext.TestDirectory, "Data", "docker");
 
             // Upload config
             using (var fs = File.OpenRead(Path.Combine(basePath, config)))
@@ -523,7 +545,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
 
             // Act
             Response<DownloadRegistryBlobStreamingResult> downloadResult = await client.DownloadBlobStreamingAsync(digest);
-            Stream downloadedStream = downloadResult.Value.Content;
+            using Stream downloadedStream = downloadResult.Value.Content;
             BinaryData content = BinaryData.FromStream(downloadedStream);
 
             // Assert
@@ -532,7 +554,6 @@ namespace Azure.Containers.ContainerRegistry.Tests
             Assert.AreEqual(data, content.ToArray());
 
             // Clean up
-            downloadedStream.Dispose();
             await client.DeleteBlobAsync(digest);
         }
 
@@ -748,6 +769,74 @@ namespace Azure.Containers.ContainerRegistry.Tests
             // Content is validated by the client, so we only need to check length.
             Assert.IsTrue(File.Exists(filePath));
             Assert.AreEqual(size, new FileInfo(filePath).Length);
+        }
+
+        [Test]
+        [LiveOnly]
+        [IgnoreServiceError(404, "BLOB_UPLOAD_INVALID", Reason = "https://github.com/Azure/azure-sdk-for-net/issues/35322")]
+        public async Task CanUploadAndDownloadLargeBlobStreaming()
+        {
+            long size = int.MaxValue;
+            size++; // Exceed max to exercise path that would throw with an int.
+
+            string repositoryId = Recording.Random.NewGuid().ToString();
+            ContainerRegistryContentClient client = CreateBlobClient(repositoryId);
+
+            // Upload the large blob
+            Stream uploadStream = RandomStream.Create(size);
+            UploadRegistryBlobResult uploadResult = await client.UploadBlobAsync(uploadStream);
+
+            // Download to a file stream
+            string path = Path.Combine(TestContext.CurrentContext.TestDirectory, "Data", "LargeFile");
+            string downloadFileName = "blob_downloaded.bin";
+            string filePath = Path.Combine(path, downloadFileName);
+
+            if (!Directory.Exists(path))
+            {
+                Directory.CreateDirectory(path);
+            }
+
+            if (File.Exists(filePath))
+            {
+                File.Delete(filePath);
+            }
+
+            using FileStream downloadFs = File.OpenWrite(filePath);
+            Response<DownloadRegistryBlobStreamingResult> response = await client.DownloadBlobStreamingAsync(uploadResult.Digest);
+            using Stream contentStream = response.Value.Content;
+            long blobSize = response.GetRawResponse().Headers.ContentLengthLong.Value;
+            await CopyNetworkStream(contentStream, downloadFs, blobSize);
+
+            // Content is validated by the client, so we only need to check length.
+            Assert.IsTrue(File.Exists(filePath));
+            Assert.AreEqual(size, new FileInfo(filePath).Length);
+            Assert.AreEqual(blobSize, new FileInfo(filePath).Length);
+        }
+
+        private async Task CopyNetworkStream(Stream source, Stream destination, long size, CancellationToken cancellationToken = default)
+        {
+            int bufferSize = 4 * 1024 * 1024; // 4MB
+            byte[] buffer = ArrayPool<byte>.Shared.Rent(bufferSize);
+
+            long blobBytes = 0;
+            long blobSize = size;
+
+            try
+            {
+                do
+                {
+                    int bytesRead = await source.ReadAsync(buffer, 0, bufferSize, cancellationToken).ConfigureAwait(false);
+                    await destination.WriteAsync(buffer, 0, bytesRead, cancellationToken).ConfigureAwait(false);
+                    blobBytes += bytesRead;
+                }
+                while (blobBytes < blobSize);
+
+                await destination.FlushAsync(cancellationToken).ConfigureAwait(false);
+            }
+            finally
+            {
+                ArrayPool<byte>.Shared.Return(buffer);
+            }
         }
 
         [RecordedTest]

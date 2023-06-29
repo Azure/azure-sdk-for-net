@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <summary> Initializes a new instance of VaultHealthProperties. </summary>
         internal VaultHealthProperties()
         {
-            VaultErrors = new ChangeTrackingList<HealthError>();
+            VaultErrors = new ChangeTrackingList<SiteRecoveryHealthError>();
         }
 
         /// <summary> Initializes a new instance of VaultHealthProperties. </summary>
@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="protectedItemsHealth"> The list of the health detail of the protected items in the vault. </param>
         /// <param name="fabricsHealth"> The list of the health detail of the fabrics in the vault. </param>
         /// <param name="containersHealth"> The list of the health detail of the containers in the vault. </param>
-        internal VaultHealthProperties(IReadOnlyList<HealthError> vaultErrors, ResourceHealthSummary protectedItemsHealth, ResourceHealthSummary fabricsHealth, ResourceHealthSummary containersHealth)
+        internal VaultHealthProperties(IReadOnlyList<SiteRecoveryHealthError> vaultErrors, ResourceHealthSummary protectedItemsHealth, ResourceHealthSummary fabricsHealth, ResourceHealthSummary containersHealth)
         {
             VaultErrors = vaultErrors;
             ProtectedItemsHealth = protectedItemsHealth;
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> The list of errors on the vault. </summary>
-        public IReadOnlyList<HealthError> VaultErrors { get; }
+        public IReadOnlyList<SiteRecoveryHealthError> VaultErrors { get; }
         /// <summary> The list of the health detail of the protected items in the vault. </summary>
         public ResourceHealthSummary ProtectedItemsHealth { get; }
         /// <summary> The list of the health detail of the fabrics in the vault. </summary>

@@ -12,8 +12,8 @@ using Azure.Communication.JobRouter.Models;
 Create a `RouterClient`.
 
 ```C# Snippet:Azure_Communication_JobRouter_Tests_Samples_CreateClient
-RouterClient routerClient = new RouterClient("<< CONNECTION STRING >>");
-RouterAdministrationClient routerAdministrationClient = new RouterAdministrationClient("<< CONNECTION STRING >>");
+JobRouterClient routerClient = new JobRouterClient("<< CONNECTION STRING >>");
+JobRouterAdministrationClient routerAdministrationClient = new JobRouterAdministrationClient("<< CONNECTION STRING >>");
 ```
 
 ## Create an exception policy
@@ -116,7 +116,7 @@ Response<ExceptionPolicy> updateExceptionPolicy = await routerClient.UpdateExcep
     {
         // you can update one or more properties of exception policy - here we are adding one additional exception rule
         Name = "My updated exception policy",
-        ExceptionRules = new Dictionary<string, ExceptionRule?>()
+        ExceptionRules =
         {
             // adding new rule
             ["EscalateJobOnWaitTimeExceededTrigger2Min"] = new ExceptionRule(
@@ -141,6 +141,18 @@ Console.WriteLine($"Exception policy successfully updated with id: {updateExcept
 Console.WriteLine($"Exception policy now has 2 exception rules: {updateExceptionPolicy.Value.ExceptionRules.Count}");
 Console.WriteLine($"`EscalateJobOnWaitTimeExceededTrigger` rule has been successfully deleted: {!updateExceptionPolicy.Value.ExceptionRules.ContainsKey("EscalateJobOnWaitTimeExceededTrigger")}");
 Console.WriteLine($"`EscalateJobOnWaitTimeExceededTrigger2Min` rule has been successfully added: {updateExceptionPolicy.Value.ExceptionRules.ContainsKey("EscalateJobOnWaitTimeExceededTrigger2Min")}");
+```
+
+## Remove from exception policy
+
+```C# Snippet:Azure_Communication_JobRouter_Tests_Samples_Crud_UpdateExceptionPolicyRemoveProp_Async
+// we are going to remove Name
+Response updateExceptionPolicyWithoutName = await routerClient.UpdateExceptionPolicyAsync(exceptionPolicyId,
+    RequestContent.Create(new { Name = (string?)null }));
+
+Response<ExceptionPolicy> queriedExceptionPolicyWithoutName = await routerClient.GetExceptionPolicyAsync(exceptionPolicyId);
+
+Console.WriteLine($"Exception policy successfully updated: 'Name' has been removed. Status: {string.IsNullOrWhiteSpace(queriedExceptionPolicyWithoutName.Value.Name)}");
 ```
 
 ## List exception policies

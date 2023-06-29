@@ -15,12 +15,6 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
     public abstract partial class MethodRequest
     {
         /// <summary> Initializes a new instance of MethodRequest. </summary>
-        protected MethodRequest()
-        {
-            ApiVersion = "1.1";
-        }
-
-        /// <summary> Initializes a new instance of MethodRequest. </summary>
         /// <param name="methodName"> Direct method method name. </param>
         /// <param name="apiVersion"> Video Analyzer API version. </param>
         internal MethodRequest(string methodName, string apiVersion)

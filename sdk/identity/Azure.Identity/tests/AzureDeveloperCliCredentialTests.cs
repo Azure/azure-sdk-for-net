@@ -90,8 +90,8 @@ namespace Azure.Identity.Tests
             yield return new object[] { AzureDeveloperCliCredential.AzdNotLogIn, AzureDeveloperCliCredential.AzdNotLogIn, typeof(CredentialUnavailableException) };
             yield return new object[] { RefreshTokenExpiredError, AzureDeveloperCliCredential.InteractiveLoginRequired, typeof(CredentialUnavailableException) };
             yield return new object[] { AzureDeveloperCliCredential.AzdCLIInternalError, AzureDeveloperCliCredential.InteractiveLoginRequired, typeof(CredentialUnavailableException) };
-            yield return new object[] { "random unknown exception", AzureDeveloperCliCredential.AzdCliFailedError + " " + AzureDeveloperCliCredential.Troubleshoot + " random unknown exception", typeof(AuthenticationFailedException) };
-            yield return new object[] { "AADSTS12345: Some AAD error. To re-authenticate, please run: azd auth login", AzureDeveloperCliCredential.AzdCliFailedError + " " + AzureDeveloperCliCredential.Troubleshoot + " AADSTS12345: Some AAD error. To re-authenticate, please run: azd auth login", typeof(AuthenticationFailedException) };
+            yield return new object[] { "random unknown exception", AzureDeveloperCliCredential.AzdCliFailedError + " " + AzureDeveloperCliCredential.Troubleshoot + " random unknown exception", typeof(CredentialUnavailableException) };
+            yield return new object[] { "AADSTS12345: Some AAD error. To re-authenticate, please run: azd auth login", AzureDeveloperCliCredential.AzdCliFailedError + " " + AzureDeveloperCliCredential.Troubleshoot + " AADSTS12345: Some AAD error. To re-authenticate, please run: azd auth login", typeof(CredentialUnavailableException) };
         }
 
         [Test]
@@ -122,7 +122,7 @@ namespace Azure.Identity.Tests
                 new AzureDeveloperCliCredential(CredentialPipeline.GetInstance(null),
                     new TestProcessService(testProcess),
                     new AzureDeveloperCliCredentialOptions() { ProcessTimeout = TimeSpan.Zero }));
-            var ex = Assert.ThrowsAsync<AuthenticationFailedException>(async () => await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default)));
+            var ex = Assert.ThrowsAsync<CredentialUnavailableException>(async () => await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default)));
             Assert.AreEqual(AzureDeveloperCliCredential.AzdCliTimeoutError, ex.Message);
         }
     }

@@ -38,7 +38,7 @@ namespace Azure.Communication.CallAutomation
         /// This is blocking call. Wait for <see cref="RemoveParticipantEventResult"/> using <see cref="CallAutomationEventProcessor"/>.
         /// </summary>
         /// <param name="cancellationToken">Cancellation Token can be used to set timeout or cancel this WaitForEventProcessor.</param>
-        /// <returns>Returns <see cref="RemoveParticipantEventResult"/> which contains either <see cref="RemoveParticipantSucceededEventData"/> event or <see cref="RemoveParticipantFailedEventData"/> event.</returns>
+        /// <returns>Returns <see cref="RemoveParticipantEventResult"/> which contains either <see cref="RemoveParticipantSucceeded"/> event or <see cref="RemoveParticipantFailed"/> event.</returns>
         public RemoveParticipantEventResult WaitForEventProcessor(CancellationToken cancellationToken = default)
         {
             if (_evHandler is null)
@@ -49,8 +49,8 @@ namespace Azure.Communication.CallAutomation
             var returnedEvent = _evHandler.WaitForEventProcessor(filter
                 => filter.CallConnectionId == _callConnectionId
                 && (filter.OperationContext == _operationContext || _operationContext is null)
-                && (filter.GetType() == typeof(RemoveParticipantSucceededEventData)
-                || filter.GetType() == typeof(RemoveParticipantFailedEventData)),
+                && (filter.GetType() == typeof(RemoveParticipantSucceeded)
+                || filter.GetType() == typeof(RemoveParticipantFailed)),
                 cancellationToken);
 
             return SetReturnedEvent(returnedEvent);
@@ -60,7 +60,7 @@ namespace Azure.Communication.CallAutomation
         /// Wait for <see cref="RemoveParticipantEventResult"/> using <see cref="CallAutomationEventProcessor"/>.
         /// </summary>
         /// <param name="cancellationToken">Cancellation Token can be used to set timeout or cancel this WaitForEventProcessor.</param>
-        /// <returns>Returns <see cref="RemoveParticipantEventResult"/> which contains either <see cref="RemoveParticipantSucceededEventData"/> event or <see cref="RemoveParticipantFailedEventData"/> event.</returns>
+        /// <returns>Returns <see cref="RemoveParticipantEventResult"/> which contains either <see cref="RemoveParticipantSucceeded"/> event or <see cref="RemoveParticipantFailed"/> event.</returns>
         public async Task<RemoveParticipantEventResult> WaitForEventProcessorAsync(CancellationToken cancellationToken = default)
         {
             if (_evHandler is null)
@@ -71,23 +71,23 @@ namespace Azure.Communication.CallAutomation
             var returnedEvent = await _evHandler.WaitForEventProcessorAsync(filter
                 => filter.CallConnectionId == _callConnectionId
                 && (filter.OperationContext == _operationContext || _operationContext is null)
-                && (filter.GetType() == typeof(RemoveParticipantSucceededEventData)
-                || filter.GetType() == typeof(RemoveParticipantFailedEventData)),
+                && (filter.GetType() == typeof(RemoveParticipantSucceeded)
+                || filter.GetType() == typeof(RemoveParticipantFailed)),
                 cancellationToken).ConfigureAwait(false);
 
             return SetReturnedEvent(returnedEvent);
         }
 
-        private static RemoveParticipantEventResult SetReturnedEvent(CallAutomationEventData returnedEvent)
+        private static RemoveParticipantEventResult SetReturnedEvent(CallAutomationEventBase returnedEvent)
         {
             RemoveParticipantEventResult result = default;
             switch (returnedEvent)
             {
-                case RemoveParticipantSucceededEventData:
-                    result = new RemoveParticipantEventResult(true, (RemoveParticipantSucceededEventData)returnedEvent, null, ((RemoveParticipantSucceededEventData)returnedEvent).Participant);
+                case RemoveParticipantSucceeded:
+                    result = new RemoveParticipantEventResult(true, (RemoveParticipantSucceeded)returnedEvent, null, ((RemoveParticipantSucceeded)returnedEvent).Participant);
                     break;
-                case RemoveParticipantFailedEventData:
-                    result = new RemoveParticipantEventResult(false, null, (RemoveParticipantFailedEventData)returnedEvent,((RemoveParticipantFailedEventData)returnedEvent).Participant);
+                case RemoveParticipantFailed:
+                    result = new RemoveParticipantEventResult(false, null, (RemoveParticipantFailed)returnedEvent,((RemoveParticipantFailed)returnedEvent).Participant);
                     break;
                 default:
                     throw new NotSupportedException(returnedEvent.GetType().Name);

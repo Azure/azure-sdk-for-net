@@ -1,10 +1,35 @@
 # Release History
 
-## 1.0.0-beta.3 (2023-04-28)
+## 1.1.0-beta.1 (Unreleased)
 
-### Features 
+### Features Added
 
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+## 1.0.0 (2023-06-06)
+
+### Breaking Changes
+
+Polishing since last public beta release:
+- Corrected the format of all `ResourceIdentifier` type properties / parameters.
+- Corrected the format of all `TimeSpan` type properties / parameters.
+- Optimized the name of some models and functions.
+
+## 1.0.0-beta.3 (2023-05-31)
+
+### Features Added
+
+- Enable the model factory feature for model mocking, more information can be found [here](https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-mocking-factory-builder).
 - Add support for new version 2023-02-01
+
+### Other Changes
+
+- Upgraded dependent Azure.Core to 1.32.0.
+- Upgraded dependent Azure.ResourceManager to 1.6.0.
 
 ## 1.0.0-beta.2 (2023-02-17)
 

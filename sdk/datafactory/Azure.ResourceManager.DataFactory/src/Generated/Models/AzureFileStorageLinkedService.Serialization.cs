@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -64,20 +65,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(Host))
             {
                 writer.WritePropertyName("host"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(Host);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(Host.ToString()).RootElement);
-#endif
+                JsonSerializer.Serialize(writer, Host);
             }
             if (Optional.IsDefined(UserId))
             {
                 writer.WritePropertyName("userId"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(UserId);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(UserId.ToString()).RootElement);
-#endif
+                JsonSerializer.Serialize(writer, UserId);
             }
             if (Optional.IsDefined(Password))
             {
@@ -87,11 +80,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(ConnectionString))
             {
                 writer.WritePropertyName("connectionString"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(ConnectionString);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(ConnectionString.ToString()).RootElement);
-#endif
+                JsonSerializer.Serialize(writer, ConnectionString);
             }
             if (Optional.IsDefined(AccountKey))
             {
@@ -101,11 +90,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(SasUri))
             {
                 writer.WritePropertyName("sasUri"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(SasUri);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(SasUri.ToString()).RootElement);
-#endif
+                JsonSerializer.Serialize(writer, SasUri);
             }
             if (Optional.IsDefined(SasToken))
             {
@@ -115,20 +100,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(FileShare))
             {
                 writer.WritePropertyName("fileShare"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(FileShare);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(FileShare.ToString()).RootElement);
-#endif
+                JsonSerializer.Serialize(writer, FileShare);
             }
             if (Optional.IsDefined(Snapshot))
             {
                 writer.WritePropertyName("snapshot"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(Snapshot);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(Snapshot.ToString()).RootElement);
-#endif
+                JsonSerializer.Serialize(writer, Snapshot);
             }
             if (Optional.IsDefined(EncryptedCredential))
             {
@@ -163,15 +140,15 @@ namespace Azure.ResourceManager.DataFactory.Models
             Optional<string> description = default;
             Optional<IDictionary<string, EntityParameterSpecification>> parameters = default;
             Optional<IList<BinaryData>> annotations = default;
-            Optional<BinaryData> host = default;
-            Optional<BinaryData> userId = default;
-            Optional<FactorySecretBaseDefinition> password = default;
-            Optional<BinaryData> connectionString = default;
+            Optional<DataFactoryElement<string>> host = default;
+            Optional<DataFactoryElement<string>> userId = default;
+            Optional<DataFactorySecretBaseDefinition> password = default;
+            Optional<DataFactoryElement<string>> connectionString = default;
             Optional<AzureKeyVaultSecretReference> accountKey = default;
-            Optional<BinaryData> sasUri = default;
+            Optional<DataFactoryElement<string>> sasUri = default;
             Optional<AzureKeyVaultSecretReference> sasToken = default;
-            Optional<BinaryData> fileShare = default;
-            Optional<BinaryData> snapshot = default;
+            Optional<DataFactoryElement<string>> fileShare = default;
+            Optional<DataFactoryElement<string>> snapshot = default;
             Optional<BinaryData> encryptedCredential = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -246,7 +223,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            host = BinaryData.FromString(property0.Value.GetRawText());
+                            host = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("userId"u8))
@@ -255,7 +232,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            userId = BinaryData.FromString(property0.Value.GetRawText());
+                            userId = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("password"u8))
@@ -264,7 +241,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            password = FactorySecretBaseDefinition.DeserializeFactorySecretBaseDefinition(property0.Value);
+                            password = DataFactorySecretBaseDefinition.DeserializeDataFactorySecretBaseDefinition(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("connectionString"u8))
@@ -273,7 +250,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            connectionString = BinaryData.FromString(property0.Value.GetRawText());
+                            connectionString = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("accountKey"u8))
@@ -291,7 +268,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            sasUri = BinaryData.FromString(property0.Value.GetRawText());
+                            sasUri = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("sasToken"u8))
@@ -309,7 +286,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            fileShare = BinaryData.FromString(property0.Value.GetRawText());
+                            fileShare = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("snapshot"u8))
@@ -318,7 +295,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            snapshot = BinaryData.FromString(property0.Value.GetRawText());
+                            snapshot = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("encryptedCredential"u8))

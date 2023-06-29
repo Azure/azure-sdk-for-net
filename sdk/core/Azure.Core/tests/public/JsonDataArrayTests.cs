@@ -58,6 +58,7 @@ namespace Azure.Core.Tests.Public
         }
 
         [Test]
+        [Ignore("Disallowing POCO support in current version.")]
         public void CannotConvertArrayToModel()
         {
             dynamic data = JsonDataTestHelpers.CreateFromJson("[1, 2, 3]");
@@ -77,6 +78,7 @@ namespace Azure.Core.Tests.Public
         }
 
         [Test]
+        [Ignore("Disallowing POCO support in current version.")]
         public void CannotConvertArrayPropertyToModel()
         {
             dynamic data = JsonDataTestHelpers.CreateFromJson("""{ "value": [1, 2, 3] }""");
@@ -197,6 +199,7 @@ namespace Azure.Core.Tests.Public
             Assert.AreEqual(5, (int)data[0]);
             Assert.AreEqual("valid", (string)data[1]);
             Assert.IsTrue(data[2] == null);
+            Assert.AreEqual(null, data[2]);
         }
 
         [Test]
@@ -234,14 +237,50 @@ namespace Azure.Core.Tests.Public
         public void CanGetArrayLength()
         {
             dynamic data = JsonDataTestHelpers.CreateFromJson("[1, 2, 3]");
-            Assert.AreEqual(3, ((int[])data).Length);
+            Assert.AreEqual(3, data.Length);
+        }
+
+        [Test]
+        public void CanGetArrayLengthWithChanges()
+        {
+            dynamic data = JsonDataTestHelpers.CreateFromJson("[1, 2, 3]");
+
+            data[0] = 4;
+            data[1] = BinaryData.FromString("""{ "foo": 1 }""").ToDynamicFromJson();
+
+            Assert.AreEqual(3, data.Length);
         }
 
         [Test]
         public void CanGetArrayPropertyLength()
         {
             dynamic data = JsonDataTestHelpers.CreateFromJson("""{ "value": [1, 2, 3] }""");
-            Assert.AreEqual(3, ((int[])data.value).Length);
+            Assert.AreEqual(3, data.value.Length);
+        }
+
+        [Test]
+        public void CanGetArrayPropertyLengthWithChanges()
+        {
+            dynamic data = JsonDataTestHelpers.CreateFromJson("""{ "value": [1, 2, 3] }""");
+
+            data.value[0] = 4;
+            data.value[1] = BinaryData.FromString("""{ "foo": 1 }""").ToDynamicFromJson();
+
+            Assert.AreEqual(3, data.value.Length);
+
+            data.value = new int[] { 1, 2 };
+
+            Assert.AreEqual(2, data.value.Length);
+
+            data.value = BinaryData.FromString("""[1, 2, 3, 4]""").ToDynamicFromJson();
+
+            Assert.AreEqual(4, data.value.Length);
+
+            // Switch JsonKind
+            data = BinaryData.FromString("""{ "foo": 1 }""").ToDynamicFromJson();
+            data.foo = new int[] { 1, 2 };
+
+            Assert.AreEqual(2, data.foo.Length);
         }
 
         [Test]

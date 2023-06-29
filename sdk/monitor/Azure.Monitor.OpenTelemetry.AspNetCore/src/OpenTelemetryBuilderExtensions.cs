@@ -8,7 +8,6 @@ using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using OpenTelemetry;
-using OpenTelemetry.Extensions.AzureMonitor;
 using OpenTelemetry.Logs;
 using OpenTelemetry.Metrics;
 using OpenTelemetry.Trace;
@@ -94,7 +93,6 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore
                             .AddAspNetCoreInstrumentation()
                             .AddHttpClientInstrumentation()
                             .AddSqlClientInstrumentation()
-                            .SetSampler(new ApplicationInsightsSampler(1.0F))
                             .AddAzureMonitorTraceExporter());
 
             builder.WithMetrics(b => b
@@ -107,7 +105,6 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore
                 logging.AddOpenTelemetry(builderOptions =>
                 {
                     builderOptions.IncludeFormattedMessage = true;
-                    builderOptions.ParseStateValues = true;
                     builderOptions.IncludeScopes = false;
                 });
             });

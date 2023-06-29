@@ -21,7 +21,7 @@ namespace Azure.Core
         private readonly TimeSpan _maxDelay;
 
         /// <summary>
-        /// Constructs a new instance of <see cref="DelayStrategy"/>.
+        /// Constructs a new instance of <see cref="DelayStrategy"/>. This constructor can be used by derived classes to customize the jitter factor and max delay.
         /// </summary>
         /// <param name="maxDelay">The max delay value to apply on an individual delay.</param>
         /// <param name="jitterFactor">The jitter factor to apply to each delay. For example, if the delay is 1 second with a jitterFactor of 0.2, the actual
@@ -35,7 +35,7 @@ namespace Azure.Core
         }
 
         /// <summary>
-        /// Create an exponential delay with the default jitter factor.
+        /// Constructs an exponential delay with jitter.
         /// </summary>
         /// <param name="initialDelay">The initial delay to use.</param>
         /// <param name="maxDelay">The maximum delay to use.</param>
@@ -48,7 +48,7 @@ namespace Azure.Core
         }
 
         /// <summary>
-        /// Create a fixed delay with jitter.
+        /// Constructs a fixed delay with jitter.
         /// </summary>
         /// <param name="delay">The delay to use.</param>
         /// <returns>The <see cref="DelayStrategy"/> instance.</returns>
@@ -59,7 +59,8 @@ namespace Azure.Core
         }
 
         /// <summary>
-        /// Gets the next delay interval.
+        /// Gets the next delay interval. Implement this method to provide custom delay logic.
+        /// The Max Delay, jitter, and any Retry-After headers will be applied to the value returned from this method.
         /// </summary>
         /// <param name="response">The response, if any, returned from the service.</param>
         /// <param name="retryNumber">The retry number.</param>

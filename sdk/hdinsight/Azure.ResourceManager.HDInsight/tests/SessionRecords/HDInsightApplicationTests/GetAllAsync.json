@@ -1,16 +1,16 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/HDInsightRG-9851/providers/Microsoft.HDInsight/clusters/cluster7580/applications/application4231?api-version=2021-06-01",
+      "RequestUri": "https://management.azure.com/subscriptions/964c10bb-8a6c-43bc-83d3-6b318c6c7305/resourceGroups/HDInsightRG-3237/providers/Microsoft.HDInsight/clusters/cluster6253/applications/application1358?api-version=2023-04-15-preview",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
         "Content-Length": "405",
         "Content-Type": "application/json",
-        "traceparent": "00-94e303d52ea4e20a50450a548c1eff11-58fbe8a1e8a5b986-00",
-        "User-Agent": "azsdk-net-ResourceManager.HDInsight/1.1.0-alpha.20221202.1 (.NET 6.0.11; Microsoft Windows 10.0.19045)",
-        "x-ms-client-request-id": "77aeb8e8213c9496bd18e9acf03b9889",
+        "traceparent": "00-46138643bdf12b95237054edab32a09b-334db90214355a6d-00",
+        "User-Agent": "azsdk-net-ResourceManager.HDInsight/1.1.0-alpha.20230608.1 (.NET 7.0.5; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "b3ced8c3f9794ca750eb8e64bc89497c",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -31,7 +31,7 @@
           },
           "installScriptActions": [
             {
-              "name": "InstallHue2328",
+              "name": "InstallHue1045",
               "uri": "https://hdiconfigactions.blob.core.windows.net/linuxhueconfigactionv02/install-hue-uber-v02.sh",
               "parameters": "-version latest -port 20000",
               "roles": [
@@ -44,29 +44,29 @@
       },
       "StatusCode": 200,
       "ResponseHeaders": {
-        "Azure-AsyncOperation": "https://management.azure.com:443/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/HDInsightRG-9851/providers/Microsoft.HDInsight/clusters/cluster7580/azureasyncoperations/create?api-version=2021-06-01",
+        "Azure-AsyncOperation": "https://management.azure.com:443/subscriptions/964c10bb-8a6c-43bc-83d3-6b318c6c7305/resourceGroups/HDInsightRG-3237/providers/Microsoft.HDInsight/clusters/cluster6253/azureasyncoperations/create?api-version=2023-04-15-preview",
         "Cache-Control": "no-cache",
-        "Content-Length": "857",
+        "Content-Length": "858",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 06 Dec 2022 03:26:14 GMT",
-        "ETag": "\u0022D0DB9D74-C805-41F9-A43E-1282F9929AF8\u0022",
+        "Date": "Tue, 13 Jun 2023 08:11:14 GMT",
+        "ETag": "\u00228A0E50F8-FCAC-426F-8FC9-4E3761BBAF4F\u0022",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "10f7b2ae-c1cf-4774-b6a8-62e112ab4727",
-        "x-ms-hdi-appuri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/HDInsightRG-9851/providers/Microsoft.HDInsight/clusters/cluster7580/applications/application4231?api-version=2021-06-01",
-        "x-ms-hdi-served-by": "eastus",
-        "x-ms-ratelimit-remaining-subscription-writes": "1199",
-        "x-ms-request-id": "bb2e12d1-0398-4c4b-840f-46fff528c2bb",
-        "x-ms-routing-request-id": "SOUTHEASTASIA:20221206T032615Z:10f7b2ae-c1cf-4774-b6a8-62e112ab4727"
+        "x-ms-correlation-request-id": "e601b6e9-4515-470a-a046-5684c26a4a31",
+        "x-ms-hdi-appuri": "https://management.azure.com/subscriptions/964c10bb-8a6c-43bc-83d3-6b318c6c7305/resourceGroups/HDInsightRG-3237/providers/Microsoft.HDInsight/clusters/cluster6253/applications/application1358?api-version=2023-04-15-preview",
+        "x-ms-hdi-served-by": "japaneast",
+        "x-ms-ratelimit-remaining-subscription-writes": "1189",
+        "x-ms-request-id": "acb8a589-b6cf-44d8-8180-309408b53c67",
+        "x-ms-routing-request-id": "JAPANEAST:20230613T081115Z:e601b6e9-4515-470a-a046-5684c26a4a31"
       },
       "ResponseBody": {
-        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/HDInsightRG-9851/providers/Microsoft.HDInsight/clusters/cluster7580/applications/application4231",
-        "name": "application4231",
+        "id": "/subscriptions/964c10bb-8a6c-43bc-83d3-6b318c6c7305/resourceGroups/HDInsightRG-3237/providers/Microsoft.HDInsight/clusters/cluster6253/applications/application1358",
+        "name": "application1358",
         "type": "Microsoft.HDInsight/clusters/applications",
-        "etag": "D0DB9D74-C805-41F9-A43E-1282F9929AF8",
+        "etag": "8A0E50F8-FCAC-426F-8FC9-4E3761BBAF4F",
         "tags": {
           "test": "test"
         },
@@ -85,7 +85,7 @@
           },
           "installScriptActions": [
             {
-              "name": "InstallHue2328",
+              "name": "InstallHue1045",
               "uri": "https://hdiconfigactions.blob.core.windows.net/linuxhueconfigactionv02/install-hue-uber-v02.sh",
               "roles": [
                 "edgenode"
@@ -97,19 +97,19 @@
           "sshEndpoints": [],
           "provisioningState": "InProgress",
           "applicationState": "Accepted",
-          "createdDate": "2022-12-06T03:26:15.06",
+          "createdDate": "2023-06-13T08:11:14.787",
           "applicationType": "CustomApplication"
         }
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/HDInsightRG-9851/providers/Microsoft.HDInsight/clusters/cluster7580/azureasyncoperations/create?api-version=2021-06-01",
+      "RequestUri": "https://management.azure.com/subscriptions/964c10bb-8a6c-43bc-83d3-6b318c6c7305/resourceGroups/HDInsightRG-3237/providers/Microsoft.HDInsight/clusters/cluster6253/azureasyncoperations/create?api-version=2023-04-15-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
-        "traceparent": "00-94e303d52ea4e20a50450a548c1eff11-ceed71016ac15f73-00",
-        "User-Agent": "azsdk-net-ResourceManager/1.3.2 (.NET 6.0.11; Microsoft Windows 10.0.19045)",
-        "x-ms-client-request-id": "1a094ea449a3abeeca9b30ca2a7c2962",
+        "traceparent": "00-46138643bdf12b95237054edab32a09b-b13278c3a9f52cf5-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.6.0 (.NET 7.0.5; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "0763de0f30f5e485f069b11902d15bb7",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -118,55 +118,55 @@
         "Cache-Control": "no-cache",
         "Content-Length": "22",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 06 Dec 2022 03:26:15 GMT",
+        "Date": "Tue, 13 Jun 2023 08:11:14 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "532546fc-e703-4877-8503-e79e1c22f0b6",
-        "x-ms-hdi-served-by": "eastus",
-        "x-ms-ratelimit-remaining-subscription-reads": "11994",
-        "x-ms-request-id": "7eb7f576-52e1-4d82-b3bd-3571d6a90ccd",
-        "x-ms-routing-request-id": "SOUTHEASTASIA:20221206T032616Z:532546fc-e703-4877-8503-e79e1c22f0b6"
+        "x-ms-correlation-request-id": "b1c6a99d-e937-4fb8-bca8-fb72af9139e1",
+        "x-ms-hdi-served-by": "japaneast",
+        "x-ms-ratelimit-remaining-subscription-reads": "11856",
+        "x-ms-request-id": "123741fd-6655-4198-af70-baa61e970377",
+        "x-ms-routing-request-id": "JAPANEAST:20230613T081115Z:b1c6a99d-e937-4fb8-bca8-fb72af9139e1"
       },
       "ResponseBody": {
         "status": "Succeeded"
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/HDInsightRG-9851/providers/Microsoft.HDInsight/clusters/cluster7580/applications/application4231?api-version=2021-06-01",
+      "RequestUri": "https://management.azure.com/subscriptions/964c10bb-8a6c-43bc-83d3-6b318c6c7305/resourceGroups/HDInsightRG-3237/providers/Microsoft.HDInsight/clusters/cluster6253/applications/application1358?api-version=2023-04-15-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
-        "traceparent": "00-94e303d52ea4e20a50450a548c1eff11-c79629184e4b2bb3-00",
-        "User-Agent": "azsdk-net-ResourceManager/1.3.2 (.NET 6.0.11; Microsoft Windows 10.0.19045)",
-        "x-ms-client-request-id": "df94b9d04f7a2df39d6ebdaf9f69d5b9",
+        "traceparent": "00-46138643bdf12b95237054edab32a09b-a2c0145b2bc32452-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.6.0 (.NET 7.0.5; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "de51acc4dbbb343f392510524f115304",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "883",
+        "Content-Length": "858",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 06 Dec 2022 03:26:16 GMT",
+        "Date": "Tue, 13 Jun 2023 08:11:14 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "5ee70219-1358-4e0b-9ff1-3e378d8a2b49",
-        "x-ms-hdi-served-by": "eastus",
-        "x-ms-ratelimit-remaining-subscription-reads": "11993",
-        "x-ms-request-id": "25347b93-c2a3-4a13-bfea-e2c81cd3eed5",
-        "x-ms-routing-request-id": "SOUTHEASTASIA:20221206T032616Z:5ee70219-1358-4e0b-9ff1-3e378d8a2b49"
+        "x-ms-correlation-request-id": "44f8a4e8-db35-47fd-8481-fe93b4704c36",
+        "x-ms-hdi-served-by": "japaneast",
+        "x-ms-ratelimit-remaining-subscription-reads": "11855",
+        "x-ms-request-id": "a4dc881c-54c1-4573-8905-85d5ba220d55",
+        "x-ms-routing-request-id": "JAPANEAST:20230613T081115Z:44f8a4e8-db35-47fd-8481-fe93b4704c36"
       },
       "ResponseBody": {
-        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/HDInsightRG-9851/providers/Microsoft.HDInsight/clusters/cluster7580/applications/application4231",
-        "name": "application4231",
+        "id": "/subscriptions/964c10bb-8a6c-43bc-83d3-6b318c6c7305/resourceGroups/HDInsightRG-3237/providers/Microsoft.HDInsight/clusters/cluster6253/applications/application1358",
+        "name": "application1358",
         "type": "Microsoft.HDInsight/clusters/applications",
-        "etag": "14D2266B-0E1A-47D1-BC23-2B0F7FD1C9ED",
+        "etag": "8A0E50F8-FCAC-426F-8FC9-4E3761BBAF4F",
         "tags": {
           "test": "test"
         },
@@ -176,7 +176,6 @@
               {
                 "name": "edgenode",
                 "targetInstanceCount": 1,
-                "VMGroupName": "edgenode1",
                 "hardwareProfile": {
                   "vmSize": "standard_a4_v2"
                 },
@@ -186,7 +185,7 @@
           },
           "installScriptActions": [
             {
-              "name": "InstallHue2328",
+              "name": "InstallHue1045",
               "uri": "https://hdiconfigactions.blob.core.windows.net/linuxhueconfigactionv02/install-hue-uber-v02.sh",
               "roles": [
                 "edgenode"
@@ -198,47 +197,46 @@
           "sshEndpoints": [],
           "provisioningState": "InProgress",
           "applicationState": "Accepted",
-          "createdDate": "2022-12-06T03:26:15.06",
+          "createdDate": "2023-06-13T08:11:14.787",
           "applicationType": "CustomApplication"
         }
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/HDInsightRG-9851/providers/Microsoft.HDInsight/clusters/cluster7580/applications?api-version=2021-06-01",
+      "RequestUri": "https://management.azure.com/subscriptions/964c10bb-8a6c-43bc-83d3-6b318c6c7305/resourceGroups/HDInsightRG-3237/providers/Microsoft.HDInsight/clusters/cluster6253/applications?api-version=2023-04-15-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-94cf07c7c5599c9a1a9d690e037f48af-1d1f75f1ad41d785-00",
-        "User-Agent": "azsdk-net-ResourceManager.HDInsight/1.1.0-alpha.20221202.1 (.NET 6.0.11; Microsoft Windows 10.0.19045)",
-        "x-ms-client-request-id": "a108c0bc7d313ce6ed9f07368a50153d",
+        "User-Agent": "azsdk-net-ResourceManager.HDInsight/1.1.0-alpha.20230608.1 (.NET 7.0.5; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "dd55df4a4225288697edde30dd86a6d1",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "895",
+        "Content-Length": "870",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 06 Dec 2022 03:26:17 GMT",
+        "Date": "Tue, 13 Jun 2023 08:11:15 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "83552c30-19f9-4d7c-a844-d6c7811b388f",
-        "x-ms-hdi-served-by": "eastus",
-        "x-ms-ratelimit-remaining-subscription-reads": "11992",
-        "x-ms-request-id": "b84b74d5-654b-4b61-9f2e-2c1c6f596184",
-        "x-ms-routing-request-id": "SOUTHEASTASIA:20221206T032617Z:83552c30-19f9-4d7c-a844-d6c7811b388f"
+        "x-ms-correlation-request-id": "912b6e02-8e75-46c5-b373-19661780f7a8",
+        "x-ms-hdi-served-by": "japaneast",
+        "x-ms-ratelimit-remaining-subscription-reads": "11854",
+        "x-ms-request-id": "10cc853d-4e56-4b54-ab21-03658d34e4e4",
+        "x-ms-routing-request-id": "JAPANEAST:20230613T081116Z:912b6e02-8e75-46c5-b373-19661780f7a8"
       },
       "ResponseBody": {
         "value": [
           {
-            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/HDInsightRG-9851/providers/Microsoft.HDInsight/clusters/cluster7580/applications/application4231",
-            "name": "application4231",
+            "id": "/subscriptions/964c10bb-8a6c-43bc-83d3-6b318c6c7305/resourceGroups/HDInsightRG-3237/providers/Microsoft.HDInsight/clusters/cluster6253/applications/application1358",
+            "name": "application1358",
             "type": "Microsoft.HDInsight/clusters/applications",
-            "etag": "14D2266B-0E1A-47D1-BC23-2B0F7FD1C9ED",
+            "etag": "8A0E50F8-FCAC-426F-8FC9-4E3761BBAF4F",
             "tags": {
               "test": "test"
             },
@@ -248,7 +246,6 @@
                   {
                     "name": "edgenode",
                     "targetInstanceCount": 1,
-                    "VMGroupName": "edgenode1",
                     "hardwareProfile": {
                       "vmSize": "standard_a4_v2"
                     },
@@ -258,7 +255,7 @@
               },
               "installScriptActions": [
                 {
-                  "name": "InstallHue2328",
+                  "name": "InstallHue1045",
                   "uri": "https://hdiconfigactions.blob.core.windows.net/linuxhueconfigactionv02/install-hue-uber-v02.sh",
                   "roles": [
                     "edgenode"
@@ -270,7 +267,7 @@
               "sshEndpoints": [],
               "provisioningState": "InProgress",
               "applicationState": "Accepted",
-              "createdDate": "2022-12-06T03:26:15.06",
+              "createdDate": "2023-06-13T08:11:14.787",
               "applicationType": "CustomApplication"
             }
           }
@@ -279,9 +276,9 @@
     }
   ],
   "Variables": {
-    "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com",
-    "RandomSeed": "1075202673",
-    "RESOURCE_MANAGER_URL": null,
-    "SUBSCRIPTION_ID": "db1ab6f0-4769-4b27-930e-01e2ef9c123c"
+    "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com/",
+    "RandomSeed": "1142490441",
+    "RESOURCE_MANAGER_URL": "https://management.azure.com/",
+    "SUBSCRIPTION_ID": "964c10bb-8a6c-43bc-83d3-6b318c6c7305"
   }
 }

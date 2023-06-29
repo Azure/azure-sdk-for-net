@@ -16,8 +16,8 @@ namespace Azure.Storage.DataMovement
         /// </summary>
         internal StreamToUriTransferJob(
             DataTransfer dataTransfer,
-            StorageResource sourceResource,
-            StorageResource destinationResource,
+            StorageResourceSingle sourceResource,
+            StorageResourceSingle destinationResource,
             TransferOptions transferOptions,
             QueueChunkTaskInternal queueChunkTask,
             TransferCheckpointer checkpointer,
@@ -63,7 +63,6 @@ namespace Azure.Storage.DataMovement
         /// <returns>An IEnumerable that contains the job parts</returns>
         public override async IAsyncEnumerable<JobPartInternal> ProcessJobToJobPartAsync()
         {
-            JobPartStatusEvents += JobPartEvent;
             await OnJobStatusChangedAsync(StorageTransferStatus.InProgress).ConfigureAwait(false);
             int partNumber = 0;
 
@@ -80,7 +79,7 @@ namespace Azure.Storage.DataMovement
                             job: this,
                             partNumber: partNumber,
                             isFinalPart: true).ConfigureAwait(false);
-                        _jobParts.Add(part);
+                        AppendJobPart(part);
                     }
                     catch (Exception ex)
                     {
@@ -134,7 +133,7 @@ namespace Azure.Storage.DataMovement
             int partNumber = _jobParts.Count;
             List<string> existingSources = GetJobPartSourceResourcePaths();
             // Call listing operation on the source container
-            IAsyncEnumerator<StorageResourceBase> enumerator;
+            IAsyncEnumerator<StorageResource> enumerator;
 
             // Obtain enumerator and check for any point of failure before we attempt to list
             // and fail gracefully.
@@ -152,7 +151,7 @@ namespace Azure.Storage.DataMovement
             // List the container keep track of the last job part in order to store it properly
             // so we know we finished enumerating/listed.
             bool enumerationCompleted = false;
-            StorageResourceBase lastResource = default;
+            StorageResource lastResource = default;
             while (!enumerationCompleted)
             {
                 try
@@ -169,10 +168,13 @@ namespace Azure.Storage.DataMovement
                     yield break;
                 }
 
-                StorageResourceBase current = enumerator.Current;
+                StorageResource current = enumerator.Current;
                 if (lastResource != default)
                 {
-                    string sourceName = lastResource.Path.Substring(_sourceResourceContainer.Path.Length + 1);
+                    string sourceName = string.IsNullOrEmpty(_sourceResourceContainer.Path)
+                        ? lastResource.Path
+                        : lastResource.Path.Substring(_sourceResourceContainer.Path.Length + 1);
+
                     if (!existingSources.Contains(sourceName))
                     {
                         // Because AsyncEnumerable doesn't let us know which storage resource is the last resource
@@ -184,10 +186,10 @@ namespace Azure.Storage.DataMovement
                             part = await StreamToUriJobPart.CreateJobPartAsync(
                                 job: this,
                                 partNumber: partNumber,
-                                sourceResource: (StorageResource)lastResource,
+                                sourceResource: (StorageResourceSingle)lastResource,
                                 destinationResource: _destinationResourceContainer.GetChildStorageResource(sourceName),
                                 isFinalPart: false).ConfigureAwait(false);
-                            _jobParts.Add(part);
+                            AppendJobPart(part);
                         }
                         catch (Exception ex)
                         {
@@ -209,14 +211,17 @@ namespace Azure.Storage.DataMovement
                 {
                     // Return last part but enable the part to be the last job part of the entire job
                     // so we know that we've finished listing in the container
-                    string lastSourceName = lastResource.Path.Substring(_sourceResourceContainer.Path.Length + 1);
+                    string lastSourceName = string.IsNullOrEmpty(_sourceResourceContainer.Path)
+                        ? lastResource.Path
+                        : lastResource.Path.Substring(_sourceResourceContainer.Path.Length + 1);
+
                     lastPart = await StreamToUriJobPart.CreateJobPartAsync(
                             job: this,
                             partNumber: partNumber,
-                            sourceResource: (StorageResource)lastResource,
+                            sourceResource: (StorageResourceSingle)lastResource,
                             destinationResource: _destinationResourceContainer.GetChildStorageResource(lastSourceName),
                             isFinalPart: true).ConfigureAwait(false);
-                    _jobParts.Add(lastPart);
+                    AppendJobPart(lastPart);
                 }
                 catch (Exception ex)
                 {

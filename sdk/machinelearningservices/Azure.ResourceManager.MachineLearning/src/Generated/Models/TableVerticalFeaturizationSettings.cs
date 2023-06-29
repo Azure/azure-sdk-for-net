@@ -27,9 +27,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="columnNameAndTypes"> Dictionary of column name and its type (int, float, string, datetime etc). </param>
         /// <param name="enableDnnFeaturization"> Determines whether to use Dnn based featurizers for data featurization. </param>
         /// <param name="mode">
-        /// Featurization mode - User can keep the default &apos;Auto&apos; mode and AutoML will take care of necessary transformation of the data in featurization phase.
-        /// If &apos;Off&apos; is selected then no featurization is done.
-        /// If &apos;Custom&apos; is selected then user can specify additional inputs to customize how featurization is done.
+        /// Featurization mode - User can keep the default 'Auto' mode and AutoML will take care of necessary transformation of the data in featurization phase.
+        /// If 'Off' is selected then no featurization is done.
+        /// If 'Custom' is selected then user can specify additional inputs to customize how featurization is done.
         /// </param>
         /// <param name="transformerParams"> User can specify additional transformers to be used along with the columns to which it would be applied and parameters for the transformer constructor. </param>
         internal TableVerticalFeaturizationSettings(string datasetLanguage, IList<BlockedTransformer> blockedTransformers, IDictionary<string, string> columnNameAndTypes, bool? enableDnnFeaturization, MachineLearningFeaturizationMode? mode, IDictionary<string, IList<ColumnTransformer>> transformerParams) : base(datasetLanguage)
@@ -48,9 +48,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary> Determines whether to use Dnn based featurizers for data featurization. </summary>
         public bool? EnableDnnFeaturization { get; set; }
         /// <summary>
-        /// Featurization mode - User can keep the default &apos;Auto&apos; mode and AutoML will take care of necessary transformation of the data in featurization phase.
-        /// If &apos;Off&apos; is selected then no featurization is done.
-        /// If &apos;Custom&apos; is selected then user can specify additional inputs to customize how featurization is done.
+        /// Featurization mode - User can keep the default 'Auto' mode and AutoML will take care of necessary transformation of the data in featurization phase.
+        /// If 'Off' is selected then no featurization is done.
+        /// If 'Custom' is selected then user can specify additional inputs to customize how featurization is done.
         /// </summary>
         public MachineLearningFeaturizationMode? Mode { get; set; }
         /// <summary> User can specify additional transformers to be used along with the columns to which it would be applied and parameters for the transformer constructor. </summary>

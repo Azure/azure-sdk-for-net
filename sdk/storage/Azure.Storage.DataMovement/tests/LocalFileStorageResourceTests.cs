@@ -77,8 +77,20 @@ namespace Azure.Storage.DataMovement.Tests
                 // Assert
                 Assert.AreEqual(path, storageResource.Path);
                 Assert.AreEqual(ProduceUriType.NoUri, storageResource.CanProduceUri);
-                Assert.AreEqual(TransferCopyMethod.None, storageResource.ServiceCopyMethod);
             }
+        }
+
+        [Test]
+        public void Ctor_Error()
+        {
+            Assert.Catch<ArgumentException>(() =>
+                new LocalFileStorageResource(""));
+
+            Assert.Catch<ArgumentException>(() =>
+                new LocalFileStorageResource("   "));
+
+            Assert.Catch<ArgumentException>(() =>
+                new LocalFileStorageResource(default));
         }
 
         [Test]
@@ -269,7 +281,7 @@ namespace Azure.Storage.DataMovement.Tests
             LocalFileStorageResource storageResource = new LocalFileStorageResource(path);
 
             // Act
-            await storageResource.CompleteTransferAsync();
+            await storageResource.CompleteTransferAsync(false);
 
             // Assert
             Assert.IsTrue(File.Exists(path));

@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
         {
             string linkedServiceName = Recording.GenerateAssetName("LinkedService");
             await CreateLinkedService(_dataFactory, linkedServiceName, _accessKey);
-            bool flag = await _dataFactory.GetFactoryLinkedServices().ExistsAsync(linkedServiceName);
+            bool flag = await _dataFactory.GetDataFactoryLinkedServices().ExistsAsync(linkedServiceName);
             Assert.IsTrue(flag);
         }
 
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
         {
             string linkedServiceName = Recording.GenerateAssetName("LinkedService");
             await CreateLinkedService(_dataFactory, linkedServiceName, _accessKey);
-            var linkedService = await _dataFactory.GetFactoryLinkedServices().GetAsync(linkedServiceName);
+            var linkedService = await _dataFactory.GetDataFactoryLinkedServices().GetAsync(linkedServiceName);
             Assert.IsNotNull(linkedService);
             Assert.AreEqual(linkedServiceName, linkedService.Value.Data.Name);
         }
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
         {
             string linkedServiceName = Recording.GenerateAssetName("LinkedService");
             await CreateLinkedService(_dataFactory, linkedServiceName, _accessKey);
-            var list = await _dataFactory.GetFactoryLinkedServices().GetAllAsync().ToEnumerableAsync();
+            var list = await _dataFactory.GetDataFactoryLinkedServices().GetAllAsync().ToEnumerableAsync();
             Assert.IsNotEmpty(list);
             Assert.AreEqual(1, list.Count);
         }
@@ -123,11 +123,11 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
         {
             string linkedServiceName = Recording.GenerateAssetName("LinkedService");
             var linkedService = await CreateLinkedService(_dataFactory, linkedServiceName, _accessKey);
-            bool flag = await _dataFactory.GetFactoryLinkedServices().ExistsAsync(linkedServiceName);
+            bool flag = await _dataFactory.GetDataFactoryLinkedServices().ExistsAsync(linkedServiceName);
             Assert.IsTrue(flag);
 
             await linkedService.DeleteAsync(WaitUntil.Completed);
-            flag = await _dataFactory.GetFactoryLinkedServices().ExistsAsync(linkedServiceName);
+            flag = await _dataFactory.GetDataFactoryLinkedServices().ExistsAsync(linkedServiceName);
             Assert.IsFalse(flag);
         }
     }

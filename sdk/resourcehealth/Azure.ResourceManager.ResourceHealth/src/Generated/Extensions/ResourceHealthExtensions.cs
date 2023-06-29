@@ -35,6 +35,22 @@ namespace Azure.ResourceManager.ResourceHealth
             });
         }
 
+        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmResource resource)
+        {
+            return resource.GetCachedClient(client =>
+            {
+                return new ResourceGroupResourceExtensionClient(client, resource.Id);
+            });
+        }
+
+        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        {
+            return client.GetResourceClient(() =>
+            {
+                return new ResourceGroupResourceExtensionClient(client, scope);
+            });
+        }
+
         private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
@@ -66,58 +82,39 @@ namespace Azure.ResourceManager.ResourceHealth
                 return new TenantResourceExtensionClient(client, scope);
             });
         }
-        #region AvailabilityStatusResource
+        #region ResourceHealthMetadataEntityResource
         /// <summary>
-        /// Gets an object representing an <see cref="AvailabilityStatusResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="AvailabilityStatusResource.CreateResourceIdentifier" /> to create an <see cref="AvailabilityStatusResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="ResourceHealthMetadataEntityResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ResourceHealthMetadataEntityResource.CreateResourceIdentifier" /> to create a <see cref="ResourceHealthMetadataEntityResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="AvailabilityStatusResource" /> object. </returns>
-        public static AvailabilityStatusResource GetAvailabilityStatusResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ResourceHealthMetadataEntityResource" /> object. </returns>
+        public static ResourceHealthMetadataEntityResource GetResourceHealthMetadataEntityResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                AvailabilityStatusResource.ValidateResourceId(id);
-                return new AvailabilityStatusResource(client, id);
+                ResourceHealthMetadataEntityResource.ValidateResourceId(id);
+                return new ResourceHealthMetadataEntityResource(client, id);
             }
             );
         }
         #endregion
 
-        #region MetadataEntityResource
+        #region ResourceHealthEventImpactedResource
         /// <summary>
-        /// Gets an object representing a <see cref="MetadataEntityResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="MetadataEntityResource.CreateResourceIdentifier" /> to create a <see cref="MetadataEntityResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="ResourceHealthEventImpactedResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ResourceHealthEventImpactedResource.CreateResourceIdentifier" /> to create a <see cref="ResourceHealthEventImpactedResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="MetadataEntityResource" /> object. </returns>
-        public static MetadataEntityResource GetMetadataEntityResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ResourceHealthEventImpactedResource" /> object. </returns>
+        public static ResourceHealthEventImpactedResource GetResourceHealthEventImpactedResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                MetadataEntityResource.ValidateResourceId(id);
-                return new MetadataEntityResource(client, id);
-            }
-            );
-        }
-        #endregion
-
-        #region SubscriptionResourceHealthEventImpactedResource
-        /// <summary>
-        /// Gets an object representing a <see cref="SubscriptionResourceHealthEventImpactedResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SubscriptionResourceHealthEventImpactedResource.CreateResourceIdentifier" /> to create a <see cref="SubscriptionResourceHealthEventImpactedResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SubscriptionResourceHealthEventImpactedResource" /> object. </returns>
-        public static SubscriptionResourceHealthEventImpactedResource GetSubscriptionResourceHealthEventImpactedResource(this ArmClient client, ResourceIdentifier id)
-        {
-            return client.GetResourceClient(() =>
-            {
-                SubscriptionResourceHealthEventImpactedResource.ValidateResourceId(id);
-                return new SubscriptionResourceHealthEventImpactedResource(client, id);
+                ResourceHealthEventImpactedResource.ValidateResourceId(id);
+                return new ResourceHealthEventImpactedResource(client, id);
             }
             );
         }
@@ -142,70 +139,153 @@ namespace Azure.ResourceManager.ResourceHealth
         }
         #endregion
 
-        #region SubscriptionEventResource
+        #region ResourceHealthEventResource
         /// <summary>
-        /// Gets an object representing a <see cref="SubscriptionEventResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SubscriptionEventResource.CreateResourceIdentifier" /> to create a <see cref="SubscriptionEventResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="ResourceHealthEventResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ResourceHealthEventResource.CreateResourceIdentifier" /> to create a <see cref="ResourceHealthEventResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SubscriptionEventResource" /> object. </returns>
-        public static SubscriptionEventResource GetSubscriptionEventResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ResourceHealthEventResource" /> object. </returns>
+        public static ResourceHealthEventResource GetResourceHealthEventResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                SubscriptionEventResource.ValidateResourceId(id);
-                return new SubscriptionEventResource(client, id);
+                ResourceHealthEventResource.ValidateResourceId(id);
+                return new ResourceHealthEventResource(client, id);
             }
             );
         }
         #endregion
 
-        #region TenantEventResource
+        #region TenantResourceHealthEventResource
         /// <summary>
-        /// Gets an object representing a <see cref="TenantEventResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="TenantEventResource.CreateResourceIdentifier" /> to create a <see cref="TenantEventResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="TenantResourceHealthEventResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="TenantResourceHealthEventResource.CreateResourceIdentifier" /> to create a <see cref="TenantResourceHealthEventResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="TenantEventResource" /> object. </returns>
-        public static TenantEventResource GetTenantEventResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="TenantResourceHealthEventResource" /> object. </returns>
+        public static TenantResourceHealthEventResource GetTenantResourceHealthEventResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                TenantEventResource.ValidateResourceId(id);
-                return new TenantEventResource(client, id);
+                TenantResourceHealthEventResource.ValidateResourceId(id);
+                return new TenantResourceHealthEventResource(client, id);
             }
             );
         }
         #endregion
 
-        #region EmergingIssuesGetResultResource
+        #region ServiceEmergingIssueResource
         /// <summary>
-        /// Gets an object representing an <see cref="EmergingIssuesGetResultResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="EmergingIssuesGetResultResource.CreateResourceIdentifier" /> to create an <see cref="EmergingIssuesGetResultResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="ServiceEmergingIssueResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ServiceEmergingIssueResource.CreateResourceIdentifier" /> to create a <see cref="ServiceEmergingIssueResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="EmergingIssuesGetResultResource" /> object. </returns>
-        public static EmergingIssuesGetResultResource GetEmergingIssuesGetResultResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ServiceEmergingIssueResource" /> object. </returns>
+        public static ServiceEmergingIssueResource GetServiceEmergingIssueResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                EmergingIssuesGetResultResource.ValidateResourceId(id);
-                return new EmergingIssuesGetResultResource(client, id);
+                ServiceEmergingIssueResource.ValidateResourceId(id);
+                return new ServiceEmergingIssueResource(client, id);
             }
             );
         }
         #endregion
 
-        /// <summary> Gets an object representing a AvailabilityStatusResource along with the instance operations that can be performed on it in the ArmResource. </summary>
+        /// <summary>
+        /// Gets current availability status for a single resource
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{resourceUri}/providers/Microsoft.ResourceHealth/availabilityStatuses/current</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AvailabilityStatuses_GetByResource</description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <returns> Returns a <see cref="AvailabilityStatusResource" /> object. </returns>
-        public static AvailabilityStatusResource GetAvailabilityStatus(this ArmClient client, ResourceIdentifier scope)
+        /// <param name="filter"> The filter to apply on the operation. For more information please see https://docs.microsoft.com/en-us/rest/api/apimanagement/apis?redirectedfrom=MSDN. </param>
+        /// <param name="expand"> Setting $expand=recommendedactions in url query expands the recommendedactions in the response. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public static async Task<Response<ResourceHealthAvailabilityStatus>> GetAvailabilityStatusAsync(this ArmClient client, ResourceIdentifier scope, string filter = null, string expand = null, CancellationToken cancellationToken = default)
         {
-            return GetArmResourceExtensionClient(client, scope).GetAvailabilityStatus();
+            return await GetArmResourceExtensionClient(client, scope).GetAvailabilityStatusAsync(filter, expand, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets current availability status for a single resource
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{resourceUri}/providers/Microsoft.ResourceHealth/availabilityStatuses/current</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AvailabilityStatuses_GetByResource</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="filter"> The filter to apply on the operation. For more information please see https://docs.microsoft.com/en-us/rest/api/apimanagement/apis?redirectedfrom=MSDN. </param>
+        /// <param name="expand"> Setting $expand=recommendedactions in url query expands the recommendedactions in the response. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public static Response<ResourceHealthAvailabilityStatus> GetAvailabilityStatus(this ArmClient client, ResourceIdentifier scope, string filter = null, string expand = null, CancellationToken cancellationToken = default)
+        {
+            return GetArmResourceExtensionClient(client, scope).GetAvailabilityStatus(filter, expand, cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists all historical availability transitions and impacting events for a single resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{resourceUri}/providers/Microsoft.ResourceHealth/availabilityStatuses</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AvailabilityStatuses_List</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="filter"> The filter to apply on the operation. For more information please see https://docs.microsoft.com/en-us/rest/api/apimanagement/apis?redirectedfrom=MSDN. </param>
+        /// <param name="expand"> Setting $expand=recommendedactions in url query expands the recommendedactions in the response. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public static AsyncPageable<ResourceHealthAvailabilityStatus> GetAvailabilityStatusesAsync(this ArmClient client, ResourceIdentifier scope, string filter = null, string expand = null, CancellationToken cancellationToken = default)
+        {
+            return GetArmResourceExtensionClient(client, scope).GetAvailabilityStatusesAsync(filter, expand, cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists all historical availability transitions and impacting events for a single resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{resourceUri}/providers/Microsoft.ResourceHealth/availabilityStatuses</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AvailabilityStatuses_List</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="filter"> The filter to apply on the operation. For more information please see https://docs.microsoft.com/en-us/rest/api/apimanagement/apis?redirectedfrom=MSDN. </param>
+        /// <param name="expand"> Setting $expand=recommendedactions in url query expands the recommendedactions in the response. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public static Pageable<ResourceHealthAvailabilityStatus> GetAvailabilityStatuses(this ArmClient client, ResourceIdentifier scope, string filter = null, string expand = null, CancellationToken cancellationToken = default)
+        {
+            return GetArmResourceExtensionClient(client, scope).GetAvailabilityStatuses(filter, expand, cancellationToken);
         }
 
         /// <summary>
@@ -225,9 +305,9 @@ namespace Azure.ResourceManager.ResourceHealth
         /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <param name="filter"> The filter to apply on the operation. For more information please see https://docs.microsoft.com/en-us/rest/api/apimanagement/apis?redirectedfrom=MSDN. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public static AsyncPageable<EventData> GetEventsBySingleResourceAsync(this ArmClient client, ResourceIdentifier scope, string filter = null, CancellationToken cancellationToken = default)
+        public static AsyncPageable<ResourceHealthEventData> GetHealthEventsOfSingleResourceAsync(this ArmClient client, ResourceIdentifier scope, string filter = null, CancellationToken cancellationToken = default)
         {
-            return GetArmResourceExtensionClient(client, scope).GetEventsBySingleResourceAsync(filter, cancellationToken);
+            return GetArmResourceExtensionClient(client, scope).GetHealthEventsOfSingleResourceAsync(filter, cancellationToken);
         }
 
         /// <summary>
@@ -247,17 +327,201 @@ namespace Azure.ResourceManager.ResourceHealth
         /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <param name="filter"> The filter to apply on the operation. For more information please see https://docs.microsoft.com/en-us/rest/api/apimanagement/apis?redirectedfrom=MSDN. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public static Pageable<EventData> GetEventsBySingleResource(this ArmClient client, ResourceIdentifier scope, string filter = null, CancellationToken cancellationToken = default)
+        public static Pageable<ResourceHealthEventData> GetHealthEventsOfSingleResource(this ArmClient client, ResourceIdentifier scope, string filter = null, CancellationToken cancellationToken = default)
         {
-            return GetArmResourceExtensionClient(client, scope).GetEventsBySingleResource(filter, cancellationToken);
+            return GetArmResourceExtensionClient(client, scope).GetHealthEventsOfSingleResource(filter, cancellationToken);
         }
 
-        /// <summary> Gets a collection of SubscriptionEventResources in the SubscriptionResource. </summary>
+        /// <summary>
+        /// Gets current availability status for a single resource
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{resourceUri}/providers/Microsoft.ResourceHealth/childAvailabilityStatuses/current</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ChildAvailabilityStatuses_GetByResource</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="filter"> The filter to apply on the operation. For more information please see https://docs.microsoft.com/en-us/rest/api/apimanagement/apis?redirectedfrom=MSDN. </param>
+        /// <param name="expand"> Setting $expand=recommendedactions in url query expands the recommendedactions in the response. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public static async Task<Response<ResourceHealthAvailabilityStatus>> GetAvailabilityStatusOfChildResourceAsync(this ArmClient client, ResourceIdentifier scope, string filter = null, string expand = null, CancellationToken cancellationToken = default)
+        {
+            return await GetArmResourceExtensionClient(client, scope).GetAvailabilityStatusOfChildResourceAsync(filter, expand, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets current availability status for a single resource
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{resourceUri}/providers/Microsoft.ResourceHealth/childAvailabilityStatuses/current</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ChildAvailabilityStatuses_GetByResource</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="filter"> The filter to apply on the operation. For more information please see https://docs.microsoft.com/en-us/rest/api/apimanagement/apis?redirectedfrom=MSDN. </param>
+        /// <param name="expand"> Setting $expand=recommendedactions in url query expands the recommendedactions in the response. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public static Response<ResourceHealthAvailabilityStatus> GetAvailabilityStatusOfChildResource(this ArmClient client, ResourceIdentifier scope, string filter = null, string expand = null, CancellationToken cancellationToken = default)
+        {
+            return GetArmResourceExtensionClient(client, scope).GetAvailabilityStatusOfChildResource(filter, expand, cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists the historical availability statuses for a single child resource. Use the nextLink property in the response to get the next page of availability status
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{resourceUri}/providers/Microsoft.ResourceHealth/childAvailabilityStatuses</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ChildAvailabilityStatuses_List</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="filter"> The filter to apply on the operation. For more information please see https://docs.microsoft.com/en-us/rest/api/apimanagement/apis?redirectedfrom=MSDN. </param>
+        /// <param name="expand"> Setting $expand=recommendedactions in url query expands the recommendedactions in the response. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public static AsyncPageable<ResourceHealthAvailabilityStatus> GetHistoricalAvailabilityStatusesOfChildResourceAsync(this ArmClient client, ResourceIdentifier scope, string filter = null, string expand = null, CancellationToken cancellationToken = default)
+        {
+            return GetArmResourceExtensionClient(client, scope).GetHistoricalAvailabilityStatusesOfChildResourceAsync(filter, expand, cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists the historical availability statuses for a single child resource. Use the nextLink property in the response to get the next page of availability status
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{resourceUri}/providers/Microsoft.ResourceHealth/childAvailabilityStatuses</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ChildAvailabilityStatuses_List</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="filter"> The filter to apply on the operation. For more information please see https://docs.microsoft.com/en-us/rest/api/apimanagement/apis?redirectedfrom=MSDN. </param>
+        /// <param name="expand"> Setting $expand=recommendedactions in url query expands the recommendedactions in the response. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public static Pageable<ResourceHealthAvailabilityStatus> GetHistoricalAvailabilityStatusesOfChildResource(this ArmClient client, ResourceIdentifier scope, string filter = null, string expand = null, CancellationToken cancellationToken = default)
+        {
+            return GetArmResourceExtensionClient(client, scope).GetHistoricalAvailabilityStatusesOfChildResource(filter, expand, cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists the all the children and its current health status for a parent resource. Use the nextLink property in the response to get the next page of children current health
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{resourceUri}/providers/Microsoft.ResourceHealth/childResources</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ChildResources_List</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="filter"> The filter to apply on the operation. For more information please see https://docs.microsoft.com/en-us/rest/api/apimanagement/apis?redirectedfrom=MSDN. </param>
+        /// <param name="expand"> Setting $expand=recommendedactions in url query expands the recommendedactions in the response. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public static AsyncPageable<ResourceHealthAvailabilityStatus> GetAvailabilityStatusOfChildResourcesAsync(this ArmClient client, ResourceIdentifier scope, string filter = null, string expand = null, CancellationToken cancellationToken = default)
+        {
+            return GetArmResourceExtensionClient(client, scope).GetAvailabilityStatusOfChildResourcesAsync(filter, expand, cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists the all the children and its current health status for a parent resource. Use the nextLink property in the response to get the next page of children current health
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{resourceUri}/providers/Microsoft.ResourceHealth/childResources</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ChildResources_List</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="filter"> The filter to apply on the operation. For more information please see https://docs.microsoft.com/en-us/rest/api/apimanagement/apis?redirectedfrom=MSDN. </param>
+        /// <param name="expand"> Setting $expand=recommendedactions in url query expands the recommendedactions in the response. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public static Pageable<ResourceHealthAvailabilityStatus> GetAvailabilityStatusOfChildResources(this ArmClient client, ResourceIdentifier scope, string filter = null, string expand = null, CancellationToken cancellationToken = default)
+        {
+            return GetArmResourceExtensionClient(client, scope).GetAvailabilityStatusOfChildResources(filter, expand, cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists the current availability status for all the resources in the resource group.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ResourceHealth/availabilityStatuses</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AvailabilityStatuses_ListByResourceGroup</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="filter"> The filter to apply on the operation. For more information please see https://docs.microsoft.com/en-us/rest/api/apimanagement/apis?redirectedfrom=MSDN. </param>
+        /// <param name="expand"> Setting $expand=recommendedactions in url query expands the recommendedactions in the response. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="ResourceHealthAvailabilityStatus" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<ResourceHealthAvailabilityStatus> GetAvailabilityStatusesByResourceGroupAsync(this ResourceGroupResource resourceGroupResource, string filter = null, string expand = null, CancellationToken cancellationToken = default)
+        {
+            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetAvailabilityStatusesByResourceGroupAsync(filter, expand, cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists the current availability status for all the resources in the resource group.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ResourceHealth/availabilityStatuses</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AvailabilityStatuses_ListByResourceGroup</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="filter"> The filter to apply on the operation. For more information please see https://docs.microsoft.com/en-us/rest/api/apimanagement/apis?redirectedfrom=MSDN. </param>
+        /// <param name="expand"> Setting $expand=recommendedactions in url query expands the recommendedactions in the response. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="ResourceHealthAvailabilityStatus" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<ResourceHealthAvailabilityStatus> GetAvailabilityStatusesByResourceGroup(this ResourceGroupResource resourceGroupResource, string filter = null, string expand = null, CancellationToken cancellationToken = default)
+        {
+            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetAvailabilityStatusesByResourceGroup(filter, expand, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of ResourceHealthEventResources in the SubscriptionResource. </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of SubscriptionEventResources and their operations over a SubscriptionEventResource. </returns>
-        public static SubscriptionEventCollection GetSubscriptionEvents(this SubscriptionResource subscriptionResource)
+        /// <returns> An object representing collection of ResourceHealthEventResources and their operations over a ResourceHealthEventResource. </returns>
+        public static ResourceHealthEventCollection GetResourceHealthEvents(this SubscriptionResource subscriptionResource)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetSubscriptionEvents();
+            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetResourceHealthEvents();
         }
 
         /// <summary>
@@ -281,9 +545,9 @@ namespace Azure.ResourceManager.ResourceHealth
         /// <exception cref="ArgumentException"> <paramref name="eventTrackingId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="eventTrackingId"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<SubscriptionEventResource>> GetSubscriptionEventAsync(this SubscriptionResource subscriptionResource, string eventTrackingId, string filter = null, string queryStartTime = null, CancellationToken cancellationToken = default)
+        public static async Task<Response<ResourceHealthEventResource>> GetResourceHealthEventAsync(this SubscriptionResource subscriptionResource, string eventTrackingId, string filter = null, string queryStartTime = null, CancellationToken cancellationToken = default)
         {
-            return await subscriptionResource.GetSubscriptionEvents().GetAsync(eventTrackingId, filter, queryStartTime, cancellationToken).ConfigureAwait(false);
+            return await subscriptionResource.GetResourceHealthEvents().GetAsync(eventTrackingId, filter, queryStartTime, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -307,17 +571,63 @@ namespace Azure.ResourceManager.ResourceHealth
         /// <exception cref="ArgumentException"> <paramref name="eventTrackingId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="eventTrackingId"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<SubscriptionEventResource> GetSubscriptionEvent(this SubscriptionResource subscriptionResource, string eventTrackingId, string filter = null, string queryStartTime = null, CancellationToken cancellationToken = default)
+        public static Response<ResourceHealthEventResource> GetResourceHealthEvent(this SubscriptionResource subscriptionResource, string eventTrackingId, string filter = null, string queryStartTime = null, CancellationToken cancellationToken = default)
         {
-            return subscriptionResource.GetSubscriptionEvents().Get(eventTrackingId, filter, queryStartTime, cancellationToken);
+            return subscriptionResource.GetResourceHealthEvents().Get(eventTrackingId, filter, queryStartTime, cancellationToken);
         }
 
-        /// <summary> Gets a collection of MetadataEntityResources in the TenantResource. </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of MetadataEntityResources and their operations over a MetadataEntityResource. </returns>
-        public static MetadataEntityCollection GetMetadataEntities(this TenantResource tenantResource)
+        /// <summary>
+        /// Lists the current availability status for all the resources in the subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ResourceHealth/availabilityStatuses</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AvailabilityStatuses_ListBySubscriptionId</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="filter"> The filter to apply on the operation. For more information please see https://docs.microsoft.com/en-us/rest/api/apimanagement/apis?redirectedfrom=MSDN. </param>
+        /// <param name="expand"> Setting $expand=recommendedactions in url query expands the recommendedactions in the response. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="ResourceHealthAvailabilityStatus" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<ResourceHealthAvailabilityStatus> GetAvailabilityStatusesBySubscriptionAsync(this SubscriptionResource subscriptionResource, string filter = null, string expand = null, CancellationToken cancellationToken = default)
         {
-            return GetTenantResourceExtensionClient(tenantResource).GetMetadataEntities();
+            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetAvailabilityStatusesBySubscriptionAsync(filter, expand, cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists the current availability status for all the resources in the subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ResourceHealth/availabilityStatuses</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AvailabilityStatuses_ListBySubscriptionId</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="filter"> The filter to apply on the operation. For more information please see https://docs.microsoft.com/en-us/rest/api/apimanagement/apis?redirectedfrom=MSDN. </param>
+        /// <param name="expand"> Setting $expand=recommendedactions in url query expands the recommendedactions in the response. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="ResourceHealthAvailabilityStatus" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<ResourceHealthAvailabilityStatus> GetAvailabilityStatusesBySubscription(this SubscriptionResource subscriptionResource, string filter = null, string expand = null, CancellationToken cancellationToken = default)
+        {
+            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetAvailabilityStatusesBySubscription(filter, expand, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of ResourceHealthMetadataEntityResources in the TenantResource. </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <returns> An object representing collection of ResourceHealthMetadataEntityResources and their operations over a ResourceHealthMetadataEntityResource. </returns>
+        public static ResourceHealthMetadataEntityCollection GetResourceHealthMetadataEntities(this TenantResource tenantResource)
+        {
+            return GetTenantResourceExtensionClient(tenantResource).GetResourceHealthMetadataEntities();
         }
 
         /// <summary>
@@ -339,9 +649,9 @@ namespace Azure.ResourceManager.ResourceHealth
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<MetadataEntityResource>> GetMetadataEntityAsync(this TenantResource tenantResource, string name, CancellationToken cancellationToken = default)
+        public static async Task<Response<ResourceHealthMetadataEntityResource>> GetResourceHealthMetadataEntityAsync(this TenantResource tenantResource, string name, CancellationToken cancellationToken = default)
         {
-            return await tenantResource.GetMetadataEntities().GetAsync(name, cancellationToken).ConfigureAwait(false);
+            return await tenantResource.GetResourceHealthMetadataEntities().GetAsync(name, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -363,17 +673,17 @@ namespace Azure.ResourceManager.ResourceHealth
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<MetadataEntityResource> GetMetadataEntity(this TenantResource tenantResource, string name, CancellationToken cancellationToken = default)
+        public static Response<ResourceHealthMetadataEntityResource> GetResourceHealthMetadataEntity(this TenantResource tenantResource, string name, CancellationToken cancellationToken = default)
         {
-            return tenantResource.GetMetadataEntities().Get(name, cancellationToken);
+            return tenantResource.GetResourceHealthMetadataEntities().Get(name, cancellationToken);
         }
 
-        /// <summary> Gets a collection of TenantEventResources in the TenantResource. </summary>
+        /// <summary> Gets a collection of TenantResourceHealthEventResources in the TenantResource. </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of TenantEventResources and their operations over a TenantEventResource. </returns>
-        public static TenantEventCollection GetTenantEvents(this TenantResource tenantResource)
+        /// <returns> An object representing collection of TenantResourceHealthEventResources and their operations over a TenantResourceHealthEventResource. </returns>
+        public static TenantResourceHealthEventCollection GetTenantResourceHealthEvents(this TenantResource tenantResource)
         {
-            return GetTenantResourceExtensionClient(tenantResource).GetTenantEvents();
+            return GetTenantResourceExtensionClient(tenantResource).GetTenantResourceHealthEvents();
         }
 
         /// <summary>
@@ -397,9 +707,9 @@ namespace Azure.ResourceManager.ResourceHealth
         /// <exception cref="ArgumentException"> <paramref name="eventTrackingId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="eventTrackingId"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<TenantEventResource>> GetTenantEventAsync(this TenantResource tenantResource, string eventTrackingId, string filter = null, string queryStartTime = null, CancellationToken cancellationToken = default)
+        public static async Task<Response<TenantResourceHealthEventResource>> GetTenantResourceHealthEventAsync(this TenantResource tenantResource, string eventTrackingId, string filter = null, string queryStartTime = null, CancellationToken cancellationToken = default)
         {
-            return await tenantResource.GetTenantEvents().GetAsync(eventTrackingId, filter, queryStartTime, cancellationToken).ConfigureAwait(false);
+            return await tenantResource.GetTenantResourceHealthEvents().GetAsync(eventTrackingId, filter, queryStartTime, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -423,21 +733,21 @@ namespace Azure.ResourceManager.ResourceHealth
         /// <exception cref="ArgumentException"> <paramref name="eventTrackingId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="eventTrackingId"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<TenantEventResource> GetTenantEvent(this TenantResource tenantResource, string eventTrackingId, string filter = null, string queryStartTime = null, CancellationToken cancellationToken = default)
+        public static Response<TenantResourceHealthEventResource> GetTenantResourceHealthEvent(this TenantResource tenantResource, string eventTrackingId, string filter = null, string queryStartTime = null, CancellationToken cancellationToken = default)
         {
-            return tenantResource.GetTenantEvents().Get(eventTrackingId, filter, queryStartTime, cancellationToken);
+            return tenantResource.GetTenantResourceHealthEvents().Get(eventTrackingId, filter, queryStartTime, cancellationToken);
         }
 
-        /// <summary> Gets a collection of EmergingIssuesGetResultResources in the TenantResource. </summary>
+        /// <summary> Gets a collection of ServiceEmergingIssueResources in the TenantResource. </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of EmergingIssuesGetResultResources and their operations over a EmergingIssuesGetResultResource. </returns>
-        public static EmergingIssuesGetResultCollection GetEmergingIssuesGetResults(this TenantResource tenantResource)
+        /// <returns> An object representing collection of ServiceEmergingIssueResources and their operations over a ServiceEmergingIssueResource. </returns>
+        public static ServiceEmergingIssueCollection GetServiceEmergingIssues(this TenantResource tenantResource)
         {
-            return GetTenantResourceExtensionClient(tenantResource).GetEmergingIssuesGetResults();
+            return GetTenantResourceExtensionClient(tenantResource).GetServiceEmergingIssues();
         }
 
         /// <summary>
-        /// Gets Azure services&apos; emerging issues.
+        /// Gets Azure services' emerging issues.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -453,13 +763,13 @@ namespace Azure.ResourceManager.ResourceHealth
         /// <param name="issueName"> The name of the emerging issue. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public static async Task<Response<EmergingIssuesGetResultResource>> GetEmergingIssuesGetResultAsync(this TenantResource tenantResource, IssueNameParameter issueName, CancellationToken cancellationToken = default)
+        public static async Task<Response<ServiceEmergingIssueResource>> GetServiceEmergingIssueAsync(this TenantResource tenantResource, EmergingIssueNameContent issueName, CancellationToken cancellationToken = default)
         {
-            return await tenantResource.GetEmergingIssuesGetResults().GetAsync(issueName, cancellationToken).ConfigureAwait(false);
+            return await tenantResource.GetServiceEmergingIssues().GetAsync(issueName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
-        /// Gets Azure services&apos; emerging issues.
+        /// Gets Azure services' emerging issues.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -475,9 +785,9 @@ namespace Azure.ResourceManager.ResourceHealth
         /// <param name="issueName"> The name of the emerging issue. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public static Response<EmergingIssuesGetResultResource> GetEmergingIssuesGetResult(this TenantResource tenantResource, IssueNameParameter issueName, CancellationToken cancellationToken = default)
+        public static Response<ServiceEmergingIssueResource> GetServiceEmergingIssue(this TenantResource tenantResource, EmergingIssueNameContent issueName, CancellationToken cancellationToken = default)
         {
-            return tenantResource.GetEmergingIssuesGetResults().Get(issueName, cancellationToken);
+            return tenantResource.GetServiceEmergingIssues().Get(issueName, cancellationToken);
         }
     }
 }

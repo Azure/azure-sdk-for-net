@@ -11,16 +11,16 @@ using Azure.ResourceManager.Network;
 using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.ServiceBus.Models;
-using Azure.ResourceManager.ServiceBus.Tests.Helpers;
 using Azure.ResourceManager.KeyVault;
 using Azure.ResourceManager.KeyVault.Models;
 using Azure.ResourceManager.ManagedServiceIdentities;
 using Azure.ResourceManager.ManagedServiceIdentities.Models;
 using Azure.Core;
 using Azure.ResourceManager.Models;
+
 namespace Azure.ResourceManager.ServiceBus.Tests
 {
-    public class ServiceBusNamespaceTests : ServiceBusTestBase
+    public class ServiceBusNamespaceTests : ServiceBusManagementTestBase
     {
         private ResourceGroupResource _resourceGroup;
         private string namespacePrefix = "testnamespacemgmt";
@@ -408,38 +408,32 @@ namespace Azure.ResourceManager.ServiceBus.Tests
 
             //prepare vnet
             string vnetName = Recording.GenerateAssetName("sdktestvnet");
-            if (Mode == RecordedTestMode.Record)
+            var parameters = new VirtualNetworkData
             {
-                using (Recording.DisableRecording())
-                {
-                    var parameters = new VirtualNetworkData
+                Subnets = {
+                    new SubnetData
                     {
-                        Subnets = {
-                            new SubnetData
-                            {
-                                Name = "default1",
-                                AddressPrefix = "10.0.0.0/24",
-                                ServiceEndpoints = { new ServiceEndpointProperties { Service = "Microsoft.ServiceBus" } }
-                            },
-                            new SubnetData
-                            {
-                                Name = "default2",
-                                AddressPrefix = "10.0.1.0/24",
-                                ServiceEndpoints = { new ServiceEndpointProperties { Service = "Microsoft.ServiceBus" } }
-                            },
-                            new SubnetData
-                            {
-                                Name = "default3",
-                                AddressPrefix = "10.0.2.0/24",
-                                ServiceEndpoints = { new ServiceEndpointProperties { Service = "Microsoft.ServiceBus" } }
-                            }
-                        },
-                        Location = "eastus2"
-                    };
-                    parameters.AddressPrefixes.Add("10.0.0.0/16");
-                    VirtualNetworkResource virtualNetwork = (await _resourceGroup.GetVirtualNetworks().CreateOrUpdateAsync(WaitUntil.Completed, vnetName, parameters)).Value;
-                }
-            }
+                        Name = "default1",
+                        AddressPrefix = "10.0.0.0/24",
+                        ServiceEndpoints = { new ServiceEndpointProperties { Service = "Microsoft.ServiceBus" } }
+                    },
+                    new SubnetData
+                    {
+                        Name = "default2",
+                        AddressPrefix = "10.0.1.0/24",
+                        ServiceEndpoints = { new ServiceEndpointProperties { Service = "Microsoft.ServiceBus" } }
+                    },
+                    new SubnetData
+                    {
+                        Name = "default3",
+                        AddressPrefix = "10.0.2.0/24",
+                        ServiceEndpoints = { new ServiceEndpointProperties { Service = "Microsoft.ServiceBus" } }
+                    }
+                },
+                Location = "eastus2"
+            };
+            parameters.AddressPrefixes.Add("10.0.0.0/16");
+            VirtualNetworkResource virtualNetwork = (await _resourceGroup.GetVirtualNetworks().CreateOrUpdateAsync(WaitUntil.Completed, vnetName, parameters)).Value;
 
             //set network rule set
             string subscriptionId = DefaultSubscription.Id.ToString();
@@ -565,35 +559,22 @@ namespace Azure.ResourceManager.ServiceBus.Tests
             UserAssignedIdentityCollection identityCollection = _resourceGroup.GetUserAssignedIdentities();
 
             ResourceIdentifier firstIdentityId, secondIdentityId;
-            Uri keyVaultUri;
-            if (Mode == RecordedTestMode.Playback)
-            {
-                keyVaultUri = new Uri("https://KeyVault-rg01.vault.azure.net/");
-                firstIdentityId = new ResourceIdentifier($"/subscriptions/{_resourceGroup.Id.SubscriptionId}/resourcegroups/{_resourceGroup.Id.Name}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{identityName_1}");
-                secondIdentityId = new ResourceIdentifier($"/subscriptions/{_resourceGroup.Id.SubscriptionId}/resourcegroups/{_resourceGroup.Id.Name}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{identityName_2}");
-            }
-            else
-            {
-                using (Recording.DisableRecording())
-                {
-                    ArmOperation<UserAssignedIdentityResource> identityResponse_1 = (await identityCollection.CreateOrUpdateAsync(WaitUntil.Completed, identityName_1, new UserAssignedIdentityData(DefaultLocation)));
-                    ArmOperation<UserAssignedIdentityResource> identityResponse_2 = (await identityCollection.CreateOrUpdateAsync(WaitUntil.Completed, identityName_2, new UserAssignedIdentityData(DefaultLocation)));
+            ArmOperation<UserAssignedIdentityResource> identityResponse_1 = (await identityCollection.CreateOrUpdateAsync(WaitUntil.Completed, identityName_1, new UserAssignedIdentityData(DefaultLocation)));
+            ArmOperation<UserAssignedIdentityResource> identityResponse_2 = (await identityCollection.CreateOrUpdateAsync(WaitUntil.Completed, identityName_2, new UserAssignedIdentityData(DefaultLocation)));
 
-                    IdentityAccessPermissions identityAccessPermissions = new IdentityAccessPermissions();
-                    identityAccessPermissions.Keys.Add(IdentityAccessKeyPermission.WrapKey);
-                    identityAccessPermissions.Keys.Add(IdentityAccessKeyPermission.UnwrapKey);
-                    identityAccessPermissions.Keys.Add(IdentityAccessKeyPermission.Get);
-                    KeyVaultAccessPolicy property = new KeyVaultAccessPolicy((Guid)identityResponse_1.Value.Data.TenantId, identityResponse_1.Value.Data.PrincipalId.ToString(), identityAccessPermissions);
-                    Response<KeyVaultResource> kvResponse = await kvCollection.GetAsync(VaultName).ConfigureAwait(false);
-                    KeyVaultData kvData = kvResponse.Value.Data;
-                    kvData.Properties.AccessPolicies.Add(property);
-                    KeyVaultCreateOrUpdateContent parameters = new KeyVaultCreateOrUpdateContent(AzureLocation.EastUS, kvData.Properties);
-                    await kvCollection.CreateOrUpdateAsync(WaitUntil.Completed, VaultName, parameters).ConfigureAwait(false);
-                    keyVaultUri = kvData.Properties.VaultUri;
-                    firstIdentityId = identityResponse_1.Value.Data.Id;
-                    secondIdentityId = identityResponse_2.Value.Data.Id;
-                }
-            }
+            IdentityAccessPermissions identityAccessPermissions = new IdentityAccessPermissions();
+            identityAccessPermissions.Keys.Add(IdentityAccessKeyPermission.WrapKey);
+            identityAccessPermissions.Keys.Add(IdentityAccessKeyPermission.UnwrapKey);
+            identityAccessPermissions.Keys.Add(IdentityAccessKeyPermission.Get);
+            KeyVaultAccessPolicy property = new KeyVaultAccessPolicy((Guid)identityResponse_1.Value.Data.TenantId, identityResponse_1.Value.Data.PrincipalId.ToString(), identityAccessPermissions);
+            Response<KeyVaultResource> kvResponse = await kvCollection.GetAsync(VaultName).ConfigureAwait(false);
+            KeyVaultData kvData = kvResponse.Value.Data;
+            kvData.Properties.AccessPolicies.Add(property);
+            KeyVaultCreateOrUpdateContent parameters = new KeyVaultCreateOrUpdateContent(AzureLocation.EastUS, kvData.Properties);
+            await kvCollection.CreateOrUpdateAsync(WaitUntil.Completed, VaultName, parameters).ConfigureAwait(false);
+            var keyVaultUri = kvData.Properties.VaultUri;
+            firstIdentityId = identityResponse_1.Value.Data.Id;
+            secondIdentityId = identityResponse_2.Value.Data.Id;
 
             ServiceBusNamespaceData serviceBusNamespaceData = new ServiceBusNamespaceData(DefaultLocation)
             {

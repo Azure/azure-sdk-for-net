@@ -308,7 +308,7 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary>
-        /// Gets a database&apos;s security alert policy.
+        /// Gets a database's security alert policy.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -329,7 +329,7 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary>
-        /// Gets a database&apos;s security alert policy.
+        /// Gets a database's security alert policy.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -357,7 +357,7 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary>
-        /// Gets the database&apos;s vulnerability assessment.
+        /// Gets the database's vulnerability assessment.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -378,7 +378,7 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary>
-        /// Gets the database&apos;s vulnerability assessment.
+        /// Gets the database's vulnerability assessment.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -455,7 +455,7 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary>
-        /// Gets a database&apos;s long term retention policy.
+        /// Gets a database's long term retention policy.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -476,7 +476,7 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary>
-        /// Gets a database&apos;s long term retention policy.
+        /// Gets a database's long term retention policy.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -677,7 +677,7 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary>
-        /// Gets a logical database&apos;s transparent data encryption.
+        /// Gets a logical database's transparent data encryption.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -698,7 +698,7 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary>
-        /// Gets a logical database&apos;s transparent data encryption.
+        /// Gets a logical database's transparent data encryption.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -726,7 +726,7 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary>
-        /// Gets a database&apos;s short term retention policy.
+        /// Gets a database's short term retention policy.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -738,7 +738,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="policyName"> The policy name. Should always be &quot;default&quot;. </param>
+        /// <param name="policyName"> The policy name. Should always be "default". </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
         public virtual async Task<Response<BackupShortTermRetentionPolicyResource>> GetBackupShortTermRetentionPolicyAsync(ShortTermRetentionPolicyName policyName, CancellationToken cancellationToken = default)
@@ -747,7 +747,7 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary>
-        /// Gets a database&apos;s short term retention policy.
+        /// Gets a database's short term retention policy.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -759,7 +759,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="policyName"> The policy name. Should always be &quot;default&quot;. </param>
+        /// <param name="policyName"> The policy name. Should always be "default". </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
         public virtual Response<BackupShortTermRetentionPolicyResource> GetBackupShortTermRetentionPolicy(ShortTermRetentionPolicyName policyName, CancellationToken cancellationToken = default)
@@ -824,7 +824,7 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary>
-        /// Gets a database&apos;s blob auditing policy.
+        /// Gets a database's blob auditing policy.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -845,7 +845,7 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary>
-        /// Gets a database&apos;s blob auditing policy.
+        /// Gets a database's blob auditing policy.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -873,7 +873,7 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary>
-        /// Gets an extended database&apos;s blob auditing policy.
+        /// Gets an extended database's blob auditing policy.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -894,7 +894,7 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary>
-        /// Gets an extended database&apos;s blob auditing policy.
+        /// Gets an extended database's blob auditing policy.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -922,7 +922,7 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary>
-        /// Gets a database&apos;s Advanced Threat Protection state.
+        /// Gets a database's Advanced Threat Protection state.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -943,7 +943,7 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary>
-        /// Gets a database&apos;s Advanced Threat Protection state.
+        /// Gets a database's Advanced Threat Protection state.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>

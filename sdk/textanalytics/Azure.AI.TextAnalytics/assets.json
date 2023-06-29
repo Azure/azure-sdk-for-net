@@ -1,0 +1,6 @@
+{
+  "AssetsRepo": "Azure/azure-sdk-assets",
+  "AssetsRepoPrefixPath": "net",
+  "TagPrefix": "net/textanalytics/Azure.AI.TextAnalytics",
+  "Tag": "net/textanalytics/Azure.AI.TextAnalytics_b9bae00ee9"
+}

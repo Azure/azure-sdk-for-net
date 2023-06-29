@@ -49,10 +49,15 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
                 builder.ConfigureServices(services => services.Configure(finalOptionsName, configure));
             }
 
-            return builder.AddProcessor(sp =>
+            var deferredBuilder = builder as IDeferredTracerProviderBuilder;
+            if (deferredBuilder == null)
+            {
+                throw new InvalidOperationException("The provided TracerProviderBuilder does not implement IDeferredTracerProviderBuilder.");
+            }
+
+            return deferredBuilder.Configure((sp, builder) =>
             {
                 var exporterOptions = sp.GetRequiredService<IOptionsMonitor<AzureMonitorExporterOptions>>().Get(finalOptionsName);
-
                 if (name == null && configure != null)
                 {
                     // If we are NOT using named options, we execute the
@@ -63,6 +68,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
                     configure(exporterOptions);
                 }
 
+                builder.SetSampler(new ApplicationInsightsSampler(exporterOptions.SamplingRatio));
+
                 if (credential != null)
                 {
                     // Credential can be set by either AzureMonitorExporterOptions or Extension Method Parameter.
@@ -70,11 +77,11 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
                     exporterOptions.Credential ??= credential;
                 }
 
-                return new CompositeProcessor<Activity>(new BaseProcessor<Activity>[]
+                builder.AddProcessor(new CompositeProcessor<Activity>(new BaseProcessor<Activity>[]
                 {
-                    new StandardMetricsExtractionProcessor(),
+                    new StandardMetricsExtractionProcessor(new AzureMonitorMetricExporter(exporterOptions)),
                     new BatchActivityExportProcessor(new AzureMonitorTraceExporter(exporterOptions))
-                });
+                }));
             });
         }
     }

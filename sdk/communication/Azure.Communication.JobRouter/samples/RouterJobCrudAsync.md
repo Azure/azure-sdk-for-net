@@ -12,8 +12,8 @@ using Azure.Communication.JobRouter.Models;
 Create a `RouterClient`.
 
 ```C# Snippet:Azure_Communication_JobRouter_Tests_Samples_CreateClient
-RouterClient routerClient = new RouterClient("<< CONNECTION STRING >>");
-RouterAdministrationClient routerAdministrationClient = new RouterAdministrationClient("<< CONNECTION STRING >>");
+JobRouterClient routerClient = new JobRouterClient("<< CONNECTION STRING >>");
+JobRouterAdministrationClient routerAdministrationClient = new JobRouterAdministrationClient("<< CONNECTION STRING >>");
 ```
 
 ## Create a job
@@ -25,7 +25,7 @@ Response<DistributionPolicy> distributionPolicy =
     await routerAdministrationClient.CreateDistributionPolicyAsync(new CreateDistributionPolicyOptions(
         "distribution-policy-id", TimeSpan.FromMinutes(5), new LongestIdleMode()));
 
-Response<JobQueue> jobQueue = await routerAdministrationClient.CreateQueueAsync(new CreateQueueOptions("job-queue-id", distributionPolicy.Value.Id));
+Response<Models.RouterQueue> jobQueue = await routerAdministrationClient.CreateQueueAsync(new CreateQueueOptions("job-queue-id", distributionPolicy.Value.Id));
 
 string jobId = "router-job-id";
 
@@ -39,16 +39,16 @@ Response<RouterJob> job = await routerClient.CreateJobAsync(
         ChannelReference = "12345",
     });
 
-Console.WriteLine($"Job has been successfully created with status: {job.Value.JobStatus}"); // "Queued"
+Console.WriteLine($"Job has been successfully created with status: {job.Value.Status}"); // "Queued"
 
 // Alternatively, a job can also be created while specifying a classification policy
 // As a pre-requisite, we would need to create a classification policy first
 Response<ClassificationPolicy> classificationPolicy = await routerAdministrationClient.CreateClassificationPolicyAsync(
     new CreateClassificationPolicyOptions("classification-policy-id")
     {
-        QueueSelectors = new List<QueueSelectorAttachment>()
+        QueueSelectors =
         {
-            new StaticQueueSelectorAttachment(new QueueSelector("Id", LabelOperator.Equal,
+            new StaticQueueSelectorAttachment(new RouterQueueSelector("Id", LabelOperator.Equal,
                 new LabelValue(jobQueue.Value.Id))),
         },
         PrioritizationRule = new StaticRule(new LabelValue(10))
@@ -56,7 +56,7 @@ Response<ClassificationPolicy> classificationPolicy = await routerAdministration
 
 string jobWithCpId = "job-with-cp-id";
 
-Response<RouterJob> jobWithCp = await routerClient.CreateJobAsync(
+Response<RouterJob> jobWithCp = await routerClient.CreateJobWithClassificationPolicyAsync(
     options: new CreateJobWithClassificationPolicyOptions(
         jobId: jobWithCpId,
         channelId: "general",
@@ -65,7 +65,7 @@ Response<RouterJob> jobWithCp = await routerClient.CreateJobAsync(
         ChannelReference = "12345",
     });
 
-Console.WriteLine($"Job has been successfully created with status: {jobWithCp.Value.JobStatus}"); // "PendingClassification"
+Console.WriteLine($"Job has been successfully created with status: {jobWithCp.Value.Status}"); // "PendingClassification"
 ```
 
 ## Get a job
@@ -79,7 +79,7 @@ Console.WriteLine($"Successfully retrieved job with id: {queriedJob.Value.Id}");
 ## Get a job position
 
 ```C# Snippet:Azure_Communication_JobRouter_Tests_Samples_Crud_GetRouterJobPosition_Async
-Response<JobPositionDetails> jobPositionDetails = await routerClient.GetQueuePositionAsync(jobId);
+Response<Models.RouterJobPositionDetails> jobPositionDetails = await routerClient.GetQueuePositionAsync(jobId);
 
 Console.WriteLine($"Job position for id `{jobPositionDetails.Value.JobId}` successfully retrieved. JobPosition: {jobPositionDetails.Value.Position}");
 ```
@@ -97,6 +97,17 @@ Response<RouterJob> updatedJob = await routerClient.UpdateJobAsync(
 Console.WriteLine($"Job has been successfully updated. Current value of channelReference: {updatedJob.Value.ChannelReference}"); // "45678"
 ```
 
+## Remove from job
+
+```C# Snippet:Azure_Communication_JobRouter_Tests_Samples_Crud_UpdateJobRemoveProp_Async
+Response updatedJobWithoutChannelReference = await routerClient.UpdateJobAsync(jobId,
+    RequestContent.Create(new { ChannelReference = (string?)null }));
+
+Response<RouterJob> queriedJobWithoutChannelReference = await routerClient.GetJobAsync(jobId);
+
+Console.WriteLine($"Job has been successfully updated. 'ChannelReference' has been removed: {string.IsNullOrWhiteSpace(queriedJobWithoutChannelReference.Value.ChannelReference)}");
+```
+
 ## Reclassify a job
 
 ```C# Snippet:Azure_Communication_JobRouter_Tests_Samples_Crud_ReclassifyRouterJob_Async
@@ -111,15 +122,8 @@ Response<RouterWorker> worker = await routerClient.CreateWorkerAsync(
     options: new CreateWorkerOptions(workerId: "router-worker-id", totalCapacity: 100)
     {
         AvailableForOffers = true, // if a worker is not registered, no offer will be issued
-        ChannelConfigurations =
-            new Dictionary<string, ChannelConfiguration>()
-            {
-                ["general"] = new ChannelConfiguration(100),
-            },
-        QueueIds = new Dictionary<string, QueueAssignment>()
-        {
-            [jobQueue.Value.Id] = new QueueAssignment(),
-        },
+        ChannelConfigurations = { ["general"] = new ChannelConfiguration(100), },
+        QueueIds = { [jobQueue.Value.Id] = new RouterQueueAssignment(), },
     });
 
 // now that we have a registered worker, we can expect offer to be sent to the worker
@@ -132,19 +136,19 @@ while ((await routerClient.GetWorkerAsync(worker.Value.Id)).Value.Offers.All(off
 
 Response<RouterWorker> queriedWorker = await routerClient.GetWorkerAsync(worker.Value.Id);
 
-JobOffer? issuedOffer = queriedWorker.Value.Offers.First(offer => offer.JobId == jobId);
+Models.RouterJobOffer? issuedOffer = queriedWorker.Value.Offers.First<RouterJobOffer>(offer => offer.JobId == jobId);
 
-Console.WriteLine($"Worker has been successfully issued to worker with offerId: {issuedOffer.Id} and offer expiry time: {issuedOffer.ExpiryTimeUtc}");
+Console.WriteLine($"Worker has been successfully issued to worker with offerId: {issuedOffer.OfferId} and offer expiry time: {issuedOffer.ExpiresAt}");
 
 // now we accept the offer
 
-Response<AcceptJobOfferResult> acceptedJobOffer = await routerClient.AcceptJobOfferAsync(worker.Value.Id, issuedOffer.Id);
+Response<AcceptJobOfferResult> acceptedJobOffer = await routerClient.AcceptJobOfferAsync(worker.Value.Id, issuedOffer.OfferId);
 
 // job has been assigned to the worker
 
 queriedJob = await routerClient.GetJobAsync(jobId);
 
-Console.WriteLine($"Job has been successfully assigned to worker. Current job status: {queriedJob.Value.JobStatus}"); // "Assigned"
+Console.WriteLine($"Job has been successfully assigned to worker. Current job status: {queriedJob.Value.Status}"); // "Assigned"
 Console.WriteLine($"Job has been successfully assigned with a worker with assignment id: {acceptedJobOffer.Value.AssignmentId}");
 ```
 
@@ -153,7 +157,7 @@ Console.WriteLine($"Job has been successfully assigned with a worker with assign
 ```C# Snippet:Azure_Communication_JobRouter_Tests_Samples_Crud_DeclineJobOffer_Async
 // A worker can also choose to decline an offer
 
-Response<DeclineJobOfferResult> declineOffer = await routerClient.DeclineJobOfferAsync(worker.Value.Id, issuedOffer.Id);
+Response<DeclineJobOfferResult> declineOffer = await routerClient.DeclineJobOfferAsync(new DeclineJobOfferOptions(worker.Value.Id, issuedOffer.OfferId));
 ```
 
 ## Complete a job
@@ -164,7 +168,7 @@ Response<DeclineJobOfferResult> declineOffer = await routerClient.DeclineJobOffe
 Response<CompleteJobResult> completedJobResult = await routerClient.CompleteJobAsync(new CompleteJobOptions(jobId, acceptedJobOffer.Value.AssignmentId));
 
 queriedJob = await routerClient.GetJobAsync(jobId);
-Console.WriteLine($"Job has been successfully completed. Current status: {queriedJob.Value.JobStatus}"); // "Completed"
+Console.WriteLine($"Job has been successfully completed. Current status: {queriedJob.Value.Status}"); // "Completed"
 ```
 
 ## Close a job
@@ -173,7 +177,7 @@ Console.WriteLine($"Job has been successfully completed. Current status: {querie
 Response<CloseJobResult> closeJobResult = await routerClient.CloseJobAsync(new CloseJobOptions(jobId, acceptedJobOffer.Value.AssignmentId));
 
 queriedJob = await routerClient.GetJobAsync(jobId);
-Console.WriteLine($"Job has been successfully closed. Current status: {queriedJob.Value.JobStatus}"); // "Closed"
+Console.WriteLine($"Job has been successfully closed. Current status: {queriedJob.Value.Status}"); // "Closed"
 ```
 
 ## List jobs
@@ -184,7 +188,7 @@ await foreach (Page<RouterJobItem> asPage in routerJobs.AsPages(pageSizeHint: 10
 {
     foreach (RouterJobItem? _job in asPage.Values)
     {
-        Console.WriteLine($"Listing router job with id: {_job.RouterJob.Id}");
+        Console.WriteLine($"Listing router job with id: {_job.Job.Id}");
     }
 }
 ```

@@ -38,72 +38,8 @@ Console.WriteLine(response.Status);
 </example>
     </member>
     <member name="GenerateClientTokenImplAsync(string,IEnumerable{string},int?,IEnumerable{string},RequestContext)">
-<example>
-This sample shows how to call GenerateClientTokenImplAsync and parse the result.
-<code><![CDATA[
-var client = new WebPubSubServiceClient("<https://my-service.azure.com>", "<hub>");
-
-Response response = await client.GenerateClientTokenImplAsync();
-
-JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.ToString());
-]]></code>
-This sample shows how to call GenerateClientTokenImplAsync with all parameters, and how to parse the result.
-<code><![CDATA[
-var client = new WebPubSubServiceClient("<https://my-service.azure.com>", "<hub>");
-
-Response response = await client.GenerateClientTokenImplAsync("<userId>", new String[]{"<role>"}, 1234, new String[]{"<group>"});
-
-JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.GetProperty("token").ToString());
-]]></code>
-</example>
-<remarks>
-Below is the JSON schema for the response payload.
-
-Response Body:
-
-Schema for <c>ClientTokenResponse</c>:
-<code>{
-  token: string, # Optional. The token value for the WebSocket client to connect to the service
-}
-</code>
-
-</remarks>
     </member>
     <member name="GenerateClientTokenImpl(string,IEnumerable{string},int?,IEnumerable{string},RequestContext)">
-<example>
-This sample shows how to call GenerateClientTokenImpl and parse the result.
-<code><![CDATA[
-var client = new WebPubSubServiceClient("<https://my-service.azure.com>", "<hub>");
-
-Response response = client.GenerateClientTokenImpl();
-
-JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.ToString());
-]]></code>
-This sample shows how to call GenerateClientTokenImpl with all parameters, and how to parse the result.
-<code><![CDATA[
-var client = new WebPubSubServiceClient("<https://my-service.azure.com>", "<hub>");
-
-Response response = client.GenerateClientTokenImpl("<userId>", new String[]{"<role>"}, 1234, new String[]{"<group>"});
-
-JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.GetProperty("token").ToString());
-]]></code>
-</example>
-<remarks>
-Below is the JSON schema for the response payload.
-
-Response Body:
-
-Schema for <c>ClientTokenResponse</c>:
-<code>{
-  token: string, # Optional. The token value for the WebSocket client to connect to the service
-}
-</code>
-
-</remarks>
     </member>
     <member name="SendToAllAsync(RequestContent,ContentType,IEnumerable{string},string,RequestContext)">
 <example>
@@ -186,26 +122,8 @@ Console.WriteLine(response.Status);
 </example>
     </member>
     <member name="ConnectionExistsImplAsync(string,RequestContext)">
-<example>
-This sample shows how to call ConnectionExistsImplAsync with required parameters.
-<code><![CDATA[
-var client = new WebPubSubServiceClient("<https://my-service.azure.com>", "<hub>");
-
-Response response = await client.ConnectionExistsImplAsync("<connectionId>");
-Console.WriteLine(response.Status);
-]]></code>
-</example>
     </member>
     <member name="ConnectionExistsImpl(string,RequestContext)">
-<example>
-This sample shows how to call ConnectionExistsImpl with required parameters.
-<code><![CDATA[
-var client = new WebPubSubServiceClient("<https://my-service.azure.com>", "<hub>");
-
-Response response = client.ConnectionExistsImpl("<connectionId>");
-Console.WriteLine(response.Status);
-]]></code>
-</example>
     </member>
     <member name="SendToConnectionAsync(string,RequestContent,ContentType,RequestContext)">
 <example>
@@ -256,26 +174,8 @@ Console.WriteLine(response.Status);
 </example>
     </member>
     <member name="GroupExistsImplAsync(string,RequestContext)">
-<example>
-This sample shows how to call GroupExistsImplAsync with required parameters.
-<code><![CDATA[
-var client = new WebPubSubServiceClient("<https://my-service.azure.com>", "<hub>");
-
-Response response = await client.GroupExistsImplAsync("<group>");
-Console.WriteLine(response.Status);
-]]></code>
-</example>
     </member>
     <member name="GroupExistsImpl(string,RequestContext)">
-<example>
-This sample shows how to call GroupExistsImpl with required parameters.
-<code><![CDATA[
-var client = new WebPubSubServiceClient("<https://my-service.azure.com>", "<hub>");
-
-Response response = client.GroupExistsImpl("<group>");
-Console.WriteLine(response.Status);
-]]></code>
-</example>
     </member>
     <member name="CloseGroupConnectionsAsync(string,IEnumerable{string},string,RequestContext)">
 <example>
@@ -402,134 +302,20 @@ Console.WriteLine(response.Status);
 </example>
     </member>
     <member name="RevokePermissionAsync(string,string,string,RequestContext)">
-<example>
-This sample shows how to call RevokePermissionAsync with required parameters.
-<code><![CDATA[
-var client = new WebPubSubServiceClient("<https://my-service.azure.com>", "<hub>");
-
-Response response = await client.RevokePermissionAsync("<permission>", "<connectionId>");
-Console.WriteLine(response.Status);
-]]></code>
-This sample shows how to call RevokePermissionAsync with all parameters.
-<code><![CDATA[
-var client = new WebPubSubServiceClient("<https://my-service.azure.com>", "<hub>");
-
-Response response = await client.RevokePermissionAsync("<permission>", "<connectionId>", "<targetName>");
-Console.WriteLine(response.Status);
-]]></code>
-</example>
     </member>
     <member name="RevokePermission(string,string,string,RequestContext)">
-<example>
-This sample shows how to call RevokePermission with required parameters.
-<code><![CDATA[
-var client = new WebPubSubServiceClient("<https://my-service.azure.com>", "<hub>");
-
-Response response = client.RevokePermission("<permission>", "<connectionId>");
-Console.WriteLine(response.Status);
-]]></code>
-This sample shows how to call RevokePermission with all parameters.
-<code><![CDATA[
-var client = new WebPubSubServiceClient("<https://my-service.azure.com>", "<hub>");
-
-Response response = client.RevokePermission("<permission>", "<connectionId>", "<targetName>");
-Console.WriteLine(response.Status);
-]]></code>
-</example>
     </member>
     <member name="CheckPermissionAsync(string,string,string,RequestContext)">
-<example>
-This sample shows how to call CheckPermissionAsync with required parameters.
-<code><![CDATA[
-var client = new WebPubSubServiceClient("<https://my-service.azure.com>", "<hub>");
-
-Response response = await client.CheckPermissionAsync("<permission>", "<connectionId>");
-Console.WriteLine(response.Status);
-]]></code>
-This sample shows how to call CheckPermissionAsync with all parameters.
-<code><![CDATA[
-var client = new WebPubSubServiceClient("<https://my-service.azure.com>", "<hub>");
-
-Response response = await client.CheckPermissionAsync("<permission>", "<connectionId>", "<targetName>");
-Console.WriteLine(response.Status);
-]]></code>
-</example>
     </member>
     <member name="CheckPermission(string,string,string,RequestContext)">
-<example>
-This sample shows how to call CheckPermission with required parameters.
-<code><![CDATA[
-var client = new WebPubSubServiceClient("<https://my-service.azure.com>", "<hub>");
-
-Response response = client.CheckPermission("<permission>", "<connectionId>");
-Console.WriteLine(response.Status);
-]]></code>
-This sample shows how to call CheckPermission with all parameters.
-<code><![CDATA[
-var client = new WebPubSubServiceClient("<https://my-service.azure.com>", "<hub>");
-
-Response response = client.CheckPermission("<permission>", "<connectionId>", "<targetName>");
-Console.WriteLine(response.Status);
-]]></code>
-</example>
     </member>
     <member name="GrantPermissionAsync(string,string,string,RequestContext)">
-<example>
-This sample shows how to call GrantPermissionAsync with required parameters.
-<code><![CDATA[
-var client = new WebPubSubServiceClient("<https://my-service.azure.com>", "<hub>");
-
-Response response = await client.GrantPermissionAsync("<permission>", "<connectionId>");
-Console.WriteLine(response.Status);
-]]></code>
-This sample shows how to call GrantPermissionAsync with all parameters.
-<code><![CDATA[
-var client = new WebPubSubServiceClient("<https://my-service.azure.com>", "<hub>");
-
-Response response = await client.GrantPermissionAsync("<permission>", "<connectionId>", "<targetName>");
-Console.WriteLine(response.Status);
-]]></code>
-</example>
     </member>
     <member name="GrantPermission(string,string,string,RequestContext)">
-<example>
-This sample shows how to call GrantPermission with required parameters.
-<code><![CDATA[
-var client = new WebPubSubServiceClient("<https://my-service.azure.com>", "<hub>");
-
-Response response = client.GrantPermission("<permission>", "<connectionId>");
-Console.WriteLine(response.Status);
-]]></code>
-This sample shows how to call GrantPermission with all parameters.
-<code><![CDATA[
-var client = new WebPubSubServiceClient("<https://my-service.azure.com>", "<hub>");
-
-Response response = client.GrantPermission("<permission>", "<connectionId>", "<targetName>");
-Console.WriteLine(response.Status);
-]]></code>
-</example>
     </member>
     <member name="UserExistsImplAsync(string,RequestContext)">
-<example>
-This sample shows how to call UserExistsImplAsync with required parameters.
-<code><![CDATA[
-var client = new WebPubSubServiceClient("<https://my-service.azure.com>", "<hub>");
-
-Response response = await client.UserExistsImplAsync("<userId>");
-Console.WriteLine(response.Status);
-]]></code>
-</example>
     </member>
     <member name="UserExistsImpl(string,RequestContext)">
-<example>
-This sample shows how to call UserExistsImpl with required parameters.
-<code><![CDATA[
-var client = new WebPubSubServiceClient("<https://my-service.azure.com>", "<hub>");
-
-Response response = client.UserExistsImpl("<userId>");
-Console.WriteLine(response.Status);
-]]></code>
-</example>
     </member>
     <member name="CloseUserConnectionsAsync(string,IEnumerable{string},string,RequestContext)">
 <example>
@@ -634,48 +420,12 @@ Console.WriteLine(response.Status);
 </example>
     </member>
     <member name="RemoveUserFromGroupAsync(string,string,RequestContext)">
-<example>
-This sample shows how to call RemoveUserFromGroupAsync with required parameters.
-<code><![CDATA[
-var client = new WebPubSubServiceClient("<https://my-service.azure.com>", "<hub>");
-
-Response response = await client.RemoveUserFromGroupAsync("<userId>", "<group>");
-Console.WriteLine(response.Status);
-]]></code>
-</example>
     </member>
     <member name="RemoveUserFromGroup(string,string,RequestContext)">
-<example>
-This sample shows how to call RemoveUserFromGroup with required parameters.
-<code><![CDATA[
-var client = new WebPubSubServiceClient("<https://my-service.azure.com>", "<hub>");
-
-Response response = client.RemoveUserFromGroup("<userId>", "<group>");
-Console.WriteLine(response.Status);
-]]></code>
-</example>
     </member>
     <member name="AddUserToGroupAsync(string,string,RequestContext)">
-<example>
-This sample shows how to call AddUserToGroupAsync with required parameters.
-<code><![CDATA[
-var client = new WebPubSubServiceClient("<https://my-service.azure.com>", "<hub>");
-
-Response response = await client.AddUserToGroupAsync("<userId>", "<group>");
-Console.WriteLine(response.Status);
-]]></code>
-</example>
     </member>
     <member name="AddUserToGroup(string,string,RequestContext)">
-<example>
-This sample shows how to call AddUserToGroup with required parameters.
-<code><![CDATA[
-var client = new WebPubSubServiceClient("<https://my-service.azure.com>", "<hub>");
-
-Response response = client.AddUserToGroup("<userId>", "<group>");
-Console.WriteLine(response.Status);
-]]></code>
-</example>
     </member>
   </members>
 </doc>

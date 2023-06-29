@@ -39,11 +39,11 @@ namespace Azure.Communication.CallAutomation
         /// <summary>
         /// Process incoming events. Pass incoming events to get it processed to have other method like WaitForEventProcessor to function.
         /// </summary>
-        /// <param name="events">Incoming <see cref="CallAutomationEventData"/>.</param>
-        public void ProcessEvents(IEnumerable<CallAutomationEventData> events)
+        /// <param name="events">Incoming <see cref="CallAutomationEventBase"/>.</param>
+        public void ProcessEvents(IEnumerable<CallAutomationEventBase> events)
         {
             // Note: There will always be only 1 event coming from the service
-            CallAutomationEventData receivedEvent = events.FirstOrDefault();
+            CallAutomationEventBase receivedEvent = events.FirstOrDefault();
 
             if (receivedEvent != null)
             {
@@ -63,7 +63,7 @@ namespace Azure.Communication.CallAutomation
                 }
 
                 // If this call is disconnect, remove all related items in memory
-                if (receivedEvent is CallDisconnectedEventData)
+                if (receivedEvent is CallDisconnected)
                 {
                     // remove from eventsbacklog
                     _eventBacklog.TryRemoveEvent(internalEventId);
@@ -80,7 +80,7 @@ namespace Azure.Communication.CallAutomation
         /// <typeparam name="TEvent">Call Automation Event Type.</typeparam>
         /// <param name="callConnectionId">CallConnectionId of the call.</param>
         /// <param name="eventProcessor">EventProcessor to be fired when the specified event arrives.</param>
-        public void AttachOngoingEventProcessor<TEvent>(string callConnectionId, Action<TEvent> eventProcessor) where TEvent : CallAutomationEventData
+        public void AttachOngoingEventProcessor<TEvent>(string callConnectionId, Action<TEvent> eventProcessor) where TEvent : CallAutomationEventBase
         {
             var ongoingAwaiter = new EventAwaiterOngoing<TEvent>(callConnectionId, eventProcessor);
             EventHandler<EventProcessorArgs> handler = (o, arg) => ongoingAwaiter.OnEventReceived(o, arg);
@@ -96,18 +96,18 @@ namespace Azure.Communication.CallAutomation
         /// </summary>
         /// <typeparam name="TEvent">Call Automation Event Type.</typeparam>
         /// <param name="callConnectionId">CallConnectionId of the call.</param>
-        public void DetachOngoingEventProcessor<TEvent>(string callConnectionId) where TEvent : CallAutomationEventData
+        public void DetachOngoingEventProcessor<TEvent>(string callConnectionId) where TEvent : CallAutomationEventBase
         {
             RemoveFromOngoingEvent(callConnectionId, typeof(TEvent));
         }
 
         /// <summary>
-        /// Wait for matching incoming event. This is blocking Call. Returns the <see cref="CallAutomationEventData"/> once it arrives in ProcessEvent method.
+        /// Wait for matching incoming event. This is blocking Call. Returns the <see cref="CallAutomationEventBase"/> once it arrives in ProcessEvent method.
         /// </summary>
         /// <param name="predicate">Predicate for waiting on event.</param>
         /// <param name="cancellationToken">Cancellation Token can be used to set timeout or cancel this WaitForEventProcessor.</param>
-        /// <returns>Returns <see cref="CallAutomationEventData"/> once matching event arrives.</returns>
-        public CallAutomationEventData WaitForEventProcessor(Func<CallAutomationEventData, bool> predicate, CancellationToken cancellationToken = default)
+        /// <returns>Returns <see cref="CallAutomationEventBase"/> once matching event arrives.</returns>
+        public CallAutomationEventBase WaitForEventProcessor(Func<CallAutomationEventBase, bool> predicate, CancellationToken cancellationToken = default)
         {
             // Initialize awaiter and get event handler of it
             var awaiter = new EventAwaiter(predicate, cancellationToken);
@@ -149,14 +149,14 @@ namespace Azure.Communication.CallAutomation
         }
 
         /// <summary>
-        /// Wait for matching incoming event. This is blocking Call. Returns the <see cref="CallAutomationEventData"/> once it arrives in ProcessEvent method.
+        /// Wait for matching incoming event. This is blocking Call. Returns the <see cref="CallAutomationEventBase"/> once it arrives in ProcessEvent method.
         /// </summary>
         /// <typeparam name="TEvent">Matching event type.</typeparam>
         /// <param name="connectionId">CallConnectionId of the call.</param>
         /// <param name="operationContext">OperationContext of the method.</param>
         /// <param name="cancellationToken">Cancellation Token can be used to set timeout or cancel this WaitForEventProcessor.</param>
         /// <returns>Returns the event once matching event arrives.</returns>
-        public TEvent WaitForEventProcessor<TEvent>(string connectionId = default, string operationContext = default, CancellationToken cancellationToken = default) where TEvent : CallAutomationEventData
+        public TEvent WaitForEventProcessor<TEvent>(string connectionId = default, string operationContext = default, CancellationToken cancellationToken = default) where TEvent : CallAutomationEventBase
             => (TEvent)WaitForEventProcessor(predicate
                 => (predicate.CallConnectionId == connectionId || connectionId is null)
                 && (predicate.OperationContext == operationContext || operationContext is null)
@@ -164,12 +164,12 @@ namespace Azure.Communication.CallAutomation
                 cancellationToken);
 
         /// <summary>
-        /// Wait for matching incoming event. Returns the <see cref="CallAutomationEventData"/> once it arrives in ProcessEvent method.
+        /// Wait for matching incoming event. Returns the <see cref="CallAutomationEventBase"/> once it arrives in ProcessEvent method.
         /// </summary>
         /// <param name="predicate">Predicate for waiting on event.</param>
         /// <param name="cancellationToken">Cancellation Token can be used to set timeout or cancel this WaitForEventProcessor.</param>
-        /// <returns>Returns <see cref="CallAutomationEventData"/> once matching event arrives.</returns>
-        public async Task<CallAutomationEventData> WaitForEventProcessorAsync(Func<CallAutomationEventData, bool> predicate, CancellationToken cancellationToken = default)
+        /// <returns>Returns <see cref="CallAutomationEventBase"/> once matching event arrives.</returns>
+        public async Task<CallAutomationEventBase> WaitForEventProcessorAsync(Func<CallAutomationEventBase, bool> predicate, CancellationToken cancellationToken = default)
         {
             // Initialize awaiter and get event handler of it
             var awaiter = new EventAwaiter(predicate, cancellationToken);
@@ -209,14 +209,14 @@ namespace Azure.Communication.CallAutomation
         }
 
         /// <summary>
-        /// Wait for matching incoming event. Returns the <see cref="CallAutomationEventData"/> once it arrives in ProcessEvent method.
+        /// Wait for matching incoming event. Returns the <see cref="CallAutomationEventBase"/> once it arrives in ProcessEvent method.
         /// </summary>
         /// <typeparam name="TEvent">Matching event type.</typeparam>
         /// <param name="connectionId">CallConnectionId of the call.</param>
         /// <param name="operationContext">OperationContext of the method.</param>
         /// <param name="cancellationToken">Cancellation Token can be used to set timeout or cancel this WaitForEventProcessor.</param>
         /// <returns>Returns the event once matching event arrives.</returns>
-        public async Task<TEvent> WaitForEventProcessorAsync<TEvent>(string connectionId = default, string operationContext = default, CancellationToken cancellationToken = default) where TEvent : CallAutomationEventData
+        public async Task<TEvent> WaitForEventProcessorAsync<TEvent>(string connectionId = default, string operationContext = default, CancellationToken cancellationToken = default) where TEvent : CallAutomationEventBase
             => (TEvent)await WaitForEventProcessorAsync(predicate
                 => (predicate.CallConnectionId == connectionId || connectionId is null)
                 && (predicate.OperationContext == operationContext || operationContext is null)

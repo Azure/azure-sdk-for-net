@@ -11,7 +11,6 @@ namespace Azure.ResourceManager.Resources
     /// <summary>
     /// A class representing the operations that can be performed over a specific subscription.
     /// </summary>
-    #pragma warning disable CA1825
     [CodeGenSuppress("TenantResource", typeof(ArmClient), typeof(TenantData))]
     [CodeGenSuppress("Get", typeof(CancellationToken))]
     [CodeGenSuppress("GetAsync", typeof(CancellationToken))]
@@ -19,7 +18,6 @@ namespace Azure.ResourceManager.Resources
     [CodeGenSuppress("GetAvailableLocationsAsync", typeof(CancellationToken))]
     [CodeGenSuppress("GetTenants")]
     [CodeGenSuppress("CreateResourceIdentifier")]
-    #pragma warning restore CA1825
     // [CodeGenSuppress("_tenantsRestClient")] // TODO: not working for private member
     public partial class TenantResource : ArmResource
     {

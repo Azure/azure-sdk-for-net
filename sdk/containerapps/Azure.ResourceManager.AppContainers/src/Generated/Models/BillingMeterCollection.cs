@@ -12,7 +12,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
-    /// <summary> Collection of premium workload billing meters. </summary>
+    /// <summary> Collection of billing meters. </summary>
     internal partial class BillingMeterCollection
     {
         /// <summary> Initializes a new instance of BillingMeterCollection. </summary>

@@ -102,8 +102,6 @@ namespace Azure.AI.TextAnalytics.Samples
 
                 Console.WriteLine($"  Detected language: {documentResult.PrimaryLanguage.Name}");
                 Console.WriteLine($"  Confidence score: {documentResult.PrimaryLanguage.ConfidenceScore}");
-                if (documentResult.PrimaryLanguage.Script is not null)
-                    Console.WriteLine($"  Script: {documentResult.PrimaryLanguage.Script}");
 
                 Console.WriteLine($"  Document statistics:");
                 Console.WriteLine($"    Character count: {documentResult.Statistics.CharacterCount}");
