@@ -22,15 +22,22 @@ namespace Azure.Developer.LoadTesting.Models
         {
             _element = MutableJsonDocument.Parse(BinaryData.FromBytes("{}"u8.ToArray())).RootElement;
 
-            AdditionalFileInfo = new ChangeTrackingList<FileInfo>();
+            AdditionalFileInfo = new MutableJsonReadOnlyList<FileInfo>(_element.GetProperty("additionalFileInfo"));
         }
 
         internal TestInputArtifacts(MutableJsonElement element)
         {
             _element = element;
-        }
 
-        // TODO: port these to use MJD
+            // TODO: TryGetProperty
+
+            ConfigFileInfo = new FileInfo(_element.GetProperty("configFileInfo"));
+            TestScriptFileInfo = new FileInfo(_element.GetProperty("testScriptFileInfo"));
+            UserPropFileInfo = new FileInfo(_element.GetProperty("userPropFileInfo"));
+            InputArtifactsZipFileInfo = new FileInfo(_element.GetProperty("inputArtifactsZipFileInfo"));
+
+            AdditionalFileInfo = new MutableJsonReadOnlyList<FileInfo>(_element.GetProperty("additionalFileInfo"));
+        }
 
         /// <summary> File info. </summary>
         public FileInfo ConfigFileInfo { get; }

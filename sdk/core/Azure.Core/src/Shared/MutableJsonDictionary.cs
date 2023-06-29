@@ -4,7 +4,9 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
+using System.Text.Json;
 
 #nullable enable
 
@@ -18,6 +20,8 @@ namespace Azure.Core.Json
         public MutableJsonDictionary(MutableJsonElement element)
         {
             _element = element;
+
+            Debug.Assert(_element.ValueKind == JsonValueKind.Object);
         }
 
         public T this[string key]

@@ -26,6 +26,7 @@
     <Compile Include="$(AzureCoreSharedSources)MutableJsonElement.ObjectEnumerator.cs" LinkBase="Shared" />
     <Compile Include="$(AzureCoreSharedSources)MutableJsonElement.WriteTo.cs" LinkBase="Shared" />
     <Compile Include="$(AzureCoreSharedSources)MutableJsonPatchNode.cs" LinkBase="Shared" />
+    <Compile Include="$(AzureCoreSharedSources)MutableJsonReadOnlyList.cs" LinkBase="Shared" />
   </ItemGroup>
   <ItemGroup>
     <!--<PackageReference Include="Azure.Core" />-->
