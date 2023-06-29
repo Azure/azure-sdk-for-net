@@ -32,6 +32,7 @@ output CLUSTER_NAME string = cluster.outputs.CLUSTER_NAME
 output DATABASE_NAME string = cluster.outputs.DATABASE_NAME
 output TABLE_NAME string = cluster.outputs.TABLE_NAME
 output FOLLOWING_CLUSTER_NAME string = cluster.outputs.FOLLOWING_CLUSTER_NAME
+output MIGRATION_CLUSTER_NAME string = cluster.outputs.MIGRATION_CLUSTER_NAME
 
 module keyVault './Azure.ResourceManager.Kusto/tests/Prerequisites/Data/keyVault.bicep' = {
     name: 'keyVault'

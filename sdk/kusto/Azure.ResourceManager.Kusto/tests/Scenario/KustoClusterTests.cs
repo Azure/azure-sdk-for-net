@@ -14,8 +14,7 @@ namespace Azure.ResourceManager.Kusto.Tests.Scenario
 {
     public class KustoClusterTests : KustoManagementTestBase
     {
-        private readonly KustoSku _sku1 = new(KustoSkuName.StandardD13V2, 2, KustoSkuTier.Standard);
-        private readonly KustoSku _sku2 = new(KustoSkuName.StandardD14V2, 3, KustoSkuTier.Standard);
+        private readonly KustoSku _sku = new(Dev(No SLA)_Standard_E2a_v4, 1, KustoSkuTier.BasicValue);
 
         public KustoClusterTests(bool isAsync)
             : base(isAsync) //, RecordedTestMode.Record)
@@ -36,12 +35,12 @@ namespace Azure.ResourceManager.Kusto.Tests.Scenario
 
             var clusterName = GenerateAssetName("sdkCluster");
 
-            var clusterDataCreate = new KustoClusterData(Location, _sku1)
+            var clusterDataCreate = new KustoClusterData(Location, _sku)
             {
                 Identity = new ManagedServiceIdentity(ManagedServiceIdentityType.SystemAssigned)
             };
 
-            var clusterDataUpdate = new KustoClusterData(Location, _sku2)
+            var clusterDataUpdate = new KustoClusterData(Location, _sku)
             {
                 Identity = new ManagedServiceIdentity(ManagedServiceIdentityType.SystemAssignedUserAssigned)
                 {
