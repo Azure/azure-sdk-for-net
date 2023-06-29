@@ -102,6 +102,95 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             return new LinkTableStatus(id, status, errorMessage, startTime, stopTime, linkTableId, errorCode, lastProcessedData, lastTransactionCommitTime);
         }
 
+        /// <summary> Initializes a new instance of RunNotebookResponse. </summary>
+        /// <param name="message"> Response message. </param>
+        /// <param name="result"> Result of run notebook. </param>
+        /// <returns> A new <see cref="Models.RunNotebookResponse"/> instance for mocking. </returns>
+        public static RunNotebookResponse RunNotebookResponse(string message = null, RunNotebookResult result = null)
+        {
+            return new RunNotebookResponse(message, result);
+        }
+
+        /// <summary> Initializes a new instance of RunNotebookResult. </summary>
+        /// <param name="runId"> Run id. </param>
+        /// <param name="runStatus"> Status of the run notebook. </param>
+        /// <param name="lastCheckedOn"> Timestamp of last update. </param>
+        /// <param name="sessionId"> Livy session id. </param>
+        /// <param name="sparkPool"> SparkPool name. </param>
+        /// <param name="sessionDetail"> Run notebook session details. </param>
+        /// <param name="exitValue"> Output of exit command. </param>
+        /// <param name="error"> Run notebook error. </param>
+        /// <returns> A new <see cref="Models.RunNotebookResult"/> instance for mocking. </returns>
+        public static RunNotebookResult RunNotebookResult(string runId = null, string runStatus = null, string lastCheckedOn = null, long? sessionId = null, string sparkPool = null, object sessionDetail = null, string exitValue = null, RunNotebookError error = null)
+        {
+            return new RunNotebookResult(runId, runStatus, lastCheckedOn, sessionId, sparkPool, sessionDetail, exitValue, error);
+        }
+
+        /// <summary> Initializes a new instance of RunNotebookError. </summary>
+        /// <param name="ename"> Error name. </param>
+        /// <param name="evalue"> Error message. </param>
+        /// <param name="traceback"> Error trace. </param>
+        /// <returns> A new <see cref="Models.RunNotebookError"/> instance for mocking. </returns>
+        public static RunNotebookError RunNotebookError(string ename = null, string evalue = null, IEnumerable<string> traceback = null)
+        {
+            traceback ??= new List<string>();
+
+            return new RunNotebookError(ename, evalue, traceback?.ToList());
+        }
+
+        /// <summary> Initializes a new instance of RunNotebookSnapshotResponse. </summary>
+        /// <param name="message"> Response message. </param>
+        /// <param name="result"> Run notebook snapshot result. </param>
+        /// <returns> A new <see cref="Models.RunNotebookSnapshotResponse"/> instance for mocking. </returns>
+        public static RunNotebookSnapshotResponse RunNotebookSnapshotResponse(string message = null, RunNotebookSnapshotResult result = null)
+        {
+            return new RunNotebookSnapshotResponse(message, result);
+        }
+
+        /// <summary> Initializes a new instance of RunNotebookSnapshotResult. </summary>
+        /// <param name="snapshot"> Run notebook snapshot. </param>
+        /// <param name="error"> Run notebook error. </param>
+        /// <param name="runId"> Run id. </param>
+        /// <param name="runStatus"> Status of the run notebook. </param>
+        /// <param name="lastCheckedOn"> Timestamp of last update. </param>
+        /// <param name="sessionId"> Livy session id. </param>
+        /// <param name="sparkPool"> SparkPool name. </param>
+        /// <returns> A new <see cref="Models.RunNotebookSnapshotResult"/> instance for mocking. </returns>
+        public static RunNotebookSnapshotResult RunNotebookSnapshotResult(RunNotebookSnapshot snapshot = null, RunNotebookError error = null, string runId = null, string runStatus = null, string lastCheckedOn = null, long? sessionId = null, string sparkPool = null)
+        {
+            return new RunNotebookSnapshotResult(snapshot, error, runId, runStatus, lastCheckedOn, sessionId, sparkPool);
+        }
+
+        /// <summary> Initializes a new instance of RunNotebookSnapshot. </summary>
+        /// <param name="exitValue"> Output of exit command. </param>
+        /// <param name="id"> Run notebook runId. </param>
+        /// <param name="notebook"> Notebook name. </param>
+        /// <param name="sessionOptions"> Session properties. </param>
+        /// <param name="honorSessionTimeToLive"> Whether session should run till time to live after run completes. </param>
+        /// <param name="sessionId"> Livy session id. </param>
+        /// <param name="sparkPool"> SparkPool name. </param>
+        /// <param name="parameters"> Run notebook parameters. </param>
+        /// <param name="notebookContent"> Notebook resource type. </param>
+        /// <returns> A new <see cref="Models.RunNotebookSnapshot"/> instance for mocking. </returns>
+        public static RunNotebookSnapshot RunNotebookSnapshot(string exitValue = null, string id = null, string notebook = null, RunNotebookSparkSessionOptions sessionOptions = null, bool? honorSessionTimeToLive = null, long? sessionId = null, string sparkPool = null, IReadOnlyDictionary<string, RunNotebookParameter> parameters = null, NotebookResource notebookContent = null)
+        {
+            parameters ??= new Dictionary<string, RunNotebookParameter>();
+
+            return new RunNotebookSnapshot(exitValue, id, notebook, sessionOptions, honorSessionTimeToLive, sessionId, sparkPool, parameters, notebookContent);
+        }
+
+        /// <summary> Initializes a new instance of NotebookResource. </summary>
+        /// <param name="id"> Fully qualified resource Id for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="type"> The type of the resource. Ex- Microsoft.Compute/virtualMachines or Microsoft.Storage/storageAccounts. </param>
+        /// <param name="etag"> Resource Etag. </param>
+        /// <param name="properties"> Properties of Notebook. </param>
+        /// <returns> A new <see cref="Models.NotebookResource"/> instance for mocking. </returns>
+        public static NotebookResource NotebookResource(string id = null, string name = null, string type = null, string etag = null, Notebook properties = null)
+        {
+            return new NotebookResource(id, name, type, etag, properties);
+        }
+
         /// <summary> Initializes a new instance of MetastoreRegistrationResponse. </summary>
         /// <param name="status"> Enumerates possible request statuses. </param>
         /// <returns> A new <see cref="Models.MetastoreRegistrationResponse"/> instance for mocking. </returns>
@@ -433,18 +522,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public static LinkedServiceResource LinkedServiceResource(string id = null, string name = null, string type = null, string etag = null, LinkedService properties = null)
         {
             return new LinkedServiceResource(id, name, type, etag, properties);
-        }
-
-        /// <summary> Initializes a new instance of NotebookResource. </summary>
-        /// <param name="id"> Fully qualified resource Id for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="type"> The type of the resource. Ex- Microsoft.Compute/virtualMachines or Microsoft.Storage/storageAccounts. </param>
-        /// <param name="etag"> Resource Etag. </param>
-        /// <param name="properties"> Properties of Notebook. </param>
-        /// <returns> A new <see cref="Models.NotebookResource"/> instance for mocking. </returns>
-        public static NotebookResource NotebookResource(string id = null, string name = null, string type = null, string etag = null, Notebook properties = null)
-        {
-            return new NotebookResource(id, name, type, etag, properties);
         }
 
         /// <summary> Initializes a new instance of PipelineResource. </summary>
@@ -922,6 +999,92 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             return new ManagedIdentity(principalId, tenantId, type);
         }
 
+        /// <summary> Initializes a new instance of MDEntity. </summary>
+        /// <param name="name"> Entity Name. </param>
+        /// <param name="type"> Artifact type. </param>
+        /// <param name="id"> Entity Resource Id. </param>
+        /// <returns> A new <see cref="Models.MDEntity"/> instance for mocking. </returns>
+        public static MDEntity MDEntity(string name = null, SASEntityType type = default, string id = null)
+        {
+            return new MDEntity(name, type, id);
+        }
+
+        /// <summary> Initializes a new instance of SyMsapiddlResponses. </summary>
+        /// <param name="syMsApiDdlResponse"> List of DDL response. </param>
+        /// <returns> A new <see cref="Models.SyMsapiddlResponses"/> instance for mocking. </returns>
+        public static SyMsapiddlResponses SyMsapiddlResponses(IEnumerable<SyMsapiddlResponse> syMsApiDdlResponse = null)
+        {
+            syMsApiDdlResponse ??= new List<SyMsapiddlResponse>();
+
+            return new SyMsapiddlResponses(syMsApiDdlResponse?.ToList());
+        }
+
+        /// <summary> Initializes a new instance of SyMsapiddlResponse. </summary>
+        /// <param name="ddlType"> DDL type. </param>
+        /// <param name="entityName"> Entity name. </param>
+        /// <param name="entityType"> Artifact type. </param>
+        /// <param name="publishStatus"> Publish status. </param>
+        /// <param name="originObjectId"> Object id maintained by Origin Catalog. </param>
+        /// <param name="objectId"> Object id maintained by SyMS. </param>
+        /// <param name="objectVersion"> Object version maintained by SyMS. </param>
+        /// <returns> A new <see cref="Models.SyMsapiddlResponse"/> instance for mocking. </returns>
+        public static SyMsapiddlResponse SyMsapiddlResponse(DDLType ddlType = default, string entityName = null, SASEntityType entityType = default, PublishStatus publishStatus = default, string originObjectId = null, string objectId = null, long objectVersion = default)
+        {
+            return new SyMsapiddlResponse(ddlType, entityName, entityType, publishStatus, originObjectId, objectId, objectVersion);
+        }
+
+        /// <summary> Initializes a new instance of QueryArtifactsResponse. </summary>
+        /// <param name="items"></param>
+        /// <param name="continuationToken"> Continuation token to get next page. </param>
+        /// <returns> A new <see cref="Models.QueryArtifactsResponse"/> instance for mocking. </returns>
+        public static QueryArtifactsResponse QueryArtifactsResponse(IEnumerable<object> items = null, string continuationToken = null)
+        {
+            items ??= new List<object>();
+
+            return new QueryArtifactsResponse(items?.ToList(), continuationToken);
+        }
+
+        /// <summary> Initializes a new instance of DatabaseEntity. </summary>
+        /// <param name="name"> Entity Name. </param>
+        /// <param name="type"> Artifact type. </param>
+        /// <param name="id"> Entity Resource Id. </param>
+        /// <param name="properties"> Database properties. </param>
+        /// <returns> A new <see cref="Models.DatabaseEntity"/> instance for mocking. </returns>
+        public static DatabaseEntity DatabaseEntity(string name = null, SASEntityType type = default, string id = null, DatabaseProperties properties = null)
+        {
+            return new DatabaseEntity(name, type, id, properties);
+        }
+
+        /// <summary> Initializes a new instance of DatabaseProperties. </summary>
+        /// <param name="originObjectId"> Entity object id maintained by the caller. </param>
+        /// <param name="objectId"> Entity object id maintained by SyMS. </param>
+        /// <param name="objectVersion"> Entity object version maintained by SyMS. </param>
+        /// <param name="publishStatus"> Publish status. </param>
+        /// <param name="properties"> Property bag. </param>
+        /// <param name="source"> Data source properties. </param>
+        /// <param name="description"> Description of the database. </param>
+        /// <returns> A new <see cref="Models.DatabaseProperties"/> instance for mocking. </returns>
+        public static DatabaseProperties DatabaseProperties(string originObjectId = null, string objectId = null, long? objectVersion = null, PublishStatus? publishStatus = null, IDictionary<string, object> properties = null, DataSource source = null, string description = null)
+        {
+            properties ??= new Dictionary<string, object>();
+
+            return new DatabaseProperties(originObjectId, objectId, objectVersion, publishStatus, properties, source, description);
+        }
+
+        /// <summary> Initializes a new instance of MDEntityProperties. </summary>
+        /// <param name="originObjectId"> Entity object id maintained by the caller. </param>
+        /// <param name="objectId"> Entity object id maintained by SyMS. </param>
+        /// <param name="objectVersion"> Entity object version maintained by SyMS. </param>
+        /// <param name="publishStatus"> Publish status. </param>
+        /// <param name="properties"> Property bag. </param>
+        /// <returns> A new <see cref="Models.MDEntityProperties"/> instance for mocking. </returns>
+        public static MDEntityProperties MDEntityProperties(string originObjectId = null, string objectId = null, long? objectVersion = null, PublishStatus? publishStatus = null, IDictionary<string, object> properties = null)
+        {
+            properties ??= new Dictionary<string, object>();
+
+            return new MDEntityProperties(originObjectId, objectId, objectVersion, publishStatus, properties);
+        }
+
         /// <summary> Initializes a new instance of WorkspaceIdentity. </summary>
         /// <param name="type"> The identity type. Currently the only supported type is 'SystemAssigned'. </param>
         /// <param name="principalId"> The principal id of the identity. </param>
@@ -1121,6 +1284,157 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             dependsOn ??= new List<PipelineReference>();
 
             return new ChainingTrigger("ChainingTrigger", description, runtimeState, annotations?.ToList(), additionalProperties, pipeline, dependsOn?.ToList(), runDimension);
+        }
+
+        /// <summary> Initializes a new instance of PartitionInfoProperties. </summary>
+        /// <param name="originObjectId"> Entity object id maintained by the caller. </param>
+        /// <param name="objectId"> Entity object id maintained by SyMS. </param>
+        /// <param name="objectVersion"> Entity object version maintained by SyMS. </param>
+        /// <param name="publishStatus"> Publish status. </param>
+        /// <param name="properties"> Property bag. </param>
+        /// <param name="namespace"> Partition information namespace. </param>
+        /// <param name="storageDescriptor"> Storage descriptor. </param>
+        /// <param name="partitionKeyValues"> Partition key values. </param>
+        /// <returns> A new <see cref="Models.PartitionInfoProperties"/> instance for mocking. </returns>
+        public static PartitionInfoProperties PartitionInfoProperties(string originObjectId = null, string objectId = null, long? objectVersion = null, PublishStatus? publishStatus = null, IDictionary<string, object> properties = null, PartitionInfoNamespace @namespace = null, StorageDescriptor storageDescriptor = null, IEnumerable<object> partitionKeyValues = null)
+        {
+            properties ??= new Dictionary<string, object>();
+            partitionKeyValues ??= new List<object>();
+
+            return new PartitionInfoProperties(originObjectId, objectId, objectVersion, publishStatus, properties, @namespace, storageDescriptor, partitionKeyValues?.ToList());
+        }
+
+        /// <summary> Initializes a new instance of SchemaProperties. </summary>
+        /// <param name="originObjectId"> Entity object id maintained by the caller. </param>
+        /// <param name="objectId"> Entity object id maintained by SyMS. </param>
+        /// <param name="objectVersion"> Entity object version maintained by SyMS. </param>
+        /// <param name="publishStatus"> Publish status. </param>
+        /// <param name="properties"> Property bag. </param>
+        /// <param name="namespace"> Namespace. </param>
+        /// <returns> A new <see cref="Models.SchemaProperties"/> instance for mocking. </returns>
+        public static SchemaProperties SchemaProperties(string originObjectId = null, string objectId = null, long? objectVersion = null, PublishStatus? publishStatus = null, IDictionary<string, object> properties = null, BaseNamespace @namespace = null)
+        {
+            properties ??= new Dictionary<string, object>();
+
+            return new SchemaProperties(originObjectId, objectId, objectVersion, publishStatus, properties, @namespace);
+        }
+
+        /// <summary> Initializes a new instance of ViewEntityProperties. </summary>
+        /// <param name="originObjectId"> Entity object id maintained by the caller. </param>
+        /// <param name="objectId"> Entity object id maintained by SyMS. </param>
+        /// <param name="objectVersion"> Entity object version maintained by SyMS. </param>
+        /// <param name="publishStatus"> Publish status. </param>
+        /// <param name="properties"> Property bag. </param>
+        /// <param name="namespace"> Table namespace. </param>
+        /// <param name="partitioning"> Table partitioning information. </param>
+        /// <param name="storageDescriptor"> Storage descriptor. </param>
+        /// <param name="viewOriginalText"> View original text. </param>
+        /// <param name="viewExpandedText"> View expanded text. </param>
+        /// <param name="temporary"> Temporary. </param>
+        /// <param name="isRewriteEnabled"> Is rewrite enabled. </param>
+        /// <returns> A new <see cref="Models.ViewEntityProperties"/> instance for mocking. </returns>
+        public static ViewEntityProperties ViewEntityProperties(string originObjectId = null, string objectId = null, long? objectVersion = null, PublishStatus? publishStatus = null, IDictionary<string, object> properties = null, TableNamespace @namespace = null, TablePartitioning partitioning = null, StorageDescriptor storageDescriptor = null, string viewOriginalText = null, string viewExpandedText = null, bool? temporary = null, bool? isRewriteEnabled = null)
+        {
+            properties ??= new Dictionary<string, object>();
+
+            return new ViewEntityProperties(originObjectId, objectId, objectVersion, publishStatus, properties, @namespace, partitioning, storageDescriptor, viewOriginalText, viewExpandedText, temporary, isRewriteEnabled);
+        }
+
+        /// <summary> Initializes a new instance of RelationshipProperties. </summary>
+        /// <param name="originObjectId"> Entity object id maintained by the caller. </param>
+        /// <param name="objectId"> Entity object id maintained by SyMS. </param>
+        /// <param name="objectVersion"> Entity object version maintained by SyMS. </param>
+        /// <param name="publishStatus"> Publish status. </param>
+        /// <param name="properties"> Property bag. </param>
+        /// <param name="namespace"> Namespace. </param>
+        /// <param name="fromTableId"> From Table Id. </param>
+        /// <param name="fromTableName"> From Table Name. </param>
+        /// <param name="toTableId"> To Table Id. </param>
+        /// <param name="toTableName"> To Table Name. </param>
+        /// <param name="relationshipType"> Relation Type. </param>
+        /// <param name="columnRelationshipInformations"> List of Column Relationships. </param>
+        /// <returns> A new <see cref="Models.RelationshipProperties"/> instance for mocking. </returns>
+        public static RelationshipProperties RelationshipProperties(string originObjectId = null, string objectId = null, long? objectVersion = null, PublishStatus? publishStatus = null, IDictionary<string, object> properties = null, BaseNamespace @namespace = null, string fromTableId = null, string fromTableName = null, string toTableId = null, string toTableName = null, RelationshipType? relationshipType = null, IEnumerable<ColumnRelationshipInformation> columnRelationshipInformations = null)
+        {
+            properties ??= new Dictionary<string, object>();
+            columnRelationshipInformations ??= new List<ColumnRelationshipInformation>();
+
+            return new RelationshipProperties(originObjectId, objectId, objectVersion, publishStatus, properties, @namespace, fromTableId, fromTableName, toTableId, toTableName, relationshipType, columnRelationshipInformations?.ToList());
+        }
+
+        /// <summary> Initializes a new instance of TableProperties. </summary>
+        /// <param name="originObjectId"> Entity object id maintained by the caller. </param>
+        /// <param name="objectId"> Entity object id maintained by SyMS. </param>
+        /// <param name="objectVersion"> Entity object version maintained by SyMS. </param>
+        /// <param name="publishStatus"> Publish status. </param>
+        /// <param name="properties"> Property bag. </param>
+        /// <param name="namespace"> Table namespace. </param>
+        /// <param name="partitioning"> Table partitioning information. </param>
+        /// <param name="tableType"> Entity type. </param>
+        /// <param name="storageDescriptor"> Storage descriptor. </param>
+        /// <param name="temporary"> Temporary. </param>
+        /// <param name="isRewriteEnabled"> Is rewrite enabled. </param>
+        /// <returns> A new <see cref="Models.TableProperties"/> instance for mocking. </returns>
+        public static TableProperties TableProperties(string originObjectId = null, string objectId = null, long? objectVersion = null, PublishStatus? publishStatus = null, IDictionary<string, object> properties = null, TableNamespace @namespace = null, TablePartitioning partitioning = null, TableType tableType = default, StorageDescriptor storageDescriptor = null, bool? temporary = null, bool? isRewriteEnabled = null)
+        {
+            properties ??= new Dictionary<string, object>();
+
+            return new TableProperties(originObjectId, objectId, objectVersion, publishStatus, properties, @namespace, partitioning, tableType, storageDescriptor, temporary, isRewriteEnabled);
+        }
+
+        /// <summary> Initializes a new instance of PartitionInfo. </summary>
+        /// <param name="name"> Entity Name. </param>
+        /// <param name="type"> Artifact type. </param>
+        /// <param name="id"> Entity Resource Id. </param>
+        /// <param name="properties"> Database properties. </param>
+        /// <returns> A new <see cref="Models.PartitionInfo"/> instance for mocking. </returns>
+        public static PartitionInfo PartitionInfo(string name = null, SASEntityType type = default, string id = null, PartitionInfoProperties properties = null)
+        {
+            return new PartitionInfo(name, type, id, properties);
+        }
+
+        /// <summary> Initializes a new instance of SchemaEntity. </summary>
+        /// <param name="name"> Entity Name. </param>
+        /// <param name="type"> Artifact type. </param>
+        /// <param name="id"> Entity Resource Id. </param>
+        /// <param name="properties"> Database properties. </param>
+        /// <returns> A new <see cref="Models.SchemaEntity"/> instance for mocking. </returns>
+        public static SchemaEntity SchemaEntity(string name = null, SASEntityType type = default, string id = null, SchemaProperties properties = null)
+        {
+            return new SchemaEntity(name, type, id, properties);
+        }
+
+        /// <summary> Initializes a new instance of ViewEntity. </summary>
+        /// <param name="name"> Entity Name. </param>
+        /// <param name="type"> Artifact type. </param>
+        /// <param name="id"> Entity Resource Id. </param>
+        /// <param name="properties"> Database properties. </param>
+        /// <returns> A new <see cref="Models.ViewEntity"/> instance for mocking. </returns>
+        public static ViewEntity ViewEntity(string name = null, SASEntityType type = default, string id = null, ViewEntityProperties properties = null)
+        {
+            return new ViewEntity(name, type, id, properties);
+        }
+
+        /// <summary> Initializes a new instance of RelationshipEntity. </summary>
+        /// <param name="name"> Entity Name. </param>
+        /// <param name="type"> Artifact type. </param>
+        /// <param name="id"> Entity Resource Id. </param>
+        /// <param name="properties"> Database properties. </param>
+        /// <returns> A new <see cref="Models.RelationshipEntity"/> instance for mocking. </returns>
+        public static RelationshipEntity RelationshipEntity(string name = null, SASEntityType type = default, string id = null, RelationshipProperties properties = null)
+        {
+            return new RelationshipEntity(name, type, id, properties);
+        }
+
+        /// <summary> Initializes a new instance of TableEntity. </summary>
+        /// <param name="name"> Entity Name. </param>
+        /// <param name="type"> Artifact type. </param>
+        /// <param name="id"> Entity Resource Id. </param>
+        /// <param name="properties"> Database properties. </param>
+        /// <returns> A new <see cref="Models.TableEntity"/> instance for mocking. </returns>
+        public static TableEntity TableEntity(string name = null, SASEntityType type = default, string id = null, TableProperties properties = null)
+        {
+            return new TableEntity(name, type, id, properties);
         }
 
         /// <summary> Initializes a new instance of ManagedIntegrationRuntime. </summary>

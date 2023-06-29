@@ -13,21 +13,25 @@ namespace Azure.Analytics.Synapse.Artifacts
     /// <summary> Client options for ArtifactsClient. </summary>
     public partial class ArtifactsClientOptions : ClientOptions
     {
-        private const ServiceVersion LatestVersion = ServiceVersion.V2022_12_01_Preview;
+        private const ServiceVersion LatestVersion = ServiceVersion.V2023_04_18_Preview;
 
         /// <summary> The version of the service to use. </summary>
         public enum ServiceVersion
         {
             /// <summary> Service version "2020-12-01". </summary>
             V2020_12_01 = 1,
+            /// <summary> Service version "2021-04-01". </summary>
+            V2021_04_01 = 2,
             /// <summary> Service version "2021-06-01-preview". </summary>
-            V2021_06_01_Preview = 2,
+            V2021_06_01_Preview = 3,
             /// <summary> Service version "2021-07-01-preview". </summary>
-            V2021_07_01_Preview = 3,
+            V2021_07_01_Preview = 4,
             /// <summary> Service version "2021-11-01-preview". </summary>
-            V2021_11_01_Preview = 4,
-            /// <summary> Service version "2022-12-01-preview". </summary>
-            V2022_12_01_Preview = 5,
+            V2021_11_01_Preview = 5,
+            /// <summary> Service version "2022-03-01-preview". </summary>
+            V2022_03_01_Preview = 6,
+            /// <summary> Service version "2023-04-18-preview". </summary>
+            V2023_04_18_Preview = 7,
         }
 
         internal string Version { get; }
@@ -38,10 +42,12 @@ namespace Azure.Analytics.Synapse.Artifacts
             Version = version switch
             {
                 ServiceVersion.V2020_12_01 => "2020-12-01",
+                ServiceVersion.V2021_04_01 => "2021-04-01",
                 ServiceVersion.V2021_06_01_Preview => "2021-06-01-preview",
                 ServiceVersion.V2021_07_01_Preview => "2021-07-01-preview",
                 ServiceVersion.V2021_11_01_Preview => "2021-11-01-preview",
-                ServiceVersion.V2022_12_01_Preview => "2022-12-01-preview",
+                ServiceVersion.V2022_03_01_Preview => "2022-03-01-preview",
+                ServiceVersion.V2023_04_18_Preview => "2023-04-18-preview",
                 _ => throw new NotSupportedException()
             };
         }
