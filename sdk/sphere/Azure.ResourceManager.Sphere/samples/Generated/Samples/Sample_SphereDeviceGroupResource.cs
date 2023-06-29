@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.Sphere.Samples
             SphereDeviceGroupResource sphereDeviceGroup = client.GetSphereDeviceGroupResource(sphereDeviceGroupResourceId);
 
             // invoke the operation
-            ClaimDevicesContent content = new ClaimDevicesContent(new string[]
+            ClaimSphereDevicesContent content = new ClaimSphereDevicesContent(new string[]
             {
 "00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000"
             });

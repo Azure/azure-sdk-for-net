@@ -67,5 +67,7 @@ rename-mapping:
   ImageType: SphereImageType
   OSFeedType: SphereOSFeedType
   UpdatePolicy: SphereUpdatePolicy
+  ClaimDevicesRequest: ClaimSphereDevicesContent
+  ListDeviceGroupsRequest: ListSphereDeviceGroupsContent
 
 ```

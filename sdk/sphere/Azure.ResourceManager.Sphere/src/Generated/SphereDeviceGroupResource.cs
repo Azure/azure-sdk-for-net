@@ -418,7 +418,7 @@ namespace Azure.ResourceManager.Sphere
         /// <param name="content"> Bulk claim devices request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<ArmOperation> ClaimDevicesAsync(WaitUntil waitUntil, ClaimDevicesContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> ClaimDevicesAsync(WaitUntil waitUntil, ClaimSphereDevicesContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -456,7 +456,7 @@ namespace Azure.ResourceManager.Sphere
         /// <param name="content"> Bulk claim devices request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual ArmOperation ClaimDevices(WaitUntil waitUntil, ClaimDevicesContent content, CancellationToken cancellationToken = default)
+        public virtual ArmOperation ClaimDevices(WaitUntil waitUntil, ClaimSphereDevicesContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 

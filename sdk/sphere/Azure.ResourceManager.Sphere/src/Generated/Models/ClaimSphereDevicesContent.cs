@@ -16,15 +16,15 @@ namespace Azure.ResourceManager.Sphere.Models
     /// Request to the action call to bulk claim devices.
     /// Serialized Name: ClaimDevicesRequest
     /// </summary>
-    public partial class ClaimDevicesContent
+    public partial class ClaimSphereDevicesContent
     {
-        /// <summary> Initializes a new instance of ClaimDevicesContent. </summary>
+        /// <summary> Initializes a new instance of ClaimSphereDevicesContent. </summary>
         /// <param name="deviceIdentifiers">
         /// Device identifiers of the devices to be claimed.
         /// Serialized Name: ClaimDevicesRequest.deviceIdentifiers
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="deviceIdentifiers"/> is null. </exception>
-        public ClaimDevicesContent(IEnumerable<string> deviceIdentifiers)
+        public ClaimSphereDevicesContent(IEnumerable<string> deviceIdentifiers)
         {
             Argument.AssertNotNull(deviceIdentifiers, nameof(deviceIdentifiers));
 

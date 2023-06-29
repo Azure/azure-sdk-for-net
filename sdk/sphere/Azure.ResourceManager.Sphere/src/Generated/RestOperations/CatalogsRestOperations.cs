@@ -677,7 +677,7 @@ namespace Azure.ResourceManager.Sphere
             }
         }
 
-        internal HttpMessage CreateListDeviceGroupsRequest(string subscriptionId, string resourceGroupName, string catalogName, ListDeviceGroupsContent content, string filter, int? top, int? skip, int? maxpagesize)
+        internal HttpMessage CreateListDeviceGroupsRequest(string subscriptionId, string resourceGroupName, string catalogName, ListSphereDeviceGroupsContent content, string filter, int? top, int? skip, int? maxpagesize)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -730,7 +730,7 @@ namespace Azure.ResourceManager.Sphere
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="catalogName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="catalogName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<DeviceGroupListResult>> ListDeviceGroupsAsync(string subscriptionId, string resourceGroupName, string catalogName, ListDeviceGroupsContent content, string filter = null, int? top = null, int? skip = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
+        public async Task<Response<DeviceGroupListResult>> ListDeviceGroupsAsync(string subscriptionId, string resourceGroupName, string catalogName, ListSphereDeviceGroupsContent content, string filter = null, int? top = null, int? skip = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -765,7 +765,7 @@ namespace Azure.ResourceManager.Sphere
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="catalogName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="catalogName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<DeviceGroupListResult> ListDeviceGroups(string subscriptionId, string resourceGroupName, string catalogName, ListDeviceGroupsContent content, string filter = null, int? top = null, int? skip = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
+        public Response<DeviceGroupListResult> ListDeviceGroups(string subscriptionId, string resourceGroupName, string catalogName, ListSphereDeviceGroupsContent content, string filter = null, int? top = null, int? skip = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -1218,7 +1218,7 @@ namespace Azure.ResourceManager.Sphere
             }
         }
 
-        internal HttpMessage CreateListDeviceGroupsNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string catalogName, ListDeviceGroupsContent content, string filter, int? top, int? skip, int? maxpagesize)
+        internal HttpMessage CreateListDeviceGroupsNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string catalogName, ListSphereDeviceGroupsContent content, string filter, int? top, int? skip, int? maxpagesize)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1245,7 +1245,7 @@ namespace Azure.ResourceManager.Sphere
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="catalogName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="catalogName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<DeviceGroupListResult>> ListDeviceGroupsNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string catalogName, ListDeviceGroupsContent content, string filter = null, int? top = null, int? skip = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
+        public async Task<Response<DeviceGroupListResult>> ListDeviceGroupsNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string catalogName, ListSphereDeviceGroupsContent content, string filter = null, int? top = null, int? skip = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -1282,7 +1282,7 @@ namespace Azure.ResourceManager.Sphere
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="catalogName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="catalogName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<DeviceGroupListResult> ListDeviceGroupsNextPage(string nextLink, string subscriptionId, string resourceGroupName, string catalogName, ListDeviceGroupsContent content, string filter = null, int? top = null, int? skip = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
+        public Response<DeviceGroupListResult> ListDeviceGroupsNextPage(string nextLink, string subscriptionId, string resourceGroupName, string catalogName, ListSphereDeviceGroupsContent content, string filter = null, int? top = null, int? skip = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));

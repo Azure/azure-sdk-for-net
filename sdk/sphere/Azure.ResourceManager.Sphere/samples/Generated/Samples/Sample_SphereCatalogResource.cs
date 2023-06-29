@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.Sphere.Samples
             SphereCatalogResource sphereCatalog = client.GetSphereCatalogResource(sphereCatalogResourceId);
 
             // invoke the operation and iterate over the result
-            ListDeviceGroupsContent content = new ListDeviceGroupsContent()
+            ListSphereDeviceGroupsContent content = new ListSphereDeviceGroupsContent()
             {
                 DeviceGroupName = "MyDeviceGroup1",
             };

@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Sphere.Models
 {
-    public partial class ListDeviceGroupsContent : IUtf8JsonSerializable
+    public partial class ListSphereDeviceGroupsContent : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {

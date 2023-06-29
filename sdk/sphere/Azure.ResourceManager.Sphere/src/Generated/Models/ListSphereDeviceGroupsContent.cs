@@ -11,10 +11,10 @@ namespace Azure.ResourceManager.Sphere.Models
     /// Request of the action to list device groups for a catalog.
     /// Serialized Name: ListDeviceGroupsRequest
     /// </summary>
-    public partial class ListDeviceGroupsContent
+    public partial class ListSphereDeviceGroupsContent
     {
-        /// <summary> Initializes a new instance of ListDeviceGroupsContent. </summary>
-        public ListDeviceGroupsContent()
+        /// <summary> Initializes a new instance of ListSphereDeviceGroupsContent. </summary>
+        public ListSphereDeviceGroupsContent()
         {
         }
 
