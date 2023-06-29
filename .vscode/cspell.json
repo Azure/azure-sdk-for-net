@@ -632,7 +632,9 @@
         "Dpdk",
         "Sriov",
         "Sata",
-        "Uefi"
+        "Uefi",
+        "Ipvlan",
+        "Macvlan"
       ]
     },
     {
@@ -1173,13 +1175,6 @@
         "rpath",
         "runpath",
         "Cves"
-      ]
-    },
-    {
-      "filename": "**/sdk/networkcloud/Azure.ResourceManager.NetworkCloud/**/*.cs",
-      "words": [
-        "Ipvlan",
-        "Macvlan"
       ]
     }
   ],
