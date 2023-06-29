@@ -463,7 +463,7 @@ namespace Azure.Communication.CallAutomation
         /// <returns></returns>
         public virtual async Task<Response<CreateCallResult>> CreateCallAsync(CallInvite callInvite, Uri callbackUri, CancellationToken cancellationToken = default)
         {
-            CreateCallOptions options = new CreateCallOptions(callInvite, callbackUri);
+            CreateCallOptions options = new CreateCallOptions(callInvite) { CallbackUri = callbackUri };
 
             return await CreateCallAsync(options, cancellationToken).ConfigureAwait(false);
         }
@@ -528,7 +528,7 @@ namespace Azure.Communication.CallAutomation
         /// <returns></returns>
         public virtual Response<CreateCallResult> CreateCall(CallInvite callInvite, Uri callbackUri, CancellationToken cancellationToken = default)
         {
-            CreateCallOptions options = new CreateCallOptions(callInvite, callbackUri);
+            CreateCallOptions options = new CreateCallOptions(callInvite) { CallbackUri = callbackUri };
 
             return CreateCall(options, cancellationToken);
         }

@@ -34,7 +34,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallRecordings
             var uniqueId = await ServiceBusWithNewCall(user, target);
 
             // create call and assert response
-            var createCallOptions = new CreateCallOptions(new CallInvite(target), new Uri(TestEnvironment.DispatcherCallback + $"?q={uniqueId}"));
+            var createCallOptions = new CreateCallOptions(new CallInvite(target)) { CallbackUri = new Uri(TestEnvironment.DispatcherCallback + $"?q={uniqueId}") };
             CreateCallResult response = await client.CreateCallAsync(createCallOptions).ConfigureAwait(false);
             string callConnectionId = response.CallConnectionProperties.CallConnectionId;
             Assert.IsNotEmpty(response.CallConnectionProperties.CallConnectionId);
@@ -144,7 +144,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallRecordings
                     var uniqueId = await ServiceBusWithNewCall(user, target);
 
                     // create call and assert response
-                    var createCallOptions = new CreateCallOptions(new CallInvite(target), new Uri(TestEnvironment.DispatcherCallback + $"?q={uniqueId}"));
+                    var createCallOptions = new CreateCallOptions(new CallInvite(target)) { CallbackUri = new Uri(TestEnvironment.DispatcherCallback + $"?q={uniqueId}") };
                     CreateCallResult response = await client.CreateCallAsync(createCallOptions).ConfigureAwait(false);
                     callConnectionId = response.CallConnectionProperties.CallConnectionId;
                     Assert.IsNotEmpty(response.CallConnectionProperties.CallConnectionId);
@@ -241,7 +241,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallRecordings
                     var uniqueId = await ServiceBusWithNewCall(user, target);
 
                     // create call and assert response
-                    var createCallOptions = new CreateCallOptions(new CallInvite(target), new Uri(TestEnvironment.DispatcherCallback + $"?q={uniqueId}"));
+                    var createCallOptions = new CreateCallOptions(new CallInvite(target)) { CallbackUri = new Uri(TestEnvironment.DispatcherCallback + $"?q={uniqueId}") };
                     CreateCallResult response = await client.CreateCallAsync(createCallOptions).ConfigureAwait(false);
                     callConnectionId = response.CallConnectionProperties.CallConnectionId;
                     Assert.IsNotEmpty(response.CallConnectionProperties.CallConnectionId);
