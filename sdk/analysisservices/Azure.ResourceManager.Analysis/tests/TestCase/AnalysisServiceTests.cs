@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.Analysis.Models;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources;
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.Analysis.Tests
@@ -89,7 +90,18 @@ namespace Azure.ResourceManager.Analysis.Tests
             //5.Get
             AnalysisServerResource account3 = await account.GetAsync();
             AssertService(account.Data, account3.Data);
-            //6.Delete
+            //6.CheckAnalysisServerNameAvailability
+            AnalysisServerNameAvailabilityContent content = new AnalysisServerNameAvailabilityContent()
+            {
+                Name = name,
+                ResourceType = "Microsoft.AnalysisServices/servers",
+            };
+            AnalysisServerNameAvailabilityResult result = await DefaultSubscription.CheckAnalysisServerNameAvailabilityAsync(DefaultLocation, content);
+            //7.suspend
+            await account.SuspendAsync(WaitUntil.Completed);
+            //8.Resume
+            await account.ResumeAsync(WaitUntil.Completed);
+            //9.Delete
             await account.DeleteAsync(WaitUntil.Completed);
         }
     }
