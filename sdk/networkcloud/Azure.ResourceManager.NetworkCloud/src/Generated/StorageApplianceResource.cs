@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.NetworkCloud
             try
             {
                 var response = await _storageApplianceRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken).ConfigureAwait(false);
-                var operation = new NetworkCloudArmOperation<StorageApplianceResource>(new StorageApplianceOperationSource(Client), _storageApplianceClientDiagnostics, Pipeline, _storageApplianceRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch).Request, response, OperationFinalStateVia.Location);
+                var operation = new NetworkCloudArmOperation<StorageApplianceResource>(new StorageApplianceOperationSource(Client), _storageApplianceClientDiagnostics, Pipeline, _storageApplianceRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -217,7 +217,7 @@ namespace Azure.ResourceManager.NetworkCloud
             try
             {
                 var response = _storageApplianceRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken);
-                var operation = new NetworkCloudArmOperation<StorageApplianceResource>(new StorageApplianceOperationSource(Client), _storageApplianceClientDiagnostics, Pipeline, _storageApplianceRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch).Request, response, OperationFinalStateVia.Location);
+                var operation = new NetworkCloudArmOperation<StorageApplianceResource>(new StorageApplianceOperationSource(Client), _storageApplianceClientDiagnostics, Pipeline, _storageApplianceRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
