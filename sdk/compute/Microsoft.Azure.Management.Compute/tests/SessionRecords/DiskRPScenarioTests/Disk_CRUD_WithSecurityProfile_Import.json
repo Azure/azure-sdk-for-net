@@ -2623,7 +2623,7 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"startTime\": \"2023-06-09T12:36:55.5040867-04:00\",\r\n  \"endTime\": \"2023-06-09T12:36:55.6915161-04:00\",\r\n  \"status\": \"Succeeded\",\r\n  \"properties\": {\r\n    \"output\": {\r\n      \"accessSAS\": \"Sanitized\",\r\n      \"securityDataAccessSAS\": \"https://md-hdd-zztjfmnz3kxx.z49.blob.storage.azure.net/cgpg5bsmvfbn/f50fab45-8280-461d-9e0f-5091a42af041_vmgs?sv=2018-03-28&sr=b&si=3ba6a4be-7f41-4b21-97e8-5a2a02c110aa&sig=vc6VqRnXouYpEWNTU2PndqAl4nSQdWz51AE0ZgTkT3U%3D\"\r\n    }\r\n  },\r\n  \"name\": \"5fb78bab-9250-4a1c-810b-90ffe49dc095\"\r\n}",
+      "ResponseBody": "{\r\n  \"startTime\": \"2023-06-09T12:36:55.5040867-04:00\",\r\n  \"endTime\": \"2023-06-09T12:36:55.6915161-04:00\",\r\n  \"status\": \"Succeeded\",\r\n  \"properties\": {\r\n    \"output\": {\r\n      \"accessSAS\": \"Sanitized\",\r\n      \"securityDataAccessSAS\": \"value\"\r\n    }\r\n  },\r\n  \"name\": \"5fb78bab-9250-4a1c-810b-90ffe49dc095\"\r\n}",
       "StatusCode": 200
     },
     {
@@ -2687,7 +2687,7 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"accessSAS\": \"Sanitized\",\r\n  \"securityDataAccessSAS\": \"https://md-hdd-zztjfmnz3kxx.z49.blob.storage.azure.net/cgpg5bsmvfbn/f50fab45-8280-461d-9e0f-5091a42af041_vmgs?sv=2018-03-28&sr=b&si=3ba6a4be-7f41-4b21-97e8-5a2a02c110aa&sig=vc6VqRnXouYpEWNTU2PndqAl4nSQdWz51AE0ZgTkT3U%3D\"\r\n}",
+      "ResponseBody": "{\r\n  \"accessSAS\": \"Sanitized\",\r\n  \"securityDataAccessSAS\": \"value\"\r\n}",
       "StatusCode": 200
     },
     {
