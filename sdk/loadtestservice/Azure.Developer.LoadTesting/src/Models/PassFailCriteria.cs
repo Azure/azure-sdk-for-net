@@ -20,18 +20,32 @@ namespace Azure.Developer.LoadTesting.Models
         public PassFailCriteria()
         {
             _element = MutableJsonDocument.Parse(BinaryData.FromBytes("{}"u8.ToArray())).RootElement;
-
-            PassFailMetrics = new MutableJsonDictionary<PassFailMetric>(_element.GetProperty("passFailMetrics"));
         }
 
         internal PassFailCriteria(MutableJsonElement element)
         {
             _element = element;
 
-            PassFailMetrics = new MutableJsonDictionary<PassFailMetric>(_element.GetProperty("passFailMetrics"));
+            if (_element.TryGetProperty("passFailMetrics", out MutableJsonElement value))
+            {
+                _passFailMetrics = new MutableJsonDictionary<PassFailMetric>(value);
+            }            
         }
 
+        private IDictionary<string, PassFailMetric> _passFailMetrics;
         /// <summary> Map of id and pass fail metrics { id : pass fail metrics }. </summary>
-        public IDictionary<string, PassFailMetric> PassFailMetrics { get; }
+        public IDictionary<string, PassFailMetric> PassFailMetrics
+        {
+            get
+            {
+                if (_passFailMetrics == null)
+                {
+                    _element.SetProperty("passFailMetrics", new { });
+                    _passFailMetrics = new MutableJsonDictionary<PassFailMetric>(_element.GetProperty("passFailMetrics"));
+                }
+
+                return _passFailMetrics;
+            }
+        }
     }
 }

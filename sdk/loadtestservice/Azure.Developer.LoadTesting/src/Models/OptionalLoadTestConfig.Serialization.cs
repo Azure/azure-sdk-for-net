@@ -20,7 +20,7 @@ namespace Azure.Developer.LoadTesting.Models
             if (Optional.IsDefined(EndpointUrl))
             {
                 writer.WritePropertyName("endpointUrl"u8);
-                writer.WriteStringValue(EndpointUrl);
+                writer.WriteStringValue(EndpointUrl.AbsoluteUri);
             }
             if (Optional.IsDefined(VirtualUsers))
             {

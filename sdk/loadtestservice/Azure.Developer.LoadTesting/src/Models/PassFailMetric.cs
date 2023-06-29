@@ -28,28 +28,64 @@ namespace Azure.Developer.LoadTesting.Models
         /// <summary> The client metric on which the criteria should be applied. </summary>
         public PFMetrics? ClientMetric
         {
-            get => _element.GetProperty("clientMetric").GetString();
+            get
+            {
+                if (_element.TryGetProperty("clientMetric", out MutableJsonElement value))
+                {
+                    return value.GetString();
+                }
+
+                return null;
+            }
+
             set => _element.SetProperty("clientMetric", value);
         }
 
         /// <summary> The aggregation function to be applied on the client metric. Allowed functions - ‘percentage’ - for error metric , ‘avg’, ‘p50’, ‘p90’, ‘p95’, ‘p99’, ‘min’, ‘max’ - for response_time_ms and latency metric, ‘avg’ - for requests_per_sec, ‘count’ - for requests. </summary>
         public PFAgFunc? Aggregate
         {
-            get => _element.GetProperty("aggregate").GetString();
+            get
+            {
+                if (_element.TryGetProperty("aggregate", out MutableJsonElement value))
+                {
+                    return value.GetString();
+                }
+
+                return null;
+            }
+
             set => _element.SetProperty("aggregate", value);
         }
 
         /// <summary> The comparison operator. Supported types ‘&gt;’, ‘&lt;’. </summary>
         public string Condition
         {
-            get => _element.GetProperty("condition").GetString();
+            get
+            {
+                if (_element.TryGetProperty("condition", out MutableJsonElement value))
+                {
+                    return value.GetString();
+                }
+
+                return null;
+            }
+
             set => _element.SetProperty("condition", value);
         }
 
         /// <summary> Request name for which the Pass fail criteria has to be applied. </summary>
         public string RequestName
         {
-            get => _element.GetProperty("requestName").GetString();
+            get
+            {
+                if (_element.TryGetProperty("requestName", out MutableJsonElement value))
+                {
+                    return value.GetString();
+                }
+
+                return null;
+            }
+
             set => _element.SetProperty("requestName", value);
         }
 
@@ -77,7 +113,16 @@ namespace Azure.Developer.LoadTesting.Models
         /// <summary> Action taken after the threshold is met. Default is ‘continue’. </summary>
         public PFAction? Action
         {
-            get => _element.GetProperty("action").GetString();
+            get
+            {
+                if (_element.TryGetProperty("action", out MutableJsonElement value))
+                {
+                    return value.GetString();
+                }
+
+                return null;
+            }
+
             set => _element.SetProperty("action", value);
         }
 
@@ -103,7 +148,15 @@ namespace Azure.Developer.LoadTesting.Models
         /// <summary> Outcome of the test run. </summary>
         public PFResult? Result
         {
-            get => _element.GetProperty("result").GetString();
+            get
+            {
+                if (_element.TryGetProperty("result", out MutableJsonElement value))
+                {
+                    return value.GetString();
+                }
+
+                return null;
+            }
         }
     }
 }

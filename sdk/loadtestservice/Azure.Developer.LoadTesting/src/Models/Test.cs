@@ -20,56 +20,86 @@ namespace Azure.Developer.LoadTesting.Models
         public Test()
         {
             // TODO: Store a way to make an empty MJD - avoid the ToArray() allocation below.
-            //_element = MutableJsonDocument.Parse(BinaryData.FromBytes("{}"u8.ToArray())).RootElement;
-
-            // TODO: Or do we want to initialize it with some basic JSON, e.g. child values?
-            // The current thinking here is that this initializes nodes in the JSON that contain
-            // dictionary values.  We need to confirm via scenarios whether we would want to do
-            // this and if so, under what conditions it is valid.
-            // TODO: if we use this approach, the initialization JSON will need to be a const
-            // or a static in the model file.  Should children live in the relevant model rather
-            // than at the top level?
-            _element = MutableJsonDocument.Parse(BinaryData.FromBytes("""
-                {
-                    "passFailCriteria": {
-                        "passFailMetrics": { }
-                    },
-                    "secrets": { },
-                    "environmentVariables": { }
-                }
-                """u8.ToArray())).RootElement;
-
-            PassFailCriteria = new PassFailCriteria(_element.GetProperty("passFailCriteria"));
+            _element = MutableJsonDocument.Parse(BinaryData.FromBytes("{}"u8.ToArray())).RootElement;
 
             // TODO: If we are suggesting a wholesale replacement of ChangeTrackingDictionary,
             // we will need to confirm that MJD provides the complete set of features this type provides.
-            Secrets = new MutableJsonDictionary<Secret>(_element.GetProperty("secrets"));
-            EnvironmentVariables = new MutableJsonDictionary<string>(_element.GetProperty("environmentVariables"));
         }
 
         internal Test(MutableJsonElement element)
         {
             _element = element;
 
-            // TODO: if passFailCriteria is optional, we'll want to use TryGetProperty here instead.
-            PassFailCriteria = new PassFailCriteria(_element.GetProperty("passFailCriteria"));
+            if (_element.TryGetProperty("passFailCriteria", out MutableJsonElement passFailCriteriaElement))
+            {
+                _passFailCriteria = new PassFailCriteria(passFailCriteriaElement);
+            }
 
-            // TODO: same comment re: optional properties.
-            Secrets = new MutableJsonDictionary<Secret>(_element.GetProperty("secrets"));
-            EnvironmentVariables = new MutableJsonDictionary<string>(_element.GetProperty("environmentVariables"));
+            if (_element.TryGetProperty("secrets", out MutableJsonElement secretsElement))
+            {
+                _secrets = new MutableJsonDictionary<Secret>(secretsElement);
+            }
+
+            if (_element.TryGetProperty("environmentVariables", out MutableJsonElement environmentVariablesElement))
+            {
+                _environmentVariables = new MutableJsonDictionary<string>(environmentVariablesElement);
+            }
         }
 
+        private PassFailCriteria _passFailCriteria;
         /// <summary> Pass fail criteria for a test. </summary>
-        public PassFailCriteria PassFailCriteria { get; set; }
+        public PassFailCriteria PassFailCriteria
+        {
+            get
+            {
+                if (_passFailCriteria == null)
+                {
+                    _element.SetProperty("passFailCriteria", new { });
+                    _passFailCriteria = new PassFailCriteria(_element.GetProperty("passFailCriteria"));
+                }
 
+                return _passFailCriteria;
+            }
+
+            // TODO: need to test what happens if caller sets this, how the interaction
+            // across MJEs in the MJD works.
+            set { _passFailCriteria = value; }
+        }
+
+        private IDictionary<string, Secret> _secrets;
         /// <summary> Secrets can be stored in an Azure Key Vault or any other secret store. If the secret is stored in an Azure Key Vault, the value should be the secret identifier and the type should be AKV_SECRET_URI. If the secret is stored elsewhere, the secret value should be provided directly and the type should be SECRET_VALUE. </summary>
-        public IDictionary<string, Secret> Secrets { get; }
+        public IDictionary<string, Secret> Secrets
+        {
+            get
+            {
+                if (_secrets == null)
+                {
+                    _element.SetProperty("secrets", new { });
+                    _secrets = new MutableJsonDictionary<Secret>(_element.GetProperty("secrets"));
+                }
+
+                return _secrets;
+            }
+        }
 
         /// <summary> Certificates metadata. </summary>
         public CertificateMetadata Certificate { get; set; }
 
+        private IDictionary<string, string> _environmentVariables;
         /// <summary> Environment variables which are defined as a set of &lt;name,value&gt; pairs. </summary>
-        public IDictionary<string, string> EnvironmentVariables { get; }
+        public IDictionary<string, string> EnvironmentVariables
+        {
+            get
+            {
+                if (_environmentVariables == null)
+                {
+                    _element.SetProperty("environmentVariables", new { });
+                    _environmentVariables = new MutableJsonDictionary<string>(_element.GetProperty("environmentVariables"));
+                }
+
+                return _environmentVariables;
+            }
+        }
 
         /// <summary> The load test configuration. </summary>
         public LoadTestConfiguration LoadTestConfiguration { get; set; }
