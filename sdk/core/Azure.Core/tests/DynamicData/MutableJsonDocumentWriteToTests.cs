@@ -671,6 +671,20 @@ namespace Azure.Core.Tests
         }
 
         #region JSON Merge Patch
+
+        // TODO: Validate that all of these are appropriately represented
+        // Test case: properties on the same descendant object are updated
+        // between updates to different descendant objects, but they group
+        // together correctly in the PATCH JSON.
+
+        // Test case: ancestor changes then descendant changes
+        // Test case: descendant changes then ancestor changes
+
+        // Test case: array elements change
+        // Test case: enum values change
+        // Test case: new property is added
+        // Test case: property is deleted
+
         [Test]
         public void CanWritePatchChangeRoot()
         {
