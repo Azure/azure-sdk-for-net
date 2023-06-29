@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -134,11 +135,24 @@ namespace Azure.Developer.LoadTesting
         /// <param name="test"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-#pragma warning disable CS1998 // Async method lacks 'await' operators and will run synchronously
         public virtual async Task<Response<Test>> CreateOrUpdateTestAsync(Test test, CancellationToken cancellationToken = default)
-#pragma warning restore CS1998 // Async method lacks 'await' operators and will run synchronously
         {
-            throw new NotImplementedException();
+            // TODO: Add WritePatchAsync?
+            // TODO: Use Utf8JsonWriter instead of Stream?
+            using Stream stream = new MemoryStream();
+            test.WritePatch(stream);
+
+            // TODO: remove if not needed
+            stream.Position = 0;
+
+            RequestContent content = RequestContent.Create(stream);
+
+            // TODO: was there a good way to get RequestContext without creating it new?
+            RequestContext context = new() { CancellationToken = cancellationToken };
+
+            Response response = await CreateOrUpdateTestAsync(test.TestId, content, context).ConfigureAwait(false);
+
+            return Response.FromValue(Test.DeserializeTest(response.Content), response);
         }
 
         /// <summary>
@@ -148,7 +162,21 @@ namespace Azure.Developer.LoadTesting
         /// <returns></returns>
         public virtual Response<Test> CreateOrUpdateTest(Test test, CancellationToken cancellationToken = default)
         {
-            throw new NotImplementedException();
+            // TODO: Use Utf8JsonWriter instead of Stream?
+            using Stream stream = new MemoryStream();
+            test.WritePatch(stream);
+
+            // TODO: remove if not needed
+            stream.Position = 0;
+
+            RequestContent content = RequestContent.Create(stream);
+
+            // TODO: was there a good way to get RequestContext without creating it new?
+            RequestContext context = new() { CancellationToken = cancellationToken };
+
+            Response response = CreateOrUpdateTest(test.TestId, content, context);
+
+            return Response.FromValue(Test.DeserializeTest(response.Content), response);
         }
     }
 }

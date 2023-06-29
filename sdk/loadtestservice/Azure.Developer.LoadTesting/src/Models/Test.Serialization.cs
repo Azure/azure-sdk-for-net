@@ -98,6 +98,12 @@ namespace Azure.Developer.LoadTesting.Models
             return new Test(mje);
         }
 
+        internal static Test DeserializeTest(BinaryData utf8Json)
+        {
+            MutableJsonElement mje = MutableJsonDocument.Parse(utf8Json).RootElement;
+            return new Test(mje);
+        }
+
         // TODO: Move this to Core, but hopefully not for long
         internal static BinaryData GetBytes(JsonElement element)
         {
