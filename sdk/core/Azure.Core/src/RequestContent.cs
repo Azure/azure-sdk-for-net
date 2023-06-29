@@ -80,6 +80,14 @@ namespace Azure.Core
         public static RequestContent Create(DynamicData content) => new DynamicDataContent(content);
 
         /// <summary>
+        /// Generates JSON for JSON Merge Patch updates corresponding to the changes made to the DynamicData instance.
+        /// </summary>
+        /// <param name="content"></param>
+        /// <returns></returns>
+        /// <exception cref="NotImplementedException"></exception>
+        public static RequestContent CreatePatch(DynamicData content) => new DynamicDataContent(content, 'P');
+
+        /// <summary>
         /// Creates an instance of <see cref="RequestContent"/> that wraps a serialized version of an object.
         /// </summary>
         /// <param name="serializable">The <see cref="object"/> to serialize.</param>
@@ -313,8 +321,13 @@ namespace Azure.Core
         private sealed class DynamicDataContent : RequestContent
         {
             private readonly DynamicData _data;
+            private readonly StandardFormat _format;
 
-            public DynamicDataContent(DynamicData data) => _data = data;
+            public DynamicDataContent(DynamicData data, StandardFormat format = default)
+            {
+                _data = data;
+                _format = format;
+            }
 
             public override void Dispose()
             {
@@ -323,7 +336,7 @@ namespace Azure.Core
 
             public override void WriteTo(Stream stream, CancellationToken cancellation)
             {
-                _data.WriteTo(stream);
+                _data.WriteTo(stream, _format);
             }
 
             public override bool TryComputeLength(out long length)

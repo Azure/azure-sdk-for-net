@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Buffers;
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -44,6 +45,13 @@ namespace Azure.Core.Serialization
         {
             using Utf8JsonWriter writer = new(stream);
             _element.WriteTo(writer);
+        }
+
+        internal void WriteTo(Stream stream, StandardFormat format)
+        {
+            // TODO: This is going to write out the PATCH JSON for the
+            // root document and not the single element, so has a bug.
+            _element.WriteTo(stream, format);
         }
 
         private object? GetProperty(string name)
