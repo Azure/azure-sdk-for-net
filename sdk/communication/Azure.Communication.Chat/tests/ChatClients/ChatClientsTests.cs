@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
+using Moq;
 using NUnit.Framework;
 
 namespace Azure.Communication.Chat.Tests.ChatClients
@@ -772,6 +773,18 @@ namespace Azure.Communication.Chat.Tests.ChatClients
             }
         }
 
+        [Test]
+        public void TestMockingModels()
+        {
+            var chatThreadProperties = ChatModelFactory.ChatThreadProperties("id", "topic", It.IsAny<DateTimeOffset>(), It.IsAny<CommunicationIdentifier>(), It.IsAny<DateTimeOffset>());
+            Assert.IsNotNull(chatThreadProperties);
+
+            var createChatThreadResult = ChatModelFactory.CreateChatThreadResult(chatThreadProperties, It.IsAny<IEnumerable<ChatError>>());
+            Assert.IsNotNull(createChatThreadResult);
+
+            var sendChatMessageResult = ChatModelFactory.SendChatMessageResult("id");
+            Assert.IsNotNull(sendChatMessageResult);
+        }
         private void AsssertParticipantError(ChatError chatParticipantError, string expectedMessage, string expectedTarget)
         {
             Assert.AreEqual(expectedMessage, chatParticipantError.Message);
