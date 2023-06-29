@@ -54,7 +54,7 @@ namespace Azure.Storage.DataMovement
         {
             Argument.AssertNotNull(info, nameof(info));
 
-            const string expected = "LocalFilesystem";
+            const string expected = "LocalFile";
             return (info.SourceScheme == expected, info.DestinationScheme == expected);
         }
     }

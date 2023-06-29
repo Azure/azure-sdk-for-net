@@ -39,7 +39,7 @@ namespace Azure.Storage.DataMovement.Tests
         public static IEnumerable<RehydrateApi> GetRehydrateApis() => Enum.GetValues(typeof(RehydrateApi)).Cast<RehydrateApi>();
 
         public RehydrateBlobResourceTests(bool async)
-            : base(async, Core.TestFramework.RecordedTestMode.Live /* RecordedTestMode.Record /* to re-record */)
+            : base(async, null /* RecordedTestMode.Record /* to re-record */)
         { }
 
         private enum StorageResourceType
