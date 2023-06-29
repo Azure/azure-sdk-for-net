@@ -4,8 +4,6 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.Tracing;
-using System.Linq;
-using Azure.Core.Shared;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics;
 using Azure.Monitor.OpenTelemetry.Exporter.Tests.CommonTestFramework;
 using Xunit;
@@ -19,112 +17,12 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
     {
         /// <summary>
         /// This test uses reflection to invoke every Event method in our EventSource class.
-        /// This validates that paramaters are logged and helps to confirm that EventIds are correct.
+        /// This validates that parameters are logged and helps to confirm that EventIds are correct.
         /// </summary>
         [Fact]
         public void EventSourceTest_AzureMonitorExporterEventSource()
         {
             EventSourceTestHelper.MethodsAreImplementedConsistentlyWithTheirAttributes(AzureMonitorExporterEventSource.Log);
-        }
-
-        [Fact]
-        public void VerifyEventSource_Critical() => Test(writeAction: AzureMonitorExporterEventSource.Log.WriteCritical, expectedId: 1, expectedName: "WriteCritical");
-
-        [Fact]
-        public void VerifyEventSource_Error() => Test(writeAction: AzureMonitorExporterEventSource.Log.WriteError, expectedId: 2, expectedName: "WriteError");
-
-        [Fact]
-        public void VerifyEventSource_Error_WithException() => TestException(writeAction: AzureMonitorExporterEventSource.Log.WriteError, expectedId: 2, expectedName: "WriteError");
-
-        [Fact]
-        public void VerifyEventSource_Error_WithAggregateException() => TestAggregateException(writeAction: AzureMonitorExporterEventSource.Log.WriteError, expectedId: 2, expectedName: "WriteError");
-
-        [Fact]
-        public void VerifyEventSource_Warning() => Test(writeAction: AzureMonitorExporterEventSource.Log.WriteWarning, expectedId: 3, expectedName: "WriteWarning");
-
-        [Fact]
-        public void VerifyEventSource_Warning_WithException() => TestException(writeAction: AzureMonitorExporterEventSource.Log.WriteWarning, expectedId: 3, expectedName: "WriteWarning");
-
-        [Fact]
-        public void VerifyEventSource_Warning_WithAggregateException() => TestAggregateException(writeAction: AzureMonitorExporterEventSource.Log.WriteWarning, expectedId: 3, expectedName: "WriteWarning");
-
-        [Fact]
-        public void VerifyEventSource_Informational() => Test(writeAction: AzureMonitorExporterEventSource.Log.WriteInformational, expectedId: 4, expectedName: "WriteInformational");
-
-        [Fact]
-        public void VerifyEventSource_Informational_WithException() => TestException(writeAction: AzureMonitorExporterEventSource.Log.WriteInformational, expectedId: 4, expectedName: "WriteInformational");
-
-        [Fact]
-        public void VerifyEventSource_Informational_WithAggregateException() => TestAggregateException(writeAction: AzureMonitorExporterEventSource.Log.WriteInformational, expectedId: 4, expectedName: "WriteInformational");
-
-        [Fact]
-        public void VerifyEventSource_Verbose() => Test(writeAction: AzureMonitorExporterEventSource.Log.WriteVerbose, expectedId: 5, expectedName: "WriteVerbose");
-
-        private void Test(Action<string, string> writeAction, int expectedId, string expectedName)
-        {
-            using var listener = new TestListener();
-
-            var name = nameof(AzureMonitorExporterEventSourceTests);
-
-            writeAction(name, "hello world");
-
-            var eventData = listener.Events.Single();
-            Assert.Equal(AzureMonitorExporterEventSource.EventSourceName, eventData.EventSource.Name);
-            Assert.Equal(expectedId, eventData.EventId);
-            Assert.Equal(expectedName, eventData.EventName);
-
-            var message = EventSourceEventFormatting.Format(eventData);
-            Assert.Equal($"{name} - hello world", message);
-        }
-
-        private void TestException(Action<string, Exception> writeAction, int expectedId, string expectedName)
-        {
-            using var listener = new TestListener();
-
-            var name = nameof(AzureMonitorExporterEventSourceTests);
-
-            writeAction(name, new Exception("hello world"));
-
-            var eventData = listener.Events.Single();
-            Assert.Equal(AzureMonitorExporterEventSource.EventSourceName, eventData.EventSource.Name);
-            Assert.Equal(expectedId, eventData.EventId);
-            Assert.Equal(expectedName, eventData.EventName);
-
-            var message = EventSourceEventFormatting.Format(eventData);
-            Assert.Equal($"{name} - System.Exception: hello world", message);
-        }
-
-        private void TestAggregateException(Action<string, Exception> writeAction, int expectedId, string expectedName)
-        {
-            using var listener = new TestListener();
-
-            var name = nameof(AzureMonitorExporterEventSourceTests);
-
-            writeAction(name, new AggregateException(new Exception("hello world_1"), new Exception("hello world_2)")));
-
-            var eventData = listener.Events.Single();
-            Assert.Equal(AzureMonitorExporterEventSource.EventSourceName, eventData.EventSource.Name);
-            Assert.Equal(expectedId, eventData.EventId);
-            Assert.Equal(expectedName, eventData.EventName);
-
-            var message = EventSourceEventFormatting.Format(eventData);
-
-#if NETFRAMEWORK
-            var expectedMessage = $"{name} - System.AggregateException: One or more errors occurred. ---> System.Exception: hello world_1"
-                + Environment.NewLine + "   --- End of inner exception stack trace ---"
-                + Environment.NewLine + "---> (Inner Exception #0) System.Exception: hello world_1<---"
-                + Environment.NewLine
-                + Environment.NewLine + "---> (Inner Exception #1) System.Exception: hello world_2)<---"
-                + Environment.NewLine;
-#else
-            var expectedMessage = $"{name} - System.AggregateException: One or more errors occurred. (hello world_1) (hello world_2))"
-                + Environment.NewLine + " ---> System.Exception: hello world_1"
-                + Environment.NewLine + "   --- End of inner exception stack trace ---"
-                + Environment.NewLine + " ---> (Inner Exception #1) System.Exception: hello world_2)<---"
-                + Environment.NewLine;
-#endif
-
-            Assert.Equal(expectedMessage, message);
         }
 
         public class TestListener : EventListener
