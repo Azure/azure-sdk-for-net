@@ -10,9 +10,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="$(AzureCoreTestFramework)" />
-    <ProjectReference Include="..\..\Azure.Communication.Identity\src\Azure.Communication.Identity.csproj">
-      <ExcludeFromCodeCoverage>true</ExcludeFromCodeCoverage>
-    </ProjectReference>
+    <ProjectReference Include="..\..\Azure.Communication.Identity\src\Azure.Communication.Identity.csproj"/>
     <ProjectReference Include="..\src\Azure.Communication.Chat.csproj" />
   </ItemGroup>
   <ItemGroup>
@@ -23,9 +21,9 @@
   
   <Compile Include="$(AzureCoreSharedSources)ConnectionString.cs" LinkBase="Shared" />
     <Compile Include="..\..\Shared\tests\AuthMethod.cs" LinkBase="Shared\Communication.Tests" />
-    <Compile Include="..\..\Shared\tests\CommunicationTestEnvironment.cs" LinkBase="Shared\Communication.Tests">
-    </Compile>
-    <!-- <Compile Include="..\..\Shared\src\CommunicationIdentifierSerializerTest.cs" LinkBase="Shared\Communication">
-     </Compile> -->
+    <Compile Include="..\..\Shared\tests\CommunicationTestEnvironment.cs" LinkBase="Shared\Communication.Tests"/>
+    <Compile Include="..\..\Shared\src\CommunicationIdentifierSerializerTest.cs" LinkBase="Shared\Communication"/>
+    <!--<Compile Include="..\..\Azure.Communication.Identity\src\CommunicationIdentityClientOptions.cs"/>
+    <Compile Include="..\..\Azure.Communication.Identity\src\CommunicationIdentityClient.cs"/>-->
   </ItemGroup>
 </Project>
