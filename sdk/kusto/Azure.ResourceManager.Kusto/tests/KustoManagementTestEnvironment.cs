@@ -15,7 +15,6 @@ namespace Azure.ResourceManager.Kusto.Tests
         public string DatabaseName => GetRecordedVariable("DATABASE_NAME");
         public string TableName => GetRecordedVariable("TABLE_NAME");
         public string FollowingClusterName => GetRecordedVariable("FOLLOWING_CLUSTER_NAME");
-        public string MigrationClusterName => GetRecordedVariable("MIGRATION_CLUSTER_NAME");
         public Uri KeyVaultUri => new(GetRecordedVariable("KEY_VAULT_URI"));
         public string KeyName => GetRecordedVariable("KEY_NAME");
         public string KeyVersion => GetRecordedVariable("KEY_VERSION");

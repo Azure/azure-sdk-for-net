@@ -3,6 +3,7 @@
 
 using System;
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.Kusto.Models;
 using NUnit.Framework;
@@ -19,6 +20,7 @@ namespace Azure.ResourceManager.Kusto.Tests.Scenario
         private Uri KeyVaultUri { get; set; }
         private string KeyName { get; set; }
         private string KeyVersion { get; set; }
+        private ResourceIdentifier UserAssignedIdentityId { get; set; }
 
         public KustoDatabaseTests(bool isAsync)
             : base(isAsync) //, RecordedTestMode.Record)
@@ -33,6 +35,7 @@ namespace Azure.ResourceManager.Kusto.Tests.Scenario
             KeyVaultUri = TE.KeyVaultUri;
             KeyName = TE.KeyName;
             KeyVersion = TE.KeyVersion;
+            UserAssignedIdentityId = TE.UserAssignedIdentityId;
         }
 
         [TestCase]
@@ -48,7 +51,7 @@ namespace Azure.ResourceManager.Kusto.Tests.Scenario
         [RecordedTest]
         public async Task DatabaseCmkTests()
         {
-            var keyVaultProperties = new KustoKeyVaultProperties {KeyName = KeyName, KeyVaultUri = KeyVaultUri, KeyVersion = KeyVersion};
+            var keyVaultProperties = new KustoKeyVaultProperties {KeyName = KeyName, KeyVaultUri = KeyVaultUri, KeyVersion = KeyVersion, UserIdentity = UserAssignedIdentityId};
             var databaseDataCreate = new KustoReadWriteDatabase {Location = Location, HotCachePeriod = _hotCachePeriod1, SoftDeletePeriod = _softDeletePeriod1, KeyVaultProperties = keyVaultProperties};
             var databaseDataUpdate = new KustoReadWriteDatabase {Location = Location, HotCachePeriod = _hotCachePeriod2, SoftDeletePeriod = _softDeletePeriod2, KeyVaultProperties = keyVaultProperties};
             await RunDatabaseTests(databaseDataCreate, databaseDataUpdate);

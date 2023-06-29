@@ -15,8 +15,8 @@ resource cluster 'Microsoft.Kusto/clusters@2023-05-02' = {
     name: clusterName
     location: location
     sku: {
-        name: 'Dev(No SLA)_Standard_E2a_v4'
-        tier: 'Basic'
+        name: 'Standard_E2a_v4'
+        tier: 'Standard'
     }
     identity: {
         type: 'SystemAssigned, UserAssigned'
@@ -70,25 +70,3 @@ resource followerCluster 'Microsoft.Kusto/clusters@2023-05-02' = {
 }
 
 output FOLLOWING_CLUSTER_NAME string = followingClusterName
-
-var migrationClusterName = 'sdkMigrationCluster${id}'
-
-resource migrationCluster 'Microsoft.Kusto/clusters@2023-05-02' = {
-    name: migrationClusterName
-    location: location
-    sku: {
-        name: 'Dev(No SLA)_Standard_E2a_v4'
-        tier: 'Basic'
-    }
-    identity: {
-        type: 'SystemAssigned'
-    }
-
-     resource database 'databases' = {
-            name: 'migrationDb'
-            location: location
-            kind: 'ReadWrite'
-     }
-}
-
-output MIGRATION_CLUSTER_NAME string = migrationClusterName

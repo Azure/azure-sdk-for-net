@@ -14,8 +14,7 @@ namespace Azure.ResourceManager.Kusto.Tests.Scenario
 {
     public class KustoClusterMigrationTests : KustoManagementTestBase
     {
-        private KustoClusterResource MigrationCluster { get; set; }
-        private KustoClusterResource DestinationCluster { get; set; }
+        private readonly KustoSku _sku = new(KustoSkuName.DevNoSlaStandardE2aV4, 1, KustoSkuTier.Basic);
 
         public KustoClusterMigrationTests(bool isAsync)
             : base(isAsync) //, RecordedTestMode.Record)
@@ -26,22 +25,30 @@ namespace Azure.ResourceManager.Kusto.Tests.Scenario
         protected async Task SetUp()
         {
             await BaseSetUp();
-
-            MigrationCluster = (await ResourceGroup.GetKustoClusterAsync(TE.MigrationClusterName)).Value;
-            DestinationCluster = (await ResourceGroup.GetKustoClusterAsync(TE.ClusterName)).Value;
         }
 
         [TestCase]
         [RecordedTest]
-        public async Task ClusterTests()
+        public async Task ClusterMigrationTests()
         {
             var clusterCollection = ResourceGroup.GetKustoClusters();
-            var clusterMigrationContent = new ClusterMigrateContent(DestinationCluster.Data.Id);
 
-            await MigrationCluster.MigrateAsync(WaitUntil.Completed, clusterMigrationContent).ConfigureAwait(false);
+            var migrationClusterName = GenerateAssetName("sdkMigrationCluster");
 
-            var cluster = await clusterCollection.GetAsync(MigrationCluster.Data.Name).ConfigureAwait(false);
+            var clusterDataCreate = new KustoClusterData(Location, _sku);
+
+            var migrationCluster = (await clusterCollection.CreateOrUpdateAsync(WaitUntil.Completed, migrationClusterName, clusterDataCreate)).Value;
+
+            var clusterMigrationContent = new ClusterMigrateContent(Cluster.Data.Id);
+
+            await migrationCluster.MigrateAsync(WaitUntil.Completed, clusterMigrationContent).ConfigureAwait(false);
+
+            migrationCluster = await clusterCollection.GetAsync(migrationClusterName).ConfigureAwait(false);
+
+            var cluster = await clusterCollection.GetAsync(migrationCluster.Data.Name).ConfigureAwait(false);
             AssertEquality(KustoClusterState.Migrated, cluster.Value.Data.State);
+
+            await migrationCluster.DeleteAsync(WaitUntil.Completed).ConfigureAwait(false);
         }
     }
 }

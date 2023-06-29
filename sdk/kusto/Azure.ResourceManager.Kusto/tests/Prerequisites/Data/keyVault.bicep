@@ -1,6 +1,7 @@
 param id string
 param location string
 param cluster_object_id string
+param user_identity_object_id string
 
 resource keyVault 'Microsoft.KeyVault/vaults@2022-07-01' = {
     name: 'sdkKeyVault${id}'
@@ -14,6 +15,13 @@ resource keyVault 'Microsoft.KeyVault/vaults@2022-07-01' = {
         accessPolicies: [
             {
                 objectId: cluster_object_id
+                permissions: {
+                    keys: [ 'get', 'list', 'wrapKey', 'unwrapKey' ]
+                }
+                tenantId: tenant().tenantId
+            },
+            {
+                objectId: user_identity_object_id
                 permissions: {
                     keys: [ 'get', 'list', 'wrapKey', 'unwrapKey' ]
                 }
