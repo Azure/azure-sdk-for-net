@@ -162,7 +162,7 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore
                 var hub = request.Headers.GetFirstHeaderValueOrDefault(Constants.Headers.CloudEvents.Hub);
                 var eventType = GetEventType(request.Headers.GetFirstHeaderValueOrDefault(Constants.Headers.CloudEvents.Type));
                 var eventName = request.Headers.GetFirstHeaderValueOrDefault(Constants.Headers.CloudEvents.EventName);
-                var signature = request.Headers.GetFirstHeaderValueOrDefault(Constants.Headers.CloudEvents.Signature);
+                var signature = request.Headers.GetCommaJoinedHeaderValueString(Constants.Headers.CloudEvents.Signature);
                 var origin = request.Headers.GetFirstHeaderValueOrDefault(Constants.Headers.WebHookRequestOrigin);
                 var headers = request.Headers.ToDictionary(x => x.Key, v => v.Value.ToArray(), StringComparer.OrdinalIgnoreCase);
 
@@ -214,6 +214,11 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore
         private static string GetFirstHeaderValueOrDefault(this IHeaderDictionary header, string key)
         {
             return header.TryGetValue(key, out StringValues values) && values.Count > 0 ? values[0] : null;
+        }
+
+        private static string GetCommaJoinedHeaderValueString(this IHeaderDictionary header, string key)
+        {
+            return header.TryGetValue(key, out StringValues values) && values.Count > 0 ? string.Join(',', values) : null;
         }
 
         private static bool IsValidMediaType(this string mediaType, out WebPubSubDataType dataType)
