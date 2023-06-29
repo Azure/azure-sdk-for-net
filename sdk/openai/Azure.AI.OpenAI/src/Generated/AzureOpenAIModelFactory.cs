@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure;
 
 namespace Azure.AI.OpenAI
 {
@@ -72,6 +73,20 @@ namespace Azure.AI.OpenAI
         public static CompletionsUsage CompletionsUsage(int completionTokens = default, int promptTokens = default, int totalTokens = default)
         {
             return new CompletionsUsage(completionTokens, promptTokens, totalTokens);
+        }
+
+        /// <summary> Initializes a new instance of ImageLocation. </summary>
+        /// <param name="url"> The URL that provides temporary access to download the generated image. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="url"/> is null. </exception>
+        /// <returns> A new <see cref="OpenAI.ImageLocation"/> instance for mocking. </returns>
+        public static ImageLocation ImageLocation(Uri url = null)
+        {
+            if (url == null)
+            {
+                throw new ArgumentNullException(nameof(url));
+            }
+
+            return new ImageLocation(url);
         }
     }
 }

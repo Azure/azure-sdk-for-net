@@ -8,9 +8,9 @@
         "Authorization": "Sanitized",
         "Content-Length": "300",
         "Content-Type": "application/json",
-        "traceparent": "00-330d680b0afaea9afd25b87ba2d5d248-50b1e32ec7bb3944-00",
-        "User-Agent": "azsdk-net-AI.OpenAI/1.0.0-alpha.20230320.1 (.NET 7.0.4; Microsoft Windows 10.0.25300)",
-        "x-ms-client-request-id": "d1fbfafcb989a2b82d79968415263a28",
+        "traceparent": "00-b3ee663633cd7f8da921243688509591-6d458f9eb463d005-00",
+        "User-Agent": "azsdk-net-AI.OpenAI/1.0.0-alpha.20230621.1 (.NET 6.0.18; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "166e12201e97f6a6a878066fed4f1c6f",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -38,48 +38,138 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Access-Control-Allow-Origin": "*",
+        "Alt-Svc": "h3=\u0022:443\u0022",
         "Cache-Control": "must-revalidate, no-cache",
+        "CF-Cache-Status": "DYNAMIC",
+        "CF-RAY": "7db0c1a2fb88eca0-SEA",
         "Connection": "keep-alive",
         "Content-Type": "application/json",
-        "Date": "Tue, 21 Mar 2023 00:35:22 GMT",
-        "Openai-Model": "gpt-3.5-turbo-0301",
-        "Openai-Organization": "msft-finetuning-2",
-        "Openai-Processing-Ms": "1671",
-        "Openai-Version": "2020-10-01",
+        "Date": "Thu, 22 Jun 2023 01:35:46 GMT",
+        "openai-model": "gpt-3.5-turbo-0301",
+        "openai-organization": "msft-finetuning-2",
+        "openai-processing-ms": "1645",
+        "openai-version": "2020-10-01",
+        "Server": "cloudflare",
         "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
         "Transfer-Encoding": "chunked",
-        "X-Ratelimit-Limit-Requests": "3500",
-        "X-Ratelimit-Remaining-Requests": "3499",
-        "X-Ratelimit-Reset-Requests": "17ms",
-        "X-Request-ID": "c033a1555855d28b674270fad00232ff"
+        "x-ratelimit-limit-requests": "3500",
+        "x-ratelimit-limit-tokens": "90000",
+        "x-ratelimit-remaining-requests": "3499",
+        "x-ratelimit-remaining-tokens": "89452",
+        "x-ratelimit-reset-requests": "17ms",
+        "x-ratelimit-reset-tokens": "364ms",
+        "X-Request-ID": "b7b7eaccdf512f4feb22024044e281d2"
       },
       "ResponseBody": {
-        "id": "chatcmpl-6wKG8coS2qpMKzCnwl3GU6yyaSuNG",
+        "id": "chatcmpl-7U3WbCt7jlJukpoIqhasAtSIBzrhg",
         "object": "chat.completion",
-        "created": 1679358920,
+        "created": 1687397745,
         "model": "gpt-3.5-turbo-0301",
-        "usage": {
-          "prompt_tokens": 51,
-          "completion_tokens": 61,
-          "total_tokens": 112
-        },
         "choices": [
           {
+            "index": 0,
             "message": {
               "role": "assistant",
-              "content": "The ideal temperature for baking a pizza is 425-450\u00B0F (218-232\u00B0C). However, each recipe and type of crust may require different temperatures and baking times, so it\u0027s best to follow the instructions of your chosen recipe or refer to the instructions on the packaging of your pizza crust."
+              "content": "The temperature you should bake your pizza at depends on the type of crust and toppings you have on your pizza. \n\nAs a general guideline, if you have a thin crust pizza with light toppings, you can bake it at a higher temperature, around 425-450\u00B0F (218-232\u00B0C) for 10-15 minutes. \n\nIf you have a thicker crust with heavy toppings, you will want to bake it at a lower temperature of around 375-400\u00B0F (191-204\u00B0C) for 20-25 minutes. \n\nIt\u0027s always a good idea to check the packaging or recipe for specific temperature and time instructions, and keep an eye on your pizza while it\u0027s baking to avoid burning or overcooking."
             },
-            "finish_reason": "stop",
-            "index": 0
+            "finish_reason": "stop"
           }
-        ]
+        ],
+        "usage": {
+          "prompt_tokens": 52,
+          "completion_tokens": 147,
+          "total_tokens": 199
+        }
+      }
+    },
+    {
+      "RequestUri": "https://api.openai.com/v1/chat/completions",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "300",
+        "Content-Type": "application/json",
+        "traceparent": "00-b3ee663633cd7f8da921243688509591-6d458f9eb463d005-00",
+        "User-Agent": "azsdk-net-AI.OpenAI/1.0.0-alpha.20230621.1 (.NET 6.0.18; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "166e12201e97f6a6a878066fed4f1c6f",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "messages": [
+          {
+            "role": "system",
+            "content": "You are a helpful assistant."
+          },
+          {
+            "role": "user",
+            "content": "Can you help me?"
+          },
+          {
+            "role": "assistant",
+            "content": "Of course! What do you need help with?"
+          },
+          {
+            "role": "user",
+            "content": "What temperature should I bake pizza at?"
+          }
+        ],
+        "max_tokens": 512,
+        "model": "gpt-3.5-turbo"
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Access-Control-Allow-Origin": "*",
+        "Alt-Svc": "h3=\u0022:443\u0022",
+        "Cache-Control": "must-revalidate, no-cache",
+        "CF-Cache-Status": "DYNAMIC",
+        "CF-RAY": "7db0c1adf8afeca0-SEA",
+        "Connection": "keep-alive",
+        "Content-Type": "application/json",
+        "Date": "Thu, 22 Jun 2023 01:35:48 GMT",
+        "openai-model": "gpt-3.5-turbo-0301",
+        "openai-organization": "msft-finetuning-2",
+        "openai-processing-ms": "1344",
+        "openai-version": "2020-10-01",
+        "Server": "cloudflare",
+        "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
+        "Transfer-Encoding": "chunked",
+        "x-ratelimit-limit-requests": "3500",
+        "x-ratelimit-limit-tokens": "90000",
+        "x-ratelimit-remaining-requests": "3499",
+        "x-ratelimit-remaining-tokens": "89453",
+        "x-ratelimit-reset-requests": "17ms",
+        "x-ratelimit-reset-tokens": "364ms",
+        "X-Request-ID": "d72166a273ed83c0e34624c43f4d209a"
+      },
+      "ResponseBody": {
+        "id": "chatcmpl-7U3WdC6PlvK5e9mN3UEANo8hSMO9k",
+        "object": "chat.completion",
+        "created": 1687397747,
+        "model": "gpt-3.5-turbo-0301",
+        "choices": [
+          {
+            "index": 0,
+            "message": {
+              "role": "assistant",
+              "content": "Generally, pizzas are baked at a high temperature, usually between 425\u00B0F and 450\u00B0F (218\u00B0C to 232\u00B0C). This high temperature helps the pizza dough cook quickly and evenly, and creates a crispy crust. The exact temperature and baking time may vary depending on the type of pizza you are making and the oven you are using. It\u0027s always best to follow the instructions on the recipe or package you are using for the best results."
+            },
+            "finish_reason": "stop"
+          }
+        ],
+        "usage": {
+          "prompt_tokens": 52,
+          "completion_tokens": 90,
+          "total_tokens": 142
+        }
       }
     }
   ],
   "Variables": {
+    "OPENAI_CHAT_COMPLETIONS_DEPLOYMENT_ID": null,
     "OPENAI_DEPLOYMENT_ID": "text-davinci-002",
     "OPENAI_EMBEDDINGS_DEPLOYMENT_ID": "text-similarity-curie-001",
     "OPENAI_ENDPOINT": "https://sdk8428.openai.azure.com/",
-    "RandomSeed": "1000202524"
+    "RandomSeed": "115658137"
   }
 }

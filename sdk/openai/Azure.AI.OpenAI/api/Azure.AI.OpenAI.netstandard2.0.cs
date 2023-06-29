@@ -8,6 +8,7 @@ namespace Azure.AI.OpenAI
         public static Azure.AI.OpenAI.EmbeddingItem EmbeddingItem(System.Collections.Generic.IEnumerable<float> embedding = null, int index = 0) { throw null; }
         public static Azure.AI.OpenAI.Embeddings Embeddings(System.Collections.Generic.IEnumerable<Azure.AI.OpenAI.EmbeddingItem> data = null, Azure.AI.OpenAI.EmbeddingsUsage usage = null) { throw null; }
         public static Azure.AI.OpenAI.EmbeddingsUsage EmbeddingsUsage(int promptTokens = 0, int totalTokens = 0) { throw null; }
+        public static Azure.AI.OpenAI.ImageLocation ImageLocation(System.Uri url = null) { throw null; }
     }
     public partial class ChatChoice
     {
@@ -158,6 +159,79 @@ namespace Azure.AI.OpenAI
         public int PromptTokens { get { throw null; } }
         public int TotalTokens { get { throw null; } }
     }
+    public partial class ImageGenerationOptions
+    {
+        public ImageGenerationOptions() { }
+        public ImageGenerationOptions(string prompt) { }
+        public int? ImageCount { get { throw null; } set { } }
+        public string Prompt { get { throw null; } set { } }
+        public Azure.AI.OpenAI.ImageGenerationResponseFormat? ResponseFormat { get { throw null; } set { } }
+        public Azure.AI.OpenAI.ImageSize? Size { get { throw null; } set { } }
+        public string User { get { throw null; } set { } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct ImageGenerationResponseFormat : System.IEquatable<Azure.AI.OpenAI.ImageGenerationResponseFormat>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public ImageGenerationResponseFormat(string value) { throw null; }
+        public static Azure.AI.OpenAI.ImageGenerationResponseFormat Base64 { get { throw null; } }
+        public static Azure.AI.OpenAI.ImageGenerationResponseFormat Url { get { throw null; } }
+        public bool Equals(Azure.AI.OpenAI.ImageGenerationResponseFormat other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.AI.OpenAI.ImageGenerationResponseFormat left, Azure.AI.OpenAI.ImageGenerationResponseFormat right) { throw null; }
+        public static implicit operator Azure.AI.OpenAI.ImageGenerationResponseFormat (string value) { throw null; }
+        public static bool operator !=(Azure.AI.OpenAI.ImageGenerationResponseFormat left, Azure.AI.OpenAI.ImageGenerationResponseFormat right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class ImageGenerations
+    {
+        internal ImageGenerations() { }
+        public System.DateTimeOffset Created { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.AI.OpenAI.ImageResponseItem> Data { get { throw null; } }
+    }
+    public partial class ImageLocation : Azure.AI.OpenAI.ImageResponseItem
+    {
+        internal ImageLocation() { }
+        public System.Uri Url { get { throw null; } }
+        public override System.IO.Stream GetStream(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public override System.Threading.Tasks.Task<System.IO.Stream> GetStreamAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class ImagePayload : Azure.AI.OpenAI.ImageResponseItem
+    {
+        internal ImagePayload() { }
+        public System.ReadOnlyMemory<char> Base64Data { get { throw null; } }
+        public override System.IO.Stream GetStream(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public override System.Threading.Tasks.Task<System.IO.Stream> GetStreamAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public abstract partial class ImageResponseItem
+    {
+        protected ImageResponseItem() { }
+        public abstract System.IO.Stream GetStream(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        public abstract System.Threading.Tasks.Task<System.IO.Stream> GetStreamAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct ImageSize : System.IEquatable<Azure.AI.OpenAI.ImageSize>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public ImageSize(string value) { throw null; }
+        public static Azure.AI.OpenAI.ImageSize Size1024x1024 { get { throw null; } }
+        public static Azure.AI.OpenAI.ImageSize Size256x256 { get { throw null; } }
+        public static Azure.AI.OpenAI.ImageSize Size512x512 { get { throw null; } }
+        public bool Equals(Azure.AI.OpenAI.ImageSize other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.AI.OpenAI.ImageSize left, Azure.AI.OpenAI.ImageSize right) { throw null; }
+        public static implicit operator Azure.AI.OpenAI.ImageSize (string value) { throw null; }
+        public static bool operator !=(Azure.AI.OpenAI.ImageSize left, Azure.AI.OpenAI.ImageSize right) { throw null; }
+        public override string ToString() { throw null; }
+    }
     public partial class OpenAIClient
     {
         protected OpenAIClient() { }
@@ -180,14 +254,17 @@ namespace Azure.AI.OpenAI
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.OpenAI.StreamingCompletions>> GetCompletionsStreamingAsync(string deploymentOrModelName, Azure.AI.OpenAI.CompletionsOptions completionsOptions, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.AI.OpenAI.Embeddings> GetEmbeddings(string deploymentOrModelName, Azure.AI.OpenAI.EmbeddingsOptions embeddingsOptions, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.OpenAI.Embeddings>> GetEmbeddingsAsync(string deploymentOrModelName, Azure.AI.OpenAI.EmbeddingsOptions embeddingsOptions, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.AI.OpenAI.ImageGenerations> GetImageGenerations(Azure.AI.OpenAI.ImageGenerationOptions imageGenerationOptions, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.OpenAI.ImageGenerations>> GetImageGenerationsAsync(Azure.AI.OpenAI.ImageGenerationOptions imageGenerationOptions, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class OpenAIClientOptions : Azure.Core.ClientOptions
     {
-        public OpenAIClientOptions(Azure.AI.OpenAI.OpenAIClientOptions.ServiceVersion version = Azure.AI.OpenAI.OpenAIClientOptions.ServiceVersion.V2023_03_15_Preview) { }
+        public OpenAIClientOptions(Azure.AI.OpenAI.OpenAIClientOptions.ServiceVersion version = Azure.AI.OpenAI.OpenAIClientOptions.ServiceVersion.V2023_06_01_Preview) { }
         public enum ServiceVersion
         {
             V2022_12_01 = 1,
-            V2023_03_15_Preview = 2,
+            V2023_05_15 = 2,
+            V2023_06_01_Preview = 3,
         }
     }
     public partial class StreamingChatChoice

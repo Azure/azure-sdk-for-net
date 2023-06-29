@@ -1,16 +1,16 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://sdk8428.openai.azure.com/openai/deployments/text-davinci-002/completions?api-version=2023-03-15-preview",
+      "RequestUri": "https://sdk8428.openai.azure.com/openai/deployments/text-davinci-002/completions?api-version=2023-06-01-preview",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
         "api-key": "***********",
         "Content-Length": "119",
         "Content-Type": "application/json",
-        "traceparent": "00-b532a816f41433489204f8786b40d6f0-fe1266541b0ccc73-00",
-        "User-Agent": "azsdk-net-AI.OpenAI/1.0.0-alpha.20230320.1 (.NET 7.0.4; Microsoft Windows 10.0.25300)",
-        "x-ms-client-request-id": "84bbd3f4e1dba6fa425d0b77f94b7d86",
+        "traceparent": "00-5217f8776c76fad5d59852185b7b40d7-9876eb1ec5f68e8c-00",
+        "User-Agent": "azsdk-net-AI.OpenAI/1.0.0-alpha.20230620.1 (.NET 6.0.16; Microsoft Windows 10.0.25393)",
+        "x-ms-client-request-id": "2b6ae3fd0f6b50e0cc035d91d04a839b",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -22,31 +22,72 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Access-Control-Allow-Origin": "*",
-        "apim-request-id": "784e0f74-265b-4639-9629-7807b26a761e",
+        "apim-request-id": "0079a580-6b8e-4e2a-ad6c-4ada57103df5",
         "Cache-Control": "must-revalidate, no-cache",
-        "Content-Length": "272",
+        "Content-Length": "739",
         "Content-Type": "application/json",
-        "Date": "Tue, 21 Mar 2023 00:36:42 GMT",
-        "openai-model": "text-davinci-002",
-        "openai-processing-ms": "200.5903",
+        "Date": "Tue, 20 Jun 2023 15:32:49 GMT",
+        "Openai-Model": "text-davinci-002",
+        "Openai-Processing-Ms": "142.2659",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
-        "x-accel-buffering": "no",
+        "X-Accel-Buffering": "no",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-client-request-id": "84bbd3f4e1dba6fa425d0b77f94b7d86",
+        "X-Ms-Client-Request-Id": "2b6ae3fd0f6b50e0cc035d91d04a839b",
         "x-ms-region": "East US",
-        "X-Request-ID": "dd1343e4-4684-4665-bfdd-d06714b3f6b8"
+        "X-Request-ID": "50840ea2-1b8a-402d-ba36-1c408970ecf4"
       },
       "ResponseBody": {
-        "id": "cmpl-6wKHSM08alIhLQM7Qz4vWkhJwRjQl",
+        "id": "cmpl-7TXdaJlYJtXkg1JuMEAXZBZBvT8J6",
         "object": "text_completion",
-        "created": 1679359002,
+        "created": 1687275170,
         "model": "text-davinci-002",
+        "prompt_annotations": [
+          {
+            "prompt_index": 0,
+            "content_filter_results": {
+              "hate": {
+                "filtered": false,
+                "severity": "safe"
+              },
+              "self_harm": {
+                "filtered": false,
+                "severity": "safe"
+              },
+              "sexual": {
+                "filtered": false,
+                "severity": "safe"
+              },
+              "violence": {
+                "filtered": false,
+                "severity": "safe"
+              }
+            }
+          }
+        ],
         "choices": [
           {
-            "text": "\n\nThere",
+            "text": "\n\nIt",
             "index": 0,
             "finish_reason": "length",
-            "logprobs": null
+            "logprobs": null,
+            "content_filter_results": {
+              "hate": {
+                "filtered": false,
+                "severity": "safe"
+              },
+              "self_harm": {
+                "filtered": false,
+                "severity": "safe"
+              },
+              "sexual": {
+                "filtered": false,
+                "severity": "safe"
+              },
+              "violence": {
+                "filtered": false,
+                "severity": "safe"
+              }
+            }
           }
         ],
         "usage": {
@@ -58,9 +99,10 @@
     }
   ],
   "Variables": {
+    "OPENAI_CHAT_COMPLETIONS_DEPLOYMENT_ID": null,
     "OPENAI_DEPLOYMENT_ID": "text-davinci-002",
     "OPENAI_EMBEDDINGS_DEPLOYMENT_ID": "text-similarity-curie-001",
     "OPENAI_ENDPOINT": "https://sdk8428.openai.azure.com/",
-    "RandomSeed": "1717195702"
+    "RandomSeed": "1598393517"
   }
 }

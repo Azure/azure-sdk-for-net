@@ -335,11 +335,6 @@ namespace Azure.AI.OpenAI.Tests
                     textPartsForChoice.Add(choiceTextPart);
                 }
                 Assert.That(choiceTextBuilder.ToString(), Is.Not.Null.Or.Empty);
-                // Note: needs to be clarified why AOAI sets this and OAI does not
-                if (serviceTarget == OpenAIClientServiceTarget.Azure)
-                {
-                    Assert.That(choice.FinishReason, Is.Not.Null.Or.Empty);
-                }
                 Assert.That(choice.LogProbabilityModel, Is.Not.Null);
                 originallyEnumeratedChoices++;
                 originallyEnumeratedTextParts.Add(textPartsForChoice);

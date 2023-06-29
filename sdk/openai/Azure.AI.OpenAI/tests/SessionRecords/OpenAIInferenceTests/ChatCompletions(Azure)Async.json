@@ -1,16 +1,16 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://sdk8428.openai.azure.com/openai/deployments/gpt-35-turbo/chat/completions?api-version=2023-03-15-preview",
+      "RequestUri": "https://sdk8428.openai.azure.com/openai/deployments/gpt-35-turbo/chat/completions?api-version=2023-06-01-preview",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
         "api-key": "***********",
         "Content-Length": "276",
         "Content-Type": "application/json",
-        "traceparent": "00-42823de3a2c644e45be266b4d0464609-f6e513a38ea30ef1-00",
-        "User-Agent": "azsdk-net-AI.OpenAI/1.0.0-alpha.20230320.1 (.NET 7.0.4; Microsoft Windows 10.0.25300)",
-        "x-ms-client-request-id": "af29fa1dbc0870df50c26e7cd3828e3e",
+        "traceparent": "00-e160280867a523744717de1d7868ce23-8d3446eb18f589cb-00",
+        "User-Agent": "azsdk-net-AI.OpenAI/1.0.0-alpha.20230620.1 (.NET 6.0.16; Microsoft Windows 10.0.25393)",
+        "x-ms-client-request-id": "2da05465bddcca7671722e8ed2b2e36b",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -37,50 +37,91 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Access-Control-Allow-Origin": "*",
-        "apim-request-id": "2a3932b4-1c98-4422-9ead-5b4f662c926f",
+        "apim-request-id": "28d18503-0e8a-4d0c-b13e-b1441aaeca61",
+        "azureml-model-group": "online",
+        "azureml-model-session": "aoai-gpt35-05172023",
         "Cache-Control": "must-revalidate, no-cache",
-        "Content-Length": "571",
+        "Content-Length": "1054",
         "Content-Type": "application/json",
-        "Date": "Tue, 21 Mar 2023 00:43:25 GMT",
+        "Date": "Tue, 20 Jun 2023 15:33:09 GMT",
         "openai-model": "gpt-35-turbo",
-        "openai-processing-ms": "1459.2519",
+        "openai-processing-ms": "1476.2028",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "x-accel-buffering": "no",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-client-request-id": "af29fa1dbc0870df50c26e7cd3828e3e",
+        "x-ms-client-request-id": "2da05465bddcca7671722e8ed2b2e36b",
         "x-ms-region": "East US",
-        "X-Request-ID": "afedf869-55e2-49de-be14-2e43021e6d4b"
+        "X-Request-ID": "871cfb86-ca43-481d-94fa-b38ddaa75c4b"
       },
       "ResponseBody": {
-        "id": "chatcmpl-6wKNvHTG53UWMPwJDQaxTru3yfYNy",
+        "id": "chatcmpl-7TXdsuM6buGvbb7UUYBPW2LqG1ya0",
         "object": "chat.completion",
-        "created": 1679359403,
+        "created": 1687275188,
         "model": "gpt-35-turbo",
-        "usage": {
-          "prompt_tokens": 51,
-          "completion_tokens": 58,
-          "total_tokens": 109
-        },
+        "prompt_annotations": [
+          {
+            "prompt_index": 0,
+            "content_filter_results": {
+              "hate": {
+                "filtered": false,
+                "severity": "safe"
+              },
+              "self_harm": {
+                "filtered": false,
+                "severity": "safe"
+              },
+              "sexual": {
+                "filtered": false,
+                "severity": "safe"
+              },
+              "violence": {
+                "filtered": false,
+                "severity": "safe"
+              }
+            }
+          }
+        ],
         "choices": [
           {
+            "index": 0,
+            "finish_reason": "stop",
             "message": {
               "role": "assistant",
-              "content": "The recommended temperature for baking pizza is 425-450 degrees Fahrenheit (218-232 degrees Celsius). However, the exact temperature and baking time may vary depending on the type of pizza and the thickness of the crust. Be sure to follow the instructions on your pizza recipe or packaging."
+              "content": "Generally, pizzas should be baked at a high temperature to ensure a crisp crust and melted cheese. A temperature of 425-450\u00B0F (218-232\u00B0C) is ideal for most types of pizza. However, it\u0027s a good idea to check the instructions on your pizza dough or crust recipe for specific temperature recommendations."
             },
-            "finish_reason": "stop",
-            "index": 0
+            "content_filter_results": {
+              "hate": {
+                "filtered": false,
+                "severity": "safe"
+              },
+              "self_harm": {
+                "filtered": false,
+                "severity": "safe"
+              },
+              "sexual": {
+                "filtered": false,
+                "severity": "safe"
+              },
+              "violence": {
+                "filtered": false,
+                "severity": "safe"
+              }
+            }
           }
-        ]
+        ],
+        "usage": {
+          "completion_tokens": 64,
+          "prompt_tokens": 52,
+          "total_tokens": 116
+        }
       }
     }
   ],
   "Variables": {
-    "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com",
     "OPENAI_CHAT_COMPLETIONS_DEPLOYMENT_ID": "gpt-35-turbo",
     "OPENAI_DEPLOYMENT_ID": "text-davinci-002",
     "OPENAI_EMBEDDINGS_DEPLOYMENT_ID": "text-similarity-curie-001",
     "OPENAI_ENDPOINT": "https://sdk8428.openai.azure.com/",
-    "RandomSeed": "1825443454",
-    "SUBSCRIPTION_ID": "e72e5254-f265-4e95-9bd2-9ee8e7329051"
+    "RandomSeed": "1342646166"
   }
 }

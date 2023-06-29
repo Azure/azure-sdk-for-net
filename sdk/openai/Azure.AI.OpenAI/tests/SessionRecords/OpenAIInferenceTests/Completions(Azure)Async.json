@@ -1,16 +1,16 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://sdk8428.openai.azure.com/openai/deployments/text-davinci-002/completions?api-version=2023-03-15-preview",
+      "RequestUri": "https://sdk8428.openai.azure.com/openai/deployments/text-davinci-002/completions?api-version=2023-06-01-preview",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
         "api-key": "***********",
         "Content-Length": "61",
         "Content-Type": "application/json",
-        "traceparent": "00-8b9d47f57f49a33ee73eb2de2a34b9e0-b087eab541f7c6e3-00",
-        "User-Agent": "azsdk-net-AI.OpenAI/1.0.0-alpha.20230320.1 (.NET 7.0.4; Microsoft Windows 10.0.25300)",
-        "x-ms-client-request-id": "3696022627096d4a864a595cbc012ec2",
+        "traceparent": "00-bbbc3194f53d7d738c4045d00a8c74bd-e77f750bf81924c6-00",
+        "User-Agent": "azsdk-net-AI.OpenAI/1.0.0-alpha.20230620.1 (.NET 6.0.16; Microsoft Windows 10.0.25393)",
+        "x-ms-client-request-id": "3ad61cb27db5a874409f9f734990737e",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -22,51 +22,132 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Access-Control-Allow-Origin": "*",
-        "apim-request-id": "51110ed0-4bc8-4b91-b701-9d5bf823271d",
+        "apim-request-id": "3f393ca1-f4b2-4da0-9f0f-6572bfd1e854",
         "Cache-Control": "must-revalidate, no-cache",
-        "Content-Length": "395",
+        "Content-Length": "1332",
         "Content-Type": "application/json",
-        "Date": "Tue, 21 Mar 2023 00:36:51 GMT",
-        "openai-model": "text-davinci-002",
-        "openai-processing-ms": "1588.9141",
+        "Date": "Tue, 20 Jun 2023 15:33:09 GMT",
+        "Openai-Model": "text-davinci-002",
+        "Openai-Processing-Ms": "356.2651",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
-        "x-accel-buffering": "no",
+        "X-Accel-Buffering": "no",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-client-request-id": "3696022627096d4a864a595cbc012ec2",
+        "X-Ms-Client-Request-Id": "3ad61cb27db5a874409f9f734990737e",
         "x-ms-region": "East US",
-        "X-Request-ID": "68c50a88-6509-4110-9f1e-db83c17c086f"
+        "X-Request-ID": "bdb16cb7-1f44-467c-ab03-6d02a2e82ec1"
       },
       "ResponseBody": {
-        "id": "cmpl-6wKHaKypoQRdRaMkbJdJy6mOz4NRq",
+        "id": "cmpl-7TXdt8QGNM3Vv3Jjcn9aj5GWMqg4G",
         "object": "text_completion",
-        "created": 1679359010,
+        "created": 1687275189,
         "model": "text-davinci-002",
-        "choices": [
+        "prompt_annotations": [
           {
-            "text": "!\u0027)\n",
-            "index": 0,
-            "finish_reason": "stop",
-            "logprobs": null
+            "prompt_index": 0,
+            "content_filter_results": {
+              "hate": {
+                "filtered": false,
+                "severity": "safe"
+              },
+              "self_harm": {
+                "filtered": false,
+                "severity": "safe"
+              },
+              "sexual": {
+                "filtered": false,
+                "severity": "safe"
+              },
+              "violence": {
+                "filtered": false,
+                "severity": "safe"
+              }
+            }
           },
           {
-            "text": "\u0022\u00A7\u0027,\n               check_command(\u0022git rebase master\u0022))\n\n\n",
+            "prompt_index": 1,
+            "content_filter_results": {
+              "hate": {
+                "filtered": false,
+                "severity": "safe"
+              },
+              "self_harm": {
+                "filtered": false,
+                "severity": "safe"
+              },
+              "sexual": {
+                "filtered": false,
+                "severity": "safe"
+              },
+              "violence": {
+                "filtered": false,
+                "severity": "safe"
+              }
+            }
+          }
+        ],
+        "choices": [
+          {
+            "text": "!\nI am here to stay.\nHe is as tall as I.",
+            "index": 0,
+            "finish_reason": "length",
+            "logprobs": null,
+            "content_filter_results": {
+              "hate": {
+                "filtered": false,
+                "severity": "safe"
+              },
+              "self_harm": {
+                "filtered": false,
+                "severity": "safe"
+              },
+              "sexual": {
+                "filtered": false,
+                "severity": "safe"
+              },
+              "violence": {
+                "filtered": false,
+                "severity": "safe"
+              }
+            }
+          },
+          {
+            "text": "\u201D); \u201Cgive me a call when you get there\u201D (",
             "index": 1,
             "finish_reason": "length",
-            "logprobs": null
+            "logprobs": null,
+            "content_filter_results": {
+              "hate": {
+                "filtered": false,
+                "severity": "safe"
+              },
+              "self_harm": {
+                "filtered": false,
+                "severity": "safe"
+              },
+              "sexual": {
+                "filtered": false,
+                "severity": "safe"
+              },
+              "violence": {
+                "filtered": false,
+                "severity": "safe"
+              }
+            }
           }
         ],
         "usage": {
-          "completion_tokens": 19,
+          "completion_tokens": 32,
           "prompt_tokens": 8,
-          "total_tokens": 27
+          "total_tokens": 40
         }
       }
     }
   ],
   "Variables": {
+    "OPENAI_CHAT_COMPLETIONS_DEPLOYMENT_ID": null,
     "OPENAI_DEPLOYMENT_ID": "text-davinci-002",
     "OPENAI_EMBEDDINGS_DEPLOYMENT_ID": "text-similarity-curie-001",
     "OPENAI_ENDPOINT": "https://sdk8428.openai.azure.com/",
-    "RandomSeed": "1640192865"
+    "RandomSeed": "1526557001"
   }
 }

@@ -1,16 +1,16 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://sdk8428.openai.azure.com/openai/deployments/BAD_DEPLOYMENT_ID/completions?api-version=2023-03-15-preview",
+      "RequestUri": "https://sdk8428.openai.azure.com/openai/deployments/BAD_DEPLOYMENT_ID/completions?api-version=2023-06-01-preview",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
         "api-key": "***********",
         "Content-Length": "26",
         "Content-Type": "application/json",
-        "traceparent": "00-f3d8d4f53868607aed5cdf83ac3041e9-d864407145809275-00",
-        "User-Agent": "azsdk-net-AI.OpenAI/1.0.0-alpha.20230320.1 (.NET 7.0.4; Microsoft Windows 10.0.25300)",
-        "x-ms-client-request-id": "3f4f47a2647fadb59f58f9b243ec3015",
+        "traceparent": "00-ba8029cbb54d323d743cc9aac0277971-d9c5a09e7dca0dc2-00",
+        "User-Agent": "azsdk-net-AI.OpenAI/1.0.0-alpha.20230620.1 (.NET 6.0.16; Microsoft Windows 10.0.25393)",
+        "x-ms-client-request-id": "c012e38e71b2aeb1c67b796abb94216a",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -20,13 +20,14 @@
       },
       "StatusCode": 404,
       "ResponseHeaders": {
-        "apim-request-id": "7defe9e3-7569-45bf-9916-6972ec50b203",
+        "apim-request-id": "10bb5062-bf90-4068-8b77-7e2e8655a409",
         "Content-Length": "198",
         "Content-Type": "application/json",
-        "Date": "Tue, 21 Mar 2023 00:36:45 GMT",
-        "OpenAI-Processing-Ms": "1.561",
+        "Date": "Tue, 20 Jun 2023 15:33:07 GMT",
+        "OpenAI-Processing-Ms": "1.6242",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "c012e38e71b2aeb1c67b796abb94216a",
         "x-ms-region": "East US"
       },
       "ResponseBody": {
@@ -38,11 +39,10 @@
     }
   ],
   "Variables": {
-    "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com",
+    "OPENAI_CHAT_COMPLETIONS_DEPLOYMENT_ID": null,
     "OPENAI_DEPLOYMENT_ID": "text-davinci-002",
     "OPENAI_EMBEDDINGS_DEPLOYMENT_ID": "text-similarity-curie-001",
     "OPENAI_ENDPOINT": "https://sdk8428.openai.azure.com/",
-    "RandomSeed": "1070412786",
-    "SUBSCRIPTION_ID": "e72e5254-f265-4e95-9bd2-9ee8e7329051"
+    "RandomSeed": "1833477690"
   }
 }
