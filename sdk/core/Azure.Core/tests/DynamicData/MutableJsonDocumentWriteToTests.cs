@@ -749,7 +749,7 @@ namespace Azure.Core.Tests
         }
 
         [Test]
-        public void CanWritePatchChangeChild()
+        public void CanWritePatchForNonRootElement()
         {
             string json = """
                 {
@@ -865,12 +865,6 @@ namespace Azure.Core.Tests
         }
 
         [Test]
-        public void CanWritePatchForNonRootElement()
-        {
-            throw new NotImplementedException();
-        }
-
-        [Test]
         public void CanWritePatchToArrayElement()
         {
             throw new NotImplementedException();
@@ -879,31 +873,332 @@ namespace Azure.Core.Tests
         [Test]
         public void CanWritePatchReplaceObject()
         {
-            throw new NotImplementedException();
+            string json = """
+                {
+                    "a": {
+                        "aa": 1,
+                        "ab": 2
+                    },
+                    "b": {
+                        "ba": "1",
+                        "bb": "2"
+                    }
+                }
+                """;
+            MutableJsonDocument mdoc = MutableJsonDocument.Parse(json);
+
+            mdoc.RootElement.GetProperty("a").Set(new { aa = 3, ab = 4 });
+
+            string expected = """
+                {
+                    "a": {
+                        "aa": 3,
+                        "ab": 4
+                    }
+                }
+                """;
+
+            using Stream stream = new MemoryStream();
+            mdoc.WriteTo(stream, 'P');
+            stream.Flush();
+            stream.Position = 0;
+
+            string actual = BinaryData.FromStream(stream).ToString();
+
+            AreEqualJson(expected, actual);
+        }
+
+        [Test]
+        public void CanWritePatchReplaceObject_Deletions()
+        {
+            string json = """
+                {
+                    "a": {
+                        "aa": 1,
+                        "ab": 2
+                    },
+                    "b": {
+                        "ba": "1",
+                        "bb": "2"
+                    }
+                }
+                """;
+            MutableJsonDocument mdoc = MutableJsonDocument.Parse(json);
+
+            mdoc.RootElement.GetProperty("a").Set(new { ac = 3 });
+
+            string expected = """
+                {
+                    "a": {
+                        "aa": null,
+                        "ab": null,
+                        "ac": 3
+                    }
+                }
+                """;
+
+            using Stream stream = new MemoryStream();
+            mdoc.WriteTo(stream, 'P');
+            stream.Flush();
+            stream.Position = 0;
+
+            string actual = BinaryData.FromStream(stream).ToString();
+
+            AreEqualJson(expected, actual);
         }
 
         [Test]
         public void CanWritePatchAddProperty()
         {
-            throw new NotImplementedException();
+            string json = """
+                {
+                    "a": {
+                        "aa": 1,
+                        "ab": 2
+                    },
+                    "b": {
+                        "ba": "1",
+                        "bb": "2"
+                    }
+                }
+                """;
+            MutableJsonDocument mdoc = MutableJsonDocument.Parse(json);
+
+            mdoc.RootElement.SetProperty("c", 3);
+
+            string expected = """
+                {
+                    "c": 3
+                }
+                """;
+
+            using Stream stream = new MemoryStream();
+            mdoc.WriteTo(stream, 'P');
+            stream.Flush();
+            stream.Position = 0;
+
+            string actual = BinaryData.FromStream(stream).ToString();
+
+            AreEqualJson(expected, actual);
+        }
+
+        [Test]
+        public void CanWritePatchAddNestedProperty()
+        {
+            string json = """
+                {
+                    "a": {
+                        "aa": 1,
+                        "ab": 2
+                    },
+                    "b": {
+                        "ba": "1",
+                        "bb": "2"
+                    }
+                }
+                """;
+            MutableJsonDocument mdoc = MutableJsonDocument.Parse(json);
+
+            mdoc.RootElement.GetProperty("b").SetProperty("bc", "3");
+
+            string expected = """
+                {
+                    "b": {
+                        "bc": "3"
+                    }
+                }
+                """;
+
+            using Stream stream = new MemoryStream();
+            mdoc.WriteTo(stream, 'P');
+            stream.Flush();
+            stream.Position = 0;
+
+            string actual = BinaryData.FromStream(stream).ToString();
+
+            AreEqualJson(expected, actual);
         }
 
         [Test]
         public void CanWritePatchAddObject()
         {
-            throw new NotImplementedException();
+            string json = """
+                {
+                    "a": {
+                        "aa": 1,
+                        "ab": 2
+                    },
+                    "b": {
+                        "ba": "1",
+                        "bb": "2"
+                    }
+                }
+                """;
+            MutableJsonDocument mdoc = MutableJsonDocument.Parse(json);
+
+            mdoc.RootElement.SetProperty("c", new { ca = true, cb = false });
+
+            string expected = """
+                {
+                    "c": {
+                        "ca": true,
+                        "cb": false
+                    }
+                }
+                """;
+
+            using Stream stream = new MemoryStream();
+            mdoc.WriteTo(stream, 'P');
+            stream.Flush();
+            stream.Position = 0;
+
+            string actual = BinaryData.FromStream(stream).ToString();
+
+            AreEqualJson(expected, actual);
+        }
+
+        [Test]
+        public void CanWritePatchDeleteProperty_SetNull()
+        {
+            string json = """
+                {
+                    "a": {
+                        "aa": 1,
+                        "ab": 2
+                    },
+                    "b": {
+                        "ba": "1",
+                        "bb": "2"
+                    }
+                }
+                """;
+            MutableJsonDocument mdoc = MutableJsonDocument.Parse(json);
+
+            mdoc.RootElement.GetProperty("a").GetProperty("aa").Set(null);
+
+            string expected = """
+                {
+                    "a": {
+                        "aa": null
+                    }
+                }
+                """;
+
+            using Stream stream = new MemoryStream();
+            mdoc.WriteTo(stream, 'P');
+            stream.Flush();
+            stream.Position = 0;
+
+            string actual = BinaryData.FromStream(stream).ToString();
+
+            AreEqualJson(expected, actual);
         }
 
         [Test]
         public void CanWritePatchDeleteProperty()
         {
-            throw new NotImplementedException();
+            string json = """
+                {
+                    "a": {
+                        "aa": 1,
+                        "ab": 2
+                    },
+                    "b": {
+                        "ba": "1",
+                        "bb": "2"
+                    }
+                }
+                """;
+            MutableJsonDocument mdoc = MutableJsonDocument.Parse(json);
+
+            mdoc.RootElement.GetProperty("a").RemoveProperty("aa");
+
+            string expected = """
+                {
+                    "a": {
+                        "aa": null
+                    }
+                }
+                """;
+
+            using Stream stream = new MemoryStream();
+            mdoc.WriteTo(stream, 'P');
+            stream.Flush();
+            stream.Position = 0;
+
+            string actual = BinaryData.FromStream(stream).ToString();
+
+            AreEqualJson(expected, actual);
         }
 
         [Test]
         public void CanWritePatchDeleteObject()
         {
-            throw new NotImplementedException();
+            string json = """
+                {
+                    "a": {
+                        "aa": 1,
+                        "ab": 2
+                    },
+                    "b": {
+                        "ba": "1",
+                        "bb": "2"
+                    }
+                }
+                """;
+            MutableJsonDocument mdoc = MutableJsonDocument.Parse(json);
+
+            mdoc.RootElement.RemoveProperty("b");
+
+            string expected = """
+                {
+                    "b": null
+                }
+                """;
+
+            using Stream stream = new MemoryStream();
+            mdoc.WriteTo(stream, 'P');
+            stream.Flush();
+            stream.Position = 0;
+
+            string actual = BinaryData.FromStream(stream).ToString();
+
+            AreEqualJson(expected, actual);
+        }
+
+        [Test]
+        public void CanWritePatchDeleteObject_SetNull()
+        {
+            string json = """
+                {
+                    "a": {
+                        "aa": 1,
+                        "ab": 2
+                    },
+                    "b": {
+                        "ba": "1",
+                        "bb": "2"
+                    }
+                }
+                """;
+            MutableJsonDocument mdoc = MutableJsonDocument.Parse(json);
+
+            mdoc.RootElement.GetProperty("b").Set(null);
+
+            string expected = """
+                {
+                    "b": null
+                }
+                """;
+
+            using Stream stream = new MemoryStream();
+            mdoc.WriteTo(stream, 'P');
+            stream.Flush();
+            stream.Position = 0;
+
+            string actual = BinaryData.FromStream(stream).ToString();
+
+            AreEqualJson(expected, actual);
         }
 
         #endregion
