@@ -178,8 +178,8 @@ namespace Azure.Storage.DataMovement.Tests
             string destinationPath = "https://storageaccount.blob.core.windows.net/container/blobdest";
             string originalPath = isSource ? sourcePath : destinationPath;
 
-            StorageResourceType sourceType = isSource ? StorageResourceType.Local : StorageResourceType.BlockBlob;
-            StorageResourceType destinationType = !isSource ? StorageResourceType.Local : StorageResourceType.BlockBlob;
+            StorageResourceType sourceType = !isSource ? StorageResourceType.Local : StorageResourceType.BlockBlob;
+            StorageResourceType destinationType = isSource ? StorageResourceType.Local : StorageResourceType.BlockBlob;
 
             DataTransferProperties transferProperties = GetProperties(
                 test.DirectoryPath,
@@ -224,8 +224,8 @@ namespace Azure.Storage.DataMovement.Tests
             string destinationPath = "https://storageaccount.blob.core.windows.net/container/blobdest";
             string originalPath = isSource ? sourcePath : destinationPath;
 
-            StorageResourceType sourceType = isSource ? StorageResourceType.Local : StorageResourceType.BlockBlob;
-            StorageResourceType destinationType = !isSource ? StorageResourceType.Local : StorageResourceType.BlockBlob;
+            StorageResourceType sourceType = !isSource ? StorageResourceType.Local : StorageResourceType.PageBlob;
+            StorageResourceType destinationType = isSource ? StorageResourceType.Local : StorageResourceType.PageBlob;
 
             DataTransferProperties transferProperties = GetProperties(
                 test.DirectoryPath,
@@ -270,8 +270,8 @@ namespace Azure.Storage.DataMovement.Tests
             string destinationPath = "https://storageaccount.blob.core.windows.net/container/blobdest";
             string originalPath = isSource ? sourcePath : destinationPath;
 
-            StorageResourceType sourceType = isSource ? StorageResourceType.Local : StorageResourceType.BlockBlob;
-            StorageResourceType destinationType = !isSource ? StorageResourceType.Local : StorageResourceType.BlockBlob;
+            StorageResourceType sourceType = !isSource ? StorageResourceType.Local : StorageResourceType.AppendBlob;
+            StorageResourceType destinationType = isSource ? StorageResourceType.Local : StorageResourceType.AppendBlob;
 
             DataTransferProperties transferProperties = GetProperties(
                 test.DirectoryPath,
@@ -324,8 +324,8 @@ namespace Azure.Storage.DataMovement.Tests
                 destinationPaths.Add(string.Join("/", destinationParentPath, childPath));
             }
 
-            StorageResourceType sourceType = isSource ? StorageResourceType.Local : StorageResourceType.BlockBlob;
-            StorageResourceType destinationType = !isSource ? StorageResourceType.Local : StorageResourceType.BlockBlob;
+            StorageResourceType sourceType = !isSource ? StorageResourceType.Local : StorageResourceType.BlockBlob;
+            StorageResourceType destinationType = isSource ? StorageResourceType.Local : StorageResourceType.BlockBlob;
 
             string originalPath = isSource ? sourceParentPath : destinationParentPath;
 
