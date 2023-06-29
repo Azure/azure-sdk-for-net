@@ -22,7 +22,11 @@
   <ItemGroup>
     <Compile Include="$(AzureCoreSharedSources)ConnectionString.cs" LinkBase="Shared" />
     <Compile Include="..\..\Shared\tests\AuthMethod.cs" LinkBase="Shared\Communication.Tests" />
-    <Compile Include="..\..\Shared\tests\CommunicationTestEnvironment.cs" LinkBase="Shared\Communication.Tests" />
-    <Compile Include="..\..\Shared\src\CommunicationIdentifierSerializerTest.cs" LinkBase="Shared\Communication" />
+    <Compile Include="..\..\Shared\tests\CommunicationTestEnvironment.cs" LinkBase="Shared\Communication.Tests">
+      <ExcludeFromCodeCoverage>true</ExcludeFromCodeCoverage>
+    </Compile>
+    <Compile Include="..\..\Shared\src\CommunicationIdentifierSerializerTest.cs" LinkBase="Shared\Communication">
+      <ExcludeFromCodeCoverage>true</ExcludeFromCodeCoverage>
+    </Compile>
   </ItemGroup>
 </Project>
