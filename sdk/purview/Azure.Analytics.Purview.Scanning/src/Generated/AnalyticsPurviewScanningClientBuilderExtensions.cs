@@ -12,7 +12,7 @@ using Azure.Core.Extensions;
 namespace Microsoft.Extensions.Azure
 {
     /// <summary> Extension methods to add <see cref="PurviewScanningServiceClient"/>, <see cref="PurviewClassificationRuleClient"/>, <see cref="PurviewDataSourceClient"/>, <see cref="PurviewScanClient"/> to client builder. </summary>
-    public static partial class PurviewScanningServiceClientBuilderExtensions
+    public static partial class AnalyticsPurviewScanningClientBuilderExtensions
     {
         /// <summary> Registers a <see cref="PurviewScanningServiceClient"/> instance. </summary>
         /// <param name="builder"> The builder to register with. </param>
