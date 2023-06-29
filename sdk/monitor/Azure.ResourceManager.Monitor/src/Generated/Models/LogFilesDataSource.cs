@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="format"> The data format of the log files. </param>
         /// <param name="settings"> The log files specific settings. </param>
         /// <param name="name">
-        /// A friendly name for the data source. 
+        /// A friendly name for the data source.
         /// This name should be unique across all data sources (regardless of type) within the data collection rule.
         /// </param>
         internal LogFilesDataSource(IList<string> streams, IList<string> filePatterns, LogFilesDataSourceFormat format, LogFilesDataSourceSettings settings, string name)
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.Monitor.Models
         }
 
         /// <summary>
-        /// A friendly name for the data source. 
+        /// A friendly name for the data source.
         /// This name should be unique across all data sources (regardless of type) within the data collection rule.
         /// </summary>
         public string Name { get; set; }

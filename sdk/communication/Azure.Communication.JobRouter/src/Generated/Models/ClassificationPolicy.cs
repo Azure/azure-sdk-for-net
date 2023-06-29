@@ -14,11 +14,10 @@ namespace Azure.Communication.JobRouter.Models
     /// <summary> A container for the rules that govern how jobs are classified. </summary>
     public partial class ClassificationPolicy
     {
-
         /// <summary> Initializes a new instance of ClassificationPolicy. </summary>
         /// <param name="id"> Unique identifier of this policy. </param>
         /// <param name="name"> Friendly name of this policy. </param>
-        /// <param name="fallbackQueueId"> The fallback queue to select if the queue selector doesn&apos;t find a match. </param>
+        /// <param name="fallbackQueueId"> The fallback queue to select if the queue selector doesn't find a match. </param>
         /// <param name="queueSelectors">
         /// The queue selectors to resolve a queue for a given job.
         /// Please note <see cref="QueueSelectorAttachment"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
@@ -26,7 +25,7 @@ namespace Azure.Communication.JobRouter.Models
         /// </param>
         /// <param name="prioritizationRule">
         /// A rule of one of the following types:
-        ///             
+        ///
         /// StaticRule:  A rule providing static rules that always return the same result, regardless of input.
         /// DirectMapRule:  A rule that return the same labels as the input labels.
         /// ExpressionRule: A rule providing inline expression rules.
@@ -45,20 +44,20 @@ namespace Azure.Communication.JobRouter.Models
             Id = id;
             Name = name;
             FallbackQueueId = fallbackQueueId;
-            QueueSelectors = queueSelectors;
+            _queueSelectors = queueSelectors;
             PrioritizationRule = prioritizationRule;
-            WorkerSelectors = workerSelectors;
+            _workerSelectors = workerSelectors;
         }
 
         /// <summary> Unique identifier of this policy. </summary>
         public string Id { get; }
         /// <summary> Friendly name of this policy. </summary>
         public string Name { get; set; }
-        /// <summary> The fallback queue to select if the queue selector doesn&apos;t find a match. </summary>
+        /// <summary> The fallback queue to select if the queue selector doesn't find a match. </summary>
         public string FallbackQueueId { get; set; }
         /// <summary>
         /// A rule of one of the following types:
-        ///             
+        ///
         /// StaticRule:  A rule providing static rules that always return the same result, regardless of input.
         /// DirectMapRule:  A rule that return the same labels as the input labels.
         /// ExpressionRule: A rule providing inline expression rules.

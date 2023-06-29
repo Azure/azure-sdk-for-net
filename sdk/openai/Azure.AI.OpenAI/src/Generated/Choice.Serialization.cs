@@ -21,8 +21,8 @@ namespace Azure.AI.OpenAI
             }
             string text = default;
             int index = default;
-            Optional<CompletionsLogProbabilityModel> logprobs = default;
-            Optional<CompletionsFinishReason> finishReason = default;
+            CompletionsLogProbabilityModel logprobs = default;
+            CompletionsFinishReason finishReason = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("text"u8))
@@ -37,24 +37,16 @@ namespace Azure.AI.OpenAI
                 }
                 if (property.NameEquals("logprobs"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     logprobs = CompletionsLogProbabilityModel.DeserializeCompletionsLogProbabilityModel(property.Value);
                     continue;
                 }
                 if (property.NameEquals("finish_reason"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     finishReason = new CompletionsFinishReason(property.Value.GetString());
                     continue;
                 }
             }
-            return new Choice(text, index, logprobs.Value, Optional.ToNullable(finishReason));
+            return new Choice(text, index, logprobs, finishReason);
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>

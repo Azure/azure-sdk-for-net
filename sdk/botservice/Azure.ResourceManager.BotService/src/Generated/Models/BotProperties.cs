@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.BotService.Models
     {
         /// <summary> Initializes a new instance of BotProperties. </summary>
         /// <param name="displayName"> The Name of the bot. </param>
-        /// <param name="endpoint"> The bot&apos;s endpoint. </param>
+        /// <param name="endpoint"> The bot's endpoint. </param>
         /// <param name="msaAppId"> Microsoft App Id for the bot. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="displayName"/> or <paramref name="msaAppId"/> is null. </exception>
         public BotProperties(string displayName, Uri endpoint, string msaAppId)
@@ -40,11 +40,11 @@ namespace Azure.ResourceManager.BotService.Models
         /// <param name="displayName"> The Name of the bot. </param>
         /// <param name="description"> The description of the bot. </param>
         /// <param name="iconUri"> The Icon Url of the bot. </param>
-        /// <param name="endpoint"> The bot&apos;s endpoint. </param>
-        /// <param name="endpointVersion"> The bot&apos;s endpoint version. </param>
+        /// <param name="endpoint"> The bot's endpoint. </param>
+        /// <param name="endpointVersion"> The bot's endpoint version. </param>
         /// <param name="allSettings"> Contains resource all settings defined as key/value pairs. </param>
         /// <param name="parameters"> Contains resource parameters defined as key/value pairs. </param>
-        /// <param name="manifestUri"> The bot&apos;s manifest url. </param>
+        /// <param name="manifestUri"> The bot's manifest url. </param>
         /// <param name="msaAppType"> Microsoft App Type for the bot. </param>
         /// <param name="msaAppId"> Microsoft App Id for the bot. </param>
         /// <param name="msaAppTenantId"> Microsoft App Tenant Id for the bot. </param>
@@ -117,15 +117,15 @@ namespace Azure.ResourceManager.BotService.Models
         public string Description { get; set; }
         /// <summary> The Icon Url of the bot. </summary>
         public Uri IconUri { get; set; }
-        /// <summary> The bot&apos;s endpoint. </summary>
+        /// <summary> The bot's endpoint. </summary>
         public Uri Endpoint { get; set; }
-        /// <summary> The bot&apos;s endpoint version. </summary>
+        /// <summary> The bot's endpoint version. </summary>
         public string EndpointVersion { get; }
         /// <summary> Contains resource all settings defined as key/value pairs. </summary>
         public IDictionary<string, string> AllSettings { get; }
         /// <summary> Contains resource parameters defined as key/value pairs. </summary>
         public IDictionary<string, string> Parameters { get; }
-        /// <summary> The bot&apos;s manifest url. </summary>
+        /// <summary> The bot's manifest url. </summary>
         public Uri ManifestUri { get; set; }
         /// <summary> Microsoft App Type for the bot. </summary>
         public BotMsaAppType? MsaAppType { get; set; }

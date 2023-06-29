@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <param name="hardwareInventory"> The hardware inventory, including information acquired from the model/sku information and from the ironic inspector. </param>
         /// <param name="hardwareValidationStatus"> The details of the latest hardware validation performed for this bare metal machine. </param>
         /// <param name="hybridAksClustersAssociatedIds"> The list of the resource IDs for the HybridAksClusters that have nodes hosted on this bare metal machine. </param>
-        /// <param name="kubernetesNodeName"> The name of this machine represented by the host object in the Cluster&apos;s Kubernetes control plane. </param>
+        /// <param name="kubernetesNodeName"> The name of this machine represented by the host object in the Cluster's Kubernetes control plane. </param>
         /// <param name="kubernetesVersion"> The version of Kubernetes running on this machine. </param>
         /// <param name="machineDetails"> The custom details provided by the customer. </param>
         /// <param name="machineName"> The OS-level hostname assigned to this machine. </param>
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <param name="rackSlot"> The rack slot in which this bare metal machine is located, ordered from the bottom up i.e. the lowest slot is 1. </param>
         /// <param name="readyState"> The indicator of whether the bare metal machine is ready to receive workloads. </param>
         /// <param name="serialNumber"> The serial number of the bare metal machine. </param>
-        /// <param name="serviceTag"> The discovered value of the machine&apos;s service tag. </param>
+        /// <param name="serviceTag"> The discovered value of the machine's service tag. </param>
         /// <param name="virtualMachinesAssociatedIds"> The list of the resource IDs for the VirtualMachines that are hosted on this bare metal machine. </param>
         /// <returns> A new <see cref="NetworkCloud.BareMetalMachineData"/> instance for mocking. </returns>
         public static BareMetalMachineData BareMetalMachineData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ExtendedLocation extendedLocation = null, string bmcConnectionString = null, AdministrativeCredentials bmcCredentials = null, string bmcMacAddress = null, string bootMacAddress = null, string clusterId = null, BareMetalMachineCordonStatus? cordonStatus = null, BareMetalMachineDetailedStatus? detailedStatus = null, string detailedStatusMessage = null, HardwareInventory hardwareInventory = null, HardwareValidationStatus hardwareValidationStatus = null, IEnumerable<string> hybridAksClustersAssociatedIds = null, string kubernetesNodeName = null, string kubernetesVersion = null, string machineDetails = null, string machineName = null, string machineSkuId = null, string oamIPv4Address = null, string oamIPv6Address = null, string osImage = null, BareMetalMachinePowerState? powerState = null, BareMetalMachineProvisioningState? provisioningState = null, string rackId = null, long rackSlot = default, BareMetalMachineReadyState? readyState = null, string serialNumber = null, string serviceTag = null, IEnumerable<string> virtualMachinesAssociatedIds = null)
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <param name="linkStatus"> The current status of the link. </param>
         /// <param name="macAddress"> The MAC address associated with this interface. </param>
         /// <param name="name"> The name of the interface. </param>
-        /// <param name="networkInterfaceId"> The resource ID of the network interface for the port on the switch that this machine&apos;s interface is connected to. </param>
+        /// <param name="networkInterfaceId"> The resource ID of the network interface for the port on the switch that this machine's interface is connected to. </param>
         /// <returns> A new <see cref="Models.HardwareInventoryNetworkInterface"/> instance for mocking. </returns>
         public static HardwareInventoryNetworkInterface HardwareInventoryNetworkInterface(string linkStatus = null, string macAddress = null, string name = null, string networkInterfaceId = null)
         {
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <param name="detailedStatusMessage"> The descriptive message about the current detailed status. </param>
         /// <param name="fabricControllerId"> The resource ID of the fabric controller that has one to one mapping with the cluster manager. </param>
         /// <param name="managedResourceGroupConfiguration"> The configuration of the managed resource group associated with the resource. </param>
-        /// <param name="managerExtendedLocation"> The extended location (custom location) that represents the cluster manager&apos;s control plane location. This extended location is used when creating cluster and rack manifest resources. </param>
+        /// <param name="managerExtendedLocation"> The extended location (custom location) that represents the cluster manager's control plane location. This extended location is used when creating cluster and rack manifest resources. </param>
         /// <param name="provisioningState"> The provisioning state of the cluster manager. </param>
         /// <param name="vmSize"> Field deprecated, this value will no longer influence the cluster manager allocation process and will be removed in a future version. The size of the Azure virtual machines to use for hosting the cluster manager resource. </param>
         /// <returns> A new <see cref="NetworkCloud.ClusterManagerData"/> instance for mocking. </returns>
@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <param name="availableUpgradeVersions"> The list of cluster runtime version upgrades available for this cluster. </param>
         /// <param name="clusterCapacity"> The capacity supported by this cluster. </param>
         /// <param name="clusterConnectionStatus"> The latest heartbeat status between the cluster manager and the cluster. </param>
-        /// <param name="clusterExtendedLocation"> The extended location (custom location) that represents the cluster&apos;s control plane location. This extended location is used to route the requests of child objects of the cluster that are handled by the platform operator. </param>
+        /// <param name="clusterExtendedLocation"> The extended location (custom location) that represents the cluster's control plane location. This extended location is used to route the requests of child objects of the cluster that are handled by the platform operator. </param>
         /// <param name="clusterLocation"> The customer-provided location information to identify where the cluster resides. </param>
         /// <param name="clusterManagerConnectionStatus"> The latest connectivity status between cluster manager and the cluster. </param>
         /// <param name="clusterManagerId"> The resource ID of the cluster manager that manages this cluster. This is set by the Cluster Manager when the cluster is created. </param>
@@ -392,9 +392,9 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// </param>
         /// <param name="ipv4Address">
         /// The IPv4 address of the virtual machine.
-        /// 
+        ///
         /// This field is used only if the attached network has IPAllocationType of IPV4 or DualStack.
-        /// 
+        ///
         /// If IPAllocationMethod is:
         /// Static - this field must contain a user specified IPv4 address from within the subnet specified in the attached network.
         /// Dynamic - this field is read-only, but will be populated with an address from within the subnet specified in the attached network.
@@ -402,9 +402,9 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// </param>
         /// <param name="ipv6Address">
         /// The IPv6 address of the virtual machine.
-        /// 
+        ///
         /// This field is used only if the attached network has IPAllocationType of IPV6 or DualStack.
-        /// 
+        ///
         /// If IPAllocationMethod is:
         /// Static - this field must contain an IPv6 address range from within the range specified in the attached network.
         /// Dynamic - this field is read-only, but will be populated with an range from within the subnet specified in the attached network.
@@ -412,7 +412,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// </param>
         /// <param name="macAddress"> The MAC address of the interface for the virtual machine that corresponds to this network attachment. </param>
         /// <param name="networkAttachmentName">
-        /// The associated network&apos;s interface name.
+        /// The associated network's interface name.
         /// If specified, the network attachment name has a maximum length of 15 characters and must be unique to this virtual machine.
         /// If the user doesn’t specify this value, the default interface name of the network resource will be used.
         /// For a CloudServicesNetwork resource, this name will be ignored.
@@ -465,7 +465,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <param name="hybridAksIpamEnabled"> The indicator of whether or not to disable IPAM allocation on the network attachment definition injected into the Hybrid AKS Cluster. </param>
         /// <param name="hybridAksPluginType"> The network plugin type for Hybrid AKS. </param>
         /// <param name="interfaceName"> The default interface name for this L3 network in the virtual machine. This name can be overridden by the name supplied in the network attachment configuration of that virtual machine. </param>
-        /// <param name="ipAllocationType"> The type of the IP address allocation, defaulted to &quot;DualStack&quot;. </param>
+        /// <param name="ipAllocationType"> The type of the IP address allocation, defaulted to "DualStack". </param>
         /// <param name="ipv4ConnectedPrefix">
         /// The IPV4 prefix (CIDR) assigned to this L3 network. Required when the IP allocation type
         /// is IPV4 or DualStack.
@@ -496,7 +496,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <param name="computeMachines"> The list of machine SKUs and associated rack slot for the compute-dedicated machines in this rack model. </param>
         /// <param name="controllerMachines"> The list of machine SKUs and associated rack slot for the control-plane dedicated machines in this rack model. </param>
         /// <param name="description"> The free-form text describing the rack. </param>
-        /// <param name="maxClusterSlots"> The maximum number of compute racks supported by an aggregator rack. 0 if this is a compute rack or a rack for a single rack cluster(rackType=&quot;Single&quot;). </param>
+        /// <param name="maxClusterSlots"> The maximum number of compute racks supported by an aggregator rack. 0 if this is a compute rack or a rack for a single rack cluster(rackType="Single"). </param>
         /// <param name="provisioningState"> The provisioning state of the rack SKU resource. </param>
         /// <param name="rackType"> The type of the rack. </param>
         /// <param name="storageAppliances"> The list of appliance SKUs and associated rack slot for the storage appliance(s) in this rack model. </param>

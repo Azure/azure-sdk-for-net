@@ -13,7 +13,9 @@ namespace Azure.ResourceManager.Consumption.Tests
     public class ConsumptionManagementTestBase : ManagementRecordedTestBase<ConsumptionManagementTestEnvironment>
     {
         protected ArmClient Client { get; private set; }
-
+        protected SubscriptionResource DefaultSubscription { get; private set; }
+        protected const string ResourceGroupNamePrefix = "ConsumptionRG";
+        protected AzureLocation DefaultLocation = AzureLocation.EastUS;
         protected ConsumptionManagementTestBase(bool isAsync, RecordedTestMode mode)
         : base(isAsync, mode)
         {
@@ -25,16 +27,17 @@ namespace Azure.ResourceManager.Consumption.Tests
         }
 
         [SetUp]
-        public void CreateCommonClient()
+        public async Task CreateCommonClient()
         {
             Client = GetArmClient();
+            DefaultSubscription = await Client.GetDefaultSubscriptionAsync();
         }
 
-        protected async Task<ResourceGroupResource> CreateResourceGroup(SubscriptionResource subscription, string rgNamePrefix, AzureLocation location)
+        protected async Task<ResourceGroupResource> CreateResourceGroup()
         {
-            string rgName = Recording.GenerateAssetName(rgNamePrefix);
-            ResourceGroupData input = new ResourceGroupData(location);
-            var lro = await subscription.GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Completed, rgName, input);
+            string rgName = Recording.GenerateAssetName(ResourceGroupNamePrefix);
+            ResourceGroupData input = new ResourceGroupData(DefaultLocation);
+            var lro = await DefaultSubscription.GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Completed, rgName, input);
             return lro.Value;
         }
     }

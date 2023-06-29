@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Purview.Models
         /// </param>
         /// <param name="createdOn"> Gets the time at which the entity was created. </param>
         /// <param name="createdBy"> Gets the creator of the entity. </param>
-        /// <param name="createdByObjectId"> Gets the creators of the entity&apos;s object id. </param>
+        /// <param name="createdByObjectId"> Gets the creators of the entity's object id. </param>
         /// <param name="endpoints"> The URIs that are the public endpoints of the account. </param>
         /// <param name="friendlyName"> Gets or sets the friendly name. </param>
         /// <param name="managedResourceGroupName"> Gets or sets the managed resource group name. </param>

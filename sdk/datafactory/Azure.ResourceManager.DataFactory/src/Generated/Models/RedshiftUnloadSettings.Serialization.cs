@@ -5,9 +5,9 @@
 
 #nullable disable
 
-using System;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -19,11 +19,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WritePropertyName("s3LinkedServiceName"u8);
             writer.WriteObjectValue(S3LinkedServiceName);
             writer.WritePropertyName("bucketName"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(BucketName);
-#else
-            JsonSerializer.Serialize(writer, JsonDocument.Parse(BucketName.ToString()).RootElement);
-#endif
+            JsonSerializer.Serialize(writer, BucketName);
             writer.WriteEndObject();
         }
 
@@ -33,18 +29,18 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            FactoryLinkedServiceReference s3LinkedServiceName = default;
-            BinaryData bucketName = default;
+            DataFactoryLinkedServiceReference s3LinkedServiceName = default;
+            DataFactoryElement<string> bucketName = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("s3LinkedServiceName"u8))
                 {
-                    s3LinkedServiceName = FactoryLinkedServiceReference.DeserializeFactoryLinkedServiceReference(property.Value);
+                    s3LinkedServiceName = DataFactoryLinkedServiceReference.DeserializeDataFactoryLinkedServiceReference(property.Value);
                     continue;
                 }
                 if (property.NameEquals("bucketName"u8))
                 {
-                    bucketName = BinaryData.FromString(property.Value.GetRawText());
+                    bucketName = JsonSerializer.Deserialize<DataFactoryElement<string>>(property.Value.GetRawText());
                     continue;
                 }
             }

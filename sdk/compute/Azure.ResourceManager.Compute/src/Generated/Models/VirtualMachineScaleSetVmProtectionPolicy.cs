@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> Initializes a new instance of VirtualMachineScaleSetVmProtectionPolicy. </summary>
-        /// <param name="protectFromScaleIn"> Indicates that the virtual machine scale set VM shouldn&apos;t be considered for deletion during a scale-in operation. </param>
+        /// <param name="protectFromScaleIn"> Indicates that the virtual machine scale set VM shouldn't be considered for deletion during a scale-in operation. </param>
         /// <param name="protectFromScaleSetActions"> Indicates that model updates or actions (including scale-in) initiated on the virtual machine scale set should not be applied to the virtual machine scale set VM. </param>
         internal VirtualMachineScaleSetVmProtectionPolicy(bool? protectFromScaleIn, bool? protectFromScaleSetActions)
         {
@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Compute.Models
             ProtectFromScaleSetActions = protectFromScaleSetActions;
         }
 
-        /// <summary> Indicates that the virtual machine scale set VM shouldn&apos;t be considered for deletion during a scale-in operation. </summary>
+        /// <summary> Indicates that the virtual machine scale set VM shouldn't be considered for deletion during a scale-in operation. </summary>
         public bool? ProtectFromScaleIn { get; set; }
         /// <summary> Indicates that model updates or actions (including scale-in) initiated on the virtual machine scale set should not be applied to the virtual machine scale set VM. </summary>
         public bool? ProtectFromScaleSetActions { get; set; }

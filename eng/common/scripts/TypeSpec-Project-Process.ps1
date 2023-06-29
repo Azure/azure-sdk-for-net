@@ -8,7 +8,8 @@ param (
   [Parameter(Position = 1)]
   [string] $CommitHash,
   [Parameter(Position = 2)]
-  [string] $RepoUrl
+  [string] $RepoUrl,
+  [switch] $SkipSyncAndGenerate
 )
 
 . $PSScriptRoot/common.ps1
@@ -111,7 +112,7 @@ $specRepoRoot = ""
 $generateFromLocalTypeSpec = $false
 # remote url scenario
 # example url of tspconfig.yaml: https://github.com/Azure/azure-rest-api-specs-pr/blob/724ccc4d7ef7655c0b4d5c5ac4a5513f19bbef35/specification/containerservice/Fleet.Management/tspconfig.yaml
-if ($TypeSpecProjectDirectory -match '^https://github.com/(?<repo>Azure/azure-rest-api-specs(-pr)?)/blob/(?<commit>[0-9a-f]{40})/(?<path>.*)/tspconfig.yaml$') {
+if ($TypeSpecProjectDirectory -match '^https://github.com/(?<repo>[^/]*/azure-rest-api-specs(-pr)?)/blob/(?<commit>[0-9a-f]{40})/(?<path>.*)/tspconfig.yaml$') {
   try {
     $TypeSpecProjectDirectory = $TypeSpecProjectDirectory -replace "https://github.com/(.*)/(tree|blob)", "https://raw.githubusercontent.com/`$1"
     Invoke-WebRequest $TypeSpecProjectDirectory -OutFile $tspConfigPath -MaximumRetryCount 3
@@ -199,14 +200,19 @@ if ($generateFromLocalTypeSpec) {
   $sdkProjectFolder = CreateUpdate-TspLocation $tspConfigYaml $TypeSpecProjectDirectory $CommitHash $repo $sdkRepoRootPath
 }
 
-# call TypeSpec-Project-Sync.ps1
-$syncScript = Join-Path $PSScriptRoot TypeSpec-Project-Sync.ps1
-& $syncScript $sdkProjectFolder $specRepoRoot
-if ($LASTEXITCODE) { exit $LASTEXITCODE }
+# checking skip switch
+if ($SkipSyncAndGenerate) {
+  Write-Host "Skip calling TypeSpec-Project-Sync.ps1 and TypeSpec-Project-Generate.ps1."
+} else {
+  # call TypeSpec-Project-Sync.ps1
+  $syncScript = Join-Path $PSScriptRoot TypeSpec-Project-Sync.ps1
+  & $syncScript $sdkProjectFolder $specRepoRoot
+  if ($LASTEXITCODE) { exit $LASTEXITCODE }
 
-# call TypeSpec-Project-Generate.ps1
-$generateScript = Join-Path $PSScriptRoot TypeSpec-Project-Generate.ps1
-& $generateScript $sdkProjectFolder
-if ($LASTEXITCODE) { exit $LASTEXITCODE }
+  # call TypeSpec-Project-Generate.ps1
+  $generateScript = Join-Path $PSScriptRoot TypeSpec-Project-Generate.ps1
+  & $generateScript $sdkProjectFolder
+  if ($LASTEXITCODE) { exit $LASTEXITCODE }
+}
 
 return $sdkProjectFolder

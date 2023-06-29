@@ -26,9 +26,8 @@ namespace Azure.Storage
         public static ArgumentException UnableToGetLength()
             => new ArgumentException("Unable to get the length of the source storage resource");
 
-        public static ArgumentException MismatchSchemaVersionHeader(string schemaVersion)
-            => throw new ArgumentException($"Mismatch Schema Version: Schema Version of the Job Plan file does not match the Schema Version supported by " +
-                    $"the SDK: {DataMovementConstants.PlanFile.SchemaVersion}. Please update to the Azure.Storage.DataMovement version which supports this Job Plan file Version Schema: {schemaVersion}.");
+        public static ArgumentException UnsupportedSchemaVersionHeader(string schemaVersion)
+            => new ArgumentException($"The checkpoint file schema version {schemaVersion} is not supported by this version of the SDK.");
 
         public static ArgumentException MismatchTransferId(string passedTransferId, string storedTransferId)
             => throw new ArgumentException($"Mismatch Transfer Id: Transfer ID stored in the Job Plan file does not match the Transfer ID " +
@@ -92,5 +91,35 @@ namespace Azure.Storage
 
         public static InvalidOperationException SingleDownloadLengthMismatch(long expectedLength, long actualLength)
             => new InvalidOperationException($"Download length {actualLength} did not match expected length {expectedLength}.");
+
+        public static ArgumentException InvalidDownloadOffset(long offset, long length)
+            => new ArgumentException($"Cannot find offset returned by Successful Download Range in the expected Range.\n" +
+                $"Offset: \"{offset}\"\n" +
+                $"Length: \"{length}\"");
+
+        public static ArgumentException InvalidExpectedLength(long length)
+            => new ArgumentException($"Expected positive non-zero length, but was given: {length}");
+
+        public static InvalidOperationException FailedDownloadRange(long offset, long bytesTransferred, string transferId)
+            => new InvalidOperationException($"Unexpected error: Experienced failed download range argument. " +
+                    $"Range: {offset} - {bytesTransferred} with Transfer ID: {transferId}");
+
+        public static FileNotFoundException TempChunkFileNotFound(long offset, long length, string filePath)
+            => new FileNotFoundException($"Could not append chunk to destination file at Offset: " +
+                $"\"{offset}\" and Length: \"{length}\"," +
+                $"due to the chunk file missing: \"{filePath}\"");
+
+        public static InvalidOperationException MismatchLengthTransferred(long expectedLength, long actualLength)
+            => new InvalidOperationException($"Amount of bytes transferred exceeds expected length\n" +
+                $"Expected Bytes Transferred Length: {expectedLength}\n" +
+                $"Actual Bytes Transferred Length: {actualLength}.");
+
+        public static InvalidOperationException FailedChunkTransfer(long offset, long bytesTransferred)
+            => new InvalidOperationException($"Unexpected error: Experienced failed chunk transfer argument. " +
+                    $"Offset: \"{offset}\"\n" +
+                    $"Length: \"{bytesTransferred}\"");
+
+        public static InvalidOperationException InvalidTransferResourceTypes()
+            => new InvalidOperationException("Invalid source and destination resource types.");
     }
 }
