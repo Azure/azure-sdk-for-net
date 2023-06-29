@@ -1,5 +1,6 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
+
 #nullable disable
 
 using System;
@@ -38,6 +39,7 @@ namespace Azure.ResourceManager.Kusto
         /// <exception cref="ArgumentNullException"> <paramref name="databaseName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<KustoDatabaseResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string databaseName, KustoDatabaseData data, CancellationToken cancellationToken) =>
             await CreateOrUpdateAsync(waitUntil, databaseName, data, null, cancellationToken).ConfigureAwait(false);
+
         /// <summary>
         /// Creates or updates a database.
         /// <list type="bullet">
