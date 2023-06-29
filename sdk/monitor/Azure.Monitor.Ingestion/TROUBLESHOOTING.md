@@ -17,7 +17,7 @@ This troubleshooting guide contains instructions to diagnose frequently encounte
 
 To troubleshoot issues with the library, first enable logging to monitor the behavior of the application. The errors and warnings in the logs generally provide useful insights into what went wrong and sometimes include corrective actions to fix issues.
 
-This library uses the standard [logging](https://learn.microsoft.com/dotnet/azure/sdk/logging) library. Basic information about HTTP sessions, such as URLs and headers, is logged at the `INFO` level.
+This library uses the standard [logging](https://learn.microsoft.com/dotnet/azure/sdk/logging) library. Basic information about HTTP requests and responses, such as URIs and headers, is logged at the `INFO` level.
 
 The simplest way to see the logs is to enable console logging. To create an Azure SDK log listener that outputs messages to the console, use the [AzureEventSourceListener.CreateConsoleLogger](https://learn.microsoft.com/dotnet/api/azure.core.diagnostics.azureeventsourcelistener.createconsolelogger?view=azure-dotnet) method:
 
@@ -76,7 +76,7 @@ var ruleId = "<data_collection_rule_id>";
 var streamName = "<stream_name>";
 
 var credential = new DefaultAzureCredential();
-LogsIngestionClient client = new LogsIngestionClient(endpoint, credential);
+var client = new LogsIngestionClient(endpoint, credential);
 
 DateTimeOffset currentTime = DateTimeOffset.UtcNow;
 
@@ -92,7 +92,7 @@ for (int i = 0; i < 100; i++)
     );
 }
 // Set concurrency in LogsUploadOptions
-LogsUploadOptions options = new LogsUploadOptions
+var options = new LogsUploadOptions
 {
     MaxConcurrency = 10
 };

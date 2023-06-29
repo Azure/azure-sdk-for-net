@@ -197,7 +197,7 @@ namespace Azure.Monitor.Ingestion.Tests.Samples
             endpoint = new Uri(TestEnvironment.DCREndpoint);
             credential = TestEnvironment.Credential;
 #endif
-            LogsIngestionClient client = new LogsIngestionClient(endpoint, credential);
+            var client = new LogsIngestionClient(endpoint, credential);
 
             DateTimeOffset currentTime = DateTimeOffset.UtcNow;
 
@@ -213,7 +213,7 @@ namespace Azure.Monitor.Ingestion.Tests.Samples
                 );
             }
             // Set concurrency in LogsUploadOptions
-            LogsUploadOptions options = new LogsUploadOptions
+            var options = new LogsUploadOptions
             {
                 MaxConcurrency = 10
             };
