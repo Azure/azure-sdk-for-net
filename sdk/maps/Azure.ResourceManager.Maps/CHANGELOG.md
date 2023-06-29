@@ -4,8 +4,7 @@
 
 ### Other Changes
 
-- Bump ResourceManager version to 2021-12-01-preview
-- Update variable naming
+- Bump API version to 2021-12-01-preview
 
 ## 1.1.0-beta.1 (2023-05-30)
 
