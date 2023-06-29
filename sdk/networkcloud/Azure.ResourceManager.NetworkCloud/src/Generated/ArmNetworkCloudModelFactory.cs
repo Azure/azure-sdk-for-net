@@ -815,7 +815,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <param name="extendedLocation"> The extended location of the cluster associated with the resource. </param>
         /// <param name="administratorConfiguration"> The administrator credentials to be used for the nodes in this agent pool. </param>
         /// <param name="agentOptions"> The configurations that will be applied to each agent in this agent pool. </param>
-        /// <param name="attachedNetworkConfiguration"> The configuration of networks being attached to the agent pool for use by the workloads that run on this Kubernetes cluster. These networks are in addition to the networks connected in the Kubernetes cluster attached network configuration. </param>
+        /// <param name="attachedNetworkConfiguration"> The configuration of networks being attached to the agent pool for use by the workloads that run on this Kubernetes cluster. </param>
         /// <param name="availabilityZones"> The list of availability zones of the Network Cloud cluster used for the provisioning of nodes in this agent pool. If not specified, all availability zones will be used. </param>
         /// <param name="count"> The number of virtual machines that use this configuration. </param>
         /// <param name="detailedStatus"> The current status of the agent pool. </param>

@@ -7,7 +7,7 @@ azure-arm: true
 csharp: true
 library-name: NetworkCloud
 namespace: Azure.ResourceManager.NetworkCloud
-require: https://github.com/Azure/azure-rest-api-specs/blob/d283cd28c6396d18f704da7b2953d0ad2ddc89c6/specification/networkcloud/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/073fed0ecce0a1f0c95d0c790e20b3670740507c/specification/networkcloud/resource-manager/readme.md
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 skip-csproj: true
@@ -48,6 +48,12 @@ rename-rules:
   Etag: ETag|etag
 
 directive:
+  # temporary workaround for https://github.com/Azure/autorest.csharp/issues/3546
+  # remove new POST direction 'final-state-schema' until autorest core is upgraded
+  - from: networkcloud.json
+    where: $.paths.*.post['x-ms-long-running-operation-options']
+    transform: >
+      delete $['final-state-schema'];
   # The core library Azure.ResourceManager has been generated when the subscriptionId was not marked as an uuid.
   # v5 of common-types defines `subscriptionId` as `guid` format and needs to be removed in order to generate valid code.
   - from: types.json

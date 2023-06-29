@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <summary> Initializes a new instance of InitialAgentPoolConfiguration. </summary>
         /// <param name="administratorConfiguration"> The administrator credentials to be used for the nodes in this agent pool. </param>
         /// <param name="agentOptions"> The configurations that will be applied to each agent in this agent pool. </param>
-        /// <param name="attachedNetworkConfiguration"> The configuration of networks being attached to the agent pool for use by the workloads that run on this Kubernetes cluster. These networks are in addition to the networks connected in the Kubernetes cluster attached network configuration. </param>
+        /// <param name="attachedNetworkConfiguration"> The configuration of networks being attached to the agent pool for use by the workloads that run on this Kubernetes cluster. </param>
         /// <param name="availabilityZones"> The list of availability zones of the Network Cloud cluster used for the provisioning of nodes in this agent pool. If not specified, all availability zones will be used. </param>
         /// <param name="count"> The number of virtual machines that use this configuration. </param>
         /// <param name="labels"> The labels applied to the nodes in this agent pool. </param>
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         public AdministratorConfiguration AdministratorConfiguration { get; set; }
         /// <summary> The configurations that will be applied to each agent in this agent pool. </summary>
         public AgentOptions AgentOptions { get; set; }
-        /// <summary> The configuration of networks being attached to the agent pool for use by the workloads that run on this Kubernetes cluster. These networks are in addition to the networks connected in the Kubernetes cluster attached network configuration. </summary>
+        /// <summary> The configuration of networks being attached to the agent pool for use by the workloads that run on this Kubernetes cluster. </summary>
         public AttachedNetworkConfiguration AttachedNetworkConfiguration { get; set; }
         /// <summary> The list of availability zones of the Network Cloud cluster used for the provisioning of nodes in this agent pool. If not specified, all availability zones will be used. </summary>
         public IList<string> AvailabilityZones { get; }
