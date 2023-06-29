@@ -129,7 +129,6 @@ namespace Azure.Developer.LoadTesting.Models
         public string CreatedBy
         {
             get => _element.GetProperty("createdBy").GetString();
-            set => _element.SetProperty("createdBy", value);
         }
 
         /// <summary> The last Modified datetime(ISO 8601 literal format). </summary>
@@ -142,7 +141,6 @@ namespace Azure.Developer.LoadTesting.Models
         public string LastModifiedBy
         {
             get => _element.GetProperty("lastModifiedBy").GetString();
-            set => _element.SetProperty("lastModifiedBy", value);
         }
     }
 }
