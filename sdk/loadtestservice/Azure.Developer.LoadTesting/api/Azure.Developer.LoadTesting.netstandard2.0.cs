@@ -321,7 +321,7 @@ namespace Azure.Developer.LoadTesting.Models
     {
         public Test() { }
         public Azure.Developer.LoadTesting.Models.CertificateMetadata Certificate { get { throw null; } set { } }
-        public string CreatedBy { get { throw null; } set { } }
+        public string CreatedBy { get { throw null; } }
         public System.DateTimeOffset? CreatedDateTime { get { throw null; } }
         public string Description { get { throw null; } set { } }
         public string DisplayName { get { throw null; } set { } }
@@ -329,7 +329,7 @@ namespace Azure.Developer.LoadTesting.Models
         public Azure.Developer.LoadTesting.Models.TestInputArtifacts InputArtifacts { get { throw null; } }
         public string KeyvaultReferenceIdentityId { get { throw null; } set { } }
         public string KeyvaultReferenceIdentityType { get { throw null; } set { } }
-        public string LastModifiedBy { get { throw null; } set { } }
+        public string LastModifiedBy { get { throw null; } }
         public System.DateTimeOffset? LastModifiedDateTime { get { throw null; } }
         public Azure.Developer.LoadTesting.Models.LoadTestConfiguration LoadTestConfiguration { get { throw null; } set { } }
         public Azure.Developer.LoadTesting.Models.PassFailCriteria PassFailCriteria { get { throw null; } set { } }
