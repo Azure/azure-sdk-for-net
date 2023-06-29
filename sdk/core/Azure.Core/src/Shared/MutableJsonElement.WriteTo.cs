@@ -142,21 +142,25 @@ namespace Azure.Core.Json
             {
                 string currentPath = string.Empty;
                 string[] segments = path.Split(MutableJsonDocument.ChangeTracker.Delimiter);
-                string name;
+                string name = segments[0];
+                currentPath = MutableJsonDocument.ChangeTracker.PushProperty(currentPath, name);
+
+                while (!currentPath.StartsWith(jsonPath))
+                {
+                    writer.WriteEndObject();
+
+                    // Pop path and current
+                    jsonPath = MutableJsonDocument.ChangeTracker.PopProperty(jsonPath);
+                    current = GetPropertyFromRoot(jsonPath);
+                }
 
                 int i = 0;
                 for (; i < segments.Length - 1; i++)
                 {
-                    name = segments[i];
-                    currentPath = MutableJsonDocument.ChangeTracker.PushProperty(currentPath, name);
-
-                    while (!currentPath.StartsWith(jsonPath))
+                    if (i != 0)
                     {
-                        writer.WriteEndObject();
-
-                        // Pop path and current
-                        jsonPath = MutableJsonDocument.ChangeTracker.PopProperty(jsonPath);
-                        current = GetPropertyFromRoot(jsonPath);
+                        name = segments[i];
+                        currentPath = MutableJsonDocument.ChangeTracker.PushProperty(currentPath, name);
                     }
 
                     if (!jsonPath.StartsWith(currentPath) && currentPath.StartsWith(jsonPath))
