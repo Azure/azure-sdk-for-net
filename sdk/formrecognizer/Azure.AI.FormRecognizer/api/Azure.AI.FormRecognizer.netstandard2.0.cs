@@ -293,7 +293,6 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         public System.Collections.Generic.IList<Azure.AI.FormRecognizer.DocumentAnalysis.DocumentAnalysisFeature> Features { get { throw null; } }
         public string Locale { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> Pages { get { throw null; } }
-        public System.Collections.Generic.IList<string> QueryFields { get { throw null; } }
     }
     public partial class AnalyzeResult
     {
@@ -467,13 +466,13 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
     }
     public partial class DocumentAnalysisClientOptions : Azure.Core.ClientOptions
     {
-        public DocumentAnalysisClientOptions(Azure.AI.FormRecognizer.DocumentAnalysis.DocumentAnalysisClientOptions.ServiceVersion version = Azure.AI.FormRecognizer.DocumentAnalysis.DocumentAnalysisClientOptions.ServiceVersion.V2023_02_28_Preview) { }
+        public DocumentAnalysisClientOptions(Azure.AI.FormRecognizer.DocumentAnalysis.DocumentAnalysisClientOptions.ServiceVersion version = Azure.AI.FormRecognizer.DocumentAnalysis.DocumentAnalysisClientOptions.ServiceVersion.V2023_07_31) { }
         public Azure.AI.FormRecognizer.DocumentAnalysis.DocumentAnalysisAudience? Audience { get { throw null; } set { } }
         public Azure.AI.FormRecognizer.DocumentAnalysis.DocumentAnalysisClientOptions.ServiceVersion Version { get { throw null; } }
         public enum ServiceVersion
         {
             V2022_08_31 = 1,
-            V2023_02_28_Preview = 2,
+            V2023_07_31 = 2,
         }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
@@ -482,10 +481,12 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
         public DocumentAnalysisFeature(string value) { throw null; }
-        public static Azure.AI.FormRecognizer.DocumentAnalysis.DocumentAnalysisFeature OcrFont { get { throw null; } }
-        public static Azure.AI.FormRecognizer.DocumentAnalysis.DocumentAnalysisFeature OcrFormula { get { throw null; } }
+        public static Azure.AI.FormRecognizer.DocumentAnalysis.DocumentAnalysisFeature Barcodes { get { throw null; } }
+        public static Azure.AI.FormRecognizer.DocumentAnalysis.DocumentAnalysisFeature Formulas { get { throw null; } }
+        public static Azure.AI.FormRecognizer.DocumentAnalysis.DocumentAnalysisFeature KeyValuePairs { get { throw null; } }
+        public static Azure.AI.FormRecognizer.DocumentAnalysis.DocumentAnalysisFeature Languages { get { throw null; } }
         public static Azure.AI.FormRecognizer.DocumentAnalysis.DocumentAnalysisFeature OcrHighResolution { get { throw null; } }
-        public static Azure.AI.FormRecognizer.DocumentAnalysis.DocumentAnalysisFeature QueryFieldsPremium { get { throw null; } }
+        public static Azure.AI.FormRecognizer.DocumentAnalysis.DocumentAnalysisFeature StyleFont { get { throw null; } }
         public bool Equals(Azure.AI.FormRecognizer.DocumentAnalysis.DocumentAnalysisFeature other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
@@ -507,7 +508,6 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.AI.FormRecognizer.DocumentAnalysis.CurrencyValue CurrencyValue(double amount, string symbol) { throw null; }
         public static Azure.AI.FormRecognizer.DocumentAnalysis.CurrencyValue CurrencyValue(double amount = 0, string symbol = null, string code = null) { throw null; }
-        public static Azure.AI.FormRecognizer.DocumentAnalysis.DocumentAnnotation DocumentAnnotation(Azure.AI.FormRecognizer.DocumentAnalysis.DocumentAnnotationKind kind = default(Azure.AI.FormRecognizer.DocumentAnalysis.DocumentAnnotationKind), System.Collections.Generic.IReadOnlyList<System.Drawing.PointF> boundingPolygon = null, float confidence = 0f) { throw null; }
         public static Azure.AI.FormRecognizer.DocumentAnalysis.DocumentBarcode DocumentBarcode(Azure.AI.FormRecognizer.DocumentAnalysis.DocumentBarcodeKind kind = default(Azure.AI.FormRecognizer.DocumentAnalysis.DocumentBarcodeKind), string value = null, System.Collections.Generic.IReadOnlyList<System.Drawing.PointF> boundingPolygon = null, Azure.AI.FormRecognizer.DocumentAnalysis.DocumentSpan span = default(Azure.AI.FormRecognizer.DocumentAnalysis.DocumentSpan), float confidence = 0f) { throw null; }
         public static Azure.AI.FormRecognizer.DocumentAnalysis.DocumentClassifierBuildOperationDetails DocumentClassifierBuildOperationDetails(string operationId = null, Azure.AI.FormRecognizer.DocumentAnalysis.DocumentOperationStatus status = Azure.AI.FormRecognizer.DocumentAnalysis.DocumentOperationStatus.NotStarted, int? percentCompleted = default(int?), System.DateTimeOffset createdOn = default(System.DateTimeOffset), System.DateTimeOffset lastUpdatedOn = default(System.DateTimeOffset), System.Uri resourceLocation = null, System.Collections.Generic.IReadOnlyDictionary<string, string> tags = null, Azure.ResponseError error = null, Azure.AI.FormRecognizer.DocumentAnalysis.DocumentClassifierDetails result = null) { throw null; }
         public static Azure.AI.FormRecognizer.DocumentAnalysis.DocumentClassifierDetails DocumentClassifierDetails(string classifierId = null, string description = null, System.DateTimeOffset createdOn = default(System.DateTimeOffset), System.DateTimeOffset? expiresOn = default(System.DateTimeOffset?), string apiVersion = null, System.Collections.Generic.IReadOnlyDictionary<string, Azure.AI.FormRecognizer.DocumentAnalysis.ClassifierDocumentTypeDetails> documentTypes = null) { throw null; }
@@ -529,11 +529,8 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         public static Azure.AI.FormRecognizer.DocumentAnalysis.DocumentFieldValue DocumentFieldValueWithTimeFieldType(System.TimeSpan value) { throw null; }
         public static Azure.AI.FormRecognizer.DocumentAnalysis.DocumentFieldValue DocumentFieldValueWithUnknownFieldType(Azure.AI.FormRecognizer.DocumentAnalysis.DocumentFieldType expectedFieldType) { throw null; }
         public static Azure.AI.FormRecognizer.DocumentAnalysis.DocumentFormula DocumentFormula(Azure.AI.FormRecognizer.DocumentAnalysis.DocumentFormulaKind kind = default(Azure.AI.FormRecognizer.DocumentAnalysis.DocumentFormulaKind), string value = null, System.Collections.Generic.IReadOnlyList<System.Drawing.PointF> boundingPolygon = null, Azure.AI.FormRecognizer.DocumentAnalysis.DocumentSpan span = default(Azure.AI.FormRecognizer.DocumentAnalysis.DocumentSpan), float confidence = 0f) { throw null; }
-        public static Azure.AI.FormRecognizer.DocumentAnalysis.DocumentImage DocumentImage(System.Collections.Generic.IReadOnlyList<System.Drawing.PointF> boundingPolygon = null, Azure.AI.FormRecognizer.DocumentAnalysis.DocumentSpan span = default(Azure.AI.FormRecognizer.DocumentAnalysis.DocumentSpan), int pageNumber = 0, float confidence = 0f) { throw null; }
         public static Azure.AI.FormRecognizer.DocumentAnalysis.DocumentKeyValueElement DocumentKeyValueElement(string content = null, System.Collections.Generic.IEnumerable<Azure.AI.FormRecognizer.DocumentAnalysis.BoundingRegion> boundingRegions = null, System.Collections.Generic.IEnumerable<Azure.AI.FormRecognizer.DocumentAnalysis.DocumentSpan> spans = null) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.AI.FormRecognizer.DocumentAnalysis.DocumentKeyValuePair DocumentKeyValuePair(Azure.AI.FormRecognizer.DocumentAnalysis.DocumentKeyValueElement key, Azure.AI.FormRecognizer.DocumentAnalysis.DocumentKeyValueElement value, float confidence) { throw null; }
-        public static Azure.AI.FormRecognizer.DocumentAnalysis.DocumentKeyValuePair DocumentKeyValuePair(Azure.AI.FormRecognizer.DocumentAnalysis.DocumentKeyValueElement key = null, Azure.AI.FormRecognizer.DocumentAnalysis.DocumentKeyValueElement value = null, float confidence = 0f, string commonName = null) { throw null; }
         public static Azure.AI.FormRecognizer.DocumentAnalysis.DocumentLanguage DocumentLanguage(string locale = null, System.Collections.Generic.IEnumerable<Azure.AI.FormRecognizer.DocumentAnalysis.DocumentSpan> spans = null, float confidence = 0f) { throw null; }
         public static Azure.AI.FormRecognizer.DocumentAnalysis.DocumentLine DocumentLine(string content = null, System.Collections.Generic.IReadOnlyList<System.Drawing.PointF> boundingPolygon = null, System.Collections.Generic.IEnumerable<Azure.AI.FormRecognizer.DocumentAnalysis.DocumentSpan> spans = null, System.Collections.Generic.IEnumerable<Azure.AI.FormRecognizer.DocumentAnalysis.DocumentWord> words = null) { throw null; }
         public static Azure.AI.FormRecognizer.DocumentAnalysis.DocumentModelBuildOperationDetails DocumentModelBuildOperationDetails(string operationId = null, Azure.AI.FormRecognizer.DocumentAnalysis.DocumentOperationStatus status = Azure.AI.FormRecognizer.DocumentAnalysis.DocumentOperationStatus.NotStarted, int? percentCompleted = default(int?), System.DateTimeOffset createdOn = default(System.DateTimeOffset), System.DateTimeOffset lastUpdatedOn = default(System.DateTimeOffset), System.Uri resourceLocation = null, System.Collections.Generic.IReadOnlyDictionary<string, string> tags = null, Azure.ResponseError error = null, Azure.AI.FormRecognizer.DocumentAnalysis.DocumentModelDetails result = null) { throw null; }
@@ -547,7 +544,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         public static Azure.AI.FormRecognizer.DocumentAnalysis.DocumentModelSummary DocumentModelSummary(string modelId = null, string description = null, System.DateTimeOffset createdOn = default(System.DateTimeOffset), System.Collections.Generic.IReadOnlyDictionary<string, string> tags = null, System.DateTimeOffset? expiresOn = default(System.DateTimeOffset?)) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.AI.FormRecognizer.DocumentAnalysis.DocumentPage DocumentPage(int pageNumber, float? angle, float? width, float? height, Azure.AI.FormRecognizer.DocumentAnalysis.DocumentPageLengthUnit? unit, System.Collections.Generic.IEnumerable<Azure.AI.FormRecognizer.DocumentAnalysis.DocumentSpan> spans, System.Collections.Generic.IEnumerable<Azure.AI.FormRecognizer.DocumentAnalysis.DocumentWord> words, System.Collections.Generic.IEnumerable<Azure.AI.FormRecognizer.DocumentAnalysis.DocumentSelectionMark> selectionMarks, System.Collections.Generic.IEnumerable<Azure.AI.FormRecognizer.DocumentAnalysis.DocumentLine> lines) { throw null; }
-        public static Azure.AI.FormRecognizer.DocumentAnalysis.DocumentPage DocumentPage(int pageNumber = 0, float? angle = default(float?), float? width = default(float?), float? height = default(float?), Azure.AI.FormRecognizer.DocumentAnalysis.DocumentPageLengthUnit? unit = default(Azure.AI.FormRecognizer.DocumentAnalysis.DocumentPageLengthUnit?), System.Collections.Generic.IEnumerable<Azure.AI.FormRecognizer.DocumentAnalysis.DocumentSpan> spans = null, System.Collections.Generic.IEnumerable<Azure.AI.FormRecognizer.DocumentAnalysis.DocumentWord> words = null, System.Collections.Generic.IEnumerable<Azure.AI.FormRecognizer.DocumentAnalysis.DocumentSelectionMark> selectionMarks = null, System.Collections.Generic.IEnumerable<Azure.AI.FormRecognizer.DocumentAnalysis.DocumentLine> lines = null, Azure.AI.FormRecognizer.DocumentAnalysis.DocumentPageKind kind = default(Azure.AI.FormRecognizer.DocumentAnalysis.DocumentPageKind), System.Collections.Generic.IEnumerable<Azure.AI.FormRecognizer.DocumentAnalysis.DocumentAnnotation> annotations = null, System.Collections.Generic.IEnumerable<Azure.AI.FormRecognizer.DocumentAnalysis.DocumentBarcode> barcodes = null, System.Collections.Generic.IEnumerable<Azure.AI.FormRecognizer.DocumentAnalysis.DocumentFormula> formulas = null, System.Collections.Generic.IEnumerable<Azure.AI.FormRecognizer.DocumentAnalysis.DocumentImage> images = null) { throw null; }
+        public static Azure.AI.FormRecognizer.DocumentAnalysis.DocumentPage DocumentPage(int pageNumber = 0, float? angle = default(float?), float? width = default(float?), float? height = default(float?), Azure.AI.FormRecognizer.DocumentAnalysis.DocumentPageLengthUnit? unit = default(Azure.AI.FormRecognizer.DocumentAnalysis.DocumentPageLengthUnit?), System.Collections.Generic.IEnumerable<Azure.AI.FormRecognizer.DocumentAnalysis.DocumentSpan> spans = null, System.Collections.Generic.IEnumerable<Azure.AI.FormRecognizer.DocumentAnalysis.DocumentWord> words = null, System.Collections.Generic.IEnumerable<Azure.AI.FormRecognizer.DocumentAnalysis.DocumentSelectionMark> selectionMarks = null, System.Collections.Generic.IEnumerable<Azure.AI.FormRecognizer.DocumentAnalysis.DocumentLine> lines = null, System.Collections.Generic.IEnumerable<Azure.AI.FormRecognizer.DocumentAnalysis.DocumentBarcode> barcodes = null, System.Collections.Generic.IEnumerable<Azure.AI.FormRecognizer.DocumentAnalysis.DocumentFormula> formulas = null) { throw null; }
         public static Azure.AI.FormRecognizer.DocumentAnalysis.DocumentParagraph DocumentParagraph(Azure.AI.FormRecognizer.DocumentAnalysis.ParagraphRole? role = default(Azure.AI.FormRecognizer.DocumentAnalysis.ParagraphRole?), string content = null, System.Collections.Generic.IEnumerable<Azure.AI.FormRecognizer.DocumentAnalysis.BoundingRegion> boundingRegions = null, System.Collections.Generic.IEnumerable<Azure.AI.FormRecognizer.DocumentAnalysis.DocumentSpan> spans = null) { throw null; }
         public static Azure.AI.FormRecognizer.DocumentAnalysis.DocumentSelectionMark DocumentSelectionMark(Azure.AI.FormRecognizer.DocumentAnalysis.DocumentSelectionMarkState state = Azure.AI.FormRecognizer.DocumentAnalysis.DocumentSelectionMarkState.Unselected, System.Collections.Generic.IReadOnlyList<System.Drawing.PointF> boundingPolygon = null, Azure.AI.FormRecognizer.DocumentAnalysis.DocumentSpan span = default(Azure.AI.FormRecognizer.DocumentAnalysis.DocumentSpan), float confidence = 0f) { throw null; }
         public static Azure.AI.FormRecognizer.DocumentAnalysis.DocumentSpan DocumentSpan(int offset = 0, int length = 0) { throw null; }
@@ -564,31 +561,6 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.AI.FormRecognizer.DocumentAnalysis.ResourceDetails ResourceDetails(int customDocumentModelCount, int customDocumentModelLimit) { throw null; }
         public static Azure.AI.FormRecognizer.DocumentAnalysis.ResourceDetails ResourceDetails(int customDocumentModelCount = 0, int customDocumentModelLimit = 0, Azure.AI.FormRecognizer.DocumentAnalysis.QuotaDetails customNeuralDocumentModelBuilds = null) { throw null; }
-    }
-    public partial class DocumentAnnotation
-    {
-        internal DocumentAnnotation() { }
-        public System.Collections.Generic.IReadOnlyList<System.Drawing.PointF> BoundingPolygon { get { throw null; } }
-        public float Confidence { get { throw null; } }
-        public Azure.AI.FormRecognizer.DocumentAnalysis.DocumentAnnotationKind Kind { get { throw null; } }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct DocumentAnnotationKind : System.IEquatable<Azure.AI.FormRecognizer.DocumentAnalysis.DocumentAnnotationKind>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public DocumentAnnotationKind(string value) { throw null; }
-        public static Azure.AI.FormRecognizer.DocumentAnalysis.DocumentAnnotationKind Check { get { throw null; } }
-        public static Azure.AI.FormRecognizer.DocumentAnalysis.DocumentAnnotationKind Cross { get { throw null; } }
-        public bool Equals(Azure.AI.FormRecognizer.DocumentAnalysis.DocumentAnnotationKind other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.AI.FormRecognizer.DocumentAnalysis.DocumentAnnotationKind left, Azure.AI.FormRecognizer.DocumentAnalysis.DocumentAnnotationKind right) { throw null; }
-        public static implicit operator Azure.AI.FormRecognizer.DocumentAnalysis.DocumentAnnotationKind (string value) { throw null; }
-        public static bool operator !=(Azure.AI.FormRecognizer.DocumentAnalysis.DocumentAnnotationKind left, Azure.AI.FormRecognizer.DocumentAnalysis.DocumentAnnotationKind right) { throw null; }
-        public override string ToString() { throw null; }
     }
     public partial class DocumentBarcode
     {
@@ -749,14 +721,6 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         public static bool operator !=(Azure.AI.FormRecognizer.DocumentAnalysis.DocumentFormulaKind left, Azure.AI.FormRecognizer.DocumentAnalysis.DocumentFormulaKind right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class DocumentImage
-    {
-        internal DocumentImage() { }
-        public System.Collections.Generic.IReadOnlyList<System.Drawing.PointF> BoundingPolygon { get { throw null; } }
-        public float Confidence { get { throw null; } }
-        public int PageNumber { get { throw null; } }
-        public Azure.AI.FormRecognizer.DocumentAnalysis.DocumentSpan Span { get { throw null; } }
-    }
     public partial class DocumentKeyValueElement
     {
         internal DocumentKeyValueElement() { }
@@ -767,7 +731,6 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
     public partial class DocumentKeyValuePair
     {
         internal DocumentKeyValuePair() { }
-        public string CommonName { get { throw null; } }
         public float Confidence { get { throw null; } }
         public Azure.AI.FormRecognizer.DocumentAnalysis.DocumentKeyValueElement Key { get { throw null; } }
         public Azure.AI.FormRecognizer.DocumentAnalysis.DocumentKeyValueElement Value { get { throw null; } }
@@ -899,12 +862,9 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
     {
         internal DocumentPage() { }
         public float? Angle { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.AI.FormRecognizer.DocumentAnalysis.DocumentAnnotation> Annotations { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.AI.FormRecognizer.DocumentAnalysis.DocumentBarcode> Barcodes { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.AI.FormRecognizer.DocumentAnalysis.DocumentFormula> Formulas { get { throw null; } }
         public float? Height { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.AI.FormRecognizer.DocumentAnalysis.DocumentImage> Images { get { throw null; } }
-        public Azure.AI.FormRecognizer.DocumentAnalysis.DocumentPageKind Kind { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.AI.FormRecognizer.DocumentAnalysis.DocumentLine> Lines { get { throw null; } }
         public int PageNumber { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.AI.FormRecognizer.DocumentAnalysis.DocumentSelectionMark> SelectionMarks { get { throw null; } }
@@ -912,26 +872,6 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         public Azure.AI.FormRecognizer.DocumentAnalysis.DocumentPageLengthUnit? Unit { get { throw null; } }
         public float? Width { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.AI.FormRecognizer.DocumentAnalysis.DocumentWord> Words { get { throw null; } }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct DocumentPageKind : System.IEquatable<Azure.AI.FormRecognizer.DocumentAnalysis.DocumentPageKind>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public DocumentPageKind(string value) { throw null; }
-        public static Azure.AI.FormRecognizer.DocumentAnalysis.DocumentPageKind Document { get { throw null; } }
-        public static Azure.AI.FormRecognizer.DocumentAnalysis.DocumentPageKind Image { get { throw null; } }
-        public static Azure.AI.FormRecognizer.DocumentAnalysis.DocumentPageKind Sheet { get { throw null; } }
-        public static Azure.AI.FormRecognizer.DocumentAnalysis.DocumentPageKind Slide { get { throw null; } }
-        public bool Equals(Azure.AI.FormRecognizer.DocumentAnalysis.DocumentPageKind other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.AI.FormRecognizer.DocumentAnalysis.DocumentPageKind left, Azure.AI.FormRecognizer.DocumentAnalysis.DocumentPageKind right) { throw null; }
-        public static implicit operator Azure.AI.FormRecognizer.DocumentAnalysis.DocumentPageKind (string value) { throw null; }
-        public static bool operator !=(Azure.AI.FormRecognizer.DocumentAnalysis.DocumentPageKind left, Azure.AI.FormRecognizer.DocumentAnalysis.DocumentPageKind right) { throw null; }
-        public override string ToString() { throw null; }
     }
     public enum DocumentPageLengthUnit
     {

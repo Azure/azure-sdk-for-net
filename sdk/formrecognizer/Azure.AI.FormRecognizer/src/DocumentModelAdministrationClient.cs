@@ -780,7 +780,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// completion will contain meta-data about the created document classifier.
         /// </returns>
         /// <remarks>
-        /// This method is only available for <see cref="DocumentAnalysisClientOptions.ServiceVersion.V2023_02_28_Preview"/> and newer.
+        /// This method is only available for <see cref="DocumentAnalysisClientOptions.ServiceVersion.V2023_07_31"/> and newer.
         /// </remarks>
         public virtual async Task<BuildDocumentClassifierOperation> BuildDocumentClassifierAsync(WaitUntil waitUntil, IDictionary<string, ClassifierDocumentTypeDetails> documentTypes, string classifierId = default, string description = default, CancellationToken cancellationToken = default)
         {
@@ -833,7 +833,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// completion will contain meta-data about the created document classifier.
         /// </returns>
         /// <remarks>
-        /// This method is only available for <see cref="DocumentAnalysisClientOptions.ServiceVersion.V2023_02_28_Preview"/> and newer.
+        /// This method is only available for <see cref="DocumentAnalysisClientOptions.ServiceVersion.V2023_07_31"/> and newer.
         /// </remarks>
         public virtual BuildDocumentClassifierOperation BuildDocumentClassifier(WaitUntil waitUntil, IDictionary<string, ClassifierDocumentTypeDetails> documentTypes, string classifierId = default, string description = default, CancellationToken cancellationToken = default)
         {
@@ -875,7 +875,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// <returns>A <see cref="Response{T}"/> representing the result of the operation. It can be cast to a <see cref="DocumentClassifierDetails"/> containing
         /// information about the requested classifier.</returns>
         /// <remarks>
-        /// This method is only available for <see cref="DocumentAnalysisClientOptions.ServiceVersion.V2023_02_28_Preview"/> and newer.
+        /// This method is only available for <see cref="DocumentAnalysisClientOptions.ServiceVersion.V2023_07_31"/> and newer.
         /// </remarks>
         public virtual async Task<Response<DocumentClassifierDetails>> GetDocumentClassifierAsync(string classifierId, CancellationToken cancellationToken = default)
         {
@@ -904,7 +904,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// <returns>A <see cref="Response{T}"/> representing the result of the operation. It can be cast to a <see cref="DocumentClassifierDetails"/> containing
         /// information about the requested classifier.</returns>
         /// <remarks>
-        /// This method is only available for <see cref="DocumentAnalysisClientOptions.ServiceVersion.V2023_02_28_Preview"/> and newer.
+        /// This method is only available for <see cref="DocumentAnalysisClientOptions.ServiceVersion.V2023_07_31"/> and newer.
         /// </remarks>
         public virtual Response<DocumentClassifierDetails> GetDocumentClassifier(string classifierId, CancellationToken cancellationToken = default)
         {
@@ -931,7 +931,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>A collection of <see cref="DocumentClassifierDetails"/> items.</returns>
         /// <remarks>
-        /// This method is only available for <see cref="DocumentAnalysisClientOptions.ServiceVersion.V2023_02_28_Preview"/> and newer.
+        /// This method is only available for <see cref="DocumentAnalysisClientOptions.ServiceVersion.V2023_07_31"/> and newer.
         /// </remarks>
         public virtual AsyncPageable<DocumentClassifierDetails> GetDocumentClassifiersAsync(CancellationToken cancellationToken = default)
         {
@@ -978,7 +978,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>A collection of <see cref="DocumentClassifierDetails"/> items.</returns>
         /// <remarks>
-        /// This method is only available for <see cref="DocumentAnalysisClientOptions.ServiceVersion.V2023_02_28_Preview"/> and newer.
+        /// This method is only available for <see cref="DocumentAnalysisClientOptions.ServiceVersion.V2023_07_31"/> and newer.
         /// </remarks>
         public virtual Pageable<DocumentClassifierDetails> GetDocumentClassifiers(CancellationToken cancellationToken = default)
         {
@@ -1026,7 +1026,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>A <see cref="Response"/> representing the result of the operation.</returns>
         /// <remarks>
-        /// This method is only available for <see cref="DocumentAnalysisClientOptions.ServiceVersion.V2023_02_28_Preview"/> and newer.
+        /// This method is only available for <see cref="DocumentAnalysisClientOptions.ServiceVersion.V2023_07_31"/> and newer.
         /// </remarks>
         public virtual async Task<Response> DeleteDocumentClassifierAsync(string classifierId, CancellationToken cancellationToken = default)
         {
@@ -1053,7 +1053,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>A <see cref="Response"/> representing the result of the operation.</returns>
         /// <remarks>
-        /// This method is only available for <see cref="DocumentAnalysisClientOptions.ServiceVersion.V2023_02_28_Preview"/> and newer.
+        /// This method is only available for <see cref="DocumentAnalysisClientOptions.ServiceVersion.V2023_07_31"/> and newer.
         /// </remarks>
         public virtual Response DeleteDocumentClassifier(string classifierId, CancellationToken cancellationToken = default)
         {

@@ -1679,18 +1679,6 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
                         ValidateBoundingRegion(region, expectedFirstPageNumber, expectedLastPageNumber);
                     }
                 }
-
-                if (_serviceVersion >= DocumentAnalysisClientOptions.ServiceVersion.V2023_02_28_Preview)
-                {
-                    if (kvp.CommonName != null)
-                    {
-                        Assert.IsNotEmpty(kvp.CommonName);
-                    }
-                }
-                else
-                {
-                    Assert.Null(kvp.CommonName);
-                }
             }
 
             // Check Document Pages.
@@ -1890,7 +1878,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             Assert.That(value.Amount, Is.EqualTo(expectedAmount).Within(0.0001), message);
             Assert.AreEqual(expectedSymbol, value.Symbol, message);
 
-            if (_serviceVersion >= DocumentAnalysisClientOptions.ServiceVersion.V2023_02_28_Preview)
+            if (_serviceVersion >= DocumentAnalysisClientOptions.ServiceVersion.V2023_07_31)
             {
                 Assert.AreEqual(expectedCode, value.Code, message);
             }

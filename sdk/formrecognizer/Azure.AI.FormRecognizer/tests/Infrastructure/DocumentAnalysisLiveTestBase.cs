@@ -12,7 +12,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
 {
     [ClientTestFixture(
         DocumentAnalysisClientOptions.ServiceVersion.V2022_08_31,
-        DocumentAnalysisClientOptions.ServiceVersion.V2023_02_28_Preview)]
+        DocumentAnalysisClientOptions.ServiceVersion.V2023_07_31)]
     public class DocumentAnalysisLiveTestBase : RecordedTestBase<DocumentAnalysisTestEnvironment>
     {
         /// <summary>
@@ -29,7 +29,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             ServiceVersionString = _serviceVersion switch
             {
                 DocumentAnalysisClientOptions.ServiceVersion.V2022_08_31 => "2022-08-31",
-                DocumentAnalysisClientOptions.ServiceVersion.V2023_02_28_Preview => "2023-02-28-preview",
+                DocumentAnalysisClientOptions.ServiceVersion.V2023_07_31 => "2023-07-31",
                 _ => null
             };
 

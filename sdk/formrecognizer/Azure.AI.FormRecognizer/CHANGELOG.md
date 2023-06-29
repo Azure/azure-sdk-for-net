@@ -3,8 +3,16 @@
 ## 4.1.0-beta.2 (Unreleased)
 
 ### Features Added
+- In struct `DocumentAnalysisFeature`, added properties `Barcodes`, `KeyValuePairs`, and `Languages` as add-on capabilities.
 
 ### Breaking Changes
+- `DocumentAnalysisClient` and `DocumentModelAdministrationClient` now target service API version `2023-07-31` by default. Version `2023-02-28-preview` is not supported anymore.
+- In struct `DocumentAnalysisFeature`, properties `OcrFormula` and `OcrFont` were renamed to `Formulas` and `StyleFont`, respectively.
+- Removed query fields support. The properties `AnalyzeDocumentOptions.QueryFields` and `DocumentAnalysisFeature.QueryFieldsPremium` were removed.
+- Removed image extraction support. The class `DocumentImage` and the property `DocumentPage.Images` were removed.
+- Remove annotation extraction support. The types `DocumentAnnotation`, `DocumentAnnotationKind`, and the property `DocumentPage.Annotations` were removed.
+- Removed struct `DocumentPageKind` and property `DocumentPage.Kind`.
+- Removed property `DocumentKeyValuePair.CommonName`.
 
 ### Bugs Fixed
 - Fixed a bug where calling the `GetResourceDetails` API while targeting service version `2022-08-31` would throw an `ArgumentNullException`.

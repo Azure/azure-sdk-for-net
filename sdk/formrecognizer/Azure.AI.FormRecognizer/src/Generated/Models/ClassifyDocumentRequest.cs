@@ -17,9 +17,9 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         {
         }
 
-        /// <summary> Document URL to classify. </summary>
+        /// <summary> Document URL to classify.  Either urlSource or base64Source must be specified. </summary>
         public Uri UrlSource { get; set; }
-        /// <summary> Base64 encoding of the document to classify. </summary>
+        /// <summary> Base64 encoding of the document to classify.  Either urlSource or base64Source must be specified. </summary>
         public byte[] Base64Source { get; set; }
     }
 }

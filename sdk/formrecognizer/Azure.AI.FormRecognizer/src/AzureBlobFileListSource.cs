@@ -6,6 +6,7 @@ using Azure.Core;
 
 namespace Azure.AI.FormRecognizer.DocumentAnalysis
 {
+    [CodeGenModel("AzureBlobFileListContentSource")]
     public partial class AzureBlobFileListSource
     {
         /// <summary>
