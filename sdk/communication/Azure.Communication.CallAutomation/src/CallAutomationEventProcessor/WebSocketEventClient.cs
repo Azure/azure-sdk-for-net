@@ -27,7 +27,7 @@ namespace Azure.Communication.CallAutomation
             {
                 // establish hmac here
                 CallAutomationEventProcessor.customHMACAuthenticationWebSocket?.AddHmacHeaders(_client, new Uri(webSocketUrl), Core.RequestMethod.Get, string.Empty);
-
+                Console.WriteLine("Try to set up the websocket");
                 await _client.ConnectAsync(new Uri(webSocketUrl), CancellationToken.None).ConfigureAwait(false);
                 await SendPayload(connectionId).ConfigureAwait(false);
                 await ReceiveResponses().ConfigureAwait(false);
@@ -51,6 +51,7 @@ namespace Azure.Communication.CallAutomation
 
             while (_client.State == WebSocketState.Open)
             {
+                Console.WriteLine("Waiting on incoming response....");
                 var receiveResult = await _client.ReceiveAsync(new ArraySegment<byte>(buffer), CancellationToken.None).ConfigureAwait(false);
 
                 if (receiveResult.MessageType == WebSocketMessageType.Close)
@@ -70,6 +71,7 @@ namespace Azure.Communication.CallAutomation
                         if (msg == "ack")
                         {
                             IsEstablished = true;
+                            Console.WriteLine("Websocket is established");
                         }
                         else
                         {

@@ -75,7 +75,11 @@ namespace Azure.Communication.CallAutomation
         public void RemoveWebSocketEventClient(string connectionId)
         {
             // Remove this client from the list.
-            _wsEventClients.TryRemove(connectionId, out _);
+            // TODO? Signaling the server side to close the socket if needed.
+            if (_wsEventClients.TryRemove(connectionId, out _))
+            {
+                Console.WriteLine($"WebSocketEventClient stopped listening at: {connectionId}");
+            }
         }
 
         /// <summary>
