@@ -4,6 +4,7 @@
 
 ### Bugs Fixed
 - Fix secondary key validation failed.
+- Fix multi request origins validation.
 
 ## 1.5.0 (2023-03-21)
 
