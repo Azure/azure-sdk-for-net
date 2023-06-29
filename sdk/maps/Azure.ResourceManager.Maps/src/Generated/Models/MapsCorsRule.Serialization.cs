@@ -16,11 +16,11 @@ namespace Azure.ResourceManager.Maps.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(MapsCorsRuleValue))
+            if (Optional.IsCollectionDefined(CorsRules))
             {
                 writer.WritePropertyName("corsRules"u8);
                 writer.WriteStartArray();
-                foreach (var item in MapsCorsRuleValue)
+                foreach (var item in CorsRules)
                 {
                     writer.WriteObjectValue(item);
                 }
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Maps.Models
             {
                 return null;
             }
-            Optional<IList<CorsRule>> mapsCorsRule = default;
+            Optional<IList<CorsRule>> corsRules = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("corsRules"u8))
@@ -49,11 +49,11 @@ namespace Azure.ResourceManager.Maps.Models
                     {
                         array.Add(CorsRule.DeserializeCorsRule(item));
                     }
-                    mapsCorsRule = array;
+                    corsRules = array;
                     continue;
                 }
             }
-            return new MapsCorsRule(Optional.ToList(mapsCorsRule));
+            return new MapsCorsRule(Optional.ToList(corsRules));
         }
     }
 }

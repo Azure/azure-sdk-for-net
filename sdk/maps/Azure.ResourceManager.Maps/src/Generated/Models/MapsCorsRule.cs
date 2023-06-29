@@ -16,17 +16,17 @@ namespace Azure.ResourceManager.Maps.Models
         /// <summary> Initializes a new instance of MapsCorsRule. </summary>
         public MapsCorsRule()
         {
-            MapsCorsRuleValue = new ChangeTrackingList<CorsRule>();
+            CorsRules = new ChangeTrackingList<CorsRule>();
         }
 
         /// <summary> Initializes a new instance of MapsCorsRule. </summary>
-        /// <param name="mapsCorsRuleValue"> The list of CORS rules. You can include up to five CorsRule elements in the request. </param>
-        internal MapsCorsRule(IList<CorsRule> mapsCorsRuleValue)
+        /// <param name="corsRules"> The list of CORS rules. You can include up to five CorsRule elements in the request. </param>
+        internal MapsCorsRule(IList<CorsRule> corsRules)
         {
-            MapsCorsRuleValue = mapsCorsRuleValue;
+            CorsRules = corsRules;
         }
 
         /// <summary> The list of CORS rules. You can include up to five CorsRule elements in the request. </summary>
-        public IList<CorsRule> MapsCorsRuleValue { get; }
+        public IList<CorsRule> CorsRules { get; }
     }
 }

@@ -109,7 +109,7 @@ new MapsLinkedResource("myBatchStorageAccount","/subscriptions/21a9967a-e8a9-465
                 Properties = new MapsAccountProperties()
                 {
                     DisableLocalAuth = false,
-                    MapsCorsRuleValue =
+                    CorsRules =
 {
 new CorsRule(new string[]
 {
@@ -163,7 +163,7 @@ new CorsRule(new string[]
                 Properties = new MapsAccountProperties()
                 {
                     DisableLocalAuth = true,
-                    MapsCorsRuleValue =
+                    CorsRules =
 {
 new CorsRule(new string[]
 {

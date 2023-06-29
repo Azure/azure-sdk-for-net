@@ -19,6 +19,7 @@ rename-mapping:
   CreatorList: MapsCreatorListResult
   Kind: MapsAccountKind
   Name: MapsSkuName
+  CorsRules: MapsCorsRule
   MapsAccountProperties.uniqueId: -|uuid
   MapsAccountUpdateParameters.properties.uniqueId: -|uuid
   MapsAccountKeys.primaryKeyLastUpdated: primaryKeyLastUpdatedOn|date-time
@@ -30,6 +31,7 @@ prepend-rp-prefix:
   - KeyType
   - LinkedResource
   - SigningKey
+
 
 format-by-name-rules:
   'tenantId': 'uuid'
@@ -60,7 +62,6 @@ rename-rules:
   SSO: Sso
   URI: Uri
   Etag: ETag|etag
-  CorsRules: MapsCorsRule
   AccountSasContent: MapsAccountSasContent
 
 directive:

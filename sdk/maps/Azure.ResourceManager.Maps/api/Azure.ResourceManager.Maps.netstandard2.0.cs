@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.Maps.Models
     {
         public static Azure.ResourceManager.Maps.MapsAccountData MapsAccountData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.Maps.Models.MapsSku sku = null, Azure.ResourceManager.Maps.Models.MapsAccountKind? kind = default(Azure.ResourceManager.Maps.Models.MapsAccountKind?), Azure.ResourceManager.Models.ManagedServiceIdentity identity = null, Azure.ResourceManager.Maps.Models.MapsAccountProperties properties = null) { throw null; }
         public static Azure.ResourceManager.Maps.Models.MapsAccountKeys MapsAccountKeys(System.DateTimeOffset? primaryKeyLastUpdatedOn = default(System.DateTimeOffset?), string primaryKey = null, string secondaryKey = null, System.DateTimeOffset? secondaryKeyLastUpdatedOn = default(System.DateTimeOffset?)) { throw null; }
-        public static Azure.ResourceManager.Maps.Models.MapsAccountProperties MapsAccountProperties(System.Guid? uniqueId = default(System.Guid?), bool? disableLocalAuth = default(bool?), string provisioningState = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Maps.Models.MapsLinkedResource> linkedResources = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Maps.Models.CorsRule> mapsCorsRuleValue = null) { throw null; }
+        public static Azure.ResourceManager.Maps.Models.MapsAccountProperties MapsAccountProperties(System.Guid? uniqueId = default(System.Guid?), bool? disableLocalAuth = default(bool?), string provisioningState = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Maps.Models.MapsLinkedResource> linkedResources = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Maps.Models.CorsRule> corsRules = null) { throw null; }
         public static Azure.ResourceManager.Maps.Models.MapsAccountSasToken MapsAccountSasToken(string accountSasToken = null) { throw null; }
         public static Azure.ResourceManager.Maps.MapsCreatorData MapsCreatorData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.Maps.Models.MapsCreatorProperties properties = null) { throw null; }
         public static Azure.ResourceManager.Maps.Models.MapsCreatorProperties MapsCreatorProperties(string provisioningState = null, int storageUnits = 0) { throw null; }
@@ -149,11 +149,11 @@ namespace Azure.ResourceManager.Maps.Models
     public partial class MapsAccountPatch
     {
         public MapsAccountPatch() { }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Maps.Models.CorsRule> CorsRules { get { throw null; } }
         public bool? DisableLocalAuth { get { throw null; } set { } }
         public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public Azure.ResourceManager.Maps.Models.MapsAccountKind? Kind { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Maps.Models.MapsLinkedResource> LinkedResources { get { throw null; } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Maps.Models.CorsRule> MapsCorsRuleValue { get { throw null; } }
         public string ProvisioningState { get { throw null; } }
         public Azure.ResourceManager.Maps.Models.MapsSku Sku { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
@@ -162,9 +162,9 @@ namespace Azure.ResourceManager.Maps.Models
     public partial class MapsAccountProperties
     {
         public MapsAccountProperties() { }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Maps.Models.CorsRule> CorsRules { get { throw null; } }
         public bool? DisableLocalAuth { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Maps.Models.MapsLinkedResource> LinkedResources { get { throw null; } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Maps.Models.CorsRule> MapsCorsRuleValue { get { throw null; } }
         public string ProvisioningState { get { throw null; } }
         public System.Guid? UniqueId { get { throw null; } }
     }
