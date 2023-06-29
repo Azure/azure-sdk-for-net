@@ -3705,6 +3705,24 @@ namespace Azure.ResourceManager.Compute.Models
         public static bool operator !=(Azure.ResourceManager.Compute.Models.ExpandTypesForListVm left, Azure.ResourceManager.Compute.Models.ExpandTypesForListVm right) { throw null; }
         public override string ToString() { throw null; }
     }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct FileFormat : System.IEquatable<Azure.ResourceManager.Compute.Models.FileFormat>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public FileFormat(string value) { throw null; }
+        public static Azure.ResourceManager.Compute.Models.FileFormat VHD { get { throw null; } }
+        public static Azure.ResourceManager.Compute.Models.FileFormat Vhdx { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Compute.Models.FileFormat other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Compute.Models.FileFormat left, Azure.ResourceManager.Compute.Models.FileFormat right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Compute.Models.FileFormat (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Compute.Models.FileFormat left, Azure.ResourceManager.Compute.Models.FileFormat right) { throw null; }
+        public override string ToString() { throw null; }
+    }
     public partial class GalleryApplicationCustomAction
     {
         public GalleryApplicationCustomAction(string name, string script) { }
@@ -4046,6 +4064,7 @@ namespace Azure.ResourceManager.Compute.Models
         public GrantAccessData(Azure.ResourceManager.Compute.Models.AccessLevel access, int durationInSeconds) { }
         public Azure.ResourceManager.Compute.Models.AccessLevel Access { get { throw null; } }
         public int DurationInSeconds { get { throw null; } }
+        public Azure.ResourceManager.Compute.Models.FileFormat? FileFormat { get { throw null; } set { } }
         public bool? GetSecureVmGuestStateSas { get { throw null; } set { } }
     }
     public enum HostCaching
