@@ -68,9 +68,9 @@ namespace Azure.Storage.DataMovement.Blobs
                 return scheme switch
                 {
                     // TODO figure out actual strings
-                    "block" => info.IsContainer ? ResourceType.BlobContainer : ResourceType.BlockBlob,
-                    "page" => info.IsContainer ? ResourceType.BlobContainer : ResourceType.PageBlob,
-                    "append" => info.IsContainer ? ResourceType.BlobContainer : ResourceType.AppendBlob,
+                    "BlockBlob" => info.IsContainer ? ResourceType.BlobContainer : ResourceType.BlockBlob,
+                    "PageBlob" => info.IsContainer ? ResourceType.BlobContainer : ResourceType.PageBlob,
+                    "AppendBlob" => info.IsContainer ? ResourceType.BlobContainer : ResourceType.AppendBlob,
                     _ => ResourceType.Unknown
                 };
             }

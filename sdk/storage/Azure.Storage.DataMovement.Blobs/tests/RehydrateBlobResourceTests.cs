@@ -50,13 +50,26 @@ namespace Azure.Storage.DataMovement.Tests
             Local
         }
 
+        private static string ToResourceId(StorageResourceType type)
+        {
+            return type switch
+            {
+                StorageResourceType.BlockBlob => "BlockBlob",
+                StorageResourceType.PageBlob => "PageBlob",
+                StorageResourceType.AppendBlob => "AppendBlob",
+                StorageResourceType.Local => "LocalFile",
+                _ => throw new NotImplementedException(),
+            };
+        }
+
         private static Mock<DataTransferProperties> GetProperties(
             string checkpointerPath,
             string transferId,
             string sourcePath,
             string destinationPath,
             string sourceResourceId,
-            string destinationResourceId)
+            string destinationResourceId,
+            bool isContainer)
         {
             var mock = new Mock<DataTransferProperties>(MockBehavior.Strict);
             mock.Setup(p => p.TransferId).Returns(transferId);
@@ -65,6 +78,7 @@ namespace Azure.Storage.DataMovement.Tests
             mock.Setup(p => p.DestinationPath).Returns(destinationPath);
             mock.Setup(p => p.SourceScheme).Returns(sourceResourceId);
             mock.Setup(p => p.DestinationScheme).Returns(destinationResourceId);
+            mock.Setup(p => p.IsContainer).Returns(isContainer);
             return mock;
         }
 
@@ -172,8 +186,9 @@ namespace Azure.Storage.DataMovement.Tests
                 transferId,
                 sourcePath,
                 destinationPath,
-                "",
-                "").Object;
+                ToResourceId(sourceType),
+                ToResourceId(destinationType),
+                isContainer: false).Object;
 
             await AddJobPartToCheckpointer(
                 checkpointer,
@@ -217,8 +232,9 @@ namespace Azure.Storage.DataMovement.Tests
                 transferId,
                 sourcePath,
                 destinationPath,
-                "",
-                "").Object;
+                ToResourceId(sourceType),
+                ToResourceId(destinationType),
+                isContainer: false).Object;
 
             await AddJobPartToCheckpointer(
                 checkpointer,
@@ -262,8 +278,9 @@ namespace Azure.Storage.DataMovement.Tests
                 transferId,
                 sourcePath,
                 destinationPath,
-                "",
-                "").Object;
+                ToResourceId(sourceType),
+                ToResourceId(destinationType),
+                isContainer: false).Object;
 
             await AddJobPartToCheckpointer(
                 checkpointer,
@@ -306,18 +323,20 @@ namespace Azure.Storage.DataMovement.Tests
                 sourcePaths.Add(string.Join("/", sourceParentPath, childPath));
                 destinationPaths.Add(string.Join("/", destinationParentPath, childPath));
             }
+
+            StorageResourceType sourceType = isSource ? StorageResourceType.Local : StorageResourceType.BlockBlob;
+            StorageResourceType destinationType = !isSource ? StorageResourceType.Local : StorageResourceType.BlockBlob;
+
+            string originalPath = isSource ? sourceParentPath : destinationParentPath;
+
             DataTransferProperties transferProperties = GetProperties(
                 test.DirectoryPath,
                 transferId,
                 sourceParentPath,
                 destinationParentPath,
-                "",
-                "").Object;
-
-            string originalPath = isSource ? sourceParentPath : destinationParentPath;
-
-            StorageResourceType sourceType = isSource ? StorageResourceType.Local : StorageResourceType.BlockBlob;
-            StorageResourceType destinationType = !isSource ? StorageResourceType.Local : StorageResourceType.BlockBlob;
+                ToResourceId(sourceType),
+                ToResourceId(destinationType),
+                isContainer: true).Object;
 
             await AddJobPartToCheckpointer(
                 checkpointer,
