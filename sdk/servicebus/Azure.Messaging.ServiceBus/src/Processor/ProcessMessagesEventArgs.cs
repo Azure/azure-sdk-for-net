@@ -12,15 +12,15 @@ using Azure.Messaging.ServiceBus.Processor;
 namespace Azure.Messaging.ServiceBus
 {
     /// <summary>
-    /// The <see cref="ProcessMessageEventArgs"/> contain event args that are specific
+    /// The <see cref="ProcessMessagesEventArgs"/> contain event args that are specific
     /// to the <see cref="ServiceBusReceivedMessage"/> that is being processed.
     /// </summary>
-    public class ProcessMessageEventArgs : EventArgs, IProcessedMessages
+    public class ProcessMessagesEventArgs : EventArgs, IProcessedMessages
     {
         /// <summary>
-        /// The received message to be processed.
+        /// The received messages to be processed.
         /// </summary>
-        public ServiceBusReceivedMessage Message { get; }
+        public IReadOnlyList<ServiceBusReceivedMessage> Messages { get; }
 
         /// <summary>
         /// The processor's <see cref="System.Threading.CancellationToken"/> instance which will be
@@ -43,9 +43,9 @@ namespace Azure.Messaging.ServiceBus
         /// </summary>
         public string FullyQualifiedNamespace => _receiver.FullyQualifiedNamespace;
 
-        internal ConcurrentDictionary<ServiceBusReceivedMessage, byte> Messages => _receiveActions.Messages;
+        internal ConcurrentDictionary<ServiceBusReceivedMessage, byte> ReceivedActionsMessages => _receiveActions.Messages;
 
-        ICollection<ServiceBusReceivedMessage> IProcessedMessages.ProcessedMessages => Messages.Keys;
+        ICollection<ServiceBusReceivedMessage> IProcessedMessages.ProcessedMessages => ReceivedActionsMessages.Keys;
 
         private readonly ServiceBusReceiver _receiver;
         private readonly ProcessorReceiveActions _receiveActions;
@@ -54,14 +54,14 @@ namespace Azure.Messaging.ServiceBus
         /// Initializes a new instance of the <see cref="ProcessMessageEventArgs"/> class.
         /// </summary>
         ///
-        /// <param name="message">The message to be processed.</param>
+        /// <param name="messages">The messages to be processed.</param>
         /// <param name="receiver">The receiver instance that can be used to perform message settlement.</param>
         /// <param name="cancellationToken">The processor's <see cref="System.Threading.CancellationToken"/> instance which will be cancelled
         /// in the event that <see cref="ServiceBusProcessor.StopProcessingAsync"/> is called.
         /// </param>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public ProcessMessageEventArgs(ServiceBusReceivedMessage message, ServiceBusReceiver receiver, CancellationToken cancellationToken) :
-            this(message, manager: null, cancellationToken)
+        public ProcessMessagesEventArgs(IReadOnlyList<ServiceBusReceivedMessage> messages, ServiceBusReceiver receiver, CancellationToken cancellationToken) :
+            this(messages, manager: null, cancellationToken)
         {
             _receiver = receiver;
         }
@@ -70,14 +70,14 @@ namespace Azure.Messaging.ServiceBus
         /// Initializes a new instance of the <see cref="ProcessMessageEventArgs"/> class.
         /// </summary>
         ///
-        /// <param name="message">The message to be processed.</param>
+        /// <param name="messages">The messages to be processed.</param>
         /// <param name="receiver">The receiver instance that can be used to perform message settlement.</param>
         /// <param name="identifier">The identifier of the processor.</param>
         /// <param name="cancellationToken">The processor's <see cref="System.Threading.CancellationToken"/> instance which will be cancelled
         /// in the event that <see cref="ServiceBusProcessor.StopProcessingAsync"/> is called.
         /// </param>
-        public ProcessMessageEventArgs(ServiceBusReceivedMessage message, ServiceBusReceiver receiver, string identifier, CancellationToken cancellationToken) :
-            this(message, manager: null, identifier, cancellationToken)
+        public ProcessMessagesEventArgs(IReadOnlyList<ServiceBusReceivedMessage> messages, ServiceBusReceiver receiver, string identifier, CancellationToken cancellationToken) :
+            this(messages, manager: null, identifier, cancellationToken)
         {
             _receiver = receiver;
         }
@@ -86,42 +86,42 @@ namespace Azure.Messaging.ServiceBus
         /// Initializes a new instance of the <see cref="ProcessMessageEventArgs"/> class.
         /// </summary>
         ///
-        /// <param name="message">The message to be processed.</param>
+        /// <param name="messages">The message to be processed.</param>
         /// <param name="manager">The receiver manager for these event args.</param>
         /// <param name="cancellationToken">The processor's <see cref="System.Threading.CancellationToken"/> instance which will be cancelled
         /// in the event that <see cref="ServiceBusProcessor.StopProcessingAsync"/> is called.
         /// </param>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        internal ProcessMessageEventArgs(
-            ServiceBusReceivedMessage message,
+        internal ProcessMessagesEventArgs(
+            IReadOnlyList<ServiceBusReceivedMessage> messages,
             ReceiverManager manager,
             CancellationToken cancellationToken)
         {
-            Message = message;
+            Messages = messages;
 
             // manager would be null in scenarios where customers are using the public constructor for testing purposes.
             _receiver = manager?.Receiver;
             CancellationToken = cancellationToken;
 
             bool autoRenew = manager?.ShouldAutoRenewMessageLock() == true;
-            _receiveActions = new ProcessorReceiveActions(message, manager, autoRenew);
+            _receiveActions = new ProcessorReceiveActions(messages, manager, autoRenew);
         }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ProcessMessageEventArgs"/> class.
         /// </summary>
         ///
-        /// <param name="message">The message to be processed.</param>
+        /// <param name="messages">The message to be processed.</param>
         /// <param name="manager">The receiver manager for these event args.</param>
         /// <param name="identifier">The identifier of the processor.</param>
         /// <param name="cancellationToken">The processor's <see cref="System.Threading.CancellationToken"/> instance which will be cancelled
         /// in the event that <see cref="ServiceBusProcessor.StopProcessingAsync"/> is called.
         /// </param>
-        internal ProcessMessageEventArgs(
-            ServiceBusReceivedMessage message,
+        internal ProcessMessagesEventArgs(
+            IReadOnlyList<ServiceBusReceivedMessage> messages,
             ReceiverManager manager,
             string identifier,
-            CancellationToken cancellationToken) : this(message, manager, cancellationToken)
+            CancellationToken cancellationToken) : this(messages, manager, cancellationToken)
         {
             Identifier = identifier;
         }

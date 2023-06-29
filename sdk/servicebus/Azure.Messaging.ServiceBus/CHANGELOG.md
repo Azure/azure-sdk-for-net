@@ -3,6 +3,7 @@
 ## 7.16.0-beta.1 (Unreleased)
 
 ### Features Added
+- Added receiving batches of messages in `ServiceBusProcessor` and `ServiceBusSessionProcessor` by setting `BatchSize` in `ServiceBusProcessorOptions` or `ServiceBusSessionProcessorOptions` to a value greater than `1`.
 
 ### Breaking Changes
 
@@ -199,7 +200,7 @@ Thank you to our developer community members who helped to make the Service Bus 
 
 ### Features Added
 
-- Added `ServiceBusTransportMetrics` that can be used to get transport metric information. 
+- Added `ServiceBusTransportMetrics` that can be used to get transport metric information.
 
 ### Bugs Fixed
 
@@ -229,7 +230,7 @@ Thank you to our developer community members who helped to make the Service Bus 
 ### Bugs Fixed
 
 - Fixed name of ServiceBusAdministrationClient extension method.
-- Fixed entity name validation when passing in a subscription entity path into the 
+- Fixed entity name validation when passing in a subscription entity path into the
   CreateReceiver method.
 
 ### Other Changes
@@ -358,7 +359,7 @@ Thank you to our developer community members who helped to make the Service Bus 
 
 ### Added
 * Added `SubQueue` option to `ServiceBusProcessorOptions` to allow for processing the deadletter queue
-* Added Verbose event source events for the following scenarios that previously had Error events which resulted in unnecessary noise in application logs: 
+* Added Verbose event source events for the following scenarios that previously had Error events which resulted in unnecessary noise in application logs:
   * Accepting a session times out because there are no sessions available.
   * TaskCanceledException occurs while stopping the processor.
 
@@ -396,7 +397,7 @@ Thank you to our developer community members who helped to make the Service Bus 
 ## 7.2.0-beta.1 (2021-03-08)
 ### Added
 - Added `EnableCrossEntityTransactions` property to `ServiceBusClientOptions` to support transactions spanning multiple entities.
-- Added `SessionIdleTimeout` property to `ServiceBusSessionProcessorOptions` to allow configuration of when to switch to the next session when using the session processor. 
+- Added `SessionIdleTimeout` property to `ServiceBusSessionProcessorOptions` to allow configuration of when to switch to the next session when using the session processor.
 
 ### Key Bug Fixes
 - Fixed issue where batch size calculation was not taking diagnostic tracing information into account.
@@ -421,7 +422,7 @@ Thank you to our developer community members who helped to make the Service Bus 
 ## 7.0.1 (2021-01-12)
 
 ### Fixed
-- Fixed race condition that could occur when using the same `ServiceBusSessionReceiverOptions` instance 
+- Fixed race condition that could occur when using the same `ServiceBusSessionReceiverOptions` instance
 for several receivers.
 - Increased the authorization refresh buffer to make it less likely that authorization will expire.
 
@@ -491,7 +492,7 @@ Thank you to our developer community members who helped to make the Service Bus 
 
 ### Added
 - Added MaxConcurrentCallsPerSession option to ServiceBusSessionProcessor
-  
+
 ### Breaking Changes
 - Change MaxConcurrentCalls to MaxConcurrentSessions in ServiceBusSessionProcessor.
 - Replace (Queue|Topic|Subscription|Rule)Description with (Queue|Topic|Subscription|Rule)Properties.
@@ -509,7 +510,7 @@ Thank you to our developer community members who helped to make the Service Bus 
 ### Added
 - Add IAsyncEnumerable Receive overload
 - Add batch schedule/cancel schedule messages
-  
+
 ### Breaking Changes
 - Remove use of "Batch" in Peek/Receive methods.
 - Add Message/Messages suffix to Peek/Send/Receive/Abandon/Defer/Complete/DeadLetter methods.
@@ -531,7 +532,7 @@ Thank you to our developer community members who helped to make the Service Bus 
 - Add constructor for ServiceBusMessage taking a string
 - Use the BinaryData type for ServiceBusMessage.Body
 - Add diagnostic tracing
-  
+
 ### Breaking Changes
 - Introduce ServiceBusSessionReceiverOptions/ServiceBusSessionProcessorOptions for creating
   ServiceBusSessionReceiver/ServiceBusSessionProcessor
@@ -550,17 +551,17 @@ Thank you to our developer community members who helped to make the Service Bus 
 - Add SessionInitializingAsync/SessionClosingAsync events in ServiceBusSessionProcessor
 - Do not attempt to autocomplete messages with the processor if the user settled the message in their callback
 - Add SendAsync overload accepting an IEnumerable of ServiceBusMessage
-- Various performance improvements  
+- Various performance improvements
   _(A community contribution, courtesy of [danielmarbach](https://github.com/danielmarbach))_
-- Improve the way exception stack traces are captured  
+- Improve the way exception stack traces are captured
   _(A community contribution, courtesy of [danielmarbach](https://github.com/danielmarbach))_
-  
+
 ### Breaking Changes
 - Change from using a static factory method for creating a sendable message from a received message to instead
-  using a constructor  
+  using a constructor
   _(A community contribution, courtesy of [danielmarbach](https://github.com/danielmarbach))_
-- CreateSessionProcessor parameter sessionId renamed to sessionIds (also changed from string to params string array). 
-- Remove cancellation token from CreateProcessor and CreateSessionProcessor  
+- CreateSessionProcessor parameter sessionId renamed to sessionIds (also changed from string to params string array).
+- Remove cancellation token from CreateProcessor and CreateSessionProcessor
   _(A community contribution, courtesy of [danielmarbach](https://github.com/danielmarbach))_
 - Rename SendBatchAsync to SendAsync
 - Add SenderOptions parameter to CreateSender method.

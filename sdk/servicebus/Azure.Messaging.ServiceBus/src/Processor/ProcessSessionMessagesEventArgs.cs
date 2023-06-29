@@ -13,16 +13,16 @@ using Azure.Messaging.ServiceBus.Processor;
 namespace Azure.Messaging.ServiceBus
 {
     /// <summary>
-    /// The <see cref="ProcessSessionMessageEventArgs"/> contain event args that
+    /// The <see cref="ProcessSessionMessagesEventArgs"/> contain event args that
     /// are specific to the <see cref="ServiceBusReceivedMessage"/> and session that
     /// is being processed.
     /// </summary>
-    public class ProcessSessionMessageEventArgs : EventArgs, IProcessedMessages
+    public class ProcessSessionMessagesEventArgs : EventArgs, IProcessedMessages
     {
         /// <summary>
         /// Gets the <see cref="ServiceBusReceivedMessage"/> to be processed.
         /// </summary>
-        public ServiceBusReceivedMessage Message { get; }
+        public IReadOnlyList<ServiceBusReceivedMessage> Messages { get; }
 
         /// <summary>
         /// Gets the <see cref="System.Threading.CancellationToken"/> instance which
@@ -31,9 +31,9 @@ namespace Azure.Messaging.ServiceBus
         /// </summary>
         public CancellationToken CancellationToken { get; }
 
-        internal ConcurrentDictionary<ServiceBusReceivedMessage, byte> Messages => _receiveActions.Messages;
+        internal ConcurrentDictionary<ServiceBusReceivedMessage, byte> ReceivedActionsMessages => _receiveActions.Messages;
 
-        ICollection<ServiceBusReceivedMessage> IProcessedMessages.ProcessedMessages => Messages.Keys;
+        ICollection<ServiceBusReceivedMessage> IProcessedMessages.ProcessedMessages => ReceivedActionsMessages.Keys;
 
         /// <summary>
         /// The <see cref="ServiceBusSessionReceiver"/> that will be used for all settlement methods for the args.
@@ -70,60 +70,60 @@ namespace Azure.Messaging.ServiceBus
         public string FullyQualifiedNamespace => _sessionReceiver.FullyQualifiedNamespace;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ProcessSessionMessageEventArgs"/> class.
+        /// Initializes a new instance of the <see cref="ProcessSessionMessagesEventArgs"/> class.
         /// </summary>
         ///
-        /// <param name="message">The current <see cref="ServiceBusReceivedMessage"/>.</param>
+        /// <param name="messages">The current <see cref="ServiceBusReceivedMessage"/>.</param>
         /// <param name="receiver">The <see cref="ServiceBusSessionReceiver"/> that will be used for all settlement methods
         /// for the args.</param>
         /// <param name="cancellationToken">The processor's <see cref="System.Threading.CancellationToken"/> instance which will be cancelled in the event that <see cref="ServiceBusProcessor.StopProcessingAsync"/> is called.</param>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public ProcessSessionMessageEventArgs(
-            ServiceBusReceivedMessage message,
+        public ProcessSessionMessagesEventArgs(
+            IReadOnlyList<ServiceBusReceivedMessage> messages,
             ServiceBusSessionReceiver receiver,
-            CancellationToken cancellationToken) : this(message, manager: null, cancellationToken)
+            CancellationToken cancellationToken) : this(messages, manager: null, cancellationToken)
         {
             _sessionReceiver = receiver;
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ProcessSessionMessageEventArgs"/> class.
+        /// Initializes a new instance of the <see cref="ProcessSessionMessagesEventArgs"/> class.
         /// </summary>
         ///
-        /// <param name="message">The current <see cref="ServiceBusReceivedMessage"/>.</param>
+        /// <param name="messages">The current <see cref="ServiceBusReceivedMessage"/>.</param>
         /// <param name="receiver">The <see cref="ServiceBusSessionReceiver"/> that will be used for all settlement methods
         /// for the args.</param>
         /// <param name="identifier">The identifier of the processor.</param>
         /// <param name="cancellationToken">The processor's <see cref="System.Threading.CancellationToken"/> instance which will be cancelled in the event that <see cref="ServiceBusProcessor.StopProcessingAsync"/> is called.</param>
-        public ProcessSessionMessageEventArgs(
-            ServiceBusReceivedMessage message,
+        public ProcessSessionMessagesEventArgs(
+            IReadOnlyList<ServiceBusReceivedMessage> messages,
             ServiceBusSessionReceiver receiver,
             string identifier,
-            CancellationToken cancellationToken) : this(message, receiver, cancellationToken)
+            CancellationToken cancellationToken) : this(messages, receiver, cancellationToken)
         {
             Identifier = identifier;
         }
 
-        internal ProcessSessionMessageEventArgs(
-            ServiceBusReceivedMessage message,
+        internal ProcessSessionMessagesEventArgs(
+            IReadOnlyList<ServiceBusReceivedMessage> messages,
             SessionReceiverManager manager,
             CancellationToken cancellationToken)
         {
-            Message = message;
+            Messages = messages;
             _manager = manager;
 
             // manager would be null in scenarios where customers are using the public constructor for testing purposes.
             _sessionReceiver = (ServiceBusSessionReceiver) _manager?.Receiver;
-            _receiveActions = new ProcessorReceiveActions(message, manager, false);
+            _receiveActions = new ProcessorReceiveActions(messages, manager, false);
             CancellationToken = cancellationToken;
         }
 
         [EditorBrowsable(EditorBrowsableState.Never)]
-        internal ProcessSessionMessageEventArgs(
-            ServiceBusReceivedMessage message,
+        internal ProcessSessionMessagesEventArgs(
+            IReadOnlyList<ServiceBusReceivedMessage> messages,
             SessionReceiverManager manager,
             string identifier,
-            CancellationToken cancellationToken) : this(message, manager, cancellationToken)
+            CancellationToken cancellationToken) : this(messages, manager, cancellationToken)
         {
             Identifier = identifier;
         }

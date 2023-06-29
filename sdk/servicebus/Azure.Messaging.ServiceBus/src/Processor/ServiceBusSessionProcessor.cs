@@ -154,6 +154,16 @@ namespace Azure.Messaging.ServiceBus
             await InnerProcessor.OnProcessSessionMessageAsync(args).ConfigureAwait(false);
         }
 
+        /// <summary>
+        /// Invokes the process message event handler after a message has been received.
+        /// This method can be overriden to raise an event manually for testing purposes.
+        /// </summary>
+        /// <param name="args">The event args containing information related to the session message.</param>
+        protected internal virtual async Task OnProcessSessionMessagesAsync(ProcessSessionMessagesEventArgs args)
+        {
+            await InnerProcessor.OnProcessSessionMessagesAsync(args).ConfigureAwait(false);
+        }
+
         /// <inheritdoc cref="ServiceBusProcessor.OnProcessErrorAsync(ProcessErrorEventArgs)"/>
         protected internal virtual async Task OnProcessErrorAsync(ProcessErrorEventArgs args)
         {
@@ -199,6 +209,28 @@ namespace Azure.Messaging.ServiceBus
             remove
             {
                 InnerProcessor.ProcessSessionMessageAsync -= value;
+            }
+        }
+
+        /// <summary>
+        /// The handler responsible for processing messages received from the Queue or Subscription. Implementation is mandatory.
+        /// </summary>
+        /// <remarks>
+        /// It is not recommended that the state of the processor be managed directly from within this handler; requesting to start or stop the processor may result in
+        /// a deadlock scenario.
+        /// </remarks>
+        [SuppressMessage("Usage", "AZC0002:Ensure all service methods take an optional CancellationToken parameter.", Justification = "Guidance does not apply; this is an event.")]
+        [SuppressMessage("Usage", "AZC0003:DO make service methods virtual.", Justification = "This member follows the standard .NET event pattern; override via the associated On<<EVENT>> method.")]
+        public event Func<ProcessSessionMessagesEventArgs, Task> ProcessMessagesAsync
+        {
+            add
+            {
+                InnerProcessor.ProcessSessionMessagesAsync += value;
+            }
+
+            remove
+            {
+                InnerProcessor.ProcessSessionMessagesAsync -= value;
             }
         }
 

@@ -52,6 +52,30 @@ namespace Azure.Messaging.ServiceBus
         public SubQueue SubQueue { get; set; } = SubQueue.None;
 
         /// <summary>
+        /// Number of messages to receive.
+        /// <exception cref="ArgumentOutOfRangeException">
+        ///   A value less than 1 is attempted to be set for the property.
+        /// </exception>
+        /// </summary>
+        public int BatchSize
+        {
+            get
+            {
+                return _batchSize;
+            }
+            set
+            {
+                if (value < 1)
+                {
+                    throw new ArgumentOutOfRangeException(nameof(BatchSize));
+                }
+                _batchSize = value;
+            }
+        }
+
+        private int _batchSize = 1;
+
+        /// <summary>
         /// Determines whether the specified <see cref="System.Object" /> is equal to this instance.
         /// </summary>
         ///
@@ -90,7 +114,8 @@ namespace Azure.Messaging.ServiceBus
                 ReceiveMode = ReceiveMode,
                 PrefetchCount = PrefetchCount,
                 SubQueue = SubQueue,
-                Identifier = Identifier
+                Identifier = Identifier,
+                BatchSize = BatchSize
             };
     }
 }

@@ -1,0 +1,22 @@
+name: Pull Request
+
+on: [pull_request]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v3
+      with:
+        source-url: https://nuget.pkg.github.com/EleventhHourGames/index.json
+        dotnet-version: |
+          6.0.x
+          7.0.x
+      env:
+        NUGET_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
+    - name: Build
+      run: dotnet build eng/service.proj -c Release -p:ServiceDirectory=servicebus
