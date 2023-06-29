@@ -57,7 +57,7 @@ namespace Azure.Core.Json
             try
             {
                 // TODO: change this implementation so we don't deserialize known types.
-				// i.e. check typeof(T) and call relevant GetXx() method for supported types.
+                // i.e. check typeof(T) and call relevant GetXx() method for supported types.
                 // Can we do better here per perf?
 
                 T? value;
