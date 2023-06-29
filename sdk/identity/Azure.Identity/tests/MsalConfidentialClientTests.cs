@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Azure.Identity.Tests.Mock;
 using Microsoft.Identity.Client;
@@ -28,13 +29,14 @@ namespace Azure.Identity.Tests
         }
 
         [Test]
-        public void CacheRespectsEnableCaeConfig(
+        public async Task CacheRespectsEnableCaeConfig(
             [Values(true, false)] bool enableCae)
         {
-            var options = new TestCredentialOptions {
-                        Transport = new MockTransport(),
-                        TokenCachePersistenceOptions = new TokenCachePersistenceOptions()
-                    };
+            var options = new TestCredentialOptions
+            {
+                Transport = new MockTransport(),
+                TokenCachePersistenceOptions = new TokenCachePersistenceOptions()
+            };
             var client = new MockMsalConfidentialClient(
                 CredentialPipeline.GetInstance(options),
                 "tenant",
@@ -43,9 +45,13 @@ namespace Azure.Identity.Tests
                 "https://redirect",
                 options);
 
-            client.CallBaseGetClientAsync(enableCae, false, default);
+            await client.CallBaseGetClientAsync(true, true, default);
+            await client.CallBaseGetClientAsync(false, true, default);
+            var caeEnabledCache = await client.GetTokenCache(true);
+            var caeDisabledCache = await client.GetTokenCache(false);
 
-            Assert.AreEqual(enableCae, client.Cache.EnableCae);
+            Assert.True(caeEnabledCache.EnableCae);
+            Assert.False(caeDisabledCache.EnableCae);
         }
 
         public class TestCredentialOptions : TokenCredentialOptions, ISupportsTokenCachePersistenceOptions

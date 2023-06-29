@@ -29,7 +29,7 @@ namespace Azure.Identity.Tests
         protected const string ExpectedUsername = "mockuser@mockdomain.com";
         protected const string UserrealmResponse = "{\"ver\": \"1.0\", \"account_type\": \"Managed\", \"domain_name\": \"constoso.com\", \"cloud_instance_name\": \"microsoftonline.com\", \"cloud_audience_urn\": \"urn:federation:MicrosoftOnline\"}";
         protected string expectedToken;
-        protected string expectedUserAssertion;
+        protected string expectedUserAssertion = Guid.NewGuid().ToString();
         protected string expectedTenantId;
         protected string expectedReplyUri;
         protected string authCode;
@@ -189,13 +189,18 @@ namespace Azure.Identity.Tests
         }
 
         [Test]
-        public async Task EnableCae([Values(true, false)] bool enableCae)
+        public async Task EnableCae()
         {
+            //TODO: Remove
+            using var logger = Core.Diagnostics.AzureEventSourceListener.CreateConsoleLogger();
             // Configure the transport
             var token = Guid.NewGuid().ToString();
             var idToken = CredentialTestHelpers.CreateMsalIdToken(Guid.NewGuid().ToString(), "userName", TenantId);
             bool calledDiscoveryEndpoint = false;
             bool isPubClient = false;
+            bool observedCae = false;
+            bool observedNoCae = false;
+
             var mockTransport = new MockTransport(req =>
             {
                 calledDiscoveryEndpoint |= req.Uri.Path.Contains("discovery/instance");
@@ -211,7 +216,7 @@ namespace Azure.Identity.Tests
                 }
                 else
                 {
-                    if (isPubClient || typeof(TCredOptions) == typeof(AuthorizationCodeCredentialOptions))
+                    if (isPubClient || typeof(TCredOptions) == typeof(AuthorizationCodeCredentialOptions) || typeof(TCredOptions) == typeof(OnBehalfOfCredentialOptions))
                     {
                         response = CredentialTestHelpers.CreateMockMsalTokenResponse(200, token, TenantId, ExpectedUsername, ObjectId);
                     }
@@ -229,16 +234,20 @@ namespace Azure.Identity.Tests
                             .Select(q => q.Split('='))
                             .ToDictionary(kvp => kvp[0], kvp => kvp[1]);
                         bool containsClaims = queryString.TryGetValue("claims", out var claimsJson);
+                        bool enableCae = req.ClientRequestId == "enableCae";
+                        if (enableCae)
+                        {
+                            observedCae = true;
+                        }
+                        else
+                        {
+                            observedNoCae = true;
+                        }
                         Assert.AreEqual(enableCae, containsClaims);
                         if (containsClaims)
                         {
                             var claims = System.Text.Json.JsonSerializer.Deserialize<Claims>(claimsJson);
                             CollectionAssert.Contains(claims.access_token.xms_cc.values, "CP1");
-                        }
-
-                        if (content.Contains("grant"))
-                        {
-                            Console.WriteLine("has grant type");
                         }
                     }
                 }
@@ -257,8 +266,33 @@ namespace Azure.Identity.Tests
                 Assert.Ignore("EnableCAE tests do not apply to the non-MSAL credentials.");
             }
             isPubClient = CredentialTestHelpers.IsCredentialTypePubClient(credential);
-            AccessToken actualToken = await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default, new TokenRequestContextOptions { EnableCae = enableCae }), default);
-            Assert.AreEqual(token, actualToken.Token);
+
+            // First call with EnableCae = false
+            using (HttpPipeline.CreateClientRequestIdScope("disableCae"))
+            {
+                AccessToken actualToken = await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default, new TokenRequestContextOptions { EnableCae = false }), default);
+                Assert.AreEqual(token, actualToken.Token);
+            }
+            // First call with EnableCae = true
+            using (HttpPipeline.CreateClientRequestIdScope("enableCae"))
+            {
+                AccessToken actualToken = await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default, new TokenRequestContextOptions { EnableCae = true }), default);
+                Assert.AreEqual(token, actualToken.Token);
+            }
+            // Second call with EnableCae = false
+            using (HttpPipeline.CreateClientRequestIdScope("disableCae"))
+            {
+                AccessToken actualToken = await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default, new TokenRequestContextOptions { EnableCae = false }), default);
+                Assert.AreEqual(token, actualToken.Token);
+            }
+            // Second call with EnableCae = true
+            using (HttpPipeline.CreateClientRequestIdScope("enableCae"))
+            {
+                AccessToken actualToken = await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default, new TokenRequestContextOptions { EnableCae = true }), default);
+                Assert.AreEqual(token, actualToken.Token);
+            }
+            Assert.True(observedCae);
+            Assert.True(observedNoCae);
         }
 
         public class AllowedTenantsTestParameters

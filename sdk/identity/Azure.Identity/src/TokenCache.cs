@@ -29,8 +29,6 @@ namespace Azure.Identity
         private readonly bool _persistToDisk;
         private AsyncLockWithValue<MsalCacheHelperWrapper> cacheHelperLock = new AsyncLockWithValue<MsalCacheHelperWrapper>();
         private readonly MsalCacheHelperWrapper _cacheHelperWrapper;
-        private const string CaeEnabledCacheSuffix = ".cae";
-        private const string CaeDisabledCacheSuffix = ".nocae";
 
         /// <summary>
         /// The internal state of the cache.
@@ -41,7 +39,7 @@ namespace Azure.Identity
         /// Determines whether the token cache will be associated with CAE enabled requests.
         /// </summary>
         /// <value>If true, this cache services only CAE enabled requests.Otherwise, this cache services non-CAE enabled requests.</value>
-        internal bool EnableCae { get; set; }
+        internal bool EnableCae { get;}
 
         private class CacheTimestamp
         {
@@ -65,14 +63,16 @@ namespace Azure.Identity
         /// Creates a new instance of <see cref="TokenCache"/> with the specified options.
         /// </summary>
         /// <param name="options">Options controlling the storage of the <see cref="TokenCache"/>.</param>
-        public TokenCache(TokenCachePersistenceOptions options = null)
-            : this(options, default, default)
+        /// <param name="enableCae">Controls whether this cache will be associated with CAE requests or non-CAE requests.</param>
+        public TokenCache(TokenCachePersistenceOptions options = null, bool enableCae = false)
+            : this(options, default, default, enableCae)
         { }
 
-        internal TokenCache(TokenCachePersistenceOptions options, MsalCacheHelperWrapper cacheHelperWrapper, Func<IPublicClientApplication> publicApplicationFactory = null)
+        internal TokenCache(TokenCachePersistenceOptions options, MsalCacheHelperWrapper cacheHelperWrapper, Func<IPublicClientApplication> publicApplicationFactory = null, bool enableCae = false)
         {
             _cacheHelperWrapper = cacheHelperWrapper ?? new MsalCacheHelperWrapper();
             _publicClientApplicationFactory = publicApplicationFactory ?? new Func<IPublicClientApplication>(() => PublicClientApplicationBuilder.Create(Guid.NewGuid().ToString()).Build());
+            EnableCae = enableCae;
             if (options is UnsafeTokenCacheOptions inMemoryOptions)
             {
                 TokenCacheUpdatedAsync = inMemoryOptions.TokenCacheUpdatedAsync;
@@ -83,7 +83,7 @@ namespace Azure.Identity
             else
             {
                 _allowUnencryptedStorage = options?.UnsafeAllowUnencryptedStorage ?? false;
-                _name = (options?.Name ?? Constants.DefaultMsalTokenCacheName) + (EnableCae ? CaeEnabledCacheSuffix : CaeDisabledCacheSuffix);
+                _name = (options?.Name ?? Constants.DefaultMsalTokenCacheName) + (enableCae ? Constants.CaeEnabledCacheSuffix : Constants.CaeDisabledCacheSuffix);
                 _persistToDisk = true;
             }
         }

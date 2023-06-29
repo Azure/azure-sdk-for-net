@@ -39,8 +39,6 @@ namespace Azure.Identity.Tests.Mock
             OnBehalfOfFactory = (_, _, _, _, _) => throw exception;
         }
 
-        public TokenCache Cache => TokenCache;
-
         public MockMsalConfidentialClient WithClientFactory(Func<string[], string, AuthenticationResult> clientFactory)
         {
             ClientFactory = clientFactory;

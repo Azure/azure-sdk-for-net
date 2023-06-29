@@ -40,8 +40,6 @@ namespace Azure.Identity.Tests.Mock
         public MockMsalPublicClient(CredentialPipeline pipeline, string tenantId, string clientId, string redirectUrl, TokenCredentialOptions options)
             : base(pipeline, tenantId, clientId, redirectUrl, options) { }
 
-        public TokenCache Cache => TokenCache;
-
         protected override ValueTask<List<IAccount>> GetAccountsCoreAsync(bool enableCae, bool async, CancellationToken cancellationToken)
         {
             return new(Accounts);
