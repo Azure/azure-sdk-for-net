@@ -5,6 +5,7 @@ using System;
 using System.Linq;
 using Azure.Core;
 using Azure.Core.TestFramework;
+using Azure.Core.TestFramework.Models;
 using Azure.ResourceManager;
 using Azure.ResourceManager.CognitiveServices;
 using Azure.ResourceManager.CognitiveServices.Models;
@@ -53,11 +54,9 @@ namespace Azure.AI.OpenAI.Tests
 
         protected OpenAITestBase(bool isAsync, RecordedTestMode? mode = null) : base(isAsync, mode)
         {
-            HeaderRegexSanitizers.Add(new Core.TestFramework.Models.HeaderRegexSanitizer("api-key", "***********"));
-            SanitizedQueryParameters.Add("sig");
-            BodyRegexSanitizers.Add(new Core.TestFramework.Models.BodyRegexSanitizer(
-                "(.*)sig=[^&\"\\\\]*([&\"\\\\].*)",
-                "${1}sig=Sanitized${2}"));
+            HeaderRegexSanitizers.Add(new HeaderRegexSanitizer("api-key", "***********"));
+            this.UriRegexSanitizers.Add(new UriRegexSanitizer("sig=[^\"]*", "sig=Sanitized"));
+            this.BodyRegexSanitizers.Add(new BodyRegexSanitizer("sig=[^\"]*", "sig=Sanitized"));
         }
 
         protected OpenAIClient GetAzureClientWithKey() => InstrumentClient(
