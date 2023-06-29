@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Batch.Models
         /// </summary>
         public BinaryData Settings { get; set; }
         /// <summary>
-        /// The extension can contain either protectedSettings or protectedSettingsFromKeyVault or no protected settings at all. 
+        /// The extension can contain either protectedSettings or protectedSettingsFromKeyVault or no protected settings at all.
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>

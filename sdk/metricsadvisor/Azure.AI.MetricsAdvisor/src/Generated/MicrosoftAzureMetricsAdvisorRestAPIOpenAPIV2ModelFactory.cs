@@ -21,7 +21,7 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// <param name="description"> anomaly alerting configuration description. </param>
         /// <param name="crossMetricsOperator">
         /// cross metrics operator
-        /// 
+        ///
         /// should be specified when setting up multiple metric alerting configurations
         /// </param>
         /// <param name="dimensionsToSplitAlert"> dimensions used to split alert. </param>

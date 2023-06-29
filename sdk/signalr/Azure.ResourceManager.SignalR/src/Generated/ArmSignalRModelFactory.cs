@@ -70,9 +70,9 @@ namespace Azure.ResourceManager.SignalR.Models
         /// <param name="hostNamePrefix"> Deprecated. </param>
         /// <param name="features">
         /// List of the featureFlags.
-        /// 
+        ///
         /// FeatureFlags that are not included in the parameters for the update operation will not be modified.
-        /// And the response will only include featureFlags that are explicitly set. 
+        /// And the response will only include featureFlags that are explicitly set.
         /// When a featureFlag is not explicitly set, its globally default value will be used
         /// But keep in mind, the default value doesn't mean "false". It varies in terms of different FeatureFlags.
         /// </param>
@@ -113,19 +113,19 @@ namespace Azure.ResourceManager.SignalR.Models
         /// <summary> Initializes a new instance of SignalRResourceSku. </summary>
         /// <param name="name">
         /// The name of the SKU. Required.
-        /// 
+        ///
         /// Allowed values: Standard_S1, Free_F1
         /// </param>
         /// <param name="tier">
-        /// Optional tier of this particular SKU. 'Standard' or 'Free'. 
-        /// 
+        /// Optional tier of this particular SKU. 'Standard' or 'Free'.
+        ///
         /// `Basic` is deprecated, use `Standard` instead.
         /// </param>
         /// <param name="size"> Not used. Retained for future use. </param>
         /// <param name="family"> Not used. Retained for future use. </param>
         /// <param name="capacity">
         /// Optional, integer. The unit count of the resource. 1 by default.
-        /// 
+        ///
         /// If present, following values are allowed:
         ///     Free: 1
         ///     Standard: 1,2,5,10,20,50,100

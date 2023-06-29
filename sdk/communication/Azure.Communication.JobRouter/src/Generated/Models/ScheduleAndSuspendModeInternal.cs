@@ -12,7 +12,6 @@ namespace Azure.Communication.JobRouter
     /// <summary> The ScheduleAndSuspendModeInternal. </summary>
     internal partial class ScheduleAndSuspendModeInternal
     {
-
         /// <summary> Initializes a new instance of ScheduleAndSuspendModeInternal. </summary>
         /// <param name="scheduleAt"></param>
         internal ScheduleAndSuspendModeInternal(DateTimeOffset? scheduleAt)
