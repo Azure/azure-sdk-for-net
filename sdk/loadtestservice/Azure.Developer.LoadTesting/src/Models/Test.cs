@@ -110,67 +110,137 @@ namespace Azure.Developer.LoadTesting.Models
         /// <summary> Unique test name as identifier. </summary>
         public string TestId
         {
-            get => _element.GetProperty("testId").GetString();
+            get
+            {
+                if (_element.TryGetProperty("testId", out MutableJsonElement value))
+                {
+                    return value.GetString();
+                }
+                return null;
+            }
             set => _element.SetProperty("testId", value);
         }
 
         /// <summary> The test description. </summary>
         public string Description
         {
-            get => _element.GetProperty("description").GetString();
+            get
+            {
+                if (_element.TryGetProperty("description", out MutableJsonElement value))
+                {
+                    return value.GetString();
+                }
+                return null;
+            }
             set => _element.SetProperty("description", value);
         }
 
         /// <summary> Display name of a test. </summary>
         public string DisplayName
         {
-            get => _element.GetProperty("displayName").GetString();
+            get
+            {
+                if (_element.TryGetProperty("displayName", out MutableJsonElement value))
+                {
+                    return value.GetString();
+                }
+                return null;
+            }
             set => _element.SetProperty("displayName", value);
         }
 
         /// <summary> Subnet ID on which the load test instances should run. </summary>
         public string SubnetId
         {
-            get => _element.GetProperty("subnetId").GetString();
+            get
+            {
+                if (_element.TryGetProperty("subnetId", out MutableJsonElement value))
+                {
+                    return value.GetString();
+                }
+                return null;
+            }
             set => _element.SetProperty("subnetId", value);
         }
 
         /// <summary> Type of the managed identity referencing the Key vault. </summary>
         public string KeyvaultReferenceIdentityType
         {
-            get => _element.GetProperty("keyvaultReferenceIdentityType").GetString();
+            get
+            {
+                if (_element.TryGetProperty("keyvaultReferenceIdentityType", out MutableJsonElement value))
+                {
+                    return value.GetString();
+                }
+                return null;
+            }
             set => _element.SetProperty("keyvaultReferenceIdentityType", value);
         }
 
         /// <summary> Resource Id of the managed identity referencing the Key vault. </summary>
         public string KeyvaultReferenceIdentityId
         {
-            get => _element.GetProperty("keyvaultReferenceIdentityId").GetString();
+            get
+            {
+                if (_element.TryGetProperty("keyvaultReferenceIdentityId", out MutableJsonElement value))
+                {
+                    return value.GetString();
+                }
+                return null;
+            }
             set => _element.SetProperty("keyvaultReferenceIdentityId", value);
         }
 
         /// <summary> The creation datetime(ISO 8601 literal format). </summary>
         public DateTimeOffset? CreatedDateTime
         {
-            get => _element.GetProperty("createdDateTime").GetDateTimeOffset();
+            get
+            {
+                if (_element.TryGetProperty("createdDateTime", out MutableJsonElement value))
+                {
+                    return value.GetDateTimeOffset();
+                }
+                return null;
+            }
         }
 
         /// <summary> The user that created. </summary>
         public string CreatedBy
         {
-            get => _element.GetProperty("createdBy").GetString();
+            get
+            {
+                if (_element.TryGetProperty("createdBy", out MutableJsonElement value))
+                {
+                    return value.GetString();
+                }
+                return null;
+            }
         }
 
         /// <summary> The last Modified datetime(ISO 8601 literal format). </summary>
         public DateTimeOffset? LastModifiedDateTime
         {
-            get => _element.GetProperty("lastModifiedDateTime").GetDateTimeOffset();
+            get
+            {
+                if (_element.TryGetProperty("lastModifiedDateTime", out MutableJsonElement value))
+                {
+                    return value.GetDateTimeOffset();
+                }
+                return null;
+            }
         }
 
         /// <summary> The user that last modified. </summary>
         public string LastModifiedBy
         {
-            get => _element.GetProperty("lastModifiedBy").GetString();
+            get
+            {
+                if (_element.TryGetProperty("lastModifiedBy", out MutableJsonElement value))
+                {
+                    return value.GetString();
+                }
+                return null;
+            }
         }
     }
 }
