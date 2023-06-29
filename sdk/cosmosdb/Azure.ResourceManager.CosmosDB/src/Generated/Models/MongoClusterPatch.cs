@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public CosmosDBAccountCreateMode? CreateMode { get; set; }
         /// <summary> Parameters used for restore operations. </summary>
         public MongoClusterRestoreParameters RestoreParameters { get; set; }
-        /// <summary> The administrator&apos;s login for the mongo cluster. </summary>
+        /// <summary> The administrator's login for the mongo cluster. </summary>
         public string AdministratorLogin { get; set; }
         /// <summary> The password of the administrator login. </summary>
         public string AdministratorLoginPassword { get; set; }

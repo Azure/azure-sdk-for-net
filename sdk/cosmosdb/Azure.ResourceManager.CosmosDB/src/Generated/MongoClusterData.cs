@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="location"> The location. </param>
         /// <param name="createMode"> The mode to create a mongo cluster. </param>
         /// <param name="restoreParameters"> Parameters used for restore operations. </param>
-        /// <param name="administratorLogin"> The administrator&apos;s login for the mongo cluster. </param>
+        /// <param name="administratorLogin"> The administrator's login for the mongo cluster. </param>
         /// <param name="administratorLoginPassword"> The password of the administrator login. </param>
         /// <param name="serverVersion"> The Mongo DB server version. Defaults to the latest available version if not specified. </param>
         /// <param name="connectionString"> The default mongo connection string for the cluster. </param>
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.CosmosDB
         public CosmosDBAccountCreateMode? CreateMode { get; set; }
         /// <summary> Parameters used for restore operations. </summary>
         public MongoClusterRestoreParameters RestoreParameters { get; set; }
-        /// <summary> The administrator&apos;s login for the mongo cluster. </summary>
+        /// <summary> The administrator's login for the mongo cluster. </summary>
         public string AdministratorLogin { get; set; }
         /// <summary> The password of the administrator login. </summary>
         public string AdministratorLoginPassword { get; set; }
