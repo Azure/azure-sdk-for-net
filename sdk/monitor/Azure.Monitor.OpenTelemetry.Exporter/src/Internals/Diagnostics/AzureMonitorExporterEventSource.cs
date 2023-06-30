@@ -272,6 +272,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics
         public void TransmitterFailed(string instrumentationKey, string exceptionMessage) => WriteEvent(33, instrumentationKey, exceptionMessage);
 
         [Event(34, Message = "Exporter encountered a transmission failure and will wait {0} milliseconds before transmitting again.", Level = EventLevel.Warning)]
-        public void BackoffEnabled(double milliseconds) => WriteEvent(33, milliseconds);
+        public void BackoffEnabled(double milliseconds) => WriteEvent(34, milliseconds);
     }
 }
