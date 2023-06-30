@@ -94,7 +94,7 @@ namespace Microsoft.Azure.Management.Compute
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "publicGalleryName");
             }
-            string apiVersion = "2022-03-03";
+            string apiVersion = "2022-08-03";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
