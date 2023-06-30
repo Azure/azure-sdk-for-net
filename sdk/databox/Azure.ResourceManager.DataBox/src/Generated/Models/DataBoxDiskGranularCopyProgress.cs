@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.DataBox.Models
         /// <param name="directoriesErroredOut"> To indicate directories errored out in the job. </param>
         /// <param name="invalidDirectoriesProcessed"> To indicate directories renamed. </param>
         /// <param name="isEnumerationInProgress">
-        /// To indicate if enumeration of data is in progress. 
+        /// To indicate if enumeration of data is in progress.
         /// Until this is true, the TotalBytesToProcess may not be valid.
         /// </param>
         /// <param name="error"> Error, if any, in the stage. </param>

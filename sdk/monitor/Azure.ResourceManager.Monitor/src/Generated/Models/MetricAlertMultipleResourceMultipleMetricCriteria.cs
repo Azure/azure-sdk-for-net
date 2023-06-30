@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="odataType"> specifies the type of the alert criteria. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
         /// <param name="allOf">
-        /// the list of multiple metric criteria for this 'all of' operation. 
+        /// the list of multiple metric criteria for this 'all of' operation.
         /// Please note <see cref="MultiMetricCriteria"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="DynamicMetricCriteria"/> and <see cref="MetricCriteria"/>.
         /// </param>
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Monitor.Models
         }
 
         /// <summary>
-        /// the list of multiple metric criteria for this 'all of' operation. 
+        /// the list of multiple metric criteria for this 'all of' operation.
         /// Please note <see cref="MultiMetricCriteria"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="DynamicMetricCriteria"/> and <see cref="MetricCriteria"/>.
         /// </summary>

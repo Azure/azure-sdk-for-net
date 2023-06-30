@@ -10,6 +10,9 @@
 
 ### Other Changes
 
+## 5.1.3 (2023-06-26)
+- Loosen parameter binding data parsing and validation to allow binding BlobContainerClient without blob name. (#37124)
+
 ## 5.1.2 (2023-04-27)
 - Fixed bug where the blob container would scan from the beginning due not correctly updating the latest scan time. (#35145)
 
