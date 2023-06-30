@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<RunSettings>
+    <DataCollectionRunSettings>
+        <DataCollectors>
+            <DataCollector friendlyName="Code Coverage">
+                <Configuration>
+                    <CodeCoverage>
+                        <ModulePaths>
+                            <Exclude>
+                                <ModulePath>azure.communication.identity.*</ModulePath>
+                                <!-- Add more ModulePath nodes here. -->
+                            </Exclude>
+                        </ModulePaths>
+                    </CodeCoverage>
+                </Configuration>
+            </DataCollector>
+        </DataCollectors>
+    </DataCollectionRunSettings>
+</RunSettings>
