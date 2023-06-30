@@ -7,7 +7,7 @@ azure-arm: true
 csharp: true
 library-name: NetworkCloud
 namespace: Azure.ResourceManager.NetworkCloud
-require: https://github.com/Azure/azure-rest-api-specs/blob/c10e2354bed3a529a382a095642558dfd673e7bf/specification/networkcloud/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/64efc48302878a07d1d1231eaed0ca9cadfaf037/specification/networkcloud/resource-manager/readme.md
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 skip-csproj: true
@@ -78,6 +78,11 @@ directive:
         'principalId',
         'applicationId'
       ];
+  # CodeGen don't support some definitions in v4 & v5 common types, here is an issue https://github.com/Azure/autorest.csharp/issues/3537 opened to fix this problem
+  - from: v5/types.json
+    where: $.definitions
+    transform: >
+      delete $.Resource.properties.id.format;
   # `delete` transformations are to remove APIs/methods that result in Access Denied for end users.
   - remove-operation: BareMetalMachines_CreateOrUpdate
   - remove-operation: BareMetalMachines_Delete
