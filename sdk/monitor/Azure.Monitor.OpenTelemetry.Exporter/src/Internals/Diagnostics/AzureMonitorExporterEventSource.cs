@@ -77,7 +77,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics
                     }
                 }
             }
-            else if (IsEnabled(EventLevel.Error))
+            else if (IsEnabled(EventLevel.Critical))
             {
                 TransmissionFailed(
                     statusCode: statusCode,
