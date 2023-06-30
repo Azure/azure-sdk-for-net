@@ -6,7 +6,7 @@ using Azure.Communication.Tests;
 
 namespace Azure.Communication.Chat.Tests
 {
-    [ExcludeFromCodeCoverage]
+    //[ExcludeFromCodeCoverage]
     /// <summary>
     /// A helper class used to retrieve information to be used for tests.
     /// </summary>

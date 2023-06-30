@@ -11,7 +11,6 @@ using NUnit.Framework;
 
 namespace Azure.Communication.Chat.Tests.samples
 {
-    [ExcludeFromCodeCoverage]
     public partial class Sample2_MessagingOperations : SamplesBase<ChatTestEnvironment>
     {
         // This sample demonstrates the messaging operations that can be performed on a thread: send, get, update, delete, typing notifications and readreceipts
