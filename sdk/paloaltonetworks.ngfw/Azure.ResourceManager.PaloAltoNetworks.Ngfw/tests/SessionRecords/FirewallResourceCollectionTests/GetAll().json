@@ -1,0 +1,551 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/2bf4a339-294d-4c25-b0b2-ef649e9f5c27?api-version=2021-01-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-e232c52f7388e9887eadbf074ac63a5e-df22ecc2bd6a6166-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.6.0 (.NET 7.0.7; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "0837201954d770fb917bc9bf0e4ac646",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "440",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 28 Jun 2023 06:15:31 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "9a91e54a-9823-4629-afbe-238774b94ee3",
+        "x-ms-ratelimit-remaining-subscription-reads": "11986",
+        "x-ms-request-id": "9a91e54a-9823-4629-afbe-238774b94ee3",
+        "x-ms-routing-request-id": "SOUTHINDIA:20230628T061531Z:9a91e54a-9823-4629-afbe-238774b94ee3"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/2bf4a339-294d-4c25-b0b2-ef649e9f5c27",
+        "authorizationSource": "RoleBased",
+        "managedByTenants": [
+          {
+            "tenantId": "942b80cd-1b14-42a1-8dcf-4b21dece61ba"
+          }
+        ],
+        "subscriptionId": "2bf4a339-294d-4c25-b0b2-ef649e9f5c27",
+        "tenantId": "888d76fa-54b2-4ced-8ee5-aac1585adee7",
+        "displayName": "Liftr-PAN",
+        "state": "Enabled",
+        "subscriptionPolicies": {
+          "locationPlacementId": "Public_2014-09-01",
+          "quotaId": "PayAsYouGo_2014-09-01",
+          "spendingLimit": "Off"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/2bf4a339-294d-4c25-b0b2-ef649e9f5c27/resourcegroups/dotnetSdkTest-4436?api-version=**",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "22",
+        "Content-Type": "application/json",
+        "traceparent": "00-e3a9eccdac36686d8f99218172c81ed1-6c43d0c537c29598-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.6.0 (.NET 7.0.7; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "093370e7f15d46da0a775428488f2fa9",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "location": "eastus2"
+      },
+      "StatusCode": 201,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "234",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 28 Jun 2023 06:15:31 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "f9b4316a-2df0-4ab5-9224-5d4218a1510f",
+        "x-ms-ratelimit-remaining-subscription-writes": "1195",
+        "x-ms-request-id": "f9b4316a-2df0-4ab5-9224-5d4218a1510f",
+        "x-ms-routing-request-id": "SOUTHINDIA:20230628T061531Z:f9b4316a-2df0-4ab5-9224-5d4218a1510f"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/2bf4a339-294d-4c25-b0b2-ef649e9f5c27/resourceGroups/dotnetSdkTest-4436",
+        "name": "dotnetSdkTest-4436",
+        "type": "Microsoft.Resources/resourceGroups",
+        "location": "eastus2",
+        "properties": {
+          "provisioningState": "Succeeded"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/2bf4a339-294d-4c25-b0b2-ef649e9f5c27/resourcegroups/dotnetSdkTest-infra-rg?api-version=**",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-b5a64006f60fe129dae4d9867723fac4-e8874d3fde842ac4-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.6.0 (.NET 7.0.7; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "f233ba3aef4d13b3e6c63a8a92bbf19f",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "259",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 28 Jun 2023 06:15:31 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "e3420c25-d240-4b5f-83d5-f5e1f33abbfd",
+        "x-ms-ratelimit-remaining-subscription-reads": "11985",
+        "x-ms-request-id": "e3420c25-d240-4b5f-83d5-f5e1f33abbfd",
+        "x-ms-routing-request-id": "SOUTHINDIA:20230628T061531Z:e3420c25-d240-4b5f-83d5-f5e1f33abbfd"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/2bf4a339-294d-4c25-b0b2-ef649e9f5c27/resourceGroups/dotnetSdkTest-infra-rg",
+        "name": "dotnetSdkTest-infra-rg",
+        "type": "Microsoft.Resources/resourceGroups",
+        "location": "northcentralus",
+        "tags": {},
+        "properties": {
+          "provisioningState": "Succeeded"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/2bf4a339-294d-4c25-b0b2-ef649e9f5c27/resourceGroups/dotnetSdkTest-infra-rg/providers/PaloAltoNetworks.Cloudngfw/firewalls/dotnetSdkTest-default-1?api-version=2022-08-29",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-4cde707e30752e7c52e21f18ede4c4ed-a4fa8d91c5ae1085-00",
+        "User-Agent": "azsdk-net-ResourceManager.PaloAltoNetworks.Ngfw/1.0.0-alpha.20230623.1 (.NET 7.0.7; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "d43859e704f72ebc5dc2ccdca64848eb",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "2413",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 28 Jun 2023 06:15:32 GMT",
+        "ETag": "\u0022a9001eea-0000-0100-0000-649bbc590000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "d43859e704f72ebc5dc2ccdca64848eb",
+        "x-ms-correlation-request-id": "aad667d1-9d55-4e86-b137-315c4934174c",
+        "x-ms-providerhub-traffic": "True",
+        "x-ms-ratelimit-remaining-subscription-reads": "11984",
+        "x-ms-request-id": "e37a61cb-a801-4f45-a780-c494ff01c692",
+        "x-ms-routing-request-id": "SOUTHINDIA:20230628T061532Z:aad667d1-9d55-4e86-b137-315c4934174c"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/2bf4a339-294d-4c25-b0b2-ef649e9f5c27/resourceGroups/dotnetSdkTest-infra-rg/providers/PaloAltoNetworks.Cloudngfw/firewalls/dotnetSdkTest-default-1",
+        "name": "dotnetSdkTest-default-1",
+        "type": "paloaltonetworks.cloudngfw/firewalls",
+        "location": "eastus2",
+        "tags": {},
+        "systemData": {
+          "createdBy": "vibhuti.sharma@microsoft.com",
+          "createdByType": "User",
+          "createdAt": "2023-06-28T04:29:21.3902027Z",
+          "lastModifiedBy": "54a2195e-8365-444c-8f50-4a5de4be1e2b",
+          "lastModifiedByType": "Application",
+          "lastModifiedAt": "2023-06-28T04:51:37.9231891Z"
+        },
+        "properties": {
+          "networkProfile": {
+            "vnetConfiguration": {
+              "vnet": {
+                "resourceId": "/subscriptions/2bf4a339-294d-4c25-b0b2-ef649e9f5c27/resourceGroups/dotnetSdkTest-infra-rg/providers/Microsoft.Network/virtualNetworks/dotnetSdkTest-default-1-vnet"
+              },
+              "trustSubnet": {
+                "resourceId": "/subscriptions/2bf4a339-294d-4c25-b0b2-ef649e9f5c27/resourceGroups/dotnetSdkTest-infra-rg/providers/Microsoft.Network/virtualNetworks/dotnetSdkTest-default-1-vnet/subnets/subnet1"
+              },
+              "unTrustSubnet": {
+                "resourceId": "/subscriptions/2bf4a339-294d-4c25-b0b2-ef649e9f5c27/resourceGroups/dotnetSdkTest-infra-rg/providers/Microsoft.Network/virtualNetworks/dotnetSdkTest-default-1-vnet/subnets/subnet2"
+              },
+              "ipOfTrustSubnetForUdr": {
+                "address": "10.224.0.4"
+              }
+            },
+            "networkType": "VNET",
+            "publicIps": [
+              {
+                "resourceId": "/subscriptions/2bf4a339-294d-4c25-b0b2-ef649e9f5c27/resourceGroups/dotnetSdkTest-infra-rg/providers/Microsoft.Network/publicIPAddresses/dotnetSdkTest-default-1-public-ip",
+                "address": "20.122.25.79"
+              }
+            ],
+            "enableEgressNat": "DISABLED",
+            "egressNatIp": []
+          },
+          "associatedRulestack": {
+            "resourceId": "/subscriptions/2bf4a339-294d-4c25-b0b2-ef649e9f5c27/resourceGroups/dotnetSdkTest-infra-rg/providers/PaloAltoNetworks.Cloudngfw/localRulestacks/dotnetSdkTest-default-1-lrs",
+            "location": "eastus2",
+            "rulestackId": "SUBSCRIPTION~2bf4a339-294d-4c25-b0b2-ef649e9f5c27~RG~dotnetSdkTest-infra-rg~STACK~dotnetSdkTest-default-1-lrs"
+          },
+          "dnsSettings": {
+            "enableDnsProxy": "DISABLED",
+            "enabledDnsType": "CUSTOM"
+          },
+          "isPanoramaManaged": "FALSE",
+          "provisioningState": "Succeeded",
+          "planData": {
+            "usageType": "PAYG",
+            "billingCycle": "MONTHLY",
+            "planId": "cloud-ngfw-payg-test",
+            "effectiveDate": "0001-01-01T00:00:00Z"
+          },
+          "marketplaceDetails": {
+            "offerId": "pan_swfw_cloud_ngfw",
+            "publisherId": "paloaltonetworks",
+            "marketplaceSubscriptionStatus": "Subscribed",
+            "marketplaceSubscriptionId": "4d407033-fc7d-470b-dc72-24bd505968d9"
+          },
+          "panEtag": "6c9061f8-156c-11ee-a1f7-cedd2f0787df"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/2bf4a339-294d-4c25-b0b2-ef649e9f5c27/resourceGroups/dotnetSdkTest-infra-rg/providers/PaloAltoNetworks.Cloudngfw/firewalls?api-version=2022-08-29",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-25335f29f5a3ffa913a2d0d4f32217e1-3934bdef912d2b4d-00",
+        "User-Agent": "azsdk-net-ResourceManager.PaloAltoNetworks.Ngfw/1.0.0-alpha.20230623.1 (.NET 7.0.7; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "8fd416995492f883bc1f2397b74fb34e",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "9777",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 28 Jun 2023 06:15:36 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "d8d315ca-7b2e-47fd-8f11-f7720d71d0bb",
+        "x-ms-original-request-ids": [
+          "6fd9c3a6-d7dd-4852-abf5-5cc7c0e81c69",
+          "a76f68c7-8303-4a3b-93f8-dc19efe5fe4d",
+          "f62d2f65-09ef-43b5-ae30-004eff088e3b",
+          "9064e57e-52f7-4865-846d-3fb2b3498142",
+          "9cb43aea-f115-439c-9609-d7c4473d03f9",
+          "e8923b84-9cd9-4cf4-9e23-d4c561e30e86",
+          "c79a06f3-9f7e-4c8a-b06e-0a776a08f0f8",
+          "a869a290-a049-41a7-8cc7-15f06077bae3",
+          "575e6462-9737-49bb-ab1d-da46997a2c3d",
+          "61c36b2f-3747-47c6-8ff4-b0aa50d50421",
+          "379c2cda-7dcb-43ec-acad-d7d1d6d5a3ef",
+          "ea093d07-0aec-4809-a1cf-6490982c36d6",
+          "940f7b67-a907-4c64-ab88-f6a6c2b54d1c",
+          "bdd46896-edd3-44d3-b505-12d16fcacf5b",
+          "38cfb9c1-b34c-4954-8abf-43eca3b77ce8",
+          "138d3811-2495-4160-a5c5-ca328440f74c",
+          "baac1fd5-ea08-4b46-818b-9728529cde1b",
+          "78c54619-440f-4056-8237-e162421b9c7e",
+          "0d5de300-0d21-4338-aa58-9921963153a6",
+          "de811422-6163-4b6f-b95d-a6ba10390167",
+          "373bc04e-8d7f-4750-820f-dc5bbc259af5"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": "11983",
+        "x-ms-request-id": "d8d315ca-7b2e-47fd-8f11-f7720d71d0bb",
+        "x-ms-routing-request-id": "SOUTHINDIA:20230628T061536Z:d8d315ca-7b2e-47fd-8f11-f7720d71d0bb"
+      },
+      "ResponseBody": {
+        "value": [
+          {
+            "id": "/subscriptions/2bf4a339-294d-4c25-b0b2-ef649e9f5c27/resourceGroups/dotnetSdkTest-infra-rg/providers/PaloAltoNetworks.Cloudngfw/firewalls/dotnetSdkTest-default-1",
+            "name": "dotnetSdkTest-default-1",
+            "type": "paloaltonetworks.cloudngfw/firewalls",
+            "location": "eastus2",
+            "tags": {},
+            "systemData": {
+              "createdBy": "vibhuti.sharma@microsoft.com",
+              "createdByType": "User",
+              "createdAt": "2023-06-28T04:29:21.3902027Z",
+              "lastModifiedBy": "54a2195e-8365-444c-8f50-4a5de4be1e2b",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-06-28T04:51:37.9231891Z"
+            },
+            "properties": {
+              "networkProfile": {
+                "vnetConfiguration": {
+                  "vnet": {
+                    "resourceId": "/subscriptions/2bf4a339-294d-4c25-b0b2-ef649e9f5c27/resourceGroups/dotnetSdkTest-infra-rg/providers/Microsoft.Network/virtualNetworks/dotnetSdkTest-default-1-vnet"
+                  },
+                  "trustSubnet": {
+                    "resourceId": "/subscriptions/2bf4a339-294d-4c25-b0b2-ef649e9f5c27/resourceGroups/dotnetSdkTest-infra-rg/providers/Microsoft.Network/virtualNetworks/dotnetSdkTest-default-1-vnet/subnets/subnet1"
+                  },
+                  "unTrustSubnet": {
+                    "resourceId": "/subscriptions/2bf4a339-294d-4c25-b0b2-ef649e9f5c27/resourceGroups/dotnetSdkTest-infra-rg/providers/Microsoft.Network/virtualNetworks/dotnetSdkTest-default-1-vnet/subnets/subnet2"
+                  },
+                  "ipOfTrustSubnetForUdr": {
+                    "address": "10.224.0.4"
+                  }
+                },
+                "networkType": "VNET",
+                "publicIps": [
+                  {
+                    "resourceId": "/subscriptions/2bf4a339-294d-4c25-b0b2-ef649e9f5c27/resourceGroups/dotnetSdkTest-infra-rg/providers/Microsoft.Network/publicIPAddresses/dotnetSdkTest-default-1-public-ip",
+                    "address": "20.122.25.79"
+                  }
+                ],
+                "enableEgressNat": "DISABLED",
+                "egressNatIp": []
+              },
+              "associatedRulestack": {
+                "resourceId": "/subscriptions/2bf4a339-294d-4c25-b0b2-ef649e9f5c27/resourceGroups/dotnetSdkTest-infra-rg/providers/PaloAltoNetworks.Cloudngfw/localRulestacks/dotnetSdkTest-default-1-lrs",
+                "location": "eastus2",
+                "rulestackId": "SUBSCRIPTION~2bf4a339-294d-4c25-b0b2-ef649e9f5c27~RG~dotnetSdkTest-infra-rg~STACK~dotnetSdkTest-default-1-lrs"
+              },
+              "dnsSettings": {
+                "enableDnsProxy": "DISABLED",
+                "enabledDnsType": "CUSTOM"
+              },
+              "isPanoramaManaged": "FALSE",
+              "provisioningState": "Succeeded",
+              "planData": {
+                "usageType": "PAYG",
+                "billingCycle": "MONTHLY",
+                "planId": "cloud-ngfw-payg-test",
+                "effectiveDate": "0001-01-01T00:00:00Z"
+              },
+              "marketplaceDetails": {
+                "offerId": "pan_swfw_cloud_ngfw",
+                "publisherId": "paloaltonetworks",
+                "marketplaceSubscriptionStatus": "Subscribed",
+                "marketplaceSubscriptionId": "4d407033-fc7d-470b-dc72-24bd505968d9"
+              },
+              "panEtag": "6c9061f8-156c-11ee-a1f7-cedd2f0787df"
+            }
+          },
+          {
+            "id": "/subscriptions/2bf4a339-294d-4c25-b0b2-ef649e9f5c27/resourceGroups/dotnetSdkTest-infra-rg/providers/PaloAltoNetworks.Cloudngfw/firewalls/dotnetSdkTest-default-delAsync",
+            "name": "dotnetSdkTest-default-delAsync",
+            "type": "paloaltonetworks.cloudngfw/firewalls",
+            "location": "eastus2",
+            "tags": {},
+            "systemData": {
+              "createdBy": "vibhuti.sharma@microsoft.com",
+              "createdByType": "User",
+              "createdAt": "2023-06-28T04:33:37.5305383Z",
+              "lastModifiedBy": "54a2195e-8365-444c-8f50-4a5de4be1e2b",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-06-28T04:55:46.7583037Z"
+            },
+            "properties": {
+              "networkProfile": {
+                "vnetConfiguration": {
+                  "vnet": {
+                    "resourceId": "/subscriptions/2bf4a339-294d-4c25-b0b2-ef649e9f5c27/resourceGroups/dotnetSdkTest-infra-rg/providers/Microsoft.Network/virtualNetworks/dotnetSdkTest-default-delAsync-vnet"
+                  },
+                  "trustSubnet": {
+                    "resourceId": "/subscriptions/2bf4a339-294d-4c25-b0b2-ef649e9f5c27/resourceGroups/dotnetSdkTest-infra-rg/providers/Microsoft.Network/virtualNetworks/dotnetSdkTest-default-delAsync-vnet/subnets/subnet1"
+                  },
+                  "unTrustSubnet": {
+                    "resourceId": "/subscriptions/2bf4a339-294d-4c25-b0b2-ef649e9f5c27/resourceGroups/dotnetSdkTest-infra-rg/providers/Microsoft.Network/virtualNetworks/dotnetSdkTest-default-delAsync-vnet/subnets/subnet2"
+                  },
+                  "ipOfTrustSubnetForUdr": {
+                    "address": "10.224.0.4"
+                  }
+                },
+                "networkType": "VNET",
+                "publicIps": [
+                  {
+                    "resourceId": "/subscriptions/2bf4a339-294d-4c25-b0b2-ef649e9f5c27/resourceGroups/dotnetSdkTest-infra-rg/providers/Microsoft.Network/publicIPAddresses/dotnetSdkTest-default-delAsync-public-ip",
+                    "address": "172.177.157.237"
+                  }
+                ],
+                "enableEgressNat": "DISABLED",
+                "egressNatIp": []
+              },
+              "associatedRulestack": {
+                "resourceId": "/subscriptions/2bf4a339-294d-4c25-b0b2-ef649e9f5c27/resourceGroups/dotnetSdkTest-infra-rg/providers/PaloAltoNetworks.Cloudngfw/localRulestacks/dotnetSdkTest-default-delAsync-lrs",
+                "location": "eastus2",
+                "rulestackId": "SUBSCRIPTION~2bf4a339-294d-4c25-b0b2-ef649e9f5c27~RG~dotnetSdkTest-infra-rg~STACK~dotnetSdkTest-default-delAsync-lrs"
+              },
+              "dnsSettings": {
+                "enableDnsProxy": "DISABLED",
+                "enabledDnsType": "CUSTOM"
+              },
+              "isPanoramaManaged": "FALSE",
+              "provisioningState": "Succeeded",
+              "planData": {
+                "usageType": "PAYG",
+                "billingCycle": "MONTHLY",
+                "planId": "cloud-ngfw-payg-test",
+                "effectiveDate": "0001-01-01T00:00:00Z"
+              },
+              "marketplaceDetails": {
+                "offerId": "pan_swfw_cloud_ngfw",
+                "publisherId": "paloaltonetworks",
+                "marketplaceSubscriptionStatus": "Subscribed",
+                "marketplaceSubscriptionId": "832c1d3e-543f-4fb6-c7aa-bff08312a181"
+              },
+              "panEtag": "0521df3c-156d-11ee-a1f7-cedd2f0787df"
+            }
+          },
+          {
+            "id": "/subscriptions/2bf4a339-294d-4c25-b0b2-ef649e9f5c27/resourceGroups/dotnetSdkTest-infra-rg/providers/PaloAltoNetworks.Cloudngfw/firewalls/dotnetSdkTest-default-delSync",
+            "name": "dotnetSdkTest-default-delSync",
+            "type": "paloaltonetworks.cloudngfw/firewalls",
+            "location": "eastus2",
+            "tags": {},
+            "systemData": {
+              "createdBy": "vibhuti.sharma@microsoft.com",
+              "createdByType": "User",
+              "createdAt": "2023-06-28T04:34:54.4689006Z",
+              "lastModifiedBy": "54a2195e-8365-444c-8f50-4a5de4be1e2b",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-06-28T04:57:02.7258368Z"
+            },
+            "properties": {
+              "networkProfile": {
+                "vnetConfiguration": {
+                  "vnet": {
+                    "resourceId": "/subscriptions/2bf4a339-294d-4c25-b0b2-ef649e9f5c27/resourceGroups/dotnetSdkTest-infra-rg/providers/Microsoft.Network/virtualNetworks/dotnetSdkTest-default-delSync-vnet"
+                  },
+                  "trustSubnet": {
+                    "resourceId": "/subscriptions/2bf4a339-294d-4c25-b0b2-ef649e9f5c27/resourceGroups/dotnetSdkTest-infra-rg/providers/Microsoft.Network/virtualNetworks/dotnetSdkTest-default-delSync-vnet/subnets/subnet1"
+                  },
+                  "unTrustSubnet": {
+                    "resourceId": "/subscriptions/2bf4a339-294d-4c25-b0b2-ef649e9f5c27/resourceGroups/dotnetSdkTest-infra-rg/providers/Microsoft.Network/virtualNetworks/dotnetSdkTest-default-delSync-vnet/subnets/subnet2"
+                  },
+                  "ipOfTrustSubnetForUdr": {
+                    "address": "10.224.0.4"
+                  }
+                },
+                "networkType": "VNET",
+                "publicIps": [
+                  {
+                    "resourceId": "/subscriptions/2bf4a339-294d-4c25-b0b2-ef649e9f5c27/resourceGroups/dotnetSdkTest-infra-rg/providers/Microsoft.Network/publicIPAddresses/dotnetSdkTest-default-delSync-public-ip",
+                    "address": "20.119.178.35"
+                  }
+                ],
+                "enableEgressNat": "DISABLED",
+                "egressNatIp": []
+              },
+              "associatedRulestack": {
+                "resourceId": "/subscriptions/2bf4a339-294d-4c25-b0b2-ef649e9f5c27/resourceGroups/dotnetSdkTest-infra-rg/providers/PaloAltoNetworks.Cloudngfw/localRulestacks/dotnetSdkTest-default-delSync-lrs",
+                "location": "eastus2",
+                "rulestackId": "SUBSCRIPTION~2bf4a339-294d-4c25-b0b2-ef649e9f5c27~RG~dotnetSdkTest-infra-rg~STACK~dotnetSdkTest-default-delSync-lrs"
+              },
+              "dnsSettings": {
+                "enableDnsProxy": "DISABLED",
+                "enabledDnsType": "CUSTOM"
+              },
+              "isPanoramaManaged": "FALSE",
+              "provisioningState": "Succeeded",
+              "planData": {
+                "usageType": "PAYG",
+                "billingCycle": "MONTHLY",
+                "planId": "cloud-ngfw-payg-test",
+                "effectiveDate": "0001-01-01T00:00:00Z"
+              },
+              "marketplaceDetails": {
+                "offerId": "pan_swfw_cloud_ngfw",
+                "publisherId": "paloaltonetworks",
+                "marketplaceSubscriptionStatus": "Subscribed",
+                "marketplaceSubscriptionId": "92f1f0df-ffa8-42ab-d0ca-a0a63981602f"
+              },
+              "panEtag": "319ed0c4-156d-11ee-94fa-cedd2f0787df"
+            }
+          },
+          {
+            "id": "/subscriptions/2bf4a339-294d-4c25-b0b2-ef649e9f5c27/resourceGroups/dotnetSdkTest-infra-rg/providers/PaloAltoNetworks.Cloudngfw/firewalls/dotnetSdkTest-default-2",
+            "name": "dotnetSdkTest-default-2",
+            "type": "paloaltonetworks.cloudngfw/firewalls",
+            "location": "eastus2",
+            "tags": {},
+            "systemData": {
+              "createdBy": "vibhuti.sharma@microsoft.com",
+              "createdByType": "User",
+              "createdAt": "2023-06-28T04:36:37.2999169Z",
+              "lastModifiedBy": "54a2195e-8365-444c-8f50-4a5de4be1e2b",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-06-28T04:58:56.9846112Z"
+            },
+            "properties": {
+              "networkProfile": {
+                "vnetConfiguration": {
+                  "vnet": {
+                    "resourceId": "/subscriptions/2bf4a339-294d-4c25-b0b2-ef649e9f5c27/resourceGroups/dotnetSdkTest-infra-rg/providers/Microsoft.Network/virtualNetworks/dotnetSdkTest-default-2-vnet"
+                  },
+                  "trustSubnet": {
+                    "resourceId": "/subscriptions/2bf4a339-294d-4c25-b0b2-ef649e9f5c27/resourceGroups/dotnetSdkTest-infra-rg/providers/Microsoft.Network/virtualNetworks/dotnetSdkTest-default-2-vnet/subnets/subnet1"
+                  },
+                  "unTrustSubnet": {
+                    "resourceId": "/subscriptions/2bf4a339-294d-4c25-b0b2-ef649e9f5c27/resourceGroups/dotnetSdkTest-infra-rg/providers/Microsoft.Network/virtualNetworks/dotnetSdkTest-default-2-vnet/subnets/subnet2"
+                  },
+                  "ipOfTrustSubnetForUdr": {
+                    "address": "10.224.0.4"
+                  }
+                },
+                "networkType": "VNET",
+                "publicIps": [
+                  {
+                    "resourceId": "/subscriptions/2bf4a339-294d-4c25-b0b2-ef649e9f5c27/resourceGroups/dotnetSdkTest-infra-rg/providers/Microsoft.Network/publicIPAddresses/dotnetSdkTest-default-2-public-ip",
+                    "address": "20.122.199.129"
+                  }
+                ],
+                "enableEgressNat": "DISABLED",
+                "egressNatIp": []
+              },
+              "associatedRulestack": {
+                "resourceId": "/subscriptions/2bf4a339-294d-4c25-b0b2-ef649e9f5c27/resourceGroups/dotnetSdkTest-infra-rg/providers/PaloAltoNetworks.Cloudngfw/localRulestacks/dotnetSdkTest-default-2-lrs",
+                "location": "eastus2",
+                "rulestackId": "SUBSCRIPTION~2bf4a339-294d-4c25-b0b2-ef649e9f5c27~RG~dotnetSdkTest-infra-rg~STACK~dotnetSdkTest-default-2-lrs"
+              },
+              "dnsSettings": {
+                "enableDnsProxy": "DISABLED",
+                "enabledDnsType": "CUSTOM"
+              },
+              "isPanoramaManaged": "FALSE",
+              "provisioningState": "Succeeded",
+              "planData": {
+                "usageType": "PAYG",
+                "billingCycle": "MONTHLY",
+                "planId": "cloud-ngfw-payg-test",
+                "effectiveDate": "0001-01-01T00:00:00Z"
+              },
+              "marketplaceDetails": {
+                "offerId": "pan_swfw_cloud_ngfw",
+                "publisherId": "paloaltonetworks",
+                "marketplaceSubscriptionStatus": "Subscribed",
+                "marketplaceSubscriptionId": "c81e1864-b06b-4af9-d0e4-bf0a1cd50a84"
+              },
+              "panEtag": "70a85df8-156d-11ee-a1f7-cedd2f0787df"
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "Variables": {
+    "AZURE_AUTHORITY_HOST": null,
+    "RandomSeed": "1132289246",
+    "RESOURCE_MANAGER_URL": null,
+    "SUBSCRIPTION_ID": "2bf4a339-294d-4c25-b0b2-ef649e9f5c27"
+  }
+}

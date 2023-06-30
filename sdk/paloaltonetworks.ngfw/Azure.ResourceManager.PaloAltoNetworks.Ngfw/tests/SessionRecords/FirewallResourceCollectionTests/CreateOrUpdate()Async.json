@@ -1,0 +1,2207 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/2bf4a339-294d-4c25-b0b2-ef649e9f5c27?api-version=2021-01-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-44320b64cb5b04feedfc4a9ea1d8530c-159ff0bb6c540fec-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.6.0 (.NET 7.0.7; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "8b20edaa3024ff7079f8b545a644de0d",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "440",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 28 Jun 2023 06:15:41 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "c67572fc-bf0f-469a-8512-fa98a3a148e8",
+        "x-ms-ratelimit-remaining-subscription-reads": "11982",
+        "x-ms-request-id": "c67572fc-bf0f-469a-8512-fa98a3a148e8",
+        "x-ms-routing-request-id": "SOUTHINDIA:20230628T061541Z:c67572fc-bf0f-469a-8512-fa98a3a148e8"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/2bf4a339-294d-4c25-b0b2-ef649e9f5c27",
+        "authorizationSource": "RoleBased",
+        "managedByTenants": [
+          {
+            "tenantId": "942b80cd-1b14-42a1-8dcf-4b21dece61ba"
+          }
+        ],
+        "subscriptionId": "2bf4a339-294d-4c25-b0b2-ef649e9f5c27",
+        "tenantId": "888d76fa-54b2-4ced-8ee5-aac1585adee7",
+        "displayName": "Liftr-PAN",
+        "state": "Enabled",
+        "subscriptionPolicies": {
+          "locationPlacementId": "Public_2014-09-01",
+          "quotaId": "PayAsYouGo_2014-09-01",
+          "spendingLimit": "Off"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/2bf4a339-294d-4c25-b0b2-ef649e9f5c27/resourcegroups/dotnetSdkTest-1158?api-version=**",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "22",
+        "Content-Type": "application/json",
+        "traceparent": "00-a525e5654bd0876cca029adac466ff15-8c361ad84debd4a4-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.6.0 (.NET 7.0.7; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "a46cc26b383254555db58347e75c35fb",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "location": "eastus2"
+      },
+      "StatusCode": 201,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "234",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 28 Jun 2023 06:15:41 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "46e3c451-9ba0-413b-ba69-9b8bb8a1c544",
+        "x-ms-ratelimit-remaining-subscription-writes": "1194",
+        "x-ms-request-id": "46e3c451-9ba0-413b-ba69-9b8bb8a1c544",
+        "x-ms-routing-request-id": "SOUTHINDIA:20230628T061542Z:46e3c451-9ba0-413b-ba69-9b8bb8a1c544"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/2bf4a339-294d-4c25-b0b2-ef649e9f5c27/resourceGroups/dotnetSdkTest-1158",
+        "name": "dotnetSdkTest-1158",
+        "type": "Microsoft.Resources/resourceGroups",
+        "location": "eastus2",
+        "properties": {
+          "provisioningState": "Succeeded"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/2bf4a339-294d-4c25-b0b2-ef649e9f5c27/resourcegroups/dotnetSdkTest-infra-rg?api-version=**",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-c533845bea1cb50192576baa7d7c647e-a908bb37d77b9cde-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.6.0 (.NET 7.0.7; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "27571684297bc9c395d4cf06f0dfc9ed",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "259",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 28 Jun 2023 06:15:42 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "9fc465d5-cac7-4cfd-8720-5a0e19d5902d",
+        "x-ms-ratelimit-remaining-subscription-reads": "11981",
+        "x-ms-request-id": "9fc465d5-cac7-4cfd-8720-5a0e19d5902d",
+        "x-ms-routing-request-id": "SOUTHINDIA:20230628T061542Z:9fc465d5-cac7-4cfd-8720-5a0e19d5902d"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/2bf4a339-294d-4c25-b0b2-ef649e9f5c27/resourceGroups/dotnetSdkTest-infra-rg",
+        "name": "dotnetSdkTest-infra-rg",
+        "type": "Microsoft.Resources/resourceGroups",
+        "location": "northcentralus",
+        "tags": {},
+        "properties": {
+          "provisioningState": "Succeeded"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/2bf4a339-294d-4c25-b0b2-ef649e9f5c27/resourceGroups/dotnetSdkTest-infra-rg/providers/PaloAltoNetworks.Cloudngfw/firewalls/dotnetSdkTest-default-1?api-version=2022-08-29",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-af0bab51f0a4345ed31eb5cc5eaf2c51-c81b76a1321cc55f-00",
+        "User-Agent": "azsdk-net-ResourceManager.PaloAltoNetworks.Ngfw/1.0.0-alpha.20230623.1 (.NET 7.0.7; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "9c53767e2484b577ca36c77becb8919b",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "2413",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 28 Jun 2023 06:15:42 GMT",
+        "ETag": "\u0022a9001eea-0000-0100-0000-649bbc590000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "9c53767e2484b577ca36c77becb8919b",
+        "x-ms-correlation-request-id": "8f95e34c-50a0-4938-bbc9-1dd49fa0b5fb",
+        "x-ms-providerhub-traffic": "True",
+        "x-ms-ratelimit-remaining-subscription-reads": "11980",
+        "x-ms-request-id": "c8333017-1d54-498a-abfb-e57655d87f8e",
+        "x-ms-routing-request-id": "SOUTHINDIA:20230628T061542Z:8f95e34c-50a0-4938-bbc9-1dd49fa0b5fb"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/2bf4a339-294d-4c25-b0b2-ef649e9f5c27/resourceGroups/dotnetSdkTest-infra-rg/providers/PaloAltoNetworks.Cloudngfw/firewalls/dotnetSdkTest-default-1",
+        "name": "dotnetSdkTest-default-1",
+        "type": "paloaltonetworks.cloudngfw/firewalls",
+        "location": "eastus2",
+        "tags": {},
+        "systemData": {
+          "createdBy": "vibhuti.sharma@microsoft.com",
+          "createdByType": "User",
+          "createdAt": "2023-06-28T04:29:21.3902027Z",
+          "lastModifiedBy": "54a2195e-8365-444c-8f50-4a5de4be1e2b",
+          "lastModifiedByType": "Application",
+          "lastModifiedAt": "2023-06-28T04:51:37.9231891Z"
+        },
+        "properties": {
+          "networkProfile": {
+            "vnetConfiguration": {
+              "vnet": {
+                "resourceId": "/subscriptions/2bf4a339-294d-4c25-b0b2-ef649e9f5c27/resourceGroups/dotnetSdkTest-infra-rg/providers/Microsoft.Network/virtualNetworks/dotnetSdkTest-default-1-vnet"
+              },
+              "trustSubnet": {
+                "resourceId": "/subscriptions/2bf4a339-294d-4c25-b0b2-ef649e9f5c27/resourceGroups/dotnetSdkTest-infra-rg/providers/Microsoft.Network/virtualNetworks/dotnetSdkTest-default-1-vnet/subnets/subnet1"
+              },
+              "unTrustSubnet": {
+                "resourceId": "/subscriptions/2bf4a339-294d-4c25-b0b2-ef649e9f5c27/resourceGroups/dotnetSdkTest-infra-rg/providers/Microsoft.Network/virtualNetworks/dotnetSdkTest-default-1-vnet/subnets/subnet2"
+              },
+              "ipOfTrustSubnetForUdr": {
+                "address": "10.224.0.4"
+              }
+            },
+            "networkType": "VNET",
+            "publicIps": [
+              {
+                "resourceId": "/subscriptions/2bf4a339-294d-4c25-b0b2-ef649e9f5c27/resourceGroups/dotnetSdkTest-infra-rg/providers/Microsoft.Network/publicIPAddresses/dotnetSdkTest-default-1-public-ip",
+                "address": "20.122.25.79"
+              }
+            ],
+            "enableEgressNat": "DISABLED",
+            "egressNatIp": []
+          },
+          "associatedRulestack": {
+            "resourceId": "/subscriptions/2bf4a339-294d-4c25-b0b2-ef649e9f5c27/resourceGroups/dotnetSdkTest-infra-rg/providers/PaloAltoNetworks.Cloudngfw/localRulestacks/dotnetSdkTest-default-1-lrs",
+            "location": "eastus2",
+            "rulestackId": "SUBSCRIPTION~2bf4a339-294d-4c25-b0b2-ef649e9f5c27~RG~dotnetSdkTest-infra-rg~STACK~dotnetSdkTest-default-1-lrs"
+          },
+          "dnsSettings": {
+            "enableDnsProxy": "DISABLED",
+            "enabledDnsType": "CUSTOM"
+          },
+          "isPanoramaManaged": "FALSE",
+          "provisioningState": "Succeeded",
+          "planData": {
+            "usageType": "PAYG",
+            "billingCycle": "MONTHLY",
+            "planId": "cloud-ngfw-payg-test",
+            "effectiveDate": "0001-01-01T00:00:00Z"
+          },
+          "marketplaceDetails": {
+            "offerId": "pan_swfw_cloud_ngfw",
+            "publisherId": "paloaltonetworks",
+            "marketplaceSubscriptionStatus": "Subscribed",
+            "marketplaceSubscriptionId": "4d407033-fc7d-470b-dc72-24bd505968d9"
+          },
+          "panEtag": "6c9061f8-156c-11ee-a1f7-cedd2f0787df"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/2bf4a339-294d-4c25-b0b2-ef649e9f5c27/resourceGroups/dotnetSdkTest-1158/providers/PaloAltoNetworks.Cloudngfw/firewalls/dotnetSdkTest-2786?api-version=2022-08-29",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "1531",
+        "Content-Type": "application/json",
+        "traceparent": "00-efff06bb8f7e0a30404bd614bb9f4c64-97637a90a2312181-00",
+        "User-Agent": "azsdk-net-ResourceManager.PaloAltoNetworks.Ngfw/1.0.0-alpha.20230623.1 (.NET 7.0.7; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "872e224964e6fe41a30f5e694f647eeb",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "tags": {},
+        "location": "eastus2",
+        "properties": {
+          "networkProfile": {
+            "vnetConfiguration": {
+              "vnet": {
+                "resourceId": "/subscriptions/2bf4a339-294d-4c25-b0b2-ef649e9f5c27/resourceGroups/dotnetSdkTest-infra-rg/providers/Microsoft.Network/virtualNetworks/dotnetSdkTest-vnet-default",
+                "addressSpace": "10.148.0.0/16"
+              },
+              "trustSubnet": {
+                "resourceId": "/subscriptions/2bf4a339-294d-4c25-b0b2-ef649e9f5c27/resourceGroups/dotnetSdkTest-infra-rg/providers/Microsoft.Network/virtualNetworks/dotnetSdkTest-vnet-default/subnets/subnet1",
+                "addressSpace": "10.148.1.0/26"
+              },
+              "unTrustSubnet": {
+                "resourceId": "/subscriptions/2bf4a339-294d-4c25-b0b2-ef649e9f5c27/resourceGroups/dotnetSdkTest-infra-rg/providers/Microsoft.Network/virtualNetworks/dotnetSdkTest-vnet-default/subnets/subnet2",
+                "addressSpace": "10.148.0.0/26"
+              }
+            },
+            "networkType": "VNET",
+            "publicIps": [
+              {
+                "resourceId": "/subscriptions/2bf4a339-294d-4c25-b0b2-ef649e9f5c27/resourceGroups/dotnetSdkTest-infra-rg/providers/Microsoft.Network/publicIPAddresses/dotnetSdkTest-public-ip-default",
+                "address": "20.12.91.61"
+              }
+            ],
+            "enableEgressNat": "DISABLED"
+          },
+          "associatedRulestack": {
+            "resourceId": "/subscriptions/2bf4a339-294d-4c25-b0b2-ef649e9f5c27/resourceGroups/dotnetSdkTest-infra-rg/providers/PaloAltoNetworks.Cloudngfw/localRulestacks/dotnetSdkTest-lrs-default",
+            "rulestackId": "",
+            "location": "eastus2"
+          },
+          "dnsSettings": {
+            "enableDnsProxy": "DISABLED",
+            "enabledDnsType": "CUSTOM"
+          },
+          "planData": {
+            "billingCycle": "MONTHLY",
+            "planId": "cloud-ngfw-payg-test"
+          },
+          "marketplaceDetails": {
+            "offerId": "pan_swfw_cloud_ngfw",
+            "publisherId": "paloaltonetworks"
+          }
+        }
+      },
+      "StatusCode": 201,
+      "ResponseHeaders": {
+        "Azure-AsyncOperation": "https://management.azure.com/providers/PaloAltoNetworks.Cloudngfw/locations/EASTUS2/operationStatuses/5cad4f94-51ba-4544-ad38-8da81b780d06*29C9DAC94EEC84555EC32E8D1A70BEDD1DAE508AADB83F64D15E1E98EECF5FA4?api-version=2022-08-29",
+        "Cache-Control": "no-cache",
+        "Content-Length": "2216",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 28 Jun 2023 06:15:52 GMT",
+        "ETag": "\u0022ad00dc7b-0000-0100-0000-649bd0170000\u0022",
+        "Expires": "-1",
+        "Location": "https://management.azure.com/providers/PaloAltoNetworks.Cloudngfw/locations/EASTUS2/operationStatuses/5cad4f94-51ba-4544-ad38-8da81b780d06*29C9DAC94EEC84555EC32E8D1A70BEDD1DAE508AADB83F64D15E1E98EECF5FA4?api-version=2022-08-29",
+        "mise-correlation-id": "c7ffd22b-1c52-4f0e-bfa5-6ec90d562385",
+        "Pragma": "no-cache",
+        "Request-Context": "appId=cid-v1:4aa06bd6-38f4-4944-9612-cd84d39b5e90",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "872e224964e6fe41a30f5e694f647eeb",
+        "x-ms-correlation-request-id": "4b5a8e01-5fd2-4fd3-89bc-747b947cc672",
+        "x-ms-providerhub-traffic": "True",
+        "x-ms-ratelimit-remaining-subscription-writes": "1193",
+        "x-ms-request-id": "5cad4f94-51ba-4544-ad38-8da81b780d06",
+        "x-ms-routing-request-id": "SOUTHINDIA:20230628T061552Z:4b5a8e01-5fd2-4fd3-89bc-747b947cc672"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/2bf4a339-294d-4c25-b0b2-ef649e9f5c27/resourceGroups/dotnetSdkTest-1158/providers/PaloAltoNetworks.Cloudngfw/firewalls/dotnetSdkTest-2786",
+        "name": "dotnetSdkTest-2786",
+        "type": "paloaltonetworks.cloudngfw/firewalls",
+        "location": "eastus2",
+        "tags": {},
+        "systemData": {
+          "createdBy": "864bdfa7-42e8-4658-83dd-9148a39ff519",
+          "createdByType": "Application",
+          "createdAt": "2023-06-28T06:15:45.5856771Z",
+          "lastModifiedBy": "864bdfa7-42e8-4658-83dd-9148a39ff519",
+          "lastModifiedByType": "Application",
+          "lastModifiedAt": "2023-06-28T06:15:45.5856771Z"
+        },
+        "properties": {
+          "networkProfile": {
+            "vnetConfiguration": {
+              "vnet": {
+                "resourceId": "/subscriptions/2bf4a339-294d-4c25-b0b2-ef649e9f5c27/resourceGroups/dotnetSdkTest-infra-rg/providers/Microsoft.Network/virtualNetworks/dotnetSdkTest-vnet-default",
+                "addressSpace": "10.148.0.0/16"
+              },
+              "trustSubnet": {
+                "resourceId": "/subscriptions/2bf4a339-294d-4c25-b0b2-ef649e9f5c27/resourceGroups/dotnetSdkTest-infra-rg/providers/Microsoft.Network/virtualNetworks/dotnetSdkTest-vnet-default/subnets/subnet1",
+                "addressSpace": "10.148.1.0/26"
+              },
+              "unTrustSubnet": {
+                "resourceId": "/subscriptions/2bf4a339-294d-4c25-b0b2-ef649e9f5c27/resourceGroups/dotnetSdkTest-infra-rg/providers/Microsoft.Network/virtualNetworks/dotnetSdkTest-vnet-default/subnets/subnet2",
+                "addressSpace": "10.148.0.0/26"
+              }
+            },
+            "networkType": "VNET",
+            "publicIps": [
+              {
+                "resourceId": "/subscriptions/2bf4a339-294d-4c25-b0b2-ef649e9f5c27/resourceGroups/dotnetSdkTest-infra-rg/providers/Microsoft.Network/publicIPAddresses/dotnetSdkTest-public-ip-default",
+                "address": "20.12.91.61"
+              }
+            ],
+            "enableEgressNat": "DISABLED"
+          },
+          "associatedRulestack": {
+            "resourceId": "/subscriptions/2bf4a339-294d-4c25-b0b2-ef649e9f5c27/resourceGroups/dotnetSdkTest-infra-rg/providers/PaloAltoNetworks.Cloudngfw/localRulestacks/dotnetSdkTest-lrs-default",
+            "rulestackId": "",
+            "location": "eastus2"
+          },
+          "dnsSettings": {
+            "enableDnsProxy": "DISABLED",
+            "enabledDnsType": "CUSTOM"
+          },
+          "isPanoramaManaged": "FALSE",
+          "provisioningState": "Accepted",
+          "planData": {
+            "usageType": "PAYG",
+            "billingCycle": "MONTHLY",
+            "planId": "cloud-ngfw-payg-test",
+            "effectiveDate": "0001-01-01T00:00:00"
+          },
+          "marketplaceDetails": {
+            "offerId": "pan_swfw_cloud_ngfw",
+            "publisherId": "paloaltonetworks",
+            "marketplaceSubscriptionStatus": "PendingFulfillmentStart"
+          }
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/providers/PaloAltoNetworks.Cloudngfw/locations/EASTUS2/operationStatuses/5cad4f94-51ba-4544-ad38-8da81b780d06*29C9DAC94EEC84555EC32E8D1A70BEDD1DAE508AADB83F64D15E1E98EECF5FA4?api-version=2022-08-29",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-efff06bb8f7e0a30404bd614bb9f4c64-90671f51d3715917-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.6.0 (.NET 7.0.7; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "bca68633669a1198119ee115194b7bd2",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "525",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 28 Jun 2023 06:15:52 GMT",
+        "ETag": "\u00220300def8-0000-0100-0000-649bd0130000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "bca68633669a1198119ee115194b7bd2",
+        "x-ms-correlation-request-id": "a4e15e5b-8d71-4a07-abf8-3c5ca6347c5d",
+        "x-ms-ratelimit-remaining-tenant-reads": "11951",
+        "x-ms-request-id": "5f6fcfa8-b920-47d6-8ad9-827332ea3e5b",
+        "x-ms-routing-request-id": "SOUTHINDIA:20230628T061553Z:a4e15e5b-8d71-4a07-abf8-3c5ca6347c5d"
+      },
+      "ResponseBody": {
+        "id": "/providers/PaloAltoNetworks.Cloudngfw/locations/EASTUS2/operationStatuses/5cad4f94-51ba-4544-ad38-8da81b780d06*29C9DAC94EEC84555EC32E8D1A70BEDD1DAE508AADB83F64D15E1E98EECF5FA4",
+        "name": "5cad4f94-51ba-4544-ad38-8da81b780d06*29C9DAC94EEC84555EC32E8D1A70BEDD1DAE508AADB83F64D15E1E98EECF5FA4",
+        "resourceId": "/subscriptions/2bf4a339-294d-4c25-b0b2-ef649e9f5c27/resourceGroups/dotnetSdkTest-1158/providers/PaloAltoNetworks.Cloudngfw/firewalls/dotnetSdkTest-2786",
+        "status": "Accepted",
+        "startTime": "2023-06-28T06:15:47.2431913Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/providers/PaloAltoNetworks.Cloudngfw/locations/EASTUS2/operationStatuses/5cad4f94-51ba-4544-ad38-8da81b780d06*29C9DAC94EEC84555EC32E8D1A70BEDD1DAE508AADB83F64D15E1E98EECF5FA4?api-version=2022-08-29",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-efff06bb8f7e0a30404bd614bb9f4c64-2edad5631d9becff-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.6.0 (.NET 7.0.7; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "f0578f489220d2e7c390e58a20dfb6c6",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "525",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 28 Jun 2023 06:15:53 GMT",
+        "ETag": "\u00220300def8-0000-0100-0000-649bd0130000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "f0578f489220d2e7c390e58a20dfb6c6",
+        "x-ms-correlation-request-id": "de5a5e3e-ee5a-4840-82bc-3aab33974095",
+        "x-ms-ratelimit-remaining-tenant-reads": "11950",
+        "x-ms-request-id": "0afd2564-0997-4799-8665-e60784e3f5d9",
+        "x-ms-routing-request-id": "SOUTHINDIA:20230628T061554Z:de5a5e3e-ee5a-4840-82bc-3aab33974095"
+      },
+      "ResponseBody": {
+        "id": "/providers/PaloAltoNetworks.Cloudngfw/locations/EASTUS2/operationStatuses/5cad4f94-51ba-4544-ad38-8da81b780d06*29C9DAC94EEC84555EC32E8D1A70BEDD1DAE508AADB83F64D15E1E98EECF5FA4",
+        "name": "5cad4f94-51ba-4544-ad38-8da81b780d06*29C9DAC94EEC84555EC32E8D1A70BEDD1DAE508AADB83F64D15E1E98EECF5FA4",
+        "resourceId": "/subscriptions/2bf4a339-294d-4c25-b0b2-ef649e9f5c27/resourceGroups/dotnetSdkTest-1158/providers/PaloAltoNetworks.Cloudngfw/firewalls/dotnetSdkTest-2786",
+        "status": "Accepted",
+        "startTime": "2023-06-28T06:15:47.2431913Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/providers/PaloAltoNetworks.Cloudngfw/locations/EASTUS2/operationStatuses/5cad4f94-51ba-4544-ad38-8da81b780d06*29C9DAC94EEC84555EC32E8D1A70BEDD1DAE508AADB83F64D15E1E98EECF5FA4?api-version=2022-08-29",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-efff06bb8f7e0a30404bd614bb9f4c64-03f8f96c40dad40e-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.6.0 (.NET 7.0.7; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "c8351b32c1bd2f50305ff7fa954a8455",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "525",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 28 Jun 2023 06:15:55 GMT",
+        "ETag": "\u00220300def8-0000-0100-0000-649bd0130000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "c8351b32c1bd2f50305ff7fa954a8455",
+        "x-ms-correlation-request-id": "00ddf4a7-61d4-41a1-8942-d71caab0fe48",
+        "x-ms-ratelimit-remaining-tenant-reads": "11949",
+        "x-ms-request-id": "aaa770ee-898b-4dbf-9845-c8561b7ee026",
+        "x-ms-routing-request-id": "SOUTHINDIA:20230628T061555Z:00ddf4a7-61d4-41a1-8942-d71caab0fe48"
+      },
+      "ResponseBody": {
+        "id": "/providers/PaloAltoNetworks.Cloudngfw/locations/EASTUS2/operationStatuses/5cad4f94-51ba-4544-ad38-8da81b780d06*29C9DAC94EEC84555EC32E8D1A70BEDD1DAE508AADB83F64D15E1E98EECF5FA4",
+        "name": "5cad4f94-51ba-4544-ad38-8da81b780d06*29C9DAC94EEC84555EC32E8D1A70BEDD1DAE508AADB83F64D15E1E98EECF5FA4",
+        "resourceId": "/subscriptions/2bf4a339-294d-4c25-b0b2-ef649e9f5c27/resourceGroups/dotnetSdkTest-1158/providers/PaloAltoNetworks.Cloudngfw/firewalls/dotnetSdkTest-2786",
+        "status": "Accepted",
+        "startTime": "2023-06-28T06:15:47.2431913Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/providers/PaloAltoNetworks.Cloudngfw/locations/EASTUS2/operationStatuses/5cad4f94-51ba-4544-ad38-8da81b780d06*29C9DAC94EEC84555EC32E8D1A70BEDD1DAE508AADB83F64D15E1E98EECF5FA4?api-version=2022-08-29",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-efff06bb8f7e0a30404bd614bb9f4c64-993dab6b4daac88d-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.6.0 (.NET 7.0.7; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "b91972e0eb85a0229ed4f90a800df132",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "525",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 28 Jun 2023 06:15:56 GMT",
+        "ETag": "\u00220300def8-0000-0100-0000-649bd0130000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "b91972e0eb85a0229ed4f90a800df132",
+        "x-ms-correlation-request-id": "3e83e041-6d33-447f-8b74-809107d09c76",
+        "x-ms-ratelimit-remaining-tenant-reads": "11948",
+        "x-ms-request-id": "a7e5fba8-597a-4d38-9384-4eb307875e16",
+        "x-ms-routing-request-id": "SOUTHINDIA:20230628T061556Z:3e83e041-6d33-447f-8b74-809107d09c76"
+      },
+      "ResponseBody": {
+        "id": "/providers/PaloAltoNetworks.Cloudngfw/locations/EASTUS2/operationStatuses/5cad4f94-51ba-4544-ad38-8da81b780d06*29C9DAC94EEC84555EC32E8D1A70BEDD1DAE508AADB83F64D15E1E98EECF5FA4",
+        "name": "5cad4f94-51ba-4544-ad38-8da81b780d06*29C9DAC94EEC84555EC32E8D1A70BEDD1DAE508AADB83F64D15E1E98EECF5FA4",
+        "resourceId": "/subscriptions/2bf4a339-294d-4c25-b0b2-ef649e9f5c27/resourceGroups/dotnetSdkTest-1158/providers/PaloAltoNetworks.Cloudngfw/firewalls/dotnetSdkTest-2786",
+        "status": "Accepted",
+        "startTime": "2023-06-28T06:15:47.2431913Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/providers/PaloAltoNetworks.Cloudngfw/locations/EASTUS2/operationStatuses/5cad4f94-51ba-4544-ad38-8da81b780d06*29C9DAC94EEC84555EC32E8D1A70BEDD1DAE508AADB83F64D15E1E98EECF5FA4?api-version=2022-08-29",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-efff06bb8f7e0a30404bd614bb9f4c64-10cac14627aa17ef-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.6.0 (.NET 7.0.7; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "fee21be7b31686143e27c0c19bed3d79",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "525",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 28 Jun 2023 06:15:58 GMT",
+        "ETag": "\u00220300def8-0000-0100-0000-649bd0130000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "fee21be7b31686143e27c0c19bed3d79",
+        "x-ms-correlation-request-id": "84260fb6-0ccc-4add-af15-68173728ceec",
+        "x-ms-ratelimit-remaining-tenant-reads": "11947",
+        "x-ms-request-id": "d0e4d510-43d6-4fe0-9198-cfe86f678440",
+        "x-ms-routing-request-id": "SOUTHINDIA:20230628T061559Z:84260fb6-0ccc-4add-af15-68173728ceec"
+      },
+      "ResponseBody": {
+        "id": "/providers/PaloAltoNetworks.Cloudngfw/locations/EASTUS2/operationStatuses/5cad4f94-51ba-4544-ad38-8da81b780d06*29C9DAC94EEC84555EC32E8D1A70BEDD1DAE508AADB83F64D15E1E98EECF5FA4",
+        "name": "5cad4f94-51ba-4544-ad38-8da81b780d06*29C9DAC94EEC84555EC32E8D1A70BEDD1DAE508AADB83F64D15E1E98EECF5FA4",
+        "resourceId": "/subscriptions/2bf4a339-294d-4c25-b0b2-ef649e9f5c27/resourceGroups/dotnetSdkTest-1158/providers/PaloAltoNetworks.Cloudngfw/firewalls/dotnetSdkTest-2786",
+        "status": "Accepted",
+        "startTime": "2023-06-28T06:15:47.2431913Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/providers/PaloAltoNetworks.Cloudngfw/locations/EASTUS2/operationStatuses/5cad4f94-51ba-4544-ad38-8da81b780d06*29C9DAC94EEC84555EC32E8D1A70BEDD1DAE508AADB83F64D15E1E98EECF5FA4?api-version=2022-08-29",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-efff06bb8f7e0a30404bd614bb9f4c64-7fd6033b4cab5b63-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.6.0 (.NET 7.0.7; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "ada98f0bfdc64740f89529e9c846ae22",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "525",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 28 Jun 2023 06:16:02 GMT",
+        "ETag": "\u00220300def8-0000-0100-0000-649bd0130000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "ada98f0bfdc64740f89529e9c846ae22",
+        "x-ms-correlation-request-id": "a872bdcd-1523-41da-b052-8cc122e1cfa0",
+        "x-ms-ratelimit-remaining-tenant-reads": "11946",
+        "x-ms-request-id": "10a516ab-8735-4c6a-9ca5-c14077060de0",
+        "x-ms-routing-request-id": "SOUTHINDIA:20230628T061603Z:a872bdcd-1523-41da-b052-8cc122e1cfa0"
+      },
+      "ResponseBody": {
+        "id": "/providers/PaloAltoNetworks.Cloudngfw/locations/EASTUS2/operationStatuses/5cad4f94-51ba-4544-ad38-8da81b780d06*29C9DAC94EEC84555EC32E8D1A70BEDD1DAE508AADB83F64D15E1E98EECF5FA4",
+        "name": "5cad4f94-51ba-4544-ad38-8da81b780d06*29C9DAC94EEC84555EC32E8D1A70BEDD1DAE508AADB83F64D15E1E98EECF5FA4",
+        "resourceId": "/subscriptions/2bf4a339-294d-4c25-b0b2-ef649e9f5c27/resourceGroups/dotnetSdkTest-1158/providers/PaloAltoNetworks.Cloudngfw/firewalls/dotnetSdkTest-2786",
+        "status": "Accepted",
+        "startTime": "2023-06-28T06:15:47.2431913Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/providers/PaloAltoNetworks.Cloudngfw/locations/EASTUS2/operationStatuses/5cad4f94-51ba-4544-ad38-8da81b780d06*29C9DAC94EEC84555EC32E8D1A70BEDD1DAE508AADB83F64D15E1E98EECF5FA4?api-version=2022-08-29",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-efff06bb8f7e0a30404bd614bb9f4c64-87d99905d4aaa891-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.6.0 (.NET 7.0.7; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "7912c56d85672d3f5e927a5e2b6105b1",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "525",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 28 Jun 2023 06:16:11 GMT",
+        "ETag": "\u00220300def8-0000-0100-0000-649bd0130000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "7912c56d85672d3f5e927a5e2b6105b1",
+        "x-ms-correlation-request-id": "ab0e71e9-5eed-4024-839d-ca8d22d95f72",
+        "x-ms-ratelimit-remaining-tenant-reads": "11945",
+        "x-ms-request-id": "ce252ff1-cfd9-430d-9689-c527046d6c96",
+        "x-ms-routing-request-id": "SOUTHINDIA:20230628T061612Z:ab0e71e9-5eed-4024-839d-ca8d22d95f72"
+      },
+      "ResponseBody": {
+        "id": "/providers/PaloAltoNetworks.Cloudngfw/locations/EASTUS2/operationStatuses/5cad4f94-51ba-4544-ad38-8da81b780d06*29C9DAC94EEC84555EC32E8D1A70BEDD1DAE508AADB83F64D15E1E98EECF5FA4",
+        "name": "5cad4f94-51ba-4544-ad38-8da81b780d06*29C9DAC94EEC84555EC32E8D1A70BEDD1DAE508AADB83F64D15E1E98EECF5FA4",
+        "resourceId": "/subscriptions/2bf4a339-294d-4c25-b0b2-ef649e9f5c27/resourceGroups/dotnetSdkTest-1158/providers/PaloAltoNetworks.Cloudngfw/firewalls/dotnetSdkTest-2786",
+        "status": "Accepted",
+        "startTime": "2023-06-28T06:15:47.2431913Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/providers/PaloAltoNetworks.Cloudngfw/locations/EASTUS2/operationStatuses/5cad4f94-51ba-4544-ad38-8da81b780d06*29C9DAC94EEC84555EC32E8D1A70BEDD1DAE508AADB83F64D15E1E98EECF5FA4?api-version=2022-08-29",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-efff06bb8f7e0a30404bd614bb9f4c64-b8a89a98af1c217c-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.6.0 (.NET 7.0.7; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "f1fe7f964463ea6bdb9b0680892bbef8",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "525",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 28 Jun 2023 06:16:28 GMT",
+        "ETag": "\u00220300def8-0000-0100-0000-649bd0130000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "f1fe7f964463ea6bdb9b0680892bbef8",
+        "x-ms-correlation-request-id": "90dad791-10a9-46d3-8fd2-77e92d62ffa9",
+        "x-ms-ratelimit-remaining-tenant-reads": "11944",
+        "x-ms-request-id": "4712fba7-0591-48f5-85dc-86be402c0ed6",
+        "x-ms-routing-request-id": "SOUTHINDIA:20230628T061629Z:90dad791-10a9-46d3-8fd2-77e92d62ffa9"
+      },
+      "ResponseBody": {
+        "id": "/providers/PaloAltoNetworks.Cloudngfw/locations/EASTUS2/operationStatuses/5cad4f94-51ba-4544-ad38-8da81b780d06*29C9DAC94EEC84555EC32E8D1A70BEDD1DAE508AADB83F64D15E1E98EECF5FA4",
+        "name": "5cad4f94-51ba-4544-ad38-8da81b780d06*29C9DAC94EEC84555EC32E8D1A70BEDD1DAE508AADB83F64D15E1E98EECF5FA4",
+        "resourceId": "/subscriptions/2bf4a339-294d-4c25-b0b2-ef649e9f5c27/resourceGroups/dotnetSdkTest-1158/providers/PaloAltoNetworks.Cloudngfw/firewalls/dotnetSdkTest-2786",
+        "status": "Accepted",
+        "startTime": "2023-06-28T06:15:47.2431913Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/providers/PaloAltoNetworks.Cloudngfw/locations/EASTUS2/operationStatuses/5cad4f94-51ba-4544-ad38-8da81b780d06*29C9DAC94EEC84555EC32E8D1A70BEDD1DAE508AADB83F64D15E1E98EECF5FA4?api-version=2022-08-29",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-efff06bb8f7e0a30404bd614bb9f4c64-be711433fb9dda30-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.6.0 (.NET 7.0.7; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "d6539d79c3da86114f7c4f3382e21b96",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "525",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 28 Jun 2023 06:17:02 GMT",
+        "ETag": "\u00220300def8-0000-0100-0000-649bd0130000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "d6539d79c3da86114f7c4f3382e21b96",
+        "x-ms-correlation-request-id": "341f7ed9-45db-47c1-b136-de00d4f45142",
+        "x-ms-ratelimit-remaining-tenant-reads": "11943",
+        "x-ms-request-id": "ebba8699-b858-41d3-8129-39e9ef3ea536",
+        "x-ms-routing-request-id": "SOUTHINDIA:20230628T061702Z:341f7ed9-45db-47c1-b136-de00d4f45142"
+      },
+      "ResponseBody": {
+        "id": "/providers/PaloAltoNetworks.Cloudngfw/locations/EASTUS2/operationStatuses/5cad4f94-51ba-4544-ad38-8da81b780d06*29C9DAC94EEC84555EC32E8D1A70BEDD1DAE508AADB83F64D15E1E98EECF5FA4",
+        "name": "5cad4f94-51ba-4544-ad38-8da81b780d06*29C9DAC94EEC84555EC32E8D1A70BEDD1DAE508AADB83F64D15E1E98EECF5FA4",
+        "resourceId": "/subscriptions/2bf4a339-294d-4c25-b0b2-ef649e9f5c27/resourceGroups/dotnetSdkTest-1158/providers/PaloAltoNetworks.Cloudngfw/firewalls/dotnetSdkTest-2786",
+        "status": "Accepted",
+        "startTime": "2023-06-28T06:15:47.2431913Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/providers/PaloAltoNetworks.Cloudngfw/locations/EASTUS2/operationStatuses/5cad4f94-51ba-4544-ad38-8da81b780d06*29C9DAC94EEC84555EC32E8D1A70BEDD1DAE508AADB83F64D15E1E98EECF5FA4?api-version=2022-08-29",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-efff06bb8f7e0a30404bd614bb9f4c64-0fbf0e426550cdcb-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.6.0 (.NET 7.0.7; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "4852788fbd4728be59279ecb7fbea333",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "525",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 28 Jun 2023 06:17:34 GMT",
+        "ETag": "\u00220300def8-0000-0100-0000-649bd0130000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "4852788fbd4728be59279ecb7fbea333",
+        "x-ms-correlation-request-id": "10805b4a-c7b2-4f1f-b2ea-d439dbaaef1e",
+        "x-ms-ratelimit-remaining-tenant-reads": "11942",
+        "x-ms-request-id": "85c6ecea-a306-43a8-b02e-e29b9879bbfa",
+        "x-ms-routing-request-id": "SOUTHINDIA:20230628T061735Z:10805b4a-c7b2-4f1f-b2ea-d439dbaaef1e"
+      },
+      "ResponseBody": {
+        "id": "/providers/PaloAltoNetworks.Cloudngfw/locations/EASTUS2/operationStatuses/5cad4f94-51ba-4544-ad38-8da81b780d06*29C9DAC94EEC84555EC32E8D1A70BEDD1DAE508AADB83F64D15E1E98EECF5FA4",
+        "name": "5cad4f94-51ba-4544-ad38-8da81b780d06*29C9DAC94EEC84555EC32E8D1A70BEDD1DAE508AADB83F64D15E1E98EECF5FA4",
+        "resourceId": "/subscriptions/2bf4a339-294d-4c25-b0b2-ef649e9f5c27/resourceGroups/dotnetSdkTest-1158/providers/PaloAltoNetworks.Cloudngfw/firewalls/dotnetSdkTest-2786",
+        "status": "Accepted",
+        "startTime": "2023-06-28T06:15:47.2431913Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/providers/PaloAltoNetworks.Cloudngfw/locations/EASTUS2/operationStatuses/5cad4f94-51ba-4544-ad38-8da81b780d06*29C9DAC94EEC84555EC32E8D1A70BEDD1DAE508AADB83F64D15E1E98EECF5FA4?api-version=2022-08-29",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-efff06bb8f7e0a30404bd614bb9f4c64-f4c79c8deddb2f6a-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.6.0 (.NET 7.0.7; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "8ee581d42f0dd2d66d78a1e7f53868f8",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "525",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 28 Jun 2023 06:18:08 GMT",
+        "ETag": "\u00220300def8-0000-0100-0000-649bd0130000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "8ee581d42f0dd2d66d78a1e7f53868f8",
+        "x-ms-correlation-request-id": "f0483f26-f24f-4104-a02e-ed9dffcc5854",
+        "x-ms-ratelimit-remaining-tenant-reads": "11941",
+        "x-ms-request-id": "ccf37f41-540b-4e58-bb4e-06379e420b10",
+        "x-ms-routing-request-id": "SOUTHINDIA:20230628T061808Z:f0483f26-f24f-4104-a02e-ed9dffcc5854"
+      },
+      "ResponseBody": {
+        "id": "/providers/PaloAltoNetworks.Cloudngfw/locations/EASTUS2/operationStatuses/5cad4f94-51ba-4544-ad38-8da81b780d06*29C9DAC94EEC84555EC32E8D1A70BEDD1DAE508AADB83F64D15E1E98EECF5FA4",
+        "name": "5cad4f94-51ba-4544-ad38-8da81b780d06*29C9DAC94EEC84555EC32E8D1A70BEDD1DAE508AADB83F64D15E1E98EECF5FA4",
+        "resourceId": "/subscriptions/2bf4a339-294d-4c25-b0b2-ef649e9f5c27/resourceGroups/dotnetSdkTest-1158/providers/PaloAltoNetworks.Cloudngfw/firewalls/dotnetSdkTest-2786",
+        "status": "Accepted",
+        "startTime": "2023-06-28T06:15:47.2431913Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/providers/PaloAltoNetworks.Cloudngfw/locations/EASTUS2/operationStatuses/5cad4f94-51ba-4544-ad38-8da81b780d06*29C9DAC94EEC84555EC32E8D1A70BEDD1DAE508AADB83F64D15E1E98EECF5FA4?api-version=2022-08-29",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-efff06bb8f7e0a30404bd614bb9f4c64-9bb2a983a1efb07f-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.6.0 (.NET 7.0.7; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "10f16f8075d8bbb0de2a7cb325460791",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "525",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 28 Jun 2023 06:18:41 GMT",
+        "ETag": "\u00220300def8-0000-0100-0000-649bd0130000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "10f16f8075d8bbb0de2a7cb325460791",
+        "x-ms-correlation-request-id": "965c13b4-4932-41ae-ade7-fa2c8001fba4",
+        "x-ms-ratelimit-remaining-tenant-reads": "11940",
+        "x-ms-request-id": "d47015c0-6542-4747-a267-d0a4e3a7eb1a",
+        "x-ms-routing-request-id": "SOUTHINDIA:20230628T061841Z:965c13b4-4932-41ae-ade7-fa2c8001fba4"
+      },
+      "ResponseBody": {
+        "id": "/providers/PaloAltoNetworks.Cloudngfw/locations/EASTUS2/operationStatuses/5cad4f94-51ba-4544-ad38-8da81b780d06*29C9DAC94EEC84555EC32E8D1A70BEDD1DAE508AADB83F64D15E1E98EECF5FA4",
+        "name": "5cad4f94-51ba-4544-ad38-8da81b780d06*29C9DAC94EEC84555EC32E8D1A70BEDD1DAE508AADB83F64D15E1E98EECF5FA4",
+        "resourceId": "/subscriptions/2bf4a339-294d-4c25-b0b2-ef649e9f5c27/resourceGroups/dotnetSdkTest-1158/providers/PaloAltoNetworks.Cloudngfw/firewalls/dotnetSdkTest-2786",
+        "status": "Accepted",
+        "startTime": "2023-06-28T06:15:47.2431913Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/providers/PaloAltoNetworks.Cloudngfw/locations/EASTUS2/operationStatuses/5cad4f94-51ba-4544-ad38-8da81b780d06*29C9DAC94EEC84555EC32E8D1A70BEDD1DAE508AADB83F64D15E1E98EECF5FA4?api-version=2022-08-29",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-efff06bb8f7e0a30404bd614bb9f4c64-6a373b7daf7800d6-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.6.0 (.NET 7.0.7; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "005e1cd88cfd6088a17fdbcf1cd73321",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "525",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 28 Jun 2023 06:19:13 GMT",
+        "ETag": "\u00220300def8-0000-0100-0000-649bd0130000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "005e1cd88cfd6088a17fdbcf1cd73321",
+        "x-ms-correlation-request-id": "bcf9854c-ce34-47fb-a00b-6d64cac5f8ba",
+        "x-ms-ratelimit-remaining-tenant-reads": "11939",
+        "x-ms-request-id": "e24f450d-8b60-4269-aca2-e580ec0e73c6",
+        "x-ms-routing-request-id": "SOUTHINDIA:20230628T061914Z:bcf9854c-ce34-47fb-a00b-6d64cac5f8ba"
+      },
+      "ResponseBody": {
+        "id": "/providers/PaloAltoNetworks.Cloudngfw/locations/EASTUS2/operationStatuses/5cad4f94-51ba-4544-ad38-8da81b780d06*29C9DAC94EEC84555EC32E8D1A70BEDD1DAE508AADB83F64D15E1E98EECF5FA4",
+        "name": "5cad4f94-51ba-4544-ad38-8da81b780d06*29C9DAC94EEC84555EC32E8D1A70BEDD1DAE508AADB83F64D15E1E98EECF5FA4",
+        "resourceId": "/subscriptions/2bf4a339-294d-4c25-b0b2-ef649e9f5c27/resourceGroups/dotnetSdkTest-1158/providers/PaloAltoNetworks.Cloudngfw/firewalls/dotnetSdkTest-2786",
+        "status": "Accepted",
+        "startTime": "2023-06-28T06:15:47.2431913Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/providers/PaloAltoNetworks.Cloudngfw/locations/EASTUS2/operationStatuses/5cad4f94-51ba-4544-ad38-8da81b780d06*29C9DAC94EEC84555EC32E8D1A70BEDD1DAE508AADB83F64D15E1E98EECF5FA4?api-version=2022-08-29",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-efff06bb8f7e0a30404bd614bb9f4c64-0b3c7d42ec805297-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.6.0 (.NET 7.0.7; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "0f4ba5bf92cd5f5ad029afe3b223ad27",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "525",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 28 Jun 2023 06:19:47 GMT",
+        "ETag": "\u00220300def8-0000-0100-0000-649bd0130000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "0f4ba5bf92cd5f5ad029afe3b223ad27",
+        "x-ms-correlation-request-id": "85a95b5a-9534-429d-8ead-4ccec092ef4e",
+        "x-ms-ratelimit-remaining-tenant-reads": "11938",
+        "x-ms-request-id": "69740f1a-7a60-4f28-91ee-593773d9e5eb",
+        "x-ms-routing-request-id": "SOUTHINDIA:20230628T061947Z:85a95b5a-9534-429d-8ead-4ccec092ef4e"
+      },
+      "ResponseBody": {
+        "id": "/providers/PaloAltoNetworks.Cloudngfw/locations/EASTUS2/operationStatuses/5cad4f94-51ba-4544-ad38-8da81b780d06*29C9DAC94EEC84555EC32E8D1A70BEDD1DAE508AADB83F64D15E1E98EECF5FA4",
+        "name": "5cad4f94-51ba-4544-ad38-8da81b780d06*29C9DAC94EEC84555EC32E8D1A70BEDD1DAE508AADB83F64D15E1E98EECF5FA4",
+        "resourceId": "/subscriptions/2bf4a339-294d-4c25-b0b2-ef649e9f5c27/resourceGroups/dotnetSdkTest-1158/providers/PaloAltoNetworks.Cloudngfw/firewalls/dotnetSdkTest-2786",
+        "status": "Accepted",
+        "startTime": "2023-06-28T06:15:47.2431913Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/providers/PaloAltoNetworks.Cloudngfw/locations/EASTUS2/operationStatuses/5cad4f94-51ba-4544-ad38-8da81b780d06*29C9DAC94EEC84555EC32E8D1A70BEDD1DAE508AADB83F64D15E1E98EECF5FA4?api-version=2022-08-29",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-efff06bb8f7e0a30404bd614bb9f4c64-751079766ae8c449-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.6.0 (.NET 7.0.7; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "d90e107167d9f3fbe6906f599ae19f07",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "525",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 28 Jun 2023 06:20:20 GMT",
+        "ETag": "\u00220300def8-0000-0100-0000-649bd0130000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "d90e107167d9f3fbe6906f599ae19f07",
+        "x-ms-correlation-request-id": "c1345bc4-5374-4463-a495-21b7d72cc1e6",
+        "x-ms-ratelimit-remaining-tenant-reads": "11937",
+        "x-ms-request-id": "89391d4e-9c6e-4147-8b31-548186a0695b",
+        "x-ms-routing-request-id": "SOUTHINDIA:20230628T062020Z:c1345bc4-5374-4463-a495-21b7d72cc1e6"
+      },
+      "ResponseBody": {
+        "id": "/providers/PaloAltoNetworks.Cloudngfw/locations/EASTUS2/operationStatuses/5cad4f94-51ba-4544-ad38-8da81b780d06*29C9DAC94EEC84555EC32E8D1A70BEDD1DAE508AADB83F64D15E1E98EECF5FA4",
+        "name": "5cad4f94-51ba-4544-ad38-8da81b780d06*29C9DAC94EEC84555EC32E8D1A70BEDD1DAE508AADB83F64D15E1E98EECF5FA4",
+        "resourceId": "/subscriptions/2bf4a339-294d-4c25-b0b2-ef649e9f5c27/resourceGroups/dotnetSdkTest-1158/providers/PaloAltoNetworks.Cloudngfw/firewalls/dotnetSdkTest-2786",
+        "status": "Accepted",
+        "startTime": "2023-06-28T06:15:47.2431913Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/providers/PaloAltoNetworks.Cloudngfw/locations/EASTUS2/operationStatuses/5cad4f94-51ba-4544-ad38-8da81b780d06*29C9DAC94EEC84555EC32E8D1A70BEDD1DAE508AADB83F64D15E1E98EECF5FA4?api-version=2022-08-29",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-efff06bb8f7e0a30404bd614bb9f4c64-7e2b6fed9a9ad41c-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.6.0 (.NET 7.0.7; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "7ff45bf6f7fa45c3c1ff2fd3dda5ad7e",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "525",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 28 Jun 2023 06:20:52 GMT",
+        "ETag": "\u00220300def8-0000-0100-0000-649bd0130000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "7ff45bf6f7fa45c3c1ff2fd3dda5ad7e",
+        "x-ms-correlation-request-id": "8dba9e83-504a-4454-9216-7277bf3980cd",
+        "x-ms-ratelimit-remaining-tenant-reads": "11936",
+        "x-ms-request-id": "e9cc772a-2929-4108-9d7e-95c5e2df63a4",
+        "x-ms-routing-request-id": "SOUTHINDIA:20230628T062053Z:8dba9e83-504a-4454-9216-7277bf3980cd"
+      },
+      "ResponseBody": {
+        "id": "/providers/PaloAltoNetworks.Cloudngfw/locations/EASTUS2/operationStatuses/5cad4f94-51ba-4544-ad38-8da81b780d06*29C9DAC94EEC84555EC32E8D1A70BEDD1DAE508AADB83F64D15E1E98EECF5FA4",
+        "name": "5cad4f94-51ba-4544-ad38-8da81b780d06*29C9DAC94EEC84555EC32E8D1A70BEDD1DAE508AADB83F64D15E1E98EECF5FA4",
+        "resourceId": "/subscriptions/2bf4a339-294d-4c25-b0b2-ef649e9f5c27/resourceGroups/dotnetSdkTest-1158/providers/PaloAltoNetworks.Cloudngfw/firewalls/dotnetSdkTest-2786",
+        "status": "Accepted",
+        "startTime": "2023-06-28T06:15:47.2431913Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/providers/PaloAltoNetworks.Cloudngfw/locations/EASTUS2/operationStatuses/5cad4f94-51ba-4544-ad38-8da81b780d06*29C9DAC94EEC84555EC32E8D1A70BEDD1DAE508AADB83F64D15E1E98EECF5FA4?api-version=2022-08-29",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-efff06bb8f7e0a30404bd614bb9f4c64-ec0b4e0b313ea7db-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.6.0 (.NET 7.0.7; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "0c5eb3d15ac85748aa57283d2301c5ef",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "525",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 28 Jun 2023 06:21:26 GMT",
+        "ETag": "\u00220300def8-0000-0100-0000-649bd0130000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "0c5eb3d15ac85748aa57283d2301c5ef",
+        "x-ms-correlation-request-id": "1e6e7805-1149-452e-8aaa-3580b566108a",
+        "x-ms-ratelimit-remaining-tenant-reads": "11935",
+        "x-ms-request-id": "cc5fcbea-d57a-4b68-bcdd-29aea0e2cbfd",
+        "x-ms-routing-request-id": "SOUTHINDIA:20230628T062126Z:1e6e7805-1149-452e-8aaa-3580b566108a"
+      },
+      "ResponseBody": {
+        "id": "/providers/PaloAltoNetworks.Cloudngfw/locations/EASTUS2/operationStatuses/5cad4f94-51ba-4544-ad38-8da81b780d06*29C9DAC94EEC84555EC32E8D1A70BEDD1DAE508AADB83F64D15E1E98EECF5FA4",
+        "name": "5cad4f94-51ba-4544-ad38-8da81b780d06*29C9DAC94EEC84555EC32E8D1A70BEDD1DAE508AADB83F64D15E1E98EECF5FA4",
+        "resourceId": "/subscriptions/2bf4a339-294d-4c25-b0b2-ef649e9f5c27/resourceGroups/dotnetSdkTest-1158/providers/PaloAltoNetworks.Cloudngfw/firewalls/dotnetSdkTest-2786",
+        "status": "Accepted",
+        "startTime": "2023-06-28T06:15:47.2431913Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/providers/PaloAltoNetworks.Cloudngfw/locations/EASTUS2/operationStatuses/5cad4f94-51ba-4544-ad38-8da81b780d06*29C9DAC94EEC84555EC32E8D1A70BEDD1DAE508AADB83F64D15E1E98EECF5FA4?api-version=2022-08-29",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-efff06bb8f7e0a30404bd614bb9f4c64-49d0ff7b79ff4b75-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.6.0 (.NET 7.0.7; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "57eca88a2e2e792c4cc817d937281640",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "525",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 28 Jun 2023 06:21:59 GMT",
+        "ETag": "\u00220300def8-0000-0100-0000-649bd0130000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "57eca88a2e2e792c4cc817d937281640",
+        "x-ms-correlation-request-id": "d27f94bf-c9ca-4a6e-955e-17dfd2de9137",
+        "x-ms-ratelimit-remaining-tenant-reads": "11934",
+        "x-ms-request-id": "263c4e41-5159-4517-a661-edb48529718d",
+        "x-ms-routing-request-id": "SOUTHINDIA:20230628T062159Z:d27f94bf-c9ca-4a6e-955e-17dfd2de9137"
+      },
+      "ResponseBody": {
+        "id": "/providers/PaloAltoNetworks.Cloudngfw/locations/EASTUS2/operationStatuses/5cad4f94-51ba-4544-ad38-8da81b780d06*29C9DAC94EEC84555EC32E8D1A70BEDD1DAE508AADB83F64D15E1E98EECF5FA4",
+        "name": "5cad4f94-51ba-4544-ad38-8da81b780d06*29C9DAC94EEC84555EC32E8D1A70BEDD1DAE508AADB83F64D15E1E98EECF5FA4",
+        "resourceId": "/subscriptions/2bf4a339-294d-4c25-b0b2-ef649e9f5c27/resourceGroups/dotnetSdkTest-1158/providers/PaloAltoNetworks.Cloudngfw/firewalls/dotnetSdkTest-2786",
+        "status": "Accepted",
+        "startTime": "2023-06-28T06:15:47.2431913Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/providers/PaloAltoNetworks.Cloudngfw/locations/EASTUS2/operationStatuses/5cad4f94-51ba-4544-ad38-8da81b780d06*29C9DAC94EEC84555EC32E8D1A70BEDD1DAE508AADB83F64D15E1E98EECF5FA4?api-version=2022-08-29",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-efff06bb8f7e0a30404bd614bb9f4c64-f84593084558e9d2-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.6.0 (.NET 7.0.7; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "e687f0e292839c3e129cd5a2ce8622c0",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "525",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 28 Jun 2023 06:22:32 GMT",
+        "ETag": "\u00220300def8-0000-0100-0000-649bd0130000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "e687f0e292839c3e129cd5a2ce8622c0",
+        "x-ms-correlation-request-id": "961bbba0-4b0a-480b-992f-335729faa36a",
+        "x-ms-ratelimit-remaining-tenant-reads": "11933",
+        "x-ms-request-id": "34e6523c-21e6-4948-b80f-4f44e59fb514",
+        "x-ms-routing-request-id": "SOUTHINDIA:20230628T062232Z:961bbba0-4b0a-480b-992f-335729faa36a"
+      },
+      "ResponseBody": {
+        "id": "/providers/PaloAltoNetworks.Cloudngfw/locations/EASTUS2/operationStatuses/5cad4f94-51ba-4544-ad38-8da81b780d06*29C9DAC94EEC84555EC32E8D1A70BEDD1DAE508AADB83F64D15E1E98EECF5FA4",
+        "name": "5cad4f94-51ba-4544-ad38-8da81b780d06*29C9DAC94EEC84555EC32E8D1A70BEDD1DAE508AADB83F64D15E1E98EECF5FA4",
+        "resourceId": "/subscriptions/2bf4a339-294d-4c25-b0b2-ef649e9f5c27/resourceGroups/dotnetSdkTest-1158/providers/PaloAltoNetworks.Cloudngfw/firewalls/dotnetSdkTest-2786",
+        "status": "Accepted",
+        "startTime": "2023-06-28T06:15:47.2431913Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/providers/PaloAltoNetworks.Cloudngfw/locations/EASTUS2/operationStatuses/5cad4f94-51ba-4544-ad38-8da81b780d06*29C9DAC94EEC84555EC32E8D1A70BEDD1DAE508AADB83F64D15E1E98EECF5FA4?api-version=2022-08-29",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-efff06bb8f7e0a30404bd614bb9f4c64-b837f069b30b3adc-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.6.0 (.NET 7.0.7; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "3449403956b9a34f86e4bfff436e2081",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "525",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 28 Jun 2023 06:23:05 GMT",
+        "ETag": "\u00220300def8-0000-0100-0000-649bd0130000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "3449403956b9a34f86e4bfff436e2081",
+        "x-ms-correlation-request-id": "c86dee7e-c00d-4bee-92fe-56dbf9b727a3",
+        "x-ms-ratelimit-remaining-tenant-reads": "11932",
+        "x-ms-request-id": "1590592d-0d7e-4ff1-96c0-1e26733588ce",
+        "x-ms-routing-request-id": "SOUTHINDIA:20230628T062305Z:c86dee7e-c00d-4bee-92fe-56dbf9b727a3"
+      },
+      "ResponseBody": {
+        "id": "/providers/PaloAltoNetworks.Cloudngfw/locations/EASTUS2/operationStatuses/5cad4f94-51ba-4544-ad38-8da81b780d06*29C9DAC94EEC84555EC32E8D1A70BEDD1DAE508AADB83F64D15E1E98EECF5FA4",
+        "name": "5cad4f94-51ba-4544-ad38-8da81b780d06*29C9DAC94EEC84555EC32E8D1A70BEDD1DAE508AADB83F64D15E1E98EECF5FA4",
+        "resourceId": "/subscriptions/2bf4a339-294d-4c25-b0b2-ef649e9f5c27/resourceGroups/dotnetSdkTest-1158/providers/PaloAltoNetworks.Cloudngfw/firewalls/dotnetSdkTest-2786",
+        "status": "Accepted",
+        "startTime": "2023-06-28T06:15:47.2431913Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/providers/PaloAltoNetworks.Cloudngfw/locations/EASTUS2/operationStatuses/5cad4f94-51ba-4544-ad38-8da81b780d06*29C9DAC94EEC84555EC32E8D1A70BEDD1DAE508AADB83F64D15E1E98EECF5FA4?api-version=2022-08-29",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-efff06bb8f7e0a30404bd614bb9f4c64-204112d67a637368-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.6.0 (.NET 7.0.7; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "335ae841de79f76b69504492588aaac6",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "525",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 28 Jun 2023 06:23:38 GMT",
+        "ETag": "\u00220300def8-0000-0100-0000-649bd0130000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "335ae841de79f76b69504492588aaac6",
+        "x-ms-correlation-request-id": "4c23a010-8340-4ab0-8f3c-29a90452c86b",
+        "x-ms-ratelimit-remaining-tenant-reads": "11931",
+        "x-ms-request-id": "bb647478-4c19-4e9a-80ae-7bfbe7f123bc",
+        "x-ms-routing-request-id": "SOUTHINDIA:20230628T062338Z:4c23a010-8340-4ab0-8f3c-29a90452c86b"
+      },
+      "ResponseBody": {
+        "id": "/providers/PaloAltoNetworks.Cloudngfw/locations/EASTUS2/operationStatuses/5cad4f94-51ba-4544-ad38-8da81b780d06*29C9DAC94EEC84555EC32E8D1A70BEDD1DAE508AADB83F64D15E1E98EECF5FA4",
+        "name": "5cad4f94-51ba-4544-ad38-8da81b780d06*29C9DAC94EEC84555EC32E8D1A70BEDD1DAE508AADB83F64D15E1E98EECF5FA4",
+        "resourceId": "/subscriptions/2bf4a339-294d-4c25-b0b2-ef649e9f5c27/resourceGroups/dotnetSdkTest-1158/providers/PaloAltoNetworks.Cloudngfw/firewalls/dotnetSdkTest-2786",
+        "status": "Accepted",
+        "startTime": "2023-06-28T06:15:47.2431913Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/providers/PaloAltoNetworks.Cloudngfw/locations/EASTUS2/operationStatuses/5cad4f94-51ba-4544-ad38-8da81b780d06*29C9DAC94EEC84555EC32E8D1A70BEDD1DAE508AADB83F64D15E1E98EECF5FA4?api-version=2022-08-29",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-efff06bb8f7e0a30404bd614bb9f4c64-2f9cb4b4ba96996f-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.6.0 (.NET 7.0.7; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "f69f56a6e1de8c87a0e4609ed33e58a4",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "525",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 28 Jun 2023 06:24:11 GMT",
+        "ETag": "\u00220300def8-0000-0100-0000-649bd0130000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "f69f56a6e1de8c87a0e4609ed33e58a4",
+        "x-ms-correlation-request-id": "66126a78-e292-4235-a587-a3219bdea98d",
+        "x-ms-ratelimit-remaining-tenant-reads": "11930",
+        "x-ms-request-id": "c1e69fa1-332d-410c-a5df-516bb9a4ad17",
+        "x-ms-routing-request-id": "SOUTHINDIA:20230628T062411Z:66126a78-e292-4235-a587-a3219bdea98d"
+      },
+      "ResponseBody": {
+        "id": "/providers/PaloAltoNetworks.Cloudngfw/locations/EASTUS2/operationStatuses/5cad4f94-51ba-4544-ad38-8da81b780d06*29C9DAC94EEC84555EC32E8D1A70BEDD1DAE508AADB83F64D15E1E98EECF5FA4",
+        "name": "5cad4f94-51ba-4544-ad38-8da81b780d06*29C9DAC94EEC84555EC32E8D1A70BEDD1DAE508AADB83F64D15E1E98EECF5FA4",
+        "resourceId": "/subscriptions/2bf4a339-294d-4c25-b0b2-ef649e9f5c27/resourceGroups/dotnetSdkTest-1158/providers/PaloAltoNetworks.Cloudngfw/firewalls/dotnetSdkTest-2786",
+        "status": "Accepted",
+        "startTime": "2023-06-28T06:15:47.2431913Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/providers/PaloAltoNetworks.Cloudngfw/locations/EASTUS2/operationStatuses/5cad4f94-51ba-4544-ad38-8da81b780d06*29C9DAC94EEC84555EC32E8D1A70BEDD1DAE508AADB83F64D15E1E98EECF5FA4?api-version=2022-08-29",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-efff06bb8f7e0a30404bd614bb9f4c64-a2c022b6508e7ba2-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.6.0 (.NET 7.0.7; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "e661537cee2c5b46d551cb6911bd4afc",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "525",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 28 Jun 2023 06:24:44 GMT",
+        "ETag": "\u00220300def8-0000-0100-0000-649bd0130000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "e661537cee2c5b46d551cb6911bd4afc",
+        "x-ms-correlation-request-id": "cf352c85-b0a3-4992-8353-6aa003c89fbe",
+        "x-ms-ratelimit-remaining-tenant-reads": "11929",
+        "x-ms-request-id": "1cee4278-477f-450a-8e7d-0a50f1a7f779",
+        "x-ms-routing-request-id": "SOUTHINDIA:20230628T062445Z:cf352c85-b0a3-4992-8353-6aa003c89fbe"
+      },
+      "ResponseBody": {
+        "id": "/providers/PaloAltoNetworks.Cloudngfw/locations/EASTUS2/operationStatuses/5cad4f94-51ba-4544-ad38-8da81b780d06*29C9DAC94EEC84555EC32E8D1A70BEDD1DAE508AADB83F64D15E1E98EECF5FA4",
+        "name": "5cad4f94-51ba-4544-ad38-8da81b780d06*29C9DAC94EEC84555EC32E8D1A70BEDD1DAE508AADB83F64D15E1E98EECF5FA4",
+        "resourceId": "/subscriptions/2bf4a339-294d-4c25-b0b2-ef649e9f5c27/resourceGroups/dotnetSdkTest-1158/providers/PaloAltoNetworks.Cloudngfw/firewalls/dotnetSdkTest-2786",
+        "status": "Accepted",
+        "startTime": "2023-06-28T06:15:47.2431913Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/providers/PaloAltoNetworks.Cloudngfw/locations/EASTUS2/operationStatuses/5cad4f94-51ba-4544-ad38-8da81b780d06*29C9DAC94EEC84555EC32E8D1A70BEDD1DAE508AADB83F64D15E1E98EECF5FA4?api-version=2022-08-29",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-efff06bb8f7e0a30404bd614bb9f4c64-496c278f8ac5aac4-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.6.0 (.NET 7.0.7; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "ec59f83a29ce60a360cd93957ecc242a",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "525",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 28 Jun 2023 06:25:17 GMT",
+        "ETag": "\u00220300def8-0000-0100-0000-649bd0130000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "ec59f83a29ce60a360cd93957ecc242a",
+        "x-ms-correlation-request-id": "a60caf24-cbc9-4d82-8e29-af1eb526ef17",
+        "x-ms-ratelimit-remaining-tenant-reads": "11928",
+        "x-ms-request-id": "e8d56ab8-dc23-40b9-8f93-c7dd426b079c",
+        "x-ms-routing-request-id": "SOUTHINDIA:20230628T062518Z:a60caf24-cbc9-4d82-8e29-af1eb526ef17"
+      },
+      "ResponseBody": {
+        "id": "/providers/PaloAltoNetworks.Cloudngfw/locations/EASTUS2/operationStatuses/5cad4f94-51ba-4544-ad38-8da81b780d06*29C9DAC94EEC84555EC32E8D1A70BEDD1DAE508AADB83F64D15E1E98EECF5FA4",
+        "name": "5cad4f94-51ba-4544-ad38-8da81b780d06*29C9DAC94EEC84555EC32E8D1A70BEDD1DAE508AADB83F64D15E1E98EECF5FA4",
+        "resourceId": "/subscriptions/2bf4a339-294d-4c25-b0b2-ef649e9f5c27/resourceGroups/dotnetSdkTest-1158/providers/PaloAltoNetworks.Cloudngfw/firewalls/dotnetSdkTest-2786",
+        "status": "Accepted",
+        "startTime": "2023-06-28T06:15:47.2431913Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/providers/PaloAltoNetworks.Cloudngfw/locations/EASTUS2/operationStatuses/5cad4f94-51ba-4544-ad38-8da81b780d06*29C9DAC94EEC84555EC32E8D1A70BEDD1DAE508AADB83F64D15E1E98EECF5FA4?api-version=2022-08-29",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-efff06bb8f7e0a30404bd614bb9f4c64-2a4e5b1357423b0c-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.6.0 (.NET 7.0.7; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "0516a0f7c329b89a0f44218c151d7be3",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "525",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 28 Jun 2023 06:25:50 GMT",
+        "ETag": "\u00220300def8-0000-0100-0000-649bd0130000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "0516a0f7c329b89a0f44218c151d7be3",
+        "x-ms-correlation-request-id": "868a5e87-d257-441b-a8c6-70ceb453a8ea",
+        "x-ms-ratelimit-remaining-tenant-reads": "11927",
+        "x-ms-request-id": "b0d72995-5fef-46e8-a17d-806eea18504d",
+        "x-ms-routing-request-id": "SOUTHINDIA:20230628T062551Z:868a5e87-d257-441b-a8c6-70ceb453a8ea"
+      },
+      "ResponseBody": {
+        "id": "/providers/PaloAltoNetworks.Cloudngfw/locations/EASTUS2/operationStatuses/5cad4f94-51ba-4544-ad38-8da81b780d06*29C9DAC94EEC84555EC32E8D1A70BEDD1DAE508AADB83F64D15E1E98EECF5FA4",
+        "name": "5cad4f94-51ba-4544-ad38-8da81b780d06*29C9DAC94EEC84555EC32E8D1A70BEDD1DAE508AADB83F64D15E1E98EECF5FA4",
+        "resourceId": "/subscriptions/2bf4a339-294d-4c25-b0b2-ef649e9f5c27/resourceGroups/dotnetSdkTest-1158/providers/PaloAltoNetworks.Cloudngfw/firewalls/dotnetSdkTest-2786",
+        "status": "Accepted",
+        "startTime": "2023-06-28T06:15:47.2431913Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/providers/PaloAltoNetworks.Cloudngfw/locations/EASTUS2/operationStatuses/5cad4f94-51ba-4544-ad38-8da81b780d06*29C9DAC94EEC84555EC32E8D1A70BEDD1DAE508AADB83F64D15E1E98EECF5FA4?api-version=2022-08-29",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-efff06bb8f7e0a30404bd614bb9f4c64-e7ba172731d41600-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.6.0 (.NET 7.0.7; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "da6464996ce552d5b000855e5bb1dc08",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "525",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 28 Jun 2023 06:26:23 GMT",
+        "ETag": "\u00220300def8-0000-0100-0000-649bd0130000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "da6464996ce552d5b000855e5bb1dc08",
+        "x-ms-correlation-request-id": "5673bf30-5cc9-4863-8bb7-79996fcd9e5e",
+        "x-ms-ratelimit-remaining-tenant-reads": "11926",
+        "x-ms-request-id": "d410dd80-4569-4f2b-bede-3bfbeafa1c3a",
+        "x-ms-routing-request-id": "SOUTHINDIA:20230628T062624Z:5673bf30-5cc9-4863-8bb7-79996fcd9e5e"
+      },
+      "ResponseBody": {
+        "id": "/providers/PaloAltoNetworks.Cloudngfw/locations/EASTUS2/operationStatuses/5cad4f94-51ba-4544-ad38-8da81b780d06*29C9DAC94EEC84555EC32E8D1A70BEDD1DAE508AADB83F64D15E1E98EECF5FA4",
+        "name": "5cad4f94-51ba-4544-ad38-8da81b780d06*29C9DAC94EEC84555EC32E8D1A70BEDD1DAE508AADB83F64D15E1E98EECF5FA4",
+        "resourceId": "/subscriptions/2bf4a339-294d-4c25-b0b2-ef649e9f5c27/resourceGroups/dotnetSdkTest-1158/providers/PaloAltoNetworks.Cloudngfw/firewalls/dotnetSdkTest-2786",
+        "status": "Accepted",
+        "startTime": "2023-06-28T06:15:47.2431913Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/providers/PaloAltoNetworks.Cloudngfw/locations/EASTUS2/operationStatuses/5cad4f94-51ba-4544-ad38-8da81b780d06*29C9DAC94EEC84555EC32E8D1A70BEDD1DAE508AADB83F64D15E1E98EECF5FA4?api-version=2022-08-29",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-efff06bb8f7e0a30404bd614bb9f4c64-767ff41b247f6797-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.6.0 (.NET 7.0.7; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "7172a02d45a676d35ea0dc8908164a42",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "525",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 28 Jun 2023 06:26:56 GMT",
+        "ETag": "\u00220300def8-0000-0100-0000-649bd0130000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "7172a02d45a676d35ea0dc8908164a42",
+        "x-ms-correlation-request-id": "c988d2a9-7567-4899-8943-0a288746ae0a",
+        "x-ms-ratelimit-remaining-tenant-reads": "11925",
+        "x-ms-request-id": "74618f71-ec9c-4f1e-9062-fb616e478297",
+        "x-ms-routing-request-id": "SOUTHINDIA:20230628T062657Z:c988d2a9-7567-4899-8943-0a288746ae0a"
+      },
+      "ResponseBody": {
+        "id": "/providers/PaloAltoNetworks.Cloudngfw/locations/EASTUS2/operationStatuses/5cad4f94-51ba-4544-ad38-8da81b780d06*29C9DAC94EEC84555EC32E8D1A70BEDD1DAE508AADB83F64D15E1E98EECF5FA4",
+        "name": "5cad4f94-51ba-4544-ad38-8da81b780d06*29C9DAC94EEC84555EC32E8D1A70BEDD1DAE508AADB83F64D15E1E98EECF5FA4",
+        "resourceId": "/subscriptions/2bf4a339-294d-4c25-b0b2-ef649e9f5c27/resourceGroups/dotnetSdkTest-1158/providers/PaloAltoNetworks.Cloudngfw/firewalls/dotnetSdkTest-2786",
+        "status": "Accepted",
+        "startTime": "2023-06-28T06:15:47.2431913Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/providers/PaloAltoNetworks.Cloudngfw/locations/EASTUS2/operationStatuses/5cad4f94-51ba-4544-ad38-8da81b780d06*29C9DAC94EEC84555EC32E8D1A70BEDD1DAE508AADB83F64D15E1E98EECF5FA4?api-version=2022-08-29",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-efff06bb8f7e0a30404bd614bb9f4c64-fdb02cf80fb89ca7-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.6.0 (.NET 7.0.7; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "1afcb05249688a44cac454283d3b5d5e",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "525",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 28 Jun 2023 06:27:29 GMT",
+        "ETag": "\u00220300def8-0000-0100-0000-649bd0130000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "1afcb05249688a44cac454283d3b5d5e",
+        "x-ms-correlation-request-id": "0daf4ba1-82fb-4ed5-9aab-41eaa076a09f",
+        "x-ms-ratelimit-remaining-tenant-reads": "11924",
+        "x-ms-request-id": "722744e8-3b01-4aa9-8693-7c40a92c4c31",
+        "x-ms-routing-request-id": "SOUTHINDIA:20230628T062730Z:0daf4ba1-82fb-4ed5-9aab-41eaa076a09f"
+      },
+      "ResponseBody": {
+        "id": "/providers/PaloAltoNetworks.Cloudngfw/locations/EASTUS2/operationStatuses/5cad4f94-51ba-4544-ad38-8da81b780d06*29C9DAC94EEC84555EC32E8D1A70BEDD1DAE508AADB83F64D15E1E98EECF5FA4",
+        "name": "5cad4f94-51ba-4544-ad38-8da81b780d06*29C9DAC94EEC84555EC32E8D1A70BEDD1DAE508AADB83F64D15E1E98EECF5FA4",
+        "resourceId": "/subscriptions/2bf4a339-294d-4c25-b0b2-ef649e9f5c27/resourceGroups/dotnetSdkTest-1158/providers/PaloAltoNetworks.Cloudngfw/firewalls/dotnetSdkTest-2786",
+        "status": "Accepted",
+        "startTime": "2023-06-28T06:15:47.2431913Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/providers/PaloAltoNetworks.Cloudngfw/locations/EASTUS2/operationStatuses/5cad4f94-51ba-4544-ad38-8da81b780d06*29C9DAC94EEC84555EC32E8D1A70BEDD1DAE508AADB83F64D15E1E98EECF5FA4?api-version=2022-08-29",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-efff06bb8f7e0a30404bd614bb9f4c64-f6f86f7b550de316-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.6.0 (.NET 7.0.7; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "755e18680aab543c90ed7c458f4b4a9a",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "525",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 28 Jun 2023 06:28:03 GMT",
+        "ETag": "\u00220300def8-0000-0100-0000-649bd0130000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "755e18680aab543c90ed7c458f4b4a9a",
+        "x-ms-correlation-request-id": "8a5931b8-4e81-4525-b028-02bf6cd270f9",
+        "x-ms-ratelimit-remaining-tenant-reads": "11923",
+        "x-ms-request-id": "d193ff99-e39c-49a2-b12a-091ee03d1fa4",
+        "x-ms-routing-request-id": "SOUTHINDIA:20230628T062803Z:8a5931b8-4e81-4525-b028-02bf6cd270f9"
+      },
+      "ResponseBody": {
+        "id": "/providers/PaloAltoNetworks.Cloudngfw/locations/EASTUS2/operationStatuses/5cad4f94-51ba-4544-ad38-8da81b780d06*29C9DAC94EEC84555EC32E8D1A70BEDD1DAE508AADB83F64D15E1E98EECF5FA4",
+        "name": "5cad4f94-51ba-4544-ad38-8da81b780d06*29C9DAC94EEC84555EC32E8D1A70BEDD1DAE508AADB83F64D15E1E98EECF5FA4",
+        "resourceId": "/subscriptions/2bf4a339-294d-4c25-b0b2-ef649e9f5c27/resourceGroups/dotnetSdkTest-1158/providers/PaloAltoNetworks.Cloudngfw/firewalls/dotnetSdkTest-2786",
+        "status": "Accepted",
+        "startTime": "2023-06-28T06:15:47.2431913Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/providers/PaloAltoNetworks.Cloudngfw/locations/EASTUS2/operationStatuses/5cad4f94-51ba-4544-ad38-8da81b780d06*29C9DAC94EEC84555EC32E8D1A70BEDD1DAE508AADB83F64D15E1E98EECF5FA4?api-version=2022-08-29",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-efff06bb8f7e0a30404bd614bb9f4c64-c884dd44795b6b23-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.6.0 (.NET 7.0.7; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "aa0c42b6c2b4e4a05be7a6e2f0aa3822",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "525",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 28 Jun 2023 06:28:35 GMT",
+        "ETag": "\u00220300def8-0000-0100-0000-649bd0130000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "aa0c42b6c2b4e4a05be7a6e2f0aa3822",
+        "x-ms-correlation-request-id": "af2ab04a-e797-4d00-8d9d-022240a62d6a",
+        "x-ms-ratelimit-remaining-tenant-reads": "11922",
+        "x-ms-request-id": "a1ba2859-f748-4087-9e67-ea7deec9337a",
+        "x-ms-routing-request-id": "SOUTHINDIA:20230628T062836Z:af2ab04a-e797-4d00-8d9d-022240a62d6a"
+      },
+      "ResponseBody": {
+        "id": "/providers/PaloAltoNetworks.Cloudngfw/locations/EASTUS2/operationStatuses/5cad4f94-51ba-4544-ad38-8da81b780d06*29C9DAC94EEC84555EC32E8D1A70BEDD1DAE508AADB83F64D15E1E98EECF5FA4",
+        "name": "5cad4f94-51ba-4544-ad38-8da81b780d06*29C9DAC94EEC84555EC32E8D1A70BEDD1DAE508AADB83F64D15E1E98EECF5FA4",
+        "resourceId": "/subscriptions/2bf4a339-294d-4c25-b0b2-ef649e9f5c27/resourceGroups/dotnetSdkTest-1158/providers/PaloAltoNetworks.Cloudngfw/firewalls/dotnetSdkTest-2786",
+        "status": "Accepted",
+        "startTime": "2023-06-28T06:15:47.2431913Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/providers/PaloAltoNetworks.Cloudngfw/locations/EASTUS2/operationStatuses/5cad4f94-51ba-4544-ad38-8da81b780d06*29C9DAC94EEC84555EC32E8D1A70BEDD1DAE508AADB83F64D15E1E98EECF5FA4?api-version=2022-08-29",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-efff06bb8f7e0a30404bd614bb9f4c64-03db6a60c43268f3-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.6.0 (.NET 7.0.7; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "ef217d43d5b7489773a8897bcdfffb7e",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "525",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 28 Jun 2023 06:29:08 GMT",
+        "ETag": "\u00220300def8-0000-0100-0000-649bd0130000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "ef217d43d5b7489773a8897bcdfffb7e",
+        "x-ms-correlation-request-id": "72634b06-ecae-4721-9e54-c5186ec77b16",
+        "x-ms-ratelimit-remaining-tenant-reads": "11921",
+        "x-ms-request-id": "6eec02f0-7484-4587-8269-caf54a02eddb",
+        "x-ms-routing-request-id": "SOUTHINDIA:20230628T062909Z:72634b06-ecae-4721-9e54-c5186ec77b16"
+      },
+      "ResponseBody": {
+        "id": "/providers/PaloAltoNetworks.Cloudngfw/locations/EASTUS2/operationStatuses/5cad4f94-51ba-4544-ad38-8da81b780d06*29C9DAC94EEC84555EC32E8D1A70BEDD1DAE508AADB83F64D15E1E98EECF5FA4",
+        "name": "5cad4f94-51ba-4544-ad38-8da81b780d06*29C9DAC94EEC84555EC32E8D1A70BEDD1DAE508AADB83F64D15E1E98EECF5FA4",
+        "resourceId": "/subscriptions/2bf4a339-294d-4c25-b0b2-ef649e9f5c27/resourceGroups/dotnetSdkTest-1158/providers/PaloAltoNetworks.Cloudngfw/firewalls/dotnetSdkTest-2786",
+        "status": "Accepted",
+        "startTime": "2023-06-28T06:15:47.2431913Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/providers/PaloAltoNetworks.Cloudngfw/locations/EASTUS2/operationStatuses/5cad4f94-51ba-4544-ad38-8da81b780d06*29C9DAC94EEC84555EC32E8D1A70BEDD1DAE508AADB83F64D15E1E98EECF5FA4?api-version=2022-08-29",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-efff06bb8f7e0a30404bd614bb9f4c64-707d71292aaece8c-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.6.0 (.NET 7.0.7; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "fa72ba79b22fa5aa787a19c4635a63e6",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "525",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 28 Jun 2023 06:29:41 GMT",
+        "ETag": "\u00220300def8-0000-0100-0000-649bd0130000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "fa72ba79b22fa5aa787a19c4635a63e6",
+        "x-ms-correlation-request-id": "86d0189a-1bd6-4600-ac33-dd287cf07f05",
+        "x-ms-ratelimit-remaining-tenant-reads": "11920",
+        "x-ms-request-id": "b80ab36d-68c9-4216-8288-68d4c7c4e763",
+        "x-ms-routing-request-id": "SOUTHINDIA:20230628T062942Z:86d0189a-1bd6-4600-ac33-dd287cf07f05"
+      },
+      "ResponseBody": {
+        "id": "/providers/PaloAltoNetworks.Cloudngfw/locations/EASTUS2/operationStatuses/5cad4f94-51ba-4544-ad38-8da81b780d06*29C9DAC94EEC84555EC32E8D1A70BEDD1DAE508AADB83F64D15E1E98EECF5FA4",
+        "name": "5cad4f94-51ba-4544-ad38-8da81b780d06*29C9DAC94EEC84555EC32E8D1A70BEDD1DAE508AADB83F64D15E1E98EECF5FA4",
+        "resourceId": "/subscriptions/2bf4a339-294d-4c25-b0b2-ef649e9f5c27/resourceGroups/dotnetSdkTest-1158/providers/PaloAltoNetworks.Cloudngfw/firewalls/dotnetSdkTest-2786",
+        "status": "Accepted",
+        "startTime": "2023-06-28T06:15:47.2431913Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/providers/PaloAltoNetworks.Cloudngfw/locations/EASTUS2/operationStatuses/5cad4f94-51ba-4544-ad38-8da81b780d06*29C9DAC94EEC84555EC32E8D1A70BEDD1DAE508AADB83F64D15E1E98EECF5FA4?api-version=2022-08-29",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-efff06bb8f7e0a30404bd614bb9f4c64-41799ece2a57f0a8-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.6.0 (.NET 7.0.7; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "110159b45a2ae0e2abc4370c3924175b",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "525",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 28 Jun 2023 06:30:14 GMT",
+        "ETag": "\u00220300def8-0000-0100-0000-649bd0130000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "110159b45a2ae0e2abc4370c3924175b",
+        "x-ms-correlation-request-id": "d2ed92da-c7c4-4c6f-9076-ab8a72dcf98d",
+        "x-ms-ratelimit-remaining-tenant-reads": "11919",
+        "x-ms-request-id": "ac05e846-d8ad-4cc0-bf7d-577f99545fe5",
+        "x-ms-routing-request-id": "SOUTHINDIA:20230628T063015Z:d2ed92da-c7c4-4c6f-9076-ab8a72dcf98d"
+      },
+      "ResponseBody": {
+        "id": "/providers/PaloAltoNetworks.Cloudngfw/locations/EASTUS2/operationStatuses/5cad4f94-51ba-4544-ad38-8da81b780d06*29C9DAC94EEC84555EC32E8D1A70BEDD1DAE508AADB83F64D15E1E98EECF5FA4",
+        "name": "5cad4f94-51ba-4544-ad38-8da81b780d06*29C9DAC94EEC84555EC32E8D1A70BEDD1DAE508AADB83F64D15E1E98EECF5FA4",
+        "resourceId": "/subscriptions/2bf4a339-294d-4c25-b0b2-ef649e9f5c27/resourceGroups/dotnetSdkTest-1158/providers/PaloAltoNetworks.Cloudngfw/firewalls/dotnetSdkTest-2786",
+        "status": "Accepted",
+        "startTime": "2023-06-28T06:15:47.2431913Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/providers/PaloAltoNetworks.Cloudngfw/locations/EASTUS2/operationStatuses/5cad4f94-51ba-4544-ad38-8da81b780d06*29C9DAC94EEC84555EC32E8D1A70BEDD1DAE508AADB83F64D15E1E98EECF5FA4?api-version=2022-08-29",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-efff06bb8f7e0a30404bd614bb9f4c64-da91e3f5c1c50619-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.6.0 (.NET 7.0.7; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "356827ec3e3891f3d37c773cbbd3e419",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "525",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 28 Jun 2023 06:30:47 GMT",
+        "ETag": "\u00220300def8-0000-0100-0000-649bd0130000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "356827ec3e3891f3d37c773cbbd3e419",
+        "x-ms-correlation-request-id": "1432bbb2-ef71-4719-a84c-e11adef18a06",
+        "x-ms-ratelimit-remaining-tenant-reads": "11918",
+        "x-ms-request-id": "37825d9d-140b-4967-90cf-d1fdebca4507",
+        "x-ms-routing-request-id": "SOUTHINDIA:20230628T063048Z:1432bbb2-ef71-4719-a84c-e11adef18a06"
+      },
+      "ResponseBody": {
+        "id": "/providers/PaloAltoNetworks.Cloudngfw/locations/EASTUS2/operationStatuses/5cad4f94-51ba-4544-ad38-8da81b780d06*29C9DAC94EEC84555EC32E8D1A70BEDD1DAE508AADB83F64D15E1E98EECF5FA4",
+        "name": "5cad4f94-51ba-4544-ad38-8da81b780d06*29C9DAC94EEC84555EC32E8D1A70BEDD1DAE508AADB83F64D15E1E98EECF5FA4",
+        "resourceId": "/subscriptions/2bf4a339-294d-4c25-b0b2-ef649e9f5c27/resourceGroups/dotnetSdkTest-1158/providers/PaloAltoNetworks.Cloudngfw/firewalls/dotnetSdkTest-2786",
+        "status": "Accepted",
+        "startTime": "2023-06-28T06:15:47.2431913Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/providers/PaloAltoNetworks.Cloudngfw/locations/EASTUS2/operationStatuses/5cad4f94-51ba-4544-ad38-8da81b780d06*29C9DAC94EEC84555EC32E8D1A70BEDD1DAE508AADB83F64D15E1E98EECF5FA4?api-version=2022-08-29",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-efff06bb8f7e0a30404bd614bb9f4c64-ab0d5e2e654ed723-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.6.0 (.NET 7.0.7; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "73c7a344e9fe1e54d8914f6a7b9d6c53",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "525",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 28 Jun 2023 06:31:20 GMT",
+        "ETag": "\u00220300def8-0000-0100-0000-649bd0130000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "73c7a344e9fe1e54d8914f6a7b9d6c53",
+        "x-ms-correlation-request-id": "e452e549-9fae-45ad-b945-b0a5822edacb",
+        "x-ms-ratelimit-remaining-tenant-reads": "11917",
+        "x-ms-request-id": "88c33bd8-e623-4025-b4b9-c22a69cec818",
+        "x-ms-routing-request-id": "SOUTHINDIA:20230628T063121Z:e452e549-9fae-45ad-b945-b0a5822edacb"
+      },
+      "ResponseBody": {
+        "id": "/providers/PaloAltoNetworks.Cloudngfw/locations/EASTUS2/operationStatuses/5cad4f94-51ba-4544-ad38-8da81b780d06*29C9DAC94EEC84555EC32E8D1A70BEDD1DAE508AADB83F64D15E1E98EECF5FA4",
+        "name": "5cad4f94-51ba-4544-ad38-8da81b780d06*29C9DAC94EEC84555EC32E8D1A70BEDD1DAE508AADB83F64D15E1E98EECF5FA4",
+        "resourceId": "/subscriptions/2bf4a339-294d-4c25-b0b2-ef649e9f5c27/resourceGroups/dotnetSdkTest-1158/providers/PaloAltoNetworks.Cloudngfw/firewalls/dotnetSdkTest-2786",
+        "status": "Accepted",
+        "startTime": "2023-06-28T06:15:47.2431913Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/providers/PaloAltoNetworks.Cloudngfw/locations/EASTUS2/operationStatuses/5cad4f94-51ba-4544-ad38-8da81b780d06*29C9DAC94EEC84555EC32E8D1A70BEDD1DAE508AADB83F64D15E1E98EECF5FA4?api-version=2022-08-29",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-efff06bb8f7e0a30404bd614bb9f4c64-2bac65dc85a2d49a-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.6.0 (.NET 7.0.7; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "3cd7bd632df176ae66703dade3a525d8",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "525",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 28 Jun 2023 06:31:53 GMT",
+        "ETag": "\u00220300def8-0000-0100-0000-649bd0130000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "3cd7bd632df176ae66703dade3a525d8",
+        "x-ms-correlation-request-id": "14588df4-cb5f-496a-b410-1080c5f44362",
+        "x-ms-ratelimit-remaining-tenant-reads": "11916",
+        "x-ms-request-id": "ca33a455-7128-40ad-9ec1-d6e59e558048",
+        "x-ms-routing-request-id": "SOUTHINDIA:20230628T063154Z:14588df4-cb5f-496a-b410-1080c5f44362"
+      },
+      "ResponseBody": {
+        "id": "/providers/PaloAltoNetworks.Cloudngfw/locations/EASTUS2/operationStatuses/5cad4f94-51ba-4544-ad38-8da81b780d06*29C9DAC94EEC84555EC32E8D1A70BEDD1DAE508AADB83F64D15E1E98EECF5FA4",
+        "name": "5cad4f94-51ba-4544-ad38-8da81b780d06*29C9DAC94EEC84555EC32E8D1A70BEDD1DAE508AADB83F64D15E1E98EECF5FA4",
+        "resourceId": "/subscriptions/2bf4a339-294d-4c25-b0b2-ef649e9f5c27/resourceGroups/dotnetSdkTest-1158/providers/PaloAltoNetworks.Cloudngfw/firewalls/dotnetSdkTest-2786",
+        "status": "Accepted",
+        "startTime": "2023-06-28T06:15:47.2431913Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/providers/PaloAltoNetworks.Cloudngfw/locations/EASTUS2/operationStatuses/5cad4f94-51ba-4544-ad38-8da81b780d06*29C9DAC94EEC84555EC32E8D1A70BEDD1DAE508AADB83F64D15E1E98EECF5FA4?api-version=2022-08-29",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-efff06bb8f7e0a30404bd614bb9f4c64-1808c21ac99f9da0-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.6.0 (.NET 7.0.7; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "96c71de0a35d025dd2495da6ee881536",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "525",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 28 Jun 2023 06:32:27 GMT",
+        "ETag": "\u00220300def8-0000-0100-0000-649bd0130000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "96c71de0a35d025dd2495da6ee881536",
+        "x-ms-correlation-request-id": "703f68f6-b365-4745-954c-924f4df7c3d7",
+        "x-ms-ratelimit-remaining-tenant-reads": "11915",
+        "x-ms-request-id": "9e95bd3a-2481-4238-bc18-08b181954742",
+        "x-ms-routing-request-id": "SOUTHINDIA:20230628T063227Z:703f68f6-b365-4745-954c-924f4df7c3d7"
+      },
+      "ResponseBody": {
+        "id": "/providers/PaloAltoNetworks.Cloudngfw/locations/EASTUS2/operationStatuses/5cad4f94-51ba-4544-ad38-8da81b780d06*29C9DAC94EEC84555EC32E8D1A70BEDD1DAE508AADB83F64D15E1E98EECF5FA4",
+        "name": "5cad4f94-51ba-4544-ad38-8da81b780d06*29C9DAC94EEC84555EC32E8D1A70BEDD1DAE508AADB83F64D15E1E98EECF5FA4",
+        "resourceId": "/subscriptions/2bf4a339-294d-4c25-b0b2-ef649e9f5c27/resourceGroups/dotnetSdkTest-1158/providers/PaloAltoNetworks.Cloudngfw/firewalls/dotnetSdkTest-2786",
+        "status": "Accepted",
+        "startTime": "2023-06-28T06:15:47.2431913Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/providers/PaloAltoNetworks.Cloudngfw/locations/EASTUS2/operationStatuses/5cad4f94-51ba-4544-ad38-8da81b780d06*29C9DAC94EEC84555EC32E8D1A70BEDD1DAE508AADB83F64D15E1E98EECF5FA4?api-version=2022-08-29",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-efff06bb8f7e0a30404bd614bb9f4c64-be885871facd3b1d-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.6.0 (.NET 7.0.7; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "fdd9230fa8fb1628f4500c8daca63b32",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "525",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 28 Jun 2023 06:32:59 GMT",
+        "ETag": "\u00220300def8-0000-0100-0000-649bd0130000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "fdd9230fa8fb1628f4500c8daca63b32",
+        "x-ms-correlation-request-id": "238acb67-9064-480c-ba68-c3674d6acdf9",
+        "x-ms-ratelimit-remaining-tenant-reads": "11914",
+        "x-ms-request-id": "795ab856-f519-4a2a-b915-2279fa7a3ee6",
+        "x-ms-routing-request-id": "SOUTHINDIA:20230628T063300Z:238acb67-9064-480c-ba68-c3674d6acdf9"
+      },
+      "ResponseBody": {
+        "id": "/providers/PaloAltoNetworks.Cloudngfw/locations/EASTUS2/operationStatuses/5cad4f94-51ba-4544-ad38-8da81b780d06*29C9DAC94EEC84555EC32E8D1A70BEDD1DAE508AADB83F64D15E1E98EECF5FA4",
+        "name": "5cad4f94-51ba-4544-ad38-8da81b780d06*29C9DAC94EEC84555EC32E8D1A70BEDD1DAE508AADB83F64D15E1E98EECF5FA4",
+        "resourceId": "/subscriptions/2bf4a339-294d-4c25-b0b2-ef649e9f5c27/resourceGroups/dotnetSdkTest-1158/providers/PaloAltoNetworks.Cloudngfw/firewalls/dotnetSdkTest-2786",
+        "status": "Accepted",
+        "startTime": "2023-06-28T06:15:47.2431913Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/providers/PaloAltoNetworks.Cloudngfw/locations/EASTUS2/operationStatuses/5cad4f94-51ba-4544-ad38-8da81b780d06*29C9DAC94EEC84555EC32E8D1A70BEDD1DAE508AADB83F64D15E1E98EECF5FA4?api-version=2022-08-29",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-efff06bb8f7e0a30404bd614bb9f4c64-b43493b3bf3de22f-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.6.0 (.NET 7.0.7; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "5d8a766bd6d6bff55fd569a7d00787de",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "525",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 28 Jun 2023 06:33:33 GMT",
+        "ETag": "\u00220300def8-0000-0100-0000-649bd0130000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "5d8a766bd6d6bff55fd569a7d00787de",
+        "x-ms-correlation-request-id": "792388b7-69c6-46fb-b5d8-71c5cb34aa02",
+        "x-ms-ratelimit-remaining-tenant-reads": "11913",
+        "x-ms-request-id": "391dc2a5-dcfa-40e7-b0ba-d6375de7f990",
+        "x-ms-routing-request-id": "SOUTHINDIA:20230628T063333Z:792388b7-69c6-46fb-b5d8-71c5cb34aa02"
+      },
+      "ResponseBody": {
+        "id": "/providers/PaloAltoNetworks.Cloudngfw/locations/EASTUS2/operationStatuses/5cad4f94-51ba-4544-ad38-8da81b780d06*29C9DAC94EEC84555EC32E8D1A70BEDD1DAE508AADB83F64D15E1E98EECF5FA4",
+        "name": "5cad4f94-51ba-4544-ad38-8da81b780d06*29C9DAC94EEC84555EC32E8D1A70BEDD1DAE508AADB83F64D15E1E98EECF5FA4",
+        "resourceId": "/subscriptions/2bf4a339-294d-4c25-b0b2-ef649e9f5c27/resourceGroups/dotnetSdkTest-1158/providers/PaloAltoNetworks.Cloudngfw/firewalls/dotnetSdkTest-2786",
+        "status": "Accepted",
+        "startTime": "2023-06-28T06:15:47.2431913Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/providers/PaloAltoNetworks.Cloudngfw/locations/EASTUS2/operationStatuses/5cad4f94-51ba-4544-ad38-8da81b780d06*29C9DAC94EEC84555EC32E8D1A70BEDD1DAE508AADB83F64D15E1E98EECF5FA4?api-version=2022-08-29",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-efff06bb8f7e0a30404bd614bb9f4c64-bdd743273541584c-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.6.0 (.NET 7.0.7; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "c09e075a28cc37ddf5b0a10d96d0562b",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "525",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 28 Jun 2023 06:34:06 GMT",
+        "ETag": "\u00220300def8-0000-0100-0000-649bd0130000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "c09e075a28cc37ddf5b0a10d96d0562b",
+        "x-ms-correlation-request-id": "a9b0011e-18b9-49f3-9202-627e3f1c17bf",
+        "x-ms-ratelimit-remaining-tenant-reads": "11912",
+        "x-ms-request-id": "66f9a1eb-0390-43a9-9b26-4c042c972751",
+        "x-ms-routing-request-id": "SOUTHINDIA:20230628T063406Z:a9b0011e-18b9-49f3-9202-627e3f1c17bf"
+      },
+      "ResponseBody": {
+        "id": "/providers/PaloAltoNetworks.Cloudngfw/locations/EASTUS2/operationStatuses/5cad4f94-51ba-4544-ad38-8da81b780d06*29C9DAC94EEC84555EC32E8D1A70BEDD1DAE508AADB83F64D15E1E98EECF5FA4",
+        "name": "5cad4f94-51ba-4544-ad38-8da81b780d06*29C9DAC94EEC84555EC32E8D1A70BEDD1DAE508AADB83F64D15E1E98EECF5FA4",
+        "resourceId": "/subscriptions/2bf4a339-294d-4c25-b0b2-ef649e9f5c27/resourceGroups/dotnetSdkTest-1158/providers/PaloAltoNetworks.Cloudngfw/firewalls/dotnetSdkTest-2786",
+        "status": "Accepted",
+        "startTime": "2023-06-28T06:15:47.2431913Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/providers/PaloAltoNetworks.Cloudngfw/locations/EASTUS2/operationStatuses/5cad4f94-51ba-4544-ad38-8da81b780d06*29C9DAC94EEC84555EC32E8D1A70BEDD1DAE508AADB83F64D15E1E98EECF5FA4?api-version=2022-08-29",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-efff06bb8f7e0a30404bd614bb9f4c64-4b2be6be6b27c9a2-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.6.0 (.NET 7.0.7; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "773a2b0eb7fd39602e199d253e8046ed",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "525",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 28 Jun 2023 06:34:38 GMT",
+        "ETag": "\u00220300def8-0000-0100-0000-649bd0130000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "773a2b0eb7fd39602e199d253e8046ed",
+        "x-ms-correlation-request-id": "6a340e80-ecfa-4858-9071-694dc69675f3",
+        "x-ms-ratelimit-remaining-tenant-reads": "11911",
+        "x-ms-request-id": "c24998d2-22e3-48da-9acb-0b405797ed42",
+        "x-ms-routing-request-id": "SOUTHINDIA:20230628T063439Z:6a340e80-ecfa-4858-9071-694dc69675f3"
+      },
+      "ResponseBody": {
+        "id": "/providers/PaloAltoNetworks.Cloudngfw/locations/EASTUS2/operationStatuses/5cad4f94-51ba-4544-ad38-8da81b780d06*29C9DAC94EEC84555EC32E8D1A70BEDD1DAE508AADB83F64D15E1E98EECF5FA4",
+        "name": "5cad4f94-51ba-4544-ad38-8da81b780d06*29C9DAC94EEC84555EC32E8D1A70BEDD1DAE508AADB83F64D15E1E98EECF5FA4",
+        "resourceId": "/subscriptions/2bf4a339-294d-4c25-b0b2-ef649e9f5c27/resourceGroups/dotnetSdkTest-1158/providers/PaloAltoNetworks.Cloudngfw/firewalls/dotnetSdkTest-2786",
+        "status": "Accepted",
+        "startTime": "2023-06-28T06:15:47.2431913Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/providers/PaloAltoNetworks.Cloudngfw/locations/EASTUS2/operationStatuses/5cad4f94-51ba-4544-ad38-8da81b780d06*29C9DAC94EEC84555EC32E8D1A70BEDD1DAE508AADB83F64D15E1E98EECF5FA4?api-version=2022-08-29",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-efff06bb8f7e0a30404bd614bb9f4c64-2ed6d32a0a0cbd2d-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.6.0 (.NET 7.0.7; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "a5322ec97a0843659952682534e8288f",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "525",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 28 Jun 2023 06:35:12 GMT",
+        "ETag": "\u00220300def8-0000-0100-0000-649bd0130000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "a5322ec97a0843659952682534e8288f",
+        "x-ms-correlation-request-id": "8ec13015-b03e-4087-b3ab-a9be1abe3525",
+        "x-ms-ratelimit-remaining-tenant-reads": "11910",
+        "x-ms-request-id": "7ab7e0be-bdec-42aa-9577-5bdf105eae68",
+        "x-ms-routing-request-id": "SOUTHINDIA:20230628T063512Z:8ec13015-b03e-4087-b3ab-a9be1abe3525"
+      },
+      "ResponseBody": {
+        "id": "/providers/PaloAltoNetworks.Cloudngfw/locations/EASTUS2/operationStatuses/5cad4f94-51ba-4544-ad38-8da81b780d06*29C9DAC94EEC84555EC32E8D1A70BEDD1DAE508AADB83F64D15E1E98EECF5FA4",
+        "name": "5cad4f94-51ba-4544-ad38-8da81b780d06*29C9DAC94EEC84555EC32E8D1A70BEDD1DAE508AADB83F64D15E1E98EECF5FA4",
+        "resourceId": "/subscriptions/2bf4a339-294d-4c25-b0b2-ef649e9f5c27/resourceGroups/dotnetSdkTest-1158/providers/PaloAltoNetworks.Cloudngfw/firewalls/dotnetSdkTest-2786",
+        "status": "Accepted",
+        "startTime": "2023-06-28T06:15:47.2431913Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/providers/PaloAltoNetworks.Cloudngfw/locations/EASTUS2/operationStatuses/5cad4f94-51ba-4544-ad38-8da81b780d06*29C9DAC94EEC84555EC32E8D1A70BEDD1DAE508AADB83F64D15E1E98EECF5FA4?api-version=2022-08-29",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-efff06bb8f7e0a30404bd614bb9f4c64-54ea771ea1377452-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.6.0 (.NET 7.0.7; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "a5983d7f0fcca3e0a76491b28ab7f975",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "525",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 28 Jun 2023 06:35:44 GMT",
+        "ETag": "\u00220300def8-0000-0100-0000-649bd0130000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "a5983d7f0fcca3e0a76491b28ab7f975",
+        "x-ms-correlation-request-id": "ba692e6d-2a78-401e-9260-3048fea9b010",
+        "x-ms-ratelimit-remaining-tenant-reads": "11909",
+        "x-ms-request-id": "c5e9d946-d287-4049-9a61-0fdadd2e5335",
+        "x-ms-routing-request-id": "SOUTHINDIA:20230628T063545Z:ba692e6d-2a78-401e-9260-3048fea9b010"
+      },
+      "ResponseBody": {
+        "id": "/providers/PaloAltoNetworks.Cloudngfw/locations/EASTUS2/operationStatuses/5cad4f94-51ba-4544-ad38-8da81b780d06*29C9DAC94EEC84555EC32E8D1A70BEDD1DAE508AADB83F64D15E1E98EECF5FA4",
+        "name": "5cad4f94-51ba-4544-ad38-8da81b780d06*29C9DAC94EEC84555EC32E8D1A70BEDD1DAE508AADB83F64D15E1E98EECF5FA4",
+        "resourceId": "/subscriptions/2bf4a339-294d-4c25-b0b2-ef649e9f5c27/resourceGroups/dotnetSdkTest-1158/providers/PaloAltoNetworks.Cloudngfw/firewalls/dotnetSdkTest-2786",
+        "status": "Accepted",
+        "startTime": "2023-06-28T06:15:47.2431913Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/providers/PaloAltoNetworks.Cloudngfw/locations/EASTUS2/operationStatuses/5cad4f94-51ba-4544-ad38-8da81b780d06*29C9DAC94EEC84555EC32E8D1A70BEDD1DAE508AADB83F64D15E1E98EECF5FA4?api-version=2022-08-29",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-efff06bb8f7e0a30404bd614bb9f4c64-2fe3eb52770d6ecd-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.6.0 (.NET 7.0.7; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "6843b36ab19d9323c5f6deaa4f3a0446",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "525",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 28 Jun 2023 06:36:18 GMT",
+        "ETag": "\u00220300def8-0000-0100-0000-649bd0130000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "6843b36ab19d9323c5f6deaa4f3a0446",
+        "x-ms-correlation-request-id": "ad73db2f-34b9-4573-8a4b-906ca3cf5517",
+        "x-ms-ratelimit-remaining-tenant-reads": "11908",
+        "x-ms-request-id": "25596202-8067-47bb-a8a6-801a8bbbbc0c",
+        "x-ms-routing-request-id": "SOUTHINDIA:20230628T063618Z:ad73db2f-34b9-4573-8a4b-906ca3cf5517"
+      },
+      "ResponseBody": {
+        "id": "/providers/PaloAltoNetworks.Cloudngfw/locations/EASTUS2/operationStatuses/5cad4f94-51ba-4544-ad38-8da81b780d06*29C9DAC94EEC84555EC32E8D1A70BEDD1DAE508AADB83F64D15E1E98EECF5FA4",
+        "name": "5cad4f94-51ba-4544-ad38-8da81b780d06*29C9DAC94EEC84555EC32E8D1A70BEDD1DAE508AADB83F64D15E1E98EECF5FA4",
+        "resourceId": "/subscriptions/2bf4a339-294d-4c25-b0b2-ef649e9f5c27/resourceGroups/dotnetSdkTest-1158/providers/PaloAltoNetworks.Cloudngfw/firewalls/dotnetSdkTest-2786",
+        "status": "Accepted",
+        "startTime": "2023-06-28T06:15:47.2431913Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/providers/PaloAltoNetworks.Cloudngfw/locations/EASTUS2/operationStatuses/5cad4f94-51ba-4544-ad38-8da81b780d06*29C9DAC94EEC84555EC32E8D1A70BEDD1DAE508AADB83F64D15E1E98EECF5FA4?api-version=2022-08-29",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-efff06bb8f7e0a30404bd614bb9f4c64-56d40687d77bb1ef-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.6.0 (.NET 7.0.7; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "00a60ef0a1e7b9204d8ffda4e9b3b9e2",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "525",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 28 Jun 2023 06:36:51 GMT",
+        "ETag": "\u00220300def8-0000-0100-0000-649bd0130000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "00a60ef0a1e7b9204d8ffda4e9b3b9e2",
+        "x-ms-correlation-request-id": "0ed972e3-10f5-4c82-bd73-67e7ef263ebd",
+        "x-ms-ratelimit-remaining-tenant-reads": "11907",
+        "x-ms-request-id": "8aa41798-4163-4c52-bd2f-2f4168768503",
+        "x-ms-routing-request-id": "SOUTHINDIA:20230628T063651Z:0ed972e3-10f5-4c82-bd73-67e7ef263ebd"
+      },
+      "ResponseBody": {
+        "id": "/providers/PaloAltoNetworks.Cloudngfw/locations/EASTUS2/operationStatuses/5cad4f94-51ba-4544-ad38-8da81b780d06*29C9DAC94EEC84555EC32E8D1A70BEDD1DAE508AADB83F64D15E1E98EECF5FA4",
+        "name": "5cad4f94-51ba-4544-ad38-8da81b780d06*29C9DAC94EEC84555EC32E8D1A70BEDD1DAE508AADB83F64D15E1E98EECF5FA4",
+        "resourceId": "/subscriptions/2bf4a339-294d-4c25-b0b2-ef649e9f5c27/resourceGroups/dotnetSdkTest-1158/providers/PaloAltoNetworks.Cloudngfw/firewalls/dotnetSdkTest-2786",
+        "status": "Accepted",
+        "startTime": "2023-06-28T06:15:47.2431913Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/providers/PaloAltoNetworks.Cloudngfw/locations/EASTUS2/operationStatuses/5cad4f94-51ba-4544-ad38-8da81b780d06*29C9DAC94EEC84555EC32E8D1A70BEDD1DAE508AADB83F64D15E1E98EECF5FA4?api-version=2022-08-29",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-efff06bb8f7e0a30404bd614bb9f4c64-ce78fc7b00d891b5-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.6.0 (.NET 7.0.7; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "81bbf359c0a4cef11a05dfd53136536c",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "525",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 28 Jun 2023 06:37:23 GMT",
+        "ETag": "\u00220300def8-0000-0100-0000-649bd0130000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "81bbf359c0a4cef11a05dfd53136536c",
+        "x-ms-correlation-request-id": "9157a395-5475-4b85-85cd-46156b74d98b",
+        "x-ms-ratelimit-remaining-tenant-reads": "11906",
+        "x-ms-request-id": "f04b32ee-5787-4748-980f-97ab7667fc8f",
+        "x-ms-routing-request-id": "SOUTHINDIA:20230628T063724Z:9157a395-5475-4b85-85cd-46156b74d98b"
+      },
+      "ResponseBody": {
+        "id": "/providers/PaloAltoNetworks.Cloudngfw/locations/EASTUS2/operationStatuses/5cad4f94-51ba-4544-ad38-8da81b780d06*29C9DAC94EEC84555EC32E8D1A70BEDD1DAE508AADB83F64D15E1E98EECF5FA4",
+        "name": "5cad4f94-51ba-4544-ad38-8da81b780d06*29C9DAC94EEC84555EC32E8D1A70BEDD1DAE508AADB83F64D15E1E98EECF5FA4",
+        "resourceId": "/subscriptions/2bf4a339-294d-4c25-b0b2-ef649e9f5c27/resourceGroups/dotnetSdkTest-1158/providers/PaloAltoNetworks.Cloudngfw/firewalls/dotnetSdkTest-2786",
+        "status": "Accepted",
+        "startTime": "2023-06-28T06:15:47.2431913Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/providers/PaloAltoNetworks.Cloudngfw/locations/EASTUS2/operationStatuses/5cad4f94-51ba-4544-ad38-8da81b780d06*29C9DAC94EEC84555EC32E8D1A70BEDD1DAE508AADB83F64D15E1E98EECF5FA4?api-version=2022-08-29",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-efff06bb8f7e0a30404bd614bb9f4c64-e4c52e72eefc14e9-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.6.0 (.NET 7.0.7; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "7bc14b60f811c88d938a1a0eb37eaa12",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "525",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 28 Jun 2023 06:37:57 GMT",
+        "ETag": "\u00220300def8-0000-0100-0000-649bd0130000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "7bc14b60f811c88d938a1a0eb37eaa12",
+        "x-ms-correlation-request-id": "610d350c-da97-478d-be04-14c442c012b7",
+        "x-ms-ratelimit-remaining-tenant-reads": "11905",
+        "x-ms-request-id": "97c1e413-ce44-4d69-8b96-b1aa480fb6d1",
+        "x-ms-routing-request-id": "SOUTHINDIA:20230628T063757Z:610d350c-da97-478d-be04-14c442c012b7"
+      },
+      "ResponseBody": {
+        "id": "/providers/PaloAltoNetworks.Cloudngfw/locations/EASTUS2/operationStatuses/5cad4f94-51ba-4544-ad38-8da81b780d06*29C9DAC94EEC84555EC32E8D1A70BEDD1DAE508AADB83F64D15E1E98EECF5FA4",
+        "name": "5cad4f94-51ba-4544-ad38-8da81b780d06*29C9DAC94EEC84555EC32E8D1A70BEDD1DAE508AADB83F64D15E1E98EECF5FA4",
+        "resourceId": "/subscriptions/2bf4a339-294d-4c25-b0b2-ef649e9f5c27/resourceGroups/dotnetSdkTest-1158/providers/PaloAltoNetworks.Cloudngfw/firewalls/dotnetSdkTest-2786",
+        "status": "Accepted",
+        "startTime": "2023-06-28T06:15:47.2431913Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/providers/PaloAltoNetworks.Cloudngfw/locations/EASTUS2/operationStatuses/5cad4f94-51ba-4544-ad38-8da81b780d06*29C9DAC94EEC84555EC32E8D1A70BEDD1DAE508AADB83F64D15E1E98EECF5FA4?api-version=2022-08-29",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-efff06bb8f7e0a30404bd614bb9f4c64-fa6c9dbc7316552c-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.6.0 (.NET 7.0.7; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "5c51fb3d837f30a11dd7e5e2c14a8717",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "596",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 28 Jun 2023 06:38:30 GMT",
+        "ETag": "\u002203004afa-0000-0100-0000-649bd5540000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "5c51fb3d837f30a11dd7e5e2c14a8717",
+        "x-ms-correlation-request-id": "373b289a-9664-43b3-b49a-23fd9496e185",
+        "x-ms-ratelimit-remaining-tenant-reads": "11904",
+        "x-ms-request-id": "05c68847-46ce-43c0-b229-2b85ce79c966",
+        "x-ms-routing-request-id": "SOUTHINDIA:20230628T063830Z:373b289a-9664-43b3-b49a-23fd9496e185"
+      },
+      "ResponseBody": {
+        "id": "/providers/PaloAltoNetworks.Cloudngfw/locations/EASTUS2/operationStatuses/5cad4f94-51ba-4544-ad38-8da81b780d06*29C9DAC94EEC84555EC32E8D1A70BEDD1DAE508AADB83F64D15E1E98EECF5FA4",
+        "name": "5cad4f94-51ba-4544-ad38-8da81b780d06*29C9DAC94EEC84555EC32E8D1A70BEDD1DAE508AADB83F64D15E1E98EECF5FA4",
+        "resourceId": "/subscriptions/2bf4a339-294d-4c25-b0b2-ef649e9f5c27/resourceGroups/dotnetSdkTest-1158/providers/PaloAltoNetworks.Cloudngfw/firewalls/dotnetSdkTest-2786",
+        "status": "Succeeded",
+        "startTime": "2023-06-28T06:15:47.2431913Z",
+        "endTime": "2023-06-28T06:38:12.2951677Z",
+        "error": {},
+        "properties": null
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/2bf4a339-294d-4c25-b0b2-ef649e9f5c27/resourceGroups/dotnetSdkTest-1158/providers/PaloAltoNetworks.Cloudngfw/firewalls/dotnetSdkTest-2786?api-version=2022-08-29",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-efff06bb8f7e0a30404bd614bb9f4c64-235fb427f97f86be-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.6.0 (.NET 7.0.7; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "9d43913b3df160d165f2ed1aa5e21b9b",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "2477",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 28 Jun 2023 06:38:30 GMT",
+        "ETag": "\u0022ad00e1be-0000-0100-0000-649bd5540000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "9d43913b3df160d165f2ed1aa5e21b9b",
+        "x-ms-correlation-request-id": "4d8c6a2e-dd70-46fb-978c-601aa980b870",
+        "x-ms-providerhub-traffic": "True",
+        "x-ms-ratelimit-remaining-subscription-reads": "11979",
+        "x-ms-request-id": "0339ebf0-8884-4d8b-8b68-ffb14da1986b",
+        "x-ms-routing-request-id": "SOUTHINDIA:20230628T063831Z:4d8c6a2e-dd70-46fb-978c-601aa980b870"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/2bf4a339-294d-4c25-b0b2-ef649e9f5c27/resourceGroups/dotnetSdkTest-1158/providers/PaloAltoNetworks.Cloudngfw/firewalls/dotnetSdkTest-2786",
+        "name": "dotnetSdkTest-2786",
+        "type": "paloaltonetworks.cloudngfw/firewalls",
+        "location": "eastus2",
+        "tags": {},
+        "systemData": {
+          "createdBy": "864bdfa7-42e8-4658-83dd-9148a39ff519",
+          "createdByType": "Application",
+          "createdAt": "2023-06-28T06:15:45.5856771Z",
+          "lastModifiedBy": "54a2195e-8365-444c-8f50-4a5de4be1e2b",
+          "lastModifiedByType": "Application",
+          "lastModifiedAt": "2023-06-28T06:38:12.3449415Z"
+        },
+        "properties": {
+          "networkProfile": {
+            "vnetConfiguration": {
+              "vnet": {
+                "resourceId": "/subscriptions/2bf4a339-294d-4c25-b0b2-ef649e9f5c27/resourceGroups/dotnetSdkTest-infra-rg/providers/Microsoft.Network/virtualNetworks/dotnetSdkTest-vnet-default",
+                "addressSpace": "10.148.0.0/16"
+              },
+              "trustSubnet": {
+                "resourceId": "/subscriptions/2bf4a339-294d-4c25-b0b2-ef649e9f5c27/resourceGroups/dotnetSdkTest-infra-rg/providers/Microsoft.Network/virtualNetworks/dotnetSdkTest-vnet-default/subnets/subnet1",
+                "addressSpace": "10.148.1.0/26"
+              },
+              "unTrustSubnet": {
+                "resourceId": "/subscriptions/2bf4a339-294d-4c25-b0b2-ef649e9f5c27/resourceGroups/dotnetSdkTest-infra-rg/providers/Microsoft.Network/virtualNetworks/dotnetSdkTest-vnet-default/subnets/subnet2",
+                "addressSpace": "10.148.0.0/26"
+              },
+              "ipOfTrustSubnetForUdr": {
+                "address": "10.148.1.4"
+              }
+            },
+            "networkType": "VNET",
+            "publicIps": [
+              {
+                "resourceId": "/subscriptions/2bf4a339-294d-4c25-b0b2-ef649e9f5c27/resourceGroups/dotnetSdkTest-infra-rg/providers/Microsoft.Network/publicIPAddresses/dotnetSdkTest-public-ip-default",
+                "address": "20.12.91.61"
+              }
+            ],
+            "enableEgressNat": "DISABLED"
+          },
+          "associatedRulestack": {
+            "resourceId": "/subscriptions/2bf4a339-294d-4c25-b0b2-ef649e9f5c27/resourceGroups/dotnetSdkTest-infra-rg/providers/PaloAltoNetworks.Cloudngfw/localRulestacks/dotnetSdkTest-lrs-default",
+            "rulestackId": "SUBSCRIPTION~2bf4a339-294d-4c25-b0b2-ef649e9f5c27~RG~dotnetSdkTest-infra-rg~STACK~dotnetSdkTest-lrs-default",
+            "location": "eastus2"
+          },
+          "dnsSettings": {
+            "enableDnsProxy": "DISABLED",
+            "enabledDnsType": "CUSTOM"
+          },
+          "isPanoramaManaged": "FALSE",
+          "provisioningState": "Succeeded",
+          "planData": {
+            "usageType": "PAYG",
+            "billingCycle": "MONTHLY",
+            "planId": "cloud-ngfw-payg-test",
+            "effectiveDate": "0001-01-01T00:00:00Z"
+          },
+          "marketplaceDetails": {
+            "offerId": "pan_swfw_cloud_ngfw",
+            "publisherId": "paloaltonetworks",
+            "marketplaceSubscriptionStatus": "Subscribed",
+            "marketplaceSubscriptionId": "e32661d5-6767-4db4-d736-f04d41f24bef"
+          },
+          "panEtag": "50ea2be6-157b-11ee-94fa-cedd2f0787df"
+        }
+      }
+    }
+  ],
+  "Variables": {
+    "AZURE_AUTHORITY_HOST": null,
+    "RandomSeed": "674476445",
+    "RESOURCE_MANAGER_URL": null,
+    "SUBSCRIPTION_ID": "2bf4a339-294d-4c25-b0b2-ef649e9f5c27"
+  }
+}
