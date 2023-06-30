@@ -34,7 +34,6 @@ namespace Azure.AI.OpenAI
                     default:
                         throw new InvalidCastException($"Value is of type {nameof(T)} or {nameof(U)}.");
                 }
-
             }
         }
 
