@@ -26,6 +26,7 @@
   <ItemGroup>
     <Compile Include="$(AzureCoreSharedSources)AuthorizationChallengeParser.cs" LinkBase="Shared\Core" />
     <Compile Include="$(AzureCoreSharedSources)NoBodyResponseOfT.cs" LinkBase="Shared\Core" />
+    <Compile Include="$(AzureCoreSharedSources)PrivilegedOperationAttribute.cs" LinkBase="Shared\Core" />
   </ItemGroup>
   <ItemGroup>
     <Compile Remove="Shared\*.cs" />

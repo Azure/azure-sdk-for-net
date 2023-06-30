@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Text;
+using Azure.Core;
 using Azure.Storage.Queues;
 
 namespace Azure.Storage.Sas
@@ -228,6 +229,7 @@ namespace Azure.Storage.Sas
         /// The <see cref="SasQueryParameters"/> used for authenticating
         /// requests.
         /// </returns>
+        [PrivilegedOperation]
         public SasQueryParameters ToSasQueryParameters(StorageSharedKeyCredential sharedKeyCredential)
         {
             sharedKeyCredential = sharedKeyCredential ?? throw Errors.ArgumentNull(nameof(sharedKeyCredential));

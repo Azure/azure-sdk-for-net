@@ -6590,6 +6590,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// <remarks>
         /// A <see cref="Exception"/> will be thrown if a failure occurs.
         /// </remarks>
+        [PrivilegedOperation]
         public virtual Uri GenerateSasUri(BlobSasPermissions permissions, DateTimeOffset expiresOn) =>
             GenerateSasUri(new BlobSasBuilder(permissions, expiresOn)
             {
@@ -6623,6 +6624,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// A <see cref="Exception"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
+        [PrivilegedOperation]
         public virtual Uri GenerateSasUri(BlobSasBuilder builder)
         {
             if (builder == null)
