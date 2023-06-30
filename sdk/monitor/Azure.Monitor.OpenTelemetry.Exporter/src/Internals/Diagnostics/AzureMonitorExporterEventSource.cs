@@ -53,10 +53,10 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics
 
                 if (errorMessages == null || errorMessages.Length == 0)
                 {
-                    TransmissionFailedVerbose(
+                    TransmissionFailed(
                         statusCode: statusCode,
                         errorMessage: "N/A",
-                        action: willRetry ? "Telemetry is stored offline for retry." : "Telemetry is dropped.",
+                        action: willRetry ? "Telemetry is stored offline for retry" : "Telemetry is dropped",
                         origin: fromStorage ? "Storage" : "AzureMonitorExporter",
                         instrumentationKey: connectionVars.InstrumentationKey,
                         configuredEndpoint: connectionVars.IngestionEndpoint,
@@ -66,10 +66,10 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics
                 {
                     foreach (var error in errorMessages)
                     {
-                        TransmissionFailedVerbose(
+                        TransmissionFailed(
                             statusCode: statusCode,
                             errorMessage: error ?? "N/A",
-                            action: willRetry ? "Telemetry is stored offline for retry." : "Telemetry is dropped.",
+                            action: willRetry ? "Telemetry is stored offline for retry" : "Telemetry is dropped",
                             origin: fromStorage ? "Storage" : "AzureMonitorExporter",
                             instrumentationKey: connectionVars.InstrumentationKey,
                             configuredEndpoint: connectionVars.IngestionEndpoint,
@@ -81,7 +81,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics
             {
                 TransmissionFailed(
                     statusCode: statusCode,
-                    action: willRetry ? "Telemetry is stored offline for retry." : "Telemetry is dropped.",
+                    errorMessage: "(To get exact error change LogLevel to Verbose)",
+                    action: willRetry ? "Telemetry is stored offline for retry" : "Telemetry is dropped",
                     origin: fromStorage ? "Storage" : "AzureMonitorExporter",
                     instrumentationKey: connectionVars.InstrumentationKey,
                     configuredEndpoint: connectionVars.IngestionEndpoint,
@@ -89,9 +90,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics
             }
         }
 
-        [Event(8, Message = "Transmission failed. StatusCode: {0}. To get exact error from Ingestion change LogLevel to VERBOSE. Action: {1}. Origin: {2}. Instrumentation Key: {3}. Configured Endpoint: {4}. Actual Endpoint: {5}", Level = EventLevel.Error)]
-        public void TransmissionFailed(int statusCode, string action, string origin, string instrumentationKey, string configuredEndpoint, string? actualEndpoint)
-            => WriteEvent(8, statusCode, action, origin, instrumentationKey, configuredEndpoint, actualEndpoint);
+        [Event(8, Message = "Transmission failed. StatusCode: {0}. Error from Ingestion: {1}. Action: {2}. Origin: {3}. Instrumentation Key: {4}. Configured Endpoint: {5}. Actual Endpoint: {6}", Level = EventLevel.Critical)]
+        public void TransmissionFailed(int statusCode, string errorMessage, string action, string origin, string instrumentationKey, string configuredEndpoint, string? actualEndpoint)
+            => WriteEvent(8, statusCode, errorMessage, action, origin, instrumentationKey, configuredEndpoint, actualEndpoint);
 
         [Event(9, Message = "{0} has been disposed.", Level = EventLevel.Informational)]
         public void DisposedObject(string name) => WriteEvent(9, name);
@@ -317,9 +318,5 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics
 
         [Event(35, Message = "Failed to deserialize response from ingestion due to an exception. Not user actionable. {0}", Level = EventLevel.Warning)]
         public void FailedToDeserializeIngestionResponse(string exceptionMessage) => WriteEvent(35, exceptionMessage);
-
-        [Event(36, Message = "Transmission failed. StatusCode: {0}. Error from Ingestion: {1}. Action: {2}. Origin: {3}. Instrumentation Key: {4}. Configured Endpoint: {5}. Actual Endpoint: {6}", Level = EventLevel.Verbose)]
-        public void TransmissionFailedVerbose(int statusCode, string errorMessage, string action, string origin, string instrumentationKey, string configuredEndpoint, string? actualEndpoint)
-            => WriteEvent(36, statusCode, errorMessage, action, origin, instrumentationKey, configuredEndpoint, actualEndpoint);
     }
 }
