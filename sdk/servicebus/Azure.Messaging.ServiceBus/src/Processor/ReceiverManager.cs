@@ -176,7 +176,14 @@ namespace Azure.Messaging.ServiceBus
                 try
                 {
                     LogProcessorMessageHandlerStart(triggerMessages);
-                    await OnMessagesHandler(args).ConfigureAwait(false);
+                    if (ProcessorOptions.BatchSize > 1)
+                    {
+                        await OnMessagesHandler(args).ConfigureAwait(false);
+                    }
+                    else
+                    {
+                        await OnMessageHandler(args).ConfigureAwait(false);
+                    }
                     LogProcessorMessageHandlerComplete(triggerMessages);
                 }
                 catch (Exception ex)
