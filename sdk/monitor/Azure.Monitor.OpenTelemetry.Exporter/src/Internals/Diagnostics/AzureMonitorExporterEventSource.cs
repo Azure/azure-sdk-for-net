@@ -18,6 +18,12 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics
     /// <item>To collect all events: <code>PerfView.exe collect -MaxCollectSec:300 -NoGui /onlyProviders=*OpenTelemetry-AzureMonitor-Exporter</code></item>
     /// <item>To collect events based on LogLevel: <code>PerfView.exe collect -MaxCollectSec:300 -NoGui /onlyProviders:OpenTelemetry-AzureMonitor-Exporter::Verbose</code></item>
     /// </list>
+    /// Logman Instructions:
+    /// <list type="number">
+    /// <item>Create a text file containing providers: <code>echo "{bb5be13f-ec3a-5ab2-6a6a-0f881d6e0d5b}" > providers.txt</code></item>
+    /// <item>Start collecting: <code>logman -start exporter -pf providers.txt -ets -bs 1024 -nb 100 256</code></item>
+    /// <item>Stop collecting: <code>logman -stop exporter -ets</code></item>
+    /// </list>
     /// </remarks>
     [EventSource(Name = EventSourceName)]
     internal sealed class AzureMonitorExporterEventSource : EventSource
