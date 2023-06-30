@@ -5,12 +5,18 @@ using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
-#region Snippet:SearchImportNamespace
+#region Snippet:SearchImportNamespaces
 using Azure.Core.GeoJson;
 using Azure.Maps.Search;
 using Azure.Maps.Search.Models;
 #endregion
 using Azure.Core.TestFramework;
+#region Snippet:SasAuthImportNamespaces
+using Azure.Core;
+using Azure.ResourceManager;
+using Azure.ResourceManager.Maps;
+using Azure.ResourceManager.Maps.Models;
+#endregion
 
 using NUnit.Framework;
 
@@ -40,8 +46,24 @@ namespace Azure.Maps.Search.Tests
         public void SearchClientViaSas()
         {
             #region Snippet:InstantiateSearchClientViaSas
+            // Get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // Authenticate your client
+            ArmClient armClient = new ArmClient(cred);
+
+            string subscriptionId = "MyMapsSubscriptionId";
+            string resourceGroupName = "MyMapsResourceGroupName";
+            string accountName = "MyMapsAccountName";
+            ResourceIdentifier mapsAccountResourceId = MapsAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
+            MapsAccountResource mapsAccount = armClient.GetMapsAccountResource(mapsAccountResourceId);
+
+            var principalId = "MyManagedIdentityObjectId";
+            int maxRatePerSecond = 500;
+            var sasContent = new MapsAccountSasContent(MapsSigningKey.PrimaryKey, principalId, maxRatePerSecond, "2023-06-30T04:27:28.734Z", "2023-06-30T12:27:28.734Z");
+            var sas = mapsAccount.GetSas(sasContent);
+
             // Create a SearchClient that will authenticate through SAS token
-            AzureSasCredential sasCredential = new AzureSasCredential("<SAS Token>");
+            AzureSasCredential sasCredential = new AzureSasCredential(sas.Value.AccountSasToken);
             MapsSearchClient client = new MapsSearchClient(sasCredential);
             #endregion
         }
