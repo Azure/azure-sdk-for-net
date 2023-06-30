@@ -565,7 +565,7 @@ namespace Azure.Maps.Rendering
             try
             {
                 var boundingBox = new BoundingBox(new List<double>() { geoBoundingBox.South, geoBoundingBox.West }, new List<double>() { geoBoundingBox.North, geoBoundingBox.East });
-                return await restClient.GetCopyrightFromBoundingBoxAsync(boundingBox, ResponseFormat.Json, includeText ? "yes" : "no", cancellationToken).ConfigureAwait(false);
+                return await restClient.GetCopyrightFromBoundingBoxAsync(ResponseFormat.Json, boundingBox, includeText ? "yes" : "no", cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -590,7 +590,7 @@ namespace Azure.Maps.Rendering
             try
             {
                 var boundingBox = new BoundingBox(new List<double>() { geoBoundingBox.South, geoBoundingBox.West }, new List<double>() { geoBoundingBox.North, geoBoundingBox.East });
-                return restClient.GetCopyrightFromBoundingBox(boundingBox, ResponseFormat.Json, includeText ? "yes" : "no", cancellationToken);
+                return restClient.GetCopyrightFromBoundingBox(ResponseFormat.Json, boundingBox, includeText ? "yes" : "no", cancellationToken);
             }
             catch (Exception e)
             {
@@ -617,7 +617,7 @@ namespace Azure.Maps.Rendering
             scope.Start();
             try
             {
-                return await restClient.GetCopyrightForTileAsync(mapTileIndex, ResponseFormat.Json, includeText ? "yes" : "no", cancellationToken).ConfigureAwait(false);
+                return await restClient.GetCopyrightForTileAsync(ResponseFormat.Json, mapTileIndex, includeText ? "yes" : "no", cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -644,7 +644,7 @@ namespace Azure.Maps.Rendering
             scope.Start();
             try
             {
-                return restClient.GetCopyrightForTile(mapTileIndex, ResponseFormat.Json, includeText ? "yes" : "no", cancellationToken);
+                return restClient.GetCopyrightForTile(ResponseFormat.Json, mapTileIndex, includeText ? "yes" : "no", cancellationToken);
             }
             catch (Exception e)
             {
