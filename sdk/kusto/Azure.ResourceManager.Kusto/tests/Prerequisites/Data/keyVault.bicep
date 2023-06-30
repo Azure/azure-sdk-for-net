@@ -1,7 +1,7 @@
 param id string
 param location string
 param cluster_object_id string
-param user_identity_object_id string
+param user_assigned_identity_principal_id string
 
 resource keyVault 'Microsoft.KeyVault/vaults@2022-07-01' = {
     name: 'sdkKeyVault${id}'
@@ -12,6 +12,9 @@ resource keyVault 'Microsoft.KeyVault/vaults@2022-07-01' = {
             name: 'standard'
         }
         tenantId: tenant().tenantId
+        enableSoftDelete: true
+        enablePurgeProtection: true
+        softDeleteRetentionInDays: 7
         accessPolicies: [
             {
                 objectId: cluster_object_id
@@ -19,9 +22,9 @@ resource keyVault 'Microsoft.KeyVault/vaults@2022-07-01' = {
                     keys: [ 'get', 'list', 'wrapKey', 'unwrapKey' ]
                 }
                 tenantId: tenant().tenantId
-            },
+            }
             {
-                objectId: user_identity_object_id
+                objectId: user_assigned_identity_principal_id
                 permissions: {
                     keys: [ 'get', 'list', 'wrapKey', 'unwrapKey' ]
                 }

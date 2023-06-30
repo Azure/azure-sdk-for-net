@@ -65,6 +65,7 @@ module dataConnection './Azure.ResourceManager.Kusto/tests/Prerequisites/Data/da
     params: {
         id: id
         location: location
+        user_assigned_identity_principal_id: managedIdentity.outputs.USER_ASSIGNED_IDENTITY_PRINCIPAL_ID
     }
     scope: resourceGroup()
 }

@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.Kusto.Tests.Scenario
 {
     public class KustoClusterTests : KustoManagementTestBase
     {
-        private readonly KustoSku _sku = new(KustoSkuName.DevNoSlaStandardE2aV4, 1, KustoSkuTier.Basic);
+        private readonly KustoSku _sku = new(KustoSkuName.StandardE2aV4, 2, KustoSkuTier.Standard);
 
         public KustoClusterTests(bool isAsync)
             : base(isAsync) //, RecordedTestMode.Record)
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Kusto.Tests.Scenario
                 },
                 IsDiskEncryptionEnabled = true,
                 IsStreamingIngestEnabled = true,
-                OptimizedAutoscale = new OptimizedAutoscale(1, true, 2, 100),
+                OptimizedAutoscale = new OptimizedAutoscale(1, true, 2, 5),
                 PublicIPType = "DualStack",
                 TrustedExternalTenants = { new KustoClusterTrustedExternalTenant(TE.TenantId) },
                 // TODO: figure out how to authenticate
@@ -76,12 +76,14 @@ namespace Azure.ResourceManager.Kusto.Tests.Scenario
                 ValidateCluster
             );
 
-            await ClusterResourceTests(clusterCollection, clusterName);
+            await ClusterStopStartTests(clusterCollection, clusterName);
+
+            await ClusterMigrationTests(clusterCollection, clusterName);
 
             await DeletionTest(clusterName, clusterCollection.GetAsync, clusterCollection.ExistsAsync);
         }
 
-        private static async Task ClusterResourceTests(KustoClusterCollection clusterCollection, string clusterName)
+        private static async Task ClusterStopStartTests(KustoClusterCollection clusterCollection, string clusterName)
         {
             var cluster = (await clusterCollection.GetAsync(clusterName)).Value;
 
@@ -92,6 +94,22 @@ namespace Azure.ResourceManager.Kusto.Tests.Scenario
             await cluster.StartAsync(WaitUntil.Completed);
             cluster = await clusterCollection.GetAsync(clusterName);
             AssertEquality(KustoClusterState.Running, cluster.Data.State);
+        }
+
+        private async Task ClusterMigrationTests(KustoClusterCollection clusterCollection, string clusterName)
+        {
+            var cluster = (await clusterCollection.GetAsync(clusterName)).Value;
+
+            var databaseName = GenerateAssetName("MgrDatabase");
+            var databaseData = new KustoReadWriteDatabase {Location = Location, HotCachePeriod = TimeSpan.FromDays(2), SoftDeletePeriod = TimeSpan.FromDays(3)};
+            var databaseCollection = cluster.GetKustoDatabases();
+            await databaseCollection.CreateOrUpdateAsync(WaitUntil.Completed, databaseName, databaseData);
+
+            var clusterMigrationContent = new ClusterMigrateContent(Cluster.Data.Id);
+            await cluster.MigrateAsync(WaitUntil.Completed, clusterMigrationContent).ConfigureAwait(false);
+
+            cluster = await clusterCollection.GetAsync(clusterName).ConfigureAwait(false);
+            AssertEquality(KustoClusterState.Migrated, cluster.Data.State);
         }
 
         private void ValidateCluster(
