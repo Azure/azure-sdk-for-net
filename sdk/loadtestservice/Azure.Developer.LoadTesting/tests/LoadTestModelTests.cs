@@ -112,7 +112,7 @@ namespace Azure.Developer.LoadTesting.Tests
                 utf8 = BinaryData.FromStream(stream);
             }
 
-            Assert.AreEqual("""{"passFailCriteria":{"passFailMetrics":{"a":"a"}}}""", utf8.ToString());
+            Assert.AreEqual("""{"passFailCriteria":{"passFailMetrics":{"a":{"requestName":"a"}}}}""", utf8.ToString());
         }
     }
 }

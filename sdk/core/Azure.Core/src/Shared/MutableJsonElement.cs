@@ -64,9 +64,11 @@ namespace Azure.Core.Json
 
                 T? value;
 
-                if (typeof(T).GetInterfaces().Contains(typeof(IModelSerializable)))
+                // Use custom deserialization for an Azure model type.
+                if (typeof(T).GetInterfaces().Contains(typeof(IModelSerializable)) &&
+                    Activator.CreateInstance(typeof(T), true) is IModelSerializable model)
                 {
-                    // YOU ARE HERE
+                    return (T)model.Deserialize(element);
                 }
 
 #if NET6_0_OR_GREATER
@@ -1097,7 +1099,8 @@ namespace Azure.Core.Json
                 mje.EnsureValid();
             }
 
-            // TODO: replace this with IUtf8JsonSerializable
+            // Use custom serialization for an Azure model type.
+            // TODO: replace this with IUtf8JsonSerializable if needed short term.
             if (value is IModelSerializable model)
             {
                 using MemoryStream stream = new();
@@ -1106,12 +1109,7 @@ namespace Azure.Core.Json
                 model.Serialize(writer);
                 writer.Flush();
                 stream.Position = 0;
-                //BinaryData data = BinaryData.FromStream(stream);
-                //return JsonDocument.Parse(data).RootElement;
-
-                // TODO: remove
-                // for debugging
-                string data = BinaryData.FromStream(stream).ToString();
+                BinaryData data = BinaryData.FromStream(stream);
                 return JsonDocument.Parse(data).RootElement;
             }
 
