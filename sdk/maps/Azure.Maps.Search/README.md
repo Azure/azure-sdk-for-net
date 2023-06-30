@@ -80,7 +80,7 @@ using Azure.ResourceManager.Maps;
 using Azure.ResourceManager.Maps.Models;
 ```
 
-And then we can get SAS token via [List Sas](https://learn.microsoft.com/rest/api/maps-management/accounts/list-sas?tabs=HTTP) API and assign it to `MapsSearchClient`:
+And then we can get SAS token via [List Sas](https://learn.microsoft.com/rest/api/maps-management/accounts/list-sas?tabs=HTTP) API and assign it to `MapsSearchClient`. In the follow code sample, we fetch a specific maps account resouce, and create a SAS token for 1 day expiry time when the code is executed.
 
 ```C# Snippet:InstantiateSearchClientViaSas
 // Get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
