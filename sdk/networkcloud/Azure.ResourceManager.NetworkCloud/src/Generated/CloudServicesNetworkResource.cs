@@ -247,7 +247,7 @@ namespace Azure.ResourceManager.NetworkCloud
             try
             {
                 var response = await _cloudServicesNetworkRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken).ConfigureAwait(false);
-                var operation = new NetworkCloudArmOperation<CloudServicesNetworkResource>(new CloudServicesNetworkOperationSource(Client), _cloudServicesNetworkClientDiagnostics, Pipeline, _cloudServicesNetworkRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch).Request, response, OperationFinalStateVia.Location);
+                var operation = new NetworkCloudArmOperation<CloudServicesNetworkResource>(new CloudServicesNetworkOperationSource(Client), _cloudServicesNetworkClientDiagnostics, Pipeline, _cloudServicesNetworkRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -285,7 +285,7 @@ namespace Azure.ResourceManager.NetworkCloud
             try
             {
                 var response = _cloudServicesNetworkRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken);
-                var operation = new NetworkCloudArmOperation<CloudServicesNetworkResource>(new CloudServicesNetworkOperationSource(Client), _cloudServicesNetworkClientDiagnostics, Pipeline, _cloudServicesNetworkRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch).Request, response, OperationFinalStateVia.Location);
+                var operation = new NetworkCloudArmOperation<CloudServicesNetworkResource>(new CloudServicesNetworkOperationSource(Client), _cloudServicesNetworkClientDiagnostics, Pipeline, _cloudServicesNetworkRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

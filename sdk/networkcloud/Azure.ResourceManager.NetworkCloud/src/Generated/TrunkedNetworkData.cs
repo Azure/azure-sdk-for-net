@@ -33,6 +33,7 @@ namespace Azure.ResourceManager.NetworkCloud
             Argument.AssertNotNull(vlans, nameof(vlans));
 
             ExtendedLocation = extendedLocation;
+            AssociatedResourceIds = new ChangeTrackingList<string>();
             HybridAksClustersAssociatedIds = new ChangeTrackingList<string>();
             IsolationDomainIds = isolationDomainIds.ToList();
             VirtualMachinesAssociatedIds = new ChangeTrackingList<string>();
@@ -47,19 +48,21 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
         /// <param name="extendedLocation"> The extended location of the cluster associated with the resource. </param>
+        /// <param name="associatedResourceIds"> The list of resource IDs for the other Microsoft.NetworkCloud resources that have attached this network. </param>
         /// <param name="clusterId"> The resource ID of the Network Cloud cluster this trunked network is associated with. </param>
         /// <param name="detailedStatus"> The more detailed status of the trunked network. </param>
         /// <param name="detailedStatusMessage"> The descriptive message about the current detailed status. </param>
-        /// <param name="hybridAksClustersAssociatedIds"> The list of Hybrid AKS cluster resource IDs that are associated with this trunked network. </param>
-        /// <param name="hybridAksPluginType"> The network plugin type for Hybrid AKS. </param>
+        /// <param name="hybridAksClustersAssociatedIds"> Field Deprecated. These fields will be empty/omitted. The list of Hybrid AKS cluster resource IDs that are associated with this trunked network. </param>
+        /// <param name="hybridAksPluginType"> Field Deprecated. The field was previously optional, now it will have no defined behavior and will be ignored. The network plugin type for Hybrid AKS. </param>
         /// <param name="interfaceName"> The default interface name for this trunked network in the virtual machine. This name can be overridden by the name supplied in the network attachment configuration of that virtual machine. </param>
         /// <param name="isolationDomainIds"> The list of resource IDs representing the Network Fabric isolation domains. It can be any combination of l2IsolationDomain and l3IsolationDomain resources. </param>
         /// <param name="provisioningState"> The provisioning state of the trunked network. </param>
-        /// <param name="virtualMachinesAssociatedIds"> The list of virtual machine resource IDs, excluding any Hybrid AKS virtual machines, that are currently using this trunked network. </param>
+        /// <param name="virtualMachinesAssociatedIds"> Field Deprecated. These fields will be empty/omitted. The list of virtual machine resource IDs, excluding any Hybrid AKS virtual machines, that are currently using this trunked network. </param>
         /// <param name="vlans"> The list of vlans that are selected from the isolation domains for trunking. </param>
-        internal TrunkedNetworkData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ExtendedLocation extendedLocation, string clusterId, TrunkedNetworkDetailedStatus? detailedStatus, string detailedStatusMessage, IReadOnlyList<string> hybridAksClustersAssociatedIds, HybridAksPluginType? hybridAksPluginType, string interfaceName, IList<string> isolationDomainIds, TrunkedNetworkProvisioningState? provisioningState, IReadOnlyList<string> virtualMachinesAssociatedIds, IList<long> vlans) : base(id, name, resourceType, systemData, tags, location)
+        internal TrunkedNetworkData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ExtendedLocation extendedLocation, IReadOnlyList<string> associatedResourceIds, string clusterId, TrunkedNetworkDetailedStatus? detailedStatus, string detailedStatusMessage, IReadOnlyList<string> hybridAksClustersAssociatedIds, HybridAksPluginType? hybridAksPluginType, string interfaceName, IList<string> isolationDomainIds, TrunkedNetworkProvisioningState? provisioningState, IReadOnlyList<string> virtualMachinesAssociatedIds, IList<long> vlans) : base(id, name, resourceType, systemData, tags, location)
         {
             ExtendedLocation = extendedLocation;
+            AssociatedResourceIds = associatedResourceIds;
             ClusterId = clusterId;
             DetailedStatus = detailedStatus;
             DetailedStatusMessage = detailedStatusMessage;
@@ -74,15 +77,17 @@ namespace Azure.ResourceManager.NetworkCloud
 
         /// <summary> The extended location of the cluster associated with the resource. </summary>
         public ExtendedLocation ExtendedLocation { get; set; }
+        /// <summary> The list of resource IDs for the other Microsoft.NetworkCloud resources that have attached this network. </summary>
+        public IReadOnlyList<string> AssociatedResourceIds { get; }
         /// <summary> The resource ID of the Network Cloud cluster this trunked network is associated with. </summary>
         public string ClusterId { get; }
         /// <summary> The more detailed status of the trunked network. </summary>
         public TrunkedNetworkDetailedStatus? DetailedStatus { get; }
         /// <summary> The descriptive message about the current detailed status. </summary>
         public string DetailedStatusMessage { get; }
-        /// <summary> The list of Hybrid AKS cluster resource IDs that are associated with this trunked network. </summary>
+        /// <summary> Field Deprecated. These fields will be empty/omitted. The list of Hybrid AKS cluster resource IDs that are associated with this trunked network. </summary>
         public IReadOnlyList<string> HybridAksClustersAssociatedIds { get; }
-        /// <summary> The network plugin type for Hybrid AKS. </summary>
+        /// <summary> Field Deprecated. The field was previously optional, now it will have no defined behavior and will be ignored. The network plugin type for Hybrid AKS. </summary>
         public HybridAksPluginType? HybridAksPluginType { get; set; }
         /// <summary> The default interface name for this trunked network in the virtual machine. This name can be overridden by the name supplied in the network attachment configuration of that virtual machine. </summary>
         public string InterfaceName { get; set; }
@@ -90,7 +95,7 @@ namespace Azure.ResourceManager.NetworkCloud
         public IList<string> IsolationDomainIds { get; }
         /// <summary> The provisioning state of the trunked network. </summary>
         public TrunkedNetworkProvisioningState? ProvisioningState { get; }
-        /// <summary> The list of virtual machine resource IDs, excluding any Hybrid AKS virtual machines, that are currently using this trunked network. </summary>
+        /// <summary> Field Deprecated. These fields will be empty/omitted. The list of virtual machine resource IDs, excluding any Hybrid AKS virtual machines, that are currently using this trunked network. </summary>
         public IReadOnlyList<string> VirtualMachinesAssociatedIds { get; }
         /// <summary> The list of vlans that are selected from the isolation domains for trunking. </summary>
         public IList<long> Vlans { get; }

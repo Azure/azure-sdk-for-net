@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         }
 
         /// <summary> Initializes a new instance of RackDefinition. </summary>
-        /// <param name="availabilityZone"> The zone name used for this rack when created. </param>
+        /// <param name="availabilityZone"> The zone name used for this rack when created. Availability zones are used for workload placement. </param>
         /// <param name="bareMetalMachineConfigurationData"> The unordered list of bare metal machine configuration. </param>
         /// <param name="networkRackId"> The resource ID of the network rack that matches this rack definition. </param>
         /// <param name="rackLocation"> The free-form description of the rack's location. </param>
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             StorageApplianceConfigurationData = storageApplianceConfigurationData;
         }
 
-        /// <summary> The zone name used for this rack when created. </summary>
+        /// <summary> The zone name used for this rack when created. Availability zones are used for workload placement. </summary>
         public string AvailabilityZone { get; set; }
         /// <summary> The unordered list of bare metal machine configuration. </summary>
         public IList<BareMetalMachineConfigurationData> BareMetalMachineConfigurationData { get; }

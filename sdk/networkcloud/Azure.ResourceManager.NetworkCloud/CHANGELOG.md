@@ -1,6 +1,6 @@
 # Release History
 
-## 1.0.0-beta.2 (Unreleased)
+## 1.0.0-beta.3 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,20 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.0.0-beta.2 (2023-06-30)
+
+### Features Added
+
+This version adds support to KubernetesCluster resource and its child resource AgentPool.
+
+### Breaking Changes
+
+This version no longer supports HybridAksCluster and DefaultCniNetwork resource. Customers are redirected to use newly created KubernetesCluster resource instead.
+
+### Other Changes
+
+Upgrades API version to 2023-05-01-preview.
 
 ## 1.0.0-beta.1 (2023-05-26)
 

@@ -33,11 +33,11 @@ namespace Azure.ResourceManager.NetworkCloud
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2022-12-12-preview";
+            _apiVersion = apiVersion ?? "2023-05-01-preview";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
-        internal HttpMessage CreateListByResourceGroupRequest(string subscriptionId, string resourceGroupName, string virtualMachineName)
+        internal HttpMessage CreateListByVirtualMachineRequest(string subscriptionId, string resourceGroupName, string virtualMachineName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -58,20 +58,20 @@ namespace Azure.ResourceManager.NetworkCloud
             return message;
         }
 
-        /// <summary> Get a list of virtual machine consoles in the provided resource group. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <summary> Get a list of consoles for the provided virtual machine. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="virtualMachineName"> The name of the virtual machine. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="virtualMachineName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="virtualMachineName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ConsoleList>> ListByResourceGroupAsync(string subscriptionId, string resourceGroupName, string virtualMachineName, CancellationToken cancellationToken = default)
+        public async Task<Response<ConsoleList>> ListByVirtualMachineAsync(string subscriptionId, string resourceGroupName, string virtualMachineName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(virtualMachineName, nameof(virtualMachineName));
 
-            using var message = CreateListByResourceGroupRequest(subscriptionId, resourceGroupName, virtualMachineName);
+            using var message = CreateListByVirtualMachineRequest(subscriptionId, resourceGroupName, virtualMachineName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -87,20 +87,20 @@ namespace Azure.ResourceManager.NetworkCloud
             }
         }
 
-        /// <summary> Get a list of virtual machine consoles in the provided resource group. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <summary> Get a list of consoles for the provided virtual machine. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="virtualMachineName"> The name of the virtual machine. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="virtualMachineName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="virtualMachineName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ConsoleList> ListByResourceGroup(string subscriptionId, string resourceGroupName, string virtualMachineName, CancellationToken cancellationToken = default)
+        public Response<ConsoleList> ListByVirtualMachine(string subscriptionId, string resourceGroupName, string virtualMachineName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(virtualMachineName, nameof(virtualMachineName));
 
-            using var message = CreateListByResourceGroupRequest(subscriptionId, resourceGroupName, virtualMachineName);
+            using var message = CreateListByVirtualMachineRequest(subscriptionId, resourceGroupName, virtualMachineName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.NetworkCloud
         }
 
         /// <summary> Get properties of the provided virtual machine console. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="virtualMachineName"> The name of the virtual machine. </param>
         /// <param name="consoleName"> The name of the virtual machine console. </param>
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.NetworkCloud
         }
 
         /// <summary> Get properties of the provided virtual machine console. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="virtualMachineName"> The name of the virtual machine. </param>
         /// <param name="consoleName"> The name of the virtual machine console. </param>
@@ -231,7 +231,7 @@ namespace Azure.ResourceManager.NetworkCloud
         }
 
         /// <summary> Create a new virtual machine console or update the properties of the existing virtual machine console. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="virtualMachineName"> The name of the virtual machine. </param>
         /// <param name="consoleName"> The name of the virtual machine console. </param>
@@ -260,7 +260,7 @@ namespace Azure.ResourceManager.NetworkCloud
         }
 
         /// <summary> Create a new virtual machine console or update the properties of the existing virtual machine console. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="virtualMachineName"> The name of the virtual machine. </param>
         /// <param name="consoleName"> The name of the virtual machine console. </param>
@@ -311,7 +311,7 @@ namespace Azure.ResourceManager.NetworkCloud
         }
 
         /// <summary> Delete the provided virtual machine console. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="virtualMachineName"> The name of the virtual machine. </param>
         /// <param name="consoleName"> The name of the virtual machine console. </param>
@@ -339,7 +339,7 @@ namespace Azure.ResourceManager.NetworkCloud
         }
 
         /// <summary> Delete the provided virtual machine console. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="virtualMachineName"> The name of the virtual machine. </param>
         /// <param name="consoleName"> The name of the virtual machine console. </param>
@@ -393,7 +393,7 @@ namespace Azure.ResourceManager.NetworkCloud
         }
 
         /// <summary> Patch the properties of the provided virtual machine console, or update the tags associated with the virtual machine console. Properties and tag updates can be done independently. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="virtualMachineName"> The name of the virtual machine. </param>
         /// <param name="consoleName"> The name of the virtual machine console. </param>
@@ -422,7 +422,7 @@ namespace Azure.ResourceManager.NetworkCloud
         }
 
         /// <summary> Patch the properties of the provided virtual machine console, or update the tags associated with the virtual machine console. Properties and tag updates can be done independently. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="virtualMachineName"> The name of the virtual machine. </param>
         /// <param name="consoleName"> The name of the virtual machine console. </param>
@@ -450,7 +450,7 @@ namespace Azure.ResourceManager.NetworkCloud
             }
         }
 
-        internal HttpMessage CreateListByResourceGroupNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string virtualMachineName)
+        internal HttpMessage CreateListByVirtualMachineNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string virtualMachineName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -464,22 +464,22 @@ namespace Azure.ResourceManager.NetworkCloud
             return message;
         }
 
-        /// <summary> Get a list of virtual machine consoles in the provided resource group. </summary>
+        /// <summary> Get a list of consoles for the provided virtual machine. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="virtualMachineName"> The name of the virtual machine. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="virtualMachineName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="virtualMachineName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ConsoleList>> ListByResourceGroupNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string virtualMachineName, CancellationToken cancellationToken = default)
+        public async Task<Response<ConsoleList>> ListByVirtualMachineNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string virtualMachineName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(virtualMachineName, nameof(virtualMachineName));
 
-            using var message = CreateListByResourceGroupNextPageRequest(nextLink, subscriptionId, resourceGroupName, virtualMachineName);
+            using var message = CreateListByVirtualMachineNextPageRequest(nextLink, subscriptionId, resourceGroupName, virtualMachineName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -495,22 +495,22 @@ namespace Azure.ResourceManager.NetworkCloud
             }
         }
 
-        /// <summary> Get a list of virtual machine consoles in the provided resource group. </summary>
+        /// <summary> Get a list of consoles for the provided virtual machine. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="virtualMachineName"> The name of the virtual machine. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="virtualMachineName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="virtualMachineName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ConsoleList> ListByResourceGroupNextPage(string nextLink, string subscriptionId, string resourceGroupName, string virtualMachineName, CancellationToken cancellationToken = default)
+        public Response<ConsoleList> ListByVirtualMachineNextPage(string nextLink, string subscriptionId, string resourceGroupName, string virtualMachineName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(virtualMachineName, nameof(virtualMachineName));
 
-            using var message = CreateListByResourceGroupNextPageRequest(nextLink, subscriptionId, resourceGroupName, virtualMachineName);
+            using var message = CreateListByVirtualMachineNextPageRequest(nextLink, subscriptionId, resourceGroupName, virtualMachineName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
