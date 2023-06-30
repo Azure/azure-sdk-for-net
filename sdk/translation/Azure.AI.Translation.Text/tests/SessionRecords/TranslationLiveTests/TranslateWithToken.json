@@ -13,7 +13,7 @@
         "x-ms-client-request-id": "de8fc3c0e3b3927cf86e57b6cd188c43",
         "x-ms-return-client-request-id": "true"
       },
-      "RequestBody": "[{\u0022Text\u0022:\u0022This is a test.\u0022}]",
+      "RequestBody": "[{\u0022text\u0022:\u0022This is a test.\u0022}]",
       "StatusCode": 200,
       "ResponseHeaders": {
         "Access-Control-Expose-Headers": [
