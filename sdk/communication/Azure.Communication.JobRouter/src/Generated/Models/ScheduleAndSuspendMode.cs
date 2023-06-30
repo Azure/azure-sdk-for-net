@@ -9,12 +9,17 @@ using System;
 
 namespace Azure.Communication.JobRouter
 {
-    /// <summary> The ScheduleAndSuspendModeInternal. </summary>
-    internal partial class ScheduleAndSuspendModeInternal
+    /// <summary> The ScheduleAndSuspendMode. </summary>
+    public partial class ScheduleAndSuspendMode
     {
-        /// <summary> Initializes a new instance of ScheduleAndSuspendModeInternal. </summary>
+        /// <summary> Initializes a new instance of ScheduleAndSuspendMode. </summary>
+        public ScheduleAndSuspendMode()
+        {
+        }
+
+        /// <summary> Initializes a new instance of ScheduleAndSuspendMode. </summary>
         /// <param name="scheduleAt"></param>
-        internal ScheduleAndSuspendModeInternal(DateTimeOffset? scheduleAt)
+        internal ScheduleAndSuspendMode(DateTimeOffset? scheduleAt)
         {
             ScheduleAt = scheduleAt;
         }

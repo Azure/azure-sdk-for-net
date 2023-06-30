@@ -6,14 +6,14 @@ using Azure.Core;
 
 namespace Azure.Communication.JobRouter
 {
-    [CodeGenModel("FunctionRuleCredential")]
-    [CodeGenSuppress("FunctionRuleCredential")]
-    public partial class FunctionRuleCredential
+    [CodeGenModel("FunctionRouterRuleCredential")]
+    [CodeGenSuppress("FunctionRouterRuleCredential")]
+    public partial class FunctionRouterRuleCredential
     {
         /// <summary> Initializes a new instance of AzureFunctionRuleCredential. </summary>
         /// <param name="functionKey"> (Optional) Access key scoped to a particular function. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="functionKey"/> is null. </exception>
-        public FunctionRuleCredential(string functionKey)
+        public FunctionRouterRuleCredential(string functionKey)
         {
             Argument.AssertNotNullOrWhiteSpace(functionKey, nameof(functionKey));
             FunctionKey = functionKey;
@@ -31,7 +31,7 @@ namespace Azure.Communication.JobRouter
         /// In context of Azure function, this is usually the name of the key.
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="appKey"/> or <paramref name="clientId"/> is null. </exception>
-        public FunctionRuleCredential(string appKey, string clientId)
+        public FunctionRouterRuleCredential(string appKey, string clientId)
         {
             Argument.AssertNotNullOrWhiteSpace(appKey, nameof(appKey));
             Argument.AssertNotNullOrWhiteSpace(clientId, nameof(clientId));

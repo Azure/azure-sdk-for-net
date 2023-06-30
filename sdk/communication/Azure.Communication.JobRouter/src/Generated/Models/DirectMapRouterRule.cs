@@ -8,17 +8,17 @@
 namespace Azure.Communication.JobRouter
 {
     /// <summary> A rule that return the same labels as the input labels. </summary>
-    public partial class DirectMapRule : RouterRule
+    public partial class DirectMapRouterRule : RouterRule
     {
-        /// <summary> Initializes a new instance of DirectMapRule. </summary>
-        public DirectMapRule()
+        /// <summary> Initializes a new instance of DirectMapRouterRule. </summary>
+        public DirectMapRouterRule()
         {
             Kind = "direct-map-rule";
         }
 
-        /// <summary> Initializes a new instance of DirectMapRule. </summary>
+        /// <summary> Initializes a new instance of DirectMapRouterRule. </summary>
         /// <param name="kind"> The type discriminator describing a sub-type of Rule. </param>
-        internal DirectMapRule(string kind) : base(kind)
+        internal DirectMapRouterRule(string kind) : base(kind)
         {
             Kind = kind ?? "direct-map-rule";
         }

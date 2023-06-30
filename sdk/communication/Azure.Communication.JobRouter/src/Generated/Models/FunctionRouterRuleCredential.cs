@@ -8,9 +8,9 @@
 namespace Azure.Communication.JobRouter
 {
     /// <summary> Credentials used to access Azure function rule. </summary>
-    public partial class FunctionRuleCredential
+    public partial class FunctionRouterRuleCredential
     {
-        /// <summary> Initializes a new instance of FunctionRuleCredential. </summary>
+        /// <summary> Initializes a new instance of FunctionRouterRuleCredential. </summary>
         /// <param name="functionKey"> (Optional) Access key scoped to a particular function. </param>
         /// <param name="appKey">
         /// (Optional) Access key scoped to a Azure Function app.
@@ -20,7 +20,7 @@ namespace Azure.Communication.JobRouter
         /// (Optional) Client id, when AppKey is provided
         /// In context of Azure function, this is usually the name of the key
         /// </param>
-        internal FunctionRuleCredential(string functionKey, string appKey, string clientId)
+        internal FunctionRouterRuleCredential(string functionKey, string appKey, string clientId)
         {
             FunctionKey = functionKey;
             AppKey = appKey;

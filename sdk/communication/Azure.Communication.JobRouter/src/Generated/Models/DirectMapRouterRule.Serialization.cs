@@ -10,47 +10,32 @@ using Azure.Core;
 
 namespace Azure.Communication.JobRouter
 {
-    public partial class StaticRule : IUtf8JsonSerializable
+    public partial class DirectMapRouterRule : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(_value))
-            {
-                writer.WritePropertyName("value"u8);
-                writer.WriteObjectValue(_value);
-            }
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind);
             writer.WriteEndObject();
         }
 
-        internal static StaticRule DeserializeStaticRule(JsonElement element)
+        internal static DirectMapRouterRule DeserializeDirectMapRouterRule(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<object> value = default;
             string kind = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("value"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    value = property.Value.GetObject();
-                    continue;
-                }
                 if (property.NameEquals("kind"u8))
                 {
                     kind = property.Value.GetString();
                     continue;
                 }
             }
-            return new StaticRule(kind, value.Value);
+            return new DirectMapRouterRule(kind);
         }
     }
 }

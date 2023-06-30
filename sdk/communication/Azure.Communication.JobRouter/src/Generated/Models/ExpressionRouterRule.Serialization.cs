@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.Communication.JobRouter
 {
-    public partial class ExpressionRule : IUtf8JsonSerializable
+    public partial class ExpressionRouterRule : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -27,7 +27,7 @@ namespace Azure.Communication.JobRouter
             writer.WriteEndObject();
         }
 
-        internal static ExpressionRule DeserializeExpressionRule(JsonElement element)
+        internal static ExpressionRouterRule DeserializeExpressionRouterRule(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -54,7 +54,7 @@ namespace Azure.Communication.JobRouter
                     continue;
                 }
             }
-            return new ExpressionRule(kind, language.Value, expression);
+            return new ExpressionRouterRule(kind, language.Value, expression);
         }
     }
 }

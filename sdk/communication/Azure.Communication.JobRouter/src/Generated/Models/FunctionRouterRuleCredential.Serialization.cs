@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.Communication.JobRouter
 {
-    public partial class FunctionRuleCredential : IUtf8JsonSerializable
+    public partial class FunctionRouterRuleCredential : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -33,7 +33,7 @@ namespace Azure.Communication.JobRouter
             writer.WriteEndObject();
         }
 
-        internal static FunctionRuleCredential DeserializeFunctionRuleCredential(JsonElement element)
+        internal static FunctionRouterRuleCredential DeserializeFunctionRouterRuleCredential(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -60,7 +60,7 @@ namespace Azure.Communication.JobRouter
                     continue;
                 }
             }
-            return new FunctionRuleCredential(functionKey.Value, appKey.Value, clientId.Value);
+            return new FunctionRouterRuleCredential(functionKey.Value, appKey.Value, clientId.Value);
         }
     }
 }

@@ -10,35 +10,9 @@ using Azure.Core;
 
 namespace Azure.Communication.JobRouter
 {
-    internal partial class JobMatchingModeInternal : IUtf8JsonSerializable
+    public partial class JobMatchingMode : IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
-        {
-            writer.WriteStartObject();
-            if (Optional.IsDefined(ModeType))
-            {
-                writer.WritePropertyName("modeType"u8);
-                writer.WriteStringValue(ModeType.Value.ToString());
-            }
-            if (Optional.IsDefined(QueueAndMatchMode))
-            {
-                writer.WritePropertyName("queueAndMatchMode"u8);
-                writer.WriteObjectValue(QueueAndMatchMode);
-            }
-            if (Optional.IsDefined(ScheduleAndSuspendMode))
-            {
-                writer.WritePropertyName("scheduleAndSuspendMode"u8);
-                writer.WriteObjectValue(ScheduleAndSuspendMode);
-            }
-            if (Optional.IsDefined(SuspendMode))
-            {
-                writer.WritePropertyName("suspendMode"u8);
-                writer.WriteObjectValue(SuspendMode);
-            }
-            writer.WriteEndObject();
-        }
-
-        internal static JobMatchingModeInternal DeserializeJobMatchingModeInternal(JsonElement element)
+        internal static JobMatchingMode DeserializeJobMatchingMode(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -46,7 +20,7 @@ namespace Azure.Communication.JobRouter
             }
             Optional<JobMatchModeType> modeType = default;
             Optional<object> queueAndMatchMode = default;
-            Optional<ScheduleAndSuspendModeInternal> scheduleAndSuspendMode = default;
+            Optional<ScheduleAndSuspendMode> scheduleAndSuspendMode = default;
             Optional<object> suspendMode = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -74,7 +48,7 @@ namespace Azure.Communication.JobRouter
                     {
                         continue;
                     }
-                    scheduleAndSuspendMode = ScheduleAndSuspendModeInternal.DeserializeScheduleAndSuspendModeInternal(property.Value);
+                    scheduleAndSuspendMode = ScheduleAndSuspendMode.DeserializeScheduleAndSuspendMode(property.Value);
                     continue;
                 }
                 if (property.NameEquals("suspendMode"u8))
@@ -87,7 +61,7 @@ namespace Azure.Communication.JobRouter
                     continue;
                 }
             }
-            return new JobMatchingModeInternal(Optional.ToNullable(modeType), queueAndMatchMode.Value, scheduleAndSuspendMode.Value, suspendMode.Value);
+            return new JobMatchingMode(Optional.ToNullable(modeType), queueAndMatchMode.Value, scheduleAndSuspendMode.Value, suspendMode.Value);
         }
     }
 }
