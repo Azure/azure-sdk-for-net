@@ -8,6 +8,13 @@
                         <ModulePaths>
                             <Exclude>
                                 <ModulePath>azure.communication.identity.*</ModulePath>
+                                <ModulePath>Azure.Communication.Identity.*</ModulePath>
+                                <ModulePath>.*Azure\.Communication\.Identity\.dll*</ModulePath>
+                                <ModulePath>.*Azure.Communication.Identity.*</ModulePath>
+                                <ModulePath>.*azure.communication.identity.*</ModulePath>
+                                <Source>..\..\Azure.Communication.Identity\src\*</Source>
+                                <Source>.*\\Azure.Communication.Identity\\src\\.*</Source>
+                                <Function>^Azure.Communication.Identity\..*</Function>
                                 <!-- Add more ModulePath nodes here. -->
                             </Exclude>
                         </ModulePaths>
