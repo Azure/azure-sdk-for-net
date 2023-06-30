@@ -179,7 +179,7 @@ StorageApplianceName = "vmName",
             {
                 AnalyticsWorkspaceId = "/subscriptions/123e4567-e89b-12d3-a456-426655440000/resourceGroups/resourceGroupName/providers/microsoft.operationalInsights/workspaces/logAnalyticsWorkspaceName",
                 ClusterLocation = "Foo Street, 3rd Floor, row 9",
-                ClusterServicePrincipal = new ServicePrincipalInformation("12345678-1234-1234-1234-123456789012", "00000008-0004-0004-0004-000000000012", Guid.Parse("80000000-4000-4000-4000-120000000000"))
+                ClusterServicePrincipal = new ServicePrincipalInformation("12345678-1234-1234-1234-123456789012", "00000008-0004-0004-0004-000000000012", "80000000-4000-4000-4000-120000000000")
                 {
                     Password = "{password}",
                 },

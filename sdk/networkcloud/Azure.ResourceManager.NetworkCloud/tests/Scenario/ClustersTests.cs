@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
             )
             {
                 AnalyticsWorkspaceId = TestEnvironment.LawId,
-                ClusterServicePrincipal = new ServicePrincipalInformation("12345678-1234-1234-1234-123456789012", "00000008-0004-0004-0004-000000000012", Guid.Parse("80000000-4000-4000-4000-120000000000")){
+                ClusterServicePrincipal = new ServicePrincipalInformation("12345678-1234-1234-1234-123456789012", "00000008-0004-0004-0004-000000000012", "80000000-4000-4000-4000-120000000000"){
                     Password = "password"
                 },
                 ComputeDeploymentThreshold = new ValidationThreshold(ValidationThresholdGrouping.PerCluster, ValidationThresholdType.PercentSuccess, 90),
@@ -91,9 +91,10 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
             Assert.AreEqual(clusterName, getResult.Value.Data.Name);
             ClusterResource clusterResource = Client.GetClusterResource(getResult.Value.Data.Id);
 
-            // Update - backend API bug
-            /*ClusterPatch patch = new ClusterPatch()
+            // Update
+            ClusterPatch patch = new ClusterPatch()
             {
+                ClusterLocation = "Foo floor",
                 Tags =
                 {
                     ["key1"] = "myvalue1",
@@ -101,7 +102,8 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
                 },
             };
             var patchResult = await clusterResource.UpdateAsync(WaitUntil.Completed, patch);
-            Assert.AreEqual(patch.Tags, patchResult.Value.Data.Tags);*/
+            Assert.AreEqual(patch.Tags, patchResult.Value.Data.Tags);
+            Assert.AreEqual("Foo floor", patchResult.Value.Data.ClusterLocation);
 
             // List by Resource Group
             var listByResourceGroup = new List<ClusterResource>();

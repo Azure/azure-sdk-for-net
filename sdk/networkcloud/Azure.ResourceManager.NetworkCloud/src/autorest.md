@@ -14,8 +14,8 @@ skip-csproj: true
 modelerfour:
   flatten-payloads: false
 
+# 'tenantId': 'uuid' cannot be used globally as it break our list clusters API where tenantId sometimes is an empty string
 format-by-name-rules:
-  'tenantId': 'uuid'
   'ETag': 'etag'
   'location': 'azure-location'
   '*Uri': 'Uri'
