@@ -15,10 +15,6 @@ namespace Azure.Developer.LoadTesting.Models
 {
     public partial class Test : IUtf8JsonSerializable
     {
-        // Making this public to prove the concept - this will depend on
-        // serialization work?
-
-
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
