@@ -8,6 +8,17 @@ using Azure.Monitor.OpenTelemetry.Exporter.Internals.ConnectionString;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics
 {
+    /// <summary>
+    /// EventSource for the AzureMonitorExporter.
+    /// EventSource Guid at Runtime: bb5be13f-ec3a-5ab2-6a6a-0f881d6e0d5b.
+    /// </summary>
+    /// <remarks>
+    /// PerfView Instructions:
+    /// <list type="bullet">
+    /// <item>To collect all events: <code>PerfView.exe collect -MaxCollectSec:300 -NoGui /onlyProviders=*OpenTelemetry-AzureMonitor-Exporter</code></item>
+    /// <item>To collect events based on LogLevel: <code>PerfView.exe collect -MaxCollectSec:300 -NoGui /onlyProviders:OpenTelemetry-AzureMonitor-Exporter::Verbose</code></item>
+    /// </list>
+    /// </remarks>
     [EventSource(Name = EventSourceName)]
     internal sealed class AzureMonitorExporterEventSource : EventSource
     {
