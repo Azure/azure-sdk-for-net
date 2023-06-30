@@ -99,7 +99,7 @@ namespace Azure.Developer.LoadTesting
                 return GetRawResponse();
             }
 
-            _response = _client.GetTestRun(_testRunId);
+            _response = _client.GetTestRun(_testRunId, FromCancellationToken(cancellationToken));
             _value = _response.Content;
 
             return GetCompletionResponse();
@@ -117,7 +117,7 @@ namespace Azure.Developer.LoadTesting
 
             try
             {
-                _response = await _client.GetTestRunAsync(_testRunId).ConfigureAwait(false);
+                _response = await _client.GetTestRunAsync(_testRunId, FromCancellationToken(cancellationToken)).ConfigureAwait(false);
                 _value = _response.Content;
             }
             catch
@@ -157,6 +157,16 @@ namespace Azure.Developer.LoadTesting
             }
 
             return GetRawResponse();
+        }
+        private static RequestContext DefaultRequestContext = new RequestContext();
+        internal static RequestContext FromCancellationToken(CancellationToken cancellationToken = default)
+        {
+            if (!cancellationToken.CanBeCanceled)
+            {
+                return DefaultRequestContext;
+            }
+
+            return new RequestContext() { CancellationToken = cancellationToken };
         }
     }
 }

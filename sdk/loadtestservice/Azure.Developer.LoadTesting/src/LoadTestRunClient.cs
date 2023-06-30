@@ -9,6 +9,7 @@ namespace Azure.Developer.LoadTesting
 {
     public partial class LoadTestRunClient
     {
+        /*
         /// <summary> Create and start a new test run with the given name. </summary>
         /// <param name="waitUntil"> Defines how to use the LRO, if passed WaitUntil.Completed then waits for test run to get completed</param>
         /// <param name="testRunId"> Unique name for the load test run, must contain only lower-case alphabetic, numeric, underscore or hyphen characters. </param>
@@ -90,6 +91,7 @@ namespace Azure.Developer.LoadTesting
                 throw;
             }
         }
+        */
 
         /// <summary> Get all test runs with given filters. </summary>
         /// <param name="orderby"> Sort on the supported fields in (field asc/desc) format. eg: executedDateTime asc. Supported fields - executedDateTime. </param>
@@ -151,8 +153,8 @@ namespace Azure.Developer.LoadTesting
                 content = RequestContent.Create(new { });
             }
 
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetMetricsRequest(testRunId, metricName, metricNamespace, timespan, content, aggregation, interval, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetMetricsNextPageRequest(nextLink, testRunId, metricName, metricNamespace, timespan, content, aggregation, interval, context);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetMetricsRequest(testRunId, content, metricName, metricNamespace, timespan, aggregation, interval, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetMetricsNextPageRequest(nextLink, testRunId, content, metricName, metricNamespace, timespan, aggregation, interval, context);
             return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "LoadTestRunClient.GetMetrics", "value", "nextLink", context);
         }
 
@@ -182,8 +184,8 @@ namespace Azure.Developer.LoadTesting
                 content = RequestContent.Create(new { });
             }
 
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetMetricsRequest(testRunId, metricName, metricNamespace, timespan, content, aggregation, interval, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetMetricsNextPageRequest(nextLink, testRunId, metricName, metricNamespace, timespan, content, aggregation, interval, context);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetMetricsRequest(testRunId, content, metricName, metricNamespace, timespan, aggregation, interval, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetMetricsNextPageRequest(nextLink, testRunId, content, metricName, metricNamespace, timespan, aggregation, interval, context);
             return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "LoadTestRunClient.GetMetrics", "value", "nextLink", context);
         }
     }
