@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.Communication.JobRouter
 {
-    public partial class WebhookRule : IUtf8JsonSerializable
+    public partial class WebhookRouterRule : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -36,7 +36,7 @@ namespace Azure.Communication.JobRouter
             writer.WriteEndObject();
         }
 
-        internal static WebhookRule DeserializeWebhookRule(JsonElement element)
+        internal static WebhookRouterRule DeserializeWebhookRouterRule(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -81,7 +81,7 @@ namespace Azure.Communication.JobRouter
                     continue;
                 }
             }
-            return new WebhookRule(kind, authorizationServerUri.Value, clientCredential.Value, webhookUri.Value);
+            return new WebhookRouterRule(kind, authorizationServerUri.Value, clientCredential.Value, webhookUri.Value);
         }
     }
 }

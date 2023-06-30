@@ -86,7 +86,7 @@ namespace Azure.Communication.JobRouter.Models
         {
             get
             {
-                return Notes != null
+                return Notes != null && Notes.Count != 0
                     ? Notes?.ToDictionary(x => (x.AddedAtUtc ?? DateTimeOffset.UtcNow)
                         .ToUniversalTime().ToString("O", CultureInfo.InvariantCulture), x => x.Message)
                     : new ChangeTrackingDictionary<string, string>();
@@ -109,56 +109,13 @@ namespace Azure.Communication.JobRouter.Models
         {
             get
             {
-                return RequestedWorkerSelectors != null
+                return RequestedWorkerSelectors != null && RequestedWorkerSelectors.Any()
                     ? RequestedWorkerSelectors.ToList()
                     : new ChangeTrackingList<RouterWorkerSelector>();
             }
             set
             {
                 RequestedWorkerSelectors.AddRange(value);
-            }
-        }
-
-        /// <summary>
-        /// If provided, will determine how job matching will be carried out. Default mode: QueueAndMatchMode.
-        /// </summary>
-        public JobMatchingMode MatchingMode { get; set; }
-
-        [CodeGenMember("MatchingMode")]
-        internal JobMatchingModeInternal _matchingMode
-        {
-            get
-            {
-                return MatchingMode != null ? MatchingMode.Kind switch
-                {
-                    nameof(SuspendMode) => new JobMatchingModeInternal(modeType: JobMatchModeType.SuspendMode, null,
-                        null, new {}),
-                    nameof(QueueAndMatchMode) => new JobMatchingModeInternal(
-                        modeType: JobMatchModeType.QueueAndMatchMode, new {}, null, null),
-                    nameof(ScheduleAndSuspendMode) => new JobMatchingModeInternal(
-                        modeType: JobMatchModeType.ScheduleAndSuspendMode, null,
-                        new ScheduleAndSuspendModeInternal(((ScheduleAndSuspendMode)MatchingMode).ScheduleAt), null),
-                    _ => throw new ArgumentOutOfRangeException()
-                } : null;
-            }
-            set
-            {
-                if (value.ModeType == JobMatchModeType.SuspendMode)
-                {
-                    MatchingMode = new SuspendMode();
-                }
-                else if (value.ModeType == JobMatchModeType.ScheduleAndSuspendMode)
-                {
-                    MatchingMode = new ScheduleAndSuspendMode(value.ScheduleAndSuspendMode.ScheduleAt);
-                }
-                else if (value.ModeType == JobMatchModeType.QueueAndMatchMode)
-                {
-                    MatchingMode = new QueueAndMatchMode();
-                }
-                else
-                {
-                    throw new ArgumentOutOfRangeException();
-                }
             }
         }
     }

@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.Communication.JobRouter
 {
-    internal partial class ScheduleAndSuspendModeInternal : IUtf8JsonSerializable
+    public partial class ScheduleAndSuspendMode : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -24,7 +24,7 @@ namespace Azure.Communication.JobRouter
             writer.WriteEndObject();
         }
 
-        internal static ScheduleAndSuspendModeInternal DeserializeScheduleAndSuspendModeInternal(JsonElement element)
+        internal static ScheduleAndSuspendMode DeserializeScheduleAndSuspendMode(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -43,7 +43,7 @@ namespace Azure.Communication.JobRouter
                     continue;
                 }
             }
-            return new ScheduleAndSuspendModeInternal(Optional.ToNullable(scheduleAt));
+            return new ScheduleAndSuspendMode(Optional.ToNullable(scheduleAt));
         }
     }
 }

@@ -23,7 +23,7 @@ namespace Azure.Communication.JobRouter.Models
         {
             get
             {
-                return QueueSelectors != null
+                return QueueSelectors != null && QueueSelectors.Any()
                     ? QueueSelectors.ToList()
                     : new ChangeTrackingList<QueueSelectorAttachment>();
             }
@@ -38,7 +38,7 @@ namespace Azure.Communication.JobRouter.Models
         {
             get
             {
-                return WorkerSelectors != null
+                return WorkerSelectors != null && WorkerSelectors.Any()
                     ? WorkerSelectors.ToList()
                     : new ChangeTrackingList<WorkerSelectorAttachment>();
             }

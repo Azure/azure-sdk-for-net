@@ -11,13 +11,13 @@ using Azure.Core;
 namespace Azure.Communication.JobRouter
 {
     /// <summary> A rule providing inline expression rules. </summary>
-    public partial class ExpressionRule : RouterRule
+    public partial class ExpressionRouterRule : RouterRule
     {
-        /// <summary> Initializes a new instance of ExpressionRule. </summary>
+        /// <summary> Initializes a new instance of ExpressionRouterRule. </summary>
         /// <param name="kind"> The type discriminator describing a sub-type of Rule. </param>
         /// <param name="language"> The expression language to compile to and execute. </param>
         /// <param name="expression"> The string containing the expression to evaluate. Should contain return statement with calculated values. </param>
-        internal ExpressionRule(string kind, string language, string expression) : base(kind)
+        internal ExpressionRouterRule(string kind, string language, string expression) : base(kind)
         {
             Language = language;
             Expression = expression;

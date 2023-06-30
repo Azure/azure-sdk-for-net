@@ -8,9 +8,9 @@ using Azure.Core;
 
 namespace Azure.Communication.JobRouter
 {
-    [CodeGenModel("ExpressionRule")]
-    [CodeGenSuppress("ExpressionRule", typeof(string), typeof(string))]
-    public partial class ExpressionRule : RouterRule
+    [CodeGenModel("ExpressionRouterRule")]
+    [CodeGenSuppress("ExpressionRouterRule", typeof(string), typeof(string))]
+    public partial class ExpressionRouterRule : RouterRule
     {
         /// <summary> The available expression languages that can be configured. </summary>
         public string Language { get; }
@@ -18,11 +18,11 @@ namespace Azure.Communication.JobRouter
         /// <summary> Initializes a new instance of ExpressionRule. </summary>
         /// <param name="expression"> The string containing the expression to evaluate. Should contain return statement with calculated values. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="expression"/> is null. </exception>
-        public ExpressionRule(string expression)
+        public ExpressionRouterRule(string expression)
         {
             Argument.AssertNotNull(expression, nameof(expression));
 
-            Language = "powerFx";
+            Language = ExpressionRouterRuleLanguage.PowerFx.ToString();
             Expression = expression;
             Kind = "expression-rule";
         }

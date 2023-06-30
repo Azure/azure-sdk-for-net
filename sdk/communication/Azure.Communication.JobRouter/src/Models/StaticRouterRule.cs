@@ -8,9 +8,9 @@ using Azure.Core;
 
 namespace Azure.Communication.JobRouter
 {
-    [CodeGenModel("StaticRule")]
-    [CodeGenSuppress("StaticRule")]
-    public partial class StaticRule : RouterRule
+    [CodeGenModel("StaticRouterRule")]
+    [CodeGenSuppress("StaticRouterRule")]
+    public partial class StaticRouterRule : RouterRule
     {
         /// <summary> The static value this rule always returns. </summary>
         public LabelValue Value { get; set; }
@@ -29,7 +29,7 @@ namespace Azure.Communication.JobRouter
 
         /// <summary> Initializes a new instance of StaticRule. </summary>
         /// <param name="value"> The static value this rule always returns. </param>
-        public StaticRule(LabelValue value) : this(null, value.Value)
+        public StaticRouterRule(LabelValue value) : this(null, value.Value)
         {
         }
     }

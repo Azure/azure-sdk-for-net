@@ -8,12 +8,12 @@
 namespace Azure.Communication.JobRouter
 {
     /// <summary> A rule providing static rules that always return the same result, regardless of input. </summary>
-    public partial class StaticRule : RouterRule
+    public partial class StaticRouterRule : RouterRule
     {
-        /// <summary> Initializes a new instance of StaticRule. </summary>
+        /// <summary> Initializes a new instance of StaticRouterRule. </summary>
         /// <param name="kind"> The type discriminator describing a sub-type of Rule. </param>
         /// <param name="value"> The static value this rule always returns. </param>
-        internal StaticRule(string kind, object value) : base(kind)
+        internal StaticRouterRule(string kind, object value) : base(kind)
         {
             _value = value;
             Kind = kind ?? "static-rule";

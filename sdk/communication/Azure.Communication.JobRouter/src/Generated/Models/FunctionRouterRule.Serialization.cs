@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.Communication.JobRouter
 {
-    public partial class FunctionRule : IUtf8JsonSerializable
+    public partial class FunctionRouterRule : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -28,14 +28,14 @@ namespace Azure.Communication.JobRouter
             writer.WriteEndObject();
         }
 
-        internal static FunctionRule DeserializeFunctionRule(JsonElement element)
+        internal static FunctionRouterRule DeserializeFunctionRouterRule(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Uri functionUri = default;
-            Optional<FunctionRuleCredential> credential = default;
+            Optional<FunctionRouterRuleCredential> credential = default;
             string kind = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -50,7 +50,7 @@ namespace Azure.Communication.JobRouter
                     {
                         continue;
                     }
-                    credential = FunctionRuleCredential.DeserializeFunctionRuleCredential(property.Value);
+                    credential = FunctionRouterRuleCredential.DeserializeFunctionRouterRuleCredential(property.Value);
                     continue;
                 }
                 if (property.NameEquals("kind"u8))
@@ -59,7 +59,7 @@ namespace Azure.Communication.JobRouter
                     continue;
                 }
             }
-            return new FunctionRule(kind, functionUri, credential.Value);
+            return new FunctionRouterRule(kind, functionUri, credential.Value);
         }
     }
 }
