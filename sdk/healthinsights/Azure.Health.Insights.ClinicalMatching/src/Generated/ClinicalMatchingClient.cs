@@ -130,7 +130,7 @@ namespace Azure.Health.Insights.ClinicalMatching
             try
             {
                 using HttpMessage message = CreateMatchTrialsRequest(content, repeatabilityRequestId, repeatabilityFirstSent, context);
-                return await ProtocolOperationHelpers.ProcessMessageAsync(_pipeline, message, ClientDiagnostics, "ClinicalMatchingClient.MatchTrials", OperationFinalStateVia.Location, context, waitUntil).ConfigureAwait(false);
+                return await ProtocolOperationHelpers.ProcessMessageAsync(_pipeline, message, ClientDiagnostics, "ClinicalMatchingClient.MatchTrials", OperationFinalStateVia.OriginalUri, context, waitUntil).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -172,7 +172,7 @@ namespace Azure.Health.Insights.ClinicalMatching
             try
             {
                 using HttpMessage message = CreateMatchTrialsRequest(content, repeatabilityRequestId, repeatabilityFirstSent, context);
-                return ProtocolOperationHelpers.ProcessMessage(_pipeline, message, ClientDiagnostics, "ClinicalMatchingClient.MatchTrials", OperationFinalStateVia.Location, context, waitUntil);
+                return ProtocolOperationHelpers.ProcessMessage(_pipeline, message, ClientDiagnostics, "ClinicalMatchingClient.MatchTrials", OperationFinalStateVia.OriginalUri, context, waitUntil);
             }
             catch (Exception e)
             {
@@ -192,6 +192,7 @@ namespace Azure.Health.Insights.ClinicalMatching
             uri.AppendPath("/trialmatcher/jobs", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             if (repeatabilityRequestId != null)
             {
                 request.Headers.Add("Repeatability-Request-ID", repeatabilityRequestId);
@@ -200,7 +201,6 @@ namespace Azure.Health.Insights.ClinicalMatching
             {
                 request.Headers.Add("Repeatability-First-Sent", repeatabilityFirstSent.Value, "O");
             }
-            request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             request.Content = content;
             return message;
