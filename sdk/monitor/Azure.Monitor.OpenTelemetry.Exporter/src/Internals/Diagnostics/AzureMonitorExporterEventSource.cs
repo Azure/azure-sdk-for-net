@@ -245,16 +245,16 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics
         public void StatsbeatDisabled() => WriteEvent(30);
 
         [NonEvent]
-        public void ErrorInitializingStatsbeat(string instrumentationKey, Exception ex)
+        public void ErrorInitializingStatsbeat(ConnectionVars connectionVars, Exception ex)
         {
-            if (IsEnabled(EventLevel.Error))
+            if (IsEnabled(EventLevel.Informational))
             {
-                ErrorInitializingStatsbeat(instrumentationKey, ex.FlattenException().ToInvariantString());
+                ErrorInitializingStatsbeat(connectionVars.InstrumentationKey, connectionVars.IngestionEndpoint, ex.FlattenException().ToInvariantString());
             }
         }
 
-        [Event(31, Message = "Failed to initialize Statsbeat due to an exception. Instrumentation Key: {0}. {1}", Level = EventLevel.Error)]
-        public void ErrorInitializingStatsbeat(string instrumentationKey, string exceptionMessage) => WriteEvent(31, instrumentationKey, exceptionMessage);
+        [Event(31, Message = "Failed to initialize Statsbeat due to an exception. This is only for internal telemetry and can safely be ignored. Instrumentation Key: {0}. Configured Endpoint: {1}. {2}", Level = EventLevel.Informational)]
+        public void ErrorInitializingStatsbeat(string instrumentationKey, string configuredEndpoint, string exceptionMessage) => WriteEvent(31, instrumentationKey, configuredEndpoint, exceptionMessage);
 
         [Event(32, Message = "Successfully transmitted a batch of telemetry Items. Instrumentation Key: {0}", Level = EventLevel.Verbose)]
         public void TransmissionSuccess(string instrumentationKey) => WriteEvent(32, instrumentationKey);
