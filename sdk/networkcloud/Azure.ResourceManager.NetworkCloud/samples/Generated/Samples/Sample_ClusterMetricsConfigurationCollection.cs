@@ -18,13 +18,13 @@ namespace Azure.ResourceManager.NetworkCloud.Samples
 {
     public partial class Sample_ClusterMetricsConfigurationCollection
     {
-        // List metrics configurations of cluster for resource group
+        // List metrics configurations of the cluster
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetAll_ListMetricsConfigurationsOfClusterForResourceGroup()
+        public async Task GetAll_ListMetricsConfigurationsOfTheCluster()
         {
-            // Generated from example definition: specification/networkcloud/resource-manager/Microsoft.NetworkCloud/preview/2022-12-12-preview/examples/ClusterMetricsConfigurations_ListByResourceGroup.json
-            // this example is just showing the usage of "MetricsConfigurations_ListByResourceGroup" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/networkcloud/resource-manager/Microsoft.NetworkCloud/preview/2023-05-01-preview/examples/ClusterMetricsConfigurations_ListByCluster.json
+            // this example is just showing the usage of "MetricsConfigurations_ListByCluster" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.NetworkCloud.Samples
 
             // this example assumes you already have this ClusterResource created on azure
             // for more information of creating ClusterResource, please refer to the document of ClusterResource
-            string subscriptionId = "subscriptionId";
+            string subscriptionId = "123e4567-e89b-12d3-a456-426655440000";
             string resourceGroupName = "resourceGroupName";
             string clusterName = "clusterName";
             ResourceIdentifier clusterResourceId = ClusterResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, clusterName);
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.NetworkCloud.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_GetMetricsConfigurationOfCluster()
         {
-            // Generated from example definition: specification/networkcloud/resource-manager/Microsoft.NetworkCloud/preview/2022-12-12-preview/examples/ClusterMetricsConfigurations_Get.json
+            // Generated from example definition: specification/networkcloud/resource-manager/Microsoft.NetworkCloud/preview/2023-05-01-preview/examples/ClusterMetricsConfigurations_Get.json
             // this example is just showing the usage of "MetricsConfigurations_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.NetworkCloud.Samples
 
             // this example assumes you already have this ClusterResource created on azure
             // for more information of creating ClusterResource, please refer to the document of ClusterResource
-            string subscriptionId = "subscriptionId";
+            string subscriptionId = "123e4567-e89b-12d3-a456-426655440000";
             string resourceGroupName = "resourceGroupName";
             string clusterName = "clusterName";
             ResourceIdentifier clusterResourceId = ClusterResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, clusterName);
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.NetworkCloud.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Exists_GetMetricsConfigurationOfCluster()
         {
-            // Generated from example definition: specification/networkcloud/resource-manager/Microsoft.NetworkCloud/preview/2022-12-12-preview/examples/ClusterMetricsConfigurations_Get.json
+            // Generated from example definition: specification/networkcloud/resource-manager/Microsoft.NetworkCloud/preview/2023-05-01-preview/examples/ClusterMetricsConfigurations_Get.json
             // this example is just showing the usage of "MetricsConfigurations_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.NetworkCloud.Samples
 
             // this example assumes you already have this ClusterResource created on azure
             // for more information of creating ClusterResource, please refer to the document of ClusterResource
-            string subscriptionId = "subscriptionId";
+            string subscriptionId = "123e4567-e89b-12d3-a456-426655440000";
             string resourceGroupName = "resourceGroupName";
             string clusterName = "clusterName";
             ResourceIdentifier clusterResourceId = ClusterResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, clusterName);
@@ -121,12 +121,12 @@ namespace Azure.ResourceManager.NetworkCloud.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Update metrics configuration of cluster
+        // Create or update metrics configuration of cluster
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task CreateOrUpdate_UpdateMetricsConfigurationOfCluster()
+        public async Task CreateOrUpdate_CreateOrUpdateMetricsConfigurationOfCluster()
         {
-            // Generated from example definition: specification/networkcloud/resource-manager/Microsoft.NetworkCloud/preview/2022-12-12-preview/examples/ClusterMetricsConfigurations_Update.json
+            // Generated from example definition: specification/networkcloud/resource-manager/Microsoft.NetworkCloud/preview/2023-05-01-preview/examples/ClusterMetricsConfigurations_Create.json
             // this example is just showing the usage of "MetricsConfigurations_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.NetworkCloud.Samples
 
             // this example assumes you already have this ClusterResource created on azure
             // for more information of creating ClusterResource, please refer to the document of ClusterResource
-            string subscriptionId = "subscriptionId";
+            string subscriptionId = "123e4567-e89b-12d3-a456-426655440000";
             string resourceGroupName = "resourceGroupName";
             string clusterName = "clusterName";
             ResourceIdentifier clusterResourceId = ClusterResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, clusterName);
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.NetworkCloud.Samples
 
             // invoke the operation
             string metricsConfigurationName = "default";
-            ClusterMetricsConfigurationData data = new ClusterMetricsConfigurationData(new AzureLocation("location"), new ExtendedLocation("/subscriptions/subscriptionId/resourceGroups/resourceGroupName/providers/Microsoft.ExtendedLocation/customLocations/clusterExtendedLocationName", "CustomLocation"), 15)
+            ClusterMetricsConfigurationData data = new ClusterMetricsConfigurationData(new AzureLocation("location"), new ExtendedLocation("/subscriptions/123e4567-e89b-12d3-a456-426655440000/resourceGroups/resourceGroupName/providers/Microsoft.ExtendedLocation/customLocations/clusterExtendedLocationName", "CustomLocation"), 15)
             {
                 EnabledMetrics =
 {

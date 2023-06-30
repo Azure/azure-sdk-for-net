@@ -25,7 +25,7 @@ namespace Azure.Communication.JobRouter
         /// AzureFunctionRule: A rule providing a binding to an HTTP Triggered Azure Function.
         /// WebhookRule: A rule providing a binding to a webserver following OAuth2.0 authentication protocol.
         /// Please note <see cref="RouterRule"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="FunctionRule"/>, <see cref="DirectMapRule"/>, <see cref="ExpressionRule"/>, <see cref="StaticRule"/> and <see cref="WebhookRule"/>.
+        /// The available derived classes include <see cref="FunctionRouterRule"/>, <see cref="DirectMapRouterRule"/>, <see cref="ExpressionRouterRule"/>, <see cref="StaticRouterRule"/> and <see cref="WebhookRouterRule"/>.
         /// </param>
         /// <param name="workerSelectors"> The worker selectors to attach. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="condition"/> or <paramref name="workerSelectors"/> is null. </exception>
@@ -50,7 +50,7 @@ namespace Azure.Communication.JobRouter
         /// AzureFunctionRule: A rule providing a binding to an HTTP Triggered Azure Function.
         /// WebhookRule: A rule providing a binding to a webserver following OAuth2.0 authentication protocol.
         /// Please note <see cref="RouterRule"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="FunctionRule"/>, <see cref="DirectMapRule"/>, <see cref="ExpressionRule"/>, <see cref="StaticRule"/> and <see cref="WebhookRule"/>.
+        /// The available derived classes include <see cref="FunctionRouterRule"/>, <see cref="DirectMapRouterRule"/>, <see cref="ExpressionRouterRule"/>, <see cref="StaticRouterRule"/> and <see cref="WebhookRouterRule"/>.
         /// </param>
         /// <param name="workerSelectors"> The worker selectors to attach. </param>
         internal ConditionalWorkerSelectorAttachment(string kind, RouterRule condition, IList<RouterWorkerSelector> workerSelectors) : base(kind)
@@ -69,7 +69,7 @@ namespace Azure.Communication.JobRouter
         /// AzureFunctionRule: A rule providing a binding to an HTTP Triggered Azure Function.
         /// WebhookRule: A rule providing a binding to a webserver following OAuth2.0 authentication protocol.
         /// Please note <see cref="RouterRule"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="FunctionRule"/>, <see cref="DirectMapRule"/>, <see cref="ExpressionRule"/>, <see cref="StaticRule"/> and <see cref="WebhookRule"/>.
+        /// The available derived classes include <see cref="FunctionRouterRule"/>, <see cref="DirectMapRouterRule"/>, <see cref="ExpressionRouterRule"/>, <see cref="StaticRouterRule"/> and <see cref="WebhookRouterRule"/>.
         /// </summary>
         public RouterRule Condition { get; set; }
         /// <summary> The worker selectors to attach. </summary>
