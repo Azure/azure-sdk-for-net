@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             Optional<int> mtu = default;
             Optional<int> vlanId = default;
             Optional<int> peerASN = default;
-            Optional<OptionAPropertiesBfdConfiguration> bfdConfiguration = default;
+            Optional<FabricBfdConfiguration> bfdConfiguration = default;
             Optional<string> primaryIPv4Prefix = default;
             Optional<string> primaryIPv6Prefix = default;
             Optional<string> secondaryIPv4Prefix = default;
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     {
                         continue;
                     }
-                    bfdConfiguration = OptionAPropertiesBfdConfiguration.DeserializeOptionAPropertiesBfdConfiguration(property.Value);
+                    bfdConfiguration = FabricBfdConfiguration.DeserializeFabricBfdConfiguration(property.Value);
                     continue;
                 }
                 if (property.NameEquals("primaryIpv4Prefix"u8))

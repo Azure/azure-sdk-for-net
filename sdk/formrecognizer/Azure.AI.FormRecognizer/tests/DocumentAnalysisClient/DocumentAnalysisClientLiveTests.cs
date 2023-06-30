@@ -918,9 +918,9 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
 
             var expectedItems = new List<(double Amount, DateTimeOffset Date, string Description, string ProductCode, double Quantity, string Unit, double UnitPrice)>()
             {
-                (60f, DateTimeOffset.Parse("2021-03-04 00:00:00+00:00"), "Consulting Services", "A123", 2, "hours", 30),
-                (30f, DateTimeOffset.Parse("2021-03-05 00:00:00+00:00"), "Document Fee", "B456", 3, null, 10),
-                (10f, DateTimeOffset.Parse("2021-03-06 00:00:00+00:00"), "Printing Fee", "C789", 10, "pages", 1)
+                (60f, DateTimeOffset.Parse("2021-04-03 00:00:00+00:00"), "Consulting Services", "A123", 2, "hours", 30),
+                (30f, DateTimeOffset.Parse("2021-05-03 00:00:00+00:00"), "Document Fee", "B456", 3, null, 10),
+                (10f, DateTimeOffset.Parse("2021-06-03 00:00:00+00:00"), "Printing Fee", "C789", 10, "pages", 1)
             };
 
             // Include a bit of tolerance when comparing double types.

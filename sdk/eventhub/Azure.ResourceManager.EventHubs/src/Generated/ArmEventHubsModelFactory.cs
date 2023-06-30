@@ -19,7 +19,6 @@ namespace Azure.ResourceManager.EventHubs.Models
     /// <summary> Model factory for models. </summary>
     public static partial class ArmEventHubsModelFactory
     {
-
         /// <summary> Initializes a new instance of AvailableCluster. </summary>
         /// <param name="location"> Location fo the Available Cluster. </param>
         /// <returns> A new <see cref="Models.AvailableCluster"/> instance for mocking. </returns>

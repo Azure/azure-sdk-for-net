@@ -22,6 +22,11 @@ namespace Azure.Storage.DataMovement
         protected StorageResourceSingle() { }
 
         /// <summary>
+        /// The identifier for the type of storage resource.
+        /// </summary>
+        public abstract string ResourceId { get; }
+
+        /// <summary>
         /// Defines the transfer type of the storage resource.
         /// </summary>
         public abstract TransferType TransferType { get; }

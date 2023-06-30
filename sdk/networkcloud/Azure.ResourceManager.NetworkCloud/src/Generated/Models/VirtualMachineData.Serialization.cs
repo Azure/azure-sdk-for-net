@@ -130,6 +130,7 @@ namespace Azure.ResourceManager.NetworkCloud
             ResourceType type = default;
             Optional<SystemData> systemData = default;
             string adminUsername = default;
+            Optional<string> availabilityZone = default;
             Optional<string> bareMetalMachineId = default;
             Optional<VirtualMachineBootMethod> bootMethod = default;
             NetworkAttachment cloudServicesNetworkAttachment = default;
@@ -214,6 +215,11 @@ namespace Azure.ResourceManager.NetworkCloud
                         if (property0.NameEquals("adminUsername"u8))
                         {
                             adminUsername = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("availabilityZone"u8))
+                        {
+                            availabilityZone = property0.Value.GetString();
                             continue;
                         }
                         if (property0.NameEquals("bareMetalMachineId"u8))
@@ -398,7 +404,7 @@ namespace Azure.ResourceManager.NetworkCloud
                     continue;
                 }
             }
-            return new VirtualMachineData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, extendedLocation, adminUsername, bareMetalMachineId.Value, Optional.ToNullable(bootMethod), cloudServicesNetworkAttachment, clusterId.Value, cpuCores, Optional.ToNullable(detailedStatus), detailedStatusMessage.Value, Optional.ToNullable(isolateEmulatorThread), memorySizeGB, Optional.ToList(networkAttachments), networkData.Value, Optional.ToList(placementHints), Optional.ToNullable(powerState), Optional.ToNullable(provisioningState), Optional.ToList(sshPublicKeys), storageProfile, userData.Value, Optional.ToNullable(virtioInterface), Optional.ToNullable(vmDeviceModel), vmImage, vmImageRepositoryCredentials.Value, Optional.ToList(volumes));
+            return new VirtualMachineData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, extendedLocation, adminUsername, availabilityZone.Value, bareMetalMachineId.Value, Optional.ToNullable(bootMethod), cloudServicesNetworkAttachment, clusterId.Value, cpuCores, Optional.ToNullable(detailedStatus), detailedStatusMessage.Value, Optional.ToNullable(isolateEmulatorThread), memorySizeGB, Optional.ToList(networkAttachments), networkData.Value, Optional.ToList(placementHints), Optional.ToNullable(powerState), Optional.ToNullable(provisioningState), Optional.ToList(sshPublicKeys), storageProfile, userData.Value, Optional.ToNullable(virtioInterface), Optional.ToNullable(vmDeviceModel), vmImage, vmImageRepositoryCredentials.Value, Optional.ToList(volumes));
         }
     }
 }
