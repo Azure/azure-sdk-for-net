@@ -45,11 +45,9 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
             return DeserializeDogListProperty(jsonDocument.RootElement, serializationOptions);
         }
 
-        public static explicit operator RequestContent(DogListProperty dog)
+        public static implicit operator RequestContent(DogListProperty dog)
         {
             var content = new Utf8JsonRequestContent();
-            //content.JsonWriter.WriteObjectValue(dog);
-            //temp implementation due to IUtf8JsonSerializable signature mismatch since we added an options parameter
             ((IUtf8JsonSerializable)dog).Write(content.JsonWriter);
             return content;
         }

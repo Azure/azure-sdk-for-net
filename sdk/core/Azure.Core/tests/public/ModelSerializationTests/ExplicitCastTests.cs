@@ -39,7 +39,7 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
             string requestContent = "{\"latinName\":\"Animalia\",\"name\":\"Doggo\",\"isHungry\":false,\"weight\":1.1,\"foodConsumed\":[\"kibble\",\"egg\",\"peanut butter\"],\"numberOfLegs\":4}";
 #endif
 
-            RequestContent content = (RequestContent)dog;
+            RequestContent content = dog;
             var requestStream = new MemoryStream();
             content.WriteTo(requestStream, default);
             requestStream.Position = 0;

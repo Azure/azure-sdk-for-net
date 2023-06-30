@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Text.Json;
@@ -20,6 +21,11 @@ namespace Azure.Core.Serialization
         /// .
         /// </summary>
         public bool IgnoreAdditionalProperties { get; set; } = true;
+
+        /// <summary>
+        /// .
+        /// </summary>
+        public Dictionary<Type, ObjectSerializer> Serializers { get; set; } = new Dictionary<Type, ObjectSerializer>();
 
         /// <summary>
         /// .
@@ -82,6 +88,7 @@ namespace Azure.Core.Serialization
         {
             ModelSerializerOptions serializableOptions = new ModelSerializerOptions();
             serializableOptions.IgnoreAdditionalProperties = IgnoreAdditionalProperties;
+            serializableOptions.Serializers = Serializers;
             serializableOptions.IgnoreReadOnlyProperties = options.IgnoreReadOnlyProperties;
             return serializableOptions;
         }

@@ -12,7 +12,7 @@ using Azure.Core.Serialization;
 
 namespace Azure.Core.Tests.Public.ModelSerializationTests.Models
 {
-    internal abstract class BaseModel : IUtf8JsonSerializable, IModelSerializable
+    public abstract class BaseModel : IUtf8JsonSerializable, IModelSerializable
     {
         private Dictionary<string, BinaryData> RawData { get; set; } = new Dictionary<string, BinaryData>();
 

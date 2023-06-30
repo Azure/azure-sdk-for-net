@@ -12,7 +12,7 @@ using Azure.Core.Serialization;
 
 namespace Azure.Core.Tests.Public.ModelSerializationTests.Models
 {
-    internal class ModelX : BaseModel, IUtf8JsonSerializable, IModelSerializable
+    public class ModelX : BaseModel, IUtf8JsonSerializable, IModelSerializable
     {
         private Dictionary<string, BinaryData> RawData { get; set; } = new Dictionary<string, BinaryData>();
 
@@ -33,12 +33,22 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests.Models
 
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
-            BinaryData data = ((IModelSerializable)this).Serialize(new ModelSerializerOptions());
+            var options = new ModelSerializerOptions();
+            options.IgnoreAdditionalProperties = true;
+            options.IgnoreReadOnlyProperties = true;
+            BinaryData data = ((IModelSerializable)this).Serialize(options);
 #if NET6_0_OR_GREATER
             writer.WriteRawValue(data);
 #else
             JsonSerializer.Serialize(writer, JsonDocument.Parse(data.ToString()).RootElement);
 #endif
+        }
+
+        public static implicit operator RequestContent(ModelX modelX)
+        {
+            var content = new Utf8JsonRequestContent();
+            ((IUtf8JsonSerializable)modelX).Write(content.JsonWriter);
+            return content;
         }
 
         BinaryData IModelSerializable.Serialize(ModelSerializerOptions options)
@@ -79,6 +89,12 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests.Models
 
         internal static ModelX DeserializeModelX(JsonElement element, ModelSerializerOptions options = default)
         {
+            if (options is null)
+            {
+                options = new ModelSerializerOptions();
+                options.IgnoreAdditionalProperties = true;
+            }
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -116,6 +132,12 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests.Models
         object IModelSerializable.Deserialize(BinaryData data, ModelSerializerOptions options)
         {
             return DeserializeModelX(JsonDocument.Parse(data.ToString()).RootElement, options);
+        }
+
+        //public method to serialize with internal interface
+        public void Serialize(Utf8JsonWriter writer)
+        {
+            ((IUtf8JsonSerializable)this).Write(writer);
         }
     }
 }
