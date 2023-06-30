@@ -54,15 +54,23 @@ namespace Azure.Maps.Search.Tests
             string subscriptionId = "MyMapsSubscriptionId";
             string resourceGroupName = "MyMapsResourceGroupName";
             string accountName = "MyMapsAccountName";
+
+            // Get maps account resource
             ResourceIdentifier mapsAccountResourceId = MapsAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
             MapsAccountResource mapsAccount = armClient.GetMapsAccountResource(mapsAccountResourceId);
 
             // Assign SAS token information
             // Every time you want to SAS token, update the principal ID, max rate, start and expiry time
-            var principalId = "MyManagedIdentityObjectId";
+            string principalId = "MyManagedIdentityObjectId";
             int maxRatePerSecond = 500;
-            var sasContent = new MapsAccountSasContent(MapsSigningKey.PrimaryKey, principalId, maxRatePerSecond, "2023-06-30T04:27:28.734Z", "2023-06-30T12:27:28.734Z");
-            var sas = mapsAccount.GetSas(sasContent);
+
+            // Set start and expiry time for the SAS token in round-trip date/time format
+            DateTime now = DateTime.Now;
+            string start = now.ToString("O");
+            string expiry = now.AddDays(1).ToString("O");
+
+            MapsAccountSasContent sasContent = new MapsAccountSasContent(MapsSigningKey.PrimaryKey, principalId, maxRatePerSecond, start, expiry);
+            Response<MapsAccountSasToken> sas = mapsAccount.GetSas(sasContent);
 
             // Create a SearchClient that will authenticate via SAS token
             AzureSasCredential sasCredential = new AzureSasCredential(sas.Value.AccountSasToken);

@@ -58,7 +58,7 @@ MapsSearchClient client = new MapsSearchClient(credential, clientId);
 
 Shared access signature (SAS) tokens are authentication tokens created using the JSON Web token (JWT) format and are cryptographically signed to prove authentication for an application to the Azure Maps REST API.
 
-Before integratingSAS token authentication, we need to install `Azure.ResourceManager` and `Azure.ResourceManager.Maps` (version 1.1.0-beta.2 or higher):
+Before integrating SAS token authentication, we need to install `Azure.ResourceManager` and `Azure.ResourceManager.Maps` (version `1.1.0-beta.2` or higher):
 
 ```powershell
 dotnet add package Azure.ResourceManager
@@ -80,8 +80,7 @@ using Azure.ResourceManager.Maps;
 using Azure.ResourceManager.Maps.Models;
 ```
 
-And then we can get SAS token via [List Sas](https://learn.microsoft.com/rest/api/maps-management/accounts/list-sas?tabs=HTTP) API and assign it in `MapsSearchClient`:
-
+And then we can get SAS token via [List Sas](https://learn.microsoft.com/rest/api/maps-management/accounts/list-sas?tabs=HTTP) API and assign it to `MapsSearchClient`:
 
 ```C# Snippet:InstantiateSearchClientViaSas
 // Get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -92,15 +91,23 @@ ArmClient armClient = new ArmClient(cred);
 string subscriptionId = "MyMapsSubscriptionId";
 string resourceGroupName = "MyMapsResourceGroupName";
 string accountName = "MyMapsAccountName";
+
+// Get maps account resource
 ResourceIdentifier mapsAccountResourceId = MapsAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
 MapsAccountResource mapsAccount = armClient.GetMapsAccountResource(mapsAccountResourceId);
 
 // Assign SAS token information
 // Every time you want to SAS token, update the principal ID, max rate, start and expiry time
-var principalId = "MyManagedIdentityObjectId";
+string principalId = "MyManagedIdentityObjectId";
 int maxRatePerSecond = 500;
-var sasContent = new MapsAccountSasContent(MapsSigningKey.PrimaryKey, principalId, maxRatePerSecond, "2023-06-30T04:27:28.734Z", "2023-06-30T12:27:28.734Z");
-var sas = mapsAccount.GetSas(sasContent);
+
+// Set start and expiry time for the SAS token in round-trip date/time format
+DateTime now = DateTime.Now;
+string start = now.ToString("O");
+string expiry = now.AddDays(1).ToString("O");
+
+MapsAccountSasContent sasContent = new MapsAccountSasContent(MapsSigningKey.PrimaryKey, principalId, maxRatePerSecond, start, expiry);
+Response<MapsAccountSasToken> sas = mapsAccount.GetSas(sasContent);
 
 // Create a SearchClient that will authenticate via SAS token
 AzureSasCredential sasCredential = new AzureSasCredential(sas.Value.AccountSasToken);
