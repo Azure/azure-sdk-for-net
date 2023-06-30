@@ -232,7 +232,7 @@ namespace Azure.Storage.DataMovement.Tests
             DataTransferProperties[] expectedResults = new DataTransferProperties[]
             {
                 new DataTransferProperties { TransferId = Guid.NewGuid().ToString(), SourceScheme = "LocalFile", SourcePath = parentLocalPath1 + "file1", DestinationScheme = "BlockBlob", DestinationPath = parentRemotePath + "file1", IsContainer = false },
-                new DataTransferProperties { TransferId = Guid.NewGuid().ToString(), SourceScheme = "BlockBlob", SourcePath = parentRemotePath + "file2", DestinationScheme = "LocalFile", DestinationPath = parentLocalPath1 + "file2", IsContainer = false },
+                new DataTransferProperties { TransferId = Guid.NewGuid().ToString(), SourceScheme = "BlockBlob", SourcePath = parentRemotePath + "file2/", DestinationScheme = "LocalFile", DestinationPath = parentLocalPath1 + "file2/", IsContainer = false },
                 new DataTransferProperties { TransferId = Guid.NewGuid().ToString(), SourceScheme = "BlockBlob", SourcePath = parentRemotePath + "file3", DestinationScheme = "BlockBlob", DestinationPath = parentRemotePath + "file3", IsContainer = false },
                 new DataTransferProperties { TransferId = Guid.NewGuid().ToString(), SourceScheme = "BlockBlob", SourcePath = parentRemotePath, DestinationScheme = "LocalFile", DestinationPath = parentLocalPath1, IsContainer = true },
                 new DataTransferProperties { TransferId = Guid.NewGuid().ToString(), SourceScheme = "LocalFile", SourcePath = parentLocalPath2, DestinationScheme = "AppendBlob", DestinationPath = parentRemotePath, IsContainer = true },
@@ -310,6 +310,14 @@ namespace Azure.Storage.DataMovement.Tests
                 List<string> destinationPaths = new List<string>();
                 for (int i = 0; i < numParts; i++)
                 {
+                    // Put extra slash on end of last part for testing
+                    if (i == numParts - 1)
+                    {
+                        sourcePaths.Add(properties.SourcePath + $"file{i}/");
+                        destinationPaths.Add(properties.DestinationPath + $"file{i}/");
+                        continue;
+                    }
+
                     sourcePaths.Add(properties.SourcePath + $"file{i}");
                     destinationPaths.Add(properties.DestinationPath + $"file{i}");
                 }
@@ -342,9 +350,9 @@ namespace Azure.Storage.DataMovement.Tests
         {
             Assert.AreEqual(expected.TransferId, actual.TransferId);
             Assert.AreEqual(expected.SourceScheme, actual.SourceScheme);
-            Assert.AreEqual(expected.SourcePath.TrimEnd('\\', '/'), actual.SourcePath);
+            Assert.AreEqual(expected.SourcePath.TrimEnd('\\', '/'), actual.SourcePath.TrimEnd('\\', '/'));
             Assert.AreEqual(expected.DestinationScheme, actual.DestinationScheme);
-            Assert.AreEqual(expected.DestinationPath.TrimEnd('\\', '/'), actual.DestinationPath);
+            Assert.AreEqual(expected.DestinationPath.TrimEnd('\\', '/'), actual.DestinationPath.TrimEnd('\\', '/'));
             Assert.AreEqual(expected.IsContainer, actual.IsContainer);
         }
     }

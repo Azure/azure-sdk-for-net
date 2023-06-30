@@ -46,6 +46,6 @@ namespace Azure.Storage.DataMovement.Models
         /// <summary>
         /// For mocking.
         /// </summary>
-        internal DataTransferProperties() { }
+        protected internal DataTransferProperties() { }
     }
 }

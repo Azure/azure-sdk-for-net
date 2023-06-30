@@ -123,7 +123,7 @@ namespace Azure.Storage.DataMovement
             _currentTaskIsProcessingJobPart = Task.Run(() => NotifyOfPendingJobPartProcessing());
             _currentTaskIsProcessingJobChunk = Task.Run(() => NotifyOfPendingJobChunkProcessing());
             _maxJobChunkTasks = options?.MaximumConcurrency ?? DataMovementConstants.MaxJobChunkTasks;
-            _checkpointerOptions = options?.CheckpointerOptions;
+            _checkpointerOptions = options?.CheckpointerOptions != default ? new TransferCheckpointerOptions(options.CheckpointerOptions) : default;
             _checkpointer = _checkpointerOptions != default ? _checkpointerOptions.GetCheckpointer() : CreateDefaultCheckpointer();
             _dataTransfers = new Dictionary<string, DataTransfer>();
             _arrayPool = ArrayPool<byte>.Shared;
@@ -317,22 +317,12 @@ namespace Azure.Storage.DataMovement
                     continue;
                 }
 
-                string sourceResourceId = await _checkpointer.GetResourceIdAsync(
+                (string sourceResourceId, string destResourceId) = await _checkpointer.GetResourceIdsAsync(
                     transferId,
-                    true, /* isSource */
-                    _cancellationToken).ConfigureAwait(false);
-                string destResourceId = await _checkpointer.GetResourceIdAsync(
-                    transferId,
-                    false, /* isSource */
                     _cancellationToken).ConfigureAwait(false);
 
-                string sourcePath = await _checkpointer.GetResourcePathAsync(
+                (string sourcePath, string destPath) = await _checkpointer.GetResourcePathsAsync(
                     transferId,
-                    true, /* isSource */
-                    _cancellationToken).ConfigureAwait(false);
-                string destPath = await _checkpointer.GetResourcePathAsync(
-                    transferId,
-                    false, /* isSource */
                     _cancellationToken).ConfigureAwait(false);
 
                 bool isContainer =
