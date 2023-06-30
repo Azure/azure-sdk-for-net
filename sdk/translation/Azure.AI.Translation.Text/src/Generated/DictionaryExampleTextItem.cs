@@ -16,8 +16,8 @@ namespace Azure.AI.Translation.Text
         /// <summary> Initializes a new instance of DictionaryExampleTextItem. </summary>
         /// <param name="text"> Text to translate. </param>
         /// <param name="translation">
-        /// A string specifying the translated text previously returned by the Dictionary lookup operation. 
-        /// This should be the value from the normalizedTarget field in the translations list of the Dictionary 
+        /// A string specifying the translated text previously returned by the Dictionary lookup operation.
+        /// This should be the value from the normalizedTarget field in the translations list of the Dictionary
         /// lookup response. The service will return examples for the specific source-target word-pair.
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="text"/> or <paramref name="translation"/> is null. </exception>
@@ -30,8 +30,8 @@ namespace Azure.AI.Translation.Text
         }
 
         /// <summary>
-        /// A string specifying the translated text previously returned by the Dictionary lookup operation. 
-        /// This should be the value from the normalizedTarget field in the translations list of the Dictionary 
+        /// A string specifying the translated text previously returned by the Dictionary lookup operation.
+        /// This should be the value from the normalizedTarget field in the translations list of the Dictionary
         /// lookup response. The service will return examples for the specific source-target word-pair.
         /// </summary>
         public string Translation { get; }
