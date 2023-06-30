@@ -149,7 +149,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                 }
                 catch (Exception ex)
                 {
-                    AzureMonitorExporterEventSource.Log.ErrorInitializingStatsbeat(connectionVars.InstrumentationKey, ex);
+                    AzureMonitorExporterEventSource.Log.ErrorInitializingStatsbeat(connectionVars, ex);
                 }
             }
 
