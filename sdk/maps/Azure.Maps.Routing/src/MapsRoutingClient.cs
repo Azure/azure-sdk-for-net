@@ -692,7 +692,7 @@ namespace Azure.Maps.Routing
             try
             {
                 var batchItems = MapsRoutingClient.RouteDirectionsQueriesToBatchItems(queries);
-                return await RestClient.RequestRouteDirectionsBatchSyncAsync(null, batchItems, cancellationToken).ConfigureAwait(false);
+                return await RestClient.RequestRouteDirectionsBatchSyncAsync(JsonFormat.Json, batchItems, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -717,7 +717,7 @@ namespace Azure.Maps.Routing
             try
             {
                 var batchItems = MapsRoutingClient.RouteDirectionsQueriesToBatchItems(queries);
-                return RestClient.RequestRouteDirectionsBatchSync(null, batchItems, cancellationToken);
+                return RestClient.RequestRouteDirectionsBatchSync(JsonFormat.Json, batchItems, cancellationToken);
             }
             catch (Exception e)
             {
@@ -864,7 +864,7 @@ namespace Azure.Maps.Routing
             {
                 var batchItems = MapsRoutingClient.RouteDirectionsQueriesToBatchItems(queries);
                 var response = await RestClient.RequestRouteDirectionsBatchAsync(
-                    null, batchItems, cancellationToken).ConfigureAwait(false);
+                    JsonFormat.Json, batchItems, cancellationToken).ConfigureAwait(false);
 
                 // Create operation for route direction
                 var operation = new GetDirectionsOperation(this, new Uri(response.Headers.Location));
@@ -902,7 +902,7 @@ namespace Azure.Maps.Routing
             {
                 var batchItems = MapsRoutingClient.RouteDirectionsQueriesToBatchItems(queries);
                 var response = RestClient.RequestRouteDirectionsBatch(
-                    null, batchItems, cancellationToken);
+                    JsonFormat.Json, batchItems, cancellationToken);
 
                 // Create operation for route direction
                 var operation = new GetDirectionsOperation(this, new Uri(response.Headers.Location));
