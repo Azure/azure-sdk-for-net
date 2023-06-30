@@ -1193,8 +1193,8 @@ namespace Azure.Developer.LoadTesting
             Argument.AssertNotNull(metricNamespace, nameof(metricNamespace));
 
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetMetricDimensionValuesRequest(testRunId, name, metricNamespace, interval, metricName, timespan, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetMetricDimensionValuesNextPageRequest(nextLink, testRunId, name, metricNamespace, interval, metricName, timespan, context);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetMetricDimensionValuesRequest(testRunId, name, metricNamespace, interval?.ToString(), metricName, timespan, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetMetricDimensionValuesNextPageRequest(nextLink, testRunId, name, metricNamespace, interval?.ToString(), metricName, timespan, context);
             return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, DimensionValueList.DeserializeDimensionValueList, ClientDiagnostics, _pipeline, "LoadTestRunClient.GetMetricDimensionValues", "value", "nextLink", context);
         }
 
@@ -1219,8 +1219,8 @@ namespace Azure.Developer.LoadTesting
             Argument.AssertNotNull(metricNamespace, nameof(metricNamespace));
 
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetMetricDimensionValuesRequest(testRunId, name, metricNamespace, interval, metricName, timespan, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetMetricDimensionValuesNextPageRequest(nextLink, testRunId, name, metricNamespace, interval, metricName, timespan, context);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetMetricDimensionValuesRequest(testRunId, name, metricNamespace, interval?.ToString(), metricName, timespan, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetMetricDimensionValuesNextPageRequest(nextLink, testRunId, name, metricNamespace, interval?.ToString(), metricName, timespan, context);
             return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, DimensionValueList.DeserializeDimensionValueList, ClientDiagnostics, _pipeline, "LoadTestRunClient.GetMetricDimensionValues", "value", "nextLink", context);
         }
 
@@ -1331,8 +1331,8 @@ namespace Azure.Developer.LoadTesting
 
             RequestContent content = body.ToRequestContent();
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetMetricsRequest(testRunId, content, aggregation, interval, metricName, metricNamespace, timespan, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetMetricsNextPageRequest(nextLink, testRunId, content, aggregation, interval, metricName, metricNamespace, timespan, context);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetMetricsRequest(testRunId, content, aggregation, interval?.ToString(), metricName, metricNamespace, timespan, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetMetricsNextPageRequest(nextLink, testRunId, content, aggregation, interval?.ToString(), metricName, metricNamespace, timespan, context);
             return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, TimeSeriesElement.DeserializeTimeSeriesElement, ClientDiagnostics, _pipeline, "LoadTestRunClient.GetMetrics", "value", "nextLink", context);
         }
 
@@ -1361,8 +1361,8 @@ namespace Azure.Developer.LoadTesting
 
             RequestContent content = body.ToRequestContent();
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetMetricsRequest(testRunId, content, aggregation, interval, metricName, metricNamespace, timespan, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetMetricsNextPageRequest(nextLink, testRunId, content, aggregation, interval, metricName, metricNamespace, timespan, context);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetMetricsRequest(testRunId, content, aggregation, interval?.ToString(), metricName, metricNamespace, timespan, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetMetricsNextPageRequest(nextLink, testRunId, content, aggregation, interval?.ToString(), metricName, metricNamespace, timespan, context);
             return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, TimeSeriesElement.DeserializeTimeSeriesElement, ClientDiagnostics, _pipeline, "LoadTestRunClient.GetMetrics", "value", "nextLink", context);
         }
 

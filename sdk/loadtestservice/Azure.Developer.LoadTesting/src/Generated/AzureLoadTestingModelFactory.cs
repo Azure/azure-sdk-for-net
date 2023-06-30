@@ -165,7 +165,7 @@ namespace Azure.Developer.LoadTesting.Models
         /// <param name="components">
         /// Azure resource collection { resource id (fully qualified resource Id e.g
         /// subscriptions/{subId}/resourceGroups/{rg}/providers/Microsoft.LoadTestService/loadtests/{resName})
-        /// : resource object } 
+        /// : resource object }
         /// </param>
         /// <param name="testId"> Test identifier. </param>
         /// <param name="createdDateTime"> The creation datetime(ISO 8601 literal format). </param>
@@ -338,7 +338,7 @@ namespace Azure.Developer.LoadTesting.Models
         /// <param name="components">
         /// Azure resource collection { resource id (fully qualified resource Id e.g
         /// subscriptions/{subId}/resourceGroups/{rg}/providers/Microsoft.LoadTestService/loadtests/{resName})
-        /// : resource object } 
+        /// : resource object }
         /// </param>
         /// <param name="testRunId"> Test run identifier. </param>
         /// <param name="createdDateTime"> The creation datetime(ISO 8601 literal format). </param>

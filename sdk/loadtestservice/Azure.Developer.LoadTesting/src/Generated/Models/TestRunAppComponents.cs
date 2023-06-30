@@ -18,7 +18,7 @@ namespace Azure.Developer.LoadTesting.Models
         /// <param name="components">
         /// Azure resource collection { resource id (fully qualified resource Id e.g
         /// subscriptions/{subId}/resourceGroups/{rg}/providers/Microsoft.LoadTestService/loadtests/{resName})
-        /// : resource object } 
+        /// : resource object }
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="components"/> is null. </exception>
         internal TestRunAppComponents(IReadOnlyDictionary<string, AppComponent> components)
@@ -32,7 +32,7 @@ namespace Azure.Developer.LoadTesting.Models
         /// <param name="components">
         /// Azure resource collection { resource id (fully qualified resource Id e.g
         /// subscriptions/{subId}/resourceGroups/{rg}/providers/Microsoft.LoadTestService/loadtests/{resName})
-        /// : resource object } 
+        /// : resource object }
         /// </param>
         /// <param name="testRunId"> Test run identifier. </param>
         /// <param name="createdDateTime"> The creation datetime(ISO 8601 literal format). </param>
@@ -52,7 +52,7 @@ namespace Azure.Developer.LoadTesting.Models
         /// <summary>
         /// Azure resource collection { resource id (fully qualified resource Id e.g
         /// subscriptions/{subId}/resourceGroups/{rg}/providers/Microsoft.LoadTestService/loadtests/{resName})
-        /// : resource object } 
+        /// : resource object }
         /// </summary>
         public IReadOnlyDictionary<string, AppComponent> Components { get; }
         /// <summary> Test run identifier. </summary>
