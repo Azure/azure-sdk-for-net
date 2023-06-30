@@ -16,21 +16,23 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
         public ClusterManagersTests(bool isAsync, RecordedTestMode mode) : base(isAsync, mode) {}
         public ClusterManagersTests(bool isAsync) : base(isAsync) {}
 
-        [Test]
+        // updated from Test to RecordedTest per pipeline recommendation
+        [RecordedTest]
         public async Task ClusterManagers()
         {
             var clusterManagerCollection = ResourceGroupResource.GetClusterManagers();
             string clusterManagerName = Recording.GenerateAssetName("clustermanager");
 
             // Create
-            var createData = new ClusterManagerData(new AzureLocation(TestEnvironment.Location), TestEnvironment.NFControllerId)
+            var createData = new ClusterManagerData(new AzureLocation(TestEnvironment.Location), TestEnvironment.SubnetId)
             {
                 Tags = {
                     ["DisableFabricIntegration"] = "true"
                 }
             };
-            var createResult  = await clusterManagerCollection.CreateOrUpdateAsync(WaitUntil.Completed, clusterManagerName, createData);
-            Assert.AreEqual(createResult.Value.Data.Tags, createData.Tags);
+            var createResult = await clusterManagerCollection.CreateOrUpdateAsync(WaitUntil.Completed, clusterManagerName, createData);
+            // check a specific tag as the subscription policies add more automatically.
+            Assert.AreEqual(createResult.Value.Data.Tags["DisableFabricIntegration"], createData.Tags["DisableFabricIntegration"]);
 
             // Get
             var getResult =await clusterManagerCollection.GetAsync(clusterManagerName);

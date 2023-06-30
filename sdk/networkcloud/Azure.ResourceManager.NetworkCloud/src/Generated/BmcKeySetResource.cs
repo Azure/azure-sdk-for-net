@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.NetworkCloud
             try
             {
                 var response = await _bmcKeySetRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch, cancellationToken).ConfigureAwait(false);
-                var operation = new NetworkCloudArmOperation<BmcKeySetResource>(new BmcKeySetOperationSource(Client), _bmcKeySetClientDiagnostics, Pipeline, _bmcKeySetRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch).Request, response, OperationFinalStateVia.Location);
+                var operation = new NetworkCloudArmOperation<BmcKeySetResource>(new BmcKeySetOperationSource(Client), _bmcKeySetClientDiagnostics, Pipeline, _bmcKeySetRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -284,7 +284,7 @@ namespace Azure.ResourceManager.NetworkCloud
             try
             {
                 var response = _bmcKeySetRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch, cancellationToken);
-                var operation = new NetworkCloudArmOperation<BmcKeySetResource>(new BmcKeySetOperationSource(Client), _bmcKeySetClientDiagnostics, Pipeline, _bmcKeySetRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch).Request, response, OperationFinalStateVia.Location);
+                var operation = new NetworkCloudArmOperation<BmcKeySetResource>(new BmcKeySetOperationSource(Client), _bmcKeySetClientDiagnostics, Pipeline, _bmcKeySetRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

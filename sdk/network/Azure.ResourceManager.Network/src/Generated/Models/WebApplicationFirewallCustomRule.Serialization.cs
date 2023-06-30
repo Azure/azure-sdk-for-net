@@ -29,6 +29,16 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToString());
             }
+            if (Optional.IsDefined(RateLimitDuration))
+            {
+                writer.WritePropertyName("rateLimitDuration"u8);
+                writer.WriteStringValue(RateLimitDuration.Value.ToString());
+            }
+            if (Optional.IsDefined(RateLimitThreshold))
+            {
+                writer.WritePropertyName("rateLimitThreshold"u8);
+                writer.WriteNumberValue(RateLimitThreshold.Value);
+            }
             writer.WritePropertyName("ruleType"u8);
             writer.WriteStringValue(RuleType.ToString());
             writer.WritePropertyName("matchConditions"u8);
@@ -38,6 +48,16 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
+            if (Optional.IsCollectionDefined(GroupByUserSession))
+            {
+                writer.WritePropertyName("groupByUserSession"u8);
+                writer.WriteStartArray();
+                foreach (var item in GroupByUserSession)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
             writer.WritePropertyName("action"u8);
             writer.WriteStringValue(Action.ToString());
             writer.WriteEndObject();
@@ -53,8 +73,11 @@ namespace Azure.ResourceManager.Network.Models
             Optional<ETag> etag = default;
             int priority = default;
             Optional<WebApplicationFirewallState> state = default;
+            Optional<ApplicationGatewayFirewallRateLimitDuration> rateLimitDuration = default;
+            Optional<int> rateLimitThreshold = default;
             WebApplicationFirewallRuleType ruleType = default;
             IList<MatchCondition> matchConditions = default;
+            Optional<IList<GroupByUserSession>> groupByUserSession = default;
             WebApplicationFirewallAction action = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -86,6 +109,24 @@ namespace Azure.ResourceManager.Network.Models
                     state = new WebApplicationFirewallState(property.Value.GetString());
                     continue;
                 }
+                if (property.NameEquals("rateLimitDuration"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    rateLimitDuration = new ApplicationGatewayFirewallRateLimitDuration(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("rateLimitThreshold"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    rateLimitThreshold = property.Value.GetInt32();
+                    continue;
+                }
                 if (property.NameEquals("ruleType"u8))
                 {
                     ruleType = new WebApplicationFirewallRuleType(property.Value.GetString());
@@ -101,13 +142,27 @@ namespace Azure.ResourceManager.Network.Models
                     matchConditions = array;
                     continue;
                 }
+                if (property.NameEquals("groupByUserSession"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<GroupByUserSession> array = new List<GroupByUserSession>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(Models.GroupByUserSession.DeserializeGroupByUserSession(item));
+                    }
+                    groupByUserSession = array;
+                    continue;
+                }
                 if (property.NameEquals("action"u8))
                 {
                     action = new WebApplicationFirewallAction(property.Value.GetString());
                     continue;
                 }
             }
-            return new WebApplicationFirewallCustomRule(name.Value, Optional.ToNullable(etag), priority, Optional.ToNullable(state), ruleType, matchConditions, action);
+            return new WebApplicationFirewallCustomRule(name.Value, Optional.ToNullable(etag), priority, Optional.ToNullable(state), Optional.ToNullable(rateLimitDuration), Optional.ToNullable(rateLimitThreshold), ruleType, matchConditions, Optional.ToList(groupByUserSession), action);
         }
     }
 }
