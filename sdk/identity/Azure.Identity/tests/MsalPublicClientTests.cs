@@ -32,10 +32,11 @@ namespace Azure.Identity.Tests
         [Test]
         public async Task CacheRespectsEnableCaeConfig()
         {
-            var options = new TestCredentialOptions {
-                        Transport = new MockTransport(),
-                        TokenCachePersistenceOptions = new TokenCachePersistenceOptions()
-                    };
+            var options = new TestCredentialOptions
+            {
+                Transport = new MockTransport(),
+                TokenCachePersistenceOptions = new TokenCachePersistenceOptions() { UnsafeAllowUnencryptedStorage = true }
+            };
             var client = new MockMsalPublicClient(
                 CredentialPipeline.GetInstance(options),
                 "tenant",

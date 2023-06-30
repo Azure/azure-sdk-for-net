@@ -34,7 +34,7 @@ namespace Azure.Identity.Tests
             var options = new TestCredentialOptions
             {
                 Transport = new MockTransport(),
-                TokenCachePersistenceOptions = new TokenCachePersistenceOptions()
+                TokenCachePersistenceOptions = new TokenCachePersistenceOptions() { UnsafeAllowUnencryptedStorage = true }
             };
             var client = new MockMsalConfidentialClient(
                 CredentialPipeline.GetInstance(options),
