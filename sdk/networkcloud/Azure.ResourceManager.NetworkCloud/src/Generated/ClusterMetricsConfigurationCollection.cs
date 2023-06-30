@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.NetworkCloud
         }
 
         /// <summary>
-        /// Update the metrics configuration of the provided cluster.
+        /// Create new or update the existing metrics configuration of the provided cluster.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.NetworkCloud
         }
 
         /// <summary>
-        /// Update the metrics configuration of the provided cluster.
+        /// Create new or update the existing metrics configuration of the provided cluster.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.NetworkCloud
         }
 
         /// <summary>
-        /// Get a list of metrics configurations of the clusters in the provided resource group.
+        /// Get a list of metrics configurations for the provided cluster.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -217,7 +217,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>MetricsConfigurations_ListByResourceGroup</description>
+        /// <description>MetricsConfigurations_ListByCluster</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -225,13 +225,13 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <returns> An async collection of <see cref="ClusterMetricsConfigurationResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ClusterMetricsConfigurationResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _clusterMetricsConfigurationMetricsConfigurationsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _clusterMetricsConfigurationMetricsConfigurationsRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _clusterMetricsConfigurationMetricsConfigurationsRestClient.CreateListByClusterRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _clusterMetricsConfigurationMetricsConfigurationsRestClient.CreateListByClusterNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ClusterMetricsConfigurationResource(Client, ClusterMetricsConfigurationData.DeserializeClusterMetricsConfigurationData(e)), _clusterMetricsConfigurationMetricsConfigurationsClientDiagnostics, Pipeline, "ClusterMetricsConfigurationCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
-        /// Get a list of metrics configurations of the clusters in the provided resource group.
+        /// Get a list of metrics configurations for the provided cluster.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -239,7 +239,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>MetricsConfigurations_ListByResourceGroup</description>
+        /// <description>MetricsConfigurations_ListByCluster</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -247,8 +247,8 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <returns> A collection of <see cref="ClusterMetricsConfigurationResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ClusterMetricsConfigurationResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _clusterMetricsConfigurationMetricsConfigurationsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _clusterMetricsConfigurationMetricsConfigurationsRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _clusterMetricsConfigurationMetricsConfigurationsRestClient.CreateListByClusterRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _clusterMetricsConfigurationMetricsConfigurationsRestClient.CreateListByClusterNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ClusterMetricsConfigurationResource(Client, ClusterMetricsConfigurationData.DeserializeClusterMetricsConfigurationData(e)), _clusterMetricsConfigurationMetricsConfigurationsClientDiagnostics, Pipeline, "ClusterMetricsConfigurationCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
