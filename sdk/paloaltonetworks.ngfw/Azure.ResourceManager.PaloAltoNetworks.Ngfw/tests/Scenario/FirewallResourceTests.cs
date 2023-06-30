@@ -114,8 +114,8 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Tests.Scenario
                 "/subscriptions/2bf4a339-294d-4c25-b0b2-ef649e9f5c27/resourceGroups/dotnetSdkTest-infra-rg/providers/Microsoft.OperationalInsights/workspaces/dotnetSdkTest-logAnalytics",
                 "/subscriptions/2bf4a339-294d-4c25-b0b2-ef649e9f5c27",
                 "22c8efd2-0d44-436a-8c0f-0a31c8a25a84",
-                "jLX7mBxd7KV4h3redpprhvLUNhghoEGC7SARTkcf/viX17d0YCgV+AUs2tPvNAZm6bKUVl0K0fUiTryN0SRcXQ==",
-                "qtNFUdejZrGVn5hKj/az1tiKMBC/oODFFKoOFQ+Qi4RVwoaM5H+ON4gQyrZJhserFOTdWhnPzP7szPufL1xP7A=="
+                "",
+                ""
                 );
             LogDestination commonDestination = new LogDestination(null, null, monitorConfigurations);
             LogSettings logSettings = new LogSettings(LogType.Traffic, LogOption.SameDestination, new ApplicationInsights(null, null), commonDestination, null, null, null);
