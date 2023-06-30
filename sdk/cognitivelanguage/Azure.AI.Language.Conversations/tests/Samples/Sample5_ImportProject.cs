@@ -10,6 +10,7 @@ using NUnit.Framework;
 
 #region Snippet:ConversationAuthoringClient_Namespaces
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.AI.Language.Conversations.Authoring;
 #endregion
 
@@ -45,28 +46,28 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
             // Define our project assets and import. In practice this would most often be read from a file.
             var importData = new
             {
-                projectFileVersion = "2022-05-01",
-                metadata = new {
-                    projectName,
-                    projectKind = "Conversation",
-                    multilingual = true,
-                    language = "en",
+                ProjectFileVersion = "2022-05-01",
+                Metadata = new {
+                    ProjectName = projectName,
+                    ProjectKind = "Conversation",
+                    Multilingual = true,
+                    Language = "en",
                 },
 
-                assets = new
+                Assets = new
                 {
-                    projectKind = "Conversation",
-                    entities = new[] // ConversationalAnalysisAuthoringConversationExportedEntity
+                    ProjectKind = "Conversation",
+                    Entities = new[] // ConversationalAnalysisAuthoringConversationExportedEntity
                     {
                         new
                         {
-                            category = "Contact",
-                            compositionSetting = "combineComponents",
-                            prebuilts = new[]
+                            Category = "Contact",
+                            CompositionSetting = "combineComponents",
+                            Prebuilts = new[]
                             {
                                 new
                                 {
-                                    category = "Person.Name",
+                                    Category = "Person.Name",
                                 },
                             },
 
@@ -74,45 +75,45 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
                         }
                     },
 
-                    intents = new[] // ConversationalAnalysisAuthoringConversationExportedIntent
+                    Intents = new[] // ConversationalAnalysisAuthoringConversationExportedIntent
                     {
                         new
                         {
-                            category = "Send",
+                            Category = "Send",
                         },
 
                         // ... more intents.
                     },
 
-                    utterances = new[] // ConversationalAnalysisAuthoringConversationExportedUtterance
+                    Utterances = new[] // ConversationalAnalysisAuthoringConversationExportedUtterance
                     {
                         new
                         {
-                            text = "Send an email to Johnson",
-                            language = "en",
-                            intent = "Send",
-                            entities = new[]
+                            Text = "Send an email to Johnson",
+                            Language = "en",
+                            Intent = "Send",
+                            Entities = new[]
                             {
                                 new
                                 {
-                                    category = "Contact",
-                                    offset = 17,
-                                    length = 7,
+                                    Category = "Contact",
+                                    Offset = 17,
+                                    Length = 7,
                                 },
                             },
                         },
                         new
                         {
-                            text = "Send Kathy a calendar invite",
-                            language = "en",
-                            intent = "Send",
-                            entities = new[]
+                            Text = "Send Kathy a calendar invite",
+                            Language = "en",
+                            Intent = "Send",
+                            Entities = new[]
                             {
                                 new
                                 {
-                                    category = "Contact",
-                                    offset = 5,
-                                    length = 5,
+                                    Category = "Contact",
+                                    Offset = 5,
+                                    Length = 5,
                                 },
                             },
                         },
@@ -122,14 +123,14 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
                 },
 
                 // Use Utf16CodeUnit for strings in .NET.
-                stringIndexType = "Utf16CodeUnit",
+                StringIndexType = "Utf16CodeUnit",
             };
 
 #if SNIPPET
-            Operation<BinaryData> importOperation = client.ImportProject(WaitUntil.Completed, projectName, RequestContent.Create(importData));
+            Operation<BinaryData> importOperation = client.ImportProject(WaitUntil.Completed, projectName, RequestContent.Create(importData, JsonPropertyNames.CamelCase));
 #else
             // BUGBUG: https://github.com/Azure/azure-sdk-for-net/issues/29140
-            Operation<BinaryData> importOperation = client.ImportProject(WaitUntil.Started, projectName, RequestContent.Create(importData));
+            Operation<BinaryData> importOperation = client.ImportProject(WaitUntil.Started, projectName, RequestContent.Create(importData, JsonPropertyNames.CamelCase));
             await InstrumentOperation(importOperation).WaitForCompletionAsync();
 
             _projects.Add(projectName);
@@ -138,31 +139,31 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
             // Train the model.
             var trainData = new
             {
-                modelLabel = "Sample5",
-                trainingMode = "standard",
+                ModelLabel = "Sample5",
+                TrainingMode = "standard",
             };
 
             Console.WriteLine($"Training project {projectName}...");
 #if SNIPPET
-            Operation<BinaryData> trainOperation = client.Train(WaitUntil.Completed, projectName, RequestContent.Create(trainData));
+            Operation<BinaryData> trainOperation = client.Train(WaitUntil.Completed, projectName, RequestContent.Create(trainData, JsonPropertyNames.CamelCase));
 #else
             // BUGBUG: https://github.com/Azure/azure-sdk-for-net/issues/29140
-            Operation<BinaryData> trainOperation = client.Train(WaitUntil.Started, projectName, RequestContent.Create(trainData));
+            Operation<BinaryData> trainOperation = client.Train(WaitUntil.Started, projectName, RequestContent.Create(trainData, JsonPropertyNames.CamelCase));
             await InstrumentOperation(trainOperation).WaitForCompletionAsync();
 #endif
 
             // Deploy the model.
             var deployData = new
             {
-                trainedModelLabel = "Sample5",
+                TrainedModelLabel = "Sample5",
             };
 
             Console.WriteLine($"Deploying project {projectName} to production...");
 #if SNIPPET
-            Operation<BinaryData> deployOperation = client.DeployProject(WaitUntil.Completed, projectName, "production", RequestContent.Create(deployData));
+            Operation<BinaryData> deployOperation = client.DeployProject(WaitUntil.Completed, projectName, "production", RequestContent.Create(deployData, JsonPropertyNames.CamelCase));
 #else
             // BUGBUG: https://github.com/Azure/azure-sdk-for-net/issues/29140
-            Operation<BinaryData> deployOperation = client.DeployProject(WaitUntil.Started, projectName, "production", RequestContent.Create(deployData));
+            Operation<BinaryData> deployOperation = client.DeployProject(WaitUntil.Started, projectName, "production", RequestContent.Create(deployData, JsonPropertyNames.CamelCase));
             deployOperation = InstrumentOperation(deployOperation);
             await deployOperation.WaitForCompletionAsync();
 #endif
@@ -170,7 +171,7 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
             Console.WriteLine("Import complete");
             #endregion
 
-            dynamic deployResult = deployOperation.Value.ToDynamicFromJson();
+            dynamic deployResult = deployOperation.Value.ToDynamicFromJson(JsonPropertyNames.CamelCase);
             Assert.That(deployResult.Errors, Is.Null.Or.Empty);
 
             // Need to always await something for when SNIPPET is defined above.
@@ -188,29 +189,29 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
             // Define our project assets and import.
             var importData = new
             {
-                projectFileVersion = "2022-05-01",
-                metadata = new
+                ProjectFileVersion = "2022-05-01",
+                Metadata = new
                 {
-                    projectName,
-                    projectKind = "Conversation",
-                    multilingual = true,
-                    language = "en",
+                    ProjectName = projectName,
+                    ProjectKind = "Conversation",
+                    Multilingual = true,
+                    Language = "en",
                 },
 
-                assets = new
+                Assets = new
                 {
-                    projectKind = "Conversation",
-                    entities = new[] // ConversationalAnalysisAuthoringConversationExportedEntity
+                    ProjectKind = "Conversation",
+                    Entities = new[] // ConversationalAnalysisAuthoringConversationExportedEntity
                     {
                         new
                         {
-                            category = "Contact",
-                            compositionSetting = "combineComponents",
-                            prebuilts = new[]
+                            Category = "Contact",
+                            CompositionSetting = "combineComponents",
+                            Prebuilts = new[]
                             {
                                 new
                                 {
-                                    category = "Person.Name",
+                                    Category = "Person.Name",
                                 },
                             },
 
@@ -218,45 +219,45 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
                         }
                     },
 
-                    intents = new[] // ConversationalAnalysisAuthoringConversationExportedIntent
+                    Intents = new[] // ConversationalAnalysisAuthoringConversationExportedIntent
                     {
                         new
                         {
-                            category = "Send",
+                            Category = "Send",
                         },
 
                         // ... more intents.
                     },
 
-                    utterances = new[] // ConversationalAnalysisAuthoringConversationExportedUtterance
+                    Utterances = new[] // ConversationalAnalysisAuthoringConversationExportedUtterance
                     {
                         new
                         {
-                            text = "Send an email to Johnson",
-                            language = "en",
-                            intent = "Send",
-                            entities = new[]
+                            Text = "Send an email to Johnson",
+                            Language = "en",
+                            Intent = "Send",
+                            Entities = new[]
                             {
                                 new
                                 {
-                                    category = "Contact",
-                                    offset = 17,
-                                    length = 7,
+                                    Category = "Contact",
+                                    Offset = 17,
+                                    Length = 7,
                                 },
                             },
                         },
                         new
                         {
-                            text = "Send Kathy a calendar invite",
-                            language = "en",
-                            intent = "Send",
-                            entities = new[]
+                            Text = "Send Kathy a calendar invite",
+                            Language = "en",
+                            Intent = "Send",
+                            Entities = new[]
                             {
                                 new
                                 {
-                                    category = "Contact",
-                                    offset = 5,
-                                    length = 5,
+                                    Category = "Contact",
+                                    Offset = 5,
+                                    Length = 5,
                                 },
                             },
                         },
@@ -266,11 +267,11 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
                 },
 
                 // Use Utf16CodeUnit for strings in .NET.
-                stringIndexType = "Utf16CodeUnit",
+                StringIndexType = "Utf16CodeUnit",
             };
 
-#region Snippet:ConversationAuthoringClient_ImportProjectAsync
-            Operation<BinaryData> importOperation = await client.ImportProjectAsync(WaitUntil.Completed, projectName, RequestContent.Create(importData));
+            #region Snippet:ConversationAuthoringClient_ImportProjectAsync
+            Operation<BinaryData> importOperation = await client.ImportProjectAsync(WaitUntil.Completed, projectName, RequestContent.Create(importData, JsonPropertyNames.CamelCase));
 #if !SNIPPET
             _projects.Add(projectName);
 #endif
@@ -283,7 +284,7 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
             };
 
             Console.WriteLine($"Training project {projectName}...");
-            Operation<BinaryData> trainOperation = await client.TrainAsync(WaitUntil.Completed, projectName, RequestContent.Create(trainData));
+            Operation<BinaryData> trainOperation = await client.TrainAsync(WaitUntil.Completed, projectName, RequestContent.Create(trainData, JsonPropertyNames.CamelCase));
 
             // Deploy the model.
             var deployData = new
@@ -292,12 +293,12 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
             };
 
             Console.WriteLine($"Deploying project {projectName} to production...");
-            Operation<BinaryData> deployOperation = await client.DeployProjectAsync(WaitUntil.Completed, projectName, "production", RequestContent.Create(deployData));
+            Operation<BinaryData> deployOperation = await client.DeployProjectAsync(WaitUntil.Completed, projectName, "production", RequestContent.Create(deployData, JsonPropertyNames.CamelCase));
 
             Console.WriteLine("Import complete");
             #endregion
 
-            dynamic deployResult = deployOperation.Value.ToDynamicFromJson();
+            dynamic deployResult = deployOperation.Value.ToDynamicFromJson(JsonPropertyNames.CamelCase);
             Assert.That(deployResult.Errors, Is.Null.Or.Empty);
         }
 

@@ -24,11 +24,14 @@ namespace Azure.ResourceManager.NetworkCloud.Models
 
         private const string OnValue = "On";
         private const string OffValue = "Off";
+        private const string UnknownValue = "Unknown";
 
         /// <summary> On. </summary>
         public static VirtualMachinePowerState On { get; } = new VirtualMachinePowerState(OnValue);
         /// <summary> Off. </summary>
         public static VirtualMachinePowerState Off { get; } = new VirtualMachinePowerState(OffValue);
+        /// <summary> Unknown. </summary>
+        public static VirtualMachinePowerState Unknown { get; } = new VirtualMachinePowerState(UnknownValue);
         /// <summary> Determines if two <see cref="VirtualMachinePowerState"/> values are the same. </summary>
         public static bool operator ==(VirtualMachinePowerState left, VirtualMachinePowerState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="VirtualMachinePowerState"/> values are not the same. </summary>

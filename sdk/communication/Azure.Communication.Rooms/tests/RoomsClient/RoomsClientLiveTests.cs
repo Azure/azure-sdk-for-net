@@ -160,12 +160,10 @@ namespace Azure.Communication.Rooms.Tests
                 AsyncPageable<CommunicationRoom> allActiveRooms = roomsClient.GetRoomsAsync();
                 await foreach (CommunicationRoom room in allActiveRooms)
                 {
-                    if (room is not null)
-                    {
-                        firstActiveRoom = room;
-                        break;
-                    }
+                    firstActiveRoom = room;
+                    break;
                 }
+
                 Assert.IsNotNull(firstActiveRoom);
                 Assert.IsNotNull(firstActiveRoom?.Id);
                 Assert.IsNotNull(firstActiveRoom?.CreatedAt);

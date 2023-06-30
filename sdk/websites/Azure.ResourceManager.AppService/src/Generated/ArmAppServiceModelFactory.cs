@@ -430,7 +430,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="lastRenewedOn"> Timestamp when the domain was renewed last time. </param>
         /// <param name="isAutoRenew"> &lt;code&gt;true&lt;/code&gt; if the domain should be automatically renewed; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
         /// <param name="isDnsRecordManagementReady">
-        /// &lt;code&gt;true&lt;/code&gt; if Azure can assign this domain to App Service apps; otherwise, &lt;code&gt;false&lt;/code&gt;. This value will be &lt;code&gt;true&lt;/code&gt; if domain registration status is active and 
+        /// &lt;code&gt;true&lt;/code&gt; if Azure can assign this domain to App Service apps; otherwise, &lt;code&gt;false&lt;/code&gt;. This value will be &lt;code&gt;true&lt;/code&gt; if domain registration status is active and
         ///  it is hosted on name servers Azure has programmatic access to.
         /// </param>
         /// <param name="managedHostNames"> All hostnames derived from the domain and assigned to Azure resources. </param>
@@ -495,7 +495,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="lastRenewedOn"> Timestamp when the domain was renewed last time. </param>
         /// <param name="isAutoRenew"> &lt;code&gt;true&lt;/code&gt; if the domain should be automatically renewed; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
         /// <param name="isReadyForDnsRecordManagement">
-        /// &lt;code&gt;true&lt;/code&gt; if Azure can assign this domain to App Service apps; otherwise, &lt;code&gt;false&lt;/code&gt;. This value will be &lt;code&gt;true&lt;/code&gt; if domain registration status is active and 
+        /// &lt;code&gt;true&lt;/code&gt; if Azure can assign this domain to App Service apps; otherwise, &lt;code&gt;false&lt;/code&gt;. This value will be &lt;code&gt;true&lt;/code&gt; if domain registration status is active and
         ///  it is hosted on name servers Azure has programmatic access to.
         /// </param>
         /// <param name="managedHostNames"> All hostnames derived from the domain and assigned to Azure resources. </param>
@@ -672,7 +672,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="computeMode"> Shared/dedicated workers. </param>
         /// <param name="workerSize"> Size of the machines. </param>
         /// <param name="workerSizeId">
-        /// Size ID of machines: 
+        /// Size ID of machines:
         /// 0 - Small
         /// 1 - Medium
         /// 2 - Large
@@ -1205,7 +1205,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="tagsRequiringAuth">
         /// Gets or sets a JSON string containing a list of tags that require user authentication to be used in the push registration endpoint.
         /// Tags can consist of alphanumeric characters and the following:
-        /// '_', '@', '#', '.', ':', '-'. 
+        /// '_', '@', '#', '.', ':', '-'.
         /// Validation should be performed at the PushRequestHandler.
         /// </param>
         /// <param name="dynamicTagsJson"> Gets or sets a JSON string containing a list of dynamic tags that will be evaluated from user claims in the push registration endpoint. </param>
@@ -1359,7 +1359,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="vnetResourceId"> The Virtual Network's resource ID. </param>
         /// <param name="certThumbprintString"> The client certificate thumbprint. </param>
         /// <param name="certBlob">
-        /// A certificate file (.cer) blob containing the public key of the private key used to authenticate a 
+        /// A certificate file (.cer) blob containing the public key of the private key used to authenticate a
         /// Point-To-Site VPN connection.
         /// </param>
         /// <param name="routes"> The routes that this Virtual Network connection uses. </param>
@@ -1379,7 +1379,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="vnetResourceId"> The Virtual Network's resource ID. </param>
         /// <param name="certThumbprintString"> The client certificate thumbprint. </param>
         /// <param name="certBlob">
-        /// A certificate file (.cer) blob containing the public key of the private key used to authenticate a 
+        /// A certificate file (.cer) blob containing the public key of the private key used to authenticate a
         /// Point-To-Site VPN connection.
         /// </param>
         /// <param name="routes"> The routes that this Virtual Network connection uses. </param>
@@ -1406,7 +1406,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// DEFAULT - By default, every app has routes to the local address ranges specified by RFC1918
         /// INHERITED - Routes inherited from the real Virtual Network routes
         /// STATIC - Static route set on the app only
-        /// 
+        ///
         /// These values will be used for syncing an app's routes with those from a Virtual Network.
         /// </param>
         /// <param name="kind"> Kind of resource. </param>
@@ -2745,7 +2745,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="siteName"> Name of an app. </param>
         /// <param name="databases"> Collection of databases which should be restored. This list has to match the list of databases included in the backup. </param>
         /// <param name="ignoreConflictingHostNames">
-        /// Changes a logic when restoring an app with custom domains. &lt;code&gt;true&lt;/code&gt; to remove custom domains automatically. If &lt;code&gt;false&lt;/code&gt;, custom domains are added to 
+        /// Changes a logic when restoring an app with custom domains. &lt;code&gt;true&lt;/code&gt; to remove custom domains automatically. If &lt;code&gt;false&lt;/code&gt;, custom domains are added to
         /// the app's object when it is being restored, but that might fail due to conflicts during the operation.
         /// </param>
         /// <param name="ignoreDatabases"> Ignore the databases and only restore the site content. </param>
@@ -2908,7 +2908,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// </param>
         /// <param name="clientId">
         /// The Client ID of this relying party application, known as the client_id.
-        /// This setting is required for enabling OpenID Connection authentication with Azure Active Directory or 
+        /// This setting is required for enabling OpenID Connection authentication with Azure Active Directory or
         /// other 3rd party OpenID Connect providers.
         /// More information on OpenID Connect: http://openid.net/specs/openid-connect-core-1_0.html
         /// </param>
@@ -2931,7 +2931,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// </param>
         /// <param name="validateIssuer"> Gets a value indicating whether the issuer should be a valid HTTPS url and be validated as such. </param>
         /// <param name="allowedAudiences">
-        /// Allowed audience values to consider when validating JWTs issued by 
+        /// Allowed audience values to consider when validating JWTs issued by
         /// Azure Active Directory. Note that the &lt;code&gt;ClientID&lt;/code&gt; value is always considered an
         /// allowed audience, regardless of this setting.
         /// </param>
@@ -2951,7 +2951,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// Google Sign-In documentation: https://developers.google.com/identity/sign-in/web/
         /// </param>
         /// <param name="googleClientSecretSettingName">
-        /// The app setting name that contains the client secret associated with 
+        /// The app setting name that contains the client secret associated with
         /// the Google web application.
         /// </param>
         /// <param name="googleOAuthScopes">
@@ -3751,7 +3751,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// </param>
         /// <param name="recoverConfiguration"> If true, deleted site configuration, in addition to content, will be restored. </param>
         /// <param name="snapshotTime">
-        /// Point in time to restore the deleted app from, formatted as a DateTime string. 
+        /// Point in time to restore the deleted app from, formatted as a DateTime string.
         /// If unspecified, default value is the time that the app was deleted.
         /// </param>
         /// <param name="useDRSecondary"> If true, the snapshot is retrieved from DRSecondary endpoint. </param>

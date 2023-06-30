@@ -127,7 +127,7 @@ namespace Azure.Maps.Search.Models
         /// <param name="roadUse"></param>
         /// <param name="matchType">
         /// Information on the type of match.
-        /// 
+        ///
         /// One of:
         ///   * AddressPoint
         ///   * HouseNumberRange

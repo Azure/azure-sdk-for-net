@@ -44,9 +44,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
 
             // invoke the operation
             string accessControlListName = "aclOne";
-            AccessControlListData data = new AccessControlListData(new AzureLocation("EastUs"), AddressFamily.IPv4, new AccessControlListPropertiesConditionsItem[]
+            AccessControlListData data = new AccessControlListData(new AzureLocation("EastUs"), AddressFamily.IPv4, new AccessControlListConditionProperties[]
             {
-new AccessControlListPropertiesConditionsItem(3,ConditionActionType.Allow,"1.1.1.1","21","2.2.2.2","65000",6)
+new AccessControlListConditionProperties(3,ConditionActionType.Allow,"1.1.1.1","21","2.2.2.2","65000",6)
             });
             ArmOperation<AccessControlListResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, accessControlListName, data);
             AccessControlListResource result = lro.Value;

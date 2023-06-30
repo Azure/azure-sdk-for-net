@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
         public async Task L3Networks()
         {
             var l3NetworkCollection = ResourceGroupResource.GetL3Networks();
-            var l3NetworkName = TestEnvironment.L3NetworkName;
+            var l3NetworkName = Recording.GenerateAssetName("l3network");
 
             var l3NetworkId = L3NetworkResource.CreateResourceIdentifier(TestEnvironment.SubscriptionId, ResourceIdentifier.Parse(ResourceGroupResource.Id).Name, l3NetworkName);
             var l3Network = Client.GetL3NetworkResource(l3NetworkId);

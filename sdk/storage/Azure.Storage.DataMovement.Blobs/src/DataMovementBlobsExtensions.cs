@@ -1,8 +1,12 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.IO;
+using System.Threading.Tasks;
+using System.Threading;
 using Azure.Storage.Blobs.Models;
 using Azure.Storage.DataMovement.Models;
+using Azure.Storage.DataMovement.Models.JobPlan;
 
 namespace Azure.Storage.DataMovement.Blobs
 {
@@ -444,6 +448,181 @@ namespace Azure.Storage.DataMovement.Blobs
                 DestinationConditions = CreateRequestConditions(options?.DestinationConditions, overwrite),
                 SourceAuthentication = sourceAuthorization,
             };
+        }
+
+        internal static async Task<BlockBlobStorageResourceOptions> GetBlockBlobResourceOptionsAsync(
+            this TransferCheckpointer checkpointer,
+            string transferId,
+            bool isSource,
+            CancellationToken cancellationToken)
+        {
+            BlobStorageResourceOptions baseOptions = await checkpointer.GetBlobResourceOptionsAsync(
+                transferId,
+                isSource,
+                cancellationToken).ConfigureAwait(false);
+            BlockBlobStorageResourceOptions options = new(baseOptions);
+
+            // Get AccessTier
+            if (!isSource)
+            {
+                int startIndex = DataMovementConstants.PlanFile.DstBlobBlockBlobTierIndex;
+                JobPartPlanBlockBlobTier accessTier = (JobPartPlanBlockBlobTier)await checkpointer.GetByteValue(
+                    transferId,
+                    startIndex,
+                    cancellationToken: cancellationToken).ConfigureAwait(false);
+                options.AccessTier = accessTier.ToAccessTier();
+            }
+            return options;
+        }
+
+        internal static async Task<PageBlobStorageResourceOptions> GetPageBlobResourceOptionsAsync(
+            this TransferCheckpointer checkpointer,
+            string transferId,
+            bool isSource,
+            CancellationToken cancellationToken)
+        {
+            BlobStorageResourceOptions baseOptions = await checkpointer.GetBlobResourceOptionsAsync(
+                transferId,
+                isSource,
+                cancellationToken).ConfigureAwait(false);
+            PageBlobStorageResourceOptions options = new(baseOptions);
+
+            if (!isSource)
+            {
+                // Get AccessTier
+                int startIndex = DataMovementConstants.PlanFile.DstBlobPageBlobTierIndex;
+                JobPartPlanPageBlobTier accessTier = (JobPartPlanPageBlobTier)await checkpointer.GetByteValue(
+                    transferId,
+                    startIndex,
+                    cancellationToken: cancellationToken).ConfigureAwait(false);
+                options.AccessTier = accessTier.ToAccessTier();
+            }
+            return options;
+        }
+
+        internal static async Task<BlobStorageResourceOptions> GetBlobResourceOptionsAsync(
+            this TransferCheckpointer checkpointer,
+            string transferId,
+            bool isSource,
+            CancellationToken cancellationToken)
+        {
+            BlobStorageResourceOptions options = new BlobStorageResourceOptions();
+
+            // TODO: parse out the rest of the parameters from the Job Part Plan File
+
+            if (!isSource)
+            {
+                // Get Metadata
+                int metadataIndex = DataMovementConstants.PlanFile.DstBlobMetadataLengthIndex;
+                int metadataReadLength = DataMovementConstants.PlanFile.DstBlobTagsLengthIndex - metadataIndex;
+                string metadata = await checkpointer.GetHeaderValue(
+                    transferId,
+                    metadataIndex,
+                    metadataReadLength,
+                    DataMovementConstants.PlanFile.MetadataStrMaxLength,
+                    cancellationToken).ConfigureAwait(false);
+                options.Metadata = metadata.ToDictionary(nameof(metadata));
+
+                // Get blob tags
+                int tagsIndex = DataMovementConstants.PlanFile.DstBlobTagsLengthIndex;
+                int tagsReadLength = DataMovementConstants.PlanFile.DstBlobIsSourceEncrypted - tagsIndex;
+                string tags = await checkpointer.GetHeaderValue(
+                    transferId,
+                    tagsIndex,
+                    tagsReadLength,
+                    DataMovementConstants.PlanFile.BlobTagsStrMaxLength,
+                    cancellationToken).ConfigureAwait(false);
+                options.Tags = tags.ToDictionary(nameof(tags));
+            }
+            return options;
+        }
+
+        internal static async Task<BlobStorageResourceContainerOptions> GetBlobContainerOptionsAsync(
+            this TransferCheckpointer checkpointer,
+            string directoryPrefix,
+            string transferId,
+            bool isSource,
+            CancellationToken cancellationToken)
+        {
+            BlobStorageResourceOptions baseOptions = await checkpointer.GetBlobResourceOptionsAsync(
+                transferId,
+                isSource,
+                cancellationToken).ConfigureAwait(false);
+            BlobStorageResourceContainerOptions options = new()
+            {
+                DirectoryPrefix = directoryPrefix,
+                ResourceOptions = baseOptions,
+            };
+
+            return options;
+        }
+
+        private static AccessTier ToAccessTier(this JobPartPlanBlockBlobTier tier)
+        {
+            if (JobPartPlanBlockBlobTier.Archive == tier)
+            {
+                return AccessTier.Archive;
+            }
+            else if (JobPartPlanBlockBlobTier.Cool == tier)
+            {
+                return AccessTier.Cool;
+            }
+            else if (JobPartPlanBlockBlobTier.Cold == tier)
+            {
+                return AccessTier.Cold;
+            }
+            else // including JobPartPlanBlockBlobTier.Hot == tier
+            {
+                return AccessTier.Hot;
+            }
+        }
+
+        private static AccessTier ToAccessTier(this JobPartPlanPageBlobTier tier)
+        {
+            if (JobPartPlanPageBlobTier.P4 == tier)
+            {
+                return AccessTier.P4;
+            }
+            else if (JobPartPlanPageBlobTier.P6 == tier)
+            {
+                return AccessTier.P6;
+            }
+            else if (JobPartPlanPageBlobTier.P10 == tier)
+            {
+                return AccessTier.P10;
+            }
+            else if (JobPartPlanPageBlobTier.P15 == tier)
+            {
+                return AccessTier.P15;
+            }
+            else if (JobPartPlanPageBlobTier.P20 == tier)
+            {
+                return AccessTier.P20;
+            }
+            else if (JobPartPlanPageBlobTier.P30 == tier)
+            {
+                return AccessTier.P30;
+            }
+            else if (JobPartPlanPageBlobTier.P40 == tier)
+            {
+                return AccessTier.P40;
+            }
+            else if (JobPartPlanPageBlobTier.P50 == tier)
+            {
+                return AccessTier.P50;
+            }
+            else if (JobPartPlanPageBlobTier.P60 == tier)
+            {
+                return AccessTier.P60;
+            }
+            else if (JobPartPlanPageBlobTier.P70 == tier)
+            {
+                return AccessTier.P70;
+            }
+            else // including JobPartPlanPageBlobTier.P80 == tier
+            {
+                return AccessTier.P80;
+            }
         }
     }
 }
