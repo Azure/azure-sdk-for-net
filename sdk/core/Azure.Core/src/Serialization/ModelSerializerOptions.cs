@@ -22,11 +22,6 @@ namespace Azure.Core.Serialization
         public bool IgnoreAdditionalProperties { get; set; }
 
         /// <summary>
-        /// Bool that determines if Json will be PrettyPrinted. Default is false.
-        /// </summary>
-        public bool PrettyPrint { get; set; }
-
-        /// <summary>
         /// Dictionary that holds all the serializers for the different model types.
         /// </summary>
         public Dictionary<Type, ObjectSerializer> Serializers { get; } = new Dictionary<Type, ObjectSerializer>();
