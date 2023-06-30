@@ -1605,7 +1605,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new ConversationAuthoringClient(endpoint, credential);
 
-            foreach (var item in client.GetModelEvaluationResults("<projectName>", "<trainedModelLabel>", "<stringIndexType>"))
+            foreach (var item in client.GetModelEvaluationResults("<projectName>", "<trainedModelLabel>"))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.GetProperty("text").ToString());
@@ -1629,7 +1629,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new ConversationAuthoringClient(endpoint, credential);
 
-            foreach (var item in client.GetModelEvaluationResults("<projectName>", "<trainedModelLabel>", "<stringIndexType>"))
+            foreach (var item in client.GetModelEvaluationResults("<projectName>", "<trainedModelLabel>", "Utf16CodeUnit"))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.GetProperty("text").ToString());
@@ -1653,7 +1653,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new ConversationAuthoringClient(endpoint, credential);
 
-            await foreach (var item in client.GetModelEvaluationResultsAsync("<projectName>", "<trainedModelLabel>", "<stringIndexType>"))
+            await foreach (var item in client.GetModelEvaluationResultsAsync("<projectName>", "<trainedModelLabel>"))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.GetProperty("text").ToString());
@@ -1677,7 +1677,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new ConversationAuthoringClient(endpoint, credential);
 
-            await foreach (var item in client.GetModelEvaluationResultsAsync("<projectName>", "<trainedModelLabel>", "<stringIndexType>"))
+            await foreach (var item in client.GetModelEvaluationResultsAsync("<projectName>", "<trainedModelLabel>", "Utf16CodeUnit"))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.GetProperty("text").ToString());
@@ -2141,7 +2141,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new ConversationAuthoringClient(endpoint, credential);
 
-            var operation = client.ExportProject(WaitUntil.Completed, "<projectName>", "<stringIndexType>");
+            var operation = client.ExportProject(WaitUntil.Completed, "<projectName>");
 
             BinaryData responseData = operation.Value;
             JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
@@ -2156,7 +2156,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new ConversationAuthoringClient(endpoint, credential);
 
-            var operation = client.ExportProject(WaitUntil.Completed, "<projectName>", "<stringIndexType>", "<exportedProjectFormat>", "<assetKind>", "<trainedModelLabel>");
+            var operation = client.ExportProject(WaitUntil.Completed, "<projectName>", "<exportedProjectFormat>", "<assetKind>", "Utf16CodeUnit", "<trainedModelLabel>");
 
             BinaryData responseData = operation.Value;
             JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
@@ -2192,7 +2192,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new ConversationAuthoringClient(endpoint, credential);
 
-            var operation = await client.ExportProjectAsync(WaitUntil.Completed, "<projectName>", "<stringIndexType>");
+            var operation = await client.ExportProjectAsync(WaitUntil.Completed, "<projectName>");
 
             BinaryData responseData = operation.Value;
             JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
@@ -2207,7 +2207,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new ConversationAuthoringClient(endpoint, credential);
 
-            var operation = await client.ExportProjectAsync(WaitUntil.Completed, "<projectName>", "<stringIndexType>", "<exportedProjectFormat>", "<assetKind>", "<trainedModelLabel>");
+            var operation = await client.ExportProjectAsync(WaitUntil.Completed, "<projectName>", "<exportedProjectFormat>", "<assetKind>", "Utf16CodeUnit", "<trainedModelLabel>");
 
             BinaryData responseData = operation.Value;
             JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
