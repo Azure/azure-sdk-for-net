@@ -27,7 +27,7 @@ namespace Azure.Communication.CallAutomation.Tests.EventProcessors
                 );
             CallAutomationEventProcessor handler = callAutomationClient.GetEventProcessor();
 
-            var response = callAutomationClient.CreateCall(new CreateCallOptions(CreateMockInvite(), new Uri(CallBackUri)));
+            var response = callAutomationClient.CreateCall(new CreateCallOptions(CreateMockInvite()) { CallbackUri = new Uri(CallBackUri) });
             Assert.AreEqual(successCode, response.GetRawResponse().Status);
 
             // Create and send event to event processor
@@ -55,7 +55,7 @@ namespace Azure.Communication.CallAutomation.Tests.EventProcessors
                 options: new CallAutomationClientOptions() { Source = new CommunicationUserIdentifier("12345") });
             CallAutomationEventProcessor handler = callAutomationClient.GetEventProcessor();
 
-            var response = callAutomationClient.CreateCall(new CreateCallOptions(CreateMockInvite(), new Uri(CallBackUri)));
+            var response = callAutomationClient.CreateCall(new CreateCallOptions(CreateMockInvite()) { CallbackUri = new Uri(CallBackUri) });
             Assert.AreEqual(successCode, response.GetRawResponse().Status);
 
             // Create and send event to event processor

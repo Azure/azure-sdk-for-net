@@ -69,16 +69,6 @@ namespace Azure.Communication.CallAutomation
         }
 
         /// <summary>
-        /// Remove WebSocketEventClient of target callConnectionId.
-        /// </summary>
-        /// <param name="connectionId">Call connectionId.</param>
-        public void RemoveWebSocketEventClient(string connectionId)
-        {
-            // Remove this client from the list.
-            _wsEventClients.TryRemove(connectionId, out _);
-        }
-
-        /// <summary>
         /// Process incoming events. Pass incoming events to get it processed to have other method like WaitForEventProcessor to function.
         /// </summary>
         /// <param name="events">Incoming CloudEvent object.</param>

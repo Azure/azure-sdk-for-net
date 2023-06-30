@@ -224,7 +224,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallAutomationClients
         {
             CallAutomationClient callAutomationClient = CreateMockCallAutomationClient(201, CreateOrAnswerCallOrGetCallConnectionPayload);
 
-            var options = new CreateCallOptions(target, callbackUri);
+            var options = new CreateCallOptions(target) { CallbackUri = callbackUri };
             var response = await callAutomationClient.CreateCallAsync(options).ConfigureAwait(false);
             CreateCallResult result = (CreateCallResult)response;
             Assert.NotNull(result);
@@ -239,7 +239,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallAutomationClients
         {
             CallAutomationClient callAutomationClient = CreateMockCallAutomationClient(201, CreateOrAnswerCallOrGetCallConnectionPayload);
 
-            var options = new CreateCallOptions(target, callbackUri);
+            var options = new CreateCallOptions(target) { CallbackUri = callbackUri };
             var response = callAutomationClient.CreateCall(options);
             CreateCallResult result = (CreateCallResult)response;
             Assert.NotNull(result);
@@ -254,10 +254,10 @@ namespace Azure.Communication.CallAutomation.Tests.CallAutomationClients
         {
             CallAutomationClient callAutomationClient = CreateMockCallAutomationClient(201, CreateOrAnswerCallOrGetCallConnectionWithMediaSubscriptionPayload);
             CreateCallOptions options = new CreateCallOptions(
-                callInvite: target,
-                callbackUri: callbackUri)
+                callInvite: target)
             {
-                MediaStreamingOptions = _mediaStreamingConfiguration
+                MediaStreamingOptions = _mediaStreamingConfiguration,
+                CallbackUri = callbackUri
             };
 
             var response = await callAutomationClient.CreateCallAsync(options).ConfigureAwait(false);
@@ -274,10 +274,10 @@ namespace Azure.Communication.CallAutomation.Tests.CallAutomationClients
         {
             CallAutomationClient callAutomationClient = CreateMockCallAutomationClient(201, CreateOrAnswerCallOrGetCallConnectionWithMediaSubscriptionPayload);
             CreateCallOptions options = new CreateCallOptions(
-                callInvite: target,
-                callbackUri: callbackUri)
+                callInvite: target)
             {
-                MediaStreamingOptions = _mediaStreamingConfiguration
+                MediaStreamingOptions = _mediaStreamingConfiguration,
+                CallbackUri = callbackUri
             };
 
             var response = callAutomationClient.CreateCall(options);
@@ -294,7 +294,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallAutomationClients
         {
             CallAutomationClient callAutomationClient = CreateMockCallAutomationClient(404);
 
-            RequestFailedException? ex = Assert.ThrowsAsync<RequestFailedException>(async () => await callAutomationClient.CreateCallAsync(new CreateCallOptions(target, callbackUri)).ConfigureAwait(false));
+            RequestFailedException? ex = Assert.ThrowsAsync<RequestFailedException>(async () => await callAutomationClient.CreateCallAsync(new CreateCallOptions(target) { CallbackUri = callbackUri }).ConfigureAwait(false));
             Assert.NotNull(ex);
             Assert.AreEqual(ex?.Status, 404);
         }
@@ -304,7 +304,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallAutomationClients
         {
             CallAutomationClient callAutomationClient = CreateMockCallAutomationClient(404);
 
-            RequestFailedException? ex = Assert.Throws<RequestFailedException>(() => callAutomationClient.CreateCall(new CreateCallOptions(target, callbackUri)));
+            RequestFailedException? ex = Assert.Throws<RequestFailedException>(() => callAutomationClient.CreateCall(new CreateCallOptions(target) { CallbackUri = callbackUri }));
             Assert.NotNull(ex);
             Assert.AreEqual(ex?.Status, 404);
         }
@@ -330,8 +330,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallAutomationClients
         {
             CallAutomationClient callAutomationClient = CreateMockCallAutomationClient(201, CreateOrAnswerCallOrGetCallConnectionWithMediaSubscriptionPayload);
             CreateGroupCallOptions options = new(
-                targets: targets,
-                callbackUri: callbackUri)
+                targets: targets)
             {
                 MediaStreamingOptions = _mediaStreamingConfiguration,
                 SourceCallerIdNumber = callerIdNumber,

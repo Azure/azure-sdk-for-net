@@ -123,12 +123,6 @@ namespace Azure.Communication.CallAutomation
                 scope.Failed(ex);
                 throw;
             }
-            finally
-            {
-                // Remove the websocket after 7 seconds - because we still need to receive the call hangup event
-                Thread.Sleep(7000);
-                EventProcessor.RemoveWebSocketEventClient(CallConnectionId);
-            }
         }
 
         /// <summary> Disconnect the current caller in a group-call or end a p2p-call. </summary>
@@ -163,12 +157,6 @@ namespace Azure.Communication.CallAutomation
             {
                 scope.Failed(ex);
                 throw;
-            }
-            finally
-            {
-                // Remove the websocket after 7 seconds - because we still need to receive the call hangup event
-                Thread.Sleep(7000);
-                EventProcessor.RemoveWebSocketEventClient(CallConnectionId);
             }
         }
 

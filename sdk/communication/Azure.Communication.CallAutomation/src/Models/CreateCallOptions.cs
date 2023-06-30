@@ -37,7 +37,7 @@ namespace Azure.Communication.CallAutomation
         /// <summary>
         /// The callback Uri.
         /// </summary>
-        public Uri CallbackUri { get; }
+        public Uri CallbackUri { get; set; }
 
         /// <summary>
         /// The Operation context.
