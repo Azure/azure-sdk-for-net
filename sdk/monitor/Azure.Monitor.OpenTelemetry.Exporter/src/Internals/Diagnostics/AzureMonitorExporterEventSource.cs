@@ -47,13 +47,13 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics
         [NonEvent]
         public void TransmissionFailed(int statusCode, bool fromStorage, bool willRetry, ConnectionVars connectionVars, string? requestEndpoint, Response? response)
         {
-            if (IsEnabled(EventLevel.Critical))
+            if (IsEnabled(EventLevel.Verbose))
             {
                 var errorMessages = IngestionResponseHelper.GetErrorsFromResponse(response);
 
                 if (errorMessages == null || errorMessages.Length == 0)
                 {
-                    TransmissionFailed(
+                    TransmissionFailedVerbose(
                         statusCode: statusCode,
                         errorMessage: "N/A",
                         action: willRetry ? "Telemetry is stored offline for retry." : "Telemetry is dropped.",
@@ -66,7 +66,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics
                 {
                     foreach (var error in errorMessages)
                     {
-                        TransmissionFailed(
+                        TransmissionFailedVerbose(
                             statusCode: statusCode,
                             errorMessage: error ?? "N/A",
                             action: willRetry ? "Telemetry is stored offline for retry." : "Telemetry is dropped.",
@@ -77,11 +77,21 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics
                     }
                 }
             }
+            else if (IsEnabled(EventLevel.Error))
+            {
+                TransmissionFailed(
+                    statusCode: statusCode,
+                    action: willRetry ? "Telemetry is stored offline for retry." : "Telemetry is dropped.",
+                    origin: fromStorage ? "Storage" : "AzureMonitorExporter",
+                    instrumentationKey: connectionVars.InstrumentationKey,
+                    configuredEndpoint: connectionVars.IngestionEndpoint,
+                    actualEndpoint: requestEndpoint);
+            }
         }
 
-        [Event(8, Message = "Transmission failed. StatusCode: {0}. Error from Ingestion: {1}. Action: {2}. Origin: {3}. Instrumentation Key: {4}. Configured Endpoint: {5}. Actual Endpoint: {6}", Level = EventLevel.Critical)]
-        public void TransmissionFailed(int statusCode, string errorMessage, string action, string origin, string instrumentationKey, string configuredEndpoint, string? actualEndpoint)
-            => WriteEvent(8, statusCode, errorMessage, action, origin, instrumentationKey, configuredEndpoint, actualEndpoint);
+        [Event(8, Message = "Transmission failed. StatusCode: {0}. To get exact error from Ingestion change LogLevel to VERBOSE. Action: {1}. Origin: {2}. Instrumentation Key: {3}. Configured Endpoint: {4}. Actual Endpoint: {5}", Level = EventLevel.Error)]
+        public void TransmissionFailed(int statusCode, string action, string origin, string instrumentationKey, string configuredEndpoint, string? actualEndpoint)
+            => WriteEvent(8, statusCode, action, origin, instrumentationKey, configuredEndpoint, actualEndpoint);
 
         [Event(9, Message = "{0} has been disposed.", Level = EventLevel.Informational)]
         public void DisposedObject(string name) => WriteEvent(9, name);
@@ -304,5 +314,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics
 
         [Event(34, Message = "Failed to deserialize response from ingestion due to an exception. Not user actionable. {0}", Level = EventLevel.Warning)]
         public void FailedToDeserializeIngestionResponse(string exceptionMessage) => WriteEvent(34, exceptionMessage);
+
+        [Event(35, Message = "Transmission failed. StatusCode: {0}. Error from Ingestion: {1}. Action: {2}. Origin: {3}. Instrumentation Key: {4}. Configured Endpoint: {5}. Actual Endpoint: {6}", Level = EventLevel.Verbose)]
+        public void TransmissionFailedVerbose(int statusCode, string errorMessage, string action, string origin, string instrumentationKey, string configuredEndpoint, string? actualEndpoint)
+            => WriteEvent(35, statusCode, errorMessage, action, origin, instrumentationKey, configuredEndpoint, actualEndpoint);
     }
 }
