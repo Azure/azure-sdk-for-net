@@ -14,7 +14,6 @@ namespace Azure.AI.OpenAI
 {
     public partial class ImagePayload
     {
-
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static ImagePayload FromResponse(Response response)

@@ -14,7 +14,6 @@ namespace Azure.AI.OpenAI
 {
     public partial class ImageGenerations
     {
-
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static ImageGenerations FromResponse(Response response)

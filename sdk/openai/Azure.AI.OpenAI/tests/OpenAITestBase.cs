@@ -55,8 +55,8 @@ namespace Azure.AI.OpenAI.Tests
         protected OpenAITestBase(bool isAsync, RecordedTestMode? mode = null) : base(isAsync, mode)
         {
             HeaderRegexSanitizers.Add(new HeaderRegexSanitizer("api-key", "***********"));
-            this.UriRegexSanitizers.Add(new UriRegexSanitizer("sig=[^\"]*", "sig=Sanitized"));
-            this.BodyRegexSanitizers.Add(new BodyRegexSanitizer("sig=[^\"]*", "sig=Sanitized"));
+            UriRegexSanitizers.Add(new UriRegexSanitizer("sig=[^\"]*", "sig=Sanitized"));
+            BodyRegexSanitizers.Add(new BodyRegexSanitizer("sig=[^\"]*", "sig=Sanitized"));
         }
 
         protected OpenAIClient GetAzureClientWithKey() => InstrumentClient(
