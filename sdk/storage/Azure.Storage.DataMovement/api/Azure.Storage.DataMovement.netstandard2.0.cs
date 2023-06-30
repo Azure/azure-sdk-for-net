@@ -149,7 +149,7 @@ namespace Azure.Storage.DataMovement.Models
 {
     public partial class DataTransferProperties
     {
-        internal DataTransferProperties() { }
+        protected internal DataTransferProperties() { }
         public virtual Azure.Storage.DataMovement.Models.TransferCheckpointerOptions Checkpointer { get { throw null; } }
         public virtual string DestinationPath { get { throw null; } }
         public virtual string DestinationScheme { get { throw null; } }
