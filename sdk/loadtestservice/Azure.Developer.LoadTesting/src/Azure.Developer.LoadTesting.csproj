@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <Description>This is the LoadTestService client library for developing .NET applications with rich experience.</Description>
     <AssemblyTitle>Azure SDK Code Generation LoadTestService for Azure Data Plane</AssemblyTitle>
@@ -16,6 +16,7 @@
     <Compile Include="$(AzureCoreSharedSources)ArrayBufferWriter.cs" LinkBase="Shared" />
     <Compile Include="$(AzureCoreSharedSources)AzureResourceProviderNamespaceAttribute.cs" LinkBase="Shared" />
     <Compile Include="$(AzureCoreSharedSources)AzureKeyCredentialPolicy.cs" LinkBase="Shared" />
+    <Compile Include="$(AzureCoreSharedSources)IModelSerializable.cs" LinkBase="Shared" />
     <Compile Include="$(AzureCoreSharedSources)MutableJsonChange.cs" LinkBase="Shared" />
     <Compile Include="$(AzureCoreSharedSources)MutableJsonChangeKind.cs" LinkBase="Shared" />
     <Compile Include="$(AzureCoreSharedSources)MutableJsonDocument.cs" LinkBase="Shared" />
@@ -25,7 +26,6 @@
     <Compile Include="$(AzureCoreSharedSources)MutableJsonElement.ArrayEnumerator.cs" LinkBase="Shared" />
     <Compile Include="$(AzureCoreSharedSources)MutableJsonElement.ObjectEnumerator.cs" LinkBase="Shared" />
     <Compile Include="$(AzureCoreSharedSources)MutableJsonElement.WriteTo.cs" LinkBase="Shared" />
-    <Compile Include="$(AzureCoreSharedSources)MutableJsonPatchNode.cs" LinkBase="Shared" />
     <Compile Include="$(AzureCoreSharedSources)MutableJsonReadOnlyList.cs" LinkBase="Shared" />
   </ItemGroup>
   <ItemGroup>

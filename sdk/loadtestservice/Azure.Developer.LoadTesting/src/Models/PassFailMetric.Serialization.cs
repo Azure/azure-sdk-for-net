@@ -9,10 +9,11 @@ using System;
 using System.Text.Json;
 using Azure.Core;
 using Azure.Core.Json;
+using Azure.Core.Serialization;
 
 namespace Azure.Developer.LoadTesting.Models
 {
-    public partial class PassFailMetric : IUtf8JsonSerializable
+    public partial class PassFailMetric : IUtf8JsonSerializable, IModelSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -50,11 +51,21 @@ namespace Azure.Developer.LoadTesting.Models
             writer.WriteEndObject();
         }
 
+        void IModelSerializable.Serialize(Utf8JsonWriter writer)
+        {
+            ((IUtf8JsonSerializable)this).Write(writer);
+        }
+
         internal static PassFailMetric DeserializePassFailMetric(JsonElement element)
         {
             BinaryData utf8Json = Test.GetBytes(element);
             MutableJsonElement mje = MutableJsonDocument.Parse(utf8Json).RootElement;
             return new PassFailMetric(mje);
+        }
+
+        object IModelSerializable.Deserialize(JsonElement element)
+        {
+            return DeserializePassFailMetric(element);
         }
     }
 }

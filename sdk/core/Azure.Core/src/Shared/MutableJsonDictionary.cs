@@ -26,8 +26,11 @@ namespace Azure.Core.Json
 
         public T this[string key]
         {
-            get => _element.GetProperty(key).ConvertTo<T>();
-            set => _element.GetProperty(key).Set(value);
+            get
+            {
+                return _element.GetProperty(key).ConvertTo<T>();
+            }
+            set => _element.SetProperty(key, value);
         }
 
         public ICollection<string> Keys => throw new NotImplementedException();

@@ -4,9 +4,11 @@
 using System;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Azure.Core.Serialization;
 
 #nullable enable
 
@@ -61,6 +63,11 @@ namespace Azure.Core.Json
                 // Can we do better here per perf?
 
                 T? value;
+
+                if (typeof(T).GetInterfaces().Contains(typeof(IModelSerializable)))
+                {
+                    // YOU ARE HERE
+                }
 
 #if NET6_0_OR_GREATER
                 value = JsonSerializer.Deserialize<T>(element, _root.SerializerOptions);
@@ -1090,10 +1097,25 @@ namespace Azure.Core.Json
                 mje.EnsureValid();
             }
 
+            // TODO: replace this with IUtf8JsonSerializable
+            if (value is IModelSerializable model)
+            {
+                using MemoryStream stream = new();
+                using Utf8JsonWriter writer = new(stream);
+
+                model.Serialize(writer);
+                writer.Flush();
+                stream.Position = 0;
+                //BinaryData data = BinaryData.FromStream(stream);
+                //return JsonDocument.Parse(data).RootElement;
+
+                // TODO: remove
+                // for debugging
+                string data = BinaryData.FromStream(stream).ToString();
+                return JsonDocument.Parse(data).RootElement;
+            }
+
             // If it's not a special type, we'll serialize it on assignment.
-            // for debugging
-            string sval = JsonSerializer.Serialize(value, _root.SerializerOptions);
-            // end
             byte[] bytes = JsonSerializer.SerializeToUtf8Bytes(value, _root.SerializerOptions);
             return JsonDocument.Parse(bytes).RootElement;
         }

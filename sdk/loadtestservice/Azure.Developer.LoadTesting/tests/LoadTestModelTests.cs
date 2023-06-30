@@ -68,6 +68,25 @@ namespace Azure.Developer.LoadTesting.Tests
         }
 
         [Test]
+        public void CanPatchDictionaryValue()
+        {
+            MutableJsonDocument doc = MutableJsonDocument.Parse("""{"testId":"abc"}""");
+            Test test = new(doc.RootElement);
+
+            test.EnvironmentVariables["a"] = "a";
+
+            BinaryData utf8;
+            using (MemoryStream stream = new())
+            {
+                test.WritePatch(stream);
+                stream.Position = 0;
+                utf8 = BinaryData.FromStream(stream);
+            }
+
+            Assert.AreEqual("""{"environmentVariables":{"a":"a"}}""", utf8.ToString());
+        }
+
+        [Test]
         public void CanSetTestPassFailMetric()
         {
             Test test = new();
@@ -75,6 +94,25 @@ namespace Azure.Developer.LoadTesting.Tests
             test.PassFailCriteria.PassFailMetrics.Add("a", new PassFailMetric() { RequestName = "a"});
 
             Assert.AreEqual("a", test.PassFailCriteria.PassFailMetrics["a"].RequestName);
+        }
+
+        [Test]
+        public void CanPatchTestPassFailMetric()
+        {
+            Test test = new();
+            test.PassFailCriteria.PassFailMetrics.Add("a", new PassFailMetric() { RequestName = "a" });
+
+            Assert.AreEqual("a", test.PassFailCriteria.PassFailMetrics["a"].RequestName);
+
+            BinaryData utf8;
+            using (MemoryStream stream = new())
+            {
+                test.WritePatch(stream);
+                stream.Position = 0;
+                utf8 = BinaryData.FromStream(stream);
+            }
+
+            Assert.AreEqual("""{"passFailCriteria":{"passFailMetrics":{"a":"a"}}}""", utf8.ToString());
         }
     }
 }
