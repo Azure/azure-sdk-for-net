@@ -191,8 +191,6 @@ namespace Azure.Identity.Tests
         [Test]
         public async Task EnableCae()
         {
-            //TODO: Remove
-            using var logger = Core.Diagnostics.AzureEventSourceListener.CreateConsoleLogger();
             // Configure the transport
             var token = Guid.NewGuid().ToString();
             var idToken = CredentialTestHelpers.CreateMsalIdToken(Guid.NewGuid().ToString(), "userName", TenantId);

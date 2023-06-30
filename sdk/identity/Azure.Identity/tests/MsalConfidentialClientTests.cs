@@ -29,8 +29,7 @@ namespace Azure.Identity.Tests
         }
 
         [Test]
-        public async Task CacheRespectsEnableCaeConfig(
-            [Values(true, false)] bool enableCae)
+        public async Task CacheRespectsEnableCaeConfig()
         {
             var options = new TestCredentialOptions
             {
