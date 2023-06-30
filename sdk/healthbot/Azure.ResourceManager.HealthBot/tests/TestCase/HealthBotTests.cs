@@ -3,8 +3,11 @@
 
 using System;
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.HealthBot.Models;
+using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources;
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.HealthBot.Tests.TestCase
@@ -12,7 +15,7 @@ namespace Azure.ResourceManager.HealthBot.Tests.TestCase
     public class HealthBotTests : HealthBotManagementTestBase
     {
         public HealthBotTests(bool isAsync)
-            : base(isAsync)//, RecordedTestMode.Record)
+            : base(isAsync, RecordedTestMode.Record)
         {
         }
 
@@ -60,6 +63,12 @@ namespace Azure.ResourceManager.HealthBot.Tests.TestCase
                 count++;
             }
             Assert.GreaterOrEqual(count, 3);
+            //.ListBotsBySubscription
+            await foreach (var num in DefaultSubscription.GetHealthBotsAsync())
+            {
+                count++;
+            }
+            Assert.GreaterOrEqual(count, 6);
             //4Exists
             Assert.IsTrue(await collection.ExistsAsync(name));
             Assert.IsFalse(await collection.ExistsAsync(name + "1"));
@@ -70,7 +79,16 @@ namespace Azure.ResourceManager.HealthBot.Tests.TestCase
             HealthBotResource healthBot3 = await healthBot1.GetAsync();
 
             AssertData(healthBot1.Data, healthBot3.Data);
-            //6.Delete
+            //6.Update
+            HealthBotPatch patch = new HealthBotPatch()
+            {
+                Tags =
+                {
+                    {"updateKey", "updateValue"}
+                }
+            };
+            HealthBotResource result = await healthBot1.UpdateAsync(patch);
+            //7.Delete
             await healthBot1.DeleteAsync(WaitUntil.Completed);
         }
     }
