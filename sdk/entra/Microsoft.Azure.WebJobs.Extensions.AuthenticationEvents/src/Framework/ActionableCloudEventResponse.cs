@@ -35,5 +35,13 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework
 
             base.Invalidate();
         }
-    }
+
+		internal override void ValidateActions()
+		{
+            if (Actions.Count == 0)
+            {
+                this.StatusCode = System.Net.HttpStatusCode.BadRequest;
+            }
+		}
+	}
 }
