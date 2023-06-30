@@ -37,7 +37,8 @@ namespace Azure.ResourceManager.Kusto.Tests.Scenario
 
             var clusterDataCreate = new KustoClusterData(Location, _sku)
             {
-                Identity = new ManagedServiceIdentity(ManagedServiceIdentityType.SystemAssigned)
+                Identity = new ManagedServiceIdentity(ManagedServiceIdentityType.SystemAssigned),
+                IsStreamingIngestEnabled = true
             };
 
             var clusterDataUpdate = new KustoClusterData(Location, _sku)
@@ -47,7 +48,7 @@ namespace Azure.ResourceManager.Kusto.Tests.Scenario
                     UserAssignedIdentities = { [TE.UserAssignedIdentityId] = new UserAssignedIdentity() }
                 },
                 IsDiskEncryptionEnabled = true,
-                IsStreamingIngestEnabled = true,
+                IsStreamingIngestEnabled = false,
                 OptimizedAutoscale = new OptimizedAutoscale(1, true, 2, 5),
                 PublicIPType = "DualStack",
                 TrustedExternalTenants = { new KustoClusterTrustedExternalTenant(TE.TenantId) },
@@ -105,7 +106,9 @@ namespace Azure.ResourceManager.Kusto.Tests.Scenario
             var databaseCollection = cluster.GetKustoDatabases();
             await databaseCollection.CreateOrUpdateAsync(WaitUntil.Completed, databaseName, databaseData);
 
-            var clusterMigrationContent = new ClusterMigrateContent(Cluster.Data.Id);
+            var destinationCluster = (await ResourceGroup.GetKustoClusterAsync(TE.ClusterName)).Value;
+
+            var clusterMigrationContent = new ClusterMigrateContent(destinationCluster.Data.Id);
             await cluster.MigrateAsync(WaitUntil.Completed, clusterMigrationContent).ConfigureAwait(false);
 
             cluster = await clusterCollection.GetAsync(clusterName).ConfigureAwait(false);

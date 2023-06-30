@@ -15,8 +15,8 @@ resource cluster 'Microsoft.Kusto/clusters@2023-05-02' = {
     name: clusterName
     location: location
     sku: {
-        name: 'Standard_E2a_v4'
-        tier: 'Standard'
+        name: 'Dev(No SLA)_Standard_E2a_v4'
+        tier: 'Basic'
     }
     identity: {
         type: 'SystemAssigned, UserAssigned'
