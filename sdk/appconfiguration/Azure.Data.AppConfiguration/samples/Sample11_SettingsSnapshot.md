@@ -59,9 +59,9 @@ Console.WriteLine($"Created configuration setting snapshot: {createdSnapshot.Nam
 After creating a configuration setting snapshot, you can retrieve it using the `GetSnapshot` method.
 
 ```C# Snippet:AzConfigSample11_GetSnapshot
-var snapshotName = "some_snapshot";
+string snapshotName = "some_snapshot";
 ConfigurationSettingsSnapshot retrievedSnapshot = client.GetSnapshot(snapshotName);
-Console.WriteLine($"Retrieved configuration setting snapshot: {retrievedSnapshot.Name}, status: {createdSnapshot.Status}");
+Console.WriteLine($"Retrieved configuration setting snapshot: {retrievedSnapshot.Name}, status: {retrievedSnapshot.Status}");
 ```
 
 ## Archive a Snapshot
@@ -69,7 +69,7 @@ Console.WriteLine($"Retrieved configuration setting snapshot: {retrievedSnapshot
 To archive a snapshot, you can use the `ArchiveSnapshot` method. This operation updates the status of the snapshot to `archived`.
 
 ```C# Snippet:AzConfigSample11_ArchiveSnapshot
-var snapshotName = "some_snapshot";
+string snapshotName = "some_snapshot";
 ConfigurationSettingsSnapshot archivedSnapshot = client.ArchiveSnapshot(snapshotName);
 Console.WriteLine($"Archived configuration setting snapshot: {archivedSnapshot.Name}, status: {archivedSnapshot.Status}");
 ```
@@ -79,7 +79,7 @@ Console.WriteLine($"Archived configuration setting snapshot: {archivedSnapshot.N
 To recover an archived snapshot, you can use the `RecoverSnapshot` method. This operation updates the status of the snapshot to `ready`.
 
 ```C# Snippet:AzConfigSample11_RecoverSnapshot
-var snapshotName = "some_snapshot";
+string snapshotName = "some_snapshot";
 ConfigurationSettingsSnapshot recoveredSnapshot = client.RecoverSnapshot(snapshotName);
 Console.WriteLine($"Recovered configuration setting snapshot: {recoveredSnapshot.Name}, status: {recoveredSnapshot.Status}");
 ```

@@ -143,17 +143,18 @@ namespace Azure.Data.AppConfiguration.Samples
                 List<SnapshotSettingFilter> snapshotFilter = new(new SnapshotSettingFilter[] { new SnapshotSettingFilter(setting.Key) });
                 var settingsSnapshot = new ConfigurationSettingsSnapshot(snapshotFilter);
 
-                var snapshotName = TestEnvironment.Randomize("some_snapshot");
-                CreateSnapshotOperation createSnapshotOperation = client.CreateSnapshot(WaitUntil.Completed, snapshotName, settingsSnapshot);
+                string configSnapshotName = TestEnvironment.Randomize("some_snapshot");
+                CreateSnapshotOperation createSnapshotOperation = client.CreateSnapshot(WaitUntil.Completed, configSnapshotName, settingsSnapshot);
                 ConfigurationSettingsSnapshot createdSnapshot = createSnapshotOperation.Value;
                 Console.WriteLine($"Created configuration setting snapshot: {createdSnapshot.Name}, Status: {createdSnapshot.Status}");
 
                 #region Snippet:AzConfigSample11_GetSnapshot
-#if SNIPPET
-                var snapshotName = "some_snapshot";
+                string snapshotName = "some_snapshot";
+#if !SNIPPET
+                snapshotName = configSnapshotName;
 #endif
                 ConfigurationSettingsSnapshot retrievedSnapshot = client.GetSnapshot(snapshotName);
-                Console.WriteLine($"Retrieved configuration setting snapshot: {retrievedSnapshot.Name}, status: {createdSnapshot.Status}");
+                Console.WriteLine($"Retrieved configuration setting snapshot: {retrievedSnapshot.Name}, status: {retrievedSnapshot.Status}");
                 #endregion
 
                 Assert.NotNull(retrievedSnapshot);
@@ -166,7 +167,7 @@ namespace Azure.Data.AppConfiguration.Samples
         }
 
         [Test]
-        public void UpdateSnapshotStatus()
+        public void ArchiveSnapshot()
         {
             var connectionString = TestEnvironment.ConnectionString;
             var client = new ConfigurationClient(connectionString);
@@ -179,28 +180,66 @@ namespace Azure.Data.AppConfiguration.Samples
                 List<SnapshotSettingFilter> snapshotFilter = new(new SnapshotSettingFilter[] { new SnapshotSettingFilter(setting.Key) });
                 var settingsSnapshot = new ConfigurationSettingsSnapshot(snapshotFilter);
 
-                string snapshotName = TestEnvironment.Randomize("some_snapshot");
-                CreateSnapshotOperation createSnapshotOperation = client.CreateSnapshot(WaitUntil.Completed, snapshotName, settingsSnapshot);
+                string configSnapshotName = TestEnvironment.Randomize("some_snapshot");
+
+                CreateSnapshotOperation createSnapshotOperation = client.CreateSnapshot(WaitUntil.Completed, configSnapshotName, settingsSnapshot);
                 ConfigurationSettingsSnapshot createdSnapshot = createSnapshotOperation.Value;
                 Console.WriteLine($"Created configuration setting snapshot: {createdSnapshot.Name}, status: {createdSnapshot.Status}");
 
                 Assert.NotNull(createdSnapshot);
-                Assert.AreEqual(snapshotName, createdSnapshot.Name);
+                Assert.AreEqual(configSnapshotName, createdSnapshot.Name);
                 Assert.AreEqual(SnapshotStatus.Ready, createdSnapshot.Status);
 
                 #region Snippet:AzConfigSample11_ArchiveSnapshot
-#if SNIPPET
-                var snapshotName = "some_snapshot";
+                string snapshotName = "some_snapshot";
+#if !SNIPPET
+                snapshotName = configSnapshotName;
 #endif
                 ConfigurationSettingsSnapshot archivedSnapshot = client.ArchiveSnapshot(snapshotName);
                 Console.WriteLine($"Archived configuration setting snapshot: {archivedSnapshot.Name}, status: {archivedSnapshot.Status}");
                 #endregion
 
                 Assert.AreEqual(SnapshotStatus.Archived, archivedSnapshot.Status);
+            }
+            finally
+            {
+                AssertStatus200(client.DeleteConfigurationSetting(setting.Key, setting.Label));
+            }
+        }
+
+        [Test]
+        public void RecoverSnapshot()
+        {
+            var connectionString = TestEnvironment.ConnectionString;
+            var client = new ConfigurationClient(connectionString);
+            var setting = new ConfigurationSetting("some_key", "some_value");
+
+            try
+            {
+                client.SetConfigurationSetting(setting);
+
+                List<SnapshotSettingFilter> snapshotFilter = new(new SnapshotSettingFilter[] { new SnapshotSettingFilter(setting.Key) });
+                var settingsSnapshot = new ConfigurationSettingsSnapshot(snapshotFilter);
+
+                string configSnapshotName = TestEnvironment.Randomize("some_snapshot");
+
+                CreateSnapshotOperation createSnapshotOperation = client.CreateSnapshot(WaitUntil.Completed, configSnapshotName, settingsSnapshot);
+                ConfigurationSettingsSnapshot createdSnapshot = createSnapshotOperation.Value;
+                Console.WriteLine($"Created configuration setting snapshot: {createdSnapshot.Name}, status: {createdSnapshot.Status}");
+
+                Assert.NotNull(createdSnapshot);
+                Assert.AreEqual(configSnapshotName, createdSnapshot.Name);
+                Assert.AreEqual(SnapshotStatus.Ready, createdSnapshot.Status);
+
+                ConfigurationSettingsSnapshot archivedSnapshot = client.ArchiveSnapshot(configSnapshotName);
+                Console.WriteLine($"Archived configuration setting snapshot: {archivedSnapshot.Name}, status: {archivedSnapshot.Status}");
+
+                Assert.AreEqual(SnapshotStatus.Archived, archivedSnapshot.Status);
 
                 #region Snippet:AzConfigSample11_RecoverSnapshot
-#if SNIPPET
-                var snapshotName = "some_snapshot";
+                string snapshotName = "some_snapshot";
+#if !SNIPPET
+                snapshotName = configSnapshotName;
 #endif
                 ConfigurationSettingsSnapshot recoveredSnapshot = client.RecoverSnapshot(snapshotName);
                 Console.WriteLine($"Recovered configuration setting snapshot: {recoveredSnapshot.Name}, status: {recoveredSnapshot.Status}");
