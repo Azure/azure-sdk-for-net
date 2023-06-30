@@ -2931,11 +2931,11 @@ namespace Azure.ResourceManager.NetworkCloud.Models
     }
     public partial class ServicePrincipalInformation
     {
-        public ServicePrincipalInformation(string applicationId, string principalId, System.Guid tenantId) { }
+        public ServicePrincipalInformation(string applicationId, string principalId, string tenantId) { }
         public string ApplicationId { get { throw null; } set { } }
         public string Password { get { throw null; } set { } }
         public string PrincipalId { get { throw null; } set { } }
-        public System.Guid TenantId { get { throw null; } set { } }
+        public string TenantId { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct SkipShutdown : System.IEquatable<Azure.ResourceManager.NetworkCloud.Models.SkipShutdown>
