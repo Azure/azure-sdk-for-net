@@ -20,6 +20,15 @@ namespace Azure.Communication.CallAutomation
         }
 
         /// <summary>
+        /// Creates a new CreateCallOptions object.
+        /// </summary>
+        public CreateCallOptions(CallInvite callInvite)
+        {
+            CallInvite = callInvite;
+            WebSocketEnable = true;
+        }
+
+        /// <summary>
         /// Call invitee information.
         /// </summary>
         /// <value></value>

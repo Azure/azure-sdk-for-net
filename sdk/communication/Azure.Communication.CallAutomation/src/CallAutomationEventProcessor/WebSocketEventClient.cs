@@ -6,6 +6,8 @@ using System.Net.WebSockets;
 using System.Text;
 using System.Threading.Tasks;
 using System.Threading;
+using System.Collections;
+using System.Collections.Generic;
 
 namespace Azure.Communication.CallAutomation
 {
@@ -13,12 +15,19 @@ namespace Azure.Communication.CallAutomation
     {
         private readonly ClientWebSocket _client = new();
         private volatile bool _isEstablished = false;
+        private readonly CallAutomationEventProcessor _eventProcessor;
+
+        public WebSocketEventClient(CallAutomationEventProcessor eventProcessor)
+        {
+            _eventProcessor = eventProcessor;
+        }
 
         public bool IsEstablished
         {
             get { return _isEstablished; }
             private set { _isEstablished = value; }
         }
+
         public string ConnectionId { get; private set; }
 
         public async Task TryToEstablishWebsocketConnection(string webSocketUrl, string connectionId)
@@ -74,7 +83,10 @@ namespace Azure.Communication.CallAutomation
                         else
                         {
                             // Handle the event
-                            Console.WriteLine(msg);
+                            _eventProcessor.ProcessEvents(
+                                new List<CallAutomationEventBase> {
+                                    CallAutomationEventParser.Parse(BinaryData.FromString(msg))
+                            });
                         }
                     }
                 }

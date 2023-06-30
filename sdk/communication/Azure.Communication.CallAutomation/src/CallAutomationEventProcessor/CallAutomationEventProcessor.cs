@@ -50,7 +50,7 @@ namespace Azure.Communication.CallAutomation
                 return;
             }
 
-            WebSocketEventClient wsEventClient = new WebSocketEventClient();
+            WebSocketEventClient wsEventClient = new WebSocketEventClient(this);
 
             // Starting another thread to keep this client running. There is a while loop inside the logic to keep listening ws responses.
             _ = Task.Run(async () =>
@@ -122,6 +122,9 @@ namespace Azure.Communication.CallAutomation
 
                     // remove from ongoingevent list
                     RemoveFromOngoingEvent(receivedEvent.CallConnectionId);
+
+                    // remove from eventprocessor
+                    _wsEventClients.TryRemove(receivedEvent.CallConnectionId, out _);
                 }
             }
         }
