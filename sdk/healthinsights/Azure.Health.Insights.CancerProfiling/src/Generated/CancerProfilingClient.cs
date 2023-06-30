@@ -130,7 +130,7 @@ namespace Azure.Health.Insights.CancerProfiling
             try
             {
                 using HttpMessage message = CreateInferCancerProfileRequest(content, repeatabilityRequestId, repeatabilityFirstSent, context);
-                return await ProtocolOperationHelpers.ProcessMessageAsync(_pipeline, message, ClientDiagnostics, "CancerProfilingClient.InferCancerProfile", OperationFinalStateVia.OriginalUri, context, waitUntil).ConfigureAwait(false);
+                return await ProtocolOperationHelpers.ProcessMessageAsync(_pipeline, message, ClientDiagnostics, "CancerProfilingClient.InferCancerProfile", OperationFinalStateVia.Location, context, waitUntil).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -172,7 +172,7 @@ namespace Azure.Health.Insights.CancerProfiling
             try
             {
                 using HttpMessage message = CreateInferCancerProfileRequest(content, repeatabilityRequestId, repeatabilityFirstSent, context);
-                return ProtocolOperationHelpers.ProcessMessage(_pipeline, message, ClientDiagnostics, "CancerProfilingClient.InferCancerProfile", OperationFinalStateVia.OriginalUri, context, waitUntil);
+                return ProtocolOperationHelpers.ProcessMessage(_pipeline, message, ClientDiagnostics, "CancerProfilingClient.InferCancerProfile", OperationFinalStateVia.Location, context, waitUntil);
             }
             catch (Exception e)
             {
