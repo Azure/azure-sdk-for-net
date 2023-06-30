@@ -18,7 +18,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics
 
         [NonEvent]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        internal bool IsEnabled(EventLevel eventLevel) => IsEnabled(eventLevel, EventKeywords.All);
+        private bool IsEnabled(EventLevel eventLevel) => IsEnabled(eventLevel, EventKeywords.All);
 
         [NonEvent]
         public void FailedToExport(string exporterName, string instrumentationKey, Exception ex)
@@ -270,15 +270,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics
 
         [Event(33, Message = "Transmitter failed due to an exception. Instrumentation Key: {0}. {1}", Level = EventLevel.Error)]
         public void TransmitterFailed(string instrumentationKey, string exceptionMessage) => WriteEvent(33, instrumentationKey, exceptionMessage);
-
-        [NonEvent]
-        public void BackoffEnabled(TimeSpan backoffInterval)
-        {
-            if (IsEnabled(EventLevel.Warning))
-            {
-                BackoffEnabled(backoffInterval);
-            }
-        }
 
         [Event(34, Message = "Exporter encountered a transmission failure and will wait {0} milliseconds before transmitting again.", Level = EventLevel.Warning)]
         public void BackoffEnabled(double milliseconds) => WriteEvent(33, milliseconds);
