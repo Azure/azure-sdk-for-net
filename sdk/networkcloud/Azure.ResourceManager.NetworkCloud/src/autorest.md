@@ -54,12 +54,6 @@ directive:
     where: $.paths.*.post['x-ms-long-running-operation-options']
     transform: >
       delete $['final-state-schema'];
-  # temporary workaround for https://github.com/Azure/autorest.csharp/issues/3537
-  # remove the formatting not supported by SDK
-  - from: v5/types.json
-    where: $.definitions
-    transform: >
-      delete $.Resource.properties.id.format;
   # The core library Azure.ResourceManager has been generated when the subscriptionId was not marked as an uuid.
   # v5 of common-types defines `subscriptionId` as `guid` format and needs to be removed in order to generate valid code.
   - from: types.json
