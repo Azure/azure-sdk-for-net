@@ -31,10 +31,10 @@ namespace Azure.Storage.Files.DataLake
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="url"> The URL of the service account, container, or blob that is the target of the desired operation. </param>
-        /// <param name="version"> Specifies the version of the operation to use for this request. </param>
+        /// <param name="version"> Specifies the version of the operation to use for this request. The default value is "2021-06-08". </param>
         /// <param name="xMsLeaseDuration"> The lease duration is required to acquire a lease, and specifies the duration of the lease in seconds.  The lease duration must be between 15 and 60 seconds or -1 for infinite lease. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="clientDiagnostics"/>, <paramref name="pipeline"/>, <paramref name="url"/> or <paramref name="version"/> is null. </exception>
-        public PathRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string url, string version = "2021-06-08", int? xMsLeaseDuration = null)
+        public PathRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string url, string version, int? xMsLeaseDuration = null)
         {
             ClientDiagnostics = clientDiagnostics ?? throw new ArgumentNullException(nameof(clientDiagnostics));
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
