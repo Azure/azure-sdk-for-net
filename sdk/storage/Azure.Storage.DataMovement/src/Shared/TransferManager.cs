@@ -387,15 +387,37 @@ namespace Azure.Storage.DataMovement
 
             transferOptions ??= new TransferOptions();
 
-            string transferId = Guid.NewGuid().ToString();
-            await _checkpointer.AddNewJobAsync(transferId, _cancellationToken).ConfigureAwait(false);
+            string transferId;
+            bool resumeJob = false;
+            if (!string.IsNullOrEmpty(transferOptions.ResumeFromCheckpointId))
+            {
+                resumeJob = true;
+                transferId = transferOptions.ResumeFromCheckpointId;
+                // Attempt to add existing job to the checkpointer.
+                await _checkpointer.AddExistingJobAsync(
+                    transferId: transferId,
+                    cancellationToken: _cancellationToken).ConfigureAwait(false);
+
+                if (_dataTransfers.ContainsKey(transferId))
+                {
+                    // Remove the stale DataTransfer so we can pass a new DataTransfer object
+                    // to the user and also track the transfer from the DataTransfer object
+                    _dataTransfers.Remove(transferId);
+                }
+            }
+            else
+            {
+                // Add Transfer to Checkpointer
+                transferId = Guid.NewGuid().ToString();
+                await _checkpointer.AddNewJobAsync(transferId, _cancellationToken).ConfigureAwait(false);
+            }
 
             DataTransfer dataTransfer = await BuildAndAddTransferJobAsync(
                 sourceResource,
                 destinationResource,
                 transferOptions,
                 transferId,
-                true,
+                resumeJob,
                 cancellationToken).ConfigureAwait(false);
 
             return dataTransfer;
