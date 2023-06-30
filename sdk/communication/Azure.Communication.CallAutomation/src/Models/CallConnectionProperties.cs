@@ -48,7 +48,7 @@ namespace Azure.Communication.CallAutomation
                 CallConnectionState = callConnectionPropertiesDtoInternal.CallConnectionState.Value;
             }
 
-            CallbackUri = string.IsNullOrEmpty(callConnectionPropertiesDtoInternal.CallbackUri) ? null : new Uri(callConnectionPropertiesDtoInternal.CallbackUri);
+            CallbackUri = callConnectionPropertiesDtoInternal.CallbackUri == null ? null : new Uri(callConnectionPropertiesDtoInternal.CallbackUri);
             MediaSubscriptionId = callConnectionPropertiesDtoInternal.MediaSubscriptionId;
             SourceIdentity = callConnectionPropertiesDtoInternal.SourceIdentity == null? null : CommunicationIdentifierSerializer.Deserialize(callConnectionPropertiesDtoInternal.SourceIdentity);
             SourceDisplayName = callConnectionPropertiesDtoInternal.SourceDisplayName;

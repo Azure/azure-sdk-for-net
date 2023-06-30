@@ -6,6 +6,8 @@ using System.Net.WebSockets;
 using System.Text;
 using System.Threading.Tasks;
 using System.Threading;
+using System.Collections;
+using System.Collections.Generic;
 
 namespace Azure.Communication.CallAutomation
 {
@@ -13,12 +15,19 @@ namespace Azure.Communication.CallAutomation
     {
         private readonly ClientWebSocket _client = new();
         private volatile bool _isEstablished = false;
+        private readonly CallAutomationEventProcessor _eventProcessor;
+
+        public WebSocketEventClient(CallAutomationEventProcessor eventProcessor)
+        {
+            _eventProcessor = eventProcessor;
+        }
 
         public bool IsEstablished
         {
             get { return _isEstablished; }
             private set { _isEstablished = value; }
         }
+
         public string ConnectionId { get; private set; }
 
         public async Task TryToEstablishWebsocketConnection(string webSocketUrl, string connectionId)
@@ -27,7 +36,6 @@ namespace Azure.Communication.CallAutomation
             {
                 // establish hmac here
                 CallAutomationEventProcessor.customHMACAuthenticationWebSocket?.AddHmacHeaders(_client, new Uri(webSocketUrl), Core.RequestMethod.Get, string.Empty);
-                Console.WriteLine("Try to set up the websocket");
                 await _client.ConnectAsync(new Uri(webSocketUrl), CancellationToken.None).ConfigureAwait(false);
                 await SendPayload(connectionId).ConfigureAwait(false);
                 await ReceiveResponses().ConfigureAwait(false);
@@ -51,7 +59,6 @@ namespace Azure.Communication.CallAutomation
 
             while (_client.State == WebSocketState.Open)
             {
-                Console.WriteLine("Waiting on incoming response....");
                 var receiveResult = await _client.ReceiveAsync(new ArraySegment<byte>(buffer), CancellationToken.None).ConfigureAwait(false);
 
                 if (receiveResult.MessageType == WebSocketMessageType.Close)
@@ -71,12 +78,14 @@ namespace Azure.Communication.CallAutomation
                         if (msg == "ack")
                         {
                             IsEstablished = true;
-                            Console.WriteLine("Websocket is established");
                         }
                         else
                         {
                             // Handle the event
-                            Console.WriteLine(msg);
+                            _eventProcessor.ProcessEvents(
+                                new List<CallAutomationEventBase> {
+                                    CallAutomationEventParser.Parse(BinaryData.FromString(msg))
+                            });
                         }
                     }
                 }

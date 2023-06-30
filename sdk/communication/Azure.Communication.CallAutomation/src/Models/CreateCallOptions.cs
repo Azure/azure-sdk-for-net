@@ -13,9 +13,19 @@ namespace Azure.Communication.CallAutomation
         /// <summary>
         /// Creates a new CreateCallOptions object.
         /// </summary>
+        public CreateCallOptions(CallInvite callInvite, Uri callbackUri)
+        {
+            CallInvite = callInvite;
+            CallbackUri = callbackUri;
+        }
+
+        /// <summary>
+        /// Creates a new CreateCallOptions object.
+        /// </summary>
         public CreateCallOptions(CallInvite callInvite)
         {
             CallInvite = callInvite;
+            WebSocketEnable = true;
         }
 
         /// <summary>
