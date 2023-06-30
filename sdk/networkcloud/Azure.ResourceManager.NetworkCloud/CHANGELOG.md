@@ -1,6 +1,6 @@
 # Release History
 
-## 1.0.0-beta.2 (Unreleased)
+## 1.0.0-beta.2 (2023-06-30)
 
 ### Features Added
 
@@ -10,11 +10,9 @@ This version adds support to KubernetesCluster resource and its child resource A
 
 This version no longer supports HybridAksCluster and DefaultCniNetwork resource. Customers are redirected to use newly created KubernetesCluster resource instead.
 
-### Bugs Fixed
-
 ### Other Changes
 
-This version upgrades SDK to NetworkCloud 2023-05-01-preview APIs.
+Upgrades API version to 2023-05-01-preview.
 
 ## 1.0.0-beta.1 (2023-05-26)
 
