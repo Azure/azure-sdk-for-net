@@ -129,13 +129,11 @@ namespace Azure.Storage.DataMovement
         }
 
         #region Job Channel Management
-        internal async Task QueueJobAsync(
-            TransferJobInternal job,
-            CancellationToken cancellationToken)
+        internal async Task QueueJobAsync(TransferJobInternal job)
         {
             await _jobsToProcessChannel.Writer.WriteAsync(
                 job,
-                cancellationToken: cancellationToken).ConfigureAwait(false);
+                cancellationToken: _cancellationToken).ConfigureAwait(false);
         }
 
         // Inform the Reader that there's work to be executed for this Channel.
@@ -464,7 +462,7 @@ namespace Azure.Storage.DataMovement
                 throw Errors.InvalidTransferResourceTypes();
             }
             // Queue Job
-            await QueueJobAsync(transferJobInternal, cancellationToken).ConfigureAwait(false);
+            await QueueJobAsync(transferJobInternal).ConfigureAwait(false);
 
             return dataTransfer;
         }
