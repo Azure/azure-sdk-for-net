@@ -67,6 +67,7 @@ namespace Azure.Storage.DataMovement
         /// If unspecified will default to LocalTransferCheckpointer at {currentpath}/.azstoragedml
         /// </summary>
         internal TransferCheckpointer _checkpointer;
+        private TransferCheckpointerOptions _checkpointerOptions;
 
         /// <summary>
         /// Defines the error handling method to follow when an error is seen. Defaults to
@@ -122,7 +123,8 @@ namespace Azure.Storage.DataMovement
             _currentTaskIsProcessingJobPart = Task.Run(() => NotifyOfPendingJobPartProcessing());
             _currentTaskIsProcessingJobChunk = Task.Run(() => NotifyOfPendingJobChunkProcessing());
             _maxJobChunkTasks = options?.MaximumConcurrency ?? DataMovementConstants.MaxJobChunkTasks;
-            _checkpointer = options?.CheckpointerOptions != default ? options.CheckpointerOptions.GetCheckpointer() : CreateDefaultCheckpointer();
+            _checkpointerOptions = options?.CheckpointerOptions;
+            _checkpointer = _checkpointerOptions != default ? _checkpointerOptions.GetCheckpointer() : CreateDefaultCheckpointer();
             _dataTransfers = new Dictionary<string, DataTransfer>();
             _arrayPool = ArrayPool<byte>.Shared;
             _errorHandling = options?.ErrorHandling != default ? options.ErrorHandling : ErrorHandlingOptions.StopOnAllFailures;
@@ -289,6 +291,63 @@ namespace Azure.Storage.DataMovement
             foreach (DataTransfer transfer in totalTransfers)
             {
                 yield return transfer;
+            }
+        }
+
+        /// <summary>
+        /// Lists all the transfers stored in the checkpointer that can be resumed.
+        /// </summary>
+        /// <returns>
+        /// List of <see cref="DataTransferProperties"/> objects that can be used to rebuild resources
+        /// to resume with.
+        /// </returns>
+        public virtual async IAsyncEnumerable<DataTransferProperties> GetResumableTransfersAsync()
+        {
+            List<string> storedTransfers = await _checkpointer.GetStoredTransfersAsync().ConfigureAwait(false);
+            foreach (string transferId in storedTransfers)
+            {
+                StorageTransferStatus jobStatus = (StorageTransferStatus) await _checkpointer.GetByteValue(
+                    transferId,
+                    DataMovementConstants.PlanFile.AtomicJobStatusIndex,
+                    _cancellationToken).ConfigureAwait(false);
+
+                // Transfers marked as fully completed are not resumable
+                if (jobStatus == StorageTransferStatus.Completed)
+                {
+                    continue;
+                }
+
+                string sourceResourceId = await _checkpointer.GetResourceIdAsync(
+                    transferId,
+                    true, /* isSource */
+                    _cancellationToken).ConfigureAwait(false);
+                string destResourceId = await _checkpointer.GetResourceIdAsync(
+                    transferId,
+                    false, /* isSource */
+                    _cancellationToken).ConfigureAwait(false);
+
+                string sourcePath = await _checkpointer.GetResourcePathAsync(
+                    transferId,
+                    true, /* isSource */
+                    _cancellationToken).ConfigureAwait(false);
+                string destPath = await _checkpointer.GetResourcePathAsync(
+                    transferId,
+                    false, /* isSource */
+                    _cancellationToken).ConfigureAwait(false);
+
+                bool isContainer =
+                    (await _checkpointer.CurrentJobPartCountAsync(transferId, _cancellationToken).ConfigureAwait(false)) > 1;
+
+                yield return new DataTransferProperties
+                {
+                    TransferId = transferId,
+                    SourceScheme = sourceResourceId,
+                    SourcePath = sourcePath,
+                    DestinationScheme = destResourceId,
+                    DestinationPath = destPath,
+                    IsContainer = isContainer,
+                    Checkpointer = _checkpointerOptions,
+                };
             }
         }
 

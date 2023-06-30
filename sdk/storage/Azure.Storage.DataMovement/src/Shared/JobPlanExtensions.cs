@@ -46,25 +46,6 @@ namespace Azure.Storage.DataMovement
             return result;
         }
 
-        /// <summary>
-        /// Rehydrates from Checkpointer.
-        /// </summary>
-        /// <param name="checkpointer">
-        /// The checkpointer where the transfer state was saved to.
-        /// </param>
-        /// <param name="transferId">
-        /// Transfer Id where we want to rehydrate the resource from the job from.
-        /// </param>
-        /// /// <param name="isSource">
-        /// Whether or not we are rehydrating the source or destination. True if the source, false if the destination.
-        /// </param>
-        /// <param name="cancellationToken">
-        /// Whether or not to cancel the operation.
-        /// </param>
-        /// <returns>
-        /// The <see cref="Task"/> to rehdyrate a <see cref="LocalFileStorageResource"/> from
-        /// a stored checkpointed transfer state.
-        /// </returns>
         internal static async Task<string> GetResourcePathAsync(
             this TransferCheckpointer checkpointer,
             string transferId,
@@ -120,7 +101,37 @@ namespace Azure.Storage.DataMovement
                     }
                 }
             }
-            return storedPath.TrimEnd('\\', '/');
+
+            if (partCount == 1)
+            {
+                return storedPath;
+            }
+            else
+            {
+                int lastSlash = storedPath.Replace('\\', '/').LastIndexOf('/');
+                return storedPath.Substring(0, lastSlash);
+            }
+        }
+
+        internal static Task<string> GetResourceIdAsync(
+            this TransferCheckpointer checkpointer,
+            string transferId,
+            bool isSource,
+            CancellationToken cancellationToken)
+        {
+            int readIndex = isSource ?
+                DataMovementConstants.PlanFile.SourceResourceIdLengthIndex :
+                DataMovementConstants.PlanFile.DestinationResourceIdLengthIndex;
+            int readLength = isSource ?
+                DataMovementConstants.PlanFile.SourcePathLengthIndex - readIndex :
+                DataMovementConstants.PlanFile.DestinationPathLengthIndex - readIndex;
+
+            return checkpointer.GetHeaderValue(
+                transferId,
+                readIndex,
+                readLength,
+                DataMovementConstants.PlanFile.ResourceIdNumBytes,
+                cancellationToken);
         }
 
         internal static IDictionary<string, string> ToDictionary(this string str, string elementName)
