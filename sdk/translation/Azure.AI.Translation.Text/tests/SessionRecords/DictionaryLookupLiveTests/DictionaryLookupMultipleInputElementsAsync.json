@@ -14,7 +14,7 @@
         "x-ms-client-request-id": "f6587c2d5b6ca9358e7af9e8bfbae627",
         "x-ms-return-client-request-id": "true"
       },
-      "RequestBody": "[{\u0022Text\u0022:\u0022fly\u0022},{\u0022Text\u0022:\u0022fox\u0022}]",
+      "RequestBody": "[{\u0022text\u0022:\u0022fly\u0022},{\u0022text\u0022:\u0022fox\u0022}]",
       "StatusCode": 200,
       "ResponseHeaders": {
         "Access-Control-Expose-Headers": [
