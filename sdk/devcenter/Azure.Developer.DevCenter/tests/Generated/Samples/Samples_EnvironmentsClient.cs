@@ -27,7 +27,7 @@ namespace Azure.Developer.DevCenter.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new EnvironmentsClient(endpoint, "<projectName>", credential);
 
-            Response response = client.GetEnvironmentByUser("<environmentName>");
+            Response response = client.GetEnvironmentByUser("<userId>", "<environmentName>");
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("environmentType").ToString());
@@ -42,7 +42,7 @@ namespace Azure.Developer.DevCenter.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new EnvironmentsClient(endpoint, "<projectName>", credential);
 
-            Response response = client.GetEnvironmentByUser("<environmentName>", "me");
+            Response response = client.GetEnvironmentByUser("<userId>", "<environmentName>");
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("name").ToString());
@@ -68,7 +68,7 @@ namespace Azure.Developer.DevCenter.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new EnvironmentsClient(endpoint, "<projectName>", credential);
 
-            Response response = await client.GetEnvironmentByUserAsync("<environmentName>");
+            Response response = await client.GetEnvironmentByUserAsync("<userId>", "<environmentName>");
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("environmentType").ToString());
@@ -83,7 +83,7 @@ namespace Azure.Developer.DevCenter.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new EnvironmentsClient(endpoint, "<projectName>", credential);
 
-            Response response = await client.GetEnvironmentByUserAsync("<environmentName>", "me");
+            Response response = await client.GetEnvironmentByUserAsync("<userId>", "<environmentName>");
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("name").ToString());
@@ -114,7 +114,7 @@ namespace Azure.Developer.DevCenter.Samples
                 environmentType = "<environmentType>",
             };
 
-            Response response = client.UpdateEnvironment("<environmentName>", RequestContent.Create(data));
+            Response response = client.UpdateEnvironment("<userId>", "<environmentName>", RequestContent.Create(data));
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("environmentType").ToString());
@@ -152,7 +152,7 @@ namespace Azure.Developer.DevCenter.Samples
                 },
             };
 
-            Response response = client.UpdateEnvironment("<environmentName>", RequestContent.Create(data), "me");
+            Response response = client.UpdateEnvironment("<userId>", "<environmentName>", RequestContent.Create(data));
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("name").ToString());
@@ -183,7 +183,7 @@ namespace Azure.Developer.DevCenter.Samples
                 environmentType = "<environmentType>",
             };
 
-            Response response = await client.UpdateEnvironmentAsync("<environmentName>", RequestContent.Create(data));
+            Response response = await client.UpdateEnvironmentAsync("<userId>", "<environmentName>", RequestContent.Create(data));
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("environmentType").ToString());
@@ -221,7 +221,7 @@ namespace Azure.Developer.DevCenter.Samples
                 },
             };
 
-            Response response = await client.UpdateEnvironmentAsync("<environmentName>", RequestContent.Create(data), "me");
+            Response response = await client.UpdateEnvironmentAsync("<userId>", "<environmentName>", RequestContent.Create(data));
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("name").ToString());
@@ -515,7 +515,7 @@ namespace Azure.Developer.DevCenter.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new EnvironmentsClient(endpoint, "<projectName>", credential);
 
-            foreach (var item in client.GetEnvironmentsByUser())
+            foreach (var item in client.GetEnvironmentsByUser("<userId>"))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.GetProperty("environmentType").ToString());
@@ -531,7 +531,7 @@ namespace Azure.Developer.DevCenter.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new EnvironmentsClient(endpoint, "<projectName>", credential);
 
-            foreach (var item in client.GetEnvironmentsByUser("me", 1234))
+            foreach (var item in client.GetEnvironmentsByUser("<userId>", 1234))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.GetProperty("name").ToString());
@@ -558,7 +558,7 @@ namespace Azure.Developer.DevCenter.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new EnvironmentsClient(endpoint, "<projectName>", credential);
 
-            await foreach (var item in client.GetEnvironmentsByUserAsync())
+            await foreach (var item in client.GetEnvironmentsByUserAsync("<userId>"))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.GetProperty("environmentType").ToString());
@@ -574,7 +574,7 @@ namespace Azure.Developer.DevCenter.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new EnvironmentsClient(endpoint, "<projectName>", credential);
 
-            await foreach (var item in client.GetEnvironmentsByUserAsync("me", 1234))
+            await foreach (var item in client.GetEnvironmentsByUserAsync("<userId>", 1234))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.GetProperty("name").ToString());
@@ -860,7 +860,7 @@ namespace Azure.Developer.DevCenter.Samples
                 environmentType = "<environmentType>",
             };
 
-            var operation = client.CreateOrUpdateEnvironment(WaitUntil.Completed, "<environmentName>", RequestContent.Create(data));
+            var operation = client.CreateOrUpdateEnvironment(WaitUntil.Completed, "<userId>", "<environmentName>", RequestContent.Create(data));
 
             BinaryData responseData = operation.Value;
             JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
@@ -899,7 +899,7 @@ namespace Azure.Developer.DevCenter.Samples
                 },
             };
 
-            var operation = client.CreateOrUpdateEnvironment(WaitUntil.Completed, "<environmentName>", RequestContent.Create(data), "me");
+            var operation = client.CreateOrUpdateEnvironment(WaitUntil.Completed, "<userId>", "<environmentName>", RequestContent.Create(data));
 
             BinaryData responseData = operation.Value;
             JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
@@ -931,7 +931,7 @@ namespace Azure.Developer.DevCenter.Samples
                 environmentType = "<environmentType>",
             };
 
-            var operation = await client.CreateOrUpdateEnvironmentAsync(WaitUntil.Completed, "<environmentName>", RequestContent.Create(data));
+            var operation = await client.CreateOrUpdateEnvironmentAsync(WaitUntil.Completed, "<userId>", "<environmentName>", RequestContent.Create(data));
 
             BinaryData responseData = operation.Value;
             JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
@@ -970,7 +970,7 @@ namespace Azure.Developer.DevCenter.Samples
                 },
             };
 
-            var operation = await client.CreateOrUpdateEnvironmentAsync(WaitUntil.Completed, "<environmentName>", RequestContent.Create(data), "me");
+            var operation = await client.CreateOrUpdateEnvironmentAsync(WaitUntil.Completed, "<userId>", "<environmentName>", RequestContent.Create(data));
 
             BinaryData responseData = operation.Value;
             JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
@@ -997,7 +997,7 @@ namespace Azure.Developer.DevCenter.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new EnvironmentsClient(endpoint, "<projectName>", credential);
 
-            var operation = client.DeleteEnvironment(WaitUntil.Completed, "<environmentName>");
+            var operation = client.DeleteEnvironment(WaitUntil.Completed, "<userId>", "<environmentName>");
 
             Console.WriteLine(operation.GetRawResponse().Status);
         }
@@ -1010,7 +1010,7 @@ namespace Azure.Developer.DevCenter.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new EnvironmentsClient(endpoint, "<projectName>", credential);
 
-            var operation = client.DeleteEnvironment(WaitUntil.Completed, "<environmentName>", "me");
+            var operation = client.DeleteEnvironment(WaitUntil.Completed, "<userId>", "<environmentName>");
 
             Console.WriteLine(operation.GetRawResponse().Status);
         }
@@ -1023,7 +1023,7 @@ namespace Azure.Developer.DevCenter.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new EnvironmentsClient(endpoint, "<projectName>", credential);
 
-            var operation = await client.DeleteEnvironmentAsync(WaitUntil.Completed, "<environmentName>");
+            var operation = await client.DeleteEnvironmentAsync(WaitUntil.Completed, "<userId>", "<environmentName>");
 
             Console.WriteLine(operation.GetRawResponse().Status);
         }
@@ -1036,7 +1036,7 @@ namespace Azure.Developer.DevCenter.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new EnvironmentsClient(endpoint, "<projectName>", credential);
 
-            var operation = await client.DeleteEnvironmentAsync(WaitUntil.Completed, "<environmentName>", "me");
+            var operation = await client.DeleteEnvironmentAsync(WaitUntil.Completed, "<userId>", "<environmentName>");
 
             Console.WriteLine(operation.GetRawResponse().Status);
         }
@@ -1054,7 +1054,7 @@ namespace Azure.Developer.DevCenter.Samples
                 actionId = "<actionId>",
             };
 
-            var operation = client.DeployEnvironmentAction(WaitUntil.Completed, "<environmentName>", RequestContent.Create(data));
+            var operation = client.DeployEnvironmentAction(WaitUntil.Completed, "<userId>", "<environmentName>", RequestContent.Create(data));
 
             Console.WriteLine(operation.GetRawResponse().Status);
         }
@@ -1073,7 +1073,7 @@ namespace Azure.Developer.DevCenter.Samples
                 parameters = new { },
             };
 
-            var operation = client.DeployEnvironmentAction(WaitUntil.Completed, "<environmentName>", RequestContent.Create(data), "me");
+            var operation = client.DeployEnvironmentAction(WaitUntil.Completed, "<userId>", "<environmentName>", RequestContent.Create(data));
 
             Console.WriteLine(operation.GetRawResponse().Status);
         }
@@ -1091,7 +1091,7 @@ namespace Azure.Developer.DevCenter.Samples
                 actionId = "<actionId>",
             };
 
-            var operation = await client.DeployEnvironmentActionAsync(WaitUntil.Completed, "<environmentName>", RequestContent.Create(data));
+            var operation = await client.DeployEnvironmentActionAsync(WaitUntil.Completed, "<userId>", "<environmentName>", RequestContent.Create(data));
 
             Console.WriteLine(operation.GetRawResponse().Status);
         }
@@ -1110,7 +1110,7 @@ namespace Azure.Developer.DevCenter.Samples
                 parameters = new { },
             };
 
-            var operation = await client.DeployEnvironmentActionAsync(WaitUntil.Completed, "<environmentName>", RequestContent.Create(data), "me");
+            var operation = await client.DeployEnvironmentActionAsync(WaitUntil.Completed, "<userId>", "<environmentName>", RequestContent.Create(data));
 
             Console.WriteLine(operation.GetRawResponse().Status);
         }
@@ -1128,7 +1128,7 @@ namespace Azure.Developer.DevCenter.Samples
                 actionId = "<actionId>",
             };
 
-            var operation = client.CustomEnvironmentAction(WaitUntil.Completed, "<environmentName>", RequestContent.Create(data));
+            var operation = client.CustomEnvironmentAction(WaitUntil.Completed, "<userId>", "<environmentName>", RequestContent.Create(data));
 
             Console.WriteLine(operation.GetRawResponse().Status);
         }
@@ -1147,7 +1147,7 @@ namespace Azure.Developer.DevCenter.Samples
                 parameters = new { },
             };
 
-            var operation = client.CustomEnvironmentAction(WaitUntil.Completed, "<environmentName>", RequestContent.Create(data), "me");
+            var operation = client.CustomEnvironmentAction(WaitUntil.Completed, "<userId>", "<environmentName>", RequestContent.Create(data));
 
             Console.WriteLine(operation.GetRawResponse().Status);
         }
@@ -1165,7 +1165,7 @@ namespace Azure.Developer.DevCenter.Samples
                 actionId = "<actionId>",
             };
 
-            var operation = await client.CustomEnvironmentActionAsync(WaitUntil.Completed, "<environmentName>", RequestContent.Create(data));
+            var operation = await client.CustomEnvironmentActionAsync(WaitUntil.Completed, "<userId>", "<environmentName>", RequestContent.Create(data));
 
             Console.WriteLine(operation.GetRawResponse().Status);
         }
@@ -1184,7 +1184,7 @@ namespace Azure.Developer.DevCenter.Samples
                 parameters = new { },
             };
 
-            var operation = await client.CustomEnvironmentActionAsync(WaitUntil.Completed, "<environmentName>", RequestContent.Create(data), "me");
+            var operation = await client.CustomEnvironmentActionAsync(WaitUntil.Completed, "<userId>", "<environmentName>", RequestContent.Create(data));
 
             Console.WriteLine(operation.GetRawResponse().Status);
         }
