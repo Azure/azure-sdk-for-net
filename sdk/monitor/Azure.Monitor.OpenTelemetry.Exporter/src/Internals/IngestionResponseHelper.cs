@@ -50,6 +50,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             [JsonPropertyName("errors")]
             public List<ErrorObject>? Errors { get; set; }
         }
+
         private class ErrorObject
         {
             [JsonPropertyName("index")]
