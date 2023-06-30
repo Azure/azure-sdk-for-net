@@ -853,11 +853,11 @@ namespace Azure.Analytics.Purview.Sharing
             uri.AppendPath(":notify", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             if (repeatabilityRequestId != null)
             {
                 request.Headers.Add("repeatability-request-id", repeatabilityRequestId);
             }
-            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
