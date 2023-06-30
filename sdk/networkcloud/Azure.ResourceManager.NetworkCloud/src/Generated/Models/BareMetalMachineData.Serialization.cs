@@ -72,6 +72,7 @@ namespace Azure.ResourceManager.NetworkCloud
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
+            Optional<IReadOnlyList<string>> associatedResourceIds = default;
             string bmcConnectionString = default;
             AdministrativeCredentials bmcCredentials = default;
             string bmcMacAddress = default;
@@ -158,6 +159,20 @@ namespace Azure.ResourceManager.NetworkCloud
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
+                        if (property0.NameEquals("associatedResourceIds"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            List<string> array = new List<string>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(item.GetString());
+                            }
+                            associatedResourceIds = array;
+                            continue;
+                        }
                         if (property0.NameEquals("bmcConnectionString"u8))
                         {
                             bmcConnectionString = property0.Value.GetString();
@@ -343,7 +358,7 @@ namespace Azure.ResourceManager.NetworkCloud
                     continue;
                 }
             }
-            return new BareMetalMachineData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, extendedLocation, bmcConnectionString, bmcCredentials, bmcMacAddress, bootMacAddress, clusterId.Value, Optional.ToNullable(cordonStatus), Optional.ToNullable(detailedStatus), detailedStatusMessage.Value, hardwareInventory.Value, hardwareValidationStatus.Value, Optional.ToList(hybridAksClustersAssociatedIds), kubernetesNodeName.Value, kubernetesVersion.Value, machineDetails, machineName, machineSkuId, oamIPv4Address.Value, oamIPv6Address.Value, osImage.Value, Optional.ToNullable(powerState), Optional.ToNullable(provisioningState), rackId, rackSlot, Optional.ToNullable(readyState), serialNumber, serviceTag.Value, Optional.ToList(virtualMachinesAssociatedIds));
+            return new BareMetalMachineData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, extendedLocation, Optional.ToList(associatedResourceIds), bmcConnectionString, bmcCredentials, bmcMacAddress, bootMacAddress, clusterId.Value, Optional.ToNullable(cordonStatus), Optional.ToNullable(detailedStatus), detailedStatusMessage.Value, hardwareInventory.Value, hardwareValidationStatus.Value, Optional.ToList(hybridAksClustersAssociatedIds), kubernetesNodeName.Value, kubernetesVersion.Value, machineDetails, machineName, machineSkuId, oamIPv4Address.Value, oamIPv6Address.Value, osImage.Value, Optional.ToNullable(powerState), Optional.ToNullable(provisioningState), rackId, rackSlot, Optional.ToNullable(readyState), serialNumber, serviceTag.Value, Optional.ToList(virtualMachinesAssociatedIds));
         }
     }
 }
