@@ -11,6 +11,7 @@ using NUnit.Framework;
 
 namespace Azure.Communication.Chat.Tests.samples
 {
+    [ExcludeFromCodeCoverage]
     public partial class Sample1_ThreadOperations : SamplesBase<ChatTestEnvironment>
     {
         // This sample demonstrates the operations that can be performed on a thread: create, get, getThreads, update and delete.

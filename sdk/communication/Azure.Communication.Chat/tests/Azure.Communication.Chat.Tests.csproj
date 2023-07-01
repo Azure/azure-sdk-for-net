@@ -5,6 +5,10 @@
       <RunSettingsFilePath>$(MSBuildProjectDirectory)\.runsettings</RunSettingsFilePath>
   </PropertyGroup>
   <ItemGroup>
+    <PackageReference Include="coverlet.msbuild" VersionOverride="6.0.0">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
     <PackageReference Include="NUnit" />
     <PackageReference Include="NUnit3TestAdapter" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" />
@@ -13,6 +17,7 @@
     <ProjectReference Include="$(AzureCoreTestFramework)" />
     <ProjectReference Include="..\..\Azure.Communication.Identity\src\Azure.Communication.Identity.csproj" />
     <ProjectReference Include="..\src\Azure.Communication.Chat.csproj" />
+    <PackageReference Update="coverlet.collector" VersionOverride="3.2.0" PrivateAssets="All" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\tests.yml" Link="\tests.yml" />
