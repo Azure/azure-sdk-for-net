@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.AppContainers
             return message;
         }
 
-        /// <summary> Get a Container Apps Job&apos;s executions. </summary>
+        /// <summary> Get a Container Apps Job's executions. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="jobName"> Name of the Container Apps Job. </param>
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.AppContainers
             }
         }
 
-        /// <summary> Get a Container Apps Job&apos;s executions. </summary>
+        /// <summary> Get a Container Apps Job's executions. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="jobName"> Name of the Container Apps Job. </param>
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.AppContainers
             return message;
         }
 
-        /// <summary> Get a Container Apps Job&apos;s executions. </summary>
+        /// <summary> Get a Container Apps Job's executions. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.AppContainers
             }
         }
 
-        /// <summary> Get a Container Apps Job&apos;s executions. </summary>
+        /// <summary> Get a Container Apps Job's executions. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>

@@ -6,8 +6,8 @@
 - Added `ResourceOptions` to `BlobStorageResourceContainerOptions` which allows setting resource specific options on all resources in a container transfer.
 
 ### Breaking Changes
-- Removed `Traits` and `States` from `BlobStorageResourceContainerOptions`.
-- Removed `CopyMethod` from `BlobStorageResourceContainerOptions`. Use `ResouceOptions.CopyMethod` now.
+- [Breaking Change] Removed several options from `BlobStorageResourceContainerOptions`.
+- [Breaking Change] Removed several options from `BlockBlobStorageResourceOptions`, `AppendBlobStorageResourceOptions`, and `PageBlobStorageResourceOptions`.
 
 ### Bugs Fixed
 - Fixed bug where the extension methods `BlobContainerClient.StartUploadDirectoryAsync` and `StartDownloadToDirectoryAsync` throws an exception when attempting to lazy construct the `TransferManager`.

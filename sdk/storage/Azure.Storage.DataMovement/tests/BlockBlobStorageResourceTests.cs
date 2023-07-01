@@ -2,11 +2,8 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Reflection.Metadata;
-using System.Text;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Azure.Storage.Blobs;
@@ -25,7 +22,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
            : base(async, serviceVersion, null /* RecordedTestMode.Record /* to re-record */)
         { }
 
-        [RecordedTest]
+        [Test]
         public void Ctor_PublicUri()
         {
             // Arrange
@@ -37,38 +34,6 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             Assert.AreEqual(uri, storageResource.Uri);
             Assert.AreEqual(blobClient.Name, storageResource.Path);
             Assert.AreEqual(ProduceUriType.ProducesUri, storageResource.CanProduceUri);
-            // If no options were specified then we default to SyncCopy
-            Assert.AreEqual(TransferCopyMethod.SyncCopy, storageResource.ServiceCopyMethod);
-        }
-
-        [RecordedTest]
-        public void Ctor_Options()
-        {
-            // Arrange
-            Uri uri = new Uri("https://storageaccount.blob.core.windows.net/");
-            BlockBlobClient blobClient = new BlockBlobClient(uri);
-            // Default Options
-            BlockBlobStorageResourceOptions defaultOptions = new BlockBlobStorageResourceOptions();
-            BlockBlobStorageResource resourceDefaultOptions = new BlockBlobStorageResource(blobClient, defaultOptions);
-
-            // Assert
-            Assert.AreEqual(uri, resourceDefaultOptions.Uri);
-            Assert.AreEqual(blobClient.Name, resourceDefaultOptions.Path);
-            Assert.AreEqual(ProduceUriType.ProducesUri, resourceDefaultOptions.CanProduceUri);
-            Assert.AreEqual(TransferCopyMethod.None, resourceDefaultOptions.ServiceCopyMethod);
-
-            // Arrange - Set up options specifying different async copy
-            BlockBlobStorageResourceOptions optionsWithAsyncCopy = new BlockBlobStorageResourceOptions()
-            {
-                CopyMethod = TransferCopyMethod.AsyncCopy,
-            };
-            BlockBlobStorageResource resourceSyncCopy = new BlockBlobStorageResource(blobClient, optionsWithAsyncCopy);
-
-            // Assert
-            Assert.AreEqual(uri, resourceSyncCopy.Uri);
-            Assert.AreEqual(blobClient.Name, resourceSyncCopy.Path);
-            Assert.AreEqual(ProduceUriType.ProducesUri, resourceSyncCopy.CanProduceUri);
-            Assert.AreEqual(TransferCopyMethod.AsyncCopy, resourceSyncCopy.ServiceCopyMethod);
         }
 
         [RecordedTest]

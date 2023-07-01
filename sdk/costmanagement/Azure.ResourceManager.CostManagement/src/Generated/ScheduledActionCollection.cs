@@ -213,7 +213,7 @@ namespace Azure.ResourceManager.CostManagement
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="filter"> May be used to filter scheduled actions by properties/viewId. Supported operator is &apos;eq&apos;. </param>
+        /// <param name="filter"> May be used to filter scheduled actions by properties/viewId. Supported operator is 'eq'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ScheduledActionResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ScheduledActionResource> GetAllAsync(string filter = null, CancellationToken cancellationToken = default)
@@ -236,7 +236,7 @@ namespace Azure.ResourceManager.CostManagement
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="filter"> May be used to filter scheduled actions by properties/viewId. Supported operator is &apos;eq&apos;. </param>
+        /// <param name="filter"> May be used to filter scheduled actions by properties/viewId. Supported operator is 'eq'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ScheduledActionResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ScheduledActionResource> GetAll(string filter = null, CancellationToken cancellationToken = default)

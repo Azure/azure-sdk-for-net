@@ -18,17 +18,17 @@ namespace Azure.ResourceManager.Quantum.Models
         }
 
         /// <summary> Initializes a new instance of ProviderPropertiesAad. </summary>
-        /// <param name="applicationId"> Provider&apos;s application id. </param>
-        /// <param name="tenantId"> Provider&apos;s tenant id. </param>
+        /// <param name="applicationId"> Provider's application id. </param>
+        /// <param name="tenantId"> Provider's tenant id. </param>
         internal ProviderPropertiesAad(string applicationId, Guid? tenantId)
         {
             ApplicationId = applicationId;
             TenantId = tenantId;
         }
 
-        /// <summary> Provider&apos;s application id. </summary>
+        /// <summary> Provider's application id. </summary>
         public string ApplicationId { get; }
-        /// <summary> Provider&apos;s tenant id. </summary>
+        /// <summary> Provider's tenant id. </summary>
         public Guid? TenantId { get; }
     }
 }

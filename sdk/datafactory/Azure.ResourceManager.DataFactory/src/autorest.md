@@ -9,12 +9,15 @@ generate-model-factory: false
 csharp: true
 library-name: DataFactory
 namespace: Azure.ResourceManager.DataFactory
-require: https://github.com/Azure/azure-rest-api-specs/blob/de400f7204d30d25543ac967636180728d52a88f/specification/datafactory/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/cd06d327e115cdb55f8e7c9fd1b23fa551b5b750/specification/datafactory/resource-manager/readme.md
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
+
+#mgmt-debug: 
+#  show-serialized-names: true
 
 format-by-name-rules:
   'tenantId': 'uuid'
@@ -116,120 +119,122 @@ rename-mapping:
   SsisPackageLocationType.SSISDB: SsisDB
   # Factory
   Factory: DataFactory
-  FactoryListResponse: FactoryListResult
+  FactoryListResponse: DataFactoryListResult
   # Dataset
-  Dataset: FactoryDatasetDefinition
-  DatasetResource: FactoryDataset
-  HttpDataset: HttpFileDataset
+  Dataset: DataFactoryDatasetDefinition
+  DatasetResource: DataFactoryDataset
+  HttpDataset: DataFactoryHttpDataset
   AvroFormat: DatasetAvroFormat
   JsonFormat: DatasetJsonFormat
   OrcFormat: DatasetOrcFormat
   ParquetFormat: DatasetParquetFormat
   TextFormat: DatasetTextFormat
   # DataFlow
-  DataFlow: FactoryDataFlowDefinition
-  DataFlowResource: FactoryDataFlow
-  Flowlet: FactoryFlowletDefinition
-  MappingDataFlow: FactoryMappingDataFlowDefinition
-  WranglingDataFlow: FactoryWranglingDataFlowDefinition
+  DataFlow: DataFactoryDataFlowDefinition
+  DataFlowResource: DataFactoryDataFlow
+  Flowlet: DataFactoryFlowletDefinition
+  MappingDataFlow: DataFactoryMappingDataFlowDefinition
+  WranglingDataFlow: DataFactoryWranglingDataFlowDefinition
   Transformation: DataFlowTransformation
   # Data source
-  BlobSink: AzureBlobSink
-  BlobSource: AzureBlobSource
+  BlobSink: DataFactoryBlobSink
+  BlobSource: DataFactoryBlobSource
   # Debug resource
-  AddDataFlowToDebugSessionResponse: FactoryDataFlowStartDebugSessionResult
-  CreateDataFlowDebugSessionRequest: FactoryDataFlowDebugSessionContent
-  CreateDataFlowDebugSessionResponse: FactoryDataFlowCreateDebugSessionResult
-  DataFlowDebugResource: FactoryDataFlowDebugInfo
-  DataFlowDebugCommandResponse: FactoryDataFlowDebugCommandResult
-  DataFlowDebugPackage: FactoryDataFlowDebugPackageContent
-  DatasetDebugResource: FactoryDatasetDebugInfo
-  IntegrationRuntimeDebugResource: FactoryIntegrationRuntimeDebugInfo
-  LinkedServiceDebugResource: FactoryLinkedServiceDebugInfo
-  SubResourceDebugResource: FactoryDebugInfo
+  AddDataFlowToDebugSessionResponse: DataFactoryDataFlowStartDebugSessionResult
+  CreateDataFlowDebugSessionRequest: DataFactoryDataFlowDebugSessionContent
+  CreateDataFlowDebugSessionResponse: DataFactoryDataFlowCreateDebugSessionResult
+  DataFlowDebugResource: DataFactoryDataFlowDebugInfo
+  DataFlowDebugCommandResponse: DataFactoryDataFlowDebugCommandResult
+  DataFlowDebugPackage: DataFactoryDataFlowDebugPackageContent
+  DatasetDebugResource: DataFactoryDatasetDebugInfo
+  IntegrationRuntimeDebugResource: DataFactoryIntegrationRuntimeDebugInfo
+  LinkedServiceDebugResource: DataFactoryLinkedServiceDebugInfo
+  SubResourceDebugResource: DataFactoryDebugInfo
   # GlobalParameter
-  GlobalParameterResource: FactoryGlobalParameter
-  GlobalParameterSpecification: FactoryGlobalParameterSpecification
-  GlobalParameterType: FactoryGlobalParameterType
+  GlobalParameterResource: DataFactoryGlobalParameter
+  GlobalParameterSpecification: DataFactoryGlobalParameterSpecification
+  GlobalParameterType: DataFactoryGlobalParameterType
   ParameterSpecification: EntityParameterSpecification
   ParameterDefinitionSpecification: EntityParameterDefinitionSpecification
   ParameterType: EntityParameterType
   # IntegrationRuntime
-  IntegrationRuntime: IntegrationRuntimeDefinition
-  IntegrationRuntimeResource: FactoryIntegrationRuntime
-  IntegrationRuntimeStatusResponse: IntegrationRuntimeStatusResult
-  PackageStore: IntegrationRuntimeSsisPackageStore
+  IntegrationRuntime: DataFactoryIntegrationRuntimeDefinition
+  IntegrationRuntimeResource: DataFactoryIntegrationRuntime
+  IntegrationRuntimeStatusResponse: DataFactoryIntegrationRuntimeStatusResult
+  PackageStore: DataFactoryPackageStore
   # LinkedService
-  LinkedService: FactoryLinkedServiceDefinition
-  LinkedServiceReference: FactoryLinkedServiceReference
-  LinkedServiceReferenceType: FactoryLinkedServiceReferenceType
-  LinkedServiceResource: FactoryLinkedService
+  LinkedService: DataFactoryLinkedServiceDefinition
+  LinkedServiceResource: DataFactoryLinkedService
+  LinkedServiceReference: DataFactoryLinkedServiceReference
+  LinkedServiceReferenceType: DataFactoryLinkedServiceReferenceType
   # Network
-  ManagedVirtualNetworkResource: FactoryVirtualNetwork
-  PublicNetworkAccess: FactoryPublicNetworkAccess
+  ManagedVirtualNetworkResource: DataFactoryManagedVirtualNetwork
+  PublicNetworkAccess: DataFactoryPublicNetworkAccess
   # Pipeline
-  PipelineResource: FactoryPipeline
-  PipelineListResponse: FactoryPipelineListResult
-  PipelinePolicy: FactoryPipelinePolicy
-  PipelineReference: FactoryPipelineReference
-  PipelineReferenceType: FactoryPipelineReferenceType
-  PipelineRun: FactoryPipelineRunInfo
-  PipelineRunInvokedBy: FactoryPipelineRunInvokedByInfo
-  PipelineRunsQueryResponse: FactoryPipelineRunsQueryResult
-  Activity: PipelineActivity
-  ActivityRun: ActivityRunInfo
-  ActivityRunsQueryResponse: ActivityRunsResult
+  PipelineResource: DataFactoryPipeline
+  PipelineListResponse: DataFactoryPipelineListResult
+  PipelinePolicy: DataFactoryPipelinePolicy
+  PipelineReference: DataFactoryPipelineReference
+  PipelineReferenceType: DataFactoryPipelineReferenceType
+  PipelineRun: DataFactoryPipelineRunInfo
+  PipelineRunInvokedBy: DataFactoryPipelineRunEntityInfo
+  PipelineRunsQueryResponse: DataFactoryPipelineRunsQueryResult
+  Activity: DataFactoryActivity
+  ActivityRun: DataFactoryActivityRunInfo
+  ActivityRunsQueryResponse: DataFactoryActivityRunsResult
   CopySource: CopyActivitySource
   CreateRunResponse: PipelineCreateRunResult
-  Expression: FactoryExpressionDefinition
-  ExpressionType: FactoryExpressionType
+  Expression: DataFactoryExpressionDefinition
+  ExpressionType: DataFactoryExpressionType
   GetMetadataActivity: GetDatasetMetadataActivity
   SwitchCase: SwitchCaseActivity
   UserProperty: ActivityUserProperty
   VariableSpecification: PipelineVariableSpecification
   VariableType: PipelineVariableType
   # Private link
-  ManagedPrivateEndpointResource: FactoryPrivateEndpoint
-  RemotePrivateEndpointConnection: FactoryPrivateEndpointProperties
-  PrivateEndpointConnectionResource: FactoryPrivateEndpointConnection
-  PrivateLinkResource: FactoryPrivateLinkResource
-  PrivateLinkResourceProperties: FactoryPrivateLinkResourceProperties
+  ManagedPrivateEndpointResource: DataFactoryPrivateEndpoint
+  RemotePrivateEndpointConnection: DataFactoryPrivateEndpointProperties
+  PrivateEndpointConnectionResource: DataFactoryPrivateEndpointConnection
+  PrivateLinkResource: DataFactoryPrivateLinkResource
+  PrivateLinkResourceProperties: DataFactoryPrivateLinkResourceProperties
   # Trigger
-  BlobEventsTrigger: AzureBlobEventsTrigger
-  BlobEventTypes: AzureBlobEventType
-  BlobTrigger: AzureBlobTrigger
-  TriggerResource: FactoryTrigger
-  Trigger: FactoryTriggerDefinition
-  TriggerListResponse: FactoryTriggerListResult
-  TriggerQueryResponse: FactoryTriggerQueryResult
-  TriggerReference: FactoryTriggerReference
-  TriggerReferenceType: FactoryTriggerReferenceType
-  TriggerRun: FactoryTriggerRun
-  TriggerRunsQueryResponse: FactoryTriggerRunsQueryResult
-  TriggerRunStatus: FactoryTriggerRunStatus
-  TriggerRuntimeState: FactoryTriggerRuntimeState
-  TriggerSubscriptionOperationStatus: FactoryTriggerSubscriptionOperationResult
+  BlobEventsTrigger: DataFactoryBlobEventsTrigger
+  BlobEventTypes: DataFactoryBlobEventType
+  BlobTrigger: DataFactoryBlobTrigger
+  TriggerResource: DataFactoryTrigger
+  Trigger: DataFactoryTriggerDefinition
+  TriggerListResponse: DataFactoryTriggerListResult
+  TriggerQueryResponse: DataFactoryTriggerQueryResult
+  TriggerReference: DataFactoryTriggerReference
+  TriggerReferenceType: DataFactoryTriggerReferenceType
+  TriggerRun: DataFactoryTriggerRun
+  TriggerRunsQueryResponse: DataFactoryTriggerRunsQueryResult
+  TriggerRunStatus: DataFactoryTriggerRunStatus
+  TriggerRuntimeState: DataFactoryTriggerRuntimeState
+  TriggerSubscriptionOperationStatus: DataFactoryTriggerSubscriptionOperationResult
   # Others
-  UserAccessPolicy: FactoryDataPlaneUserAccessPolicy
-  AccessPolicyResponse: FactoryDataPlaneAccessPolicyResult
-  CredentialReference: FactoryCredentialReference
-  CredentialReferenceType: FactoryCredentialReferenceType
-  DaysOfWeek: FactoryDayOfWeek
-  EncryptionConfiguration: FactoryEncryptionConfiguration
+  UserAccessPolicy: DataFactoryDataPlaneUserAccessPolicy
+  AccessPolicyResponse: DataFactoryDataPlaneAccessPolicyResult
+  CredentialReference: DataFactoryCredentialReference
+  CredentialReferenceType: DataFactoryCredentialReferenceType
+  DaysOfWeek: DataFactoryDayOfWeek
+  EncryptionConfiguration: DataFactoryEncryptionConfiguration
   ExposureControlBatchResponse: ExposureControlBatchResult
   ExposureControlResponse: ExposureControlResult
   ExposureControlRequest: ExposureControlContent
   HDInsightActivityDebugInfoOption: HDInsightActivityDebugInfoOptionSetting
   GitHubAccessTokenResponse: GitHubAccessTokenResult
-  HttpSource: HttpFileSource
-  MetadataItem: FactoryMetadataItemInfo
-  PurviewConfiguration: FactoryPurviewConfiguration
+  HttpSource: DataFactoryHttpFileSource
+  MetadataItem: DataFactoryMetadataItemInfo
+  PurviewConfiguration: DataFactoryPurviewConfiguration
   RunFilterParameters: RunFilterContent
-  SecretBase: FactorySecretBaseDefinition
-  SecureString: FactorySecretString
+  SecretBase: DataFactorySecretBaseDefinition
+  SecureString: DataFactorySecretString
   SsisObjectMetadataStatusResponse: SsisObjectMetadataStatusResult
   SsisParameter: SsisParameterInfo
   IntegrationRuntimeOutboundNetworkDependenciesEndpointsResponse: IntegrationRuntimeOutboundNetworkDependenciesResult
+  ManagedIdentityCredential: DataFactoryManagedIdentityCredentialDefinition
+  ManagedIdentityCredentialResource: DataFactoryManagedIdentityCredential
 
 override-operation-name:
   ActivityRuns_QueryByPipelineRun: GetActivityRun
@@ -254,11 +259,12 @@ directive:
     transform: >
       $.DataFlowDebugSessionInfo.properties.lastActivityTime['format'] = 'date-time';
       $.UpdateIntegrationRuntimeRequest.properties.updateDelayOffset['format'] = 'duration';
-  - from: Pipeline.json
-    where: $.definitions
-    transform: >
-      $.PipelineElapsedTimeMetricPolicy.properties.duration['type'] = 'string';
-      $.PipelineElapsedTimeMetricPolicy.properties.duration['format'] = 'duration';
+      $.LinkedServiceReference.properties.type['x-ms-enum']['name'] = 'LinkedServiceReferenceType';
+#  - from: Pipeline.json
+#    where: $.definitions
+#    transform: >
+#      $.PipelineElapsedTimeMetricPolicy.properties.duration['type'] = 'string';
+#      $.PipelineElapsedTimeMetricPolicy.properties.duration['format'] = 'duration';
   - from: IntegrationRuntime.json
     where: $.definitions
     transform: >

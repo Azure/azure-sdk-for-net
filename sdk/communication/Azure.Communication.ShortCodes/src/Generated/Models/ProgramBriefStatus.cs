@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.Communication.ShortCodes.Models
 {
-    /// <summary> Program Brief status e.g. &apos;submitted&apos;, &apos;approved&apos;, etc. </summary>
+    /// <summary> Program Brief status e.g. 'submitted', 'approved', etc. </summary>
     public readonly partial struct ProgramBriefStatus : IEquatable<ProgramBriefStatus>
     {
         private readonly string _value;

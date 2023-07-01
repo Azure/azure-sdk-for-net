@@ -9,7 +9,6 @@ using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.Buffers;
-using Azure.Core.Dynamic;
 using Azure.Core.Serialization;
 
 namespace Azure.Core
@@ -99,17 +98,18 @@ namespace Azure.Core
         /// Creates an instance of <see cref="RequestContent"/> that wraps a serialized version of an object.
         /// </summary>
         /// <param name="serializable">The <see cref="object"/> to serialize.</param>
-        /// <param name="propertyNamingConvention">The naming convention to use for property names in the serialized content.</param>
+        /// <param name="propertyNameFormat">The format to use for property names in the serialized content.</param>
+        /// <param name="dateTimeFormat">The format to use for DateTime and DateTimeOffset values in the serialized content.</param>
         /// <returns>An instance of <see cref="RequestContent"/> that wraps a serialized version of the object.</returns>
-        public static RequestContent Create(object serializable, PropertyNamingConvention propertyNamingConvention)
+        public static RequestContent Create(object serializable, JsonPropertyNames propertyNameFormat, string dateTimeFormat = DynamicData.RoundTripFormat)
         {
-            JsonSerializerOptions options = new();
-            if (propertyNamingConvention == PropertyNamingConvention.CamelCase)
+            DynamicDataOptions options = new()
             {
-                options.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
+                PropertyNameFormat = propertyNameFormat,
+                DateTimeFormat = dateTimeFormat
             };
-
-            ObjectSerializer serializer = new JsonObjectSerializer(options);
+            JsonSerializerOptions serializerOptions = DynamicDataOptions.ToSerializerOptions(options);
+            ObjectSerializer serializer = new JsonObjectSerializer(serializerOptions);
             return Create(serializer.Serialize(serializable));
         }
 

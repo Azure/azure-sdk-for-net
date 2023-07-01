@@ -37,7 +37,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="userProperties"> Activity user properties. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
         /// <param name="on"> An expression that would evaluate to a string or integer. This is used to determine the block of activities in cases that will be executed. </param>
-        /// <param name="cases"> List of cases that correspond to expected values of the &apos;on&apos; property. This is an optional property and if not provided, the activity will execute activities provided in defaultActivities. </param>
+        /// <param name="cases"> List of cases that correspond to expected values of the 'on' property. This is an optional property and if not provided, the activity will execute activities provided in defaultActivities. </param>
         /// <param name="defaultActivities">
         /// List of activities to execute if no case condition is satisfied. This is an optional property and if not provided, the activity will exit without any action.
         /// Please note <see cref="Activity"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
@@ -53,7 +53,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         /// <summary> An expression that would evaluate to a string or integer. This is used to determine the block of activities in cases that will be executed. </summary>
         public Expression On { get; set; }
-        /// <summary> List of cases that correspond to expected values of the &apos;on&apos; property. This is an optional property and if not provided, the activity will execute activities provided in defaultActivities. </summary>
+        /// <summary> List of cases that correspond to expected values of the 'on' property. This is an optional property and if not provided, the activity will execute activities provided in defaultActivities. </summary>
         public IList<SwitchCase> Cases { get; }
         /// <summary>
         /// List of activities to execute if no case condition is satisfied. This is an optional property and if not provided, the activity will exit without any action.

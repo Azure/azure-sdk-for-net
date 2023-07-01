@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.StoragePool.Models
         public string ManagedBy { get; set; }
         /// <summary> List of Azure resource ids that manage this resource. </summary>
         public IList<string> ManagedByExtended { get; }
-        /// <summary> Logical zone for Disk Pool resource; example: [&quot;1&quot;]. </summary>
+        /// <summary> Logical zone for Disk Pool resource; example: ["1"]. </summary>
         public IList<string> AvailabilityZones { get; }
         /// <summary> List of Azure Managed Disks to attach to a Disk Pool. </summary>
         public IList<WritableSubResource> Disks { get; }

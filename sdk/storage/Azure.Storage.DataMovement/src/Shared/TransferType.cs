@@ -8,7 +8,7 @@ using System.Text;
 namespace Azure.Storage.DataMovement
 {
     /// <summary>
-    /// Defines the recommended Transfer Type of the <see cref="StorageResource"/>.
+    /// Defines the recommended Transfer Type of the <see cref="StorageResourceSingle"/>.
     /// </summary>
     public enum TransferType
     {

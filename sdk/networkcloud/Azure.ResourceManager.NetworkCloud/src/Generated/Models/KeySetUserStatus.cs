@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         }
 
         /// <summary> Initializes a new instance of KeySetUserStatus. </summary>
-        /// <param name="azureUserName"> The Azure Active Directory user name (email name). </param>
+        /// <param name="azureUserName"> The user name that will be used for access. </param>
         /// <param name="status"> The indicator of whether the user is currently deployed for access. </param>
         /// <param name="statusMessage"> The additional information describing the current status of this user, if any available. </param>
         internal KeySetUserStatus(string azureUserName, BareMetalMachineKeySetUserSetupStatus? status, string statusMessage)
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             StatusMessage = statusMessage;
         }
 
-        /// <summary> The Azure Active Directory user name (email name). </summary>
+        /// <summary> The user name that will be used for access. </summary>
         public string AzureUserName { get; }
         /// <summary> The indicator of whether the user is currently deployed for access. </summary>
         public BareMetalMachineKeySetUserSetupStatus? Status { get; }

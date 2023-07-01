@@ -15,7 +15,7 @@ namespace Azure.Search.Documents.Indexes.Models
     public partial class CustomNormalizer : LexicalNormalizer
     {
         /// <summary> Initializes a new instance of CustomNormalizer. </summary>
-        /// <param name="name"> The name of the normalizer. It must only contain letters, digits, spaces, dashes or underscores, can only start and end with alphanumeric characters, and is limited to 128 characters. It cannot end in &apos;.microsoft&apos; nor &apos;.lucene&apos;, nor be named &apos;asciifolding&apos;, &apos;standard&apos;, &apos;lowercase&apos;, &apos;uppercase&apos;, or &apos;elision&apos;. </param>
+        /// <param name="name"> The name of the normalizer. It must only contain letters, digits, spaces, dashes or underscores, can only start and end with alphanumeric characters, and is limited to 128 characters. It cannot end in '.microsoft' nor '.lucene', nor be named 'asciifolding', 'standard', 'lowercase', 'uppercase', or 'elision'. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public CustomNormalizer(string name) : base(name)
         {
@@ -28,7 +28,7 @@ namespace Azure.Search.Documents.Indexes.Models
 
         /// <summary> Initializes a new instance of CustomNormalizer. </summary>
         /// <param name="oDataType"> Identifies the concrete type of the normalizer. </param>
-        /// <param name="name"> The name of the normalizer. It must only contain letters, digits, spaces, dashes or underscores, can only start and end with alphanumeric characters, and is limited to 128 characters. It cannot end in &apos;.microsoft&apos; nor &apos;.lucene&apos;, nor be named &apos;asciifolding&apos;, &apos;standard&apos;, &apos;lowercase&apos;, &apos;uppercase&apos;, or &apos;elision&apos;. </param>
+        /// <param name="name"> The name of the normalizer. It must only contain letters, digits, spaces, dashes or underscores, can only start and end with alphanumeric characters, and is limited to 128 characters. It cannot end in '.microsoft' nor '.lucene', nor be named 'asciifolding', 'standard', 'lowercase', 'uppercase', or 'elision'. </param>
         /// <param name="tokenFilters"> A list of token filters used to filter out or modify the input token. For example, you can specify a lowercase filter that converts all characters to lowercase. The filters are run in the order in which they are listed. </param>
         /// <param name="charFilters"> A list of character filters used to prepare input text before it is processed. For instance, they can replace certain characters or symbols. The filters are run in the order in which they are listed. </param>
         internal CustomNormalizer(string oDataType, string name, IList<TokenFilterName> tokenFilters, IList<CharFilterName> charFilters) : base(oDataType, name)
