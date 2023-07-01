@@ -117,6 +117,31 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         }
 
         [Fact]
+        public void TagObjects_Mapped_HonorsV2()
+        {
+            var activityTagsProcessor = new ActivityTagsProcessor();
+
+            IEnumerable<KeyValuePair<string, object?>> tagObjects = new Dictionary<string, object?>
+            {
+                [SemanticConventions.AttributeUrlScheme] = "https",
+                [SemanticConventions.AttributeHttpRequestMethod] = "GET",
+                [SemanticConventions.AttributeServerAddress] = "localhost",
+                [SemanticConventions.AttributeServerPort] = "8888",
+                [SemanticConventions.AttributeUrlPath] = "/test"
+            };
+
+            using var activity = CreateTestActivity(tagObjects);
+            activityTagsProcessor.CategorizeTags(activity);
+
+            Assert.Equal(OperationType.Http | OperationType.V2, activityTagsProcessor.activityType);
+            Assert.Equal(5, activityTagsProcessor.MappedTags.Length);
+            Assert.Equal("https", AzMonList.GetTagValue(ref activityTagsProcessor.MappedTags, SemanticConventions.AttributeUrlScheme));
+            Assert.Equal("localhost", AzMonList.GetTagValue(ref activityTagsProcessor.MappedTags, SemanticConventions.AttributeServerAddress));
+            Assert.Equal("8888", AzMonList.GetTagValue(ref activityTagsProcessor.MappedTags, SemanticConventions.AttributeServerPort));
+            Assert.Equal("/test", AzMonList.GetTagValue(ref activityTagsProcessor.MappedTags, SemanticConventions.AttributeUrlPath));
+        }
+
+        [Fact]
         public void TagObjects_Mapped_UnMapped()
         {
             var activityTagsProcessor = new ActivityTagsProcessor();
