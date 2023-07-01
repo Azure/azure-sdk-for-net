@@ -122,7 +122,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             Assert.NotNull(activity);
             var activityTagsProcessor = TraceHelper.EnumerateActivityTags(activity);
 
-            var requestData = new RequestData(2, activity, ref activityTagsProcessor);
+            var requestData = new RequestData(2, activity, ref activityTagsProcessor, schemaVersion: "V2");
 
             Assert.Equal("DemoAzureResource", activityTagsProcessor.AzureNamespace);
         }
@@ -147,7 +147,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             Assert.NotNull(activity);
             var activityTagsProcessor = TraceHelper.EnumerateActivityTags(activity);
 
-            var requestData = new RequestData(2, activity, ref activityTagsProcessor);
+            var requestData = new RequestData(2, activity, ref activityTagsProcessor, schemaVersion: "V2");
 
             DateTimeOffset startTime = activity.StartTimeUtc;
             var startTimeEpoch = startTime.ToUnixTimeMilliseconds();
@@ -181,7 +181,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             Assert.NotNull(activity);
             var activityTagsProcessor = TraceHelper.EnumerateActivityTags(activity);
 
-            var requestData = new RequestData(2, activity, ref activityTagsProcessor);
+            var requestData = new RequestData(2, activity, ref activityTagsProcessor, schemaVersion: "V2");
 
             DateTimeOffset startTime = activity.StartTimeUtc;
             var startTimeEpoch = startTime.ToUnixTimeMilliseconds();
@@ -212,7 +212,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             Assert.NotNull(activity);
             var activityTagsProcessor = TraceHelper.EnumerateActivityTags(activity);
 
-            var requestData = new RequestData(2, activity, ref activityTagsProcessor);
+            var requestData = new RequestData(2, activity, ref activityTagsProcessor, schemaVersion: "V2");
 
             DateTimeOffset startTime = activity.StartTimeUtc;
             var startTimeEpoch = startTime.ToUnixTimeMilliseconds();
