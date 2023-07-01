@@ -16,7 +16,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
 {
     public class RequestDataV2Tests
     {
-        private const string ActivitySourceName = "RequestDataTests";
         private const string ActivityName = "RequestDataActivity";
 
         [Fact]
