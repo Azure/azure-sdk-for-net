@@ -104,10 +104,10 @@ To retrieve the configuration settings for a snapshot, you can use the `GetConfi
 
 ```C# Snippet:AzConfigSample11_GetConfigurationSettingsForSnapshot
 var firstSetting = new ConfigurationSetting("first_key", "first_value");
-client.SetConfigurationSetting(firstSetting);
+client.AddConfigurationSetting(firstSetting);
 
 var secondSetting = new ConfigurationSetting("second_key", "second_value");
-client.SetConfigurationSetting(secondSetting);
+client.AddConfigurationSetting(secondSetting);
 
 List<SnapshotSettingFilter> snapshotFilter = new(new SnapshotSettingFilter[] { new SnapshotSettingFilter(firstSetting.Key), new SnapshotSettingFilter(secondSetting.Key) });
 var settingsSnapshot = new ConfigurationSettingsSnapshot(snapshotFilter);
