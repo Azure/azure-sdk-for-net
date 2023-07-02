@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             Optional<DataFactoryElement<string>> delay = default;
             int maxConcurrency = default;
             Optional<RetryPolicy> retryPolicy = default;
-            Optional<IList<DependencyReference>> dependsOn = default;
+            Optional<IList<DataFactorySecretBaseDefinition>> dependsOn = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -224,10 +224,10 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            List<DependencyReference> array = new List<DependencyReference>();
+                            List<DataFactorySecretBaseDefinition> array = new List<DataFactorySecretBaseDefinition>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(DependencyReference.DeserializeDependencyReference(item));
+                                array.Add(JsonSerializer.Deserialize<DataFactorySecretBaseDefinition>(item.GetRawText()));
                             }
                             dependsOn = array;
                             continue;

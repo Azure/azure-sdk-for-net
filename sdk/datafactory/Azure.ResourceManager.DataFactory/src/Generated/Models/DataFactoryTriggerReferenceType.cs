@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> Trigger reference type. </summary>
-    public readonly partial struct DataFactoryTriggerReferenceType : IEquatable<DataFactoryTriggerReferenceType>
+    internal readonly partial struct DataFactoryTriggerReferenceType : IEquatable<DataFactoryTriggerReferenceType>
     {
         private readonly string _value;
 

@@ -12,7 +12,7 @@ using Azure.Core.Expressions.DataFactory;
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> The TarGZip compression read settings. </summary>
-    public partial class TarGzipReadSettings : CompressionReadSettings
+    internal partial class TarGzipReadSettings : DataFactorySecretBaseDefinition
     {
         /// <summary> Initializes a new instance of TarGzipReadSettings. </summary>
         public TarGzipReadSettings()

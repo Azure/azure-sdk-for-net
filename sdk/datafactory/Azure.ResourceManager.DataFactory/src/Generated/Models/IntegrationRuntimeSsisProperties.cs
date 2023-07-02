@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -17,7 +18,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Initializes a new instance of IntegrationRuntimeSsisProperties. </summary>
         public IntegrationRuntimeSsisProperties()
         {
-            ExpressCustomSetupProperties = new ChangeTrackingList<CustomSetupBase>();
+            ExpressCustomSetupProperties = new ChangeTrackingList<DataFactorySecretBaseDefinition>();
             PackageStores = new ChangeTrackingList<DataFactoryPackageStore>();
             AdditionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
         }
@@ -30,13 +31,13 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="edition"> The edition for the SSIS Integration Runtime. </param>
         /// <param name="expressCustomSetupProperties">
         /// Custom setup without script properties for a SSIS integration runtime.
-        /// Please note <see cref="CustomSetupBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="DataFactorySecretBaseDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="AzPowerShellSetup"/>, <see cref="CmdkeySetup"/>, <see cref="ComponentSetup"/> and <see cref="EnvironmentVariableSetup"/>.
         /// </param>
         /// <param name="packageStores"> Package stores for the SSIS Integration Runtime. </param>
         /// <param name="credential"> The credential reference containing authentication information. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        internal IntegrationRuntimeSsisProperties(IntegrationRuntimeSsisCatalogInfo catalogInfo, IntegrationRuntimeLicenseType? licenseType, IntegrationRuntimeCustomSetupScriptProperties customSetupScriptProperties, IntegrationRuntimeDataProxyProperties dataProxyProperties, IntegrationRuntimeEdition? edition, IList<CustomSetupBase> expressCustomSetupProperties, IList<DataFactoryPackageStore> packageStores, DataFactoryCredentialReference credential, IDictionary<string, BinaryData> additionalProperties)
+        internal IntegrationRuntimeSsisProperties(IntegrationRuntimeSsisCatalogInfo catalogInfo, IntegrationRuntimeLicenseType? licenseType, IntegrationRuntimeCustomSetupScriptProperties customSetupScriptProperties, IntegrationRuntimeDataProxyProperties dataProxyProperties, IntegrationRuntimeEdition? edition, IList<DataFactorySecretBaseDefinition> expressCustomSetupProperties, IList<DataFactoryPackageStore> packageStores, DataFactoryCredentialReference credential, IDictionary<string, BinaryData> additionalProperties)
         {
             CatalogInfo = catalogInfo;
             LicenseType = licenseType;
@@ -61,10 +62,10 @@ namespace Azure.ResourceManager.DataFactory.Models
         public IntegrationRuntimeEdition? Edition { get; set; }
         /// <summary>
         /// Custom setup without script properties for a SSIS integration runtime.
-        /// Please note <see cref="CustomSetupBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="DataFactorySecretBaseDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="AzPowerShellSetup"/>, <see cref="CmdkeySetup"/>, <see cref="ComponentSetup"/> and <see cref="EnvironmentVariableSetup"/>.
         /// </summary>
-        public IList<CustomSetupBase> ExpressCustomSetupProperties { get; }
+        public IList<DataFactorySecretBaseDefinition> ExpressCustomSetupProperties { get; }
         /// <summary> Package stores for the SSIS Integration Runtime. </summary>
         public IList<DataFactoryPackageStore> PackageStores { get; }
         /// <summary> The credential reference containing authentication information. </summary>

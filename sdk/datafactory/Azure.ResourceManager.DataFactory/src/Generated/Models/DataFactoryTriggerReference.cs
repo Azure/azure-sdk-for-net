@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> Trigger reference type. </summary>
-    public partial class DataFactoryTriggerReference
+    internal partial class DataFactoryTriggerReference
     {
         /// <summary> Initializes a new instance of DataFactoryTriggerReference. </summary>
         /// <param name="referenceType"> Trigger reference type. </param>

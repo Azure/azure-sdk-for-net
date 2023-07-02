@@ -7,11 +7,12 @@
 
 using System;
 using Azure.Core;
+using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> The key authorization type integration runtime. </summary>
-    public partial class LinkedIntegrationRuntimeKeyAuthorization : LinkedIntegrationRuntimeType
+    internal partial class LinkedIntegrationRuntimeKeyAuthorization : DataFactorySecretBaseDefinition
     {
         /// <summary> Initializes a new instance of LinkedIntegrationRuntimeKeyAuthorization. </summary>
         /// <param name="key"> The key used for authorization. </param>

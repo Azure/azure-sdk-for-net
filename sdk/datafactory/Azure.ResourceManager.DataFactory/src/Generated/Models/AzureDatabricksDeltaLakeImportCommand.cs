@@ -12,7 +12,7 @@ using Azure.Core.Expressions.DataFactory;
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> Azure Databricks Delta Lake import command settings. </summary>
-    public partial class AzureDatabricksDeltaLakeImportCommand : ImportSettings
+    public partial class AzureDatabricksDeltaLakeImportCommand : DataFactorySecretBaseDefinition
     {
         /// <summary> Initializes a new instance of AzureDatabricksDeltaLakeImportCommand. </summary>
         public AzureDatabricksDeltaLakeImportCommand()

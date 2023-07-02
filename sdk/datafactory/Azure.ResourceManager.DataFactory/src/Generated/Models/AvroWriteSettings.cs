@@ -12,7 +12,7 @@ using Azure.Core.Expressions.DataFactory;
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> Avro write settings. </summary>
-    public partial class AvroWriteSettings : FormatWriteSettings
+    public partial class AvroWriteSettings : DataFactorySecretBaseDefinition
     {
         /// <summary> Initializes a new instance of AvroWriteSettings. </summary>
         public AvroWriteSettings()

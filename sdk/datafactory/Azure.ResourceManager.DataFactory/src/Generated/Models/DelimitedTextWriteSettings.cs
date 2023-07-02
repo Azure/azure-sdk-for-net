@@ -13,7 +13,7 @@ using Azure.Core.Expressions.DataFactory;
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> Delimited text write settings. </summary>
-    public partial class DelimitedTextWriteSettings : FormatWriteSettings
+    public partial class DelimitedTextWriteSettings : DataFactorySecretBaseDefinition
     {
         /// <summary> Initializes a new instance of DelimitedTextWriteSettings. </summary>
         /// <param name="fileExtension"> The file extension used to create the files. Type: string (or Expression with resultType string). </param>

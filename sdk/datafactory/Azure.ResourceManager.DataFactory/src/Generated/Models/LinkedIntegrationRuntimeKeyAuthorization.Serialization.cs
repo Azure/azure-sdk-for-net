@@ -7,10 +7,11 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class LinkedIntegrationRuntimeKeyAuthorization : IUtf8JsonSerializable
+    internal partial class LinkedIntegrationRuntimeKeyAuthorization : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -34,7 +35,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 if (property.NameEquals("key"u8))
                 {
-                    key = DataFactorySecretString.DeserializeDataFactorySecretString(property.Value);
+                    key = JsonSerializer.Deserialize<DataFactorySecretString>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("authorizationType"u8))

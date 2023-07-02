@@ -8,11 +8,12 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> Snowflake export command settings. </summary>
-    public partial class SnowflakeExportCopyCommand : ExportSettings
+    public partial class SnowflakeExportCopyCommand : DataFactorySecretBaseDefinition
     {
         /// <summary> Initializes a new instance of SnowflakeExportCopyCommand. </summary>
         public SnowflakeExportCopyCommand()

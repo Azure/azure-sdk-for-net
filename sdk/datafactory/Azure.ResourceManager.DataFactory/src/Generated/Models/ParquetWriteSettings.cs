@@ -12,7 +12,7 @@ using Azure.Core.Expressions.DataFactory;
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> Parquet write settings. </summary>
-    public partial class ParquetWriteSettings : FormatWriteSettings
+    public partial class ParquetWriteSettings : DataFactorySecretBaseDefinition
     {
         /// <summary> Initializes a new instance of ParquetWriteSettings. </summary>
         public ParquetWriteSettings()

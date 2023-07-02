@@ -7,11 +7,12 @@
 
 using System;
 using Azure.Core;
+using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> The express custom setup of installing Azure PowerShell. </summary>
-    public partial class AzPowerShellSetup : CustomSetupBase
+    internal partial class AzPowerShellSetup : DataFactorySecretBaseDefinition
     {
         /// <summary> Initializes a new instance of AzPowerShellSetup. </summary>
         /// <param name="version"> The required version of Azure PowerShell to install. </param>

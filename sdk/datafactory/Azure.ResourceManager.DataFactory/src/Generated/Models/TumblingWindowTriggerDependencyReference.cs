@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> Referenced tumbling window trigger dependency. </summary>
-    public partial class TumblingWindowTriggerDependencyReference : TriggerDependencyReference
+    internal partial class TumblingWindowTriggerDependencyReference : TriggerDependencyReference
     {
         /// <summary> Initializes a new instance of TumblingWindowTriggerDependencyReference. </summary>
         /// <param name="referenceTrigger"> Referenced trigger. </param>

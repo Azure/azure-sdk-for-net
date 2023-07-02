@@ -7,11 +7,12 @@
 
 using System;
 using Azure.Core;
+using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> The role based access control (RBAC) authorization type integration runtime. </summary>
-    public partial class LinkedIntegrationRuntimeRbacAuthorization : LinkedIntegrationRuntimeType
+    internal partial class LinkedIntegrationRuntimeRbacAuthorization : DataFactorySecretBaseDefinition
     {
         /// <summary> Initializes a new instance of LinkedIntegrationRuntimeRbacAuthorization. </summary>
         /// <param name="resourceId"> The resource identifier of the integration runtime to be shared. </param>
