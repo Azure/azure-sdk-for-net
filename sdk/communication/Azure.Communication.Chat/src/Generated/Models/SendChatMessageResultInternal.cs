@@ -6,11 +6,13 @@
 #nullable disable
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using Azure.Core;
 
 namespace Azure.Communication.Chat
 {
     /// <summary> Result of the send message operation. </summary>
+    [ExcludeFromCodeCoverage]
     internal partial class SendChatMessageResultInternal
     {
         /// <summary> Initializes a new instance of SendChatMessageResultInternal. </summary>

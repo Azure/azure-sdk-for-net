@@ -6,12 +6,14 @@
 #nullable disable
 
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using Azure.Communication;
 using Azure.Core;
 
 namespace Azure.Communication.Chat
 {
     /// <summary> Content of a chat message. </summary>
+    [ExcludeFromCodeCoverage]
     internal partial class ChatMessageContentInternal
     {
         /// <summary> Initializes a new instance of ChatMessageContentInternal. </summary>
