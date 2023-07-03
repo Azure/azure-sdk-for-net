@@ -11,7 +11,7 @@ using Azure.Maps.Search;
 using Azure.Maps.Search.Models;
 #endregion
 using Azure.Core.TestFramework;
-#region Snippet:SasAuthImportNamespaces
+#region Snippet:SearchSasAuthImportNamespaces
 using Azure.Core;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Maps;
