@@ -28,7 +28,7 @@
     <Compile Include="..\..\Shared\tests\AuthMethod.cs" LinkBase="Shared\Communication.Tests" />
     <Compile Include="..\..\Shared\tests\CommunicationTestEnvironment.cs" LinkBase="Shared\Communication.Tests" />
     <Compile Include="..\..\Shared\src\CommunicationIdentifierSerializerTest.cs" LinkBase="Shared\Communication" />
-    <!--<Compile Include="..\..\Azure.Communication.Identity\src\CommunicationIdentityClientOptions.cs"/>
+    <Compile Include="..\..\Azure.Communication.Identity.Tests\CommunicationIdentityClient\CommunicationIdentityClientLiveTests.cs"/>
     <Compile Include="..\..\Azure.Communication.Identity\src\CommunicationIdentityClient.cs"/>-->
   </ItemGroup>
 </Project>
