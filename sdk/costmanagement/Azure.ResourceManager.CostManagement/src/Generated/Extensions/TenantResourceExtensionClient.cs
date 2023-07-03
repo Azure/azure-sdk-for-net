@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.CostManagement
         /// <param name="filter"> Supports filtering by properties/benefitId, properties/benefitOrderId and properties/usageDate. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="BenefitUtilizationSummary" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<BenefitUtilizationSummary> GetBenefitUtilizationSummariesByBillingAccountIdAsync(string billingAccountId, GrainParameter? grainParameter = null, string filter = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<BenefitUtilizationSummary> GetBenefitUtilizationSummariesByBillingAccountIdAsync(string billingAccountId, GrainContent? grainParameter = null, string filter = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => BenefitUtilizationSummariesRestClient.CreateListByBillingAccountIdRequest(billingAccountId, grainParameter, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => BenefitUtilizationSummariesRestClient.CreateListByBillingAccountIdNextPageRequest(nextLink, billingAccountId, grainParameter, filter);
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.CostManagement
         /// <param name="filter"> Supports filtering by properties/benefitId, properties/benefitOrderId and properties/usageDate. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="BenefitUtilizationSummary" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<BenefitUtilizationSummary> GetBenefitUtilizationSummariesByBillingAccountId(string billingAccountId, GrainParameter? grainParameter = null, string filter = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<BenefitUtilizationSummary> GetBenefitUtilizationSummariesByBillingAccountId(string billingAccountId, GrainContent? grainParameter = null, string filter = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => BenefitUtilizationSummariesRestClient.CreateListByBillingAccountIdRequest(billingAccountId, grainParameter, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => BenefitUtilizationSummariesRestClient.CreateListByBillingAccountIdNextPageRequest(nextLink, billingAccountId, grainParameter, filter);
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.CostManagement
         /// <param name="filter"> Supports filtering by properties/benefitId, properties/benefitOrderId and properties/usageDate. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="BenefitUtilizationSummary" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<BenefitUtilizationSummary> GetBenefitUtilizationSummariesByBillingProfileIdAsync(string billingAccountId, string billingProfileId, GrainParameter? grainParameter = null, string filter = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<BenefitUtilizationSummary> GetBenefitUtilizationSummariesByBillingProfileIdAsync(string billingAccountId, string billingProfileId, GrainContent? grainParameter = null, string filter = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => BenefitUtilizationSummariesRestClient.CreateListByBillingProfileIdRequest(billingAccountId, billingProfileId, grainParameter, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => BenefitUtilizationSummariesRestClient.CreateListByBillingProfileIdNextPageRequest(nextLink, billingAccountId, billingProfileId, grainParameter, filter);
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.CostManagement
         /// <param name="filter"> Supports filtering by properties/benefitId, properties/benefitOrderId and properties/usageDate. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="BenefitUtilizationSummary" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<BenefitUtilizationSummary> GetBenefitUtilizationSummariesByBillingProfileId(string billingAccountId, string billingProfileId, GrainParameter? grainParameter = null, string filter = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<BenefitUtilizationSummary> GetBenefitUtilizationSummariesByBillingProfileId(string billingAccountId, string billingProfileId, GrainContent? grainParameter = null, string filter = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => BenefitUtilizationSummariesRestClient.CreateListByBillingProfileIdRequest(billingAccountId, billingProfileId, grainParameter, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => BenefitUtilizationSummariesRestClient.CreateListByBillingProfileIdNextPageRequest(nextLink, billingAccountId, billingProfileId, grainParameter, filter);
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.CostManagement
         /// <param name="grainParameter"> Grain. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="BenefitUtilizationSummary" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<BenefitUtilizationSummary> GetBenefitUtilizationSummariesBySavingsPlanOrderAsync(string savingsPlanOrderId, string filter = null, GrainParameter? grainParameter = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<BenefitUtilizationSummary> GetBenefitUtilizationSummariesBySavingsPlanOrderAsync(string savingsPlanOrderId, string filter = null, GrainContent? grainParameter = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => BenefitUtilizationSummariesRestClient.CreateListBySavingsPlanOrderRequest(savingsPlanOrderId, filter, grainParameter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => BenefitUtilizationSummariesRestClient.CreateListBySavingsPlanOrderNextPageRequest(nextLink, savingsPlanOrderId, filter, grainParameter);
@@ -254,7 +254,7 @@ namespace Azure.ResourceManager.CostManagement
         /// <param name="grainParameter"> Grain. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="BenefitUtilizationSummary" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<BenefitUtilizationSummary> GetBenefitUtilizationSummariesBySavingsPlanOrder(string savingsPlanOrderId, string filter = null, GrainParameter? grainParameter = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<BenefitUtilizationSummary> GetBenefitUtilizationSummariesBySavingsPlanOrder(string savingsPlanOrderId, string filter = null, GrainContent? grainParameter = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => BenefitUtilizationSummariesRestClient.CreateListBySavingsPlanOrderRequest(savingsPlanOrderId, filter, grainParameter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => BenefitUtilizationSummariesRestClient.CreateListBySavingsPlanOrderNextPageRequest(nextLink, savingsPlanOrderId, filter, grainParameter);
@@ -280,7 +280,7 @@ namespace Azure.ResourceManager.CostManagement
         /// <param name="grainParameter"> Grain. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="BenefitUtilizationSummary" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<BenefitUtilizationSummary> GetBenefitUtilizationSummariesBySavingsPlanIdAsync(string savingsPlanOrderId, string savingsPlanId, string filter = null, GrainParameter? grainParameter = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<BenefitUtilizationSummary> GetBenefitUtilizationSummariesBySavingsPlanIdAsync(string savingsPlanOrderId, string savingsPlanId, string filter = null, GrainContent? grainParameter = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => BenefitUtilizationSummariesRestClient.CreateListBySavingsPlanIdRequest(savingsPlanOrderId, savingsPlanId, filter, grainParameter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => BenefitUtilizationSummariesRestClient.CreateListBySavingsPlanIdNextPageRequest(nextLink, savingsPlanOrderId, savingsPlanId, filter, grainParameter);
@@ -306,7 +306,7 @@ namespace Azure.ResourceManager.CostManagement
         /// <param name="grainParameter"> Grain. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="BenefitUtilizationSummary" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<BenefitUtilizationSummary> GetBenefitUtilizationSummariesBySavingsPlanId(string savingsPlanOrderId, string savingsPlanId, string filter = null, GrainParameter? grainParameter = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<BenefitUtilizationSummary> GetBenefitUtilizationSummariesBySavingsPlanId(string savingsPlanOrderId, string savingsPlanId, string filter = null, GrainContent? grainParameter = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => BenefitUtilizationSummariesRestClient.CreateListBySavingsPlanIdRequest(savingsPlanOrderId, savingsPlanId, filter, grainParameter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => BenefitUtilizationSummariesRestClient.CreateListBySavingsPlanIdNextPageRequest(nextLink, savingsPlanOrderId, savingsPlanId, filter, grainParameter);

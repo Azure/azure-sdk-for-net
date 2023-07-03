@@ -113,6 +113,7 @@ rename-mapping:
   CheckNameAvailabilityResponse: CostManagementNameAvailabilityResult  
   CheckNameAvailabilityReason: CostManagementUnavailabilityReason
   BenefitUtilizationSummariesRequest: BenefitUtilizationSummariesContent
+  GrainParameter: GrainContent
 
 directive:
   # [Error][Linked: https://github.com/Azure/autorest.csharp/issues/3288] Found more than 1 candidate for XX 

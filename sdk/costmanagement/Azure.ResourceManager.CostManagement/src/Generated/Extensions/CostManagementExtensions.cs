@@ -783,7 +783,7 @@ namespace Azure.ResourceManager.CostManagement
         /// <exception cref="ArgumentException"> <paramref name="billingAccountId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="billingAccountId"/> is null. </exception>
         /// <returns> An async collection of <see cref="BenefitUtilizationSummary" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<BenefitUtilizationSummary> GetBenefitUtilizationSummariesByBillingAccountIdAsync(this TenantResource tenantResource, string billingAccountId, GrainParameter? grainParameter = null, string filter = null, CancellationToken cancellationToken = default)
+        public static AsyncPageable<BenefitUtilizationSummary> GetBenefitUtilizationSummariesByBillingAccountIdAsync(this TenantResource tenantResource, string billingAccountId, GrainContent? grainParameter = null, string filter = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(billingAccountId, nameof(billingAccountId));
 
@@ -811,7 +811,7 @@ namespace Azure.ResourceManager.CostManagement
         /// <exception cref="ArgumentException"> <paramref name="billingAccountId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="billingAccountId"/> is null. </exception>
         /// <returns> A collection of <see cref="BenefitUtilizationSummary" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<BenefitUtilizationSummary> GetBenefitUtilizationSummariesByBillingAccountId(this TenantResource tenantResource, string billingAccountId, GrainParameter? grainParameter = null, string filter = null, CancellationToken cancellationToken = default)
+        public static Pageable<BenefitUtilizationSummary> GetBenefitUtilizationSummariesByBillingAccountId(this TenantResource tenantResource, string billingAccountId, GrainContent? grainParameter = null, string filter = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(billingAccountId, nameof(billingAccountId));
 
@@ -840,7 +840,7 @@ namespace Azure.ResourceManager.CostManagement
         /// <exception cref="ArgumentException"> <paramref name="billingAccountId"/> or <paramref name="billingProfileId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="billingAccountId"/> or <paramref name="billingProfileId"/> is null. </exception>
         /// <returns> An async collection of <see cref="BenefitUtilizationSummary" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<BenefitUtilizationSummary> GetBenefitUtilizationSummariesByBillingProfileIdAsync(this TenantResource tenantResource, string billingAccountId, string billingProfileId, GrainParameter? grainParameter = null, string filter = null, CancellationToken cancellationToken = default)
+        public static AsyncPageable<BenefitUtilizationSummary> GetBenefitUtilizationSummariesByBillingProfileIdAsync(this TenantResource tenantResource, string billingAccountId, string billingProfileId, GrainContent? grainParameter = null, string filter = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(billingAccountId, nameof(billingAccountId));
             Argument.AssertNotNullOrEmpty(billingProfileId, nameof(billingProfileId));
@@ -870,7 +870,7 @@ namespace Azure.ResourceManager.CostManagement
         /// <exception cref="ArgumentException"> <paramref name="billingAccountId"/> or <paramref name="billingProfileId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="billingAccountId"/> or <paramref name="billingProfileId"/> is null. </exception>
         /// <returns> A collection of <see cref="BenefitUtilizationSummary" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<BenefitUtilizationSummary> GetBenefitUtilizationSummariesByBillingProfileId(this TenantResource tenantResource, string billingAccountId, string billingProfileId, GrainParameter? grainParameter = null, string filter = null, CancellationToken cancellationToken = default)
+        public static Pageable<BenefitUtilizationSummary> GetBenefitUtilizationSummariesByBillingProfileId(this TenantResource tenantResource, string billingAccountId, string billingProfileId, GrainContent? grainParameter = null, string filter = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(billingAccountId, nameof(billingAccountId));
             Argument.AssertNotNullOrEmpty(billingProfileId, nameof(billingProfileId));
@@ -899,7 +899,7 @@ namespace Azure.ResourceManager.CostManagement
         /// <exception cref="ArgumentException"> <paramref name="savingsPlanOrderId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="savingsPlanOrderId"/> is null. </exception>
         /// <returns> An async collection of <see cref="BenefitUtilizationSummary" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<BenefitUtilizationSummary> GetBenefitUtilizationSummariesBySavingsPlanOrderAsync(this TenantResource tenantResource, string savingsPlanOrderId, string filter = null, GrainParameter? grainParameter = null, CancellationToken cancellationToken = default)
+        public static AsyncPageable<BenefitUtilizationSummary> GetBenefitUtilizationSummariesBySavingsPlanOrderAsync(this TenantResource tenantResource, string savingsPlanOrderId, string filter = null, GrainContent? grainParameter = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(savingsPlanOrderId, nameof(savingsPlanOrderId));
 
@@ -927,7 +927,7 @@ namespace Azure.ResourceManager.CostManagement
         /// <exception cref="ArgumentException"> <paramref name="savingsPlanOrderId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="savingsPlanOrderId"/> is null. </exception>
         /// <returns> A collection of <see cref="BenefitUtilizationSummary" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<BenefitUtilizationSummary> GetBenefitUtilizationSummariesBySavingsPlanOrder(this TenantResource tenantResource, string savingsPlanOrderId, string filter = null, GrainParameter? grainParameter = null, CancellationToken cancellationToken = default)
+        public static Pageable<BenefitUtilizationSummary> GetBenefitUtilizationSummariesBySavingsPlanOrder(this TenantResource tenantResource, string savingsPlanOrderId, string filter = null, GrainContent? grainParameter = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(savingsPlanOrderId, nameof(savingsPlanOrderId));
 
@@ -956,7 +956,7 @@ namespace Azure.ResourceManager.CostManagement
         /// <exception cref="ArgumentException"> <paramref name="savingsPlanOrderId"/> or <paramref name="savingsPlanId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="savingsPlanOrderId"/> or <paramref name="savingsPlanId"/> is null. </exception>
         /// <returns> An async collection of <see cref="BenefitUtilizationSummary" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<BenefitUtilizationSummary> GetBenefitUtilizationSummariesBySavingsPlanIdAsync(this TenantResource tenantResource, string savingsPlanOrderId, string savingsPlanId, string filter = null, GrainParameter? grainParameter = null, CancellationToken cancellationToken = default)
+        public static AsyncPageable<BenefitUtilizationSummary> GetBenefitUtilizationSummariesBySavingsPlanIdAsync(this TenantResource tenantResource, string savingsPlanOrderId, string savingsPlanId, string filter = null, GrainContent? grainParameter = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(savingsPlanOrderId, nameof(savingsPlanOrderId));
             Argument.AssertNotNullOrEmpty(savingsPlanId, nameof(savingsPlanId));
@@ -986,7 +986,7 @@ namespace Azure.ResourceManager.CostManagement
         /// <exception cref="ArgumentException"> <paramref name="savingsPlanOrderId"/> or <paramref name="savingsPlanId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="savingsPlanOrderId"/> or <paramref name="savingsPlanId"/> is null. </exception>
         /// <returns> A collection of <see cref="BenefitUtilizationSummary" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<BenefitUtilizationSummary> GetBenefitUtilizationSummariesBySavingsPlanId(this TenantResource tenantResource, string savingsPlanOrderId, string savingsPlanId, string filter = null, GrainParameter? grainParameter = null, CancellationToken cancellationToken = default)
+        public static Pageable<BenefitUtilizationSummary> GetBenefitUtilizationSummariesBySavingsPlanId(this TenantResource tenantResource, string savingsPlanOrderId, string savingsPlanId, string filter = null, GrainContent? grainParameter = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(savingsPlanOrderId, nameof(savingsPlanOrderId));
             Argument.AssertNotNullOrEmpty(savingsPlanId, nameof(savingsPlanId));
