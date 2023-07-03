@@ -7,12 +7,14 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Azure.Core;
 
 namespace Azure.Communication.Chat
 {
     /// <summary> Collection of participants belong to a particular thread. </summary>
+    [ExcludeFromCodeCoverage]
     internal partial class ChatParticipantsCollection
     {
         /// <summary> Initializes a new instance of ChatParticipantsCollection. </summary>

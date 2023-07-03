@@ -4,6 +4,7 @@
 #nullable disable
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using Azure.Communication;
 
 namespace Azure.Communication.Chat
@@ -11,6 +12,7 @@ namespace Azure.Communication.Chat
     /// <summary> A chat message read receipt indicates the time a chat message was read by a recipient. </summary>
     public partial class ChatMessageReadReceipt
     {
+        [ExcludeFromCodeCoverage]
         internal ChatMessageReadReceipt(CommunicationIdentifier sender, string chatMessageId, DateTimeOffset readOn)
         {
             Sender = sender;
@@ -18,6 +20,7 @@ namespace Azure.Communication.Chat
             ReadOn = readOn;
         }
 
+        [ExcludeFromCodeCoverage]
         internal ChatMessageReadReceipt(ChatMessageReadReceiptInternal chatMessageReadReceiptInternal)
         {
             Sender = CommunicationIdentifierSerializer.Deserialize(chatMessageReadReceiptInternal.SenderCommunicationIdentifier);
