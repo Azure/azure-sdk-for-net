@@ -313,11 +313,6 @@ namespace Azure.Storage.DataMovement
         {
             CancellationHelper.ThrowIfCancellationRequested(cancellationToken);
 
-            // Attempt to add existing job to the checkpointer.
-            await _checkpointer.AddExistingJobAsync(
-                transferId: transferId,
-                cancellationToken: _cancellationToken).ConfigureAwait(false);
-
             if (_dataTransfers.ContainsKey(transferId))
             {
                 // Remove the stale DataTransfer so we can pass a new DataTransfer object
@@ -391,10 +386,6 @@ namespace Azure.Storage.DataMovement
             {
                 resumeJob = true;
                 transferId = transferOptions.ResumeFromCheckpointId;
-                // Attempt to add existing job to the checkpointer.
-                await _checkpointer.AddExistingJobAsync(
-                    transferId: transferId,
-                    cancellationToken: _cancellationToken).ConfigureAwait(false);
 
                 if (_dataTransfers.ContainsKey(transferId))
                 {
