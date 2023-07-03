@@ -27,6 +27,8 @@ namespace Azure.ResourceManager.Kusto.Tests.Scenario
             await BaseSetUp();
         }
 
+        // TODO break this up into smaller tests
+
         [TestCase]
         [RecordedTest]
         public async Task ClusterTests()
@@ -35,23 +37,16 @@ namespace Azure.ResourceManager.Kusto.Tests.Scenario
 
             var clusterName = GenerateAssetName("sdkCluster");
 
-            var clusterDataCreate = new KustoClusterData(Location, _sku)
-            {
-                Identity = new ManagedServiceIdentity(ManagedServiceIdentityType.SystemAssigned),
-                IsStreamingIngestEnabled = true
-            };
+            var clusterDataCreate = new KustoClusterData(Location, _sku) {Identity = new ManagedServiceIdentity(ManagedServiceIdentityType.SystemAssigned), IsStreamingIngestEnabled = true};
 
             var clusterDataUpdate = new KustoClusterData(Location, _sku)
             {
-                Identity = new ManagedServiceIdentity(ManagedServiceIdentityType.SystemAssignedUserAssigned)
-                {
-                    UserAssignedIdentities = { [TE.UserAssignedIdentityId] = new UserAssignedIdentity() }
-                },
+                Identity = new ManagedServiceIdentity(ManagedServiceIdentityType.SystemAssignedUserAssigned) {UserAssignedIdentities = {[TE.UserAssignedIdentityId] = new UserAssignedIdentity()}},
                 IsDiskEncryptionEnabled = true,
                 IsStreamingIngestEnabled = false,
                 OptimizedAutoscale = new OptimizedAutoscale(1, true, 2, 5),
                 PublicIPType = "DualStack",
-                TrustedExternalTenants = { new KustoClusterTrustedExternalTenant(TE.TenantId) },
+                TrustedExternalTenants = {new KustoClusterTrustedExternalTenant(TE.TenantId)},
                 // TODO: figure out how to authenticate
                 // KeyVaultProperties = new KustoKeyVaultProperties(
                 //     TE.KeyName,
@@ -148,10 +143,7 @@ namespace Azure.ResourceManager.Kusto.Tests.Scenario
 
         private void IdentityEquals(ManagedServiceIdentity expected, ManagedServiceIdentity actual)
         {
-            var systemAssigned = new List<ManagedServiceIdentityType>
-            {
-                ManagedServiceIdentityType.SystemAssigned, ManagedServiceIdentityType.SystemAssignedUserAssigned
-            }.Contains(expected.ManagedServiceIdentityType);
+            var systemAssigned = new List<ManagedServiceIdentityType> {ManagedServiceIdentityType.SystemAssigned, ManagedServiceIdentityType.SystemAssignedUserAssigned}.Contains(expected.ManagedServiceIdentityType);
 
             if (systemAssigned)
             {
