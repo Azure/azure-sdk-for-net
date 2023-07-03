@@ -1,0 +1,2060 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/fca2e8ee-1179-48b8-9532-428ed0873a2e/resourcegroups/networkcloud-sdk960?api-version=**",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "21",
+        "Content-Type": "application/json",
+        "traceparent": "00-5c64109fee6346761e3ab2398e54eebf-2604695cdf68126f-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.6.0 (.NET 7.0.5; Linux 5.15.90.1-microsoft-standard-WSL2 #1 SMP Fri Jan 27 02:56:13 UTC 2023)",
+        "x-ms-client-request-id": "246a973c405810c24df678b14278422a",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "location": "eastus"
+      },
+      "StatusCode": 201,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "235",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 19 Jun 2023 21:47:18 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "40f0c5e4-6791-4cd8-9420-f8588d39c6cd",
+        "x-ms-ratelimit-remaining-subscription-writes": "1196",
+        "x-ms-request-id": "40f0c5e4-6791-4cd8-9420-f8588d39c6cd",
+        "x-ms-routing-request-id": "CANADACENTRAL:20230619T214719Z:40f0c5e4-6791-4cd8-9420-f8588d39c6cd"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/fca2e8ee-1179-48b8-9532-428ed0873a2e/resourceGroups/networkcloud-sdk960",
+        "name": "networkcloud-sdk960",
+        "type": "Microsoft.Resources/resourceGroups",
+        "location": "eastus",
+        "properties": {
+          "provisioningState": "Succeeded"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/fca2e8ee-1179-48b8-9532-428ed0873a2e/resourceGroups/nc-resource-testing-k5-0907401cb287-ors8g/providers/Microsoft.NetworkCloud/kubernetesClusters/res-test-standard-naks-d5a98?api-version=2023-05-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-5f46a5addabc9bd2fdba2bdceeff699a-741a80aa68367ac3-00",
+        "User-Agent": "azsdk-net-ResourceManager.NetworkCloud/1.0.0-alpha.20230619.1 (.NET 7.0.5; Linux 5.15.90.1-microsoft-standard-WSL2 #1 SMP Fri Jan 27 02:56:13 UTC 2023)",
+        "x-ms-client-request-id": "c4caed2e613f8b36314ae5969bab21d2",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "9030",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 19 Jun 2023 21:47:18 GMT",
+        "ETag": "\u002254036688-0000-0100-0000-6490cc3a0000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "c4caed2e613f8b36314ae5969bab21d2",
+        "x-ms-correlation-request-id": "7b1844a8-3a7c-47a5-9e48-3f12d2c98c2d",
+        "x-ms-providerhub-traffic": "True",
+        "x-ms-ratelimit-remaining-subscription-reads": "11966",
+        "x-ms-request-id": "83ddd6cb-2e43-4493-8680-1b3e8d7976b4",
+        "x-ms-routing-request-id": "CANADACENTRAL:20230619T214719Z:7b1844a8-3a7c-47a5-9e48-3f12d2c98c2d"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/fca2e8ee-1179-48b8-9532-428ed0873a2e/resourceGroups/nc-resource-testing-k5-0907401cb287-ors8g/providers/Microsoft.NetworkCloud/kubernetesClusters/res-test-standard-naks-d5a98",
+        "name": "res-test-standard-naks-d5a98",
+        "type": "microsoft.networkcloud/kubernetesclusters",
+        "location": "eastus",
+        "extendedLocation": {
+          "name": "/subscriptions/fca2e8ee-1179-48b8-9532-428ed0873a2e/resourcegroups/k5-0907401cb287-hostedresources-27fbcfcb/providers/microsoft.extendedlocation/customlocations/k5-0907401cb287-cstm-loc",
+          "type": "CustomLocation"
+        },
+        "tags": {
+          "ManagedBy": "nc-resource-testing"
+        },
+        "systemData": {
+          "createdBy": "76a1c3a1-1aaa-4cbe-b809-1b4f9dfe41e0",
+          "createdByType": "Application",
+          "createdAt": "2023-06-14T21:29:08.7141416Z",
+          "lastModifiedBy": "319f651f-7ddb-4fc6-9857-7aef9250bd05",
+          "lastModifiedByType": "Application",
+          "lastModifiedAt": "2023-06-19T21:44:26.0761348Z"
+        },
+        "properties": {
+          "provisioningState": "Succeeded",
+          "aadConfiguration": {
+            "adminGroupObjectIds": [
+              "3d4c8620-ac8c-4bd6-9a92-f2b75923ef9f"
+            ]
+          },
+          "administratorConfiguration": {
+            "adminUsername": "azureuser",
+            "sshPublicKeys": [
+              {
+                "keyData": "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDBT3qQsR5WZwzLDahIEqvM5q4/HX\u002Bbgd3Q/GAASN9XIEtjb8J6OQmzrhf/\u002BWyBIRleAsd6A2AN3Ul0G1hIie2e4U1ha7lS0x8uc6bTFb/3I9ZckcMIj0oFCoHyxORB0dypNjIPI/r353MsAGdG45VxuQvf5A9FbQCIhulX/725j9p7o8qNHzKOzTL6KJnLvwOfLyKTyTwhmieGiV9dpA8hBwPQUTy502duN5eX4e2uNqFINTIQQQZsCCZuPMxafrhq2c3ePsBImUqzuuDyyYpW4td3uWwHsBwIhtnG66QsbsIsDBxbDkFbMBmnHWkoKjdBlESHCiztgPiWAQ2mIkAn1kyJrFHXX0hLqTIo1\u002BV6KsHAKH6clmxLtev1GicAQd52OJ4leIAdteL6FFSXU93Xtu36yV4AfcTNN/p/D/K5vYWgWkuAOodzBMgfHYTr3MXDH0R5Rew3AxRuIupc8xHhq46o\u002BxAr5w3gjfD\u002BmXsb7rTYUJJAojx5I7iJh3VTuZU= root@SandboxHost-638223748029203143"
+              }
+            ]
+          },
+          "controlPlaneNodeConfiguration": {
+            "availabilityZones": [],
+            "count": 1,
+            "vmSkuName": "NC_G2_v1"
+          },
+          "initialAgentPoolConfigurations": [
+            {
+              "count": 1,
+              "mode": "System",
+              "name": "agentpool1",
+              "vmSkuName": "NC_G2_v1"
+            }
+          ],
+          "kubernetesVersion": "1.24.9",
+          "networkConfiguration": {
+            "cloudServicesNetworkId": "/subscriptions/fca2e8ee-1179-48b8-9532-428ed0873a2e/resourceGroups/nc-resource-testing-k5-0907401cb287-ors8g/providers/Microsoft.NetworkCloud/cloudServicesNetworks/testcsnfo3znasx2pksw",
+            "cniNetworkId": "/subscriptions/fca2e8ee-1179-48b8-9532-428ed0873a2e/resourceGroups/nc-resource-testing-k5-0907401cb287-ors8g/providers/Microsoft.NetworkCloud/l3Networks/l3network-505",
+            "dnsServiceIp": "10.97.0.10",
+            "podCidrs": [
+              "10.245.0.0/16"
+            ],
+            "serviceCidrs": [
+              "10.97.0.0/16"
+            ],
+            "bgpServiceLoadBalancerConfiguration": {
+              "bgpAdvertisements": [],
+              "bgpPeers": [],
+              "ipAddressPools": []
+            }
+          },
+          "managedResourceGroupConfiguration": {
+            "location": "eastus",
+            "name": "res-test-standard-naks-d5a98-HostedResources-66FDA918"
+          },
+          "availableUpgrades": [
+            {
+              "availabilityLifecycle": "GenerallyAvailable",
+              "version": "v1.25.4-1"
+            }
+          ],
+          "attachedNetworkIds": [
+            "/subscriptions/fca2e8ee-1179-48b8-9532-428ed0873a2e/resourceGroups/nc-resource-testing-k5-0907401cb287-ors8g/providers/Microsoft.NetworkCloud/cloudServicesNetworks/testcsnfo3znasx2pksw",
+            "/subscriptions/fca2e8ee-1179-48b8-9532-428ed0873a2e/resourceGroups/nc-resource-testing-k5-0907401cb287-ors8g/providers/Microsoft.NetworkCloud/l3Networks/l3network-505"
+          ],
+          "clusterId": "/subscriptions/fca2e8ee-1179-48b8-9532-428ed0873a2e/resourceGroups/k5-cluster-1/providers/Microsoft.NetworkCloud/clusters/k5-0907401cb287",
+          "featureStatuses": [
+            {
+              "detailedStatus": "Running",
+              "detailedStatusMessage": "The feature is running",
+              "name": "azure-arc-k8sagents",
+              "version": "v1.10.6"
+            },
+            {
+              "detailedStatus": "Running",
+              "detailedStatusMessage": "The feature is running",
+              "name": "calico",
+              "version": "v3.23.1"
+            },
+            {
+              "detailedStatus": "Running",
+              "detailedStatusMessage": "The feature is running",
+              "name": "cloud-provider-kubevirt",
+              "version": "v0.1.0"
+            },
+            {
+              "detailedStatus": "Running",
+              "detailedStatusMessage": "The feature is running",
+              "name": "csi-nexus-volume",
+              "version": "v0.1.0"
+            },
+            {
+              "detailedStatus": "Running",
+              "detailedStatusMessage": "The feature is running",
+              "name": "csi-nfs",
+              "version": "v3.0.0"
+            },
+            {
+              "detailedStatus": "Running",
+              "detailedStatusMessage": "The feature is running",
+              "name": "metallb",
+              "version": "v0.13.9"
+            },
+            {
+              "detailedStatus": "Running",
+              "detailedStatusMessage": "The feature is running",
+              "name": "metrics-server",
+              "version": "v0.6.3"
+            },
+            {
+              "detailedStatus": "Running",
+              "detailedStatusMessage": "The feature is running",
+              "name": "multus",
+              "version": "v3.8.0"
+            },
+            {
+              "detailedStatus": "Running",
+              "detailedStatusMessage": "The feature is running",
+              "name": "nc-aks-ipam-cni-plugin",
+              "version": "v0.1.0"
+            },
+            {
+              "detailedStatus": "Running",
+              "detailedStatusMessage": "The feature is running",
+              "name": "node-local-dns",
+              "version": "v0.1.0"
+            },
+            {
+              "detailedStatus": "Running",
+              "detailedStatusMessage": "The feature is running",
+              "name": "sriov-dp",
+              "version": "v3.5.1"
+            }
+          ],
+          "nodes": [
+            {
+              "bareMetalMachineId": "/subscriptions/fca2e8ee-1179-48b8-9532-428ed0873a2e/resourceGroups/k5-0907401cb287-HostedResources-27FBCFCB/providers/Microsoft.NetworkCloud/bareMetalMachines/k5r750wkr7",
+              "cpuCores": 1,
+              "detailedStatus": "Running",
+              "detailedStatusMessage": "Running - virtual machine is running.",
+              "diskSizeGB": 300,
+              "image": "afo-mariner-guest-qcow2-kubevirt-v1.24.9",
+              "memorySizeGB": 4,
+              "name": "res-test-standard-naks-d5a98-56561df7-agentpool1-md-nbw7g",
+              "networkAttachments": [
+                {
+                  "attachedNetworkId": "/subscriptions/fca2e8ee-1179-48b8-9532-428ed0873a2e/resourceGroups/nc-resource-testing-k5-0907401cb287-ors8g/providers/Microsoft.NetworkCloud/cloudServicesNetworks/testcsnfo3znasx2pksw",
+                  "defaultGateway": "False",
+                  "ipAllocationMethod": "Dynamic",
+                  "ipv4Address": "169.254.8.2",
+                  "macAddress": "aa:bb:cc:9e:4e:85",
+                  "networkAttachmentName": "cloudservices"
+                },
+                {
+                  "attachedNetworkId": "/subscriptions/fca2e8ee-1179-48b8-9532-428ed0873a2e/resourceGroups/nc-resource-testing-k5-0907401cb287-ors8g/providers/Microsoft.NetworkCloud/l3Networks/l3network-505",
+                  "defaultGateway": "False",
+                  "ipAllocationMethod": "Dynamic",
+                  "ipv4Address": "10.12.40.11",
+                  "ipv6Address": "fda0:d59c:da0a:c28::9",
+                  "macAddress": "aa:bb:cc:9b:e5:9a",
+                  "networkAttachmentName": "defaultcni"
+                }
+              ],
+              "powerState": "On",
+              "role": "Worker"
+            },
+            {
+              "bareMetalMachineId": "/subscriptions/fca2e8ee-1179-48b8-9532-428ed0873a2e/resourceGroups/k5-0907401cb287-HostedResources-27FBCFCB/providers/Microsoft.NetworkCloud/bareMetalMachines/k5r750wkr3",
+              "cpuCores": 1,
+              "detailedStatus": "Running",
+              "detailedStatusMessage": "Running - virtual machine is running.",
+              "diskSizeGB": 300,
+              "image": "afo-mariner-guest-qcow2-kubevirt-v1.24.9",
+              "memorySizeGB": 4,
+              "name": "res-test-standard-naks-d5a98-56561df7-control-plane-8fr88",
+              "networkAttachments": [
+                {
+                  "attachedNetworkId": "/subscriptions/fca2e8ee-1179-48b8-9532-428ed0873a2e/resourceGroups/nc-resource-testing-k5-0907401cb287-ors8g/providers/Microsoft.NetworkCloud/cloudServicesNetworks/testcsnfo3znasx2pksw",
+                  "defaultGateway": "False",
+                  "ipAllocationMethod": "Dynamic",
+                  "ipv4Address": "169.254.8.1",
+                  "macAddress": "aa:bb:cc:13:91:48",
+                  "networkAttachmentName": "cloudservices"
+                },
+                {
+                  "attachedNetworkId": "/subscriptions/fca2e8ee-1179-48b8-9532-428ed0873a2e/resourceGroups/nc-resource-testing-k5-0907401cb287-ors8g/providers/Microsoft.NetworkCloud/l3Networks/l3network-505",
+                  "defaultGateway": "False",
+                  "ipAllocationMethod": "Dynamic",
+                  "ipv4Address": "10.12.40.10",
+                  "ipv6Address": "fda0:d59c:da0a:c28::8",
+                  "macAddress": "aa:bb:cc:f9:54:02",
+                  "networkAttachmentName": "defaultcni"
+                }
+              ],
+              "powerState": "On",
+              "role": "ControlPlane"
+            },
+            {
+              "bareMetalMachineId": "/subscriptions/fca2e8ee-1179-48b8-9532-428ed0873a2e/resourceGroups/k5-0907401cb287-HostedResources-27FBCFCB/providers/Microsoft.NetworkCloud/bareMetalMachines/k5r750wkr1",
+              "cpuCores": 8,
+              "detailedStatus": "Running",
+              "detailedStatusMessage": "Running - virtual machine is running.",
+              "diskSizeGB": 300,
+              "image": "afo-mariner-guest-qcow2-kubevirt-v1.24.9",
+              "memorySizeGB": 64,
+              "name": "systempool5072-1f72fc6c-md-d7zpr",
+              "networkAttachments": [
+                {
+                  "attachedNetworkId": "/subscriptions/fca2e8ee-1179-48b8-9532-428ed0873a2e/resourceGroups/nc-resource-testing-k5-0907401cb287-ors8g/providers/Microsoft.NetworkCloud/cloudServicesNetworks/testcsnfo3znasx2pksw",
+                  "defaultGateway": "False",
+                  "ipAllocationMethod": "Dynamic",
+                  "ipv4Address": "169.254.8.3",
+                  "macAddress": "aa:bb:cc:95:d1:2f",
+                  "networkAttachmentName": "cloudservices"
+                },
+                {
+                  "attachedNetworkId": "/subscriptions/fca2e8ee-1179-48b8-9532-428ed0873a2e/resourceGroups/nc-resource-testing-k5-0907401cb287-ors8g/providers/Microsoft.NetworkCloud/l3Networks/l3network-505",
+                  "defaultGateway": "False",
+                  "ipAllocationMethod": "Dynamic",
+                  "ipv4Address": "10.12.40.12",
+                  "ipv6Address": "fda0:d59c:da0a:c28::a",
+                  "macAddress": "aa:bb:cc:3c:0b:40",
+                  "networkAttachmentName": "defaultcni"
+                },
+                {
+                  "attachedNetworkId": "/subscriptions/fca2e8ee-1179-48b8-9532-428ed0873a2e/resourceGroups/nc-resource-testing-k5-0907401cb287-ors8g/providers/Microsoft.NetworkCloud/l3Networks/l3network-505",
+                  "defaultGateway": "False",
+                  "ipAllocationMethod": "Disabled",
+                  "macAddress": "aa:bb:cc:7d:c2:36",
+                  "networkAttachmentName": "s00l3netw-16f7e"
+                }
+              ],
+              "powerState": "On",
+              "role": "Worker"
+            }
+          ],
+          "connectedClusterId": "/subscriptions/fca2e8ee-1179-48b8-9532-428ed0873a2e/resourceGroups/res-test-standard-naks-d5a98-HostedResources-66FDA918/providers/Microsoft.Kubernetes/connectedClusters/res-test-standard-naks-d5a98",
+          "detailedStatus": "Provisioning",
+          "detailedStatusMessage": "control plane nodes 1 out of 1 ready, worker nodes 1 out of 2 ready"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/fca2e8ee-1179-48b8-9532-428ed0873a2e/resourceGroups/nc-resource-testing-k5-0907401cb287-ors8g/providers/Microsoft.NetworkCloud/kubernetesClusters/res-test-standard-naks-d5a98/agentPools/systemPool3991?api-version=2023-05-01-preview",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "1126",
+        "Content-Type": "application/json",
+        "traceparent": "00-cfb9209981ddf89fa857a38c02e219e3-396a7ec439c85ed3-00",
+        "User-Agent": "azsdk-net-ResourceManager.NetworkCloud/1.0.0-alpha.20230619.1 (.NET 7.0.5; Linux 5.15.90.1-microsoft-standard-WSL2 #1 SMP Fri Jan 27 02:56:13 UTC 2023)",
+        "x-ms-client-request-id": "fff897a7ed00edef256872bc23fc97c4",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "extendedLocation": {
+          "name": "/subscriptions/fca2e8ee-1179-48b8-9532-428ed0873a2e/resourcegroups/k5-0907401cb287-hostedresources-27fbcfcb/providers/microsoft.extendedlocation/customlocations/k5-0907401cb287-cstm-loc",
+          "type": "CustomLocation"
+        },
+        "tags": {
+          "key1": "value1",
+          "key2": "value2"
+        },
+        "location": "eastus",
+        "properties": {
+          "administratorConfiguration": {
+            "adminUsername": "azure",
+            "sshPublicKeys": [
+              {
+                "keyData": "ssh-rsa AAtsE3njSONzDYRIZv/WLjVuMfrUSByHp\u002BjfaaOLHTIIB4fJvo6dQUZxE20w2iDHV3tEkmnTo84eba97VMueQD6OzJPEyWZMRpz8UYWOd0IXeRqiFu1lawNblZhwNT/ojNZfpB3af/YDzwQCZgTcTRyNNhL4o/blKUmug0daSsSXISTRnIDpcf5qytjs1Xo\u002ByYyJMvzLL59mhAyb3p/cD\u002BY3/s3WhAx\u002Bl0XOKpzXnblrv9d3q4c2tWmm/SyFqthaqd0= fake-public-key"
+              }
+            ]
+          },
+          "agentOptions": {
+            "hugepagesCount": 12,
+            "hugepagesSize": "2M"
+          },
+          "attachedNetworkConfiguration": {
+            "l3Networks": [
+              {
+                "ipamEnabled": "False",
+                "networkId": "/subscriptions/fca2e8ee-1179-48b8-9532-428ed0873a2e/resourceGroups/nc-resource-testing-k5-0907401cb287-ors8g/providers/Microsoft.NetworkCloud/l3Networks/l3network-505",
+                "pluginType": "SRIOV"
+              }
+            ]
+          },
+          "count": 1,
+          "mode": "System",
+          "upgradeSettings": {
+            "maxSurge": "1"
+          },
+          "vmSkuName": "NC_M16_v1"
+        }
+      },
+      "StatusCode": 201,
+      "ResponseHeaders": {
+        "Azure-AsyncOperation": "https://management.azure.com/subscriptions/fca2e8ee-1179-48b8-9532-428ed0873a2e/providers/Microsoft.NetworkCloud/locations/EASTUS/operationStatuses/4b848ee0-4a6a-4ff6-ab48-e96838c23c50*4DDA8E081AD77320710F42C75201942C3060CA45B35F032AA70F459BDCE11BEB?api-version=2023-05-01-preview",
+        "Cache-Control": "no-cache",
+        "Content-Length": "1688",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 19 Jun 2023 21:47:20 GMT",
+        "ETag": "\u00221a094bf0-0000-0100-0000-6490cce80000\u0022",
+        "Expires": "-1",
+        "mise-correlation-id": "1c66cded-53df-4661-9a86-88dda9498fb6",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "fff897a7ed00edef256872bc23fc97c4",
+        "x-ms-correlation-request-id": "a69d1407-fb31-4184-94fd-1e7fcb5b6bd2",
+        "x-ms-providerhub-traffic": "True",
+        "x-ms-ratelimit-remaining-subscription-writes": "1195",
+        "x-ms-request-id": "00000000-0000-0000-0000-000000000000",
+        "x-ms-routing-request-id": "CANADACENTRAL:20230619T214720Z:a69d1407-fb31-4184-94fd-1e7fcb5b6bd2"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/fca2e8ee-1179-48b8-9532-428ed0873a2e/resourceGroups/nc-resource-testing-k5-0907401cb287-ors8g/providers/Microsoft.NetworkCloud/kubernetesClusters/res-test-standard-naks-d5a98/agentPools/systemPool3991",
+        "name": "systemPool3991",
+        "type": "microsoft.networkcloud/kubernetesclusters/agentpools",
+        "location": "eastus",
+        "extendedLocation": {
+          "name": "/subscriptions/fca2e8ee-1179-48b8-9532-428ed0873a2e/resourcegroups/k5-0907401cb287-hostedresources-27fbcfcb/providers/microsoft.extendedlocation/customlocations/k5-0907401cb287-cstm-loc",
+          "type": "CustomLocation"
+        },
+        "tags": {
+          "key1": "value1",
+          "key2": "value2"
+        },
+        "systemData": {
+          "createdBy": "REDACTED",
+          "createdByType": "User",
+          "createdAt": "2023-06-19T21:47:20.1909596Z",
+          "lastModifiedBy": "REDACTED",
+          "lastModifiedByType": "User",
+          "lastModifiedAt": "2023-06-19T21:47:20.1909596Z"
+        },
+        "properties": {
+          "provisioningState": "Accepted",
+          "administratorConfiguration": {
+            "adminUsername": "azure",
+            "sshPublicKeys": [
+              {
+                "keyData": "ssh-rsa AAtsE3njSONzDYRIZv/WLjVuMfrUSByHp\u002BjfaaOLHTIIB4fJvo6dQUZxE20w2iDHV3tEkmnTo84eba97VMueQD6OzJPEyWZMRpz8UYWOd0IXeRqiFu1lawNblZhwNT/ojNZfpB3af/YDzwQCZgTcTRyNNhL4o/blKUmug0daSsSXISTRnIDpcf5qytjs1Xo\u002ByYyJMvzLL59mhAyb3p/cD\u002BY3/s3WhAx\u002Bl0XOKpzXnblrv9d3q4c2tWmm/SyFqthaqd0= fake-public-key"
+              }
+            ]
+          },
+          "agentOptions": {
+            "hugepagesCount": 12,
+            "hugepagesSize": "2M"
+          },
+          "attachedNetworkConfiguration": {
+            "l3Networks": [
+              {
+                "ipamEnabled": "False",
+                "networkId": "/subscriptions/fca2e8ee-1179-48b8-9532-428ed0873a2e/resourceGroups/nc-resource-testing-k5-0907401cb287-ors8g/providers/Microsoft.NetworkCloud/l3Networks/l3network-505",
+                "pluginType": "SRIOV"
+              }
+            ]
+          },
+          "count": 1,
+          "mode": "System",
+          "upgradeSettings": {
+            "maxSurge": "1"
+          },
+          "vmSkuName": "NC_M16_v1"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/fca2e8ee-1179-48b8-9532-428ed0873a2e/providers/Microsoft.NetworkCloud/locations/EASTUS/operationStatuses/4b848ee0-4a6a-4ff6-ab48-e96838c23c50*4DDA8E081AD77320710F42C75201942C3060CA45B35F032AA70F459BDCE11BEB?api-version=2023-05-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-cfb9209981ddf89fa857a38c02e219e3-af98592f72024cf1-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.6.0 (.NET 7.0.5; Linux 5.15.90.1-microsoft-standard-WSL2 #1 SMP Fri Jan 27 02:56:13 UTC 2023)",
+        "x-ms-client-request-id": "e19bde562a4941fffedc9ed7ee796734",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "635",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 19 Jun 2023 21:47:20 GMT",
+        "ETag": "\u0022d0021524-0000-0100-0000-6490cce80000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "e19bde562a4941fffedc9ed7ee796734",
+        "x-ms-correlation-request-id": "d180baa4-cd34-44c5-96d6-bdc4b5b6e840",
+        "x-ms-ratelimit-remaining-subscription-reads": "11965",
+        "x-ms-request-id": "1558c034-93d2-4698-b9f6-36e50830fea2",
+        "x-ms-routing-request-id": "CANADACENTRAL:20230619T214721Z:d180baa4-cd34-44c5-96d6-bdc4b5b6e840"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/fca2e8ee-1179-48b8-9532-428ed0873a2e/providers/Microsoft.NetworkCloud/locations/EASTUS/operationStatuses/4b848ee0-4a6a-4ff6-ab48-e96838c23c50*4DDA8E081AD77320710F42C75201942C3060CA45B35F032AA70F459BDCE11BEB",
+        "name": "4b848ee0-4a6a-4ff6-ab48-e96838c23c50*4DDA8E081AD77320710F42C75201942C3060CA45B35F032AA70F459BDCE11BEB",
+        "resourceId": "/subscriptions/fca2e8ee-1179-48b8-9532-428ed0873a2e/resourceGroups/nc-resource-testing-k5-0907401cb287-ors8g/providers/Microsoft.NetworkCloud/kubernetesClusters/res-test-standard-naks-d5a98/agentPools/systemPool3991",
+        "status": "Accepted",
+        "startTime": "2023-06-19T21:47:20.2697073Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/fca2e8ee-1179-48b8-9532-428ed0873a2e/providers/Microsoft.NetworkCloud/locations/EASTUS/operationStatuses/4b848ee0-4a6a-4ff6-ab48-e96838c23c50*4DDA8E081AD77320710F42C75201942C3060CA45B35F032AA70F459BDCE11BEB?api-version=2023-05-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-cfb9209981ddf89fa857a38c02e219e3-c555b1ac1402f53b-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.6.0 (.NET 7.0.5; Linux 5.15.90.1-microsoft-standard-WSL2 #1 SMP Fri Jan 27 02:56:13 UTC 2023)",
+        "x-ms-client-request-id": "a88020b2c7da0a759bc2cb68c5f810ab",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "635",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 19 Jun 2023 21:47:21 GMT",
+        "ETag": "\u0022d0021524-0000-0100-0000-6490cce80000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "a88020b2c7da0a759bc2cb68c5f810ab",
+        "x-ms-correlation-request-id": "960b80ce-11ad-49db-ac33-f761c81ee05a",
+        "x-ms-ratelimit-remaining-subscription-reads": "11964",
+        "x-ms-request-id": "e9a4b0ce-e49c-4834-a5bb-5dfe4ba0dfeb",
+        "x-ms-routing-request-id": "CANADACENTRAL:20230619T214722Z:960b80ce-11ad-49db-ac33-f761c81ee05a"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/fca2e8ee-1179-48b8-9532-428ed0873a2e/providers/Microsoft.NetworkCloud/locations/EASTUS/operationStatuses/4b848ee0-4a6a-4ff6-ab48-e96838c23c50*4DDA8E081AD77320710F42C75201942C3060CA45B35F032AA70F459BDCE11BEB",
+        "name": "4b848ee0-4a6a-4ff6-ab48-e96838c23c50*4DDA8E081AD77320710F42C75201942C3060CA45B35F032AA70F459BDCE11BEB",
+        "resourceId": "/subscriptions/fca2e8ee-1179-48b8-9532-428ed0873a2e/resourceGroups/nc-resource-testing-k5-0907401cb287-ors8g/providers/Microsoft.NetworkCloud/kubernetesClusters/res-test-standard-naks-d5a98/agentPools/systemPool3991",
+        "status": "Accepted",
+        "startTime": "2023-06-19T21:47:20.2697073Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/fca2e8ee-1179-48b8-9532-428ed0873a2e/providers/Microsoft.NetworkCloud/locations/EASTUS/operationStatuses/4b848ee0-4a6a-4ff6-ab48-e96838c23c50*4DDA8E081AD77320710F42C75201942C3060CA45B35F032AA70F459BDCE11BEB?api-version=2023-05-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-cfb9209981ddf89fa857a38c02e219e3-bcffb4e365b7acd5-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.6.0 (.NET 7.0.5; Linux 5.15.90.1-microsoft-standard-WSL2 #1 SMP Fri Jan 27 02:56:13 UTC 2023)",
+        "x-ms-client-request-id": "456628b6b661ea7af38f5c80fe2448ba",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "635",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 19 Jun 2023 21:47:22 GMT",
+        "ETag": "\u0022d0021524-0000-0100-0000-6490cce80000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "456628b6b661ea7af38f5c80fe2448ba",
+        "x-ms-correlation-request-id": "75133537-05e3-4f84-985b-5f651e4ce213",
+        "x-ms-ratelimit-remaining-subscription-reads": "11963",
+        "x-ms-request-id": "9f357ed9-f046-48a8-a87d-cd6a7414815b",
+        "x-ms-routing-request-id": "CANADACENTRAL:20230619T214723Z:75133537-05e3-4f84-985b-5f651e4ce213"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/fca2e8ee-1179-48b8-9532-428ed0873a2e/providers/Microsoft.NetworkCloud/locations/EASTUS/operationStatuses/4b848ee0-4a6a-4ff6-ab48-e96838c23c50*4DDA8E081AD77320710F42C75201942C3060CA45B35F032AA70F459BDCE11BEB",
+        "name": "4b848ee0-4a6a-4ff6-ab48-e96838c23c50*4DDA8E081AD77320710F42C75201942C3060CA45B35F032AA70F459BDCE11BEB",
+        "resourceId": "/subscriptions/fca2e8ee-1179-48b8-9532-428ed0873a2e/resourceGroups/nc-resource-testing-k5-0907401cb287-ors8g/providers/Microsoft.NetworkCloud/kubernetesClusters/res-test-standard-naks-d5a98/agentPools/systemPool3991",
+        "status": "Accepted",
+        "startTime": "2023-06-19T21:47:20.2697073Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/fca2e8ee-1179-48b8-9532-428ed0873a2e/providers/Microsoft.NetworkCloud/locations/EASTUS/operationStatuses/4b848ee0-4a6a-4ff6-ab48-e96838c23c50*4DDA8E081AD77320710F42C75201942C3060CA45B35F032AA70F459BDCE11BEB?api-version=2023-05-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-cfb9209981ddf89fa857a38c02e219e3-7416630a4d2ac466-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.6.0 (.NET 7.0.5; Linux 5.15.90.1-microsoft-standard-WSL2 #1 SMP Fri Jan 27 02:56:13 UTC 2023)",
+        "x-ms-client-request-id": "bc43f23008f98f70689045875f977b05",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "635",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 19 Jun 2023 21:47:23 GMT",
+        "ETag": "\u0022d0022c24-0000-0100-0000-6490ccec0000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "bc43f23008f98f70689045875f977b05",
+        "x-ms-correlation-request-id": "fb85155b-424c-42a1-b780-8d9ca145d544",
+        "x-ms-ratelimit-remaining-subscription-reads": "11962",
+        "x-ms-request-id": "191a5b7c-4ef1-4db8-9501-5ff1d2523f22",
+        "x-ms-routing-request-id": "CANADACENTRAL:20230619T214724Z:fb85155b-424c-42a1-b780-8d9ca145d544"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/fca2e8ee-1179-48b8-9532-428ed0873a2e/providers/Microsoft.NetworkCloud/locations/EASTUS/operationStatuses/4b848ee0-4a6a-4ff6-ab48-e96838c23c50*4DDA8E081AD77320710F42C75201942C3060CA45B35F032AA70F459BDCE11BEB",
+        "name": "4b848ee0-4a6a-4ff6-ab48-e96838c23c50*4DDA8E081AD77320710F42C75201942C3060CA45B35F032AA70F459BDCE11BEB",
+        "resourceId": "/subscriptions/fca2e8ee-1179-48b8-9532-428ed0873a2e/resourceGroups/nc-resource-testing-k5-0907401cb287-ors8g/providers/Microsoft.NetworkCloud/kubernetesClusters/res-test-standard-naks-d5a98/agentPools/systemPool3991",
+        "status": "Accepted",
+        "startTime": "2023-06-19T21:47:20.2697073Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/fca2e8ee-1179-48b8-9532-428ed0873a2e/providers/Microsoft.NetworkCloud/locations/EASTUS/operationStatuses/4b848ee0-4a6a-4ff6-ab48-e96838c23c50*4DDA8E081AD77320710F42C75201942C3060CA45B35F032AA70F459BDCE11BEB?api-version=2023-05-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-cfb9209981ddf89fa857a38c02e219e3-e4f5135ca17762fb-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.6.0 (.NET 7.0.5; Linux 5.15.90.1-microsoft-standard-WSL2 #1 SMP Fri Jan 27 02:56:13 UTC 2023)",
+        "x-ms-client-request-id": "c621f3cb2213fbd3a695b54b6bf50b76",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "635",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 19 Jun 2023 21:47:25 GMT",
+        "ETag": "\u0022d0022c24-0000-0100-0000-6490ccec0000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "c621f3cb2213fbd3a695b54b6bf50b76",
+        "x-ms-correlation-request-id": "b3912304-cc8c-4b05-bb85-95b86490e64c",
+        "x-ms-ratelimit-remaining-subscription-reads": "11961",
+        "x-ms-request-id": "fbd4fadf-629d-4e82-8d34-e6e17a4bf7d0",
+        "x-ms-routing-request-id": "CANADACENTRAL:20230619T214726Z:b3912304-cc8c-4b05-bb85-95b86490e64c"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/fca2e8ee-1179-48b8-9532-428ed0873a2e/providers/Microsoft.NetworkCloud/locations/EASTUS/operationStatuses/4b848ee0-4a6a-4ff6-ab48-e96838c23c50*4DDA8E081AD77320710F42C75201942C3060CA45B35F032AA70F459BDCE11BEB",
+        "name": "4b848ee0-4a6a-4ff6-ab48-e96838c23c50*4DDA8E081AD77320710F42C75201942C3060CA45B35F032AA70F459BDCE11BEB",
+        "resourceId": "/subscriptions/fca2e8ee-1179-48b8-9532-428ed0873a2e/resourceGroups/nc-resource-testing-k5-0907401cb287-ors8g/providers/Microsoft.NetworkCloud/kubernetesClusters/res-test-standard-naks-d5a98/agentPools/systemPool3991",
+        "status": "Accepted",
+        "startTime": "2023-06-19T21:47:20.2697073Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/fca2e8ee-1179-48b8-9532-428ed0873a2e/providers/Microsoft.NetworkCloud/locations/EASTUS/operationStatuses/4b848ee0-4a6a-4ff6-ab48-e96838c23c50*4DDA8E081AD77320710F42C75201942C3060CA45B35F032AA70F459BDCE11BEB?api-version=2023-05-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-cfb9209981ddf89fa857a38c02e219e3-e9d384d66e0419bb-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.6.0 (.NET 7.0.5; Linux 5.15.90.1-microsoft-standard-WSL2 #1 SMP Fri Jan 27 02:56:13 UTC 2023)",
+        "x-ms-client-request-id": "d237107a54b5adb1b8d7dcd070f38b5b",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "635",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 19 Jun 2023 21:47:29 GMT",
+        "ETag": "\u0022d0022c24-0000-0100-0000-6490ccec0000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "d237107a54b5adb1b8d7dcd070f38b5b",
+        "x-ms-correlation-request-id": "ddcd46d1-6711-47dc-ac02-b7aa8bb62e67",
+        "x-ms-ratelimit-remaining-subscription-reads": "11960",
+        "x-ms-request-id": "4f9f4a18-9c59-4a6f-b190-f6f13e7eb731",
+        "x-ms-routing-request-id": "CANADACENTRAL:20230619T214730Z:ddcd46d1-6711-47dc-ac02-b7aa8bb62e67"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/fca2e8ee-1179-48b8-9532-428ed0873a2e/providers/Microsoft.NetworkCloud/locations/EASTUS/operationStatuses/4b848ee0-4a6a-4ff6-ab48-e96838c23c50*4DDA8E081AD77320710F42C75201942C3060CA45B35F032AA70F459BDCE11BEB",
+        "name": "4b848ee0-4a6a-4ff6-ab48-e96838c23c50*4DDA8E081AD77320710F42C75201942C3060CA45B35F032AA70F459BDCE11BEB",
+        "resourceId": "/subscriptions/fca2e8ee-1179-48b8-9532-428ed0873a2e/resourceGroups/nc-resource-testing-k5-0907401cb287-ors8g/providers/Microsoft.NetworkCloud/kubernetesClusters/res-test-standard-naks-d5a98/agentPools/systemPool3991",
+        "status": "Accepted",
+        "startTime": "2023-06-19T21:47:20.2697073Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/fca2e8ee-1179-48b8-9532-428ed0873a2e/providers/Microsoft.NetworkCloud/locations/EASTUS/operationStatuses/4b848ee0-4a6a-4ff6-ab48-e96838c23c50*4DDA8E081AD77320710F42C75201942C3060CA45B35F032AA70F459BDCE11BEB?api-version=2023-05-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-cfb9209981ddf89fa857a38c02e219e3-bcb0c8b1dd9d2c5e-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.6.0 (.NET 7.0.5; Linux 5.15.90.1-microsoft-standard-WSL2 #1 SMP Fri Jan 27 02:56:13 UTC 2023)",
+        "x-ms-client-request-id": "0bb4561382030ea61f47166452252473",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "635",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 19 Jun 2023 21:47:37 GMT",
+        "ETag": "\u0022d0022c24-0000-0100-0000-6490ccec0000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "0bb4561382030ea61f47166452252473",
+        "x-ms-correlation-request-id": "cd3f242b-2bb9-4c29-8233-54addaa7f68a",
+        "x-ms-ratelimit-remaining-subscription-reads": "11959",
+        "x-ms-request-id": "fb6f7324-6b17-4689-82da-893cd97938e5",
+        "x-ms-routing-request-id": "CANADACENTRAL:20230619T214738Z:cd3f242b-2bb9-4c29-8233-54addaa7f68a"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/fca2e8ee-1179-48b8-9532-428ed0873a2e/providers/Microsoft.NetworkCloud/locations/EASTUS/operationStatuses/4b848ee0-4a6a-4ff6-ab48-e96838c23c50*4DDA8E081AD77320710F42C75201942C3060CA45B35F032AA70F459BDCE11BEB",
+        "name": "4b848ee0-4a6a-4ff6-ab48-e96838c23c50*4DDA8E081AD77320710F42C75201942C3060CA45B35F032AA70F459BDCE11BEB",
+        "resourceId": "/subscriptions/fca2e8ee-1179-48b8-9532-428ed0873a2e/resourceGroups/nc-resource-testing-k5-0907401cb287-ors8g/providers/Microsoft.NetworkCloud/kubernetesClusters/res-test-standard-naks-d5a98/agentPools/systemPool3991",
+        "status": "Accepted",
+        "startTime": "2023-06-19T21:47:20.2697073Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/fca2e8ee-1179-48b8-9532-428ed0873a2e/providers/Microsoft.NetworkCloud/locations/EASTUS/operationStatuses/4b848ee0-4a6a-4ff6-ab48-e96838c23c50*4DDA8E081AD77320710F42C75201942C3060CA45B35F032AA70F459BDCE11BEB?api-version=2023-05-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-cfb9209981ddf89fa857a38c02e219e3-05e5a3659b96b5f4-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.6.0 (.NET 7.0.5; Linux 5.15.90.1-microsoft-standard-WSL2 #1 SMP Fri Jan 27 02:56:13 UTC 2023)",
+        "x-ms-client-request-id": "4e0dce84a860775042730d3c46028bb3",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "637",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 19 Jun 2023 21:47:54 GMT",
+        "ETag": "\u0022d002d524-0000-0100-0000-6490cd040000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "4e0dce84a860775042730d3c46028bb3",
+        "x-ms-correlation-request-id": "a96b14e6-19dd-43a9-8955-a8ea3521a825",
+        "x-ms-ratelimit-remaining-subscription-reads": "11958",
+        "x-ms-request-id": "ff053d9b-d48c-4b19-9c42-d49b724526e1",
+        "x-ms-routing-request-id": "CANADACENTRAL:20230619T214754Z:a96b14e6-19dd-43a9-8955-a8ea3521a825"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/fca2e8ee-1179-48b8-9532-428ed0873a2e/providers/Microsoft.NetworkCloud/locations/EASTUS/operationStatuses/4b848ee0-4a6a-4ff6-ab48-e96838c23c50*4DDA8E081AD77320710F42C75201942C3060CA45B35F032AA70F459BDCE11BEB",
+        "name": "4b848ee0-4a6a-4ff6-ab48-e96838c23c50*4DDA8E081AD77320710F42C75201942C3060CA45B35F032AA70F459BDCE11BEB",
+        "resourceId": "/subscriptions/fca2e8ee-1179-48b8-9532-428ed0873a2e/resourceGroups/nc-resource-testing-k5-0907401cb287-ors8g/providers/Microsoft.NetworkCloud/kubernetesClusters/res-test-standard-naks-d5a98/agentPools/systemPool3991",
+        "status": "InProgress",
+        "startTime": "2023-06-19T21:47:20.2697073Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/fca2e8ee-1179-48b8-9532-428ed0873a2e/providers/Microsoft.NetworkCloud/locations/EASTUS/operationStatuses/4b848ee0-4a6a-4ff6-ab48-e96838c23c50*4DDA8E081AD77320710F42C75201942C3060CA45B35F032AA70F459BDCE11BEB?api-version=2023-05-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-cfb9209981ddf89fa857a38c02e219e3-9dbc35e5fcda2a78-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.6.0 (.NET 7.0.5; Linux 5.15.90.1-microsoft-standard-WSL2 #1 SMP Fri Jan 27 02:56:13 UTC 2023)",
+        "x-ms-client-request-id": "14375a0a0041f7736928b36d3e4c5a93",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "637",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 19 Jun 2023 21:48:26 GMT",
+        "ETag": "\u0022d0028b25-0000-0100-0000-6490cd0e0000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "14375a0a0041f7736928b36d3e4c5a93",
+        "x-ms-correlation-request-id": "b9f1211b-0039-436f-9712-87fbce468144",
+        "x-ms-ratelimit-remaining-subscription-reads": "11957",
+        "x-ms-request-id": "b497f999-29b0-4346-946d-72f34127fbee",
+        "x-ms-routing-request-id": "CANADACENTRAL:20230619T214826Z:b9f1211b-0039-436f-9712-87fbce468144"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/fca2e8ee-1179-48b8-9532-428ed0873a2e/providers/Microsoft.NetworkCloud/locations/EASTUS/operationStatuses/4b848ee0-4a6a-4ff6-ab48-e96838c23c50*4DDA8E081AD77320710F42C75201942C3060CA45B35F032AA70F459BDCE11BEB",
+        "name": "4b848ee0-4a6a-4ff6-ab48-e96838c23c50*4DDA8E081AD77320710F42C75201942C3060CA45B35F032AA70F459BDCE11BEB",
+        "resourceId": "/subscriptions/fca2e8ee-1179-48b8-9532-428ed0873a2e/resourceGroups/nc-resource-testing-k5-0907401cb287-ors8g/providers/Microsoft.NetworkCloud/kubernetesClusters/res-test-standard-naks-d5a98/agentPools/systemPool3991",
+        "status": "InProgress",
+        "startTime": "2023-06-19T21:47:20.2697073Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/fca2e8ee-1179-48b8-9532-428ed0873a2e/providers/Microsoft.NetworkCloud/locations/EASTUS/operationStatuses/4b848ee0-4a6a-4ff6-ab48-e96838c23c50*4DDA8E081AD77320710F42C75201942C3060CA45B35F032AA70F459BDCE11BEB?api-version=2023-05-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-cfb9209981ddf89fa857a38c02e219e3-d66dc0dc34bd79e9-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.6.0 (.NET 7.0.5; Linux 5.15.90.1-microsoft-standard-WSL2 #1 SMP Fri Jan 27 02:56:13 UTC 2023)",
+        "x-ms-client-request-id": "a14b69b23ce56afb053dc88f746ac81d",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "637",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 19 Jun 2023 21:48:58 GMT",
+        "ETag": "\u0022d0021326-0000-0100-0000-6490cd2b0000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "a14b69b23ce56afb053dc88f746ac81d",
+        "x-ms-correlation-request-id": "c4c87102-5e98-4b1e-aa97-ca70f2e0762c",
+        "x-ms-ratelimit-remaining-subscription-reads": "11956",
+        "x-ms-request-id": "494121de-8f5e-4d91-9d56-f91468337590",
+        "x-ms-routing-request-id": "CANADACENTRAL:20230619T214858Z:c4c87102-5e98-4b1e-aa97-ca70f2e0762c"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/fca2e8ee-1179-48b8-9532-428ed0873a2e/providers/Microsoft.NetworkCloud/locations/EASTUS/operationStatuses/4b848ee0-4a6a-4ff6-ab48-e96838c23c50*4DDA8E081AD77320710F42C75201942C3060CA45B35F032AA70F459BDCE11BEB",
+        "name": "4b848ee0-4a6a-4ff6-ab48-e96838c23c50*4DDA8E081AD77320710F42C75201942C3060CA45B35F032AA70F459BDCE11BEB",
+        "resourceId": "/subscriptions/fca2e8ee-1179-48b8-9532-428ed0873a2e/resourceGroups/nc-resource-testing-k5-0907401cb287-ors8g/providers/Microsoft.NetworkCloud/kubernetesClusters/res-test-standard-naks-d5a98/agentPools/systemPool3991",
+        "status": "InProgress",
+        "startTime": "2023-06-19T21:47:20.2697073Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/fca2e8ee-1179-48b8-9532-428ed0873a2e/providers/Microsoft.NetworkCloud/locations/EASTUS/operationStatuses/4b848ee0-4a6a-4ff6-ab48-e96838c23c50*4DDA8E081AD77320710F42C75201942C3060CA45B35F032AA70F459BDCE11BEB?api-version=2023-05-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-cfb9209981ddf89fa857a38c02e219e3-279add980bf5f945-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.6.0 (.NET 7.0.5; Linux 5.15.90.1-microsoft-standard-WSL2 #1 SMP Fri Jan 27 02:56:13 UTC 2023)",
+        "x-ms-client-request-id": "f85a62bc0fed84315b15e437f5e338f5",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "637",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 19 Jun 2023 21:49:30 GMT",
+        "ETag": "\u0022d002fd26-0000-0100-0000-6490cd670000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "f85a62bc0fed84315b15e437f5e338f5",
+        "x-ms-correlation-request-id": "e6699c5a-f648-4e7d-8227-c33bc8b0ab9f",
+        "x-ms-ratelimit-remaining-subscription-reads": "11955",
+        "x-ms-request-id": "cd23fefc-552f-4fc9-b34b-0b0abca817aa",
+        "x-ms-routing-request-id": "CANADACENTRAL:20230619T214931Z:e6699c5a-f648-4e7d-8227-c33bc8b0ab9f"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/fca2e8ee-1179-48b8-9532-428ed0873a2e/providers/Microsoft.NetworkCloud/locations/EASTUS/operationStatuses/4b848ee0-4a6a-4ff6-ab48-e96838c23c50*4DDA8E081AD77320710F42C75201942C3060CA45B35F032AA70F459BDCE11BEB",
+        "name": "4b848ee0-4a6a-4ff6-ab48-e96838c23c50*4DDA8E081AD77320710F42C75201942C3060CA45B35F032AA70F459BDCE11BEB",
+        "resourceId": "/subscriptions/fca2e8ee-1179-48b8-9532-428ed0873a2e/resourceGroups/nc-resource-testing-k5-0907401cb287-ors8g/providers/Microsoft.NetworkCloud/kubernetesClusters/res-test-standard-naks-d5a98/agentPools/systemPool3991",
+        "status": "InProgress",
+        "startTime": "2023-06-19T21:47:20.2697073Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/fca2e8ee-1179-48b8-9532-428ed0873a2e/providers/Microsoft.NetworkCloud/locations/EASTUS/operationStatuses/4b848ee0-4a6a-4ff6-ab48-e96838c23c50*4DDA8E081AD77320710F42C75201942C3060CA45B35F032AA70F459BDCE11BEB?api-version=2023-05-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-cfb9209981ddf89fa857a38c02e219e3-7f0022d634eecd75-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.6.0 (.NET 7.0.5; Linux 5.15.90.1-microsoft-standard-WSL2 #1 SMP Fri Jan 27 02:56:13 UTC 2023)",
+        "x-ms-client-request-id": "dc897a18e9b6cdcd5ecc0e0337e483ff",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "637",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 19 Jun 2023 21:50:02 GMT",
+        "ETag": "\u0022d002fd26-0000-0100-0000-6490cd670000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "dc897a18e9b6cdcd5ecc0e0337e483ff",
+        "x-ms-correlation-request-id": "082e094c-e476-4825-a97b-5b7e9e8e4508",
+        "x-ms-ratelimit-remaining-subscription-reads": "11954",
+        "x-ms-request-id": "f9a55051-fbca-4701-b39c-dfdd47da702d",
+        "x-ms-routing-request-id": "CANADACENTRAL:20230619T215003Z:082e094c-e476-4825-a97b-5b7e9e8e4508"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/fca2e8ee-1179-48b8-9532-428ed0873a2e/providers/Microsoft.NetworkCloud/locations/EASTUS/operationStatuses/4b848ee0-4a6a-4ff6-ab48-e96838c23c50*4DDA8E081AD77320710F42C75201942C3060CA45B35F032AA70F459BDCE11BEB",
+        "name": "4b848ee0-4a6a-4ff6-ab48-e96838c23c50*4DDA8E081AD77320710F42C75201942C3060CA45B35F032AA70F459BDCE11BEB",
+        "resourceId": "/subscriptions/fca2e8ee-1179-48b8-9532-428ed0873a2e/resourceGroups/nc-resource-testing-k5-0907401cb287-ors8g/providers/Microsoft.NetworkCloud/kubernetesClusters/res-test-standard-naks-d5a98/agentPools/systemPool3991",
+        "status": "InProgress",
+        "startTime": "2023-06-19T21:47:20.2697073Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/fca2e8ee-1179-48b8-9532-428ed0873a2e/providers/Microsoft.NetworkCloud/locations/EASTUS/operationStatuses/4b848ee0-4a6a-4ff6-ab48-e96838c23c50*4DDA8E081AD77320710F42C75201942C3060CA45B35F032AA70F459BDCE11BEB?api-version=2023-05-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-cfb9209981ddf89fa857a38c02e219e3-c00bb48516ef26b3-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.6.0 (.NET 7.0.5; Linux 5.15.90.1-microsoft-standard-WSL2 #1 SMP Fri Jan 27 02:56:13 UTC 2023)",
+        "x-ms-client-request-id": "dbb0966062f2a3a537c746d058c37522",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "637",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 19 Jun 2023 21:50:34 GMT",
+        "ETag": "\u0022d002fd26-0000-0100-0000-6490cd670000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "dbb0966062f2a3a537c746d058c37522",
+        "x-ms-correlation-request-id": "142fc591-6562-4557-a184-e70441972cfc",
+        "x-ms-ratelimit-remaining-subscription-reads": "11953",
+        "x-ms-request-id": "835d4969-509e-42c5-b2df-3174936891b7",
+        "x-ms-routing-request-id": "CANADACENTRAL:20230619T215035Z:142fc591-6562-4557-a184-e70441972cfc"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/fca2e8ee-1179-48b8-9532-428ed0873a2e/providers/Microsoft.NetworkCloud/locations/EASTUS/operationStatuses/4b848ee0-4a6a-4ff6-ab48-e96838c23c50*4DDA8E081AD77320710F42C75201942C3060CA45B35F032AA70F459BDCE11BEB",
+        "name": "4b848ee0-4a6a-4ff6-ab48-e96838c23c50*4DDA8E081AD77320710F42C75201942C3060CA45B35F032AA70F459BDCE11BEB",
+        "resourceId": "/subscriptions/fca2e8ee-1179-48b8-9532-428ed0873a2e/resourceGroups/nc-resource-testing-k5-0907401cb287-ors8g/providers/Microsoft.NetworkCloud/kubernetesClusters/res-test-standard-naks-d5a98/agentPools/systemPool3991",
+        "status": "InProgress",
+        "startTime": "2023-06-19T21:47:20.2697073Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/fca2e8ee-1179-48b8-9532-428ed0873a2e/providers/Microsoft.NetworkCloud/locations/EASTUS/operationStatuses/4b848ee0-4a6a-4ff6-ab48-e96838c23c50*4DDA8E081AD77320710F42C75201942C3060CA45B35F032AA70F459BDCE11BEB?api-version=2023-05-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-cfb9209981ddf89fa857a38c02e219e3-613cb633cda69b91-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.6.0 (.NET 7.0.5; Linux 5.15.90.1-microsoft-standard-WSL2 #1 SMP Fri Jan 27 02:56:13 UTC 2023)",
+        "x-ms-client-request-id": "f976d304ebe1d366958c9921002d4c76",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "695",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 19 Jun 2023 21:51:07 GMT",
+        "ETag": "\u0022d0029329-0000-0100-0000-6490cdc30000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "f976d304ebe1d366958c9921002d4c76",
+        "x-ms-correlation-request-id": "d81788fe-48a0-4a3b-89c4-230003d4bce8",
+        "x-ms-ratelimit-remaining-subscription-reads": "11952",
+        "x-ms-request-id": "a7f6c706-dce7-4047-b717-996e82215205",
+        "x-ms-routing-request-id": "CANADACENTRAL:20230619T215107Z:d81788fe-48a0-4a3b-89c4-230003d4bce8"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/fca2e8ee-1179-48b8-9532-428ed0873a2e/providers/Microsoft.NetworkCloud/locations/EASTUS/operationStatuses/4b848ee0-4a6a-4ff6-ab48-e96838c23c50*4DDA8E081AD77320710F42C75201942C3060CA45B35F032AA70F459BDCE11BEB",
+        "name": "4b848ee0-4a6a-4ff6-ab48-e96838c23c50*4DDA8E081AD77320710F42C75201942C3060CA45B35F032AA70F459BDCE11BEB",
+        "resourceId": "/subscriptions/fca2e8ee-1179-48b8-9532-428ed0873a2e/resourceGroups/nc-resource-testing-k5-0907401cb287-ors8g/providers/Microsoft.NetworkCloud/kubernetesClusters/res-test-standard-naks-d5a98/agentPools/systemPool3991",
+        "status": "Succeeded",
+        "startTime": "2023-06-19T21:47:20.2697073Z",
+        "endTime": "2023-06-19T21:50:59.5267164Z",
+        "properties": null
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/fca2e8ee-1179-48b8-9532-428ed0873a2e/resourceGroups/nc-resource-testing-k5-0907401cb287-ors8g/providers/Microsoft.NetworkCloud/kubernetesClusters/res-test-standard-naks-d5a98/agentPools/systemPool3991?api-version=2023-05-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-cfb9209981ddf89fa857a38c02e219e3-db105bb3ebc0d5ec-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.6.0 (.NET 7.0.5; Linux 5.15.90.1-microsoft-standard-WSL2 #1 SMP Fri Jan 27 02:56:13 UTC 2023)",
+        "x-ms-client-request-id": "5fd7e5915d32b602d5e5a5eea2fd759b",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "1689",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 19 Jun 2023 21:51:07 GMT",
+        "ETag": "\u00221b09c237-0000-0100-0000-6490cdc30000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "5fd7e5915d32b602d5e5a5eea2fd759b",
+        "x-ms-correlation-request-id": "639d8e94-5ffe-4130-8ed7-0cf75396de95",
+        "x-ms-providerhub-traffic": "True",
+        "x-ms-ratelimit-remaining-subscription-reads": "11951",
+        "x-ms-request-id": "f5fdaa62-2493-4985-898f-f13f7e35feb3",
+        "x-ms-routing-request-id": "CANADACENTRAL:20230619T215107Z:639d8e94-5ffe-4130-8ed7-0cf75396de95"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/fca2e8ee-1179-48b8-9532-428ed0873a2e/resourceGroups/nc-resource-testing-k5-0907401cb287-ors8g/providers/Microsoft.NetworkCloud/kubernetesClusters/res-test-standard-naks-d5a98/agentPools/systemPool3991",
+        "name": "systemPool3991",
+        "type": "microsoft.networkcloud/kubernetesclusters/agentpools",
+        "location": "eastus",
+        "extendedLocation": {
+          "name": "/subscriptions/fca2e8ee-1179-48b8-9532-428ed0873a2e/resourcegroups/k5-0907401cb287-hostedresources-27fbcfcb/providers/microsoft.extendedlocation/customlocations/k5-0907401cb287-cstm-loc",
+          "type": "CustomLocation"
+        },
+        "tags": {
+          "key1": "value1",
+          "key2": "value2"
+        },
+        "systemData": {
+          "createdBy": "REDACTED",
+          "createdByType": "User",
+          "createdAt": "2023-06-19T21:47:20.1909596Z",
+          "lastModifiedBy": "REDACTED",
+          "lastModifiedByType": "User",
+          "lastModifiedAt": "2023-06-19T21:47:20.1909596Z"
+        },
+        "properties": {
+          "provisioningState": "Succeeded",
+          "administratorConfiguration": {
+            "adminUsername": "azure",
+            "sshPublicKeys": [
+              {
+                "keyData": "ssh-rsa AAtsE3njSONzDYRIZv/WLjVuMfrUSByHp\u002BjfaaOLHTIIB4fJvo6dQUZxE20w2iDHV3tEkmnTo84eba97VMueQD6OzJPEyWZMRpz8UYWOd0IXeRqiFu1lawNblZhwNT/ojNZfpB3af/YDzwQCZgTcTRyNNhL4o/blKUmug0daSsSXISTRnIDpcf5qytjs1Xo\u002ByYyJMvzLL59mhAyb3p/cD\u002BY3/s3WhAx\u002Bl0XOKpzXnblrv9d3q4c2tWmm/SyFqthaqd0= fake-public-key"
+              }
+            ]
+          },
+          "agentOptions": {
+            "hugepagesCount": 12,
+            "hugepagesSize": "2M"
+          },
+          "attachedNetworkConfiguration": {
+            "l3Networks": [
+              {
+                "ipamEnabled": "False",
+                "networkId": "/subscriptions/fca2e8ee-1179-48b8-9532-428ed0873a2e/resourceGroups/nc-resource-testing-k5-0907401cb287-ors8g/providers/Microsoft.NetworkCloud/l3Networks/l3network-505",
+                "pluginType": "SRIOV"
+              }
+            ]
+          },
+          "count": 1,
+          "mode": "System",
+          "upgradeSettings": {
+            "maxSurge": "1"
+          },
+          "vmSkuName": "NC_M16_v1"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/fca2e8ee-1179-48b8-9532-428ed0873a2e/resourceGroups/nc-resource-testing-k5-0907401cb287-ors8g/providers/Microsoft.NetworkCloud/kubernetesClusters/res-test-standard-naks-d5a98/agentPools/systemPool3991?api-version=2023-05-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-94d1d5b8b698769a1571af79b8686450-41f7ed3486d55f27-00",
+        "User-Agent": "azsdk-net-ResourceManager.NetworkCloud/1.0.0-alpha.20230619.1 (.NET 7.0.5; Linux 5.15.90.1-microsoft-standard-WSL2 #1 SMP Fri Jan 27 02:56:13 UTC 2023)",
+        "x-ms-client-request-id": "64ffec578a6e741e2fdd4665c884a309",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "1689",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 19 Jun 2023 21:51:07 GMT",
+        "ETag": "\u00221b09c237-0000-0100-0000-6490cdc30000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "64ffec578a6e741e2fdd4665c884a309",
+        "x-ms-correlation-request-id": "9fcb1032-9410-4ca0-9a28-286f92ec4302",
+        "x-ms-providerhub-traffic": "True",
+        "x-ms-ratelimit-remaining-subscription-reads": "11950",
+        "x-ms-request-id": "0a943d6a-eef5-4aeb-9d3e-6baf178ddaf0",
+        "x-ms-routing-request-id": "CANADACENTRAL:20230619T215107Z:9fcb1032-9410-4ca0-9a28-286f92ec4302"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/fca2e8ee-1179-48b8-9532-428ed0873a2e/resourceGroups/nc-resource-testing-k5-0907401cb287-ors8g/providers/Microsoft.NetworkCloud/kubernetesClusters/res-test-standard-naks-d5a98/agentPools/systemPool3991",
+        "name": "systemPool3991",
+        "type": "microsoft.networkcloud/kubernetesclusters/agentpools",
+        "location": "eastus",
+        "extendedLocation": {
+          "name": "/subscriptions/fca2e8ee-1179-48b8-9532-428ed0873a2e/resourcegroups/k5-0907401cb287-hostedresources-27fbcfcb/providers/microsoft.extendedlocation/customlocations/k5-0907401cb287-cstm-loc",
+          "type": "CustomLocation"
+        },
+        "tags": {
+          "key1": "value1",
+          "key2": "value2"
+        },
+        "systemData": {
+          "createdBy": "REDACTED",
+          "createdByType": "User",
+          "createdAt": "2023-06-19T21:47:20.1909596Z",
+          "lastModifiedBy": "REDACTED",
+          "lastModifiedByType": "User",
+          "lastModifiedAt": "2023-06-19T21:47:20.1909596Z"
+        },
+        "properties": {
+          "provisioningState": "Succeeded",
+          "administratorConfiguration": {
+            "adminUsername": "azure",
+            "sshPublicKeys": [
+              {
+                "keyData": "ssh-rsa AAtsE3njSONzDYRIZv/WLjVuMfrUSByHp\u002BjfaaOLHTIIB4fJvo6dQUZxE20w2iDHV3tEkmnTo84eba97VMueQD6OzJPEyWZMRpz8UYWOd0IXeRqiFu1lawNblZhwNT/ojNZfpB3af/YDzwQCZgTcTRyNNhL4o/blKUmug0daSsSXISTRnIDpcf5qytjs1Xo\u002ByYyJMvzLL59mhAyb3p/cD\u002BY3/s3WhAx\u002Bl0XOKpzXnblrv9d3q4c2tWmm/SyFqthaqd0= fake-public-key"
+              }
+            ]
+          },
+          "agentOptions": {
+            "hugepagesCount": 12,
+            "hugepagesSize": "2M"
+          },
+          "attachedNetworkConfiguration": {
+            "l3Networks": [
+              {
+                "ipamEnabled": "False",
+                "networkId": "/subscriptions/fca2e8ee-1179-48b8-9532-428ed0873a2e/resourceGroups/nc-resource-testing-k5-0907401cb287-ors8g/providers/Microsoft.NetworkCloud/l3Networks/l3network-505",
+                "pluginType": "SRIOV"
+              }
+            ]
+          },
+          "count": 1,
+          "mode": "System",
+          "upgradeSettings": {
+            "maxSurge": "1"
+          },
+          "vmSkuName": "NC_M16_v1"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/fca2e8ee-1179-48b8-9532-428ed0873a2e/resourceGroups/nc-resource-testing-k5-0907401cb287-ors8g/providers/Microsoft.NetworkCloud/kubernetesClusters/res-test-standard-naks-d5a98/agentPools?api-version=2023-05-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "User-Agent": "azsdk-net-ResourceManager.NetworkCloud/1.0.0-alpha.20230619.1 (.NET 7.0.5; Linux 5.15.90.1-microsoft-standard-WSL2 #1 SMP Fri Jan 27 02:56:13 UTC 2023)",
+        "x-ms-client-request-id": "723ecf7b15eca7f0d0bf23fb46783097",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "5893",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 19 Jun 2023 21:51:07 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "723ecf7b15eca7f0d0bf23fb46783097",
+        "x-ms-correlation-request-id": "b8ad0fca-ceca-4450-b3ce-d665312d06a2",
+        "x-ms-providerhub-traffic": "True",
+        "x-ms-ratelimit-remaining-subscription-reads": "11949",
+        "x-ms-request-id": "04413a56-8e04-4684-9330-764620ff1872",
+        "x-ms-routing-request-id": "CANADACENTRAL:20230619T215107Z:b8ad0fca-ceca-4450-b3ce-d665312d06a2"
+      },
+      "ResponseBody": {
+        "value": [
+          {
+            "id": "/subscriptions/fca2e8ee-1179-48b8-9532-428ed0873a2e/resourceGroups/nc-resource-testing-k5-0907401cb287-ors8g/providers/Microsoft.NetworkCloud/kubernetesClusters/res-test-standard-naks-d5a98/agentPools/agentpool1",
+            "name": "agentpool1",
+            "type": "microsoft.networkcloud/kubernetesclusters/agentpools",
+            "location": "eastus",
+            "systemData": {
+              "createdBy": "319f651f-7ddb-4fc6-9857-7aef9250bd05",
+              "createdByType": "Application",
+              "createdAt": "2023-06-14T21:34:31.1329422Z",
+              "lastModifiedBy": "319f651f-7ddb-4fc6-9857-7aef9250bd05",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-06-14T21:34:31.1329422Z"
+            },
+            "properties": {
+              "administratorConfiguration": {},
+              "agentOptions": {
+                "hugepagesCount": 0,
+                "hugepagesSize": ""
+              },
+              "attachedNetworkConfiguration": {},
+              "count": 1,
+              "kubernetesVersion": "1.24.9",
+              "mode": "System",
+              "upgradeSettings": {},
+              "vmSkuName": "NC_G2_v1",
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/fca2e8ee-1179-48b8-9532-428ed0873a2e/resourceGroups/nc-resource-testing-k5-0907401cb287-ors8g/providers/Microsoft.NetworkCloud/kubernetesClusters/res-test-standard-naks-d5a98/agentPools/systemPool501",
+            "name": "systemPool501",
+            "type": "microsoft.networkcloud/kubernetesclusters/agentpools",
+            "location": "eastus",
+            "extendedLocation": {
+              "name": "/subscriptions/fca2e8ee-1179-48b8-9532-428ed0873a2e/resourcegroups/k5-0907401cb287-hostedresources-27fbcfcb/providers/microsoft.extendedlocation/customlocations/k5-0907401cb287-cstm-loc",
+              "type": "CustomLocation"
+            },
+            "tags": {
+              "key1": "value1",
+              "key2": "value2"
+            },
+            "systemData": {
+              "createdBy": "REDACTED",
+              "createdByType": "User",
+              "createdAt": "2023-06-19T21:36:54.7537574Z",
+              "lastModifiedBy": "REDACTED",
+              "lastModifiedByType": "User",
+              "lastModifiedAt": "2023-06-19T21:36:54.7537574Z"
+            },
+            "properties": {
+              "provisioningState": "Failed",
+              "administratorConfiguration": {
+                "adminUsername": "azure",
+                "sshPublicKeys": [
+                  {
+                    "keyData": "ssh-rsa AAtsE3njSONzDYRIZv/WLjVuMfrUSByHp\u002BjfaaOLHTIIB4fJvo6dQUZxE20w2iDHV3tEkmnTo84eba97VMueQD6OzJPEyWZMRpz8UYWOd0IXeRqiFu1lawNblZhwNT/ojNZfpB3af/YDzwQCZgTcTRyNNhL4o/blKUmug0daSsSXISTRnIDpcf5qytjs1Xo\u002ByYyJMvzLL59mhAyb3p/cD\u002BY3/s3WhAx\u002Bl0XOKpzXnblrv9d3q4c2tWmm/SyFqthaqd0= fake-public-key"
+                  }
+                ]
+              },
+              "agentOptions": {
+                "hugepagesCount": 12,
+                "hugepagesSize": "2M"
+              },
+              "attachedNetworkConfiguration": {
+                "l3Networks": [
+                  {
+                    "ipamEnabled": "False",
+                    "networkId": "/subscriptions/123e4567-e89b-12d3-a456-426655440000/resourceGroups/resourceGroupName/providers/Microsoft.NetworkCloud/l3Networks/l3NetworkName",
+                    "pluginType": "SRIOV"
+                  }
+                ]
+              },
+              "count": 1,
+              "mode": "System",
+              "upgradeSettings": {
+                "maxSurge": "1"
+              },
+              "vmSkuName": "NC_M16_v1"
+            }
+          },
+          {
+            "id": "/subscriptions/fca2e8ee-1179-48b8-9532-428ed0873a2e/resourceGroups/nc-resource-testing-k5-0907401cb287-ors8g/providers/Microsoft.NetworkCloud/kubernetesClusters/res-test-standard-naks-d5a98/agentPools/systemPool8048",
+            "name": "systemPool8048",
+            "type": "microsoft.networkcloud/kubernetesclusters/agentpools",
+            "location": "eastus",
+            "extendedLocation": {
+              "name": "/subscriptions/fca2e8ee-1179-48b8-9532-428ed0873a2e/resourcegroups/k5-0907401cb287-hostedresources-27fbcfcb/providers/microsoft.extendedlocation/customlocations/k5-0907401cb287-cstm-loc",
+              "type": "CustomLocation"
+            },
+            "tags": {
+              "key1": "value1",
+              "key2": "value2"
+            },
+            "systemData": {
+              "createdBy": "REDACTED",
+              "createdByType": "User",
+              "createdAt": "2023-06-19T21:37:12.1454181Z",
+              "lastModifiedBy": "REDACTED",
+              "lastModifiedByType": "User",
+              "lastModifiedAt": "2023-06-19T21:37:12.1454181Z"
+            },
+            "properties": {
+              "provisioningState": "Failed",
+              "administratorConfiguration": {
+                "adminUsername": "azure",
+                "sshPublicKeys": [
+                  {
+                    "keyData": "ssh-rsa AAtsE3njSONzDYRIZv/WLjVuMfrUSByHp\u002BjfaaOLHTIIB4fJvo6dQUZxE20w2iDHV3tEkmnTo84eba97VMueQD6OzJPEyWZMRpz8UYWOd0IXeRqiFu1lawNblZhwNT/ojNZfpB3af/YDzwQCZgTcTRyNNhL4o/blKUmug0daSsSXISTRnIDpcf5qytjs1Xo\u002ByYyJMvzLL59mhAyb3p/cD\u002BY3/s3WhAx\u002Bl0XOKpzXnblrv9d3q4c2tWmm/SyFqthaqd0= fake-public-key"
+                  }
+                ]
+              },
+              "agentOptions": {
+                "hugepagesCount": 12,
+                "hugepagesSize": "2M"
+              },
+              "attachedNetworkConfiguration": {
+                "l3Networks": [
+                  {
+                    "ipamEnabled": "False",
+                    "networkId": "/subscriptions/123e4567-e89b-12d3-a456-426655440000/resourceGroups/resourceGroupName/providers/Microsoft.NetworkCloud/l3Networks/l3NetworkName",
+                    "pluginType": "SRIOV"
+                  }
+                ]
+              },
+              "count": 1,
+              "mode": "System",
+              "upgradeSettings": {
+                "maxSurge": "1"
+              },
+              "vmSkuName": "NC_M16_v1"
+            }
+          },
+          {
+            "id": "/subscriptions/fca2e8ee-1179-48b8-9532-428ed0873a2e/resourceGroups/nc-resource-testing-k5-0907401cb287-ors8g/providers/Microsoft.NetworkCloud/kubernetesClusters/res-test-standard-naks-d5a98/agentPools/systemPool3991",
+            "name": "systemPool3991",
+            "type": "microsoft.networkcloud/kubernetesclusters/agentpools",
+            "location": "eastus",
+            "extendedLocation": {
+              "name": "/subscriptions/fca2e8ee-1179-48b8-9532-428ed0873a2e/resourcegroups/k5-0907401cb287-hostedresources-27fbcfcb/providers/microsoft.extendedlocation/customlocations/k5-0907401cb287-cstm-loc",
+              "type": "CustomLocation"
+            },
+            "tags": {
+              "key1": "value1",
+              "key2": "value2"
+            },
+            "systemData": {
+              "createdBy": "REDACTED",
+              "createdByType": "User",
+              "createdAt": "2023-06-19T21:47:20.1909596Z",
+              "lastModifiedBy": "REDACTED",
+              "lastModifiedByType": "User",
+              "lastModifiedAt": "2023-06-19T21:47:20.1909596Z"
+            },
+            "properties": {
+              "provisioningState": "Succeeded",
+              "administratorConfiguration": {
+                "adminUsername": "azure",
+                "sshPublicKeys": [
+                  {
+                    "keyData": "ssh-rsa AAtsE3njSONzDYRIZv/WLjVuMfrUSByHp\u002BjfaaOLHTIIB4fJvo6dQUZxE20w2iDHV3tEkmnTo84eba97VMueQD6OzJPEyWZMRpz8UYWOd0IXeRqiFu1lawNblZhwNT/ojNZfpB3af/YDzwQCZgTcTRyNNhL4o/blKUmug0daSsSXISTRnIDpcf5qytjs1Xo\u002ByYyJMvzLL59mhAyb3p/cD\u002BY3/s3WhAx\u002Bl0XOKpzXnblrv9d3q4c2tWmm/SyFqthaqd0= fake-public-key"
+                  }
+                ]
+              },
+              "agentOptions": {
+                "hugepagesCount": 12,
+                "hugepagesSize": "2M"
+              },
+              "attachedNetworkConfiguration": {
+                "l3Networks": [
+                  {
+                    "ipamEnabled": "False",
+                    "networkId": "/subscriptions/fca2e8ee-1179-48b8-9532-428ed0873a2e/resourceGroups/nc-resource-testing-k5-0907401cb287-ors8g/providers/Microsoft.NetworkCloud/l3Networks/l3network-505",
+                    "pluginType": "SRIOV"
+                  }
+                ]
+              },
+              "count": 1,
+              "mode": "System",
+              "upgradeSettings": {
+                "maxSurge": "1"
+              },
+              "vmSkuName": "NC_M16_v1"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/fca2e8ee-1179-48b8-9532-428ed0873a2e/resourceGroups/nc-resource-testing-k5-0907401cb287-ors8g/providers/Microsoft.NetworkCloud/kubernetesClusters/res-test-standard-naks-d5a98/agentPools/systemPool3991?api-version=2023-05-01-preview",
+      "RequestMethod": "PATCH",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "64",
+        "Content-Type": "application/json",
+        "traceparent": "00-17020780b4c40b75c40bb5100247c97a-f8dbe40989958840-00",
+        "User-Agent": "azsdk-net-ResourceManager.NetworkCloud/1.0.0-alpha.20230619.1 (.NET 7.0.5; Linux 5.15.90.1-microsoft-standard-WSL2 #1 SMP Fri Jan 27 02:56:13 UTC 2023)",
+        "x-ms-client-request-id": "14c9fe17e72e0708c7623055169cee51",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "tags": {
+          "key1": "newvalue1",
+          "key2": "newvalue2"
+        },
+        "properties": {}
+      },
+      "StatusCode": 202,
+      "ResponseHeaders": {
+        "Azure-AsyncOperation": "https://management.azure.com/subscriptions/fca2e8ee-1179-48b8-9532-428ed0873a2e/providers/Microsoft.NetworkCloud/locations/EASTUS/operationStatuses/f9eda4af-4c96-45fc-8d60-d91924d9e704*4DDA8E081AD77320710F42C75201942C3060CA45B35F032AA70F459BDCE11BEB?api-version=2023-05-01-preview",
+        "Cache-Control": "no-cache",
+        "Content-Length": "4",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 19 Jun 2023 21:51:08 GMT",
+        "ETag": "\u00221b099238-0000-0100-0000-6490cdcc0000\u0022",
+        "Expires": "-1",
+        "Location": "https://management.azure.com/subscriptions/fca2e8ee-1179-48b8-9532-428ed0873a2e/providers/Microsoft.NetworkCloud/locations/EASTUS/operationStatuses/f9eda4af-4c96-45fc-8d60-d91924d9e704*4DDA8E081AD77320710F42C75201942C3060CA45B35F032AA70F459BDCE11BEB?api-version=2023-05-01-preview",
+        "mise-correlation-id": "473c0e8a-2bed-41d2-851a-f2b5b67e1aa1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "14c9fe17e72e0708c7623055169cee51",
+        "x-ms-correlation-request-id": "df55929c-9050-4ed3-826c-032e90ae07e5",
+        "x-ms-providerhub-traffic": "True",
+        "x-ms-ratelimit-remaining-subscription-writes": "1194",
+        "x-ms-request-id": "42ef48d4-6272-4306-8012-7ed14cc4be9c",
+        "x-ms-routing-request-id": "CANADACENTRAL:20230619T215108Z:df55929c-9050-4ed3-826c-032e90ae07e5"
+      },
+      "ResponseBody": "null"
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/fca2e8ee-1179-48b8-9532-428ed0873a2e/providers/Microsoft.NetworkCloud/locations/EASTUS/operationStatuses/f9eda4af-4c96-45fc-8d60-d91924d9e704*4DDA8E081AD77320710F42C75201942C3060CA45B35F032AA70F459BDCE11BEB?api-version=2023-05-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-17020780b4c40b75c40bb5100247c97a-934eefdfc15c2c43-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.6.0 (.NET 7.0.5; Linux 5.15.90.1-microsoft-standard-WSL2 #1 SMP Fri Jan 27 02:56:13 UTC 2023)",
+        "x-ms-client-request-id": "c94eaeac8eba93dbc737ab8ae59b9033",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "635",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 19 Jun 2023 21:51:08 GMT",
+        "ETag": "\u0022d0029c29-0000-0100-0000-6490cdcb0000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "c94eaeac8eba93dbc737ab8ae59b9033",
+        "x-ms-correlation-request-id": "68e24c49-074d-4a7d-b1eb-5770e0fdcc25",
+        "x-ms-ratelimit-remaining-subscription-reads": "11948",
+        "x-ms-request-id": "9c10e6d0-0ec7-43d9-8703-d99939f71ab3",
+        "x-ms-routing-request-id": "CANADACENTRAL:20230619T215108Z:68e24c49-074d-4a7d-b1eb-5770e0fdcc25"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/fca2e8ee-1179-48b8-9532-428ed0873a2e/providers/Microsoft.NetworkCloud/locations/EASTUS/operationStatuses/f9eda4af-4c96-45fc-8d60-d91924d9e704*4DDA8E081AD77320710F42C75201942C3060CA45B35F032AA70F459BDCE11BEB",
+        "name": "f9eda4af-4c96-45fc-8d60-d91924d9e704*4DDA8E081AD77320710F42C75201942C3060CA45B35F032AA70F459BDCE11BEB",
+        "resourceId": "/subscriptions/fca2e8ee-1179-48b8-9532-428ed0873a2e/resourceGroups/nc-resource-testing-k5-0907401cb287-ors8g/providers/Microsoft.NetworkCloud/kubernetesClusters/res-test-standard-naks-d5a98/agentPools/systemPool3991",
+        "status": "Accepted",
+        "startTime": "2023-06-19T21:51:07.8803849Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/fca2e8ee-1179-48b8-9532-428ed0873a2e/providers/Microsoft.NetworkCloud/locations/EASTUS/operationStatuses/f9eda4af-4c96-45fc-8d60-d91924d9e704*4DDA8E081AD77320710F42C75201942C3060CA45B35F032AA70F459BDCE11BEB?api-version=2023-05-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-17020780b4c40b75c40bb5100247c97a-a212d6091f09a693-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.6.0 (.NET 7.0.5; Linux 5.15.90.1-microsoft-standard-WSL2 #1 SMP Fri Jan 27 02:56:13 UTC 2023)",
+        "x-ms-client-request-id": "aab8d2d05e0415d9508718d55359a0a4",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "635",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 19 Jun 2023 21:51:09 GMT",
+        "ETag": "\u0022d0029c29-0000-0100-0000-6490cdcb0000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "aab8d2d05e0415d9508718d55359a0a4",
+        "x-ms-correlation-request-id": "ef6401bb-94ec-4c28-98e5-891a7971cada",
+        "x-ms-ratelimit-remaining-subscription-reads": "11947",
+        "x-ms-request-id": "a2b3422f-628d-4b27-a75c-70fb2ebb605f",
+        "x-ms-routing-request-id": "CANADACENTRAL:20230619T215109Z:ef6401bb-94ec-4c28-98e5-891a7971cada"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/fca2e8ee-1179-48b8-9532-428ed0873a2e/providers/Microsoft.NetworkCloud/locations/EASTUS/operationStatuses/f9eda4af-4c96-45fc-8d60-d91924d9e704*4DDA8E081AD77320710F42C75201942C3060CA45B35F032AA70F459BDCE11BEB",
+        "name": "f9eda4af-4c96-45fc-8d60-d91924d9e704*4DDA8E081AD77320710F42C75201942C3060CA45B35F032AA70F459BDCE11BEB",
+        "resourceId": "/subscriptions/fca2e8ee-1179-48b8-9532-428ed0873a2e/resourceGroups/nc-resource-testing-k5-0907401cb287-ors8g/providers/Microsoft.NetworkCloud/kubernetesClusters/res-test-standard-naks-d5a98/agentPools/systemPool3991",
+        "status": "Accepted",
+        "startTime": "2023-06-19T21:51:07.8803849Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/fca2e8ee-1179-48b8-9532-428ed0873a2e/providers/Microsoft.NetworkCloud/locations/EASTUS/operationStatuses/f9eda4af-4c96-45fc-8d60-d91924d9e704*4DDA8E081AD77320710F42C75201942C3060CA45B35F032AA70F459BDCE11BEB?api-version=2023-05-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-17020780b4c40b75c40bb5100247c97a-302a0c2607da9365-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.6.0 (.NET 7.0.5; Linux 5.15.90.1-microsoft-standard-WSL2 #1 SMP Fri Jan 27 02:56:13 UTC 2023)",
+        "x-ms-client-request-id": "68a87833254eb396c0df0b8756245c60",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "635",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 19 Jun 2023 21:51:10 GMT",
+        "ETag": "\u0022d0029c29-0000-0100-0000-6490cdcb0000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "68a87833254eb396c0df0b8756245c60",
+        "x-ms-correlation-request-id": "906cc9c0-cce6-48aa-9320-f45b0ca81360",
+        "x-ms-ratelimit-remaining-subscription-reads": "11946",
+        "x-ms-request-id": "a6c845cb-b0c7-4743-b955-3bcaff59158f",
+        "x-ms-routing-request-id": "CANADACENTRAL:20230619T215110Z:906cc9c0-cce6-48aa-9320-f45b0ca81360"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/fca2e8ee-1179-48b8-9532-428ed0873a2e/providers/Microsoft.NetworkCloud/locations/EASTUS/operationStatuses/f9eda4af-4c96-45fc-8d60-d91924d9e704*4DDA8E081AD77320710F42C75201942C3060CA45B35F032AA70F459BDCE11BEB",
+        "name": "f9eda4af-4c96-45fc-8d60-d91924d9e704*4DDA8E081AD77320710F42C75201942C3060CA45B35F032AA70F459BDCE11BEB",
+        "resourceId": "/subscriptions/fca2e8ee-1179-48b8-9532-428ed0873a2e/resourceGroups/nc-resource-testing-k5-0907401cb287-ors8g/providers/Microsoft.NetworkCloud/kubernetesClusters/res-test-standard-naks-d5a98/agentPools/systemPool3991",
+        "status": "Accepted",
+        "startTime": "2023-06-19T21:51:07.8803849Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/fca2e8ee-1179-48b8-9532-428ed0873a2e/providers/Microsoft.NetworkCloud/locations/EASTUS/operationStatuses/f9eda4af-4c96-45fc-8d60-d91924d9e704*4DDA8E081AD77320710F42C75201942C3060CA45B35F032AA70F459BDCE11BEB?api-version=2023-05-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-17020780b4c40b75c40bb5100247c97a-3149be2ca9f7c9a1-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.6.0 (.NET 7.0.5; Linux 5.15.90.1-microsoft-standard-WSL2 #1 SMP Fri Jan 27 02:56:13 UTC 2023)",
+        "x-ms-client-request-id": "94dd5fc8836a4db2d538793276053f6d",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "635",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 19 Jun 2023 21:51:11 GMT",
+        "ETag": "\u0022d0029c29-0000-0100-0000-6490cdcb0000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "94dd5fc8836a4db2d538793276053f6d",
+        "x-ms-correlation-request-id": "1cc2f519-d252-4f97-a2d2-3971d3369f40",
+        "x-ms-ratelimit-remaining-subscription-reads": "11945",
+        "x-ms-request-id": "57947561-8b4a-4755-bc7d-7caa3722348c",
+        "x-ms-routing-request-id": "CANADACENTRAL:20230619T215111Z:1cc2f519-d252-4f97-a2d2-3971d3369f40"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/fca2e8ee-1179-48b8-9532-428ed0873a2e/providers/Microsoft.NetworkCloud/locations/EASTUS/operationStatuses/f9eda4af-4c96-45fc-8d60-d91924d9e704*4DDA8E081AD77320710F42C75201942C3060CA45B35F032AA70F459BDCE11BEB",
+        "name": "f9eda4af-4c96-45fc-8d60-d91924d9e704*4DDA8E081AD77320710F42C75201942C3060CA45B35F032AA70F459BDCE11BEB",
+        "resourceId": "/subscriptions/fca2e8ee-1179-48b8-9532-428ed0873a2e/resourceGroups/nc-resource-testing-k5-0907401cb287-ors8g/providers/Microsoft.NetworkCloud/kubernetesClusters/res-test-standard-naks-d5a98/agentPools/systemPool3991",
+        "status": "Accepted",
+        "startTime": "2023-06-19T21:51:07.8803849Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/fca2e8ee-1179-48b8-9532-428ed0873a2e/providers/Microsoft.NetworkCloud/locations/EASTUS/operationStatuses/f9eda4af-4c96-45fc-8d60-d91924d9e704*4DDA8E081AD77320710F42C75201942C3060CA45B35F032AA70F459BDCE11BEB?api-version=2023-05-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-17020780b4c40b75c40bb5100247c97a-a4ee2269c882fe6d-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.6.0 (.NET 7.0.5; Linux 5.15.90.1-microsoft-standard-WSL2 #1 SMP Fri Jan 27 02:56:13 UTC 2023)",
+        "x-ms-client-request-id": "6c56079627f2abe53b04ea255351be2c",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "635",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 19 Jun 2023 21:51:13 GMT",
+        "ETag": "\u0022d002a429-0000-0100-0000-6490cdd10000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "6c56079627f2abe53b04ea255351be2c",
+        "x-ms-correlation-request-id": "e1d00d3c-bef9-4795-8ece-82bb211b28cb",
+        "x-ms-ratelimit-remaining-subscription-reads": "11944",
+        "x-ms-request-id": "3e0035b2-1354-4238-8d74-15652d278876",
+        "x-ms-routing-request-id": "CANADACENTRAL:20230619T215113Z:e1d00d3c-bef9-4795-8ece-82bb211b28cb"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/fca2e8ee-1179-48b8-9532-428ed0873a2e/providers/Microsoft.NetworkCloud/locations/EASTUS/operationStatuses/f9eda4af-4c96-45fc-8d60-d91924d9e704*4DDA8E081AD77320710F42C75201942C3060CA45B35F032AA70F459BDCE11BEB",
+        "name": "f9eda4af-4c96-45fc-8d60-d91924d9e704*4DDA8E081AD77320710F42C75201942C3060CA45B35F032AA70F459BDCE11BEB",
+        "resourceId": "/subscriptions/fca2e8ee-1179-48b8-9532-428ed0873a2e/resourceGroups/nc-resource-testing-k5-0907401cb287-ors8g/providers/Microsoft.NetworkCloud/kubernetesClusters/res-test-standard-naks-d5a98/agentPools/systemPool3991",
+        "status": "Accepted",
+        "startTime": "2023-06-19T21:51:07.8803849Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/fca2e8ee-1179-48b8-9532-428ed0873a2e/providers/Microsoft.NetworkCloud/locations/EASTUS/operationStatuses/f9eda4af-4c96-45fc-8d60-d91924d9e704*4DDA8E081AD77320710F42C75201942C3060CA45B35F032AA70F459BDCE11BEB?api-version=2023-05-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-17020780b4c40b75c40bb5100247c97a-83a76aed5a5de0c4-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.6.0 (.NET 7.0.5; Linux 5.15.90.1-microsoft-standard-WSL2 #1 SMP Fri Jan 27 02:56:13 UTC 2023)",
+        "x-ms-client-request-id": "f30db72b0b7bb039c65a9315ab643dbb",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "693",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 19 Jun 2023 21:51:17 GMT",
+        "ETag": "\u0022d002ad29-0000-0100-0000-6490cdd20000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "f30db72b0b7bb039c65a9315ab643dbb",
+        "x-ms-correlation-request-id": "bc16c830-4f8e-4631-9816-4ddce716a8b3",
+        "x-ms-ratelimit-remaining-subscription-reads": "11943",
+        "x-ms-request-id": "69503953-1f5c-41c5-8102-8313c5e7d263",
+        "x-ms-routing-request-id": "CANADACENTRAL:20230619T215117Z:bc16c830-4f8e-4631-9816-4ddce716a8b3"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/fca2e8ee-1179-48b8-9532-428ed0873a2e/providers/Microsoft.NetworkCloud/locations/EASTUS/operationStatuses/f9eda4af-4c96-45fc-8d60-d91924d9e704*4DDA8E081AD77320710F42C75201942C3060CA45B35F032AA70F459BDCE11BEB",
+        "name": "f9eda4af-4c96-45fc-8d60-d91924d9e704*4DDA8E081AD77320710F42C75201942C3060CA45B35F032AA70F459BDCE11BEB",
+        "resourceId": "/subscriptions/fca2e8ee-1179-48b8-9532-428ed0873a2e/resourceGroups/nc-resource-testing-k5-0907401cb287-ors8g/providers/Microsoft.NetworkCloud/kubernetesClusters/res-test-standard-naks-d5a98/agentPools/systemPool3991",
+        "status": "Succeeded",
+        "startTime": "2023-06-19T21:51:07.8803849Z",
+        "endTime": "2023-06-19T21:51:14.90791Z",
+        "properties": null
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/fca2e8ee-1179-48b8-9532-428ed0873a2e/resourceGroups/nc-resource-testing-k5-0907401cb287-ors8g/providers/Microsoft.NetworkCloud/kubernetesClusters/res-test-standard-naks-d5a98/agentPools/systemPool3991?api-version=2023-05-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-17020780b4c40b75c40bb5100247c97a-3bd7dfce92e77513-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.6.0 (.NET 7.0.5; Linux 5.15.90.1-microsoft-standard-WSL2 #1 SMP Fri Jan 27 02:56:13 UTC 2023)",
+        "x-ms-client-request-id": "4ef19d9fefcda06e7a325965988dfa84",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "1694",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 19 Jun 2023 21:51:17 GMT",
+        "ETag": "\u00221b09cb3a-0000-0100-0000-6490cdd20000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "4ef19d9fefcda06e7a325965988dfa84",
+        "x-ms-correlation-request-id": "37477449-4345-4056-8309-e4afd55fd87c",
+        "x-ms-providerhub-traffic": "True",
+        "x-ms-ratelimit-remaining-subscription-reads": "11942",
+        "x-ms-request-id": "5c4f9b36-791c-4e52-af1b-7dbf57c10044",
+        "x-ms-routing-request-id": "CANADACENTRAL:20230619T215117Z:37477449-4345-4056-8309-e4afd55fd87c"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/fca2e8ee-1179-48b8-9532-428ed0873a2e/resourceGroups/nc-resource-testing-k5-0907401cb287-ors8g/providers/Microsoft.NetworkCloud/kubernetesClusters/res-test-standard-naks-d5a98/agentPools/systemPool3991",
+        "name": "systemPool3991",
+        "type": "microsoft.networkcloud/kubernetesclusters/agentpools",
+        "location": "eastus",
+        "extendedLocation": {
+          "name": "/subscriptions/fca2e8ee-1179-48b8-9532-428ed0873a2e/resourcegroups/k5-0907401cb287-hostedresources-27fbcfcb/providers/microsoft.extendedlocation/customlocations/k5-0907401cb287-cstm-loc",
+          "type": "CustomLocation"
+        },
+        "tags": {
+          "key1": "newvalue1",
+          "key2": "newvalue2"
+        },
+        "systemData": {
+          "createdBy": "REDACTED",
+          "createdByType": "User",
+          "createdAt": "2023-06-19T21:47:20.1909596Z",
+          "lastModifiedBy": "REDACTED",
+          "lastModifiedByType": "User",
+          "lastModifiedAt": "2023-06-19T21:51:07.833699Z"
+        },
+        "properties": {
+          "administratorConfiguration": {
+            "adminUsername": "azure",
+            "sshPublicKeys": [
+              {
+                "keyData": "ssh-rsa AAtsE3njSONzDYRIZv/WLjVuMfrUSByHp\u002BjfaaOLHTIIB4fJvo6dQUZxE20w2iDHV3tEkmnTo84eba97VMueQD6OzJPEyWZMRpz8UYWOd0IXeRqiFu1lawNblZhwNT/ojNZfpB3af/YDzwQCZgTcTRyNNhL4o/blKUmug0daSsSXISTRnIDpcf5qytjs1Xo\u002ByYyJMvzLL59mhAyb3p/cD\u002BY3/s3WhAx\u002Bl0XOKpzXnblrv9d3q4c2tWmm/SyFqthaqd0= fake-public-key"
+              }
+            ]
+          },
+          "agentOptions": {
+            "hugepagesCount": 12,
+            "hugepagesSize": "2M"
+          },
+          "attachedNetworkConfiguration": {
+            "l3Networks": [
+              {
+                "ipamEnabled": "False",
+                "networkId": "/subscriptions/fca2e8ee-1179-48b8-9532-428ed0873a2e/resourceGroups/nc-resource-testing-k5-0907401cb287-ors8g/providers/Microsoft.NetworkCloud/l3Networks/l3network-505",
+                "pluginType": "SRIOV"
+              }
+            ]
+          },
+          "count": 1,
+          "mode": "System",
+          "upgradeSettings": {
+            "maxSurge": "1"
+          },
+          "vmSkuName": "NC_M16_v1",
+          "provisioningState": "Succeeded"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/fca2e8ee-1179-48b8-9532-428ed0873a2e/resourceGroups/nc-resource-testing-k5-0907401cb287-ors8g/providers/Microsoft.NetworkCloud/kubernetesClusters/res-test-standard-naks-d5a98/agentPools/systemPool3991?api-version=2023-05-01-preview",
+      "RequestMethod": "DELETE",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-b07da765d851b23ad6a9325bdba9cf04-313c98214efc4e25-00",
+        "User-Agent": "azsdk-net-ResourceManager.NetworkCloud/1.0.0-alpha.20230619.1 (.NET 7.0.5; Linux 5.15.90.1-microsoft-standard-WSL2 #1 SMP Fri Jan 27 02:56:13 UTC 2023)",
+        "x-ms-client-request-id": "be074d794bf78af1cea6a59794cfffd7",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 202,
+      "ResponseHeaders": {
+        "Azure-AsyncOperation": "https://management.azure.com/subscriptions/fca2e8ee-1179-48b8-9532-428ed0873a2e/providers/Microsoft.NetworkCloud/locations/EASTUS/operationStatuses/ac239a9d-e176-4872-b1ed-85dc3b254e52*4DDA8E081AD77320710F42C75201942C3060CA45B35F032AA70F459BDCE11BEB?api-version=2023-05-01-preview",
+        "Cache-Control": "no-cache",
+        "Content-Length": "4",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 19 Jun 2023 21:51:18 GMT",
+        "ETag": "\u00221b09f63a-0000-0100-0000-6490cdd60000\u0022",
+        "Expires": "-1",
+        "Location": "https://management.azure.com/subscriptions/fca2e8ee-1179-48b8-9532-428ed0873a2e/providers/Microsoft.NetworkCloud/locations/EASTUS/operationStatuses/ac239a9d-e176-4872-b1ed-85dc3b254e52*4DDA8E081AD77320710F42C75201942C3060CA45B35F032AA70F459BDCE11BEB?api-version=2023-05-01-preview",
+        "mise-correlation-id": "a31b89ad-d30e-4c3a-b141-15d231e6f787",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "be074d794bf78af1cea6a59794cfffd7",
+        "x-ms-correlation-request-id": "dd09c297-ea36-417e-ac81-f0f9e9f839c4",
+        "x-ms-providerhub-traffic": "True",
+        "x-ms-ratelimit-remaining-subscription-deletes": "14998",
+        "x-ms-request-id": "00000000-0000-0000-0000-000000000000",
+        "x-ms-routing-request-id": "CANADACENTRAL:20230619T215118Z:dd09c297-ea36-417e-ac81-f0f9e9f839c4"
+      },
+      "ResponseBody": "null"
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/fca2e8ee-1179-48b8-9532-428ed0873a2e/providers/Microsoft.NetworkCloud/locations/EASTUS/operationStatuses/ac239a9d-e176-4872-b1ed-85dc3b254e52*4DDA8E081AD77320710F42C75201942C3060CA45B35F032AA70F459BDCE11BEB?api-version=2023-05-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-b07da765d851b23ad6a9325bdba9cf04-42ee07cb6212fa5c-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.6.0 (.NET 7.0.5; Linux 5.15.90.1-microsoft-standard-WSL2 #1 SMP Fri Jan 27 02:56:13 UTC 2023)",
+        "x-ms-client-request-id": "5e9b0f607e5c54c3ac66802749d60baa",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 202,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "635",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 19 Jun 2023 21:51:18 GMT",
+        "ETag": "\u0022d002b329-0000-0100-0000-6490cdd60000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "5e9b0f607e5c54c3ac66802749d60baa",
+        "x-ms-correlation-request-id": "b658b27c-9b3b-4784-b133-c812a7e7a0f8",
+        "x-ms-ratelimit-remaining-subscription-reads": "11941",
+        "x-ms-request-id": "6286176e-c009-497c-af86-545b5f031168",
+        "x-ms-routing-request-id": "CANADACENTRAL:20230619T215118Z:b658b27c-9b3b-4784-b133-c812a7e7a0f8"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/fca2e8ee-1179-48b8-9532-428ed0873a2e/providers/Microsoft.NetworkCloud/locations/EASTUS/operationStatuses/ac239a9d-e176-4872-b1ed-85dc3b254e52*4DDA8E081AD77320710F42C75201942C3060CA45B35F032AA70F459BDCE11BEB",
+        "name": "ac239a9d-e176-4872-b1ed-85dc3b254e52*4DDA8E081AD77320710F42C75201942C3060CA45B35F032AA70F459BDCE11BEB",
+        "resourceId": "/subscriptions/fca2e8ee-1179-48b8-9532-428ed0873a2e/resourceGroups/nc-resource-testing-k5-0907401cb287-ors8g/providers/Microsoft.NetworkCloud/kubernetesClusters/res-test-standard-naks-d5a98/agentPools/systemPool3991",
+        "status": "Deleting",
+        "startTime": "2023-06-19T21:51:18.2469974Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/fca2e8ee-1179-48b8-9532-428ed0873a2e/providers/Microsoft.NetworkCloud/locations/EASTUS/operationStatuses/ac239a9d-e176-4872-b1ed-85dc3b254e52*4DDA8E081AD77320710F42C75201942C3060CA45B35F032AA70F459BDCE11BEB?api-version=2023-05-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-b07da765d851b23ad6a9325bdba9cf04-2ff7177988e34c1b-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.6.0 (.NET 7.0.5; Linux 5.15.90.1-microsoft-standard-WSL2 #1 SMP Fri Jan 27 02:56:13 UTC 2023)",
+        "x-ms-client-request-id": "699e813344070923eecc758ad2a8d8fa",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 202,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "635",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 19 Jun 2023 21:51:19 GMT",
+        "ETag": "\u0022d002b329-0000-0100-0000-6490cdd60000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "699e813344070923eecc758ad2a8d8fa",
+        "x-ms-correlation-request-id": "3edd7d01-54d2-4d61-981b-0ec65e88f0b2",
+        "x-ms-ratelimit-remaining-subscription-reads": "11940",
+        "x-ms-request-id": "e1937ef6-eb7d-4e79-9ab5-7c252d7263ad",
+        "x-ms-routing-request-id": "CANADACENTRAL:20230619T215119Z:3edd7d01-54d2-4d61-981b-0ec65e88f0b2"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/fca2e8ee-1179-48b8-9532-428ed0873a2e/providers/Microsoft.NetworkCloud/locations/EASTUS/operationStatuses/ac239a9d-e176-4872-b1ed-85dc3b254e52*4DDA8E081AD77320710F42C75201942C3060CA45B35F032AA70F459BDCE11BEB",
+        "name": "ac239a9d-e176-4872-b1ed-85dc3b254e52*4DDA8E081AD77320710F42C75201942C3060CA45B35F032AA70F459BDCE11BEB",
+        "resourceId": "/subscriptions/fca2e8ee-1179-48b8-9532-428ed0873a2e/resourceGroups/nc-resource-testing-k5-0907401cb287-ors8g/providers/Microsoft.NetworkCloud/kubernetesClusters/res-test-standard-naks-d5a98/agentPools/systemPool3991",
+        "status": "Deleting",
+        "startTime": "2023-06-19T21:51:18.2469974Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/fca2e8ee-1179-48b8-9532-428ed0873a2e/providers/Microsoft.NetworkCloud/locations/EASTUS/operationStatuses/ac239a9d-e176-4872-b1ed-85dc3b254e52*4DDA8E081AD77320710F42C75201942C3060CA45B35F032AA70F459BDCE11BEB?api-version=2023-05-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-b07da765d851b23ad6a9325bdba9cf04-bebaf2b375e3c282-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.6.0 (.NET 7.0.5; Linux 5.15.90.1-microsoft-standard-WSL2 #1 SMP Fri Jan 27 02:56:13 UTC 2023)",
+        "x-ms-client-request-id": "85376c8fa033497a6b3109f9f037f173",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 202,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "635",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 19 Jun 2023 21:51:20 GMT",
+        "ETag": "\u0022d002b329-0000-0100-0000-6490cdd60000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "85376c8fa033497a6b3109f9f037f173",
+        "x-ms-correlation-request-id": "bd2c0420-00d3-4f25-bf0b-3dbcf69a7473",
+        "x-ms-ratelimit-remaining-subscription-reads": "11939",
+        "x-ms-request-id": "11818d90-63c9-439a-b813-cf351e3c0a5d",
+        "x-ms-routing-request-id": "CANADACENTRAL:20230619T215120Z:bd2c0420-00d3-4f25-bf0b-3dbcf69a7473"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/fca2e8ee-1179-48b8-9532-428ed0873a2e/providers/Microsoft.NetworkCloud/locations/EASTUS/operationStatuses/ac239a9d-e176-4872-b1ed-85dc3b254e52*4DDA8E081AD77320710F42C75201942C3060CA45B35F032AA70F459BDCE11BEB",
+        "name": "ac239a9d-e176-4872-b1ed-85dc3b254e52*4DDA8E081AD77320710F42C75201942C3060CA45B35F032AA70F459BDCE11BEB",
+        "resourceId": "/subscriptions/fca2e8ee-1179-48b8-9532-428ed0873a2e/resourceGroups/nc-resource-testing-k5-0907401cb287-ors8g/providers/Microsoft.NetworkCloud/kubernetesClusters/res-test-standard-naks-d5a98/agentPools/systemPool3991",
+        "status": "Deleting",
+        "startTime": "2023-06-19T21:51:18.2469974Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/fca2e8ee-1179-48b8-9532-428ed0873a2e/providers/Microsoft.NetworkCloud/locations/EASTUS/operationStatuses/ac239a9d-e176-4872-b1ed-85dc3b254e52*4DDA8E081AD77320710F42C75201942C3060CA45B35F032AA70F459BDCE11BEB?api-version=2023-05-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-b07da765d851b23ad6a9325bdba9cf04-e63ad115b5276b81-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.6.0 (.NET 7.0.5; Linux 5.15.90.1-microsoft-standard-WSL2 #1 SMP Fri Jan 27 02:56:13 UTC 2023)",
+        "x-ms-client-request-id": "3016ce61ad351b31eb926f9008398104",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 202,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "635",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 19 Jun 2023 21:51:21 GMT",
+        "ETag": "\u0022d002b329-0000-0100-0000-6490cdd60000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "3016ce61ad351b31eb926f9008398104",
+        "x-ms-correlation-request-id": "876b4d88-f62c-49ec-b5f3-7d22fd6a13b9",
+        "x-ms-ratelimit-remaining-subscription-reads": "11938",
+        "x-ms-request-id": "01084e60-86f7-469e-a664-e01b2a0461b2",
+        "x-ms-routing-request-id": "CANADACENTRAL:20230619T215121Z:876b4d88-f62c-49ec-b5f3-7d22fd6a13b9"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/fca2e8ee-1179-48b8-9532-428ed0873a2e/providers/Microsoft.NetworkCloud/locations/EASTUS/operationStatuses/ac239a9d-e176-4872-b1ed-85dc3b254e52*4DDA8E081AD77320710F42C75201942C3060CA45B35F032AA70F459BDCE11BEB",
+        "name": "ac239a9d-e176-4872-b1ed-85dc3b254e52*4DDA8E081AD77320710F42C75201942C3060CA45B35F032AA70F459BDCE11BEB",
+        "resourceId": "/subscriptions/fca2e8ee-1179-48b8-9532-428ed0873a2e/resourceGroups/nc-resource-testing-k5-0907401cb287-ors8g/providers/Microsoft.NetworkCloud/kubernetesClusters/res-test-standard-naks-d5a98/agentPools/systemPool3991",
+        "status": "Deleting",
+        "startTime": "2023-06-19T21:51:18.2469974Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/fca2e8ee-1179-48b8-9532-428ed0873a2e/providers/Microsoft.NetworkCloud/locations/EASTUS/operationStatuses/ac239a9d-e176-4872-b1ed-85dc3b254e52*4DDA8E081AD77320710F42C75201942C3060CA45B35F032AA70F459BDCE11BEB?api-version=2023-05-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-b07da765d851b23ad6a9325bdba9cf04-267639dfba4fe988-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.6.0 (.NET 7.0.5; Linux 5.15.90.1-microsoft-standard-WSL2 #1 SMP Fri Jan 27 02:56:13 UTC 2023)",
+        "x-ms-client-request-id": "dd98858e869f92760754fdd63b2a19b7",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 202,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "635",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 19 Jun 2023 21:51:23 GMT",
+        "ETag": "\u0022d002b329-0000-0100-0000-6490cdd60000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "dd98858e869f92760754fdd63b2a19b7",
+        "x-ms-correlation-request-id": "95b5fba6-c5a1-49fc-9117-d1b84816da98",
+        "x-ms-ratelimit-remaining-subscription-reads": "11937",
+        "x-ms-request-id": "e6109fa1-8b7c-4f5d-b7d0-de7f55f0048c",
+        "x-ms-routing-request-id": "CANADACENTRAL:20230619T215124Z:95b5fba6-c5a1-49fc-9117-d1b84816da98"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/fca2e8ee-1179-48b8-9532-428ed0873a2e/providers/Microsoft.NetworkCloud/locations/EASTUS/operationStatuses/ac239a9d-e176-4872-b1ed-85dc3b254e52*4DDA8E081AD77320710F42C75201942C3060CA45B35F032AA70F459BDCE11BEB",
+        "name": "ac239a9d-e176-4872-b1ed-85dc3b254e52*4DDA8E081AD77320710F42C75201942C3060CA45B35F032AA70F459BDCE11BEB",
+        "resourceId": "/subscriptions/fca2e8ee-1179-48b8-9532-428ed0873a2e/resourceGroups/nc-resource-testing-k5-0907401cb287-ors8g/providers/Microsoft.NetworkCloud/kubernetesClusters/res-test-standard-naks-d5a98/agentPools/systemPool3991",
+        "status": "Deleting",
+        "startTime": "2023-06-19T21:51:18.2469974Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/fca2e8ee-1179-48b8-9532-428ed0873a2e/providers/Microsoft.NetworkCloud/locations/EASTUS/operationStatuses/ac239a9d-e176-4872-b1ed-85dc3b254e52*4DDA8E081AD77320710F42C75201942C3060CA45B35F032AA70F459BDCE11BEB?api-version=2023-05-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-b07da765d851b23ad6a9325bdba9cf04-420756070a7ab8b6-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.6.0 (.NET 7.0.5; Linux 5.15.90.1-microsoft-standard-WSL2 #1 SMP Fri Jan 27 02:56:13 UTC 2023)",
+        "x-ms-client-request-id": "032802daa791e1c53a1b9aa130ea4032",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 202,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "635",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 19 Jun 2023 21:51:27 GMT",
+        "ETag": "\u0022d002c929-0000-0100-0000-6490cdde0000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "032802daa791e1c53a1b9aa130ea4032",
+        "x-ms-correlation-request-id": "c9467a45-9efd-4fe8-9fd9-d20b04ad53af",
+        "x-ms-ratelimit-remaining-subscription-reads": "11936",
+        "x-ms-request-id": "cab6f3d6-622b-4c87-9027-23987d6617e4",
+        "x-ms-routing-request-id": "CANADACENTRAL:20230619T215128Z:c9467a45-9efd-4fe8-9fd9-d20b04ad53af"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/fca2e8ee-1179-48b8-9532-428ed0873a2e/providers/Microsoft.NetworkCloud/locations/EASTUS/operationStatuses/ac239a9d-e176-4872-b1ed-85dc3b254e52*4DDA8E081AD77320710F42C75201942C3060CA45B35F032AA70F459BDCE11BEB",
+        "name": "ac239a9d-e176-4872-b1ed-85dc3b254e52*4DDA8E081AD77320710F42C75201942C3060CA45B35F032AA70F459BDCE11BEB",
+        "resourceId": "/subscriptions/fca2e8ee-1179-48b8-9532-428ed0873a2e/resourceGroups/nc-resource-testing-k5-0907401cb287-ors8g/providers/Microsoft.NetworkCloud/kubernetesClusters/res-test-standard-naks-d5a98/agentPools/systemPool3991",
+        "status": "Deleting",
+        "startTime": "2023-06-19T21:51:18.2469974Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/fca2e8ee-1179-48b8-9532-428ed0873a2e/providers/Microsoft.NetworkCloud/locations/EASTUS/operationStatuses/ac239a9d-e176-4872-b1ed-85dc3b254e52*4DDA8E081AD77320710F42C75201942C3060CA45B35F032AA70F459BDCE11BEB?api-version=2023-05-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-b07da765d851b23ad6a9325bdba9cf04-a7755e48baddaa22-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.6.0 (.NET 7.0.5; Linux 5.15.90.1-microsoft-standard-WSL2 #1 SMP Fri Jan 27 02:56:13 UTC 2023)",
+        "x-ms-client-request-id": "6a6b05af139edbd4578329e0b05bdfc1",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 202,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "635",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 19 Jun 2023 21:51:35 GMT",
+        "ETag": "\u0022d002c929-0000-0100-0000-6490cdde0000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "6a6b05af139edbd4578329e0b05bdfc1",
+        "x-ms-correlation-request-id": "0e927bcf-7e85-46a7-8a3d-fb85cffb64ae",
+        "x-ms-ratelimit-remaining-subscription-reads": "11935",
+        "x-ms-request-id": "6e2da031-16de-4edd-9d1d-81c5309b13ab",
+        "x-ms-routing-request-id": "CANADACENTRAL:20230619T215136Z:0e927bcf-7e85-46a7-8a3d-fb85cffb64ae"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/fca2e8ee-1179-48b8-9532-428ed0873a2e/providers/Microsoft.NetworkCloud/locations/EASTUS/operationStatuses/ac239a9d-e176-4872-b1ed-85dc3b254e52*4DDA8E081AD77320710F42C75201942C3060CA45B35F032AA70F459BDCE11BEB",
+        "name": "ac239a9d-e176-4872-b1ed-85dc3b254e52*4DDA8E081AD77320710F42C75201942C3060CA45B35F032AA70F459BDCE11BEB",
+        "resourceId": "/subscriptions/fca2e8ee-1179-48b8-9532-428ed0873a2e/resourceGroups/nc-resource-testing-k5-0907401cb287-ors8g/providers/Microsoft.NetworkCloud/kubernetesClusters/res-test-standard-naks-d5a98/agentPools/systemPool3991",
+        "status": "Deleting",
+        "startTime": "2023-06-19T21:51:18.2469974Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/fca2e8ee-1179-48b8-9532-428ed0873a2e/providers/Microsoft.NetworkCloud/locations/EASTUS/operationStatuses/ac239a9d-e176-4872-b1ed-85dc3b254e52*4DDA8E081AD77320710F42C75201942C3060CA45B35F032AA70F459BDCE11BEB?api-version=2023-05-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-b07da765d851b23ad6a9325bdba9cf04-5ac218d7bed9b233-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.6.0 (.NET 7.0.5; Linux 5.15.90.1-microsoft-standard-WSL2 #1 SMP Fri Jan 27 02:56:13 UTC 2023)",
+        "x-ms-client-request-id": "06b5b8797d10e672c0b7a283ecd5611c",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 202,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "635",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 19 Jun 2023 21:51:51 GMT",
+        "ETag": "\u0022d002c929-0000-0100-0000-6490cdde0000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "06b5b8797d10e672c0b7a283ecd5611c",
+        "x-ms-correlation-request-id": "198489e4-5791-43cf-81c9-bb822e686b9c",
+        "x-ms-ratelimit-remaining-subscription-reads": "11934",
+        "x-ms-request-id": "9238264a-b210-4673-a9a7-960734f50e1c",
+        "x-ms-routing-request-id": "CANADACENTRAL:20230619T215152Z:198489e4-5791-43cf-81c9-bb822e686b9c"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/fca2e8ee-1179-48b8-9532-428ed0873a2e/providers/Microsoft.NetworkCloud/locations/EASTUS/operationStatuses/ac239a9d-e176-4872-b1ed-85dc3b254e52*4DDA8E081AD77320710F42C75201942C3060CA45B35F032AA70F459BDCE11BEB",
+        "name": "ac239a9d-e176-4872-b1ed-85dc3b254e52*4DDA8E081AD77320710F42C75201942C3060CA45B35F032AA70F459BDCE11BEB",
+        "resourceId": "/subscriptions/fca2e8ee-1179-48b8-9532-428ed0873a2e/resourceGroups/nc-resource-testing-k5-0907401cb287-ors8g/providers/Microsoft.NetworkCloud/kubernetesClusters/res-test-standard-naks-d5a98/agentPools/systemPool3991",
+        "status": "Deleting",
+        "startTime": "2023-06-19T21:51:18.2469974Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/fca2e8ee-1179-48b8-9532-428ed0873a2e/providers/Microsoft.NetworkCloud/locations/EASTUS/operationStatuses/ac239a9d-e176-4872-b1ed-85dc3b254e52*4DDA8E081AD77320710F42C75201942C3060CA45B35F032AA70F459BDCE11BEB?api-version=2023-05-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-b07da765d851b23ad6a9325bdba9cf04-7dbe7b3171afa201-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.6.0 (.NET 7.0.5; Linux 5.15.90.1-microsoft-standard-WSL2 #1 SMP Fri Jan 27 02:56:13 UTC 2023)",
+        "x-ms-client-request-id": "3626ca14aebec6182e4dac0d7de430df",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "695",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 19 Jun 2023 21:52:23 GMT",
+        "ETag": "\u0022d0022d2a-0000-0100-0000-6490cdfb0000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "3626ca14aebec6182e4dac0d7de430df",
+        "x-ms-correlation-request-id": "22881ba3-cdc8-4599-aa97-6362bc1484e1",
+        "x-ms-ratelimit-remaining-subscription-reads": "11933",
+        "x-ms-request-id": "ee129e76-a666-477c-a58a-8c8d5b9f8d8a",
+        "x-ms-routing-request-id": "CANADACENTRAL:20230619T215224Z:22881ba3-cdc8-4599-aa97-6362bc1484e1"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/fca2e8ee-1179-48b8-9532-428ed0873a2e/providers/Microsoft.NetworkCloud/locations/EASTUS/operationStatuses/ac239a9d-e176-4872-b1ed-85dc3b254e52*4DDA8E081AD77320710F42C75201942C3060CA45B35F032AA70F459BDCE11BEB",
+        "name": "ac239a9d-e176-4872-b1ed-85dc3b254e52*4DDA8E081AD77320710F42C75201942C3060CA45B35F032AA70F459BDCE11BEB",
+        "resourceId": "/subscriptions/fca2e8ee-1179-48b8-9532-428ed0873a2e/resourceGroups/nc-resource-testing-k5-0907401cb287-ors8g/providers/Microsoft.NetworkCloud/kubernetesClusters/res-test-standard-naks-d5a98/agentPools/systemPool3991",
+        "status": "Succeeded",
+        "startTime": "2023-06-19T21:51:18.2469974Z",
+        "endTime": "2023-06-19T21:51:55.9174033Z",
+        "properties": null
+      }
+    }
+  ],
+  "Variables": {
+    "KUBERNETES_CLUSTER_ID": "/subscriptions/fca2e8ee-1179-48b8-9532-428ed0873a2e/resourceGroups/nc-resource-testing-k5-0907401cb287-ors8g/providers/Microsoft.NetworkCloud/kubernetesClusters/res-test-standard-naks-d5a98",
+    "KUBERNETES_CLUSTER_NAME": "res-test-standard-naks-d5a98",
+    "KUBERNETES_CLUSTER_RG": "nc-resource-testing-k5-0907401cb287-ors8g",
+    "L3_ATTACHMENT_ID": "/subscriptions/fca2e8ee-1179-48b8-9532-428ed0873a2e/resourceGroups/nc-resource-testing-k5-0907401cb287-ors8g/providers/Microsoft.NetworkCloud/l3Networks/l3network-505",
+    "LOCATION": "eastus",
+    "RandomSeed": "666348161",
+    "RESOURCE_MANAGER_URL": null,
+    "SUBSCRIPTION_ID": "fca2e8ee-1179-48b8-9532-428ed0873a2e",
+    "VM_IMAGE": "NC_M16_v1"
+  }
+}

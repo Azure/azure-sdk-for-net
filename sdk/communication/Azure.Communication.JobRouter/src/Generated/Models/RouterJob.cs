@@ -36,7 +36,7 @@ namespace Azure.Communication.JobRouter.Models
         /// <param name="notes"> Notes attached to a job, sorted by timestamp. </param>
         /// <param name="scheduledAt"> If set, job will be scheduled to be enqueued at a given time. </param>
         /// <param name="matchingMode"></param>
-        internal RouterJob(string id, string channelReference, RouterJobStatus? status, DateTimeOffset? enqueuedAt, string channelId, string classificationPolicyId, string queueId, int? priority, string dispositionCode, IList<RouterWorkerSelector> requestedWorkerSelectors, IReadOnlyList<RouterWorkerSelector> attachedWorkerSelectors, IDictionary<string, object> labels, IReadOnlyDictionary<string, RouterJobAssignment> assignments, IDictionary<string, object> tags, IDictionary<string, string> notes, DateTimeOffset? scheduledAt, JobMatchingModeInternal matchingMode)
+        internal RouterJob(string id, string channelReference, RouterJobStatus? status, DateTimeOffset? enqueuedAt, string channelId, string classificationPolicyId, string queueId, int? priority, string dispositionCode, IList<RouterWorkerSelector> requestedWorkerSelectors, IReadOnlyList<RouterWorkerSelector> attachedWorkerSelectors, IDictionary<string, object> labels, IReadOnlyDictionary<string, RouterJobAssignment> assignments, IDictionary<string, object> tags, IDictionary<string, string> notes, DateTimeOffset? scheduledAt, JobMatchingMode matchingMode)
         {
             Id = id;
             ChannelReference = channelReference;
@@ -54,7 +54,7 @@ namespace Azure.Communication.JobRouter.Models
             _tags = tags;
             _notes = notes;
             ScheduledAt = scheduledAt;
-            _matchingMode = matchingMode;
+            MatchingMode = matchingMode;
         }
 
         /// <summary> The id of the job. </summary>
@@ -84,5 +84,7 @@ namespace Azure.Communication.JobRouter.Models
         public IReadOnlyDictionary<string, RouterJobAssignment> Assignments { get; }
         /// <summary> If set, job will be scheduled to be enqueued at a given time. </summary>
         public DateTimeOffset? ScheduledAt { get; }
+        /// <summary> Gets or sets the matching mode. </summary>
+        public JobMatchingMode MatchingMode { get; set; }
     }
 }

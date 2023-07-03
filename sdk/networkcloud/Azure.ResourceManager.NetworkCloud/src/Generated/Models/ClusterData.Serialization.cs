@@ -37,8 +37,11 @@ namespace Azure.ResourceManager.NetworkCloud
             writer.WriteStartObject();
             writer.WritePropertyName("aggregatorOrSingleRackDefinition"u8);
             writer.WriteObjectValue(AggregatorOrSingleRackDefinition);
-            writer.WritePropertyName("analyticsWorkspaceId"u8);
-            writer.WriteStringValue(AnalyticsWorkspaceId);
+            if (Optional.IsDefined(AnalyticsWorkspaceId))
+            {
+                writer.WritePropertyName("analyticsWorkspaceId"u8);
+                writer.WriteStringValue(AnalyticsWorkspaceId);
+            }
             if (Optional.IsDefined(ClusterLocation))
             {
                 writer.WritePropertyName("clusterLocation"u8);
@@ -93,7 +96,7 @@ namespace Azure.ResourceManager.NetworkCloud
             ResourceType type = default;
             Optional<SystemData> systemData = default;
             RackDefinition aggregatorOrSingleRackDefinition = default;
-            string analyticsWorkspaceId = default;
+            Optional<string> analyticsWorkspaceId = default;
             Optional<IReadOnlyList<ClusterAvailableUpgradeVersion>> availableUpgradeVersions = default;
             Optional<ClusterCapacity> clusterCapacity = default;
             Optional<ClusterConnectionStatus> clusterConnectionStatus = default;
@@ -364,7 +367,7 @@ namespace Azure.ResourceManager.NetworkCloud
                     continue;
                 }
             }
-            return new ClusterData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, extendedLocation, aggregatorOrSingleRackDefinition, analyticsWorkspaceId, Optional.ToList(availableUpgradeVersions), clusterCapacity.Value, Optional.ToNullable(clusterConnectionStatus), clusterExtendedLocation.Value, clusterLocation.Value, Optional.ToNullable(clusterManagerConnectionStatus), clusterManagerId.Value, clusterServicePrincipal.Value, clusterType, clusterVersion, computeDeploymentThreshold.Value, Optional.ToList(computeRackDefinitions), Optional.ToNullable(detailedStatus), detailedStatusMessage.Value, hybridAksExtendedLocation.Value, managedResourceGroupConfiguration.Value, Optional.ToNullable(manualActionCount), networkFabricId, Optional.ToNullable(provisioningState), supportExpiryDate.Value, Optional.ToList(workloadResourceIds));
+            return new ClusterData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, extendedLocation, aggregatorOrSingleRackDefinition, analyticsWorkspaceId.Value, Optional.ToList(availableUpgradeVersions), clusterCapacity.Value, Optional.ToNullable(clusterConnectionStatus), clusterExtendedLocation.Value, clusterLocation.Value, Optional.ToNullable(clusterManagerConnectionStatus), clusterManagerId.Value, clusterServicePrincipal.Value, clusterType, clusterVersion, computeDeploymentThreshold.Value, Optional.ToList(computeRackDefinitions), Optional.ToNullable(detailedStatus), detailedStatusMessage.Value, hybridAksExtendedLocation.Value, managedResourceGroupConfiguration.Value, Optional.ToNullable(manualActionCount), networkFabricId, Optional.ToNullable(provisioningState), supportExpiryDate.Value, Optional.ToList(workloadResourceIds));
         }
     }
 }

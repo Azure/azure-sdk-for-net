@@ -881,7 +881,7 @@ namespace Azure.ResourceManager.Network.Tests
             Assert.NotNull(sslOptionsInfo);
             Assert.AreEqual(sslOptionsInfo.Name, "default");
             Assert.AreEqual(sslOptionsInfo.Id.ResourceType, sslOptionsInfo.ResourceType);
-            Assert.AreEqual(sslOptionsInfo.DefaultPolicy, ApplicationGatewaySslPolicyName.AppGwSslPolicy20150501);
+            Assert.AreEqual(sslOptionsInfo.DefaultPolicy, ApplicationGatewaySslPolicyName.AppGwSslPolicy20220101);
             Assert.AreEqual(sslOptionsInfo.PredefinedPolicies.Count, 5);
             foreach (var predefinedPolicy in sslOptionsInfo.PredefinedPolicies)
             {

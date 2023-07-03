@@ -19,8 +19,11 @@ namespace Azure.ResourceManager.StorageCache.Tests
         protected AzureLocation DefaultLocation => AzureLocation.EastUS;
         protected ArmClient Client { get; private set; }
         protected SubscriptionResource DefaultSubscription { get; private set; }
-        protected ResourceGroupResource DefaultResourceGroup { get; private set; }
+       protected ResourceGroupResource DefaultResourceGroup { get; private set; }
         protected Stack<Action> CleanupActions { get; } = new Stack<Action>();
+        protected string amlFSSubnetResourceId;
+        protected ResourceGroupResource amlFSResourceGroup;
+        protected string amlFSStorageAccountId;
 
         protected StorageCacheManagementTestBase(bool isAsync, RecordedTestMode mode)
         : base(isAsync, mode)
@@ -37,7 +40,10 @@ namespace Azure.ResourceManager.StorageCache.Tests
         {
             Client = GetArmClient();
             DefaultSubscription = await Client.GetDefaultSubscriptionAsync().ConfigureAwait(false);
-            DefaultResourceGroup = await this.CreateResourceGroup(this.DefaultSubscription, "storagecachetestrg", this.DefaultLocation);
+            DefaultResourceGroup = await this.DefaultSubscription.GetResourceGroupAsync("rg-rdupuisstoragecache");
+            amlFSResourceGroup = DefaultResourceGroup;
+            amlFSStorageAccountId = "/subscriptions/" + DefaultSubscription.Id.SubscriptionId +"/resourceGroups/"+ DefaultResourceGroup.Id.Name +"/providers/Microsoft.Storage/storageAccounts/" + "sdktestingstorageaccount";
+            amlFSSubnetResourceId = this.amlFSResourceGroup.Id + "/providers/Microsoft.Network/virtualNetworks/" + "vnet1" + "/subnets/fsSubnet";
         }
 
         [TearDown]
@@ -147,6 +153,61 @@ namespace Azure.ResourceManager.StorageCache.Tests
                 Assert.AreEqual(actual.Data.Zones[i], expected.Zones[i]);
         }
 
+        protected async Task<AmlFileSystemResource> CreateOrUpdateAmlFilesystem(string name = null, string zone = "1", bool verifyResult = false)
+        {
+            AmlFileSystemCollection amlFSCollectionVar = this.amlFSResourceGroup.GetAmlFileSystems();
+            string amlFSName = name ?? Recording.GenerateAssetName("testamlFS");
+            string subnetId = this.amlFSResourceGroup.Id + "/providers/Microsoft.Network/virtualNetworks/" + TestEnvironment.vnetName +"/subnets/fsSubnet";
+            string amlFSHsmContainer = amlFSStorageAccountId + "/blobServices/default/containers/importcontainer";
+            string amlFSHsmLoggingContainer = amlFSStorageAccountId + "/blobServices/default/containers/loggingcontainer";
+            AmlFileSystemData dataVar = new AmlFileSystemData(this.DefaultLocation)
+            {
+                Sku = new StorageCacheSkuName
+                {
+                    Name = @"AMLFS-Durable-Premium-125"
+                },
+                StorageCapacityTiB = (float?)16.0,
+                FilesystemSubnet = subnetId,
+                MaintenanceWindow = new AmlFileSystemPropertiesMaintenanceWindow
+                {
+                    DayOfWeek = MaintenanceDayOfWeekType.Monday,
+                    TimeOfDayUTC = @"23:25"
+                },
+                Hsm = new AmlFileSystemPropertiesHsm
+                {
+                    Settings = new AmlFileSystemHsmSettings(amlFSHsmContainer, amlFSHsmLoggingContainer)
+                },
+                Zones =
+                {
+                    zone,
+                }
+            };
+            ArmOperation<AmlFileSystemResource> lro = await amlFSCollectionVar.CreateOrUpdateAsync(
+                waitUntil: WaitUntil.Completed,
+                amlFileSystemName: amlFSName,
+                data: dataVar);
+            this.CleanupActions.Push(async () => await lro.Value.DeleteAsync(WaitUntil.Completed));
+            if (verifyResult)
+            {
+                this.VerifyAmlFileSystem(lro.Value, dataVar);
+            }
+            return lro.Value;
+        }
+
+        protected void VerifyAmlFileSystem(AmlFileSystemResource actual, AmlFileSystemData expected)
+        {
+            Assert.AreEqual(actual.Data.Sku.Name, expected.Sku.Name);
+            Assert.AreEqual(actual.Data.StorageCapacityTiB, expected.StorageCapacityTiB);
+            Assert.AreEqual(actual.Data.FilesystemSubnet, expected.FilesystemSubnet);
+            Assert.AreEqual(actual.Data.Zones.Count, expected.Zones.Count);
+            Assert.AreEqual(actual.Data.MaintenanceWindow.DayOfWeek, expected.MaintenanceWindow.DayOfWeek);
+            Assert.AreEqual(actual.Data.MaintenanceWindow.TimeOfDayUTC, expected.MaintenanceWindow.TimeOfDayUTC);
+            Assert.AreEqual(actual.Data.Hsm.Settings.Container, expected.Hsm.Settings.Container);
+            Assert.AreEqual(actual.Data.Hsm.Settings.LoggingContainer, expected.Hsm.Settings.LoggingContainer);
+            for (int i = 0; i < actual.Data.Zones.Count; i++)
+                Assert.AreEqual(actual.Data.Zones[i], expected.Zones[i]);
+        }
+
         protected async Task<GenericResource> CreateVirtualNetwork()
         {
             var vnetName = Recording.GenerateAssetName("scTestVNet-");
@@ -166,7 +227,7 @@ namespace Azure.ResourceManager.StorageCache.Tests
                 }
             };
             var subnets = new List<object>() { subnet };
-            var input = new GenericResourceData(DefaultLocation)
+            var input = new GenericResourceData(this.DefaultLocation)
             {
                 Properties = BinaryData.FromObjectAsJson(new Dictionary<string, object>()
                 {

@@ -428,7 +428,7 @@ namespace Azure.Maps.Rendering
             }
         }
 
-        internal HttpMessage CreateGetCopyrightCaptionRequest(ResponseFormat? format)
+        internal HttpMessage CreateGetCopyrightCaptionRequest(ResponseFormat format)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -436,7 +436,7 @@ namespace Azure.Maps.Rendering
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/map/copyright/caption/", false);
-            uri.AppendPath(format.Value.ToString(), true);
+            uri.AppendPath(format.ToString(), true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             if (_clientId != null)
@@ -457,12 +457,10 @@ namespace Azure.Maps.Rendering
         /// As an alternative to copyrights for map request, one can receive captions
         /// for displaying the map provider information on the map.
         /// </summary>
-        /// <param name="format"> Desired format of the response. Value can be either _json_ or _xml_. </param>
+        /// <param name="format"> Desired format of the response. Value can be either _json_ or _xml_. The default value is AutoRest.CSharp.Output.Models.Types.EnumTypeValue. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response<CopyrightCaption>> GetCopyrightCaptionAsync(ResponseFormat? format = null, CancellationToken cancellationToken = default)
+        public async Task<Response<CopyrightCaption>> GetCopyrightCaptionAsync(ResponseFormat format, CancellationToken cancellationToken = default)
         {
-            format ??= ResponseFormat.Json;
-
             using var message = CreateGetCopyrightCaptionRequest(format);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
@@ -489,12 +487,10 @@ namespace Azure.Maps.Rendering
         /// As an alternative to copyrights for map request, one can receive captions
         /// for displaying the map provider information on the map.
         /// </summary>
-        /// <param name="format"> Desired format of the response. Value can be either _json_ or _xml_. </param>
+        /// <param name="format"> Desired format of the response. Value can be either _json_ or _xml_. The default value is AutoRest.CSharp.Output.Models.Types.EnumTypeValue. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<CopyrightCaption> GetCopyrightCaption(ResponseFormat? format = null, CancellationToken cancellationToken = default)
+        public Response<CopyrightCaption> GetCopyrightCaption(ResponseFormat format, CancellationToken cancellationToken = default)
         {
-            format ??= ResponseFormat.Json;
-
             using var message = CreateGetCopyrightCaptionRequest(format);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
@@ -511,7 +507,7 @@ namespace Azure.Maps.Rendering
             }
         }
 
-        internal HttpMessage CreateGetMapStaticImageRequest(RasterTileFormat? format, MapImageLayer? layer, MapImageStyle? style, int? zoom, IEnumerable<double> center, IEnumerable<double> boundingBoxPrivate, int? height, int? width, string language, LocalizedMapView? localizedMapView, IEnumerable<string> pins, IEnumerable<string> path)
+        internal HttpMessage CreateGetMapStaticImageRequest(RasterTileFormat format, MapImageLayer? layer, MapImageStyle? style, int? zoom, IEnumerable<double> center, IEnumerable<double> boundingBoxPrivate, int? height, int? width, string language, LocalizedMapView? localizedMapView, IEnumerable<string> pins, IEnumerable<string> path)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -519,7 +515,7 @@ namespace Azure.Maps.Rendering
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/map/static/", false);
-            uri.AppendPath(format.Value.ToString(), true);
+            uri.AppendPath(format.ToString(), true);
             uri.AppendQuery("api-version", _apiVersion, true);
             if (layer != null)
             {
@@ -622,7 +618,7 @@ namespace Azure.Maps.Rendering
         ///   |19         | 0.0109863281    | 0.0051879883 |
         ///   |20         | 0.0054931641    | 0.0025939941 |
         /// </summary>
-        /// <param name="format"> Desired format of the response. Possible value: png. </param>
+        /// <param name="format"> Desired format of the response. Possible value: png. The default value is AutoRest.CSharp.Output.Models.Types.EnumTypeValue. </param>
         /// <param name="layer"> Map layer requested. If layer is set to labels or hybrid, the format should be png. </param>
         /// <param name="style"> Map style to be returned. Possible values are main and dark. </param>
         /// <param name="zoom"> Desired zoom level of the map. Zoom value must be in the range: 0-20 (inclusive). Default value is 12.&lt;br&gt;&lt;br&gt;Please see [Zoom Levels and Tile Grid](https://docs.microsoft.com/azure/location-based-services/zoom-levels-and-tile-grid) for details. </param>
@@ -850,10 +846,8 @@ namespace Azure.Maps.Rendering
         /// ra        | Circle radius (meters) | Greater than 0
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<ResponseWithHeaders<Stream, RenderGetMapStaticImageHeaders>> GetMapStaticImageAsync(RasterTileFormat? format = null, MapImageLayer? layer = null, MapImageStyle? style = null, int? zoom = null, IEnumerable<double> center = null, IEnumerable<double> boundingBoxPrivate = null, int? height = null, int? width = null, string language = null, LocalizedMapView? localizedMapView = null, IEnumerable<string> pins = null, IEnumerable<string> path = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<Stream, RenderGetMapStaticImageHeaders>> GetMapStaticImageAsync(RasterTileFormat format, MapImageLayer? layer = null, MapImageStyle? style = null, int? zoom = null, IEnumerable<double> center = null, IEnumerable<double> boundingBoxPrivate = null, int? height = null, int? width = null, string language = null, LocalizedMapView? localizedMapView = null, IEnumerable<string> pins = null, IEnumerable<string> path = null, CancellationToken cancellationToken = default)
         {
-            format ??= RasterTileFormat.Png;
-
             using var message = CreateGetMapStaticImageRequest(format, layer, style, zoom, center, boundingBoxPrivate, height, width, language, localizedMapView, pins, path);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             var headers = new RenderGetMapStaticImageHeaders(message.Response);
@@ -911,7 +905,7 @@ namespace Azure.Maps.Rendering
         ///   |19         | 0.0109863281    | 0.0051879883 |
         ///   |20         | 0.0054931641    | 0.0025939941 |
         /// </summary>
-        /// <param name="format"> Desired format of the response. Possible value: png. </param>
+        /// <param name="format"> Desired format of the response. Possible value: png. The default value is AutoRest.CSharp.Output.Models.Types.EnumTypeValue. </param>
         /// <param name="layer"> Map layer requested. If layer is set to labels or hybrid, the format should be png. </param>
         /// <param name="style"> Map style to be returned. Possible values are main and dark. </param>
         /// <param name="zoom"> Desired zoom level of the map. Zoom value must be in the range: 0-20 (inclusive). Default value is 12.&lt;br&gt;&lt;br&gt;Please see [Zoom Levels and Tile Grid](https://docs.microsoft.com/azure/location-based-services/zoom-levels-and-tile-grid) for details. </param>
@@ -1139,10 +1133,8 @@ namespace Azure.Maps.Rendering
         /// ra        | Circle radius (meters) | Greater than 0
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public ResponseWithHeaders<Stream, RenderGetMapStaticImageHeaders> GetMapStaticImage(RasterTileFormat? format = null, MapImageLayer? layer = null, MapImageStyle? style = null, int? zoom = null, IEnumerable<double> center = null, IEnumerable<double> boundingBoxPrivate = null, int? height = null, int? width = null, string language = null, LocalizedMapView? localizedMapView = null, IEnumerable<string> pins = null, IEnumerable<string> path = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<Stream, RenderGetMapStaticImageHeaders> GetMapStaticImage(RasterTileFormat format, MapImageLayer? layer = null, MapImageStyle? style = null, int? zoom = null, IEnumerable<double> center = null, IEnumerable<double> boundingBoxPrivate = null, int? height = null, int? width = null, string language = null, LocalizedMapView? localizedMapView = null, IEnumerable<string> pins = null, IEnumerable<string> path = null, CancellationToken cancellationToken = default)
         {
-            format ??= RasterTileFormat.Png;
-
             using var message = CreateGetMapStaticImageRequest(format, layer, style, zoom, center, boundingBoxPrivate, height, width, language, localizedMapView, pins, path);
             _pipeline.Send(message, cancellationToken);
             var headers = new RenderGetMapStaticImageHeaders(message.Response);
@@ -1158,7 +1150,7 @@ namespace Azure.Maps.Rendering
             }
         }
 
-        internal HttpMessage CreateGetCopyrightFromBoundingBoxRequest(BoundingBox boundingBox, ResponseFormat? format, IncludeText? includeText)
+        internal HttpMessage CreateGetCopyrightFromBoundingBoxRequest(ResponseFormat format, BoundingBox boundingBox, IncludeText? includeText)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1166,7 +1158,7 @@ namespace Azure.Maps.Rendering
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/map/copyright/bounding/", false);
-            uri.AppendPath(format.Value.ToString(), true);
+            uri.AppendPath(format.ToString(), true);
             uri.AppendQuery("api-version", _apiVersion, true);
             if (boundingBox?.SouthWest != null && Optional.IsCollectionDefined(boundingBox?.SouthWest))
             {
@@ -1194,20 +1186,19 @@ namespace Azure.Maps.Rendering
         ///
         /// Returns copyright information for a given bounding box. Bounding-box requests should specify the minimum and maximum longitude and latitude (EPSG-3857) coordinates
         /// </summary>
+        /// <param name="format"> Desired format of the response. Value can be either _json_ or _xml_. The default value is AutoRest.CSharp.Output.Models.Types.EnumTypeValue. </param>
         /// <param name="boundingBox"> Parameter group. </param>
-        /// <param name="format"> Desired format of the response. Value can be either _json_ or _xml_. </param>
         /// <param name="includeText"> Yes/no value to exclude textual data from response. Only images and country/region names will be in response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="boundingBox"/> is null. </exception>
-        public async Task<Response<RenderCopyright>> GetCopyrightFromBoundingBoxAsync(BoundingBox boundingBox, ResponseFormat? format = null, IncludeText? includeText = null, CancellationToken cancellationToken = default)
+        public async Task<Response<RenderCopyright>> GetCopyrightFromBoundingBoxAsync(ResponseFormat format, BoundingBox boundingBox, IncludeText? includeText = null, CancellationToken cancellationToken = default)
         {
             if (boundingBox == null)
             {
                 throw new ArgumentNullException(nameof(boundingBox));
             }
-            format ??= ResponseFormat.Json;
 
-            using var message = CreateGetCopyrightFromBoundingBoxRequest(boundingBox, format, includeText);
+            using var message = CreateGetCopyrightFromBoundingBoxRequest(format, boundingBox, includeText);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -1228,20 +1219,19 @@ namespace Azure.Maps.Rendering
         ///
         /// Returns copyright information for a given bounding box. Bounding-box requests should specify the minimum and maximum longitude and latitude (EPSG-3857) coordinates
         /// </summary>
+        /// <param name="format"> Desired format of the response. Value can be either _json_ or _xml_. The default value is AutoRest.CSharp.Output.Models.Types.EnumTypeValue. </param>
         /// <param name="boundingBox"> Parameter group. </param>
-        /// <param name="format"> Desired format of the response. Value can be either _json_ or _xml_. </param>
         /// <param name="includeText"> Yes/no value to exclude textual data from response. Only images and country/region names will be in response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="boundingBox"/> is null. </exception>
-        public Response<RenderCopyright> GetCopyrightFromBoundingBox(BoundingBox boundingBox, ResponseFormat? format = null, IncludeText? includeText = null, CancellationToken cancellationToken = default)
+        public Response<RenderCopyright> GetCopyrightFromBoundingBox(ResponseFormat format, BoundingBox boundingBox, IncludeText? includeText = null, CancellationToken cancellationToken = default)
         {
             if (boundingBox == null)
             {
                 throw new ArgumentNullException(nameof(boundingBox));
             }
-            format ??= ResponseFormat.Json;
 
-            using var message = CreateGetCopyrightFromBoundingBoxRequest(boundingBox, format, includeText);
+            using var message = CreateGetCopyrightFromBoundingBoxRequest(format, boundingBox, includeText);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -1257,7 +1247,7 @@ namespace Azure.Maps.Rendering
             }
         }
 
-        internal HttpMessage CreateGetCopyrightForTileRequest(MapTileIndex tileIndex, ResponseFormat? format, IncludeText? includeText)
+        internal HttpMessage CreateGetCopyrightForTileRequest(ResponseFormat format, MapTileIndex tileIndex, IncludeText? includeText)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1265,7 +1255,7 @@ namespace Azure.Maps.Rendering
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/map/copyright/tile/", false);
-            uri.AppendPath(format.Value.ToString(), true);
+            uri.AppendPath(format.ToString(), true);
             uri.AppendQuery("api-version", _apiVersion, true);
             uri.AppendQuery("zoom", tileIndex.Z, true);
             uri.AppendQuery("x", tileIndex.X, true);
@@ -1289,20 +1279,19 @@ namespace Azure.Maps.Rendering
         /// Copyrights API is designed to serve copyright information for Render Tile  service. In addition to basic copyright for the whole map, API is serving  specific groups of copyrights for some countries/regions.
         /// Returns the copyright information for a given tile. To obtain the copyright information for a particular tile, the request should specify the tile's zoom level and x and y coordinates (see: Zoom Levels and Tile Grid).
         /// </summary>
+        /// <param name="format"> Desired format of the response. Value can be either _json_ or _xml_. The default value is AutoRest.CSharp.Output.Models.Types.EnumTypeValue. </param>
         /// <param name="tileIndex"> Parameter group. </param>
-        /// <param name="format"> Desired format of the response. Value can be either _json_ or _xml_. </param>
         /// <param name="includeText"> Yes/no value to exclude textual data from response. Only images and country/region names will be in response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tileIndex"/> is null. </exception>
-        public async Task<Response<RenderCopyright>> GetCopyrightForTileAsync(MapTileIndex tileIndex, ResponseFormat? format = null, IncludeText? includeText = null, CancellationToken cancellationToken = default)
+        public async Task<Response<RenderCopyright>> GetCopyrightForTileAsync(ResponseFormat format, MapTileIndex tileIndex, IncludeText? includeText = null, CancellationToken cancellationToken = default)
         {
             if (tileIndex == null)
             {
                 throw new ArgumentNullException(nameof(tileIndex));
             }
-            format ??= ResponseFormat.Json;
 
-            using var message = CreateGetCopyrightForTileRequest(tileIndex, format, includeText);
+            using var message = CreateGetCopyrightForTileRequest(format, tileIndex, includeText);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -1324,20 +1313,19 @@ namespace Azure.Maps.Rendering
         /// Copyrights API is designed to serve copyright information for Render Tile  service. In addition to basic copyright for the whole map, API is serving  specific groups of copyrights for some countries/regions.
         /// Returns the copyright information for a given tile. To obtain the copyright information for a particular tile, the request should specify the tile's zoom level and x and y coordinates (see: Zoom Levels and Tile Grid).
         /// </summary>
+        /// <param name="format"> Desired format of the response. Value can be either _json_ or _xml_. The default value is AutoRest.CSharp.Output.Models.Types.EnumTypeValue. </param>
         /// <param name="tileIndex"> Parameter group. </param>
-        /// <param name="format"> Desired format of the response. Value can be either _json_ or _xml_. </param>
         /// <param name="includeText"> Yes/no value to exclude textual data from response. Only images and country/region names will be in response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tileIndex"/> is null. </exception>
-        public Response<RenderCopyright> GetCopyrightForTile(MapTileIndex tileIndex, ResponseFormat? format = null, IncludeText? includeText = null, CancellationToken cancellationToken = default)
+        public Response<RenderCopyright> GetCopyrightForTile(ResponseFormat format, MapTileIndex tileIndex, IncludeText? includeText = null, CancellationToken cancellationToken = default)
         {
             if (tileIndex == null)
             {
                 throw new ArgumentNullException(nameof(tileIndex));
             }
-            format ??= ResponseFormat.Json;
 
-            using var message = CreateGetCopyrightForTileRequest(tileIndex, format, includeText);
+            using var message = CreateGetCopyrightForTileRequest(format, tileIndex, includeText);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -1353,7 +1341,7 @@ namespace Azure.Maps.Rendering
             }
         }
 
-        internal HttpMessage CreateGetCopyrightForWorldRequest(ResponseFormat? format, IncludeText? includeText)
+        internal HttpMessage CreateGetCopyrightForWorldRequest(ResponseFormat format, IncludeText? includeText)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1361,7 +1349,7 @@ namespace Azure.Maps.Rendering
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/map/copyright/world/", false);
-            uri.AppendPath(format.Value.ToString(), true);
+            uri.AppendPath(format.ToString(), true);
             uri.AppendQuery("api-version", _apiVersion, true);
             if (includeText != null)
             {
@@ -1382,13 +1370,11 @@ namespace Azure.Maps.Rendering
         /// Copyrights API is designed to serve copyright information for Render Tile  service. In addition to basic copyright for the whole map, API is serving  specific groups of copyrights for some countries/regions.
         /// Returns the copyright information for the world. To obtain the default copyright information for the whole world, do not specify a tile or bounding box.
         /// </summary>
-        /// <param name="format"> Desired format of the response. Value can be either _json_ or _xml_. </param>
+        /// <param name="format"> Desired format of the response. Value can be either _json_ or _xml_. The default value is AutoRest.CSharp.Output.Models.Types.EnumTypeValue. </param>
         /// <param name="includeText"> Yes/no value to exclude textual data from response. Only images and country/region names will be in response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response<RenderCopyright>> GetCopyrightForWorldAsync(ResponseFormat? format = null, IncludeText? includeText = null, CancellationToken cancellationToken = default)
+        public async Task<Response<RenderCopyright>> GetCopyrightForWorldAsync(ResponseFormat format, IncludeText? includeText = null, CancellationToken cancellationToken = default)
         {
-            format ??= ResponseFormat.Json;
-
             using var message = CreateGetCopyrightForWorldRequest(format, includeText);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
@@ -1411,13 +1397,11 @@ namespace Azure.Maps.Rendering
         /// Copyrights API is designed to serve copyright information for Render Tile  service. In addition to basic copyright for the whole map, API is serving  specific groups of copyrights for some countries/regions.
         /// Returns the copyright information for the world. To obtain the default copyright information for the whole world, do not specify a tile or bounding box.
         /// </summary>
-        /// <param name="format"> Desired format of the response. Value can be either _json_ or _xml_. </param>
+        /// <param name="format"> Desired format of the response. Value can be either _json_ or _xml_. The default value is AutoRest.CSharp.Output.Models.Types.EnumTypeValue. </param>
         /// <param name="includeText"> Yes/no value to exclude textual data from response. Only images and country/region names will be in response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<RenderCopyright> GetCopyrightForWorld(ResponseFormat? format = null, IncludeText? includeText = null, CancellationToken cancellationToken = default)
+        public Response<RenderCopyright> GetCopyrightForWorld(ResponseFormat format, IncludeText? includeText = null, CancellationToken cancellationToken = default)
         {
-            format ??= ResponseFormat.Json;
-
             using var message = CreateGetCopyrightForWorldRequest(format, includeText);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
