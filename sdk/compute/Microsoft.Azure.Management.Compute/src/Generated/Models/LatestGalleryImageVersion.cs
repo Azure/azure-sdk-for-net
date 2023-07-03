@@ -14,7 +14,8 @@ namespace Microsoft.Azure.Management.Compute.Models
     using System.Linq;
 
     /// <summary>
-    /// The gallery image version with latest version in a particular region.
+    /// The property latestVersion. It contains two value, the latest version
+    /// name and the region.
     /// </summary>
     public partial class LatestGalleryImageVersion
     {

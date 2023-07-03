@@ -269,6 +269,54 @@ namespace Microsoft.Azure.Management.Compute
             }
 
             /// <summary>
+            /// Retrieves information about the latest version of an image.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='galleryName'>
+            /// The name of the Shared Image Gallery in which the Image Definition resides.
+            /// </param>
+            /// <param name='galleryImageName'>
+            /// The name of the gallery image definition in which the Image Version
+            /// resides.
+            /// </param>
+            public static LatestVersion GetLatest(this IGalleryImageVersionsOperations operations, string resourceGroupName, string galleryName, string galleryImageName)
+            {
+                return operations.GetLatestAsync(resourceGroupName, galleryName, galleryImageName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Retrieves information about the latest version of an image.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='galleryName'>
+            /// The name of the Shared Image Gallery in which the Image Definition resides.
+            /// </param>
+            /// <param name='galleryImageName'>
+            /// The name of the gallery image definition in which the Image Version
+            /// resides.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<LatestVersion> GetLatestAsync(this IGalleryImageVersionsOperations operations, string resourceGroupName, string galleryName, string galleryImageName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetLatestWithHttpMessagesAsync(resourceGroupName, galleryName, galleryImageName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// List gallery image versions in a gallery image definition.
             /// </summary>
             /// <param name='operations'>
