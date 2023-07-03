@@ -618,11 +618,11 @@ namespace Azure.ResourceManager.CostManagement
         /// <param name="content"> Scheduled action to be created or updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public static async Task<Response<CostManagementNameAvailabilityResult>> CheckNameAvailabilityByScopeScheduledActionAsync(this ArmClient client, ResourceIdentifier scope, CostManagementNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public static async Task<Response<CostManagementNameAvailabilityResult>> CheckCostManagementNameAvailabilityByScopeScheduledActionAsync(this ArmClient client, ResourceIdentifier scope, CostManagementNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            return await GetArmResourceExtensionClient(client, scope).CheckNameAvailabilityByScopeScheduledActionAsync(content, cancellationToken).ConfigureAwait(false);
+            return await GetArmResourceExtensionClient(client, scope).CheckCostManagementNameAvailabilityByScopeScheduledActionAsync(content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -643,11 +643,11 @@ namespace Azure.ResourceManager.CostManagement
         /// <param name="content"> Scheduled action to be created or updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public static Response<CostManagementNameAvailabilityResult> CheckNameAvailabilityByScopeScheduledAction(this ArmClient client, ResourceIdentifier scope, CostManagementNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public static Response<CostManagementNameAvailabilityResult> CheckCostManagementNameAvailabilityByScopeScheduledAction(this ArmClient client, ResourceIdentifier scope, CostManagementNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            return GetArmResourceExtensionClient(client, scope).CheckNameAvailabilityByScopeScheduledAction(content, cancellationToken);
+            return GetArmResourceExtensionClient(client, scope).CheckCostManagementNameAvailabilityByScopeScheduledAction(content, cancellationToken);
         }
 
         /// <summary> Gets a collection of TenantsCostManagementViewsResources in the TenantResource. </summary>
@@ -1817,11 +1817,11 @@ namespace Azure.ResourceManager.CostManagement
         /// <param name="content"> Scheduled action to be created or updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public static async Task<Response<CostManagementNameAvailabilityResult>> CheckNameAvailabilityScheduledActionAsync(this TenantResource tenantResource, CostManagementNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public static async Task<Response<CostManagementNameAvailabilityResult>> CheckCostManagementNameAvailabilityByScheduledActionAsync(this TenantResource tenantResource, CostManagementNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            return await GetTenantResourceExtensionClient(tenantResource).CheckNameAvailabilityScheduledActionAsync(content, cancellationToken).ConfigureAwait(false);
+            return await GetTenantResourceExtensionClient(tenantResource).CheckCostManagementNameAvailabilityByScheduledActionAsync(content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1841,11 +1841,11 @@ namespace Azure.ResourceManager.CostManagement
         /// <param name="content"> Scheduled action to be created or updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public static Response<CostManagementNameAvailabilityResult> CheckNameAvailabilityScheduledAction(this TenantResource tenantResource, CostManagementNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public static Response<CostManagementNameAvailabilityResult> CheckCostManagementNameAvailabilityByScheduledAction(this TenantResource tenantResource, CostManagementNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            return GetTenantResourceExtensionClient(tenantResource).CheckNameAvailabilityScheduledAction(content, cancellationToken);
+            return GetTenantResourceExtensionClient(tenantResource).CheckCostManagementNameAvailabilityByScheduledAction(content, cancellationToken);
         }
     }
 }

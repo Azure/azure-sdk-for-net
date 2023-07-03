@@ -1286,9 +1286,9 @@ namespace Azure.ResourceManager.CostManagement
         /// </summary>
         /// <param name="content"> Scheduled action to be created or updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<CostManagementNameAvailabilityResult>> CheckNameAvailabilityScheduledActionAsync(CostManagementNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<CostManagementNameAvailabilityResult>> CheckCostManagementNameAvailabilityByScheduledActionAsync(CostManagementNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            using var scope = ScheduledActionsClientDiagnostics.CreateScope("TenantResourceExtensionClient.CheckNameAvailabilityScheduledAction");
+            using var scope = ScheduledActionsClientDiagnostics.CreateScope("TenantResourceExtensionClient.CheckCostManagementNameAvailabilityByScheduledAction");
             scope.Start();
             try
             {
@@ -1317,9 +1317,9 @@ namespace Azure.ResourceManager.CostManagement
         /// </summary>
         /// <param name="content"> Scheduled action to be created or updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<CostManagementNameAvailabilityResult> CheckNameAvailabilityScheduledAction(CostManagementNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public virtual Response<CostManagementNameAvailabilityResult> CheckCostManagementNameAvailabilityByScheduledAction(CostManagementNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            using var scope = ScheduledActionsClientDiagnostics.CreateScope("TenantResourceExtensionClient.CheckNameAvailabilityScheduledAction");
+            using var scope = ScheduledActionsClientDiagnostics.CreateScope("TenantResourceExtensionClient.CheckCostManagementNameAvailabilityByScheduledAction");
             scope.Start();
             try
             {

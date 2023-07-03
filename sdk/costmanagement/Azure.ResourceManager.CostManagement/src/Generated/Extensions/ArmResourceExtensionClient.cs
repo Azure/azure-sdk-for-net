@@ -328,9 +328,9 @@ namespace Azure.ResourceManager.CostManagement
         /// </summary>
         /// <param name="content"> Scheduled action to be created or updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<CostManagementNameAvailabilityResult>> CheckNameAvailabilityByScopeScheduledActionAsync(CostManagementNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<CostManagementNameAvailabilityResult>> CheckCostManagementNameAvailabilityByScopeScheduledActionAsync(CostManagementNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            using var scope = ScheduledActionsClientDiagnostics.CreateScope("ArmResourceExtensionClient.CheckNameAvailabilityByScopeScheduledAction");
+            using var scope = ScheduledActionsClientDiagnostics.CreateScope("ArmResourceExtensionClient.CheckCostManagementNameAvailabilityByScopeScheduledAction");
             scope.Start();
             try
             {
@@ -359,9 +359,9 @@ namespace Azure.ResourceManager.CostManagement
         /// </summary>
         /// <param name="content"> Scheduled action to be created or updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<CostManagementNameAvailabilityResult> CheckNameAvailabilityByScopeScheduledAction(CostManagementNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public virtual Response<CostManagementNameAvailabilityResult> CheckCostManagementNameAvailabilityByScopeScheduledAction(CostManagementNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            using var scope = ScheduledActionsClientDiagnostics.CreateScope("ArmResourceExtensionClient.CheckNameAvailabilityByScopeScheduledAction");
+            using var scope = ScheduledActionsClientDiagnostics.CreateScope("ArmResourceExtensionClient.CheckCostManagementNameAvailabilityByScopeScheduledAction");
             scope.Start();
             try
             {

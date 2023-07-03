@@ -713,7 +713,7 @@ Dimensions = new QueryComparisonExpression("ResourceGroup",QueryOperatorType.In,
         // ScheduledActionCheckNameAvailability
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task CheckNameAvailabilityScheduledAction_ScheduledActionCheckNameAvailability()
+        public async Task CheckCostManagementNameAvailabilityByScheduledAction_ScheduledActionCheckNameAvailability()
         {
             // Generated from example definition: specification/cost-management/resource-manager/Microsoft.CostManagement/stable/2023-03-01/examples/scheduledActions/checkNameAvailability-private-scheduledAction.json
             // this example is just showing the usage of "ScheduledActions_CheckNameAvailability" operation, for the dependent resources, they will have to be created separately.
@@ -733,7 +733,7 @@ Dimensions = new QueryComparisonExpression("ResourceGroup",QueryOperatorType.In,
                 Name = "testName",
                 ResourceType = "Microsoft.CostManagement/ScheduledActions",
             };
-            CostManagementNameAvailabilityResult result = await tenantResource.CheckNameAvailabilityScheduledActionAsync(content);
+            CostManagementNameAvailabilityResult result = await tenantResource.CheckCostManagementNameAvailabilityByScheduledActionAsync(content);
 
             Console.WriteLine($"Succeeded: {result}");
         }

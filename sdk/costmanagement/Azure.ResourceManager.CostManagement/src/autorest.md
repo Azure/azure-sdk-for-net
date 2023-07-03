@@ -57,9 +57,9 @@ request-path-to-resource-name:
   /{scope}/providers/Microsoft.CostManagement/views/{viewName}: CostManagementViews
   /{scope}/providers/Microsoft.CostManagement/exports/{exportName}: CostManagementExport
 
-# override-operation-name:
-#   ScheduledActions_CheckNameAvailabilityByScope: CheckCostManagementNameAvailabilityByScopeScheduledAction
-#   ScheduledActions_CheckNameAvailability: CheckCostManagementNameAvailability
+override-operation-name:
+  ScheduledActions_CheckNameAvailabilityByScope: CheckCostManagementNameAvailabilityByScopeScheduledAction
+  ScheduledActions_CheckNameAvailability: CheckCostManagementNameAvailabilityByScheduledAction
 
 prepend-rp-prefix:
   - Alert
