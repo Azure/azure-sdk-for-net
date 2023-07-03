@@ -43,7 +43,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <param name="provisioningState">Possible values include:
         /// 'Creating', 'Updating', 'Failed', 'Succeeded', 'Deleting',
         /// 'Migrating'</param>
-        public GalleryImageVersion(string location, GalleryImageVersionStorageProfile storageProfile, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), GalleryImageVersionPublishingProfile publishingProfile = default(GalleryImageVersionPublishingProfile), string provisioningState = default(string), GalleryImageVersionSafetyProfile safetyProfile = default(GalleryImageVersionSafetyProfile), ReplicationStatus replicationStatus = default(ReplicationStatus))
+        public GalleryImageVersion(string location, GalleryImageVersionStorageProfile storageProfile, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), GalleryImageVersionPublishingProfile publishingProfile = default(GalleryImageVersionPublishingProfile), string provisioningState = default(string), GalleryImageVersionSafetyProfile safetyProfile = default(GalleryImageVersionSafetyProfile), ReplicationStatus replicationStatus = default(ReplicationStatus), ValidationsProfile validationsProfile = default(ValidationsProfile))
             : base(location, id, name, type, tags)
         {
             PublishingProfile = publishingProfile;
@@ -51,6 +51,7 @@ namespace Microsoft.Azure.Management.Compute.Models
             StorageProfile = storageProfile;
             SafetyProfile = safetyProfile;
             ReplicationStatus = replicationStatus;
+            ValidationsProfile = validationsProfile;
             CustomInit();
         }
 
@@ -85,6 +86,11 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.replicationStatus")]
         public ReplicationStatus ReplicationStatus { get; private set; }
+
+        /// <summary>
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.validationsProfile")]
+        public ValidationsProfile ValidationsProfile { get; private set; }
 
         /// <summary>
         /// Validate the object.
