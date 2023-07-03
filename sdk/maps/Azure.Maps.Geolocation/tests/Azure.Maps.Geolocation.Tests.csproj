@@ -9,6 +9,7 @@
   <ItemGroup>
     <ProjectReference Include="$(AzureCoreTestFramework)" />
     <ProjectReference Include="..\src\Azure.Maps.Geolocation.csproj" />
+    <ProjectReference Include="..\..\Azure.ResourceManager.Maps\src\Azure.ResourceManager.Maps.csproj" />
   </ItemGroup>
 
   <ItemGroup>
