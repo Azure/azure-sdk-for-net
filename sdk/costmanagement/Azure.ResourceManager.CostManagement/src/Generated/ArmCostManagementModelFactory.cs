@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.CostManagement.Models
         /// <param name="status"> The status of the creation of the benefit utilization summaries report. </param>
         /// <param name="properties"> Contains sas url to the async benefit utilization summaries report and a date that the url is valid until. These values will be empty if the report is in a Running or Failed state. </param>
         /// <returns> A new <see cref="Models.BenefitUtilizationSummariesOperationStatus"/> instance for mocking. </returns>
-        public static BenefitUtilizationSummariesOperationStatus BenefitUtilizationSummariesOperationStatus(BenefitUtilizationSummariesRequest input = null, OperationStatusType? status = null, AsyncOperationStatusProperties properties = null)
+        public static BenefitUtilizationSummariesOperationStatus BenefitUtilizationSummariesOperationStatus(BenefitUtilizationSummariesContent input = null, OperationStatusType? status = null, AsyncOperationStatusProperties properties = null)
         {
             return new BenefitUtilizationSummariesOperationStatus(input, status, properties);
         }
@@ -282,8 +282,8 @@ namespace Azure.ResourceManager.CostManagement.Models
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="description"> Dimension description. </param>
-        /// <param name="filterEnabled"> Filter enabled. </param>
-        /// <param name="groupingEnabled"> Grouping enabled. </param>
+        /// <param name="isFilterEnabled"> Filter enabled. </param>
+        /// <param name="isGroupingEnabled"> Grouping enabled. </param>
         /// <param name="data"> Dimension data. </param>
         /// <param name="total"> Total number of data for the dimension. </param>
         /// <param name="category"> Dimension category. </param>
@@ -295,12 +295,12 @@ namespace Azure.ResourceManager.CostManagement.Models
         /// <param name="eTag"> ETag of the resource. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <returns> A new <see cref="Models.CostManagementDimension"/> instance for mocking. </returns>
-        public static CostManagementDimension CostManagementDimension(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string description = null, bool? filterEnabled = null, bool? groupingEnabled = null, IEnumerable<string> data = null, int? total = null, string category = null, DateTimeOffset? usageStart = null, DateTimeOffset? usageEnd = null, string nextLink = null, AzureLocation? location = null, string sku = null, ETag? eTag = null, IReadOnlyDictionary<string, string> tags = null)
+        public static CostManagementDimension CostManagementDimension(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string description = null, bool? isFilterEnabled = null, bool? isGroupingEnabled = null, IEnumerable<string> data = null, int? total = null, string category = null, DateTimeOffset? usageStart = null, DateTimeOffset? usageEnd = null, string nextLink = null, AzureLocation? location = null, string sku = null, ETag? eTag = null, IReadOnlyDictionary<string, string> tags = null)
         {
             data ??= new List<string>();
             tags ??= new Dictionary<string, string>();
 
-            return new CostManagementDimension(id, name, resourceType, systemData, description, filterEnabled, groupingEnabled, data?.ToList(), total, category, usageStart, usageEnd, nextLink, location, sku, eTag, tags);
+            return new CostManagementDimension(id, name, resourceType, systemData, description, isFilterEnabled, isGroupingEnabled, data?.ToList(), total, category, usageStart, usageEnd, nextLink, location, sku, eTag, tags);
         }
 
         /// <summary> Initializes a new instance of QueryResult. </summary>
@@ -377,14 +377,14 @@ namespace Azure.ResourceManager.CostManagement.Models
             return new ScheduledActionData(id, name, resourceType, systemData, displayName, fileFormats != null ? new FileDestination(fileFormats?.ToList()) : null, notification, notificationEmail, schedule, scope, status, viewId, eTag, kind);
         }
 
-        /// <summary> Initializes a new instance of CheckNameAvailabilityResponse. </summary>
+        /// <summary> Initializes a new instance of CostManagementNameAvailabilityResult. </summary>
         /// <param name="nameAvailable"> Indicates if the resource name is available. </param>
         /// <param name="reason"> The reason why the given name is not available. </param>
         /// <param name="message"> Detailed reason why the given name is available. </param>
-        /// <returns> A new <see cref="Models.CheckNameAvailabilityResponse"/> instance for mocking. </returns>
-        public static CheckNameAvailabilityResponse CheckNameAvailabilityResponse(bool? nameAvailable = null, CheckNameAvailabilityReason? reason = null, string message = null)
+        /// <returns> A new <see cref="Models.CostManagementNameAvailabilityResult"/> instance for mocking. </returns>
+        public static CostManagementNameAvailabilityResult CostManagementNameAvailabilityResult(bool? nameAvailable = null, CostManagementUnavailabilityReason? reason = null, string message = null)
         {
-            return new CheckNameAvailabilityResponse(nameAvailable, reason, message);
+            return new CostManagementNameAvailabilityResult(nameAvailable, reason, message);
         }
 
         /// <summary> Initializes a new instance of SingleScopeBenefitRecommendationProperties. </summary>

@@ -25,10 +25,10 @@ namespace Azure.ResourceManager.CostManagement.Models
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(KpiId);
             }
-            if (Optional.IsDefined(Enabled))
+            if (Optional.IsDefined(IsEnabled))
             {
                 writer.WritePropertyName("enabled"u8);
-                writer.WriteBooleanValue(Enabled.Value);
+                writer.WriteBooleanValue(IsEnabled.Value);
             }
             writer.WriteEndObject();
         }

@@ -13,7 +13,7 @@ clear-output-folder: true
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
-  
+
 list-exception:
 - /providers/Microsoft.CostManagement/views/{viewName}
 - /{scope}/providers/Microsoft.CostManagement/costDetailsOperationResults/{operationId}
@@ -56,6 +56,10 @@ request-path-to-resource-name:
   /providers/Microsoft.CostManagement/views/{viewName}: TenantsCostManagementViews
   /{scope}/providers/Microsoft.CostManagement/views/{viewName}: CostManagementViews
   /{scope}/providers/Microsoft.CostManagement/exports/{exportName}: CostManagementExport
+
+# override-operation-name:
+#   ScheduledActions_CheckNameAvailabilityByScope: CheckCostManagementNameAvailabilityByScopeScheduledAction
+#   ScheduledActions_CheckNameAvailability: CheckCostManagementNameAvailability
 
 prepend-rp-prefix:
   - Alert
@@ -102,7 +106,13 @@ rename-mapping:
   ScheduledAction.properties.viewId: -|arm-id
   ExportDeliveryDestination.resourceId: DestinationId|arm-id
   KpiProperties.id: KpiId|arm-id
-
+  Dimension.properties.filterEnabled: IsFilterEnabled
+  Dimension.properties.groupingEnabled: IsGroupingEnabled
+  KpiProperties.enabled: IsEnabled
+  CheckNameAvailabilityRequest: CostManagementNameAvailabilityContent
+  CheckNameAvailabilityResponse: CostManagementNameAvailabilityResult  
+  CheckNameAvailabilityReason: CostManagementUnavailabilityReason
+  BenefitUtilizationSummariesRequest: BenefitUtilizationSummariesContent
 
 directive:
   # [Error][Linked: https://github.com/Azure/autorest.csharp/issues/3288] Found more than 1 candidate for XX 
