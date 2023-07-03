@@ -45,6 +45,11 @@ namespace Azure.AI.Translation.Text
         public string NormalizedSource { get { throw null; } }
         public string NormalizedTarget { get { throw null; } }
     }
+    public partial class DictionaryExampleTextItem : Azure.AI.Translation.Text.InputTextItem
+    {
+        public DictionaryExampleTextItem(string text, string translation) : base (default(string)) { }
+        public string Translation { get { throw null; } }
+    }
     public partial class DictionaryLookupItem
     {
         internal DictionaryLookupItem() { }
@@ -68,6 +73,11 @@ namespace Azure.AI.Translation.Text
         public System.Collections.Generic.IReadOnlyDictionary<string, Azure.AI.Translation.Text.SourceDictionaryLanguage> Dictionary { get { throw null; } }
         public System.Collections.Generic.IReadOnlyDictionary<string, Azure.AI.Translation.Text.TranslationLanguage> Translation { get { throw null; } }
         public System.Collections.Generic.IReadOnlyDictionary<string, Azure.AI.Translation.Text.TransliterationLanguage> Transliteration { get { throw null; } }
+    }
+    public partial class InputTextItem
+    {
+        public InputTextItem(string text) { }
+        public string Text { get { throw null; } }
     }
     public partial class InputTextWithTranslation
     {

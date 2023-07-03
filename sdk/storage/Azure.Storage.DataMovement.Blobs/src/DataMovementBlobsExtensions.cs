@@ -519,7 +519,7 @@ namespace Azure.Storage.DataMovement.Blobs
                     transferId,
                     metadataIndex,
                     metadataReadLength,
-                    DataMovementConstants.PlanFile.MetadataStrMaxLength,
+                    DataMovementConstants.PlanFile.MetadataStrNumBytes,
                     cancellationToken).ConfigureAwait(false);
                 options.Metadata = metadata.ToDictionary(nameof(metadata));
 
@@ -530,7 +530,7 @@ namespace Azure.Storage.DataMovement.Blobs
                     transferId,
                     tagsIndex,
                     tagsReadLength,
-                    DataMovementConstants.PlanFile.BlobTagsStrMaxLength,
+                    DataMovementConstants.PlanFile.BlobTagsStrNumBytes,
                     cancellationToken).ConfigureAwait(false);
                 options.Tags = tags.ToDictionary(nameof(tags));
             }

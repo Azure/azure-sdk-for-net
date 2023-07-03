@@ -1,0 +1,788 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/82f138e0-1c79-4708-bda1-5e224cd688b2?api-version=2021-01-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-14b6cf1fa9227c18d21ff2ffb97ff979-0f6654ee4026e282-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.6.0 (.NET 7.0.7; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "56f35ffeee9e0f78f2f969a353b5b40d",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "405",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 28 Jun 2023 21:00:38 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "a72f2c3f-f22c-466f-85de-c3a7c1fd26a5",
+        "x-ms-ratelimit-remaining-subscription-reads": "11985",
+        "x-ms-request-id": "a72f2c3f-f22c-466f-85de-c3a7c1fd26a5",
+        "x-ms-routing-request-id": "WESTUS2:20230628T210039Z:a72f2c3f-f22c-466f-85de-c3a7c1fd26a5"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/82f138e0-1c79-4708-bda1-5e224cd688b2",
+        "authorizationSource": "Bypassed",
+        "managedByTenants": [],
+        "subscriptionId": "82f138e0-1c79-4708-bda1-5e224cd688b2",
+        "tenantId": "72f988bf-86f1-41af-91ab-2d7cd011db47",
+        "displayName": "sub-as3-arm-tests-prod-001",
+        "state": "Enabled",
+        "subscriptionPolicies": {
+          "locationPlacementId": "Internal_2014-09-01",
+          "quotaId": "Internal_2014-09-01",
+          "spendingLimit": "Off"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/82f138e0-1c79-4708-bda1-5e224cd688b2/resourcegroups/sdkTestRG?api-version=**",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-4d9250387b38fb34ac9f023d3f2394cb-8e48b307a9ad9ffa-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.6.0 (.NET 7.0.7; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "2e1f446f30a1042f61a200b827e27046",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "215",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 28 Jun 2023 21:00:38 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "2f8ed929-5f29-4660-828a-98affc7ff528",
+        "x-ms-ratelimit-remaining-subscription-reads": "11984",
+        "x-ms-request-id": "2f8ed929-5f29-4660-828a-98affc7ff528",
+        "x-ms-routing-request-id": "WESTUS2:20230628T210039Z:2f8ed929-5f29-4660-828a-98affc7ff528"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/82f138e0-1c79-4708-bda1-5e224cd688b2/resourceGroups/sdkTestRG",
+        "name": "sdkTestRG",
+        "type": "Microsoft.Resources/resourceGroups",
+        "location": "eastus",
+        "properties": {
+          "provisioningState": "Succeeded"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/82f138e0-1c79-4708-bda1-5e224cd688b2/resourceGroups/sdkTestRG/providers/Microsoft.AzureSphere/catalogs/catalog-5408?api-version=2022-09-01-preview",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "47",
+        "Content-Type": "application/json",
+        "traceparent": "00-e66a6066dabaed65d7ecfef3c7328026-ca872c0f9d06e5df-00",
+        "User-Agent": "azsdk-net-ResourceManager.Sphere/1.0.0-alpha.20230628.1 (.NET 7.0.7; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "899927f7639f5a246911238ff63a92cf",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "tags": {},
+        "location": "global",
+        "properties": {}
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "556",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 28 Jun 2023 21:00:41 GMT",
+        "ETag": "\u00220a0044cd-0000-0400-0000-649c9f790000\u0022",
+        "Expires": "-1",
+        "mise-correlation-id": "ae0eb947-bba6-451d-b19c-ed86a066c709",
+        "Pragma": "no-cache",
+        "Request-Context": "appId=",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "899927f7639f5a246911238ff63a92cf",
+        "x-ms-correlation-request-id": "ed00c490-02ab-4067-b5fb-17ca9e756ad4",
+        "x-ms-providerhub-traffic": "True",
+        "x-ms-ratelimit-remaining-subscription-writes": "1195",
+        "x-ms-request-id": "b0e16d05-48d8-4ff9-8bfe-e0e126f6696b",
+        "x-ms-routing-request-id": "WESTUS2:20230628T210041Z:ed00c490-02ab-4067-b5fb-17ca9e756ad4"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/82f138e0-1c79-4708-bda1-5e224cd688b2/resourceGroups/sdkTestRG/providers/Microsoft.AzureSphere/catalogs/catalog-5408",
+        "name": "catalog-5408",
+        "type": "microsoft.azuresphere/catalogs",
+        "location": "global",
+        "tags": {},
+        "systemData": {
+          "createdBy": "513e1ad3-36bc-4d5c-b639-0ec23e6a87e1",
+          "createdByType": "Application",
+          "createdAt": "2023-06-28T21:00:40.0465813Z",
+          "lastModifiedBy": "513e1ad3-36bc-4d5c-b639-0ec23e6a87e1",
+          "lastModifiedByType": "Application",
+          "lastModifiedAt": "2023-06-28T21:00:40.0465813Z"
+        },
+        "properties": {
+          "provisioningState": "Succeeded"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/82f138e0-1c79-4708-bda1-5e224cd688b2/resourceGroups/sdkTestRG/providers/Microsoft.AzureSphere/catalogs?api-version=2022-09-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-dde63b3db1c781c93ae61aa7b5c04d47-e5bea55db085b486-00",
+        "User-Agent": "azsdk-net-ResourceManager.Sphere/1.0.0-alpha.20230628.1 (.NET 7.0.7; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "8d5b8f23831ae0d0fad3381e0c756b67",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "17821",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 28 Jun 2023 21:00:41 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "8d5b8f23831ae0d0fad3381e0c756b67",
+        "x-ms-correlation-request-id": "9b45b199-b564-41b9-8f59-a3e76eb1bb86",
+        "x-ms-providerhub-traffic": "True",
+        "x-ms-ratelimit-remaining-subscription-reads": "11983",
+        "x-ms-request-id": "ad1d5908-c3fb-4978-8465-37113f0d2a64",
+        "x-ms-routing-request-id": "WESTUS2:20230628T210041Z:9b45b199-b564-41b9-8f59-a3e76eb1bb86"
+      },
+      "ResponseBody": {
+        "value": [
+          {
+            "id": "/subscriptions/82f138e0-1c79-4708-bda1-5e224cd688b2/resourceGroups/sdkTestRG/providers/Microsoft.AzureSphere/catalogs/catalog-4135",
+            "name": "catalog-4135",
+            "type": "microsoft.azuresphere/catalogs",
+            "location": "global",
+            "tags": {},
+            "systemData": {
+              "createdBy": "513e1ad3-36bc-4d5c-b639-0ec23e6a87e1",
+              "createdByType": "Application",
+              "createdAt": "2023-06-21T20:28:29.5728114Z",
+              "lastModifiedBy": "513e1ad3-36bc-4d5c-b639-0ec23e6a87e1",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-06-21T20:28:29.5728114Z"
+            },
+            "properties": {
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/82f138e0-1c79-4708-bda1-5e224cd688b2/resourceGroups/sdkTestRG/providers/Microsoft.AzureSphere/catalogs/catalog-2684",
+            "name": "catalog-2684",
+            "type": "microsoft.azuresphere/catalogs",
+            "location": "global",
+            "tags": {},
+            "systemData": {
+              "createdBy": "513e1ad3-36bc-4d5c-b639-0ec23e6a87e1",
+              "createdByType": "Application",
+              "createdAt": "2023-06-21T20:36:42.0389997Z",
+              "lastModifiedBy": "513e1ad3-36bc-4d5c-b639-0ec23e6a87e1",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-06-21T20:36:42.0389997Z"
+            },
+            "properties": {
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/82f138e0-1c79-4708-bda1-5e224cd688b2/resourceGroups/sdkTestRG/providers/Microsoft.AzureSphere/catalogs/catalog-450",
+            "name": "catalog-450",
+            "type": "microsoft.azuresphere/catalogs",
+            "location": "global",
+            "tags": {},
+            "systemData": {
+              "createdBy": "513e1ad3-36bc-4d5c-b639-0ec23e6a87e1",
+              "createdByType": "Application",
+              "createdAt": "2023-06-21T20:36:54.8204003Z",
+              "lastModifiedBy": "513e1ad3-36bc-4d5c-b639-0ec23e6a87e1",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-06-21T20:36:54.8204003Z"
+            },
+            "properties": {
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/82f138e0-1c79-4708-bda1-5e224cd688b2/resourceGroups/sdkTestRG/providers/Microsoft.AzureSphere/catalogs/catalog-6535",
+            "name": "catalog-6535",
+            "type": "microsoft.azuresphere/catalogs",
+            "location": "global",
+            "tags": {},
+            "systemData": {
+              "createdBy": "513e1ad3-36bc-4d5c-b639-0ec23e6a87e1",
+              "createdByType": "Application",
+              "createdAt": "2023-06-21T20:51:29.2436154Z",
+              "lastModifiedBy": "513e1ad3-36bc-4d5c-b639-0ec23e6a87e1",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-06-21T20:51:29.2436154Z"
+            },
+            "properties": {
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/82f138e0-1c79-4708-bda1-5e224cd688b2/resourceGroups/sdkTestRG/providers/Microsoft.AzureSphere/catalogs/catalog-4317",
+            "name": "catalog-4317",
+            "type": "microsoft.azuresphere/catalogs",
+            "location": "global",
+            "tags": {},
+            "systemData": {
+              "createdBy": "513e1ad3-36bc-4d5c-b639-0ec23e6a87e1",
+              "createdByType": "Application",
+              "createdAt": "2023-06-21T20:51:36.3535016Z",
+              "lastModifiedBy": "513e1ad3-36bc-4d5c-b639-0ec23e6a87e1",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-06-21T20:51:36.3535016Z"
+            },
+            "properties": {
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/82f138e0-1c79-4708-bda1-5e224cd688b2/resourceGroups/sdkTestRG/providers/Microsoft.AzureSphere/catalogs/catalog-8904",
+            "name": "catalog-8904",
+            "type": "microsoft.azuresphere/catalogs",
+            "location": "global",
+            "tags": {},
+            "systemData": {
+              "createdBy": "513e1ad3-36bc-4d5c-b639-0ec23e6a87e1",
+              "createdByType": "Application",
+              "createdAt": "2023-06-21T20:53:18.2883278Z",
+              "lastModifiedBy": "513e1ad3-36bc-4d5c-b639-0ec23e6a87e1",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-06-21T20:53:18.2883278Z"
+            },
+            "properties": {
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/82f138e0-1c79-4708-bda1-5e224cd688b2/resourceGroups/sdkTestRG/providers/Microsoft.AzureSphere/catalogs/catalog-4656",
+            "name": "catalog-4656",
+            "type": "microsoft.azuresphere/catalogs",
+            "location": "global",
+            "tags": {},
+            "systemData": {
+              "createdBy": "513e1ad3-36bc-4d5c-b639-0ec23e6a87e1",
+              "createdByType": "Application",
+              "createdAt": "2023-06-21T20:53:24.3040516Z",
+              "lastModifiedBy": "513e1ad3-36bc-4d5c-b639-0ec23e6a87e1",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-06-21T20:53:24.3040516Z"
+            },
+            "properties": {
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/82f138e0-1c79-4708-bda1-5e224cd688b2/resourceGroups/sdkTestRG/providers/Microsoft.AzureSphere/catalogs/catalog-5979",
+            "name": "catalog-5979",
+            "type": "microsoft.azuresphere/catalogs",
+            "location": "global",
+            "tags": {},
+            "systemData": {
+              "createdBy": "513e1ad3-36bc-4d5c-b639-0ec23e6a87e1",
+              "createdByType": "Application",
+              "createdAt": "2023-06-21T20:54:51.7002336Z",
+              "lastModifiedBy": "513e1ad3-36bc-4d5c-b639-0ec23e6a87e1",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-06-21T20:54:51.7002336Z"
+            },
+            "properties": {
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/82f138e0-1c79-4708-bda1-5e224cd688b2/resourceGroups/sdkTestRG/providers/Microsoft.AzureSphere/catalogs/catalog-8049",
+            "name": "catalog-8049",
+            "type": "microsoft.azuresphere/catalogs",
+            "location": "global",
+            "tags": {},
+            "systemData": {
+              "createdBy": "513e1ad3-36bc-4d5c-b639-0ec23e6a87e1",
+              "createdByType": "Application",
+              "createdAt": "2023-06-21T20:54:57.5752951Z",
+              "lastModifiedBy": "513e1ad3-36bc-4d5c-b639-0ec23e6a87e1",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-06-21T20:54:57.5752951Z"
+            },
+            "properties": {
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/82f138e0-1c79-4708-bda1-5e224cd688b2/resourceGroups/sdkTestRG/providers/Microsoft.AzureSphere/catalogs/catalog-2261",
+            "name": "catalog-2261",
+            "type": "microsoft.azuresphere/catalogs",
+            "location": "global",
+            "tags": {},
+            "systemData": {
+              "createdBy": "513e1ad3-36bc-4d5c-b639-0ec23e6a87e1",
+              "createdByType": "Application",
+              "createdAt": "2023-06-21T21:02:23.2119689Z",
+              "lastModifiedBy": "513e1ad3-36bc-4d5c-b639-0ec23e6a87e1",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-06-21T21:02:23.2119689Z"
+            },
+            "properties": {
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/82f138e0-1c79-4708-bda1-5e224cd688b2/resourceGroups/sdkTestRG/providers/Microsoft.AzureSphere/catalogs/catalog-44",
+            "name": "catalog-44",
+            "type": "microsoft.azuresphere/catalogs",
+            "location": "global",
+            "tags": {},
+            "systemData": {
+              "createdBy": "513e1ad3-36bc-4d5c-b639-0ec23e6a87e1",
+              "createdByType": "Application",
+              "createdAt": "2023-06-21T21:02:28.99326Z",
+              "lastModifiedBy": "513e1ad3-36bc-4d5c-b639-0ec23e6a87e1",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-06-21T21:02:28.99326Z"
+            },
+            "properties": {
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/82f138e0-1c79-4708-bda1-5e224cd688b2/resourceGroups/sdkTestRG/providers/Microsoft.AzureSphere/catalogs/catalog-2552",
+            "name": "catalog-2552",
+            "type": "microsoft.azuresphere/catalogs",
+            "location": "global",
+            "tags": {},
+            "systemData": {
+              "createdBy": "513e1ad3-36bc-4d5c-b639-0ec23e6a87e1",
+              "createdByType": "Application",
+              "createdAt": "2023-06-21T21:04:27.5142853Z",
+              "lastModifiedBy": "513e1ad3-36bc-4d5c-b639-0ec23e6a87e1",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-06-21T21:04:27.5142853Z"
+            },
+            "properties": {
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/82f138e0-1c79-4708-bda1-5e224cd688b2/resourceGroups/sdkTestRG/providers/Microsoft.AzureSphere/catalogs/catalog-6880",
+            "name": "catalog-6880",
+            "type": "microsoft.azuresphere/catalogs",
+            "location": "global",
+            "tags": {},
+            "systemData": {
+              "createdBy": "513e1ad3-36bc-4d5c-b639-0ec23e6a87e1",
+              "createdByType": "Application",
+              "createdAt": "2023-06-21T21:04:38.4527403Z",
+              "lastModifiedBy": "513e1ad3-36bc-4d5c-b639-0ec23e6a87e1",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-06-21T21:04:38.4527403Z"
+            },
+            "properties": {
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/82f138e0-1c79-4708-bda1-5e224cd688b2/resourceGroups/sdkTestRG/providers/Microsoft.AzureSphere/catalogs/catalog-8972",
+            "name": "catalog-8972",
+            "type": "microsoft.azuresphere/catalogs",
+            "location": "global",
+            "tags": {},
+            "systemData": {
+              "createdBy": "513e1ad3-36bc-4d5c-b639-0ec23e6a87e1",
+              "createdByType": "Application",
+              "createdAt": "2023-06-21T21:42:43.5737902Z",
+              "lastModifiedBy": "513e1ad3-36bc-4d5c-b639-0ec23e6a87e1",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-06-21T21:42:43.5737902Z"
+            },
+            "properties": {
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/82f138e0-1c79-4708-bda1-5e224cd688b2/resourceGroups/sdkTestRG/providers/Microsoft.AzureSphere/catalogs/catalog-2789",
+            "name": "catalog-2789",
+            "type": "microsoft.azuresphere/catalogs",
+            "location": "global",
+            "tags": {},
+            "systemData": {
+              "createdBy": "513e1ad3-36bc-4d5c-b639-0ec23e6a87e1",
+              "createdByType": "Application",
+              "createdAt": "2023-06-21T22:47:16.4215237Z",
+              "lastModifiedBy": "513e1ad3-36bc-4d5c-b639-0ec23e6a87e1",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-06-21T22:47:16.4215237Z"
+            },
+            "properties": {
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/82f138e0-1c79-4708-bda1-5e224cd688b2/resourceGroups/sdkTestRG/providers/Microsoft.AzureSphere/catalogs/catalog-7522",
+            "name": "catalog-7522",
+            "type": "microsoft.azuresphere/catalogs",
+            "location": "global",
+            "tags": {},
+            "systemData": {
+              "createdBy": "513e1ad3-36bc-4d5c-b639-0ec23e6a87e1",
+              "createdByType": "Application",
+              "createdAt": "2023-06-26T21:39:34.9266641Z",
+              "lastModifiedBy": "513e1ad3-36bc-4d5c-b639-0ec23e6a87e1",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-06-26T21:39:34.9266641Z"
+            },
+            "properties": {
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/82f138e0-1c79-4708-bda1-5e224cd688b2/resourceGroups/sdkTestRG/providers/Microsoft.AzureSphere/catalogs/catalog-6125",
+            "name": "catalog-6125",
+            "type": "microsoft.azuresphere/catalogs",
+            "location": "global",
+            "tags": {},
+            "systemData": {
+              "createdBy": "513e1ad3-36bc-4d5c-b639-0ec23e6a87e1",
+              "createdByType": "Application",
+              "createdAt": "2023-06-27T00:03:53.45989Z",
+              "lastModifiedBy": "513e1ad3-36bc-4d5c-b639-0ec23e6a87e1",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-06-27T00:03:53.45989Z"
+            },
+            "properties": {
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/82f138e0-1c79-4708-bda1-5e224cd688b2/resourceGroups/sdkTestRG/providers/Microsoft.AzureSphere/catalogs/catalog-9904",
+            "name": "catalog-9904",
+            "type": "microsoft.azuresphere/catalogs",
+            "location": "global",
+            "tags": {},
+            "systemData": {
+              "createdBy": "513e1ad3-36bc-4d5c-b639-0ec23e6a87e1",
+              "createdByType": "Application",
+              "createdAt": "2023-06-27T00:23:00.3511643Z",
+              "lastModifiedBy": "513e1ad3-36bc-4d5c-b639-0ec23e6a87e1",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-06-27T00:23:00.3511643Z"
+            },
+            "properties": {
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/82f138e0-1c79-4708-bda1-5e224cd688b2/resourceGroups/sdkTestRG/providers/Microsoft.AzureSphere/catalogs/catalog-6567",
+            "name": "catalog-6567",
+            "type": "microsoft.azuresphere/catalogs",
+            "location": "global",
+            "tags": {},
+            "systemData": {
+              "createdBy": "513e1ad3-36bc-4d5c-b639-0ec23e6a87e1",
+              "createdByType": "Application",
+              "createdAt": "2023-06-27T00:28:22.4672866Z",
+              "lastModifiedBy": "513e1ad3-36bc-4d5c-b639-0ec23e6a87e1",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-06-27T00:28:22.4672866Z"
+            },
+            "properties": {
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/82f138e0-1c79-4708-bda1-5e224cd688b2/resourceGroups/sdkTestRG/providers/Microsoft.AzureSphere/catalogs/catalog-3967",
+            "name": "catalog-3967",
+            "type": "microsoft.azuresphere/catalogs",
+            "location": "global",
+            "tags": {},
+            "systemData": {
+              "createdBy": "513e1ad3-36bc-4d5c-b639-0ec23e6a87e1",
+              "createdByType": "Application",
+              "createdAt": "2023-06-27T00:28:38.1549496Z",
+              "lastModifiedBy": "513e1ad3-36bc-4d5c-b639-0ec23e6a87e1",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-06-27T00:28:38.1549496Z"
+            },
+            "properties": {
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/82f138e0-1c79-4708-bda1-5e224cd688b2/resourceGroups/sdkTestRG/providers/Microsoft.AzureSphere/catalogs/catalog-5421",
+            "name": "catalog-5421",
+            "type": "microsoft.azuresphere/catalogs",
+            "location": "global",
+            "tags": {},
+            "systemData": {
+              "createdBy": "513e1ad3-36bc-4d5c-b639-0ec23e6a87e1",
+              "createdByType": "Application",
+              "createdAt": "2023-06-27T00:29:08.1366112Z",
+              "lastModifiedBy": "513e1ad3-36bc-4d5c-b639-0ec23e6a87e1",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-06-27T00:29:08.1366112Z"
+            },
+            "properties": {
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/82f138e0-1c79-4708-bda1-5e224cd688b2/resourceGroups/sdkTestRG/providers/Microsoft.AzureSphere/catalogs/catalog-9666",
+            "name": "catalog-9666",
+            "type": "microsoft.azuresphere/catalogs",
+            "location": "global",
+            "tags": {},
+            "systemData": {
+              "createdBy": "513e1ad3-36bc-4d5c-b639-0ec23e6a87e1",
+              "createdByType": "Application",
+              "createdAt": "2023-06-27T00:30:58.2206328Z",
+              "lastModifiedBy": "513e1ad3-36bc-4d5c-b639-0ec23e6a87e1",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-06-27T00:30:58.2206328Z"
+            },
+            "properties": {
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/82f138e0-1c79-4708-bda1-5e224cd688b2/resourceGroups/sdkTestRG/providers/Microsoft.AzureSphere/catalogs/catalog-7361",
+            "name": "catalog-7361",
+            "type": "microsoft.azuresphere/catalogs",
+            "location": "global",
+            "tags": {},
+            "systemData": {
+              "createdBy": "513e1ad3-36bc-4d5c-b639-0ec23e6a87e1",
+              "createdByType": "Application",
+              "createdAt": "2023-06-27T00:34:56.3666156Z",
+              "lastModifiedBy": "513e1ad3-36bc-4d5c-b639-0ec23e6a87e1",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-06-27T00:34:56.3666156Z"
+            },
+            "properties": {
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/82f138e0-1c79-4708-bda1-5e224cd688b2/resourceGroups/sdkTestRG/providers/Microsoft.AzureSphere/catalogs/catalog-8945",
+            "name": "catalog-8945",
+            "type": "microsoft.azuresphere/catalogs",
+            "location": "global",
+            "tags": {},
+            "systemData": {
+              "createdBy": "513e1ad3-36bc-4d5c-b639-0ec23e6a87e1",
+              "createdByType": "Application",
+              "createdAt": "2023-06-27T00:35:27.2574101Z",
+              "lastModifiedBy": "513e1ad3-36bc-4d5c-b639-0ec23e6a87e1",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-06-27T00:35:27.2574101Z"
+            },
+            "properties": {
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/82f138e0-1c79-4708-bda1-5e224cd688b2/resourceGroups/sdkTestRG/providers/Microsoft.AzureSphere/catalogs/catalog-3204",
+            "name": "catalog-3204",
+            "type": "microsoft.azuresphere/catalogs",
+            "location": "global",
+            "tags": {},
+            "systemData": {
+              "createdBy": "513e1ad3-36bc-4d5c-b639-0ec23e6a87e1",
+              "createdByType": "Application",
+              "createdAt": "2023-06-27T00:36:29.7861392Z",
+              "lastModifiedBy": "513e1ad3-36bc-4d5c-b639-0ec23e6a87e1",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-06-27T00:36:29.7861392Z"
+            },
+            "properties": {
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/82f138e0-1c79-4708-bda1-5e224cd688b2/resourceGroups/sdkTestRG/providers/Microsoft.AzureSphere/catalogs/catalog-2857",
+            "name": "catalog-2857",
+            "type": "microsoft.azuresphere/catalogs",
+            "location": "global",
+            "tags": {},
+            "systemData": {
+              "createdBy": "513e1ad3-36bc-4d5c-b639-0ec23e6a87e1",
+              "createdByType": "Application",
+              "createdAt": "2023-06-27T00:37:36.3181089Z",
+              "lastModifiedBy": "513e1ad3-36bc-4d5c-b639-0ec23e6a87e1",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-06-27T00:37:36.3181089Z"
+            },
+            "properties": {
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/82f138e0-1c79-4708-bda1-5e224cd688b2/resourceGroups/sdkTestRG/providers/Microsoft.AzureSphere/catalogs/catalog-8279",
+            "name": "catalog-8279",
+            "type": "microsoft.azuresphere/catalogs",
+            "location": "global",
+            "tags": {},
+            "systemData": {
+              "createdBy": "513e1ad3-36bc-4d5c-b639-0ec23e6a87e1",
+              "createdByType": "Application",
+              "createdAt": "2023-06-27T00:46:20.2425482Z",
+              "lastModifiedBy": "513e1ad3-36bc-4d5c-b639-0ec23e6a87e1",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-06-27T00:46:20.2425482Z"
+            },
+            "properties": {
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/82f138e0-1c79-4708-bda1-5e224cd688b2/resourceGroups/sdkTestRG/providers/Microsoft.AzureSphere/catalogs/catalog-5157",
+            "name": "catalog-5157",
+            "type": "microsoft.azuresphere/catalogs",
+            "location": "global",
+            "tags": {},
+            "systemData": {
+              "createdBy": "513e1ad3-36bc-4d5c-b639-0ec23e6a87e1",
+              "createdByType": "Application",
+              "createdAt": "2023-06-27T00:55:38.1079887Z",
+              "lastModifiedBy": "513e1ad3-36bc-4d5c-b639-0ec23e6a87e1",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-06-27T00:55:38.1079887Z"
+            },
+            "properties": {
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/82f138e0-1c79-4708-bda1-5e224cd688b2/resourceGroups/sdkTestRG/providers/Microsoft.AzureSphere/catalogs/catalog-8424",
+            "name": "catalog-8424",
+            "type": "microsoft.azuresphere/catalogs",
+            "location": "global",
+            "tags": {},
+            "systemData": {
+              "createdBy": "513e1ad3-36bc-4d5c-b639-0ec23e6a87e1",
+              "createdByType": "Application",
+              "createdAt": "2023-06-27T00:55:59.4990296Z",
+              "lastModifiedBy": "513e1ad3-36bc-4d5c-b639-0ec23e6a87e1",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-06-27T00:55:59.4990296Z"
+            },
+            "properties": {
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/82f138e0-1c79-4708-bda1-5e224cd688b2/resourceGroups/sdkTestRG/providers/Microsoft.AzureSphere/catalogs/catalog-4191",
+            "name": "catalog-4191",
+            "type": "microsoft.azuresphere/catalogs",
+            "location": "global",
+            "tags": {},
+            "systemData": {
+              "createdBy": "513e1ad3-36bc-4d5c-b639-0ec23e6a87e1",
+              "createdByType": "Application",
+              "createdAt": "2023-06-27T00:57:29.8653903Z",
+              "lastModifiedBy": "513e1ad3-36bc-4d5c-b639-0ec23e6a87e1",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-06-27T00:57:29.8653903Z"
+            },
+            "properties": {
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/82f138e0-1c79-4708-bda1-5e224cd688b2/resourceGroups/sdkTestRG/providers/Microsoft.AzureSphere/catalogs/catalog-4420",
+            "name": "catalog-4420",
+            "type": "microsoft.azuresphere/catalogs",
+            "location": "global",
+            "tags": {},
+            "systemData": {
+              "createdBy": "513e1ad3-36bc-4d5c-b639-0ec23e6a87e1",
+              "createdByType": "Application",
+              "createdAt": "2023-06-27T00:58:58.9036902Z",
+              "lastModifiedBy": "513e1ad3-36bc-4d5c-b639-0ec23e6a87e1",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-06-27T00:58:58.9036902Z"
+            },
+            "properties": {
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/82f138e0-1c79-4708-bda1-5e224cd688b2/resourceGroups/sdkTestRG/providers/Microsoft.AzureSphere/catalogs/catalog-5408",
+            "name": "catalog-5408",
+            "type": "microsoft.azuresphere/catalogs",
+            "location": "global",
+            "tags": {},
+            "systemData": {
+              "createdBy": "513e1ad3-36bc-4d5c-b639-0ec23e6a87e1",
+              "createdByType": "Application",
+              "createdAt": "2023-06-28T21:00:40.0465813Z",
+              "lastModifiedBy": "513e1ad3-36bc-4d5c-b639-0ec23e6a87e1",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-06-28T21:00:40.0465813Z"
+            },
+            "properties": {
+              "provisioningState": "Succeeded"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/82f138e0-1c79-4708-bda1-5e224cd688b2/resourceGroups/sdkTestRG/providers/Microsoft.AzureSphere/catalogs/catalog-5408?api-version=2022-09-01-preview",
+      "RequestMethod": "DELETE",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-37d4d3570d95d85ea252bd84a854d24b-d60e7536aa73f13e-00",
+        "User-Agent": "azsdk-net-ResourceManager.Sphere/1.0.0-alpha.20230628.1 (.NET 7.0.7; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "2142e86e05931660596a9baa66369a81",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "0",
+        "Date": "Wed, 28 Jun 2023 21:00:42 GMT",
+        "Expires": "-1",
+        "mise-correlation-id": "94bb8aed-d846-43b1-8bd1-218f26e326f6",
+        "Pragma": "no-cache",
+        "Request-Context": "appId=",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "2142e86e05931660596a9baa66369a81",
+        "x-ms-correlation-request-id": "7a6f0d0c-7250-4eb8-b6f5-23582c780dd5",
+        "x-ms-providerhub-traffic": "True",
+        "x-ms-ratelimit-remaining-subscription-deletes": "14995",
+        "x-ms-request-id": "00000000-0000-0000-0000-000000000000",
+        "x-ms-routing-request-id": "WESTUS2:20230628T210043Z:7a6f0d0c-7250-4eb8-b6f5-23582c780dd5"
+      },
+      "ResponseBody": null
+    }
+  ],
+  "Variables": {
+    "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com",
+    "RandomSeed": "1549062725",
+    "RESOURCE_MANAGER_URL": null,
+    "SUBSCRIPTION_ID": "82f138e0-1c79-4708-bda1-5e224cd688b2"
+  }
+}

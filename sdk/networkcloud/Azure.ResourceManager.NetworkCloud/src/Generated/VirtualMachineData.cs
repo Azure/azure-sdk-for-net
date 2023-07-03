@@ -59,6 +59,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <param name="location"> The location. </param>
         /// <param name="extendedLocation"> The extended location of the cluster associated with the resource. </param>
         /// <param name="adminUsername"> The name of the administrator to which the ssh public keys will be added into the authorized keys. </param>
+        /// <param name="availabilityZone"> The cluster availability zone containing this virtual machine. </param>
         /// <param name="bareMetalMachineId"> The resource ID of the bare metal machine the virtual machine has landed to. </param>
         /// <param name="bootMethod"> Selects the boot method for the virtual machine. </param>
         /// <param name="cloudServicesNetworkAttachment"> The cloud service network that provides platform-level services for the virtual machine. </param>
@@ -81,10 +82,11 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <param name="vmImage"> The virtual machine image that is currently provisioned to the OS disk, using the full url and tag notation used to pull the image. </param>
         /// <param name="vmImageRepositoryCredentials"> The credentials used to login to the image repository that has access to the specified image. </param>
         /// <param name="volumes"> The resource IDs of volumes that are attached to the virtual machine. </param>
-        internal VirtualMachineData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ExtendedLocation extendedLocation, string adminUsername, string bareMetalMachineId, VirtualMachineBootMethod? bootMethod, NetworkAttachment cloudServicesNetworkAttachment, string clusterId, long cpuCores, VirtualMachineDetailedStatus? detailedStatus, string detailedStatusMessage, VirtualMachineIsolateEmulatorThread? isolateEmulatorThread, long memorySizeGB, IList<NetworkAttachment> networkAttachments, string networkData, IList<VirtualMachinePlacementHint> placementHints, VirtualMachinePowerState? powerState, VirtualMachineProvisioningState? provisioningState, IList<SshPublicKey> sshPublicKeys, StorageProfile storageProfile, string userData, VirtualMachineVirtioInterfaceType? virtioInterface, VirtualMachineDeviceModelType? vmDeviceModel, string vmImage, ImageRepositoryCredentials vmImageRepositoryCredentials, IReadOnlyList<string> volumes) : base(id, name, resourceType, systemData, tags, location)
+        internal VirtualMachineData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ExtendedLocation extendedLocation, string adminUsername, string availabilityZone, string bareMetalMachineId, VirtualMachineBootMethod? bootMethod, NetworkAttachment cloudServicesNetworkAttachment, string clusterId, long cpuCores, VirtualMachineDetailedStatus? detailedStatus, string detailedStatusMessage, VirtualMachineIsolateEmulatorThread? isolateEmulatorThread, long memorySizeGB, IList<NetworkAttachment> networkAttachments, string networkData, IList<VirtualMachinePlacementHint> placementHints, VirtualMachinePowerState? powerState, VirtualMachineProvisioningState? provisioningState, IList<SshPublicKey> sshPublicKeys, StorageProfile storageProfile, string userData, VirtualMachineVirtioInterfaceType? virtioInterface, VirtualMachineDeviceModelType? vmDeviceModel, string vmImage, ImageRepositoryCredentials vmImageRepositoryCredentials, IReadOnlyList<string> volumes) : base(id, name, resourceType, systemData, tags, location)
         {
             ExtendedLocation = extendedLocation;
             AdminUsername = adminUsername;
+            AvailabilityZone = availabilityZone;
             BareMetalMachineId = bareMetalMachineId;
             BootMethod = bootMethod;
             CloudServicesNetworkAttachment = cloudServicesNetworkAttachment;
@@ -113,6 +115,8 @@ namespace Azure.ResourceManager.NetworkCloud
         public ExtendedLocation ExtendedLocation { get; set; }
         /// <summary> The name of the administrator to which the ssh public keys will be added into the authorized keys. </summary>
         public string AdminUsername { get; set; }
+        /// <summary> The cluster availability zone containing this virtual machine. </summary>
+        public string AvailabilityZone { get; }
         /// <summary> The resource ID of the bare metal machine the virtual machine has landed to. </summary>
         public string BareMetalMachineId { get; }
         /// <summary> Selects the boot method for the virtual machine. </summary>

@@ -22,16 +22,31 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        private const string ErrorValue = "Error";
         private const string AvailableValue = "Available";
+        private const string ErrorValue = "Error";
         private const string ProvisioningValue = "Provisioning";
+        private const string RunningValue = "Running";
+        private const string SchedulingValue = "Scheduling";
+        private const string StoppedValue = "Stopped";
+        private const string TerminatingValue = "Terminating";
+        private const string UnknownValue = "Unknown";
 
-        /// <summary> Error. </summary>
-        public static VirtualMachineDetailedStatus Error { get; } = new VirtualMachineDetailedStatus(ErrorValue);
         /// <summary> Available. </summary>
         public static VirtualMachineDetailedStatus Available { get; } = new VirtualMachineDetailedStatus(AvailableValue);
+        /// <summary> Error. </summary>
+        public static VirtualMachineDetailedStatus Error { get; } = new VirtualMachineDetailedStatus(ErrorValue);
         /// <summary> Provisioning. </summary>
         public static VirtualMachineDetailedStatus Provisioning { get; } = new VirtualMachineDetailedStatus(ProvisioningValue);
+        /// <summary> Running. </summary>
+        public static VirtualMachineDetailedStatus Running { get; } = new VirtualMachineDetailedStatus(RunningValue);
+        /// <summary> Scheduling. </summary>
+        public static VirtualMachineDetailedStatus Scheduling { get; } = new VirtualMachineDetailedStatus(SchedulingValue);
+        /// <summary> Stopped. </summary>
+        public static VirtualMachineDetailedStatus Stopped { get; } = new VirtualMachineDetailedStatus(StoppedValue);
+        /// <summary> Terminating. </summary>
+        public static VirtualMachineDetailedStatus Terminating { get; } = new VirtualMachineDetailedStatus(TerminatingValue);
+        /// <summary> Unknown. </summary>
+        public static VirtualMachineDetailedStatus Unknown { get; } = new VirtualMachineDetailedStatus(UnknownValue);
         /// <summary> Determines if two <see cref="VirtualMachineDetailedStatus"/> values are the same. </summary>
         public static bool operator ==(VirtualMachineDetailedStatus left, VirtualMachineDetailedStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="VirtualMachineDetailedStatus"/> values are not the same. </summary>

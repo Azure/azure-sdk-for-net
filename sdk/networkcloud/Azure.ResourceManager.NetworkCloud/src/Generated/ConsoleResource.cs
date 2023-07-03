@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.NetworkCloud
             try
             {
                 var response = await _consoleRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch, cancellationToken).ConfigureAwait(false);
-                var operation = new NetworkCloudArmOperation<ConsoleResource>(new ConsoleOperationSource(Client), _consoleClientDiagnostics, Pipeline, _consoleRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch).Request, response, OperationFinalStateVia.Location);
+                var operation = new NetworkCloudArmOperation<ConsoleResource>(new ConsoleOperationSource(Client), _consoleClientDiagnostics, Pipeline, _consoleRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -284,7 +284,7 @@ namespace Azure.ResourceManager.NetworkCloud
             try
             {
                 var response = _consoleRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch, cancellationToken);
-                var operation = new NetworkCloudArmOperation<ConsoleResource>(new ConsoleOperationSource(Client), _consoleClientDiagnostics, Pipeline, _consoleRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch).Request, response, OperationFinalStateVia.Location);
+                var operation = new NetworkCloudArmOperation<ConsoleResource>(new ConsoleOperationSource(Client), _consoleClientDiagnostics, Pipeline, _consoleRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
