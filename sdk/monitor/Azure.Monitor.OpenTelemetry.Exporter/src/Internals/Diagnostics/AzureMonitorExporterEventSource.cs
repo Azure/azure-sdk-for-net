@@ -8,6 +8,28 @@ using Azure.Monitor.OpenTelemetry.Exporter.Internals.ConnectionString;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics
 {
+    /// <summary>
+    /// EventSource for the AzureMonitorExporter.
+    /// EventSource Guid at Runtime: bb5be13f-ec3a-5ab2-6a6a-0f881d6e0d5b.
+    /// </summary>
+    /// <remarks>
+    /// PerfView Instructions:
+    /// <list type="bullet">
+    /// <item>To collect all events: <code>PerfView.exe collect -MaxCollectSec:300 -NoGui /onlyProviders=*OpenTelemetry-AzureMonitor-Exporter</code></item>
+    /// <item>To collect events based on LogLevel: <code>PerfView.exe collect -MaxCollectSec:300 -NoGui /onlyProviders:OpenTelemetry-AzureMonitor-Exporter::Verbose</code></item>
+    /// </list>
+    /// Dotnet-Trace Instructions:
+    /// <list type="bullet">
+    /// <item>To collect all events: <code>dotnet-trace collect --process-id PID --providers OpenTelemetry-AzureMonitor-Exporter</code></item>
+    /// <item>To collect events based on LogLevel: <code>dotnet-trace collect --process-id PID --providers OpenTelemetry-AzureMonitor-Exporter::Verbose</code></item>
+    /// </list>
+    /// Logman Instructions:
+    /// <list type="number">
+    /// <item>Create a text file containing providers: <code>echo "{bb5be13f-ec3a-5ab2-6a6a-0f881d6e0d5b}" > providers.txt</code></item>
+    /// <item>Start collecting: <code>logman -start exporter -pf providers.txt -ets -bs 1024 -nb 100 256</code></item>
+    /// <item>Stop collecting: <code>logman -stop exporter -ets</code></item>
+    /// </list>
+    /// </remarks>
     [EventSource(Name = EventSourceName)]
     internal sealed class AzureMonitorExporterEventSource : EventSource
     {
@@ -15,6 +37,10 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics
 
         internal static readonly AzureMonitorExporterEventSource Log = new AzureMonitorExporterEventSource();
         internal static readonly AzureMonitorExporterEventListener Listener = new AzureMonitorExporterEventListener();
+
+        [NonEvent]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private bool IsEnabled(EventLevel eventLevel) => IsEnabled(eventLevel, EventKeywords.All);
 
         [NonEvent]
         public void FailedToExport(string exporterName, string instrumentationKey, Exception ex)
@@ -41,21 +67,54 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics
         public void FailedToTransmit(string exceptionMessage) => WriteEvent(7, exceptionMessage);
 
         [NonEvent]
-        public void TransmissionFailed(bool fromStorage, int statusCode, ConnectionVars connectionVars, string? requestEndpoint, bool willRetry)
+        public void TransmissionFailed(int statusCode, bool fromStorage, bool willRetry, ConnectionVars connectionVars, string? requestEndpoint, Response? response)
         {
-            // TODO: INCLUDE EXACT ERROR MESSAGE FROM INGESTION
-            if (IsEnabled(EventLevel.Error))
+            if (IsEnabled(EventLevel.Verbose))
+            {
+                var errorMessages = IngestionResponseHelper.GetErrorsFromResponse(response);
+
+                if (errorMessages == null || errorMessages.Length == 0)
+                {
+                    TransmissionFailed(
+                        statusCode: statusCode,
+                        errorMessage: "N/A",
+                        action: willRetry ? "Telemetry is stored offline for retry" : "Telemetry is dropped",
+                        origin: fromStorage ? "Storage" : "AzureMonitorExporter",
+                        instrumentationKey: connectionVars.InstrumentationKey,
+                        configuredEndpoint: connectionVars.IngestionEndpoint,
+                        actualEndpoint: requestEndpoint);
+                }
+                else
+                {
+                    foreach (var error in errorMessages)
+                    {
+                        TransmissionFailed(
+                            statusCode: statusCode,
+                            errorMessage: error ?? "N/A",
+                            action: willRetry ? "Telemetry is stored offline for retry" : "Telemetry is dropped",
+                            origin: fromStorage ? "Storage" : "AzureMonitorExporter",
+                            instrumentationKey: connectionVars.InstrumentationKey,
+                            configuredEndpoint: connectionVars.IngestionEndpoint,
+                            actualEndpoint: requestEndpoint);
+                    }
+                }
+            }
+            else if (IsEnabled(EventLevel.Critical))
             {
                 TransmissionFailed(
-                    message: fromStorage ? "Transmission from storage failed." : "Transmission failed.",
-                    retryDetails: willRetry ? "Telemetry is stored offline for retry." : "Telemetry is dropped.",
-                    metaData: $"Instrumentation Key: {connectionVars.InstrumentationKey}, Configured Endpoint: {connectionVars.IngestionEndpoint}, Actual Endpoint: {requestEndpoint}"
-                    );
+                    statusCode: statusCode,
+                    errorMessage: "(To get exact error change LogLevel to Verbose)",
+                    action: willRetry ? "Telemetry is stored offline for retry" : "Telemetry is dropped",
+                    origin: fromStorage ? "Storage" : "AzureMonitorExporter",
+                    instrumentationKey: connectionVars.InstrumentationKey,
+                    configuredEndpoint: connectionVars.IngestionEndpoint,
+                    actualEndpoint: requestEndpoint);
             }
         }
 
-        [Event(8, Message = "{0} {1} {2}", Level = EventLevel.Error)]
-        public void TransmissionFailed(string message, string retryDetails, string metaData) => WriteEvent(8, message, retryDetails, metaData);
+        [Event(8, Message = "Transmission failed. StatusCode: {0}. Error from Ingestion: {1}. Action: {2}. Origin: {3}. Instrumentation Key: {4}. Configured Endpoint: {5}. Actual Endpoint: {6}", Level = EventLevel.Critical)]
+        public void TransmissionFailed(int statusCode, string errorMessage, string action, string origin, string instrumentationKey, string configuredEndpoint, string? actualEndpoint)
+            => WriteEvent(8, statusCode, errorMessage, action, origin, instrumentationKey, configuredEndpoint, actualEndpoint);
 
         [Event(9, Message = "{0} has been disposed.", Level = EventLevel.Informational)]
         public void DisposedObject(string name) => WriteEvent(9, name);
@@ -241,16 +300,16 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics
         public void StatsbeatDisabled() => WriteEvent(30);
 
         [NonEvent]
-        public void ErrorInitializingStatsbeat(string instrumentationKey, Exception ex)
+        public void ErrorInitializingStatsbeat(ConnectionVars connectionVars, Exception ex)
         {
-            if (IsEnabled(EventLevel.Error))
+            if (IsEnabled(EventLevel.Informational))
             {
-                ErrorInitializingStatsbeat(instrumentationKey, ex.FlattenException().ToInvariantString());
+                ErrorInitializingStatsbeat(connectionVars.InstrumentationKey, connectionVars.IngestionEndpoint, ex.FlattenException().ToInvariantString());
             }
         }
 
-        [Event(31, Message = "Failed to initialize Statsbeat due to an exception. Instrumentation Key: {0}. {1}", Level = EventLevel.Error)]
-        public void ErrorInitializingStatsbeat(string instrumentationKey, string exceptionMessage) => WriteEvent(31, instrumentationKey, exceptionMessage);
+        [Event(31, Message = "Failed to initialize Statsbeat due to an exception. This is only for internal telemetry and can safely be ignored. Instrumentation Key: {0}. Configured Endpoint: {1}. {2}", Level = EventLevel.Informational)]
+        public void ErrorInitializingStatsbeat(string instrumentationKey, string configuredEndpoint, string exceptionMessage) => WriteEvent(31, instrumentationKey, configuredEndpoint, exceptionMessage);
 
         [Event(32, Message = "Successfully transmitted a batch of telemetry Items. Instrumentation Key: {0}", Level = EventLevel.Verbose)]
         public void TransmissionSuccess(string instrumentationKey) => WriteEvent(32, instrumentationKey);
@@ -267,8 +326,19 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics
         [Event(33, Message = "Transmitter failed due to an exception. Instrumentation Key: {0}. {1}", Level = EventLevel.Error)]
         public void TransmitterFailed(string instrumentationKey, string exceptionMessage) => WriteEvent(33, instrumentationKey, exceptionMessage);
 
+        [Event(34, Message = "Exporter encountered a transmission failure and will wait {0} milliseconds before transmitting again.", Level = EventLevel.Warning)]
+        public void BackoffEnabled(double milliseconds) => WriteEvent(34, milliseconds);
+
         [NonEvent]
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        internal bool IsEnabled(EventLevel eventLevel) => IsEnabled(eventLevel, EventKeywords.All);
+        public void FailedToDeserializeIngestionResponse(Exception ex)
+        {
+            if (IsEnabled(EventLevel.Warning))
+            {
+                FailedToDeserializeIngestionResponse(ex.FlattenException().ToInvariantString());
+            }
+        }
+
+        [Event(35, Message = "Failed to deserialize response from ingestion due to an exception. Not user actionable. {0}", Level = EventLevel.Warning)]
+        public void FailedToDeserializeIngestionResponse(string exceptionMessage) => WriteEvent(35, exceptionMessage);
     }
 }

@@ -110,8 +110,8 @@ namespace Azure.Maps.Geolocation
             try
             {
                 return await RestClient.GetLocationAsync(
-                    ipAddress.ToString(),
                     JsonFormat.Json,
+                    ipAddress.ToString(),
                     cancellationToken
                 ).ConfigureAwait(false);
             }
@@ -137,8 +137,8 @@ namespace Azure.Maps.Geolocation
             try
             {
                 return RestClient.GetLocation(
-                    ipAddress.ToString(),
                     JsonFormat.Json,
+                    ipAddress.ToString(),
                     cancellationToken
                 );
             }
