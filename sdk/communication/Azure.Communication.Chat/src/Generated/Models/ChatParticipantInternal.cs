@@ -6,12 +6,14 @@
 #nullable disable
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using Azure.Communication;
 using Azure.Core;
 
 namespace Azure.Communication.Chat
 {
     /// <summary> A participant of the chat thread. </summary>
+    [ExcludeFromCodeCoverage]
     internal partial class ChatParticipantInternal
     {
         /// <summary> Initializes a new instance of ChatParticipantInternal. </summary>
