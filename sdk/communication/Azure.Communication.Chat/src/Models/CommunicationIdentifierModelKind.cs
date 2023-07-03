@@ -8,10 +8,12 @@
 
 using System;
 using System.ComponentModel;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.Communication
 {
     /// <summary> Type of CommunicationIdentifierModel. </summary>
+    [ExcludeFromCodeCoverage]
     internal readonly partial struct CommunicationIdentifierModelKind : IEquatable<CommunicationIdentifierModelKind>
     {
         private readonly string _value;
