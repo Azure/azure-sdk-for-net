@@ -112,16 +112,10 @@ await dataTransfer.PauseIfRunningAsync();
 
 Resume a transfer
 ```C# Snippet:TransferManagerResume_Async
-// Resume from checkpoint id
-TransferOptions optionsWithResumeTransferId = new TransferOptions()
-{
-    ResumeFromCheckpointId = dataTransfer.Id
-};
-
-DataTransfer resumedTransfer = await transferManager.StartTransferAsync(
+DataTransfer resumedTransfer = await transferManager.ResumeTransferAsync(
+    transferId: dataTransfer.Id,
     sourceResource: sourceResource,
-    destinationResource: destinationResource,
-    transferOptions: optionsWithResumeTransferId);
+    destinationResource: destinationResource);
 ```
 
 ## Troubleshooting
