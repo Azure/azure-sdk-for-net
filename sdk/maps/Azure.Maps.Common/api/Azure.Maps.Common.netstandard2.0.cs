@@ -34,9 +34,4 @@ namespace Azure.Maps
         public static bool operator !=(Azure.Maps.LocalizedMapView left, Azure.Maps.LocalizedMapView right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class MapsSasCredentialPolicy : Azure.Core.Pipeline.HttpPipelineSynchronousPolicy
-    {
-        public MapsSasCredentialPolicy(Azure.AzureSasCredential credential) { }
-        public override void OnSendingRequest(Azure.Core.HttpMessage message) { }
-    }
 }
