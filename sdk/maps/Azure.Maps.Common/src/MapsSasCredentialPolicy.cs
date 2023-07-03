@@ -7,7 +7,7 @@ using Azure.Core.Pipeline;
 namespace Azure.Maps
 {
     /// <summary> The MapsSasCredentialPolicy used for SAS authentication. </summary>
-    public class MapsSasCredentialPolicy : HttpPipelineSynchronousPolicy
+    internal sealed class MapsSasCredentialPolicy : HttpPipelineSynchronousPolicy
     {
         private readonly string _sasAuthenticationHeader = "Authorization";
         private readonly string _sasPrefix = "jwt-sas";
