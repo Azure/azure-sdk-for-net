@@ -47,6 +47,12 @@ namespace Azure.Communication.Chat.Tests.ChatClients
         private const string AddParticipantsApiResponsePayload = "{}";
         private const string GetThreadsApiResponsePayload = "{\"value\":[{\"id\":\"1\",\"topic\":\"Test Thread 1\",\"lastMessageReceivedOn\":\"2021-02-26T00:46:09Z\"},{\"id\":\"2\",\"topic\":\"Test Thread 2\",\"lastMessageReceivedOn\":\"2021-02-25T23:38:20Z\"},{\"id\":\"3\",\"topic\":\"Test Thread 3\",\"lastMessageReceivedOn\":\"2021-02-25T23:33:29Z\"}]}";
 
+        private const string GetThreadsApiResponsePayloadPage1 = "{\"value\":[{\"id\":\"1\",\"topic\":\"Test Thread 1\",\"lastMessageReceivedOn\":\"2021-02-26T00:46:09Z\"},{\"id\":\"2\",\"topic\":\"Test Thread 2\",\"lastMessageReceivedOn\":\"2021-02-25T23:38:20Z\"},{\"id\":\"3\",\"topic\":\"Test Thread 3\",\"lastMessageReceivedOn\":\"2021-02-25T23:33:29Z\"}],\"nextLink\":\"nextLink\"}";
+
+        private const string GetThreadsApiResponsePayloadPage2 = "{\"value\":[{\"id\":\"4\",\"topic\":\"Test Thread 4\",\"lastMessageReceivedOn\":\"2021-02-26T00:46:09Z\"},{\"id\":\"5\",\"topic\":\"Test Thread 5\",\"lastMessageReceivedOn\":\"2021-02-25T23:38:20Z\"},{\"id\":\"6\",\"topic\":\"Test Thread 6\",\"lastMessageReceivedOn\":\"2021-02-25T23:33:29Z\"}]}";
+
+        private const string GetThreadsApiResponseEmptyPayload = "{}";
+
         public ChatClientsTests(bool isAsync) : base(isAsync)
         {
         }
@@ -578,7 +584,7 @@ namespace Azure.Communication.Chat.Tests.ChatClients
         }
 
         [Test]
-        public async Task GetThreadsASyncWithDateTimeShouldSucceed()
+        public async Task GetThreadsAsyncWithDateTimeShouldSucceed()
         {
             //arrange
             ChatClient chatClient = CreateMockChatClient(200, GetThreadsApiResponsePayload);
@@ -589,6 +595,7 @@ namespace Azure.Communication.Chat.Tests.ChatClients
             //assert
 
             int idCounter = 0;
+
             await foreach (ChatThreadItem chatThread in chatThreads)
             {
                 idCounter++;
@@ -599,7 +606,106 @@ namespace Azure.Communication.Chat.Tests.ChatClients
         }
 
         [Test]
-        public async Task GetThreadsASyncShouldSucceed()
+        public async Task GetThreadsAsyncWithPagesShouldSucceed()
+        {
+            var uri = new Uri("https://localHostTest");
+            var responseItemsPage1 = new MockResponse(200);
+            responseItemsPage1.SetContent(GetThreadsApiResponsePayloadPage1);
+
+            var responseItemsPage2 = new MockResponse(200);
+            responseItemsPage2.SetContent(GetThreadsApiResponsePayloadPage2);
+
+            var chatClientOptions = new ChatClientOptions
+            {
+                Transport = new MockTransport(responseItemsPage1, responseItemsPage2)
+            };
+
+            //act
+            var communicationTokenCredential = new CommunicationTokenCredential(ChatLiveTestBase.SanitizedUnsignedUserTokenValue);
+            var chatClient = new ChatClient(uri, communicationTokenCredential, chatClientOptions);
+            AsyncPageable<ChatThreadItem> chatThreads = chatClient.GetChatThreadsAsync(It.IsAny<DateTimeOffset>());
+            int idCounter = 0;
+            int pages = 0;
+            await foreach (Page<ChatThreadItem> page in chatThreads.AsPages(pageSizeHint: 2))
+            {
+                pages++;
+                foreach (ChatThreadItem chatThread in page.Values)
+                {
+                    idCounter++;
+                    Assert.AreEqual($"{idCounter}", chatThread.Id);
+                    Assert.AreEqual($"Test Thread {idCounter}", chatThread.Topic);
+                }
+            }
+            Assert.AreEqual(2, pages);
+            Assert.AreEqual(6, idCounter);
+        }
+
+        [Test]
+        public void GetThreadsWithPagesShouldSucceed()
+        {
+            var uri = new Uri("https://localHostTest");
+            var responseItemsPage1 = new MockResponse(200);
+            responseItemsPage1.SetContent(GetThreadsApiResponsePayloadPage1);
+
+            var responseItemsPage2 = new MockResponse(200);
+            responseItemsPage2.SetContent(GetThreadsApiResponsePayloadPage2);
+
+            var chatClientOptions = new ChatClientOptions
+            {
+                Transport = new MockTransport(responseItemsPage1, responseItemsPage2)
+            };
+
+            //act
+            var communicationTokenCredential = new CommunicationTokenCredential(ChatLiveTestBase.SanitizedUnsignedUserTokenValue);
+            var chatClient = new ChatClient(uri, communicationTokenCredential, chatClientOptions);
+            var chatThreads = chatClient.GetChatThreads(It.IsAny<DateTimeOffset>());
+            int idCounter = 0;
+            int pages = 0;
+            foreach (Page<ChatThreadItem> page in chatThreads.AsPages(pageSizeHint: 2))
+            {
+                pages++;
+                foreach (ChatThreadItem chatThread in page.Values)
+                {
+                    idCounter++;
+                    Assert.AreEqual($"{idCounter}", chatThread.Id);
+                    Assert.AreEqual($"Test Thread {idCounter}", chatThread.Topic);
+                }
+            }
+            Assert.AreEqual(2, pages);
+            Assert.AreEqual(6, idCounter);
+        }
+
+        //[Test]
+        //public void GetThreadsWithPagesShouldThrowError()
+        //{
+        //    var uri = new Uri("https://localHostTest");
+        //    var responseItemsPage1 = new MockResponse(401);
+        //    responseItemsPage1.SetContent("{}");
+
+        //    var responseItemsPage2 = new MockResponse(401);
+        //    responseItemsPage2.SetContent("{}");
+
+        //    var chatClientOptions = new ChatClientOptions
+        //    {
+        //        Transport = new MockTransport(responseItemsPage1, responseItemsPage2)
+        //    };
+
+        //    //act
+        //    var communicationTokenCredential = new CommunicationTokenCredential(ChatLiveTestBase.SanitizedUnsignedUserTokenValue);
+        //    var chatClient = new ChatClient(uri, communicationTokenCredential, chatClientOptions);
+
+        //    try
+        //    {
+        //        var chatThreads = chatClient.GetChatThreads(It.IsAny<DateTimeOffset>());
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        Assert.IsNotNull(ex);
+        //    }
+        //}
+
+        [Test]
+        public async Task GetThreadsAsyncShouldSucceed()
         {
             //arrange
             ChatClient chatClient = CreateMockChatClient(200, GetThreadsApiResponsePayload);
@@ -638,6 +744,65 @@ namespace Azure.Communication.Chat.Tests.ChatClients
                 Assert.AreEqual($"Test Thread {idCounter}", chatThread.Topic);
             }
             Assert.AreEqual(3, idCounter);
+        }
+
+        [Test]
+        public void GetThreadsShouldThrowException()
+        {
+            //arrange
+            ChatClient chatClient = CreateMockChatClient(401);
+
+            //act
+            try
+            {
+                var chatThreads = chatClient.GetChatThreads();
+                //if (chatThreads.Any(x=> x.))
+
+                foreach (var c in chatThreads)
+                {
+                }
+                throw new Exception("Test failed. Expected exception when getting chat threads");
+            }
+            catch (Exception ex)
+            {
+                Assert.IsTrue(ex.Message.Contains("401"));
+            }
+        }
+
+        [Test]
+        public void DeleteThreadsShouldThrowException()
+        {
+            //arrange
+            ChatClient chatClient = CreateMockChatClient(401);
+
+            //act
+            try
+            {
+                var chatThreads = chatClient.DeleteChatThread("threadID");
+                throw new Exception("Test failed. Expected exception when delete chat threads");
+            }
+            catch (Exception ex)
+            {
+                Assert.IsTrue(ex.Message.Contains("401"));
+            }
+        }
+
+        [Test]
+        public async Task DeleteThreadsAsyncShouldThrowException()
+        {
+            //arrange
+            ChatClient chatClient = CreateMockChatClient(401);
+
+            //act
+            try
+            {
+                var chatThreads = await chatClient.DeleteChatThreadAsync("threadID");
+                throw new Exception("Test failed. Expected exception when delete chat threads");
+            }
+            catch (Exception ex)
+            {
+                Assert.IsTrue(ex.Message.Contains("401"));
+            }
         }
 
         [Test]
@@ -794,7 +959,7 @@ namespace Azure.Communication.Chat.Tests.ChatClients
         }
 
         [Test]
-        public async Task CreateChatThreadShouldExposePartialErrors()
+        public async Task CreateChatThreadAsyncShouldExposePartialErrors()
         {
             //arrange
             ChatClient chatClient = CreateMockChatClient(201, CreateChatThreadWithErrorsApiResponsePayload);
@@ -802,6 +967,27 @@ namespace Azure.Communication.Chat.Tests.ChatClients
 
             //act
             CreateChatThreadResult createChatThreadResult = await chatClient.CreateChatThreadAsync("", new List<ChatParticipant>() { chatParticipant});
+
+            //assert
+            AsssertParticipantError(createChatThreadResult.InvalidParticipants.First(x => x.Code == "401"), "Authentication failed", "8:acs:1b5cc06b-f352-4571-b1e6-d9b259b7c776_00000007-1234-1234-1234-223a12345678");
+            AsssertParticipantError(createChatThreadResult.InvalidParticipants.First(x => x.Code == "403"), "Permissions check failed", "8:acs:1b5cc06b-f352-4571-b1e6-d9b259b7c776_00000007-1234-1234-1234-223a12345679");
+            AsssertParticipantError(createChatThreadResult.InvalidParticipants.First(x => x.Code == "404"), "Not found", "8:acs:1b5cc06b-f352-4571-b1e6-d9b259b7c776_00000007-1234-1234-1234-223a12345677");
+
+            Assert.AreEqual(3, createChatThreadResult.InvalidParticipants.Count);
+            Assert.AreEqual("8:acs:46849534-eb08-4ab7-bde7-c36928cd1547_00000007-165c-9b10-b0b7-3a3a0d00076c", CommunicationIdentifierSerializer.Serialize(createChatThreadResult.ChatThread.CreatedBy).RawId);
+            Assert.AreEqual("Topic for testing errors", createChatThreadResult.ChatThread.Topic);
+            Assert.AreEqual("19:e5e7a3fa5f314a01b2d12c6c7b37f433@thread.v2", createChatThreadResult.ChatThread.Id);
+        }
+
+        [Test]
+        public void CreateChatThreadShouldExposePartialErrors()
+        {
+            //arrange
+            ChatClient chatClient = CreateMockChatClient(201, CreateChatThreadWithErrorsApiResponsePayload);
+            var chatParticipant = new ChatParticipant(new CommunicationUserIdentifier("8:acs:46849534-eb08-4ab7-bde7-c36928cd1547_00000007-165c-9b10-b0b7-3a3a0d00076c"));
+
+            //act
+            CreateChatThreadResult createChatThreadResult = chatClient.CreateChatThread("", new List<ChatParticipant>() { chatParticipant });
 
             //assert
             AsssertParticipantError(createChatThreadResult.InvalidParticipants.First(x => x.Code == "401"), "Authentication failed", "8:acs:1b5cc06b-f352-4571-b1e6-d9b259b7c776_00000007-1234-1234-1234-223a12345678");
