@@ -194,20 +194,26 @@ namespace Azure.Messaging.ServiceBus
 
                 if (Receiver.ReceiveMode == ServiceBusReceiveMode.PeekLock && ProcessorOptions.AutoCompleteMessages)
                 {
+                    var completionTasks = new List<Task>();
                     foreach (ServiceBusReceivedMessage message in GetProcessedMessages(args))
                     {
                         if (!message.IsSettled)
                         {
                             errorSource = ServiceBusErrorSource.Complete;
-                            // Don't pass the processor cancellation token as we want in flight auto-completion to be able
-                            // to finish.
-                            await Receiver.CompleteMessageAsync(
-                                    message,
-                                    CancellationToken.None)
-                                .ConfigureAwait(false);
-                            message.IsSettled = true;
+                            Func<Task> completeFunc = async () =>
+                            {
+                                // Don't pass the processor cancellation token as we want in flight auto-completion to be able
+                                // to finish.
+                                await Receiver.CompleteMessageAsync(
+                                        message,
+                                        CancellationToken.None)
+                                    .ConfigureAwait(false);
+                                message.IsSettled = true;
+                            };
+                            completionTasks.Add(completeFunc.Invoke());
                         }
                     }
+                    await Task.WhenAll(completionTasks).ConfigureAwait(false);
                 }
             }
             catch (Exception ex)
