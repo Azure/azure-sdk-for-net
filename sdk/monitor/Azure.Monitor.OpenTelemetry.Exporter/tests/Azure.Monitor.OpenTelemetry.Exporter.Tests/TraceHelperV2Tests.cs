@@ -29,6 +29,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             using var activity = activitySource.StartActivity(
                 ActivityName,
                 ActivityKind.Server);
+            activity?.Stop();
 
             var url = "/api/urltest";
             var tagObjects = AzMonList.Initialize();
@@ -51,6 +52,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             using var activity = activitySource.StartActivity(
                 ActivityName,
                 ActivityKind.Server);
+            activity?.Stop();
 
             var tagObjects = AzMonList.Initialize();
             AzMonList.Add(ref tagObjects, new KeyValuePair<string, object?>(SemanticConventions.AttributeHttpRequestMethod, "GET"));
@@ -73,6 +75,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             using var activity = activitySource.StartActivity(
                 ActivityName,
                 ActivityKind.Server);
+            activity?.Stop();
 
             var url = "/api/test";
             var tagObjects = AzMonList.Initialize();
@@ -95,6 +98,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             using var activity = activitySource.StartActivity(
                 ActivityName,
                 ActivityKind.Server);
+            activity?.Stop();
 
             var tagObjects = AzMonList.Initialize();
             AzMonList.Add(ref tagObjects, new KeyValuePair<string, object?>(SemanticConventions.AttributeHttpRequestMethod, "POST"));
@@ -115,6 +119,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             using var activity = activitySource.StartActivity(
                 ActivityName,
                 ActivityKind.Server);
+            activity?.Stop();
 
             var tagObjects = AzMonList.Initialize();
             AzMonList.Add(ref tagObjects, new KeyValuePair<string, object?>(SemanticConventions.AttributeHttpRequestMethod, "GET"));
