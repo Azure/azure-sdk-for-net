@@ -52,7 +52,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Statsbeat
             // Initialize only if we are able to determine the correct region to send the data to.
             if (_statsbeat_ConnectionString == null)
             {
-                throw new InvalidOperationException("Cannot initialize statsbeat");
+                throw new InvalidOperationException("Could not find a matching endpoint to initialize Statsbeat.");
             }
 
             _customer_Ikey = connectionStringVars?.InstrumentationKey;

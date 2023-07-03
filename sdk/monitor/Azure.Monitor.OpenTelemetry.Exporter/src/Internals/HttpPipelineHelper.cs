@@ -207,7 +207,13 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                 }
             }
 
-            AzureMonitorExporterEventSource.Log.TransmissionFailed(fromStorage: false, statusCode: statusCode, connectionVars: connectionVars, requestEndpoint: httpMessage.Request.Uri.Host, willRetry: (result == ExportResult.Success));
+            AzureMonitorExporterEventSource.Log.TransmissionFailed(
+                fromStorage: false,
+                statusCode: statusCode,
+                connectionVars: connectionVars,
+                requestEndpoint: httpMessage.Request.Uri.Host,
+                willRetry: (result == ExportResult.Success),
+                response: httpMessage.HasResponse ? httpMessage.Response : null);
 
             return result;
         }
@@ -215,7 +221,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
         internal static void HandleFailures(HttpMessage httpMessage, PersistentBlob blob, PersistentBlobProvider blobProvider, ConnectionVars connectionVars)
         {
             int statusCode = 0;
-            bool shouldRetry = true;
+            bool willRetry = true;
 
             if (httpMessage.HasResponse)
             {
@@ -247,12 +253,18 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                     case ResponseStatusCodes.GatewayTimeout:
                         break;
                     default:
-                        shouldRetry = false;
+                        willRetry = false;
                         break;
                 }
             }
 
-            AzureMonitorExporterEventSource.Log.TransmissionFailed(fromStorage: true, statusCode: statusCode, connectionVars: connectionVars, requestEndpoint: httpMessage.Request.Uri.Host, willRetry: shouldRetry);
+            AzureMonitorExporterEventSource.Log.TransmissionFailed(
+                fromStorage: true,
+                statusCode: statusCode,
+                connectionVars: connectionVars,
+                requestEndpoint: httpMessage.Request.Uri.Host,
+                willRetry: willRetry,
+                response: httpMessage.HasResponse ? httpMessage.Response : null);
         }
     }
 }

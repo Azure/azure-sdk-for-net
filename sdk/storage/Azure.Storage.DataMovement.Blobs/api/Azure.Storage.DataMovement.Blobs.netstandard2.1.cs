@@ -71,6 +71,18 @@ namespace Azure.Storage.DataMovement.Blobs
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } set { } }
         public Azure.Storage.UploadTransferValidationOptions UploadTransferValidationOptions { get { throw null; } set { } }
     }
+    public partial class BlobStorageResourceProvider
+    {
+        internal BlobStorageResourceProvider() { }
+        public System.Threading.Tasks.Task<Azure.Storage.DataMovement.StorageResource> MakeResourceAsync(Azure.AzureSasCredential credential, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public System.Threading.Tasks.Task<Azure.Storage.DataMovement.StorageResource> MakeResourceAsync(Azure.Core.TokenCredential credential, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public System.Threading.Tasks.Task<Azure.Storage.DataMovement.StorageResource> MakeResourceAsync(Azure.Storage.StorageSharedKeyCredential credential, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public System.Threading.Tasks.Task<Azure.Storage.DataMovement.StorageResource> MakeResourceAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public static partial class BlobStorageResources
+    {
+        public static bool TryGetResourceProviders(Azure.Storage.DataMovement.Models.DataTransferProperties info, out Azure.Storage.DataMovement.Blobs.BlobStorageResourceProvider sourceProvider, out Azure.Storage.DataMovement.Blobs.BlobStorageResourceProvider destinationProvider) { throw null; }
+    }
     public partial class BlockBlobStorageResource : Azure.Storage.DataMovement.StorageResourceSingle
     {
         public BlockBlobStorageResource(Azure.Storage.Blobs.Specialized.BlockBlobClient blobClient, Azure.Storage.DataMovement.Blobs.BlockBlobStorageResourceOptions options = null) { }
