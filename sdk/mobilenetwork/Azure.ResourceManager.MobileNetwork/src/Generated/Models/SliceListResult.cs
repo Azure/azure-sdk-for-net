@@ -7,7 +7,6 @@
 
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.MobileNetwork;
 
 namespace Azure.ResourceManager.MobileNetwork.Models
 {
@@ -17,20 +16,20 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         /// <summary> Initializes a new instance of SliceListResult. </summary>
         internal SliceListResult()
         {
-            Value = new ChangeTrackingList<SliceData>();
+            Value = new ChangeTrackingList<Slice>();
         }
 
         /// <summary> Initializes a new instance of SliceListResult. </summary>
         /// <param name="value"> A list of network slices in a mobile network. </param>
         /// <param name="nextLink"> The URL to get the next set of results. </param>
-        internal SliceListResult(IReadOnlyList<SliceData> value, string nextLink)
+        internal SliceListResult(IReadOnlyList<Slice> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> A list of network slices in a mobile network. </summary>
-        public IReadOnlyList<SliceData> Value { get; }
+        public IReadOnlyList<Slice> Value { get; }
         /// <summary> The URL to get the next set of results. </summary>
         public string NextLink { get; }
     }

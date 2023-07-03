@@ -10,31 +10,22 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
+using Azure.ResourceManager.MobileNetwork.Models;
 
 namespace Azure.ResourceManager.MobileNetwork
 {
-    internal class SliceOperationSource : IOperationSource<SliceResource>
+    internal class SliceOperationSource : IOperationSource<Slice>
     {
-        private readonly ArmClient _client;
-
-        internal SliceOperationSource(ArmClient client)
-        {
-            _client = client;
-        }
-
-        SliceResource IOperationSource<SliceResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        Slice IOperationSource<Slice>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            var data = SliceData.DeserializeSliceData(document.RootElement);
-            return new SliceResource(_client, data);
+            return Slice.DeserializeSlice(document.RootElement);
         }
 
-        async ValueTask<SliceResource> IOperationSource<SliceResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<Slice> IOperationSource<Slice>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = SliceData.DeserializeSliceData(document.RootElement);
-            return new SliceResource(_client, data);
+            return Slice.DeserializeSlice(document.RootElement);
         }
     }
 }

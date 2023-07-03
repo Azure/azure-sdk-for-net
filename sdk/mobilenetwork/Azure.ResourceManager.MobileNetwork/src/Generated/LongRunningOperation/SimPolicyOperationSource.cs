@@ -10,31 +10,22 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
+using Azure.ResourceManager.MobileNetwork.Models;
 
 namespace Azure.ResourceManager.MobileNetwork
 {
-    internal class SimPolicyOperationSource : IOperationSource<SimPolicyResource>
+    internal class SimPolicyOperationSource : IOperationSource<SimPolicy>
     {
-        private readonly ArmClient _client;
-
-        internal SimPolicyOperationSource(ArmClient client)
-        {
-            _client = client;
-        }
-
-        SimPolicyResource IOperationSource<SimPolicyResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        SimPolicy IOperationSource<SimPolicy>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            var data = SimPolicyData.DeserializeSimPolicyData(document.RootElement);
-            return new SimPolicyResource(_client, data);
+            return SimPolicy.DeserializeSimPolicy(document.RootElement);
         }
 
-        async ValueTask<SimPolicyResource> IOperationSource<SimPolicyResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<SimPolicy> IOperationSource<SimPolicy>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = SimPolicyData.DeserializeSimPolicyData(document.RootElement);
-            return new SimPolicyResource(_client, data);
+            return SimPolicy.DeserializeSimPolicy(document.RootElement);
         }
     }
 }

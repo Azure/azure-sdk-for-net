@@ -7,12 +7,14 @@
 
 namespace Azure.ResourceManager.MobileNetwork.Models
 {
-    /// <summary> The core network technology generation (5G core or EPC / 4G core). </summary>
+    /// <summary> The core network technology generation (5G core, EPC / 4G core or EPC / 4G + 5G core). </summary>
     public enum CoreNetworkType
     {
         /// <summary> 5G core. </summary>
         FiveGC,
         /// <summary> EPC / 4G core. </summary>
-        EPC
+        EPC,
+        /// <summary> Combined EPC / 4G and 5G core. </summary>
+        EPC5GC
     }
 }

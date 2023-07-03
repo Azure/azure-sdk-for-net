@@ -8,7 +8,6 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.MobileNetwork;
 
 namespace Azure.ResourceManager.MobileNetwork.Models
 {
@@ -20,7 +19,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<SiteData>> value = default;
+            Optional<IReadOnlyList<Site>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -30,10 +29,10 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                     {
                         continue;
                     }
-                    List<SiteData> array = new List<SiteData>();
+                    List<Site> array = new List<Site>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SiteData.DeserializeSiteData(item));
+                        array.Add(Site.DeserializeSite(item));
                     }
                     value = array;
                     continue;

@@ -7,7 +7,6 @@
 
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.MobileNetwork;
 
 namespace Azure.ResourceManager.MobileNetwork.Models
 {
@@ -17,20 +16,20 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         /// <summary> Initializes a new instance of SiteListResult. </summary>
         internal SiteListResult()
         {
-            Value = new ChangeTrackingList<SiteData>();
+            Value = new ChangeTrackingList<Site>();
         }
 
         /// <summary> Initializes a new instance of SiteListResult. </summary>
         /// <param name="value"> A list of sites in a mobile network. </param>
         /// <param name="nextLink"> The URL to get the next set of results. </param>
-        internal SiteListResult(IReadOnlyList<SiteData> value, string nextLink)
+        internal SiteListResult(IReadOnlyList<Site> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> A list of sites in a mobile network. </summary>
-        public IReadOnlyList<SiteData> Value { get; }
+        public IReadOnlyList<Site> Value { get; }
         /// <summary> The URL to get the next set of results. </summary>
         public string NextLink { get; }
     }

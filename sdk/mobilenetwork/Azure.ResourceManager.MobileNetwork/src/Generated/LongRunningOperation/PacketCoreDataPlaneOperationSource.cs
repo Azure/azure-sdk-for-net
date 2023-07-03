@@ -10,31 +10,22 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
+using Azure.ResourceManager.MobileNetwork.Models;
 
 namespace Azure.ResourceManager.MobileNetwork
 {
-    internal class PacketCoreDataPlaneOperationSource : IOperationSource<PacketCoreDataPlaneResource>
+    internal class PacketCoreDataPlaneOperationSource : IOperationSource<PacketCoreDataPlane>
     {
-        private readonly ArmClient _client;
-
-        internal PacketCoreDataPlaneOperationSource(ArmClient client)
-        {
-            _client = client;
-        }
-
-        PacketCoreDataPlaneResource IOperationSource<PacketCoreDataPlaneResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        PacketCoreDataPlane IOperationSource<PacketCoreDataPlane>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            var data = PacketCoreDataPlaneData.DeserializePacketCoreDataPlaneData(document.RootElement);
-            return new PacketCoreDataPlaneResource(_client, data);
+            return PacketCoreDataPlane.DeserializePacketCoreDataPlane(document.RootElement);
         }
 
-        async ValueTask<PacketCoreDataPlaneResource> IOperationSource<PacketCoreDataPlaneResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<PacketCoreDataPlane> IOperationSource<PacketCoreDataPlane>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = PacketCoreDataPlaneData.DeserializePacketCoreDataPlaneData(document.RootElement);
-            return new PacketCoreDataPlaneResource(_client, data);
+            return PacketCoreDataPlane.DeserializePacketCoreDataPlane(document.RootElement);
         }
     }
 }

@@ -15,6 +15,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         {
             CoreNetworkType.FiveGC => "5GC",
             CoreNetworkType.EPC => "EPC",
+            CoreNetworkType.EPC5GC => "EPC + 5GC",
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown CoreNetworkType value.")
         };
 
@@ -22,6 +23,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         {
             if (StringComparer.OrdinalIgnoreCase.Equals(value, "5GC")) return CoreNetworkType.FiveGC;
             if (StringComparer.OrdinalIgnoreCase.Equals(value, "EPC")) return CoreNetworkType.EPC;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "EPC + 5GC")) return CoreNetworkType.EPC5GC;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown CoreNetworkType value.");
         }
     }

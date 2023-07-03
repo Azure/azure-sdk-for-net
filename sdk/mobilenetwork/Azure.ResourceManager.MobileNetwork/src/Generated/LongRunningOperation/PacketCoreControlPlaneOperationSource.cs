@@ -10,31 +10,22 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
+using Azure.ResourceManager.MobileNetwork.Models;
 
 namespace Azure.ResourceManager.MobileNetwork
 {
-    internal class PacketCoreControlPlaneOperationSource : IOperationSource<PacketCoreControlPlaneResource>
+    internal class PacketCoreControlPlaneOperationSource : IOperationSource<PacketCoreControlPlane>
     {
-        private readonly ArmClient _client;
-
-        internal PacketCoreControlPlaneOperationSource(ArmClient client)
-        {
-            _client = client;
-        }
-
-        PacketCoreControlPlaneResource IOperationSource<PacketCoreControlPlaneResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        PacketCoreControlPlane IOperationSource<PacketCoreControlPlane>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            var data = PacketCoreControlPlaneData.DeserializePacketCoreControlPlaneData(document.RootElement);
-            return new PacketCoreControlPlaneResource(_client, data);
+            return PacketCoreControlPlane.DeserializePacketCoreControlPlane(document.RootElement);
         }
 
-        async ValueTask<PacketCoreControlPlaneResource> IOperationSource<PacketCoreControlPlaneResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<PacketCoreControlPlane> IOperationSource<PacketCoreControlPlane>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = PacketCoreControlPlaneData.DeserializePacketCoreControlPlaneData(document.RootElement);
-            return new PacketCoreControlPlaneResource(_client, data);
+            return PacketCoreControlPlane.DeserializePacketCoreControlPlane(document.RootElement);
         }
     }
 }

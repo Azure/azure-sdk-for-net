@@ -25,21 +25,15 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         private const string G0Value = "G0";
         private const string G1Value = "G1";
         private const string G2Value = "G2";
-        private const string G3Value = "G3";
-        private const string G4Value = "G4";
         private const string G5Value = "G5";
         private const string G10Value = "G10";
 
-        /// <summary> 100 Mbps, 20 active SIMs plan. </summary>
+        /// <summary> 100 Mbps, 20 active SIMs plan, 2 RANs. </summary>
         public static BillingSku G0 { get; } = new BillingSku(G0Value);
-        /// <summary> 1 Gbps, 100 active SIMs plan. </summary>
+        /// <summary> 1 Gbps, 100 active SIMs plan, 5 RANs. </summary>
         public static BillingSku G1 { get; } = new BillingSku(G1Value);
-        /// <summary> 2 Gbps, 200 active SIMs plan. </summary>
+        /// <summary> 2 Gbps, 200 active SIMs plan, 10 RANs. </summary>
         public static BillingSku G2 { get; } = new BillingSku(G2Value);
-        /// <summary> 3 Gbps, 300 active SIMs plan. </summary>
-        public static BillingSku G3 { get; } = new BillingSku(G3Value);
-        /// <summary> 4 Gbps, 400 active SIMs plan. </summary>
-        public static BillingSku G4 { get; } = new BillingSku(G4Value);
         /// <summary> 5 Gbps, 500 active SIMs plan. </summary>
         public static BillingSku G5 { get; } = new BillingSku(G5Value);
         /// <summary> 10 Gbps, 1000 active SIMs plan. </summary>

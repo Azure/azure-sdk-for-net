@@ -10,31 +10,22 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
+using Azure.ResourceManager.MobileNetwork.Models;
 
 namespace Azure.ResourceManager.MobileNetwork
 {
-    internal class AttachedDataNetworkOperationSource : IOperationSource<AttachedDataNetworkResource>
+    internal class AttachedDataNetworkOperationSource : IOperationSource<AttachedDataNetwork>
     {
-        private readonly ArmClient _client;
-
-        internal AttachedDataNetworkOperationSource(ArmClient client)
-        {
-            _client = client;
-        }
-
-        AttachedDataNetworkResource IOperationSource<AttachedDataNetworkResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        AttachedDataNetwork IOperationSource<AttachedDataNetwork>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            var data = AttachedDataNetworkData.DeserializeAttachedDataNetworkData(document.RootElement);
-            return new AttachedDataNetworkResource(_client, data);
+            return AttachedDataNetwork.DeserializeAttachedDataNetwork(document.RootElement);
         }
 
-        async ValueTask<AttachedDataNetworkResource> IOperationSource<AttachedDataNetworkResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<AttachedDataNetwork> IOperationSource<AttachedDataNetwork>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = AttachedDataNetworkData.DeserializeAttachedDataNetworkData(document.RootElement);
-            return new AttachedDataNetworkResource(_client, data);
+            return AttachedDataNetwork.DeserializeAttachedDataNetwork(document.RootElement);
         }
     }
 }

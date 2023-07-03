@@ -10,31 +10,22 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
+using Azure.ResourceManager.MobileNetwork.Models;
 
 namespace Azure.ResourceManager.MobileNetwork
 {
-    internal class ServiceOperationSource : IOperationSource<ServiceResource>
+    internal class ServiceOperationSource : IOperationSource<Service>
     {
-        private readonly ArmClient _client;
-
-        internal ServiceOperationSource(ArmClient client)
-        {
-            _client = client;
-        }
-
-        ServiceResource IOperationSource<ServiceResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        Service IOperationSource<Service>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            var data = ServiceData.DeserializeServiceData(document.RootElement);
-            return new ServiceResource(_client, data);
+            return Service.DeserializeService(document.RootElement);
         }
 
-        async ValueTask<ServiceResource> IOperationSource<ServiceResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<Service> IOperationSource<Service>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = ServiceData.DeserializeServiceData(document.RootElement);
-            return new ServiceResource(_client, data);
+            return Service.DeserializeService(document.RootElement);
         }
     }
 }
