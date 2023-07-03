@@ -134,6 +134,7 @@ namespace Azure.Storage.DataMovement
     {
         protected TransferManager() { }
         public TransferManager(Azure.Storage.DataMovement.TransferManagerOptions options = null) { }
+        public virtual System.Collections.Generic.IAsyncEnumerable<Azure.Storage.DataMovement.Models.DataTransferProperties> GetResumableTransfersAsync() { throw null; }
         public virtual System.Collections.Generic.IAsyncEnumerable<Azure.Storage.DataMovement.DataTransfer> GetTransfersAsync(params Azure.Storage.DataMovement.StorageTransferStatus[] filterByStatus) { throw null; }
         public virtual System.Threading.Tasks.Task PauseTransferIfRunningAsync(Azure.Storage.DataMovement.DataTransfer transfer, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task PauseTransferIfRunningAsync(string transferId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -157,7 +158,7 @@ namespace Azure.Storage.DataMovement.Models
 {
     public partial class DataTransferProperties
     {
-        protected DataTransferProperties() { }
+        protected internal DataTransferProperties() { }
         public virtual Azure.Storage.DataMovement.Models.TransferCheckpointerOptions Checkpointer { get { throw null; } }
         public virtual string DestinationPath { get { throw null; } }
         public virtual string DestinationScheme { get { throw null; } }

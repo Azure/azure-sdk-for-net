@@ -1,11 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
-using System.Collections.Generic;
-using System.Security.Cryptography;
-using System.Text;
-
 namespace Azure.Storage.DataMovement.Models
 {
     /// <summary>
@@ -51,6 +46,6 @@ namespace Azure.Storage.DataMovement.Models
         /// <summary>
         /// For mocking.
         /// </summary>
-        protected DataTransferProperties() { }
+        protected internal DataTransferProperties() { }
     }
 }
