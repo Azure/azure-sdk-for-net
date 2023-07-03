@@ -15,10 +15,10 @@ namespace Azure.ResourceManager.CostManagement.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(DestinationId))
+            if (Optional.IsDefined(ResourceId))
             {
                 writer.WritePropertyName("resourceId"u8);
-                writer.WriteStringValue(DestinationId);
+                writer.WriteStringValue(ResourceId);
             }
             writer.WritePropertyName("container"u8);
             writer.WriteStringValue(Container);

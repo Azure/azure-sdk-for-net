@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.CostManagement.Tests
             string containerName = "exportcontainer";
             ExportDeliveryDestination exportDeliveryDestination = new ExportDeliveryDestination(containerName)
             {
-                DestinationId = new ResourceIdentifier(storageAccountId),
+                ResourceId = new ResourceIdentifier(storageAccountId),
             };
             var data = new CostManagementExportData()
             {

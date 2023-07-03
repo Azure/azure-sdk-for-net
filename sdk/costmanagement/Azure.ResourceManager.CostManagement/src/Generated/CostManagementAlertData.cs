@@ -39,9 +39,9 @@ namespace Azure.ResourceManager.CostManagement
         /// <param name="closeOn"> dateTime in which alert was closed. </param>
         /// <param name="modifiedOn"> dateTime in which alert was last modified. </param>
         /// <param name="statusModificationUserName"> User who last modified the alert. </param>
-        /// <param name="statusModificationOn"> dateTime in which the alert status was last modified. </param>
+        /// <param name="statusModifiedOn"> dateTime in which the alert status was last modified. </param>
         /// <param name="eTag"> eTag of the resource. To handle concurrent update scenario, this field will be used to determine whether the user is updating the latest version or not. </param>
-        internal CostManagementAlertData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AlertPropertiesDefinition definition, string description, CostManagementAlertSource? source, AlertPropertiesDetails details, string costEntityId, CostManagementAlertStatus? status, DateTimeOffset? createdOn, DateTimeOffset? closeOn, DateTimeOffset? modifiedOn, string statusModificationUserName, DateTimeOffset? statusModificationOn, ETag? eTag) : base(id, name, resourceType, systemData)
+        internal CostManagementAlertData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AlertPropertiesDefinition definition, string description, CostManagementAlertSource? source, AlertPropertiesDetails details, string costEntityId, CostManagementAlertStatus? status, DateTimeOffset? createdOn, DateTimeOffset? closeOn, DateTimeOffset? modifiedOn, string statusModificationUserName, DateTimeOffset? statusModifiedOn, ETag? eTag) : base(id, name, resourceType, systemData)
         {
             Definition = definition;
             Description = description;
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.CostManagement
             CloseOn = closeOn;
             ModifiedOn = modifiedOn;
             StatusModificationUserName = statusModificationUserName;
-            StatusModificationOn = statusModificationOn;
+            StatusModifiedOn = statusModifiedOn;
             ETag = eTag;
         }
 
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.CostManagement
         /// <summary> User who last modified the alert. </summary>
         public string StatusModificationUserName { get; set; }
         /// <summary> dateTime in which the alert status was last modified. </summary>
-        public DateTimeOffset? StatusModificationOn { get; set; }
+        public DateTimeOffset? StatusModifiedOn { get; set; }
         /// <summary> eTag of the resource. To handle concurrent update scenario, this field will be used to determine whether the user is updating the latest version or not. </summary>
         public ETag? ETag { get; set; }
     }

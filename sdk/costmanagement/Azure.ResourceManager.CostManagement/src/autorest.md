@@ -96,16 +96,16 @@ rename-mapping:
   Scope: BenefitRecommendationScope
   Grain: BenefitRecommendationUsageGrain
   OperatorType: ComparisonOperatorType
-  DismissAlertPayload.properties.closeTime: -|datetime
-  DismissAlertPayload.properties.statusModificationTime: -|datetime
-  Alert.properties.modificationTime: -|datetime
-  Alert.properties.creationTime: -|datetime
-  Alert.properties.statusModificationTime: -|datetime
+  DismissAlertPayload.properties.closeTime: CloseOn|datetime
+  DismissAlertPayload.properties.statusModificationTime: StatusModifiedOn|datetime
+  Alert.properties.modificationTime: ModifiedOn|datetime
+  Alert.properties.creationTime: CreatedOn|datetime
+  Alert.properties.statusModificationTime: StatusModifiedOn|datetime
   View.properties.scope: -|arm-id
   ScheduledAction.properties.scope: -|arm-id
   ScheduledAction.properties.viewId: -|arm-id
-  ExportDeliveryDestination.resourceId: DestinationId|arm-id
-  KpiProperties.id: KpiId|arm-id
+  ExportDeliveryDestination.resourceId: -|arm-id
+  KpiProperties.id: -|arm-id
   Dimension.properties.filterEnabled: IsFilterEnabled
   Dimension.properties.groupingEnabled: IsGroupingEnabled
   KpiProperties.enabled: IsEnabled

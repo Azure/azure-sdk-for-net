@@ -146,12 +146,12 @@ namespace Azure.ResourceManager.CostManagement.Samples
 new ViewKpiProperties()
 {
 KpiType = ViewKpiType.Forecast,
-KpiId = null,
+Id = null,
 IsEnabled = true,
 },new ViewKpiProperties()
 {
 KpiType = ViewKpiType.Budget,
-KpiId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/MYDEVTESTRG/providers/Microsoft.Consumption/budgets/swaggerDemo"),
+Id = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/MYDEVTESTRG/providers/Microsoft.Consumption/budgets/swaggerDemo"),
 IsEnabled = true,
 }
 },

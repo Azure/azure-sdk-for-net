@@ -19,19 +19,19 @@ namespace Azure.ResourceManager.CostManagement.Models
 
         /// <summary> Initializes a new instance of ViewKpiProperties. </summary>
         /// <param name="kpiType"> KPI type (Forecast, Budget). </param>
-        /// <param name="kpiId"> ID of resource related to metric (budget). </param>
+        /// <param name="id"> ID of resource related to metric (budget). </param>
         /// <param name="isEnabled"> show the KPI in the UI?. </param>
-        internal ViewKpiProperties(ViewKpiType? kpiType, ResourceIdentifier kpiId, bool? isEnabled)
+        internal ViewKpiProperties(ViewKpiType? kpiType, ResourceIdentifier id, bool? isEnabled)
         {
             KpiType = kpiType;
-            KpiId = kpiId;
+            Id = id;
             IsEnabled = isEnabled;
         }
 
         /// <summary> KPI type (Forecast, Budget). </summary>
         public ViewKpiType? KpiType { get; set; }
         /// <summary> ID of resource related to metric (budget). </summary>
-        public ResourceIdentifier KpiId { get; set; }
+        public ResourceIdentifier Id { get; set; }
         /// <summary> show the KPI in the UI?. </summary>
         public bool? IsEnabled { get; set; }
     }

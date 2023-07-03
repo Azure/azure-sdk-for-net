@@ -76,10 +76,10 @@ namespace Azure.ResourceManager.CostManagement
                 writer.WritePropertyName("statusModificationUserName"u8);
                 writer.WriteStringValue(StatusModificationUserName);
             }
-            if (Optional.IsDefined(StatusModificationOn))
+            if (Optional.IsDefined(StatusModifiedOn))
             {
                 writer.WritePropertyName("statusModificationTime"u8);
-                writer.WriteStringValue(StatusModificationOn.Value);
+                writer.WriteStringValue(StatusModifiedOn.Value);
             }
             writer.WriteEndObject();
             writer.WriteEndObject();

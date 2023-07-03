@@ -26,8 +26,8 @@ namespace Azure.ResourceManager.CostManagement
         public System.DateTimeOffset? ModifiedOn { get { throw null; } set { } }
         public Azure.ResourceManager.CostManagement.Models.CostManagementAlertSource? Source { get { throw null; } set { } }
         public Azure.ResourceManager.CostManagement.Models.CostManagementAlertStatus? Status { get { throw null; } set { } }
-        public System.DateTimeOffset? StatusModificationOn { get { throw null; } set { } }
         public string StatusModificationUserName { get { throw null; } set { } }
+        public System.DateTimeOffset? StatusModifiedOn { get { throw null; } set { } }
     }
     public partial class CostManagementAlertResource : Azure.ResourceManager.ArmResource
     {
@@ -442,7 +442,7 @@ namespace Azure.ResourceManager.CostManagement.Models
         public static Azure.ResourceManager.CostManagement.Models.BenefitUtilizationSummariesOperationStatus BenefitUtilizationSummariesOperationStatus(Azure.ResourceManager.CostManagement.Models.BenefitUtilizationSummariesContent input = null, Azure.ResourceManager.CostManagement.Models.OperationStatusType? status = default(Azure.ResourceManager.CostManagement.Models.OperationStatusType?), Azure.ResourceManager.CostManagement.Models.AsyncOperationStatusProperties properties = null) { throw null; }
         public static Azure.ResourceManager.CostManagement.Models.BenefitUtilizationSummary BenefitUtilizationSummary(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string kind = "Unknown") { throw null; }
         public static Azure.ResourceManager.CostManagement.Models.CommonExportProperties CommonExportProperties(Azure.ResourceManager.CostManagement.Models.ExportFormatType? format = default(Azure.ResourceManager.CostManagement.Models.ExportFormatType?), Azure.ResourceManager.CostManagement.Models.ExportDeliveryDestination deliveryInfoDestination = null, Azure.ResourceManager.CostManagement.Models.ExportDefinition definition = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.CostManagement.Models.ExportRun> runHistoryValue = null, bool? partitionData = default(bool?), System.DateTimeOffset? nextRunTimeEstimate = default(System.DateTimeOffset?)) { throw null; }
-        public static Azure.ResourceManager.CostManagement.CostManagementAlertData CostManagementAlertData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.CostManagement.Models.AlertPropertiesDefinition definition = null, string description = null, Azure.ResourceManager.CostManagement.Models.CostManagementAlertSource? source = default(Azure.ResourceManager.CostManagement.Models.CostManagementAlertSource?), Azure.ResourceManager.CostManagement.Models.AlertPropertiesDetails details = null, string costEntityId = null, Azure.ResourceManager.CostManagement.Models.CostManagementAlertStatus? status = default(Azure.ResourceManager.CostManagement.Models.CostManagementAlertStatus?), System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), System.DateTimeOffset? closeOn = default(System.DateTimeOffset?), System.DateTimeOffset? modifiedOn = default(System.DateTimeOffset?), string statusModificationUserName = null, System.DateTimeOffset? statusModificationOn = default(System.DateTimeOffset?), Azure.ETag? eTag = default(Azure.ETag?)) { throw null; }
+        public static Azure.ResourceManager.CostManagement.CostManagementAlertData CostManagementAlertData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.CostManagement.Models.AlertPropertiesDefinition definition = null, string description = null, Azure.ResourceManager.CostManagement.Models.CostManagementAlertSource? source = default(Azure.ResourceManager.CostManagement.Models.CostManagementAlertSource?), Azure.ResourceManager.CostManagement.Models.AlertPropertiesDetails details = null, string costEntityId = null, Azure.ResourceManager.CostManagement.Models.CostManagementAlertStatus? status = default(Azure.ResourceManager.CostManagement.Models.CostManagementAlertStatus?), System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), System.DateTimeOffset? closeOn = default(System.DateTimeOffset?), System.DateTimeOffset? modifiedOn = default(System.DateTimeOffset?), string statusModificationUserName = null, System.DateTimeOffset? statusModifiedOn = default(System.DateTimeOffset?), Azure.ETag? eTag = default(Azure.ETag?)) { throw null; }
         public static Azure.ResourceManager.CostManagement.Models.CostManagementDimension CostManagementDimension(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string description = null, bool? isFilterEnabled = default(bool?), bool? isGroupingEnabled = default(bool?), System.Collections.Generic.IEnumerable<string> data = null, int? total = default(int?), string category = null, System.DateTimeOffset? usageStart = default(System.DateTimeOffset?), System.DateTimeOffset? usageEnd = default(System.DateTimeOffset?), string nextLink = null, Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?), string sku = null, Azure.ETag? eTag = default(Azure.ETag?), System.Collections.Generic.IReadOnlyDictionary<string, string> tags = null) { throw null; }
         public static Azure.ResourceManager.CostManagement.CostManagementExportData CostManagementExportData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.CostManagement.Models.ExportFormatType? format = default(Azure.ResourceManager.CostManagement.Models.ExportFormatType?), Azure.ResourceManager.CostManagement.Models.ExportDeliveryDestination deliveryInfoDestination = null, Azure.ResourceManager.CostManagement.Models.ExportDefinition definition = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.CostManagement.Models.ExportRun> runHistoryValue = null, bool? partitionData = default(bool?), System.DateTimeOffset? nextRunTimeEstimate = default(System.DateTimeOffset?), Azure.ResourceManager.CostManagement.Models.ExportSchedule schedule = null, Azure.ETag? eTag = default(Azure.ETag?)) { throw null; }
         public static Azure.ResourceManager.CostManagement.Models.CostManagementNameAvailabilityResult CostManagementNameAvailabilityResult(bool? nameAvailable = default(bool?), Azure.ResourceManager.CostManagement.Models.CostManagementUnavailabilityReason? reason = default(Azure.ResourceManager.CostManagement.Models.CostManagementUnavailabilityReason?), string message = null) { throw null; }
@@ -677,8 +677,8 @@ namespace Azure.ResourceManager.CostManagement.Models
         public System.DateTimeOffset? ModifiedOn { get { throw null; } set { } }
         public Azure.ResourceManager.CostManagement.Models.CostManagementAlertSource? Source { get { throw null; } set { } }
         public Azure.ResourceManager.CostManagement.Models.CostManagementAlertStatus? Status { get { throw null; } set { } }
-        public System.DateTimeOffset? StatusModificationOn { get { throw null; } set { } }
         public string StatusModificationUserName { get { throw null; } set { } }
+        public System.DateTimeOffset? StatusModifiedOn { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct CostManagementAlertSource : System.IEquatable<Azure.ResourceManager.CostManagement.Models.CostManagementAlertSource>
@@ -815,7 +815,7 @@ namespace Azure.ResourceManager.CostManagement.Models
     {
         public ExportDeliveryDestination(string container) { }
         public string Container { get { throw null; } set { } }
-        public Azure.Core.ResourceIdentifier DestinationId { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier ResourceId { get { throw null; } set { } }
         public string RootFolderPath { get { throw null; } set { } }
         public string SasToken { get { throw null; } set { } }
         public string StorageAccount { get { throw null; } set { } }
@@ -1696,8 +1696,8 @@ namespace Azure.ResourceManager.CostManagement.Models
     public partial class ViewKpiProperties
     {
         public ViewKpiProperties() { }
+        public Azure.Core.ResourceIdentifier Id { get { throw null; } set { } }
         public bool? IsEnabled { get { throw null; } set { } }
-        public Azure.Core.ResourceIdentifier KpiId { get { throw null; } set { } }
         public Azure.ResourceManager.CostManagement.Models.ViewKpiType? KpiType { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
