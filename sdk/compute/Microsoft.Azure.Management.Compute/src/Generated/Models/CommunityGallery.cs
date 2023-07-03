@@ -10,12 +10,18 @@
 
 namespace Microsoft.Azure.Management.Compute.Models
 {
+    using Microsoft.Rest;
+    using Microsoft.Rest.Serialization;
+    using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
     /// Specifies information about the Community Gallery that you want to
     /// create or update.
     /// </summary>
+    [Rest.Serialization.JsonTransformation]
     public partial class CommunityGallery : PirCommunityGalleryResource
     {
         /// <summary>
@@ -34,9 +40,12 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <param name="type">Resource type</param>
         /// <param name="uniqueId">The unique id of this community
         /// gallery.</param>
-        public CommunityGallery(string name = default(string), string location = default(string), string type = default(string), string uniqueId = default(string))
+        public CommunityGallery(string name = default(string), string location = default(string), string type = default(string), string uniqueId = default(string), string disclaimer = default(string), IDictionary<string, string> artifactTags = default(IDictionary<string, string>), CommunityGalleryMetadata communityMetadata = default(CommunityGalleryMetadata))
             : base(name, location, type, uniqueId)
         {
+            Disclaimer = disclaimer;
+            ArtifactTags = artifactTags;
+            CommunityMetadata = communityMetadata;
             CustomInit();
         }
 
@@ -44,6 +53,21 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
+
+        /// <summary>
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.disclaimer")]
+        public string Disclaimer { get; set; }
+
+        /// <summary>
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.artifactTags")]
+        public IDictionary<string, string> ArtifactTags { get; set; }
+
+        /// <summary>
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.communityMetadata")]
+        public CommunityGalleryMetadata CommunityMetadata { get; set; }
 
     }
 }

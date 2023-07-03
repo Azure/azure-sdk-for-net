@@ -13,6 +13,8 @@ namespace Microsoft.Azure.Management.Compute.Models
     using Microsoft.Rest;
     using Microsoft.Rest.Serialization;
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
@@ -48,13 +50,14 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// this Image Version.</param>
         /// <param name="storageProfile">Describes the storage profile of the
         /// image version.</param>
-        public SharedGalleryImageVersion(string name = default(string), string location = default(string), string uniqueId = default(string), System.DateTime? publishedDate = default(System.DateTime?), System.DateTime? endOfLifeDate = default(System.DateTime?), bool? excludeFromLatest = default(bool?), SharedGalleryImageVersionStorageProfile storageProfile = default(SharedGalleryImageVersionStorageProfile))
+        public SharedGalleryImageVersion(string name = default(string), string location = default(string), string uniqueId = default(string), System.DateTime? publishedDate = default(System.DateTime?), System.DateTime? endOfLifeDate = default(System.DateTime?), bool? excludeFromLatest = default(bool?), SharedGalleryImageVersionStorageProfile storageProfile = default(SharedGalleryImageVersionStorageProfile), IDictionary<string, string> artifactTags = default(IDictionary<string, string>))
             : base(name, location, uniqueId)
         {
             PublishedDate = publishedDate;
             EndOfLifeDate = endOfLifeDate;
             ExcludeFromLatest = excludeFromLatest;
             StorageProfile = storageProfile;
+            ArtifactTags = artifactTags;
             CustomInit();
         }
 
@@ -92,6 +95,11 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.storageProfile")]
         public SharedGalleryImageVersionStorageProfile StorageProfile { get; set; }
+
+        /// <summary>
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.artifactTags")]
+        public IDictionary<string, string> ArtifactTags { get; set; }
 
     }
 }

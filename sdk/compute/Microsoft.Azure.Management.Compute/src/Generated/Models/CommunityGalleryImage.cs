@@ -61,7 +61,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// current community gallery image.</param>
         /// <param name="eula">End-user license agreement for the current
         /// community gallery image.</param>
-        public CommunityGalleryImage(OperatingSystemTypes osType, OperatingSystemStateTypes osState, CommunityGalleryImageIdentifier identifier, string name = default(string), string location = default(string), string type = default(string), string uniqueId = default(string), System.DateTime? endOfLifeDate = default(System.DateTime?), RecommendedMachineConfiguration recommended = default(RecommendedMachineConfiguration), Disallowed disallowed = default(Disallowed), string hyperVGeneration = default(string), IList<GalleryImageFeature> features = default(IList<GalleryImageFeature>), ImagePurchasePlan purchasePlan = default(ImagePurchasePlan), string architecture = default(string), string privacyStatementUri = default(string), string eula = default(string))
+        public CommunityGalleryImage(OperatingSystemTypes osType, OperatingSystemStateTypes osState, CommunityGalleryImageIdentifier identifier, string name = default(string), string location = default(string), string type = default(string), string uniqueId = default(string), System.DateTime? endOfLifeDate = default(System.DateTime?), RecommendedMachineConfiguration recommended = default(RecommendedMachineConfiguration), Disallowed disallowed = default(Disallowed), string hyperVGeneration = default(string), IList<GalleryImageFeature> features = default(IList<GalleryImageFeature>), ImagePurchasePlan purchasePlan = default(ImagePurchasePlan), string architecture = default(string), string privacyStatementUri = default(string), string eula = default(string), string disclaimer = default(string), IDictionary<string, string> artifactTags = default(IDictionary<string, string>))
             : base(name, location, type, uniqueId)
         {
             OsType = osType;
@@ -76,6 +76,8 @@ namespace Microsoft.Azure.Management.Compute.Models
             Architecture = architecture;
             PrivacyStatementUri = privacyStatementUri;
             Eula = eula;
+            Disclaimer = disclaimer;
+            ArtifactTags = artifactTags;
             CustomInit();
         }
 
@@ -162,6 +164,16 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.eula")]
         public string Eula { get; set; }
+
+        /// <summary>
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.disclaimer")]
+        public string Disclaimer { get; set; }
+
+        /// <summary>
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.artifactTags")]
+        public IDictionary<string, string> ArtifactTags { get; set; }
 
         /// <summary>
         /// Validate the object.

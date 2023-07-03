@@ -10,12 +10,18 @@
 
 namespace Microsoft.Azure.Management.Compute.Models
 {
+    using Microsoft.Rest;
+    using Microsoft.Rest.Serialization;
+    using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
     /// Specifies information about the Shared Gallery that you want to create
     /// or update.
     /// </summary>
+    [Rest.Serialization.JsonTransformation]
     public partial class SharedGallery : PirSharedGalleryResource
     {
         /// <summary>
@@ -33,9 +39,10 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <param name="location">Resource location</param>
         /// <param name="uniqueId">The unique id of this shared
         /// gallery.</param>
-        public SharedGallery(string name = default(string), string location = default(string), string uniqueId = default(string))
+        public SharedGallery(string name = default(string), string location = default(string), string uniqueId = default(string), IDictionary<string, string> artifactTags = default(IDictionary<string, string>))
             : base(name, location, uniqueId)
         {
+            ArtifactTags = artifactTags;
             CustomInit();
         }
 
@@ -43,6 +50,11 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
+
+        /// <summary>
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.artifactTags")]
+        public IDictionary<string, string> ArtifactTags { get; private set; }
 
     }
 }
