@@ -81,12 +81,12 @@ new ViewKpiProperties()
 {
 KpiType = ViewKpiType.Forecast,
 KpiId = null,
-Enabled = true,
+IsEnabled = true,
 },new ViewKpiProperties()
 {
 KpiType = ViewKpiType.Budget,
 KpiId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/MYDEVTESTRG/providers/Microsoft.Consumption/budgets/swaggerDemo"),
-Enabled = true,
+IsEnabled = true,
 }
 },
                 Pivots =
