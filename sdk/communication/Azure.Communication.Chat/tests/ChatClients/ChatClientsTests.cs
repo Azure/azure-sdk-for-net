@@ -266,6 +266,44 @@ namespace Azure.Communication.Chat.Tests.ChatClients
         }
 
         [Test]
+        public async Task SendMessageAsyncShouldThrowError()
+        {
+            //arrange
+            ChatThreadClient chatThreadClient = CreateMockChatThreadClient(401, "{}");
+
+            //act
+            try
+            {
+                SendChatMessageResult sendChatMessageResult = await chatThreadClient.SendMessageAsync("Send Message Test");
+                throw new Exception("Test failed as expected exception was not thrown in the previous step");
+            }
+            catch (Exception ex)
+            {
+                //assert
+                Assert.True(ex.Message.Contains("401"));
+            }
+        }
+
+        [Test]
+        public void SendMessageShouldThrowError()
+        {
+            //arrange
+            ChatThreadClient chatThreadClient = CreateMockChatThreadClient(401, "{}");
+
+            //act
+            try
+            {
+                SendChatMessageResult sendChatMessageResult = chatThreadClient.SendMessage("Send Message Test");
+                throw new Exception("Test failed as expected exception was not thrown in the previous step");
+            }
+            catch (Exception ex)
+            {
+                //assert
+                Assert.True(ex.Message.Contains("401"));
+            }
+        }
+
+        [Test]
         public async Task SendMessageWithOptionsShouldSucceed()
         {
             //arrange
@@ -290,6 +328,42 @@ namespace Azure.Communication.Chat.Tests.ChatClients
 
             //assert
             Assert.AreEqual(200, typingNotificationResponse.Status);
+        }
+
+        [Test]
+        public void SendTypingIndicatorShouldThrowError()
+        {
+            //arrange
+            ChatThreadClient chatThreadClient = CreateMockChatThreadClient(401, "{}");
+            //act
+            try
+            {
+                var res = chatThreadClient.SendTypingNotification();
+                throw new Exception("Test failed as expected exception was not thrown in the previous step");
+            }
+            catch (Exception ex)
+            {
+                //assert
+                Assert.True(ex.Message.Contains("401"));
+            }
+        }
+
+        [Test]
+        public async Task SendTypingIndicatorAsyncShouldThrowError()
+        {
+            //arrange
+            ChatThreadClient chatThreadClient = CreateMockChatThreadClient(401, "{}");
+            //act
+            try
+            {
+                var res = await chatThreadClient.SendTypingNotificationAsync();
+                throw new Exception("Test failed as expected exception was not thrown in the previous step");
+            }
+            catch (Exception ex)
+            {
+                //assert
+                Assert.True(ex.Message.Contains("401"));
+            }
         }
 
         [Test]
@@ -335,6 +409,44 @@ namespace Azure.Communication.Chat.Tests.ChatClients
         }
 
         [Test]
+        public async Task SendReadReceiptAsyncShouldThrowError()
+        {
+            //arrange
+            ChatThreadClient chatThreadClient = CreateMockChatThreadClient(401, "{}");
+            //act
+            try
+            {
+                var messageId = "1";
+                var res = await chatThreadClient.SendReadReceiptAsync(messageId);
+                throw new Exception("Test failed as expected exception was not thrown in the previous step");
+            }
+            catch (Exception ex)
+            {
+                //assert
+                Assert.True(ex.Message.Contains("401"));
+            }
+        }
+
+        [Test]
+        public void SendReadReceiptShouldThrowError()
+        {
+            //arrange
+            ChatThreadClient chatThreadClient = CreateMockChatThreadClient(401, "{}");
+            //act
+            try
+            {
+                var messageId = "1";
+                var res = chatThreadClient.SendReadReceipt(messageId);
+                throw new Exception("Test failed as expected exception was not thrown in the previous step");
+            }
+            catch (Exception ex)
+            {
+                //assert
+                Assert.True(ex.Message.Contains("401"));
+            }
+        }
+
+        [Test]
         public async Task DeleteMessageAsyncShouldSucceed()
         {
             //arrange
@@ -363,6 +475,44 @@ namespace Azure.Communication.Chat.Tests.ChatClients
         }
 
         [Test]
+        public async Task DeleteMessageAsyncShouldThrowError()
+        {
+            //arrange
+            ChatThreadClient chatThreadClient = CreateMockChatThreadClient(401, "{}");
+            var messageId = "1";
+            //act
+            try
+            {
+                var res = await chatThreadClient.DeleteMessageAsync(messageId);
+                throw new Exception("Test failed as expected exception was not thrown in the previous step");
+            }
+            catch (Exception ex)
+            {
+                //assert
+                Assert.True(ex.Message.Contains("401"));
+            }
+        }
+
+        [Test]
+        public void DeleteMessageShouldThrowError()
+        {
+            //arrange
+            ChatThreadClient chatThreadClient = CreateMockChatThreadClient(401, "{}");
+            var messageId = "1";
+            //act
+            try
+            {
+                var res = chatThreadClient.DeleteMessage(messageId);
+                throw new Exception("Test failed as expected exception was not thrown in the previous step");
+            }
+            catch (Exception ex)
+            {
+                //assert
+                Assert.True(ex.Message.Contains("401"));
+            }
+        }
+
+        [Test]
         public async Task UpdateMessagAsyncShouldSucceed()
         {
             //arrange
@@ -375,6 +525,46 @@ namespace Azure.Communication.Chat.Tests.ChatClients
 
             //assert
             Assert.AreEqual(204, updateMessageResponse.Status);
+        }
+
+        [Test]
+        public async Task UpdateMessageAsyncShouldThrowError()
+        {
+            //arrange
+            ChatThreadClient chatThreadClient = CreateMockChatThreadClient(401, "{}");
+            var messageId = "1";
+            var content = "Update Message Test";
+            //act
+            try
+            {
+                var res = await chatThreadClient.UpdateMessageAsync(messageId, content);
+                throw new Exception("Test failed as expected exception was not thrown in the previous step");
+            }
+            catch (Exception ex)
+            {
+                //assert
+                Assert.True(ex.Message.Contains("401"));
+            }
+        }
+
+        [Test]
+        public void UpdateMessageShouldThrowError()
+        {
+            //arrange
+            ChatThreadClient chatThreadClient = CreateMockChatThreadClient(401, "{}");
+            var messageId = "1";
+            var content = "Update Message Test";
+            //act
+            try
+            {
+                var res = chatThreadClient.UpdateMessage(messageId, content);
+                throw new Exception("Test failed as expected exception was not thrown in the previous step");
+            }
+            catch (Exception ex)
+            {
+                //assert
+                Assert.True(ex.Message.Contains("401"));
+            }
         }
 
         [Test]
@@ -409,6 +599,44 @@ namespace Azure.Communication.Chat.Tests.ChatClients
             Assert.AreEqual("DisplayName for Test Message", message.SenderDisplayName);
             Assert.NotNull(message.Sender);
             Assert.AreEqual("8:acs:1b5cc06b-f352-4571-b1e6-d9b259b7c776_00000007-8f5e-776d-ea7c-5a3a0d0027b7", CommunicationIdentifierSerializer.Serialize(message.Sender!).CommunicationUser.Id);
+        }
+
+        [Test]
+        public async Task GetMessageAsyncShouldThrowError()
+        {
+            //arrange
+            ChatThreadClient chatThreadClient = CreateMockChatThreadClient(401, "{}");
+
+            //act
+            try
+            {
+                var res = await chatThreadClient.GetMessageAsync("id");
+                throw new Exception("Test failed as expected exception was not thrown in the previous step");
+            }
+            catch (Exception ex)
+            {
+                //assert
+                Assert.True(ex.Message.Contains("401"));
+            }
+        }
+
+        [Test]
+        public void GetMessageShouldThrowError()
+        {
+            //arrange
+            ChatThreadClient chatThreadClient = CreateMockChatThreadClient(401, "{}");
+
+            //act
+            try
+            {
+                var sendChatMessageResult =  chatThreadClient.GetMessage("id");
+                throw new Exception("Test failed as expected exception was not thrown in the previous step");
+            }
+            catch (Exception ex)
+            {
+                //assert
+                Assert.True(ex.Message.Contains("401"));
+            }
         }
 
         [Test]
@@ -570,6 +798,44 @@ namespace Azure.Communication.Chat.Tests.ChatClients
         }
 
         [Test]
+        public void GetThreadPropertiesShouldThrowError()
+        {
+            //arrange
+            ChatThreadClient chatThreadClient = CreateMockChatThreadClient(401, "{}");
+
+            //act
+            try
+            {
+                var res = chatThreadClient.GetProperties();
+                throw new Exception("Test failed as expected exception was not thrown in the previous step");
+            }
+            catch (Exception ex)
+            {
+                //assert
+                Assert.True(ex.Message.Contains("401"));
+            }
+        }
+
+        [Test]
+        public async Task GetThreadPropertiesAsyncShouldThrowError()
+        {
+            //arrange
+            ChatThreadClient chatThreadClient = CreateMockChatThreadClient(401, "{}");
+
+            //act
+            try
+            {
+                var result = await chatThreadClient.GetPropertiesAsync();
+                throw new Exception("Test failed as expected exception was not thrown in the previous step");
+            }
+            catch (Exception ex)
+            {
+                //assert
+                Assert.True(ex.Message.Contains("401"));
+            }
+        }
+
+        [Test]
         public async Task UpdateThreadTopicShouldSucceed()
         {
             //arrange
@@ -581,6 +847,44 @@ namespace Azure.Communication.Chat.Tests.ChatClients
 
             //assert
             Assert.AreEqual(204, UpdateTopiceResponse.Status);
+        }
+
+        [Test]
+        public async Task UpdateThreadTopicAsyncShouldThrowError()
+        {
+            //arrange
+            ChatThreadClient chatThreadClient = CreateMockChatThreadClient(401, "{}");
+
+            //act
+            try
+            {
+                var res = await chatThreadClient.UpdateTopicAsync("Send Message Test");
+                throw new Exception("Test failed as expected exception was not thrown in the previous step");
+            }
+            catch (Exception ex)
+            {
+                //assert
+                Assert.True(ex.Message.Contains("401"));
+            }
+        }
+
+        [Test]
+        public void UpdateThreadTopicShouldThrowError()
+        {
+            //arrange
+            ChatThreadClient chatThreadClient = CreateMockChatThreadClient(401, "{}");
+
+            //act
+            try
+            {
+                var sendChatMessageResult = chatThreadClient.UpdateTopic("Send Message Test");
+                throw new Exception("Test failed as expected exception was not thrown in the previous step");
+            }
+            catch (Exception ex)
+            {
+                //assert
+                Assert.True(ex.Message.Contains("401"));
+            }
         }
 
         [Test]
