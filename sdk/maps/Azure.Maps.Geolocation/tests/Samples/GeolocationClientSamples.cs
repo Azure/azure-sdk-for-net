@@ -5,7 +5,7 @@ using System;
 using System.Net;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
-#region Snippet:SasAuthImportNamespaces
+#region Snippet:GeolocationSasAuthImportNamespaces
 using Azure.Maps.Geolocation;
 using Azure.Core;
 using Azure.ResourceManager;
