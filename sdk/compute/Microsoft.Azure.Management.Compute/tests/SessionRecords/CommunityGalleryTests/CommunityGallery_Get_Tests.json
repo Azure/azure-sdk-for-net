@@ -1,22 +1,22 @@
 {
   "Entries": [
     {
-      "RequestUri": "/subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/providers/Microsoft.Compute/locations/eastus2euap/communityGalleries/PIRBVT-6c64f11e-ad23-4737-a58a-4f3c85acadbf?api-version=2022-03-03",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZTM3NTEwZDctMzNiNi00Njc2LTg4NmYtZWU3NWJjYzAxODcxL3Byb3ZpZGVycy9NaWNyb3NvZnQuQ29tcHV0ZS9sb2NhdGlvbnMvZWFzdHVzMmV1YXAvY29tbXVuaXR5R2FsbGVyaWVzL1BJUkJWVC02YzY0ZjExZS1hZDIzLTQ3MzctYTU4YS00ZjNjODVhY2FkYmY/YXBpLXZlcnNpb249MjAyMi0wMy0wMw==",
+      "RequestUri": "/subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/providers/Microsoft.Compute/locations/eastus2euap/communityGalleries/PIRBVT-6c64f11e-ad23-4737-a58a-4f3c85acadbf?api-version=2022-08-03",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZTM3NTEwZDctMzNiNi00Njc2LTg4NmYtZWU3NWJjYzAxODcxL3Byb3ZpZGVycy9NaWNyb3NvZnQuQ29tcHV0ZS9sb2NhdGlvbnMvZWFzdHVzMmV1YXAvY29tbXVuaXR5R2FsbGVyaWVzL1BJUkJWVC02YzY0ZjExZS1hZDIzLTQ3MzctYTU4YS00ZjNjODVhY2FkYmY/YXBpLXZlcnNpb249MjAyMi0wOC0wMw==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "5f9312de-dfd7-449c-bc12-08b565793eb1"
+          "5c2097ba-ed55-4cf1-925a-04af7f21aa0e"
         ],
         "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.700.22.30802",
+          "FxVersion/6.0.1823.26907",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.22000",
-          "Microsoft.Azure.Management.Compute.ComputeManagementClient/57.0.0"
+          "OSVersion/Microsoft.Windows.10.0.22621",
+          "Microsoft.Azure.Management.Compute.ComputeManagementClient/61.0.0"
         ]
       },
       "ResponseHeaders": {
@@ -26,14 +26,17 @@
         "Pragma": [
           "no-cache"
         ],
+        "x-ms-ratelimit-remaining-resource": [
+          "Microsoft.Compute/GetGallery3Min;349,Microsoft.Compute/GetGallery30Min;2499"
+        ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-served-by": [
-          "f409cccf-f8d5-4387-82a6-57ba86b3a582_133009362911882600"
+          "f409cccf-f8d5-4387-82a6-57ba86b3a582_133325537010493622"
         ],
         "x-ms-request-id": [
-          "67a01919-9cd1-4e52-959c-16f81bdc9448"
+          "51ba4df7-9187-4a70-b1df-ada4f31d3f4a"
         ],
         "Server": [
           "Microsoft-HTTPAPI/2.0",
@@ -43,19 +46,19 @@
           "11999"
         ],
         "x-ms-correlation-request-id": [
-          "9e3d995f-9a21-4964-9025-d5c8e1559bd5"
+          "925d3386-2110-44b1-8a6f-dfa08c3f49b3"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20220722T221019Z:9e3d995f-9a21-4964-9025-d5c8e1559bd5"
+          "CENTRALUS:20230703T140006Z:925d3386-2110-44b1-8a6f-dfa08c3f49b3"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
         "Date": [
-          "Fri, 22 Jul 2022 22:10:19 GMT"
+          "Mon, 03 Jul 2023 14:00:05 GMT"
         ],
         "Content-Length": [
-          "423"
+          "753"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -64,7 +67,7 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"identifier\": {\r\n    \"uniqueId\": \"/CommunityGalleries/PIRBVT-6c64f11e-ad23-4737-a58a-4f3c85acadbf\"\r\n  },\r\n  \"communityMetadata\": {\r\n    \"publisherUri\": \"BVTPublisherUri\",\r\n    \"publisherContact\": \"PIR@microsoft.com\",\r\n    \"eula\": \"BVTeula\",\r\n    \"publicNames\": [\r\n      \"PIRBVT-6c64f11e-ad23-4737-a58a-4f3c85acadbf\"\r\n    ]\r\n  },\r\n  \"location\": \"EastUS2EUAP\",\r\n  \"name\": \"PIRBVT-6c64f11e-ad23-4737-a58a-4f3c85acadbf\"\r\n}",
+      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"communityMetadata\": {\r\n      \"publisherUri\": \"BVTPublisherUri\",\r\n      \"publisherContact\": \"PIR@microsoft.com\",\r\n      \"eula\": \"BVTeula\",\r\n      \"publicNames\": [\r\n        \"PIRBVT-6c64f11e-ad23-4737-a58a-4f3c85acadbf\"\r\n      ]\r\n    },\r\n    \"disclaimer\": \"https://aka.ms/community-gallery-disclaimer\"\r\n  },\r\n  \"communityMetadata\": {\r\n    \"publisherUri\": \"BVTPublisherUri\",\r\n    \"publisherContact\": \"PIR@microsoft.com\",\r\n    \"eula\": \"BVTeula\",\r\n    \"publicNames\": [\r\n      \"PIRBVT-6c64f11e-ad23-4737-a58a-4f3c85acadbf\"\r\n    ]\r\n  },\r\n  \"location\": \"EastUS2EUAP\",\r\n  \"name\": \"PIRBVT-6c64f11e-ad23-4737-a58a-4f3c85acadbf\",\r\n  \"identifier\": {\r\n    \"uniqueId\": \"/CommunityGalleries/PIRBVT-6c64f11e-ad23-4737-a58a-4f3c85acadbf\"\r\n  }\r\n}",
       "StatusCode": 200
     }
   ],
