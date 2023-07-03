@@ -67,7 +67,7 @@ dotnet add package Azure.ResourceManager.Maps --prerelease
 
 In the code, we need to import the following lines for both Azure Maps SDK and ResourceManager:
 
-```C# Snippet:RenderImportNamespaces
+```C# Snippet:SearchImportNamespaces
 using Azure.Core.GeoJson;
 using Azure.Maps.Search;
 using Azure.Maps.Search.Models;
