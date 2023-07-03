@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Sql
         {
             Tags = new ChangeTrackingDictionary<string, string>();
             PartnerServers = new ChangeTrackingList<PartnerServerInfo>();
-            Databases = new ChangeTrackingList<string>();
+            Databases = new ChangeTrackingList<ResourceIdentifier>();
         }
 
         /// <summary> Initializes a new instance of FailoverGroupData. </summary>
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="replicationState"> Replication state of the failover group instance. </param>
         /// <param name="partnerServers"> List of partner server information for the failover group. </param>
         /// <param name="databases"> List of databases in the failover group. </param>
-        internal FailoverGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, IDictionary<string, string> tags, FailoverGroupReadWriteEndpoint readWriteEndpoint, FailoverGroupReadOnlyEndpoint readOnlyEndpoint, FailoverGroupReplicationRole? replicationRole, string replicationState, IList<PartnerServerInfo> partnerServers, IList<string> databases) : base(id, name, resourceType, systemData)
+        internal FailoverGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, IDictionary<string, string> tags, FailoverGroupReadWriteEndpoint readWriteEndpoint, FailoverGroupReadOnlyEndpoint readOnlyEndpoint, FailoverGroupReplicationRole? replicationRole, string replicationState, IList<PartnerServerInfo> partnerServers, IList<ResourceIdentifier> databases) : base(id, name, resourceType, systemData)
         {
             Location = location;
             Tags = tags;
@@ -78,6 +78,6 @@ namespace Azure.ResourceManager.Sql
         /// <summary> List of partner server information for the failover group. </summary>
         public IList<PartnerServerInfo> PartnerServers { get; }
         /// <summary> List of databases in the failover group. </summary>
-        public IList<string> Databases { get; }
+        public IList<ResourceIdentifier> Databases { get; }
     }
 }
