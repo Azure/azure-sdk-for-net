@@ -49,9 +49,6 @@ namespace Azure.Storage
         public static ArgumentException MissingTransferIdCheckpointer(string transferId)
             => throw new ArgumentException($"The transfer id, {transferId}, could not be found in the checkpointer.");
 
-        public static ArgumentException MismatchIdSingleContainer(string transferId)
-            => throw new ArgumentException($"Cannot Resume Error: Transfer Id, {transferId} is being attempted as a single transfer when it's a container transfer.");
-
         public static ArgumentException CollisionJobPart(string transferId, int jobPart)
             => throw new ArgumentException($"Job Part Collision Checkpointer: The job part {jobPart} for transfer id {transferId}, already exists in the checkpointer.");
 
