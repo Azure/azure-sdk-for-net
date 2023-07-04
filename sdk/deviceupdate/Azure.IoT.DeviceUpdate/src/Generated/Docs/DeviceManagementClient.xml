@@ -9,7 +9,7 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new DeviceManagementClient(endpoint, "<instanceId>", credential);
 
-Response response = await client.GetDeviceClassAsync("<deviceClassId>");
+Response response = await client.GetDeviceClassAsync("<deviceClassId>", new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("deviceClassId").ToString());
@@ -33,7 +33,7 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new DeviceManagementClient(endpoint, "<instanceId>", credential);
 
-Response response = client.GetDeviceClass("<deviceClassId>");
+Response response = client.GetDeviceClass("<deviceClassId>", new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("deviceClassId").ToString());
@@ -139,7 +139,7 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new DeviceManagementClient(endpoint, "<instanceId>", credential);
 
-Response response = await client.GetDeviceAsync("<deviceId>");
+Response response = await client.GetDeviceAsync("<deviceId>", new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("deviceId").ToString());
@@ -182,7 +182,7 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new DeviceManagementClient(endpoint, "<instanceId>", credential);
 
-Response response = client.GetDevice("<deviceId>");
+Response response = client.GetDevice("<deviceId>", new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("deviceId").ToString());
@@ -225,7 +225,7 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new DeviceManagementClient(endpoint, "<instanceId>", credential);
 
-Response response = await client.GetDeviceModuleAsync("<deviceId>", "<moduleId>");
+Response response = await client.GetDeviceModuleAsync("<deviceId>", "<moduleId>", new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("deviceId").ToString());
@@ -268,7 +268,7 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new DeviceManagementClient(endpoint, "<instanceId>", credential);
 
-Response response = client.GetDeviceModule("<deviceId>", "<moduleId>");
+Response response = client.GetDeviceModule("<deviceId>", "<moduleId>", new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("deviceId").ToString());
@@ -305,13 +305,13 @@ Console.WriteLine(result.GetProperty("lastInstallResult").GetProperty("stepResul
     </member>
     <member name="GetUpdateComplianceAsync(RequestContext)">
 <example>
-This sample shows how to call GetUpdateComplianceAsync and parse the result.
+This sample shows how to call GetUpdateComplianceAsync with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new DeviceManagementClient(endpoint, "<instanceId>", credential);
 
-Response response = await client.GetUpdateComplianceAsync();
+Response response = await client.GetUpdateComplianceAsync(new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("totalDeviceCount").ToString());
@@ -323,13 +323,13 @@ Console.WriteLine(result.GetProperty("updatesInProgressDeviceCount").ToString())
     </member>
     <member name="GetUpdateCompliance(RequestContext)">
 <example>
-This sample shows how to call GetUpdateCompliance and parse the result.
+This sample shows how to call GetUpdateCompliance with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new DeviceManagementClient(endpoint, "<instanceId>", credential);
 
-Response response = client.GetUpdateCompliance();
+Response response = client.GetUpdateCompliance(new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("totalDeviceCount").ToString());
@@ -347,7 +347,7 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new DeviceManagementClient(endpoint, "<instanceId>", credential);
 
-Response response = await client.GetGroupAsync("<groupId>");
+Response response = await client.GetGroupAsync("<groupId>", new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("groupId").ToString());
@@ -369,7 +369,7 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new DeviceManagementClient(endpoint, "<instanceId>", credential);
 
-Response response = client.GetGroup("<groupId>");
+Response response = client.GetGroup("<groupId>", new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("groupId").ToString());
@@ -417,7 +417,7 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new DeviceManagementClient(endpoint, "<instanceId>", credential);
 
-Response response = await client.GetUpdateComplianceForGroupAsync("<groupId>");
+Response response = await client.GetUpdateComplianceForGroupAsync("<groupId>", new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("totalDeviceCount").ToString());
@@ -435,7 +435,7 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new DeviceManagementClient(endpoint, "<instanceId>", credential);
 
-Response response = client.GetUpdateComplianceForGroup("<groupId>");
+Response response = client.GetUpdateComplianceForGroup("<groupId>", new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("totalDeviceCount").ToString());
@@ -453,7 +453,7 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new DeviceManagementClient(endpoint, "<instanceId>", credential);
 
-Response response = await client.GetDeploymentAsync("<groupId>", "<deploymentId>");
+Response response = await client.GetDeploymentAsync("<groupId>", "<deploymentId>", new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("deploymentId").ToString());
@@ -486,7 +486,7 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new DeviceManagementClient(endpoint, "<instanceId>", credential);
 
-Response response = client.GetDeployment("<groupId>", "<deploymentId>");
+Response response = client.GetDeployment("<groupId>", "<deploymentId>", new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("deploymentId").ToString());
@@ -719,7 +719,7 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new DeviceManagementClient(endpoint, "<instanceId>", credential);
 
-Response response = await client.GetDeploymentStatusAsync("<groupId>", "<deploymentId>");
+Response response = await client.GetDeploymentStatusAsync("<groupId>", "<deploymentId>", new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("groupId").ToString());
@@ -757,7 +757,7 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new DeviceManagementClient(endpoint, "<instanceId>", credential);
 
-Response response = client.GetDeploymentStatus("<groupId>", "<deploymentId>");
+Response response = client.GetDeploymentStatus("<groupId>", "<deploymentId>", new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("groupId").ToString());
@@ -795,7 +795,7 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new DeviceManagementClient(endpoint, "<instanceId>", credential);
 
-Response response = await client.GetDeviceClassSubgroupAsync("<groupId>", "<deviceClassId>");
+Response response = await client.GetDeviceClassSubgroupAsync("<groupId>", "<deviceClassId>", new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("deviceClassId").ToString());
@@ -814,7 +814,7 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new DeviceManagementClient(endpoint, "<instanceId>", credential);
 
-Response response = client.GetDeviceClassSubgroup("<groupId>", "<deviceClassId>");
+Response response = client.GetDeviceClassSubgroup("<groupId>", "<deviceClassId>", new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("deviceClassId").ToString());
@@ -859,7 +859,7 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new DeviceManagementClient(endpoint, "<instanceId>", credential);
 
-Response response = await client.GetDeviceClassSubgroupUpdateComplianceAsync("<groupId>", "<deviceClassId>");
+Response response = await client.GetDeviceClassSubgroupUpdateComplianceAsync("<groupId>", "<deviceClassId>", new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("totalDeviceCount").ToString());
@@ -877,7 +877,7 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new DeviceManagementClient(endpoint, "<instanceId>", credential);
 
-Response response = client.GetDeviceClassSubgroupUpdateCompliance("<groupId>", "<deviceClassId>");
+Response response = client.GetDeviceClassSubgroupUpdateCompliance("<groupId>", "<deviceClassId>", new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("totalDeviceCount").ToString());
@@ -895,7 +895,7 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new DeviceManagementClient(endpoint, "<instanceId>", credential);
 
-Response response = await client.GetBestUpdatesForDeviceClassSubgroupAsync("<groupId>", "<deviceClassId>");
+Response response = await client.GetBestUpdatesForDeviceClassSubgroupAsync("<groupId>", "<deviceClassId>", new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("groupId").ToString());
@@ -917,7 +917,7 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new DeviceManagementClient(endpoint, "<instanceId>", credential);
 
-Response response = client.GetBestUpdatesForDeviceClassSubgroup("<groupId>", "<deviceClassId>");
+Response response = client.GetBestUpdatesForDeviceClassSubgroup("<groupId>", "<deviceClassId>", new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("groupId").ToString());
@@ -939,7 +939,7 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new DeviceManagementClient(endpoint, "<instanceId>", credential);
 
-Response response = await client.GetDeploymentForDeviceClassSubgroupAsync("<groupId>", "<deviceClassId>", "<deploymentId>");
+Response response = await client.GetDeploymentForDeviceClassSubgroupAsync("<groupId>", "<deviceClassId>", "<deploymentId>", new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("deploymentId").ToString());
@@ -972,7 +972,7 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new DeviceManagementClient(endpoint, "<instanceId>", credential);
 
-Response response = client.GetDeploymentForDeviceClassSubgroup("<groupId>", "<deviceClassId>", "<deploymentId>");
+Response response = client.GetDeploymentForDeviceClassSubgroup("<groupId>", "<deviceClassId>", "<deploymentId>", new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("deploymentId").ToString());
@@ -1031,7 +1031,7 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new DeviceManagementClient(endpoint, "<instanceId>", credential);
 
-Response response = await client.StopDeploymentAsync("<groupId>", "<deviceClassId>", "<deploymentId>");
+Response response = await client.StopDeploymentAsync("<groupId>", "<deviceClassId>", "<deploymentId>", new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("deploymentId").ToString());
@@ -1064,7 +1064,7 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new DeviceManagementClient(endpoint, "<instanceId>", credential);
 
-Response response = client.StopDeployment("<groupId>", "<deviceClassId>", "<deploymentId>");
+Response response = client.StopDeployment("<groupId>", "<deviceClassId>", "<deploymentId>", new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("deploymentId").ToString());
@@ -1097,7 +1097,7 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new DeviceManagementClient(endpoint, "<instanceId>", credential);
 
-Response response = await client.RetryDeploymentAsync("<groupId>", "<deviceClassId>", "<deploymentId>");
+Response response = await client.RetryDeploymentAsync("<groupId>", "<deviceClassId>", "<deploymentId>", new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("deploymentId").ToString());
@@ -1130,7 +1130,7 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new DeviceManagementClient(endpoint, "<instanceId>", credential);
 
-Response response = client.RetryDeployment("<groupId>", "<deviceClassId>", "<deploymentId>");
+Response response = client.RetryDeployment("<groupId>", "<deviceClassId>", "<deploymentId>", new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("deploymentId").ToString());
@@ -1163,7 +1163,7 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new DeviceManagementClient(endpoint, "<instanceId>", credential);
 
-Response response = await client.GetDeviceClassSubgroupDeploymentStatusAsync("<groupId>", "<deviceClassId>", "<deploymentId>");
+Response response = await client.GetDeviceClassSubgroupDeploymentStatusAsync("<groupId>", "<deviceClassId>", "<deploymentId>", new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("groupId").ToString());
@@ -1192,7 +1192,7 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new DeviceManagementClient(endpoint, "<instanceId>", credential);
 
-Response response = client.GetDeviceClassSubgroupDeploymentStatus("<groupId>", "<deviceClassId>", "<deploymentId>");
+Response response = client.GetDeviceClassSubgroupDeploymentStatus("<groupId>", "<deviceClassId>", "<deploymentId>", new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("groupId").ToString());
@@ -1221,21 +1221,7 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new DeviceManagementClient(endpoint, "<instanceId>", credential);
 
-Response response = await client.GetOperationStatusAsync("<operationId>");
-
-JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.GetProperty("operationId").ToString());
-Console.WriteLine(result.GetProperty("status").ToString());
-Console.WriteLine(result.GetProperty("lastActionDateTime").ToString());
-Console.WriteLine(result.GetProperty("createdDateTime").ToString());
-]]></code>
-This sample shows how to call GetOperationStatusAsync with all parameters, and how to parse the result.
-<code><![CDATA[
-var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new DeviceManagementClient(endpoint, "<instanceId>", credential);
-
-Response response = await client.GetOperationStatusAsync("<operationId>", null);
+Response response = await client.GetOperationStatusAsync("<operationId>", null, new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("operationId").ToString());
@@ -1262,21 +1248,7 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new DeviceManagementClient(endpoint, "<instanceId>", credential);
 
-Response response = client.GetOperationStatus("<operationId>");
-
-JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.GetProperty("operationId").ToString());
-Console.WriteLine(result.GetProperty("status").ToString());
-Console.WriteLine(result.GetProperty("lastActionDateTime").ToString());
-Console.WriteLine(result.GetProperty("createdDateTime").ToString());
-]]></code>
-This sample shows how to call GetOperationStatus with all parameters, and how to parse the result.
-<code><![CDATA[
-var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new DeviceManagementClient(endpoint, "<instanceId>", credential);
-
-Response response = client.GetOperationStatus("<operationId>", null);
+Response response = client.GetOperationStatus("<operationId>", null, new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("operationId").ToString());
@@ -1405,7 +1377,7 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new DeviceManagementClient(endpoint, "<instanceId>", credential);
 
-Response response = await client.GetLogCollectionAsync("<logCollectionId>");
+Response response = await client.GetLogCollectionAsync("<logCollectionId>", new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("operationId").ToString());
@@ -1426,7 +1398,7 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new DeviceManagementClient(endpoint, "<instanceId>", credential);
 
-Response response = client.GetLogCollection("<logCollectionId>");
+Response response = client.GetLogCollection("<logCollectionId>", new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("operationId").ToString());
@@ -1447,7 +1419,7 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new DeviceManagementClient(endpoint, "<instanceId>", credential);
 
-Response response = await client.GetLogCollectionDetailedStatusAsync("<logCollectionId>");
+Response response = await client.GetLogCollectionDetailedStatusAsync("<logCollectionId>", new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("operationId").ToString());
@@ -1472,7 +1444,7 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new DeviceManagementClient(endpoint, "<instanceId>", credential);
 
-Response response = client.GetLogCollectionDetailedStatus("<logCollectionId>");
+Response response = client.GetLogCollectionDetailedStatus("<logCollectionId>", new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("operationId").ToString());
@@ -1491,26 +1463,13 @@ Console.WriteLine(result.GetProperty("description").ToString());
     </member>
     <member name="GetDeviceClassesAsync(string,RequestContext)">
 <example>
-This sample shows how to call GetDeviceClassesAsync and parse the result.
+This sample shows how to call GetDeviceClassesAsync with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new DeviceManagementClient(endpoint, "<instanceId>", credential);
 
-await foreach (var item in client.GetDeviceClassesAsync())
-{
-    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-    Console.WriteLine(result.GetProperty("deviceClassId").ToString());
-    Console.WriteLine(result.GetProperty("deviceClassProperties").GetProperty("compatProperties").GetProperty("<test>").ToString());
-}
-]]></code>
-This sample shows how to call GetDeviceClassesAsync with all parameters, and how to parse the result.
-<code><![CDATA[
-var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new DeviceManagementClient(endpoint, "<instanceId>", credential);
-
-await foreach (var item in client.GetDeviceClassesAsync("<filter>"))
+await foreach (var item in client.GetDeviceClassesAsync("<filter>", new RequestContext()))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("deviceClassId").ToString());
@@ -1529,26 +1488,13 @@ await foreach (var item in client.GetDeviceClassesAsync("<filter>"))
     </member>
     <member name="GetDeviceClasses(string,RequestContext)">
 <example>
-This sample shows how to call GetDeviceClasses and parse the result.
+This sample shows how to call GetDeviceClasses with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new DeviceManagementClient(endpoint, "<instanceId>", credential);
 
-foreach (var item in client.GetDeviceClasses())
-{
-    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-    Console.WriteLine(result.GetProperty("deviceClassId").ToString());
-    Console.WriteLine(result.GetProperty("deviceClassProperties").GetProperty("compatProperties").GetProperty("<test>").ToString());
-}
-]]></code>
-This sample shows how to call GetDeviceClasses with all parameters, and how to parse the result.
-<code><![CDATA[
-var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new DeviceManagementClient(endpoint, "<instanceId>", credential);
-
-foreach (var item in client.GetDeviceClasses("<filter>"))
+foreach (var item in client.GetDeviceClasses("<filter>", new RequestContext()))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("deviceClassId").ToString());
@@ -1573,7 +1519,7 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new DeviceManagementClient(endpoint, "<instanceId>", credential);
 
-await foreach (var item in client.GetInstallableUpdatesForDeviceClassesAsync("<deviceClassId>"))
+await foreach (var item in client.GetInstallableUpdatesForDeviceClassesAsync("<deviceClassId>", new RequestContext()))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("updateId").GetProperty("provider").ToString());
@@ -1593,7 +1539,7 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new DeviceManagementClient(endpoint, "<instanceId>", credential);
 
-foreach (var item in client.GetInstallableUpdatesForDeviceClasses("<deviceClassId>"))
+foreach (var item in client.GetInstallableUpdatesForDeviceClasses("<deviceClassId>", new RequestContext()))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("updateId").GetProperty("provider").ToString());
@@ -1607,27 +1553,13 @@ foreach (var item in client.GetInstallableUpdatesForDeviceClasses("<deviceClassI
     </member>
     <member name="GetDevicesAsync(string,RequestContext)">
 <example>
-This sample shows how to call GetDevicesAsync and parse the result.
+This sample shows how to call GetDevicesAsync with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new DeviceManagementClient(endpoint, "<instanceId>", credential);
 
-await foreach (var item in client.GetDevicesAsync())
-{
-    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-    Console.WriteLine(result.GetProperty("deviceId").ToString());
-    Console.WriteLine(result.GetProperty("deviceClassId").ToString());
-    Console.WriteLine(result.GetProperty("onLatestUpdate").ToString());
-}
-]]></code>
-This sample shows how to call GetDevicesAsync with all parameters, and how to parse the result.
-<code><![CDATA[
-var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new DeviceManagementClient(endpoint, "<instanceId>", credential);
-
-await foreach (var item in client.GetDevicesAsync("<filter>"))
+await foreach (var item in client.GetDevicesAsync("<filter>", new RequestContext()))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("deviceId").ToString());
@@ -1665,27 +1597,13 @@ await foreach (var item in client.GetDevicesAsync("<filter>"))
     </member>
     <member name="GetDevices(string,RequestContext)">
 <example>
-This sample shows how to call GetDevices and parse the result.
+This sample shows how to call GetDevices with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new DeviceManagementClient(endpoint, "<instanceId>", credential);
 
-foreach (var item in client.GetDevices())
-{
-    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-    Console.WriteLine(result.GetProperty("deviceId").ToString());
-    Console.WriteLine(result.GetProperty("deviceClassId").ToString());
-    Console.WriteLine(result.GetProperty("onLatestUpdate").ToString());
-}
-]]></code>
-This sample shows how to call GetDevices with all parameters, and how to parse the result.
-<code><![CDATA[
-var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new DeviceManagementClient(endpoint, "<instanceId>", credential);
-
-foreach (var item in client.GetDevices("<filter>"))
+foreach (var item in client.GetDevices("<filter>", new RequestContext()))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("deviceId").ToString());
@@ -1723,27 +1641,13 @@ foreach (var item in client.GetDevices("<filter>"))
     </member>
     <member name="GetGroupsAsync(string,RequestContext)">
 <example>
-This sample shows how to call GetGroupsAsync and parse the result.
+This sample shows how to call GetGroupsAsync with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new DeviceManagementClient(endpoint, "<instanceId>", credential);
 
-await foreach (var item in client.GetGroupsAsync())
-{
-    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-    Console.WriteLine(result.GetProperty("groupId").ToString());
-    Console.WriteLine(result.GetProperty("groupType").ToString());
-    Console.WriteLine(result.GetProperty("createdDateTime").ToString());
-}
-]]></code>
-This sample shows how to call GetGroupsAsync with all parameters, and how to parse the result.
-<code><![CDATA[
-var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new DeviceManagementClient(endpoint, "<instanceId>", credential);
-
-await foreach (var item in client.GetGroupsAsync("<orderBy>"))
+await foreach (var item in client.GetGroupsAsync("<orderBy>", new RequestContext()))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("groupId").ToString());
@@ -1760,27 +1664,13 @@ await foreach (var item in client.GetGroupsAsync("<orderBy>"))
     </member>
     <member name="GetGroups(string,RequestContext)">
 <example>
-This sample shows how to call GetGroups and parse the result.
+This sample shows how to call GetGroups with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new DeviceManagementClient(endpoint, "<instanceId>", credential);
 
-foreach (var item in client.GetGroups())
-{
-    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-    Console.WriteLine(result.GetProperty("groupId").ToString());
-    Console.WriteLine(result.GetProperty("groupType").ToString());
-    Console.WriteLine(result.GetProperty("createdDateTime").ToString());
-}
-]]></code>
-This sample shows how to call GetGroups with all parameters, and how to parse the result.
-<code><![CDATA[
-var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new DeviceManagementClient(endpoint, "<instanceId>", credential);
-
-foreach (var item in client.GetGroups("<orderBy>"))
+foreach (var item in client.GetGroups("<orderBy>", new RequestContext()))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("groupId").ToString());
@@ -1803,7 +1693,7 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new DeviceManagementClient(endpoint, "<instanceId>", credential);
 
-await foreach (var item in client.GetBestUpdatesForGroupsAsync("<groupId>"))
+await foreach (var item in client.GetBestUpdatesForGroupsAsync("<groupId>", new RequestContext()))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("groupId").ToString());
@@ -1826,7 +1716,7 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new DeviceManagementClient(endpoint, "<instanceId>", credential);
 
-foreach (var item in client.GetBestUpdatesForGroups("<groupId>"))
+foreach (var item in client.GetBestUpdatesForGroups("<groupId>", new RequestContext()))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("groupId").ToString());
@@ -1849,24 +1739,7 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new DeviceManagementClient(endpoint, "<instanceId>", credential);
 
-await foreach (var item in client.GetDeploymentsForGroupsAsync("<groupId>"))
-{
-    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-    Console.WriteLine(result.GetProperty("deploymentId").ToString());
-    Console.WriteLine(result.GetProperty("startDateTime").ToString());
-    Console.WriteLine(result.GetProperty("update").GetProperty("updateId").GetProperty("provider").ToString());
-    Console.WriteLine(result.GetProperty("update").GetProperty("updateId").GetProperty("name").ToString());
-    Console.WriteLine(result.GetProperty("update").GetProperty("updateId").GetProperty("version").ToString());
-    Console.WriteLine(result.GetProperty("groupId").ToString());
-}
-]]></code>
-This sample shows how to call GetDeploymentsForGroupsAsync with all parameters, and how to parse the result.
-<code><![CDATA[
-var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new DeviceManagementClient(endpoint, "<instanceId>", credential);
-
-await foreach (var item in client.GetDeploymentsForGroupsAsync("<groupId>", "<orderBy>"))
+await foreach (var item in client.GetDeploymentsForGroupsAsync("<groupId>", "<orderBy>", new RequestContext()))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("deploymentId").ToString());
@@ -1900,24 +1773,7 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new DeviceManagementClient(endpoint, "<instanceId>", credential);
 
-foreach (var item in client.GetDeploymentsForGroups("<groupId>"))
-{
-    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-    Console.WriteLine(result.GetProperty("deploymentId").ToString());
-    Console.WriteLine(result.GetProperty("startDateTime").ToString());
-    Console.WriteLine(result.GetProperty("update").GetProperty("updateId").GetProperty("provider").ToString());
-    Console.WriteLine(result.GetProperty("update").GetProperty("updateId").GetProperty("name").ToString());
-    Console.WriteLine(result.GetProperty("update").GetProperty("updateId").GetProperty("version").ToString());
-    Console.WriteLine(result.GetProperty("groupId").ToString());
-}
-]]></code>
-This sample shows how to call GetDeploymentsForGroups with all parameters, and how to parse the result.
-<code><![CDATA[
-var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new DeviceManagementClient(endpoint, "<instanceId>", credential);
-
-foreach (var item in client.GetDeploymentsForGroups("<groupId>", "<orderBy>"))
+foreach (var item in client.GetDeploymentsForGroups("<groupId>", "<orderBy>", new RequestContext()))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("deploymentId").ToString());
@@ -1951,21 +1807,7 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new DeviceManagementClient(endpoint, "<instanceId>", credential);
 
-await foreach (var item in client.GetDeviceClassSubgroupsForGroupsAsync("<groupId>"))
-{
-    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-    Console.WriteLine(result.GetProperty("deviceClassId").ToString());
-    Console.WriteLine(result.GetProperty("groupId").ToString());
-    Console.WriteLine(result.GetProperty("createdDateTime").ToString());
-}
-]]></code>
-This sample shows how to call GetDeviceClassSubgroupsForGroupsAsync with all parameters, and how to parse the result.
-<code><![CDATA[
-var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new DeviceManagementClient(endpoint, "<instanceId>", credential);
-
-await foreach (var item in client.GetDeviceClassSubgroupsForGroupsAsync("<groupId>", "<filter>"))
+await foreach (var item in client.GetDeviceClassSubgroupsForGroupsAsync("<groupId>", "<filter>", new RequestContext()))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("deviceClassId").ToString());
@@ -1985,21 +1827,7 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new DeviceManagementClient(endpoint, "<instanceId>", credential);
 
-foreach (var item in client.GetDeviceClassSubgroupsForGroups("<groupId>"))
-{
-    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-    Console.WriteLine(result.GetProperty("deviceClassId").ToString());
-    Console.WriteLine(result.GetProperty("groupId").ToString());
-    Console.WriteLine(result.GetProperty("createdDateTime").ToString());
-}
-]]></code>
-This sample shows how to call GetDeviceClassSubgroupsForGroups with all parameters, and how to parse the result.
-<code><![CDATA[
-var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new DeviceManagementClient(endpoint, "<instanceId>", credential);
-
-foreach (var item in client.GetDeviceClassSubgroupsForGroups("<groupId>", "<filter>"))
+foreach (var item in client.GetDeviceClassSubgroupsForGroups("<groupId>", "<filter>", new RequestContext()))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("deviceClassId").ToString());
@@ -2019,24 +1847,7 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new DeviceManagementClient(endpoint, "<instanceId>", credential);
 
-await foreach (var item in client.GetDeploymentsForDeviceClassSubgroupsAsync("<groupId>", "<deviceClassId>"))
-{
-    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-    Console.WriteLine(result.GetProperty("deploymentId").ToString());
-    Console.WriteLine(result.GetProperty("startDateTime").ToString());
-    Console.WriteLine(result.GetProperty("update").GetProperty("updateId").GetProperty("provider").ToString());
-    Console.WriteLine(result.GetProperty("update").GetProperty("updateId").GetProperty("name").ToString());
-    Console.WriteLine(result.GetProperty("update").GetProperty("updateId").GetProperty("version").ToString());
-    Console.WriteLine(result.GetProperty("groupId").ToString());
-}
-]]></code>
-This sample shows how to call GetDeploymentsForDeviceClassSubgroupsAsync with all parameters, and how to parse the result.
-<code><![CDATA[
-var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new DeviceManagementClient(endpoint, "<instanceId>", credential);
-
-await foreach (var item in client.GetDeploymentsForDeviceClassSubgroupsAsync("<groupId>", "<deviceClassId>", "<orderBy>"))
+await foreach (var item in client.GetDeploymentsForDeviceClassSubgroupsAsync("<groupId>", "<deviceClassId>", "<orderBy>", new RequestContext()))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("deploymentId").ToString());
@@ -2070,24 +1881,7 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new DeviceManagementClient(endpoint, "<instanceId>", credential);
 
-foreach (var item in client.GetDeploymentsForDeviceClassSubgroups("<groupId>", "<deviceClassId>"))
-{
-    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-    Console.WriteLine(result.GetProperty("deploymentId").ToString());
-    Console.WriteLine(result.GetProperty("startDateTime").ToString());
-    Console.WriteLine(result.GetProperty("update").GetProperty("updateId").GetProperty("provider").ToString());
-    Console.WriteLine(result.GetProperty("update").GetProperty("updateId").GetProperty("name").ToString());
-    Console.WriteLine(result.GetProperty("update").GetProperty("updateId").GetProperty("version").ToString());
-    Console.WriteLine(result.GetProperty("groupId").ToString());
-}
-]]></code>
-This sample shows how to call GetDeploymentsForDeviceClassSubgroups with all parameters, and how to parse the result.
-<code><![CDATA[
-var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new DeviceManagementClient(endpoint, "<instanceId>", credential);
-
-foreach (var item in client.GetDeploymentsForDeviceClassSubgroups("<groupId>", "<deviceClassId>", "<orderBy>"))
+foreach (var item in client.GetDeploymentsForDeviceClassSubgroups("<groupId>", "<deviceClassId>", "<orderBy>", new RequestContext()))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("deploymentId").ToString());
@@ -2121,22 +1915,7 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new DeviceManagementClient(endpoint, "<instanceId>", credential);
 
-await foreach (var item in client.GetDeviceStatesForDeviceClassSubgroupDeploymentsAsync("<groupId>", "<deviceClassId>", "<deploymentId>"))
-{
-    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-    Console.WriteLine(result.GetProperty("deviceId").ToString());
-    Console.WriteLine(result.GetProperty("retryCount").ToString());
-    Console.WriteLine(result.GetProperty("movedOnToNewDeployment").ToString());
-    Console.WriteLine(result.GetProperty("deviceState").ToString());
-}
-]]></code>
-This sample shows how to call GetDeviceStatesForDeviceClassSubgroupDeploymentsAsync with all parameters, and how to parse the result.
-<code><![CDATA[
-var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new DeviceManagementClient(endpoint, "<instanceId>", credential);
-
-await foreach (var item in client.GetDeviceStatesForDeviceClassSubgroupDeploymentsAsync("<groupId>", "<deviceClassId>", "<deploymentId>", "<filter>"))
+await foreach (var item in client.GetDeviceStatesForDeviceClassSubgroupDeploymentsAsync("<groupId>", "<deviceClassId>", "<deploymentId>", "<filter>", new RequestContext()))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("deviceId").ToString());
@@ -2156,22 +1935,7 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new DeviceManagementClient(endpoint, "<instanceId>", credential);
 
-foreach (var item in client.GetDeviceStatesForDeviceClassSubgroupDeployments("<groupId>", "<deviceClassId>", "<deploymentId>"))
-{
-    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-    Console.WriteLine(result.GetProperty("deviceId").ToString());
-    Console.WriteLine(result.GetProperty("retryCount").ToString());
-    Console.WriteLine(result.GetProperty("movedOnToNewDeployment").ToString());
-    Console.WriteLine(result.GetProperty("deviceState").ToString());
-}
-]]></code>
-This sample shows how to call GetDeviceStatesForDeviceClassSubgroupDeployments with all parameters, and how to parse the result.
-<code><![CDATA[
-var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new DeviceManagementClient(endpoint, "<instanceId>", credential);
-
-foreach (var item in client.GetDeviceStatesForDeviceClassSubgroupDeployments("<groupId>", "<deviceClassId>", "<deploymentId>", "<filter>"))
+foreach (var item in client.GetDeviceStatesForDeviceClassSubgroupDeployments("<groupId>", "<deviceClassId>", "<deploymentId>", "<filter>", new RequestContext()))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("deviceId").ToString());
@@ -2185,28 +1949,13 @@ foreach (var item in client.GetDeviceStatesForDeviceClassSubgroupDeployments("<g
     </member>
     <member name="GetOperationStatusesAsync(string,int?,RequestContext)">
 <example>
-This sample shows how to call GetOperationStatusesAsync and parse the result.
+This sample shows how to call GetOperationStatusesAsync with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new DeviceManagementClient(endpoint, "<instanceId>", credential);
 
-await foreach (var item in client.GetOperationStatusesAsync())
-{
-    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-    Console.WriteLine(result.GetProperty("operationId").ToString());
-    Console.WriteLine(result.GetProperty("status").ToString());
-    Console.WriteLine(result.GetProperty("lastActionDateTime").ToString());
-    Console.WriteLine(result.GetProperty("createdDateTime").ToString());
-}
-]]></code>
-This sample shows how to call GetOperationStatusesAsync with all parameters, and how to parse the result.
-<code><![CDATA[
-var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new DeviceManagementClient(endpoint, "<instanceId>", credential);
-
-await foreach (var item in client.GetOperationStatusesAsync("<filter>", 1234))
+await foreach (var item in client.GetOperationStatusesAsync("<filter>", 1234, new RequestContext()))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("operationId").ToString());
@@ -2228,28 +1977,13 @@ await foreach (var item in client.GetOperationStatusesAsync("<filter>", 1234))
     </member>
     <member name="GetOperationStatuses(string,int?,RequestContext)">
 <example>
-This sample shows how to call GetOperationStatuses and parse the result.
+This sample shows how to call GetOperationStatuses with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new DeviceManagementClient(endpoint, "<instanceId>", credential);
 
-foreach (var item in client.GetOperationStatuses())
-{
-    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-    Console.WriteLine(result.GetProperty("operationId").ToString());
-    Console.WriteLine(result.GetProperty("status").ToString());
-    Console.WriteLine(result.GetProperty("lastActionDateTime").ToString());
-    Console.WriteLine(result.GetProperty("createdDateTime").ToString());
-}
-]]></code>
-This sample shows how to call GetOperationStatuses with all parameters, and how to parse the result.
-<code><![CDATA[
-var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new DeviceManagementClient(endpoint, "<instanceId>", credential);
-
-foreach (var item in client.GetOperationStatuses("<filter>", 1234))
+foreach (var item in client.GetOperationStatuses("<filter>", 1234, new RequestContext()))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("operationId").ToString());
@@ -2271,13 +2005,13 @@ foreach (var item in client.GetOperationStatuses("<filter>", 1234))
     </member>
     <member name="GetLogCollectionsAsync(RequestContext)">
 <example>
-This sample shows how to call GetLogCollectionsAsync and parse the result.
+This sample shows how to call GetLogCollectionsAsync with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new DeviceManagementClient(endpoint, "<instanceId>", credential);
 
-await foreach (var item in client.GetLogCollectionsAsync())
+await foreach (var item in client.GetLogCollectionsAsync(new RequestContext()))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("operationId").ToString());
@@ -2293,13 +2027,13 @@ await foreach (var item in client.GetLogCollectionsAsync())
     </member>
     <member name="GetLogCollections(RequestContext)">
 <example>
-This sample shows how to call GetLogCollections and parse the result.
+This sample shows how to call GetLogCollections with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new DeviceManagementClient(endpoint, "<instanceId>", credential);
 
-foreach (var item in client.GetLogCollections())
+foreach (var item in client.GetLogCollections(new RequestContext()))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("operationId").ToString());
@@ -2321,7 +2055,7 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new DeviceManagementClient(endpoint, "<instanceId>", credential);
 
-await foreach (var item in client.GetHealthOfDevicesAsync("<filter>"))
+await foreach (var item in client.GetHealthOfDevicesAsync("<filter>", new RequestContext()))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("deviceId").ToString());
@@ -2342,7 +2076,7 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new DeviceManagementClient(endpoint, "<instanceId>", credential);
 
-foreach (var item in client.GetHealthOfDevices("<filter>"))
+foreach (var item in client.GetHealthOfDevices("<filter>", new RequestContext()))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("deviceId").ToString());
