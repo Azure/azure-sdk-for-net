@@ -311,7 +311,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <param name="content"> Request body for operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<Response<DataProtectionUnlockDeleteResponse>> UnlockDeleteAsync(DataProtectionUnlockDeleteContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DataProtectionUnlockDeleteResult>> UnlockDeleteAsync(DataProtectionUnlockDeleteContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -345,7 +345,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <param name="content"> Request body for operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual Response<DataProtectionUnlockDeleteResponse> UnlockDelete(DataProtectionUnlockDeleteContent content, CancellationToken cancellationToken = default)
+        public virtual Response<DataProtectionUnlockDeleteResult> UnlockDelete(DataProtectionUnlockDeleteContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 

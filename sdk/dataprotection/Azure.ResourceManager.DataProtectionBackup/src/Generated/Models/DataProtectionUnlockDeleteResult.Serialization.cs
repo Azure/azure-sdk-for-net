@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
-    public partial class DataProtectionUnlockDeleteResponse
+    public partial class DataProtectionUnlockDeleteResult
     {
-        internal static DataProtectionUnlockDeleteResponse DeserializeDataProtectionUnlockDeleteResponse(JsonElement element)
+        internal static DataProtectionUnlockDeleteResult DeserializeDataProtectionUnlockDeleteResult(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     continue;
                 }
             }
-            return new DataProtectionUnlockDeleteResponse(unlockDeleteExpiryTime.Value);
+            return new DataProtectionUnlockDeleteResult(unlockDeleteExpiryTime.Value);
         }
     }
 }

@@ -245,7 +245,7 @@ rename-mapping:
   SoftDeleteSettings: BackupVaultSoftDeleteSettings
   SoftDeleteState: BackupVaultSoftDeleteState
   UnlockDeleteRequest: DataProtectionUnlockDeleteContent
-  UnlockDeleteResponse: DataProtectionUnlockDeleteResponse
+  UnlockDeleteResponse: DataProtectionUnlockDeleteResult
 
 directive:
 # Correct the type of properties
