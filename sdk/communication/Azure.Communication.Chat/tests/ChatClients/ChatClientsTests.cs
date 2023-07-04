@@ -21,21 +21,15 @@ namespace Azure.Communication.Chat.Tests.ChatClients
         private const string Page1ReadReceiptsApiResponsePayload = "{\"value\":[{\"senderCommunicationIdentifier\":{\"rawId\":\"8:acs:1b5cc06b-f352-4571-b1e6-d9b259b7c776_00000007-0464-274b-b274-5a3a0d000101\"},\"chatMessageId\":\"1\",\"readOn\":\"2020-12-15T00:00:01Z\"},{\"senderCommunicationIdentifier\":{\"rawId\":\"8:acs:1b5cc06b-f352-4571-b1e6-d9b259b7c776_00000007-0464-274b-b274-5a3a0d000102\"},\"chatMessageId\":\"2\",\"readOn\":\"2020-12-15T00:00:02Z\"},{\"senderCommunicationIdentifier\":{\"rawId\":\"8:acs:1b5cc06b-f352-4571-b1e6-d9b259b7c776_00000007-0464-274b-b274-5a3a0d000103\"},\"chatMessageId\":\"3\",\"readOn\":\"2020-12-15T00:00:03Z\"}],\"nextLink\":\"nextLink\"}";
         private const string Page2ReadReceiptsApiResponsePayload = "{\"value\":[{\"senderCommunicationIdentifier\":{\"rawId\":\"8:acs:1b5cc06b-f352-4571-b1e6-d9b259b7c776_00000007-0464-274b-b274-5a3a0d000104\"},\"chatMessageId\":\"4\",\"readOn\":\"2020-12-15T00:00:04Z\"},{\"senderCommunicationIdentifier\":{\"rawId\":\"8:acs:1b5cc06b-f352-4571-b1e6-d9b259b7c776_00000007-0464-274b-b274-5a3a0d000105\"},\"chatMessageId\":\"5\",\"readOn\":\"2020-12-15T00:00:05Z\"}]}";
 
-        private const string CreateChatThreadWithErrorsApiResponsePayload = "{\"chatThread\":{\"id\":\"19:e5e7a3fa5f314a01b2d12c6c7b37f433@thread.v2\",\"topic\":\"Topic for testing errors\",\"createdOn\":\"2020-12-18T18:14:33Z\",\"createdByCommunicationIdentifier\":{\"rawId\":\"8:acs:46849534-eb08-4ab7-bde7-c36928cd1547_00000007-165c-9b10-b0b7-3a3a0d00076c\"}},\"invalidParticipants\":[{\"code\":\"404\",\"message\":\"Not found\",\"target\":\"8:acs:1b5cc06b-f352-4571-b1e6-d9b259b7c776_00000007-1234-1234-1234-223a12345677\"},{\"code\":\"401\",\"message\":\"Authentication failed\",\"target\":\"8:acs:1b5cc06b-f352-4571-b1e6-d9b259b7c776_00000007-1234-1234-1234-223a12345678\"},{\"code\":\"403\",\"message\":\"Permissions check failed\",\"target\":\"8:acs:1b5cc06b-f352-4571-b1e6-d9b259b7c776_00000007-1234-1234-1234-223a12345679\"}]}";
+        private const string CreateChatThreadWithErrorsApiResponsePayload = "{\"chatThread\":{\"id\":\"19:e5e7a3fa5f314a01b2d12c6c7b37f433@thread.v2\",\"topic\":\"Topic for testing errors\",\"createdOn\":\"2020-12-18T18:14:33Z\",\"createdByCommunicationIdentifier\":{\"rawId\":\"8:acs:46849534-eb08-4ab7-bde7-c36928cd1547_00000007-165c-9b10-b0b7-3a3a0d00076c\"}},\"invalidParticipants\":[{\"code\":\"404\",\"message\":\"Not found\",\"target\":\"8:acs:1b5cc06b-f352-4571-b1e6-d9b259b7c776_00000007-1234-1234-1234-223a12345677\"},{\"code\":\"401\",\"message\":\"Authentication failed\",\"target\":\"8:acs:1b5cc06b-f352-4571-b1e6-d9b259b7c776_00000007-1234-1234-1234-223a12345678\",\"details\":[{\"code\":\"404\",\"message\":\"Not found\",\"target\":\"8:acs:1b5cc06b-f352-4571-b1e6-d9b259b7c776_00000007-1234-1234-1234-223a12345677\"}],\"innererror\":{\"code\":\"404\",\"message\":\"Not found\",\"target\":\"8:acs:1b5cc06b-f352-4571-b1e6-d9b259b7c776_00000007-1234-1234-1234-223a12345677\"}},{\"code\":\"403\",\"message\":\"Permissions check failed\",\"target\":\"8:acs:1b5cc06b-f352-4571-b1e6-d9b259b7c776_00000007-1234-1234-1234-223a12345679\",\"innererror\":{}}]}";
+
         private const string AddParticipantsdWithErrorsApiResponsePayload = "{\"invalidParticipants\":[{\"code\":\"404\",\"message\":\"Not found\",\"target\":\"8:acs:1b5cc06b-f352-4571-b1e6-d9b259b7c776_00000007-1234-1234-1234-223a12345677\"},{\"code\":\"401\",\"message\":\"Authentication failed\",\"target\":\"8:acs:1b5cc06b-f352-4571-b1e6-d9b259b7c776_00000007-1234-1234-1234-223a12345678\"},{\"code\":\"403\",\"message\":\"Permissions check failed\",\"target\":\"8:acs:1b5cc06b-f352-4571-b1e6-d9b259b7c776_00000007-1234-1234-1234-223a12345679\"}]}";
 
         private const string CreateChatThreadSuccessApiResponsePayload = "{\"chatThread\":{\"id\":\"19:e5e7a3fa5f314a01b2d12c6c7b37f433@thread.v2\",\"topic\":\"Topic for testing success\",\"createdOn\":\"2021-02-25T22:34:48Z\",\"createdByCommunicationIdentifier\":{\"rawId\":\"8:acs:46849534-eb08-4ab7-bde7-c36928cd1547_00000007-165c-9b10-b0b7-3a3a0d00076c\",\"communicationUser\":{\"id\":\"8:acs:46849534-eb08-4ab7-bde7-c36928cd1547_00000007-165c-9b10-b0b7-3a3a0d00076c\"}}}}";
 
-        // TODO:
-        private const string CreateChatThreadWithExpiredTokenFailureApiResponsePayload = "";
-
         private const string GetThreadApiResponsePayload = "{\"id\":\"19:e5e7a3fa5f314a01b2d12c6c7b37f433@thread.v2\",\"topic\":\"Test Thread\",\"createdOn\":\"2021-02-26T00:46:08Z\",\"createdByCommunicationIdentifier\":{\"rawId\":\"8:acs:1b5cc06b-f352-4571-b1e6-d9b259b7c776_00000007-8f5e-776d-ea7c-5a3a0d0027b7\",\"communicationUser\":{\"id\":\"8:acs:1b5cc06b-f352-4571-b1e6-d9b259b7c776_00000007-8f5e-776d-ea7c-5a3a0d0027b7\"}}}";
 
         private const string SendMessageApiResponsePayload = "{\"id\":\"1\"}";
-
-        // TODO:
-        private const string SendMessageToDeletedThreadApiResponsePayload = "{}";
-        private const string UpdateTopicOfDeletedThreadApiResponsePayload = "{}";
 
         private const string GetTextMessageApiResponsePayload = "{\"id\":\"1\",\"type\":\"text\",\"sequenceId\":\"1\",\"version\":\"1\",\"content\":{\"message\":\"Test Message\"},\"senderDisplayName\":\"DisplayName for Test Message\",\"createdOn\":\"2021-02-26T00:30:19Z\",\"senderCommunicationIdentifier\":{\"rawId\":\"8:acs:1b5cc06b-f352-4571-b1e6-d9b259b7c776_00000007-8f5e-776d-ea7c-5a3a0d0027b7\",\"communicationUser\":{\"id\":\"8:acs:1b5cc06b-f352-4571-b1e6-d9b259b7c776_00000007-8f5e-776d-ea7c-5a3a0d0027b7\"}}}";
         private const string GetTopicUpdatedMessageApiResponsePayload = "{\"id\":\"2\",\"type\":\"topicUpdated\",\"priority\":\"normal\",\"version\":\"2\",\"content\":{\"topic\":\"TopicUpdateTest\",\"initiatorCommunicationIdentifier\":{\"rawId\":\"8:acs:1b5cc06b-f352-4571-b1e6-d9b259b7c776_00000007-8f5e-776d-ea7c-5a3a0d0027b7\"}},\"createdOn\":\"2021-01-11T03:30:35Z\",\"senderId\":\"19:5f2ad13282c449c894a2a388f9d9ddd9@thread.v2\"}";
@@ -45,7 +39,7 @@ namespace Azure.Communication.Chat.Tests.ChatClients
 
         private const string AddParticipantApiResponsePayload = "{}";
         private const string AddParticipantsApiResponsePayload = "{}";
-        private const string GetThreadsApiResponsePayload = "{\"value\":[{\"id\":\"1\",\"topic\":\"Test Thread 1\",\"lastMessageReceivedOn\":\"2021-02-26T00:46:09Z\"},{\"id\":\"2\",\"topic\":\"Test Thread 2\",\"lastMessageReceivedOn\":\"2021-02-25T23:38:20Z\"},{\"id\":\"3\",\"topic\":\"Test Thread 3\",\"lastMessageReceivedOn\":\"2021-02-25T23:33:29Z\"}]}";
+        private const string GetThreadsApiResponsePayload = "{\"value\":[{\"id\":\"1\",\"topic\":\"Test Thread 1\",\"lastMessageReceivedOn\":\"2021-02-26T00:46:09Z\"},{\"id\":\"2\",\"topic\":\"Test Thread 2\",\"lastMessageReceivedOn\":\"2021-02-25T23:38:20Z\"},{\"id\":\"3\",\"topic\":\"Test Thread 3\",\"lastMessageReceivedOn\":\"2021-02-25T23:33:29Z\",\"deletedOn\":null},{\"id\":\"4\",\"topic\":\"Test Thread 4\",\"lastMessageReceivedOn\":null,\"deletedOn\":\"2021-02-25T23:38:20Z\"},{}]}";
 
         private const string GetThreadsApiResponsePayloadPage1 = "{\"value\":[{\"id\":\"1\",\"topic\":\"Test Thread 1\",\"lastMessageReceivedOn\":\"2021-02-26T00:46:09Z\"},{\"id\":\"2\",\"topic\":\"Test Thread 2\",\"lastMessageReceivedOn\":\"2021-02-25T23:38:20Z\"},{\"id\":\"3\",\"topic\":\"Test Thread 3\",\"lastMessageReceivedOn\":\"2021-02-25T23:33:29Z\"}],\"nextLink\":\"nextLink\"}";
 
@@ -903,10 +897,14 @@ namespace Azure.Communication.Chat.Tests.ChatClients
             await foreach (ChatThreadItem chatThread in chatThreads)
             {
                 idCounter++;
+                if (idCounter == 5 && chatThread?.Id == null)
+                {
+                    continue;
+                }
                 Assert.AreEqual($"{idCounter}", chatThread.Id);
                 Assert.AreEqual($"Test Thread {idCounter}", chatThread.Topic);
             }
-            Assert.AreEqual(3, idCounter);
+            Assert.AreEqual(5, idCounter);
         }
 
         [Test]
@@ -1023,10 +1021,14 @@ namespace Azure.Communication.Chat.Tests.ChatClients
             await foreach (ChatThreadItem chatThread in chatThreads)
             {
                 idCounter++;
+                if (idCounter == 5 && chatThread?.Id == null)
+                {
+                    continue;
+                }
                 Assert.AreEqual($"{idCounter}", chatThread.Id);
                 Assert.AreEqual($"Test Thread {idCounter}", chatThread.Topic);
             }
-            Assert.AreEqual(3, idCounter);
+            Assert.AreEqual(5, idCounter);
         }
 
         [Test]
@@ -1043,11 +1045,15 @@ namespace Azure.Communication.Chat.Tests.ChatClients
             int idCounter = 0;
             foreach (ChatThreadItem chatThread in chatThreads)
             {
-                idCounter++;
+                ++idCounter;
+                if (idCounter == 5 && chatThread?.Id == null)
+                {
+                        continue;
+                }
                 Assert.AreEqual($"{idCounter}", chatThread.Id);
                 Assert.AreEqual($"Test Thread {idCounter}", chatThread.Topic);
             }
-            Assert.AreEqual(3, idCounter);
+            Assert.AreEqual(5, idCounter);
         }
 
         [Test]
@@ -1351,8 +1357,12 @@ namespace Azure.Communication.Chat.Tests.ChatClients
             var sendChatMessageResult = ChatModelFactory.SendChatMessageResult("id");
             Assert.IsNotNull(sendChatMessageResult);
 
-            var chatError = ChatModelFactory.ChatError("code", "message", "target", It.IsAny<IEnumerable<ChatError>>(), It.IsAny<ChatError>());
+            var innerChatError = new ChatError("innerErrorCode", "InnerCodeMessage");
+            var chatErrorDetails = new List<ChatError>() { new ChatError("detailsErrorCode", "DetailsCodeMessage") };
+            var chatError = ChatModelFactory.ChatError("code", "message", "target", chatErrorDetails, innerChatError);
             Assert.IsNotNull(chatError);
+            Assert.AreEqual(chatError.Details, chatErrorDetails);
+            Assert.AreEqual(chatError.InnerError, innerChatError);
 
             var chatParticipant = ChatModelFactory.ChatParticipant(It.IsAny<CommunicationIdentifier>(), It.IsAny<string>(), It.IsAny<DateTimeOffset>());
             Assert.IsNotNull(chatParticipant);
@@ -1360,7 +1370,7 @@ namespace Azure.Communication.Chat.Tests.ChatClients
             var addChatParticipantsResult = ChatModelFactory.AddChatParticipantsResult(It.IsAny<IEnumerable<ChatError>>());
             Assert.IsNotNull(addChatParticipantsResult);
 
-            var addChatParticipantsResultEmpty= new AddChatParticipantsResult();
+            var addChatParticipantsResultEmpty = new AddChatParticipantsResult();
             Assert.IsNotNull(addChatParticipantsResultEmpty);
 
             var chatThreadItem = ChatModelFactory.ChatThreadItem("id", "topic", It.IsAny<DateTimeOffset>(), It.IsAny<DateTimeOffset>());
@@ -1377,6 +1387,9 @@ namespace Azure.Communication.Chat.Tests.ChatClients
             {
                 Assert.IsNotNull(ex);
             }
+
+            var chatMessageReceipt = ChatModelFactory.ChatMessageReadReceipt(It.IsAny<CommunicationUserIdentifier>(), "messageId", It.IsAny<DateTimeOffset>());
+            Assert.IsNotNull(chatMessageReceipt);
         }
 
         [Test]

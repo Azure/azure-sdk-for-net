@@ -6,7 +6,6 @@ using Azure.Core;
 
 namespace Azure.Communication.Chat
 {
-    [ExcludeFromCodeCoverage]
     [CodeGenModel("ChatMessageReadReceiptsCollection")]
     internal partial class ChatMessageReadReceiptsCollection
     {
