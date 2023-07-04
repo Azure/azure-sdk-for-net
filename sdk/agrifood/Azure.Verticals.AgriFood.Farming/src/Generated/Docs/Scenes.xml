@@ -160,7 +160,7 @@ var data = new {
     },
 };
 
-Response response = await client.SearchFeaturesAsync("<collectionId>", RequestContent.Create(data), 1234, 1234, new RequestContext());
+Response response = await client.SearchFeaturesAsync("<collectionId>", RequestContent.Create(data), 1234, 1234);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("features")[0].GetProperty("stacVersion").ToString());
@@ -235,7 +235,7 @@ var data = new {
     },
 };
 
-Response response = client.SearchFeatures("<collectionId>", RequestContent.Create(data), 1234, 1234, new RequestContext());
+Response response = client.SearchFeatures("<collectionId>", RequestContent.Create(data), 1234, 1234);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("features")[0].GetProperty("stacVersion").ToString());
@@ -432,7 +432,7 @@ var data = new {
     },
 };
 
-var operation = await client.CreateSatelliteDataIngestionJobAsync(WaitUntil.Completed, "<jobId>", RequestContent.Create(data), new RequestContext());
+var operation = await client.CreateSatelliteDataIngestionJobAsync(WaitUntil.Completed, "<jobId>", RequestContent.Create(data));
 
 BinaryData responseData = operation.Value;
 JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
@@ -517,7 +517,7 @@ var data = new {
     },
 };
 
-var operation = client.CreateSatelliteDataIngestionJob(WaitUntil.Completed, "<jobId>", RequestContent.Create(data), new RequestContext());
+var operation = client.CreateSatelliteDataIngestionJob(WaitUntil.Completed, "<jobId>", RequestContent.Create(data));
 
 BinaryData responseData = operation.Value;
 JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;

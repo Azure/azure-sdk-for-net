@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -19,7 +20,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="disableMetricsCollection"> If true, disable data store metrics collection. Default is false. Type: boolean (or Expression with resultType boolean). </param>
         /// <param name="copyBehavior"> The type of copy behavior for copy sink. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        internal UnknownStoreWriteSettings(string storeWriteSettingsType, BinaryData maxConcurrentConnections, BinaryData disableMetricsCollection, BinaryData copyBehavior, IDictionary<string, BinaryData> additionalProperties) : base(storeWriteSettingsType, maxConcurrentConnections, disableMetricsCollection, copyBehavior, additionalProperties)
+        internal UnknownStoreWriteSettings(string storeWriteSettingsType, DataFactoryElement<int> maxConcurrentConnections, DataFactoryElement<bool> disableMetricsCollection, BinaryData copyBehavior, IDictionary<string, BinaryData> additionalProperties) : base(storeWriteSettingsType, maxConcurrentConnections, disableMetricsCollection, copyBehavior, additionalProperties)
         {
             StoreWriteSettingsType = storeWriteSettingsType ?? "Unknown";
         }

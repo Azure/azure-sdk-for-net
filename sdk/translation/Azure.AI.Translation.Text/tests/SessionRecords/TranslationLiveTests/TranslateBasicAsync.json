@@ -14,7 +14,7 @@
         "x-ms-client-request-id": "9b062b6f1135dbc76e3a53d2089f6504",
         "x-ms-return-client-request-id": "true"
       },
-      "RequestBody": "[{\u0022Text\u0022:\u0022Hola mundo\u0022}]",
+      "RequestBody": "[{\u0022text\u0022:\u0022Hola mundo\u0022}]",
       "StatusCode": 200,
       "ResponseHeaders": {
         "Access-Control-Expose-Headers": [

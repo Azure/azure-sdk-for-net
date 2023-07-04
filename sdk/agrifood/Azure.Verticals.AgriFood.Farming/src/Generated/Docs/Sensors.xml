@@ -45,7 +45,7 @@ var data = new {
     },
 };
 
-Response response = await client.CreateOrUpdateAsync("<sensorPartnerId>", "<sensorId>", RequestContent.Create(data), new RequestContext());
+Response response = await client.CreateOrUpdateAsync("<sensorPartnerId>", "<sensorId>", RequestContent.Create(data));
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("sensorDataModelId").ToString());
@@ -116,7 +116,7 @@ var data = new {
     },
 };
 
-Response response = client.CreateOrUpdate("<sensorPartnerId>", "<sensorId>", RequestContent.Create(data), new RequestContext());
+Response response = client.CreateOrUpdate("<sensorPartnerId>", "<sensorId>", RequestContent.Create(data));
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("sensorDataModelId").ToString());
@@ -218,7 +218,7 @@ This sample shows how to call DeleteAsync with required parameters.
 var credential = new DefaultAzureCredential();
 var client = new FarmBeatsClient(credential).GetSensorsClient("2022-11-01-preview");
 
-Response response = await client.DeleteAsync("<sensorPartnerId>", "<sensorId>", new RequestContext());
+Response response = await client.DeleteAsync("<sensorPartnerId>", "<sensorId>");
 Console.WriteLine(response.Status);
 ]]></code>
 </example>
@@ -230,7 +230,7 @@ This sample shows how to call Delete with required parameters.
 var credential = new DefaultAzureCredential();
 var client = new FarmBeatsClient(credential).GetSensorsClient("2022-11-01-preview");
 
-Response response = client.Delete("<sensorPartnerId>", "<sensorId>", new RequestContext());
+Response response = client.Delete("<sensorPartnerId>", "<sensorId>");
 Console.WriteLine(response.Status);
 ]]></code>
 </example>
@@ -276,7 +276,7 @@ var data = new {
     connectionStringType = "Primary",
 };
 
-Response response = await client.RenewConnectionStringAsync("<sensorPartnerId>", "<sensorId>", RequestContent.Create(data), new RequestContext());
+Response response = await client.RenewConnectionStringAsync("<sensorPartnerId>", "<sensorId>", RequestContent.Create(data));
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("primaryDeviceConnectionString").ToString());
@@ -295,7 +295,7 @@ var data = new {
     connectionStringType = "Primary",
 };
 
-Response response = client.RenewConnectionString("<sensorPartnerId>", "<sensorId>", RequestContent.Create(data), new RequestContext());
+Response response = client.RenewConnectionString("<sensorPartnerId>", "<sensorId>", RequestContent.Create(data));
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("primaryDeviceConnectionString").ToString());

@@ -50,7 +50,7 @@ namespace Azure.Verticals.AgriFood.Farming
         }
 
         /// <summary>
-        /// [Protocol Method] Get Biomass Model job&apos;s details.
+        /// [Protocol Method] Get Biomass Model job's details.
         /// <list type="bullet">
         /// <item>
         /// <description>
@@ -85,7 +85,7 @@ namespace Azure.Verticals.AgriFood.Farming
         }
 
         /// <summary>
-        /// [Protocol Method] Get Biomass Model job&apos;s details.
+        /// [Protocol Method] Get Biomass Model job's details.
         /// <list type="bullet">
         /// <item>
         /// <description>
@@ -120,7 +120,7 @@ namespace Azure.Verticals.AgriFood.Farming
         }
 
         /// <summary>
-        /// [Protocol Method] Get Sensor Placement Model job&apos;s details.
+        /// [Protocol Method] Get Sensor Placement Model job's details.
         /// <list type="bullet">
         /// <item>
         /// <description>
@@ -155,7 +155,7 @@ namespace Azure.Verticals.AgriFood.Farming
         }
 
         /// <summary>
-        /// [Protocol Method] Get Sensor Placement Model job&apos;s details.
+        /// [Protocol Method] Get Sensor Placement Model job's details.
         /// <list type="bullet">
         /// <item>
         /// <description>
@@ -190,7 +190,7 @@ namespace Azure.Verticals.AgriFood.Farming
         }
 
         /// <summary>
-        /// [Protocol Method] Get SoilMoisture Model job&apos;s details.
+        /// [Protocol Method] Get SoilMoisture Model job's details.
         /// <list type="bullet">
         /// <item>
         /// <description>
@@ -225,7 +225,7 @@ namespace Azure.Verticals.AgriFood.Farming
         }
 
         /// <summary>
-        /// [Protocol Method] Get SoilMoisture Model job&apos;s details.
+        /// [Protocol Method] Get SoilMoisture Model job's details.
         /// <list type="bullet">
         /// <item>
         /// <description>

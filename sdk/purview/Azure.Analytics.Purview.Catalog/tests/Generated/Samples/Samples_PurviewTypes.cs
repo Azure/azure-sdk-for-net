@@ -2071,7 +2071,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
-            Response response = client.DeleteTypeByName("<name>", new RequestContext());
+            Response response = client.DeleteTypeByName("<name>");
             Console.WriteLine(response.Status);
         }
 
@@ -2095,7 +2095,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
-            Response response = await client.DeleteTypeByNameAsync("<name>", new RequestContext());
+            Response response = await client.DeleteTypeByNameAsync("<name>");
             Console.WriteLine(response.Status);
         }
 
@@ -3098,7 +3098,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
     },
             };
 
-            Response response = client.CreateTypeDefinitions(RequestContent.Create(data), new RequestContext());
+            Response response = client.CreateTypeDefinitions(RequestContent.Create(data));
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("attributeDefs")[0].GetProperty("cardinality").ToString());
@@ -3715,7 +3715,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
     },
             };
 
-            Response response = await client.CreateTypeDefinitionsAsync(RequestContent.Create(data), new RequestContext());
+            Response response = await client.CreateTypeDefinitionsAsync(RequestContent.Create(data));
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("attributeDefs")[0].GetProperty("cardinality").ToString());
@@ -4332,7 +4332,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
     },
             };
 
-            Response response = client.UpdateAtlasTypeDefinitions(RequestContent.Create(data), new RequestContext());
+            Response response = client.UpdateAtlasTypeDefinitions(RequestContent.Create(data));
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("attributeDefs")[0].GetProperty("cardinality").ToString());
@@ -4949,7 +4949,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
     },
             };
 
-            Response response = await client.UpdateAtlasTypeDefinitionsAsync(RequestContent.Create(data), new RequestContext());
+            Response response = await client.UpdateAtlasTypeDefinitionsAsync(RequestContent.Create(data));
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("attributeDefs")[0].GetProperty("cardinality").ToString());
@@ -5564,7 +5564,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
     },
             };
 
-            Response response = client.DeleteTypeDefinitions(RequestContent.Create(data), new RequestContext());
+            Response response = client.DeleteTypeDefinitions(RequestContent.Create(data));
             Console.WriteLine(response.Status);
         }
 
@@ -5845,7 +5845,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
     },
             };
 
-            Response response = await client.DeleteTypeDefinitionsAsync(RequestContent.Create(data), new RequestContext());
+            Response response = await client.DeleteTypeDefinitionsAsync(RequestContent.Create(data));
             Console.WriteLine(response.Status);
         }
 

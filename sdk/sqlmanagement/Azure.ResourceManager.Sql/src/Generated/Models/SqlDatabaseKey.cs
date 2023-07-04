@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Sql.Models
         }
 
         /// <summary> Initializes a new instance of SqlDatabaseKey. </summary>
-        /// <param name="keyType"> The database key type. Only supported value is &apos;AzureKeyVault&apos;. </param>
+        /// <param name="keyType"> The database key type. Only supported value is 'AzureKeyVault'. </param>
         /// <param name="thumbprint"> Thumbprint of the database key. </param>
         /// <param name="createdOn"> The database key creation date. </param>
         /// <param name="subregion"> Subregion of the server key. </param>
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Sql.Models
             Subregion = subregion;
         }
 
-        /// <summary> The database key type. Only supported value is &apos;AzureKeyVault&apos;. </summary>
+        /// <summary> The database key type. Only supported value is 'AzureKeyVault'. </summary>
         public SqlDatabaseKeyType? KeyType { get; }
         /// <summary> Thumbprint of the database key. </summary>
         public string Thumbprint { get; }

@@ -185,7 +185,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
                 },
             };
 
-            Response response = client.CreateOrUpdate(RequestContent.Create(data), new RequestContext());
+            Response response = client.CreateOrUpdate(RequestContent.Create(data));
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("guidAssignments").GetProperty("<test>").ToString());
@@ -419,7 +419,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
                 },
             };
 
-            Response response = await client.CreateOrUpdateAsync(RequestContent.Create(data), new RequestContext());
+            Response response = await client.CreateOrUpdateAsync(RequestContent.Create(data));
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("guidAssignments").GetProperty("<test>").ToString());
@@ -874,7 +874,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
                 },
             };
 
-            Response response = client.CreateOrUpdateEntities(RequestContent.Create(data), new RequestContext());
+            Response response = client.CreateOrUpdateEntities(RequestContent.Create(data));
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("guidAssignments").GetProperty("<test>").ToString());
@@ -1103,7 +1103,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
                 },
             };
 
-            Response response = await client.CreateOrUpdateEntitiesAsync(RequestContent.Create(data), new RequestContext());
+            Response response = await client.CreateOrUpdateEntitiesAsync(RequestContent.Create(data));
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("guidAssignments").GetProperty("<test>").ToString());
@@ -1404,7 +1404,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
     },
             };
 
-            Response response = client.AddClassification(RequestContent.Create(data), new RequestContext());
+            Response response = client.AddClassification(RequestContent.Create(data));
             Console.WriteLine(response.Status);
         }
 
@@ -1461,7 +1461,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
     },
             };
 
-            Response response = await client.AddClassificationAsync(RequestContent.Create(data), new RequestContext());
+            Response response = await client.AddClassificationAsync(RequestContent.Create(data));
             Console.WriteLine(response.Status);
         }
 
@@ -1717,7 +1717,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
 
             var data = new { };
 
-            Response response = client.PartialUpdateEntityAttributeByGuid("<guid>", "<name>", RequestContent.Create(data), new RequestContext());
+            Response response = client.PartialUpdateEntityAttributeByGuid("<guid>", "<name>", RequestContent.Create(data));
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("guidAssignments").GetProperty("<test>").ToString());
@@ -1811,7 +1811,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
 
             var data = new { };
 
-            Response response = await client.PartialUpdateEntityAttributeByGuidAsync("<guid>", "<name>", RequestContent.Create(data), new RequestContext());
+            Response response = await client.PartialUpdateEntityAttributeByGuidAsync("<guid>", "<name>", RequestContent.Create(data));
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("guidAssignments").GetProperty("<test>").ToString());
@@ -2155,7 +2155,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
-            Response response = client.DeleteClassification("<guid>", "<classificationName>", new RequestContext());
+            Response response = client.DeleteClassification("<guid>", "<classificationName>");
             Console.WriteLine(response.Status);
         }
 
@@ -2179,7 +2179,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
-            Response response = await client.DeleteClassificationAsync("<guid>", "<classificationName>", new RequestContext());
+            Response response = await client.DeleteClassificationAsync("<guid>", "<classificationName>");
             Console.WriteLine(response.Status);
         }
 
@@ -2297,7 +2297,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
     }
 };
 
-            Response response = client.AddClassifications("<guid>", RequestContent.Create(data), new RequestContext());
+            Response response = client.AddClassifications("<guid>", RequestContent.Create(data));
             Console.WriteLine(response.Status);
         }
 
@@ -2349,7 +2349,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
     }
 };
 
-            Response response = await client.AddClassificationsAsync("<guid>", RequestContent.Create(data), new RequestContext());
+            Response response = await client.AddClassificationsAsync("<guid>", RequestContent.Create(data));
             Console.WriteLine(response.Status);
         }
 
@@ -2401,7 +2401,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
     }
 };
 
-            Response response = client.UpdateClassifications("<guid>", RequestContent.Create(data), new RequestContext());
+            Response response = client.UpdateClassifications("<guid>", RequestContent.Create(data));
             Console.WriteLine(response.Status);
         }
 
@@ -2453,7 +2453,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
     }
 };
 
-            Response response = await client.UpdateClassificationsAsync("<guid>", RequestContent.Create(data), new RequestContext());
+            Response response = await client.UpdateClassificationsAsync("<guid>", RequestContent.Create(data));
             Console.WriteLine(response.Status);
         }
 
@@ -2849,7 +2849,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
                 },
             };
 
-            Response response = client.PartialUpdateEntityByUniqueAttributes("<typeName>", RequestContent.Create(data), "<attrQualifiedName>", new RequestContext());
+            Response response = client.PartialUpdateEntityByUniqueAttributes("<typeName>", RequestContent.Create(data), "<attrQualifiedName>");
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("guidAssignments").GetProperty("<test>").ToString());
@@ -3083,7 +3083,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
                 },
             };
 
-            Response response = await client.PartialUpdateEntityByUniqueAttributesAsync("<typeName>", RequestContent.Create(data), "<attrQualifiedName>", new RequestContext());
+            Response response = await client.PartialUpdateEntityByUniqueAttributesAsync("<typeName>", RequestContent.Create(data), "<attrQualifiedName>");
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("guidAssignments").GetProperty("<test>").ToString());
@@ -3351,7 +3351,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
-            Response response = client.DeleteClassificationByUniqueAttribute("<typeName>", "<classificationName>", "<attrQualifiedName>", new RequestContext());
+            Response response = client.DeleteClassificationByUniqueAttribute("<typeName>", "<classificationName>", "<attrQualifiedName>");
             Console.WriteLine(response.Status);
         }
 
@@ -3375,7 +3375,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
-            Response response = await client.DeleteClassificationByUniqueAttributeAsync("<typeName>", "<classificationName>", "<attrQualifiedName>", new RequestContext());
+            Response response = await client.DeleteClassificationByUniqueAttributeAsync("<typeName>", "<classificationName>", "<attrQualifiedName>");
             Console.WriteLine(response.Status);
         }
 
@@ -3427,7 +3427,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
     }
 };
 
-            Response response = client.AddClassificationsByUniqueAttribute("<typeName>", RequestContent.Create(data), "<attrQualifiedName>", new RequestContext());
+            Response response = client.AddClassificationsByUniqueAttribute("<typeName>", RequestContent.Create(data), "<attrQualifiedName>");
             Console.WriteLine(response.Status);
         }
 
@@ -3479,7 +3479,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
     }
 };
 
-            Response response = await client.AddClassificationsByUniqueAttributeAsync("<typeName>", RequestContent.Create(data), "<attrQualifiedName>", new RequestContext());
+            Response response = await client.AddClassificationsByUniqueAttributeAsync("<typeName>", RequestContent.Create(data), "<attrQualifiedName>");
             Console.WriteLine(response.Status);
         }
 
@@ -3531,7 +3531,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
     }
 };
 
-            Response response = client.UpdateClassificationsByUniqueAttribute("<typeName>", RequestContent.Create(data), "<attrQualifiedName>", new RequestContext());
+            Response response = client.UpdateClassificationsByUniqueAttribute("<typeName>", RequestContent.Create(data), "<attrQualifiedName>");
             Console.WriteLine(response.Status);
         }
 
@@ -3583,7 +3583,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
     }
 };
 
-            Response response = await client.UpdateClassificationsByUniqueAttributeAsync("<typeName>", RequestContent.Create(data), "<attrQualifiedName>", new RequestContext());
+            Response response = await client.UpdateClassificationsByUniqueAttributeAsync("<typeName>", RequestContent.Create(data), "<attrQualifiedName>");
             Console.WriteLine(response.Status);
         }
 
@@ -3677,7 +3677,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
                 },
             };
 
-            Response response = client.SetClassifications(RequestContent.Create(data), new RequestContext());
+            Response response = client.SetClassifications(RequestContent.Create(data));
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result[0].ToString());
@@ -3773,7 +3773,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
                 },
             };
 
-            Response response = await client.SetClassificationsAsync(RequestContent.Create(data), new RequestContext());
+            Response response = await client.SetClassificationsAsync(RequestContent.Create(data));
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result[0].ToString());

@@ -53,7 +53,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
                 },
             };
 
-            Response response = client.CreateOrUpdate("<sensorPartnerId>", "<integrationId>", RequestContent.Create(data), new RequestContext());
+            Response response = client.CreateOrUpdate("<sensorPartnerId>", "<integrationId>", RequestContent.Create(data));
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("integrationId").ToString());
@@ -105,7 +105,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
                 },
             };
 
-            Response response = await client.CreateOrUpdateAsync("<sensorPartnerId>", "<integrationId>", RequestContent.Create(data), new RequestContext());
+            Response response = await client.CreateOrUpdateAsync("<sensorPartnerId>", "<integrationId>", RequestContent.Create(data));
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("integrationId").ToString());
@@ -217,7 +217,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
             var credential = new DefaultAzureCredential();
             var client = new FarmBeatsClient(credential).GetSensorPartnerIntegrationsClient("2022-11-01-preview");
 
-            Response response = client.Delete("<sensorPartnerId>", "<integrationId>", new RequestContext());
+            Response response = client.Delete("<sensorPartnerId>", "<integrationId>");
             Console.WriteLine(response.Status);
         }
 
@@ -239,7 +239,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
             var credential = new DefaultAzureCredential();
             var client = new FarmBeatsClient(credential).GetSensorPartnerIntegrationsClient("2022-11-01-preview");
 
-            Response response = await client.DeleteAsync("<sensorPartnerId>", "<integrationId>", new RequestContext());
+            Response response = await client.DeleteAsync("<sensorPartnerId>", "<integrationId>");
             Console.WriteLine(response.Status);
         }
 

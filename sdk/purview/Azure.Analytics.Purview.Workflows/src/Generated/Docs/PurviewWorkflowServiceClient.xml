@@ -105,7 +105,7 @@ var data = new {
     actionDag = new {},
 };
 
-Response response = await client.CreateOrReplaceWorkflowAsync(Guid.NewGuid(), RequestContent.Create(data), new RequestContext());
+Response response = await client.CreateOrReplaceWorkflowAsync(Guid.NewGuid(), RequestContent.Create(data));
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("actionDag").ToString());
@@ -174,7 +174,7 @@ var data = new {
     actionDag = new {},
 };
 
-Response response = client.CreateOrReplaceWorkflow(Guid.NewGuid(), RequestContent.Create(data), new RequestContext());
+Response response = client.CreateOrReplaceWorkflow(Guid.NewGuid(), RequestContent.Create(data));
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("actionDag").ToString());
@@ -201,7 +201,7 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new PurviewWorkflowServiceClient(endpoint, credential);
 
-Response response = await client.DeleteWorkflowAsync(Guid.NewGuid(), new RequestContext());
+Response response = await client.DeleteWorkflowAsync(Guid.NewGuid());
 Console.WriteLine(response.Status);
 ]]></code>
 </example>
@@ -214,7 +214,7 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new PurviewWorkflowServiceClient(endpoint, credential);
 
-Response response = client.DeleteWorkflow(Guid.NewGuid(), new RequestContext());
+Response response = client.DeleteWorkflow(Guid.NewGuid());
 Console.WriteLine(response.Status);
 ]]></code>
 </example>
@@ -261,7 +261,7 @@ var data = new {
     comment = "<comment>",
 };
 
-Response response = await client.SubmitUserRequestsAsync(RequestContent.Create(data), new RequestContext());
+Response response = await client.SubmitUserRequestsAsync(RequestContent.Create(data));
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("requestId").ToString());
@@ -316,7 +316,7 @@ var data = new {
     comment = "<comment>",
 };
 
-Response response = client.SubmitUserRequests(RequestContent.Create(data), new RequestContext());
+Response response = client.SubmitUserRequests(RequestContent.Create(data));
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("requestId").ToString());
@@ -410,7 +410,7 @@ var data = new {
     comment = "<comment>",
 };
 
-Response response = await client.CancelWorkflowRunAsync(Guid.NewGuid(), RequestContent.Create(data), new RequestContext());
+Response response = await client.CancelWorkflowRunAsync(Guid.NewGuid(), RequestContent.Create(data));
 Console.WriteLine(response.Status);
 ]]></code>
 </example>
@@ -438,7 +438,7 @@ var data = new {
     comment = "<comment>",
 };
 
-Response response = client.CancelWorkflowRun(Guid.NewGuid(), RequestContent.Create(data), new RequestContext());
+Response response = client.CancelWorkflowRun(Guid.NewGuid(), RequestContent.Create(data));
 Console.WriteLine(response.Status);
 ]]></code>
 </example>
@@ -532,7 +532,7 @@ var data = new {
     comment = "<comment>",
 };
 
-Response response = await client.ApproveApprovalTaskAsync(Guid.NewGuid(), RequestContent.Create(data), new RequestContext());
+Response response = await client.ApproveApprovalTaskAsync(Guid.NewGuid(), RequestContent.Create(data));
 Console.WriteLine(response.Status);
 ]]></code>
 </example>
@@ -560,7 +560,7 @@ var data = new {
     comment = "<comment>",
 };
 
-Response response = client.ApproveApprovalTask(Guid.NewGuid(), RequestContent.Create(data), new RequestContext());
+Response response = client.ApproveApprovalTask(Guid.NewGuid(), RequestContent.Create(data));
 Console.WriteLine(response.Status);
 ]]></code>
 </example>
@@ -588,7 +588,7 @@ var data = new {
     comment = "<comment>",
 };
 
-Response response = await client.RejectApprovalTaskAsync(Guid.NewGuid(), RequestContent.Create(data), new RequestContext());
+Response response = await client.RejectApprovalTaskAsync(Guid.NewGuid(), RequestContent.Create(data));
 Console.WriteLine(response.Status);
 ]]></code>
 </example>
@@ -616,7 +616,7 @@ var data = new {
     comment = "<comment>",
 };
 
-Response response = client.RejectApprovalTask(Guid.NewGuid(), RequestContent.Create(data), new RequestContext());
+Response response = client.RejectApprovalTask(Guid.NewGuid(), RequestContent.Create(data));
 Console.WriteLine(response.Status);
 ]]></code>
 </example>
@@ -649,7 +649,7 @@ var data = new {
     },
 };
 
-Response response = await client.ReassignWorkflowTaskAsync(Guid.NewGuid(), RequestContent.Create(data), new RequestContext());
+Response response = await client.ReassignWorkflowTaskAsync(Guid.NewGuid(), RequestContent.Create(data));
 Console.WriteLine(response.Status);
 ]]></code>
 </example>
@@ -682,7 +682,7 @@ var data = new {
     },
 };
 
-Response response = client.ReassignWorkflowTask(Guid.NewGuid(), RequestContent.Create(data), new RequestContext());
+Response response = client.ReassignWorkflowTask(Guid.NewGuid(), RequestContent.Create(data));
 Console.WriteLine(response.Status);
 ]]></code>
 </example>
@@ -713,7 +713,7 @@ var data = new {
     comment = "<comment>",
 };
 
-Response response = await client.UpdateTaskStatusAsync(Guid.NewGuid(), RequestContent.Create(data), new RequestContext());
+Response response = await client.UpdateTaskStatusAsync(Guid.NewGuid(), RequestContent.Create(data));
 Console.WriteLine(response.Status);
 ]]></code>
 </example>
@@ -744,7 +744,7 @@ var data = new {
     comment = "<comment>",
 };
 
-Response response = client.UpdateTaskStatus(Guid.NewGuid(), RequestContent.Create(data), new RequestContext());
+Response response = client.UpdateTaskStatus(Guid.NewGuid(), RequestContent.Create(data));
 Console.WriteLine(response.Status);
 ]]></code>
 </example>

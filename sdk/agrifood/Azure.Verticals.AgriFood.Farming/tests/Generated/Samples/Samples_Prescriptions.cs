@@ -151,7 +151,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
                 },
             };
 
-            Response response = client.CreateOrUpdate("<partyId>", "<prescriptionId>", RequestContent.Create(data), new RequestContext());
+            Response response = client.CreateOrUpdate("<partyId>", "<prescriptionId>", RequestContent.Create(data));
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("partyId").ToString());
@@ -220,7 +220,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
                 },
             };
 
-            Response response = await client.CreateOrUpdateAsync("<partyId>", "<prescriptionId>", RequestContent.Create(data), new RequestContext());
+            Response response = await client.CreateOrUpdateAsync("<partyId>", "<prescriptionId>", RequestContent.Create(data));
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("partyId").ToString());
@@ -261,7 +261,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
             var credential = new DefaultAzureCredential();
             var client = new FarmBeatsClient(credential).GetPrescriptionsClient("2022-11-01-preview");
 
-            Response response = client.Delete("<partyId>", "<prescriptionId>", new RequestContext());
+            Response response = client.Delete("<partyId>", "<prescriptionId>");
             Console.WriteLine(response.Status);
         }
 
@@ -283,7 +283,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
             var credential = new DefaultAzureCredential();
             var client = new FarmBeatsClient(credential).GetPrescriptionsClient("2022-11-01-preview");
 
-            Response response = await client.DeleteAsync("<partyId>", "<prescriptionId>", new RequestContext());
+            Response response = await client.DeleteAsync("<partyId>", "<prescriptionId>");
             Console.WriteLine(response.Status);
         }
 

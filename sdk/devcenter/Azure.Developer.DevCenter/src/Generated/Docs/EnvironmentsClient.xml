@@ -9,7 +9,7 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new EnvironmentsClient(endpoint, "<projectName>", credential);
 
-Response response = await client.GetEnvironmentByUserAsync("<environmentName>", "<userId>", new RequestContext());
+Response response = await client.GetEnvironmentByUserAsync("<userId>", "<environmentName>", new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("name").ToString());
@@ -36,7 +36,7 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new EnvironmentsClient(endpoint, "<projectName>", credential);
 
-Response response = client.GetEnvironmentByUser("<environmentName>", "<userId>", new RequestContext());
+Response response = client.GetEnvironmentByUser("<userId>", "<environmentName>", new RequestContext());
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("name").ToString());
@@ -55,7 +55,7 @@ Console.WriteLine(result.GetProperty("tags").GetProperty("<test>").ToString());
 ]]></code>
 </example>
     </member>
-    <member name="UpdateEnvironmentAsync(string,RequestContent,string,RequestContext)">
+    <member name="UpdateEnvironmentAsync(string,string,RequestContent,RequestContext)">
 <example>
 This sample shows how to call UpdateEnvironmentAsync with required parameters and request content, and how to parse the result.
 <code><![CDATA[
@@ -67,7 +67,7 @@ var data = new {
     environmentType = "<environmentType>",
 };
 
-Response response = await client.UpdateEnvironmentAsync("<environmentName>", RequestContent.Create(data));
+Response response = await client.UpdateEnvironmentAsync("<userId>", "<environmentName>", RequestContent.Create(data));
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("environmentType").ToString());
@@ -98,7 +98,7 @@ var data = new {
     },
 };
 
-Response response = await client.UpdateEnvironmentAsync("<environmentName>", RequestContent.Create(data), "me", new RequestContext());
+Response response = await client.UpdateEnvironmentAsync("<userId>", "<environmentName>", RequestContent.Create(data));
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("name").ToString());
@@ -117,7 +117,7 @@ Console.WriteLine(result.GetProperty("tags").GetProperty("<test>").ToString());
 ]]></code>
 </example>
     </member>
-    <member name="UpdateEnvironment(string,RequestContent,string,RequestContext)">
+    <member name="UpdateEnvironment(string,string,RequestContent,RequestContext)">
 <example>
 This sample shows how to call UpdateEnvironment with required parameters and request content, and how to parse the result.
 <code><![CDATA[
@@ -129,7 +129,7 @@ var data = new {
     environmentType = "<environmentType>",
 };
 
-Response response = client.UpdateEnvironment("<environmentName>", RequestContent.Create(data));
+Response response = client.UpdateEnvironment("<userId>", "<environmentName>", RequestContent.Create(data));
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("environmentType").ToString());
@@ -160,7 +160,7 @@ var data = new {
     },
 };
 
-Response response = client.UpdateEnvironment("<environmentName>", RequestContent.Create(data), "me", new RequestContext());
+Response response = client.UpdateEnvironment("<userId>", "<environmentName>", RequestContent.Create(data));
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("name").ToString());
@@ -591,7 +591,7 @@ foreach (var item in client.GetEnvironmentTypes(1234, new RequestContext()))
 ]]></code>
 </example>
     </member>
-    <member name="CreateOrUpdateEnvironmentAsync(WaitUntil,string,RequestContent,string,RequestContext)">
+    <member name="CreateOrUpdateEnvironmentAsync(WaitUntil,string,string,RequestContent,RequestContext)">
 <example>
 This sample shows how to call CreateOrUpdateEnvironmentAsync with required parameters and request content, and how to parse the result.
 <code><![CDATA[
@@ -603,7 +603,7 @@ var data = new {
     environmentType = "<environmentType>",
 };
 
-var operation = await client.CreateOrUpdateEnvironmentAsync(WaitUntil.Completed, "<environmentName>", RequestContent.Create(data));
+var operation = await client.CreateOrUpdateEnvironmentAsync(WaitUntil.Completed, "<userId>", "<environmentName>", RequestContent.Create(data));
 
 BinaryData responseData = operation.Value;
 JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
@@ -635,7 +635,7 @@ var data = new {
     },
 };
 
-var operation = await client.CreateOrUpdateEnvironmentAsync(WaitUntil.Completed, "<environmentName>", RequestContent.Create(data), "me", new RequestContext());
+var operation = await client.CreateOrUpdateEnvironmentAsync(WaitUntil.Completed, "<userId>", "<environmentName>", RequestContent.Create(data));
 
 BinaryData responseData = operation.Value;
 JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
@@ -655,7 +655,7 @@ Console.WriteLine(result.GetProperty("tags").GetProperty("<test>").ToString());
 ]]></code>
 </example>
     </member>
-    <member name="CreateOrUpdateEnvironment(WaitUntil,string,RequestContent,string,RequestContext)">
+    <member name="CreateOrUpdateEnvironment(WaitUntil,string,string,RequestContent,RequestContext)">
 <example>
 This sample shows how to call CreateOrUpdateEnvironment with required parameters and request content, and how to parse the result.
 <code><![CDATA[
@@ -667,7 +667,7 @@ var data = new {
     environmentType = "<environmentType>",
 };
 
-var operation = client.CreateOrUpdateEnvironment(WaitUntil.Completed, "<environmentName>", RequestContent.Create(data));
+var operation = client.CreateOrUpdateEnvironment(WaitUntil.Completed, "<userId>", "<environmentName>", RequestContent.Create(data));
 
 BinaryData responseData = operation.Value;
 JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
@@ -699,7 +699,7 @@ var data = new {
     },
 };
 
-var operation = client.CreateOrUpdateEnvironment(WaitUntil.Completed, "<environmentName>", RequestContent.Create(data), "me", new RequestContext());
+var operation = client.CreateOrUpdateEnvironment(WaitUntil.Completed, "<userId>", "<environmentName>", RequestContent.Create(data));
 
 BinaryData responseData = operation.Value;
 JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
@@ -727,17 +727,7 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new EnvironmentsClient(endpoint, "<projectName>", credential);
 
-var operation = await client.DeleteEnvironmentAsync(WaitUntil.Completed, "<environmentName>");
-
-Console.WriteLine(operation.GetRawResponse().Status);
-]]></code>
-This sample shows how to call DeleteEnvironmentAsync with all parameters.
-<code><![CDATA[
-var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new EnvironmentsClient(endpoint, "<projectName>", credential);
-
-var operation = await client.DeleteEnvironmentAsync(WaitUntil.Completed, "<environmentName>", "me", new RequestContext());
+var operation = await client.DeleteEnvironmentAsync(WaitUntil.Completed, "<userId>", "<environmentName>");
 
 Console.WriteLine(operation.GetRawResponse().Status);
 ]]></code>
@@ -751,23 +741,13 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new EnvironmentsClient(endpoint, "<projectName>", credential);
 
-var operation = client.DeleteEnvironment(WaitUntil.Completed, "<environmentName>");
-
-Console.WriteLine(operation.GetRawResponse().Status);
-]]></code>
-This sample shows how to call DeleteEnvironment with all parameters.
-<code><![CDATA[
-var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new EnvironmentsClient(endpoint, "<projectName>", credential);
-
-var operation = client.DeleteEnvironment(WaitUntil.Completed, "<environmentName>", "me", new RequestContext());
+var operation = client.DeleteEnvironment(WaitUntil.Completed, "<userId>", "<environmentName>");
 
 Console.WriteLine(operation.GetRawResponse().Status);
 ]]></code>
 </example>
     </member>
-    <member name="DeployEnvironmentActionAsync(WaitUntil,string,RequestContent,string,RequestContext)">
+    <member name="DeployEnvironmentActionAsync(WaitUntil,string,string,RequestContent,RequestContext)">
 <example>
 This sample shows how to call DeployEnvironmentActionAsync with required parameters and request content.
 <code><![CDATA[
@@ -779,7 +759,7 @@ var data = new {
     actionId = "<actionId>",
 };
 
-var operation = await client.DeployEnvironmentActionAsync(WaitUntil.Completed, "<environmentName>", RequestContent.Create(data));
+var operation = await client.DeployEnvironmentActionAsync(WaitUntil.Completed, "<userId>", "<environmentName>", RequestContent.Create(data));
 
 Console.WriteLine(operation.GetRawResponse().Status);
 ]]></code>
@@ -794,13 +774,13 @@ var data = new {
     parameters = new {},
 };
 
-var operation = await client.DeployEnvironmentActionAsync(WaitUntil.Completed, "<environmentName>", RequestContent.Create(data), "me", new RequestContext());
+var operation = await client.DeployEnvironmentActionAsync(WaitUntil.Completed, "<userId>", "<environmentName>", RequestContent.Create(data));
 
 Console.WriteLine(operation.GetRawResponse().Status);
 ]]></code>
 </example>
     </member>
-    <member name="DeployEnvironmentAction(WaitUntil,string,RequestContent,string,RequestContext)">
+    <member name="DeployEnvironmentAction(WaitUntil,string,string,RequestContent,RequestContext)">
 <example>
 This sample shows how to call DeployEnvironmentAction with required parameters and request content.
 <code><![CDATA[
@@ -812,7 +792,7 @@ var data = new {
     actionId = "<actionId>",
 };
 
-var operation = client.DeployEnvironmentAction(WaitUntil.Completed, "<environmentName>", RequestContent.Create(data));
+var operation = client.DeployEnvironmentAction(WaitUntil.Completed, "<userId>", "<environmentName>", RequestContent.Create(data));
 
 Console.WriteLine(operation.GetRawResponse().Status);
 ]]></code>
@@ -827,13 +807,13 @@ var data = new {
     parameters = new {},
 };
 
-var operation = client.DeployEnvironmentAction(WaitUntil.Completed, "<environmentName>", RequestContent.Create(data), "me", new RequestContext());
+var operation = client.DeployEnvironmentAction(WaitUntil.Completed, "<userId>", "<environmentName>", RequestContent.Create(data));
 
 Console.WriteLine(operation.GetRawResponse().Status);
 ]]></code>
 </example>
     </member>
-    <member name="CustomEnvironmentActionAsync(WaitUntil,string,RequestContent,string,RequestContext)">
+    <member name="CustomEnvironmentActionAsync(WaitUntil,string,string,RequestContent,RequestContext)">
 <example>
 This sample shows how to call CustomEnvironmentActionAsync with required parameters and request content.
 <code><![CDATA[
@@ -845,7 +825,7 @@ var data = new {
     actionId = "<actionId>",
 };
 
-var operation = await client.CustomEnvironmentActionAsync(WaitUntil.Completed, "<environmentName>", RequestContent.Create(data));
+var operation = await client.CustomEnvironmentActionAsync(WaitUntil.Completed, "<userId>", "<environmentName>", RequestContent.Create(data));
 
 Console.WriteLine(operation.GetRawResponse().Status);
 ]]></code>
@@ -860,13 +840,13 @@ var data = new {
     parameters = new {},
 };
 
-var operation = await client.CustomEnvironmentActionAsync(WaitUntil.Completed, "<environmentName>", RequestContent.Create(data), "me", new RequestContext());
+var operation = await client.CustomEnvironmentActionAsync(WaitUntil.Completed, "<userId>", "<environmentName>", RequestContent.Create(data));
 
 Console.WriteLine(operation.GetRawResponse().Status);
 ]]></code>
 </example>
     </member>
-    <member name="CustomEnvironmentAction(WaitUntil,string,RequestContent,string,RequestContext)">
+    <member name="CustomEnvironmentAction(WaitUntil,string,string,RequestContent,RequestContext)">
 <example>
 This sample shows how to call CustomEnvironmentAction with required parameters and request content.
 <code><![CDATA[
@@ -878,7 +858,7 @@ var data = new {
     actionId = "<actionId>",
 };
 
-var operation = client.CustomEnvironmentAction(WaitUntil.Completed, "<environmentName>", RequestContent.Create(data));
+var operation = client.CustomEnvironmentAction(WaitUntil.Completed, "<userId>", "<environmentName>", RequestContent.Create(data));
 
 Console.WriteLine(operation.GetRawResponse().Status);
 ]]></code>
@@ -893,7 +873,7 @@ var data = new {
     parameters = new {},
 };
 
-var operation = client.CustomEnvironmentAction(WaitUntil.Completed, "<environmentName>", RequestContent.Create(data), "me", new RequestContext());
+var operation = client.CustomEnvironmentAction(WaitUntil.Completed, "<userId>", "<environmentName>", RequestContent.Create(data));
 
 Console.WriteLine(operation.GetRawResponse().Status);
 ]]></code>

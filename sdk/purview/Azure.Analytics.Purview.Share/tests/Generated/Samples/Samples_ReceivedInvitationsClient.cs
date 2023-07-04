@@ -121,7 +121,7 @@ namespace Azure.Analytics.Purview.Share.Samples
                 invitationKind = "Application",
             };
 
-            Response response = client.Reject("<receivedInvitationName>", RequestContent.Create(data), "<repeatabilityRequestId>", new RequestContext());
+            Response response = client.Reject("<receivedInvitationName>", RequestContent.Create(data), "<repeatabilityRequestId>");
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("invitationKind").ToString());
@@ -172,7 +172,7 @@ namespace Azure.Analytics.Purview.Share.Samples
                 invitationKind = "Application",
             };
 
-            Response response = await client.RejectAsync("<receivedInvitationName>", RequestContent.Create(data), "<repeatabilityRequestId>", new RequestContext());
+            Response response = await client.RejectAsync("<receivedInvitationName>", RequestContent.Create(data), "<repeatabilityRequestId>");
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("invitationKind").ToString());

@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Optional<string> groupId = default;
             Optional<string> rpGroupType = default;
             string instanceType = default;
-            Optional<IReadOnlyList<ASRTask>> childTasks = default;
+            Optional<IReadOnlyList<AsrTask>> childTasks = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -52,10 +52,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    List<ASRTask> array = new List<ASRTask>();
+                    List<AsrTask> array = new List<AsrTask>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ASRTask.DeserializeASRTask(item));
+                        array.Add(AsrTask.DeserializeAsrTask(item));
                     }
                     childTasks = array;
                     continue;

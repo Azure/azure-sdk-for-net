@@ -158,7 +158,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
                 },
             };
 
-            var operation = client.CreateJob(WaitUntil.Completed, "<jobId>", RequestContent.Create(data), new RequestContext());
+            var operation = client.CreateJob(WaitUntil.Completed, "<jobId>", RequestContent.Create(data));
 
             BinaryData responseData = operation.Value;
             JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
@@ -230,7 +230,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
                 },
             };
 
-            var operation = await client.CreateJobAsync(WaitUntil.Completed, "<jobId>", RequestContent.Create(data), new RequestContext());
+            var operation = await client.CreateJobAsync(WaitUntil.Completed, "<jobId>", RequestContent.Create(data));
 
             BinaryData responseData = operation.Value;
             JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;

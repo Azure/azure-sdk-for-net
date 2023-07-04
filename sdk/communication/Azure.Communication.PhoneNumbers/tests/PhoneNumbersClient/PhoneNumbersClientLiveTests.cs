@@ -314,6 +314,68 @@ namespace Azure.Communication.PhoneNumbers.Tests
 
         [Test]
         [AsyncOnly]
+        public async Task GetPhoneNumberSearchResultWithNullSearchIdAsync()
+        {
+            var client = CreateClient();
+            try
+            {
+                var searchResult = await client.GetPhoneNumberSearchResultAsync(null);
+            }
+            catch (Exception ex)
+            {
+                Assert.NotNull(ex.Message);
+            }
+        }
+
+        [Test]
+        [SyncOnly]
+        public void GetPhoneNumberSearchResultWithNullSearchId()
+        {
+            var client = CreateClient();
+            try
+            {
+                var searchResult = client.GetPhoneNumberSearchResult(null);
+            }
+            catch (Exception ex)
+            {
+                Assert.NotNull(ex.Message);
+            }
+        }
+
+        [Test]
+        [AsyncOnly]
+        public async Task GetPhoneNumberSearchResultWithUnknownSearchIdAsync()
+        {
+            var client = CreateClient();
+            try
+            {
+                var searchResult = await client.GetPhoneNumberSearchResultAsync(UnknownPhoneNumberSearchResultId);
+            }
+            catch (RequestFailedException ex)
+            {
+                Assert.IsTrue(IsClientError(ex.Status), $"Status code {ex.Status} does not indicate a client error.");
+                Assert.NotNull(ex.Message);
+            }
+        }
+
+        [Test]
+        [SyncOnly]
+        public void GetPhoneNumberSearchResultWithUnknownSearchId()
+        {
+            var client = CreateClient();
+            try
+            {
+                var searchResult = client.GetPhoneNumberSearchResult(UnknownPhoneNumberSearchResultId);
+            }
+            catch (RequestFailedException ex)
+            {
+                Assert.IsTrue(IsClientError(ex.Status), $"Status code {ex.Status} does not indicate a client error.");
+                Assert.NotNull(ex.Message);
+            }
+        }
+
+        [Test]
+        [AsyncOnly]
         public async Task ReleaseUnauthorizedNumberAsync()
         {
             var client = CreateClient();
@@ -340,6 +402,36 @@ namespace Azure.Communication.PhoneNumbers.Tests
             catch (RequestFailedException ex)
             {
                 Assert.IsTrue(IsClientError(ex.Status), $"Status code {ex.Status} does not indicate a client error.");
+                Assert.NotNull(ex.Message);
+            }
+        }
+
+        [Test]
+        [AsyncOnly]
+        public async Task ReleaseNullNumberAsync()
+        {
+            var client = CreateClient();
+            try
+            {
+                var releaseOperation = await client.StartReleasePhoneNumberAsync(null);
+            }
+            catch (Exception ex)
+            {
+                Assert.NotNull(ex.Message);
+            }
+        }
+
+        [Test]
+        [SyncOnly]
+        public void ReleaseNullNumber()
+        {
+            var client = CreateClient();
+            try
+            {
+                var releaseOperation = client.StartReleasePhoneNumber(null);
+            }
+            catch (Exception ex)
+            {
                 Assert.NotNull(ex.Message);
             }
         }
@@ -716,6 +808,34 @@ namespace Azure.Communication.PhoneNumbers.Tests
             var client = CreateClient();
 
             var offerings = client.GetAvailableOfferings("US");
+            foreach (PhoneNumberOffering offering in offerings)
+            {
+                Console.WriteLine("Offering " + offering.ToString());
+            }
+            Assert.IsNotNull(offerings);
+        }
+
+        [Test]
+        [AsyncOnly]
+        public async Task GetOfferingsWithPhoneNumberAndAssignmentTypeAsync()
+        {
+            var client = CreateClient();
+
+            var offerings = client.GetAvailableOfferingsAsync("US", PhoneNumberType.TollFree, PhoneNumberAssignmentType.Application);
+            await foreach (PhoneNumberOffering offering in offerings)
+            {
+                Console.WriteLine("Offering " + offering.ToString());
+            }
+            Assert.IsNotNull(offerings);
+        }
+
+        [Test]
+        [SyncOnly]
+        public void GetOfferingsWithPhoneNumberAndAssignmentType()
+        {
+            var client = CreateClient();
+
+            var offerings = client.GetAvailableOfferings("US", PhoneNumberType.TollFree, PhoneNumberAssignmentType.Application);
             foreach (PhoneNumberOffering offering in offerings)
             {
                 Console.WriteLine("Offering " + offering.ToString());

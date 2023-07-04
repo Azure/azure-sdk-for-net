@@ -54,7 +54,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
                 userRedirectState = "<userRedirectState>",
             };
 
-            Response response = client.GetOAuthConnectionLink(RequestContent.Create(data), new RequestContext());
+            Response response = client.GetOAuthConnectionLink(RequestContent.Create(data));
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -95,7 +95,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
                 userRedirectState = "<userRedirectState>",
             };
 
-            Response response = await client.GetOAuthConnectionLinkAsync(RequestContent.Create(data), new RequestContext());
+            Response response = await client.GetOAuthConnectionLinkAsync(RequestContent.Create(data));
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());

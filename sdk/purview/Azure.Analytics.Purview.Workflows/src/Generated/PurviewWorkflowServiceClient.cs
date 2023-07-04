@@ -256,7 +256,7 @@ namespace Azure.Analytics.Purview.Workflows
         }
 
         /// <summary>
-        /// [Protocol Method] Submit a user request for requestor, a user  request describes user ask to do operation(s) on Purview. If any workflow&apos;s trigger matches with an operation in request, a run of the workflow is created.
+        /// [Protocol Method] Submit a user request for requestor, a user  request describes user ask to do operation(s) on Purview. If any workflow's trigger matches with an operation in request, a run of the workflow is created.
         /// <list type="bullet">
         /// <item>
         /// <description>
@@ -290,7 +290,7 @@ namespace Azure.Analytics.Purview.Workflows
         }
 
         /// <summary>
-        /// [Protocol Method] Submit a user request for requestor, a user  request describes user ask to do operation(s) on Purview. If any workflow&apos;s trigger matches with an operation in request, a run of the workflow is created.
+        /// [Protocol Method] Submit a user request for requestor, a user  request describes user ask to do operation(s) on Purview. If any workflow's trigger matches with an operation in request, a run of the workflow is created.
         /// <list type="bullet">
         /// <item>
         /// <description>
@@ -849,8 +849,8 @@ namespace Azure.Analytics.Purview.Workflows
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="timeWindow"> Time window of filtering items. Allowed values: &quot;1d&quot; | &quot;7d&quot; | &quot;30d&quot; | &quot;90d&quot;. </param>
-        /// <param name="orderby"> The key word which used to sort the results. Allowed values: &quot;status desc&quot; | &quot;status asc&quot; | &quot;requestor desc&quot; | &quot;requestor asc&quot; | &quot;startTime desc&quot; | &quot;startTime asc&quot; | &quot;createdTime desc&quot; | &quot;createdTime asc&quot;. </param>
+        /// <param name="timeWindow"> Time window of filtering items. Allowed values: "1d" | "7d" | "30d" | "90d". </param>
+        /// <param name="orderby"> The key word which used to sort the results. Allowed values: "status desc" | "status asc" | "requestor desc" | "requestor asc" | "startTime desc" | "startTime asc" | "createdTime desc" | "createdTime asc". </param>
         /// <param name="runStatuses"> Filter workflow runs by workflow run status. </param>
         /// <param name="workflowIds"> Filter items by workflow id list. </param>
         /// <param name="maxpagesize"> The maximum page size to get the items at one time. </param>
@@ -875,8 +875,8 @@ namespace Azure.Analytics.Purview.Workflows
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="timeWindow"> Time window of filtering items. Allowed values: &quot;1d&quot; | &quot;7d&quot; | &quot;30d&quot; | &quot;90d&quot;. </param>
-        /// <param name="orderby"> The key word which used to sort the results. Allowed values: &quot;status desc&quot; | &quot;status asc&quot; | &quot;requestor desc&quot; | &quot;requestor asc&quot; | &quot;startTime desc&quot; | &quot;startTime asc&quot; | &quot;createdTime desc&quot; | &quot;createdTime asc&quot;. </param>
+        /// <param name="timeWindow"> Time window of filtering items. Allowed values: "1d" | "7d" | "30d" | "90d". </param>
+        /// <param name="orderby"> The key word which used to sort the results. Allowed values: "status desc" | "status asc" | "requestor desc" | "requestor asc" | "startTime desc" | "startTime asc" | "createdTime desc" | "createdTime asc". </param>
         /// <param name="runStatuses"> Filter workflow runs by workflow run status. </param>
         /// <param name="workflowIds"> Filter items by workflow id list. </param>
         /// <param name="maxpagesize"> The maximum page size to get the items at one time. </param>
@@ -901,11 +901,11 @@ namespace Azure.Analytics.Purview.Workflows
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="viewMode"> To filter user&apos;s sent, received or history workflow tasks. </param>
+        /// <param name="viewMode"> To filter user's sent, received or history workflow tasks. </param>
         /// <param name="workflowIds"> Filter items by workflow id list. </param>
-        /// <param name="timeWindow"> Time window of filtering items. Allowed values: &quot;1d&quot; | &quot;7d&quot; | &quot;30d&quot; | &quot;90d&quot;. </param>
+        /// <param name="timeWindow"> Time window of filtering items. Allowed values: "1d" | "7d" | "30d" | "90d". </param>
         /// <param name="maxpagesize"> The maximum page size to get the items at one time. </param>
-        /// <param name="orderby"> The key word which used to sort the results. Allowed values: &quot;status desc&quot; | &quot;status asc&quot; | &quot;requestor desc&quot; | &quot;requestor asc&quot; | &quot;startTime desc&quot; | &quot;startTime asc&quot; | &quot;createdTime desc&quot; | &quot;createdTime asc&quot;. </param>
+        /// <param name="orderby"> The key word which used to sort the results. Allowed values: "status desc" | "status asc" | "requestor desc" | "requestor asc" | "startTime desc" | "startTime asc" | "createdTime desc" | "createdTime asc". </param>
         /// <param name="taskTypes"> Filter items by workflow task type. </param>
         /// <param name="taskStatuses"> Filter workflow tasks by status. </param>
         /// <param name="workflowNameKeyword"> The key word which could used to filter workflow item with related workflow. </param>
@@ -930,11 +930,11 @@ namespace Azure.Analytics.Purview.Workflows
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="viewMode"> To filter user&apos;s sent, received or history workflow tasks. </param>
+        /// <param name="viewMode"> To filter user's sent, received or history workflow tasks. </param>
         /// <param name="workflowIds"> Filter items by workflow id list. </param>
-        /// <param name="timeWindow"> Time window of filtering items. Allowed values: &quot;1d&quot; | &quot;7d&quot; | &quot;30d&quot; | &quot;90d&quot;. </param>
+        /// <param name="timeWindow"> Time window of filtering items. Allowed values: "1d" | "7d" | "30d" | "90d". </param>
         /// <param name="maxpagesize"> The maximum page size to get the items at one time. </param>
-        /// <param name="orderby"> The key word which used to sort the results. Allowed values: &quot;status desc&quot; | &quot;status asc&quot; | &quot;requestor desc&quot; | &quot;requestor asc&quot; | &quot;startTime desc&quot; | &quot;startTime asc&quot; | &quot;createdTime desc&quot; | &quot;createdTime asc&quot;. </param>
+        /// <param name="orderby"> The key word which used to sort the results. Allowed values: "status desc" | "status asc" | "requestor desc" | "requestor asc" | "startTime desc" | "startTime asc" | "createdTime desc" | "createdTime asc". </param>
         /// <param name="taskTypes"> Filter items by workflow task type. </param>
         /// <param name="taskStatuses"> Filter workflow tasks by status. </param>
         /// <param name="workflowNameKeyword"> The key word which could used to filter workflow item with related workflow. </param>

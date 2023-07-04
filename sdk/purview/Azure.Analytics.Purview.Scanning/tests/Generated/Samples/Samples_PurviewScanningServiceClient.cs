@@ -114,7 +114,7 @@ namespace Azure.Analytics.Purview.Scanning.Samples
                 },
             };
 
-            Response response = client.CreateOrUpdateKeyVaultReference("<keyVaultName>", RequestContent.Create(data), new RequestContext());
+            Response response = client.CreateOrUpdateKeyVaultReference("<keyVaultName>", RequestContent.Create(data));
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("properties").GetProperty("baseUrl").ToString());
@@ -156,7 +156,7 @@ namespace Azure.Analytics.Purview.Scanning.Samples
                 },
             };
 
-            Response response = await client.CreateOrUpdateKeyVaultReferenceAsync("<keyVaultName>", RequestContent.Create(data), new RequestContext());
+            Response response = await client.CreateOrUpdateKeyVaultReferenceAsync("<keyVaultName>", RequestContent.Create(data));
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("properties").GetProperty("baseUrl").ToString());

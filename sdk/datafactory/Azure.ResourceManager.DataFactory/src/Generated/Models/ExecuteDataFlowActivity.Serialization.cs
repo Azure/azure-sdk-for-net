@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -35,6 +36,16 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
+            }
+            if (Optional.IsDefined(State))
+            {
+                writer.WritePropertyName("state"u8);
+                writer.WriteStringValue(State.Value.ToString());
+            }
+            if (Optional.IsDefined(OnInactiveMarkAs))
+            {
+                writer.WritePropertyName("onInactiveMarkAs"u8);
+                writer.WriteStringValue(OnInactiveMarkAs.Value.ToString());
             }
             if (Optional.IsCollectionDefined(DependsOn))
             {
@@ -78,38 +89,22 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(TraceLevel))
             {
                 writer.WritePropertyName("traceLevel"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(TraceLevel);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(TraceLevel.ToString()).RootElement);
-#endif
+                JsonSerializer.Serialize(writer, TraceLevel);
             }
             if (Optional.IsDefined(ContinueOnError))
             {
                 writer.WritePropertyName("continueOnError"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(ContinueOnError);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(ContinueOnError.ToString()).RootElement);
-#endif
+                JsonSerializer.Serialize(writer, ContinueOnError);
             }
             if (Optional.IsDefined(RunConcurrently))
             {
                 writer.WritePropertyName("runConcurrently"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(RunConcurrently);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(RunConcurrently.ToString()).RootElement);
-#endif
+                JsonSerializer.Serialize(writer, RunConcurrently);
             }
             if (Optional.IsDefined(SourceStagingConcurrency))
             {
                 writer.WritePropertyName("sourceStagingConcurrency"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(SourceStagingConcurrency);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(SourceStagingConcurrency.ToString()).RootElement);
-#endif
+                JsonSerializer.Serialize(writer, SourceStagingConcurrency);
             }
             writer.WriteEndObject();
             foreach (var item in AdditionalProperties)
@@ -130,21 +125,23 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            Optional<FactoryLinkedServiceReference> linkedServiceName = default;
+            Optional<DataFactoryLinkedServiceReference> linkedServiceName = default;
             Optional<ActivityPolicy> policy = default;
             string name = default;
             string type = default;
             Optional<string> description = default;
+            Optional<ActivityState> state = default;
+            Optional<ActivityOnInactiveMarkA> onInactiveMarkAs = default;
             Optional<IList<ActivityDependency>> dependsOn = default;
             Optional<IList<ActivityUserProperty>> userProperties = default;
             DataFlowReference dataFlow = default;
             Optional<DataFlowStagingInfo> staging = default;
             Optional<IntegrationRuntimeReference> integrationRuntime = default;
             Optional<ExecuteDataFlowActivityTypePropertiesCompute> compute = default;
-            Optional<BinaryData> traceLevel = default;
-            Optional<BinaryData> continueOnError = default;
-            Optional<BinaryData> runConcurrently = default;
-            Optional<BinaryData> sourceStagingConcurrency = default;
+            Optional<DataFactoryElement<string>> traceLevel = default;
+            Optional<DataFactoryElement<bool>> continueOnError = default;
+            Optional<DataFactoryElement<bool>> runConcurrently = default;
+            Optional<DataFactoryElement<int>> sourceStagingConcurrency = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -155,7 +152,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    linkedServiceName = FactoryLinkedServiceReference.DeserializeFactoryLinkedServiceReference(property.Value);
+                    linkedServiceName = DataFactoryLinkedServiceReference.DeserializeDataFactoryLinkedServiceReference(property.Value);
                     continue;
                 }
                 if (property.NameEquals("policy"u8))
@@ -180,6 +177,24 @@ namespace Azure.ResourceManager.DataFactory.Models
                 if (property.NameEquals("description"u8))
                 {
                     description = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("state"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    state = new ActivityState(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("onInactiveMarkAs"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    onInactiveMarkAs = new ActivityOnInactiveMarkA(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("dependsOn"u8))
@@ -257,7 +272,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            traceLevel = BinaryData.FromString(property0.Value.GetRawText());
+                            traceLevel = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("continueOnError"u8))
@@ -266,7 +281,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            continueOnError = BinaryData.FromString(property0.Value.GetRawText());
+                            continueOnError = JsonSerializer.Deserialize<DataFactoryElement<bool>>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("runConcurrently"u8))
@@ -275,7 +290,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            runConcurrently = BinaryData.FromString(property0.Value.GetRawText());
+                            runConcurrently = JsonSerializer.Deserialize<DataFactoryElement<bool>>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("sourceStagingConcurrency"u8))
@@ -284,7 +299,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            sourceStagingConcurrency = BinaryData.FromString(property0.Value.GetRawText());
+                            sourceStagingConcurrency = JsonSerializer.Deserialize<DataFactoryElement<int>>(property0.Value.GetRawText());
                             continue;
                         }
                     }
@@ -293,7 +308,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new ExecuteDataFlowActivity(name, type, description.Value, Optional.ToList(dependsOn), Optional.ToList(userProperties), additionalProperties, linkedServiceName.Value, policy.Value, dataFlow, staging.Value, integrationRuntime.Value, compute.Value, traceLevel.Value, continueOnError.Value, runConcurrently.Value, sourceStagingConcurrency.Value);
+            return new ExecuteDataFlowActivity(name, type, description.Value, Optional.ToNullable(state), Optional.ToNullable(onInactiveMarkAs), Optional.ToList(dependsOn), Optional.ToList(userProperties), additionalProperties, linkedServiceName.Value, policy.Value, dataFlow, staging.Value, integrationRuntime.Value, compute.Value, traceLevel.Value, continueOnError.Value, runConcurrently.Value, sourceStagingConcurrency.Value);
         }
     }
 }

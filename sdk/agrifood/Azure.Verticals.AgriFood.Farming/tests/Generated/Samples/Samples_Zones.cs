@@ -133,7 +133,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
                 },
             };
 
-            Response response = client.CreateOrUpdate("<partyId>", "<zoneId>", RequestContent.Create(data), new RequestContext());
+            Response response = client.CreateOrUpdate("<partyId>", "<zoneId>", RequestContent.Create(data));
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("partyId").ToString());
@@ -188,7 +188,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
                 },
             };
 
-            Response response = await client.CreateOrUpdateAsync("<partyId>", "<zoneId>", RequestContent.Create(data), new RequestContext());
+            Response response = await client.CreateOrUpdateAsync("<partyId>", "<zoneId>", RequestContent.Create(data));
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("partyId").ToString());
@@ -225,7 +225,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
             var credential = new DefaultAzureCredential();
             var client = new FarmBeatsClient(credential).GetZonesClient("2022-11-01-preview");
 
-            Response response = client.Delete("<partyId>", "<zoneId>", new RequestContext());
+            Response response = client.Delete("<partyId>", "<zoneId>");
             Console.WriteLine(response.Status);
         }
 
@@ -247,7 +247,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
             var credential = new DefaultAzureCredential();
             var client = new FarmBeatsClient(credential).GetZonesClient("2022-11-01-preview");
 
-            Response response = await client.DeleteAsync("<partyId>", "<zoneId>", new RequestContext());
+            Response response = await client.DeleteAsync("<partyId>", "<zoneId>");
             Console.WriteLine(response.Status);
         }
 

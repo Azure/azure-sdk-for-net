@@ -248,7 +248,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
     },
             };
 
-            Response response = client.SearchFeatures("<collectionId>", RequestContent.Create(data), 1234, 1234, new RequestContext());
+            Response response = client.SearchFeatures("<collectionId>", RequestContent.Create(data), 1234, 1234);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("features")[0].GetProperty("stacVersion").ToString());
@@ -328,7 +328,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
     },
             };
 
-            Response response = await client.SearchFeaturesAsync("<collectionId>", RequestContent.Create(data), 1234, 1234, new RequestContext());
+            Response response = await client.SearchFeaturesAsync("<collectionId>", RequestContent.Create(data), 1234, 1234);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("features")[0].GetProperty("stacVersion").ToString());
@@ -593,7 +593,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
                 },
             };
 
-            var operation = client.CreateSatelliteDataIngestionJob(WaitUntil.Completed, "<jobId>", RequestContent.Create(data), new RequestContext());
+            var operation = client.CreateSatelliteDataIngestionJob(WaitUntil.Completed, "<jobId>", RequestContent.Create(data));
 
             BinaryData responseData = operation.Value;
             JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
@@ -684,7 +684,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
                 },
             };
 
-            var operation = await client.CreateSatelliteDataIngestionJobAsync(WaitUntil.Completed, "<jobId>", RequestContent.Create(data), new RequestContext());
+            var operation = await client.CreateSatelliteDataIngestionJobAsync(WaitUntil.Completed, "<jobId>", RequestContent.Create(data));
 
             BinaryData responseData = operation.Value;
             JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;

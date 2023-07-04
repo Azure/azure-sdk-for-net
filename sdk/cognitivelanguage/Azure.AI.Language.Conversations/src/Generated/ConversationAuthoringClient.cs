@@ -126,7 +126,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/ConversationAuthoringClient.xml" path="doc/members/member[@name='GetProjectAsync(string,RequestContext)']/*" />
-        public virtual async Task<Response> GetProjectAsync(string projectName, RequestContext context = null)
+        public virtual async Task<Response> GetProjectAsync(string projectName, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
@@ -161,7 +161,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/ConversationAuthoringClient.xml" path="doc/members/member[@name='GetProject(string,RequestContext)']/*" />
-        public virtual Response GetProject(string projectName, RequestContext context = null)
+        public virtual Response GetProject(string projectName, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
@@ -197,7 +197,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/ConversationAuthoringClient.xml" path="doc/members/member[@name='GetDeploymentAsync(string,string,RequestContext)']/*" />
-        public virtual async Task<Response> GetDeploymentAsync(string projectName, string deploymentName, RequestContext context = null)
+        public virtual async Task<Response> GetDeploymentAsync(string projectName, string deploymentName, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
@@ -234,7 +234,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/ConversationAuthoringClient.xml" path="doc/members/member[@name='GetDeployment(string,string,RequestContext)']/*" />
-        public virtual Response GetDeployment(string projectName, string deploymentName, RequestContext context = null)
+        public virtual Response GetDeployment(string projectName, string deploymentName, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
@@ -272,7 +272,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/ConversationAuthoringClient.xml" path="doc/members/member[@name='GetDeploymentJobStatusAsync(string,string,string,RequestContext)']/*" />
-        public virtual async Task<Response> GetDeploymentJobStatusAsync(string projectName, string deploymentName, string jobId, RequestContext context = null)
+        public virtual async Task<Response> GetDeploymentJobStatusAsync(string projectName, string deploymentName, string jobId, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
@@ -311,7 +311,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/ConversationAuthoringClient.xml" path="doc/members/member[@name='GetDeploymentJobStatus(string,string,string,RequestContext)']/*" />
-        public virtual Response GetDeploymentJobStatus(string projectName, string deploymentName, string jobId, RequestContext context = null)
+        public virtual Response GetDeploymentJobStatus(string projectName, string deploymentName, string jobId, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
@@ -349,7 +349,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/ConversationAuthoringClient.xml" path="doc/members/member[@name='GetSwapDeploymentsJobStatusAsync(string,string,RequestContext)']/*" />
-        public virtual async Task<Response> GetSwapDeploymentsJobStatusAsync(string projectName, string jobId, RequestContext context = null)
+        public virtual async Task<Response> GetSwapDeploymentsJobStatusAsync(string projectName, string jobId, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
@@ -386,7 +386,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/ConversationAuthoringClient.xml" path="doc/members/member[@name='GetSwapDeploymentsJobStatus(string,string,RequestContext)']/*" />
-        public virtual Response GetSwapDeploymentsJobStatus(string projectName, string jobId, RequestContext context = null)
+        public virtual Response GetSwapDeploymentsJobStatus(string projectName, string jobId, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
@@ -423,7 +423,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/ConversationAuthoringClient.xml" path="doc/members/member[@name='GetExportProjectJobStatusAsync(string,string,RequestContext)']/*" />
-        public virtual async Task<Response> GetExportProjectJobStatusAsync(string projectName, string jobId, RequestContext context = null)
+        public virtual async Task<Response> GetExportProjectJobStatusAsync(string projectName, string jobId, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
@@ -460,7 +460,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/ConversationAuthoringClient.xml" path="doc/members/member[@name='GetExportProjectJobStatus(string,string,RequestContext)']/*" />
-        public virtual Response GetExportProjectJobStatus(string projectName, string jobId, RequestContext context = null)
+        public virtual Response GetExportProjectJobStatus(string projectName, string jobId, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
@@ -497,7 +497,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/ConversationAuthoringClient.xml" path="doc/members/member[@name='GetImportProjectJobStatusAsync(string,string,RequestContext)']/*" />
-        public virtual async Task<Response> GetImportProjectJobStatusAsync(string projectName, string jobId, RequestContext context = null)
+        public virtual async Task<Response> GetImportProjectJobStatusAsync(string projectName, string jobId, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
@@ -534,7 +534,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/ConversationAuthoringClient.xml" path="doc/members/member[@name='GetImportProjectJobStatus(string,string,RequestContext)']/*" />
-        public virtual Response GetImportProjectJobStatus(string projectName, string jobId, RequestContext context = null)
+        public virtual Response GetImportProjectJobStatus(string projectName, string jobId, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
@@ -571,7 +571,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/ConversationAuthoringClient.xml" path="doc/members/member[@name='GetTrainedModelAsync(string,string,RequestContext)']/*" />
-        public virtual async Task<Response> GetTrainedModelAsync(string projectName, string trainedModelLabel, RequestContext context = null)
+        public virtual async Task<Response> GetTrainedModelAsync(string projectName, string trainedModelLabel, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNullOrEmpty(trainedModelLabel, nameof(trainedModelLabel));
@@ -608,7 +608,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/ConversationAuthoringClient.xml" path="doc/members/member[@name='GetTrainedModel(string,string,RequestContext)']/*" />
-        public virtual Response GetTrainedModel(string projectName, string trainedModelLabel, RequestContext context = null)
+        public virtual Response GetTrainedModel(string projectName, string trainedModelLabel, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNullOrEmpty(trainedModelLabel, nameof(trainedModelLabel));
@@ -719,7 +719,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/ConversationAuthoringClient.xml" path="doc/members/member[@name='GetModelEvaluationSummaryAsync(string,string,RequestContext)']/*" />
-        public virtual async Task<Response> GetModelEvaluationSummaryAsync(string projectName, string trainedModelLabel, RequestContext context = null)
+        public virtual async Task<Response> GetModelEvaluationSummaryAsync(string projectName, string trainedModelLabel, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNullOrEmpty(trainedModelLabel, nameof(trainedModelLabel));
@@ -756,7 +756,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/ConversationAuthoringClient.xml" path="doc/members/member[@name='GetModelEvaluationSummary(string,string,RequestContext)']/*" />
-        public virtual Response GetModelEvaluationSummary(string projectName, string trainedModelLabel, RequestContext context = null)
+        public virtual Response GetModelEvaluationSummary(string projectName, string trainedModelLabel, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNullOrEmpty(trainedModelLabel, nameof(trainedModelLabel));
@@ -793,18 +793,18 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <exception cref="ArgumentException"> <paramref name="projectName"/>, <paramref name="trainedModelLabel"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/ConversationAuthoringClient.xml" path="doc/members/member[@name='GetLoadSnapshotStatusAsync(string,string,string,RequestContext)']/*" />
-        public virtual async Task<Response> GetLoadSnapshotStatusAsync(string projectName, string trainedModelLabel, string jobId, RequestContext context = null)
+        /// <include file="Docs/ConversationAuthoringClient.xml" path="doc/members/member[@name='GetLoadSnapshotJobStatusAsync(string,string,string,RequestContext)']/*" />
+        public virtual async Task<Response> GetLoadSnapshotJobStatusAsync(string projectName, string trainedModelLabel, string jobId, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNullOrEmpty(trainedModelLabel, nameof(trainedModelLabel));
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
-            using var scope = ClientDiagnostics.CreateScope("ConversationAuthoringClient.GetLoadSnapshotStatus");
+            using var scope = ClientDiagnostics.CreateScope("ConversationAuthoringClient.GetLoadSnapshotJobStatus");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetLoadSnapshotStatusRequest(projectName, trainedModelLabel, jobId, context);
+                using HttpMessage message = CreateGetLoadSnapshotJobStatusRequest(projectName, trainedModelLabel, jobId, context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -832,18 +832,18 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <exception cref="ArgumentException"> <paramref name="projectName"/>, <paramref name="trainedModelLabel"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/ConversationAuthoringClient.xml" path="doc/members/member[@name='GetLoadSnapshotStatus(string,string,string,RequestContext)']/*" />
-        public virtual Response GetLoadSnapshotStatus(string projectName, string trainedModelLabel, string jobId, RequestContext context = null)
+        /// <include file="Docs/ConversationAuthoringClient.xml" path="doc/members/member[@name='GetLoadSnapshotJobStatus(string,string,string,RequestContext)']/*" />
+        public virtual Response GetLoadSnapshotJobStatus(string projectName, string trainedModelLabel, string jobId, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNullOrEmpty(trainedModelLabel, nameof(trainedModelLabel));
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
-            using var scope = ClientDiagnostics.CreateScope("ConversationAuthoringClient.GetLoadSnapshotStatus");
+            using var scope = ClientDiagnostics.CreateScope("ConversationAuthoringClient.GetLoadSnapshotJobStatus");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetLoadSnapshotStatusRequest(projectName, trainedModelLabel, jobId, context);
+                using HttpMessage message = CreateGetLoadSnapshotJobStatusRequest(projectName, trainedModelLabel, jobId, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -871,7 +871,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/ConversationAuthoringClient.xml" path="doc/members/member[@name='GetTrainingJobStatusAsync(string,string,RequestContext)']/*" />
-        public virtual async Task<Response> GetTrainingJobStatusAsync(string projectName, string jobId, RequestContext context = null)
+        public virtual async Task<Response> GetTrainingJobStatusAsync(string projectName, string jobId, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
@@ -908,7 +908,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/ConversationAuthoringClient.xml" path="doc/members/member[@name='GetTrainingJobStatus(string,string,RequestContext)']/*" />
-        public virtual Response GetTrainingJobStatus(string projectName, string jobId, RequestContext context = null)
+        public virtual Response GetTrainingJobStatus(string projectName, string jobId, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
@@ -944,7 +944,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/ConversationAuthoringClient.xml" path="doc/members/member[@name='GetProjectDeletionJobStatusAsync(string,RequestContext)']/*" />
-        public virtual async Task<Response> GetProjectDeletionJobStatusAsync(string jobId, RequestContext context = null)
+        public virtual async Task<Response> GetProjectDeletionJobStatusAsync(string jobId, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
@@ -979,7 +979,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/ConversationAuthoringClient.xml" path="doc/members/member[@name='GetProjectDeletionJobStatus(string,RequestContext)']/*" />
-        public virtual Response GetProjectDeletionJobStatus(string jobId, RequestContext context = null)
+        public virtual Response GetProjectDeletionJobStatus(string jobId, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
@@ -1011,7 +1011,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
         /// <include file="Docs/ConversationAuthoringClient.xml" path="doc/members/member[@name='GetProjectsAsync(RequestContext)']/*" />
-        public virtual AsyncPageable<BinaryData> GetProjectsAsync(RequestContext context = null)
+        public virtual AsyncPageable<BinaryData> GetProjectsAsync(RequestContext context)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetProjectsRequest(context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetProjectsNextPageRequest(nextLink, context);
@@ -1032,7 +1032,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
         /// <include file="Docs/ConversationAuthoringClient.xml" path="doc/members/member[@name='GetProjects(RequestContext)']/*" />
-        public virtual Pageable<BinaryData> GetProjects(RequestContext context = null)
+        public virtual Pageable<BinaryData> GetProjects(RequestContext context)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetProjectsRequest(context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetProjectsNextPageRequest(nextLink, context);
@@ -1056,7 +1056,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
         /// <include file="Docs/ConversationAuthoringClient.xml" path="doc/members/member[@name='GetDeploymentsAsync(string,RequestContext)']/*" />
-        public virtual AsyncPageable<BinaryData> GetDeploymentsAsync(string projectName, RequestContext context = null)
+        public virtual AsyncPageable<BinaryData> GetDeploymentsAsync(string projectName, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
@@ -1082,7 +1082,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
         /// <include file="Docs/ConversationAuthoringClient.xml" path="doc/members/member[@name='GetDeployments(string,RequestContext)']/*" />
-        public virtual Pageable<BinaryData> GetDeployments(string projectName, RequestContext context = null)
+        public virtual Pageable<BinaryData> GetDeployments(string projectName, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
@@ -1108,7 +1108,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
         /// <include file="Docs/ConversationAuthoringClient.xml" path="doc/members/member[@name='GetTrainedModelsAsync(string,RequestContext)']/*" />
-        public virtual AsyncPageable<BinaryData> GetTrainedModelsAsync(string projectName, RequestContext context = null)
+        public virtual AsyncPageable<BinaryData> GetTrainedModelsAsync(string projectName, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
@@ -1134,7 +1134,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
         /// <include file="Docs/ConversationAuthoringClient.xml" path="doc/members/member[@name='GetTrainedModels(string,RequestContext)']/*" />
-        public virtual Pageable<BinaryData> GetTrainedModels(string projectName, RequestContext context = null)
+        public virtual Pageable<BinaryData> GetTrainedModels(string projectName, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
@@ -1155,14 +1155,14 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// </summary>
         /// <param name="projectName"> The name of the project to use. </param>
         /// <param name="trainedModelLabel"> The trained model label. </param>
-        /// <param name="stringIndexType"> Specifies the method used to interpret string offsets. Set this to &quot;Utf16CodeUnit&quot; for .NET strings, which are encoded as UTF-16. Allowed values: &quot;Utf16CodeUnit&quot;. </param>
+        /// <param name="stringIndexType"> Specifies the method used to interpret string offsets. Set this to "Utf16CodeUnit" for .NET strings, which are encoded as UTF-16. Allowed values: "Utf16CodeUnit". </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="trainedModelLabel"/> or <paramref name="stringIndexType"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="trainedModelLabel"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
         /// <include file="Docs/ConversationAuthoringClient.xml" path="doc/members/member[@name='GetModelEvaluationResultsAsync(string,string,string,RequestContext)']/*" />
-        public virtual AsyncPageable<BinaryData> GetModelEvaluationResultsAsync(string projectName, string trainedModelLabel, string stringIndexType = "Utf16CodeUnit", RequestContext context = null)
+        public virtual AsyncPageable<BinaryData> GetModelEvaluationResultsAsync(string projectName, string trainedModelLabel, string stringIndexType, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNullOrEmpty(trainedModelLabel, nameof(trainedModelLabel));
@@ -1185,14 +1185,14 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// </summary>
         /// <param name="projectName"> The name of the project to use. </param>
         /// <param name="trainedModelLabel"> The trained model label. </param>
-        /// <param name="stringIndexType"> Specifies the method used to interpret string offsets. Set this to &quot;Utf16CodeUnit&quot; for .NET strings, which are encoded as UTF-16. Allowed values: &quot;Utf16CodeUnit&quot;. </param>
+        /// <param name="stringIndexType"> Specifies the method used to interpret string offsets. Set this to "Utf16CodeUnit" for .NET strings, which are encoded as UTF-16. Allowed values: "Utf16CodeUnit". </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="trainedModelLabel"/> or <paramref name="stringIndexType"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="trainedModelLabel"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
         /// <include file="Docs/ConversationAuthoringClient.xml" path="doc/members/member[@name='GetModelEvaluationResults(string,string,string,RequestContext)']/*" />
-        public virtual Pageable<BinaryData> GetModelEvaluationResults(string projectName, string trainedModelLabel, string stringIndexType = "Utf16CodeUnit", RequestContext context = null)
+        public virtual Pageable<BinaryData> GetModelEvaluationResults(string projectName, string trainedModelLabel, string stringIndexType, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNullOrEmpty(trainedModelLabel, nameof(trainedModelLabel));
@@ -1220,7 +1220,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
         /// <include file="Docs/ConversationAuthoringClient.xml" path="doc/members/member[@name='GetTrainingJobsAsync(string,RequestContext)']/*" />
-        public virtual AsyncPageable<BinaryData> GetTrainingJobsAsync(string projectName, RequestContext context = null)
+        public virtual AsyncPageable<BinaryData> GetTrainingJobsAsync(string projectName, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
@@ -1246,7 +1246,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
         /// <include file="Docs/ConversationAuthoringClient.xml" path="doc/members/member[@name='GetTrainingJobs(string,RequestContext)']/*" />
-        public virtual Pageable<BinaryData> GetTrainingJobs(string projectName, RequestContext context = null)
+        public virtual Pageable<BinaryData> GetTrainingJobs(string projectName, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
@@ -1265,13 +1265,13 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="projectKind"> The project kind. Allowed values: &quot;Conversation&quot; | &quot;Orchestration&quot;. </param>
+        /// <param name="projectKind"> The project kind. Allowed values: "Conversation" | "Orchestration". </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectKind"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
         /// <include file="Docs/ConversationAuthoringClient.xml" path="doc/members/member[@name='GetSupportedLanguagesAsync(string,RequestContext)']/*" />
-        public virtual AsyncPageable<BinaryData> GetSupportedLanguagesAsync(string projectKind, RequestContext context = null)
+        public virtual AsyncPageable<BinaryData> GetSupportedLanguagesAsync(string projectKind, RequestContext context)
         {
             Argument.AssertNotNull(projectKind, nameof(projectKind));
 
@@ -1290,13 +1290,13 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="projectKind"> The project kind. Allowed values: &quot;Conversation&quot; | &quot;Orchestration&quot;. </param>
+        /// <param name="projectKind"> The project kind. Allowed values: "Conversation" | "Orchestration". </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectKind"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
         /// <include file="Docs/ConversationAuthoringClient.xml" path="doc/members/member[@name='GetSupportedLanguages(string,RequestContext)']/*" />
-        public virtual Pageable<BinaryData> GetSupportedLanguages(string projectKind, RequestContext context = null)
+        public virtual Pageable<BinaryData> GetSupportedLanguages(string projectKind, RequestContext context)
         {
             Argument.AssertNotNull(projectKind, nameof(projectKind));
 
@@ -1315,13 +1315,13 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="language"> The language to get supported prebuilt entities for. Required if multilingual is false. This is BCP-47 representation of a language. For example, use &quot;en&quot; for English, &quot;en-gb&quot; for English (UK), &quot;es&quot; for Spanish etc. </param>
+        /// <param name="language"> The language to get supported prebuilt entities for. Required if multilingual is false. This is BCP-47 representation of a language. For example, use "en" for English, "en-gb" for English (UK), "es" for Spanish etc. </param>
         /// <param name="multilingual"> Whether to get the support prebuilt entities for multilingual or monolingual projects. If true, the language parameter is ignored. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
         /// <include file="Docs/ConversationAuthoringClient.xml" path="doc/members/member[@name='GetSupportedPrebuiltEntitiesAsync(string,bool?,RequestContext)']/*" />
-        public virtual AsyncPageable<BinaryData> GetSupportedPrebuiltEntitiesAsync(string language = null, bool? multilingual = null, RequestContext context = null)
+        public virtual AsyncPageable<BinaryData> GetSupportedPrebuiltEntitiesAsync(string language, bool? multilingual, RequestContext context)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetSupportedPrebuiltEntitiesRequest(language, multilingual, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetSupportedPrebuiltEntitiesNextPageRequest(nextLink, language, multilingual, context);
@@ -1338,13 +1338,13 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="language"> The language to get supported prebuilt entities for. Required if multilingual is false. This is BCP-47 representation of a language. For example, use &quot;en&quot; for English, &quot;en-gb&quot; for English (UK), &quot;es&quot; for Spanish etc. </param>
+        /// <param name="language"> The language to get supported prebuilt entities for. Required if multilingual is false. This is BCP-47 representation of a language. For example, use "en" for English, "en-gb" for English (UK), "es" for Spanish etc. </param>
         /// <param name="multilingual"> Whether to get the support prebuilt entities for multilingual or monolingual projects. If true, the language parameter is ignored. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
         /// <include file="Docs/ConversationAuthoringClient.xml" path="doc/members/member[@name='GetSupportedPrebuiltEntities(string,bool?,RequestContext)']/*" />
-        public virtual Pageable<BinaryData> GetSupportedPrebuiltEntities(string language = null, bool? multilingual = null, RequestContext context = null)
+        public virtual Pageable<BinaryData> GetSupportedPrebuiltEntities(string language, bool? multilingual, RequestContext context)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetSupportedPrebuiltEntitiesRequest(language, multilingual, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetSupportedPrebuiltEntitiesNextPageRequest(nextLink, language, multilingual, context);
@@ -1361,13 +1361,13 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="projectKind"> The project kind. Allowed values: &quot;Conversation&quot; | &quot;Orchestration&quot;. </param>
+        /// <param name="projectKind"> The project kind. Allowed values: "Conversation" | "Orchestration". </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectKind"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
         /// <include file="Docs/ConversationAuthoringClient.xml" path="doc/members/member[@name='GetTrainingConfigVersionsAsync(string,RequestContext)']/*" />
-        public virtual AsyncPageable<BinaryData> GetTrainingConfigVersionsAsync(string projectKind, RequestContext context = null)
+        public virtual AsyncPageable<BinaryData> GetTrainingConfigVersionsAsync(string projectKind, RequestContext context)
         {
             Argument.AssertNotNull(projectKind, nameof(projectKind));
 
@@ -1386,13 +1386,13 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="projectKind"> The project kind. Allowed values: &quot;Conversation&quot; | &quot;Orchestration&quot;. </param>
+        /// <param name="projectKind"> The project kind. Allowed values: "Conversation" | "Orchestration". </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectKind"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
         /// <include file="Docs/ConversationAuthoringClient.xml" path="doc/members/member[@name='GetTrainingConfigVersions(string,RequestContext)']/*" />
-        public virtual Pageable<BinaryData> GetTrainingConfigVersions(string projectKind, RequestContext context = null)
+        public virtual Pageable<BinaryData> GetTrainingConfigVersions(string projectKind, RequestContext context)
         {
             Argument.AssertNotNull(projectKind, nameof(projectKind));
 
@@ -1419,7 +1419,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
         /// <include file="Docs/ConversationAuthoringClient.xml" path="doc/members/member[@name='DeleteProjectAsync(WaitUntil,string,RequestContext)']/*" />
-        public virtual async Task<Operation<BinaryData>> DeleteProjectAsync(WaitUntil waitUntil, string projectName, RequestContext context = null)
+        public virtual async Task<Operation<BinaryData>> DeleteProjectAsync(WaitUntil waitUntil, string projectName, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
@@ -1455,7 +1455,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
         /// <include file="Docs/ConversationAuthoringClient.xml" path="doc/members/member[@name='DeleteProject(WaitUntil,string,RequestContext)']/*" />
-        public virtual Operation<BinaryData> DeleteProject(WaitUntil waitUntil, string projectName, RequestContext context = null)
+        public virtual Operation<BinaryData> DeleteProject(WaitUntil waitUntil, string projectName, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
@@ -1474,7 +1474,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         }
 
         /// <summary>
-        /// [Protocol Method] Triggers a job to export a project&apos;s data.
+        /// [Protocol Method] Triggers a job to export a project's data.
         /// <list type="bullet">
         /// <item>
         /// <description>
@@ -1485,9 +1485,9 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="projectName"> The name of the project to use. </param>
-        /// <param name="exportedProjectFormat"> The format of the exported project file to use. Allowed values: &quot;Conversation&quot; | &quot;Luis&quot;. </param>
+        /// <param name="exportedProjectFormat"> The format of the exported project file to use. Allowed values: "Conversation" | "Luis". </param>
         /// <param name="assetKind"> Kind of asset to export. </param>
-        /// <param name="stringIndexType"> Specifies the method used to interpret string offsets. Set this to &quot;Utf16CodeUnit&quot; for .NET strings, which are encoded as UTF-16. Allowed values: &quot;Utf16CodeUnit&quot;. </param>
+        /// <param name="stringIndexType"> Specifies the method used to interpret string offsets. Set this to "Utf16CodeUnit" for .NET strings, which are encoded as UTF-16. Allowed values: "Utf16CodeUnit". </param>
         /// <param name="trainedModelLabel"> Trained model label to export. If the trainedModelLabel is null, the default behavior is to export the current working copy. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="stringIndexType"/> is null. </exception>
@@ -1495,7 +1495,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
         /// <include file="Docs/ConversationAuthoringClient.xml" path="doc/members/member[@name='ExportProjectAsync(WaitUntil,string,string,string,string,string,RequestContext)']/*" />
-        public virtual async Task<Operation<BinaryData>> ExportProjectAsync(WaitUntil waitUntil, string projectName, string exportedProjectFormat = null, string assetKind = null, string stringIndexType = "Utf16CodeUnit", string trainedModelLabel = null, RequestContext context = null)
+        public virtual async Task<Operation<BinaryData>> ExportProjectAsync(WaitUntil waitUntil, string projectName, string exportedProjectFormat, string assetKind, string stringIndexType, string trainedModelLabel, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNull(stringIndexType, nameof(stringIndexType));
@@ -1515,7 +1515,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         }
 
         /// <summary>
-        /// [Protocol Method] Triggers a job to export a project&apos;s data.
+        /// [Protocol Method] Triggers a job to export a project's data.
         /// <list type="bullet">
         /// <item>
         /// <description>
@@ -1526,9 +1526,9 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="projectName"> The name of the project to use. </param>
-        /// <param name="exportedProjectFormat"> The format of the exported project file to use. Allowed values: &quot;Conversation&quot; | &quot;Luis&quot;. </param>
+        /// <param name="exportedProjectFormat"> The format of the exported project file to use. Allowed values: "Conversation" | "Luis". </param>
         /// <param name="assetKind"> Kind of asset to export. </param>
-        /// <param name="stringIndexType"> Specifies the method used to interpret string offsets. Set this to &quot;Utf16CodeUnit&quot; for .NET strings, which are encoded as UTF-16. Allowed values: &quot;Utf16CodeUnit&quot;. </param>
+        /// <param name="stringIndexType"> Specifies the method used to interpret string offsets. Set this to "Utf16CodeUnit" for .NET strings, which are encoded as UTF-16. Allowed values: "Utf16CodeUnit". </param>
         /// <param name="trainedModelLabel"> Trained model label to export. If the trainedModelLabel is null, the default behavior is to export the current working copy. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="stringIndexType"/> is null. </exception>
@@ -1536,7 +1536,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
         /// <include file="Docs/ConversationAuthoringClient.xml" path="doc/members/member[@name='ExportProject(WaitUntil,string,string,string,string,string,RequestContext)']/*" />
-        public virtual Operation<BinaryData> ExportProject(WaitUntil waitUntil, string projectName, string exportedProjectFormat = null, string assetKind = null, string stringIndexType = "Utf16CodeUnit", string trainedModelLabel = null, RequestContext context = null)
+        public virtual Operation<BinaryData> ExportProject(WaitUntil waitUntil, string projectName, string exportedProjectFormat, string assetKind, string stringIndexType, string trainedModelLabel, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNull(stringIndexType, nameof(stringIndexType));
@@ -1568,7 +1568,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="projectName"> The name of the project to use. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="exportedProjectFormat"> The format of the exported project file to use. Allowed values: &quot;Conversation&quot; | &quot;Luis&quot;. </param>
+        /// <param name="exportedProjectFormat"> The format of the exported project file to use. Allowed values: "Conversation" | "Luis". </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -1607,7 +1607,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="projectName"> The name of the project to use. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="exportedProjectFormat"> The format of the exported project file to use. Allowed values: &quot;Conversation&quot; | &quot;Luis&quot;. </param>
+        /// <param name="exportedProjectFormat"> The format of the exported project file to use. Allowed values: "Conversation" | "Luis". </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -1884,7 +1884,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
         /// <include file="Docs/ConversationAuthoringClient.xml" path="doc/members/member[@name='DeleteDeploymentAsync(WaitUntil,string,string,RequestContext)']/*" />
-        public virtual async Task<Operation<BinaryData>> DeleteDeploymentAsync(WaitUntil waitUntil, string projectName, string deploymentName, RequestContext context = null)
+        public virtual async Task<Operation<BinaryData>> DeleteDeploymentAsync(WaitUntil waitUntil, string projectName, string deploymentName, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
@@ -1922,7 +1922,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
         /// <include file="Docs/ConversationAuthoringClient.xml" path="doc/members/member[@name='DeleteDeployment(WaitUntil,string,string,RequestContext)']/*" />
-        public virtual Operation<BinaryData> DeleteDeployment(WaitUntil waitUntil, string projectName, string deploymentName, RequestContext context = null)
+        public virtual Operation<BinaryData> DeleteDeployment(WaitUntil waitUntil, string projectName, string deploymentName, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
@@ -2036,7 +2036,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
         /// <include file="Docs/ConversationAuthoringClient.xml" path="doc/members/member[@name='CancelTrainingJobAsync(WaitUntil,string,string,RequestContext)']/*" />
-        public virtual async Task<Operation<BinaryData>> CancelTrainingJobAsync(WaitUntil waitUntil, string projectName, string jobId, RequestContext context = null)
+        public virtual async Task<Operation<BinaryData>> CancelTrainingJobAsync(WaitUntil waitUntil, string projectName, string jobId, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
@@ -2074,7 +2074,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
         /// <include file="Docs/ConversationAuthoringClient.xml" path="doc/members/member[@name='CancelTrainingJob(WaitUntil,string,string,RequestContext)']/*" />
-        public virtual Operation<BinaryData> CancelTrainingJob(WaitUntil waitUntil, string projectName, string jobId, RequestContext context = null)
+        public virtual Operation<BinaryData> CancelTrainingJob(WaitUntil waitUntil, string projectName, string jobId, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
@@ -2507,7 +2507,7 @@ namespace Azure.AI.Language.Conversations.Authoring
             return message;
         }
 
-        internal HttpMessage CreateGetLoadSnapshotStatusRequest(string projectName, string trainedModelLabel, string jobId, RequestContext context)
+        internal HttpMessage CreateGetLoadSnapshotJobStatusRequest(string projectName, string trainedModelLabel, string jobId, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;

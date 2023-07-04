@@ -23,7 +23,7 @@ namespace Azure.Health.Insights.ClinicalMatching
             }
             IReadOnlyList<TrialMatcherPatientResult> patients = default;
             string modelVersion = default;
-            Optional<DateTimeOffset?> knowledgeGraphLastUpdateDate = default;
+            Optional<DateTimeOffset> knowledgeGraphLastUpdateDate = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("patients"u8))
@@ -45,7 +45,6 @@ namespace Azure.Health.Insights.ClinicalMatching
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        knowledgeGraphLastUpdateDate = null;
                         continue;
                     }
                     knowledgeGraphLastUpdateDate = property.Value.GetDateTimeOffset("D");

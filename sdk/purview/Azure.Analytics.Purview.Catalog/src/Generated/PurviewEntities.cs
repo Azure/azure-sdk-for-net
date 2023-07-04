@@ -998,7 +998,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <summary>
         /// [Protocol Method] Get complete definition of an entity given its type and unique attribute.
         /// In addition to the typeName path parameter, attribute key-value pair(s) can be provided in the following format:
-        /// attr:\&lt;attrName&gt;=&lt;attrValue&gt;. 
+        /// attr:\&lt;attrName&gt;=&lt;attrValue&gt;.
         /// NOTE: The attrName and attrValue should be unique across entities, eg. qualifiedName.
         /// The REST request would look something like this:
         /// GET /v2/entity/uniqueAttribute/type/aType?attr:aTypeAttribute=someValue.
@@ -1041,7 +1041,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <summary>
         /// [Protocol Method] Get complete definition of an entity given its type and unique attribute.
         /// In addition to the typeName path parameter, attribute key-value pair(s) can be provided in the following format:
-        /// attr:\&lt;attrName&gt;=&lt;attrValue&gt;. 
+        /// attr:\&lt;attrName&gt;=&lt;attrValue&gt;.
         /// NOTE: The attrName and attrValue should be unique across entities, eg. qualifiedName.
         /// The REST request would look something like this:
         /// GET /v2/entity/uniqueAttribute/type/aType?attr:aTypeAttribute=someValue.
@@ -1551,15 +1551,15 @@ namespace Azure.Analytics.Purview.Catalog
 
         /// <summary>
         /// [Protocol Method] Bulk API to retrieve list of entities identified by its unique attributes.
-        /// 
+        ///
         /// In addition to the typeName path parameter, attribute key-value pair(s) can be provided in the following format
-        /// 
+        ///
         /// typeName=\&lt;typeName&gt;&amp;attr_1:\&lt;attrName&gt;=\&lt;attrValue&gt;&amp;attr_2:\&lt;attrName&gt;=\&lt;attrValue&gt;&amp;attr_3:\&lt;attrName&gt;=\&lt;attrValue&gt;
-        /// 
+        ///
         /// NOTE: The attrName should be an unique attribute for the given entity-type
-        /// 
+        ///
         /// The REST request would look something like this
-        /// 
+        ///
         /// GET /v2/entity/bulk/uniqueAttribute/type/hive_db?attr_0:qualifiedName=db1@cl1&amp;attr_2:qualifiedName=db2@cl1
         /// <list type="bullet">
         /// <item>
@@ -1599,15 +1599,15 @@ namespace Azure.Analytics.Purview.Catalog
 
         /// <summary>
         /// [Protocol Method] Bulk API to retrieve list of entities identified by its unique attributes.
-        /// 
+        ///
         /// In addition to the typeName path parameter, attribute key-value pair(s) can be provided in the following format
-        /// 
+        ///
         /// typeName=\&lt;typeName&gt;&amp;attr_1:\&lt;attrName&gt;=\&lt;attrValue&gt;&amp;attr_2:\&lt;attrName&gt;=\&lt;attrValue&gt;&amp;attr_3:\&lt;attrName&gt;=\&lt;attrValue&gt;
-        /// 
+        ///
         /// NOTE: The attrName should be an unique attribute for the given entity-type
-        /// 
+        ///
         /// The REST request would look something like this
-        /// 
+        ///
         /// GET /v2/entity/bulk/uniqueAttribute/type/hive_db?attr_0:qualifiedName=db1@cl1&amp;attr_2:qualifiedName=db2@cl1
         /// <list type="bullet">
         /// <item>
@@ -2352,7 +2352,7 @@ namespace Azure.Analytics.Purview.Catalog
         }
 
         /// <summary>
-        /// [Protocol Method] Delete given labels to a given entity identified by its type and unique attributes, if labels is null/empty, no labels will be removed. If any labels in labels set are non-existing labels, they will be ignored, only existing labels will be removed. In addition to the typeName path parameter, attribute key-value pair(s) can be provided in the following format: attr:&lt;attrName&gt;=&lt;attrValue&gt;. NOTE: The attrName and attrValue should be unique across entities, eg. qualifiedName. The REST request would look something like this: DELETE /v2/entity/uniqueAttribute/type/aType?attr:aTypeAttribute=someValue. 
+        /// [Protocol Method] Delete given labels to a given entity identified by its type and unique attributes, if labels is null/empty, no labels will be removed. If any labels in labels set are non-existing labels, they will be ignored, only existing labels will be removed. In addition to the typeName path parameter, attribute key-value pair(s) can be provided in the following format: attr:&lt;attrName&gt;=&lt;attrValue&gt;. NOTE: The attrName and attrValue should be unique across entities, eg. qualifiedName. The REST request would look something like this: DELETE /v2/entity/uniqueAttribute/type/aType?attr:aTypeAttribute=someValue.
         /// <list type="bullet">
         /// <item>
         /// <description>
@@ -2389,7 +2389,7 @@ namespace Azure.Analytics.Purview.Catalog
         }
 
         /// <summary>
-        /// [Protocol Method] Delete given labels to a given entity identified by its type and unique attributes, if labels is null/empty, no labels will be removed. If any labels in labels set are non-existing labels, they will be ignored, only existing labels will be removed. In addition to the typeName path parameter, attribute key-value pair(s) can be provided in the following format: attr:&lt;attrName&gt;=&lt;attrValue&gt;. NOTE: The attrName and attrValue should be unique across entities, eg. qualifiedName. The REST request would look something like this: DELETE /v2/entity/uniqueAttribute/type/aType?attr:aTypeAttribute=someValue. 
+        /// [Protocol Method] Delete given labels to a given entity identified by its type and unique attributes, if labels is null/empty, no labels will be removed. If any labels in labels set are non-existing labels, they will be ignored, only existing labels will be removed. In addition to the typeName path parameter, attribute key-value pair(s) can be provided in the following format: attr:&lt;attrName&gt;=&lt;attrValue&gt;. NOTE: The attrName and attrValue should be unique across entities, eg. qualifiedName. The REST request would look something like this: DELETE /v2/entity/uniqueAttribute/type/aType?attr:aTypeAttribute=someValue.
         /// <list type="bullet">
         /// <item>
         /// <description>

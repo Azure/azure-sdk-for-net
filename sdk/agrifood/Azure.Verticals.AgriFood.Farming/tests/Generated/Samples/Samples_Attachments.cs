@@ -201,7 +201,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
             var credential = new DefaultAzureCredential();
             var client = new FarmBeatsClient(credential).GetAttachmentsClient("2022-11-01-preview");
 
-            Response response = client.Delete("<partyId>", "<attachmentId>", new RequestContext());
+            Response response = client.Delete("<partyId>", "<attachmentId>");
             Console.WriteLine(response.Status);
         }
 
@@ -223,7 +223,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
             var credential = new DefaultAzureCredential();
             var client = new FarmBeatsClient(credential).GetAttachmentsClient("2022-11-01-preview");
 
-            Response response = await client.DeleteAsync("<partyId>", "<attachmentId>", new RequestContext());
+            Response response = await client.DeleteAsync("<partyId>", "<attachmentId>");
             Console.WriteLine(response.Status);
         }
 

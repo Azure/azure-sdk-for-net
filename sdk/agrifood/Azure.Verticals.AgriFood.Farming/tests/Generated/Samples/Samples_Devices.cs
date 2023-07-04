@@ -63,7 +63,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
                 },
             };
 
-            Response response = client.CreateOrUpdate("<sensorPartnerId>", "<deviceId>", RequestContent.Create(data), new RequestContext());
+            Response response = client.CreateOrUpdate("<sensorPartnerId>", "<deviceId>", RequestContent.Create(data));
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("deviceDataModelId").ToString());
@@ -131,7 +131,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
                 },
             };
 
-            Response response = await client.CreateOrUpdateAsync("<sensorPartnerId>", "<deviceId>", RequestContent.Create(data), new RequestContext());
+            Response response = await client.CreateOrUpdateAsync("<sensorPartnerId>", "<deviceId>", RequestContent.Create(data));
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("deviceDataModelId").ToString());
@@ -261,7 +261,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
             var credential = new DefaultAzureCredential();
             var client = new FarmBeatsClient(credential).GetDevicesClient("2022-11-01-preview");
 
-            Response response = client.Delete("<sensorPartnerId>", "<deviceId>", new RequestContext());
+            Response response = client.Delete("<sensorPartnerId>", "<deviceId>");
             Console.WriteLine(response.Status);
         }
 
@@ -283,7 +283,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
             var credential = new DefaultAzureCredential();
             var client = new FarmBeatsClient(credential).GetDevicesClient("2022-11-01-preview");
 
-            Response response = await client.DeleteAsync("<sensorPartnerId>", "<deviceId>", new RequestContext());
+            Response response = await client.DeleteAsync("<sensorPartnerId>", "<deviceId>");
             Console.WriteLine(response.Status);
         }
 

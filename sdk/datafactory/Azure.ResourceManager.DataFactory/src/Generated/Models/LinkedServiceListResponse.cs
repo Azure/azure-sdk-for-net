@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Initializes a new instance of LinkedServiceListResponse. </summary>
         /// <param name="value"> List of linked services. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal LinkedServiceListResponse(IEnumerable<FactoryLinkedServiceData> value)
+        internal LinkedServiceListResponse(IEnumerable<DataFactoryLinkedServiceData> value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -29,14 +29,14 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Initializes a new instance of LinkedServiceListResponse. </summary>
         /// <param name="value"> List of linked services. </param>
         /// <param name="nextLink"> The link to the next page of results, if any remaining results exist. </param>
-        internal LinkedServiceListResponse(IReadOnlyList<FactoryLinkedServiceData> value, string nextLink)
+        internal LinkedServiceListResponse(IReadOnlyList<DataFactoryLinkedServiceData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> List of linked services. </summary>
-        public IReadOnlyList<FactoryLinkedServiceData> Value { get; }
+        public IReadOnlyList<DataFactoryLinkedServiceData> Value { get; }
         /// <summary> The link to the next page of results, if any remaining results exist. </summary>
         public string NextLink { get; }
     }

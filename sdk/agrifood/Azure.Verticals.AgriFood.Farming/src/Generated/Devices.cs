@@ -287,13 +287,13 @@ namespace Azure.Verticals.AgriFood.Farming
         /// </list>
         /// </summary>
         /// <param name="sensorPartnerId"> Id of the associated sensor partner. </param>
-        /// <param name="parentDeviceIds"> Id&apos;s of the parent devices. </param>
-        /// <param name="deviceDataModelIds"> Id&apos;s of the device data models. </param>
+        /// <param name="parentDeviceIds"> Id's of the parent devices. </param>
+        /// <param name="deviceDataModelIds"> Id's of the device data models. </param>
         /// <param name="ids"> Ids of the resource. </param>
         /// <param name="names"> Names of the resource. </param>
         /// <param name="propertyFilters">
         /// Filters on key-value pairs within the Properties object.
-        /// eg. &quot;{testKey} eq {testValue}&quot;.
+        /// eg. "{testKey} eq {testValue}".
         /// </param>
         /// <param name="statuses"> Statuses of the resource. </param>
         /// <param name="minCreatedDateTime"> Minimum creation date of resource (inclusive). </param>
@@ -331,13 +331,13 @@ namespace Azure.Verticals.AgriFood.Farming
         /// </list>
         /// </summary>
         /// <param name="sensorPartnerId"> Id of the associated sensor partner. </param>
-        /// <param name="parentDeviceIds"> Id&apos;s of the parent devices. </param>
-        /// <param name="deviceDataModelIds"> Id&apos;s of the device data models. </param>
+        /// <param name="parentDeviceIds"> Id's of the parent devices. </param>
+        /// <param name="deviceDataModelIds"> Id's of the device data models. </param>
         /// <param name="ids"> Ids of the resource. </param>
         /// <param name="names"> Names of the resource. </param>
         /// <param name="propertyFilters">
         /// Filters on key-value pairs within the Properties object.
-        /// eg. &quot;{testKey} eq {testValue}&quot;.
+        /// eg. "{testKey} eq {testValue}".
         /// </param>
         /// <param name="statuses"> Statuses of the resource. </param>
         /// <param name="minCreatedDateTime"> Minimum creation date of resource (inclusive). </param>

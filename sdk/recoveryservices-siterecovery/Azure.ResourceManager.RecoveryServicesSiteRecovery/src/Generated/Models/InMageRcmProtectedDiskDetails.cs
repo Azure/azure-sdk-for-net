@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
@@ -33,7 +34,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="isInitialReplicationComplete"> A value indicating whether initial replication is complete or not. </param>
         /// <param name="irDetails"> The initial replication details. </param>
         /// <param name="resyncDetails"> The resync details. </param>
-        internal InMageRcmProtectedDiskDetails(string diskId, string diskName, string isOSDisk, long? capacityInBytes, string logStorageAccountId, string diskEncryptionSetId, string seedManagedDiskId, Uri seedBlobUri, string targetManagedDiskId, DiskAccountType? diskType, double? dataPendingInLogDataStoreInMB, double? dataPendingAtSourceAgentInMB, string isInitialReplicationComplete, InMageRcmSyncDetails irDetails, InMageRcmSyncDetails resyncDetails)
+        internal InMageRcmProtectedDiskDetails(string diskId, string diskName, string isOSDisk, long? capacityInBytes, ResourceIdentifier logStorageAccountId, ResourceIdentifier diskEncryptionSetId, string seedManagedDiskId, Uri seedBlobUri, string targetManagedDiskId, SiteRecoveryDiskAccountType? diskType, double? dataPendingInLogDataStoreInMB, double? dataPendingAtSourceAgentInMB, string isInitialReplicationComplete, InMageRcmSyncDetails irDetails, InMageRcmSyncDetails resyncDetails)
         {
             DiskId = diskId;
             DiskName = diskName;
@@ -61,9 +62,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <summary> The disk capacity in bytes. </summary>
         public long? CapacityInBytes { get; }
         /// <summary> The log storage account ARM Id. </summary>
-        public string LogStorageAccountId { get; }
+        public ResourceIdentifier LogStorageAccountId { get; }
         /// <summary> The DiskEncryptionSet ARM Id. </summary>
-        public string DiskEncryptionSetId { get; }
+        public ResourceIdentifier DiskEncryptionSetId { get; }
         /// <summary> The ARM Id of the seed managed disk. </summary>
         public string SeedManagedDiskId { get; }
         /// <summary> The uri of the seed blob. </summary>
@@ -71,7 +72,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <summary> The ARM Id of the target managed disk. </summary>
         public string TargetManagedDiskId { get; }
         /// <summary> The disk type. </summary>
-        public DiskAccountType? DiskType { get; }
+        public SiteRecoveryDiskAccountType? DiskType { get; }
         /// <summary> The data pending in log data store in MB. </summary>
         public double? DataPendingInLogDataStoreInMB { get; }
         /// <summary> The data pending at source agent in MB. </summary>

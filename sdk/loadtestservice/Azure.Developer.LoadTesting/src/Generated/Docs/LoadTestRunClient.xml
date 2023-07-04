@@ -231,7 +231,7 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new LoadTestRunClient(endpoint, credential);
 
-Response response = await client.DeleteTestRunAsync("<testRunId>", new RequestContext());
+Response response = await client.DeleteTestRunAsync("<testRunId>");
 Console.WriteLine(response.Status);
 ]]></code>
 </example>
@@ -244,7 +244,7 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new LoadTestRunClient(endpoint, credential);
 
-Response response = client.DeleteTestRun("<testRunId>", new RequestContext());
+Response response = client.DeleteTestRun("<testRunId>");
 Console.WriteLine(response.Status);
 ]]></code>
 </example>
@@ -604,7 +604,7 @@ var data = new {
     },
 };
 
-Response response = await client.CreateOrUpdateAppComponentsAsync("<testRunId>", RequestContent.Create(data), new RequestContext());
+Response response = await client.CreateOrUpdateAppComponentsAsync("<testRunId>", RequestContent.Create(data));
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("components").GetProperty("<test>").GetProperty("resourceId").ToString());
@@ -641,7 +641,7 @@ var data = new {
     },
 };
 
-Response response = client.CreateOrUpdateAppComponents("<testRunId>", RequestContent.Create(data), new RequestContext());
+Response response = client.CreateOrUpdateAppComponents("<testRunId>", RequestContent.Create(data));
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("components").GetProperty("<test>").GetProperty("resourceId").ToString());
@@ -746,7 +746,7 @@ var data = new {
     },
 };
 
-Response response = await client.CreateOrUpdateServerMetricsConfigAsync("<testRunId>", RequestContent.Create(data), new RequestContext());
+Response response = await client.CreateOrUpdateServerMetricsConfigAsync("<testRunId>", RequestContent.Create(data));
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("testRunId").ToString());
@@ -800,7 +800,7 @@ var data = new {
     },
 };
 
-Response response = client.CreateOrUpdateServerMetricsConfig("<testRunId>", RequestContent.Create(data), new RequestContext());
+Response response = client.CreateOrUpdateServerMetricsConfig("<testRunId>", RequestContent.Create(data));
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("testRunId").ToString());
@@ -887,7 +887,7 @@ var client = new LoadTestRunClient(endpoint, credential);
 
 var data = new {};
 
-await foreach (var item in client.GetMetricsAsync("<testRunId>", "<metricname>", "<metricNamespace>", "<timespan>", RequestContent.Create(data)))
+await foreach (var item in client.GetMetricsAsync("<testRunId>", "<metricname>", "<metricNamespace>", "<timespan>", RequestContent.Create(data), "<aggregation>", "<interval>", new RequestContext()))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.ToString());
@@ -931,7 +931,7 @@ var client = new LoadTestRunClient(endpoint, credential);
 
 var data = new {};
 
-foreach (var item in client.GetMetrics("<testRunId>", "<metricname>", "<metricNamespace>", "<timespan>", RequestContent.Create(data)))
+foreach (var item in client.GetMetrics("<testRunId>", "<metricname>", "<metricNamespace>", "<timespan>", RequestContent.Create(data), "<aggregation>", "<interval>", new RequestContext()))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.ToString());
@@ -973,18 +973,6 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new LoadTestRunClient(endpoint, credential);
 
-await foreach (var item in client.GetMetricDimensionValuesAsync("<testRunId>", "<name>", "<metricName>", "<metricNamespace>", "<timeInterval>"))
-{
-    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-    Console.WriteLine(result.ToString());
-}
-]]></code>
-This sample shows how to call GetMetricDimensionValuesAsync with all parameters, and how to parse the result.
-<code><![CDATA[
-var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new LoadTestRunClient(endpoint, credential);
-
 await foreach (var item in client.GetMetricDimensionValuesAsync("<testRunId>", "<name>", "<metricName>", "<metricNamespace>", "<timeInterval>", "<interval>", new RequestContext()))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
@@ -996,18 +984,6 @@ await foreach (var item in client.GetMetricDimensionValuesAsync("<testRunId>", "
     <member name="GetMetricDimensionValues(string,string,string,string,string,string,RequestContext)">
 <example>
 This sample shows how to call GetMetricDimensionValues with required parameters and parse the result.
-<code><![CDATA[
-var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new LoadTestRunClient(endpoint, credential);
-
-foreach (var item in client.GetMetricDimensionValues("<testRunId>", "<name>", "<metricName>", "<metricNamespace>", "<timeInterval>"))
-{
-    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-    Console.WriteLine(result.ToString());
-}
-]]></code>
-This sample shows how to call GetMetricDimensionValues with all parameters, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");

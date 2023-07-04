@@ -1,7 +1,9 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Threading;
+using Azure.Core;
 
 namespace Azure.Storage.DataMovement
 {
@@ -27,12 +29,19 @@ namespace Azure.Storage.DataMovement
         public long BytesTransferred { get; }
 
         /// <summary>
+        /// If <see cref="Success"/> is false, this value will be populated
+        /// with the exception that was thrown.
+        /// </summary>
+        public Exception Exception { get; }
+
+        /// <summary>
         /// Constructor
         /// </summary>
         /// <param name="transferId"></param>
         /// <param name="success"></param>
         /// <param name="offset"></param>
         /// <param name="bytesTransferred"></param>
+        /// <param name="exception"></param>
         /// <param name="isRunningSynchronously"></param>
         /// <param name="cancellationToken"></param>
         public StageChunkEventArgs(
@@ -40,13 +49,23 @@ namespace Azure.Storage.DataMovement
             bool success,
             long offset,
             long bytesTransferred,
+            Exception exception,
             bool isRunningSynchronously,
             CancellationToken cancellationToken) :
             base(transferId, isRunningSynchronously, cancellationToken)
         {
+            if (success && exception != null)
+            {
+                Argument.AssertNull(exception, nameof(exception));
+            }
+            else if (!success && exception == null)
+            {
+                Argument.AssertNotNull(exception, nameof(exception));
+            }
             Success = success;
             Offset = offset;
             BytesTransferred = bytesTransferred;
+            Exception = exception;
         }
     }
 }

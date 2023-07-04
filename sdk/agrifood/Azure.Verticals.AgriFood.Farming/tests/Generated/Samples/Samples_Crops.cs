@@ -143,7 +143,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
                 },
             };
 
-            Response response = client.CreateOrUpdate("<cropId>", RequestContent.Create(data), new RequestContext());
+            Response response = client.CreateOrUpdate("<cropId>", RequestContent.Create(data));
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("phenotype").ToString());
@@ -207,7 +207,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
                 },
             };
 
-            Response response = await client.CreateOrUpdateAsync("<cropId>", RequestContent.Create(data), new RequestContext());
+            Response response = await client.CreateOrUpdateAsync("<cropId>", RequestContent.Create(data));
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("phenotype").ToString());
@@ -245,7 +245,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
             var credential = new DefaultAzureCredential();
             var client = new FarmBeatsClient(credential).GetCropsClient("2022-11-01-preview");
 
-            Response response = client.Delete("<cropId>", new RequestContext());
+            Response response = client.Delete("<cropId>");
             Console.WriteLine(response.Status);
         }
 
@@ -267,7 +267,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
             var credential = new DefaultAzureCredential();
             var client = new FarmBeatsClient(credential).GetCropsClient("2022-11-01-preview");
 
-            Response response = await client.DeleteAsync("<cropId>", new RequestContext());
+            Response response = await client.DeleteAsync("<cropId>");
             Console.WriteLine(response.Status);
         }
 

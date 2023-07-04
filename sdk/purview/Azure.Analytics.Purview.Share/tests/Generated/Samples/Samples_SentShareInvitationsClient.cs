@@ -122,7 +122,7 @@ namespace Azure.Analytics.Purview.Share.Samples
                 invitationKind = "Application",
             };
 
-            Response response = client.CreateOrUpdate("<sentShareName>", "<sentShareInvitationName>", RequestContent.Create(data), new RequestContext());
+            Response response = client.CreateOrUpdate("<sentShareName>", "<sentShareInvitationName>", RequestContent.Create(data));
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("invitationKind").ToString());
@@ -174,7 +174,7 @@ namespace Azure.Analytics.Purview.Share.Samples
                 invitationKind = "Application",
             };
 
-            Response response = await client.CreateOrUpdateAsync("<sentShareName>", "<sentShareInvitationName>", RequestContent.Create(data), new RequestContext());
+            Response response = await client.CreateOrUpdateAsync("<sentShareName>", "<sentShareInvitationName>", RequestContent.Create(data));
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("invitationKind").ToString());
@@ -201,7 +201,7 @@ namespace Azure.Analytics.Purview.Share.Samples
             var credential = new DefaultAzureCredential();
             var client = new SentShareInvitationsClient("<https://my-service.azure.com>", credential);
 
-            Response response = client.Delete("<sentShareName>", "<sentShareInvitationName>", new RequestContext());
+            Response response = client.Delete("<sentShareName>", "<sentShareInvitationName>");
             Console.WriteLine(response.Status);
         }
 
@@ -223,7 +223,7 @@ namespace Azure.Analytics.Purview.Share.Samples
             var credential = new DefaultAzureCredential();
             var client = new SentShareInvitationsClient("<https://my-service.azure.com>", credential);
 
-            Response response = await client.DeleteAsync("<sentShareName>", "<sentShareInvitationName>", new RequestContext());
+            Response response = await client.DeleteAsync("<sentShareName>", "<sentShareInvitationName>");
             Console.WriteLine(response.Status);
         }
 

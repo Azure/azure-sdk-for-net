@@ -611,7 +611,7 @@ namespace Azure.Analytics.Purview.Catalog
         }
 
         /// <summary>
-        /// [Protocol Method] Get all related categories (parent and children). Limit, offset, and sort parameters are currently not being enabled and won&apos;t work even they are passed.
+        /// [Protocol Method] Get all related categories (parent and children). Limit, offset, and sort parameters are currently not being enabled and won't work even they are passed.
         /// <list type="bullet">
         /// <item>
         /// <description>
@@ -649,7 +649,7 @@ namespace Azure.Analytics.Purview.Catalog
         }
 
         /// <summary>
-        /// [Protocol Method] Get all related categories (parent and children). Limit, offset, and sort parameters are currently not being enabled and won&apos;t work even they are passed.
+        /// [Protocol Method] Get all related categories (parent and children). Limit, offset, and sort parameters are currently not being enabled and won't work even they are passed.
         /// <list type="bullet">
         /// <item>
         /// <description>
@@ -1497,7 +1497,7 @@ namespace Azure.Analytics.Purview.Catalog
         }
 
         /// <summary>
-        /// [Protocol Method] Get all related terms for a specific term by its GUID. Limit, offset, and sort parameters are currently not being enabled and won&apos;t work even they are passed.
+        /// [Protocol Method] Get all related terms for a specific term by its GUID. Limit, offset, and sort parameters are currently not being enabled and won't work even they are passed.
         /// <list type="bullet">
         /// <item>
         /// <description>
@@ -1535,7 +1535,7 @@ namespace Azure.Analytics.Purview.Catalog
         }
 
         /// <summary>
-        /// [Protocol Method] Get all related terms for a specific term by its GUID. Limit, offset, and sort parameters are currently not being enabled and won&apos;t work even they are passed.
+        /// [Protocol Method] Get all related terms for a specific term by its GUID. Limit, offset, and sort parameters are currently not being enabled and won't work even they are passed.
         /// <list type="bullet">
         /// <item>
         /// <description>

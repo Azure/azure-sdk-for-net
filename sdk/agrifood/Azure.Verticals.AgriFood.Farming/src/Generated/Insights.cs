@@ -133,7 +133,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <param name="partyId"> Id of the associated party. </param>
         /// <param name="modelId">
         /// Id of the associated model.
-        /// It can be either &apos;BiomassModelId&apos;, &apos;SensorPlacementModelId&apos;, &apos;SoilMoistureModelId&apos; or any solution id.
+        /// It can be either 'BiomassModelId', 'SensorPlacementModelId', 'SoilMoistureModelId' or any solution id.
         /// </param>
         /// <param name="resourceType"> Resource type associated with the record. </param>
         /// <param name="resourceId"> Id of the associated resource. </param>
@@ -181,7 +181,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <param name="partyId"> Id of the associated party. </param>
         /// <param name="modelId">
         /// Id of the associated model.
-        /// It can be either &apos;BiomassModelId&apos;, &apos;SensorPlacementModelId&apos;, &apos;SoilMoistureModelId&apos; or any solution id.
+        /// It can be either 'BiomassModelId', 'SensorPlacementModelId', 'SoilMoistureModelId' or any solution id.
         /// </param>
         /// <param name="resourceType"> Resource type associated with the record. </param>
         /// <param name="resourceId"> Id of the associated resource. </param>
@@ -229,7 +229,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <param name="partyId"> Id of the associated party. </param>
         /// <param name="modelId">
         /// Id of the associated model.
-        /// It can be either &apos;BiomassModelId&apos;, &apos;SensorPlacementModelId&apos;, &apos;SoilMoistureModelId&apos; or any solution id.
+        /// It can be either 'BiomassModelId', 'SensorPlacementModelId', 'SoilMoistureModelId' or any solution id.
         /// </param>
         /// <param name="resourceType"> Resource type associated with the record. </param>
         /// <param name="resourceId"> Id of the associated resource. </param>
@@ -275,7 +275,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <param name="partyId"> Id of the associated party. </param>
         /// <param name="modelId">
         /// Id of the associated model.
-        /// It can be either &apos;BiomassModelId&apos;, &apos;SensorPlacementModelId&apos;, &apos;SoilMoistureModelId&apos; or any solution id.
+        /// It can be either 'BiomassModelId', 'SensorPlacementModelId', 'SoilMoistureModelId' or any solution id.
         /// </param>
         /// <param name="resourceType"> Resource type associated with the record. </param>
         /// <param name="resourceId"> Id of the associated resource. </param>
@@ -321,7 +321,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <param name="partyId"> Id of the associated party. </param>
         /// <param name="modelId">
         /// Id of the associated model.
-        /// It can be either &apos;BiomassModelId&apos;, &apos;SensorPlacementModelId&apos;, &apos;SoilMoistureModelId&apos; or any solution id.
+        /// It can be either 'BiomassModelId', 'SensorPlacementModelId', 'SoilMoistureModelId' or any solution id.
         /// </param>
         /// <param name="resourceType"> Resource type associated with the record. </param>
         /// <param name="resourceId"> Id of the associated resource. </param>
@@ -367,7 +367,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <param name="partyId"> Id of the associated party. </param>
         /// <param name="modelId">
         /// Id of the associated model.
-        /// It can be either &apos;BiomassModelId&apos;, &apos;SensorPlacementModelId&apos;, &apos;SoilMoistureModelId&apos; or any solution id.
+        /// It can be either 'BiomassModelId', 'SensorPlacementModelId', 'SoilMoistureModelId' or any solution id.
         /// </param>
         /// <param name="resourceType"> Resource type associated with the record. </param>
         /// <param name="resourceId"> Id of the associated resource. </param>
@@ -420,14 +420,14 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <param name="maxInsightEndDateTime"> Maximum insightEndDateTime time of insight resources (inclusive), sample format: yyyy-MM-ddTHH:mm:ssZ. </param>
         /// <param name="measurementFilters">
         /// Filters on measureKey.unit/unitValue or measureKey.value/value pairs within the Measures object.
-        /// eg. &quot;measureKey.unit eq {testValue}&quot; where testValue is string.
-        /// eg. &quot;measureKey.value eq {testValue}&quot; where testValue = double.
+        /// eg. "measureKey.unit eq {testValue}" where testValue is string.
+        /// eg. "measureKey.value eq {testValue}" where testValue = double.
         /// </param>
         /// <param name="ids"> Ids of the resource. </param>
         /// <param name="names"> Names of the resource. </param>
         /// <param name="propertyFilters">
         /// Filters on key-value pairs within the Properties object.
-        /// eg. &quot;{testKey} eq {testValue}&quot;.
+        /// eg. "{testKey} eq {testValue}".
         /// </param>
         /// <param name="statuses"> Statuses of the resource. </param>
         /// <param name="minCreatedDateTime"> Minimum creation date of resource (inclusive). </param>
@@ -477,14 +477,14 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <param name="maxInsightEndDateTime"> Maximum insightEndDateTime time of insight resources (inclusive), sample format: yyyy-MM-ddTHH:mm:ssZ. </param>
         /// <param name="measurementFilters">
         /// Filters on measureKey.unit/unitValue or measureKey.value/value pairs within the Measures object.
-        /// eg. &quot;measureKey.unit eq {testValue}&quot; where testValue is string.
-        /// eg. &quot;measureKey.value eq {testValue}&quot; where testValue = double.
+        /// eg. "measureKey.unit eq {testValue}" where testValue is string.
+        /// eg. "measureKey.value eq {testValue}" where testValue = double.
         /// </param>
         /// <param name="ids"> Ids of the resource. </param>
         /// <param name="names"> Names of the resource. </param>
         /// <param name="propertyFilters">
         /// Filters on key-value pairs within the Properties object.
-        /// eg. &quot;{testKey} eq {testValue}&quot;.
+        /// eg. "{testKey} eq {testValue}".
         /// </param>
         /// <param name="statuses"> Statuses of the resource. </param>
         /// <param name="minCreatedDateTime"> Minimum creation date of resource (inclusive). </param>

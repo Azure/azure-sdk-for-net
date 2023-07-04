@@ -1,4 +1,4 @@
-# Analyzing healthcare entities
+# Analyze healthcare entities
 
 This sample demonstrates how to analyze healthcare entities in one or more documents.
 
@@ -14,9 +14,9 @@ TextAnalyticsClient client = new(endpoint, credential);
 
 The values of the `endpoint` and `apiKey` variables can be retrieved from environment variables, configuration settings, or any other secure approach that works for your application.
 
-## Perform text analysis on healthcare documents
+## Analyze healthcare entities in one or more text documents
 
-To analyze healthcare entities in multiple healthcare documents, call `StartAnalyzeHealthcareEntities` on the `TextAnalyticsClient` by passing the documents as an `IEnumerable<string>` parameter. This returns an `AnalyzeHealthcareEntitiesOperation`.
+To analyze healthcare entities in one or more text documents, call `AnalyzeHealthcareEntitiesAsync` on the `TextAnalyticsClient` by passing the documents as either an `IEnumerable<string>` parameter or an `IEnumerable<TextDocumentInput>` parameter. This returns an `AnalyzeHealthcareEntitiesOperation`.
 
 ```C# Snippet:Sample7_AnalyzeHealthcareEntitiesConvenienceAsync_PerformOperation
 string documentA =
@@ -48,23 +48,10 @@ List<string> batchedDocuments = new()
 };
 
 // Perform the text analysis operation.
-AnalyzeHealthcareEntitiesOperation operation = await client.StartAnalyzeHealthcareEntitiesAsync(batchedDocuments);
-await operation.WaitForCompletionAsync();
+AnalyzeHealthcareEntitiesOperation operation = await client.AnalyzeHealthcareEntitiesAsync(WaitUntil.Completed, batchedDocuments);
 ```
 
-The `AnalyzeHealthcareEntitiesOperation` includes general information about the status of the long-running operation, and it can be queried at any time:
-
-```C# Snippet:Sample7_AnalyzeHealthcareEntitiesConvenienceAsync_ViewOperationStatus
-// View the operation status.
-Console.WriteLine($"Created On   : {operation.CreatedOn}");
-Console.WriteLine($"Expires On   : {operation.ExpiresOn}");
-Console.WriteLine($"Id           : {operation.Id}");
-Console.WriteLine($"Status       : {operation.Status}");
-Console.WriteLine($"Last Modified: {operation.LastModified}");
-Console.WriteLine();
-```
-
-Once the long-running operation has completed, you can view the results of the text analysis, including any errors that might have occurred:
+Using `WaitUntil.Completed` means that the long-running operation will be automatically polled until it has completed. You can then view the results of the healthcare entities analysis, including any errors that might have occurred:
 
 ```C# Snippet:Sample7_AnalyzeHealthcareEntitiesConvenienceAsync_ViewResults
 // View the operation results.

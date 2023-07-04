@@ -97,7 +97,7 @@ var data = new {
     },
 };
 
-Response response = await client.CreateOrUpdateAsync("<partyId>", "<seasonalFieldId>", RequestContent.Create(data), new RequestContext());
+Response response = await client.CreateOrUpdateAsync("<partyId>", "<seasonalFieldId>", RequestContent.Create(data));
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("partyId").ToString());
@@ -156,7 +156,7 @@ var data = new {
     },
 };
 
-Response response = client.CreateOrUpdate("<partyId>", "<seasonalFieldId>", RequestContent.Create(data), new RequestContext());
+Response response = client.CreateOrUpdate("<partyId>", "<seasonalFieldId>", RequestContent.Create(data));
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("partyId").ToString());
@@ -186,7 +186,7 @@ This sample shows how to call DeleteAsync with required parameters.
 var credential = new DefaultAzureCredential();
 var client = new FarmBeatsClient(credential).GetSeasonalFieldsClient("2022-11-01-preview");
 
-Response response = await client.DeleteAsync("<partyId>", "<seasonalFieldId>", new RequestContext());
+Response response = await client.DeleteAsync("<partyId>", "<seasonalFieldId>");
 Console.WriteLine(response.Status);
 ]]></code>
 </example>
@@ -198,7 +198,7 @@ This sample shows how to call Delete with required parameters.
 var credential = new DefaultAzureCredential();
 var client = new FarmBeatsClient(credential).GetSeasonalFieldsClient("2022-11-01-preview");
 
-Response response = client.Delete("<partyId>", "<seasonalFieldId>", new RequestContext());
+Response response = client.Delete("<partyId>", "<seasonalFieldId>");
 Console.WriteLine(response.Status);
 ]]></code>
 </example>

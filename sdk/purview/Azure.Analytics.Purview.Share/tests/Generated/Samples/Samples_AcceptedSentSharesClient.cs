@@ -180,7 +180,7 @@ namespace Azure.Analytics.Purview.Share.Samples
                 shareKind = "InPlace",
             };
 
-            var operation = client.Reinstate(WaitUntil.Completed, "<sentShareName>", "<acceptedSentShareName>", RequestContent.Create(data), "<repeatabilityRequestId>", new RequestContext());
+            var operation = client.Reinstate(WaitUntil.Completed, "<sentShareName>", "<acceptedSentShareName>", RequestContent.Create(data), "<repeatabilityRequestId>");
 
             BinaryData responseData = operation.Value;
             JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
@@ -227,7 +227,7 @@ namespace Azure.Analytics.Purview.Share.Samples
                 shareKind = "InPlace",
             };
 
-            var operation = await client.ReinstateAsync(WaitUntil.Completed, "<sentShareName>", "<acceptedSentShareName>", RequestContent.Create(data), "<repeatabilityRequestId>", new RequestContext());
+            var operation = await client.ReinstateAsync(WaitUntil.Completed, "<sentShareName>", "<acceptedSentShareName>", RequestContent.Create(data), "<repeatabilityRequestId>");
 
             BinaryData responseData = operation.Value;
             JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
@@ -338,7 +338,7 @@ namespace Azure.Analytics.Purview.Share.Samples
                 shareKind = "InPlace",
             };
 
-            var operation = client.UpdateExpiration(WaitUntil.Completed, "<sentShareName>", "<acceptedSentShareName>", RequestContent.Create(data), "<repeatabilityRequestId>", new RequestContext());
+            var operation = client.UpdateExpiration(WaitUntil.Completed, "<sentShareName>", "<acceptedSentShareName>", RequestContent.Create(data), "<repeatabilityRequestId>");
 
             BinaryData responseData = operation.Value;
             JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
@@ -385,7 +385,7 @@ namespace Azure.Analytics.Purview.Share.Samples
                 shareKind = "InPlace",
             };
 
-            var operation = await client.UpdateExpirationAsync(WaitUntil.Completed, "<sentShareName>", "<acceptedSentShareName>", RequestContent.Create(data), "<repeatabilityRequestId>", new RequestContext());
+            var operation = await client.UpdateExpirationAsync(WaitUntil.Completed, "<sentShareName>", "<acceptedSentShareName>", RequestContent.Create(data), "<repeatabilityRequestId>");
 
             BinaryData responseData = operation.Value;
             JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;

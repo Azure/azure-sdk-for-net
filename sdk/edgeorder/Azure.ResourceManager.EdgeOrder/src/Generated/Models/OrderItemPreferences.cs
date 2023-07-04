@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
 
         /// <summary> Preferences related to the Encryption. </summary>
         internal EncryptionPreferences EncryptionPreferences { get; set; }
-        /// <summary> Double encryption status as entered by the customer. It is compulsory to give this parameter if the &apos;Deny&apos; or &apos;Disabled&apos; policy is configured. </summary>
+        /// <summary> Double encryption status as entered by the customer. It is compulsory to give this parameter if the 'Deny' or 'Disabled' policy is configured. </summary>
         public DoubleEncryptionStatus? DoubleEncryptionStatus
         {
             get => EncryptionPreferences is null ? default : EncryptionPreferences.DoubleEncryptionStatus;

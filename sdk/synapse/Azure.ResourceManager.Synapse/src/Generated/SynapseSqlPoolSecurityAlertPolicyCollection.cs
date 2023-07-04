@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Synapse
         }
 
         /// <summary>
-        /// Create or update a Sql pool&apos;s security alert policy.
+        /// Create or update a Sql pool's security alert policy.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Synapse
         }
 
         /// <summary>
-        /// Create or update a Sql pool&apos;s security alert policy.
+        /// Create or update a Sql pool's security alert policy.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.Synapse
         }
 
         /// <summary>
-        /// Get a Sql pool&apos;s security alert policy.
+        /// Get a Sql pool's security alert policy.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.Synapse
         }
 
         /// <summary>
-        /// Get a Sql pool&apos;s security alert policy.
+        /// Get a Sql pool's security alert policy.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -198,7 +198,7 @@ namespace Azure.ResourceManager.Synapse
         }
 
         /// <summary>
-        /// Get a list of Sql pool&apos;s security alert policies.
+        /// Get a list of Sql pool's security alert policies.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -220,7 +220,7 @@ namespace Azure.ResourceManager.Synapse
         }
 
         /// <summary>
-        /// Get a list of Sql pool&apos;s security alert policies.
+        /// Get a list of Sql pool's security alert policies.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>

@@ -17,7 +17,7 @@ namespace Azure.AI.Translation.Document
         /// <summary> Initializes a new instance of DocumentStatusResult. </summary>
         /// <param name="sourceDocumentUri"> Location of the source document. </param>
         /// <param name="createdOn"> Operation created date time. </param>
-        /// <param name="lastModified"> Date time in which the operation&apos;s status has been updated. </param>
+        /// <param name="lastModified"> Date time in which the operation's status has been updated. </param>
         /// <param name="status"> List of possible statuses for job or document. </param>
         /// <param name="translatedToLanguageCode"> To language. </param>
         /// <param name="progress"> Progress of the translation if available. </param>
@@ -42,7 +42,7 @@ namespace Azure.AI.Translation.Document
         /// <param name="translatedDocumentUri"> Location of the document or folder. </param>
         /// <param name="sourceDocumentUri"> Location of the source document. </param>
         /// <param name="createdOn"> Operation created date time. </param>
-        /// <param name="lastModified"> Date time in which the operation&apos;s status has been updated. </param>
+        /// <param name="lastModified"> Date time in which the operation's status has been updated. </param>
         /// <param name="status"> List of possible statuses for job or document. </param>
         /// <param name="translatedToLanguageCode"> To language. </param>
         /// <param name="error"> This contains an outer error with error code, message, details, target and an inner error with more descriptive details. </param>

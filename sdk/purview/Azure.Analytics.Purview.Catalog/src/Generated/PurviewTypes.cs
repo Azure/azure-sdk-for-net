@@ -120,7 +120,7 @@ namespace Azure.Analytics.Purview.Catalog
         }
 
         /// <summary>
-        /// [Protocol Method] Get the businessMetadata definition by it&apos;s name (unique)
+        /// [Protocol Method] Get the businessMetadata definition by it's name (unique)
         /// <list type="bullet">
         /// <item>
         /// <description>
@@ -155,7 +155,7 @@ namespace Azure.Analytics.Purview.Catalog
         }
 
         /// <summary>
-        /// [Protocol Method] Get the businessMetadata definition by it&apos;s name (unique)
+        /// [Protocol Method] Get the businessMetadata definition by it's name (unique)
         /// <list type="bullet">
         /// <item>
         /// <description>
@@ -1113,7 +1113,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// Whether include termtemplatedef when return all typedefs.
         /// This is always true when search filter type=term_template
         /// </param>
-        /// <param name="type"> Typedef name as search filter when get typedefs. Allowed values: &quot;enum&quot; | &quot;entity&quot; | &quot;classification&quot; | &quot;relationship&quot; | &quot;struct&quot; | &quot;term_template&quot;. </param>
+        /// <param name="type"> Typedef name as search filter when get typedefs. Allowed values: "enum" | "entity" | "classification" | "relationship" | "struct" | "term_template". </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
@@ -1148,7 +1148,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// Whether include termtemplatedef when return all typedefs.
         /// This is always true when search filter type=term_template
         /// </param>
-        /// <param name="type"> Typedef name as search filter when get typedefs. Allowed values: &quot;enum&quot; | &quot;entity&quot; | &quot;classification&quot; | &quot;relationship&quot; | &quot;struct&quot; | &quot;term_template&quot;. </param>
+        /// <param name="type"> Typedef name as search filter when get typedefs. Allowed values: "enum" | "entity" | "classification" | "relationship" | "struct" | "term_template". </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
@@ -1389,7 +1389,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// Whether include termtemplatedef when return all typedefs.
         /// This is always true when search filter type=term_template
         /// </param>
-        /// <param name="type"> Typedef name as search filter when get typedefs. Allowed values: &quot;enum&quot; | &quot;entity&quot; | &quot;classification&quot; | &quot;relationship&quot; | &quot;struct&quot; | &quot;term_template&quot;. </param>
+        /// <param name="type"> Typedef name as search filter when get typedefs. Allowed values: "enum" | "entity" | "classification" | "relationship" | "struct" | "term_template". </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
@@ -1424,7 +1424,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// Whether include termtemplatedef when return all typedefs.
         /// This is always true when search filter type=term_template
         /// </param>
-        /// <param name="type"> Typedef name as search filter when get typedefs. Allowed values: &quot;enum&quot; | &quot;entity&quot; | &quot;classification&quot; | &quot;relationship&quot; | &quot;struct&quot; | &quot;term_template&quot;. </param>
+        /// <param name="type"> Typedef name as search filter when get typedefs. Allowed values: "enum" | "entity" | "classification" | "relationship" | "struct" | "term_template". </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>

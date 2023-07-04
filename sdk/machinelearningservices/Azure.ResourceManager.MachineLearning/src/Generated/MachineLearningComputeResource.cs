@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.MachineLearning
         }
 
         /// <summary>
-        /// Gets compute definition by its name. Any secrets (storage keys, service credentials, etc) are not returned - use &apos;keys&apos; nested resource to get them.
+        /// Gets compute definition by its name. Any secrets (storage keys, service credentials, etc) are not returned - use 'keys' nested resource to get them.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.MachineLearning
         }
 
         /// <summary>
-        /// Gets compute definition by its name. Any secrets (storage keys, service credentials, etc) are not returned - use &apos;keys&apos; nested resource to get them.
+        /// Gets compute definition by its name. Any secrets (storage keys, service credentials, etc) are not returned - use 'keys' nested resource to get them.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="underlyingResourceAction"> Delete the underlying compute if &apos;Delete&apos;, or detach the underlying compute from workspace if &apos;Detach&apos;. </param>
+        /// <param name="underlyingResourceAction"> Delete the underlying compute if 'Delete', or detach the underlying compute from workspace if 'Detach'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, MachineLearningUnderlyingResourceAction underlyingResourceAction, CancellationToken cancellationToken = default)
         {
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="underlyingResourceAction"> Delete the underlying compute if &apos;Delete&apos;, or detach the underlying compute from workspace if &apos;Detach&apos;. </param>
+        /// <param name="underlyingResourceAction"> Delete the underlying compute if 'Delete', or detach the underlying compute from workspace if 'Detach'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, MachineLearningUnderlyingResourceAction underlyingResourceAction, CancellationToken cancellationToken = default)
         {

@@ -221,7 +221,7 @@ namespace Azure.Developer.LoadTesting
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/LoadTestAdministrationClient.xml" path="doc/members/member[@name='GetTestAsync(string,RequestContext)']/*" />
-        public virtual async Task<Response> GetTestAsync(string testId, RequestContext context = null)
+        public virtual async Task<Response> GetTestAsync(string testId, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(testId, nameof(testId));
 
@@ -256,7 +256,7 @@ namespace Azure.Developer.LoadTesting
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/LoadTestAdministrationClient.xml" path="doc/members/member[@name='GetTest(string,RequestContext)']/*" />
-        public virtual Response GetTest(string testId, RequestContext context = null)
+        public virtual Response GetTest(string testId, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(testId, nameof(testId));
 
@@ -275,7 +275,7 @@ namespace Azure.Developer.LoadTesting
         }
 
         /// <summary>
-        /// [Protocol Method] Upload input file for a given test name. File size can&apos;t be more than 50 MB. Existing file with same name for the given test will be overwritten. File should be provided in the request body as application/octet-stream.
+        /// [Protocol Method] Upload input file for a given test name. File size can't be more than 50 MB. Existing file with same name for the given test will be overwritten. File should be provided in the request body as application/octet-stream.
         /// <list type="bullet">
         /// <item>
         /// <description>
@@ -287,7 +287,7 @@ namespace Azure.Developer.LoadTesting
         /// <param name="testId"> Unique name for the load test, must contain only lower-case alphabetic, numeric, underscore or hyphen characters. </param>
         /// <param name="fileName"> Unique name for test file with file extension like : App.jmx. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="fileType"> File type. Allowed values: &quot;JMX_FILE&quot; | &quot;USER_PROPERTIES&quot; | &quot;ADDITIONAL_ARTIFACTS&quot;. </param>
+        /// <param name="fileType"> File type. Allowed values: "JMX_FILE" | "USER_PROPERTIES" | "ADDITIONAL_ARTIFACTS". </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="testId"/>, <paramref name="fileName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="testId"/> or <paramref name="fileName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -315,7 +315,7 @@ namespace Azure.Developer.LoadTesting
         }
 
         /// <summary>
-        /// [Protocol Method] Upload input file for a given test name. File size can&apos;t be more than 50 MB. Existing file with same name for the given test will be overwritten. File should be provided in the request body as application/octet-stream.
+        /// [Protocol Method] Upload input file for a given test name. File size can't be more than 50 MB. Existing file with same name for the given test will be overwritten. File should be provided in the request body as application/octet-stream.
         /// <list type="bullet">
         /// <item>
         /// <description>
@@ -327,7 +327,7 @@ namespace Azure.Developer.LoadTesting
         /// <param name="testId"> Unique name for the load test, must contain only lower-case alphabetic, numeric, underscore or hyphen characters. </param>
         /// <param name="fileName"> Unique name for test file with file extension like : App.jmx. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="fileType"> File type. Allowed values: &quot;JMX_FILE&quot; | &quot;USER_PROPERTIES&quot; | &quot;ADDITIONAL_ARTIFACTS&quot;. </param>
+        /// <param name="fileType"> File type. Allowed values: "JMX_FILE" | "USER_PROPERTIES" | "ADDITIONAL_ARTIFACTS". </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="testId"/>, <paramref name="fileName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="testId"/> or <paramref name="fileName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -372,7 +372,7 @@ namespace Azure.Developer.LoadTesting
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/LoadTestAdministrationClient.xml" path="doc/members/member[@name='GetTestFileAsync(string,string,RequestContext)']/*" />
-        public virtual async Task<Response> GetTestFileAsync(string testId, string fileName, RequestContext context = null)
+        public virtual async Task<Response> GetTestFileAsync(string testId, string fileName, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(testId, nameof(testId));
             Argument.AssertNotNullOrEmpty(fileName, nameof(fileName));
@@ -409,7 +409,7 @@ namespace Azure.Developer.LoadTesting
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/LoadTestAdministrationClient.xml" path="doc/members/member[@name='GetTestFile(string,string,RequestContext)']/*" />
-        public virtual Response GetTestFile(string testId, string fileName, RequestContext context = null)
+        public virtual Response GetTestFile(string testId, string fileName, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(testId, nameof(testId));
             Argument.AssertNotNullOrEmpty(fileName, nameof(fileName));
@@ -593,7 +593,7 @@ namespace Azure.Developer.LoadTesting
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/LoadTestAdministrationClient.xml" path="doc/members/member[@name='GetAppComponentsAsync(string,RequestContext)']/*" />
-        public virtual async Task<Response> GetAppComponentsAsync(string testId, RequestContext context = null)
+        public virtual async Task<Response> GetAppComponentsAsync(string testId, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(testId, nameof(testId));
 
@@ -628,7 +628,7 @@ namespace Azure.Developer.LoadTesting
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/LoadTestAdministrationClient.xml" path="doc/members/member[@name='GetAppComponents(string,RequestContext)']/*" />
-        public virtual Response GetAppComponents(string testId, RequestContext context = null)
+        public virtual Response GetAppComponents(string testId, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(testId, nameof(testId));
 
@@ -737,7 +737,7 @@ namespace Azure.Developer.LoadTesting
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/LoadTestAdministrationClient.xml" path="doc/members/member[@name='GetServerMetricsConfigAsync(string,RequestContext)']/*" />
-        public virtual async Task<Response> GetServerMetricsConfigAsync(string testId, RequestContext context = null)
+        public virtual async Task<Response> GetServerMetricsConfigAsync(string testId, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(testId, nameof(testId));
 
@@ -772,7 +772,7 @@ namespace Azure.Developer.LoadTesting
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/LoadTestAdministrationClient.xml" path="doc/members/member[@name='GetServerMetricsConfig(string,RequestContext)']/*" />
-        public virtual Response GetServerMetricsConfig(string testId, RequestContext context = null)
+        public virtual Response GetServerMetricsConfig(string testId, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(testId, nameof(testId));
 
@@ -807,7 +807,7 @@ namespace Azure.Developer.LoadTesting
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
         /// <include file="Docs/LoadTestAdministrationClient.xml" path="doc/members/member[@name='GetTestFilesAsync(string,RequestContext)']/*" />
-        public virtual AsyncPageable<BinaryData> GetTestFilesAsync(string testId, RequestContext context = null)
+        public virtual AsyncPageable<BinaryData> GetTestFilesAsync(string testId, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(testId, nameof(testId));
 
@@ -833,7 +833,7 @@ namespace Azure.Developer.LoadTesting
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
         /// <include file="Docs/LoadTestAdministrationClient.xml" path="doc/members/member[@name='GetTestFiles(string,RequestContext)']/*" />
-        public virtual Pageable<BinaryData> GetTestFiles(string testId, RequestContext context = null)
+        public virtual Pageable<BinaryData> GetTestFiles(string testId, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(testId, nameof(testId));
 

@@ -183,7 +183,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
                 },
             };
 
-            Response response = client.CreateOrUpdate("<partyId>", "<plantTissueAnalysisId>", RequestContent.Create(data), new RequestContext());
+            Response response = client.CreateOrUpdate("<partyId>", "<plantTissueAnalysisId>", RequestContent.Create(data));
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("partyId").ToString());
@@ -272,7 +272,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
                 },
             };
 
-            Response response = await client.CreateOrUpdateAsync("<partyId>", "<plantTissueAnalysisId>", RequestContent.Create(data), new RequestContext());
+            Response response = await client.CreateOrUpdateAsync("<partyId>", "<plantTissueAnalysisId>", RequestContent.Create(data));
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("partyId").ToString());
@@ -325,7 +325,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
             var credential = new DefaultAzureCredential();
             var client = new FarmBeatsClient(credential).GetPlantTissueAnalysesClient("2022-11-01-preview");
 
-            Response response = client.Delete("<partyId>", "<plantTissueAnalysisId>", new RequestContext());
+            Response response = client.Delete("<partyId>", "<plantTissueAnalysisId>");
             Console.WriteLine(response.Status);
         }
 
@@ -347,7 +347,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
             var credential = new DefaultAzureCredential();
             var client = new FarmBeatsClient(credential).GetPlantTissueAnalysesClient("2022-11-01-preview");
 
-            Response response = await client.DeleteAsync("<partyId>", "<plantTissueAnalysisId>", new RequestContext());
+            Response response = await client.DeleteAsync("<partyId>", "<plantTissueAnalysisId>");
             Console.WriteLine(response.Status);
         }
 

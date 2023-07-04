@@ -131,7 +131,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
                 },
             };
 
-            Response response = client.CreateOrUpdate("<oauthProviderId>", RequestContent.Create(data), new RequestContext());
+            Response response = client.CreateOrUpdate("<oauthProviderId>", RequestContent.Create(data));
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("appId").ToString());
@@ -185,7 +185,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
                 },
             };
 
-            Response response = await client.CreateOrUpdateAsync("<oauthProviderId>", RequestContent.Create(data), new RequestContext());
+            Response response = await client.CreateOrUpdateAsync("<oauthProviderId>", RequestContent.Create(data));
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("appId").ToString());
@@ -221,7 +221,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
             var credential = new DefaultAzureCredential();
             var client = new FarmBeatsClient(credential).GetOAuthProvidersClient("2022-11-01-preview");
 
-            Response response = client.Delete("<oauthProviderId>", new RequestContext());
+            Response response = client.Delete("<oauthProviderId>");
             Console.WriteLine(response.Status);
         }
 
@@ -243,7 +243,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
             var credential = new DefaultAzureCredential();
             var client = new FarmBeatsClient(credential).GetOAuthProvidersClient("2022-11-01-preview");
 
-            Response response = await client.DeleteAsync("<oauthProviderId>", new RequestContext());
+            Response response = await client.DeleteAsync("<oauthProviderId>");
             Console.WriteLine(response.Status);
         }
 

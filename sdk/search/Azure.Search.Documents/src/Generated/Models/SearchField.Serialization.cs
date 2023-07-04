@@ -98,12 +98,12 @@ namespace Azure.Search.Documents.Indexes.Models
                     writer.WriteNull("normalizer");
                 }
             }
-            if (Optional.IsDefined(Dimensions))
+            if (Optional.IsDefined(VectorSearchDimensions))
             {
-                if (Dimensions != null)
+                if (VectorSearchDimensions != null)
                 {
                     writer.WritePropertyName("dimensions"u8);
-                    writer.WriteNumberValue(Dimensions.Value);
+                    writer.WriteNumberValue(VectorSearchDimensions.Value);
                 }
                 else
                 {
@@ -112,8 +112,15 @@ namespace Azure.Search.Documents.Indexes.Models
             }
             if (Optional.IsDefined(VectorSearchConfiguration))
             {
-                writer.WritePropertyName("vectorSearchConfiguration"u8);
-                writer.WriteStringValue(VectorSearchConfiguration);
+                if (VectorSearchConfiguration != null)
+                {
+                    writer.WritePropertyName("vectorSearchConfiguration"u8);
+                    writer.WriteStringValue(VectorSearchConfiguration);
+                }
+                else
+                {
+                    writer.WriteNull("vectorSearchConfiguration");
+                }
             }
             if (Optional.IsCollectionDefined(SynonymMapNames))
             {
@@ -278,6 +285,11 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 if (property.NameEquals("vectorSearchConfiguration"u8))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        vectorSearchConfiguration = null;
+                        continue;
+                    }
                     vectorSearchConfiguration = property.Value.GetString();
                     continue;
                 }

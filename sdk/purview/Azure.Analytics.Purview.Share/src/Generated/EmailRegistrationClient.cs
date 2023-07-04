@@ -202,11 +202,11 @@ namespace Azure.Analytics.Purview.Share
             uri.AppendPath("/activateEmail", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             if (repeatabilityRequestId != null)
             {
                 request.Headers.Add("repeatability-request-id", repeatabilityRequestId);
             }
-            request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             request.Content = content;
             return message;
@@ -222,11 +222,11 @@ namespace Azure.Analytics.Purview.Share
             uri.AppendPath("/registerEmail", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             if (repeatabilityRequestId != null)
             {
                 request.Headers.Add("repeatability-request-id", repeatabilityRequestId);
             }
-            request.Headers.Add("Accept", "application/json");
             return message;
         }
 

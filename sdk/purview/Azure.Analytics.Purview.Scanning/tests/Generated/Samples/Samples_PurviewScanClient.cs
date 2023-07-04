@@ -375,7 +375,7 @@ namespace Azure.Analytics.Purview.Scanning.Samples
                 kind = "AzureSubscriptionCredential",
             };
 
-            Response response = client.CreateOrUpdate(RequestContent.Create(data), new RequestContext());
+            Response response = client.CreateOrUpdate(RequestContent.Create(data));
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("kind").ToString());
@@ -610,7 +610,7 @@ namespace Azure.Analytics.Purview.Scanning.Samples
                 kind = "AzureSubscriptionCredential",
             };
 
-            Response response = await client.CreateOrUpdateAsync(RequestContent.Create(data), new RequestContext());
+            Response response = await client.CreateOrUpdateAsync(RequestContent.Create(data));
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("kind").ToString());
@@ -1181,7 +1181,7 @@ namespace Azure.Analytics.Purview.Scanning.Samples
                 },
             };
 
-            Response response = client.CreateOrUpdateTrigger(RequestContent.Create(data), new RequestContext());
+            Response response = client.CreateOrUpdateTrigger(RequestContent.Create(data));
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("frequency").ToString());
@@ -1277,7 +1277,7 @@ namespace Azure.Analytics.Purview.Scanning.Samples
                 },
             };
 
-            Response response = await client.CreateOrUpdateTriggerAsync(RequestContent.Create(data), new RequestContext());
+            Response response = await client.CreateOrUpdateTriggerAsync(RequestContent.Create(data));
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("frequency").ToString());

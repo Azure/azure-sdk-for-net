@@ -50,7 +50,7 @@ namespace Azure.Verticals.AgriFood.Farming
         }
 
         /// <summary>
-        /// [Protocol Method] Get ImageProcessing Rasterize job&apos;s details.
+        /// [Protocol Method] Get ImageProcessing Rasterize job's details.
         /// <list type="bullet">
         /// <item>
         /// <description>
@@ -85,7 +85,7 @@ namespace Azure.Verticals.AgriFood.Farming
         }
 
         /// <summary>
-        /// [Protocol Method] Get ImageProcessing Rasterize job&apos;s details.
+        /// [Protocol Method] Get ImageProcessing Rasterize job's details.
         /// <list type="bullet">
         /// <item>
         /// <description>

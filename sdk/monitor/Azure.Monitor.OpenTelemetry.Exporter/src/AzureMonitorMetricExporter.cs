@@ -5,6 +5,7 @@ using System;
 using System.Threading;
 using Azure.Core.Pipeline;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals;
+using Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics;
 using OpenTelemetry;
 using OpenTelemetry.Metrics;
 
@@ -46,10 +47,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
                     var telemetryItems = MetricHelper.OtelToAzureMonitorMetrics(batch, MetricResource, _instrumentationKey);
                     if (telemetryItems.Count > 0)
                     {
-                        if (MetricResource?.MetricTelemetry != null)
-                        {
-                            telemetryItems.Add(MetricResource.MetricTelemetry);
-                        }
                         exportResult = _transmitter.TrackAsync(telemetryItems, false, CancellationToken.None).EnsureCompleted();
                     }
                 }
@@ -60,7 +57,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             }
             catch (Exception ex)
             {
-                AzureMonitorExporterEventSource.Log.WriteError("FailedToExport", ex);
+                AzureMonitorExporterEventSource.Log.FailedToExport(nameof(AzureMonitorMetricExporter), _instrumentationKey, ex);
             }
 
             return exportResult;
@@ -72,6 +69,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             {
                 if (disposing)
                 {
+                    AzureMonitorExporterEventSource.Log.DisposedObject(nameof(AzureMonitorMetricExporter));
                     _transmitter?.Dispose();
                 }
 

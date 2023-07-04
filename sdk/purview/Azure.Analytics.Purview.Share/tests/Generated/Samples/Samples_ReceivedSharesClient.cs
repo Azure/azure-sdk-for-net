@@ -132,7 +132,7 @@ namespace Azure.Analytics.Purview.Share.Samples
                 shareKind = "InPlace",
             };
 
-            Response response = client.Create("<receivedShareName>", RequestContent.Create(data), new RequestContext());
+            Response response = client.Create("<receivedShareName>", RequestContent.Create(data));
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("shareKind").ToString());
@@ -194,7 +194,7 @@ namespace Azure.Analytics.Purview.Share.Samples
                 shareKind = "InPlace",
             };
 
-            Response response = await client.CreateAsync("<receivedShareName>", RequestContent.Create(data), new RequestContext());
+            Response response = await client.CreateAsync("<receivedShareName>", RequestContent.Create(data));
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("shareKind").ToString());
@@ -286,7 +286,7 @@ namespace Azure.Analytics.Purview.Share.Samples
             var credential = new DefaultAzureCredential();
             var client = new ReceivedSharesClient("<https://my-service.azure.com>", credential);
 
-            var operation = client.Delete(WaitUntil.Completed, "<receivedShareName>", new RequestContext());
+            var operation = client.Delete(WaitUntil.Completed, "<receivedShareName>");
 
             Console.WriteLine(operation.GetRawResponse().Status);
         }
@@ -310,7 +310,7 @@ namespace Azure.Analytics.Purview.Share.Samples
             var credential = new DefaultAzureCredential();
             var client = new ReceivedSharesClient("<https://my-service.azure.com>", credential);
 
-            var operation = await client.DeleteAsync(WaitUntil.Completed, "<receivedShareName>", new RequestContext());
+            var operation = await client.DeleteAsync(WaitUntil.Completed, "<receivedShareName>");
 
             Console.WriteLine(operation.GetRawResponse().Status);
         }

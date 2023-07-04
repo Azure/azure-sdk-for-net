@@ -26,14 +26,10 @@ namespace Azure.ResourceManager.Automation.Models
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsDefined(Thumbprint))
+            if (Optional.IsDefined(ThumbprintString))
             {
                 writer.WritePropertyName("thumbprint"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(Thumbprint);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(Thumbprint.ToString()).RootElement);
-#endif
+                writer.WriteStringValue(ThumbprintString);
             }
             if (Optional.IsDefined(IsExportable))
             {

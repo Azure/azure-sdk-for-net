@@ -178,7 +178,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
                 },
             };
 
-            Response response = client.CreateOrUpdate("<partyId>", "<boundaryId>", RequestContent.Create(data), new RequestContext());
+            Response response = client.CreateOrUpdate("<partyId>", "<boundaryId>", RequestContent.Create(data));
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("geometry").GetProperty("type").ToString());
@@ -285,7 +285,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
                 },
             };
 
-            Response response = await client.CreateOrUpdateAsync("<partyId>", "<boundaryId>", RequestContent.Create(data), new RequestContext());
+            Response response = await client.CreateOrUpdateAsync("<partyId>", "<boundaryId>", RequestContent.Create(data));
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("geometry").GetProperty("type").ToString());
@@ -421,7 +421,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
             var credential = new DefaultAzureCredential();
             var client = new FarmBeatsClient(credential).GetBoundariesClient("2022-11-01-preview");
 
-            Response response = client.Delete("<partyId>", "<boundaryId>", new RequestContext());
+            Response response = client.Delete("<partyId>", "<boundaryId>");
             Console.WriteLine(response.Status);
         }
 
@@ -443,7 +443,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
             var credential = new DefaultAzureCredential();
             var client = new FarmBeatsClient(credential).GetBoundariesClient("2022-11-01-preview");
 
-            Response response = await client.DeleteAsync("<partyId>", "<boundaryId>", new RequestContext());
+            Response response = await client.DeleteAsync("<partyId>", "<boundaryId>");
             Console.WriteLine(response.Status);
         }
 
@@ -656,7 +656,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
                 },
             };
 
-            foreach (var item in client.Search(RequestContent.Create(data), new RequestContext()))
+            foreach (var item in client.Search(RequestContent.Create(data)))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.GetProperty("partyId").ToString());
@@ -744,7 +744,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
                 },
             };
 
-            await foreach (var item in client.SearchAsync(RequestContent.Create(data), new RequestContext()))
+            await foreach (var item in client.SearchAsync(RequestContent.Create(data)))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.GetProperty("partyId").ToString());
@@ -920,7 +920,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
                 },
             };
 
-            foreach (var item in client.SearchByPartyId("<partyId>", RequestContent.Create(data), new RequestContext()))
+            foreach (var item in client.SearchByPartyId("<partyId>", RequestContent.Create(data)))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.GetProperty("partyId").ToString());
@@ -1008,7 +1008,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
                 },
             };
 
-            await foreach (var item in client.SearchByPartyIdAsync("<partyId>", RequestContent.Create(data), new RequestContext()))
+            await foreach (var item in client.SearchByPartyIdAsync("<partyId>", RequestContent.Create(data)))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.GetProperty("partyId").ToString());

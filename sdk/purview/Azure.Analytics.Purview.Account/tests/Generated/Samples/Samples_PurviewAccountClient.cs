@@ -178,7 +178,7 @@ namespace Azure.Analytics.Purview.Account.Samples
                 friendlyName = "<friendlyName>",
             };
 
-            Response response = client.UpdateAccountProperties(RequestContent.Create(data), new RequestContext());
+            Response response = client.UpdateAccountProperties(RequestContent.Create(data));
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("id").ToString());
@@ -250,7 +250,7 @@ namespace Azure.Analytics.Purview.Account.Samples
                 friendlyName = "<friendlyName>",
             };
 
-            Response response = await client.UpdateAccountPropertiesAsync(RequestContent.Create(data), new RequestContext());
+            Response response = await client.UpdateAccountPropertiesAsync(RequestContent.Create(data));
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("id").ToString());
@@ -380,7 +380,7 @@ namespace Azure.Analytics.Purview.Account.Samples
                 keyType = "PrimaryAtlasKafkaKey",
             };
 
-            Response response = client.RegenerateAccessKey(RequestContent.Create(data), new RequestContext());
+            Response response = client.RegenerateAccessKey(RequestContent.Create(data));
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("atlasKafkaPrimaryEndpoint").ToString());
@@ -416,7 +416,7 @@ namespace Azure.Analytics.Purview.Account.Samples
                 keyType = "PrimaryAtlasKafkaKey",
             };
 
-            Response response = await client.RegenerateAccessKeyAsync(RequestContent.Create(data), new RequestContext());
+            Response response = await client.RegenerateAccessKeyAsync(RequestContent.Create(data));
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("atlasKafkaPrimaryEndpoint").ToString());

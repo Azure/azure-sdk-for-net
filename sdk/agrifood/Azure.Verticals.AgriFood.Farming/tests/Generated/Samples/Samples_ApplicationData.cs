@@ -272,7 +272,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
                 },
             };
 
-            Response response = client.CreateOrUpdate("<partyId>", "<applicationDataId>", RequestContent.Create(data), new RequestContext());
+            Response response = client.CreateOrUpdate("<partyId>", "<applicationDataId>", RequestContent.Create(data));
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("applicationProductDetails")[0].GetProperty("productName").ToString());
@@ -373,7 +373,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
                 },
             };
 
-            Response response = await client.CreateOrUpdateAsync("<partyId>", "<applicationDataId>", RequestContent.Create(data), new RequestContext());
+            Response response = await client.CreateOrUpdateAsync("<partyId>", "<applicationDataId>", RequestContent.Create(data));
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("applicationProductDetails")[0].GetProperty("productName").ToString());
@@ -425,7 +425,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
             var credential = new DefaultAzureCredential();
             var client = new FarmBeatsClient(credential).GetApplicationDataClient("2022-11-01-preview");
 
-            Response response = client.Delete("<partyId>", "<applicationDataId>", new RequestContext());
+            Response response = client.Delete("<partyId>", "<applicationDataId>");
             Console.WriteLine(response.Status);
         }
 
@@ -447,7 +447,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
             var credential = new DefaultAzureCredential();
             var client = new FarmBeatsClient(credential).GetApplicationDataClient("2022-11-01-preview");
 
-            Response response = await client.DeleteAsync("<partyId>", "<applicationDataId>", new RequestContext());
+            Response response = await client.DeleteAsync("<partyId>", "<applicationDataId>");
             Console.WriteLine(response.Status);
         }
 

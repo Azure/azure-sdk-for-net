@@ -137,7 +137,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
                 },
             };
 
-            Response response = client.CreateOrUpdate("<seasonId>", RequestContent.Create(data), new RequestContext());
+            Response response = client.CreateOrUpdate("<seasonId>", RequestContent.Create(data));
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("startDateTime").ToString());
@@ -195,7 +195,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
                 },
             };
 
-            Response response = await client.CreateOrUpdateAsync("<seasonId>", RequestContent.Create(data), new RequestContext());
+            Response response = await client.CreateOrUpdateAsync("<seasonId>", RequestContent.Create(data));
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("startDateTime").ToString());
@@ -233,7 +233,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
             var credential = new DefaultAzureCredential();
             var client = new FarmBeatsClient(credential).GetSeasonsClient("2022-11-01-preview");
 
-            Response response = client.Delete("<seasonId>", new RequestContext());
+            Response response = client.Delete("<seasonId>");
             Console.WriteLine(response.Status);
         }
 
@@ -255,7 +255,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
             var credential = new DefaultAzureCredential();
             var client = new FarmBeatsClient(credential).GetSeasonsClient("2022-11-01-preview");
 
-            Response response = await client.DeleteAsync("<seasonId>", new RequestContext());
+            Response response = await client.DeleteAsync("<seasonId>");
             Console.WriteLine(response.Status);
         }
 
