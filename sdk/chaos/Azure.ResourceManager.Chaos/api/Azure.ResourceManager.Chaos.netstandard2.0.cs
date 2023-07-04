@@ -338,15 +338,15 @@ namespace Azure.ResourceManager.Chaos.Models
     }
     public partial class ContinuousAction : Azure.ResourceManager.Chaos.Models.Action
     {
-        public ContinuousAction(string name, System.TimeSpan duration, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Chaos.Models.KeyValuePair> parameters, string selectorId) : base (default(string)) { }
-        public System.TimeSpan Duration { get { throw null; } set { } }
+        public ContinuousAction(string name, string continusActionduration, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Chaos.Models.KeyValuePair> parameters, string selectorId) : base (default(string)) { }
+        public string ContinusActionduration { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Chaos.Models.KeyValuePair> Parameters { get { throw null; } }
         public string SelectorId { get { throw null; } set { } }
     }
     public partial class DelayAction : Azure.ResourceManager.Chaos.Models.Action
     {
-        public DelayAction(string name, System.TimeSpan duration) : base (default(string)) { }
-        public System.TimeSpan Duration { get { throw null; } set { } }
+        public DelayAction(string name, string delayActionduration) : base (default(string)) { }
+        public string DelayActionduration { get { throw null; } set { } }
     }
     public partial class DiscreteAction : Azure.ResourceManager.Chaos.Models.Action
     {
