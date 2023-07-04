@@ -7,7 +7,6 @@
 
 using System;
 using System.Threading.Tasks;
-using System.Xml;
 using Azure;
 using Azure.Core;
 using Azure.Identity;
@@ -153,7 +152,7 @@ new Step("step1",new Branch[]
 {
 new Branch("branch1",new Models.Action[]
 {
-new ContinuousAction("urn:csci:microsoft:virtualMachine:shutdown/1.0",XmlConvert.ToTimeSpan("PT10M"),new KeyValuePair[]
+new ContinuousAction("urn:csci:microsoft:virtualMachine:shutdown/1.0","PT10M",new KeyValuePair[]
 {
 new KeyValuePair("abruptShutdown","false")
 },"selector1")

@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -18,7 +17,7 @@ namespace Azure.ResourceManager.Chaos.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("duration"u8);
-            writer.WriteStringValue(Duration, "P");
+            writer.WriteStringValue(ContinusActionduration);
             writer.WritePropertyName("parameters"u8);
             writer.WriteStartArray();
             foreach (var item in Parameters)
@@ -41,7 +40,7 @@ namespace Azure.ResourceManager.Chaos.Models
             {
                 return null;
             }
-            TimeSpan duration = default;
+            string duration = default;
             IList<KeyValuePair> parameters = default;
             string selectorId = default;
             string type = default;
@@ -50,7 +49,7 @@ namespace Azure.ResourceManager.Chaos.Models
             {
                 if (property.NameEquals("duration"u8))
                 {
-                    duration = property.Value.GetTimeSpan("P");
+                    duration = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("parameters"u8))

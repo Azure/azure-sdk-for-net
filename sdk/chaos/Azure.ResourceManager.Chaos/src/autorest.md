@@ -46,4 +46,8 @@ rename-rules:
   URI: Uri
   Etag: ETag|etag
 
+rename-mapping:
+  ContinuousAction.duration: continusActionduration|string
+  DelayAction.duration: delayActionduration|string
+
 ```

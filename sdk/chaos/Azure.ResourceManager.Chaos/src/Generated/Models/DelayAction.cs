@@ -15,27 +15,28 @@ namespace Azure.ResourceManager.Chaos.Models
     {
         /// <summary> Initializes a new instance of DelayAction. </summary>
         /// <param name="name"> String that represents a Capability URN. </param>
-        /// <param name="duration"> ISO8601 formatted string that represents a duration. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public DelayAction(string name, TimeSpan duration) : base(name)
+        /// <param name="delayActionduration"> ISO8601 formatted string that represents a duration. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="delayActionduration"/> is null. </exception>
+        public DelayAction(string name, string delayActionduration) : base(name)
         {
             Argument.AssertNotNull(name, nameof(name));
+            Argument.AssertNotNull(delayActionduration, nameof(delayActionduration));
 
-            Duration = duration;
+            DelayActionduration = delayActionduration;
             ActionType = "delay";
         }
 
         /// <summary> Initializes a new instance of DelayAction. </summary>
         /// <param name="actionType"> Enum that discriminates between action models. </param>
         /// <param name="name"> String that represents a Capability URN. </param>
-        /// <param name="duration"> ISO8601 formatted string that represents a duration. </param>
-        internal DelayAction(string actionType, string name, TimeSpan duration) : base(actionType, name)
+        /// <param name="delayActionduration"> ISO8601 formatted string that represents a duration. </param>
+        internal DelayAction(string actionType, string name, string delayActionduration) : base(actionType, name)
         {
-            Duration = duration;
+            DelayActionduration = delayActionduration;
             ActionType = actionType ?? "delay";
         }
 
         /// <summary> ISO8601 formatted string that represents a duration. </summary>
-        public TimeSpan Duration { get; set; }
+        public string DelayActionduration { get; set; }
     }
 }
