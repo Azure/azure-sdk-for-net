@@ -13,7 +13,6 @@ namespace Azure.Communication.Chat
 {
 
     /// <summary> Result of the create chat thread operation. </summary>
-    [ExcludeFromCodeCoverage]
     internal partial class CreateChatThreadResultInternal
     {
         /// <summary> Initializes a new instance of CreateChatThreadResultInternal. </summary>

@@ -14,7 +14,6 @@ using Azure.Core;
 namespace Azure.Communication.Chat
 {
     /// <summary> Collection of chat threads. </summary>
-    [ExcludeFromCodeCoverage]
     internal partial class ChatThreadsItemCollection
     {
         /// <summary> Initializes a new instance of ChatThreadsItemCollection. </summary>
