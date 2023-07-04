@@ -6,6 +6,7 @@ using Azure.Core;
 
 namespace Azure.Communication.Chat
 {
+    // Excluded internal shared code.
     [ExcludeFromCodeCoverage]
     [CodeGenModel("CommunicationErrorResponse")]
     internal partial class ChatErrorResponse

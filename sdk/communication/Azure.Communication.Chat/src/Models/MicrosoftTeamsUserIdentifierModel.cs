@@ -6,6 +6,7 @@ using Azure.Core;
 
 namespace Azure.Communication
 {
+    // Excluded internal shared code. Model does not apply to ACS chat
     [ExcludeFromCodeCoverage]
     [CodeGenModel("MicrosoftTeamsUserIdentifierModel")]
     internal partial class MicrosoftTeamsUserIdentifierModel

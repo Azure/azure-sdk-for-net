@@ -8,6 +8,7 @@ using Azure.Core;
 
 namespace Azure.Communication
 {
+    // Excluded internal shared code.
     [ExcludeFromCodeCoverage]
     [CodeGenModel("CommunicationIdentifierModel")]
     internal partial class CommunicationIdentifierModel

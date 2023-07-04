@@ -977,35 +977,6 @@ namespace Azure.Communication.Chat.Tests.ChatClients
             Assert.AreEqual(6, idCounter);
         }
 
-        //[Test]
-        //public void GetThreadsWithPagesShouldThrowError()
-        //{
-        //    var uri = new Uri("https://localHostTest");
-        //    var responseItemsPage1 = new MockResponse(401);
-        //    responseItemsPage1.SetContent("{}");
-
-        //    var responseItemsPage2 = new MockResponse(401);
-        //    responseItemsPage2.SetContent("{}");
-
-        //    var chatClientOptions = new ChatClientOptions
-        //    {
-        //        Transport = new MockTransport(responseItemsPage1, responseItemsPage2)
-        //    };
-
-        //    //act
-        //    var communicationTokenCredential = new CommunicationTokenCredential(ChatLiveTestBase.SanitizedUnsignedUserTokenValue);
-        //    var chatClient = new ChatClient(uri, communicationTokenCredential, chatClientOptions);
-
-        //    try
-        //    {
-        //        var chatThreads = chatClient.GetChatThreads(It.IsAny<DateTimeOffset>());
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        Assert.IsNotNull(ex);
-        //    }
-        //}
-
         [Test]
         public async Task GetThreadsAsyncShouldSucceed()
         {
