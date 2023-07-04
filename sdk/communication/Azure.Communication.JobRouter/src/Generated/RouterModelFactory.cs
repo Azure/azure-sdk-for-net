@@ -7,27 +7,12 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace Azure.Communication.JobRouter.Models
 {
     /// <summary> Model factory for models. </summary>
     public static partial class RouterModelFactory
     {
-        /// <summary> Initializes a new instance of CommunicationError. </summary>
-        /// <param name="code"> The error code. </param>
-        /// <param name="message"> The error message. </param>
-        /// <param name="target"> The error target. </param>
-        /// <param name="details"> Further details about specific errors that led to this error. </param>
-        /// <param name="innerError"> The inner error if any. </param>
-        /// <returns> A new <see cref="Models.CommunicationError"/> instance for mocking. </returns>
-        public static CommunicationError CommunicationError(string code = null, string message = null, string target = null, IEnumerable<CommunicationError> details = null, CommunicationError innerError = null)
-        {
-            details ??= new List<CommunicationError>();
-
-            return new CommunicationError(code, message, target, details?.ToList(), innerError);
-        }
-
         /// <summary> Initializes a new instance of RouterJobAssignment. </summary>
         /// <param name="assignmentId"> The Id of the job assignment. </param>
         /// <param name="workerId"> The Id of the Worker assigned to the job. </param>

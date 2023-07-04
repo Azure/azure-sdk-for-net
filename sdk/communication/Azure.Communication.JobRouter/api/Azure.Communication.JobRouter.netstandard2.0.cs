@@ -768,15 +768,6 @@ namespace Azure.Communication.JobRouter.Models
     {
         internal CloseJobResult() { }
     }
-    public partial class CommunicationError
-    {
-        internal CommunicationError() { }
-        public string Code { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.Communication.JobRouter.Models.CommunicationError> Details { get { throw null; } }
-        public Azure.Communication.JobRouter.Models.CommunicationError InnerError { get { throw null; } }
-        public string Message { get { throw null; } }
-        public string Target { get { throw null; } }
-    }
     public partial class CompleteJobResult
     {
         internal CompleteJobResult() { }
@@ -907,7 +898,6 @@ namespace Azure.Communication.JobRouter.Models
     public static partial class RouterModelFactory
     {
         public static Azure.Communication.JobRouter.Models.AcceptJobOfferResult AcceptJobOfferResult(string assignmentId = null, string jobId = null, string workerId = null) { throw null; }
-        public static Azure.Communication.JobRouter.Models.CommunicationError CommunicationError(string code = null, string message = null, string target = null, System.Collections.Generic.IEnumerable<Azure.Communication.JobRouter.Models.CommunicationError> details = null, Azure.Communication.JobRouter.Models.CommunicationError innerError = null) { throw null; }
         public static Azure.Communication.JobRouter.Models.RouterJobAssignment RouterJobAssignment(string assignmentId = null, string workerId = null, System.DateTimeOffset assignedAt = default(System.DateTimeOffset), System.DateTimeOffset? completedAt = default(System.DateTimeOffset?), System.DateTimeOffset? closedAt = default(System.DateTimeOffset?)) { throw null; }
         public static Azure.Communication.JobRouter.Models.RouterJobOffer RouterJobOffer(string offerId = null, string jobId = null, int capacityCost = 0, System.DateTimeOffset? offeredAt = default(System.DateTimeOffset?), System.DateTimeOffset? expiresAt = default(System.DateTimeOffset?)) { throw null; }
         public static Azure.Communication.JobRouter.Models.RouterQueueItem RouterQueueItem(Azure.Communication.JobRouter.Models.RouterQueue queue = null, string etag = null) { throw null; }
