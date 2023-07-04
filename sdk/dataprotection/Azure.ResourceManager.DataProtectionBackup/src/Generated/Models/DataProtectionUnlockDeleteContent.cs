@@ -11,10 +11,10 @@ using Azure.Core;
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
     /// <summary> Request body of unlock delete API. </summary>
-    public partial class UnlockDeleteContent
+    public partial class DataProtectionUnlockDeleteContent
     {
-        /// <summary> Initializes a new instance of UnlockDeleteContent. </summary>
-        public UnlockDeleteContent()
+        /// <summary> Initializes a new instance of DataProtectionUnlockDeleteContent. </summary>
+        public DataProtectionUnlockDeleteContent()
         {
             ResourceGuardOperationRequests = new ChangeTrackingList<string>();
         }
