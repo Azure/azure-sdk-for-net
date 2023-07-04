@@ -4,8 +4,6 @@
 #nullable disable
 
 using System;
-using System.Diagnostics.CodeAnalysis;
-using Azure.Communication;
 
 namespace Azure.Communication.Chat
 {

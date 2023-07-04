@@ -159,7 +159,7 @@ namespace Azure.Communication.Chat.Tests.ChatClients
             ChatThreadClient chatThreadClient = CreateMockChatThreadClient(200, AllReadReceiptsApiResponsePayload);
 
             //act
-           var allReadReceipts = chatThreadClient.GetReadReceipts();
+            var allReadReceipts = chatThreadClient.GetReadReceipts();
 
             //assert
             int idCounter = 0;
@@ -238,7 +238,7 @@ namespace Azure.Communication.Chat.Tests.ChatClients
             //act
             var chatClient = CreateMockChatClient(201, CreateChatThreadSuccessApiResponsePayload);
             var chatParticipant = new ChatParticipant(new CommunicationUserIdentifier("8:acs:46849534-eb08-4ab7-bde7-c36928cd1547_00000007-165c-9b10-b0b7-3a3a0d00076c"));
-            CreateChatThreadResult createChatThreadResult =  chatClient.CreateChatThread("", new List<ChatParticipant>() { chatParticipant });
+            CreateChatThreadResult createChatThreadResult = chatClient.CreateChatThread("", new List<ChatParticipant>() { chatParticipant });
 
             //assert
             Assert.AreEqual("8:acs:46849534-eb08-4ab7-bde7-c36928cd1547_00000007-165c-9b10-b0b7-3a3a0d00076c", CommunicationIdentifierSerializer.Serialize(createChatThreadResult.ChatThread.CreatedBy).CommunicationUser.Id);
@@ -448,10 +448,10 @@ namespace Azure.Communication.Chat.Tests.ChatClients
             ChatThreadClient chatThreadClient = CreateMockChatThreadClient(204);
 
             //act
-            Response readReceiptResponse = await chatThreadClient.DeleteMessageAsync(messageId);
+            var response = await chatThreadClient.DeleteMessageAsync(messageId);
 
             //assert
-            Assert.AreEqual(204, readReceiptResponse.Status);
+            Assert.AreEqual(204, response.Status);
         }
 
         [Test]
@@ -462,10 +462,10 @@ namespace Azure.Communication.Chat.Tests.ChatClients
             ChatThreadClient chatThreadClient = CreateMockChatThreadClient(204);
 
             //act
-            Response readReceiptResponse = chatThreadClient.DeleteMessage(messageId);
+            var response = chatThreadClient.DeleteMessage(messageId);
 
             //assert
-            Assert.AreEqual(204, readReceiptResponse.Status);
+            Assert.AreEqual(204, response.Status);
         }
 
         [Test]
@@ -623,7 +623,7 @@ namespace Azure.Communication.Chat.Tests.ChatClients
             //act
             try
             {
-                var sendChatMessageResult =  chatThreadClient.GetMessage("id");
+                var sendChatMessageResult = chatThreadClient.GetMessage("id");
                 throw new Exception("Test failed as expected exception was not thrown in the previous step");
             }
             catch (Exception ex)
@@ -1038,7 +1038,7 @@ namespace Azure.Communication.Chat.Tests.ChatClients
             ChatClient chatClient = CreateMockChatClient(200, GetThreadsApiResponsePayload);
 
             //act
-           var chatThreads = chatClient.GetChatThreads();
+            var chatThreads = chatClient.GetChatThreads();
 
             //assert
 
@@ -1048,7 +1048,7 @@ namespace Azure.Communication.Chat.Tests.ChatClients
                 ++idCounter;
                 if (idCounter == 5 && chatThread?.Id == null)
                 {
-                        continue;
+                    continue;
                 }
                 Assert.AreEqual($"{idCounter}", chatThread.Id);
                 Assert.AreEqual($"Test Thread {idCounter}", chatThread.Topic);
@@ -1174,7 +1174,7 @@ namespace Azure.Communication.Chat.Tests.ChatClients
             ChatThreadClient chatThreadClient = CreateMockChatThreadClient(201, AddParticipantApiResponsePayload);
 
             //act
-            Response AddParticipantResponse =  chatThreadClient.AddParticipant(chatParticipant);
+            Response AddParticipantResponse = chatThreadClient.AddParticipant(chatParticipant);
 
             //assert
             Assert.AreEqual(201, AddParticipantResponse.Status);
@@ -1276,7 +1276,7 @@ namespace Azure.Communication.Chat.Tests.ChatClients
             var chatParticipant = new ChatParticipant(new CommunicationUserIdentifier("8:acs:46849534-eb08-4ab7-bde7-c36928cd1547_00000007-165c-9b10-b0b7-3a3a0d00076c"));
 
             //act
-            CreateChatThreadResult createChatThreadResult = await chatClient.CreateChatThreadAsync("", new List<ChatParticipant>() { chatParticipant});
+            CreateChatThreadResult createChatThreadResult = await chatClient.CreateChatThreadAsync("", new List<ChatParticipant>() { chatParticipant });
 
             //assert
             AsssertParticipantError(createChatThreadResult.InvalidParticipants.First(x => x.Code == "401"), "Authentication failed", "8:acs:1b5cc06b-f352-4571-b1e6-d9b259b7c776_00000007-1234-1234-1234-223a12345678");
