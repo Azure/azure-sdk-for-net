@@ -7,10 +7,11 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class ComponentSetup : IUtf8JsonSerializable
+    internal partial class ComponentSetup : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -66,7 +67,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            licenseKey = DataFactorySecretBaseDefinition.DeserializeDataFactorySecretBaseDefinition(property0.Value);
+                            licenseKey = JsonSerializer.Deserialize<DataFactorySecretBaseDefinition>(property0.Value.GetRawText());
                             continue;
                         }
                     }

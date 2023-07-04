@@ -32,19 +32,19 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="developerToken">
         /// The developer token associated with the manager account that you use to grant access to the AdWords API.
         /// Please note <see cref="DataFactorySecretBaseDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="DataFactorySecretString"/> and <see cref="AzureKeyVaultSecretReference"/>.
+        /// The available derived classes include <see cref="DataFactorySecretString"/> and <see cref="DataFactoryKeyVaultSecretReference"/>.
         /// </param>
         /// <param name="authenticationType"> The OAuth 2.0 authentication mechanism used for authentication. ServiceAuthentication can only be used on self-hosted IR. </param>
         /// <param name="refreshToken">
         /// The refresh token obtained from Google for authorizing access to AdWords for UserAuthentication.
         /// Please note <see cref="DataFactorySecretBaseDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="DataFactorySecretString"/> and <see cref="AzureKeyVaultSecretReference"/>.
+        /// The available derived classes include <see cref="DataFactorySecretString"/> and <see cref="DataFactoryKeyVaultSecretReference"/>.
         /// </param>
         /// <param name="clientId"> The client id of the google application used to acquire the refresh token. Type: string (or Expression with resultType string). </param>
         /// <param name="clientSecret">
         /// The client secret of the google application used to acquire the refresh token.
         /// Please note <see cref="DataFactorySecretBaseDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="DataFactorySecretString"/> and <see cref="AzureKeyVaultSecretReference"/>.
+        /// The available derived classes include <see cref="DataFactorySecretString"/> and <see cref="DataFactoryKeyVaultSecretReference"/>.
         /// </param>
         /// <param name="email"> The service account email ID that is used for ServiceAuthentication and can only be used on self-hosted IR. Type: string (or Expression with resultType string). </param>
         /// <param name="keyFilePath"> The full path to the .p12 key file that is used to authenticate the service account email address and can only be used on self-hosted IR. Type: string (or Expression with resultType string). </param>
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary>
         /// The developer token associated with the manager account that you use to grant access to the AdWords API.
         /// Please note <see cref="DataFactorySecretBaseDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="DataFactorySecretString"/> and <see cref="AzureKeyVaultSecretReference"/>.
+        /// The available derived classes include <see cref="DataFactorySecretString"/> and <see cref="DataFactoryKeyVaultSecretReference"/>.
         /// </summary>
         public DataFactorySecretBaseDefinition DeveloperToken { get; set; }
         /// <summary> The OAuth 2.0 authentication mechanism used for authentication. ServiceAuthentication can only be used on self-hosted IR. </summary>
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary>
         /// The refresh token obtained from Google for authorizing access to AdWords for UserAuthentication.
         /// Please note <see cref="DataFactorySecretBaseDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="DataFactorySecretString"/> and <see cref="AzureKeyVaultSecretReference"/>.
+        /// The available derived classes include <see cref="DataFactorySecretString"/> and <see cref="DataFactoryKeyVaultSecretReference"/>.
         /// </summary>
         public DataFactorySecretBaseDefinition RefreshToken { get; set; }
         /// <summary> The client id of the google application used to acquire the refresh token. Type: string (or Expression with resultType string). </summary>
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary>
         /// The client secret of the google application used to acquire the refresh token.
         /// Please note <see cref="DataFactorySecretBaseDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="DataFactorySecretString"/> and <see cref="AzureKeyVaultSecretReference"/>.
+        /// The available derived classes include <see cref="DataFactorySecretString"/> and <see cref="DataFactoryKeyVaultSecretReference"/>.
         /// </summary>
         public DataFactorySecretBaseDefinition ClientSecret { get; set; }
         /// <summary> The service account email ID that is used for ServiceAuthentication and can only be used on self-hosted IR. Type: string (or Expression with resultType string). </summary>

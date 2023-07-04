@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            secretAccessKey = DataFactorySecretBaseDefinition.DeserializeDataFactorySecretBaseDefinition(property0.Value);
+                            secretAccessKey = JsonSerializer.Deserialize<DataFactorySecretBaseDefinition>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("serviceUrl"u8))

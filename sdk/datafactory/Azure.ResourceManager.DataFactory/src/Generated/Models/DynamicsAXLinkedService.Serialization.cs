@@ -194,7 +194,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                         }
                         if (property0.NameEquals("servicePrincipalKey"u8))
                         {
-                            servicePrincipalKey = DataFactorySecretBaseDefinition.DeserializeDataFactorySecretBaseDefinition(property0.Value);
+                            servicePrincipalKey = JsonSerializer.Deserialize<DataFactorySecretBaseDefinition>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("tenant"u8))

@@ -257,7 +257,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            developerToken = DataFactorySecretBaseDefinition.DeserializeDataFactorySecretBaseDefinition(property0.Value);
+                            developerToken = JsonSerializer.Deserialize<DataFactorySecretBaseDefinition>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("authenticationType"u8))
@@ -275,7 +275,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            refreshToken = DataFactorySecretBaseDefinition.DeserializeDataFactorySecretBaseDefinition(property0.Value);
+                            refreshToken = JsonSerializer.Deserialize<DataFactorySecretBaseDefinition>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("clientId"u8))
@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            clientSecret = DataFactorySecretBaseDefinition.DeserializeDataFactorySecretBaseDefinition(property0.Value);
+                            clientSecret = JsonSerializer.Deserialize<DataFactorySecretBaseDefinition>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("email"u8))

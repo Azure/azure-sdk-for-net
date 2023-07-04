@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -130,7 +131,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             DatasetReference dataset = default;
             Optional<IList<BinaryData>> fieldList = default;
             Optional<StoreReadSettings> storeSettings = default;
-            Optional<FormatReadSettings> formatSettings = default;
+            Optional<DataFactorySecretBaseDefinition> formatSettings = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -141,7 +142,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    linkedServiceName = DataFactoryLinkedServiceReference.DeserializeDataFactoryLinkedServiceReference(property.Value);
+                    linkedServiceName = JsonSerializer.Deserialize<DataFactoryLinkedServiceReference>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("policy"u8))
@@ -264,7 +265,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            formatSettings = FormatReadSettings.DeserializeFormatReadSettings(property0.Value);
+                            formatSettings = JsonSerializer.Deserialize<DataFactorySecretBaseDefinition>(property0.Value.GetRawText());
                             continue;
                         }
                     }

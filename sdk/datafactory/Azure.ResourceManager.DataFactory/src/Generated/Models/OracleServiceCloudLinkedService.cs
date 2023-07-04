@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="password">
         /// The password corresponding to the user name that you provided in the username key.
         /// Please note <see cref="DataFactorySecretBaseDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="DataFactorySecretString"/> and <see cref="AzureKeyVaultSecretReference"/>.
+        /// The available derived classes include <see cref="DataFactorySecretString"/> and <see cref="DataFactoryKeyVaultSecretReference"/>.
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="host"/>, <paramref name="username"/> or <paramref name="password"/> is null. </exception>
         public OracleServiceCloudLinkedService(BinaryData host, BinaryData username, DataFactorySecretBaseDefinition password)
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="password">
         /// The password corresponding to the user name that you provided in the username key.
         /// Please note <see cref="DataFactorySecretBaseDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="DataFactorySecretString"/> and <see cref="AzureKeyVaultSecretReference"/>.
+        /// The available derived classes include <see cref="DataFactorySecretString"/> and <see cref="DataFactoryKeyVaultSecretReference"/>.
         /// </param>
         /// <param name="useEncryptedEndpoints"> Specifies whether the data source endpoints are encrypted using HTTPS. The default value is true. Type: boolean (or Expression with resultType boolean). </param>
         /// <param name="useHostVerification"> Specifies whether to require the host name in the server's certificate to match the host name of the server when connecting over SSL. The default value is true. Type: boolean (or Expression with resultType boolean). </param>
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary>
         /// The password corresponding to the user name that you provided in the username key.
         /// Please note <see cref="DataFactorySecretBaseDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="DataFactorySecretString"/> and <see cref="AzureKeyVaultSecretReference"/>.
+        /// The available derived classes include <see cref="DataFactorySecretString"/> and <see cref="DataFactoryKeyVaultSecretReference"/>.
         /// </summary>
         public DataFactorySecretBaseDefinition Password { get; set; }
         /// <summary> Specifies whether the data source endpoints are encrypted using HTTPS. The default value is true. Type: boolean (or Expression with resultType boolean). </summary>

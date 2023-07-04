@@ -12,7 +12,7 @@ using Azure.Core.Expressions.DataFactory;
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> The ZipDeflate compression read settings. </summary>
-    public partial class ZipDeflateReadSettings : CompressionReadSettings
+    internal partial class ZipDeflateReadSettings : DataFactorySecretBaseDefinition
     {
         /// <summary> Initializes a new instance of ZipDeflateReadSettings. </summary>
         public ZipDeflateReadSettings()

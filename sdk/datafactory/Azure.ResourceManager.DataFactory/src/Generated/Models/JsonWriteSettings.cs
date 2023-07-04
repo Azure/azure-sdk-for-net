@@ -7,11 +7,12 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> Json write settings. </summary>
-    public partial class JsonWriteSettings : FormatWriteSettings
+    public partial class JsonWriteSettings : DataFactorySecretBaseDefinition
     {
         /// <summary> Initializes a new instance of JsonWriteSettings. </summary>
         public JsonWriteSettings()

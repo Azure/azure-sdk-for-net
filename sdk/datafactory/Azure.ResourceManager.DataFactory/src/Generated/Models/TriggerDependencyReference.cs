@@ -7,6 +7,7 @@
 
 using System;
 using Azure.Core;
+using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -15,7 +16,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// Please note <see cref="TriggerDependencyReference"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="TumblingWindowTriggerDependencyReference"/>.
     /// </summary>
-    public partial class TriggerDependencyReference : DependencyReference
+    internal partial class TriggerDependencyReference : DataFactorySecretBaseDefinition
     {
         /// <summary> Initializes a new instance of TriggerDependencyReference. </summary>
         /// <param name="referenceTrigger"> Referenced trigger. </param>

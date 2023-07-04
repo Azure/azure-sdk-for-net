@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -25,10 +26,10 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="additionalProperties"> Additional Properties. </param>
         /// <param name="linkedInfo">
         /// The base definition of a linked integration runtime.
-        /// Please note <see cref="LinkedIntegrationRuntimeType"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="DataFactorySecretBaseDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="LinkedIntegrationRuntimeKeyAuthorization"/> and <see cref="LinkedIntegrationRuntimeRbacAuthorization"/>.
         /// </param>
-        internal SelfHostedIntegrationRuntime(IntegrationRuntimeType integrationRuntimeType, string description, IDictionary<string, BinaryData> additionalProperties, LinkedIntegrationRuntimeType linkedInfo) : base(integrationRuntimeType, description, additionalProperties)
+        internal SelfHostedIntegrationRuntime(IntegrationRuntimeType integrationRuntimeType, string description, IDictionary<string, BinaryData> additionalProperties, DataFactorySecretBaseDefinition linkedInfo) : base(integrationRuntimeType, description, additionalProperties)
         {
             LinkedInfo = linkedInfo;
             IntegrationRuntimeType = integrationRuntimeType;
@@ -36,9 +37,9 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         /// <summary>
         /// The base definition of a linked integration runtime.
-        /// Please note <see cref="LinkedIntegrationRuntimeType"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="DataFactorySecretBaseDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="LinkedIntegrationRuntimeKeyAuthorization"/> and <see cref="LinkedIntegrationRuntimeRbacAuthorization"/>.
         /// </summary>
-        public LinkedIntegrationRuntimeType LinkedInfo { get; set; }
+        public DataFactorySecretBaseDefinition LinkedInfo { get; set; }
     }
 }

@@ -13,7 +13,7 @@ using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class TarReadSettings : IUtf8JsonSerializable
+    internal partial class TarReadSettings : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {

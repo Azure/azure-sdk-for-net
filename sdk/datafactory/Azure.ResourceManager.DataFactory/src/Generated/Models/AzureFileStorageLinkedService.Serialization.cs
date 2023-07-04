@@ -144,9 +144,9 @@ namespace Azure.ResourceManager.DataFactory.Models
             Optional<DataFactoryElement<string>> userId = default;
             Optional<DataFactorySecretBaseDefinition> password = default;
             Optional<DataFactoryElement<string>> connectionString = default;
-            Optional<AzureKeyVaultSecretReference> accountKey = default;
+            Optional<DataFactoryKeyVaultSecretReference> accountKey = default;
             Optional<DataFactoryElement<string>> sasUri = default;
-            Optional<AzureKeyVaultSecretReference> sasToken = default;
+            Optional<DataFactoryKeyVaultSecretReference> sasToken = default;
             Optional<DataFactoryElement<string>> fileShare = default;
             Optional<DataFactoryElement<string>> snapshot = default;
             Optional<BinaryData> encryptedCredential = default;
@@ -241,7 +241,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            password = DataFactorySecretBaseDefinition.DeserializeDataFactorySecretBaseDefinition(property0.Value);
+                            password = JsonSerializer.Deserialize<DataFactorySecretBaseDefinition>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("connectionString"u8))
@@ -259,7 +259,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            accountKey = AzureKeyVaultSecretReference.DeserializeAzureKeyVaultSecretReference(property0.Value);
+                            accountKey = JsonSerializer.Deserialize<DataFactoryKeyVaultSecretReference>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("sasUri"u8))
@@ -277,7 +277,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            sasToken = AzureKeyVaultSecretReference.DeserializeAzureKeyVaultSecretReference(property0.Value);
+                            sasToken = JsonSerializer.Deserialize<DataFactoryKeyVaultSecretReference>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("fileShare"u8))

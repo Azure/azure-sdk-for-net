@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             Interval = interval;
             StartOn = startOn;
             MaxConcurrency = maxConcurrency;
-            DependsOn = new ChangeTrackingList<DependencyReference>();
+            DependsOn = new ChangeTrackingList<DataFactorySecretBaseDefinition>();
             TriggerType = "TumblingWindowTrigger";
         }
 
@@ -51,10 +51,10 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="retryPolicy"> Retry policy that will be applied for failed pipeline runs. </param>
         /// <param name="dependsOn">
         /// Triggers that this trigger depends on. Only tumbling window triggers are supported.
-        /// Please note <see cref="DependencyReference"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="DataFactorySecretBaseDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="SelfDependencyTumblingWindowTriggerReference"/>, <see cref="TriggerDependencyReference"/> and <see cref="TumblingWindowTriggerDependencyReference"/>.
         /// </param>
-        internal TumblingWindowTrigger(string triggerType, string description, DataFactoryTriggerRuntimeState? runtimeState, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, TriggerPipelineReference pipeline, TumblingWindowFrequency frequency, int interval, DateTimeOffset startOn, DateTimeOffset? endOn, DataFactoryElement<string> delay, int maxConcurrency, RetryPolicy retryPolicy, IList<DependencyReference> dependsOn) : base(triggerType, description, runtimeState, annotations, additionalProperties)
+        internal TumblingWindowTrigger(string triggerType, string description, DataFactoryTriggerRuntimeState? runtimeState, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, TriggerPipelineReference pipeline, TumblingWindowFrequency frequency, int interval, DateTimeOffset startOn, DateTimeOffset? endOn, DataFactoryElement<string> delay, int maxConcurrency, RetryPolicy retryPolicy, IList<DataFactorySecretBaseDefinition> dependsOn) : base(triggerType, description, runtimeState, annotations, additionalProperties)
         {
             Pipeline = pipeline;
             Frequency = frequency;
@@ -86,9 +86,9 @@ namespace Azure.ResourceManager.DataFactory.Models
         public RetryPolicy RetryPolicy { get; set; }
         /// <summary>
         /// Triggers that this trigger depends on. Only tumbling window triggers are supported.
-        /// Please note <see cref="DependencyReference"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="DataFactorySecretBaseDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="SelfDependencyTumblingWindowTriggerReference"/>, <see cref="TriggerDependencyReference"/> and <see cref="TumblingWindowTriggerDependencyReference"/>.
         /// </summary>
-        public IList<DependencyReference> DependsOn { get; }
+        public IList<DataFactorySecretBaseDefinition> DependsOn { get; }
     }
 }

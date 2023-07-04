@@ -7,11 +7,12 @@
 
 using System;
 using Azure.Core;
+using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> Self referenced tumbling window trigger dependency. </summary>
-    public partial class SelfDependencyTumblingWindowTriggerReference : DependencyReference
+    internal partial class SelfDependencyTumblingWindowTriggerReference : DataFactorySecretBaseDefinition
     {
         /// <summary> Initializes a new instance of SelfDependencyTumblingWindowTriggerReference. </summary>
         /// <param name="offset"> Timespan applied to the start time of a tumbling window when evaluating dependency. </param>

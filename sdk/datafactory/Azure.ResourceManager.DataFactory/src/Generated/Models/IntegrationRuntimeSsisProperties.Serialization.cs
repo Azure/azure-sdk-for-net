@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -90,7 +91,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             Optional<IntegrationRuntimeCustomSetupScriptProperties> customSetupScriptProperties = default;
             Optional<IntegrationRuntimeDataProxyProperties> dataProxyProperties = default;
             Optional<IntegrationRuntimeEdition> edition = default;
-            Optional<IList<CustomSetupBase>> expressCustomSetupProperties = default;
+            Optional<IList<DataFactorySecretBaseDefinition>> expressCustomSetupProperties = default;
             Optional<IList<DataFactoryPackageStore>> packageStores = default;
             Optional<DataFactoryCredentialReference> credential = default;
             IDictionary<string, BinaryData> additionalProperties = default;
@@ -148,10 +149,10 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    List<CustomSetupBase> array = new List<CustomSetupBase>();
+                    List<DataFactorySecretBaseDefinition> array = new List<DataFactorySecretBaseDefinition>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CustomSetupBase.DeserializeCustomSetupBase(item));
+                        array.Add(JsonSerializer.Deserialize<DataFactorySecretBaseDefinition>(item.GetRawText()));
                     }
                     expressCustomSetupProperties = array;
                     continue;

@@ -12,7 +12,7 @@ using Azure.Core.Expressions.DataFactory;
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> The Tar compression read settings. </summary>
-    public partial class TarReadSettings : CompressionReadSettings
+    internal partial class TarReadSettings : DataFactorySecretBaseDefinition
     {
         /// <summary> Initializes a new instance of TarReadSettings. </summary>
         public TarReadSettings()

@@ -7,11 +7,12 @@
 
 using System;
 using Azure.Core;
+using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> The custom setup of setting environment variable. </summary>
-    public partial class EnvironmentVariableSetup : CustomSetupBase
+    internal partial class EnvironmentVariableSetup : DataFactorySecretBaseDefinition
     {
         /// <summary> Initializes a new instance of EnvironmentVariableSetup. </summary>
         /// <param name="variableName"> The name of the environment variable. </param>

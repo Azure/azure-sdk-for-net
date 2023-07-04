@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="servicePrincipalKey">
         /// The key of the service principal used to authenticate against Azure Key Vault.
         /// Please note <see cref="DataFactorySecretBaseDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="DataFactorySecretString"/> and <see cref="AzureKeyVaultSecretReference"/>.
+        /// The available derived classes include <see cref="DataFactorySecretString"/> and <see cref="DataFactoryKeyVaultSecretReference"/>.
         /// </param>
         /// <param name="credential"> The credential reference containing authentication information. </param>
         internal SqlAlwaysEncryptedProperties(SqlAlwaysEncryptedAkvAuthType alwaysEncryptedAkvAuthType, DataFactoryElement<string> servicePrincipalId, DataFactorySecretBaseDefinition servicePrincipalKey, DataFactoryCredentialReference credential)
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary>
         /// The key of the service principal used to authenticate against Azure Key Vault.
         /// Please note <see cref="DataFactorySecretBaseDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="DataFactorySecretString"/> and <see cref="AzureKeyVaultSecretReference"/>.
+        /// The available derived classes include <see cref="DataFactorySecretString"/> and <see cref="DataFactoryKeyVaultSecretReference"/>.
         /// </summary>
         public DataFactorySecretBaseDefinition ServicePrincipalKey { get; set; }
         /// <summary> The credential reference containing authentication information. </summary>

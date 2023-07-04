@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    pfx = DataFactorySecretBaseDefinition.DeserializeDataFactorySecretBaseDefinition(property.Value);
+                    pfx = JsonSerializer.Deserialize<DataFactorySecretBaseDefinition>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("username"u8))
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    password = DataFactorySecretBaseDefinition.DeserializeDataFactorySecretBaseDefinition(property.Value);
+                    password = JsonSerializer.Deserialize<DataFactorySecretBaseDefinition>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("resource"u8))

@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                         }
                         if (property0.NameEquals("password"u8))
                         {
-                            password = DataFactorySecretBaseDefinition.DeserializeDataFactorySecretBaseDefinition(property0.Value);
+                            password = JsonSerializer.Deserialize<DataFactorySecretBaseDefinition>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("useEncryptedEndpoints"u8))

@@ -116,9 +116,9 @@ namespace Azure.ResourceManager.DataFactory.Models
             Optional<IDictionary<string, EntityParameterSpecification>> parameters = default;
             Optional<IList<BinaryData>> annotations = default;
             Optional<DataFactoryElement<string>> connectionString = default;
-            Optional<AzureKeyVaultSecretReference> accountKey = default;
+            Optional<DataFactoryKeyVaultSecretReference> accountKey = default;
             Optional<DataFactoryElement<string>> sasUri = default;
-            Optional<AzureKeyVaultSecretReference> sasToken = default;
+            Optional<DataFactoryKeyVaultSecretReference> sasToken = default;
             Optional<BinaryData> encryptedCredential = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            accountKey = AzureKeyVaultSecretReference.DeserializeAzureKeyVaultSecretReference(property0.Value);
+                            accountKey = JsonSerializer.Deserialize<DataFactoryKeyVaultSecretReference>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("sasUri"u8))
@@ -220,7 +220,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            sasToken = AzureKeyVaultSecretReference.DeserializeAzureKeyVaultSecretReference(property0.Value);
+                            sasToken = JsonSerializer.Deserialize<DataFactoryKeyVaultSecretReference>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("encryptedCredential"u8))

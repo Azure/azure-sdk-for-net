@@ -12,7 +12,7 @@ using Azure.Core.Expressions.DataFactory;
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> Orc write settings. </summary>
-    public partial class OrcWriteSettings : FormatWriteSettings
+    public partial class OrcWriteSettings : DataFactorySecretBaseDefinition
     {
         /// <summary> Initializes a new instance of OrcWriteSettings. </summary>
         public OrcWriteSettings()

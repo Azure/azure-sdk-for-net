@@ -12,7 +12,7 @@ using Azure.Core.Expressions.DataFactory;
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> Delimited text read settings. </summary>
-    public partial class DelimitedTextReadSettings : FormatReadSettings
+    public partial class DelimitedTextReadSettings : DataFactorySecretBaseDefinition
     {
         /// <summary> Initializes a new instance of DelimitedTextReadSettings. </summary>
         public DelimitedTextReadSettings()
@@ -26,10 +26,10 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="skipLineCount"> Indicates the number of non-empty rows to skip when reading data from input files. Type: integer (or Expression with resultType integer). </param>
         /// <param name="compressionProperties">
         /// Compression settings.
-        /// Please note <see cref="CompressionReadSettings"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="DataFactorySecretBaseDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="TarGzipReadSettings"/>, <see cref="TarReadSettings"/> and <see cref="ZipDeflateReadSettings"/>.
         /// </param>
-        internal DelimitedTextReadSettings(string formatReadSettingsType, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<int> skipLineCount, CompressionReadSettings compressionProperties) : base(formatReadSettingsType, additionalProperties)
+        internal DelimitedTextReadSettings(string formatReadSettingsType, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<int> skipLineCount, DataFactorySecretBaseDefinition compressionProperties) : base(formatReadSettingsType, additionalProperties)
         {
             SkipLineCount = skipLineCount;
             CompressionProperties = compressionProperties;
@@ -40,9 +40,9 @@ namespace Azure.ResourceManager.DataFactory.Models
         public DataFactoryElement<int> SkipLineCount { get; set; }
         /// <summary>
         /// Compression settings.
-        /// Please note <see cref="CompressionReadSettings"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="DataFactorySecretBaseDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="TarGzipReadSettings"/>, <see cref="TarReadSettings"/> and <see cref="ZipDeflateReadSettings"/>.
         /// </summary>
-        public CompressionReadSettings CompressionProperties { get; set; }
+        public DataFactorySecretBaseDefinition CompressionProperties { get; set; }
     }
 }

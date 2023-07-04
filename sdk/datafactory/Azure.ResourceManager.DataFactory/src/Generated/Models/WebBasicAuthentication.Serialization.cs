@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 if (property.NameEquals("password"u8))
                 {
-                    password = DataFactorySecretBaseDefinition.DeserializeDataFactorySecretBaseDefinition(property.Value);
+                    password = JsonSerializer.Deserialize<DataFactorySecretBaseDefinition>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("url"u8))

@@ -12,7 +12,7 @@ using Azure.Core.Expressions.DataFactory;
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> Azure Databricks Delta Lake export command settings. </summary>
-    public partial class AzureDatabricksDeltaLakeExportCommand : ExportSettings
+    public partial class AzureDatabricksDeltaLakeExportCommand : DataFactorySecretBaseDefinition
     {
         /// <summary> Initializes a new instance of AzureDatabricksDeltaLakeExportCommand. </summary>
         public AzureDatabricksDeltaLakeExportCommand()

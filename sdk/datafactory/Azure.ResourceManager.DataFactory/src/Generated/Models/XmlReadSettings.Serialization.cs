@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            Optional<CompressionReadSettings> compressionProperties = default;
+            Optional<DataFactorySecretBaseDefinition> compressionProperties = default;
             Optional<DataFactoryElement<string>> validationMode = default;
             Optional<DataFactoryElement<bool>> detectDataType = default;
             Optional<DataFactoryElement<bool>> namespaces = default;
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    compressionProperties = CompressionReadSettings.DeserializeCompressionReadSettings(property.Value);
+                    compressionProperties = JsonSerializer.Deserialize<DataFactorySecretBaseDefinition>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("validationMode"u8))

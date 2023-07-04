@@ -7,11 +7,12 @@
 
 using System;
 using Azure.Core;
+using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> The custom setup of installing 3rd party components. </summary>
-    public partial class ComponentSetup : CustomSetupBase
+    internal partial class ComponentSetup : DataFactorySecretBaseDefinition
     {
         /// <summary> Initializes a new instance of ComponentSetup. </summary>
         /// <param name="componentName"> The name of the 3rd party component. </param>
@@ -30,7 +31,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="licenseKey">
         /// The license key to activate the component.
         /// Please note <see cref="DataFactorySecretBaseDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="DataFactorySecretString"/> and <see cref="AzureKeyVaultSecretReference"/>.
+        /// The available derived classes include <see cref="DataFactorySecretString"/> and <see cref="DataFactoryKeyVaultSecretReference"/>.
         /// </param>
         internal ComponentSetup(string customSetupBaseType, string componentName, DataFactorySecretBaseDefinition licenseKey) : base(customSetupBaseType)
         {
@@ -44,7 +45,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary>
         /// The license key to activate the component.
         /// Please note <see cref="DataFactorySecretBaseDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="DataFactorySecretString"/> and <see cref="AzureKeyVaultSecretReference"/>.
+        /// The available derived classes include <see cref="DataFactorySecretString"/> and <see cref="DataFactoryKeyVaultSecretReference"/>.
         /// </summary>
         public DataFactorySecretBaseDefinition LicenseKey { get; set; }
     }

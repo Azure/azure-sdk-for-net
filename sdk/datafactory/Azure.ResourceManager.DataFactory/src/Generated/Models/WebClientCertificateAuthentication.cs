@@ -19,12 +19,12 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="pfx">
         /// Base64-encoded contents of a PFX file.
         /// Please note <see cref="DataFactorySecretBaseDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="DataFactorySecretString"/> and <see cref="AzureKeyVaultSecretReference"/>.
+        /// The available derived classes include <see cref="DataFactorySecretString"/> and <see cref="DataFactoryKeyVaultSecretReference"/>.
         /// </param>
         /// <param name="password">
         /// Password for the PFX file.
         /// Please note <see cref="DataFactorySecretBaseDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="DataFactorySecretString"/> and <see cref="AzureKeyVaultSecretReference"/>.
+        /// The available derived classes include <see cref="DataFactorySecretString"/> and <see cref="DataFactoryKeyVaultSecretReference"/>.
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="uri"/>, <paramref name="pfx"/> or <paramref name="password"/> is null. </exception>
         public WebClientCertificateAuthentication(DataFactoryElement<string> uri, DataFactorySecretBaseDefinition pfx, DataFactorySecretBaseDefinition password) : base(uri)
@@ -44,12 +44,12 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="pfx">
         /// Base64-encoded contents of a PFX file.
         /// Please note <see cref="DataFactorySecretBaseDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="DataFactorySecretString"/> and <see cref="AzureKeyVaultSecretReference"/>.
+        /// The available derived classes include <see cref="DataFactorySecretString"/> and <see cref="DataFactoryKeyVaultSecretReference"/>.
         /// </param>
         /// <param name="password">
         /// Password for the PFX file.
         /// Please note <see cref="DataFactorySecretBaseDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="DataFactorySecretString"/> and <see cref="AzureKeyVaultSecretReference"/>.
+        /// The available derived classes include <see cref="DataFactorySecretString"/> and <see cref="DataFactoryKeyVaultSecretReference"/>.
         /// </param>
         internal WebClientCertificateAuthentication(DataFactoryElement<string> uri, WebAuthenticationType authenticationType, DataFactorySecretBaseDefinition pfx, DataFactorySecretBaseDefinition password) : base(uri, authenticationType)
         {
@@ -61,13 +61,13 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary>
         /// Base64-encoded contents of a PFX file.
         /// Please note <see cref="DataFactorySecretBaseDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="DataFactorySecretString"/> and <see cref="AzureKeyVaultSecretReference"/>.
+        /// The available derived classes include <see cref="DataFactorySecretString"/> and <see cref="DataFactoryKeyVaultSecretReference"/>.
         /// </summary>
         public DataFactorySecretBaseDefinition Pfx { get; set; }
         /// <summary>
         /// Password for the PFX file.
         /// Please note <see cref="DataFactorySecretBaseDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="DataFactorySecretString"/> and <see cref="AzureKeyVaultSecretReference"/>.
+        /// The available derived classes include <see cref="DataFactorySecretString"/> and <see cref="DataFactoryKeyVaultSecretReference"/>.
         /// </summary>
         public DataFactorySecretBaseDefinition Password { get; set; }
     }
