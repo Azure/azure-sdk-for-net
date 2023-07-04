@@ -85,7 +85,7 @@ namespace Azure.IoT.DeviceUpdate
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/DeviceUpdateClient.xml" path="doc/members/member[@name='GetUpdateAsync(string,string,string,ETag?,RequestContext)']/*" />
-        public virtual async Task<Response> GetUpdateAsync(string provider, string name, string version, ETag? ifNoneMatch, RequestContext context)
+        public virtual async Task<Response> GetUpdateAsync(string provider, string name, string version, ETag? ifNoneMatch = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(provider, nameof(provider));
             Argument.AssertNotNullOrEmpty(name, nameof(name));
@@ -125,7 +125,7 @@ namespace Azure.IoT.DeviceUpdate
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/DeviceUpdateClient.xml" path="doc/members/member[@name='GetUpdate(string,string,string,ETag?,RequestContext)']/*" />
-        public virtual Response GetUpdate(string provider, string name, string version, ETag? ifNoneMatch, RequestContext context)
+        public virtual Response GetUpdate(string provider, string name, string version, ETag? ifNoneMatch = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(provider, nameof(provider));
             Argument.AssertNotNullOrEmpty(name, nameof(name));
@@ -166,7 +166,7 @@ namespace Azure.IoT.DeviceUpdate
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/DeviceUpdateClient.xml" path="doc/members/member[@name='GetFileAsync(string,string,string,string,ETag?,RequestContext)']/*" />
-        public virtual async Task<Response> GetFileAsync(string provider, string name, string version, string fileId, ETag? ifNoneMatch, RequestContext context)
+        public virtual async Task<Response> GetFileAsync(string provider, string name, string version, string fileId, ETag? ifNoneMatch = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(provider, nameof(provider));
             Argument.AssertNotNullOrEmpty(name, nameof(name));
@@ -208,7 +208,7 @@ namespace Azure.IoT.DeviceUpdate
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/DeviceUpdateClient.xml" path="doc/members/member[@name='GetFile(string,string,string,string,ETag?,RequestContext)']/*" />
-        public virtual Response GetFile(string provider, string name, string version, string fileId, ETag? ifNoneMatch, RequestContext context)
+        public virtual Response GetFile(string provider, string name, string version, string fileId, ETag? ifNoneMatch = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(provider, nameof(provider));
             Argument.AssertNotNullOrEmpty(name, nameof(name));
@@ -247,7 +247,7 @@ namespace Azure.IoT.DeviceUpdate
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/DeviceUpdateClient.xml" path="doc/members/member[@name='GetOperationStatusAsync(string,ETag?,RequestContext)']/*" />
-        public virtual async Task<Response> GetOperationStatusAsync(string operationId, ETag? ifNoneMatch, RequestContext context)
+        public virtual async Task<Response> GetOperationStatusAsync(string operationId, ETag? ifNoneMatch = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
 
@@ -283,7 +283,7 @@ namespace Azure.IoT.DeviceUpdate
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/DeviceUpdateClient.xml" path="doc/members/member[@name='GetOperationStatus(string,ETag?,RequestContext)']/*" />
-        public virtual Response GetOperationStatus(string operationId, ETag? ifNoneMatch, RequestContext context)
+        public virtual Response GetOperationStatus(string operationId, ETag? ifNoneMatch = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
 
@@ -317,7 +317,7 @@ namespace Azure.IoT.DeviceUpdate
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
         /// <include file="Docs/DeviceUpdateClient.xml" path="doc/members/member[@name='GetUpdatesAsync(string,string,RequestContext)']/*" />
-        public virtual AsyncPageable<BinaryData> GetUpdatesAsync(string search, string filter, RequestContext context)
+        public virtual AsyncPageable<BinaryData> GetUpdatesAsync(string search = null, string filter = null, RequestContext context = null)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetUpdatesRequest(search, filter, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetUpdatesNextPageRequest(nextLink, search, filter, context);
@@ -340,7 +340,7 @@ namespace Azure.IoT.DeviceUpdate
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
         /// <include file="Docs/DeviceUpdateClient.xml" path="doc/members/member[@name='GetUpdates(string,string,RequestContext)']/*" />
-        public virtual Pageable<BinaryData> GetUpdates(string search, string filter, RequestContext context)
+        public virtual Pageable<BinaryData> GetUpdates(string search = null, string filter = null, RequestContext context = null)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetUpdatesRequest(search, filter, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetUpdatesNextPageRequest(nextLink, search, filter, context);
@@ -361,7 +361,7 @@ namespace Azure.IoT.DeviceUpdate
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
         /// <include file="Docs/DeviceUpdateClient.xml" path="doc/members/member[@name='GetProvidersAsync(RequestContext)']/*" />
-        public virtual AsyncPageable<BinaryData> GetProvidersAsync(RequestContext context)
+        public virtual AsyncPageable<BinaryData> GetProvidersAsync(RequestContext context = null)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetProvidersRequest(context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetProvidersNextPageRequest(nextLink, context);
@@ -382,7 +382,7 @@ namespace Azure.IoT.DeviceUpdate
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
         /// <include file="Docs/DeviceUpdateClient.xml" path="doc/members/member[@name='GetProviders(RequestContext)']/*" />
-        public virtual Pageable<BinaryData> GetProviders(RequestContext context)
+        public virtual Pageable<BinaryData> GetProviders(RequestContext context = null)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetProvidersRequest(context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetProvidersNextPageRequest(nextLink, context);
@@ -406,7 +406,7 @@ namespace Azure.IoT.DeviceUpdate
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
         /// <include file="Docs/DeviceUpdateClient.xml" path="doc/members/member[@name='GetNamesAsync(string,RequestContext)']/*" />
-        public virtual AsyncPageable<BinaryData> GetNamesAsync(string provider, RequestContext context)
+        public virtual AsyncPageable<BinaryData> GetNamesAsync(string provider, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(provider, nameof(provider));
 
@@ -432,7 +432,7 @@ namespace Azure.IoT.DeviceUpdate
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
         /// <include file="Docs/DeviceUpdateClient.xml" path="doc/members/member[@name='GetNames(string,RequestContext)']/*" />
-        public virtual Pageable<BinaryData> GetNames(string provider, RequestContext context)
+        public virtual Pageable<BinaryData> GetNames(string provider, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(provider, nameof(provider));
 
@@ -460,7 +460,7 @@ namespace Azure.IoT.DeviceUpdate
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
         /// <include file="Docs/DeviceUpdateClient.xml" path="doc/members/member[@name='GetVersionsAsync(string,string,string,RequestContext)']/*" />
-        public virtual AsyncPageable<BinaryData> GetVersionsAsync(string provider, string name, string filter, RequestContext context)
+        public virtual AsyncPageable<BinaryData> GetVersionsAsync(string provider, string name, string filter = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(provider, nameof(provider));
             Argument.AssertNotNullOrEmpty(name, nameof(name));
@@ -489,7 +489,7 @@ namespace Azure.IoT.DeviceUpdate
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
         /// <include file="Docs/DeviceUpdateClient.xml" path="doc/members/member[@name='GetVersions(string,string,string,RequestContext)']/*" />
-        public virtual Pageable<BinaryData> GetVersions(string provider, string name, string filter, RequestContext context)
+        public virtual Pageable<BinaryData> GetVersions(string provider, string name, string filter = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(provider, nameof(provider));
             Argument.AssertNotNullOrEmpty(name, nameof(name));
@@ -518,7 +518,7 @@ namespace Azure.IoT.DeviceUpdate
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
         /// <include file="Docs/DeviceUpdateClient.xml" path="doc/members/member[@name='GetFilesAsync(string,string,string,RequestContext)']/*" />
-        public virtual AsyncPageable<BinaryData> GetFilesAsync(string provider, string name, string version, RequestContext context)
+        public virtual AsyncPageable<BinaryData> GetFilesAsync(string provider, string name, string version, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(provider, nameof(provider));
             Argument.AssertNotNullOrEmpty(name, nameof(name));
@@ -548,7 +548,7 @@ namespace Azure.IoT.DeviceUpdate
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
         /// <include file="Docs/DeviceUpdateClient.xml" path="doc/members/member[@name='GetFiles(string,string,string,RequestContext)']/*" />
-        public virtual Pageable<BinaryData> GetFiles(string provider, string name, string version, RequestContext context)
+        public virtual Pageable<BinaryData> GetFiles(string provider, string name, string version, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(provider, nameof(provider));
             Argument.AssertNotNullOrEmpty(name, nameof(name));
@@ -575,7 +575,7 @@ namespace Azure.IoT.DeviceUpdate
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
         /// <include file="Docs/DeviceUpdateClient.xml" path="doc/members/member[@name='GetOperationStatusesAsync(string,int?,RequestContext)']/*" />
-        public virtual AsyncPageable<BinaryData> GetOperationStatusesAsync(string filter, int? top, RequestContext context)
+        public virtual AsyncPageable<BinaryData> GetOperationStatusesAsync(string filter = null, int? top = null, RequestContext context = null)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetOperationStatusesRequest(filter, top, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetOperationStatusesNextPageRequest(nextLink, filter, top, context);
@@ -598,7 +598,7 @@ namespace Azure.IoT.DeviceUpdate
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
         /// <include file="Docs/DeviceUpdateClient.xml" path="doc/members/member[@name='GetOperationStatuses(string,int?,RequestContext)']/*" />
-        public virtual Pageable<BinaryData> GetOperationStatuses(string filter, int? top, RequestContext context)
+        public virtual Pageable<BinaryData> GetOperationStatuses(string filter = null, int? top = null, RequestContext context = null)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetOperationStatusesRequest(filter, top, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetOperationStatusesNextPageRequest(nextLink, filter, top, context);

@@ -188,7 +188,7 @@ namespace Azure.Data.AppConfiguration
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/ConfigurationClient.xml" path="doc/members/member[@name='SetConfigurationSettingAsync(string,RequestContent,ContentType,string,MatchConditions,RequestContext)']/*" />
-        internal virtual async Task<Response> SetConfigurationSettingAsync(string key, RequestContent content, ContentType contentType, string label, MatchConditions matchConditions, RequestContext context)
+        internal virtual async Task<Response> SetConfigurationSettingAsync(string key, RequestContent content, ContentType contentType, string label = null, MatchConditions matchConditions = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(key, nameof(key));
 
@@ -227,7 +227,7 @@ namespace Azure.Data.AppConfiguration
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/ConfigurationClient.xml" path="doc/members/member[@name='SetConfigurationSetting(string,RequestContent,ContentType,string,MatchConditions,RequestContext)']/*" />
-        internal virtual Response SetConfigurationSetting(string key, RequestContent content, ContentType contentType, string label, MatchConditions matchConditions, RequestContext context)
+        internal virtual Response SetConfigurationSetting(string key, RequestContent content, ContentType contentType, string label = null, MatchConditions matchConditions = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(key, nameof(key));
 
@@ -620,7 +620,7 @@ namespace Azure.Data.AppConfiguration
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/ConfigurationClient.xml" path="doc/members/member[@name='CreateReadOnlyLockAsync(string,string,MatchConditions,RequestContext)']/*" />
-        internal virtual async Task<Response> CreateReadOnlyLockAsync(string key, string label, MatchConditions matchConditions, RequestContext context)
+        internal virtual async Task<Response> CreateReadOnlyLockAsync(string key, string label = null, MatchConditions matchConditions = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(key, nameof(key));
 
@@ -657,7 +657,7 @@ namespace Azure.Data.AppConfiguration
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/ConfigurationClient.xml" path="doc/members/member[@name='CreateReadOnlyLock(string,string,MatchConditions,RequestContext)']/*" />
-        internal virtual Response CreateReadOnlyLock(string key, string label, MatchConditions matchConditions, RequestContext context)
+        internal virtual Response CreateReadOnlyLock(string key, string label = null, MatchConditions matchConditions = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(key, nameof(key));
 
@@ -694,7 +694,7 @@ namespace Azure.Data.AppConfiguration
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/ConfigurationClient.xml" path="doc/members/member[@name='DeleteReadOnlyLockAsync(string,string,MatchConditions,RequestContext)']/*" />
-        internal virtual async Task<Response> DeleteReadOnlyLockAsync(string key, string label, MatchConditions matchConditions, RequestContext context)
+        internal virtual async Task<Response> DeleteReadOnlyLockAsync(string key, string label = null, MatchConditions matchConditions = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(key, nameof(key));
 
@@ -731,7 +731,7 @@ namespace Azure.Data.AppConfiguration
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/ConfigurationClient.xml" path="doc/members/member[@name='DeleteReadOnlyLock(string,string,MatchConditions,RequestContext)']/*" />
-        internal virtual Response DeleteReadOnlyLock(string key, string label, MatchConditions matchConditions, RequestContext context)
+        internal virtual Response DeleteReadOnlyLock(string key, string label = null, MatchConditions matchConditions = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(key, nameof(key));
 
@@ -835,7 +835,7 @@ namespace Azure.Data.AppConfiguration
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/ConfigurationClient.xml" path="doc/members/member[@name='GetOperationDetailsAsync(string,RequestContext)']/*" />
-        internal virtual async Task<Response> GetOperationDetailsAsync(string snapshot, RequestContext context)
+        internal virtual async Task<Response> GetOperationDetailsAsync(string snapshot, RequestContext context = null)
         {
             Argument.AssertNotNull(snapshot, nameof(snapshot));
 
@@ -869,7 +869,7 @@ namespace Azure.Data.AppConfiguration
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/ConfigurationClient.xml" path="doc/members/member[@name='GetOperationDetails(string,RequestContext)']/*" />
-        internal virtual Response GetOperationDetails(string snapshot, RequestContext context)
+        internal virtual Response GetOperationDetails(string snapshot, RequestContext context = null)
         {
             Argument.AssertNotNull(snapshot, nameof(snapshot));
 
@@ -904,7 +904,7 @@ namespace Azure.Data.AppConfiguration
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
         /// <include file="Docs/ConfigurationClient.xml" path="doc/members/member[@name='GetKeysAsync(string,string,string,RequestContext)']/*" />
-        internal virtual AsyncPageable<BinaryData> GetKeysAsync(string name, string after, string acceptDatetime, RequestContext context)
+        internal virtual AsyncPageable<BinaryData> GetKeysAsync(string name = null, string after = null, string acceptDatetime = null, RequestContext context = null)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetKeysRequest(name, after, acceptDatetime, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetKeysNextPageRequest(nextLink, name, after, acceptDatetime, context);
@@ -928,7 +928,7 @@ namespace Azure.Data.AppConfiguration
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
         /// <include file="Docs/ConfigurationClient.xml" path="doc/members/member[@name='GetKeys(string,string,string,RequestContext)']/*" />
-        internal virtual Pageable<BinaryData> GetKeys(string name, string after, string acceptDatetime, RequestContext context)
+        internal virtual Pageable<BinaryData> GetKeys(string name = null, string after = null, string acceptDatetime = null, RequestContext context = null)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetKeysRequest(name, after, acceptDatetime, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetKeysNextPageRequest(nextLink, name, after, acceptDatetime, context);
@@ -955,7 +955,7 @@ namespace Azure.Data.AppConfiguration
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
         /// <include file="Docs/ConfigurationClient.xml" path="doc/members/member[@name='GetConfigurationSettingsAsync(string,string,string,string,IEnumerable{string},string,RequestContext)']/*" />
-        internal virtual AsyncPageable<BinaryData> GetConfigurationSettingsAsync(string key, string label, string after, string acceptDatetime, IEnumerable<string> select, string snapshot, RequestContext context)
+        internal virtual AsyncPageable<BinaryData> GetConfigurationSettingsAsync(string key = null, string label = null, string after = null, string acceptDatetime = null, IEnumerable<string> select = null, string snapshot = null, RequestContext context = null)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetConfigurationSettingsRequest(key, label, after, acceptDatetime, select, snapshot, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetConfigurationSettingsNextPageRequest(nextLink, key, label, after, acceptDatetime, select, snapshot, context);
@@ -982,7 +982,7 @@ namespace Azure.Data.AppConfiguration
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
         /// <include file="Docs/ConfigurationClient.xml" path="doc/members/member[@name='GetConfigurationSettings(string,string,string,string,IEnumerable{string},string,RequestContext)']/*" />
-        internal virtual Pageable<BinaryData> GetConfigurationSettings(string key, string label, string after, string acceptDatetime, IEnumerable<string> select, string snapshot, RequestContext context)
+        internal virtual Pageable<BinaryData> GetConfigurationSettings(string key = null, string label = null, string after = null, string acceptDatetime = null, IEnumerable<string> select = null, string snapshot = null, RequestContext context = null)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetConfigurationSettingsRequest(key, label, after, acceptDatetime, select, snapshot, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetConfigurationSettingsNextPageRequest(nextLink, key, label, after, acceptDatetime, select, snapshot, context);
@@ -1007,7 +1007,7 @@ namespace Azure.Data.AppConfiguration
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
         /// <include file="Docs/ConfigurationClient.xml" path="doc/members/member[@name='GetLabelsAsync(string,string,string,IEnumerable{string},RequestContext)']/*" />
-        internal virtual AsyncPageable<BinaryData> GetLabelsAsync(string name, string after, string acceptDatetime, IEnumerable<string> select, RequestContext context)
+        internal virtual AsyncPageable<BinaryData> GetLabelsAsync(string name = null, string after = null, string acceptDatetime = null, IEnumerable<string> select = null, RequestContext context = null)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetLabelsRequest(name, after, acceptDatetime, select, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetLabelsNextPageRequest(nextLink, name, after, acceptDatetime, select, context);
@@ -1032,7 +1032,7 @@ namespace Azure.Data.AppConfiguration
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
         /// <include file="Docs/ConfigurationClient.xml" path="doc/members/member[@name='GetLabels(string,string,string,IEnumerable{string},RequestContext)']/*" />
-        internal virtual Pageable<BinaryData> GetLabels(string name, string after, string acceptDatetime, IEnumerable<string> select, RequestContext context)
+        internal virtual Pageable<BinaryData> GetLabels(string name = null, string after = null, string acceptDatetime = null, IEnumerable<string> select = null, RequestContext context = null)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetLabelsRequest(name, after, acceptDatetime, select, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetLabelsNextPageRequest(nextLink, name, after, acceptDatetime, select, context);
@@ -1058,7 +1058,7 @@ namespace Azure.Data.AppConfiguration
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
         /// <include file="Docs/ConfigurationClient.xml" path="doc/members/member[@name='GetRevisionsAsync(string,string,string,string,IEnumerable{string},RequestContext)']/*" />
-        internal virtual AsyncPageable<BinaryData> GetRevisionsAsync(string key, string label, string after, string acceptDatetime, IEnumerable<string> select, RequestContext context)
+        internal virtual AsyncPageable<BinaryData> GetRevisionsAsync(string key = null, string label = null, string after = null, string acceptDatetime = null, IEnumerable<string> select = null, RequestContext context = null)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetRevisionsRequest(key, label, after, acceptDatetime, select, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetRevisionsNextPageRequest(nextLink, key, label, after, acceptDatetime, select, context);
@@ -1084,7 +1084,7 @@ namespace Azure.Data.AppConfiguration
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
         /// <include file="Docs/ConfigurationClient.xml" path="doc/members/member[@name='GetRevisions(string,string,string,string,IEnumerable{string},RequestContext)']/*" />
-        internal virtual Pageable<BinaryData> GetRevisions(string key, string label, string after, string acceptDatetime, IEnumerable<string> select, RequestContext context)
+        internal virtual Pageable<BinaryData> GetRevisions(string key = null, string label = null, string after = null, string acceptDatetime = null, IEnumerable<string> select = null, RequestContext context = null)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetRevisionsRequest(key, label, after, acceptDatetime, select, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetRevisionsNextPageRequest(nextLink, key, label, after, acceptDatetime, select, context);

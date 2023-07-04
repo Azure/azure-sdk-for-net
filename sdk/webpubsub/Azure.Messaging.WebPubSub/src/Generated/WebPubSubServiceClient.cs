@@ -116,7 +116,7 @@ namespace Azure.Messaging.WebPubSub
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/WebPubSubServiceClient.xml" path="doc/members/member[@name='GenerateClientTokenImplAsync(string,IEnumerable{string},int?,IEnumerable{string},RequestContext)']/*" />
-        internal virtual async Task<Response> GenerateClientTokenImplAsync(string userId, IEnumerable<string> role, int? minutesToExpire, IEnumerable<string> group, RequestContext context)
+        internal virtual async Task<Response> GenerateClientTokenImplAsync(string userId = null, IEnumerable<string> role = null, int? minutesToExpire = null, IEnumerable<string> group = null, RequestContext context = null)
         {
             using var scope = ClientDiagnostics.CreateScope("WebPubSubServiceClient.GenerateClientTokenImpl");
             scope.Start();
@@ -150,7 +150,7 @@ namespace Azure.Messaging.WebPubSub
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/WebPubSubServiceClient.xml" path="doc/members/member[@name='GenerateClientTokenImpl(string,IEnumerable{string},int?,IEnumerable{string},RequestContext)']/*" />
-        internal virtual Response GenerateClientTokenImpl(string userId, IEnumerable<string> role, int? minutesToExpire, IEnumerable<string> group, RequestContext context)
+        internal virtual Response GenerateClientTokenImpl(string userId = null, IEnumerable<string> role = null, int? minutesToExpire = null, IEnumerable<string> group = null, RequestContext context = null)
         {
             using var scope = ClientDiagnostics.CreateScope("WebPubSubServiceClient.GenerateClientTokenImpl");
             scope.Start();

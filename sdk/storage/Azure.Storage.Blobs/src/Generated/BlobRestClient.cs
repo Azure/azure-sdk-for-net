@@ -377,7 +377,7 @@ namespace Azure.Storage.Blobs
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetPropertiesAsync(string snapshot, string versionId, int? timeout, string leaseId, string encryptionKey, string encryptionKeySha256, string encryptionAlgorithm, string ifTags, RequestConditions requestConditions, RequestContext context)
+        public virtual async Task<Response> GetPropertiesAsync(string snapshot = null, string versionId = null, int? timeout = null, string leaseId = null, string encryptionKey = null, string encryptionKeySha256 = null, string encryptionAlgorithm = null, string ifTags = null, RequestConditions requestConditions = null, RequestContext context = null)
         {
             using var scope = ClientDiagnostics.CreateScope("Blob.GetProperties");
             scope.Start();
@@ -415,7 +415,7 @@ namespace Azure.Storage.Blobs
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response GetProperties(string snapshot, string versionId, int? timeout, string leaseId, string encryptionKey, string encryptionKeySha256, string encryptionAlgorithm, string ifTags, RequestConditions requestConditions, RequestContext context)
+        public virtual Response GetProperties(string snapshot = null, string versionId = null, int? timeout = null, string leaseId = null, string encryptionKey = null, string encryptionKeySha256 = null, string encryptionAlgorithm = null, string ifTags = null, RequestConditions requestConditions = null, RequestContext context = null)
         {
             using var scope = ClientDiagnostics.CreateScope("Blob.GetProperties");
             scope.Start();
