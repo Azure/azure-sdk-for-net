@@ -10,7 +10,6 @@ using Azure.Core;
 
 namespace Azure.Communication.Chat
 {
-
     /// <summary> Result of the create chat thread operation. </summary>
     internal partial class CreateChatThreadResultInternal
     {
