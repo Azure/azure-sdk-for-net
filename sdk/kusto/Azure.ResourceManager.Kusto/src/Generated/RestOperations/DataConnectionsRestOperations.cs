@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Kusto
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2022-12-29";
+            _apiVersion = apiVersion ?? "2023-05-02";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -61,8 +61,8 @@ namespace Azure.ResourceManager.Kusto
         }
 
         /// <summary> Returns the list of data connections of the given Kusto database. </summary>
-        /// <param name="subscriptionId"> Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The name of the resource group containing the Kusto cluster. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="clusterName"> The name of the Kusto cluster. </param>
         /// <param name="databaseName"> The name of the database in the Kusto cluster. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -92,8 +92,8 @@ namespace Azure.ResourceManager.Kusto
         }
 
         /// <summary> Returns the list of data connections of the given Kusto database. </summary>
-        /// <param name="subscriptionId"> Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The name of the resource group containing the Kusto cluster. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="clusterName"> The name of the Kusto cluster. </param>
         /// <param name="databaseName"> The name of the database in the Kusto cluster. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -150,8 +150,8 @@ namespace Azure.ResourceManager.Kusto
         }
 
         /// <summary> Checks that the data connection parameters are valid. </summary>
-        /// <param name="subscriptionId"> Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The name of the resource group containing the Kusto cluster. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="clusterName"> The name of the Kusto cluster. </param>
         /// <param name="databaseName"> The name of the database in the Kusto cluster. </param>
         /// <param name="content"> The data connection parameters supplied to the CreateOrUpdate operation. </param>
@@ -179,8 +179,8 @@ namespace Azure.ResourceManager.Kusto
         }
 
         /// <summary> Checks that the data connection parameters are valid. </summary>
-        /// <param name="subscriptionId"> Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The name of the resource group containing the Kusto cluster. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="clusterName"> The name of the Kusto cluster. </param>
         /// <param name="databaseName"> The name of the database in the Kusto cluster. </param>
         /// <param name="content"> The data connection parameters supplied to the CreateOrUpdate operation. </param>
@@ -235,8 +235,8 @@ namespace Azure.ResourceManager.Kusto
         }
 
         /// <summary> Checks that the data connection name is valid and is not already in use. </summary>
-        /// <param name="subscriptionId"> Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The name of the resource group containing the Kusto cluster. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="clusterName"> The name of the Kusto cluster. </param>
         /// <param name="databaseName"> The name of the database in the Kusto cluster. </param>
         /// <param name="content"> The name of the data connection. </param>
@@ -268,8 +268,8 @@ namespace Azure.ResourceManager.Kusto
         }
 
         /// <summary> Checks that the data connection name is valid and is not already in use. </summary>
-        /// <param name="subscriptionId"> Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The name of the resource group containing the Kusto cluster. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="clusterName"> The name of the Kusto cluster. </param>
         /// <param name="databaseName"> The name of the database in the Kusto cluster. </param>
         /// <param name="content"> The name of the data connection. </param>
@@ -325,8 +325,8 @@ namespace Azure.ResourceManager.Kusto
         }
 
         /// <summary> Returns a data connection. </summary>
-        /// <param name="subscriptionId"> Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The name of the resource group containing the Kusto cluster. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="clusterName"> The name of the Kusto cluster. </param>
         /// <param name="databaseName"> The name of the database in the Kusto cluster. </param>
         /// <param name="dataConnectionName"> The name of the data connection. </param>
@@ -360,8 +360,8 @@ namespace Azure.ResourceManager.Kusto
         }
 
         /// <summary> Returns a data connection. </summary>
-        /// <param name="subscriptionId"> Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The name of the resource group containing the Kusto cluster. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="clusterName"> The name of the Kusto cluster. </param>
         /// <param name="databaseName"> The name of the database in the Kusto cluster. </param>
         /// <param name="dataConnectionName"> The name of the data connection. </param>
@@ -423,8 +423,8 @@ namespace Azure.ResourceManager.Kusto
         }
 
         /// <summary> Creates or updates a data connection. </summary>
-        /// <param name="subscriptionId"> Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The name of the resource group containing the Kusto cluster. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="clusterName"> The name of the Kusto cluster. </param>
         /// <param name="databaseName"> The name of the database in the Kusto cluster. </param>
         /// <param name="dataConnectionName"> The name of the data connection. </param>
@@ -455,8 +455,8 @@ namespace Azure.ResourceManager.Kusto
         }
 
         /// <summary> Creates or updates a data connection. </summary>
-        /// <param name="subscriptionId"> Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The name of the resource group containing the Kusto cluster. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="clusterName"> The name of the Kusto cluster. </param>
         /// <param name="databaseName"> The name of the database in the Kusto cluster. </param>
         /// <param name="dataConnectionName"> The name of the data connection. </param>
@@ -515,8 +515,8 @@ namespace Azure.ResourceManager.Kusto
         }
 
         /// <summary> Updates a data connection. </summary>
-        /// <param name="subscriptionId"> Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The name of the resource group containing the Kusto cluster. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="clusterName"> The name of the Kusto cluster. </param>
         /// <param name="databaseName"> The name of the database in the Kusto cluster. </param>
         /// <param name="dataConnectionName"> The name of the data connection. </param>
@@ -547,8 +547,8 @@ namespace Azure.ResourceManager.Kusto
         }
 
         /// <summary> Updates a data connection. </summary>
-        /// <param name="subscriptionId"> Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The name of the resource group containing the Kusto cluster. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="clusterName"> The name of the Kusto cluster. </param>
         /// <param name="databaseName"> The name of the database in the Kusto cluster. </param>
         /// <param name="dataConnectionName"> The name of the data connection. </param>
@@ -603,8 +603,8 @@ namespace Azure.ResourceManager.Kusto
         }
 
         /// <summary> Deletes the data connection with the given name. </summary>
-        /// <param name="subscriptionId"> Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The name of the resource group containing the Kusto cluster. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="clusterName"> The name of the Kusto cluster. </param>
         /// <param name="databaseName"> The name of the database in the Kusto cluster. </param>
         /// <param name="dataConnectionName"> The name of the data connection. </param>
@@ -633,8 +633,8 @@ namespace Azure.ResourceManager.Kusto
         }
 
         /// <summary> Deletes the data connection with the given name. </summary>
-        /// <param name="subscriptionId"> Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The name of the resource group containing the Kusto cluster. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="clusterName"> The name of the Kusto cluster. </param>
         /// <param name="databaseName"> The name of the database in the Kusto cluster. </param>
         /// <param name="dataConnectionName"> The name of the data connection. </param>
