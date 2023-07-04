@@ -94,7 +94,7 @@ namespace Azure.Analytics.Purview.Sharing.Tests
         {
             ReceivedSharesClient client = GetReceivedSharesClient();
 
-            List<BinaryData> detachedReceivedShares = await client.GetAllDetachedReceivedSharesAsync(null, null, null, new()).ToEnumerableAsync();
+            List<BinaryData> detachedReceivedShares = await client.GetAllDetachedReceivedSharesAsync(null, null, new()).ToEnumerableAsync();
 
             Assert.Greater(detachedReceivedShares.Count, 0);
 
@@ -112,7 +112,7 @@ namespace Azure.Analytics.Purview.Sharing.Tests
         {
             ReceivedSharesClient client = GetReceivedSharesClient();
 
-            List<BinaryData> attachedReceivedShares = await client.GetAllAttachedReceivedSharesAsync("/subscriptions/d941aad1-e4af-44a5-a70e-0381a9f702f1/resourcegroups/dev-rg/providers/Microsoft.Storage/storageAccounts/consumeraccount", null, null, null, new()).ToEnumerableAsync();
+            List<BinaryData> attachedReceivedShares = await client.GetAllAttachedReceivedSharesAsync("/subscriptions/d941aad1-e4af-44a5-a70e-0381a9f702f1/resourcegroups/dev-rg/providers/Microsoft.Storage/storageAccounts/consumeraccount", null, null, new()).ToEnumerableAsync();
 
             Assert.Greater(attachedReceivedShares.Count, 0);
 

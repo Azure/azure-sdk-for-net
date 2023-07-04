@@ -29,7 +29,7 @@ namespace Azure.Analytics.Purview.Sharing.Tests.Samples
 #else
             var sentShareClient = GetSentSharesClient();
 
-            List<BinaryData> response = await sentShareClient.GetAllSentSharesAsync("/subscriptions/d941aad1-e4af-44a5-a70e-0381a9f702f1/resourcegroups/dev-rg/providers/Microsoft.Storage/storageAccounts/provideraccount", null, null, null, new()).ToEnumerableAsync();
+            List<BinaryData> response = await sentShareClient.GetAllSentSharesAsync("/subscriptions/d941aad1-e4af-44a5-a70e-0381a9f702f1/resourcegroups/dev-rg/providers/Microsoft.Storage/storageAccounts/provideraccount", null, null, new()).ToEnumerableAsync();
 #endif
 
             #endregion

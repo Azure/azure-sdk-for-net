@@ -89,7 +89,7 @@ namespace Azure.Analytics.Purview.Sharing.Tests
             var expectedDisplayName = "testDisplayName1";
             Assert.AreEqual(expectedDisplayName, actualDisplayName);
 
-            List<BinaryData> listResponse = await client.GetAllSentSharesAsync("/subscriptions/d941aad1-e4af-44a5-a70e-0381a9f702f1/resourcegroups/dev-rg/providers/Microsoft.Storage/storageAccounts/provideraccount", null, null, null, new()).ToEnumerableAsync();
+            List<BinaryData> listResponse = await client.GetAllSentSharesAsync("/subscriptions/d941aad1-e4af-44a5-a70e-0381a9f702f1/resourcegroups/dev-rg/providers/Microsoft.Storage/storageAccounts/provideraccount", null, null, new()).ToEnumerableAsync();
 
             Assert.Greater(listResponse.Count, 0);
         }
@@ -152,7 +152,7 @@ namespace Azure.Analytics.Purview.Sharing.Tests
 
             Assert.AreEqual(200, testing.Status);
 
-            List<BinaryData> invitations = await client.GetAllSentShareInvitationsAsync(sentShareId, null, null, null, new()).ToEnumerableAsync();
+            List<BinaryData> invitations = await client.GetAllSentShareInvitationsAsync(sentShareId, null, null, new()).ToEnumerableAsync();
 
             Assert.GreaterOrEqual(invitations.Count, 0);
         }
