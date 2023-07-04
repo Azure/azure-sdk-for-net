@@ -209,7 +209,7 @@ namespace Azure.AI.Language.Conversations.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new ConversationAnalysisClient(endpoint, credential);
 
-            Response response = client.GetAnalyzeConversationJobStatus(Guid.NewGuid());
+            Response response = client.GetAnalyzeConversationJobStatus(Guid.NewGuid(), true, new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("createdDateTime").ToString());
@@ -226,7 +226,7 @@ namespace Azure.AI.Language.Conversations.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new ConversationAnalysisClient(endpoint, credential);
 
-            Response response = client.GetAnalyzeConversationJobStatus(Guid.NewGuid(), true);
+            Response response = client.GetAnalyzeConversationJobStatus(Guid.NewGuid(), true, new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("displayName").ToString());
@@ -260,7 +260,7 @@ namespace Azure.AI.Language.Conversations.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new ConversationAnalysisClient(endpoint, credential);
 
-            Response response = await client.GetAnalyzeConversationJobStatusAsync(Guid.NewGuid());
+            Response response = await client.GetAnalyzeConversationJobStatusAsync(Guid.NewGuid(), true, new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("createdDateTime").ToString());
@@ -277,7 +277,7 @@ namespace Azure.AI.Language.Conversations.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new ConversationAnalysisClient(endpoint, credential);
 
-            Response response = await client.GetAnalyzeConversationJobStatusAsync(Guid.NewGuid(), true);
+            Response response = await client.GetAnalyzeConversationJobStatusAsync(Guid.NewGuid(), true, new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("displayName").ToString());
