@@ -287,15 +287,27 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             return new PostgreSqlFlexibleServerData(id, name, resourceType, systemData, tags, location, sku, identity, administratorLogin, administratorLoginPassword, version, minorVersion, state, fullyQualifiedDomainName, storage, authConfig, dataEncryption, backup, network, highAvailability, maintenanceWindow, sourceServerResourceId, pointInTimeUtc, availabilityZone, replicationRole, replicaCapacity, createMode);
         }
 
+        /// <summary> Initializes a new instance of PostgreSqlFlexibleServerUserAssignedIdentity. </summary>
+        /// <param name="userAssignedIdentities"> represents user assigned identities map. </param>
+        /// <param name="identityType"> the types of identities associated with this resource; currently restricted to &apos;None and UserAssigned&apos;. </param>
+        /// <param name="tenantId"> Tenant id of the server. </param>
+        /// <returns> A new <see cref="Models.PostgreSqlFlexibleServerUserAssignedIdentity"/> instance for mocking. </returns>
+        public static PostgreSqlFlexibleServerUserAssignedIdentity PostgreSqlFlexibleServerUserAssignedIdentity(IDictionary<string, UserAssignedIdentity> userAssignedIdentities = null, PostgreSqlFlexibleServerIdentityType identityType = default, Guid? tenantId = null)
+        {
+            userAssignedIdentities ??= new Dictionary<string, UserAssignedIdentity>();
+
+            return new PostgreSqlFlexibleServerUserAssignedIdentity(userAssignedIdentities, identityType, tenantId);
+        }
+
         /// <summary> Initializes a new instance of PostgreSqlFlexibleServerStorage. </summary>
         /// <param name="storageSizeInGB"> Max storage allowed for a server. </param>
         /// <param name="autoGrow"> Flag to enable / disable Storage Auto grow for flexible server. </param>
-        /// <param name="iopsTier"> Name of storage tier for IOPS. </param>
+        /// <param name="tier"> Name of storage tier for IOPS. </param>
         /// <param name="iops"> Storage tier IOPS quantity. </param>
         /// <returns> A new <see cref="Models.PostgreSqlFlexibleServerStorage"/> instance for mocking. </returns>
-        public static PostgreSqlFlexibleServerStorage PostgreSqlFlexibleServerStorage(int? storageSizeInGB = null, StorageAutoGrow? autoGrow = null, AzureManagedDiskPerformanceTier? iopsTier = null, int? iops = null)
+        public static PostgreSqlFlexibleServerStorage PostgreSqlFlexibleServerStorage(int? storageSizeInGB = null, StorageAutoGrow? autoGrow = null, AzureManagedDiskPerformanceTier? tier = null, int? iops = null)
         {
-            return new PostgreSqlFlexibleServerStorage(storageSizeInGB, autoGrow, iopsTier, iops);
+            return new PostgreSqlFlexibleServerStorage(storageSizeInGB, autoGrow, tier, iops);
         }
 
         /// <summary> Initializes a new instance of PostgreSqlFlexibleServerBackupProperties. </summary>

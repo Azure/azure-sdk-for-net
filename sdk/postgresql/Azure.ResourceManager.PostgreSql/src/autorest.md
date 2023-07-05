@@ -145,7 +145,7 @@ directive:
 ``` yaml $(tag) == 'package-flexibleserver-2023-03-01-preview'
 
 namespace: Azure.ResourceManager.PostgreSql.FlexibleServers
-require: https://github.com/Azure/azure-rest-api-specs/blob/9a40c234b44da5125d464284b549a2cc89595385/specification/postgresql/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/d75abbd85bfd17bc0855a3d1d2c2e2dedd85c4b0/specification/postgresql/resource-manager/readme.md
 output-folder: $(this-folder)/PostgreSqlFlexibleServers/Generated
 
 format-by-name-rules:
