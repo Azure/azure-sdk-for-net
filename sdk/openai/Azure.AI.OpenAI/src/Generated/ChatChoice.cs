@@ -16,9 +16,11 @@ namespace Azure.AI.OpenAI
     {
         /// <summary> Initializes a new instance of ChatChoice. </summary>
         /// <param name="index"> The ordered index associated with this chat completions choice. </param>
-        internal ChatChoice(int index)
+        /// <param name="finishReason"> The reason that this chat completions choice completed its generated. </param>
+        internal ChatChoice(int index, CompletionsFinishReason finishReason)
         {
             Index = index;
+            FinishReason = finishReason;
         }
 
         /// <summary> Initializes a new instance of ChatChoice. </summary>
@@ -26,7 +28,7 @@ namespace Azure.AI.OpenAI
         /// <param name="index"> The ordered index associated with this chat completions choice. </param>
         /// <param name="finishReason"> The reason that this chat completions choice completed its generated. </param>
         /// <param name="internalStreamingDeltaMessage"> The delta message content for a streaming response. </param>
-        internal ChatChoice(ChatMessage message, int index, CompletionsFinishReason? finishReason, ChatMessage internalStreamingDeltaMessage)
+        internal ChatChoice(ChatMessage message, int index, CompletionsFinishReason finishReason, ChatMessage internalStreamingDeltaMessage)
         {
             Message = message;
             Index = index;
@@ -39,6 +41,6 @@ namespace Azure.AI.OpenAI
         /// <summary> The ordered index associated with this chat completions choice. </summary>
         public int Index { get; }
         /// <summary> The reason that this chat completions choice completed its generated. </summary>
-        public CompletionsFinishReason? FinishReason { get; }
+        public CompletionsFinishReason FinishReason { get; }
     }
 }

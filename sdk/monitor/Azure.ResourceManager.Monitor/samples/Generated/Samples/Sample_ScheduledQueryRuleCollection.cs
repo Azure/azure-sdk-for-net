@@ -295,7 +295,7 @@ MinFailingPeriodsToAlert = 1,
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create or update a scheduled query rule on Subscription 
+        // Create or update a scheduled query rule on Subscription
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task CreateOrUpdate_CreateOrUpdateAScheduledQueryRuleOnSubscription()

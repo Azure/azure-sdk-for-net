@@ -21,12 +21,12 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> Initializes a new instance of VirtualMachineInstallPatchesResult. </summary>
-        /// <param name="status"> The overall success or failure status of the operation. It remains &quot;InProgress&quot; until the operation completes. At that point it will become &quot;Failed&quot;, &quot;Succeeded&quot;, &quot;Unknown&quot; or &quot;CompletedWithWarnings.&quot;. </param>
+        /// <param name="status"> The overall success or failure status of the operation. It remains "InProgress" until the operation completes. At that point it will become "Failed", "Succeeded", "Unknown" or "CompletedWithWarnings.". </param>
         /// <param name="installationActivityId"> The activity ID of the operation that produced this result. It is used to correlate across CRP and extension logs. </param>
         /// <param name="rebootStatus"> The reboot state of the VM following completion of the operation. </param>
         /// <param name="maintenanceWindowExceeded"> Whether the operation ran out of time before it completed all its intended actions. </param>
         /// <param name="excludedPatchCount"> The number of patches that were not installed due to the user blocking their installation. </param>
-        /// <param name="notSelectedPatchCount"> The number of patches that were detected as available for install, but did not meet the operation&apos;s criteria. </param>
+        /// <param name="notSelectedPatchCount"> The number of patches that were detected as available for install, but did not meet the operation's criteria. </param>
         /// <param name="pendingPatchCount"> The number of patches that were identified as meeting the installation criteria, but were not able to be installed. Typically this happens when maintenanceWindowExceeded == true. </param>
         /// <param name="installedPatchCount"> The number of patches successfully installed. </param>
         /// <param name="failedPatchCount"> The number of patches that could not be installed due to some issue. See errors for details. </param>
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Compute.Models
             Error = error;
         }
 
-        /// <summary> The overall success or failure status of the operation. It remains &quot;InProgress&quot; until the operation completes. At that point it will become &quot;Failed&quot;, &quot;Succeeded&quot;, &quot;Unknown&quot; or &quot;CompletedWithWarnings.&quot;. </summary>
+        /// <summary> The overall success or failure status of the operation. It remains "InProgress" until the operation completes. At that point it will become "Failed", "Succeeded", "Unknown" or "CompletedWithWarnings.". </summary>
         public PatchOperationStatus? Status { get; }
         /// <summary> The activity ID of the operation that produced this result. It is used to correlate across CRP and extension logs. </summary>
         public string InstallationActivityId { get; }
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Compute.Models
         public bool? MaintenanceWindowExceeded { get; }
         /// <summary> The number of patches that were not installed due to the user blocking their installation. </summary>
         public int? ExcludedPatchCount { get; }
-        /// <summary> The number of patches that were detected as available for install, but did not meet the operation&apos;s criteria. </summary>
+        /// <summary> The number of patches that were detected as available for install, but did not meet the operation's criteria. </summary>
         public int? NotSelectedPatchCount { get; }
         /// <summary> The number of patches that were identified as meeting the installation criteria, but were not able to be installed. Typically this happens when maintenanceWindowExceeded == true. </summary>
         public int? PendingPatchCount { get; }

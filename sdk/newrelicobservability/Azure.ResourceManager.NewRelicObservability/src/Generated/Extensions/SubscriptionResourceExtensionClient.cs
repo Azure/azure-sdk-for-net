@@ -69,12 +69,12 @@ namespace Azure.ResourceManager.NewRelicObservability
         /// <param name="userEmail"> User Email. </param>
         /// <param name="location"> Location for NewRelic. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="AccountResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<AccountResource> GetAccountsAsync(string userEmail, AzureLocation location, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="NewRelicAccountResourceData" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<NewRelicAccountResourceData> GetNewRelicAccountsAsync(string userEmail, AzureLocation location, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => AccountsRestClient.CreateListRequest(Id.SubscriptionId, userEmail, location);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => AccountsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, userEmail, location);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, AccountResource.DeserializeAccountResource, AccountsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetAccounts", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, NewRelicAccountResourceData.DeserializeNewRelicAccountResourceData, AccountsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetNewRelicAccounts", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -93,12 +93,12 @@ namespace Azure.ResourceManager.NewRelicObservability
         /// <param name="userEmail"> User Email. </param>
         /// <param name="location"> Location for NewRelic. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="AccountResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<AccountResource> GetAccounts(string userEmail, AzureLocation location, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="NewRelicAccountResourceData" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<NewRelicAccountResourceData> GetNewRelicAccounts(string userEmail, AzureLocation location, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => AccountsRestClient.CreateListRequest(Id.SubscriptionId, userEmail, location);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => AccountsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, userEmail, location);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, AccountResource.DeserializeAccountResource, AccountsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetAccounts", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, NewRelicAccountResourceData.DeserializeNewRelicAccountResourceData, AccountsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetNewRelicAccounts", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -161,12 +161,12 @@ namespace Azure.ResourceManager.NewRelicObservability
         /// <param name="userEmail"> User Email. </param>
         /// <param name="location"> Location for NewRelic. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="OrganizationResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<OrganizationResource> GetOrganizationsAsync(string userEmail, AzureLocation location, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="NewRelicOrganizationResourceData" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<NewRelicOrganizationResourceData> GetNewRelicOrganizationsAsync(string userEmail, AzureLocation location, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => OrganizationsRestClient.CreateListRequest(Id.SubscriptionId, userEmail, location);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => OrganizationsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, userEmail, location);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, OrganizationResource.DeserializeOrganizationResource, OrganizationsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetOrganizations", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, NewRelicOrganizationResourceData.DeserializeNewRelicOrganizationResourceData, OrganizationsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetNewRelicOrganizations", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -185,12 +185,12 @@ namespace Azure.ResourceManager.NewRelicObservability
         /// <param name="userEmail"> User Email. </param>
         /// <param name="location"> Location for NewRelic. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="OrganizationResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<OrganizationResource> GetOrganizations(string userEmail, AzureLocation location, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="NewRelicOrganizationResourceData" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<NewRelicOrganizationResourceData> GetNewRelicOrganizations(string userEmail, AzureLocation location, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => OrganizationsRestClient.CreateListRequest(Id.SubscriptionId, userEmail, location);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => OrganizationsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, userEmail, location);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, OrganizationResource.DeserializeOrganizationResource, OrganizationsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetOrganizations", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, NewRelicOrganizationResourceData.DeserializeNewRelicOrganizationResourceData, OrganizationsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetNewRelicOrganizations", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -209,12 +209,12 @@ namespace Azure.ResourceManager.NewRelicObservability
         /// <param name="accountId"> Account Id. </param>
         /// <param name="organizationId"> Organization Id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="PlanDataResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<PlanDataResource> GetPlansAsync(string accountId = null, string organizationId = null, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="NewRelicPlanData" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<NewRelicPlanData> GetNewRelicPlansAsync(string accountId = null, string organizationId = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => PlansRestClient.CreateListRequest(Id.SubscriptionId, accountId, organizationId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => PlansRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, accountId, organizationId);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, PlanDataResource.DeserializePlanDataResource, PlansClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetPlans", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, NewRelicPlanData.DeserializeNewRelicPlanData, PlansClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetNewRelicPlans", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -233,12 +233,12 @@ namespace Azure.ResourceManager.NewRelicObservability
         /// <param name="accountId"> Account Id. </param>
         /// <param name="organizationId"> Organization Id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="PlanDataResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<PlanDataResource> GetPlans(string accountId = null, string organizationId = null, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="NewRelicPlanData" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<NewRelicPlanData> GetNewRelicPlans(string accountId = null, string organizationId = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => PlansRestClient.CreateListRequest(Id.SubscriptionId, accountId, organizationId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => PlansRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, accountId, organizationId);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, PlanDataResource.DeserializePlanDataResource, PlansClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetPlans", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, NewRelicPlanData.DeserializeNewRelicPlanData, PlansClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetNewRelicPlans", "value", "nextLink", cancellationToken);
         }
     }
 }

@@ -10,6 +10,9 @@
 
 ### Other Changes
 
+## 5.1.3 (2023-06-26)
+- Trigger binding support for ParameterBindingData reference type
+
 ## 5.1.2 (2023-04-27)
 - Bumped Azure.Storage.Queue depedency to 12.14.0
 

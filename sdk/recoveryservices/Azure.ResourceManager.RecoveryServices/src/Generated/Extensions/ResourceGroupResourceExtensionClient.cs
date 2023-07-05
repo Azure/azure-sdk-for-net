@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.RecoveryServices
         /// <summary>
         /// API to check for resource name availability.
         /// A name is available if no other resource exists that has the same SubscriptionId, Resource Name and Type
-        /// or if one or more such resources exist, each of these must be GC&apos;d and their time of deletion be more than 24 Hours Ago
+        /// or if one or more such resources exist, each of these must be GC'd and their time of deletion be more than 24 Hours Ago
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.RecoveryServices
         /// <summary>
         /// API to check for resource name availability.
         /// A name is available if no other resource exists that has the same SubscriptionId, Resource Name and Type
-        /// or if one or more such resources exist, each of these must be GC&apos;d and their time of deletion be more than 24 Hours Ago
+        /// or if one or more such resources exist, each of these must be GC'd and their time of deletion be more than 24 Hours Ago
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>

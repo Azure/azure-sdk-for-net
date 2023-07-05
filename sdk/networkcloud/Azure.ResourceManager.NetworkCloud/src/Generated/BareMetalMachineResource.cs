@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.NetworkCloud
             try
             {
                 var response = await _bareMetalMachineRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken).ConfigureAwait(false);
-                var operation = new NetworkCloudArmOperation<BareMetalMachineResource>(new BareMetalMachineOperationSource(Client), _bareMetalMachineClientDiagnostics, Pipeline, _bareMetalMachineRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch).Request, response, OperationFinalStateVia.Location);
+                var operation = new NetworkCloudArmOperation<BareMetalMachineResource>(new BareMetalMachineOperationSource(Client), _bareMetalMachineClientDiagnostics, Pipeline, _bareMetalMachineRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -217,7 +217,7 @@ namespace Azure.ResourceManager.NetworkCloud
             try
             {
                 var response = _bareMetalMachineRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken);
-                var operation = new NetworkCloudArmOperation<BareMetalMachineResource>(new BareMetalMachineOperationSource(Client), _bareMetalMachineClientDiagnostics, Pipeline, _bareMetalMachineRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch).Request, response, OperationFinalStateVia.Location);
+                var operation = new NetworkCloudArmOperation<BareMetalMachineResource>(new BareMetalMachineOperationSource(Client), _bareMetalMachineClientDiagnostics, Pipeline, _bareMetalMachineRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.NetworkCloud
         }
 
         /// <summary>
-        /// Cordon the provided bare metal machine&apos;s Kubernetes node.
+        /// Cordon the provided bare metal machine's Kubernetes node.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -265,7 +265,7 @@ namespace Azure.ResourceManager.NetworkCloud
         }
 
         /// <summary>
-        /// Cordon the provided bare metal machine&apos;s Kubernetes node.
+        /// Cordon the provided bare metal machine's Kubernetes node.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -872,7 +872,7 @@ namespace Azure.ResourceManager.NetworkCloud
         }
 
         /// <summary>
-        /// Uncordon the provided bare metal machine&apos;s Kubernetes node.
+        /// Uncordon the provided bare metal machine's Kubernetes node.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -906,7 +906,7 @@ namespace Azure.ResourceManager.NetworkCloud
         }
 
         /// <summary>
-        /// Uncordon the provided bare metal machine&apos;s Kubernetes node.
+        /// Uncordon the provided bare metal machine's Kubernetes node.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>

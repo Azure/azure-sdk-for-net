@@ -6,8 +6,8 @@ Run `dotnet build /t:GenerateCode` to generate code.
 azure-arm: true
 library-name: Network
 namespace: Azure.ResourceManager.Network
-require: https://github.com/Azure/azure-rest-api-specs/blob/ae5f241249f12e87e94e184ae5430518ac061a51/specification/network/resource-manager/readme.md
-# tag: package-2022-09
+require: https://github.com/Azure/azure-rest-api-specs/blob/0b4a0a3f4bfc198df608f373784505e42e248c2c/specification/network/resource-manager/readme.md
+# tag: package-2023-02
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 skip-csproj: true
@@ -18,8 +18,8 @@ public-clients: false
 head-as-boolean: false
 resource-model-requires-type: false
 
-# mgmt-debug: 
-#   show-serialized-names: true
+#mgmt-debug: 
+#  show-serialized-names: true
 
 rename-mapping:
   ConnectionMonitor: ConnectionMonitorInput
@@ -174,6 +174,7 @@ rename-mapping:
   VpnPacketCaptureStopParameters: VpnPacketCaptureStopContent
   VpnPacketCaptureStartParameters: VpnPacketCaptureStartContent
   ExpressRouteGateway.properties.expressRouteConnections: ExpressRouteConnectionList
+  AdminState: ExpressRouteGatewayAdminState
 
 keep-plural-resource-data:
 - PolicySignaturesOverridesForIdps
@@ -256,12 +257,15 @@ request-path-is-non-resource:
 override-operation-name:
   ApplicationGateways_ListAvailableWafRuleSets: GetAppGatewayAvailableWafRuleSets
   VirtualNetworkGateways_VpnDeviceConfigurationScript: VpnDeviceConfigurationScript
-  VirtualHubBgpConnections_ListLearnedRoutes: GetLearnedRoutesVirtualHubBgpConnection
-  VirtualHubBgpConnections_ListAdvertisedRoutes: GetAdvertisedRoutesVirtualHubBgpConnection
+  VirtualHubBgpConnections_ListLearnedRoutes: GetVirtualHubBgpConnectionLearnedRoutes
+  VirtualHubBgpConnections_ListAdvertisedRoutes: GetVirtualHubBgpConnectionAdvertisedRoutes
   ApplicationGateways_ListAvailableSslOptions: GetApplicationGatewayAvailableSslOptions
   ApplicationGateways_ListAvailableSslPredefinedPolicies: GetApplicationGatewayAvailableSslPredefinedPolicies
   ApplicationGateways_GetSslPredefinedPolicy: GetApplicationGatewaySslPredefinedPolicy
   VirtualNetworkGateways_Generatevpnclientpackage: GenerateVpnClientPackage
+  VirtualHubs_GetEffectiveVirtualHubRoutes: GetVirtualHubEffectiveRoutes
+  VirtualHubs_GetOutboundRoutes: GetVirtualHubOutboundRoutes
+  VirtualHubs_GetInboundRoutes: GetVirtualHubInboundRoutes
 
 directive:
   - remove-operation: 'PutBastionShareableLink'

@@ -1,0 +1,1708 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/ipCommunities/nfa-tool-ts-sdk-ipCommunity062223?api-version=2023-02-01-preview",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "205",
+        "Content-Type": "application/json",
+        "traceparent": "00-c7bd625c9dcb13795bb4d1e7076c5995-06fbac821f05c071-00",
+        "User-Agent": "azsdk-net-ResourceManager.ManagedNetworkFabric/1.0.0-alpha.20230622.1 (.NET 7.0.7; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "db69f1b8fae2c34ef6bdd96f29b6dc46",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "tags": {
+          "key2814": ""
+        },
+        "location": "eastus",
+        "properties": {
+          "annotation": "annotationValue",
+          "action": "Permit",
+          "wellKnownCommunities": [
+            "Internet",
+            "LocalAS",
+            "NoExport",
+            "GShut"
+          ],
+          "communityMembers": [
+            "1234:5678"
+          ]
+        }
+      },
+      "StatusCode": 201,
+      "ResponseHeaders": {
+        "Azure-AsyncOperation": "https://management.azure.com/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/providers/Microsoft.ManagedNetworkFabric/locations/EASTUS/operationStatuses/f7d17059-b2bf-42b7-b575-3886e5389ad9*1A68A72D260BE9501F254EBC5843B8B6A1BA5DFA0EB25B24259A5DE091866622?api-version=2023-02-01-preview",
+        "Cache-Control": "no-cache",
+        "Content-Length": "774",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 22 Jun 2023 07:04:59 GMT",
+        "ETag": "\u0022ff066cba-0000-0100-0000-6493f29a0000\u0022",
+        "Expires": "-1",
+        "mise-correlation-id": "646a7adc-10ce-4f21-87c9-3b2cdffacee8",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "db69f1b8fae2c34ef6bdd96f29b6dc46",
+        "x-ms-correlation-request-id": "27878c78-f7e7-4134-a540-f5acc7f82c26",
+        "x-ms-providerhub-traffic": "True",
+        "x-ms-ratelimit-remaining-subscription-writes": "1199",
+        "x-ms-request-id": "2fb6964d-c1c6-4b0a-aa89-e88ca4a91264",
+        "x-ms-routing-request-id": "WESTINDIA:20230622T070500Z:27878c78-f7e7-4134-a540-f5acc7f82c26"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/ipCommunities/nfa-tool-ts-sdk-ipCommunity062223",
+        "name": "nfa-tool-ts-sdk-ipCommunity062223",
+        "type": "microsoft.managednetworkfabric/ipcommunities",
+        "location": "eastus",
+        "tags": {
+          "key2814": ""
+        },
+        "systemData": {
+          "createdBy": "v-rmarimuthu@microsoft.com",
+          "createdByType": "User",
+          "createdAt": "2023-06-22T07:04:57.5760885Z",
+          "lastModifiedBy": "v-rmarimuthu@microsoft.com",
+          "lastModifiedByType": "User",
+          "lastModifiedAt": "2023-06-22T07:04:57.5760885Z"
+        },
+        "properties": {
+          "action": "Permit",
+          "wellKnownCommunities": [
+            "Internet",
+            "LocalAS",
+            "NoExport",
+            "GShut"
+          ],
+          "communityMembers": [
+            "1234:5678"
+          ],
+          "provisioningState": "Accepted",
+          "annotation": "annotationValue"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/providers/Microsoft.ManagedNetworkFabric/locations/EASTUS/operationStatuses/f7d17059-b2bf-42b7-b575-3886e5389ad9*1A68A72D260BE9501F254EBC5843B8B6A1BA5DFA0EB25B24259A5DE091866622?api-version=2023-02-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-c7bd625c9dcb13795bb4d1e7076c5995-1d3acc265c8376a7-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.6.0 (.NET 7.0.7; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "b450af13bb752ccc4b13b0a682992b7c",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "676",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 22 Jun 2023 07:05:00 GMT",
+        "ETag": "\u00224304a2ef-0000-0100-0000-6493f29a0000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "b450af13bb752ccc4b13b0a682992b7c",
+        "x-ms-correlation-request-id": "e48240eb-7f43-4ba5-b258-1db49257964b",
+        "x-ms-ratelimit-remaining-subscription-reads": "11999",
+        "x-ms-request-id": "f8ef4621-6700-4f0e-9f95-21c2598dfc17",
+        "x-ms-routing-request-id": "WESTINDIA:20230622T070501Z:e48240eb-7f43-4ba5-b258-1db49257964b"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/providers/Microsoft.ManagedNetworkFabric/locations/EASTUS/operationStatuses/f7d17059-b2bf-42b7-b575-3886e5389ad9*1A68A72D260BE9501F254EBC5843B8B6A1BA5DFA0EB25B24259A5DE091866622",
+        "name": "f7d17059-b2bf-42b7-b575-3886e5389ad9*1A68A72D260BE9501F254EBC5843B8B6A1BA5DFA0EB25B24259A5DE091866622",
+        "resourceId": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/ipCommunities/nfa-tool-ts-sdk-ipCommunity062223",
+        "status": "Succeeded",
+        "startTime": "2023-06-22T07:04:58.4542501Z",
+        "endTime": "2023-06-22T07:04:58.648098Z",
+        "properties": null
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/ipCommunities/nfa-tool-ts-sdk-ipCommunity062223?api-version=2023-02-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-c7bd625c9dcb13795bb4d1e7076c5995-1be115fbb5e55d51-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.6.0 (.NET 7.0.7; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "e08b35f721ac3fe9339e1c6daab4fb6b",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "775",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 22 Jun 2023 07:05:01 GMT",
+        "ETag": "\u0022ff066eba-0000-0100-0000-6493f29a0000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "e08b35f721ac3fe9339e1c6daab4fb6b",
+        "x-ms-correlation-request-id": "0723bfd6-f9a0-49b8-8843-a45c387593dc",
+        "x-ms-providerhub-traffic": "True",
+        "x-ms-ratelimit-remaining-subscription-reads": "11998",
+        "x-ms-request-id": "8e05a5c6-03f7-4b89-8e1d-16f2c73cccd1",
+        "x-ms-routing-request-id": "WESTINDIA:20230622T070502Z:0723bfd6-f9a0-49b8-8843-a45c387593dc"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/ipCommunities/nfa-tool-ts-sdk-ipCommunity062223",
+        "name": "nfa-tool-ts-sdk-ipCommunity062223",
+        "type": "microsoft.managednetworkfabric/ipcommunities",
+        "location": "eastus",
+        "tags": {
+          "key2814": ""
+        },
+        "systemData": {
+          "createdBy": "v-rmarimuthu@microsoft.com",
+          "createdByType": "User",
+          "createdAt": "2023-06-22T07:04:57.5760885Z",
+          "lastModifiedBy": "v-rmarimuthu@microsoft.com",
+          "lastModifiedByType": "User",
+          "lastModifiedAt": "2023-06-22T07:04:57.5760885Z"
+        },
+        "properties": {
+          "action": "Permit",
+          "wellKnownCommunities": [
+            "Internet",
+            "LocalAS",
+            "NoExport",
+            "GShut"
+          ],
+          "communityMembers": [
+            "1234:5678"
+          ],
+          "provisioningState": "Succeeded",
+          "annotation": "annotationValue"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/ipCommunities/nfa-tool-ts-sdk-ipCommunity062223?api-version=2023-02-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-026cb52b3800dddf730ca1741f77d3ba-0efd2d0df40393d2-00",
+        "User-Agent": "azsdk-net-ResourceManager.ManagedNetworkFabric/1.0.0-alpha.20230622.1 (.NET 7.0.7; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "7a5c3648286590d13b0145ffc7174725",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "775",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 22 Jun 2023 07:05:02 GMT",
+        "ETag": "\u0022ff066eba-0000-0100-0000-6493f29a0000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "7a5c3648286590d13b0145ffc7174725",
+        "x-ms-correlation-request-id": "e10e3585-c335-4a51-a2f3-16217caba340",
+        "x-ms-providerhub-traffic": "True",
+        "x-ms-ratelimit-remaining-subscription-reads": "11997",
+        "x-ms-request-id": "e0e78691-e7fb-4272-8c98-90f736138b0f",
+        "x-ms-routing-request-id": "WESTINDIA:20230622T070502Z:e10e3585-c335-4a51-a2f3-16217caba340"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/ipCommunities/nfa-tool-ts-sdk-ipCommunity062223",
+        "name": "nfa-tool-ts-sdk-ipCommunity062223",
+        "type": "microsoft.managednetworkfabric/ipcommunities",
+        "location": "eastus",
+        "tags": {
+          "key2814": ""
+        },
+        "systemData": {
+          "createdBy": "v-rmarimuthu@microsoft.com",
+          "createdByType": "User",
+          "createdAt": "2023-06-22T07:04:57.5760885Z",
+          "lastModifiedBy": "v-rmarimuthu@microsoft.com",
+          "lastModifiedByType": "User",
+          "lastModifiedAt": "2023-06-22T07:04:57.5760885Z"
+        },
+        "properties": {
+          "action": "Permit",
+          "wellKnownCommunities": [
+            "Internet",
+            "LocalAS",
+            "NoExport",
+            "GShut"
+          ],
+          "communityMembers": [
+            "1234:5678"
+          ],
+          "provisioningState": "Succeeded",
+          "annotation": "annotationValue"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/ipCommunities?api-version=2023-02-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "User-Agent": "azsdk-net-ResourceManager.ManagedNetworkFabric/1.0.0-alpha.20230622.1 (.NET 7.0.7; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "92a2d34a94fff1f6c51180d69f5f8196",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "1533",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 22 Jun 2023 07:05:03 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "21cc686a-4077-47fe-9ad2-72bdf8ab75ec",
+        "x-ms-original-request-ids": [
+          "9ad4e26e-41ae-441f-a48e-4a894a0b1714",
+          "0eb25c0c-c3ab-4066-8579-d251fbdfbd66",
+          "c1cf0cc2-3ec1-4273-99d5-5bce87cba490",
+          "eadc57e8-ded2-4ffb-9770-604abdd410c5"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": "11996",
+        "x-ms-request-id": "21cc686a-4077-47fe-9ad2-72bdf8ab75ec",
+        "x-ms-routing-request-id": "WESTINDIA:20230622T070504Z:21cc686a-4077-47fe-9ad2-72bdf8ab75ec"
+      },
+      "ResponseBody": {
+        "value": [
+          {
+            "id": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/ipCommunities/nfa-tool-ts-sdk-ipCommunity061623",
+            "name": "nfa-tool-ts-sdk-ipCommunity061623",
+            "type": "microsoft.managednetworkfabric/ipcommunities",
+            "location": "eastus",
+            "tags": {
+              "key2814": ""
+            },
+            "systemData": {
+              "createdBy": "v-rmarimuthu@microsoft.com",
+              "createdByType": "User",
+              "createdAt": "2023-06-16T11:21:16.0759337Z",
+              "lastModifiedBy": "d1bd24c7-b27f-477e-86dd-939e107873d7",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-06-21T10:00:25.7907232Z"
+            },
+            "properties": {
+              "action": "Deny",
+              "wellKnownCommunities": [
+                "LocalAS",
+                "GShut"
+              ],
+              "communityMembers": [
+                "100:200",
+                "101:201"
+              ],
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/ipCommunities/nfa-tool-ts-sdk-ipCommunity062223",
+            "name": "nfa-tool-ts-sdk-ipCommunity062223",
+            "type": "microsoft.managednetworkfabric/ipcommunities",
+            "location": "eastus",
+            "tags": {
+              "key2814": ""
+            },
+            "systemData": {
+              "createdBy": "v-rmarimuthu@microsoft.com",
+              "createdByType": "User",
+              "createdAt": "2023-06-22T07:04:57.5760885Z",
+              "lastModifiedBy": "v-rmarimuthu@microsoft.com",
+              "lastModifiedByType": "User",
+              "lastModifiedAt": "2023-06-22T07:04:57.5760885Z"
+            },
+            "properties": {
+              "action": "Permit",
+              "wellKnownCommunities": [
+                "Internet",
+                "LocalAS",
+                "NoExport",
+                "GShut"
+              ],
+              "communityMembers": [
+                "1234:5678"
+              ],
+              "provisioningState": "Succeeded",
+              "annotation": "annotationValue"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/providers/Microsoft.ManagedNetworkFabric/ipCommunities?api-version=2023-02-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "User-Agent": "azsdk-net-ResourceManager.ManagedNetworkFabric/1.0.0-alpha.20230622.1 (.NET 7.0.7; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "4b5e4517b03ccf1763fba4abdcea781c",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "33636",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 22 Jun 2023 07:05:04 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "443ae129-7076-4788-83ba-777a1f064fab",
+        "x-ms-original-request-ids": [
+          "0657bc8e-8b6e-48d7-93ff-32e94d522a6a",
+          "1f408945-da88-4181-b732-4509c469fbe9",
+          "2a29674d-2587-4a1a-a2cb-e52e586f61e0",
+          "4348c5cb-46b1-4742-86b5-09d407d17d3b"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": "11995",
+        "x-ms-request-id": "443ae129-7076-4788-83ba-777a1f064fab",
+        "x-ms-routing-request-id": "WESTINDIA:20230622T070504Z:443ae129-7076-4788-83ba-777a1f064fab"
+      },
+      "ResponseBody": {
+        "value": [
+          {
+            "id": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfcrg060523/providers/Microsoft.ManagedNetworkFabric/ipCommunities/nfa-tool-ts-cli-ipcommunity1-061223",
+            "name": "nfa-tool-ts-cli-ipcommunity1-061223",
+            "type": "microsoft.managednetworkfabric/ipcommunities",
+            "location": "eastus",
+            "systemData": {
+              "createdBy": "v-rmarimuthu@microsoft.com",
+              "createdByType": "User",
+              "createdAt": "2023-06-12T07:12:15.2138953Z",
+              "lastModifiedBy": "d1bd24c7-b27f-477e-86dd-939e107873d7",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-06-14T02:21:02.7202979Z"
+            },
+            "properties": {
+              "action": "Deny",
+              "wellKnownCommunities": [
+                "LocalAS",
+                "GShut"
+              ],
+              "communityMembers": [
+                "100:200",
+                "101:201"
+              ],
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/ipCommunities/nfa-tool-ts-sdk-ipCommunity061623",
+            "name": "nfa-tool-ts-sdk-ipCommunity061623",
+            "type": "microsoft.managednetworkfabric/ipcommunities",
+            "location": "eastus",
+            "tags": {
+              "key2814": ""
+            },
+            "systemData": {
+              "createdBy": "v-rmarimuthu@microsoft.com",
+              "createdByType": "User",
+              "createdAt": "2023-06-16T11:21:16.0759337Z",
+              "lastModifiedBy": "d1bd24c7-b27f-477e-86dd-939e107873d7",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-06-21T10:00:25.7907232Z"
+            },
+            "properties": {
+              "action": "Deny",
+              "wellKnownCommunities": [
+                "LocalAS",
+                "GShut"
+              ],
+              "communityMembers": [
+                "100:200",
+                "101:201"
+              ],
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/microsoft.managednetworkfabric/ipCommunities/ipcommunity-2601-staticsubnet",
+            "name": "ipcommunity-2601-staticsubnet",
+            "type": "microsoft.managednetworkfabric/ipcommunities",
+            "location": "eastus",
+            "systemData": {
+              "createdBy": "edf733ea-9067-4115-8588-b12c62d25d45",
+              "createdByType": "Application",
+              "createdAt": "2023-06-22T05:34:41.7970478Z",
+              "lastModifiedBy": "d1bd24c7-b27f-477e-86dd-939e107873d7",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-06-22T05:34:46.9701512Z"
+            },
+            "properties": {
+              "action": "Permit",
+              "wellKnownCommunities": [
+                "Internet",
+                "LocalAS",
+                "GShut"
+              ],
+              "communityMembers": [
+                "65046:12456",
+                "65046:12523"
+              ],
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/microsoft.managednetworkfabric/ipCommunities/ipcommunity-2602-staticsubnet",
+            "name": "ipcommunity-2602-staticsubnet",
+            "type": "microsoft.managednetworkfabric/ipcommunities",
+            "location": "eastus",
+            "systemData": {
+              "createdBy": "edf733ea-9067-4115-8588-b12c62d25d45",
+              "createdByType": "Application",
+              "createdAt": "2023-06-22T05:34:43.0626407Z",
+              "lastModifiedBy": "d1bd24c7-b27f-477e-86dd-939e107873d7",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-06-22T05:34:47.1889069Z"
+            },
+            "properties": {
+              "action": "Permit",
+              "wellKnownCommunities": [
+                "Internet",
+                "NoExport",
+                "GShut"
+              ],
+              "communityMembers": [
+                "65046:12457",
+                "65046:12524"
+              ],
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/microsoft.managednetworkfabric/ipCommunities/ipcommunity-connsubnet-2601",
+            "name": "ipcommunity-connsubnet-2601",
+            "type": "microsoft.managednetworkfabric/ipcommunities",
+            "location": "eastus",
+            "systemData": {
+              "createdBy": "edf733ea-9067-4115-8588-b12c62d25d45",
+              "createdByType": "Application",
+              "createdAt": "2023-06-22T05:34:44.1407793Z",
+              "lastModifiedBy": "d1bd24c7-b27f-477e-86dd-939e107873d7",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-06-22T05:34:47.4545398Z"
+            },
+            "properties": {
+              "action": "Permit",
+              "wellKnownCommunities": [
+                "Internet",
+                "LocalAS",
+                "GShut"
+              ],
+              "communityMembers": [
+                "65046:12601",
+                "65046:12602"
+              ],
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/microsoft.managednetworkfabric/ipCommunities/ipcommunity-connsubnet-2602",
+            "name": "ipcommunity-connsubnet-2602",
+            "type": "microsoft.managednetworkfabric/ipcommunities",
+            "location": "eastus",
+            "systemData": {
+              "createdBy": "edf733ea-9067-4115-8588-b12c62d25d45",
+              "createdByType": "Application",
+              "createdAt": "2023-06-22T05:34:45.3127489Z",
+              "lastModifiedBy": "d1bd24c7-b27f-477e-86dd-939e107873d7",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-06-22T05:34:47.6732973Z"
+            },
+            "properties": {
+              "action": "Permit",
+              "wellKnownCommunities": [
+                "Internet",
+                "NoExport",
+                "GShut"
+              ],
+              "communityMembers": [
+                "65046:12602"
+              ],
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/microsoft.managednetworkfabric/ipCommunities/ipcommunity-2601-imp",
+            "name": "ipcommunity-2601-imp",
+            "type": "microsoft.managednetworkfabric/ipcommunities",
+            "location": "eastus",
+            "systemData": {
+              "createdBy": "edf733ea-9067-4115-8588-b12c62d25d45",
+              "createdByType": "Application",
+              "createdAt": "2023-06-22T05:34:55.0003278Z",
+              "lastModifiedBy": "d1bd24c7-b27f-477e-86dd-939e107873d7",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-06-22T05:34:56.9407236Z"
+            },
+            "properties": {
+              "action": "Permit",
+              "wellKnownCommunities": [
+                "Internet",
+                "LocalAS",
+                "GShut"
+              ],
+              "communityMembers": [
+                "65500:12601"
+              ],
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/microsoft.managednetworkfabric/ipCommunities/ipcommunity-2601-exp",
+            "name": "ipcommunity-2601-exp",
+            "type": "microsoft.managednetworkfabric/ipcommunities",
+            "location": "eastus",
+            "systemData": {
+              "createdBy": "edf733ea-9067-4115-8588-b12c62d25d45",
+              "createdByType": "Application",
+              "createdAt": "2023-06-22T05:35:01.0316709Z",
+              "lastModifiedBy": "d1bd24c7-b27f-477e-86dd-939e107873d7",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-06-22T05:35:42.8779378Z"
+            },
+            "properties": {
+              "action": "Permit",
+              "wellKnownCommunities": [
+                "Internet",
+                "LocalAS",
+                "GShut"
+              ],
+              "communityMembers": [
+                "65500:12601"
+              ],
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/microsoft.managednetworkfabric/ipCommunities/ipcommunity-2602-imp",
+            "name": "ipcommunity-2602-imp",
+            "type": "microsoft.managednetworkfabric/ipcommunities",
+            "location": "eastus",
+            "systemData": {
+              "createdBy": "edf733ea-9067-4115-8588-b12c62d25d45",
+              "createdByType": "Application",
+              "createdAt": "2023-06-22T05:35:13.3599858Z",
+              "lastModifiedBy": "d1bd24c7-b27f-477e-86dd-939e107873d7",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-06-22T05:35:55.4442571Z"
+            },
+            "properties": {
+              "action": "Permit",
+              "wellKnownCommunities": [
+                "Internet",
+                "LocalAS",
+                "GShut"
+              ],
+              "communityMembers": [
+                "65500:12602"
+              ],
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/microsoft.managednetworkfabric/ipCommunities/ipcommunity-2602-cn1",
+            "name": "ipcommunity-2602-cn1",
+            "type": "microsoft.managednetworkfabric/ipcommunities",
+            "location": "eastus",
+            "systemData": {
+              "createdBy": "edf733ea-9067-4115-8588-b12c62d25d45",
+              "createdByType": "Application",
+              "createdAt": "2023-06-22T05:35:14.2975484Z",
+              "lastModifiedBy": "d1bd24c7-b27f-477e-86dd-939e107873d7",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-06-22T05:35:55.3348565Z"
+            },
+            "properties": {
+              "action": "Permit",
+              "wellKnownCommunities": [
+                "Internet",
+                "LocalAS",
+                "GShut"
+              ],
+              "communityMembers": [
+                "65500:12602"
+              ],
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/microsoft.managednetworkfabric/ipCommunities/ipcommunity-2602-cn2",
+            "name": "ipcommunity-2602-cn2",
+            "type": "microsoft.managednetworkfabric/ipcommunities",
+            "location": "eastus",
+            "systemData": {
+              "createdBy": "edf733ea-9067-4115-8588-b12c62d25d45",
+              "createdByType": "Application",
+              "createdAt": "2023-06-22T05:35:15.2193887Z",
+              "lastModifiedBy": "d1bd24c7-b27f-477e-86dd-939e107873d7",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-06-22T05:35:55.5536364Z"
+            },
+            "properties": {
+              "action": "Permit",
+              "wellKnownCommunities": [
+                "Internet",
+                "LocalAS",
+                "GShut"
+              ],
+              "communityMembers": [
+                "65500:12602"
+              ],
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/microsoft.managednetworkfabric/ipCommunities/ipcommunity-2602-exp",
+            "name": "ipcommunity-2602-exp",
+            "type": "microsoft.managednetworkfabric/ipcommunities",
+            "location": "eastus",
+            "systemData": {
+              "createdBy": "edf733ea-9067-4115-8588-b12c62d25d45",
+              "createdByType": "Application",
+              "createdAt": "2023-06-22T05:35:21.1101043Z",
+              "lastModifiedBy": "d1bd24c7-b27f-477e-86dd-939e107873d7",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-06-22T05:36:40.8286754Z"
+            },
+            "properties": {
+              "action": "Permit",
+              "wellKnownCommunities": [
+                "Internet",
+                "LocalAS",
+                "GShut"
+              ],
+              "communityMembers": [
+                "65500:12602"
+              ],
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/microsoft.managednetworkfabric/ipCommunities/ipcommunity-2603-staticsubnet",
+            "name": "ipcommunity-2603-staticsubnet",
+            "type": "microsoft.managednetworkfabric/ipcommunities",
+            "location": "eastus",
+            "systemData": {
+              "createdBy": "edf733ea-9067-4115-8588-b12c62d25d45",
+              "createdByType": "Application",
+              "createdAt": "2023-06-22T05:35:55.610639Z",
+              "lastModifiedBy": "d1bd24c7-b27f-477e-86dd-939e107873d7",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-06-22T05:37:41.8680768Z"
+            },
+            "properties": {
+              "action": "Permit",
+              "wellKnownCommunities": [
+                "Internet",
+                "LocalAS",
+                "GShut"
+              ],
+              "communityMembers": [
+                "65046:12457",
+                "65046:12524"
+              ],
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/microsoft.managednetworkfabric/ipCommunities/ipcommunity-2604-staticsubnet",
+            "name": "ipcommunity-2604-staticsubnet",
+            "type": "microsoft.managednetworkfabric/ipcommunities",
+            "location": "eastus",
+            "systemData": {
+              "createdBy": "edf733ea-9067-4115-8588-b12c62d25d45",
+              "createdByType": "Application",
+              "createdAt": "2023-06-22T05:35:56.5012726Z",
+              "lastModifiedBy": "d1bd24c7-b27f-477e-86dd-939e107873d7",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-06-22T05:37:42.1186715Z"
+            },
+            "properties": {
+              "action": "Permit",
+              "wellKnownCommunities": [
+                "Internet",
+                "NoExport",
+                "GShut"
+              ],
+              "communityMembers": [
+                "65046:12458",
+                "65046:12525"
+              ],
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/microsoft.managednetworkfabric/ipCommunities/ipcommunity-connsubnet-2603",
+            "name": "ipcommunity-connsubnet-2603",
+            "type": "microsoft.managednetworkfabric/ipcommunities",
+            "location": "eastus",
+            "systemData": {
+              "createdBy": "edf733ea-9067-4115-8588-b12c62d25d45",
+              "createdByType": "Application",
+              "createdAt": "2023-06-22T05:35:57.5169167Z",
+              "lastModifiedBy": "d1bd24c7-b27f-477e-86dd-939e107873d7",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-06-22T05:37:42.4461853Z"
+            },
+            "properties": {
+              "action": "Permit",
+              "wellKnownCommunities": [
+                "Internet",
+                "LocalAS",
+                "GShut"
+              ],
+              "communityMembers": [
+                "65046:12613",
+                "65046:12614"
+              ],
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/microsoft.managednetworkfabric/ipCommunities/ipcommunity-connsubnet-2604",
+            "name": "ipcommunity-connsubnet-2604",
+            "type": "microsoft.managednetworkfabric/ipcommunities",
+            "location": "eastus",
+            "systemData": {
+              "createdBy": "edf733ea-9067-4115-8588-b12c62d25d45",
+              "createdByType": "Application",
+              "createdAt": "2023-06-22T05:35:58.4856791Z",
+              "lastModifiedBy": "d1bd24c7-b27f-477e-86dd-939e107873d7",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-06-22T05:37:42.7274403Z"
+            },
+            "properties": {
+              "action": "Permit",
+              "wellKnownCommunities": [
+                "Internet",
+                "NoExport",
+                "GShut"
+              ],
+              "communityMembers": [
+                "65046:12615"
+              ],
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/microsoft.managednetworkfabric/ipCommunities/ipcommunity-2603-imp",
+            "name": "ipcommunity-2603-imp",
+            "type": "microsoft.managednetworkfabric/ipcommunities",
+            "location": "eastus",
+            "systemData": {
+              "createdBy": "edf733ea-9067-4115-8588-b12c62d25d45",
+              "createdByType": "Application",
+              "createdAt": "2023-06-22T05:36:07.4233205Z",
+              "lastModifiedBy": "d1bd24c7-b27f-477e-86dd-939e107873d7",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-06-22T05:37:48.813164Z"
+            },
+            "properties": {
+              "action": "Permit",
+              "wellKnownCommunities": [
+                "Internet",
+                "LocalAS",
+                "GShut"
+              ],
+              "communityMembers": [
+                "65500:11610"
+              ],
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/microsoft.managednetworkfabric/ipCommunities/ipcommunity-2603-exp",
+            "name": "ipcommunity-2603-exp",
+            "type": "microsoft.managednetworkfabric/ipcommunities",
+            "location": "eastus",
+            "systemData": {
+              "createdBy": "edf733ea-9067-4115-8588-b12c62d25d45",
+              "createdByType": "Application",
+              "createdAt": "2023-06-22T05:36:14.0015486Z",
+              "lastModifiedBy": "d1bd24c7-b27f-477e-86dd-939e107873d7",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-06-22T05:38:00.2507017Z"
+            },
+            "properties": {
+              "action": "Permit",
+              "wellKnownCommunities": [
+                "Internet",
+                "LocalAS",
+                "GShut"
+              ],
+              "communityMembers": [
+                "65500:11610"
+              ],
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/microsoft.managednetworkfabric/ipCommunities/ipcommunity-2604-imp",
+            "name": "ipcommunity-2604-imp",
+            "type": "microsoft.managednetworkfabric/ipcommunities",
+            "location": "eastus",
+            "systemData": {
+              "createdBy": "edf733ea-9067-4115-8588-b12c62d25d45",
+              "createdByType": "Application",
+              "createdAt": "2023-06-22T05:36:26.7517412Z",
+              "lastModifiedBy": "d1bd24c7-b27f-477e-86dd-939e107873d7",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-06-22T05:38:46.3848496Z"
+            },
+            "properties": {
+              "action": "Permit",
+              "wellKnownCommunities": [
+                "Internet",
+                "LocalAS",
+                "GShut"
+              ],
+              "communityMembers": [
+                "65500:12616"
+              ],
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/microsoft.managednetworkfabric/ipCommunities/ipcommunity-2604-cn1",
+            "name": "ipcommunity-2604-cn1",
+            "type": "microsoft.managednetworkfabric/ipcommunities",
+            "location": "eastus",
+            "systemData": {
+              "createdBy": "edf733ea-9067-4115-8588-b12c62d25d45",
+              "createdByType": "Application",
+              "createdAt": "2023-06-22T05:36:27.7830083Z",
+              "lastModifiedBy": "d1bd24c7-b27f-477e-86dd-939e107873d7",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-06-22T05:38:46.2598472Z"
+            },
+            "properties": {
+              "action": "Permit",
+              "wellKnownCommunities": [
+                "Internet",
+                "LocalAS",
+                "GShut"
+              ],
+              "communityMembers": [
+                "65500:12616"
+              ],
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/microsoft.managednetworkfabric/ipCommunities/ipcommunity-2604-cn2",
+            "name": "ipcommunity-2604-cn2",
+            "type": "microsoft.managednetworkfabric/ipcommunities",
+            "location": "eastus",
+            "systemData": {
+              "createdBy": "edf733ea-9067-4115-8588-b12c62d25d45",
+              "createdByType": "Application",
+              "createdAt": "2023-06-22T05:36:28.7048965Z",
+              "lastModifiedBy": "d1bd24c7-b27f-477e-86dd-939e107873d7",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-06-22T05:38:46.5098519Z"
+            },
+            "properties": {
+              "action": "Permit",
+              "wellKnownCommunities": [
+                "Internet",
+                "LocalAS",
+                "GShut"
+              ],
+              "communityMembers": [
+                "65500:12616"
+              ],
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/microsoft.managednetworkfabric/ipCommunities/ipcommunity-2604-exp",
+            "name": "ipcommunity-2604-exp",
+            "type": "microsoft.managednetworkfabric/ipcommunities",
+            "location": "eastus",
+            "systemData": {
+              "createdBy": "edf733ea-9067-4115-8588-b12c62d25d45",
+              "createdByType": "Application",
+              "createdAt": "2023-06-22T05:36:34.5487348Z",
+              "lastModifiedBy": "d1bd24c7-b27f-477e-86dd-939e107873d7",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-06-22T05:38:58.9417361Z"
+            },
+            "properties": {
+              "action": "Permit",
+              "wellKnownCommunities": [
+                "Internet",
+                "LocalAS",
+                "GShut"
+              ],
+              "communityMembers": [
+                "65500:12616"
+              ],
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/microsoft.managednetworkfabric/ipCommunities/ipcommunity-2605-staticsubnet",
+            "name": "ipcommunity-2605-staticsubnet",
+            "type": "microsoft.managednetworkfabric/ipcommunities",
+            "location": "eastus",
+            "systemData": {
+              "createdBy": "edf733ea-9067-4115-8588-b12c62d25d45",
+              "createdByType": "Application",
+              "createdAt": "2023-06-22T05:37:07.5179923Z",
+              "lastModifiedBy": "d1bd24c7-b27f-477e-86dd-939e107873d7",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-06-22T05:40:00.0552595Z"
+            },
+            "properties": {
+              "action": "Permit",
+              "wellKnownCommunities": [
+                "Internet",
+                "LocalAS",
+                "GShut"
+              ],
+              "communityMembers": [
+                "65046:12456",
+                "65046:12623"
+              ],
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/microsoft.managednetworkfabric/ipCommunities/ipcommunity-2606-staticsubnet",
+            "name": "ipcommunity-2606-staticsubnet",
+            "type": "microsoft.managednetworkfabric/ipcommunities",
+            "location": "eastus",
+            "systemData": {
+              "createdBy": "edf733ea-9067-4115-8588-b12c62d25d45",
+              "createdByType": "Application",
+              "createdAt": "2023-06-22T05:37:08.4242592Z",
+              "lastModifiedBy": "d1bd24c7-b27f-477e-86dd-939e107873d7",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-06-22T05:40:00.2583969Z"
+            },
+            "properties": {
+              "action": "Permit",
+              "wellKnownCommunities": [
+                "Internet",
+                "LocalAS",
+                "GShut"
+              ],
+              "communityMembers": [
+                "65046:13456",
+                "65046:13623"
+              ],
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/microsoft.managednetworkfabric/ipCommunities/ipcommunity-connsubnet-2605",
+            "name": "ipcommunity-connsubnet-2605",
+            "type": "microsoft.managednetworkfabric/ipcommunities",
+            "location": "eastus",
+            "systemData": {
+              "createdBy": "edf733ea-9067-4115-8588-b12c62d25d45",
+              "createdByType": "Application",
+              "createdAt": "2023-06-22T05:37:09.5023983Z",
+              "lastModifiedBy": "d1bd24c7-b27f-477e-86dd-939e107873d7",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-06-22T05:40:00.46154Z"
+            },
+            "properties": {
+              "action": "Permit",
+              "wellKnownCommunities": [
+                "Internet",
+                "LocalAS",
+                "GShut"
+              ],
+              "communityMembers": [
+                "65046:12701",
+                "65046:12702"
+              ],
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/microsoft.managednetworkfabric/ipCommunities/ipcommunity-connsubnet-2606",
+            "name": "ipcommunity-connsubnet-2606",
+            "type": "microsoft.managednetworkfabric/ipcommunities",
+            "location": "eastus",
+            "systemData": {
+              "createdBy": "edf733ea-9067-4115-8588-b12c62d25d45",
+              "createdByType": "Application",
+              "createdAt": "2023-06-22T05:37:10.4086627Z",
+              "lastModifiedBy": "d1bd24c7-b27f-477e-86dd-939e107873d7",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-06-22T05:40:00.6803755Z"
+            },
+            "properties": {
+              "action": "Permit",
+              "wellKnownCommunities": [
+                "Internet",
+                "LocalAS",
+                "GShut"
+              ],
+              "communityMembers": [
+                "65046:12606",
+                "65046:12486"
+              ],
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/microsoft.managednetworkfabric/ipCommunities/ipcommunity-2605-imp",
+            "name": "ipcommunity-2605-imp",
+            "type": "microsoft.managednetworkfabric/ipcommunities",
+            "location": "eastus",
+            "systemData": {
+              "createdBy": "edf733ea-9067-4115-8588-b12c62d25d45",
+              "createdByType": "Application",
+              "createdAt": "2023-06-22T05:37:19.7056767Z",
+              "lastModifiedBy": "d1bd24c7-b27f-477e-86dd-939e107873d7",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-06-22T05:40:42.387776Z"
+            },
+            "properties": {
+              "action": "Permit",
+              "wellKnownCommunities": [
+                "Internet",
+                "LocalAS",
+                "GShut"
+              ],
+              "communityMembers": [
+                "65500:12701"
+              ],
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/microsoft.managednetworkfabric/ipCommunities/ipcommunity-2605-exp",
+            "name": "ipcommunity-2605-exp",
+            "type": "microsoft.managednetworkfabric/ipcommunities",
+            "location": "eastus",
+            "systemData": {
+              "createdBy": "edf733ea-9067-4115-8588-b12c62d25d45",
+              "createdByType": "Application",
+              "createdAt": "2023-06-22T05:37:25.940151Z",
+              "lastModifiedBy": "d1bd24c7-b27f-477e-86dd-939e107873d7",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-06-22T05:40:53.4853499Z"
+            },
+            "properties": {
+              "action": "Permit",
+              "wellKnownCommunities": [
+                "Internet",
+                "LocalAS",
+                "GShut"
+              ],
+              "communityMembers": [
+                "65500:12701"
+              ],
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/microsoft.managednetworkfabric/ipCommunities/ipcommunity-2606-imp",
+            "name": "ipcommunity-2606-imp",
+            "type": "microsoft.managednetworkfabric/ipcommunities",
+            "location": "eastus",
+            "systemData": {
+              "createdBy": "edf733ea-9067-4115-8588-b12c62d25d45",
+              "createdByType": "Application",
+              "createdAt": "2023-06-22T05:37:38.190336Z",
+              "lastModifiedBy": "d1bd24c7-b27f-477e-86dd-939e107873d7",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-06-22T05:41:05.374515Z"
+            },
+            "properties": {
+              "action": "Permit",
+              "wellKnownCommunities": [
+                "Internet",
+                "LocalAS",
+                "GShut"
+              ],
+              "communityMembers": [
+                "65500:12606"
+              ],
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/microsoft.managednetworkfabric/ipCommunities/ipcommunity-2606-exp",
+            "name": "ipcommunity-2606-exp",
+            "type": "microsoft.managednetworkfabric/ipcommunities",
+            "location": "eastus",
+            "systemData": {
+              "createdBy": "edf733ea-9067-4115-8588-b12c62d25d45",
+              "createdByType": "Application",
+              "createdAt": "2023-06-22T05:37:47.3467252Z",
+              "lastModifiedBy": "d1bd24c7-b27f-477e-86dd-939e107873d7",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-06-22T05:41:45.5167094Z"
+            },
+            "properties": {
+              "action": "Permit",
+              "wellKnownCommunities": [
+                "Internet",
+                "LocalAS",
+                "GShut"
+              ],
+              "communityMembers": [
+                "65500:12606"
+              ],
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/microsoft.managednetworkfabric/ipCommunities/ipcommunity-2607-staticsubnet",
+            "name": "ipcommunity-2607-staticsubnet",
+            "type": "microsoft.managednetworkfabric/ipcommunities",
+            "location": "eastus",
+            "systemData": {
+              "createdBy": "edf733ea-9067-4115-8588-b12c62d25d45",
+              "createdByType": "Application",
+              "createdAt": "2023-06-22T05:38:19.0660841Z",
+              "lastModifiedBy": "d1bd24c7-b27f-477e-86dd-939e107873d7",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-06-22T05:42:45.0949192Z"
+            },
+            "properties": {
+              "action": "Permit",
+              "wellKnownCommunities": [
+                "Internet",
+                "LocalAS",
+                "GShut"
+              ],
+              "communityMembers": [
+                "65046:12455",
+                "65046:12624"
+              ],
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/microsoft.managednetworkfabric/ipCommunities/ipcommunity-2608-staticsubnet",
+            "name": "ipcommunity-2608-staticsubnet",
+            "type": "microsoft.managednetworkfabric/ipcommunities",
+            "location": "eastus",
+            "systemData": {
+              "createdBy": "edf733ea-9067-4115-8588-b12c62d25d45",
+              "createdByType": "Application",
+              "createdAt": "2023-06-22T05:38:20.0034746Z",
+              "lastModifiedBy": "d1bd24c7-b27f-477e-86dd-939e107873d7",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-06-22T05:42:45.3449221Z"
+            },
+            "properties": {
+              "action": "Permit",
+              "wellKnownCommunities": [
+                "Internet",
+                "LocalAS",
+                "GShut"
+              ],
+              "communityMembers": [
+                "65046:13457",
+                "65046:13625"
+              ],
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/microsoft.managednetworkfabric/ipCommunities/ipcommunity-connsubnet-2607",
+            "name": "ipcommunity-connsubnet-2607",
+            "type": "microsoft.managednetworkfabric/ipcommunities",
+            "location": "eastus",
+            "systemData": {
+              "createdBy": "edf733ea-9067-4115-8588-b12c62d25d45",
+              "createdByType": "Application",
+              "createdAt": "2023-06-22T05:38:21.0034904Z",
+              "lastModifiedBy": "d1bd24c7-b27f-477e-86dd-939e107873d7",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-06-22T05:42:45.5480458Z"
+            },
+            "properties": {
+              "action": "Permit",
+              "wellKnownCommunities": [
+                "Internet",
+                "LocalAS",
+                "GShut"
+              ],
+              "communityMembers": [
+                "65046:12711",
+                "65046:12712"
+              ],
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/microsoft.managednetworkfabric/ipCommunities/ipcommunity-connsubnet-2608",
+            "name": "ipcommunity-connsubnet-2608",
+            "type": "microsoft.managednetworkfabric/ipcommunities",
+            "location": "eastus",
+            "systemData": {
+              "createdBy": "edf733ea-9067-4115-8588-b12c62d25d45",
+              "createdByType": "Application",
+              "createdAt": "2023-06-22T05:38:21.9878813Z",
+              "lastModifiedBy": "d1bd24c7-b27f-477e-86dd-939e107873d7",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-06-22T05:42:45.8136704Z"
+            },
+            "properties": {
+              "action": "Permit",
+              "wellKnownCommunities": [
+                "Internet",
+                "LocalAS",
+                "GShut"
+              ],
+              "communityMembers": [
+                "65046:12615",
+                "65046:12487"
+              ],
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/microsoft.managednetworkfabric/ipCommunities/ipcommunity-2607-imp",
+            "name": "ipcommunity-2607-imp",
+            "type": "microsoft.managednetworkfabric/ipcommunities",
+            "location": "eastus",
+            "systemData": {
+              "createdBy": "edf733ea-9067-4115-8588-b12c62d25d45",
+              "createdByType": "Application",
+              "createdAt": "2023-06-22T05:38:33.4411776Z",
+              "lastModifiedBy": "d1bd24c7-b27f-477e-86dd-939e107873d7",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-06-22T05:42:55.0965767Z"
+            },
+            "properties": {
+              "action": "Permit",
+              "wellKnownCommunities": [
+                "Internet",
+                "LocalAS",
+                "GShut"
+              ],
+              "communityMembers": [
+                "65500:12710"
+              ],
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/microsoft.managednetworkfabric/ipCommunities/ipcommunity-2607-exp",
+            "name": "ipcommunity-2607-exp",
+            "type": "microsoft.managednetworkfabric/ipcommunities",
+            "location": "eastus",
+            "systemData": {
+              "createdBy": "edf733ea-9067-4115-8588-b12c62d25d45",
+              "createdByType": "Application",
+              "createdAt": "2023-06-22T05:38:39.9100265Z",
+              "lastModifiedBy": "d1bd24c7-b27f-477e-86dd-939e107873d7",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-06-22T05:43:06.9637637Z"
+            },
+            "properties": {
+              "action": "Permit",
+              "wellKnownCommunities": [
+                "Internet",
+                "LocalAS",
+                "GShut"
+              ],
+              "communityMembers": [
+                "65500:12710"
+              ],
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/microsoft.managednetworkfabric/ipCommunities/ipcommunity-2608-imp",
+            "name": "ipcommunity-2608-imp",
+            "type": "microsoft.managednetworkfabric/ipcommunities",
+            "location": "eastus",
+            "systemData": {
+              "createdBy": "edf733ea-9067-4115-8588-b12c62d25d45",
+              "createdByType": "Application",
+              "createdAt": "2023-06-22T05:38:52.6289729Z",
+              "lastModifiedBy": "d1bd24c7-b27f-477e-86dd-939e107873d7",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-06-22T05:43:49.514259Z"
+            },
+            "properties": {
+              "action": "Permit",
+              "wellKnownCommunities": [
+                "Internet",
+                "LocalAS",
+                "GShut"
+              ],
+              "communityMembers": [
+                "65500:12616"
+              ],
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/microsoft.managednetworkfabric/ipCommunities/ipcommunity-2608-cn1",
+            "name": "ipcommunity-2608-cn1",
+            "type": "microsoft.managednetworkfabric/ipcommunities",
+            "location": "eastus",
+            "systemData": {
+              "createdBy": "edf733ea-9067-4115-8588-b12c62d25d45",
+              "createdByType": "Application",
+              "createdAt": "2023-06-22T05:38:53.5977375Z",
+              "lastModifiedBy": "d1bd24c7-b27f-477e-86dd-939e107873d7",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-06-22T05:43:49.389249Z"
+            },
+            "properties": {
+              "action": "Permit",
+              "wellKnownCommunities": [
+                "Internet",
+                "LocalAS",
+                "GShut"
+              ],
+              "communityMembers": [
+                "65500:12616"
+              ],
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/microsoft.managednetworkfabric/ipCommunities/ipcommunity-2608-cn2",
+            "name": "ipcommunity-2608-cn2",
+            "type": "microsoft.managednetworkfabric/ipcommunities",
+            "location": "eastus",
+            "systemData": {
+              "createdBy": "edf733ea-9067-4115-8588-b12c62d25d45",
+              "createdByType": "Application",
+              "createdAt": "2023-06-22T05:38:54.6602534Z",
+              "lastModifiedBy": "d1bd24c7-b27f-477e-86dd-939e107873d7",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-06-22T05:43:49.6080216Z"
+            },
+            "properties": {
+              "action": "Permit",
+              "wellKnownCommunities": [
+                "Internet",
+                "LocalAS",
+                "GShut"
+              ],
+              "communityMembers": [
+                "65500:12616"
+              ],
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/microsoft.managednetworkfabric/ipCommunities/ipcommunity-2608-exp",
+            "name": "ipcommunity-2608-exp",
+            "type": "microsoft.managednetworkfabric/ipcommunities",
+            "location": "eastus",
+            "systemData": {
+              "createdBy": "edf733ea-9067-4115-8588-b12c62d25d45",
+              "createdByType": "Application",
+              "createdAt": "2023-06-22T05:39:00.6134699Z",
+              "lastModifiedBy": "d1bd24c7-b27f-477e-86dd-939e107873d7",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-06-22T05:44:01.9527948Z"
+            },
+            "properties": {
+              "action": "Permit",
+              "wellKnownCommunities": [
+                "Internet",
+                "LocalAS",
+                "GShut"
+              ],
+              "communityMembers": [
+                "65500:12616"
+              ],
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/microsoft.managednetworkfabric/ipCommunities/ipcommunity-2609-imp",
+            "name": "ipcommunity-2609-imp",
+            "type": "microsoft.managednetworkfabric/ipcommunities",
+            "location": "eastus",
+            "systemData": {
+              "createdBy": "edf733ea-9067-4115-8588-b12c62d25d45",
+              "createdByType": "Application",
+              "createdAt": "2023-06-22T05:39:36.8171935Z",
+              "lastModifiedBy": "d1bd24c7-b27f-477e-86dd-939e107873d7",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-06-22T05:44:57.8792181Z"
+            },
+            "properties": {
+              "action": "Permit",
+              "wellKnownCommunities": [
+                "Internet",
+                "LocalAS",
+                "GShut"
+              ],
+              "communityMembers": [
+                "65300:12710"
+              ],
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/microsoft.managednetworkfabric/ipCommunities/ipcommunity-2609-exp",
+            "name": "ipcommunity-2609-exp",
+            "type": "microsoft.managednetworkfabric/ipcommunities",
+            "location": "eastus",
+            "systemData": {
+              "createdBy": "edf733ea-9067-4115-8588-b12c62d25d45",
+              "createdByType": "Application",
+              "createdAt": "2023-06-22T05:39:41.9578455Z",
+              "lastModifiedBy": "d1bd24c7-b27f-477e-86dd-939e107873d7",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-06-22T05:45:44.3533063Z"
+            },
+            "properties": {
+              "action": "Permit",
+              "wellKnownCommunities": [
+                "Internet",
+                "LocalAS",
+                "GShut"
+              ],
+              "communityMembers": [
+                "65300:12710"
+              ],
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/microsoft.managednetworkfabric/ipCommunities/ipcommunity-2610-imp",
+            "name": "ipcommunity-2610-imp",
+            "type": "microsoft.managednetworkfabric/ipcommunities",
+            "location": "eastus",
+            "systemData": {
+              "createdBy": "edf733ea-9067-4115-8588-b12c62d25d45",
+              "createdByType": "Application",
+              "createdAt": "2023-06-22T05:39:52.7549517Z",
+              "lastModifiedBy": "d1bd24c7-b27f-477e-86dd-939e107873d7",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-06-22T05:45:54.8836976Z"
+            },
+            "properties": {
+              "action": "Permit",
+              "wellKnownCommunities": [
+                "Internet",
+                "LocalAS",
+                "GShut"
+              ],
+              "communityMembers": [
+                "61500:8616"
+              ],
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/microsoft.managednetworkfabric/ipCommunities/ipcommunity-2610-cn1",
+            "name": "ipcommunity-2610-cn1",
+            "type": "microsoft.managednetworkfabric/ipcommunities",
+            "location": "eastus",
+            "systemData": {
+              "createdBy": "edf733ea-9067-4115-8588-b12c62d25d45",
+              "createdByType": "Application",
+              "createdAt": "2023-06-22T05:39:53.4737159Z",
+              "lastModifiedBy": "d1bd24c7-b27f-477e-86dd-939e107873d7",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-06-22T05:45:54.7743158Z"
+            },
+            "properties": {
+              "action": "Permit",
+              "wellKnownCommunities": [
+                "Internet",
+                "LocalAS",
+                "GShut"
+              ],
+              "communityMembers": [
+                "61500:8616"
+              ],
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/microsoft.managednetworkfabric/ipCommunities/ipcommunity-2610-cn2",
+            "name": "ipcommunity-2610-cn2",
+            "type": "microsoft.managednetworkfabric/ipcommunities",
+            "location": "eastus",
+            "systemData": {
+              "createdBy": "edf733ea-9067-4115-8588-b12c62d25d45",
+              "createdByType": "Application",
+              "createdAt": "2023-06-22T05:39:54.3019138Z",
+              "lastModifiedBy": "d1bd24c7-b27f-477e-86dd-939e107873d7",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-06-22T05:45:55.0087055Z"
+            },
+            "properties": {
+              "action": "Permit",
+              "wellKnownCommunities": [
+                "Internet",
+                "LocalAS",
+                "GShut"
+              ],
+              "communityMembers": [
+                "61500:8616"
+              ],
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/microsoft.managednetworkfabric/ipCommunities/ipcommunity-2610-exp",
+            "name": "ipcommunity-2610-exp",
+            "type": "microsoft.managednetworkfabric/ipcommunities",
+            "location": "eastus",
+            "systemData": {
+              "createdBy": "edf733ea-9067-4115-8588-b12c62d25d45",
+              "createdByType": "Application",
+              "createdAt": "2023-06-22T05:39:59.3801005Z",
+              "lastModifiedBy": "d1bd24c7-b27f-477e-86dd-939e107873d7",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-06-22T05:46:03.5874924Z"
+            },
+            "properties": {
+              "action": "Permit",
+              "wellKnownCommunities": [
+                "Internet",
+                "LocalAS",
+                "GShut"
+              ],
+              "communityMembers": [
+                "61500:8616"
+              ],
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/ipCommunities/nfa-tool-ts-sdk-ipCommunity062223",
+            "name": "nfa-tool-ts-sdk-ipCommunity062223",
+            "type": "microsoft.managednetworkfabric/ipcommunities",
+            "location": "eastus",
+            "tags": {
+              "key2814": ""
+            },
+            "systemData": {
+              "createdBy": "v-rmarimuthu@microsoft.com",
+              "createdByType": "User",
+              "createdAt": "2023-06-22T07:04:57.5760885Z",
+              "lastModifiedBy": "v-rmarimuthu@microsoft.com",
+              "lastModifiedByType": "User",
+              "lastModifiedAt": "2023-06-22T07:04:57.5760885Z"
+            },
+            "properties": {
+              "action": "Permit",
+              "wellKnownCommunities": [
+                "Internet",
+                "LocalAS",
+                "NoExport",
+                "GShut"
+              ],
+              "communityMembers": [
+                "1234:5678"
+              ],
+              "provisioningState": "Succeeded",
+              "annotation": "annotationValue"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/ipCommunities/nfa-tool-ts-sdk-ipCommunity062223?api-version=2023-02-01-preview",
+      "RequestMethod": "DELETE",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-56ef918e301175c88087c4112c1ccb02-ac8f56c3ff975aa1-00",
+        "User-Agent": "azsdk-net-ResourceManager.ManagedNetworkFabric/1.0.0-alpha.20230622.1 (.NET 7.0.7; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "d722f6576911b46c406bb554a8fbf1db",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 202,
+      "ResponseHeaders": {
+        "Azure-AsyncOperation": "https://management.azure.com/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/providers/Microsoft.ManagedNetworkFabric/locations/EASTUS/operationStatuses/dec78a0d-6c51-4830-abdd-8950867531ff*1A68A72D260BE9501F254EBC5843B8B6A1BA5DFA0EB25B24259A5DE091866622?api-version=2023-02-01-preview",
+        "Cache-Control": "no-cache",
+        "Content-Length": "4",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 22 Jun 2023 07:05:05 GMT",
+        "ETag": "\u0022ff0673ba-0000-0100-0000-6493f2a20000\u0022",
+        "Expires": "-1",
+        "Location": "https://management.azure.com/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/providers/Microsoft.ManagedNetworkFabric/locations/EASTUS/operationStatuses/dec78a0d-6c51-4830-abdd-8950867531ff*1A68A72D260BE9501F254EBC5843B8B6A1BA5DFA0EB25B24259A5DE091866622?api-version=2023-02-01-preview",
+        "mise-correlation-id": "e290e26b-a178-43a1-b4a6-b642a30a4d63",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "d722f6576911b46c406bb554a8fbf1db",
+        "x-ms-correlation-request-id": "0258350c-f104-430d-9118-55612dad442f",
+        "x-ms-providerhub-traffic": "True",
+        "x-ms-ratelimit-remaining-subscription-deletes": "14999",
+        "x-ms-request-id": "c7218da1-b610-4b9a-80f0-338c6c4c9f08",
+        "x-ms-routing-request-id": "WESTINDIA:20230622T070506Z:0258350c-f104-430d-9118-55612dad442f"
+      },
+      "ResponseBody": "null"
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/providers/Microsoft.ManagedNetworkFabric/locations/EASTUS/operationStatuses/dec78a0d-6c51-4830-abdd-8950867531ff*1A68A72D260BE9501F254EBC5843B8B6A1BA5DFA0EB25B24259A5DE091866622?api-version=2023-02-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-56ef918e301175c88087c4112c1ccb02-44e1e8230d0d94cd-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.6.0 (.NET 7.0.7; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "a87e6498a93cae84d9aa0bd0fbc32768",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "677",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 22 Jun 2023 07:05:05 GMT",
+        "ETag": "\u00224304a5ef-0000-0100-0000-6493f2a20000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "a87e6498a93cae84d9aa0bd0fbc32768",
+        "x-ms-correlation-request-id": "78ac6eff-54bb-4153-8e13-c3b68b1401d6",
+        "x-ms-ratelimit-remaining-subscription-reads": "11994",
+        "x-ms-request-id": "4a0e6951-6073-4932-85af-f1f845615d1c",
+        "x-ms-routing-request-id": "WESTINDIA:20230622T070506Z:78ac6eff-54bb-4153-8e13-c3b68b1401d6"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/providers/Microsoft.ManagedNetworkFabric/locations/EASTUS/operationStatuses/dec78a0d-6c51-4830-abdd-8950867531ff*1A68A72D260BE9501F254EBC5843B8B6A1BA5DFA0EB25B24259A5DE091866622",
+        "name": "dec78a0d-6c51-4830-abdd-8950867531ff*1A68A72D260BE9501F254EBC5843B8B6A1BA5DFA0EB25B24259A5DE091866622",
+        "resourceId": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/ipCommunities/nfa-tool-ts-sdk-ipCommunity062223",
+        "status": "Succeeded",
+        "startTime": "2023-06-22T07:05:06.0082809Z",
+        "endTime": "2023-06-22T07:05:06.1305201Z",
+        "properties": null
+      }
+    }
+  ],
+  "Variables": {
+    "IP_COMMUNITY_NAME": "nfa-tool-ts-sdk-ipCommunity062223",
+    "LOCATION": "eastus",
+    "RandomSeed": "1196418117",
+    "RESOURCE_GROUP_NAME": "nfa-tool-ts-clisdktest-nfrg060523",
+    "RESOURCE_MANAGER_URL": null,
+    "SUBSCRIPTION_ID": "61065ccc-9543-4b91-b2d1-0ce42a914507"
+  }
+}

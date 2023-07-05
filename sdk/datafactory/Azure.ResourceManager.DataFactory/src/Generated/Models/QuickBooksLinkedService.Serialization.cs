@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -73,29 +74,17 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(Endpoint))
             {
                 writer.WritePropertyName("endpoint"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(Endpoint);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(Endpoint.ToString()).RootElement);
-#endif
+                JsonSerializer.Serialize(writer, Endpoint);
             }
             if (Optional.IsDefined(CompanyId))
             {
                 writer.WritePropertyName("companyId"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(CompanyId);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(CompanyId.ToString()).RootElement);
-#endif
+                JsonSerializer.Serialize(writer, CompanyId);
             }
             if (Optional.IsDefined(ConsumerKey))
             {
                 writer.WritePropertyName("consumerKey"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(ConsumerKey);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(ConsumerKey.ToString()).RootElement);
-#endif
+                JsonSerializer.Serialize(writer, ConsumerKey);
             }
             if (Optional.IsDefined(ConsumerSecret))
             {
@@ -115,11 +104,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(UseEncryptedEndpoints))
             {
                 writer.WritePropertyName("useEncryptedEndpoints"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(UseEncryptedEndpoints);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(UseEncryptedEndpoints.ToString()).RootElement);
-#endif
+                JsonSerializer.Serialize(writer, UseEncryptedEndpoints);
             }
             if (Optional.IsDefined(EncryptedCredential))
             {
@@ -155,13 +140,13 @@ namespace Azure.ResourceManager.DataFactory.Models
             Optional<IDictionary<string, EntityParameterSpecification>> parameters = default;
             Optional<IList<BinaryData>> annotations = default;
             Optional<BinaryData> connectionProperties = default;
-            Optional<BinaryData> endpoint = default;
-            Optional<BinaryData> companyId = default;
-            Optional<BinaryData> consumerKey = default;
-            Optional<FactorySecretBaseDefinition> consumerSecret = default;
-            Optional<FactorySecretBaseDefinition> accessToken = default;
-            Optional<FactorySecretBaseDefinition> accessTokenSecret = default;
-            Optional<BinaryData> useEncryptedEndpoints = default;
+            Optional<DataFactoryElement<string>> endpoint = default;
+            Optional<DataFactoryElement<string>> companyId = default;
+            Optional<DataFactoryElement<string>> consumerKey = default;
+            Optional<DataFactorySecretBaseDefinition> consumerSecret = default;
+            Optional<DataFactorySecretBaseDefinition> accessToken = default;
+            Optional<DataFactorySecretBaseDefinition> accessTokenSecret = default;
+            Optional<DataFactoryElement<bool>> useEncryptedEndpoints = default;
             Optional<BinaryData> encryptedCredential = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -245,7 +230,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            endpoint = BinaryData.FromString(property0.Value.GetRawText());
+                            endpoint = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("companyId"u8))
@@ -254,7 +239,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            companyId = BinaryData.FromString(property0.Value.GetRawText());
+                            companyId = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("consumerKey"u8))
@@ -263,7 +248,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            consumerKey = BinaryData.FromString(property0.Value.GetRawText());
+                            consumerKey = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("consumerSecret"u8))
@@ -272,7 +257,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            consumerSecret = FactorySecretBaseDefinition.DeserializeFactorySecretBaseDefinition(property0.Value);
+                            consumerSecret = DataFactorySecretBaseDefinition.DeserializeDataFactorySecretBaseDefinition(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("accessToken"u8))
@@ -281,7 +266,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            accessToken = FactorySecretBaseDefinition.DeserializeFactorySecretBaseDefinition(property0.Value);
+                            accessToken = DataFactorySecretBaseDefinition.DeserializeDataFactorySecretBaseDefinition(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("accessTokenSecret"u8))
@@ -290,7 +275,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            accessTokenSecret = FactorySecretBaseDefinition.DeserializeFactorySecretBaseDefinition(property0.Value);
+                            accessTokenSecret = DataFactorySecretBaseDefinition.DeserializeDataFactorySecretBaseDefinition(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("useEncryptedEndpoints"u8))
@@ -299,7 +284,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            useEncryptedEndpoints = BinaryData.FromString(property0.Value.GetRawText());
+                            useEncryptedEndpoints = JsonSerializer.Deserialize<DataFactoryElement<bool>>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("encryptedCredential"u8))

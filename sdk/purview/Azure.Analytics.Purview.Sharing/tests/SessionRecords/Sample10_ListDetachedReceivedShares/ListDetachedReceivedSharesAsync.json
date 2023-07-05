@@ -1,59 +1,43 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://myaccountname.purview.azure.com/share/receivedShares/detached?api-version=2023-02-15-preview",
+      "RequestUri": "https://myaccountname.purview.azure.com/share/receivedShares/detached?api-version=2023-05-30-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "User-Agent": "azsdk-net-Analytics.Purview.Sharing/1.0.3-alpha.20230223.1 (.NET 6.0.14; Microsoft Windows 10.0.22621)",
-        "x-ms-client-request-id": "e309d6b082129d7ab51cbb182cb2fae6",
+        "Connection": "keep-alive",
+        "User-Agent": "azsdk-net-Analytics.Purview.Sharing/1.0.0-alpha.20230607.1 (.NET Framework 4.8.9139.0; Microsoft Windows 10.0.22621 )",
+        "x-ms-client-request-id": "2a3e9e7052bee6f06e4793725eaa945a",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "Content-Length": "890",
+        "Content-Length": "453",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 24 Feb 2023 08:17:30 GMT",
+        "Date": "Mon, 12 Jun 2023 04:32:04 GMT",
         "Server": "Kestrel",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
-        "x-ms-correlation-request-id": "41bfcad9-d15c-4e07-998c-c9879fd4a3d3"
+        "x-ms-correlation-request-id": "b0c07f91-480e-49fc-97c8-dd04c0746de6"
       },
       "ResponseBody": {
         "value": [
           {
             "properties": {
-              "createdAt": "2023-02-24T08:13:53.4805496Z",
-              "sharedAt": "2023-02-24T08:13:53.4805496Z",
+              "createdAt": "2023-06-12T04:31:21.3713676Z",
+              "sharedAt": "2023-06-12T04:31:21.3713676Z",
               "displayName": "testDisplayName1",
               "state": "Succeeded",
               "shareStatus": "Detached",
               "sentShareDescription": "updatedDescription",
-              "senderName": "SyMS",
+              "senderName": "sdk-05-30-share",
               "senderTenantName": "Microsoft",
-              "assetLocation": "southafricanorth",
+              "assetLocation": "australiaeast",
               "assetStoreKind": "AdlsGen2Account"
             },
             "shareKind": "InPlace",
-            "id": "bb00baac-b768-4004-a712-c5b942dc9e83",
-            "type": "ReceivedShare"
-          },
-          {
-            "properties": {
-              "createdAt": "2023-02-17T00:08:25.3589647Z",
-              "sharedAt": "2023-02-17T00:08:25.3589647Z",
-              "displayName": "sentShare1Updated",
-              "state": "Succeeded",
-              "shareStatus": "Detached",
-              "sentShareDescription": "descriptionUpdated",
-              "senderName": "Faisal Al Tell",
-              "senderTenantName": "Microsoft",
-              "assetLocation": "southafricanorth",
-              "assetStoreKind": "AdlsGen2Account"
-            },
-            "shareKind": "InPlace",
-            "id": "536ff216-6c6d-4835-9886-4cba2d31a72e",
+            "id": "c2da55e1-c80c-4925-91fc-37c82a925ff0",
             "type": "ReceivedShare"
           }
         ]
@@ -63,6 +47,6 @@
   "Variables": {
     "AZURE_AUTHORITY_HOST": null,
     "PURVIEW_SHARE_URL": "https://myaccountname.purview.azure.com/share",
-    "RandomSeed": "1922189047"
+    "RandomSeed": "14247008"
   }
 }

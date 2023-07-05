@@ -41,12 +41,12 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <param name="location"> The location. </param>
         /// <param name="kind"> The kind of application that this component refers to, used to customize UI. This value is a freeform string, values should typically be one of the following: web, ios, other, store, java, phone. </param>
         /// <param name="etag"> Resource etag. </param>
-        /// <param name="applicationId"> The unique ID of your application. This field mirrors the &apos;Name&apos; field and cannot be changed. </param>
+        /// <param name="applicationId"> The unique ID of your application. This field mirrors the 'Name' field and cannot be changed. </param>
         /// <param name="appId"> Application Insights Unique ID for your Application. </param>
         /// <param name="namePropertiesName"> Application name. </param>
         /// <param name="applicationType"> Type of application being monitored. </param>
-        /// <param name="flowType"> Used by the Application Insights system to determine what kind of flow this component was created by. This is to be set to &apos;Bluefield&apos; when creating/updating a component via the REST API. </param>
-        /// <param name="requestSource"> Describes what tool created this Application Insights component. Customers using this API should set this to the default &apos;rest&apos;. </param>
+        /// <param name="flowType"> Used by the Application Insights system to determine what kind of flow this component was created by. This is to be set to 'Bluefield' when creating/updating a component via the REST API. </param>
+        /// <param name="requestSource"> Describes what tool created this Application Insights component. Customers using this API should set this to the default 'rest'. </param>
         /// <param name="instrumentationKey"> Application Insights Instrumentation key. A read-only value that applications can use to identify the destination for all telemetry sent to Azure Application Insights. This value will be supplied upon construction of each new Application Insights component. </param>
         /// <param name="createdOn"> Creation Date for the Application Insights component, in ISO 8601 format. </param>
         /// <param name="tenantId"> Azure Tenant Id. </param>
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         public string Kind { get; set; }
         /// <summary> Resource etag. </summary>
         public ETag? ETag { get; set; }
-        /// <summary> The unique ID of your application. This field mirrors the &apos;Name&apos; field and cannot be changed. </summary>
+        /// <summary> The unique ID of your application. This field mirrors the 'Name' field and cannot be changed. </summary>
         public string ApplicationId { get; }
         /// <summary> Application Insights Unique ID for your Application. </summary>
         public string AppId { get; }
@@ -109,9 +109,9 @@ namespace Azure.ResourceManager.ApplicationInsights
         public string NamePropertiesName { get; }
         /// <summary> Type of application being monitored. </summary>
         public ApplicationType? ApplicationType { get; set; }
-        /// <summary> Used by the Application Insights system to determine what kind of flow this component was created by. This is to be set to &apos;Bluefield&apos; when creating/updating a component via the REST API. </summary>
+        /// <summary> Used by the Application Insights system to determine what kind of flow this component was created by. This is to be set to 'Bluefield' when creating/updating a component via the REST API. </summary>
         public FlowType? FlowType { get; set; }
-        /// <summary> Describes what tool created this Application Insights component. Customers using this API should set this to the default &apos;rest&apos;. </summary>
+        /// <summary> Describes what tool created this Application Insights component. Customers using this API should set this to the default 'rest'. </summary>
         public RequestSource? RequestSource { get; set; }
         /// <summary> Application Insights Instrumentation key. A read-only value that applications can use to identify the destination for all telemetry sent to Azure Application Insights. This value will be supplied upon construction of each new Application Insights component. </summary>
         public string InstrumentationKey { get; }

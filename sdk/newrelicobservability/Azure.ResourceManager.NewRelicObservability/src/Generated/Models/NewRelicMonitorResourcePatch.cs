@@ -27,12 +27,12 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
         /// <summary> MarketplaceSubscriptionStatus of the resource. </summary>
         public NewRelicAccountProperties NewRelicAccountProperties { get; set; }
         /// <summary> User Info. </summary>
-        public UserInfo UserInfo { get; set; }
+        public NewRelicObservabilityUserInfo UserInfo { get; set; }
         /// <summary> Plan details. </summary>
-        public PlanData PlanData { get; set; }
+        public NewRelicPlanDetails PlanData { get; set; }
         /// <summary> Source of org creation. </summary>
-        public OrgCreationSource? OrgCreationSource { get; set; }
+        public NewRelicObservabilityOrgCreationSource? OrgCreationSource { get; set; }
         /// <summary> Source of account creation. </summary>
-        public AccountCreationSource? AccountCreationSource { get; set; }
+        public NewRelicObservabilityAccountCreationSource? AccountCreationSource { get; set; }
     }
 }

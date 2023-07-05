@@ -280,7 +280,7 @@ namespace Azure.ResourceManager.OperationalInsights
         }
 
         /// <summary>
-        /// Updates an existing QueryPack&apos;s tags. To update other fields use the CreateOrUpdate method.
+        /// Updates an existing QueryPack's tags. To update other fields use the CreateOrUpdate method.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -314,7 +314,7 @@ namespace Azure.ResourceManager.OperationalInsights
         }
 
         /// <summary>
-        /// Updates an existing QueryPack&apos;s tags. To update other fields use the CreateOrUpdate method.
+        /// Updates an existing QueryPack's tags. To update other fields use the CreateOrUpdate method.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>

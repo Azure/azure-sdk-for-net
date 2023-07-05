@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// <param name="location"> The location. </param>
         /// <param name="sku"> The SKU (pricing tier) of the server. </param>
         /// <param name="identity"> Describes the identity of the application. </param>
-        /// <param name="administratorLogin"> The administrator&apos;s login name of a server. Can only be specified when the server is being created (and is required for creation). </param>
+        /// <param name="administratorLogin"> The administrator's login name of a server. Can only be specified when the server is being created (and is required for creation). </param>
         /// <param name="administratorLoginPassword"> The administrator login password (required for server creation). </param>
         /// <param name="version"> PostgreSQL Server version. </param>
         /// <param name="minorVersion"> The minor version of the server. </param>
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         public PostgreSqlFlexibleServerSku Sku { get; set; }
         /// <summary> Describes the identity of the application. </summary>
         public PostgreSqlFlexibleServerUserAssignedIdentity Identity { get; set; }
-        /// <summary> The administrator&apos;s login name of a server. Can only be specified when the server is being created (and is required for creation). </summary>
+        /// <summary> The administrator's login name of a server. Can only be specified when the server is being created (and is required for creation). </summary>
         public string AdministratorLogin { get; set; }
         /// <summary> The administrator login password (required for server creation). </summary>
         public string AdministratorLoginPassword { get; set; }
