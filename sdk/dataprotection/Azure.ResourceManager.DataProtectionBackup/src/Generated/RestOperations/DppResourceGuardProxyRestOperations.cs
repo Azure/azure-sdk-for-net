@@ -33,7 +33,9 @@ namespace Azure.ResourceManager.DataProtectionBackup
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
+          
             _apiVersion = apiVersion ?? "2023-05-01";
+
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -409,6 +411,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vaultName"/>, <paramref name="resourceGuardProxyName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vaultName"/> or <paramref name="resourceGuardProxyName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<UnlockDeleteResponse>> UnlockDeleteAsync(string subscriptionId, string resourceGroupName, string vaultName, string resourceGuardProxyName, UnlockDeleteContent content, CancellationToken cancellationToken = default)
+
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -425,6 +428,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
                         UnlockDeleteResponse value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
                         value = UnlockDeleteResponse.DeserializeUnlockDeleteResponse(document.RootElement);
+
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -458,6 +462,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
                         UnlockDeleteResponse value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
                         value = UnlockDeleteResponse.DeserializeUnlockDeleteResponse(document.RootElement);
+
                         return Response.FromValue(value, message.Response);
                     }
                 default:

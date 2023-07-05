@@ -91,7 +91,9 @@ namespace Azure.Storage.DataMovement.Tests
             int jobPartCount,
             StorageTransferStatus status = StorageTransferStatus.Queued,
             List<string> sourcePaths = default,
-            List<string> destinationPaths = default)
+            List<string> destinationPaths = default,
+            string sourceResourceId = "LocalFile",
+            string destinationResourceId = "LocalFile")
         {
             // Populate sourcePaths if not provided
             if (sourcePaths == default)
@@ -121,7 +123,9 @@ namespace Azure.Storage.DataMovement.Tests
                 JobPartPlanHeader header = CreateDefaultJobPartHeader(
                     transferId: transferId,
                     partNumber: partNumber,
+                    sourceResourceId: sourceResourceId,
                     sourcePath: sourcePaths.ElementAt(partNumber),
+                    destinationResourceId: destinationResourceId,
                     destinationPath: destinationPaths.ElementAt(partNumber),
                     atomicJobStatus: status,
                     atomicPartStatus: status);
