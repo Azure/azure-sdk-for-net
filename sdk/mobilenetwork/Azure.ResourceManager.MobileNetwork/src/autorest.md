@@ -14,7 +14,9 @@ skip-csproj: true
 modelerfour:
   flatten-payloads: false
 
- 
+request-path-to-resource-name:
+  /providers/Microsoft.MobileNetwork/packetCoreControlPlaneVersions/{versionName}: TenantPacketCoreControlPlaneVersion
+  /subscriptions/{subscriptionId}/providers/Microsoft.MobileNetwork/packetCoreControlPlaneVersions/{versionName}: SubscriptionPacketCoreControlPlaneVersion
 
 format-by-name-rules:
   'tenantId': 'uuid'
@@ -46,4 +48,15 @@ rename-rules:
   URI: Uri
   Etag: ETag|etag
 
+directive:
+  # CodeGen don't support some definitions in v4 & v5 common types, here is an issue https://github.com/Azure/autorest.csharp/issues/3537 opened to fix this problem
+  - from: v5/types.json
+    where: $.definitions
+    transform: >
+      delete $.Resource.properties.id.format;
+  # CodeGen don't support some definitions in v4 & v5 common types, in v4 and v5 subscriptionId has the format of uuid, but the generator is not correctly handling it right now
+  - from: v5/types.json
+    where: $.parameters.SubscriptionIdParameter
+    transform: >
+      delete $.format;
 ```

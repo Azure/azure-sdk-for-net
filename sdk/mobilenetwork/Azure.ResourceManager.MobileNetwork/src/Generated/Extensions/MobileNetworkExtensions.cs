@@ -11,7 +11,6 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
-using Azure.ResourceManager.MobileNetwork.Models;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.MobileNetwork
@@ -19,6 +18,38 @@ namespace Azure.ResourceManager.MobileNetwork
     /// <summary> A class to add extension methods to Azure.ResourceManager.MobileNetwork. </summary>
     public static partial class MobileNetworkExtensions
     {
+        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmResource resource)
+        {
+            return resource.GetCachedClient(client =>
+            {
+                return new ResourceGroupResourceExtensionClient(client, resource.Id);
+            });
+        }
+
+        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        {
+            return client.GetResourceClient(() =>
+            {
+                return new ResourceGroupResourceExtensionClient(client, scope);
+            });
+        }
+
+        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmResource resource)
+        {
+            return resource.GetCachedClient(client =>
+            {
+                return new SubscriptionResourceExtensionClient(client, resource.Id);
+            });
+        }
+
+        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        {
+            return client.GetResourceClient(() =>
+            {
+                return new SubscriptionResourceExtensionClient(client, scope);
+            });
+        }
+
         private static TenantResourceExtensionClient GetTenantResourceExtensionClient(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
@@ -34,905 +65,297 @@ namespace Azure.ResourceManager.MobileNetwork
                 return new TenantResourceExtensionClient(client, scope);
             });
         }
-
+        #region AttachedDataNetworkResource
         /// <summary>
-        /// Deletes the specified attached data network.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MobileNetwork/packetCoreControlPlanes/{packetCoreControlPlaneName}/packetCoreDataPlanes/{packetCoreDataPlaneName}/attachedDataNetworks/{attachedDataNetworkName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AttachedDataNetworks_Delete</description>
-        /// </item>
-        /// </list>
+        /// Gets an object representing an <see cref="AttachedDataNetworkResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="AttachedDataNetworkResource.CreateResourceIdentifier" /> to create an <see cref="AttachedDataNetworkResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="packetCoreControlPlaneName"> The name of the packet core control plane. </param>
-        /// <param name="packetCoreDataPlaneName"> The name of the packet core data plane. </param>
-        /// <param name="attachedDataNetworkName"> The name of the attached data network. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/>, <paramref name="packetCoreControlPlaneName"/>, <paramref name="packetCoreDataPlaneName"/> or <paramref name="attachedDataNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="packetCoreControlPlaneName"/>, <paramref name="packetCoreDataPlaneName"/> or <paramref name="attachedDataNetworkName"/> is null. </exception>
-        public static async Task<ArmOperation> DeleteAttachedDataNetworkAsync(this TenantResource tenantResource, WaitUntil waitUntil, Guid subscriptionId, string resourceGroupName, string packetCoreControlPlaneName, string packetCoreDataPlaneName, string attachedDataNetworkName, CancellationToken cancellationToken = default)
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="AttachedDataNetworkResource" /> object. </returns>
+        public static AttachedDataNetworkResource GetAttachedDataNetworkResource(this ArmClient client, ResourceIdentifier id)
         {
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(packetCoreControlPlaneName, nameof(packetCoreControlPlaneName));
-            Argument.AssertNotNullOrEmpty(packetCoreDataPlaneName, nameof(packetCoreDataPlaneName));
-            Argument.AssertNotNullOrEmpty(attachedDataNetworkName, nameof(attachedDataNetworkName));
-
-            return await GetTenantResourceExtensionClient(tenantResource).DeleteAttachedDataNetworkAsync(waitUntil, subscriptionId, resourceGroupName, packetCoreControlPlaneName, packetCoreDataPlaneName, attachedDataNetworkName, cancellationToken).ConfigureAwait(false);
+            return client.GetResourceClient(() =>
+            {
+                AttachedDataNetworkResource.ValidateResourceId(id);
+                return new AttachedDataNetworkResource(client, id);
+            }
+            );
         }
+        #endregion
 
+        #region DataNetworkResource
         /// <summary>
-        /// Deletes the specified attached data network.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MobileNetwork/packetCoreControlPlanes/{packetCoreControlPlaneName}/packetCoreDataPlanes/{packetCoreDataPlaneName}/attachedDataNetworks/{attachedDataNetworkName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AttachedDataNetworks_Delete</description>
-        /// </item>
-        /// </list>
+        /// Gets an object representing a <see cref="DataNetworkResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DataNetworkResource.CreateResourceIdentifier" /> to create a <see cref="DataNetworkResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="packetCoreControlPlaneName"> The name of the packet core control plane. </param>
-        /// <param name="packetCoreDataPlaneName"> The name of the packet core data plane. </param>
-        /// <param name="attachedDataNetworkName"> The name of the attached data network. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/>, <paramref name="packetCoreControlPlaneName"/>, <paramref name="packetCoreDataPlaneName"/> or <paramref name="attachedDataNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="packetCoreControlPlaneName"/>, <paramref name="packetCoreDataPlaneName"/> or <paramref name="attachedDataNetworkName"/> is null. </exception>
-        public static ArmOperation DeleteAttachedDataNetwork(this TenantResource tenantResource, WaitUntil waitUntil, Guid subscriptionId, string resourceGroupName, string packetCoreControlPlaneName, string packetCoreDataPlaneName, string attachedDataNetworkName, CancellationToken cancellationToken = default)
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="DataNetworkResource" /> object. </returns>
+        public static DataNetworkResource GetDataNetworkResource(this ArmClient client, ResourceIdentifier id)
         {
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(packetCoreControlPlaneName, nameof(packetCoreControlPlaneName));
-            Argument.AssertNotNullOrEmpty(packetCoreDataPlaneName, nameof(packetCoreDataPlaneName));
-            Argument.AssertNotNullOrEmpty(attachedDataNetworkName, nameof(attachedDataNetworkName));
-
-            return GetTenantResourceExtensionClient(tenantResource).DeleteAttachedDataNetwork(waitUntil, subscriptionId, resourceGroupName, packetCoreControlPlaneName, packetCoreDataPlaneName, attachedDataNetworkName, cancellationToken);
+            return client.GetResourceClient(() =>
+            {
+                DataNetworkResource.ValidateResourceId(id);
+                return new DataNetworkResource(client, id);
+            }
+            );
         }
+        #endregion
 
+        #region DiagnosticsPackageResource
         /// <summary>
-        /// Gets information about the specified attached data network.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MobileNetwork/packetCoreControlPlanes/{packetCoreControlPlaneName}/packetCoreDataPlanes/{packetCoreDataPlaneName}/attachedDataNetworks/{attachedDataNetworkName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AttachedDataNetworks_Get</description>
-        /// </item>
-        /// </list>
+        /// Gets an object representing a <see cref="DiagnosticsPackageResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DiagnosticsPackageResource.CreateResourceIdentifier" /> to create a <see cref="DiagnosticsPackageResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="packetCoreControlPlaneName"> The name of the packet core control plane. </param>
-        /// <param name="packetCoreDataPlaneName"> The name of the packet core data plane. </param>
-        /// <param name="attachedDataNetworkName"> The name of the attached data network. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/>, <paramref name="packetCoreControlPlaneName"/>, <paramref name="packetCoreDataPlaneName"/> or <paramref name="attachedDataNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="packetCoreControlPlaneName"/>, <paramref name="packetCoreDataPlaneName"/> or <paramref name="attachedDataNetworkName"/> is null. </exception>
-        public static async Task<Response<AttachedDataNetwork>> GetAttachedDataNetworkAsync(this TenantResource tenantResource, Guid subscriptionId, string resourceGroupName, string packetCoreControlPlaneName, string packetCoreDataPlaneName, string attachedDataNetworkName, CancellationToken cancellationToken = default)
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="DiagnosticsPackageResource" /> object. </returns>
+        public static DiagnosticsPackageResource GetDiagnosticsPackageResource(this ArmClient client, ResourceIdentifier id)
         {
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(packetCoreControlPlaneName, nameof(packetCoreControlPlaneName));
-            Argument.AssertNotNullOrEmpty(packetCoreDataPlaneName, nameof(packetCoreDataPlaneName));
-            Argument.AssertNotNullOrEmpty(attachedDataNetworkName, nameof(attachedDataNetworkName));
-
-            return await GetTenantResourceExtensionClient(tenantResource).GetAttachedDataNetworkAsync(subscriptionId, resourceGroupName, packetCoreControlPlaneName, packetCoreDataPlaneName, attachedDataNetworkName, cancellationToken).ConfigureAwait(false);
+            return client.GetResourceClient(() =>
+            {
+                DiagnosticsPackageResource.ValidateResourceId(id);
+                return new DiagnosticsPackageResource(client, id);
+            }
+            );
         }
+        #endregion
 
+        #region MobileNetworkResource
         /// <summary>
-        /// Gets information about the specified attached data network.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MobileNetwork/packetCoreControlPlanes/{packetCoreControlPlaneName}/packetCoreDataPlanes/{packetCoreDataPlaneName}/attachedDataNetworks/{attachedDataNetworkName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AttachedDataNetworks_Get</description>
-        /// </item>
-        /// </list>
+        /// Gets an object representing a <see cref="MobileNetworkResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="MobileNetworkResource.CreateResourceIdentifier" /> to create a <see cref="MobileNetworkResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="packetCoreControlPlaneName"> The name of the packet core control plane. </param>
-        /// <param name="packetCoreDataPlaneName"> The name of the packet core data plane. </param>
-        /// <param name="attachedDataNetworkName"> The name of the attached data network. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/>, <paramref name="packetCoreControlPlaneName"/>, <paramref name="packetCoreDataPlaneName"/> or <paramref name="attachedDataNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="packetCoreControlPlaneName"/>, <paramref name="packetCoreDataPlaneName"/> or <paramref name="attachedDataNetworkName"/> is null. </exception>
-        public static Response<AttachedDataNetwork> GetAttachedDataNetwork(this TenantResource tenantResource, Guid subscriptionId, string resourceGroupName, string packetCoreControlPlaneName, string packetCoreDataPlaneName, string attachedDataNetworkName, CancellationToken cancellationToken = default)
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="MobileNetworkResource" /> object. </returns>
+        public static MobileNetworkResource GetMobileNetworkResource(this ArmClient client, ResourceIdentifier id)
         {
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(packetCoreControlPlaneName, nameof(packetCoreControlPlaneName));
-            Argument.AssertNotNullOrEmpty(packetCoreDataPlaneName, nameof(packetCoreDataPlaneName));
-            Argument.AssertNotNullOrEmpty(attachedDataNetworkName, nameof(attachedDataNetworkName));
-
-            return GetTenantResourceExtensionClient(tenantResource).GetAttachedDataNetwork(subscriptionId, resourceGroupName, packetCoreControlPlaneName, packetCoreDataPlaneName, attachedDataNetworkName, cancellationToken);
+            return client.GetResourceClient(() =>
+            {
+                MobileNetworkResource.ValidateResourceId(id);
+                return new MobileNetworkResource(client, id);
+            }
+            );
         }
+        #endregion
 
+        #region PacketCaptureResource
         /// <summary>
-        /// Creates or updates an attached data network. Must be created in the same location as its parent packet core data plane.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MobileNetwork/packetCoreControlPlanes/{packetCoreControlPlaneName}/packetCoreDataPlanes/{packetCoreDataPlaneName}/attachedDataNetworks/{attachedDataNetworkName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AttachedDataNetworks_CreateOrUpdate</description>
-        /// </item>
-        /// </list>
+        /// Gets an object representing a <see cref="PacketCaptureResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="PacketCaptureResource.CreateResourceIdentifier" /> to create a <see cref="PacketCaptureResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
-        public static async Task<ArmOperation<AttachedDataNetwork>> CreateOrUpdateAttachedDataNetworkAsync(this TenantResource tenantResource, WaitUntil waitUntil, TenantResourceCreateOrUpdateAttachedDataNetworkOptions options, CancellationToken cancellationToken = default)
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="PacketCaptureResource" /> object. </returns>
+        public static PacketCaptureResource GetPacketCaptureResource(this ArmClient client, ResourceIdentifier id)
         {
-            Argument.AssertNotNull(options, nameof(options));
-
-            return await GetTenantResourceExtensionClient(tenantResource).CreateOrUpdateAttachedDataNetworkAsync(waitUntil, options, cancellationToken).ConfigureAwait(false);
+            return client.GetResourceClient(() =>
+            {
+                PacketCaptureResource.ValidateResourceId(id);
+                return new PacketCaptureResource(client, id);
+            }
+            );
         }
+        #endregion
 
+        #region PacketCoreControlPlaneResource
         /// <summary>
-        /// Creates or updates an attached data network. Must be created in the same location as its parent packet core data plane.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MobileNetwork/packetCoreControlPlanes/{packetCoreControlPlaneName}/packetCoreDataPlanes/{packetCoreDataPlaneName}/attachedDataNetworks/{attachedDataNetworkName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AttachedDataNetworks_CreateOrUpdate</description>
-        /// </item>
-        /// </list>
+        /// Gets an object representing a <see cref="PacketCoreControlPlaneResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="PacketCoreControlPlaneResource.CreateResourceIdentifier" /> to create a <see cref="PacketCoreControlPlaneResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
-        public static ArmOperation<AttachedDataNetwork> CreateOrUpdateAttachedDataNetwork(this TenantResource tenantResource, WaitUntil waitUntil, TenantResourceCreateOrUpdateAttachedDataNetworkOptions options, CancellationToken cancellationToken = default)
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="PacketCoreControlPlaneResource" /> object. </returns>
+        public static PacketCoreControlPlaneResource GetPacketCoreControlPlaneResource(this ArmClient client, ResourceIdentifier id)
         {
-            Argument.AssertNotNull(options, nameof(options));
-
-            return GetTenantResourceExtensionClient(tenantResource).CreateOrUpdateAttachedDataNetwork(waitUntil, options, cancellationToken);
+            return client.GetResourceClient(() =>
+            {
+                PacketCoreControlPlaneResource.ValidateResourceId(id);
+                return new PacketCoreControlPlaneResource(client, id);
+            }
+            );
         }
+        #endregion
 
+        #region TenantPacketCoreControlPlaneVersionResource
         /// <summary>
-        /// Updates an attached data network tags.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MobileNetwork/packetCoreControlPlanes/{packetCoreControlPlaneName}/packetCoreDataPlanes/{packetCoreDataPlaneName}/attachedDataNetworks/{attachedDataNetworkName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AttachedDataNetworks_UpdateTags</description>
-        /// </item>
-        /// </list>
+        /// Gets an object representing a <see cref="TenantPacketCoreControlPlaneVersionResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="TenantPacketCoreControlPlaneVersionResource.CreateResourceIdentifier" /> to create a <see cref="TenantPacketCoreControlPlaneVersionResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
-        public static async Task<Response<AttachedDataNetwork>> UpdateTagsAttachedDataNetworkAsync(this TenantResource tenantResource, TenantResourceUpdateTagsAttachedDataNetworkOptions options, CancellationToken cancellationToken = default)
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="TenantPacketCoreControlPlaneVersionResource" /> object. </returns>
+        public static TenantPacketCoreControlPlaneVersionResource GetTenantPacketCoreControlPlaneVersionResource(this ArmClient client, ResourceIdentifier id)
         {
-            Argument.AssertNotNull(options, nameof(options));
-
-            return await GetTenantResourceExtensionClient(tenantResource).UpdateTagsAttachedDataNetworkAsync(options, cancellationToken).ConfigureAwait(false);
+            return client.GetResourceClient(() =>
+            {
+                TenantPacketCoreControlPlaneVersionResource.ValidateResourceId(id);
+                return new TenantPacketCoreControlPlaneVersionResource(client, id);
+            }
+            );
         }
+        #endregion
 
+        #region SubscriptionPacketCoreControlPlaneVersionResource
         /// <summary>
-        /// Updates an attached data network tags.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MobileNetwork/packetCoreControlPlanes/{packetCoreControlPlaneName}/packetCoreDataPlanes/{packetCoreDataPlaneName}/attachedDataNetworks/{attachedDataNetworkName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AttachedDataNetworks_UpdateTags</description>
-        /// </item>
-        /// </list>
+        /// Gets an object representing a <see cref="SubscriptionPacketCoreControlPlaneVersionResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SubscriptionPacketCoreControlPlaneVersionResource.CreateResourceIdentifier" /> to create a <see cref="SubscriptionPacketCoreControlPlaneVersionResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
-        public static Response<AttachedDataNetwork> UpdateTagsAttachedDataNetwork(this TenantResource tenantResource, TenantResourceUpdateTagsAttachedDataNetworkOptions options, CancellationToken cancellationToken = default)
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="SubscriptionPacketCoreControlPlaneVersionResource" /> object. </returns>
+        public static SubscriptionPacketCoreControlPlaneVersionResource GetSubscriptionPacketCoreControlPlaneVersionResource(this ArmClient client, ResourceIdentifier id)
         {
-            Argument.AssertNotNull(options, nameof(options));
-
-            return GetTenantResourceExtensionClient(tenantResource).UpdateTagsAttachedDataNetwork(options, cancellationToken);
+            return client.GetResourceClient(() =>
+            {
+                SubscriptionPacketCoreControlPlaneVersionResource.ValidateResourceId(id);
+                return new SubscriptionPacketCoreControlPlaneVersionResource(client, id);
+            }
+            );
         }
+        #endregion
 
+        #region PacketCoreDataPlaneResource
         /// <summary>
-        /// Gets all the attached data networks associated with a packet core data plane.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MobileNetwork/packetCoreControlPlanes/{packetCoreControlPlaneName}/packetCoreDataPlanes/{packetCoreDataPlaneName}/attachedDataNetworks</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AttachedDataNetworks_ListByPacketCoreDataPlane</description>
-        /// </item>
-        /// </list>
+        /// Gets an object representing a <see cref="PacketCoreDataPlaneResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="PacketCoreDataPlaneResource.CreateResourceIdentifier" /> to create a <see cref="PacketCoreDataPlaneResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="packetCoreControlPlaneName"> The name of the packet core control plane. </param>
-        /// <param name="packetCoreDataPlaneName"> The name of the packet core data plane. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/>, <paramref name="packetCoreControlPlaneName"/> or <paramref name="packetCoreDataPlaneName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="packetCoreControlPlaneName"/> or <paramref name="packetCoreDataPlaneName"/> is null. </exception>
-        /// <returns> An async collection of <see cref="AttachedDataNetwork" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<AttachedDataNetwork> GetAttachedDataNetworksByPacketCoreDataPlaneAsync(this TenantResource tenantResource, Guid subscriptionId, string resourceGroupName, string packetCoreControlPlaneName, string packetCoreDataPlaneName, CancellationToken cancellationToken = default)
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="PacketCoreDataPlaneResource" /> object. </returns>
+        public static PacketCoreDataPlaneResource GetPacketCoreDataPlaneResource(this ArmClient client, ResourceIdentifier id)
         {
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(packetCoreControlPlaneName, nameof(packetCoreControlPlaneName));
-            Argument.AssertNotNullOrEmpty(packetCoreDataPlaneName, nameof(packetCoreDataPlaneName));
-
-            return GetTenantResourceExtensionClient(tenantResource).GetAttachedDataNetworksByPacketCoreDataPlaneAsync(subscriptionId, resourceGroupName, packetCoreControlPlaneName, packetCoreDataPlaneName, cancellationToken);
+            return client.GetResourceClient(() =>
+            {
+                PacketCoreDataPlaneResource.ValidateResourceId(id);
+                return new PacketCoreDataPlaneResource(client, id);
+            }
+            );
         }
+        #endregion
 
+        #region ServiceResource
         /// <summary>
-        /// Gets all the attached data networks associated with a packet core data plane.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MobileNetwork/packetCoreControlPlanes/{packetCoreControlPlaneName}/packetCoreDataPlanes/{packetCoreDataPlaneName}/attachedDataNetworks</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AttachedDataNetworks_ListByPacketCoreDataPlane</description>
-        /// </item>
-        /// </list>
+        /// Gets an object representing a <see cref="ServiceResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ServiceResource.CreateResourceIdentifier" /> to create a <see cref="ServiceResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="packetCoreControlPlaneName"> The name of the packet core control plane. </param>
-        /// <param name="packetCoreDataPlaneName"> The name of the packet core data plane. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/>, <paramref name="packetCoreControlPlaneName"/> or <paramref name="packetCoreDataPlaneName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="packetCoreControlPlaneName"/> or <paramref name="packetCoreDataPlaneName"/> is null. </exception>
-        /// <returns> A collection of <see cref="AttachedDataNetwork" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<AttachedDataNetwork> GetAttachedDataNetworksByPacketCoreDataPlane(this TenantResource tenantResource, Guid subscriptionId, string resourceGroupName, string packetCoreControlPlaneName, string packetCoreDataPlaneName, CancellationToken cancellationToken = default)
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ServiceResource" /> object. </returns>
+        public static ServiceResource GetServiceResource(this ArmClient client, ResourceIdentifier id)
         {
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(packetCoreControlPlaneName, nameof(packetCoreControlPlaneName));
-            Argument.AssertNotNullOrEmpty(packetCoreDataPlaneName, nameof(packetCoreDataPlaneName));
-
-            return GetTenantResourceExtensionClient(tenantResource).GetAttachedDataNetworksByPacketCoreDataPlane(subscriptionId, resourceGroupName, packetCoreControlPlaneName, packetCoreDataPlaneName, cancellationToken);
+            return client.GetResourceClient(() =>
+            {
+                ServiceResource.ValidateResourceId(id);
+                return new ServiceResource(client, id);
+            }
+            );
         }
+        #endregion
 
+        #region SimResource
         /// <summary>
-        /// Deletes the specified data network.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MobileNetwork/mobileNetworks/{mobileNetworkName}/dataNetworks/{dataNetworkName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DataNetworks_Delete</description>
-        /// </item>
-        /// </list>
+        /// Gets an object representing a <see cref="SimResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SimResource.CreateResourceIdentifier" /> to create a <see cref="SimResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="mobileNetworkName"> The name of the mobile network. </param>
-        /// <param name="dataNetworkName"> The name of the data network. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/>, <paramref name="mobileNetworkName"/> or <paramref name="dataNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="mobileNetworkName"/> or <paramref name="dataNetworkName"/> is null. </exception>
-        public static async Task<ArmOperation> DeleteDataNetworkAsync(this TenantResource tenantResource, WaitUntil waitUntil, Guid subscriptionId, string resourceGroupName, string mobileNetworkName, string dataNetworkName, CancellationToken cancellationToken = default)
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="SimResource" /> object. </returns>
+        public static SimResource GetSimResource(this ArmClient client, ResourceIdentifier id)
         {
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(mobileNetworkName, nameof(mobileNetworkName));
-            Argument.AssertNotNullOrEmpty(dataNetworkName, nameof(dataNetworkName));
-
-            return await GetTenantResourceExtensionClient(tenantResource).DeleteDataNetworkAsync(waitUntil, subscriptionId, resourceGroupName, mobileNetworkName, dataNetworkName, cancellationToken).ConfigureAwait(false);
+            return client.GetResourceClient(() =>
+            {
+                SimResource.ValidateResourceId(id);
+                return new SimResource(client, id);
+            }
+            );
         }
+        #endregion
 
+        #region SimGroupResource
         /// <summary>
-        /// Deletes the specified data network.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MobileNetwork/mobileNetworks/{mobileNetworkName}/dataNetworks/{dataNetworkName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DataNetworks_Delete</description>
-        /// </item>
-        /// </list>
+        /// Gets an object representing a <see cref="SimGroupResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SimGroupResource.CreateResourceIdentifier" /> to create a <see cref="SimGroupResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="mobileNetworkName"> The name of the mobile network. </param>
-        /// <param name="dataNetworkName"> The name of the data network. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/>, <paramref name="mobileNetworkName"/> or <paramref name="dataNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="mobileNetworkName"/> or <paramref name="dataNetworkName"/> is null. </exception>
-        public static ArmOperation DeleteDataNetwork(this TenantResource tenantResource, WaitUntil waitUntil, Guid subscriptionId, string resourceGroupName, string mobileNetworkName, string dataNetworkName, CancellationToken cancellationToken = default)
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="SimGroupResource" /> object. </returns>
+        public static SimGroupResource GetSimGroupResource(this ArmClient client, ResourceIdentifier id)
         {
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(mobileNetworkName, nameof(mobileNetworkName));
-            Argument.AssertNotNullOrEmpty(dataNetworkName, nameof(dataNetworkName));
-
-            return GetTenantResourceExtensionClient(tenantResource).DeleteDataNetwork(waitUntil, subscriptionId, resourceGroupName, mobileNetworkName, dataNetworkName, cancellationToken);
+            return client.GetResourceClient(() =>
+            {
+                SimGroupResource.ValidateResourceId(id);
+                return new SimGroupResource(client, id);
+            }
+            );
         }
+        #endregion
 
+        #region SimPolicyResource
         /// <summary>
-        /// Gets information about the specified data network.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MobileNetwork/mobileNetworks/{mobileNetworkName}/dataNetworks/{dataNetworkName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DataNetworks_Get</description>
-        /// </item>
-        /// </list>
+        /// Gets an object representing a <see cref="SimPolicyResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SimPolicyResource.CreateResourceIdentifier" /> to create a <see cref="SimPolicyResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="mobileNetworkName"> The name of the mobile network. </param>
-        /// <param name="dataNetworkName"> The name of the data network. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/>, <paramref name="mobileNetworkName"/> or <paramref name="dataNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="mobileNetworkName"/> or <paramref name="dataNetworkName"/> is null. </exception>
-        public static async Task<Response<DataNetwork>> GetDataNetworkAsync(this TenantResource tenantResource, Guid subscriptionId, string resourceGroupName, string mobileNetworkName, string dataNetworkName, CancellationToken cancellationToken = default)
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="SimPolicyResource" /> object. </returns>
+        public static SimPolicyResource GetSimPolicyResource(this ArmClient client, ResourceIdentifier id)
         {
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(mobileNetworkName, nameof(mobileNetworkName));
-            Argument.AssertNotNullOrEmpty(dataNetworkName, nameof(dataNetworkName));
-
-            return await GetTenantResourceExtensionClient(tenantResource).GetDataNetworkAsync(subscriptionId, resourceGroupName, mobileNetworkName, dataNetworkName, cancellationToken).ConfigureAwait(false);
+            return client.GetResourceClient(() =>
+            {
+                SimPolicyResource.ValidateResourceId(id);
+                return new SimPolicyResource(client, id);
+            }
+            );
         }
+        #endregion
 
+        #region SiteResource
         /// <summary>
-        /// Gets information about the specified data network.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MobileNetwork/mobileNetworks/{mobileNetworkName}/dataNetworks/{dataNetworkName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DataNetworks_Get</description>
-        /// </item>
-        /// </list>
+        /// Gets an object representing a <see cref="SiteResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SiteResource.CreateResourceIdentifier" /> to create a <see cref="SiteResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="mobileNetworkName"> The name of the mobile network. </param>
-        /// <param name="dataNetworkName"> The name of the data network. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/>, <paramref name="mobileNetworkName"/> or <paramref name="dataNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="mobileNetworkName"/> or <paramref name="dataNetworkName"/> is null. </exception>
-        public static Response<DataNetwork> GetDataNetwork(this TenantResource tenantResource, Guid subscriptionId, string resourceGroupName, string mobileNetworkName, string dataNetworkName, CancellationToken cancellationToken = default)
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="SiteResource" /> object. </returns>
+        public static SiteResource GetSiteResource(this ArmClient client, ResourceIdentifier id)
         {
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(mobileNetworkName, nameof(mobileNetworkName));
-            Argument.AssertNotNullOrEmpty(dataNetworkName, nameof(dataNetworkName));
-
-            return GetTenantResourceExtensionClient(tenantResource).GetDataNetwork(subscriptionId, resourceGroupName, mobileNetworkName, dataNetworkName, cancellationToken);
+            return client.GetResourceClient(() =>
+            {
+                SiteResource.ValidateResourceId(id);
+                return new SiteResource(client, id);
+            }
+            );
         }
+        #endregion
 
+        #region SliceResource
         /// <summary>
-        /// Creates or updates a data network. Must be created in the same location as its parent mobile network.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MobileNetwork/mobileNetworks/{mobileNetworkName}/dataNetworks/{dataNetworkName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DataNetworks_CreateOrUpdate</description>
-        /// </item>
-        /// </list>
+        /// Gets an object representing a <see cref="SliceResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SliceResource.CreateResourceIdentifier" /> to create a <see cref="SliceResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="mobileNetworkName"> The name of the mobile network. </param>
-        /// <param name="dataNetworkName"> The name of the data network. </param>
-        /// <param name="dataNetwork"> Parameters supplied to the create or update data network operation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/>, <paramref name="mobileNetworkName"/> or <paramref name="dataNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="mobileNetworkName"/>, <paramref name="dataNetworkName"/> or <paramref name="dataNetwork"/> is null. </exception>
-        public static async Task<ArmOperation<DataNetwork>> CreateOrUpdateDataNetworkAsync(this TenantResource tenantResource, WaitUntil waitUntil, Guid subscriptionId, string resourceGroupName, string mobileNetworkName, string dataNetworkName, DataNetwork dataNetwork, CancellationToken cancellationToken = default)
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="SliceResource" /> object. </returns>
+        public static SliceResource GetSliceResource(this ArmClient client, ResourceIdentifier id)
         {
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(mobileNetworkName, nameof(mobileNetworkName));
-            Argument.AssertNotNullOrEmpty(dataNetworkName, nameof(dataNetworkName));
-            Argument.AssertNotNull(dataNetwork, nameof(dataNetwork));
-
-            return await GetTenantResourceExtensionClient(tenantResource).CreateOrUpdateDataNetworkAsync(waitUntil, subscriptionId, resourceGroupName, mobileNetworkName, dataNetworkName, dataNetwork, cancellationToken).ConfigureAwait(false);
+            return client.GetResourceClient(() =>
+            {
+                SliceResource.ValidateResourceId(id);
+                return new SliceResource(client, id);
+            }
+            );
         }
+        #endregion
 
-        /// <summary>
-        /// Creates or updates a data network. Must be created in the same location as its parent mobile network.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MobileNetwork/mobileNetworks/{mobileNetworkName}/dataNetworks/{dataNetworkName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DataNetworks_CreateOrUpdate</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="mobileNetworkName"> The name of the mobile network. </param>
-        /// <param name="dataNetworkName"> The name of the data network. </param>
-        /// <param name="dataNetwork"> Parameters supplied to the create or update data network operation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/>, <paramref name="mobileNetworkName"/> or <paramref name="dataNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="mobileNetworkName"/>, <paramref name="dataNetworkName"/> or <paramref name="dataNetwork"/> is null. </exception>
-        public static ArmOperation<DataNetwork> CreateOrUpdateDataNetwork(this TenantResource tenantResource, WaitUntil waitUntil, Guid subscriptionId, string resourceGroupName, string mobileNetworkName, string dataNetworkName, DataNetwork dataNetwork, CancellationToken cancellationToken = default)
+        /// <summary> Gets a collection of MobileNetworkResources in the ResourceGroupResource. </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <returns> An object representing collection of MobileNetworkResources and their operations over a MobileNetworkResource. </returns>
+        public static MobileNetworkCollection GetMobileNetworks(this ResourceGroupResource resourceGroupResource)
         {
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(mobileNetworkName, nameof(mobileNetworkName));
-            Argument.AssertNotNullOrEmpty(dataNetworkName, nameof(dataNetworkName));
-            Argument.AssertNotNull(dataNetwork, nameof(dataNetwork));
-
-            return GetTenantResourceExtensionClient(tenantResource).CreateOrUpdateDataNetwork(waitUntil, subscriptionId, resourceGroupName, mobileNetworkName, dataNetworkName, dataNetwork, cancellationToken);
-        }
-
-        /// <summary>
-        /// Updates data network tags.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MobileNetwork/mobileNetworks/{mobileNetworkName}/dataNetworks/{dataNetworkName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DataNetworks_UpdateTags</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="mobileNetworkName"> The name of the mobile network. </param>
-        /// <param name="dataNetworkName"> The name of the data network. </param>
-        /// <param name="tagsObject"> Parameters supplied to update data network tags. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/>, <paramref name="mobileNetworkName"/> or <paramref name="dataNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="mobileNetworkName"/>, <paramref name="dataNetworkName"/> or <paramref name="tagsObject"/> is null. </exception>
-        public static async Task<Response<DataNetwork>> UpdateTagsDataNetworkAsync(this TenantResource tenantResource, Guid subscriptionId, string resourceGroupName, string mobileNetworkName, string dataNetworkName, TagsObject tagsObject, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(mobileNetworkName, nameof(mobileNetworkName));
-            Argument.AssertNotNullOrEmpty(dataNetworkName, nameof(dataNetworkName));
-            Argument.AssertNotNull(tagsObject, nameof(tagsObject));
-
-            return await GetTenantResourceExtensionClient(tenantResource).UpdateTagsDataNetworkAsync(subscriptionId, resourceGroupName, mobileNetworkName, dataNetworkName, tagsObject, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Updates data network tags.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MobileNetwork/mobileNetworks/{mobileNetworkName}/dataNetworks/{dataNetworkName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DataNetworks_UpdateTags</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="mobileNetworkName"> The name of the mobile network. </param>
-        /// <param name="dataNetworkName"> The name of the data network. </param>
-        /// <param name="tagsObject"> Parameters supplied to update data network tags. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/>, <paramref name="mobileNetworkName"/> or <paramref name="dataNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="mobileNetworkName"/>, <paramref name="dataNetworkName"/> or <paramref name="tagsObject"/> is null. </exception>
-        public static Response<DataNetwork> UpdateTagsDataNetwork(this TenantResource tenantResource, Guid subscriptionId, string resourceGroupName, string mobileNetworkName, string dataNetworkName, TagsObject tagsObject, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(mobileNetworkName, nameof(mobileNetworkName));
-            Argument.AssertNotNullOrEmpty(dataNetworkName, nameof(dataNetworkName));
-            Argument.AssertNotNull(tagsObject, nameof(tagsObject));
-
-            return GetTenantResourceExtensionClient(tenantResource).UpdateTagsDataNetwork(subscriptionId, resourceGroupName, mobileNetworkName, dataNetworkName, tagsObject, cancellationToken);
-        }
-
-        /// <summary>
-        /// Lists all data networks in the mobile network.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MobileNetwork/mobileNetworks/{mobileNetworkName}/dataNetworks</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DataNetworks_ListByMobileNetwork</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="mobileNetworkName"> The name of the mobile network. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="mobileNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="mobileNetworkName"/> is null. </exception>
-        /// <returns> An async collection of <see cref="DataNetwork" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<DataNetwork> GetDataNetworksByMobileNetworkAsync(this TenantResource tenantResource, Guid subscriptionId, string resourceGroupName, string mobileNetworkName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(mobileNetworkName, nameof(mobileNetworkName));
-
-            return GetTenantResourceExtensionClient(tenantResource).GetDataNetworksByMobileNetworkAsync(subscriptionId, resourceGroupName, mobileNetworkName, cancellationToken);
-        }
-
-        /// <summary>
-        /// Lists all data networks in the mobile network.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MobileNetwork/mobileNetworks/{mobileNetworkName}/dataNetworks</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DataNetworks_ListByMobileNetwork</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="mobileNetworkName"> The name of the mobile network. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="mobileNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="mobileNetworkName"/> is null. </exception>
-        /// <returns> A collection of <see cref="DataNetwork" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<DataNetwork> GetDataNetworksByMobileNetwork(this TenantResource tenantResource, Guid subscriptionId, string resourceGroupName, string mobileNetworkName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(mobileNetworkName, nameof(mobileNetworkName));
-
-            return GetTenantResourceExtensionClient(tenantResource).GetDataNetworksByMobileNetwork(subscriptionId, resourceGroupName, mobileNetworkName, cancellationToken);
-        }
-
-        /// <summary>
-        /// Creates or updates a diagnostics package.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MobileNetwork/packetCoreControlPlanes/{packetCoreControlPlaneName}/diagnosticsPackages/{diagnosticsPackageName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DiagnosticsPackages_CreateOrUpdate</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="packetCoreControlPlaneName"> The name of the packet core control plane. </param>
-        /// <param name="diagnosticsPackageName"> The name of the diagnostics package. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/>, <paramref name="packetCoreControlPlaneName"/> or <paramref name="diagnosticsPackageName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="packetCoreControlPlaneName"/> or <paramref name="diagnosticsPackageName"/> is null. </exception>
-        public static async Task<ArmOperation<DiagnosticsPackage>> CreateOrUpdateDiagnosticsPackageAsync(this TenantResource tenantResource, WaitUntil waitUntil, Guid subscriptionId, string resourceGroupName, string packetCoreControlPlaneName, string diagnosticsPackageName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(packetCoreControlPlaneName, nameof(packetCoreControlPlaneName));
-            Argument.AssertNotNullOrEmpty(diagnosticsPackageName, nameof(diagnosticsPackageName));
-
-            return await GetTenantResourceExtensionClient(tenantResource).CreateOrUpdateDiagnosticsPackageAsync(waitUntil, subscriptionId, resourceGroupName, packetCoreControlPlaneName, diagnosticsPackageName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Creates or updates a diagnostics package.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MobileNetwork/packetCoreControlPlanes/{packetCoreControlPlaneName}/diagnosticsPackages/{diagnosticsPackageName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DiagnosticsPackages_CreateOrUpdate</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="packetCoreControlPlaneName"> The name of the packet core control plane. </param>
-        /// <param name="diagnosticsPackageName"> The name of the diagnostics package. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/>, <paramref name="packetCoreControlPlaneName"/> or <paramref name="diagnosticsPackageName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="packetCoreControlPlaneName"/> or <paramref name="diagnosticsPackageName"/> is null. </exception>
-        public static ArmOperation<DiagnosticsPackage> CreateOrUpdateDiagnosticsPackage(this TenantResource tenantResource, WaitUntil waitUntil, Guid subscriptionId, string resourceGroupName, string packetCoreControlPlaneName, string diagnosticsPackageName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(packetCoreControlPlaneName, nameof(packetCoreControlPlaneName));
-            Argument.AssertNotNullOrEmpty(diagnosticsPackageName, nameof(diagnosticsPackageName));
-
-            return GetTenantResourceExtensionClient(tenantResource).CreateOrUpdateDiagnosticsPackage(waitUntil, subscriptionId, resourceGroupName, packetCoreControlPlaneName, diagnosticsPackageName, cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets information about the specified diagnostics package.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MobileNetwork/packetCoreControlPlanes/{packetCoreControlPlaneName}/diagnosticsPackages/{diagnosticsPackageName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DiagnosticsPackages_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="packetCoreControlPlaneName"> The name of the packet core control plane. </param>
-        /// <param name="diagnosticsPackageName"> The name of the diagnostics package. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/>, <paramref name="packetCoreControlPlaneName"/> or <paramref name="diagnosticsPackageName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="packetCoreControlPlaneName"/> or <paramref name="diagnosticsPackageName"/> is null. </exception>
-        public static async Task<Response<DiagnosticsPackage>> GetDiagnosticsPackageAsync(this TenantResource tenantResource, Guid subscriptionId, string resourceGroupName, string packetCoreControlPlaneName, string diagnosticsPackageName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(packetCoreControlPlaneName, nameof(packetCoreControlPlaneName));
-            Argument.AssertNotNullOrEmpty(diagnosticsPackageName, nameof(diagnosticsPackageName));
-
-            return await GetTenantResourceExtensionClient(tenantResource).GetDiagnosticsPackageAsync(subscriptionId, resourceGroupName, packetCoreControlPlaneName, diagnosticsPackageName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Gets information about the specified diagnostics package.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MobileNetwork/packetCoreControlPlanes/{packetCoreControlPlaneName}/diagnosticsPackages/{diagnosticsPackageName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DiagnosticsPackages_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="packetCoreControlPlaneName"> The name of the packet core control plane. </param>
-        /// <param name="diagnosticsPackageName"> The name of the diagnostics package. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/>, <paramref name="packetCoreControlPlaneName"/> or <paramref name="diagnosticsPackageName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="packetCoreControlPlaneName"/> or <paramref name="diagnosticsPackageName"/> is null. </exception>
-        public static Response<DiagnosticsPackage> GetDiagnosticsPackage(this TenantResource tenantResource, Guid subscriptionId, string resourceGroupName, string packetCoreControlPlaneName, string diagnosticsPackageName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(packetCoreControlPlaneName, nameof(packetCoreControlPlaneName));
-            Argument.AssertNotNullOrEmpty(diagnosticsPackageName, nameof(diagnosticsPackageName));
-
-            return GetTenantResourceExtensionClient(tenantResource).GetDiagnosticsPackage(subscriptionId, resourceGroupName, packetCoreControlPlaneName, diagnosticsPackageName, cancellationToken);
-        }
-
-        /// <summary>
-        /// Deletes the specified diagnostics package.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MobileNetwork/packetCoreControlPlanes/{packetCoreControlPlaneName}/diagnosticsPackages/{diagnosticsPackageName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DiagnosticsPackages_Delete</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="packetCoreControlPlaneName"> The name of the packet core control plane. </param>
-        /// <param name="diagnosticsPackageName"> The name of the diagnostics package. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/>, <paramref name="packetCoreControlPlaneName"/> or <paramref name="diagnosticsPackageName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="packetCoreControlPlaneName"/> or <paramref name="diagnosticsPackageName"/> is null. </exception>
-        public static async Task<ArmOperation> DeleteDiagnosticsPackageAsync(this TenantResource tenantResource, WaitUntil waitUntil, Guid subscriptionId, string resourceGroupName, string packetCoreControlPlaneName, string diagnosticsPackageName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(packetCoreControlPlaneName, nameof(packetCoreControlPlaneName));
-            Argument.AssertNotNullOrEmpty(diagnosticsPackageName, nameof(diagnosticsPackageName));
-
-            return await GetTenantResourceExtensionClient(tenantResource).DeleteDiagnosticsPackageAsync(waitUntil, subscriptionId, resourceGroupName, packetCoreControlPlaneName, diagnosticsPackageName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Deletes the specified diagnostics package.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MobileNetwork/packetCoreControlPlanes/{packetCoreControlPlaneName}/diagnosticsPackages/{diagnosticsPackageName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DiagnosticsPackages_Delete</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="packetCoreControlPlaneName"> The name of the packet core control plane. </param>
-        /// <param name="diagnosticsPackageName"> The name of the diagnostics package. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/>, <paramref name="packetCoreControlPlaneName"/> or <paramref name="diagnosticsPackageName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="packetCoreControlPlaneName"/> or <paramref name="diagnosticsPackageName"/> is null. </exception>
-        public static ArmOperation DeleteDiagnosticsPackage(this TenantResource tenantResource, WaitUntil waitUntil, Guid subscriptionId, string resourceGroupName, string packetCoreControlPlaneName, string diagnosticsPackageName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(packetCoreControlPlaneName, nameof(packetCoreControlPlaneName));
-            Argument.AssertNotNullOrEmpty(diagnosticsPackageName, nameof(diagnosticsPackageName));
-
-            return GetTenantResourceExtensionClient(tenantResource).DeleteDiagnosticsPackage(waitUntil, subscriptionId, resourceGroupName, packetCoreControlPlaneName, diagnosticsPackageName, cancellationToken);
-        }
-
-        /// <summary>
-        /// Lists all the diagnostics packages under a packet core control plane.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MobileNetwork/packetCoreControlPlanes/{packetCoreControlPlaneName}/diagnosticsPackages</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DiagnosticsPackages_ListByPacketCoreControlPlane</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="packetCoreControlPlaneName"> The name of the packet core control plane. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="packetCoreControlPlaneName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="packetCoreControlPlaneName"/> is null. </exception>
-        /// <returns> An async collection of <see cref="DiagnosticsPackage" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<DiagnosticsPackage> GetDiagnosticsPackagesByPacketCoreControlPlaneAsync(this TenantResource tenantResource, Guid subscriptionId, string resourceGroupName, string packetCoreControlPlaneName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(packetCoreControlPlaneName, nameof(packetCoreControlPlaneName));
-
-            return GetTenantResourceExtensionClient(tenantResource).GetDiagnosticsPackagesByPacketCoreControlPlaneAsync(subscriptionId, resourceGroupName, packetCoreControlPlaneName, cancellationToken);
-        }
-
-        /// <summary>
-        /// Lists all the diagnostics packages under a packet core control plane.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MobileNetwork/packetCoreControlPlanes/{packetCoreControlPlaneName}/diagnosticsPackages</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DiagnosticsPackages_ListByPacketCoreControlPlane</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="packetCoreControlPlaneName"> The name of the packet core control plane. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="packetCoreControlPlaneName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="packetCoreControlPlaneName"/> is null. </exception>
-        /// <returns> A collection of <see cref="DiagnosticsPackage" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<DiagnosticsPackage> GetDiagnosticsPackagesByPacketCoreControlPlane(this TenantResource tenantResource, Guid subscriptionId, string resourceGroupName, string packetCoreControlPlaneName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(packetCoreControlPlaneName, nameof(packetCoreControlPlaneName));
-
-            return GetTenantResourceExtensionClient(tenantResource).GetDiagnosticsPackagesByPacketCoreControlPlane(subscriptionId, resourceGroupName, packetCoreControlPlaneName, cancellationToken);
-        }
-
-        /// <summary>
-        /// Deletes the specified mobile network.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MobileNetwork/mobileNetworks/{mobileNetworkName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>MobileNetworks_Delete</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="mobileNetworkName"> The name of the mobile network. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="mobileNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="mobileNetworkName"/> is null. </exception>
-        public static async Task<ArmOperation> DeleteMobileNetworkAsync(this TenantResource tenantResource, WaitUntil waitUntil, Guid subscriptionId, string resourceGroupName, string mobileNetworkName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(mobileNetworkName, nameof(mobileNetworkName));
-
-            return await GetTenantResourceExtensionClient(tenantResource).DeleteMobileNetworkAsync(waitUntil, subscriptionId, resourceGroupName, mobileNetworkName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Deletes the specified mobile network.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MobileNetwork/mobileNetworks/{mobileNetworkName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>MobileNetworks_Delete</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="mobileNetworkName"> The name of the mobile network. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="mobileNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="mobileNetworkName"/> is null. </exception>
-        public static ArmOperation DeleteMobileNetwork(this TenantResource tenantResource, WaitUntil waitUntil, Guid subscriptionId, string resourceGroupName, string mobileNetworkName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(mobileNetworkName, nameof(mobileNetworkName));
-
-            return GetTenantResourceExtensionClient(tenantResource).DeleteMobileNetwork(waitUntil, subscriptionId, resourceGroupName, mobileNetworkName, cancellationToken);
+            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetMobileNetworks();
         }
 
         /// <summary>
@@ -948,19 +371,15 @@ namespace Azure.ResourceManager.MobileNetwork
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="mobileNetworkName"> The name of the mobile network. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="mobileNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="mobileNetworkName"/> is null. </exception>
-        public static async Task<Response<Models.MobileNetwork>> GetMobileNetworkAsync(this TenantResource tenantResource, Guid subscriptionId, string resourceGroupName, string mobileNetworkName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="mobileNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="mobileNetworkName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<MobileNetworkResource>> GetMobileNetworkAsync(this ResourceGroupResource resourceGroupResource, string mobileNetworkName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(mobileNetworkName, nameof(mobileNetworkName));
-
-            return await GetTenantResourceExtensionClient(tenantResource).GetMobileNetworkAsync(subscriptionId, resourceGroupName, mobileNetworkName, cancellationToken).ConfigureAwait(false);
+            return await resourceGroupResource.GetMobileNetworks().GetAsync(mobileNetworkName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -976,605 +395,23 @@ namespace Azure.ResourceManager.MobileNetwork
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="mobileNetworkName"> The name of the mobile network. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="mobileNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="mobileNetworkName"/> is null. </exception>
-        public static Response<Models.MobileNetwork> GetMobileNetwork(this TenantResource tenantResource, Guid subscriptionId, string resourceGroupName, string mobileNetworkName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="mobileNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="mobileNetworkName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static Response<MobileNetworkResource> GetMobileNetwork(this ResourceGroupResource resourceGroupResource, string mobileNetworkName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(mobileNetworkName, nameof(mobileNetworkName));
-
-            return GetTenantResourceExtensionClient(tenantResource).GetMobileNetwork(subscriptionId, resourceGroupName, mobileNetworkName, cancellationToken);
+            return resourceGroupResource.GetMobileNetworks().Get(mobileNetworkName, cancellationToken);
         }
 
-        /// <summary>
-        /// Creates or updates a mobile network.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MobileNetwork/mobileNetworks/{mobileNetworkName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>MobileNetworks_CreateOrUpdate</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="mobileNetworkName"> The name of the mobile network. </param>
-        /// <param name="mobileNetwork"> Parameters supplied to the create or update mobile network operation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="mobileNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="mobileNetworkName"/> or <paramref name="mobileNetwork"/> is null. </exception>
-        public static async Task<ArmOperation<Models.MobileNetwork>> CreateOrUpdateMobileNetworkAsync(this TenantResource tenantResource, WaitUntil waitUntil, Guid subscriptionId, string resourceGroupName, string mobileNetworkName, Models.MobileNetwork mobileNetwork, CancellationToken cancellationToken = default)
+        /// <summary> Gets a collection of PacketCoreControlPlaneResources in the ResourceGroupResource. </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <returns> An object representing collection of PacketCoreControlPlaneResources and their operations over a PacketCoreControlPlaneResource. </returns>
+        public static PacketCoreControlPlaneCollection GetPacketCoreControlPlanes(this ResourceGroupResource resourceGroupResource)
         {
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(mobileNetworkName, nameof(mobileNetworkName));
-            Argument.AssertNotNull(mobileNetwork, nameof(mobileNetwork));
-
-            return await GetTenantResourceExtensionClient(tenantResource).CreateOrUpdateMobileNetworkAsync(waitUntil, subscriptionId, resourceGroupName, mobileNetworkName, mobileNetwork, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Creates or updates a mobile network.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MobileNetwork/mobileNetworks/{mobileNetworkName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>MobileNetworks_CreateOrUpdate</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="mobileNetworkName"> The name of the mobile network. </param>
-        /// <param name="mobileNetwork"> Parameters supplied to the create or update mobile network operation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="mobileNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="mobileNetworkName"/> or <paramref name="mobileNetwork"/> is null. </exception>
-        public static ArmOperation<Models.MobileNetwork> CreateOrUpdateMobileNetwork(this TenantResource tenantResource, WaitUntil waitUntil, Guid subscriptionId, string resourceGroupName, string mobileNetworkName, Models.MobileNetwork mobileNetwork, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(mobileNetworkName, nameof(mobileNetworkName));
-            Argument.AssertNotNull(mobileNetwork, nameof(mobileNetwork));
-
-            return GetTenantResourceExtensionClient(tenantResource).CreateOrUpdateMobileNetwork(waitUntil, subscriptionId, resourceGroupName, mobileNetworkName, mobileNetwork, cancellationToken);
-        }
-
-        /// <summary>
-        /// Updates mobile network tags.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MobileNetwork/mobileNetworks/{mobileNetworkName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>MobileNetworks_UpdateTags</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="mobileNetworkName"> The name of the mobile network. </param>
-        /// <param name="tagsObject"> Parameters supplied to update mobile network tags. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="mobileNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="mobileNetworkName"/> or <paramref name="tagsObject"/> is null. </exception>
-        public static async Task<Response<Models.MobileNetwork>> UpdateTagsMobileNetworkAsync(this TenantResource tenantResource, Guid subscriptionId, string resourceGroupName, string mobileNetworkName, TagsObject tagsObject, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(mobileNetworkName, nameof(mobileNetworkName));
-            Argument.AssertNotNull(tagsObject, nameof(tagsObject));
-
-            return await GetTenantResourceExtensionClient(tenantResource).UpdateTagsMobileNetworkAsync(subscriptionId, resourceGroupName, mobileNetworkName, tagsObject, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Updates mobile network tags.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MobileNetwork/mobileNetworks/{mobileNetworkName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>MobileNetworks_UpdateTags</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="mobileNetworkName"> The name of the mobile network. </param>
-        /// <param name="tagsObject"> Parameters supplied to update mobile network tags. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="mobileNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="mobileNetworkName"/> or <paramref name="tagsObject"/> is null. </exception>
-        public static Response<Models.MobileNetwork> UpdateTagsMobileNetwork(this TenantResource tenantResource, Guid subscriptionId, string resourceGroupName, string mobileNetworkName, TagsObject tagsObject, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(mobileNetworkName, nameof(mobileNetworkName));
-            Argument.AssertNotNull(tagsObject, nameof(tagsObject));
-
-            return GetTenantResourceExtensionClient(tenantResource).UpdateTagsMobileNetwork(subscriptionId, resourceGroupName, mobileNetworkName, tagsObject, cancellationToken);
-        }
-
-        /// <summary>
-        /// Lists all the mobile networks in a subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.MobileNetwork/mobileNetworks</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>MobileNetworks_ListBySubscription</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="Models.MobileNetwork" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<Models.MobileNetwork> GetMobileNetworksBySubscriptionAsync(this TenantResource tenantResource, Guid subscriptionId, CancellationToken cancellationToken = default)
-        {
-            return GetTenantResourceExtensionClient(tenantResource).GetMobileNetworksBySubscriptionAsync(subscriptionId, cancellationToken);
-        }
-
-        /// <summary>
-        /// Lists all the mobile networks in a subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.MobileNetwork/mobileNetworks</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>MobileNetworks_ListBySubscription</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="Models.MobileNetwork" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<Models.MobileNetwork> GetMobileNetworksBySubscription(this TenantResource tenantResource, Guid subscriptionId, CancellationToken cancellationToken = default)
-        {
-            return GetTenantResourceExtensionClient(tenantResource).GetMobileNetworksBySubscription(subscriptionId, cancellationToken);
-        }
-
-        /// <summary>
-        /// Lists all the mobile networks in a resource group.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MobileNetwork/mobileNetworks</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>MobileNetworks_ListByResourceGroup</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> is null. </exception>
-        /// <returns> An async collection of <see cref="Models.MobileNetwork" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<Models.MobileNetwork> GetMobileNetworksByResourceGroupAsync(this TenantResource tenantResource, Guid subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-
-            return GetTenantResourceExtensionClient(tenantResource).GetMobileNetworksByResourceGroupAsync(subscriptionId, resourceGroupName, cancellationToken);
-        }
-
-        /// <summary>
-        /// Lists all the mobile networks in a resource group.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MobileNetwork/mobileNetworks</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>MobileNetworks_ListByResourceGroup</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> is null. </exception>
-        /// <returns> A collection of <see cref="Models.MobileNetwork" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<Models.MobileNetwork> GetMobileNetworksByResourceGroup(this TenantResource tenantResource, Guid subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-
-            return GetTenantResourceExtensionClient(tenantResource).GetMobileNetworksByResourceGroup(subscriptionId, resourceGroupName, cancellationToken);
-        }
-
-        /// <summary>
-        /// Creates or updates a packet capture.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MobileNetwork/packetCoreControlPlanes/{packetCoreControlPlaneName}/packetCaptures/{packetCaptureName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PacketCaptures_CreateOrUpdate</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="packetCoreControlPlaneName"> The name of the packet core control plane. </param>
-        /// <param name="packetCaptureName"> The name of the packet capture session. </param>
-        /// <param name="packetCapture"> Parameters supplied to the create or update packet capture operation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/>, <paramref name="packetCoreControlPlaneName"/> or <paramref name="packetCaptureName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="packetCoreControlPlaneName"/>, <paramref name="packetCaptureName"/> or <paramref name="packetCapture"/> is null. </exception>
-        public static async Task<ArmOperation<PacketCapture>> CreateOrUpdatePacketCaptureAsync(this TenantResource tenantResource, WaitUntil waitUntil, Guid subscriptionId, string resourceGroupName, string packetCoreControlPlaneName, string packetCaptureName, PacketCapture packetCapture, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(packetCoreControlPlaneName, nameof(packetCoreControlPlaneName));
-            Argument.AssertNotNullOrEmpty(packetCaptureName, nameof(packetCaptureName));
-            Argument.AssertNotNull(packetCapture, nameof(packetCapture));
-
-            return await GetTenantResourceExtensionClient(tenantResource).CreateOrUpdatePacketCaptureAsync(waitUntil, subscriptionId, resourceGroupName, packetCoreControlPlaneName, packetCaptureName, packetCapture, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Creates or updates a packet capture.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MobileNetwork/packetCoreControlPlanes/{packetCoreControlPlaneName}/packetCaptures/{packetCaptureName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PacketCaptures_CreateOrUpdate</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="packetCoreControlPlaneName"> The name of the packet core control plane. </param>
-        /// <param name="packetCaptureName"> The name of the packet capture session. </param>
-        /// <param name="packetCapture"> Parameters supplied to the create or update packet capture operation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/>, <paramref name="packetCoreControlPlaneName"/> or <paramref name="packetCaptureName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="packetCoreControlPlaneName"/>, <paramref name="packetCaptureName"/> or <paramref name="packetCapture"/> is null. </exception>
-        public static ArmOperation<PacketCapture> CreateOrUpdatePacketCapture(this TenantResource tenantResource, WaitUntil waitUntil, Guid subscriptionId, string resourceGroupName, string packetCoreControlPlaneName, string packetCaptureName, PacketCapture packetCapture, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(packetCoreControlPlaneName, nameof(packetCoreControlPlaneName));
-            Argument.AssertNotNullOrEmpty(packetCaptureName, nameof(packetCaptureName));
-            Argument.AssertNotNull(packetCapture, nameof(packetCapture));
-
-            return GetTenantResourceExtensionClient(tenantResource).CreateOrUpdatePacketCapture(waitUntil, subscriptionId, resourceGroupName, packetCoreControlPlaneName, packetCaptureName, packetCapture, cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets information about the specified packet capture session.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MobileNetwork/packetCoreControlPlanes/{packetCoreControlPlaneName}/packetCaptures/{packetCaptureName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PacketCaptures_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="packetCoreControlPlaneName"> The name of the packet core control plane. </param>
-        /// <param name="packetCaptureName"> The name of the packet capture session. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/>, <paramref name="packetCoreControlPlaneName"/> or <paramref name="packetCaptureName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="packetCoreControlPlaneName"/> or <paramref name="packetCaptureName"/> is null. </exception>
-        public static async Task<Response<PacketCapture>> GetPacketCaptureAsync(this TenantResource tenantResource, Guid subscriptionId, string resourceGroupName, string packetCoreControlPlaneName, string packetCaptureName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(packetCoreControlPlaneName, nameof(packetCoreControlPlaneName));
-            Argument.AssertNotNullOrEmpty(packetCaptureName, nameof(packetCaptureName));
-
-            return await GetTenantResourceExtensionClient(tenantResource).GetPacketCaptureAsync(subscriptionId, resourceGroupName, packetCoreControlPlaneName, packetCaptureName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Gets information about the specified packet capture session.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MobileNetwork/packetCoreControlPlanes/{packetCoreControlPlaneName}/packetCaptures/{packetCaptureName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PacketCaptures_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="packetCoreControlPlaneName"> The name of the packet core control plane. </param>
-        /// <param name="packetCaptureName"> The name of the packet capture session. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/>, <paramref name="packetCoreControlPlaneName"/> or <paramref name="packetCaptureName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="packetCoreControlPlaneName"/> or <paramref name="packetCaptureName"/> is null. </exception>
-        public static Response<PacketCapture> GetPacketCapture(this TenantResource tenantResource, Guid subscriptionId, string resourceGroupName, string packetCoreControlPlaneName, string packetCaptureName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(packetCoreControlPlaneName, nameof(packetCoreControlPlaneName));
-            Argument.AssertNotNullOrEmpty(packetCaptureName, nameof(packetCaptureName));
-
-            return GetTenantResourceExtensionClient(tenantResource).GetPacketCapture(subscriptionId, resourceGroupName, packetCoreControlPlaneName, packetCaptureName, cancellationToken);
-        }
-
-        /// <summary>
-        /// Deletes the specified packet capture.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MobileNetwork/packetCoreControlPlanes/{packetCoreControlPlaneName}/packetCaptures/{packetCaptureName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PacketCaptures_Delete</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="packetCoreControlPlaneName"> The name of the packet core control plane. </param>
-        /// <param name="packetCaptureName"> The name of the packet capture session. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/>, <paramref name="packetCoreControlPlaneName"/> or <paramref name="packetCaptureName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="packetCoreControlPlaneName"/> or <paramref name="packetCaptureName"/> is null. </exception>
-        public static async Task<ArmOperation> DeletePacketCaptureAsync(this TenantResource tenantResource, WaitUntil waitUntil, Guid subscriptionId, string resourceGroupName, string packetCoreControlPlaneName, string packetCaptureName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(packetCoreControlPlaneName, nameof(packetCoreControlPlaneName));
-            Argument.AssertNotNullOrEmpty(packetCaptureName, nameof(packetCaptureName));
-
-            return await GetTenantResourceExtensionClient(tenantResource).DeletePacketCaptureAsync(waitUntil, subscriptionId, resourceGroupName, packetCoreControlPlaneName, packetCaptureName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Deletes the specified packet capture.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MobileNetwork/packetCoreControlPlanes/{packetCoreControlPlaneName}/packetCaptures/{packetCaptureName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PacketCaptures_Delete</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="packetCoreControlPlaneName"> The name of the packet core control plane. </param>
-        /// <param name="packetCaptureName"> The name of the packet capture session. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/>, <paramref name="packetCoreControlPlaneName"/> or <paramref name="packetCaptureName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="packetCoreControlPlaneName"/> or <paramref name="packetCaptureName"/> is null. </exception>
-        public static ArmOperation DeletePacketCapture(this TenantResource tenantResource, WaitUntil waitUntil, Guid subscriptionId, string resourceGroupName, string packetCoreControlPlaneName, string packetCaptureName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(packetCoreControlPlaneName, nameof(packetCoreControlPlaneName));
-            Argument.AssertNotNullOrEmpty(packetCaptureName, nameof(packetCaptureName));
-
-            return GetTenantResourceExtensionClient(tenantResource).DeletePacketCapture(waitUntil, subscriptionId, resourceGroupName, packetCoreControlPlaneName, packetCaptureName, cancellationToken);
-        }
-
-        /// <summary>
-        /// Stop a packet capture session.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MobileNetwork/packetCoreControlPlanes/{packetCoreControlPlaneName}/packetCaptures/{packetCaptureName}/stop</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PacketCaptures_Stop</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="packetCoreControlPlaneName"> The name of the packet core control plane. </param>
-        /// <param name="packetCaptureName"> The name of the packet capture session. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/>, <paramref name="packetCoreControlPlaneName"/> or <paramref name="packetCaptureName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="packetCoreControlPlaneName"/> or <paramref name="packetCaptureName"/> is null. </exception>
-        public static async Task<ArmOperation<AsyncOperationStatus>> StopPacketCaptureAsync(this TenantResource tenantResource, WaitUntil waitUntil, Guid subscriptionId, string resourceGroupName, string packetCoreControlPlaneName, string packetCaptureName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(packetCoreControlPlaneName, nameof(packetCoreControlPlaneName));
-            Argument.AssertNotNullOrEmpty(packetCaptureName, nameof(packetCaptureName));
-
-            return await GetTenantResourceExtensionClient(tenantResource).StopPacketCaptureAsync(waitUntil, subscriptionId, resourceGroupName, packetCoreControlPlaneName, packetCaptureName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Stop a packet capture session.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MobileNetwork/packetCoreControlPlanes/{packetCoreControlPlaneName}/packetCaptures/{packetCaptureName}/stop</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PacketCaptures_Stop</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="packetCoreControlPlaneName"> The name of the packet core control plane. </param>
-        /// <param name="packetCaptureName"> The name of the packet capture session. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/>, <paramref name="packetCoreControlPlaneName"/> or <paramref name="packetCaptureName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="packetCoreControlPlaneName"/> or <paramref name="packetCaptureName"/> is null. </exception>
-        public static ArmOperation<AsyncOperationStatus> StopPacketCapture(this TenantResource tenantResource, WaitUntil waitUntil, Guid subscriptionId, string resourceGroupName, string packetCoreControlPlaneName, string packetCaptureName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(packetCoreControlPlaneName, nameof(packetCoreControlPlaneName));
-            Argument.AssertNotNullOrEmpty(packetCaptureName, nameof(packetCaptureName));
-
-            return GetTenantResourceExtensionClient(tenantResource).StopPacketCapture(waitUntil, subscriptionId, resourceGroupName, packetCoreControlPlaneName, packetCaptureName, cancellationToken);
-        }
-
-        /// <summary>
-        /// Lists all the packet capture sessions under a packet core control plane.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MobileNetwork/packetCoreControlPlanes/{packetCoreControlPlaneName}/packetCaptures</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PacketCaptures_ListByPacketCoreControlPlane</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="packetCoreControlPlaneName"> The name of the packet core control plane. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="packetCoreControlPlaneName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="packetCoreControlPlaneName"/> is null. </exception>
-        /// <returns> An async collection of <see cref="PacketCapture" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<PacketCapture> GetPacketCapturesByPacketCoreControlPlaneAsync(this TenantResource tenantResource, Guid subscriptionId, string resourceGroupName, string packetCoreControlPlaneName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(packetCoreControlPlaneName, nameof(packetCoreControlPlaneName));
-
-            return GetTenantResourceExtensionClient(tenantResource).GetPacketCapturesByPacketCoreControlPlaneAsync(subscriptionId, resourceGroupName, packetCoreControlPlaneName, cancellationToken);
-        }
-
-        /// <summary>
-        /// Lists all the packet capture sessions under a packet core control plane.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MobileNetwork/packetCoreControlPlanes/{packetCoreControlPlaneName}/packetCaptures</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PacketCaptures_ListByPacketCoreControlPlane</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="packetCoreControlPlaneName"> The name of the packet core control plane. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="packetCoreControlPlaneName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="packetCoreControlPlaneName"/> is null. </exception>
-        /// <returns> A collection of <see cref="PacketCapture" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<PacketCapture> GetPacketCapturesByPacketCoreControlPlane(this TenantResource tenantResource, Guid subscriptionId, string resourceGroupName, string packetCoreControlPlaneName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(packetCoreControlPlaneName, nameof(packetCoreControlPlaneName));
-
-            return GetTenantResourceExtensionClient(tenantResource).GetPacketCapturesByPacketCoreControlPlane(subscriptionId, resourceGroupName, packetCoreControlPlaneName, cancellationToken);
-        }
-
-        /// <summary>
-        /// Deletes the specified packet core control plane.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MobileNetwork/packetCoreControlPlanes/{packetCoreControlPlaneName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PacketCoreControlPlanes_Delete</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="packetCoreControlPlaneName"> The name of the packet core control plane. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="packetCoreControlPlaneName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="packetCoreControlPlaneName"/> is null. </exception>
-        public static async Task<ArmOperation> DeletePacketCoreControlPlaneAsync(this TenantResource tenantResource, WaitUntil waitUntil, Guid subscriptionId, string resourceGroupName, string packetCoreControlPlaneName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(packetCoreControlPlaneName, nameof(packetCoreControlPlaneName));
-
-            return await GetTenantResourceExtensionClient(tenantResource).DeletePacketCoreControlPlaneAsync(waitUntil, subscriptionId, resourceGroupName, packetCoreControlPlaneName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Deletes the specified packet core control plane.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MobileNetwork/packetCoreControlPlanes/{packetCoreControlPlaneName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PacketCoreControlPlanes_Delete</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="packetCoreControlPlaneName"> The name of the packet core control plane. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="packetCoreControlPlaneName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="packetCoreControlPlaneName"/> is null. </exception>
-        public static ArmOperation DeletePacketCoreControlPlane(this TenantResource tenantResource, WaitUntil waitUntil, Guid subscriptionId, string resourceGroupName, string packetCoreControlPlaneName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(packetCoreControlPlaneName, nameof(packetCoreControlPlaneName));
-
-            return GetTenantResourceExtensionClient(tenantResource).DeletePacketCoreControlPlane(waitUntil, subscriptionId, resourceGroupName, packetCoreControlPlaneName, cancellationToken);
+            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetPacketCoreControlPlanes();
         }
 
         /// <summary>
@@ -1590,19 +427,15 @@ namespace Azure.ResourceManager.MobileNetwork
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="packetCoreControlPlaneName"> The name of the packet core control plane. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="packetCoreControlPlaneName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="packetCoreControlPlaneName"/> is null. </exception>
-        public static async Task<Response<PacketCoreControlPlane>> GetPacketCoreControlPlaneAsync(this TenantResource tenantResource, Guid subscriptionId, string resourceGroupName, string packetCoreControlPlaneName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="packetCoreControlPlaneName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="packetCoreControlPlaneName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<PacketCoreControlPlaneResource>> GetPacketCoreControlPlaneAsync(this ResourceGroupResource resourceGroupResource, string packetCoreControlPlaneName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(packetCoreControlPlaneName, nameof(packetCoreControlPlaneName));
-
-            return await GetTenantResourceExtensionClient(tenantResource).GetPacketCoreControlPlaneAsync(subscriptionId, resourceGroupName, packetCoreControlPlaneName, cancellationToken).ConfigureAwait(false);
+            return await resourceGroupResource.GetPacketCoreControlPlanes().GetAsync(packetCoreControlPlaneName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1618,141 +451,169 @@ namespace Azure.ResourceManager.MobileNetwork
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="packetCoreControlPlaneName"> The name of the packet core control plane. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="packetCoreControlPlaneName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="packetCoreControlPlaneName"/> is null. </exception>
-        public static Response<PacketCoreControlPlane> GetPacketCoreControlPlane(this TenantResource tenantResource, Guid subscriptionId, string resourceGroupName, string packetCoreControlPlaneName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="packetCoreControlPlaneName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="packetCoreControlPlaneName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static Response<PacketCoreControlPlaneResource> GetPacketCoreControlPlane(this ResourceGroupResource resourceGroupResource, string packetCoreControlPlaneName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(packetCoreControlPlaneName, nameof(packetCoreControlPlaneName));
+            return resourceGroupResource.GetPacketCoreControlPlanes().Get(packetCoreControlPlaneName, cancellationToken);
+        }
 
-            return GetTenantResourceExtensionClient(tenantResource).GetPacketCoreControlPlane(subscriptionId, resourceGroupName, packetCoreControlPlaneName, cancellationToken);
+        /// <summary> Gets a collection of SimGroupResources in the ResourceGroupResource. </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <returns> An object representing collection of SimGroupResources and their operations over a SimGroupResource. </returns>
+        public static SimGroupCollection GetSimGroups(this ResourceGroupResource resourceGroupResource)
+        {
+            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetSimGroups();
         }
 
         /// <summary>
-        /// Creates or updates a packet core control plane.
+        /// Gets information about the specified SIM group.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MobileNetwork/packetCoreControlPlanes/{packetCoreControlPlaneName}</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MobileNetwork/simGroups/{simGroupName}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>PacketCoreControlPlanes_CreateOrUpdate</description>
+        /// <description>SimGroups_Get</description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="packetCoreControlPlaneName"> The name of the packet core control plane. </param>
-        /// <param name="packetCoreControlPlane"> Parameters supplied to the create or update packet core control plane operation. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="simGroupName"> The name of the SIM Group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="packetCoreControlPlaneName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="packetCoreControlPlaneName"/> or <paramref name="packetCoreControlPlane"/> is null. </exception>
-        public static async Task<ArmOperation<PacketCoreControlPlane>> CreateOrUpdatePacketCoreControlPlaneAsync(this TenantResource tenantResource, WaitUntil waitUntil, Guid subscriptionId, string resourceGroupName, string packetCoreControlPlaneName, PacketCoreControlPlane packetCoreControlPlane, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="simGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="simGroupName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<SimGroupResource>> GetSimGroupAsync(this ResourceGroupResource resourceGroupResource, string simGroupName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(packetCoreControlPlaneName, nameof(packetCoreControlPlaneName));
-            Argument.AssertNotNull(packetCoreControlPlane, nameof(packetCoreControlPlane));
-
-            return await GetTenantResourceExtensionClient(tenantResource).CreateOrUpdatePacketCoreControlPlaneAsync(waitUntil, subscriptionId, resourceGroupName, packetCoreControlPlaneName, packetCoreControlPlane, cancellationToken).ConfigureAwait(false);
+            return await resourceGroupResource.GetSimGroups().GetAsync(simGroupName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
-        /// Creates or updates a packet core control plane.
+        /// Gets information about the specified SIM group.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MobileNetwork/packetCoreControlPlanes/{packetCoreControlPlaneName}</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MobileNetwork/simGroups/{simGroupName}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>PacketCoreControlPlanes_CreateOrUpdate</description>
+        /// <description>SimGroups_Get</description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="packetCoreControlPlaneName"> The name of the packet core control plane. </param>
-        /// <param name="packetCoreControlPlane"> Parameters supplied to the create or update packet core control plane operation. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="simGroupName"> The name of the SIM Group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="packetCoreControlPlaneName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="packetCoreControlPlaneName"/> or <paramref name="packetCoreControlPlane"/> is null. </exception>
-        public static ArmOperation<PacketCoreControlPlane> CreateOrUpdatePacketCoreControlPlane(this TenantResource tenantResource, WaitUntil waitUntil, Guid subscriptionId, string resourceGroupName, string packetCoreControlPlaneName, PacketCoreControlPlane packetCoreControlPlane, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="simGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="simGroupName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static Response<SimGroupResource> GetSimGroup(this ResourceGroupResource resourceGroupResource, string simGroupName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(packetCoreControlPlaneName, nameof(packetCoreControlPlaneName));
-            Argument.AssertNotNull(packetCoreControlPlane, nameof(packetCoreControlPlane));
+            return resourceGroupResource.GetSimGroups().Get(simGroupName, cancellationToken);
+        }
 
-            return GetTenantResourceExtensionClient(tenantResource).CreateOrUpdatePacketCoreControlPlane(waitUntil, subscriptionId, resourceGroupName, packetCoreControlPlaneName, packetCoreControlPlane, cancellationToken);
+        /// <summary> Gets a collection of SubscriptionPacketCoreControlPlaneVersionResources in the SubscriptionResource. </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <returns> An object representing collection of SubscriptionPacketCoreControlPlaneVersionResources and their operations over a SubscriptionPacketCoreControlPlaneVersionResource. </returns>
+        public static SubscriptionPacketCoreControlPlaneVersionCollection GetSubscriptionPacketCoreControlPlaneVersions(this SubscriptionResource subscriptionResource)
+        {
+            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetSubscriptionPacketCoreControlPlaneVersions();
         }
 
         /// <summary>
-        /// Patch packet core control plane resource.
+        /// Gets information about the specified packet core control plane version.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MobileNetwork/packetCoreControlPlanes/{packetCoreControlPlaneName}</description>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.MobileNetwork/packetCoreControlPlaneVersions/{versionName}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>PacketCoreControlPlanes_UpdateTags</description>
+        /// <description>PacketCoreControlPlaneVersions_GetBySubscription</description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="packetCoreControlPlaneName"> The name of the packet core control plane. </param>
-        /// <param name="identityAndTagsObject"> Parameters supplied to patch packet core control plane resource. </param>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="versionName"> The name of the packet core control plane version. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="packetCoreControlPlaneName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="packetCoreControlPlaneName"/> or <paramref name="identityAndTagsObject"/> is null. </exception>
-        public static async Task<Response<PacketCoreControlPlane>> UpdateTagsPacketCoreControlPlaneAsync(this TenantResource tenantResource, Guid subscriptionId, string resourceGroupName, string packetCoreControlPlaneName, IdentityAndTagsObject identityAndTagsObject, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="versionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="versionName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<SubscriptionPacketCoreControlPlaneVersionResource>> GetSubscriptionPacketCoreControlPlaneVersionAsync(this SubscriptionResource subscriptionResource, string versionName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(packetCoreControlPlaneName, nameof(packetCoreControlPlaneName));
-            Argument.AssertNotNull(identityAndTagsObject, nameof(identityAndTagsObject));
-
-            return await GetTenantResourceExtensionClient(tenantResource).UpdateTagsPacketCoreControlPlaneAsync(subscriptionId, resourceGroupName, packetCoreControlPlaneName, identityAndTagsObject, cancellationToken).ConfigureAwait(false);
+            return await subscriptionResource.GetSubscriptionPacketCoreControlPlaneVersions().GetAsync(versionName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
-        /// Patch packet core control plane resource.
+        /// Gets information about the specified packet core control plane version.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MobileNetwork/packetCoreControlPlanes/{packetCoreControlPlaneName}</description>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.MobileNetwork/packetCoreControlPlaneVersions/{versionName}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>PacketCoreControlPlanes_UpdateTags</description>
+        /// <description>PacketCoreControlPlaneVersions_GetBySubscription</description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="packetCoreControlPlaneName"> The name of the packet core control plane. </param>
-        /// <param name="identityAndTagsObject"> Parameters supplied to patch packet core control plane resource. </param>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="versionName"> The name of the packet core control plane version. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="packetCoreControlPlaneName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="packetCoreControlPlaneName"/> or <paramref name="identityAndTagsObject"/> is null. </exception>
-        public static Response<PacketCoreControlPlane> UpdateTagsPacketCoreControlPlane(this TenantResource tenantResource, Guid subscriptionId, string resourceGroupName, string packetCoreControlPlaneName, IdentityAndTagsObject identityAndTagsObject, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="versionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="versionName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static Response<SubscriptionPacketCoreControlPlaneVersionResource> GetSubscriptionPacketCoreControlPlaneVersion(this SubscriptionResource subscriptionResource, string versionName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(packetCoreControlPlaneName, nameof(packetCoreControlPlaneName));
-            Argument.AssertNotNull(identityAndTagsObject, nameof(identityAndTagsObject));
+            return subscriptionResource.GetSubscriptionPacketCoreControlPlaneVersions().Get(versionName, cancellationToken);
+        }
 
-            return GetTenantResourceExtensionClient(tenantResource).UpdateTagsPacketCoreControlPlane(subscriptionId, resourceGroupName, packetCoreControlPlaneName, identityAndTagsObject, cancellationToken);
+        /// <summary>
+        /// Lists all the mobile networks in a subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.MobileNetwork/mobileNetworks</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>MobileNetworks_ListBySubscription</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="MobileNetworkResource" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<MobileNetworkResource> GetMobileNetworksAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        {
+            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetMobileNetworksAsync(cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists all the mobile networks in a subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.MobileNetwork/mobileNetworks</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>MobileNetworks_ListBySubscription</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="MobileNetworkResource" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<MobileNetworkResource> GetMobileNetworks(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        {
+            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetMobileNetworks(cancellationToken);
         }
 
         /// <summary>
@@ -1768,13 +629,12 @@ namespace Azure.ResourceManager.MobileNetwork
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="PacketCoreControlPlane" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<PacketCoreControlPlane> GetPacketCoreControlPlanesBySubscriptionAsync(this TenantResource tenantResource, Guid subscriptionId, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="PacketCoreControlPlaneResource" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<PacketCoreControlPlaneResource> GetPacketCoreControlPlanesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetTenantResourceExtensionClient(tenantResource).GetPacketCoreControlPlanesBySubscriptionAsync(subscriptionId, cancellationToken);
+            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetPacketCoreControlPlanesAsync(cancellationToken);
         }
 
         /// <summary>
@@ -1790,245 +650,62 @@ namespace Azure.ResourceManager.MobileNetwork
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="PacketCoreControlPlane" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<PacketCoreControlPlane> GetPacketCoreControlPlanesBySubscription(this TenantResource tenantResource, Guid subscriptionId, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="PacketCoreControlPlaneResource" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<PacketCoreControlPlaneResource> GetPacketCoreControlPlanes(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetTenantResourceExtensionClient(tenantResource).GetPacketCoreControlPlanesBySubscription(subscriptionId, cancellationToken);
+            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetPacketCoreControlPlanes(cancellationToken);
         }
 
         /// <summary>
-        /// Lists all the packet core control planes in a resource group.
+        /// Gets all the SIM groups in a subscription.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MobileNetwork/packetCoreControlPlanes</description>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.MobileNetwork/simGroups</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>PacketCoreControlPlanes_ListByResourceGroup</description>
+        /// <description>SimGroups_ListBySubscription</description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> is null. </exception>
-        /// <returns> An async collection of <see cref="PacketCoreControlPlane" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<PacketCoreControlPlane> GetPacketCoreControlPlanesByResourceGroupAsync(this TenantResource tenantResource, Guid subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="SimGroupResource" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<SimGroupResource> GetSimGroupsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-
-            return GetTenantResourceExtensionClient(tenantResource).GetPacketCoreControlPlanesByResourceGroupAsync(subscriptionId, resourceGroupName, cancellationToken);
+            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetSimGroupsAsync(cancellationToken);
         }
 
         /// <summary>
-        /// Lists all the packet core control planes in a resource group.
+        /// Gets all the SIM groups in a subscription.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MobileNetwork/packetCoreControlPlanes</description>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.MobileNetwork/simGroups</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>PacketCoreControlPlanes_ListByResourceGroup</description>
+        /// <description>SimGroups_ListBySubscription</description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> is null. </exception>
-        /// <returns> A collection of <see cref="PacketCoreControlPlane" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<PacketCoreControlPlane> GetPacketCoreControlPlanesByResourceGroup(this TenantResource tenantResource, Guid subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="SimGroupResource" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<SimGroupResource> GetSimGroups(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-
-            return GetTenantResourceExtensionClient(tenantResource).GetPacketCoreControlPlanesByResourceGroup(subscriptionId, resourceGroupName, cancellationToken);
+            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetSimGroups(cancellationToken);
         }
 
-        /// <summary>
-        /// Roll back the specified packet core control plane to the previous version, "rollbackVersion". Multiple consecutive rollbacks are not possible. This action may cause a service outage.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MobileNetwork/packetCoreControlPlanes/{packetCoreControlPlaneName}/rollback</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PacketCoreControlPlanes_Rollback</description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Gets a collection of TenantPacketCoreControlPlaneVersionResources in the TenantResource. </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="packetCoreControlPlaneName"> The name of the packet core control plane. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="packetCoreControlPlaneName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="packetCoreControlPlaneName"/> is null. </exception>
-        public static async Task<ArmOperation<AsyncOperationStatus>> RollbackPacketCoreControlPlaneAsync(this TenantResource tenantResource, WaitUntil waitUntil, Guid subscriptionId, string resourceGroupName, string packetCoreControlPlaneName, CancellationToken cancellationToken = default)
+        /// <returns> An object representing collection of TenantPacketCoreControlPlaneVersionResources and their operations over a TenantPacketCoreControlPlaneVersionResource. </returns>
+        public static TenantPacketCoreControlPlaneVersionCollection GetTenantPacketCoreControlPlaneVersions(this TenantResource tenantResource)
         {
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(packetCoreControlPlaneName, nameof(packetCoreControlPlaneName));
-
-            return await GetTenantResourceExtensionClient(tenantResource).RollbackPacketCoreControlPlaneAsync(waitUntil, subscriptionId, resourceGroupName, packetCoreControlPlaneName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Roll back the specified packet core control plane to the previous version, "rollbackVersion". Multiple consecutive rollbacks are not possible. This action may cause a service outage.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MobileNetwork/packetCoreControlPlanes/{packetCoreControlPlaneName}/rollback</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PacketCoreControlPlanes_Rollback</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="packetCoreControlPlaneName"> The name of the packet core control plane. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="packetCoreControlPlaneName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="packetCoreControlPlaneName"/> is null. </exception>
-        public static ArmOperation<AsyncOperationStatus> RollbackPacketCoreControlPlane(this TenantResource tenantResource, WaitUntil waitUntil, Guid subscriptionId, string resourceGroupName, string packetCoreControlPlaneName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(packetCoreControlPlaneName, nameof(packetCoreControlPlaneName));
-
-            return GetTenantResourceExtensionClient(tenantResource).RollbackPacketCoreControlPlane(waitUntil, subscriptionId, resourceGroupName, packetCoreControlPlaneName, cancellationToken);
-        }
-
-        /// <summary>
-        /// Reinstall the specified packet core control plane. This action will remove any transaction state from the packet core to return it to a known state. This action will cause a service outage.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MobileNetwork/packetCoreControlPlanes/{packetCoreControlPlaneName}/reinstall</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PacketCoreControlPlanes_Reinstall</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="packetCoreControlPlaneName"> The name of the packet core control plane. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="packetCoreControlPlaneName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="packetCoreControlPlaneName"/> is null. </exception>
-        public static async Task<ArmOperation<AsyncOperationStatus>> ReinstallPacketCoreControlPlaneAsync(this TenantResource tenantResource, WaitUntil waitUntil, Guid subscriptionId, string resourceGroupName, string packetCoreControlPlaneName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(packetCoreControlPlaneName, nameof(packetCoreControlPlaneName));
-
-            return await GetTenantResourceExtensionClient(tenantResource).ReinstallPacketCoreControlPlaneAsync(waitUntil, subscriptionId, resourceGroupName, packetCoreControlPlaneName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Reinstall the specified packet core control plane. This action will remove any transaction state from the packet core to return it to a known state. This action will cause a service outage.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MobileNetwork/packetCoreControlPlanes/{packetCoreControlPlaneName}/reinstall</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PacketCoreControlPlanes_Reinstall</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="packetCoreControlPlaneName"> The name of the packet core control plane. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="packetCoreControlPlaneName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="packetCoreControlPlaneName"/> is null. </exception>
-        public static ArmOperation<AsyncOperationStatus> ReinstallPacketCoreControlPlane(this TenantResource tenantResource, WaitUntil waitUntil, Guid subscriptionId, string resourceGroupName, string packetCoreControlPlaneName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(packetCoreControlPlaneName, nameof(packetCoreControlPlaneName));
-
-            return GetTenantResourceExtensionClient(tenantResource).ReinstallPacketCoreControlPlane(waitUntil, subscriptionId, resourceGroupName, packetCoreControlPlaneName, cancellationToken);
-        }
-
-        /// <summary>
-        /// Collect a diagnostics package for the specified packet core control plane. This action will upload the diagnostics to a storage account.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MobileNetwork/packetCoreControlPlanes/{packetCoreControlPlaneName}/collectDiagnosticsPackage</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PacketCoreControlPlanes_CollectDiagnosticsPackage</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="packetCoreControlPlaneName"> The name of the packet core control plane. </param>
-        /// <param name="packetCoreControlPlaneCollectDiagnosticsPackage"> Parameters supplied to the packet core control plane collect diagnostics package operation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="packetCoreControlPlaneName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="packetCoreControlPlaneName"/> or <paramref name="packetCoreControlPlaneCollectDiagnosticsPackage"/> is null. </exception>
-        public static async Task<ArmOperation<AsyncOperationStatus>> CollectDiagnosticsPackagePacketCoreControlPlaneAsync(this TenantResource tenantResource, WaitUntil waitUntil, Guid subscriptionId, string resourceGroupName, string packetCoreControlPlaneName, PacketCoreControlPlaneCollectDiagnosticsPackage packetCoreControlPlaneCollectDiagnosticsPackage, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(packetCoreControlPlaneName, nameof(packetCoreControlPlaneName));
-            Argument.AssertNotNull(packetCoreControlPlaneCollectDiagnosticsPackage, nameof(packetCoreControlPlaneCollectDiagnosticsPackage));
-
-            return await GetTenantResourceExtensionClient(tenantResource).CollectDiagnosticsPackagePacketCoreControlPlaneAsync(waitUntil, subscriptionId, resourceGroupName, packetCoreControlPlaneName, packetCoreControlPlaneCollectDiagnosticsPackage, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Collect a diagnostics package for the specified packet core control plane. This action will upload the diagnostics to a storage account.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MobileNetwork/packetCoreControlPlanes/{packetCoreControlPlaneName}/collectDiagnosticsPackage</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PacketCoreControlPlanes_CollectDiagnosticsPackage</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="packetCoreControlPlaneName"> The name of the packet core control plane. </param>
-        /// <param name="packetCoreControlPlaneCollectDiagnosticsPackage"> Parameters supplied to the packet core control plane collect diagnostics package operation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="packetCoreControlPlaneName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="packetCoreControlPlaneName"/> or <paramref name="packetCoreControlPlaneCollectDiagnosticsPackage"/> is null. </exception>
-        public static ArmOperation<AsyncOperationStatus> CollectDiagnosticsPackagePacketCoreControlPlane(this TenantResource tenantResource, WaitUntil waitUntil, Guid subscriptionId, string resourceGroupName, string packetCoreControlPlaneName, PacketCoreControlPlaneCollectDiagnosticsPackage packetCoreControlPlaneCollectDiagnosticsPackage, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(packetCoreControlPlaneName, nameof(packetCoreControlPlaneName));
-            Argument.AssertNotNull(packetCoreControlPlaneCollectDiagnosticsPackage, nameof(packetCoreControlPlaneCollectDiagnosticsPackage));
-
-            return GetTenantResourceExtensionClient(tenantResource).CollectDiagnosticsPackagePacketCoreControlPlane(waitUntil, subscriptionId, resourceGroupName, packetCoreControlPlaneName, packetCoreControlPlaneCollectDiagnosticsPackage, cancellationToken);
+            return GetTenantResourceExtensionClient(tenantResource).GetTenantPacketCoreControlPlaneVersions();
         }
 
         /// <summary>
@@ -2049,11 +726,10 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="versionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="versionName"/> is null. </exception>
-        public static async Task<Response<PacketCoreControlPlaneVersion>> GetPacketCoreControlPlaneVersionAsync(this TenantResource tenantResource, string versionName, CancellationToken cancellationToken = default)
+        [ForwardsClientCalls]
+        public static async Task<Response<TenantPacketCoreControlPlaneVersionResource>> GetTenantPacketCoreControlPlaneVersionAsync(this TenantResource tenantResource, string versionName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(versionName, nameof(versionName));
-
-            return await GetTenantResourceExtensionClient(tenantResource).GetPacketCoreControlPlaneVersionAsync(versionName, cancellationToken).ConfigureAwait(false);
+            return await tenantResource.GetTenantPacketCoreControlPlaneVersions().GetAsync(versionName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -2074,2531 +750,10 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="versionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="versionName"/> is null. </exception>
-        public static Response<PacketCoreControlPlaneVersion> GetPacketCoreControlPlaneVersion(this TenantResource tenantResource, string versionName, CancellationToken cancellationToken = default)
+        [ForwardsClientCalls]
+        public static Response<TenantPacketCoreControlPlaneVersionResource> GetTenantPacketCoreControlPlaneVersion(this TenantResource tenantResource, string versionName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(versionName, nameof(versionName));
-
-            return GetTenantResourceExtensionClient(tenantResource).GetPacketCoreControlPlaneVersion(versionName, cancellationToken);
-        }
-
-        /// <summary>
-        /// Lists all supported packet core control planes versions.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.MobileNetwork/packetCoreControlPlaneVersions</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PacketCoreControlPlaneVersions_List</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="PacketCoreControlPlaneVersion" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<PacketCoreControlPlaneVersion> GetPacketCoreControlPlaneVersionsAsync(this TenantResource tenantResource, CancellationToken cancellationToken = default)
-        {
-            return GetTenantResourceExtensionClient(tenantResource).GetPacketCoreControlPlaneVersionsAsync(cancellationToken);
-        }
-
-        /// <summary>
-        /// Lists all supported packet core control planes versions.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.MobileNetwork/packetCoreControlPlaneVersions</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PacketCoreControlPlaneVersions_List</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="PacketCoreControlPlaneVersion" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<PacketCoreControlPlaneVersion> GetPacketCoreControlPlaneVersions(this TenantResource tenantResource, CancellationToken cancellationToken = default)
-        {
-            return GetTenantResourceExtensionClient(tenantResource).GetPacketCoreControlPlaneVersions(cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets information about the specified packet core control plane version.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.MobileNetwork/packetCoreControlPlaneVersions/{versionName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PacketCoreControlPlaneVersions_GetBySubscription</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="versionName"> The name of the packet core control plane version. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="versionName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="versionName"/> is null. </exception>
-        public static async Task<Response<PacketCoreControlPlaneVersion>> GetBySubscriptionPacketCoreControlPlaneVersionAsync(this TenantResource tenantResource, Guid subscriptionId, string versionName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(versionName, nameof(versionName));
-
-            return await GetTenantResourceExtensionClient(tenantResource).GetBySubscriptionPacketCoreControlPlaneVersionAsync(subscriptionId, versionName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Gets information about the specified packet core control plane version.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.MobileNetwork/packetCoreControlPlaneVersions/{versionName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PacketCoreControlPlaneVersions_GetBySubscription</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="versionName"> The name of the packet core control plane version. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="versionName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="versionName"/> is null. </exception>
-        public static Response<PacketCoreControlPlaneVersion> GetBySubscriptionPacketCoreControlPlaneVersion(this TenantResource tenantResource, Guid subscriptionId, string versionName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(versionName, nameof(versionName));
-
-            return GetTenantResourceExtensionClient(tenantResource).GetBySubscriptionPacketCoreControlPlaneVersion(subscriptionId, versionName, cancellationToken);
-        }
-
-        /// <summary>
-        /// Lists all supported packet core control planes versions.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.MobileNetwork/packetCoreControlPlaneVersions</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PacketCoreControlPlaneVersions_ListBySubscription</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="PacketCoreControlPlaneVersion" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<PacketCoreControlPlaneVersion> GetPacketCoreControlPlaneVersionsBySubscriptionAsync(this TenantResource tenantResource, Guid subscriptionId, CancellationToken cancellationToken = default)
-        {
-            return GetTenantResourceExtensionClient(tenantResource).GetPacketCoreControlPlaneVersionsBySubscriptionAsync(subscriptionId, cancellationToken);
-        }
-
-        /// <summary>
-        /// Lists all supported packet core control planes versions.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.MobileNetwork/packetCoreControlPlaneVersions</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PacketCoreControlPlaneVersions_ListBySubscription</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="PacketCoreControlPlaneVersion" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<PacketCoreControlPlaneVersion> GetPacketCoreControlPlaneVersionsBySubscription(this TenantResource tenantResource, Guid subscriptionId, CancellationToken cancellationToken = default)
-        {
-            return GetTenantResourceExtensionClient(tenantResource).GetPacketCoreControlPlaneVersionsBySubscription(subscriptionId, cancellationToken);
-        }
-
-        /// <summary>
-        /// Deletes the specified packet core data plane.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MobileNetwork/packetCoreControlPlanes/{packetCoreControlPlaneName}/packetCoreDataPlanes/{packetCoreDataPlaneName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PacketCoreDataPlanes_Delete</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="packetCoreControlPlaneName"> The name of the packet core control plane. </param>
-        /// <param name="packetCoreDataPlaneName"> The name of the packet core data plane. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/>, <paramref name="packetCoreControlPlaneName"/> or <paramref name="packetCoreDataPlaneName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="packetCoreControlPlaneName"/> or <paramref name="packetCoreDataPlaneName"/> is null. </exception>
-        public static async Task<ArmOperation> DeletePacketCoreDataPlaneAsync(this TenantResource tenantResource, WaitUntil waitUntil, Guid subscriptionId, string resourceGroupName, string packetCoreControlPlaneName, string packetCoreDataPlaneName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(packetCoreControlPlaneName, nameof(packetCoreControlPlaneName));
-            Argument.AssertNotNullOrEmpty(packetCoreDataPlaneName, nameof(packetCoreDataPlaneName));
-
-            return await GetTenantResourceExtensionClient(tenantResource).DeletePacketCoreDataPlaneAsync(waitUntil, subscriptionId, resourceGroupName, packetCoreControlPlaneName, packetCoreDataPlaneName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Deletes the specified packet core data plane.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MobileNetwork/packetCoreControlPlanes/{packetCoreControlPlaneName}/packetCoreDataPlanes/{packetCoreDataPlaneName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PacketCoreDataPlanes_Delete</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="packetCoreControlPlaneName"> The name of the packet core control plane. </param>
-        /// <param name="packetCoreDataPlaneName"> The name of the packet core data plane. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/>, <paramref name="packetCoreControlPlaneName"/> or <paramref name="packetCoreDataPlaneName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="packetCoreControlPlaneName"/> or <paramref name="packetCoreDataPlaneName"/> is null. </exception>
-        public static ArmOperation DeletePacketCoreDataPlane(this TenantResource tenantResource, WaitUntil waitUntil, Guid subscriptionId, string resourceGroupName, string packetCoreControlPlaneName, string packetCoreDataPlaneName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(packetCoreControlPlaneName, nameof(packetCoreControlPlaneName));
-            Argument.AssertNotNullOrEmpty(packetCoreDataPlaneName, nameof(packetCoreDataPlaneName));
-
-            return GetTenantResourceExtensionClient(tenantResource).DeletePacketCoreDataPlane(waitUntil, subscriptionId, resourceGroupName, packetCoreControlPlaneName, packetCoreDataPlaneName, cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets information about the specified packet core data plane.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MobileNetwork/packetCoreControlPlanes/{packetCoreControlPlaneName}/packetCoreDataPlanes/{packetCoreDataPlaneName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PacketCoreDataPlanes_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="packetCoreControlPlaneName"> The name of the packet core control plane. </param>
-        /// <param name="packetCoreDataPlaneName"> The name of the packet core data plane. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/>, <paramref name="packetCoreControlPlaneName"/> or <paramref name="packetCoreDataPlaneName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="packetCoreControlPlaneName"/> or <paramref name="packetCoreDataPlaneName"/> is null. </exception>
-        public static async Task<Response<PacketCoreDataPlane>> GetPacketCoreDataPlaneAsync(this TenantResource tenantResource, Guid subscriptionId, string resourceGroupName, string packetCoreControlPlaneName, string packetCoreDataPlaneName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(packetCoreControlPlaneName, nameof(packetCoreControlPlaneName));
-            Argument.AssertNotNullOrEmpty(packetCoreDataPlaneName, nameof(packetCoreDataPlaneName));
-
-            return await GetTenantResourceExtensionClient(tenantResource).GetPacketCoreDataPlaneAsync(subscriptionId, resourceGroupName, packetCoreControlPlaneName, packetCoreDataPlaneName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Gets information about the specified packet core data plane.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MobileNetwork/packetCoreControlPlanes/{packetCoreControlPlaneName}/packetCoreDataPlanes/{packetCoreDataPlaneName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PacketCoreDataPlanes_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="packetCoreControlPlaneName"> The name of the packet core control plane. </param>
-        /// <param name="packetCoreDataPlaneName"> The name of the packet core data plane. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/>, <paramref name="packetCoreControlPlaneName"/> or <paramref name="packetCoreDataPlaneName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="packetCoreControlPlaneName"/> or <paramref name="packetCoreDataPlaneName"/> is null. </exception>
-        public static Response<PacketCoreDataPlane> GetPacketCoreDataPlane(this TenantResource tenantResource, Guid subscriptionId, string resourceGroupName, string packetCoreControlPlaneName, string packetCoreDataPlaneName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(packetCoreControlPlaneName, nameof(packetCoreControlPlaneName));
-            Argument.AssertNotNullOrEmpty(packetCoreDataPlaneName, nameof(packetCoreDataPlaneName));
-
-            return GetTenantResourceExtensionClient(tenantResource).GetPacketCoreDataPlane(subscriptionId, resourceGroupName, packetCoreControlPlaneName, packetCoreDataPlaneName, cancellationToken);
-        }
-
-        /// <summary>
-        /// Creates or updates a packet core data plane. Must be created in the same location as its parent packet core control plane.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MobileNetwork/packetCoreControlPlanes/{packetCoreControlPlaneName}/packetCoreDataPlanes/{packetCoreDataPlaneName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PacketCoreDataPlanes_CreateOrUpdate</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="packetCoreControlPlaneName"> The name of the packet core control plane. </param>
-        /// <param name="packetCoreDataPlaneName"> The name of the packet core data plane. </param>
-        /// <param name="packetCoreDataPlane"> Parameters supplied to the create or update packet core data plane operation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/>, <paramref name="packetCoreControlPlaneName"/> or <paramref name="packetCoreDataPlaneName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="packetCoreControlPlaneName"/>, <paramref name="packetCoreDataPlaneName"/> or <paramref name="packetCoreDataPlane"/> is null. </exception>
-        public static async Task<ArmOperation<PacketCoreDataPlane>> CreateOrUpdatePacketCoreDataPlaneAsync(this TenantResource tenantResource, WaitUntil waitUntil, Guid subscriptionId, string resourceGroupName, string packetCoreControlPlaneName, string packetCoreDataPlaneName, PacketCoreDataPlane packetCoreDataPlane, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(packetCoreControlPlaneName, nameof(packetCoreControlPlaneName));
-            Argument.AssertNotNullOrEmpty(packetCoreDataPlaneName, nameof(packetCoreDataPlaneName));
-            Argument.AssertNotNull(packetCoreDataPlane, nameof(packetCoreDataPlane));
-
-            return await GetTenantResourceExtensionClient(tenantResource).CreateOrUpdatePacketCoreDataPlaneAsync(waitUntil, subscriptionId, resourceGroupName, packetCoreControlPlaneName, packetCoreDataPlaneName, packetCoreDataPlane, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Creates or updates a packet core data plane. Must be created in the same location as its parent packet core control plane.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MobileNetwork/packetCoreControlPlanes/{packetCoreControlPlaneName}/packetCoreDataPlanes/{packetCoreDataPlaneName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PacketCoreDataPlanes_CreateOrUpdate</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="packetCoreControlPlaneName"> The name of the packet core control plane. </param>
-        /// <param name="packetCoreDataPlaneName"> The name of the packet core data plane. </param>
-        /// <param name="packetCoreDataPlane"> Parameters supplied to the create or update packet core data plane operation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/>, <paramref name="packetCoreControlPlaneName"/> or <paramref name="packetCoreDataPlaneName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="packetCoreControlPlaneName"/>, <paramref name="packetCoreDataPlaneName"/> or <paramref name="packetCoreDataPlane"/> is null. </exception>
-        public static ArmOperation<PacketCoreDataPlane> CreateOrUpdatePacketCoreDataPlane(this TenantResource tenantResource, WaitUntil waitUntil, Guid subscriptionId, string resourceGroupName, string packetCoreControlPlaneName, string packetCoreDataPlaneName, PacketCoreDataPlane packetCoreDataPlane, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(packetCoreControlPlaneName, nameof(packetCoreControlPlaneName));
-            Argument.AssertNotNullOrEmpty(packetCoreDataPlaneName, nameof(packetCoreDataPlaneName));
-            Argument.AssertNotNull(packetCoreDataPlane, nameof(packetCoreDataPlane));
-
-            return GetTenantResourceExtensionClient(tenantResource).CreateOrUpdatePacketCoreDataPlane(waitUntil, subscriptionId, resourceGroupName, packetCoreControlPlaneName, packetCoreDataPlaneName, packetCoreDataPlane, cancellationToken);
-        }
-
-        /// <summary>
-        /// Updates packet core data planes tags.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MobileNetwork/packetCoreControlPlanes/{packetCoreControlPlaneName}/packetCoreDataPlanes/{packetCoreDataPlaneName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PacketCoreDataPlanes_UpdateTags</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="packetCoreControlPlaneName"> The name of the packet core control plane. </param>
-        /// <param name="packetCoreDataPlaneName"> The name of the packet core data plane. </param>
-        /// <param name="tagsObject"> Parameters supplied to update packet core data plane tags. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/>, <paramref name="packetCoreControlPlaneName"/> or <paramref name="packetCoreDataPlaneName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="packetCoreControlPlaneName"/>, <paramref name="packetCoreDataPlaneName"/> or <paramref name="tagsObject"/> is null. </exception>
-        public static async Task<Response<PacketCoreDataPlane>> UpdateTagsPacketCoreDataPlaneAsync(this TenantResource tenantResource, Guid subscriptionId, string resourceGroupName, string packetCoreControlPlaneName, string packetCoreDataPlaneName, TagsObject tagsObject, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(packetCoreControlPlaneName, nameof(packetCoreControlPlaneName));
-            Argument.AssertNotNullOrEmpty(packetCoreDataPlaneName, nameof(packetCoreDataPlaneName));
-            Argument.AssertNotNull(tagsObject, nameof(tagsObject));
-
-            return await GetTenantResourceExtensionClient(tenantResource).UpdateTagsPacketCoreDataPlaneAsync(subscriptionId, resourceGroupName, packetCoreControlPlaneName, packetCoreDataPlaneName, tagsObject, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Updates packet core data planes tags.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MobileNetwork/packetCoreControlPlanes/{packetCoreControlPlaneName}/packetCoreDataPlanes/{packetCoreDataPlaneName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PacketCoreDataPlanes_UpdateTags</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="packetCoreControlPlaneName"> The name of the packet core control plane. </param>
-        /// <param name="packetCoreDataPlaneName"> The name of the packet core data plane. </param>
-        /// <param name="tagsObject"> Parameters supplied to update packet core data plane tags. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/>, <paramref name="packetCoreControlPlaneName"/> or <paramref name="packetCoreDataPlaneName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="packetCoreControlPlaneName"/>, <paramref name="packetCoreDataPlaneName"/> or <paramref name="tagsObject"/> is null. </exception>
-        public static Response<PacketCoreDataPlane> UpdateTagsPacketCoreDataPlane(this TenantResource tenantResource, Guid subscriptionId, string resourceGroupName, string packetCoreControlPlaneName, string packetCoreDataPlaneName, TagsObject tagsObject, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(packetCoreControlPlaneName, nameof(packetCoreControlPlaneName));
-            Argument.AssertNotNullOrEmpty(packetCoreDataPlaneName, nameof(packetCoreDataPlaneName));
-            Argument.AssertNotNull(tagsObject, nameof(tagsObject));
-
-            return GetTenantResourceExtensionClient(tenantResource).UpdateTagsPacketCoreDataPlane(subscriptionId, resourceGroupName, packetCoreControlPlaneName, packetCoreDataPlaneName, tagsObject, cancellationToken);
-        }
-
-        /// <summary>
-        /// Lists all the packet core data planes associated with a packet core control plane.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MobileNetwork/packetCoreControlPlanes/{packetCoreControlPlaneName}/packetCoreDataPlanes</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PacketCoreDataPlanes_ListByPacketCoreControlPlane</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="packetCoreControlPlaneName"> The name of the packet core control plane. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="packetCoreControlPlaneName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="packetCoreControlPlaneName"/> is null. </exception>
-        /// <returns> An async collection of <see cref="PacketCoreDataPlane" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<PacketCoreDataPlane> GetPacketCoreDataPlanesByPacketCoreControlPlaneAsync(this TenantResource tenantResource, Guid subscriptionId, string resourceGroupName, string packetCoreControlPlaneName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(packetCoreControlPlaneName, nameof(packetCoreControlPlaneName));
-
-            return GetTenantResourceExtensionClient(tenantResource).GetPacketCoreDataPlanesByPacketCoreControlPlaneAsync(subscriptionId, resourceGroupName, packetCoreControlPlaneName, cancellationToken);
-        }
-
-        /// <summary>
-        /// Lists all the packet core data planes associated with a packet core control plane.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MobileNetwork/packetCoreControlPlanes/{packetCoreControlPlaneName}/packetCoreDataPlanes</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PacketCoreDataPlanes_ListByPacketCoreControlPlane</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="packetCoreControlPlaneName"> The name of the packet core control plane. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="packetCoreControlPlaneName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="packetCoreControlPlaneName"/> is null. </exception>
-        /// <returns> A collection of <see cref="PacketCoreDataPlane" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<PacketCoreDataPlane> GetPacketCoreDataPlanesByPacketCoreControlPlane(this TenantResource tenantResource, Guid subscriptionId, string resourceGroupName, string packetCoreControlPlaneName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(packetCoreControlPlaneName, nameof(packetCoreControlPlaneName));
-
-            return GetTenantResourceExtensionClient(tenantResource).GetPacketCoreDataPlanesByPacketCoreControlPlane(subscriptionId, resourceGroupName, packetCoreControlPlaneName, cancellationToken);
-        }
-
-        /// <summary>
-        /// Deletes the specified service.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MobileNetwork/mobileNetworks/{mobileNetworkName}/services/{serviceName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Services_Delete</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="mobileNetworkName"> The name of the mobile network. </param>
-        /// <param name="serviceName"> The name of the service. You must not use any of the following reserved strings - `default`, `requested` or `service`. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/>, <paramref name="mobileNetworkName"/> or <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="mobileNetworkName"/> or <paramref name="serviceName"/> is null. </exception>
-        public static async Task<ArmOperation> DeleteServiceAsync(this TenantResource tenantResource, WaitUntil waitUntil, Guid subscriptionId, string resourceGroupName, string mobileNetworkName, string serviceName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(mobileNetworkName, nameof(mobileNetworkName));
-            Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
-
-            return await GetTenantResourceExtensionClient(tenantResource).DeleteServiceAsync(waitUntil, subscriptionId, resourceGroupName, mobileNetworkName, serviceName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Deletes the specified service.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MobileNetwork/mobileNetworks/{mobileNetworkName}/services/{serviceName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Services_Delete</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="mobileNetworkName"> The name of the mobile network. </param>
-        /// <param name="serviceName"> The name of the service. You must not use any of the following reserved strings - `default`, `requested` or `service`. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/>, <paramref name="mobileNetworkName"/> or <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="mobileNetworkName"/> or <paramref name="serviceName"/> is null. </exception>
-        public static ArmOperation DeleteService(this TenantResource tenantResource, WaitUntil waitUntil, Guid subscriptionId, string resourceGroupName, string mobileNetworkName, string serviceName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(mobileNetworkName, nameof(mobileNetworkName));
-            Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
-
-            return GetTenantResourceExtensionClient(tenantResource).DeleteService(waitUntil, subscriptionId, resourceGroupName, mobileNetworkName, serviceName, cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets information about the specified service.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MobileNetwork/mobileNetworks/{mobileNetworkName}/services/{serviceName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Services_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="mobileNetworkName"> The name of the mobile network. </param>
-        /// <param name="serviceName"> The name of the service. You must not use any of the following reserved strings - `default`, `requested` or `service`. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/>, <paramref name="mobileNetworkName"/> or <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="mobileNetworkName"/> or <paramref name="serviceName"/> is null. </exception>
-        public static async Task<Response<Service>> GetServiceAsync(this TenantResource tenantResource, Guid subscriptionId, string resourceGroupName, string mobileNetworkName, string serviceName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(mobileNetworkName, nameof(mobileNetworkName));
-            Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
-
-            return await GetTenantResourceExtensionClient(tenantResource).GetServiceAsync(subscriptionId, resourceGroupName, mobileNetworkName, serviceName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Gets information about the specified service.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MobileNetwork/mobileNetworks/{mobileNetworkName}/services/{serviceName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Services_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="mobileNetworkName"> The name of the mobile network. </param>
-        /// <param name="serviceName"> The name of the service. You must not use any of the following reserved strings - `default`, `requested` or `service`. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/>, <paramref name="mobileNetworkName"/> or <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="mobileNetworkName"/> or <paramref name="serviceName"/> is null. </exception>
-        public static Response<Service> GetService(this TenantResource tenantResource, Guid subscriptionId, string resourceGroupName, string mobileNetworkName, string serviceName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(mobileNetworkName, nameof(mobileNetworkName));
-            Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
-
-            return GetTenantResourceExtensionClient(tenantResource).GetService(subscriptionId, resourceGroupName, mobileNetworkName, serviceName, cancellationToken);
-        }
-
-        /// <summary>
-        /// Creates or updates a service. Must be created in the same location as its parent mobile network.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MobileNetwork/mobileNetworks/{mobileNetworkName}/services/{serviceName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Services_CreateOrUpdate</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="mobileNetworkName"> The name of the mobile network. </param>
-        /// <param name="serviceName"> The name of the service. You must not use any of the following reserved strings - `default`, `requested` or `service`. </param>
-        /// <param name="service"> Parameters supplied to the create or update service operation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/>, <paramref name="mobileNetworkName"/> or <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="mobileNetworkName"/>, <paramref name="serviceName"/> or <paramref name="service"/> is null. </exception>
-        public static async Task<ArmOperation<Service>> CreateOrUpdateServiceAsync(this TenantResource tenantResource, WaitUntil waitUntil, Guid subscriptionId, string resourceGroupName, string mobileNetworkName, string serviceName, Service service, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(mobileNetworkName, nameof(mobileNetworkName));
-            Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
-            Argument.AssertNotNull(service, nameof(service));
-
-            return await GetTenantResourceExtensionClient(tenantResource).CreateOrUpdateServiceAsync(waitUntil, subscriptionId, resourceGroupName, mobileNetworkName, serviceName, service, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Creates or updates a service. Must be created in the same location as its parent mobile network.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MobileNetwork/mobileNetworks/{mobileNetworkName}/services/{serviceName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Services_CreateOrUpdate</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="mobileNetworkName"> The name of the mobile network. </param>
-        /// <param name="serviceName"> The name of the service. You must not use any of the following reserved strings - `default`, `requested` or `service`. </param>
-        /// <param name="service"> Parameters supplied to the create or update service operation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/>, <paramref name="mobileNetworkName"/> or <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="mobileNetworkName"/>, <paramref name="serviceName"/> or <paramref name="service"/> is null. </exception>
-        public static ArmOperation<Service> CreateOrUpdateService(this TenantResource tenantResource, WaitUntil waitUntil, Guid subscriptionId, string resourceGroupName, string mobileNetworkName, string serviceName, Service service, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(mobileNetworkName, nameof(mobileNetworkName));
-            Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
-            Argument.AssertNotNull(service, nameof(service));
-
-            return GetTenantResourceExtensionClient(tenantResource).CreateOrUpdateService(waitUntil, subscriptionId, resourceGroupName, mobileNetworkName, serviceName, service, cancellationToken);
-        }
-
-        /// <summary>
-        /// Updates service tags.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MobileNetwork/mobileNetworks/{mobileNetworkName}/services/{serviceName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Services_UpdateTags</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="mobileNetworkName"> The name of the mobile network. </param>
-        /// <param name="serviceName"> The name of the service. You must not use any of the following reserved strings - `default`, `requested` or `service`. </param>
-        /// <param name="tagsObject"> Parameters supplied to update service tags. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/>, <paramref name="mobileNetworkName"/> or <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="mobileNetworkName"/>, <paramref name="serviceName"/> or <paramref name="tagsObject"/> is null. </exception>
-        public static async Task<Response<Service>> UpdateTagsServiceAsync(this TenantResource tenantResource, Guid subscriptionId, string resourceGroupName, string mobileNetworkName, string serviceName, TagsObject tagsObject, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(mobileNetworkName, nameof(mobileNetworkName));
-            Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
-            Argument.AssertNotNull(tagsObject, nameof(tagsObject));
-
-            return await GetTenantResourceExtensionClient(tenantResource).UpdateTagsServiceAsync(subscriptionId, resourceGroupName, mobileNetworkName, serviceName, tagsObject, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Updates service tags.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MobileNetwork/mobileNetworks/{mobileNetworkName}/services/{serviceName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Services_UpdateTags</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="mobileNetworkName"> The name of the mobile network. </param>
-        /// <param name="serviceName"> The name of the service. You must not use any of the following reserved strings - `default`, `requested` or `service`. </param>
-        /// <param name="tagsObject"> Parameters supplied to update service tags. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/>, <paramref name="mobileNetworkName"/> or <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="mobileNetworkName"/>, <paramref name="serviceName"/> or <paramref name="tagsObject"/> is null. </exception>
-        public static Response<Service> UpdateTagsService(this TenantResource tenantResource, Guid subscriptionId, string resourceGroupName, string mobileNetworkName, string serviceName, TagsObject tagsObject, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(mobileNetworkName, nameof(mobileNetworkName));
-            Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
-            Argument.AssertNotNull(tagsObject, nameof(tagsObject));
-
-            return GetTenantResourceExtensionClient(tenantResource).UpdateTagsService(subscriptionId, resourceGroupName, mobileNetworkName, serviceName, tagsObject, cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets all the services in a mobile network.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MobileNetwork/mobileNetworks/{mobileNetworkName}/services</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Services_ListByMobileNetwork</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="mobileNetworkName"> The name of the mobile network. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="mobileNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="mobileNetworkName"/> is null. </exception>
-        /// <returns> An async collection of <see cref="Service" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<Service> GetServicesByMobileNetworkAsync(this TenantResource tenantResource, Guid subscriptionId, string resourceGroupName, string mobileNetworkName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(mobileNetworkName, nameof(mobileNetworkName));
-
-            return GetTenantResourceExtensionClient(tenantResource).GetServicesByMobileNetworkAsync(subscriptionId, resourceGroupName, mobileNetworkName, cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets all the services in a mobile network.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MobileNetwork/mobileNetworks/{mobileNetworkName}/services</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Services_ListByMobileNetwork</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="mobileNetworkName"> The name of the mobile network. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="mobileNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="mobileNetworkName"/> is null. </exception>
-        /// <returns> A collection of <see cref="Service" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<Service> GetServicesByMobileNetwork(this TenantResource tenantResource, Guid subscriptionId, string resourceGroupName, string mobileNetworkName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(mobileNetworkName, nameof(mobileNetworkName));
-
-            return GetTenantResourceExtensionClient(tenantResource).GetServicesByMobileNetwork(subscriptionId, resourceGroupName, mobileNetworkName, cancellationToken);
-        }
-
-        /// <summary>
-        /// Deletes the specified SIM.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MobileNetwork/simGroups/{simGroupName}/sims/{simName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Sims_Delete</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="simGroupName"> The name of the SIM Group. </param>
-        /// <param name="simName"> The name of the SIM. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/>, <paramref name="simGroupName"/> or <paramref name="simName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="simGroupName"/> or <paramref name="simName"/> is null. </exception>
-        public static async Task<ArmOperation> DeleteSimAsync(this TenantResource tenantResource, WaitUntil waitUntil, Guid subscriptionId, string resourceGroupName, string simGroupName, string simName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(simGroupName, nameof(simGroupName));
-            Argument.AssertNotNullOrEmpty(simName, nameof(simName));
-
-            return await GetTenantResourceExtensionClient(tenantResource).DeleteSimAsync(waitUntil, subscriptionId, resourceGroupName, simGroupName, simName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Deletes the specified SIM.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MobileNetwork/simGroups/{simGroupName}/sims/{simName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Sims_Delete</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="simGroupName"> The name of the SIM Group. </param>
-        /// <param name="simName"> The name of the SIM. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/>, <paramref name="simGroupName"/> or <paramref name="simName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="simGroupName"/> or <paramref name="simName"/> is null. </exception>
-        public static ArmOperation DeleteSim(this TenantResource tenantResource, WaitUntil waitUntil, Guid subscriptionId, string resourceGroupName, string simGroupName, string simName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(simGroupName, nameof(simGroupName));
-            Argument.AssertNotNullOrEmpty(simName, nameof(simName));
-
-            return GetTenantResourceExtensionClient(tenantResource).DeleteSim(waitUntil, subscriptionId, resourceGroupName, simGroupName, simName, cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets information about the specified SIM.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MobileNetwork/simGroups/{simGroupName}/sims/{simName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Sims_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="simGroupName"> The name of the SIM Group. </param>
-        /// <param name="simName"> The name of the SIM. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/>, <paramref name="simGroupName"/> or <paramref name="simName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="simGroupName"/> or <paramref name="simName"/> is null. </exception>
-        public static async Task<Response<Sim>> GetSimAsync(this TenantResource tenantResource, Guid subscriptionId, string resourceGroupName, string simGroupName, string simName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(simGroupName, nameof(simGroupName));
-            Argument.AssertNotNullOrEmpty(simName, nameof(simName));
-
-            return await GetTenantResourceExtensionClient(tenantResource).GetSimAsync(subscriptionId, resourceGroupName, simGroupName, simName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Gets information about the specified SIM.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MobileNetwork/simGroups/{simGroupName}/sims/{simName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Sims_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="simGroupName"> The name of the SIM Group. </param>
-        /// <param name="simName"> The name of the SIM. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/>, <paramref name="simGroupName"/> or <paramref name="simName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="simGroupName"/> or <paramref name="simName"/> is null. </exception>
-        public static Response<Sim> GetSim(this TenantResource tenantResource, Guid subscriptionId, string resourceGroupName, string simGroupName, string simName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(simGroupName, nameof(simGroupName));
-            Argument.AssertNotNullOrEmpty(simName, nameof(simName));
-
-            return GetTenantResourceExtensionClient(tenantResource).GetSim(subscriptionId, resourceGroupName, simGroupName, simName, cancellationToken);
-        }
-
-        /// <summary>
-        /// Creates or updates a SIM.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MobileNetwork/simGroups/{simGroupName}/sims/{simName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Sims_CreateOrUpdate</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="simGroupName"> The name of the SIM Group. </param>
-        /// <param name="simName"> The name of the SIM. </param>
-        /// <param name="sim"> Parameters supplied to the create or update SIM operation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/>, <paramref name="simGroupName"/> or <paramref name="simName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="simGroupName"/>, <paramref name="simName"/> or <paramref name="sim"/> is null. </exception>
-        public static async Task<ArmOperation<Sim>> CreateOrUpdateSimAsync(this TenantResource tenantResource, WaitUntil waitUntil, Guid subscriptionId, string resourceGroupName, string simGroupName, string simName, Sim sim, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(simGroupName, nameof(simGroupName));
-            Argument.AssertNotNullOrEmpty(simName, nameof(simName));
-            Argument.AssertNotNull(sim, nameof(sim));
-
-            return await GetTenantResourceExtensionClient(tenantResource).CreateOrUpdateSimAsync(waitUntil, subscriptionId, resourceGroupName, simGroupName, simName, sim, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Creates or updates a SIM.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MobileNetwork/simGroups/{simGroupName}/sims/{simName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Sims_CreateOrUpdate</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="simGroupName"> The name of the SIM Group. </param>
-        /// <param name="simName"> The name of the SIM. </param>
-        /// <param name="sim"> Parameters supplied to the create or update SIM operation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/>, <paramref name="simGroupName"/> or <paramref name="simName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="simGroupName"/>, <paramref name="simName"/> or <paramref name="sim"/> is null. </exception>
-        public static ArmOperation<Sim> CreateOrUpdateSim(this TenantResource tenantResource, WaitUntil waitUntil, Guid subscriptionId, string resourceGroupName, string simGroupName, string simName, Sim sim, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(simGroupName, nameof(simGroupName));
-            Argument.AssertNotNullOrEmpty(simName, nameof(simName));
-            Argument.AssertNotNull(sim, nameof(sim));
-
-            return GetTenantResourceExtensionClient(tenantResource).CreateOrUpdateSim(waitUntil, subscriptionId, resourceGroupName, simGroupName, simName, sim, cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets all the SIMs in a SIM group.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MobileNetwork/simGroups/{simGroupName}/sims</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Sims_ListByGroup</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="simGroupName"> The name of the SIM Group. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="simGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="simGroupName"/> is null. </exception>
-        /// <returns> An async collection of <see cref="Sim" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<Sim> GetSimsByGroupAsync(this TenantResource tenantResource, Guid subscriptionId, string resourceGroupName, string simGroupName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(simGroupName, nameof(simGroupName));
-
-            return GetTenantResourceExtensionClient(tenantResource).GetSimsByGroupAsync(subscriptionId, resourceGroupName, simGroupName, cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets all the SIMs in a SIM group.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MobileNetwork/simGroups/{simGroupName}/sims</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Sims_ListByGroup</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="simGroupName"> The name of the SIM Group. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="simGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="simGroupName"/> is null. </exception>
-        /// <returns> A collection of <see cref="Sim" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<Sim> GetSimsByGroup(this TenantResource tenantResource, Guid subscriptionId, string resourceGroupName, string simGroupName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(simGroupName, nameof(simGroupName));
-
-            return GetTenantResourceExtensionClient(tenantResource).GetSimsByGroup(subscriptionId, resourceGroupName, simGroupName, cancellationToken);
-        }
-
-        /// <summary>
-        /// Bulk upload SIMs to a SIM group.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MobileNetwork/simGroups/{simGroupName}/uploadSims</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Sims_BulkUpload</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="simGroupName"> The name of the SIM Group. </param>
-        /// <param name="simUploadList"> Parameters supplied to the bulk SIM upload operation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="simGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="simGroupName"/> or <paramref name="simUploadList"/> is null. </exception>
-        public static async Task<ArmOperation<AsyncOperationStatus>> BulkUploadSimAsync(this TenantResource tenantResource, WaitUntil waitUntil, Guid subscriptionId, string resourceGroupName, string simGroupName, SimUploadList simUploadList, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(simGroupName, nameof(simGroupName));
-            Argument.AssertNotNull(simUploadList, nameof(simUploadList));
-
-            return await GetTenantResourceExtensionClient(tenantResource).BulkUploadSimAsync(waitUntil, subscriptionId, resourceGroupName, simGroupName, simUploadList, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Bulk upload SIMs to a SIM group.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MobileNetwork/simGroups/{simGroupName}/uploadSims</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Sims_BulkUpload</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="simGroupName"> The name of the SIM Group. </param>
-        /// <param name="simUploadList"> Parameters supplied to the bulk SIM upload operation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="simGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="simGroupName"/> or <paramref name="simUploadList"/> is null. </exception>
-        public static ArmOperation<AsyncOperationStatus> BulkUploadSim(this TenantResource tenantResource, WaitUntil waitUntil, Guid subscriptionId, string resourceGroupName, string simGroupName, SimUploadList simUploadList, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(simGroupName, nameof(simGroupName));
-            Argument.AssertNotNull(simUploadList, nameof(simUploadList));
-
-            return GetTenantResourceExtensionClient(tenantResource).BulkUploadSim(waitUntil, subscriptionId, resourceGroupName, simGroupName, simUploadList, cancellationToken);
-        }
-
-        /// <summary>
-        /// Bulk delete SIMs from a SIM group.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MobileNetwork/simGroups/{simGroupName}/deleteSims</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Sims_BulkDelete</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="simGroupName"> The name of the SIM Group. </param>
-        /// <param name="simDeleteList"> Parameters supplied to the bulk SIM delete operation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="simGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="simGroupName"/> or <paramref name="simDeleteList"/> is null. </exception>
-        public static async Task<ArmOperation<AsyncOperationStatus>> BulkDeleteSimAsync(this TenantResource tenantResource, WaitUntil waitUntil, Guid subscriptionId, string resourceGroupName, string simGroupName, SimDeleteList simDeleteList, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(simGroupName, nameof(simGroupName));
-            Argument.AssertNotNull(simDeleteList, nameof(simDeleteList));
-
-            return await GetTenantResourceExtensionClient(tenantResource).BulkDeleteSimAsync(waitUntil, subscriptionId, resourceGroupName, simGroupName, simDeleteList, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Bulk delete SIMs from a SIM group.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MobileNetwork/simGroups/{simGroupName}/deleteSims</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Sims_BulkDelete</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="simGroupName"> The name of the SIM Group. </param>
-        /// <param name="simDeleteList"> Parameters supplied to the bulk SIM delete operation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="simGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="simGroupName"/> or <paramref name="simDeleteList"/> is null. </exception>
-        public static ArmOperation<AsyncOperationStatus> BulkDeleteSim(this TenantResource tenantResource, WaitUntil waitUntil, Guid subscriptionId, string resourceGroupName, string simGroupName, SimDeleteList simDeleteList, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(simGroupName, nameof(simGroupName));
-            Argument.AssertNotNull(simDeleteList, nameof(simDeleteList));
-
-            return GetTenantResourceExtensionClient(tenantResource).BulkDeleteSim(waitUntil, subscriptionId, resourceGroupName, simGroupName, simDeleteList, cancellationToken);
-        }
-
-        /// <summary>
-        /// Bulk upload SIMs in encrypted form to a SIM group. The SIM credentials must be encrypted.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MobileNetwork/simGroups/{simGroupName}/uploadEncryptedSims</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Sims_BulkUploadEncrypted</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="simGroupName"> The name of the SIM Group. </param>
-        /// <param name="encryptedSimUploadList"> Parameters supplied to the encrypted SIMs upload operation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="simGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="simGroupName"/> or <paramref name="encryptedSimUploadList"/> is null. </exception>
-        public static async Task<ArmOperation<AsyncOperationStatus>> BulkUploadEncryptedSimAsync(this TenantResource tenantResource, WaitUntil waitUntil, Guid subscriptionId, string resourceGroupName, string simGroupName, EncryptedSimUploadList encryptedSimUploadList, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(simGroupName, nameof(simGroupName));
-            Argument.AssertNotNull(encryptedSimUploadList, nameof(encryptedSimUploadList));
-
-            return await GetTenantResourceExtensionClient(tenantResource).BulkUploadEncryptedSimAsync(waitUntil, subscriptionId, resourceGroupName, simGroupName, encryptedSimUploadList, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Bulk upload SIMs in encrypted form to a SIM group. The SIM credentials must be encrypted.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MobileNetwork/simGroups/{simGroupName}/uploadEncryptedSims</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Sims_BulkUploadEncrypted</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="simGroupName"> The name of the SIM Group. </param>
-        /// <param name="encryptedSimUploadList"> Parameters supplied to the encrypted SIMs upload operation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="simGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="simGroupName"/> or <paramref name="encryptedSimUploadList"/> is null. </exception>
-        public static ArmOperation<AsyncOperationStatus> BulkUploadEncryptedSim(this TenantResource tenantResource, WaitUntil waitUntil, Guid subscriptionId, string resourceGroupName, string simGroupName, EncryptedSimUploadList encryptedSimUploadList, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(simGroupName, nameof(simGroupName));
-            Argument.AssertNotNull(encryptedSimUploadList, nameof(encryptedSimUploadList));
-
-            return GetTenantResourceExtensionClient(tenantResource).BulkUploadEncryptedSim(waitUntil, subscriptionId, resourceGroupName, simGroupName, encryptedSimUploadList, cancellationToken);
-        }
-
-        /// <summary>
-        /// Deletes the specified SIM group.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MobileNetwork/simGroups/{simGroupName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SimGroups_Delete</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="simGroupName"> The name of the SIM Group. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="simGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="simGroupName"/> is null. </exception>
-        public static async Task<ArmOperation> DeleteSimGroupAsync(this TenantResource tenantResource, WaitUntil waitUntil, Guid subscriptionId, string resourceGroupName, string simGroupName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(simGroupName, nameof(simGroupName));
-
-            return await GetTenantResourceExtensionClient(tenantResource).DeleteSimGroupAsync(waitUntil, subscriptionId, resourceGroupName, simGroupName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Deletes the specified SIM group.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MobileNetwork/simGroups/{simGroupName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SimGroups_Delete</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="simGroupName"> The name of the SIM Group. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="simGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="simGroupName"/> is null. </exception>
-        public static ArmOperation DeleteSimGroup(this TenantResource tenantResource, WaitUntil waitUntil, Guid subscriptionId, string resourceGroupName, string simGroupName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(simGroupName, nameof(simGroupName));
-
-            return GetTenantResourceExtensionClient(tenantResource).DeleteSimGroup(waitUntil, subscriptionId, resourceGroupName, simGroupName, cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets information about the specified SIM group.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MobileNetwork/simGroups/{simGroupName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SimGroups_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="simGroupName"> The name of the SIM Group. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="simGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="simGroupName"/> is null. </exception>
-        public static async Task<Response<SimGroup>> GetSimGroupAsync(this TenantResource tenantResource, Guid subscriptionId, string resourceGroupName, string simGroupName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(simGroupName, nameof(simGroupName));
-
-            return await GetTenantResourceExtensionClient(tenantResource).GetSimGroupAsync(subscriptionId, resourceGroupName, simGroupName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Gets information about the specified SIM group.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MobileNetwork/simGroups/{simGroupName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SimGroups_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="simGroupName"> The name of the SIM Group. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="simGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="simGroupName"/> is null. </exception>
-        public static Response<SimGroup> GetSimGroup(this TenantResource tenantResource, Guid subscriptionId, string resourceGroupName, string simGroupName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(simGroupName, nameof(simGroupName));
-
-            return GetTenantResourceExtensionClient(tenantResource).GetSimGroup(subscriptionId, resourceGroupName, simGroupName, cancellationToken);
-        }
-
-        /// <summary>
-        /// Creates or updates a SIM group.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MobileNetwork/simGroups/{simGroupName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SimGroups_CreateOrUpdate</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="simGroupName"> The name of the SIM Group. </param>
-        /// <param name="simGroup"> Parameters supplied to the create or update SIM group operation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="simGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="simGroupName"/> or <paramref name="simGroup"/> is null. </exception>
-        public static async Task<ArmOperation<SimGroup>> CreateOrUpdateSimGroupAsync(this TenantResource tenantResource, WaitUntil waitUntil, Guid subscriptionId, string resourceGroupName, string simGroupName, SimGroup simGroup, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(simGroupName, nameof(simGroupName));
-            Argument.AssertNotNull(simGroup, nameof(simGroup));
-
-            return await GetTenantResourceExtensionClient(tenantResource).CreateOrUpdateSimGroupAsync(waitUntil, subscriptionId, resourceGroupName, simGroupName, simGroup, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Creates or updates a SIM group.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MobileNetwork/simGroups/{simGroupName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SimGroups_CreateOrUpdate</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="simGroupName"> The name of the SIM Group. </param>
-        /// <param name="simGroup"> Parameters supplied to the create or update SIM group operation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="simGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="simGroupName"/> or <paramref name="simGroup"/> is null. </exception>
-        public static ArmOperation<SimGroup> CreateOrUpdateSimGroup(this TenantResource tenantResource, WaitUntil waitUntil, Guid subscriptionId, string resourceGroupName, string simGroupName, SimGroup simGroup, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(simGroupName, nameof(simGroupName));
-            Argument.AssertNotNull(simGroup, nameof(simGroup));
-
-            return GetTenantResourceExtensionClient(tenantResource).CreateOrUpdateSimGroup(waitUntil, subscriptionId, resourceGroupName, simGroupName, simGroup, cancellationToken);
-        }
-
-        /// <summary>
-        /// Patch SIM group resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MobileNetwork/simGroups/{simGroupName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SimGroups_UpdateTags</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="simGroupName"> The name of the SIM Group. </param>
-        /// <param name="identityAndTagsObject"> Parameters supplied to patch SIM group resource. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="simGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="simGroupName"/> or <paramref name="identityAndTagsObject"/> is null. </exception>
-        public static async Task<Response<SimGroup>> UpdateTagsSimGroupAsync(this TenantResource tenantResource, Guid subscriptionId, string resourceGroupName, string simGroupName, IdentityAndTagsObject identityAndTagsObject, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(simGroupName, nameof(simGroupName));
-            Argument.AssertNotNull(identityAndTagsObject, nameof(identityAndTagsObject));
-
-            return await GetTenantResourceExtensionClient(tenantResource).UpdateTagsSimGroupAsync(subscriptionId, resourceGroupName, simGroupName, identityAndTagsObject, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Patch SIM group resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MobileNetwork/simGroups/{simGroupName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SimGroups_UpdateTags</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="simGroupName"> The name of the SIM Group. </param>
-        /// <param name="identityAndTagsObject"> Parameters supplied to patch SIM group resource. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="simGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="simGroupName"/> or <paramref name="identityAndTagsObject"/> is null. </exception>
-        public static Response<SimGroup> UpdateTagsSimGroup(this TenantResource tenantResource, Guid subscriptionId, string resourceGroupName, string simGroupName, IdentityAndTagsObject identityAndTagsObject, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(simGroupName, nameof(simGroupName));
-            Argument.AssertNotNull(identityAndTagsObject, nameof(identityAndTagsObject));
-
-            return GetTenantResourceExtensionClient(tenantResource).UpdateTagsSimGroup(subscriptionId, resourceGroupName, simGroupName, identityAndTagsObject, cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets all the SIM groups in a subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.MobileNetwork/simGroups</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SimGroups_ListBySubscription</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SimGroup" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<SimGroup> GetSimGroupsBySubscriptionAsync(this TenantResource tenantResource, Guid subscriptionId, CancellationToken cancellationToken = default)
-        {
-            return GetTenantResourceExtensionClient(tenantResource).GetSimGroupsBySubscriptionAsync(subscriptionId, cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets all the SIM groups in a subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.MobileNetwork/simGroups</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SimGroups_ListBySubscription</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SimGroup" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<SimGroup> GetSimGroupsBySubscription(this TenantResource tenantResource, Guid subscriptionId, CancellationToken cancellationToken = default)
-        {
-            return GetTenantResourceExtensionClient(tenantResource).GetSimGroupsBySubscription(subscriptionId, cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets all the SIM groups in a resource group.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MobileNetwork/simGroups</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SimGroups_ListByResourceGroup</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> is null. </exception>
-        /// <returns> An async collection of <see cref="SimGroup" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<SimGroup> GetSimGroupsByResourceGroupAsync(this TenantResource tenantResource, Guid subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-
-            return GetTenantResourceExtensionClient(tenantResource).GetSimGroupsByResourceGroupAsync(subscriptionId, resourceGroupName, cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets all the SIM groups in a resource group.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MobileNetwork/simGroups</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SimGroups_ListByResourceGroup</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> is null. </exception>
-        /// <returns> A collection of <see cref="SimGroup" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<SimGroup> GetSimGroupsByResourceGroup(this TenantResource tenantResource, Guid subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-
-            return GetTenantResourceExtensionClient(tenantResource).GetSimGroupsByResourceGroup(subscriptionId, resourceGroupName, cancellationToken);
-        }
-
-        /// <summary>
-        /// Deletes the specified SIM policy.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MobileNetwork/mobileNetworks/{mobileNetworkName}/simPolicies/{simPolicyName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SimPolicies_Delete</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="mobileNetworkName"> The name of the mobile network. </param>
-        /// <param name="simPolicyName"> The name of the SIM policy. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/>, <paramref name="mobileNetworkName"/> or <paramref name="simPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="mobileNetworkName"/> or <paramref name="simPolicyName"/> is null. </exception>
-        public static async Task<ArmOperation> DeleteSimPolicyAsync(this TenantResource tenantResource, WaitUntil waitUntil, Guid subscriptionId, string resourceGroupName, string mobileNetworkName, string simPolicyName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(mobileNetworkName, nameof(mobileNetworkName));
-            Argument.AssertNotNullOrEmpty(simPolicyName, nameof(simPolicyName));
-
-            return await GetTenantResourceExtensionClient(tenantResource).DeleteSimPolicyAsync(waitUntil, subscriptionId, resourceGroupName, mobileNetworkName, simPolicyName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Deletes the specified SIM policy.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MobileNetwork/mobileNetworks/{mobileNetworkName}/simPolicies/{simPolicyName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SimPolicies_Delete</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="mobileNetworkName"> The name of the mobile network. </param>
-        /// <param name="simPolicyName"> The name of the SIM policy. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/>, <paramref name="mobileNetworkName"/> or <paramref name="simPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="mobileNetworkName"/> or <paramref name="simPolicyName"/> is null. </exception>
-        public static ArmOperation DeleteSimPolicy(this TenantResource tenantResource, WaitUntil waitUntil, Guid subscriptionId, string resourceGroupName, string mobileNetworkName, string simPolicyName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(mobileNetworkName, nameof(mobileNetworkName));
-            Argument.AssertNotNullOrEmpty(simPolicyName, nameof(simPolicyName));
-
-            return GetTenantResourceExtensionClient(tenantResource).DeleteSimPolicy(waitUntil, subscriptionId, resourceGroupName, mobileNetworkName, simPolicyName, cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets information about the specified SIM policy.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MobileNetwork/mobileNetworks/{mobileNetworkName}/simPolicies/{simPolicyName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SimPolicies_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="mobileNetworkName"> The name of the mobile network. </param>
-        /// <param name="simPolicyName"> The name of the SIM policy. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/>, <paramref name="mobileNetworkName"/> or <paramref name="simPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="mobileNetworkName"/> or <paramref name="simPolicyName"/> is null. </exception>
-        public static async Task<Response<SimPolicy>> GetSimPolicyAsync(this TenantResource tenantResource, Guid subscriptionId, string resourceGroupName, string mobileNetworkName, string simPolicyName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(mobileNetworkName, nameof(mobileNetworkName));
-            Argument.AssertNotNullOrEmpty(simPolicyName, nameof(simPolicyName));
-
-            return await GetTenantResourceExtensionClient(tenantResource).GetSimPolicyAsync(subscriptionId, resourceGroupName, mobileNetworkName, simPolicyName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Gets information about the specified SIM policy.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MobileNetwork/mobileNetworks/{mobileNetworkName}/simPolicies/{simPolicyName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SimPolicies_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="mobileNetworkName"> The name of the mobile network. </param>
-        /// <param name="simPolicyName"> The name of the SIM policy. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/>, <paramref name="mobileNetworkName"/> or <paramref name="simPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="mobileNetworkName"/> or <paramref name="simPolicyName"/> is null. </exception>
-        public static Response<SimPolicy> GetSimPolicy(this TenantResource tenantResource, Guid subscriptionId, string resourceGroupName, string mobileNetworkName, string simPolicyName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(mobileNetworkName, nameof(mobileNetworkName));
-            Argument.AssertNotNullOrEmpty(simPolicyName, nameof(simPolicyName));
-
-            return GetTenantResourceExtensionClient(tenantResource).GetSimPolicy(subscriptionId, resourceGroupName, mobileNetworkName, simPolicyName, cancellationToken);
-        }
-
-        /// <summary>
-        /// Creates or updates a SIM policy. Must be created in the same location as its parent mobile network.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MobileNetwork/mobileNetworks/{mobileNetworkName}/simPolicies/{simPolicyName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SimPolicies_CreateOrUpdate</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="mobileNetworkName"> The name of the mobile network. </param>
-        /// <param name="simPolicyName"> The name of the SIM policy. </param>
-        /// <param name="simPolicy"> Parameters supplied to the create or update SIM policy operation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/>, <paramref name="mobileNetworkName"/> or <paramref name="simPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="mobileNetworkName"/>, <paramref name="simPolicyName"/> or <paramref name="simPolicy"/> is null. </exception>
-        public static async Task<ArmOperation<SimPolicy>> CreateOrUpdateSimPolicyAsync(this TenantResource tenantResource, WaitUntil waitUntil, Guid subscriptionId, string resourceGroupName, string mobileNetworkName, string simPolicyName, SimPolicy simPolicy, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(mobileNetworkName, nameof(mobileNetworkName));
-            Argument.AssertNotNullOrEmpty(simPolicyName, nameof(simPolicyName));
-            Argument.AssertNotNull(simPolicy, nameof(simPolicy));
-
-            return await GetTenantResourceExtensionClient(tenantResource).CreateOrUpdateSimPolicyAsync(waitUntil, subscriptionId, resourceGroupName, mobileNetworkName, simPolicyName, simPolicy, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Creates or updates a SIM policy. Must be created in the same location as its parent mobile network.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MobileNetwork/mobileNetworks/{mobileNetworkName}/simPolicies/{simPolicyName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SimPolicies_CreateOrUpdate</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="mobileNetworkName"> The name of the mobile network. </param>
-        /// <param name="simPolicyName"> The name of the SIM policy. </param>
-        /// <param name="simPolicy"> Parameters supplied to the create or update SIM policy operation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/>, <paramref name="mobileNetworkName"/> or <paramref name="simPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="mobileNetworkName"/>, <paramref name="simPolicyName"/> or <paramref name="simPolicy"/> is null. </exception>
-        public static ArmOperation<SimPolicy> CreateOrUpdateSimPolicy(this TenantResource tenantResource, WaitUntil waitUntil, Guid subscriptionId, string resourceGroupName, string mobileNetworkName, string simPolicyName, SimPolicy simPolicy, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(mobileNetworkName, nameof(mobileNetworkName));
-            Argument.AssertNotNullOrEmpty(simPolicyName, nameof(simPolicyName));
-            Argument.AssertNotNull(simPolicy, nameof(simPolicy));
-
-            return GetTenantResourceExtensionClient(tenantResource).CreateOrUpdateSimPolicy(waitUntil, subscriptionId, resourceGroupName, mobileNetworkName, simPolicyName, simPolicy, cancellationToken);
-        }
-
-        /// <summary>
-        /// Updates SIM policy tags.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MobileNetwork/mobileNetworks/{mobileNetworkName}/simPolicies/{simPolicyName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SimPolicies_UpdateTags</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="mobileNetworkName"> The name of the mobile network. </param>
-        /// <param name="simPolicyName"> The name of the SIM policy. </param>
-        /// <param name="tagsObject"> Parameters supplied to update SIM policy tags. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/>, <paramref name="mobileNetworkName"/> or <paramref name="simPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="mobileNetworkName"/>, <paramref name="simPolicyName"/> or <paramref name="tagsObject"/> is null. </exception>
-        public static async Task<Response<SimPolicy>> UpdateTagsSimPolicyAsync(this TenantResource tenantResource, Guid subscriptionId, string resourceGroupName, string mobileNetworkName, string simPolicyName, TagsObject tagsObject, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(mobileNetworkName, nameof(mobileNetworkName));
-            Argument.AssertNotNullOrEmpty(simPolicyName, nameof(simPolicyName));
-            Argument.AssertNotNull(tagsObject, nameof(tagsObject));
-
-            return await GetTenantResourceExtensionClient(tenantResource).UpdateTagsSimPolicyAsync(subscriptionId, resourceGroupName, mobileNetworkName, simPolicyName, tagsObject, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Updates SIM policy tags.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MobileNetwork/mobileNetworks/{mobileNetworkName}/simPolicies/{simPolicyName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SimPolicies_UpdateTags</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="mobileNetworkName"> The name of the mobile network. </param>
-        /// <param name="simPolicyName"> The name of the SIM policy. </param>
-        /// <param name="tagsObject"> Parameters supplied to update SIM policy tags. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/>, <paramref name="mobileNetworkName"/> or <paramref name="simPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="mobileNetworkName"/>, <paramref name="simPolicyName"/> or <paramref name="tagsObject"/> is null. </exception>
-        public static Response<SimPolicy> UpdateTagsSimPolicy(this TenantResource tenantResource, Guid subscriptionId, string resourceGroupName, string mobileNetworkName, string simPolicyName, TagsObject tagsObject, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(mobileNetworkName, nameof(mobileNetworkName));
-            Argument.AssertNotNullOrEmpty(simPolicyName, nameof(simPolicyName));
-            Argument.AssertNotNull(tagsObject, nameof(tagsObject));
-
-            return GetTenantResourceExtensionClient(tenantResource).UpdateTagsSimPolicy(subscriptionId, resourceGroupName, mobileNetworkName, simPolicyName, tagsObject, cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets all the SIM policies in a mobile network.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MobileNetwork/mobileNetworks/{mobileNetworkName}/simPolicies</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SimPolicies_ListByMobileNetwork</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="mobileNetworkName"> The name of the mobile network. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="mobileNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="mobileNetworkName"/> is null. </exception>
-        /// <returns> An async collection of <see cref="SimPolicy" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<SimPolicy> GetSimPoliciesByMobileNetworkAsync(this TenantResource tenantResource, Guid subscriptionId, string resourceGroupName, string mobileNetworkName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(mobileNetworkName, nameof(mobileNetworkName));
-
-            return GetTenantResourceExtensionClient(tenantResource).GetSimPoliciesByMobileNetworkAsync(subscriptionId, resourceGroupName, mobileNetworkName, cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets all the SIM policies in a mobile network.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MobileNetwork/mobileNetworks/{mobileNetworkName}/simPolicies</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SimPolicies_ListByMobileNetwork</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="mobileNetworkName"> The name of the mobile network. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="mobileNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="mobileNetworkName"/> is null. </exception>
-        /// <returns> A collection of <see cref="SimPolicy" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<SimPolicy> GetSimPoliciesByMobileNetwork(this TenantResource tenantResource, Guid subscriptionId, string resourceGroupName, string mobileNetworkName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(mobileNetworkName, nameof(mobileNetworkName));
-
-            return GetTenantResourceExtensionClient(tenantResource).GetSimPoliciesByMobileNetwork(subscriptionId, resourceGroupName, mobileNetworkName, cancellationToken);
-        }
-
-        /// <summary>
-        /// Deletes the specified mobile network site. This will also delete any network functions that are a part of this site.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MobileNetwork/mobileNetworks/{mobileNetworkName}/sites/{siteName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Sites_Delete</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="mobileNetworkName"> The name of the mobile network. </param>
-        /// <param name="siteName"> The name of the mobile network site. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/>, <paramref name="mobileNetworkName"/> or <paramref name="siteName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="mobileNetworkName"/> or <paramref name="siteName"/> is null. </exception>
-        public static async Task<ArmOperation> DeleteSiteAsync(this TenantResource tenantResource, WaitUntil waitUntil, Guid subscriptionId, string resourceGroupName, string mobileNetworkName, string siteName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(mobileNetworkName, nameof(mobileNetworkName));
-            Argument.AssertNotNullOrEmpty(siteName, nameof(siteName));
-
-            return await GetTenantResourceExtensionClient(tenantResource).DeleteSiteAsync(waitUntil, subscriptionId, resourceGroupName, mobileNetworkName, siteName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Deletes the specified mobile network site. This will also delete any network functions that are a part of this site.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MobileNetwork/mobileNetworks/{mobileNetworkName}/sites/{siteName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Sites_Delete</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="mobileNetworkName"> The name of the mobile network. </param>
-        /// <param name="siteName"> The name of the mobile network site. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/>, <paramref name="mobileNetworkName"/> or <paramref name="siteName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="mobileNetworkName"/> or <paramref name="siteName"/> is null. </exception>
-        public static ArmOperation DeleteSite(this TenantResource tenantResource, WaitUntil waitUntil, Guid subscriptionId, string resourceGroupName, string mobileNetworkName, string siteName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(mobileNetworkName, nameof(mobileNetworkName));
-            Argument.AssertNotNullOrEmpty(siteName, nameof(siteName));
-
-            return GetTenantResourceExtensionClient(tenantResource).DeleteSite(waitUntil, subscriptionId, resourceGroupName, mobileNetworkName, siteName, cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets information about the specified mobile network site.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MobileNetwork/mobileNetworks/{mobileNetworkName}/sites/{siteName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Sites_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="mobileNetworkName"> The name of the mobile network. </param>
-        /// <param name="siteName"> The name of the mobile network site. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/>, <paramref name="mobileNetworkName"/> or <paramref name="siteName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="mobileNetworkName"/> or <paramref name="siteName"/> is null. </exception>
-        public static async Task<Response<Site>> GetSiteAsync(this TenantResource tenantResource, Guid subscriptionId, string resourceGroupName, string mobileNetworkName, string siteName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(mobileNetworkName, nameof(mobileNetworkName));
-            Argument.AssertNotNullOrEmpty(siteName, nameof(siteName));
-
-            return await GetTenantResourceExtensionClient(tenantResource).GetSiteAsync(subscriptionId, resourceGroupName, mobileNetworkName, siteName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Gets information about the specified mobile network site.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MobileNetwork/mobileNetworks/{mobileNetworkName}/sites/{siteName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Sites_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="mobileNetworkName"> The name of the mobile network. </param>
-        /// <param name="siteName"> The name of the mobile network site. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/>, <paramref name="mobileNetworkName"/> or <paramref name="siteName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="mobileNetworkName"/> or <paramref name="siteName"/> is null. </exception>
-        public static Response<Site> GetSite(this TenantResource tenantResource, Guid subscriptionId, string resourceGroupName, string mobileNetworkName, string siteName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(mobileNetworkName, nameof(mobileNetworkName));
-            Argument.AssertNotNullOrEmpty(siteName, nameof(siteName));
-
-            return GetTenantResourceExtensionClient(tenantResource).GetSite(subscriptionId, resourceGroupName, mobileNetworkName, siteName, cancellationToken);
-        }
-
-        /// <summary>
-        /// Creates or updates a mobile network site. Must be created in the same location as its parent mobile network.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MobileNetwork/mobileNetworks/{mobileNetworkName}/sites/{siteName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Sites_CreateOrUpdate</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="mobileNetworkName"> The name of the mobile network. </param>
-        /// <param name="siteName"> The name of the mobile network site. </param>
-        /// <param name="site"> Parameters supplied to the create or update mobile network site operation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/>, <paramref name="mobileNetworkName"/> or <paramref name="siteName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="mobileNetworkName"/>, <paramref name="siteName"/> or <paramref name="site"/> is null. </exception>
-        public static async Task<ArmOperation<Site>> CreateOrUpdateSiteAsync(this TenantResource tenantResource, WaitUntil waitUntil, Guid subscriptionId, string resourceGroupName, string mobileNetworkName, string siteName, Site site, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(mobileNetworkName, nameof(mobileNetworkName));
-            Argument.AssertNotNullOrEmpty(siteName, nameof(siteName));
-            Argument.AssertNotNull(site, nameof(site));
-
-            return await GetTenantResourceExtensionClient(tenantResource).CreateOrUpdateSiteAsync(waitUntil, subscriptionId, resourceGroupName, mobileNetworkName, siteName, site, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Creates or updates a mobile network site. Must be created in the same location as its parent mobile network.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MobileNetwork/mobileNetworks/{mobileNetworkName}/sites/{siteName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Sites_CreateOrUpdate</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="mobileNetworkName"> The name of the mobile network. </param>
-        /// <param name="siteName"> The name of the mobile network site. </param>
-        /// <param name="site"> Parameters supplied to the create or update mobile network site operation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/>, <paramref name="mobileNetworkName"/> or <paramref name="siteName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="mobileNetworkName"/>, <paramref name="siteName"/> or <paramref name="site"/> is null. </exception>
-        public static ArmOperation<Site> CreateOrUpdateSite(this TenantResource tenantResource, WaitUntil waitUntil, Guid subscriptionId, string resourceGroupName, string mobileNetworkName, string siteName, Site site, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(mobileNetworkName, nameof(mobileNetworkName));
-            Argument.AssertNotNullOrEmpty(siteName, nameof(siteName));
-            Argument.AssertNotNull(site, nameof(site));
-
-            return GetTenantResourceExtensionClient(tenantResource).CreateOrUpdateSite(waitUntil, subscriptionId, resourceGroupName, mobileNetworkName, siteName, site, cancellationToken);
-        }
-
-        /// <summary>
-        /// Updates site tags.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MobileNetwork/mobileNetworks/{mobileNetworkName}/sites/{siteName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Sites_UpdateTags</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="mobileNetworkName"> The name of the mobile network. </param>
-        /// <param name="siteName"> The name of the mobile network site. </param>
-        /// <param name="tagsObject"> Parameters supplied to update network site tags. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/>, <paramref name="mobileNetworkName"/> or <paramref name="siteName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="mobileNetworkName"/>, <paramref name="siteName"/> or <paramref name="tagsObject"/> is null. </exception>
-        public static async Task<Response<Site>> UpdateTagsSiteAsync(this TenantResource tenantResource, Guid subscriptionId, string resourceGroupName, string mobileNetworkName, string siteName, TagsObject tagsObject, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(mobileNetworkName, nameof(mobileNetworkName));
-            Argument.AssertNotNullOrEmpty(siteName, nameof(siteName));
-            Argument.AssertNotNull(tagsObject, nameof(tagsObject));
-
-            return await GetTenantResourceExtensionClient(tenantResource).UpdateTagsSiteAsync(subscriptionId, resourceGroupName, mobileNetworkName, siteName, tagsObject, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Updates site tags.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MobileNetwork/mobileNetworks/{mobileNetworkName}/sites/{siteName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Sites_UpdateTags</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="mobileNetworkName"> The name of the mobile network. </param>
-        /// <param name="siteName"> The name of the mobile network site. </param>
-        /// <param name="tagsObject"> Parameters supplied to update network site tags. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/>, <paramref name="mobileNetworkName"/> or <paramref name="siteName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="mobileNetworkName"/>, <paramref name="siteName"/> or <paramref name="tagsObject"/> is null. </exception>
-        public static Response<Site> UpdateTagsSite(this TenantResource tenantResource, Guid subscriptionId, string resourceGroupName, string mobileNetworkName, string siteName, TagsObject tagsObject, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(mobileNetworkName, nameof(mobileNetworkName));
-            Argument.AssertNotNullOrEmpty(siteName, nameof(siteName));
-            Argument.AssertNotNull(tagsObject, nameof(tagsObject));
-
-            return GetTenantResourceExtensionClient(tenantResource).UpdateTagsSite(subscriptionId, resourceGroupName, mobileNetworkName, siteName, tagsObject, cancellationToken);
-        }
-
-        /// <summary>
-        /// Lists all sites in the mobile network.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MobileNetwork/mobileNetworks/{mobileNetworkName}/sites</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Sites_ListByMobileNetwork</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="mobileNetworkName"> The name of the mobile network. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="mobileNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="mobileNetworkName"/> is null. </exception>
-        /// <returns> An async collection of <see cref="Site" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<Site> GetSitesByMobileNetworkAsync(this TenantResource tenantResource, Guid subscriptionId, string resourceGroupName, string mobileNetworkName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(mobileNetworkName, nameof(mobileNetworkName));
-
-            return GetTenantResourceExtensionClient(tenantResource).GetSitesByMobileNetworkAsync(subscriptionId, resourceGroupName, mobileNetworkName, cancellationToken);
-        }
-
-        /// <summary>
-        /// Lists all sites in the mobile network.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MobileNetwork/mobileNetworks/{mobileNetworkName}/sites</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Sites_ListByMobileNetwork</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="mobileNetworkName"> The name of the mobile network. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="mobileNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="mobileNetworkName"/> is null. </exception>
-        /// <returns> A collection of <see cref="Site" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<Site> GetSitesByMobileNetwork(this TenantResource tenantResource, Guid subscriptionId, string resourceGroupName, string mobileNetworkName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(mobileNetworkName, nameof(mobileNetworkName));
-
-            return GetTenantResourceExtensionClient(tenantResource).GetSitesByMobileNetwork(subscriptionId, resourceGroupName, mobileNetworkName, cancellationToken);
-        }
-
-        /// <summary>
-        /// Deletes a packet core under the specified mobile network site.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MobileNetwork/mobileNetworks/{mobileNetworkName}/sites/{siteName}/deletePacketCore</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Sites_DeletePacketCore</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="mobileNetworkName"> The name of the mobile network. </param>
-        /// <param name="siteName"> The name of the mobile network site. </param>
-        /// <param name="siteDeletePacketCore"> Parameters supplied to delete a packet core under a site. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/>, <paramref name="mobileNetworkName"/> or <paramref name="siteName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="mobileNetworkName"/>, <paramref name="siteName"/> or <paramref name="siteDeletePacketCore"/> is null. </exception>
-        public static async Task<ArmOperation> DeletePacketCoreSiteAsync(this TenantResource tenantResource, WaitUntil waitUntil, Guid subscriptionId, string resourceGroupName, string mobileNetworkName, string siteName, SiteDeletePacketCore siteDeletePacketCore, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(mobileNetworkName, nameof(mobileNetworkName));
-            Argument.AssertNotNullOrEmpty(siteName, nameof(siteName));
-            Argument.AssertNotNull(siteDeletePacketCore, nameof(siteDeletePacketCore));
-
-            return await GetTenantResourceExtensionClient(tenantResource).DeletePacketCoreSiteAsync(waitUntil, subscriptionId, resourceGroupName, mobileNetworkName, siteName, siteDeletePacketCore, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Deletes a packet core under the specified mobile network site.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MobileNetwork/mobileNetworks/{mobileNetworkName}/sites/{siteName}/deletePacketCore</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Sites_DeletePacketCore</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="mobileNetworkName"> The name of the mobile network. </param>
-        /// <param name="siteName"> The name of the mobile network site. </param>
-        /// <param name="siteDeletePacketCore"> Parameters supplied to delete a packet core under a site. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/>, <paramref name="mobileNetworkName"/> or <paramref name="siteName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="mobileNetworkName"/>, <paramref name="siteName"/> or <paramref name="siteDeletePacketCore"/> is null. </exception>
-        public static ArmOperation DeletePacketCoreSite(this TenantResource tenantResource, WaitUntil waitUntil, Guid subscriptionId, string resourceGroupName, string mobileNetworkName, string siteName, SiteDeletePacketCore siteDeletePacketCore, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(mobileNetworkName, nameof(mobileNetworkName));
-            Argument.AssertNotNullOrEmpty(siteName, nameof(siteName));
-            Argument.AssertNotNull(siteDeletePacketCore, nameof(siteDeletePacketCore));
-
-            return GetTenantResourceExtensionClient(tenantResource).DeletePacketCoreSite(waitUntil, subscriptionId, resourceGroupName, mobileNetworkName, siteName, siteDeletePacketCore, cancellationToken);
-        }
-
-        /// <summary>
-        /// Deletes the specified network slice.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MobileNetwork/mobileNetworks/{mobileNetworkName}/slices/{sliceName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Slices_Delete</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="mobileNetworkName"> The name of the mobile network. </param>
-        /// <param name="sliceName"> The name of the network slice. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/>, <paramref name="mobileNetworkName"/> or <paramref name="sliceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="mobileNetworkName"/> or <paramref name="sliceName"/> is null. </exception>
-        public static async Task<ArmOperation> DeleteSliceAsync(this TenantResource tenantResource, WaitUntil waitUntil, Guid subscriptionId, string resourceGroupName, string mobileNetworkName, string sliceName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(mobileNetworkName, nameof(mobileNetworkName));
-            Argument.AssertNotNullOrEmpty(sliceName, nameof(sliceName));
-
-            return await GetTenantResourceExtensionClient(tenantResource).DeleteSliceAsync(waitUntil, subscriptionId, resourceGroupName, mobileNetworkName, sliceName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Deletes the specified network slice.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MobileNetwork/mobileNetworks/{mobileNetworkName}/slices/{sliceName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Slices_Delete</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="mobileNetworkName"> The name of the mobile network. </param>
-        /// <param name="sliceName"> The name of the network slice. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/>, <paramref name="mobileNetworkName"/> or <paramref name="sliceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="mobileNetworkName"/> or <paramref name="sliceName"/> is null. </exception>
-        public static ArmOperation DeleteSlice(this TenantResource tenantResource, WaitUntil waitUntil, Guid subscriptionId, string resourceGroupName, string mobileNetworkName, string sliceName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(mobileNetworkName, nameof(mobileNetworkName));
-            Argument.AssertNotNullOrEmpty(sliceName, nameof(sliceName));
-
-            return GetTenantResourceExtensionClient(tenantResource).DeleteSlice(waitUntil, subscriptionId, resourceGroupName, mobileNetworkName, sliceName, cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets information about the specified network slice.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MobileNetwork/mobileNetworks/{mobileNetworkName}/slices/{sliceName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Slices_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="mobileNetworkName"> The name of the mobile network. </param>
-        /// <param name="sliceName"> The name of the network slice. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/>, <paramref name="mobileNetworkName"/> or <paramref name="sliceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="mobileNetworkName"/> or <paramref name="sliceName"/> is null. </exception>
-        public static async Task<Response<Slice>> GetSliceAsync(this TenantResource tenantResource, Guid subscriptionId, string resourceGroupName, string mobileNetworkName, string sliceName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(mobileNetworkName, nameof(mobileNetworkName));
-            Argument.AssertNotNullOrEmpty(sliceName, nameof(sliceName));
-
-            return await GetTenantResourceExtensionClient(tenantResource).GetSliceAsync(subscriptionId, resourceGroupName, mobileNetworkName, sliceName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Gets information about the specified network slice.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MobileNetwork/mobileNetworks/{mobileNetworkName}/slices/{sliceName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Slices_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="mobileNetworkName"> The name of the mobile network. </param>
-        /// <param name="sliceName"> The name of the network slice. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/>, <paramref name="mobileNetworkName"/> or <paramref name="sliceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="mobileNetworkName"/> or <paramref name="sliceName"/> is null. </exception>
-        public static Response<Slice> GetSlice(this TenantResource tenantResource, Guid subscriptionId, string resourceGroupName, string mobileNetworkName, string sliceName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(mobileNetworkName, nameof(mobileNetworkName));
-            Argument.AssertNotNullOrEmpty(sliceName, nameof(sliceName));
-
-            return GetTenantResourceExtensionClient(tenantResource).GetSlice(subscriptionId, resourceGroupName, mobileNetworkName, sliceName, cancellationToken);
-        }
-
-        /// <summary>
-        /// Creates or updates a network slice. Must be created in the same location as its parent mobile network.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MobileNetwork/mobileNetworks/{mobileNetworkName}/slices/{sliceName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Slices_CreateOrUpdate</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="mobileNetworkName"> The name of the mobile network. </param>
-        /// <param name="sliceName"> The name of the network slice. </param>
-        /// <param name="slice"> Parameters supplied to the create or update network slice operation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/>, <paramref name="mobileNetworkName"/> or <paramref name="sliceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="mobileNetworkName"/>, <paramref name="sliceName"/> or <paramref name="slice"/> is null. </exception>
-        public static async Task<ArmOperation<Slice>> CreateOrUpdateSliceAsync(this TenantResource tenantResource, WaitUntil waitUntil, Guid subscriptionId, string resourceGroupName, string mobileNetworkName, string sliceName, Slice slice, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(mobileNetworkName, nameof(mobileNetworkName));
-            Argument.AssertNotNullOrEmpty(sliceName, nameof(sliceName));
-            Argument.AssertNotNull(slice, nameof(slice));
-
-            return await GetTenantResourceExtensionClient(tenantResource).CreateOrUpdateSliceAsync(waitUntil, subscriptionId, resourceGroupName, mobileNetworkName, sliceName, slice, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Creates or updates a network slice. Must be created in the same location as its parent mobile network.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MobileNetwork/mobileNetworks/{mobileNetworkName}/slices/{sliceName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Slices_CreateOrUpdate</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="mobileNetworkName"> The name of the mobile network. </param>
-        /// <param name="sliceName"> The name of the network slice. </param>
-        /// <param name="slice"> Parameters supplied to the create or update network slice operation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/>, <paramref name="mobileNetworkName"/> or <paramref name="sliceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="mobileNetworkName"/>, <paramref name="sliceName"/> or <paramref name="slice"/> is null. </exception>
-        public static ArmOperation<Slice> CreateOrUpdateSlice(this TenantResource tenantResource, WaitUntil waitUntil, Guid subscriptionId, string resourceGroupName, string mobileNetworkName, string sliceName, Slice slice, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(mobileNetworkName, nameof(mobileNetworkName));
-            Argument.AssertNotNullOrEmpty(sliceName, nameof(sliceName));
-            Argument.AssertNotNull(slice, nameof(slice));
-
-            return GetTenantResourceExtensionClient(tenantResource).CreateOrUpdateSlice(waitUntil, subscriptionId, resourceGroupName, mobileNetworkName, sliceName, slice, cancellationToken);
-        }
-
-        /// <summary>
-        /// Updates slice tags.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MobileNetwork/mobileNetworks/{mobileNetworkName}/slices/{sliceName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Slices_UpdateTags</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="mobileNetworkName"> The name of the mobile network. </param>
-        /// <param name="sliceName"> The name of the network slice. </param>
-        /// <param name="tagsObject"> Parameters supplied to update network slice tags. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/>, <paramref name="mobileNetworkName"/> or <paramref name="sliceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="mobileNetworkName"/>, <paramref name="sliceName"/> or <paramref name="tagsObject"/> is null. </exception>
-        public static async Task<Response<Slice>> UpdateTagsSliceAsync(this TenantResource tenantResource, Guid subscriptionId, string resourceGroupName, string mobileNetworkName, string sliceName, TagsObject tagsObject, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(mobileNetworkName, nameof(mobileNetworkName));
-            Argument.AssertNotNullOrEmpty(sliceName, nameof(sliceName));
-            Argument.AssertNotNull(tagsObject, nameof(tagsObject));
-
-            return await GetTenantResourceExtensionClient(tenantResource).UpdateTagsSliceAsync(subscriptionId, resourceGroupName, mobileNetworkName, sliceName, tagsObject, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Updates slice tags.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MobileNetwork/mobileNetworks/{mobileNetworkName}/slices/{sliceName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Slices_UpdateTags</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="mobileNetworkName"> The name of the mobile network. </param>
-        /// <param name="sliceName"> The name of the network slice. </param>
-        /// <param name="tagsObject"> Parameters supplied to update network slice tags. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/>, <paramref name="mobileNetworkName"/> or <paramref name="sliceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="mobileNetworkName"/>, <paramref name="sliceName"/> or <paramref name="tagsObject"/> is null. </exception>
-        public static Response<Slice> UpdateTagsSlice(this TenantResource tenantResource, Guid subscriptionId, string resourceGroupName, string mobileNetworkName, string sliceName, TagsObject tagsObject, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(mobileNetworkName, nameof(mobileNetworkName));
-            Argument.AssertNotNullOrEmpty(sliceName, nameof(sliceName));
-            Argument.AssertNotNull(tagsObject, nameof(tagsObject));
-
-            return GetTenantResourceExtensionClient(tenantResource).UpdateTagsSlice(subscriptionId, resourceGroupName, mobileNetworkName, sliceName, tagsObject, cancellationToken);
-        }
-
-        /// <summary>
-        /// Lists all slices in the mobile network.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MobileNetwork/mobileNetworks/{mobileNetworkName}/slices</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Slices_ListByMobileNetwork</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="mobileNetworkName"> The name of the mobile network. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="mobileNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="mobileNetworkName"/> is null. </exception>
-        /// <returns> An async collection of <see cref="Slice" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<Slice> GetSlicesByMobileNetworkAsync(this TenantResource tenantResource, Guid subscriptionId, string resourceGroupName, string mobileNetworkName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(mobileNetworkName, nameof(mobileNetworkName));
-
-            return GetTenantResourceExtensionClient(tenantResource).GetSlicesByMobileNetworkAsync(subscriptionId, resourceGroupName, mobileNetworkName, cancellationToken);
-        }
-
-        /// <summary>
-        /// Lists all slices in the mobile network.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MobileNetwork/mobileNetworks/{mobileNetworkName}/slices</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Slices_ListByMobileNetwork</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="mobileNetworkName"> The name of the mobile network. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="mobileNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="mobileNetworkName"/> is null. </exception>
-        /// <returns> A collection of <see cref="Slice" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<Slice> GetSlicesByMobileNetwork(this TenantResource tenantResource, Guid subscriptionId, string resourceGroupName, string mobileNetworkName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(mobileNetworkName, nameof(mobileNetworkName));
-
-            return GetTenantResourceExtensionClient(tenantResource).GetSlicesByMobileNetwork(subscriptionId, resourceGroupName, mobileNetworkName, cancellationToken);
+            return tenantResource.GetTenantPacketCoreControlPlaneVersions().Get(versionName, cancellationToken);
         }
     }
 }

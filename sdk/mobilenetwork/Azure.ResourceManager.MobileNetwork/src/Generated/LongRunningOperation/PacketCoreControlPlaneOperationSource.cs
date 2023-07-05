@@ -10,22 +10,31 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
-using Azure.ResourceManager.MobileNetwork.Models;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.MobileNetwork
 {
-    internal class PacketCoreControlPlaneOperationSource : IOperationSource<PacketCoreControlPlane>
+    internal class PacketCoreControlPlaneOperationSource : IOperationSource<PacketCoreControlPlaneResource>
     {
-        PacketCoreControlPlane IOperationSource<PacketCoreControlPlane>.CreateResult(Response response, CancellationToken cancellationToken)
+        private readonly ArmClient _client;
+
+        internal PacketCoreControlPlaneOperationSource(ArmClient client)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            return PacketCoreControlPlane.DeserializePacketCoreControlPlane(document.RootElement);
+            _client = client;
         }
 
-        async ValueTask<PacketCoreControlPlane> IOperationSource<PacketCoreControlPlane>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        PacketCoreControlPlaneResource IOperationSource<PacketCoreControlPlaneResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        {
+            using var document = JsonDocument.Parse(response.ContentStream);
+            var data = PacketCoreControlPlaneData.DeserializePacketCoreControlPlaneData(document.RootElement);
+            return new PacketCoreControlPlaneResource(_client, data);
+        }
+
+        async ValueTask<PacketCoreControlPlaneResource> IOperationSource<PacketCoreControlPlaneResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return PacketCoreControlPlane.DeserializePacketCoreControlPlane(document.RootElement);
+            var data = PacketCoreControlPlaneData.DeserializePacketCoreControlPlaneData(document.RootElement);
+            return new PacketCoreControlPlaneResource(_client, data);
         }
     }
 }

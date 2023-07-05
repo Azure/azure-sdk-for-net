@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.MobileNetwork
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
-        internal HttpMessage CreateDeleteRequest(Guid subscriptionId, string resourceGroupName, string packetCoreControlPlaneName, string packetCoreDataPlaneName)
+        internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string packetCoreControlPlaneName, string packetCoreDataPlaneName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -65,10 +65,11 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <param name="packetCoreControlPlaneName"> The name of the packet core control plane. </param>
         /// <param name="packetCoreDataPlaneName"> The name of the packet core data plane. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="packetCoreControlPlaneName"/> or <paramref name="packetCoreDataPlaneName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/>, <paramref name="packetCoreControlPlaneName"/> or <paramref name="packetCoreDataPlaneName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> DeleteAsync(Guid subscriptionId, string resourceGroupName, string packetCoreControlPlaneName, string packetCoreDataPlaneName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="packetCoreControlPlaneName"/> or <paramref name="packetCoreDataPlaneName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="packetCoreControlPlaneName"/> or <paramref name="packetCoreDataPlaneName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string packetCoreControlPlaneName, string packetCoreDataPlaneName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(packetCoreControlPlaneName, nameof(packetCoreControlPlaneName));
             Argument.AssertNotNullOrEmpty(packetCoreDataPlaneName, nameof(packetCoreDataPlaneName));
@@ -92,10 +93,11 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <param name="packetCoreControlPlaneName"> The name of the packet core control plane. </param>
         /// <param name="packetCoreDataPlaneName"> The name of the packet core data plane. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="packetCoreControlPlaneName"/> or <paramref name="packetCoreDataPlaneName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/>, <paramref name="packetCoreControlPlaneName"/> or <paramref name="packetCoreDataPlaneName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response Delete(Guid subscriptionId, string resourceGroupName, string packetCoreControlPlaneName, string packetCoreDataPlaneName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="packetCoreControlPlaneName"/> or <paramref name="packetCoreDataPlaneName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="packetCoreControlPlaneName"/> or <paramref name="packetCoreDataPlaneName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response Delete(string subscriptionId, string resourceGroupName, string packetCoreControlPlaneName, string packetCoreDataPlaneName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(packetCoreControlPlaneName, nameof(packetCoreControlPlaneName));
             Argument.AssertNotNullOrEmpty(packetCoreDataPlaneName, nameof(packetCoreDataPlaneName));
@@ -113,7 +115,7 @@ namespace Azure.ResourceManager.MobileNetwork
             }
         }
 
-        internal HttpMessage CreateGetRequest(Guid subscriptionId, string resourceGroupName, string packetCoreControlPlaneName, string packetCoreDataPlaneName)
+        internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string packetCoreControlPlaneName, string packetCoreDataPlaneName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -141,10 +143,11 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <param name="packetCoreControlPlaneName"> The name of the packet core control plane. </param>
         /// <param name="packetCoreDataPlaneName"> The name of the packet core data plane. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="packetCoreControlPlaneName"/> or <paramref name="packetCoreDataPlaneName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/>, <paramref name="packetCoreControlPlaneName"/> or <paramref name="packetCoreDataPlaneName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<PacketCoreDataPlane>> GetAsync(Guid subscriptionId, string resourceGroupName, string packetCoreControlPlaneName, string packetCoreDataPlaneName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="packetCoreControlPlaneName"/> or <paramref name="packetCoreDataPlaneName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="packetCoreControlPlaneName"/> or <paramref name="packetCoreDataPlaneName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<PacketCoreDataPlaneData>> GetAsync(string subscriptionId, string resourceGroupName, string packetCoreControlPlaneName, string packetCoreDataPlaneName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(packetCoreControlPlaneName, nameof(packetCoreControlPlaneName));
             Argument.AssertNotNullOrEmpty(packetCoreDataPlaneName, nameof(packetCoreDataPlaneName));
@@ -155,11 +158,13 @@ namespace Azure.ResourceManager.MobileNetwork
             {
                 case 200:
                     {
-                        PacketCoreDataPlane value = default;
+                        PacketCoreDataPlaneData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = PacketCoreDataPlane.DeserializePacketCoreDataPlane(document.RootElement);
+                        value = PacketCoreDataPlaneData.DeserializePacketCoreDataPlaneData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
+                case 404:
+                    return Response.FromValue((PacketCoreDataPlaneData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -171,10 +176,11 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <param name="packetCoreControlPlaneName"> The name of the packet core control plane. </param>
         /// <param name="packetCoreDataPlaneName"> The name of the packet core data plane. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="packetCoreControlPlaneName"/> or <paramref name="packetCoreDataPlaneName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/>, <paramref name="packetCoreControlPlaneName"/> or <paramref name="packetCoreDataPlaneName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<PacketCoreDataPlane> Get(Guid subscriptionId, string resourceGroupName, string packetCoreControlPlaneName, string packetCoreDataPlaneName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="packetCoreControlPlaneName"/> or <paramref name="packetCoreDataPlaneName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="packetCoreControlPlaneName"/> or <paramref name="packetCoreDataPlaneName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<PacketCoreDataPlaneData> Get(string subscriptionId, string resourceGroupName, string packetCoreControlPlaneName, string packetCoreDataPlaneName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(packetCoreControlPlaneName, nameof(packetCoreControlPlaneName));
             Argument.AssertNotNullOrEmpty(packetCoreDataPlaneName, nameof(packetCoreDataPlaneName));
@@ -185,17 +191,19 @@ namespace Azure.ResourceManager.MobileNetwork
             {
                 case 200:
                     {
-                        PacketCoreDataPlane value = default;
+                        PacketCoreDataPlaneData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = PacketCoreDataPlane.DeserializePacketCoreDataPlane(document.RootElement);
+                        value = PacketCoreDataPlaneData.DeserializePacketCoreDataPlaneData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
+                case 404:
+                    return Response.FromValue((PacketCoreDataPlaneData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(Guid subscriptionId, string resourceGroupName, string packetCoreControlPlaneName, string packetCoreDataPlaneName, PacketCoreDataPlane packetCoreDataPlane)
+        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string packetCoreControlPlaneName, string packetCoreDataPlaneName, PacketCoreDataPlaneData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -215,7 +223,7 @@ namespace Azure.ResourceManager.MobileNetwork
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(packetCoreDataPlane);
+            content.JsonWriter.WriteObjectValue(data);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -226,18 +234,19 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="packetCoreControlPlaneName"> The name of the packet core control plane. </param>
         /// <param name="packetCoreDataPlaneName"> The name of the packet core data plane. </param>
-        /// <param name="packetCoreDataPlane"> Parameters supplied to the create or update packet core data plane operation. </param>
+        /// <param name="data"> Parameters supplied to the create or update packet core data plane operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="packetCoreControlPlaneName"/>, <paramref name="packetCoreDataPlaneName"/> or <paramref name="packetCoreDataPlane"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/>, <paramref name="packetCoreControlPlaneName"/> or <paramref name="packetCoreDataPlaneName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> CreateOrUpdateAsync(Guid subscriptionId, string resourceGroupName, string packetCoreControlPlaneName, string packetCoreDataPlaneName, PacketCoreDataPlane packetCoreDataPlane, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="packetCoreControlPlaneName"/>, <paramref name="packetCoreDataPlaneName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="packetCoreControlPlaneName"/> or <paramref name="packetCoreDataPlaneName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string packetCoreControlPlaneName, string packetCoreDataPlaneName, PacketCoreDataPlaneData data, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(packetCoreControlPlaneName, nameof(packetCoreControlPlaneName));
             Argument.AssertNotNullOrEmpty(packetCoreDataPlaneName, nameof(packetCoreDataPlaneName));
-            Argument.AssertNotNull(packetCoreDataPlane, nameof(packetCoreDataPlane));
+            Argument.AssertNotNull(data, nameof(data));
 
-            using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, packetCoreControlPlaneName, packetCoreDataPlaneName, packetCoreDataPlane);
+            using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, packetCoreControlPlaneName, packetCoreDataPlaneName, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -254,18 +263,19 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="packetCoreControlPlaneName"> The name of the packet core control plane. </param>
         /// <param name="packetCoreDataPlaneName"> The name of the packet core data plane. </param>
-        /// <param name="packetCoreDataPlane"> Parameters supplied to the create or update packet core data plane operation. </param>
+        /// <param name="data"> Parameters supplied to the create or update packet core data plane operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="packetCoreControlPlaneName"/>, <paramref name="packetCoreDataPlaneName"/> or <paramref name="packetCoreDataPlane"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/>, <paramref name="packetCoreControlPlaneName"/> or <paramref name="packetCoreDataPlaneName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response CreateOrUpdate(Guid subscriptionId, string resourceGroupName, string packetCoreControlPlaneName, string packetCoreDataPlaneName, PacketCoreDataPlane packetCoreDataPlane, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="packetCoreControlPlaneName"/>, <paramref name="packetCoreDataPlaneName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="packetCoreControlPlaneName"/> or <paramref name="packetCoreDataPlaneName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response CreateOrUpdate(string subscriptionId, string resourceGroupName, string packetCoreControlPlaneName, string packetCoreDataPlaneName, PacketCoreDataPlaneData data, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(packetCoreControlPlaneName, nameof(packetCoreControlPlaneName));
             Argument.AssertNotNullOrEmpty(packetCoreDataPlaneName, nameof(packetCoreDataPlaneName));
-            Argument.AssertNotNull(packetCoreDataPlane, nameof(packetCoreDataPlane));
+            Argument.AssertNotNull(data, nameof(data));
 
-            using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, packetCoreControlPlaneName, packetCoreDataPlaneName, packetCoreDataPlane);
+            using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, packetCoreControlPlaneName, packetCoreDataPlaneName, data);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -277,7 +287,7 @@ namespace Azure.ResourceManager.MobileNetwork
             }
         }
 
-        internal HttpMessage CreateUpdateTagsRequest(Guid subscriptionId, string resourceGroupName, string packetCoreControlPlaneName, string packetCoreDataPlaneName, TagsObject tagsObject)
+        internal HttpMessage CreateUpdateTagsRequest(string subscriptionId, string resourceGroupName, string packetCoreControlPlaneName, string packetCoreDataPlaneName, TagsObject tagsObject)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -310,10 +320,11 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <param name="packetCoreDataPlaneName"> The name of the packet core data plane. </param>
         /// <param name="tagsObject"> Parameters supplied to update packet core data plane tags. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="packetCoreControlPlaneName"/>, <paramref name="packetCoreDataPlaneName"/> or <paramref name="tagsObject"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/>, <paramref name="packetCoreControlPlaneName"/> or <paramref name="packetCoreDataPlaneName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<PacketCoreDataPlane>> UpdateTagsAsync(Guid subscriptionId, string resourceGroupName, string packetCoreControlPlaneName, string packetCoreDataPlaneName, TagsObject tagsObject, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="packetCoreControlPlaneName"/>, <paramref name="packetCoreDataPlaneName"/> or <paramref name="tagsObject"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="packetCoreControlPlaneName"/> or <paramref name="packetCoreDataPlaneName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<PacketCoreDataPlaneData>> UpdateTagsAsync(string subscriptionId, string resourceGroupName, string packetCoreControlPlaneName, string packetCoreDataPlaneName, TagsObject tagsObject, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(packetCoreControlPlaneName, nameof(packetCoreControlPlaneName));
             Argument.AssertNotNullOrEmpty(packetCoreDataPlaneName, nameof(packetCoreDataPlaneName));
@@ -325,9 +336,9 @@ namespace Azure.ResourceManager.MobileNetwork
             {
                 case 200:
                     {
-                        PacketCoreDataPlane value = default;
+                        PacketCoreDataPlaneData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = PacketCoreDataPlane.DeserializePacketCoreDataPlane(document.RootElement);
+                        value = PacketCoreDataPlaneData.DeserializePacketCoreDataPlaneData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -342,10 +353,11 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <param name="packetCoreDataPlaneName"> The name of the packet core data plane. </param>
         /// <param name="tagsObject"> Parameters supplied to update packet core data plane tags. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="packetCoreControlPlaneName"/>, <paramref name="packetCoreDataPlaneName"/> or <paramref name="tagsObject"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/>, <paramref name="packetCoreControlPlaneName"/> or <paramref name="packetCoreDataPlaneName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<PacketCoreDataPlane> UpdateTags(Guid subscriptionId, string resourceGroupName, string packetCoreControlPlaneName, string packetCoreDataPlaneName, TagsObject tagsObject, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="packetCoreControlPlaneName"/>, <paramref name="packetCoreDataPlaneName"/> or <paramref name="tagsObject"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="packetCoreControlPlaneName"/> or <paramref name="packetCoreDataPlaneName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<PacketCoreDataPlaneData> UpdateTags(string subscriptionId, string resourceGroupName, string packetCoreControlPlaneName, string packetCoreDataPlaneName, TagsObject tagsObject, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(packetCoreControlPlaneName, nameof(packetCoreControlPlaneName));
             Argument.AssertNotNullOrEmpty(packetCoreDataPlaneName, nameof(packetCoreDataPlaneName));
@@ -357,9 +369,9 @@ namespace Azure.ResourceManager.MobileNetwork
             {
                 case 200:
                     {
-                        PacketCoreDataPlane value = default;
+                        PacketCoreDataPlaneData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = PacketCoreDataPlane.DeserializePacketCoreDataPlane(document.RootElement);
+                        value = PacketCoreDataPlaneData.DeserializePacketCoreDataPlaneData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -367,7 +379,7 @@ namespace Azure.ResourceManager.MobileNetwork
             }
         }
 
-        internal HttpMessage CreateListByPacketCoreControlPlaneRequest(Guid subscriptionId, string resourceGroupName, string packetCoreControlPlaneName)
+        internal HttpMessage CreateListByPacketCoreControlPlaneRequest(string subscriptionId, string resourceGroupName, string packetCoreControlPlaneName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -393,10 +405,11 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="packetCoreControlPlaneName"> The name of the packet core control plane. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="packetCoreControlPlaneName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="packetCoreControlPlaneName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<PacketCoreDataPlaneListResult>> ListByPacketCoreControlPlaneAsync(Guid subscriptionId, string resourceGroupName, string packetCoreControlPlaneName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="packetCoreControlPlaneName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="packetCoreControlPlaneName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<PacketCoreDataPlaneListResult>> ListByPacketCoreControlPlaneAsync(string subscriptionId, string resourceGroupName, string packetCoreControlPlaneName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(packetCoreControlPlaneName, nameof(packetCoreControlPlaneName));
 
@@ -421,10 +434,11 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="packetCoreControlPlaneName"> The name of the packet core control plane. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="packetCoreControlPlaneName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="packetCoreControlPlaneName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<PacketCoreDataPlaneListResult> ListByPacketCoreControlPlane(Guid subscriptionId, string resourceGroupName, string packetCoreControlPlaneName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="packetCoreControlPlaneName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="packetCoreControlPlaneName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<PacketCoreDataPlaneListResult> ListByPacketCoreControlPlane(string subscriptionId, string resourceGroupName, string packetCoreControlPlaneName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(packetCoreControlPlaneName, nameof(packetCoreControlPlaneName));
 
@@ -444,7 +458,7 @@ namespace Azure.ResourceManager.MobileNetwork
             }
         }
 
-        internal HttpMessage CreateListByPacketCoreControlPlaneNextPageRequest(string nextLink, Guid subscriptionId, string resourceGroupName, string packetCoreControlPlaneName)
+        internal HttpMessage CreateListByPacketCoreControlPlaneNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string packetCoreControlPlaneName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -464,11 +478,12 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="packetCoreControlPlaneName"> The name of the packet core control plane. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="resourceGroupName"/> or <paramref name="packetCoreControlPlaneName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="packetCoreControlPlaneName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<PacketCoreDataPlaneListResult>> ListByPacketCoreControlPlaneNextPageAsync(string nextLink, Guid subscriptionId, string resourceGroupName, string packetCoreControlPlaneName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="packetCoreControlPlaneName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="packetCoreControlPlaneName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<PacketCoreDataPlaneListResult>> ListByPacketCoreControlPlaneNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string packetCoreControlPlaneName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(packetCoreControlPlaneName, nameof(packetCoreControlPlaneName));
 
@@ -494,11 +509,12 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="packetCoreControlPlaneName"> The name of the packet core control plane. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="resourceGroupName"/> or <paramref name="packetCoreControlPlaneName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="packetCoreControlPlaneName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<PacketCoreDataPlaneListResult> ListByPacketCoreControlPlaneNextPage(string nextLink, Guid subscriptionId, string resourceGroupName, string packetCoreControlPlaneName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="packetCoreControlPlaneName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="packetCoreControlPlaneName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<PacketCoreDataPlaneListResult> ListByPacketCoreControlPlaneNextPage(string nextLink, string subscriptionId, string resourceGroupName, string packetCoreControlPlaneName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(packetCoreControlPlaneName, nameof(packetCoreControlPlaneName));
 

@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.MobileNetwork
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
-        internal HttpMessage CreateDeleteRequest(Guid subscriptionId, string resourceGroupName, string mobileNetworkName, string serviceName)
+        internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string mobileNetworkName, string serviceName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -65,10 +65,11 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <param name="mobileNetworkName"> The name of the mobile network. </param>
         /// <param name="serviceName"> The name of the service. You must not use any of the following reserved strings - `default`, `requested` or `service`. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="mobileNetworkName"/> or <paramref name="serviceName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/>, <paramref name="mobileNetworkName"/> or <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> DeleteAsync(Guid subscriptionId, string resourceGroupName, string mobileNetworkName, string serviceName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="mobileNetworkName"/> or <paramref name="serviceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="mobileNetworkName"/> or <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string mobileNetworkName, string serviceName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(mobileNetworkName, nameof(mobileNetworkName));
             Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
@@ -92,10 +93,11 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <param name="mobileNetworkName"> The name of the mobile network. </param>
         /// <param name="serviceName"> The name of the service. You must not use any of the following reserved strings - `default`, `requested` or `service`. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="mobileNetworkName"/> or <paramref name="serviceName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/>, <paramref name="mobileNetworkName"/> or <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response Delete(Guid subscriptionId, string resourceGroupName, string mobileNetworkName, string serviceName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="mobileNetworkName"/> or <paramref name="serviceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="mobileNetworkName"/> or <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response Delete(string subscriptionId, string resourceGroupName, string mobileNetworkName, string serviceName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(mobileNetworkName, nameof(mobileNetworkName));
             Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
@@ -113,7 +115,7 @@ namespace Azure.ResourceManager.MobileNetwork
             }
         }
 
-        internal HttpMessage CreateGetRequest(Guid subscriptionId, string resourceGroupName, string mobileNetworkName, string serviceName)
+        internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string mobileNetworkName, string serviceName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -141,10 +143,11 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <param name="mobileNetworkName"> The name of the mobile network. </param>
         /// <param name="serviceName"> The name of the service. You must not use any of the following reserved strings - `default`, `requested` or `service`. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="mobileNetworkName"/> or <paramref name="serviceName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/>, <paramref name="mobileNetworkName"/> or <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<Service>> GetAsync(Guid subscriptionId, string resourceGroupName, string mobileNetworkName, string serviceName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="mobileNetworkName"/> or <paramref name="serviceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="mobileNetworkName"/> or <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<ServiceData>> GetAsync(string subscriptionId, string resourceGroupName, string mobileNetworkName, string serviceName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(mobileNetworkName, nameof(mobileNetworkName));
             Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
@@ -155,11 +158,13 @@ namespace Azure.ResourceManager.MobileNetwork
             {
                 case 200:
                     {
-                        Service value = default;
+                        ServiceData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = Service.DeserializeService(document.RootElement);
+                        value = ServiceData.DeserializeServiceData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
+                case 404:
+                    return Response.FromValue((ServiceData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -171,10 +176,11 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <param name="mobileNetworkName"> The name of the mobile network. </param>
         /// <param name="serviceName"> The name of the service. You must not use any of the following reserved strings - `default`, `requested` or `service`. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="mobileNetworkName"/> or <paramref name="serviceName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/>, <paramref name="mobileNetworkName"/> or <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<Service> Get(Guid subscriptionId, string resourceGroupName, string mobileNetworkName, string serviceName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="mobileNetworkName"/> or <paramref name="serviceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="mobileNetworkName"/> or <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<ServiceData> Get(string subscriptionId, string resourceGroupName, string mobileNetworkName, string serviceName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(mobileNetworkName, nameof(mobileNetworkName));
             Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
@@ -185,17 +191,19 @@ namespace Azure.ResourceManager.MobileNetwork
             {
                 case 200:
                     {
-                        Service value = default;
+                        ServiceData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = Service.DeserializeService(document.RootElement);
+                        value = ServiceData.DeserializeServiceData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
+                case 404:
+                    return Response.FromValue((ServiceData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(Guid subscriptionId, string resourceGroupName, string mobileNetworkName, string serviceName, Service service)
+        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string mobileNetworkName, string serviceName, ServiceData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -215,7 +223,7 @@ namespace Azure.ResourceManager.MobileNetwork
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(service);
+            content.JsonWriter.WriteObjectValue(data);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -226,18 +234,19 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="mobileNetworkName"> The name of the mobile network. </param>
         /// <param name="serviceName"> The name of the service. You must not use any of the following reserved strings - `default`, `requested` or `service`. </param>
-        /// <param name="service"> Parameters supplied to the create or update service operation. </param>
+        /// <param name="data"> Parameters supplied to the create or update service operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="mobileNetworkName"/>, <paramref name="serviceName"/> or <paramref name="service"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/>, <paramref name="mobileNetworkName"/> or <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> CreateOrUpdateAsync(Guid subscriptionId, string resourceGroupName, string mobileNetworkName, string serviceName, Service service, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="mobileNetworkName"/>, <paramref name="serviceName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="mobileNetworkName"/> or <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string mobileNetworkName, string serviceName, ServiceData data, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(mobileNetworkName, nameof(mobileNetworkName));
             Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
-            Argument.AssertNotNull(service, nameof(service));
+            Argument.AssertNotNull(data, nameof(data));
 
-            using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, mobileNetworkName, serviceName, service);
+            using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, mobileNetworkName, serviceName, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -254,18 +263,19 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="mobileNetworkName"> The name of the mobile network. </param>
         /// <param name="serviceName"> The name of the service. You must not use any of the following reserved strings - `default`, `requested` or `service`. </param>
-        /// <param name="service"> Parameters supplied to the create or update service operation. </param>
+        /// <param name="data"> Parameters supplied to the create or update service operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="mobileNetworkName"/>, <paramref name="serviceName"/> or <paramref name="service"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/>, <paramref name="mobileNetworkName"/> or <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response CreateOrUpdate(Guid subscriptionId, string resourceGroupName, string mobileNetworkName, string serviceName, Service service, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="mobileNetworkName"/>, <paramref name="serviceName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="mobileNetworkName"/> or <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response CreateOrUpdate(string subscriptionId, string resourceGroupName, string mobileNetworkName, string serviceName, ServiceData data, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(mobileNetworkName, nameof(mobileNetworkName));
             Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
-            Argument.AssertNotNull(service, nameof(service));
+            Argument.AssertNotNull(data, nameof(data));
 
-            using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, mobileNetworkName, serviceName, service);
+            using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, mobileNetworkName, serviceName, data);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -277,7 +287,7 @@ namespace Azure.ResourceManager.MobileNetwork
             }
         }
 
-        internal HttpMessage CreateUpdateTagsRequest(Guid subscriptionId, string resourceGroupName, string mobileNetworkName, string serviceName, TagsObject tagsObject)
+        internal HttpMessage CreateUpdateTagsRequest(string subscriptionId, string resourceGroupName, string mobileNetworkName, string serviceName, TagsObject tagsObject)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -310,10 +320,11 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <param name="serviceName"> The name of the service. You must not use any of the following reserved strings - `default`, `requested` or `service`. </param>
         /// <param name="tagsObject"> Parameters supplied to update service tags. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="mobileNetworkName"/>, <paramref name="serviceName"/> or <paramref name="tagsObject"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/>, <paramref name="mobileNetworkName"/> or <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<Service>> UpdateTagsAsync(Guid subscriptionId, string resourceGroupName, string mobileNetworkName, string serviceName, TagsObject tagsObject, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="mobileNetworkName"/>, <paramref name="serviceName"/> or <paramref name="tagsObject"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="mobileNetworkName"/> or <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<ServiceData>> UpdateTagsAsync(string subscriptionId, string resourceGroupName, string mobileNetworkName, string serviceName, TagsObject tagsObject, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(mobileNetworkName, nameof(mobileNetworkName));
             Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
@@ -325,9 +336,9 @@ namespace Azure.ResourceManager.MobileNetwork
             {
                 case 200:
                     {
-                        Service value = default;
+                        ServiceData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = Service.DeserializeService(document.RootElement);
+                        value = ServiceData.DeserializeServiceData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -342,10 +353,11 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <param name="serviceName"> The name of the service. You must not use any of the following reserved strings - `default`, `requested` or `service`. </param>
         /// <param name="tagsObject"> Parameters supplied to update service tags. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="mobileNetworkName"/>, <paramref name="serviceName"/> or <paramref name="tagsObject"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/>, <paramref name="mobileNetworkName"/> or <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<Service> UpdateTags(Guid subscriptionId, string resourceGroupName, string mobileNetworkName, string serviceName, TagsObject tagsObject, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="mobileNetworkName"/>, <paramref name="serviceName"/> or <paramref name="tagsObject"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="mobileNetworkName"/> or <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<ServiceData> UpdateTags(string subscriptionId, string resourceGroupName, string mobileNetworkName, string serviceName, TagsObject tagsObject, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(mobileNetworkName, nameof(mobileNetworkName));
             Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
@@ -357,9 +369,9 @@ namespace Azure.ResourceManager.MobileNetwork
             {
                 case 200:
                     {
-                        Service value = default;
+                        ServiceData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = Service.DeserializeService(document.RootElement);
+                        value = ServiceData.DeserializeServiceData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -367,7 +379,7 @@ namespace Azure.ResourceManager.MobileNetwork
             }
         }
 
-        internal HttpMessage CreateListByMobileNetworkRequest(Guid subscriptionId, string resourceGroupName, string mobileNetworkName)
+        internal HttpMessage CreateListByMobileNetworkRequest(string subscriptionId, string resourceGroupName, string mobileNetworkName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -393,10 +405,11 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="mobileNetworkName"> The name of the mobile network. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="mobileNetworkName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="mobileNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ServiceListResult>> ListByMobileNetworkAsync(Guid subscriptionId, string resourceGroupName, string mobileNetworkName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="mobileNetworkName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="mobileNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<ServiceListResult>> ListByMobileNetworkAsync(string subscriptionId, string resourceGroupName, string mobileNetworkName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(mobileNetworkName, nameof(mobileNetworkName));
 
@@ -421,10 +434,11 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="mobileNetworkName"> The name of the mobile network. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="mobileNetworkName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="mobileNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ServiceListResult> ListByMobileNetwork(Guid subscriptionId, string resourceGroupName, string mobileNetworkName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="mobileNetworkName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="mobileNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<ServiceListResult> ListByMobileNetwork(string subscriptionId, string resourceGroupName, string mobileNetworkName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(mobileNetworkName, nameof(mobileNetworkName));
 
@@ -444,7 +458,7 @@ namespace Azure.ResourceManager.MobileNetwork
             }
         }
 
-        internal HttpMessage CreateListByMobileNetworkNextPageRequest(string nextLink, Guid subscriptionId, string resourceGroupName, string mobileNetworkName)
+        internal HttpMessage CreateListByMobileNetworkNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string mobileNetworkName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -464,11 +478,12 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="mobileNetworkName"> The name of the mobile network. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="resourceGroupName"/> or <paramref name="mobileNetworkName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="mobileNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ServiceListResult>> ListByMobileNetworkNextPageAsync(string nextLink, Guid subscriptionId, string resourceGroupName, string mobileNetworkName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="mobileNetworkName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="mobileNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<ServiceListResult>> ListByMobileNetworkNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string mobileNetworkName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(mobileNetworkName, nameof(mobileNetworkName));
 
@@ -494,11 +509,12 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="mobileNetworkName"> The name of the mobile network. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="resourceGroupName"/> or <paramref name="mobileNetworkName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="mobileNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ServiceListResult> ListByMobileNetworkNextPage(string nextLink, Guid subscriptionId, string resourceGroupName, string mobileNetworkName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="mobileNetworkName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="mobileNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<ServiceListResult> ListByMobileNetworkNextPage(string nextLink, string subscriptionId, string resourceGroupName, string mobileNetworkName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(mobileNetworkName, nameof(mobileNetworkName));
 

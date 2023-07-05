@@ -10,22 +10,31 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
-using Azure.ResourceManager.MobileNetwork.Models;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.MobileNetwork
 {
-    internal class MobileNetworkOperationSource : IOperationSource<Models.MobileNetwork>
+    internal class MobileNetworkOperationSource : IOperationSource<MobileNetworkResource>
     {
-        Models.MobileNetwork IOperationSource<Models.MobileNetwork>.CreateResult(Response response, CancellationToken cancellationToken)
+        private readonly ArmClient _client;
+
+        internal MobileNetworkOperationSource(ArmClient client)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            return Models.MobileNetwork.DeserializeMobileNetwork(document.RootElement);
+            _client = client;
         }
 
-        async ValueTask<Models.MobileNetwork> IOperationSource<Models.MobileNetwork>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        MobileNetworkResource IOperationSource<MobileNetworkResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        {
+            using var document = JsonDocument.Parse(response.ContentStream);
+            var data = MobileNetworkData.DeserializeMobileNetworkData(document.RootElement);
+            return new MobileNetworkResource(_client, data);
+        }
+
+        async ValueTask<MobileNetworkResource> IOperationSource<MobileNetworkResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return Models.MobileNetwork.DeserializeMobileNetwork(document.RootElement);
+            var data = MobileNetworkData.DeserializeMobileNetworkData(document.RootElement);
+            return new MobileNetworkResource(_client, data);
         }
     }
 }

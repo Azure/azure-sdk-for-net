@@ -10,22 +10,31 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
-using Azure.ResourceManager.MobileNetwork.Models;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.MobileNetwork
 {
-    internal class PacketCaptureOperationSource : IOperationSource<PacketCapture>
+    internal class PacketCaptureOperationSource : IOperationSource<PacketCaptureResource>
     {
-        PacketCapture IOperationSource<PacketCapture>.CreateResult(Response response, CancellationToken cancellationToken)
+        private readonly ArmClient _client;
+
+        internal PacketCaptureOperationSource(ArmClient client)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            return PacketCapture.DeserializePacketCapture(document.RootElement);
+            _client = client;
         }
 
-        async ValueTask<PacketCapture> IOperationSource<PacketCapture>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        PacketCaptureResource IOperationSource<PacketCaptureResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        {
+            using var document = JsonDocument.Parse(response.ContentStream);
+            var data = PacketCaptureData.DeserializePacketCaptureData(document.RootElement);
+            return new PacketCaptureResource(_client, data);
+        }
+
+        async ValueTask<PacketCaptureResource> IOperationSource<PacketCaptureResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return PacketCapture.DeserializePacketCapture(document.RootElement);
+            var data = PacketCaptureData.DeserializePacketCaptureData(document.RootElement);
+            return new PacketCaptureResource(_client, data);
         }
     }
 }

@@ -10,22 +10,31 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
-using Azure.ResourceManager.MobileNetwork.Models;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.MobileNetwork
 {
-    internal class PacketCoreDataPlaneOperationSource : IOperationSource<PacketCoreDataPlane>
+    internal class PacketCoreDataPlaneOperationSource : IOperationSource<PacketCoreDataPlaneResource>
     {
-        PacketCoreDataPlane IOperationSource<PacketCoreDataPlane>.CreateResult(Response response, CancellationToken cancellationToken)
+        private readonly ArmClient _client;
+
+        internal PacketCoreDataPlaneOperationSource(ArmClient client)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            return PacketCoreDataPlane.DeserializePacketCoreDataPlane(document.RootElement);
+            _client = client;
         }
 
-        async ValueTask<PacketCoreDataPlane> IOperationSource<PacketCoreDataPlane>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        PacketCoreDataPlaneResource IOperationSource<PacketCoreDataPlaneResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        {
+            using var document = JsonDocument.Parse(response.ContentStream);
+            var data = PacketCoreDataPlaneData.DeserializePacketCoreDataPlaneData(document.RootElement);
+            return new PacketCoreDataPlaneResource(_client, data);
+        }
+
+        async ValueTask<PacketCoreDataPlaneResource> IOperationSource<PacketCoreDataPlaneResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return PacketCoreDataPlane.DeserializePacketCoreDataPlane(document.RootElement);
+            var data = PacketCoreDataPlaneData.DeserializePacketCoreDataPlaneData(document.RootElement);
+            return new PacketCoreDataPlaneResource(_client, data);
         }
     }
 }

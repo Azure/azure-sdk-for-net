@@ -7,6 +7,7 @@
 
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.MobileNetwork;
 
 namespace Azure.ResourceManager.MobileNetwork.Models
 {
@@ -16,20 +17,20 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         /// <summary> Initializes a new instance of AttachedDataNetworkListResult. </summary>
         internal AttachedDataNetworkListResult()
         {
-            Value = new ChangeTrackingList<AttachedDataNetwork>();
+            Value = new ChangeTrackingList<AttachedDataNetworkData>();
         }
 
         /// <summary> Initializes a new instance of AttachedDataNetworkListResult. </summary>
         /// <param name="value"> A list of data networks in a resource group. </param>
         /// <param name="nextLink"> The URL to get the next set of results. </param>
-        internal AttachedDataNetworkListResult(IReadOnlyList<AttachedDataNetwork> value, string nextLink)
+        internal AttachedDataNetworkListResult(IReadOnlyList<AttachedDataNetworkData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> A list of data networks in a resource group. </summary>
-        public IReadOnlyList<AttachedDataNetwork> Value { get; }
+        public IReadOnlyList<AttachedDataNetworkData> Value { get; }
         /// <summary> The URL to get the next set of results. </summary>
         public string NextLink { get; }
     }

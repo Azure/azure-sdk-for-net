@@ -10,22 +10,31 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
-using Azure.ResourceManager.MobileNetwork.Models;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.MobileNetwork
 {
-    internal class DiagnosticsPackageOperationSource : IOperationSource<DiagnosticsPackage>
+    internal class DiagnosticsPackageOperationSource : IOperationSource<DiagnosticsPackageResource>
     {
-        DiagnosticsPackage IOperationSource<DiagnosticsPackage>.CreateResult(Response response, CancellationToken cancellationToken)
+        private readonly ArmClient _client;
+
+        internal DiagnosticsPackageOperationSource(ArmClient client)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            return DiagnosticsPackage.DeserializeDiagnosticsPackage(document.RootElement);
+            _client = client;
         }
 
-        async ValueTask<DiagnosticsPackage> IOperationSource<DiagnosticsPackage>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        DiagnosticsPackageResource IOperationSource<DiagnosticsPackageResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        {
+            using var document = JsonDocument.Parse(response.ContentStream);
+            var data = DiagnosticsPackageData.DeserializeDiagnosticsPackageData(document.RootElement);
+            return new DiagnosticsPackageResource(_client, data);
+        }
+
+        async ValueTask<DiagnosticsPackageResource> IOperationSource<DiagnosticsPackageResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return DiagnosticsPackage.DeserializeDiagnosticsPackage(document.RootElement);
+            var data = DiagnosticsPackageData.DeserializeDiagnosticsPackageData(document.RootElement);
+            return new DiagnosticsPackageResource(_client, data);
         }
     }
 }

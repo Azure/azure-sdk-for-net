@@ -10,22 +10,31 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
-using Azure.ResourceManager.MobileNetwork.Models;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.MobileNetwork
 {
-    internal class SimGroupOperationSource : IOperationSource<SimGroup>
+    internal class SimGroupOperationSource : IOperationSource<SimGroupResource>
     {
-        SimGroup IOperationSource<SimGroup>.CreateResult(Response response, CancellationToken cancellationToken)
+        private readonly ArmClient _client;
+
+        internal SimGroupOperationSource(ArmClient client)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            return SimGroup.DeserializeSimGroup(document.RootElement);
+            _client = client;
         }
 
-        async ValueTask<SimGroup> IOperationSource<SimGroup>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        SimGroupResource IOperationSource<SimGroupResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        {
+            using var document = JsonDocument.Parse(response.ContentStream);
+            var data = SimGroupData.DeserializeSimGroupData(document.RootElement);
+            return new SimGroupResource(_client, data);
+        }
+
+        async ValueTask<SimGroupResource> IOperationSource<SimGroupResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return SimGroup.DeserializeSimGroup(document.RootElement);
+            var data = SimGroupData.DeserializeSimGroupData(document.RootElement);
+            return new SimGroupResource(_client, data);
         }
     }
 }

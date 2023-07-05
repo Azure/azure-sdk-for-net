@@ -7,6 +7,7 @@
 
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.MobileNetwork;
 
 namespace Azure.ResourceManager.MobileNetwork.Models
 {
@@ -16,20 +17,20 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         /// <summary> Initializes a new instance of PacketCoreDataPlaneListResult. </summary>
         internal PacketCoreDataPlaneListResult()
         {
-            Value = new ChangeTrackingList<PacketCoreDataPlane>();
+            Value = new ChangeTrackingList<PacketCoreDataPlaneData>();
         }
 
         /// <summary> Initializes a new instance of PacketCoreDataPlaneListResult. </summary>
         /// <param name="value"> A list of packet core data planes in a resource group. </param>
         /// <param name="nextLink"> The URL to get the next set of results. </param>
-        internal PacketCoreDataPlaneListResult(IReadOnlyList<PacketCoreDataPlane> value, string nextLink)
+        internal PacketCoreDataPlaneListResult(IReadOnlyList<PacketCoreDataPlaneData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> A list of packet core data planes in a resource group. </summary>
-        public IReadOnlyList<PacketCoreDataPlane> Value { get; }
+        public IReadOnlyList<PacketCoreDataPlaneData> Value { get; }
         /// <summary> The URL to get the next set of results. </summary>
         public string NextLink { get; }
     }

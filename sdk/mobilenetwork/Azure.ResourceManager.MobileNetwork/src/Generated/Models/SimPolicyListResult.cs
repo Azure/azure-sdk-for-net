@@ -7,6 +7,7 @@
 
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.MobileNetwork;
 
 namespace Azure.ResourceManager.MobileNetwork.Models
 {
@@ -16,20 +17,20 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         /// <summary> Initializes a new instance of SimPolicyListResult. </summary>
         internal SimPolicyListResult()
         {
-            Value = new ChangeTrackingList<SimPolicy>();
+            Value = new ChangeTrackingList<SimPolicyData>();
         }
 
         /// <summary> Initializes a new instance of SimPolicyListResult. </summary>
         /// <param name="value"> A list of SIM policies. </param>
         /// <param name="nextLink"> The URL to get the next set of results. </param>
-        internal SimPolicyListResult(IReadOnlyList<SimPolicy> value, string nextLink)
+        internal SimPolicyListResult(IReadOnlyList<SimPolicyData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> A list of SIM policies. </summary>
-        public IReadOnlyList<SimPolicy> Value { get; }
+        public IReadOnlyList<SimPolicyData> Value { get; }
         /// <summary> The URL to get the next set of results. </summary>
         public string NextLink { get; }
     }

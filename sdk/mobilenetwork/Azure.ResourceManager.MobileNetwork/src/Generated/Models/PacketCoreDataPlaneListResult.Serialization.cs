@@ -8,6 +8,7 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.MobileNetwork;
 
 namespace Azure.ResourceManager.MobileNetwork.Models
 {
@@ -19,7 +20,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<PacketCoreDataPlane>> value = default;
+            Optional<IReadOnlyList<PacketCoreDataPlaneData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -29,10 +30,10 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                     {
                         continue;
                     }
-                    List<PacketCoreDataPlane> array = new List<PacketCoreDataPlane>();
+                    List<PacketCoreDataPlaneData> array = new List<PacketCoreDataPlaneData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PacketCoreDataPlane.DeserializePacketCoreDataPlane(item));
+                        array.Add(PacketCoreDataPlaneData.DeserializePacketCoreDataPlaneData(item));
                     }
                     value = array;
                     continue;

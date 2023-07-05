@@ -8,6 +8,7 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.MobileNetwork;
 
 namespace Azure.ResourceManager.MobileNetwork.Models
 {
@@ -19,7 +20,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<PacketCapture>> value = default;
+            Optional<IReadOnlyList<PacketCaptureData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -29,10 +30,10 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                     {
                         continue;
                     }
-                    List<PacketCapture> array = new List<PacketCapture>();
+                    List<PacketCaptureData> array = new List<PacketCaptureData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PacketCapture.DeserializePacketCapture(item));
+                        array.Add(PacketCaptureData.DeserializePacketCaptureData(item));
                     }
                     value = array;
                     continue;
