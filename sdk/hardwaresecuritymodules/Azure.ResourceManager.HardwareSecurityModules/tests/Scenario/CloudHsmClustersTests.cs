@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Tests
                 Sku = new CloudHsmClusterSku(CloudHsmClusterSkuFamily.B, CloudHsmClusterSkuName.StandardB1),
                 Tags =
                 {
-                    ["Dept"] = "hsm",
+                    ["Dept"] = "SDK Testing",
                     ["Env"] = "df",
                 },
             };

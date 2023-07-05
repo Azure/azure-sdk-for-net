@@ -1,0 +1,114 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "baseName": {
+            "type": "string",
+            "defaultValue": "[resourceGroup().name]",
+            "metadata": {
+                "description": "The base resource name."
+            }
+        },
+        "tenantId": {
+            "type": "string",
+            "metadata": {
+                "description": "The tenant ID to which the application and resources belong."
+            }
+        },
+        "testApplicationId": {
+            "type": "string",
+            "metadata": {
+                "description": "The application client ID used to run tests."
+            }
+        },
+        "testApplicationSecret": {
+            "type": "string",
+            "metadata": {
+                "description": "The application client secret used to run tests."
+            }
+        },
+        "testApplicationOid": {
+            "type": "string",
+            "metadata": {
+                "description": "The client OID to grant access to test resources."
+            }
+        },
+        "location": {
+            "type": "string",
+            "defaultValue": "ukwest",
+            "allowedValues": [
+                "ukwest",
+                "centraluseuap",
+                "eastus"
+            ],
+            "metadata": {
+                "description": "The location of the resource. The default is ukwest."
+            }
+        },
+        "cloudHsmSkuFamily": {
+            "type": "string",
+            "defaultValue": "B",
+            "metadata": {
+                "description": "Cloud HSM SKU Family. The default is 'B'"
+            }
+        },
+        "cloudHsmSkuName": {
+            "type": "string",
+            "defaultValue": "Standard_B1",
+            "metadata": {
+                "description": "Cloud HSM SKU to deploy. The default is 'Standard_B1'"
+            }
+        },
+        "provisionerApplicationOid": {
+            "type": "string",
+            "metadata": {
+                "description": "The provisioner OID to grant access to test resources."
+            }
+        }
+    },
+    "variables": {
+        "cloudHsmApiVersion": "2022-08-31-preview",
+        "cloudHsmName": "sdk-test-chsm",
+        "contributorRoleId": "f58310d9-a9f6-439a-9e8d-f62e7b41a168"
+    },
+    "resources": [
+        {
+            "type": "Microsoft.HardwareSecurityModules/cloudHsmClusters",
+            "apiVersion": "[variables('cloudHsmApiVersion')]",
+            "name": "[variables('cloudHsmName')]",
+            "location": "[parameters('location')]",
+            "Sku": {
+                "Family": "[parameters('cloudHsmSkuFamily')]",
+                "Name": "[parameters('cloudHsmSkuName')]"
+            }
+        },
+        {
+            "type": "Microsoft.Authorization/roleAssignments",
+            "apiVersion": "2018-09-01-preview",
+            "name": "[guid(resourceGroup().id)]",
+            "properties": {
+                "roleDefinitionId": "[resourceId('Microsoft.Authorization/roleDefinitions', variables('contributorRoleId'))]",
+                "principalId": "[parameters('testApplicationOid')]",
+                "scope": "[resourceGroup().id]"
+            }
+        }
+    ],
+    "outputs": {
+        "AZURE_TENANT_ID": {
+            "type": "string",
+            "value": "[parameters('tenantId')]"
+        },
+        "AZURE_CLIENT_ID": {
+            "type": "string",
+            "value": "[parameters('testApplicationId')]"
+        },
+        "AZURE_CLIENT_SECRET": {
+            "type": "string",
+            "value": "[parameters('testApplicationSecret')]"
+        },
+        "RESOURCE_GROUP_NAME": {
+            "type": "string",
+            "value": "[resourceGroup().Name]"
+        }
+    }
+}
