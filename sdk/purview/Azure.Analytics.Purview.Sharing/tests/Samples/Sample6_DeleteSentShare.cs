@@ -24,7 +24,7 @@ namespace Azure.Analytics.Purview.Sharing.Tests.Samples
             var endPoint = new Uri("https://my-account-name.purview.azure.com/share");
             var sentShareClient = new SentSharesClient(endPoint, credential);
 
-            Operation operation = await sentShareClient.DeleteSentShareAsync(WaitUntil.Completed, "sentShareId");
+            Operation operation = await sentShareClient.DeleteSentShareAsync(WaitUntil.Completed, "sentShareId", new());
 #else
             var sentShareClient = GetSentSharesClient();
 
