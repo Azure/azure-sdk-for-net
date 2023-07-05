@@ -6,6 +6,10 @@
 
 - Added new resourceGuardProxy Api's.
 
+### Breaking Changes
+
+- Add property `JobResourceId` to class `DataProtectionOperationJobExtendedInfo`, replace the `JobId`.
+
 ## 1.2.0-beta.1 (2023-05-29)
 
 ### Features Added
