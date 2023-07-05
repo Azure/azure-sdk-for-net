@@ -395,12 +395,12 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             return new ResourceGuardProxyBaseResourceData(id, name, resourceType, systemData, properties);
         }
 
-        /// <summary> Initializes a new instance of UnlockDeleteResponse. </summary>
+        /// <summary> Initializes a new instance of DataProtectionUnlockDeleteResult. </summary>
         /// <param name="unlockDeleteExpiryTime"> This is the time when unlock delete privileges will get expired. </param>
-        /// <returns> A new <see cref="Models.UnlockDeleteResponse"/> instance for mocking. </returns>
-        public static UnlockDeleteResponse UnlockDeleteResponse(string unlockDeleteExpiryTime = null)
+        /// <returns> A new <see cref="Models.DataProtectionUnlockDeleteResult"/> instance for mocking. </returns>
+        public static DataProtectionUnlockDeleteResult DataProtectionUnlockDeleteResult(string unlockDeleteExpiryTime = null)
         {
-            return new UnlockDeleteResponse(unlockDeleteExpiryTime);
+            return new DataProtectionUnlockDeleteResult(unlockDeleteExpiryTime);
         }
 
         /// <summary> Initializes a new instance of DataProtectionBackupRetentionTag. </summary>
