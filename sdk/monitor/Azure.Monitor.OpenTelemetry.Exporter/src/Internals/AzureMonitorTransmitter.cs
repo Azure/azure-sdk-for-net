@@ -171,15 +171,15 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                 if (_transmissionStateManager.State == TransmissionState.Closed)
                 {
                     using var httpMessage = async ?
-                        await _applicationInsightsRestClient.InternalTrackAsync(telemetryItems, origin, cancellationToken).ConfigureAwait(false) :
-                        _applicationInsightsRestClient.InternalTrackAsync(telemetryItems, origin, cancellationToken).Result;
+                        await _applicationInsightsRestClient.InternalTrackAsync(telemetryItems, cancellationToken).ConfigureAwait(false) :
+                        _applicationInsightsRestClient.InternalTrackAsync(telemetryItems, cancellationToken).Result;
 
                     result = HttpPipelineHelper.IsSuccess(httpMessage);
 
                     if (result == ExportResult.Failure && _fileBlobProvider != null)
                     {
                         _transmissionStateManager.EnableBackOff(httpMessage.Response);
-                        result = HttpPipelineHelper.HandleFailures(httpMessage, _fileBlobProvider, _connectionVars);
+                        result = HttpPipelineHelper.HandleFailures(httpMessage, _fileBlobProvider, _connectionVars, origin);
                     }
                     else
                     {

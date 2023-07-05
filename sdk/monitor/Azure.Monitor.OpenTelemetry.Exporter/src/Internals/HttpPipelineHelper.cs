@@ -168,7 +168,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             return ExportResult.Failure;
         }
 
-        internal static ExportResult HandleFailures(HttpMessage httpMessage, PersistentBlobProvider blobProvider, ConnectionVars connectionVars)
+        internal static ExportResult HandleFailures(HttpMessage httpMessage, PersistentBlobProvider blobProvider, ConnectionVars connectionVars, string origin)
         {
             ExportResult result = ExportResult.Failure;
             int statusCode = 0;
@@ -220,10 +220,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                 }
             }
 
-            httpMessage.TryGetProperty("AzureMonitorExporter_Origin", out var origin);
-
             AzureMonitorExporterEventSource.Log.TransmissionFailed(
-                origin: origin?.ToString() ?? "AzureMonitorExporter",
+                origin: origin,
                 statusCode: statusCode,
                 connectionVars: connectionVars,
                 requestEndpoint: httpMessage.Request.Uri.Host,

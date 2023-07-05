@@ -23,10 +23,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
         /// This operation sends a sequence of telemetry events that will be monitored by Azure Monitor.
         /// </summary>
         /// <param name="body">The list of telemetry events to track.</param>
-        /// <param name="origin">Origin of the telemetry items.</param>
         /// <param name="cancellationToken">The cancellation token to use.</param>
         /// <returns></returns>
-        internal async Task<HttpMessage> InternalTrackAsync(IEnumerable<TelemetryItem> body, string origin, CancellationToken cancellationToken = default)
+        internal async Task<HttpMessage> InternalTrackAsync(IEnumerable<TelemetryItem> body, CancellationToken cancellationToken = default)
         {
             if (body == null)
             {
@@ -34,8 +33,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             }
 
             var message = CreateTrackRequest(body);
-
-            message.SetProperty("AzureMonitorExporter_Origin", origin);
 
             try
             {
