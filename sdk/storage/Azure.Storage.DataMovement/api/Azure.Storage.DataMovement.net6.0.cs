@@ -19,7 +19,7 @@ namespace Azure.Storage.DataMovement
     public partial class LocalDirectoryStorageResourceContainer : Azure.Storage.DataMovement.StorageResourceContainer
     {
         public LocalDirectoryStorageResourceContainer(string path) { }
-        public override Azure.Storage.DataMovement.ProduceUriType CanProduceUri { get { throw null; } }
+        public override bool CanProduceUri { get { throw null; } }
         public override string Path { get { throw null; } }
         public override System.Uri Uri { get { throw null; } }
         public override Azure.Storage.DataMovement.StorageResourceSingle GetChildStorageResource(string childPath) { throw null; }
@@ -28,7 +28,7 @@ namespace Azure.Storage.DataMovement
     public partial class LocalFileStorageResource : Azure.Storage.DataMovement.StorageResourceSingle
     {
         public LocalFileStorageResource(string path) { }
-        public override Azure.Storage.DataMovement.ProduceUriType CanProduceUri { get { throw null; } }
+        public override bool CanProduceUri { get { throw null; } }
         public override long? Length { get { throw null; } }
         public override long MaxChunkSize { get { throw null; } }
         public override string Path { get { throw null; } }
@@ -52,16 +52,10 @@ namespace Azure.Storage.DataMovement
     {
         public static bool TryGetResourceProviders(Azure.Storage.DataMovement.Models.DataTransferProperties info, out Azure.Storage.DataMovement.LocalStorageResourceProvider sourceProvider, out Azure.Storage.DataMovement.LocalStorageResourceProvider destinationProvider) { throw null; }
     }
-    [System.FlagsAttribute]
-    public enum ProduceUriType
-    {
-        NoUri = 0,
-        ProducesUri = 1,
-    }
     public abstract partial class StorageResource
     {
         protected StorageResource() { }
-        public abstract Azure.Storage.DataMovement.ProduceUriType CanProduceUri { get; }
+        public abstract bool CanProduceUri { get; }
         public abstract bool IsContainer { get; }
         public abstract string Path { get; }
         public abstract System.Uri Uri { get; }
