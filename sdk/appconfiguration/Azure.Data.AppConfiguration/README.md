@@ -83,7 +83,7 @@ The [Label][label_concept] property of a Configuration Setting provides a way to
 
 For example, MaxRequests may be 100 in "NorthAmerica" and 200 in "WestEurope". By creating a Configuration Setting named MaxRequests with a label of "NorthAmerica" and another, only with a different value, with a "WestEurope" label, an application can seamlessly retrieve Configuration Settings as it runs in these two dimensions.
 
-Azure App Configuration allow users to create a point-in-time snapshot of their configuration store, providing them with enhanced flexibility and control over their configuration settings. This feature enables users to create backups and easily restore their configurations to a previous state when needed. Users can create immutable, composed views of their configuration store that they can release with their application. The immutability of these snapshots ensures that users can confidently rollback to a last-known-good configuration in the event of an issue with newer configuration.
+Azure App Configuration allows users to create a point-in-time snapshot of their configuration store, providing them with the ability to treat settings as one consistent version. This feature enables applications to hold a consistent view of configuration, ensuring that there are no version mismatches to individual settings due to reading as updates were made.  Snapshots are immutable, ensuring that configuration can confidently be rolled back to a last-known-good configuration in the event of a problem.
 
 ### Thread safety
 
