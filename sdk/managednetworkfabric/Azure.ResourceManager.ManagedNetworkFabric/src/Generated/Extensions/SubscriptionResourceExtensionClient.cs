@@ -18,10 +18,12 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
     {
         private ClientDiagnostics _accessControlListClientDiagnostics;
         private AccessControlListsRestOperations _accessControlListRestClient;
-        private ClientDiagnostics _ipCommunityListIPCommunityListsClientDiagnostics;
-        private IpCommunityListsRestOperations _ipCommunityListIPCommunityListsRestClient;
-        private ClientDiagnostics _ipPrefixListIPPrefixListsClientDiagnostics;
-        private IpPrefixListsRestOperations _ipPrefixListIPPrefixListsRestClient;
+        private ClientDiagnostics _ipCommunityIPCommunitiesClientDiagnostics;
+        private IpCommunitiesRestOperations _ipCommunityIPCommunitiesRestClient;
+        private ClientDiagnostics _ipExtendedCommunityIPExtendedCommunitiesClientDiagnostics;
+        private IpExtendedCommunitiesRestOperations _ipExtendedCommunityIPExtendedCommunitiesRestClient;
+        private ClientDiagnostics _ipPrefixIPPrefixesClientDiagnostics;
+        private IpPrefixesRestOperations _ipPrefixIPPrefixesRestClient;
         private ClientDiagnostics _l2IsolationDomainClientDiagnostics;
         private L2IsolationDomainsRestOperations _l2IsolationDomainRestClient;
         private ClientDiagnostics _l3IsolationDomainClientDiagnostics;
@@ -51,10 +53,12 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
 
         private ClientDiagnostics AccessControlListClientDiagnostics => _accessControlListClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ManagedNetworkFabric", AccessControlListResource.ResourceType.Namespace, Diagnostics);
         private AccessControlListsRestOperations AccessControlListRestClient => _accessControlListRestClient ??= new AccessControlListsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(AccessControlListResource.ResourceType));
-        private ClientDiagnostics IPCommunityListIpCommunityListsClientDiagnostics => _ipCommunityListIPCommunityListsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ManagedNetworkFabric", IPCommunityListResource.ResourceType.Namespace, Diagnostics);
-        private IpCommunityListsRestOperations IPCommunityListIpCommunityListsRestClient => _ipCommunityListIPCommunityListsRestClient ??= new IpCommunityListsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(IPCommunityListResource.ResourceType));
-        private ClientDiagnostics IPPrefixListIpPrefixListsClientDiagnostics => _ipPrefixListIPPrefixListsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ManagedNetworkFabric", IPPrefixListResource.ResourceType.Namespace, Diagnostics);
-        private IpPrefixListsRestOperations IPPrefixListIpPrefixListsRestClient => _ipPrefixListIPPrefixListsRestClient ??= new IpPrefixListsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(IPPrefixListResource.ResourceType));
+        private ClientDiagnostics IPCommunityIpCommunitiesClientDiagnostics => _ipCommunityIPCommunitiesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ManagedNetworkFabric", IPCommunityResource.ResourceType.Namespace, Diagnostics);
+        private IpCommunitiesRestOperations IPCommunityIpCommunitiesRestClient => _ipCommunityIPCommunitiesRestClient ??= new IpCommunitiesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(IPCommunityResource.ResourceType));
+        private ClientDiagnostics IPExtendedCommunityIpExtendedCommunitiesClientDiagnostics => _ipExtendedCommunityIPExtendedCommunitiesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ManagedNetworkFabric", IPExtendedCommunityResource.ResourceType.Namespace, Diagnostics);
+        private IpExtendedCommunitiesRestOperations IPExtendedCommunityIpExtendedCommunitiesRestClient => _ipExtendedCommunityIPExtendedCommunitiesRestClient ??= new IpExtendedCommunitiesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(IPExtendedCommunityResource.ResourceType));
+        private ClientDiagnostics IPPrefixIpPrefixesClientDiagnostics => _ipPrefixIPPrefixesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ManagedNetworkFabric", IPPrefixResource.ResourceType.Namespace, Diagnostics);
+        private IpPrefixesRestOperations IPPrefixIpPrefixesRestClient => _ipPrefixIPPrefixesRestClient ??= new IpPrefixesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(IPPrefixResource.ResourceType));
         private ClientDiagnostics L2IsolationDomainClientDiagnostics => _l2IsolationDomainClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ManagedNetworkFabric", L2IsolationDomainResource.ResourceType.Namespace, Diagnostics);
         private L2IsolationDomainsRestOperations L2IsolationDomainRestClient => _l2IsolationDomainRestClient ??= new L2IsolationDomainsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(L2IsolationDomainResource.ResourceType));
         private ClientDiagnostics L3IsolationDomainClientDiagnostics => _l3IsolationDomainClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ManagedNetworkFabric", L3IsolationDomainResource.ResourceType.Namespace, Diagnostics);
@@ -142,91 +146,135 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         }
 
         /// <summary>
-        /// Implements IpCommunityLists list by subscription GET method.
+        /// Implements IpCommunities list by subscription GET method.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ManagedNetworkFabric/ipCommunityLists</description>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ManagedNetworkFabric/ipCommunities</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>IpCommunityLists_ListBySubscription</description>
+        /// <description>IpCommunities_ListBySubscription</description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="IPCommunityListResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<IPCommunityListResource> GetIPCommunityListsAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="IPCommunityResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<IPCommunityResource> GetIPCommunitiesAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => IPCommunityListIpCommunityListsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => IPCommunityListIpCommunityListsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new IPCommunityListResource(Client, IPCommunityListData.DeserializeIPCommunityListData(e)), IPCommunityListIpCommunityListsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetIPCommunityLists", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => IPCommunityIpCommunitiesRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => IPCommunityIpCommunitiesRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new IPCommunityResource(Client, IPCommunityData.DeserializeIPCommunityData(e)), IPCommunityIpCommunitiesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetIPCommunities", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
-        /// Implements IpCommunityLists list by subscription GET method.
+        /// Implements IpCommunities list by subscription GET method.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ManagedNetworkFabric/ipCommunityLists</description>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ManagedNetworkFabric/ipCommunities</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>IpCommunityLists_ListBySubscription</description>
+        /// <description>IpCommunities_ListBySubscription</description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="IPCommunityListResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<IPCommunityListResource> GetIPCommunityLists(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="IPCommunityResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<IPCommunityResource> GetIPCommunities(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => IPCommunityListIpCommunityListsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => IPCommunityListIpCommunityListsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new IPCommunityListResource(Client, IPCommunityListData.DeserializeIPCommunityListData(e)), IPCommunityListIpCommunityListsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetIPCommunityLists", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => IPCommunityIpCommunitiesRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => IPCommunityIpCommunitiesRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new IPCommunityResource(Client, IPCommunityData.DeserializeIPCommunityData(e)), IPCommunityIpCommunitiesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetIPCommunities", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
-        /// Implements IpPrefixLists list by subscription GET method.
+        /// Implements IpExtendedCommunities list by subscription GET method.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ManagedNetworkFabric/ipPrefixLists</description>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ManagedNetworkFabric/ipExtendedCommunities</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>IpPrefixLists_ListBySubscription</description>
+        /// <description>IpExtendedCommunities_ListBySubscription</description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="IPPrefixListResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<IPPrefixListResource> GetIPPrefixListsAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="IPExtendedCommunityResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<IPExtendedCommunityResource> GetIPExtendedCommunitiesAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => IPPrefixListIpPrefixListsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => IPPrefixListIpPrefixListsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new IPPrefixListResource(Client, IPPrefixListData.DeserializeIPPrefixListData(e)), IPPrefixListIpPrefixListsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetIPPrefixLists", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => IPExtendedCommunityIpExtendedCommunitiesRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => IPExtendedCommunityIpExtendedCommunitiesRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new IPExtendedCommunityResource(Client, IPExtendedCommunityData.DeserializeIPExtendedCommunityData(e)), IPExtendedCommunityIpExtendedCommunitiesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetIPExtendedCommunities", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
-        /// Implements IpPrefixLists list by subscription GET method.
+        /// Implements IpExtendedCommunities list by subscription GET method.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ManagedNetworkFabric/ipPrefixLists</description>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ManagedNetworkFabric/ipExtendedCommunities</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>IpPrefixLists_ListBySubscription</description>
+        /// <description>IpExtendedCommunities_ListBySubscription</description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="IPPrefixListResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<IPPrefixListResource> GetIPPrefixLists(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="IPExtendedCommunityResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<IPExtendedCommunityResource> GetIPExtendedCommunities(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => IPPrefixListIpPrefixListsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => IPPrefixListIpPrefixListsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new IPPrefixListResource(Client, IPPrefixListData.DeserializeIPPrefixListData(e)), IPPrefixListIpPrefixListsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetIPPrefixLists", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => IPExtendedCommunityIpExtendedCommunitiesRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => IPExtendedCommunityIpExtendedCommunitiesRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new IPExtendedCommunityResource(Client, IPExtendedCommunityData.DeserializeIPExtendedCommunityData(e)), IPExtendedCommunityIpExtendedCommunitiesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetIPExtendedCommunities", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
+        /// Implements IpPrefixes list by subscription GET method.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ManagedNetworkFabric/ipPrefixes</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>IpPrefixes_ListBySubscription</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="IPPrefixResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<IPPrefixResource> GetIPPrefixesAsync(CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => IPPrefixIpPrefixesRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => IPPrefixIpPrefixesRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new IPPrefixResource(Client, IPPrefixData.DeserializeIPPrefixData(e)), IPPrefixIpPrefixesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetIPPrefixes", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
+        /// Implements IpPrefixes list by subscription GET method.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ManagedNetworkFabric/ipPrefixes</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>IpPrefixes_ListBySubscription</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="IPPrefixResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<IPPrefixResource> GetIPPrefixes(CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => IPPrefixIpPrefixesRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => IPPrefixIpPrefixesRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new IPPrefixResource(Client, IPPrefixData.DeserializeIPPrefixData(e)), IPPrefixIpPrefixesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetIPPrefixes", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

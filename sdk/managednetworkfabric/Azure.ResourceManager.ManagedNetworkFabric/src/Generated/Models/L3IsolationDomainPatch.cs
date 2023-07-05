@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <summary> Advertise Static Routes. Ex: "True" | "False". </summary>
         public RedistributeStaticRoute? RedistributeStaticRoutes { get; set; }
         /// <summary> List of Ipv4 and Ipv6 route configurations. </summary>
-        public L3IsolationDomainPatchPropertiesAggregateRouteConfiguration AggregateRouteConfiguration { get; set; }
+        public AggregateRouteConfiguration AggregateRouteConfiguration { get; set; }
         /// <summary> L3 Isolation Domain description. </summary>
         public string Description { get; set; }
         /// <summary> Connected Subnet RoutePolicy. </summary>

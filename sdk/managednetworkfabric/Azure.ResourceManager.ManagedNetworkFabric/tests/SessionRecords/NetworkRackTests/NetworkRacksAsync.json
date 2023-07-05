@@ -1,0 +1,1576 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/networkRacks/nfa-tool-ts-nf060523-comprack1?api-version=2023-02-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-9210b1352ae5ca0f64851155e72b62b7-bb36ee3368c445f9-00",
+        "User-Agent": "azsdk-net-ResourceManager.ManagedNetworkFabric/1.0.0-alpha.20230622.1 (.NET 7.0.7; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "f4d3838804206b8e2fcc8d50c44f6343",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "1464",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 22 Jun 2023 07:10:26 GMT",
+        "ETag": "\u00222f0cbb39-0000-0100-0000-647da5850000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "f4d3838804206b8e2fcc8d50c44f6343",
+        "x-ms-correlation-request-id": "8553e0cd-87bb-4cd2-b2c9-c2f939bf359f",
+        "x-ms-providerhub-traffic": "True",
+        "x-ms-ratelimit-remaining-subscription-reads": "11999",
+        "x-ms-request-id": "b8a7c290-73d3-4f80-9a95-1ca9d8677bac",
+        "x-ms-routing-request-id": "JIOINDIAWEST:20230622T071027Z:8553e0cd-87bb-4cd2-b2c9-c2f939bf359f"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/networkRacks/nfa-tool-ts-nf060523-comprack1",
+        "name": "nfa-tool-ts-nf060523-comprack1",
+        "type": "microsoft.managednetworkfabric/networkracks",
+        "location": "eastus",
+        "systemData": {
+          "createdBy": "a893dadc-5c8e-47f4-8379-6afb34bdbe12",
+          "createdByType": "Application",
+          "createdAt": "2023-06-05T07:01:22.4996838Z",
+          "lastModifiedBy": "d1bd24c7-b27f-477e-86dd-939e107873d7",
+          "lastModifiedByType": "Application",
+          "lastModifiedAt": "2023-06-05T09:06:13.0515749Z"
+        },
+        "properties": {
+          "networkFabricId": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/networkFabrics/nfa-tool-ts-nf060523",
+          "networkRackSku": "fab1",
+          "networkDevices": [
+            "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/networkDevices/nfa-tool-ts-nf060523-CompRack1-TOR1",
+            "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/networkDevices/nfa-tool-ts-nf060523-CompRack1-TOR2",
+            "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/networkDevices/nfa-tool-ts-nf060523-CompRack1-MgmtSwitch"
+          ],
+          "provisioningState": "Succeeded"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/networkRacks?api-version=2023-02-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "User-Agent": "azsdk-net-ResourceManager.ManagedNetworkFabric/1.0.0-alpha.20230622.1 (.NET 7.0.7; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "f2379b7fb66a5753610988a3368e8149",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "34813",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 22 Jun 2023 07:10:29 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "3e9d779d-f980-4e86-9e6e-1323966e0a95",
+        "x-ms-original-request-ids": [
+          "426116c3-2523-4912-9fc7-ebb82f7a7314",
+          "7411de78-04e6-449d-bbe7-8aa07b85bf5f",
+          "cbd4e7c2-d412-42ab-8257-f7ec030fd726",
+          "3b8ebdca-f075-44d1-bbb6-1367804fecdf"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": "11998",
+        "x-ms-request-id": "3e9d779d-f980-4e86-9e6e-1323966e0a95",
+        "x-ms-routing-request-id": "JIOINDIAWEST:20230622T071029Z:3e9d779d-f980-4e86-9e6e-1323966e0a95"
+      },
+      "ResponseBody": {
+        "value": [
+          {
+            "id": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/networkRacks/nfa-tool-ts-nf060523-aggrack",
+            "name": "nfa-tool-ts-nf060523-aggrack",
+            "type": "microsoft.managednetworkfabric/networkracks",
+            "location": "eastus",
+            "systemData": {
+              "createdBy": "a893dadc-5c8e-47f4-8379-6afb34bdbe12",
+              "createdByType": "Application",
+              "createdAt": "2023-06-05T07:01:21.87467Z",
+              "lastModifiedBy": "d1bd24c7-b27f-477e-86dd-939e107873d7",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-06-05T09:06:12.8172367Z"
+            },
+            "properties": {
+              "networkFabricId": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/networkFabrics/nfa-tool-ts-nf060523",
+              "networkRackSku": "fab1",
+              "networkDevices": [
+                "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/networkDevices/nfa-tool-ts-nf060523-AggrRack-CE1",
+                "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/networkDevices/nfa-tool-ts-nf060523-AggrRack-CE2",
+                "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/networkDevices/nfa-tool-ts-nf060523-AggrRack-TOR17",
+                "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/networkDevices/nfa-tool-ts-nf060523-AggrRack-TOR18",
+                "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/networkDevices/nfa-tool-ts-nf060523-AggrRack-MgmtSwitch1",
+                "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/networkDevices/nfa-tool-ts-nf060523-AggrRack-MgmtSwitch2",
+                "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/networkDevices/nfa-tool-ts-nf060523-AggrRack-NPB1",
+                "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/networkDevices/nfa-tool-ts-nf060523-AggrRack-NPB2"
+              ],
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/networkRacks/nfa-tool-ts-nf060523-comprack1",
+            "name": "nfa-tool-ts-nf060523-comprack1",
+            "type": "microsoft.managednetworkfabric/networkracks",
+            "location": "eastus",
+            "systemData": {
+              "createdBy": "a893dadc-5c8e-47f4-8379-6afb34bdbe12",
+              "createdByType": "Application",
+              "createdAt": "2023-06-05T07:01:22.4996838Z",
+              "lastModifiedBy": "d1bd24c7-b27f-477e-86dd-939e107873d7",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-06-05T09:06:13.0515749Z"
+            },
+            "properties": {
+              "networkFabricId": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/networkFabrics/nfa-tool-ts-nf060523",
+              "networkRackSku": "fab1",
+              "networkDevices": [
+                "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/networkDevices/nfa-tool-ts-nf060523-CompRack1-TOR1",
+                "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/networkDevices/nfa-tool-ts-nf060523-CompRack1-TOR2",
+                "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/networkDevices/nfa-tool-ts-nf060523-CompRack1-MgmtSwitch"
+              ],
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/networkRacks/nfa-tool-ts-nf060523-comprack2",
+            "name": "nfa-tool-ts-nf060523-comprack2",
+            "type": "microsoft.managednetworkfabric/networkracks",
+            "location": "eastus",
+            "systemData": {
+              "createdBy": "a893dadc-5c8e-47f4-8379-6afb34bdbe12",
+              "createdByType": "Application",
+              "createdAt": "2023-06-05T07:01:22.8434406Z",
+              "lastModifiedBy": "d1bd24c7-b27f-477e-86dd-939e107873d7",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-06-05T09:06:13.192202Z"
+            },
+            "properties": {
+              "networkFabricId": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/networkFabrics/nfa-tool-ts-nf060523",
+              "networkRackSku": "fab1",
+              "networkDevices": [
+                "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/networkDevices/nfa-tool-ts-nf060523-CompRack2-TOR3",
+                "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/networkDevices/nfa-tool-ts-nf060523-CompRack2-TOR4",
+                "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/networkDevices/nfa-tool-ts-nf060523-CompRack2-MgmtSwitch"
+              ],
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/networkRacks/nfa-tool-ts-nf060523-comprack3",
+            "name": "nfa-tool-ts-nf060523-comprack3",
+            "type": "microsoft.managednetworkfabric/networkracks",
+            "location": "eastus",
+            "systemData": {
+              "createdBy": "a893dadc-5c8e-47f4-8379-6afb34bdbe12",
+              "createdByType": "Application",
+              "createdAt": "2023-06-05T07:01:23.2965728Z",
+              "lastModifiedBy": "a893dadc-5c8e-47f4-8379-6afb34bdbe12",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-06-05T07:01:23.2965728Z"
+            },
+            "properties": {
+              "networkFabricId": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/networkFabrics/nfa-tool-ts-nf060523",
+              "networkRackSku": "fab1",
+              "provisioningState": "Failed"
+            }
+          },
+          {
+            "id": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/networkRacks/nfa-tool-ts-cli-nf1-061223-aggrack",
+            "name": "nfa-tool-ts-cli-nf1-061223-aggrack",
+            "type": "microsoft.managednetworkfabric/networkracks",
+            "location": "eastus",
+            "systemData": {
+              "createdBy": "a893dadc-5c8e-47f4-8379-6afb34bdbe12",
+              "createdByType": "Application",
+              "createdAt": "2023-06-12T09:42:45.3972158Z",
+              "lastModifiedBy": "a893dadc-5c8e-47f4-8379-6afb34bdbe12",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-06-21T10:15:49.1583061Z"
+            },
+            "properties": {
+              "networkFabricId": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/networkFabrics/nfa-tool-ts-cli-nf1-061223",
+              "networkRackSku": "fab1",
+              "provisioningState": "Failed"
+            }
+          },
+          {
+            "id": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/networkRacks/nfa-tool-ts-cli-nf1-061223-comprack1",
+            "name": "nfa-tool-ts-cli-nf1-061223-comprack1",
+            "type": "microsoft.managednetworkfabric/networkracks",
+            "location": "eastus",
+            "systemData": {
+              "createdBy": "a893dadc-5c8e-47f4-8379-6afb34bdbe12",
+              "createdByType": "Application",
+              "createdAt": "2023-06-12T09:42:45.8659203Z",
+              "lastModifiedBy": "a893dadc-5c8e-47f4-8379-6afb34bdbe12",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-06-21T10:15:49.5210932Z"
+            },
+            "properties": {
+              "networkFabricId": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/networkFabrics/nfa-tool-ts-cli-nf1-061223",
+              "networkRackSku": "fab1",
+              "provisioningState": "Failed"
+            }
+          },
+          {
+            "id": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/networkRacks/nfa-tool-ts-cli-nf1-061223-comprack2",
+            "name": "nfa-tool-ts-cli-nf1-061223-comprack2",
+            "type": "microsoft.managednetworkfabric/networkracks",
+            "location": "eastus",
+            "systemData": {
+              "createdBy": "a893dadc-5c8e-47f4-8379-6afb34bdbe12",
+              "createdByType": "Application",
+              "createdAt": "2023-06-12T09:42:46.2253027Z",
+              "lastModifiedBy": "a893dadc-5c8e-47f4-8379-6afb34bdbe12",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-06-21T10:15:49.7677631Z"
+            },
+            "properties": {
+              "networkFabricId": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/networkFabrics/nfa-tool-ts-cli-nf1-061223",
+              "networkRackSku": "fab1",
+              "provisioningState": "Failed"
+            }
+          },
+          {
+            "id": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/networkRacks/nfa-tool-ts-cli-nf1-061223-comprack3",
+            "name": "nfa-tool-ts-cli-nf1-061223-comprack3",
+            "type": "microsoft.managednetworkfabric/networkracks",
+            "location": "eastus",
+            "systemData": {
+              "createdBy": "a893dadc-5c8e-47f4-8379-6afb34bdbe12",
+              "createdByType": "Application",
+              "createdAt": "2023-06-12T09:42:46.4909285Z",
+              "lastModifiedBy": "a893dadc-5c8e-47f4-8379-6afb34bdbe12",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-06-21T10:15:50.1271845Z"
+            },
+            "properties": {
+              "networkFabricId": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/networkFabrics/nfa-tool-ts-cli-nf1-061223",
+              "networkRackSku": "fab1",
+              "provisioningState": "Failed"
+            }
+          },
+          {
+            "id": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/networkRacks/nfa-tool-ts-cli-nf061223-comprack3",
+            "name": "nfa-tool-ts-cli-nf061223-comprack3",
+            "type": "microsoft.managednetworkfabric/networkracks",
+            "location": "eastus",
+            "systemData": {
+              "createdBy": "a893dadc-5c8e-47f4-8379-6afb34bdbe12",
+              "createdByType": "Application",
+              "createdAt": "2023-06-12T10:05:31.303302Z",
+              "lastModifiedBy": "a893dadc-5c8e-47f4-8379-6afb34bdbe12",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-06-12T10:05:31.303302Z"
+            },
+            "properties": {
+              "networkFabricId": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/networkFabrics/nfa-tool-ts-cli-nf061223",
+              "networkRackSku": "fab1",
+              "provisioningState": "Failed"
+            }
+          },
+          {
+            "id": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/networkRacks/nfa-tool-ts-cli-nf061423-comprack3",
+            "name": "nfa-tool-ts-cli-nf061423-comprack3",
+            "type": "microsoft.managednetworkfabric/networkracks",
+            "location": "eastus",
+            "systemData": {
+              "createdBy": "a893dadc-5c8e-47f4-8379-6afb34bdbe12",
+              "createdByType": "Application",
+              "createdAt": "2023-06-14T02:41:54.429785Z",
+              "lastModifiedBy": "a893dadc-5c8e-47f4-8379-6afb34bdbe12",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-06-14T02:41:54.429785Z"
+            },
+            "properties": {
+              "networkFabricId": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/networkFabrics/nfa-tool-ts-cli-nf061423",
+              "networkRackSku": "fab1",
+              "provisioningState": "Failed"
+            }
+          },
+          {
+            "id": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/networkRacks/example-fabric-opB-comprack3",
+            "name": "example-fabric-opB-comprack3",
+            "type": "microsoft.managednetworkfabric/networkracks",
+            "location": "eastus",
+            "systemData": {
+              "createdBy": "a893dadc-5c8e-47f4-8379-6afb34bdbe12",
+              "createdByType": "Application",
+              "createdAt": "2023-06-14T09:53:27.3923163Z",
+              "lastModifiedBy": "a893dadc-5c8e-47f4-8379-6afb34bdbe12",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-06-14T09:53:27.3923163Z"
+            },
+            "properties": {
+              "networkFabricId": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/networkFabrics/example-fabric-opB",
+              "networkRackSku": "fab1",
+              "provisioningState": "Failed"
+            }
+          },
+          {
+            "id": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/networkRacks/nfa-tool-ts-sdk-nf061923-comprack3",
+            "name": "nfa-tool-ts-sdk-nf061923-comprack3",
+            "type": "microsoft.managednetworkfabric/networkracks",
+            "location": "eastus",
+            "systemData": {
+              "createdBy": "a893dadc-5c8e-47f4-8379-6afb34bdbe12",
+              "createdByType": "Application",
+              "createdAt": "2023-06-19T08:40:07.8187635Z",
+              "lastModifiedBy": "a893dadc-5c8e-47f4-8379-6afb34bdbe12",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-06-21T12:13:29.8819707Z"
+            },
+            "properties": {
+              "networkFabricId": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/networkFabrics/nfa-tool-ts-sdk-nf061923",
+              "networkRackSku": "fab1",
+              "provisioningState": "Failed"
+            }
+          },
+          {
+            "id": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/networkRacks/nfa-tool-ts-sdk-nf1-061923-comprack3",
+            "name": "nfa-tool-ts-sdk-nf1-061923-comprack3",
+            "type": "microsoft.managednetworkfabric/networkracks",
+            "location": "eastus",
+            "systemData": {
+              "createdBy": "a893dadc-5c8e-47f4-8379-6afb34bdbe12",
+              "createdByType": "Application",
+              "createdAt": "2023-06-19T09:49:38.8481241Z",
+              "lastModifiedBy": "a893dadc-5c8e-47f4-8379-6afb34bdbe12",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-06-19T12:35:01.1022007Z"
+            },
+            "properties": {
+              "networkFabricId": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/networkFabrics/nfa-tool-ts-sdk-nf1-061923",
+              "networkRackSku": "fab1",
+              "provisioningState": "Failed"
+            }
+          },
+          {
+            "id": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/networkRacks/nfa-tool-ts-sdk-nf2-061923-aggrack",
+            "name": "nfa-tool-ts-sdk-nf2-061923-aggrack",
+            "type": "microsoft.managednetworkfabric/networkracks",
+            "location": "eastus",
+            "systemData": {
+              "createdBy": "a893dadc-5c8e-47f4-8379-6afb34bdbe12",
+              "createdByType": "Application",
+              "createdAt": "2023-06-19T14:32:46.1361336Z",
+              "lastModifiedBy": "a893dadc-5c8e-47f4-8379-6afb34bdbe12",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-06-19T14:32:46.1361336Z"
+            },
+            "properties": {
+              "networkFabricId": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/networkFabrics/nfa-tool-ts-sdk-nf2-061923",
+              "networkRackSku": "fab1",
+              "provisioningState": "Succeeded",
+              "networkDevices": [
+                "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/networkDevices/nfa-tool-ts-sdk-nf2-061923-AggrRack-CE1",
+                "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/networkDevices/nfa-tool-ts-sdk-nf2-061923-AggrRack-CE2",
+                "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/networkDevices/nfa-tool-ts-sdk-nf2-061923-AggrRack-TOR17",
+                "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/networkDevices/nfa-tool-ts-sdk-nf2-061923-AggrRack-TOR18",
+                "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/networkDevices/nfa-tool-ts-sdk-nf2-061923-AggrRack-MgmtSwitch1",
+                "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/networkDevices/nfa-tool-ts-sdk-nf2-061923-AggrRack-MgmtSwitch2",
+                "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/networkDevices/nfa-tool-ts-sdk-nf2-061923-AggrRack-NPB1",
+                "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/networkDevices/nfa-tool-ts-sdk-nf2-061923-AggrRack-NPB2"
+              ]
+            }
+          },
+          {
+            "id": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/networkRacks/nfa-tool-ts-sdk-nf2-061923-comprack1",
+            "name": "nfa-tool-ts-sdk-nf2-061923-comprack1",
+            "type": "microsoft.managednetworkfabric/networkracks",
+            "location": "eastus",
+            "systemData": {
+              "createdBy": "a893dadc-5c8e-47f4-8379-6afb34bdbe12",
+              "createdByType": "Application",
+              "createdAt": "2023-06-19T14:32:46.7611932Z",
+              "lastModifiedBy": "a893dadc-5c8e-47f4-8379-6afb34bdbe12",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-06-19T14:32:46.7611932Z"
+            },
+            "properties": {
+              "networkFabricId": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/networkFabrics/nfa-tool-ts-sdk-nf2-061923",
+              "networkRackSku": "fab1",
+              "provisioningState": "Succeeded",
+              "networkDevices": [
+                "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/networkDevices/nfa-tool-ts-sdk-nf2-061923-CompRack1-TOR1",
+                "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/networkDevices/nfa-tool-ts-sdk-nf2-061923-CompRack1-TOR2",
+                "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/networkDevices/nfa-tool-ts-sdk-nf2-061923-CompRack1-MgmtSwitch"
+              ]
+            }
+          },
+          {
+            "id": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/networkRacks/nfa-tool-ts-sdk-nf2-061923-comprack2",
+            "name": "nfa-tool-ts-sdk-nf2-061923-comprack2",
+            "type": "microsoft.managednetworkfabric/networkracks",
+            "location": "eastus",
+            "systemData": {
+              "createdBy": "a893dadc-5c8e-47f4-8379-6afb34bdbe12",
+              "createdByType": "Application",
+              "createdAt": "2023-06-19T14:32:47.1049701Z",
+              "lastModifiedBy": "a893dadc-5c8e-47f4-8379-6afb34bdbe12",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-06-19T14:32:47.1049701Z"
+            },
+            "properties": {
+              "networkFabricId": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/networkFabrics/nfa-tool-ts-sdk-nf2-061923",
+              "networkRackSku": "fab1",
+              "provisioningState": "Succeeded",
+              "networkDevices": [
+                "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/networkDevices/nfa-tool-ts-sdk-nf2-061923-CompRack2-TOR3",
+                "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/networkDevices/nfa-tool-ts-sdk-nf2-061923-CompRack2-TOR4",
+                "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/networkDevices/nfa-tool-ts-sdk-nf2-061923-CompRack2-MgmtSwitch"
+              ]
+            }
+          },
+          {
+            "id": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/networkRacks/nfa-tool-ts-sdk-nf2-061923-comprack3",
+            "name": "nfa-tool-ts-sdk-nf2-061923-comprack3",
+            "type": "microsoft.managednetworkfabric/networkracks",
+            "location": "eastus",
+            "systemData": {
+              "createdBy": "a893dadc-5c8e-47f4-8379-6afb34bdbe12",
+              "createdByType": "Application",
+              "createdAt": "2023-06-19T14:32:47.5112583Z",
+              "lastModifiedBy": "a893dadc-5c8e-47f4-8379-6afb34bdbe12",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-06-19T14:32:47.5112583Z"
+            },
+            "properties": {
+              "networkFabricId": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/networkFabrics/nfa-tool-ts-sdk-nf2-061923",
+              "networkRackSku": "fab1",
+              "provisioningState": "Failed"
+            }
+          },
+          {
+            "id": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/networkRacks/nfa-tool-ts-sdk-nf062023-comprack3",
+            "name": "nfa-tool-ts-sdk-nf062023-comprack3",
+            "type": "microsoft.managednetworkfabric/networkracks",
+            "location": "eastus",
+            "systemData": {
+              "createdBy": "a893dadc-5c8e-47f4-8379-6afb34bdbe12",
+              "createdByType": "Application",
+              "createdAt": "2023-06-20T09:18:16.2298914Z",
+              "lastModifiedBy": "a893dadc-5c8e-47f4-8379-6afb34bdbe12",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-06-20T09:18:16.2298914Z"
+            },
+            "properties": {
+              "networkFabricId": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/networkFabrics/nfa-tool-ts-sdk-nf062023",
+              "networkRackSku": "fab1",
+              "provisioningState": "Failed"
+            }
+          },
+          {
+            "id": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/networkRacks/nfa-tool-ts-sdk-nf1-062023-comprack3",
+            "name": "nfa-tool-ts-sdk-nf1-062023-comprack3",
+            "type": "microsoft.managednetworkfabric/networkracks",
+            "location": "eastus",
+            "systemData": {
+              "createdBy": "a893dadc-5c8e-47f4-8379-6afb34bdbe12",
+              "createdByType": "Application",
+              "createdAt": "2023-06-20T09:52:51.0325821Z",
+              "lastModifiedBy": "a893dadc-5c8e-47f4-8379-6afb34bdbe12",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-06-20T09:52:51.0325821Z"
+            },
+            "properties": {
+              "networkFabricId": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/networkFabrics/nfa-tool-ts-sdk-nf1-062023",
+              "networkRackSku": "fab1",
+              "provisioningState": "Failed"
+            }
+          },
+          {
+            "id": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/networkRacks/nfa-tool-ts-sdk-nf2-062023-comprack3",
+            "name": "nfa-tool-ts-sdk-nf2-062023-comprack3",
+            "type": "microsoft.managednetworkfabric/networkracks",
+            "location": "eastus",
+            "systemData": {
+              "createdBy": "a893dadc-5c8e-47f4-8379-6afb34bdbe12",
+              "createdByType": "Application",
+              "createdAt": "2023-06-20T11:45:34.0527251Z",
+              "lastModifiedBy": "a893dadc-5c8e-47f4-8379-6afb34bdbe12",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-06-20T13:34:01.8830449Z"
+            },
+            "properties": {
+              "networkFabricId": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/networkFabrics/nfa-tool-ts-sdk-nf2-062023",
+              "networkRackSku": "fab1",
+              "provisioningState": "Failed"
+            }
+          },
+          {
+            "id": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/networkRacks/nfa-tool-ts-sdk-nf061923-aggrack",
+            "name": "nfa-tool-ts-sdk-nf061923-aggrack",
+            "type": "microsoft.managednetworkfabric/networkracks",
+            "location": "eastus",
+            "systemData": {
+              "createdBy": "a893dadc-5c8e-47f4-8379-6afb34bdbe12",
+              "createdByType": "Application",
+              "createdAt": "2023-06-21T12:13:28.8194611Z",
+              "lastModifiedBy": "a893dadc-5c8e-47f4-8379-6afb34bdbe12",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-06-21T12:13:28.8194611Z"
+            },
+            "properties": {
+              "networkFabricId": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/networkFabrics/nfa-tool-ts-sdk-nf061923",
+              "networkRackSku": "fab1",
+              "provisioningState": "Succeeded",
+              "networkDevices": [
+                "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/networkDevices/nfa-tool-ts-sdk-nf061923-AggrRack-CE1",
+                "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/networkDevices/nfa-tool-ts-sdk-nf061923-AggrRack-CE2",
+                "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/networkDevices/nfa-tool-ts-sdk-nf061923-AggrRack-TOR17",
+                "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/networkDevices/nfa-tool-ts-sdk-nf061923-AggrRack-TOR18",
+                "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/networkDevices/nfa-tool-ts-sdk-nf061923-AggrRack-MgmtSwitch1",
+                "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/networkDevices/nfa-tool-ts-sdk-nf061923-AggrRack-MgmtSwitch2",
+                "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/networkDevices/nfa-tool-ts-sdk-nf061923-AggrRack-NPB1",
+                "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/networkDevices/nfa-tool-ts-sdk-nf061923-AggrRack-NPB2"
+              ]
+            }
+          },
+          {
+            "id": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/networkRacks/nfa-tool-ts-sdk-nf061923-comprack1",
+            "name": "nfa-tool-ts-sdk-nf061923-comprack1",
+            "type": "microsoft.managednetworkfabric/networkracks",
+            "location": "eastus",
+            "systemData": {
+              "createdBy": "a893dadc-5c8e-47f4-8379-6afb34bdbe12",
+              "createdByType": "Application",
+              "createdAt": "2023-06-21T12:13:29.272613Z",
+              "lastModifiedBy": "a893dadc-5c8e-47f4-8379-6afb34bdbe12",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-06-21T12:13:29.272613Z"
+            },
+            "properties": {
+              "networkFabricId": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/networkFabrics/nfa-tool-ts-sdk-nf061923",
+              "networkRackSku": "fab1",
+              "provisioningState": "Succeeded",
+              "networkDevices": [
+                "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/networkDevices/nfa-tool-ts-sdk-nf061923-CompRack1-TOR1",
+                "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/networkDevices/nfa-tool-ts-sdk-nf061923-CompRack1-TOR2",
+                "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/networkDevices/nfa-tool-ts-sdk-nf061923-CompRack1-MgmtSwitch"
+              ]
+            }
+          },
+          {
+            "id": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/networkRacks/nfa-tool-ts-sdk-nf061923-comprack2",
+            "name": "nfa-tool-ts-sdk-nf061923-comprack2",
+            "type": "microsoft.managednetworkfabric/networkracks",
+            "location": "eastus",
+            "systemData": {
+              "createdBy": "a893dadc-5c8e-47f4-8379-6afb34bdbe12",
+              "createdByType": "Application",
+              "createdAt": "2023-06-21T12:13:29.6319652Z",
+              "lastModifiedBy": "a893dadc-5c8e-47f4-8379-6afb34bdbe12",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-06-21T12:13:29.6319652Z"
+            },
+            "properties": {
+              "networkFabricId": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/networkFabrics/nfa-tool-ts-sdk-nf061923",
+              "networkRackSku": "fab1",
+              "provisioningState": "Succeeded",
+              "networkDevices": [
+                "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/networkDevices/nfa-tool-ts-sdk-nf061923-CompRack2-TOR3",
+                "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/networkDevices/nfa-tool-ts-sdk-nf061923-CompRack2-TOR4",
+                "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/networkDevices/nfa-tool-ts-sdk-nf061923-CompRack2-MgmtSwitch"
+              ]
+            }
+          },
+          {
+            "id": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/networkRacks/nfa-tool-ts-sdk-nf3-062123-comprack3",
+            "name": "nfa-tool-ts-sdk-nf3-062123-comprack3",
+            "type": "microsoft.managednetworkfabric/networkracks",
+            "location": "eastus",
+            "systemData": {
+              "createdBy": "a893dadc-5c8e-47f4-8379-6afb34bdbe12",
+              "createdByType": "Application",
+              "createdAt": "2023-06-21T13:02:26.198843Z",
+              "lastModifiedBy": "a893dadc-5c8e-47f4-8379-6afb34bdbe12",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-06-21T13:05:23.0800478Z"
+            },
+            "properties": {
+              "networkFabricId": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/networkFabrics/nfa-tool-ts-sdk-nf3-062123",
+              "networkRackSku": "fab1",
+              "provisioningState": "Failed"
+            }
+          },
+          {
+            "id": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/networkRacks/nfa-tool-ts-sdk-nf3-062123-aggrack",
+            "name": "nfa-tool-ts-sdk-nf3-062123-aggrack",
+            "type": "microsoft.managednetworkfabric/networkracks",
+            "location": "eastus",
+            "systemData": {
+              "createdBy": "a893dadc-5c8e-47f4-8379-6afb34bdbe12",
+              "createdByType": "Application",
+              "createdAt": "2023-06-21T13:05:21.7987839Z",
+              "lastModifiedBy": "a893dadc-5c8e-47f4-8379-6afb34bdbe12",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-06-21T13:05:21.7987839Z"
+            },
+            "properties": {
+              "networkFabricId": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/networkFabrics/nfa-tool-ts-sdk-nf3-062123",
+              "networkRackSku": "fab1",
+              "provisioningState": "Succeeded",
+              "networkDevices": [
+                "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/networkDevices/nfa-tool-ts-sdk-nf3-062123-AggrRack-CE1",
+                "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/networkDevices/nfa-tool-ts-sdk-nf3-062123-AggrRack-CE2",
+                "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/networkDevices/nfa-tool-ts-sdk-nf3-062123-AggrRack-TOR17",
+                "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/networkDevices/nfa-tool-ts-sdk-nf3-062123-AggrRack-TOR18",
+                "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/networkDevices/nfa-tool-ts-sdk-nf3-062123-AggrRack-MgmtSwitch1",
+                "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/networkDevices/nfa-tool-ts-sdk-nf3-062123-AggrRack-MgmtSwitch2",
+                "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/networkDevices/nfa-tool-ts-sdk-nf3-062123-AggrRack-NPB1",
+                "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/networkDevices/nfa-tool-ts-sdk-nf3-062123-AggrRack-NPB2"
+              ]
+            }
+          },
+          {
+            "id": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/networkRacks/nfa-tool-ts-sdk-nf3-062123-comprack1",
+            "name": "nfa-tool-ts-sdk-nf3-062123-comprack1",
+            "type": "microsoft.managednetworkfabric/networkracks",
+            "location": "eastus",
+            "systemData": {
+              "createdBy": "a893dadc-5c8e-47f4-8379-6afb34bdbe12",
+              "createdByType": "Application",
+              "createdAt": "2023-06-21T13:05:22.2050371Z",
+              "lastModifiedBy": "a893dadc-5c8e-47f4-8379-6afb34bdbe12",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-06-21T13:05:22.2050371Z"
+            },
+            "properties": {
+              "networkFabricId": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/networkFabrics/nfa-tool-ts-sdk-nf3-062123",
+              "networkRackSku": "fab1",
+              "provisioningState": "Succeeded",
+              "networkDevices": [
+                "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/networkDevices/nfa-tool-ts-sdk-nf3-062123-CompRack1-TOR1",
+                "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/networkDevices/nfa-tool-ts-sdk-nf3-062123-CompRack1-TOR2",
+                "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/networkDevices/nfa-tool-ts-sdk-nf3-062123-CompRack1-MgmtSwitch"
+              ]
+            }
+          },
+          {
+            "id": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/networkRacks/nfa-tool-ts-sdk-nf3-062123-comprack2",
+            "name": "nfa-tool-ts-sdk-nf3-062123-comprack2",
+            "type": "microsoft.managednetworkfabric/networkracks",
+            "location": "eastus",
+            "systemData": {
+              "createdBy": "a893dadc-5c8e-47f4-8379-6afb34bdbe12",
+              "createdByType": "Application",
+              "createdAt": "2023-06-21T13:05:22.6425487Z",
+              "lastModifiedBy": "a893dadc-5c8e-47f4-8379-6afb34bdbe12",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-06-21T13:05:22.6425487Z"
+            },
+            "properties": {
+              "networkFabricId": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/networkFabrics/nfa-tool-ts-sdk-nf3-062123",
+              "networkRackSku": "fab1",
+              "provisioningState": "Succeeded",
+              "networkDevices": [
+                "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/networkDevices/nfa-tool-ts-sdk-nf3-062123-CompRack2-TOR3",
+                "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/networkDevices/nfa-tool-ts-sdk-nf3-062123-CompRack2-TOR4",
+                "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/networkDevices/nfa-tool-ts-sdk-nf3-062123-CompRack2-MgmtSwitch"
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/providers/Microsoft.ManagedNetworkFabric/networkRacks?api-version=2023-02-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "User-Agent": "azsdk-net-ResourceManager.ManagedNetworkFabric/1.0.0-alpha.20230622.1 (.NET 7.0.7; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "cc349c311a18908ad676e890253e2819",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "50317",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 22 Jun 2023 07:10:30 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "ed3d7243-f9fe-46d9-aafc-532f15079a54",
+        "x-ms-original-request-ids": [
+          "43800e16-f7e1-419b-b90d-2a1568b7c060",
+          "ba0997cd-41eb-4dab-859d-42b98d93c56e",
+          "1a1242b9-17b3-4e13-a4ac-472b05eb977d",
+          "10300a6d-ad7d-4b8f-a294-611b94875b6c"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": "11997",
+        "x-ms-request-id": "ed3d7243-f9fe-46d9-aafc-532f15079a54",
+        "x-ms-routing-request-id": "JIOINDIAWEST:20230622T071030Z:ed3d7243-f9fe-46d9-aafc-532f15079a54"
+      },
+      "ResponseBody": {
+        "value": [
+          {
+            "id": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/TestD15nf180423/providers/Microsoft.ManagedNetworkFabric/networkRacks/nfTestD15180423-aggrack",
+            "name": "nfTestD15180423-aggrack",
+            "type": "microsoft.managednetworkfabric/networkracks",
+            "location": "eastus2euap",
+            "systemData": {
+              "createdBy": "a893dadc-5c8e-47f4-8379-6afb34bdbe12",
+              "createdByType": "Application",
+              "createdAt": "2023-04-18T10:01:53.6403598Z",
+              "lastModifiedBy": "a893dadc-5c8e-47f4-8379-6afb34bdbe12",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-04-18T10:01:53.6403598Z"
+            },
+            "properties": {
+              "networkFabricId": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/TestD15nf180423/providers/Microsoft.ManagedNetworkFabric/networkFabrics/nfTestD15180423",
+              "networkRackSku": "M4-A400-A100-C16-aa",
+              "provisioningState": "Succeeded",
+              "networkDevices": [
+                "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/TestD15nf180423/providers/Microsoft.ManagedNetworkFabric/networkDevices/nfTestD15180423-AggrRack-CE1",
+                "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/TestD15nf180423/providers/Microsoft.ManagedNetworkFabric/networkDevices/nfTestD15180423-AggrRack-CE2",
+                "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/TestD15nf180423/providers/Microsoft.ManagedNetworkFabric/networkDevices/nfTestD15180423-AggrRack-TOR17",
+                "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/TestD15nf180423/providers/Microsoft.ManagedNetworkFabric/networkDevices/nfTestD15180423-AggrRack-TOR18",
+                "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/TestD15nf180423/providers/Microsoft.ManagedNetworkFabric/networkDevices/nfTestD15180423-AggrRack-MgmtSwitch1",
+                "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/TestD15nf180423/providers/Microsoft.ManagedNetworkFabric/networkDevices/nfTestD15180423-AggrRack-MgmtSwitch2",
+                "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/TestD15nf180423/providers/Microsoft.ManagedNetworkFabric/networkDevices/nfTestD15180423-AggrRack-NPB1",
+                "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/TestD15nf180423/providers/Microsoft.ManagedNetworkFabric/networkDevices/nfTestD15180423-AggrRack-NPB2"
+              ]
+            }
+          },
+          {
+            "id": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/TestD15nf180423/providers/Microsoft.ManagedNetworkFabric/networkRacks/nfTestD15180423-comprack1",
+            "name": "nfTestD15180423-comprack1",
+            "type": "microsoft.managednetworkfabric/networkracks",
+            "location": "eastus2euap",
+            "systemData": {
+              "createdBy": "a893dadc-5c8e-47f4-8379-6afb34bdbe12",
+              "createdByType": "Application",
+              "createdAt": "2023-04-18T10:01:56.3122706Z",
+              "lastModifiedBy": "a893dadc-5c8e-47f4-8379-6afb34bdbe12",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-04-18T10:01:56.3122706Z"
+            },
+            "properties": {
+              "networkFabricId": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/TestD15nf180423/providers/Microsoft.ManagedNetworkFabric/networkFabrics/nfTestD15180423",
+              "networkRackSku": "M4-A400-A100-C16-aa",
+              "provisioningState": "Succeeded",
+              "networkDevices": [
+                "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/TestD15nf180423/providers/Microsoft.ManagedNetworkFabric/networkDevices/nfTestD15180423-CompRack1-TOR1",
+                "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/TestD15nf180423/providers/Microsoft.ManagedNetworkFabric/networkDevices/nfTestD15180423-CompRack1-TOR2",
+                "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/TestD15nf180423/providers/Microsoft.ManagedNetworkFabric/networkDevices/nfTestD15180423-CompRack1-MgmtSwitch"
+              ]
+            }
+          },
+          {
+            "id": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/TestD15nf180423/providers/Microsoft.ManagedNetworkFabric/networkRacks/nfTestD15180423-comprack2",
+            "name": "nfTestD15180423-comprack2",
+            "type": "microsoft.managednetworkfabric/networkracks",
+            "location": "eastus2euap",
+            "systemData": {
+              "createdBy": "a893dadc-5c8e-47f4-8379-6afb34bdbe12",
+              "createdByType": "Application",
+              "createdAt": "2023-04-18T10:01:57.9217212Z",
+              "lastModifiedBy": "a893dadc-5c8e-47f4-8379-6afb34bdbe12",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-04-18T10:01:57.9217212Z"
+            },
+            "properties": {
+              "networkFabricId": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/TestD15nf180423/providers/Microsoft.ManagedNetworkFabric/networkFabrics/nfTestD15180423",
+              "networkRackSku": "M4-A400-A100-C16-aa",
+              "provisioningState": "Succeeded",
+              "networkDevices": [
+                "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/TestD15nf180423/providers/Microsoft.ManagedNetworkFabric/networkDevices/nfTestD15180423-CompRack2-TOR3",
+                "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/TestD15nf180423/providers/Microsoft.ManagedNetworkFabric/networkDevices/nfTestD15180423-CompRack2-TOR4",
+                "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/TestD15nf180423/providers/Microsoft.ManagedNetworkFabric/networkDevices/nfTestD15180423-CompRack2-MgmtSwitch"
+              ]
+            }
+          },
+          {
+            "id": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab1nfrg061323/providers/Microsoft.ManagedNetworkFabric/networkRacks/nffab1061323-aggrack",
+            "name": "nffab1061323-aggrack",
+            "type": "microsoft.managednetworkfabric/networkracks",
+            "location": "eastus2euap",
+            "systemData": {
+              "createdBy": "a893dadc-5c8e-47f4-8379-6afb34bdbe12",
+              "createdByType": "Application",
+              "createdAt": "2023-06-13T12:06:12.4656442Z",
+              "lastModifiedBy": "d1bd24c7-b27f-477e-86dd-939e107873d7",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-06-14T12:08:11.5608754Z"
+            },
+            "properties": {
+              "networkFabricId": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourcegroups/fab1nfrg061323/providers/microsoft.managednetworkfabric/networkfabrics/nffab1061323",
+              "networkRackSku": "fab1",
+              "networkDevices": [
+                "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab1nfrg061323/providers/Microsoft.ManagedNetworkFabric/networkDevices/nffab1061323-AggrRack-CE1",
+                "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab1nfrg061323/providers/Microsoft.ManagedNetworkFabric/networkDevices/nffab1061323-AggrRack-CE2",
+                "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab1nfrg061323/providers/Microsoft.ManagedNetworkFabric/networkDevices/nffab1061323-AggrRack-TOR17",
+                "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab1nfrg061323/providers/Microsoft.ManagedNetworkFabric/networkDevices/nffab1061323-AggrRack-TOR18",
+                "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab1nfrg061323/providers/Microsoft.ManagedNetworkFabric/networkDevices/nffab1061323-AggrRack-MgmtSwitch1",
+                "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab1nfrg061323/providers/Microsoft.ManagedNetworkFabric/networkDevices/nffab1061323-AggrRack-MgmtSwitch2",
+                "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab1nfrg061323/providers/Microsoft.ManagedNetworkFabric/networkDevices/nffab1061323-AggrRack-NPB1",
+                "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab1nfrg061323/providers/Microsoft.ManagedNetworkFabric/networkDevices/nffab1061323-AggrRack-NPB2"
+              ],
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab1nfrg061323/providers/Microsoft.ManagedNetworkFabric/networkRacks/nffab1061323-comprack1",
+            "name": "nffab1061323-comprack1",
+            "type": "microsoft.managednetworkfabric/networkracks",
+            "location": "eastus2euap",
+            "systemData": {
+              "createdBy": "a893dadc-5c8e-47f4-8379-6afb34bdbe12",
+              "createdByType": "Application",
+              "createdAt": "2023-06-13T12:06:14.8250101Z",
+              "lastModifiedBy": "d1bd24c7-b27f-477e-86dd-939e107873d7",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-06-14T12:08:12.8109243Z"
+            },
+            "properties": {
+              "networkFabricId": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourcegroups/fab1nfrg061323/providers/microsoft.managednetworkfabric/networkfabrics/nffab1061323",
+              "networkRackSku": "fab1",
+              "networkDevices": [
+                "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab1nfrg061323/providers/Microsoft.ManagedNetworkFabric/networkDevices/nffab1061323-CompRack1-TOR1",
+                "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab1nfrg061323/providers/Microsoft.ManagedNetworkFabric/networkDevices/nffab1061323-CompRack1-TOR2",
+                "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab1nfrg061323/providers/Microsoft.ManagedNetworkFabric/networkDevices/nffab1061323-CompRack1-MgmtSwitch"
+              ],
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab1nfrg061323/providers/Microsoft.ManagedNetworkFabric/networkRacks/nffab1061323-comprack2",
+            "name": "nffab1061323-comprack2",
+            "type": "microsoft.managednetworkfabric/networkracks",
+            "location": "eastus2euap",
+            "systemData": {
+              "createdBy": "a893dadc-5c8e-47f4-8379-6afb34bdbe12",
+              "createdByType": "Application",
+              "createdAt": "2023-06-13T12:06:16.4343832Z",
+              "lastModifiedBy": "d1bd24c7-b27f-477e-86dd-939e107873d7",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-06-14T12:08:13.4671624Z"
+            },
+            "properties": {
+              "networkFabricId": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourcegroups/fab1nfrg061323/providers/microsoft.managednetworkfabric/networkfabrics/nffab1061323",
+              "networkRackSku": "fab1",
+              "networkDevices": [
+                "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab1nfrg061323/providers/Microsoft.ManagedNetworkFabric/networkDevices/nffab1061323-CompRack2-TOR3",
+                "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab1nfrg061323/providers/Microsoft.ManagedNetworkFabric/networkDevices/nffab1061323-CompRack2-TOR4",
+                "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab1nfrg061323/providers/Microsoft.ManagedNetworkFabric/networkDevices/nffab1061323-CompRack2-MgmtSwitch"
+              ],
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/networkRacks/nfa-tool-ts-nf060523-aggrack",
+            "name": "nfa-tool-ts-nf060523-aggrack",
+            "type": "microsoft.managednetworkfabric/networkracks",
+            "location": "eastus",
+            "systemData": {
+              "createdBy": "a893dadc-5c8e-47f4-8379-6afb34bdbe12",
+              "createdByType": "Application",
+              "createdAt": "2023-06-05T07:01:21.87467Z",
+              "lastModifiedBy": "d1bd24c7-b27f-477e-86dd-939e107873d7",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-06-05T09:06:12.8172367Z"
+            },
+            "properties": {
+              "networkFabricId": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/networkFabrics/nfa-tool-ts-nf060523",
+              "networkRackSku": "fab1",
+              "networkDevices": [
+                "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/networkDevices/nfa-tool-ts-nf060523-AggrRack-CE1",
+                "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/networkDevices/nfa-tool-ts-nf060523-AggrRack-CE2",
+                "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/networkDevices/nfa-tool-ts-nf060523-AggrRack-TOR17",
+                "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/networkDevices/nfa-tool-ts-nf060523-AggrRack-TOR18",
+                "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/networkDevices/nfa-tool-ts-nf060523-AggrRack-MgmtSwitch1",
+                "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/networkDevices/nfa-tool-ts-nf060523-AggrRack-MgmtSwitch2",
+                "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/networkDevices/nfa-tool-ts-nf060523-AggrRack-NPB1",
+                "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/networkDevices/nfa-tool-ts-nf060523-AggrRack-NPB2"
+              ],
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/networkRacks/nfa-tool-ts-nf060523-comprack1",
+            "name": "nfa-tool-ts-nf060523-comprack1",
+            "type": "microsoft.managednetworkfabric/networkracks",
+            "location": "eastus",
+            "systemData": {
+              "createdBy": "a893dadc-5c8e-47f4-8379-6afb34bdbe12",
+              "createdByType": "Application",
+              "createdAt": "2023-06-05T07:01:22.4996838Z",
+              "lastModifiedBy": "d1bd24c7-b27f-477e-86dd-939e107873d7",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-06-05T09:06:13.0515749Z"
+            },
+            "properties": {
+              "networkFabricId": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/networkFabrics/nfa-tool-ts-nf060523",
+              "networkRackSku": "fab1",
+              "networkDevices": [
+                "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/networkDevices/nfa-tool-ts-nf060523-CompRack1-TOR1",
+                "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/networkDevices/nfa-tool-ts-nf060523-CompRack1-TOR2",
+                "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/networkDevices/nfa-tool-ts-nf060523-CompRack1-MgmtSwitch"
+              ],
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/networkRacks/nfa-tool-ts-nf060523-comprack2",
+            "name": "nfa-tool-ts-nf060523-comprack2",
+            "type": "microsoft.managednetworkfabric/networkracks",
+            "location": "eastus",
+            "systemData": {
+              "createdBy": "a893dadc-5c8e-47f4-8379-6afb34bdbe12",
+              "createdByType": "Application",
+              "createdAt": "2023-06-05T07:01:22.8434406Z",
+              "lastModifiedBy": "d1bd24c7-b27f-477e-86dd-939e107873d7",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-06-05T09:06:13.192202Z"
+            },
+            "properties": {
+              "networkFabricId": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/networkFabrics/nfa-tool-ts-nf060523",
+              "networkRackSku": "fab1",
+              "networkDevices": [
+                "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/networkDevices/nfa-tool-ts-nf060523-CompRack2-TOR3",
+                "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/networkDevices/nfa-tool-ts-nf060523-CompRack2-TOR4",
+                "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/networkDevices/nfa-tool-ts-nf060523-CompRack2-MgmtSwitch"
+              ],
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/networkRacks/nfa-tool-ts-nf060523-comprack3",
+            "name": "nfa-tool-ts-nf060523-comprack3",
+            "type": "microsoft.managednetworkfabric/networkracks",
+            "location": "eastus",
+            "systemData": {
+              "createdBy": "a893dadc-5c8e-47f4-8379-6afb34bdbe12",
+              "createdByType": "Application",
+              "createdAt": "2023-06-05T07:01:23.2965728Z",
+              "lastModifiedBy": "a893dadc-5c8e-47f4-8379-6afb34bdbe12",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-06-05T07:01:23.2965728Z"
+            },
+            "properties": {
+              "networkFabricId": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/networkFabrics/nfa-tool-ts-nf060523",
+              "networkRackSku": "fab1",
+              "provisioningState": "Failed"
+            }
+          },
+          {
+            "id": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/networkRacks/nfa-tool-ts-cli-nf1-061223-aggrack",
+            "name": "nfa-tool-ts-cli-nf1-061223-aggrack",
+            "type": "microsoft.managednetworkfabric/networkracks",
+            "location": "eastus",
+            "systemData": {
+              "createdBy": "a893dadc-5c8e-47f4-8379-6afb34bdbe12",
+              "createdByType": "Application",
+              "createdAt": "2023-06-12T09:42:45.3972158Z",
+              "lastModifiedBy": "a893dadc-5c8e-47f4-8379-6afb34bdbe12",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-06-21T10:15:49.1583061Z"
+            },
+            "properties": {
+              "networkFabricId": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/networkFabrics/nfa-tool-ts-cli-nf1-061223",
+              "networkRackSku": "fab1",
+              "provisioningState": "Failed"
+            }
+          },
+          {
+            "id": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/networkRacks/nfa-tool-ts-cli-nf1-061223-comprack1",
+            "name": "nfa-tool-ts-cli-nf1-061223-comprack1",
+            "type": "microsoft.managednetworkfabric/networkracks",
+            "location": "eastus",
+            "systemData": {
+              "createdBy": "a893dadc-5c8e-47f4-8379-6afb34bdbe12",
+              "createdByType": "Application",
+              "createdAt": "2023-06-12T09:42:45.8659203Z",
+              "lastModifiedBy": "a893dadc-5c8e-47f4-8379-6afb34bdbe12",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-06-21T10:15:49.5210932Z"
+            },
+            "properties": {
+              "networkFabricId": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/networkFabrics/nfa-tool-ts-cli-nf1-061223",
+              "networkRackSku": "fab1",
+              "provisioningState": "Failed"
+            }
+          },
+          {
+            "id": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/networkRacks/nfa-tool-ts-cli-nf1-061223-comprack2",
+            "name": "nfa-tool-ts-cli-nf1-061223-comprack2",
+            "type": "microsoft.managednetworkfabric/networkracks",
+            "location": "eastus",
+            "systemData": {
+              "createdBy": "a893dadc-5c8e-47f4-8379-6afb34bdbe12",
+              "createdByType": "Application",
+              "createdAt": "2023-06-12T09:42:46.2253027Z",
+              "lastModifiedBy": "a893dadc-5c8e-47f4-8379-6afb34bdbe12",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-06-21T10:15:49.7677631Z"
+            },
+            "properties": {
+              "networkFabricId": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/networkFabrics/nfa-tool-ts-cli-nf1-061223",
+              "networkRackSku": "fab1",
+              "provisioningState": "Failed"
+            }
+          },
+          {
+            "id": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/networkRacks/nfa-tool-ts-cli-nf1-061223-comprack3",
+            "name": "nfa-tool-ts-cli-nf1-061223-comprack3",
+            "type": "microsoft.managednetworkfabric/networkracks",
+            "location": "eastus",
+            "systemData": {
+              "createdBy": "a893dadc-5c8e-47f4-8379-6afb34bdbe12",
+              "createdByType": "Application",
+              "createdAt": "2023-06-12T09:42:46.4909285Z",
+              "lastModifiedBy": "a893dadc-5c8e-47f4-8379-6afb34bdbe12",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-06-21T10:15:50.1271845Z"
+            },
+            "properties": {
+              "networkFabricId": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/networkFabrics/nfa-tool-ts-cli-nf1-061223",
+              "networkRackSku": "fab1",
+              "provisioningState": "Failed"
+            }
+          },
+          {
+            "id": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfcrg060523/providers/Microsoft.ManagedNetworkFabric/networkRacks/nfa-tool-ts-cli-nf061223-comprack3",
+            "name": "nfa-tool-ts-cli-nf061223-comprack3",
+            "type": "microsoft.managednetworkfabric/networkracks",
+            "location": "eastus",
+            "systemData": {
+              "createdBy": "a893dadc-5c8e-47f4-8379-6afb34bdbe12",
+              "createdByType": "Application",
+              "createdAt": "2023-06-12T10:03:30.0178203Z",
+              "lastModifiedBy": "a893dadc-5c8e-47f4-8379-6afb34bdbe12",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-06-12T10:03:30.0178203Z"
+            },
+            "properties": {
+              "networkFabricId": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfcrg060523/providers/Microsoft.ManagedNetworkFabric/networkFabrics/nfa-tool-ts-cli-nf061223",
+              "networkRackSku": "fab1",
+              "provisioningState": "Failed"
+            }
+          },
+          {
+            "id": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/networkRacks/nfa-tool-ts-cli-nf061223-comprack3",
+            "name": "nfa-tool-ts-cli-nf061223-comprack3",
+            "type": "microsoft.managednetworkfabric/networkracks",
+            "location": "eastus",
+            "systemData": {
+              "createdBy": "a893dadc-5c8e-47f4-8379-6afb34bdbe12",
+              "createdByType": "Application",
+              "createdAt": "2023-06-12T10:05:31.303302Z",
+              "lastModifiedBy": "a893dadc-5c8e-47f4-8379-6afb34bdbe12",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-06-12T10:05:31.303302Z"
+            },
+            "properties": {
+              "networkFabricId": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/networkFabrics/nfa-tool-ts-cli-nf061223",
+              "networkRackSku": "fab1",
+              "provisioningState": "Failed"
+            }
+          },
+          {
+            "id": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/networkRacks/nfa-tool-ts-cli-nf061423-comprack3",
+            "name": "nfa-tool-ts-cli-nf061423-comprack3",
+            "type": "microsoft.managednetworkfabric/networkracks",
+            "location": "eastus",
+            "systemData": {
+              "createdBy": "a893dadc-5c8e-47f4-8379-6afb34bdbe12",
+              "createdByType": "Application",
+              "createdAt": "2023-06-14T02:41:54.429785Z",
+              "lastModifiedBy": "a893dadc-5c8e-47f4-8379-6afb34bdbe12",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-06-14T02:41:54.429785Z"
+            },
+            "properties": {
+              "networkFabricId": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/networkFabrics/nfa-tool-ts-cli-nf061423",
+              "networkRackSku": "fab1",
+              "provisioningState": "Failed"
+            }
+          },
+          {
+            "id": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/networkRacks/example-fabric-opB-comprack3",
+            "name": "example-fabric-opB-comprack3",
+            "type": "microsoft.managednetworkfabric/networkracks",
+            "location": "eastus",
+            "systemData": {
+              "createdBy": "a893dadc-5c8e-47f4-8379-6afb34bdbe12",
+              "createdByType": "Application",
+              "createdAt": "2023-06-14T09:53:27.3923163Z",
+              "lastModifiedBy": "a893dadc-5c8e-47f4-8379-6afb34bdbe12",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-06-14T09:53:27.3923163Z"
+            },
+            "properties": {
+              "networkFabricId": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/networkFabrics/example-fabric-opB",
+              "networkRackSku": "fab1",
+              "provisioningState": "Failed"
+            }
+          },
+          {
+            "id": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/networkRacks/nfa-tool-ts-sdk-nf061923-comprack3",
+            "name": "nfa-tool-ts-sdk-nf061923-comprack3",
+            "type": "microsoft.managednetworkfabric/networkracks",
+            "location": "eastus",
+            "systemData": {
+              "createdBy": "a893dadc-5c8e-47f4-8379-6afb34bdbe12",
+              "createdByType": "Application",
+              "createdAt": "2023-06-19T08:40:07.8187635Z",
+              "lastModifiedBy": "a893dadc-5c8e-47f4-8379-6afb34bdbe12",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-06-21T12:13:29.8819707Z"
+            },
+            "properties": {
+              "networkFabricId": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/networkFabrics/nfa-tool-ts-sdk-nf061923",
+              "networkRackSku": "fab1",
+              "provisioningState": "Failed"
+            }
+          },
+          {
+            "id": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/networkRacks/nfa-tool-ts-sdk-nf1-061923-comprack3",
+            "name": "nfa-tool-ts-sdk-nf1-061923-comprack3",
+            "type": "microsoft.managednetworkfabric/networkracks",
+            "location": "eastus",
+            "systemData": {
+              "createdBy": "a893dadc-5c8e-47f4-8379-6afb34bdbe12",
+              "createdByType": "Application",
+              "createdAt": "2023-06-19T09:49:38.8481241Z",
+              "lastModifiedBy": "a893dadc-5c8e-47f4-8379-6afb34bdbe12",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-06-19T12:35:01.1022007Z"
+            },
+            "properties": {
+              "networkFabricId": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/networkFabrics/nfa-tool-ts-sdk-nf1-061923",
+              "networkRackSku": "fab1",
+              "provisioningState": "Failed"
+            }
+          },
+          {
+            "id": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/networkRacks/nfa-tool-ts-sdk-nf2-061923-aggrack",
+            "name": "nfa-tool-ts-sdk-nf2-061923-aggrack",
+            "type": "microsoft.managednetworkfabric/networkracks",
+            "location": "eastus",
+            "systemData": {
+              "createdBy": "a893dadc-5c8e-47f4-8379-6afb34bdbe12",
+              "createdByType": "Application",
+              "createdAt": "2023-06-19T14:32:46.1361336Z",
+              "lastModifiedBy": "a893dadc-5c8e-47f4-8379-6afb34bdbe12",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-06-19T14:32:46.1361336Z"
+            },
+            "properties": {
+              "networkFabricId": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/networkFabrics/nfa-tool-ts-sdk-nf2-061923",
+              "networkRackSku": "fab1",
+              "provisioningState": "Succeeded",
+              "networkDevices": [
+                "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/networkDevices/nfa-tool-ts-sdk-nf2-061923-AggrRack-CE1",
+                "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/networkDevices/nfa-tool-ts-sdk-nf2-061923-AggrRack-CE2",
+                "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/networkDevices/nfa-tool-ts-sdk-nf2-061923-AggrRack-TOR17",
+                "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/networkDevices/nfa-tool-ts-sdk-nf2-061923-AggrRack-TOR18",
+                "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/networkDevices/nfa-tool-ts-sdk-nf2-061923-AggrRack-MgmtSwitch1",
+                "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/networkDevices/nfa-tool-ts-sdk-nf2-061923-AggrRack-MgmtSwitch2",
+                "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/networkDevices/nfa-tool-ts-sdk-nf2-061923-AggrRack-NPB1",
+                "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/networkDevices/nfa-tool-ts-sdk-nf2-061923-AggrRack-NPB2"
+              ]
+            }
+          },
+          {
+            "id": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/networkRacks/nfa-tool-ts-sdk-nf2-061923-comprack1",
+            "name": "nfa-tool-ts-sdk-nf2-061923-comprack1",
+            "type": "microsoft.managednetworkfabric/networkracks",
+            "location": "eastus",
+            "systemData": {
+              "createdBy": "a893dadc-5c8e-47f4-8379-6afb34bdbe12",
+              "createdByType": "Application",
+              "createdAt": "2023-06-19T14:32:46.7611932Z",
+              "lastModifiedBy": "a893dadc-5c8e-47f4-8379-6afb34bdbe12",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-06-19T14:32:46.7611932Z"
+            },
+            "properties": {
+              "networkFabricId": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/networkFabrics/nfa-tool-ts-sdk-nf2-061923",
+              "networkRackSku": "fab1",
+              "provisioningState": "Succeeded",
+              "networkDevices": [
+                "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/networkDevices/nfa-tool-ts-sdk-nf2-061923-CompRack1-TOR1",
+                "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/networkDevices/nfa-tool-ts-sdk-nf2-061923-CompRack1-TOR2",
+                "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/networkDevices/nfa-tool-ts-sdk-nf2-061923-CompRack1-MgmtSwitch"
+              ]
+            }
+          },
+          {
+            "id": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/networkRacks/nfa-tool-ts-sdk-nf2-061923-comprack2",
+            "name": "nfa-tool-ts-sdk-nf2-061923-comprack2",
+            "type": "microsoft.managednetworkfabric/networkracks",
+            "location": "eastus",
+            "systemData": {
+              "createdBy": "a893dadc-5c8e-47f4-8379-6afb34bdbe12",
+              "createdByType": "Application",
+              "createdAt": "2023-06-19T14:32:47.1049701Z",
+              "lastModifiedBy": "a893dadc-5c8e-47f4-8379-6afb34bdbe12",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-06-19T14:32:47.1049701Z"
+            },
+            "properties": {
+              "networkFabricId": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/networkFabrics/nfa-tool-ts-sdk-nf2-061923",
+              "networkRackSku": "fab1",
+              "provisioningState": "Succeeded",
+              "networkDevices": [
+                "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/networkDevices/nfa-tool-ts-sdk-nf2-061923-CompRack2-TOR3",
+                "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/networkDevices/nfa-tool-ts-sdk-nf2-061923-CompRack2-TOR4",
+                "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/networkDevices/nfa-tool-ts-sdk-nf2-061923-CompRack2-MgmtSwitch"
+              ]
+            }
+          },
+          {
+            "id": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/networkRacks/nfa-tool-ts-sdk-nf2-061923-comprack3",
+            "name": "nfa-tool-ts-sdk-nf2-061923-comprack3",
+            "type": "microsoft.managednetworkfabric/networkracks",
+            "location": "eastus",
+            "systemData": {
+              "createdBy": "a893dadc-5c8e-47f4-8379-6afb34bdbe12",
+              "createdByType": "Application",
+              "createdAt": "2023-06-19T14:32:47.5112583Z",
+              "lastModifiedBy": "a893dadc-5c8e-47f4-8379-6afb34bdbe12",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-06-19T14:32:47.5112583Z"
+            },
+            "properties": {
+              "networkFabricId": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/networkFabrics/nfa-tool-ts-sdk-nf2-061923",
+              "networkRackSku": "fab1",
+              "provisioningState": "Failed"
+            }
+          },
+          {
+            "id": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/networkRacks/nfa-tool-ts-sdk-nf062023-comprack3",
+            "name": "nfa-tool-ts-sdk-nf062023-comprack3",
+            "type": "microsoft.managednetworkfabric/networkracks",
+            "location": "eastus",
+            "systemData": {
+              "createdBy": "a893dadc-5c8e-47f4-8379-6afb34bdbe12",
+              "createdByType": "Application",
+              "createdAt": "2023-06-20T09:18:16.2298914Z",
+              "lastModifiedBy": "a893dadc-5c8e-47f4-8379-6afb34bdbe12",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-06-20T09:18:16.2298914Z"
+            },
+            "properties": {
+              "networkFabricId": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/networkFabrics/nfa-tool-ts-sdk-nf062023",
+              "networkRackSku": "fab1",
+              "provisioningState": "Failed"
+            }
+          },
+          {
+            "id": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/networkRacks/nfa-tool-ts-sdk-nf1-062023-comprack3",
+            "name": "nfa-tool-ts-sdk-nf1-062023-comprack3",
+            "type": "microsoft.managednetworkfabric/networkracks",
+            "location": "eastus",
+            "systemData": {
+              "createdBy": "a893dadc-5c8e-47f4-8379-6afb34bdbe12",
+              "createdByType": "Application",
+              "createdAt": "2023-06-20T09:52:51.0325821Z",
+              "lastModifiedBy": "a893dadc-5c8e-47f4-8379-6afb34bdbe12",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-06-20T09:52:51.0325821Z"
+            },
+            "properties": {
+              "networkFabricId": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/networkFabrics/nfa-tool-ts-sdk-nf1-062023",
+              "networkRackSku": "fab1",
+              "provisioningState": "Failed"
+            }
+          },
+          {
+            "id": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/networkRacks/nfa-tool-ts-sdk-nf2-062023-comprack3",
+            "name": "nfa-tool-ts-sdk-nf2-062023-comprack3",
+            "type": "microsoft.managednetworkfabric/networkracks",
+            "location": "eastus",
+            "systemData": {
+              "createdBy": "a893dadc-5c8e-47f4-8379-6afb34bdbe12",
+              "createdByType": "Application",
+              "createdAt": "2023-06-20T11:45:34.0527251Z",
+              "lastModifiedBy": "a893dadc-5c8e-47f4-8379-6afb34bdbe12",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-06-20T13:34:01.8830449Z"
+            },
+            "properties": {
+              "networkFabricId": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/networkFabrics/nfa-tool-ts-sdk-nf2-062023",
+              "networkRackSku": "fab1",
+              "provisioningState": "Failed"
+            }
+          },
+          {
+            "id": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/Microsoft.ManagedNetworkFabric/networkRacks/nf1fab3200623-aggrack",
+            "name": "nf1fab3200623-aggrack",
+            "type": "microsoft.managednetworkfabric/networkracks",
+            "location": "eastus",
+            "systemData": {
+              "createdBy": "a893dadc-5c8e-47f4-8379-6afb34bdbe12",
+              "createdByType": "Application",
+              "createdAt": "2023-06-20T13:15:31.8281784Z",
+              "lastModifiedBy": "d1bd24c7-b27f-477e-86dd-939e107873d7",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-06-20T13:43:16.6931967Z"
+            },
+            "properties": {
+              "networkFabricId": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourcegroups/fab3nfrg200623/providers/microsoft.managednetworkfabric/networkfabrics/nf1fab3200623",
+              "networkRackSku": "M4-A400-A100-C16-aa",
+              "networkDevices": [
+                "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/Microsoft.ManagedNetworkFabric/networkDevices/nf1fab3200623-AggrRack-CE1",
+                "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/Microsoft.ManagedNetworkFabric/networkDevices/nf1fab3200623-AggrRack-CE2",
+                "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/Microsoft.ManagedNetworkFabric/networkDevices/nf1fab3200623-AggrRack-TOR17",
+                "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/Microsoft.ManagedNetworkFabric/networkDevices/nf1fab3200623-AggrRack-TOR18",
+                "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/Microsoft.ManagedNetworkFabric/networkDevices/nf1fab3200623-AggrRack-MgmtSwitch1",
+                "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/Microsoft.ManagedNetworkFabric/networkDevices/nf1fab3200623-AggrRack-MgmtSwitch2",
+                "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/Microsoft.ManagedNetworkFabric/networkDevices/nf1fab3200623-AggrRack-NPB1",
+                "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/Microsoft.ManagedNetworkFabric/networkDevices/nf1fab3200623-AggrRack-NPB2"
+              ],
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/Microsoft.ManagedNetworkFabric/networkRacks/nf1fab3200623-comprack1",
+            "name": "nf1fab3200623-comprack1",
+            "type": "microsoft.managednetworkfabric/networkracks",
+            "location": "eastus",
+            "systemData": {
+              "createdBy": "a893dadc-5c8e-47f4-8379-6afb34bdbe12",
+              "createdByType": "Application",
+              "createdAt": "2023-06-20T13:15:32.3281737Z",
+              "lastModifiedBy": "d1bd24c7-b27f-477e-86dd-939e107873d7",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-06-20T13:43:16.8494098Z"
+            },
+            "properties": {
+              "networkFabricId": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourcegroups/fab3nfrg200623/providers/microsoft.managednetworkfabric/networkfabrics/nf1fab3200623",
+              "networkRackSku": "M4-A400-A100-C16-aa",
+              "networkDevices": [
+                "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/Microsoft.ManagedNetworkFabric/networkDevices/nf1fab3200623-CompRack1-TOR1",
+                "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/Microsoft.ManagedNetworkFabric/networkDevices/nf1fab3200623-CompRack1-TOR2",
+                "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/Microsoft.ManagedNetworkFabric/networkDevices/nf1fab3200623-CompRack1-MgmtSwitch"
+              ],
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/Microsoft.ManagedNetworkFabric/networkRacks/nf1fab3200623-comprack2",
+            "name": "nf1fab3200623-comprack2",
+            "type": "microsoft.managednetworkfabric/networkracks",
+            "location": "eastus",
+            "systemData": {
+              "createdBy": "a893dadc-5c8e-47f4-8379-6afb34bdbe12",
+              "createdByType": "Application",
+              "createdAt": "2023-06-20T13:15:32.7187994Z",
+              "lastModifiedBy": "d1bd24c7-b27f-477e-86dd-939e107873d7",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-06-20T13:43:17.0057875Z"
+            },
+            "properties": {
+              "networkFabricId": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourcegroups/fab3nfrg200623/providers/microsoft.managednetworkfabric/networkfabrics/nf1fab3200623",
+              "networkRackSku": "M4-A400-A100-C16-aa",
+              "networkDevices": [
+                "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/Microsoft.ManagedNetworkFabric/networkDevices/nf1fab3200623-CompRack2-TOR3",
+                "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/Microsoft.ManagedNetworkFabric/networkDevices/nf1fab3200623-CompRack2-TOR4",
+                "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/fab3nfrg200623/providers/Microsoft.ManagedNetworkFabric/networkDevices/nf1fab3200623-CompRack2-MgmtSwitch"
+              ],
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/networkRacks/nfa-tool-ts-sdk-nf061923-aggrack",
+            "name": "nfa-tool-ts-sdk-nf061923-aggrack",
+            "type": "microsoft.managednetworkfabric/networkracks",
+            "location": "eastus",
+            "systemData": {
+              "createdBy": "a893dadc-5c8e-47f4-8379-6afb34bdbe12",
+              "createdByType": "Application",
+              "createdAt": "2023-06-21T12:13:28.8194611Z",
+              "lastModifiedBy": "a893dadc-5c8e-47f4-8379-6afb34bdbe12",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-06-21T12:13:28.8194611Z"
+            },
+            "properties": {
+              "networkFabricId": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/networkFabrics/nfa-tool-ts-sdk-nf061923",
+              "networkRackSku": "fab1",
+              "provisioningState": "Succeeded",
+              "networkDevices": [
+                "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/networkDevices/nfa-tool-ts-sdk-nf061923-AggrRack-CE1",
+                "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/networkDevices/nfa-tool-ts-sdk-nf061923-AggrRack-CE2",
+                "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/networkDevices/nfa-tool-ts-sdk-nf061923-AggrRack-TOR17",
+                "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/networkDevices/nfa-tool-ts-sdk-nf061923-AggrRack-TOR18",
+                "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/networkDevices/nfa-tool-ts-sdk-nf061923-AggrRack-MgmtSwitch1",
+                "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/networkDevices/nfa-tool-ts-sdk-nf061923-AggrRack-MgmtSwitch2",
+                "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/networkDevices/nfa-tool-ts-sdk-nf061923-AggrRack-NPB1",
+                "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/networkDevices/nfa-tool-ts-sdk-nf061923-AggrRack-NPB2"
+              ]
+            }
+          },
+          {
+            "id": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/networkRacks/nfa-tool-ts-sdk-nf061923-comprack1",
+            "name": "nfa-tool-ts-sdk-nf061923-comprack1",
+            "type": "microsoft.managednetworkfabric/networkracks",
+            "location": "eastus",
+            "systemData": {
+              "createdBy": "a893dadc-5c8e-47f4-8379-6afb34bdbe12",
+              "createdByType": "Application",
+              "createdAt": "2023-06-21T12:13:29.272613Z",
+              "lastModifiedBy": "a893dadc-5c8e-47f4-8379-6afb34bdbe12",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-06-21T12:13:29.272613Z"
+            },
+            "properties": {
+              "networkFabricId": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/networkFabrics/nfa-tool-ts-sdk-nf061923",
+              "networkRackSku": "fab1",
+              "provisioningState": "Succeeded",
+              "networkDevices": [
+                "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/networkDevices/nfa-tool-ts-sdk-nf061923-CompRack1-TOR1",
+                "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/networkDevices/nfa-tool-ts-sdk-nf061923-CompRack1-TOR2",
+                "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/networkDevices/nfa-tool-ts-sdk-nf061923-CompRack1-MgmtSwitch"
+              ]
+            }
+          },
+          {
+            "id": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/networkRacks/nfa-tool-ts-sdk-nf061923-comprack2",
+            "name": "nfa-tool-ts-sdk-nf061923-comprack2",
+            "type": "microsoft.managednetworkfabric/networkracks",
+            "location": "eastus",
+            "systemData": {
+              "createdBy": "a893dadc-5c8e-47f4-8379-6afb34bdbe12",
+              "createdByType": "Application",
+              "createdAt": "2023-06-21T12:13:29.6319652Z",
+              "lastModifiedBy": "a893dadc-5c8e-47f4-8379-6afb34bdbe12",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-06-21T12:13:29.6319652Z"
+            },
+            "properties": {
+              "networkFabricId": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/networkFabrics/nfa-tool-ts-sdk-nf061923",
+              "networkRackSku": "fab1",
+              "provisioningState": "Succeeded",
+              "networkDevices": [
+                "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/networkDevices/nfa-tool-ts-sdk-nf061923-CompRack2-TOR3",
+                "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/networkDevices/nfa-tool-ts-sdk-nf061923-CompRack2-TOR4",
+                "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/networkDevices/nfa-tool-ts-sdk-nf061923-CompRack2-MgmtSwitch"
+              ]
+            }
+          },
+          {
+            "id": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/networkRacks/nfa-tool-ts-sdk-nf3-062123-comprack3",
+            "name": "nfa-tool-ts-sdk-nf3-062123-comprack3",
+            "type": "microsoft.managednetworkfabric/networkracks",
+            "location": "eastus",
+            "systemData": {
+              "createdBy": "a893dadc-5c8e-47f4-8379-6afb34bdbe12",
+              "createdByType": "Application",
+              "createdAt": "2023-06-21T13:02:26.198843Z",
+              "lastModifiedBy": "a893dadc-5c8e-47f4-8379-6afb34bdbe12",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-06-21T13:05:23.0800478Z"
+            },
+            "properties": {
+              "networkFabricId": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/networkFabrics/nfa-tool-ts-sdk-nf3-062123",
+              "networkRackSku": "fab1",
+              "provisioningState": "Failed"
+            }
+          },
+          {
+            "id": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/networkRacks/nfa-tool-ts-sdk-nf3-062123-aggrack",
+            "name": "nfa-tool-ts-sdk-nf3-062123-aggrack",
+            "type": "microsoft.managednetworkfabric/networkracks",
+            "location": "eastus",
+            "systemData": {
+              "createdBy": "a893dadc-5c8e-47f4-8379-6afb34bdbe12",
+              "createdByType": "Application",
+              "createdAt": "2023-06-21T13:05:21.7987839Z",
+              "lastModifiedBy": "a893dadc-5c8e-47f4-8379-6afb34bdbe12",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-06-21T13:05:21.7987839Z"
+            },
+            "properties": {
+              "networkFabricId": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/networkFabrics/nfa-tool-ts-sdk-nf3-062123",
+              "networkRackSku": "fab1",
+              "provisioningState": "Succeeded",
+              "networkDevices": [
+                "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/networkDevices/nfa-tool-ts-sdk-nf3-062123-AggrRack-CE1",
+                "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/networkDevices/nfa-tool-ts-sdk-nf3-062123-AggrRack-CE2",
+                "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/networkDevices/nfa-tool-ts-sdk-nf3-062123-AggrRack-TOR17",
+                "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/networkDevices/nfa-tool-ts-sdk-nf3-062123-AggrRack-TOR18",
+                "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/networkDevices/nfa-tool-ts-sdk-nf3-062123-AggrRack-MgmtSwitch1",
+                "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/networkDevices/nfa-tool-ts-sdk-nf3-062123-AggrRack-MgmtSwitch2",
+                "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/networkDevices/nfa-tool-ts-sdk-nf3-062123-AggrRack-NPB1",
+                "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/networkDevices/nfa-tool-ts-sdk-nf3-062123-AggrRack-NPB2"
+              ]
+            }
+          },
+          {
+            "id": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/networkRacks/nfa-tool-ts-sdk-nf3-062123-comprack1",
+            "name": "nfa-tool-ts-sdk-nf3-062123-comprack1",
+            "type": "microsoft.managednetworkfabric/networkracks",
+            "location": "eastus",
+            "systemData": {
+              "createdBy": "a893dadc-5c8e-47f4-8379-6afb34bdbe12",
+              "createdByType": "Application",
+              "createdAt": "2023-06-21T13:05:22.2050371Z",
+              "lastModifiedBy": "a893dadc-5c8e-47f4-8379-6afb34bdbe12",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-06-21T13:05:22.2050371Z"
+            },
+            "properties": {
+              "networkFabricId": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/networkFabrics/nfa-tool-ts-sdk-nf3-062123",
+              "networkRackSku": "fab1",
+              "provisioningState": "Succeeded",
+              "networkDevices": [
+                "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/networkDevices/nfa-tool-ts-sdk-nf3-062123-CompRack1-TOR1",
+                "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/networkDevices/nfa-tool-ts-sdk-nf3-062123-CompRack1-TOR2",
+                "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/networkDevices/nfa-tool-ts-sdk-nf3-062123-CompRack1-MgmtSwitch"
+              ]
+            }
+          },
+          {
+            "id": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/networkRacks/nfa-tool-ts-sdk-nf3-062123-comprack2",
+            "name": "nfa-tool-ts-sdk-nf3-062123-comprack2",
+            "type": "microsoft.managednetworkfabric/networkracks",
+            "location": "eastus",
+            "systemData": {
+              "createdBy": "a893dadc-5c8e-47f4-8379-6afb34bdbe12",
+              "createdByType": "Application",
+              "createdAt": "2023-06-21T13:05:22.6425487Z",
+              "lastModifiedBy": "a893dadc-5c8e-47f4-8379-6afb34bdbe12",
+              "lastModifiedByType": "Application",
+              "lastModifiedAt": "2023-06-21T13:05:22.6425487Z"
+            },
+            "properties": {
+              "networkFabricId": "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/networkFabrics/nfa-tool-ts-sdk-nf3-062123",
+              "networkRackSku": "fab1",
+              "provisioningState": "Succeeded",
+              "networkDevices": [
+                "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/networkDevices/nfa-tool-ts-sdk-nf3-062123-CompRack2-TOR3",
+                "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/networkDevices/nfa-tool-ts-sdk-nf3-062123-CompRack2-TOR4",
+                "/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/networkDevices/nfa-tool-ts-sdk-nf3-062123-CompRack2-MgmtSwitch"
+              ]
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "Variables": {
+    "Network_Rack_Name": "nfa-tool-ts-nf060523-comprack1",
+    "RandomSeed": "1382485576",
+    "RESOURCE_GROUP_NAME": "nfa-tool-ts-clisdktest-nfrg060523",
+    "RESOURCE_MANAGER_URL": null,
+    "SUBSCRIPTION_ID": "61065ccc-9543-4b91-b2d1-0ce42a914507"
+  }
+}
