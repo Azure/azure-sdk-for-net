@@ -11,7 +11,7 @@ namespace Azure.Storage.DataMovement
         public virtual System.Threading.Tasks.Task PauseIfRunningAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     [System.FlagsAttribute]
-    public enum ErrorHandlingOptions
+    public enum ErrorHandlingBehavior
     {
         StopOnAllFailures = 0,
         ContinueOnFailure = 1,
@@ -145,7 +145,7 @@ namespace Azure.Storage.DataMovement
     {
         public TransferManagerOptions() { }
         public Azure.Storage.DataMovement.Models.TransferCheckpointerOptions CheckpointerOptions { get { throw null; } set { } }
-        public Azure.Storage.DataMovement.ErrorHandlingOptions ErrorHandling { get { throw null; } set { } }
+        public Azure.Storage.DataMovement.ErrorHandlingBehavior ErrorHandling { get { throw null; } set { } }
         public int? MaximumConcurrency { get { throw null; } set { } }
     }
     public enum TransferType
@@ -212,12 +212,6 @@ namespace Azure.Storage.DataMovement.Models
     {
         public TransferCheckpointerOptions(string localCheckpointerPath) { }
         public string CheckpointerPath { get { throw null; } }
-    }
-    public enum TransferCopyMethod
-    {
-        None = 0,
-        SyncCopy = 1,
-        AsyncCopy = 2,
     }
     public partial class TransferFailedEventArgs : Azure.Storage.DataMovement.StorageTransferEventArgs
     {
