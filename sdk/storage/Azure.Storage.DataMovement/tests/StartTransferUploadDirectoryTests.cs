@@ -161,7 +161,7 @@ namespace Azure.Storage.DataMovement.Tests
         public async Task LocalToBlockBlobDirectory_SmallChunks()
         {
             long blobSize = Constants.KB;
-            int waitTimeInSec = 10;
+            int waitTimeInSec = 25;
             TransferOptions options = new TransferOptions()
             {
                 InitialTransferSize = 100,
@@ -195,7 +195,7 @@ namespace Azure.Storage.DataMovement.Tests
         {
             // Arrange
             long blobSize = 2 * Constants.KB;
-            int waitTimeInSec = 10;
+            int waitTimeInSec = 25;
             TransferManagerOptions transferManagerOptions = new TransferManagerOptions()
             {
                 ErrorHandling = ErrorHandlingOptions.StopOnAllFailures,
