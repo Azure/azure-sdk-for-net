@@ -36,12 +36,7 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests.Models
             var options = new ModelSerializerOptions();
             options.IgnoreAdditionalProperties = true;
             options.IgnoreReadOnlyProperties = true;
-            BinaryData data = ((IModelSerializable)this).Serialize(options);
-#if NET6_0_OR_GREATER
-            writer.WriteRawValue(data);
-#else
-            JsonSerializer.Serialize(writer, JsonDocument.Parse(data.ToString()).RootElement);
-#endif
+            Serialize(writer, options);
         }
 
         public static implicit operator RequestContent(ModelX modelX)
@@ -51,10 +46,8 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests.Models
             return content;
         }
 
-        BinaryData IModelSerializable.Serialize(ModelSerializerOptions options)
+        private void Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
-            MemoryStream stream = new MemoryStream();
-            Utf8JsonWriter writer = new Utf8JsonWriter(stream);
             writer.WriteStartObject();
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind);
@@ -82,9 +75,15 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests.Models
                 }
             }
             writer.WriteEndObject();
+        }
+
+        BinaryData IModelSerializable.Serialize(ModelSerializerOptions options)
+        {
+            MemoryStream stream = new MemoryStream();
+            Utf8JsonWriter writer = new Utf8JsonWriter(stream);
+            Serialize(writer, options);
             writer.Flush();
-            stream.Position = 0;
-            return new BinaryData(stream.ToArray());
+            return new BinaryData(stream.GetBuffer().AsMemory(0, (int)stream.Position));
         }
 
         internal static ModelX DeserializeModelX(JsonElement element, ModelSerializerOptions options = default)

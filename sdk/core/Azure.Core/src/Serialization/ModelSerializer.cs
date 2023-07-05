@@ -21,16 +21,11 @@ namespace Azure.Core.Serialization
         /// <returns></returns>
         public static BinaryData Serialize<T>(T model, ModelSerializerOptions? options = default) where T : class, IModelSerializable
         {
-            // if options.Serializers is set and the model is in the dictionary, use the serializer
-            if (options != null)
-            {
-                ObjectSerializer? serializer;
+            options ??= new ModelSerializerOptions();
 
-                if (options.Serializers.TryGetValue(typeof(T), out serializer))
-                {
-                    return serializer.Serialize(model);
-                }
-            }
+            if (options.Serializers.TryGetValue(typeof(T), out var serializer))
+                return serializer.Serialize(model);
+
             return model.Serialize(options ?? new ModelSerializerOptions());
         }
 
@@ -40,35 +35,23 @@ namespace Azure.Core.Serialization
         /// <returns></returns>
         public static T Deserialize<T>(BinaryData data, ModelSerializerOptions? options = default) where T : class, IModelSerializable
         {
-            return (T)Deserialize(data, typeof(T), options);
+            return (T)Deserialize(data, typeof(T), options ?? new ModelSerializerOptions());
         }
 
-        internal static object Deserialize(BinaryData data, Type typeToConvert, ModelSerializerOptions? options = default)
+        internal static object Deserialize(BinaryData data, Type typeToConvert, ModelSerializerOptions options)
         {
-            if (options != null)
+            if (options.Serializers.TryGetValue(typeToConvert, out var serializer))
             {
-                ObjectSerializer? serializer;
-
-                if (options.Serializers.TryGetValue(typeToConvert, out serializer))
-                {
-                    var obj = serializer.Deserialize(data.ToStream(), typeToConvert, default);
-                    if (obj is null)
-                        throw new InvalidOperationException();
-                    else
-                        return obj;
-                }
+                var obj = serializer.Deserialize(data.ToStream(), typeToConvert, default);
+                return obj ?? throw new InvalidOperationException();
             }
-
-            options ??= new ModelSerializerOptions();
 
             if (typeToConvert.IsAbstract)
                 return DeserializeObject(data, typeToConvert, options);
 
-            IModelSerializable? model = Activator.CreateInstance(typeToConvert, true) as IModelSerializable;
-            if (model is null)
-                throw new InvalidOperationException($"{typeToConvert.Name} does not implement {nameof(IModelSerializable)}.");
+            var model = Activator.CreateInstance(typeToConvert, true) as IModelSerializable;
 
-            return model.Deserialize(data, options);
+            return model!.Deserialize(data, options);
         }
 
         private static readonly Type[] _combinedDeserializeMethodParameters = new Type[] { typeof(BinaryData), typeof(ModelSerializerOptions) };
