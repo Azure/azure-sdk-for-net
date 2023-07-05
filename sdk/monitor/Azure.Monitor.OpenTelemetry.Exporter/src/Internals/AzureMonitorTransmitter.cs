@@ -158,7 +158,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 
         public string InstrumentationKey => _connectionVars.InstrumentationKey;
 
-        public async ValueTask<ExportResult> TrackAsync(IEnumerable<TelemetryItem> telemetryItems, bool async, CancellationToken cancellationToken)
+        public async ValueTask<ExportResult> TrackAsync(IEnumerable<TelemetryItem> telemetryItems, string origin, bool async, CancellationToken cancellationToken)
         {
             ExportResult result = ExportResult.Failure;
             if (cancellationToken.IsCancellationRequested)
@@ -171,8 +171,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                 if (_transmissionStateManager.State == TransmissionState.Closed)
                 {
                     using var httpMessage = async ?
-                    await _applicationInsightsRestClient.InternalTrackAsync(telemetryItems, cancellationToken).ConfigureAwait(false) :
-                    _applicationInsightsRestClient.InternalTrackAsync(telemetryItems, cancellationToken).Result;
+                        await _applicationInsightsRestClient.InternalTrackAsync(telemetryItems, origin, cancellationToken).ConfigureAwait(false) :
+                        _applicationInsightsRestClient.InternalTrackAsync(telemetryItems, origin, cancellationToken).Result;
 
                     result = HttpPipelineHelper.IsSuccess(httpMessage);
 

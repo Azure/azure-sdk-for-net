@@ -220,8 +220,10 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                 }
             }
 
+            httpMessage.TryGetProperty("AzureMonitorExporter_Origin", out var origin);
+
             AzureMonitorExporterEventSource.Log.TransmissionFailed(
-                fromStorage: false,
+                origin: origin?.ToString() ?? "AzureMonitorExporter",
                 statusCode: statusCode,
                 connectionVars: connectionVars,
                 requestEndpoint: httpMessage.Request.Uri.Host,
@@ -272,7 +274,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             }
 
             AzureMonitorExporterEventSource.Log.TransmissionFailed(
-                fromStorage: true,
+                origin: "Storage",
                 statusCode: statusCode,
                 connectionVars: connectionVars,
                 requestEndpoint: httpMessage.Request.Uri.Host,

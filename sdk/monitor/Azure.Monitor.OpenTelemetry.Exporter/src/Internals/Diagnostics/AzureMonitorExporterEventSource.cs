@@ -67,7 +67,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics
         public void FailedToTransmit(string exceptionMessage) => WriteEvent(7, exceptionMessage);
 
         [NonEvent]
-        public void TransmissionFailed(int statusCode, bool fromStorage, bool willRetry, ConnectionVars connectionVars, string? requestEndpoint, Response? response)
+        public void TransmissionFailed(int statusCode, string origin, bool willRetry, ConnectionVars connectionVars, string? requestEndpoint, Response? response)
         {
             if (IsEnabled(EventLevel.Verbose))
             {
@@ -79,7 +79,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics
                         statusCode: statusCode,
                         errorMessage: "N/A",
                         action: willRetry ? "Telemetry is stored offline for retry" : "Telemetry is dropped",
-                        origin: fromStorage ? "Storage" : "AzureMonitorExporter",
+                        origin: origin,
                         instrumentationKey: connectionVars.InstrumentationKey,
                         configuredEndpoint: connectionVars.IngestionEndpoint,
                         actualEndpoint: requestEndpoint);
@@ -92,7 +92,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics
                             statusCode: statusCode,
                             errorMessage: error ?? "N/A",
                             action: willRetry ? "Telemetry is stored offline for retry" : "Telemetry is dropped",
-                            origin: fromStorage ? "Storage" : "AzureMonitorExporter",
+                            origin: origin,
                             instrumentationKey: connectionVars.InstrumentationKey,
                             configuredEndpoint: connectionVars.IngestionEndpoint,
                             actualEndpoint: requestEndpoint);
@@ -105,7 +105,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics
                     statusCode: statusCode,
                     errorMessage: "(To get exact error change LogLevel to Verbose)",
                     action: willRetry ? "Telemetry is stored offline for retry" : "Telemetry is dropped",
-                    origin: fromStorage ? "Storage" : "AzureMonitorExporter",
+                    origin: origin,
                     instrumentationKey: connectionVars.InstrumentationKey,
                     configuredEndpoint: connectionVars.IngestionEndpoint,
                     actualEndpoint: requestEndpoint);
