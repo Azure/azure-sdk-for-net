@@ -17,18 +17,18 @@ namespace Azure.ResourceManager.Chaos.Models
     {
         /// <summary> Initializes a new instance of ContinuousAction. </summary>
         /// <param name="name"> String that represents a Capability URN. </param>
-        /// <param name="continusActionduration"> ISO8601 formatted string that represents a duration. </param>
+        /// <param name="continuousActionduration"> ISO8601 formatted string that represents a duration. </param>
         /// <param name="parameters"> List of key value pairs. </param>
         /// <param name="selectorId"> String that represents a selector. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="continusActionduration"/>, <paramref name="parameters"/> or <paramref name="selectorId"/> is null. </exception>
-        public ContinuousAction(string name, string continusActionduration, IEnumerable<KeyValuePair> parameters, string selectorId) : base(name)
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="continuousActionduration"/>, <paramref name="parameters"/> or <paramref name="selectorId"/> is null. </exception>
+        public ContinuousAction(string name, string continuousActionduration, IEnumerable<KeyValuePair> parameters, string selectorId) : base(name)
         {
             Argument.AssertNotNull(name, nameof(name));
-            Argument.AssertNotNull(continusActionduration, nameof(continusActionduration));
+            Argument.AssertNotNull(continuousActionduration, nameof(continuousActionduration));
             Argument.AssertNotNull(parameters, nameof(parameters));
             Argument.AssertNotNull(selectorId, nameof(selectorId));
 
-            ContinusActionduration = continusActionduration;
+            ContinuousActionduration = continuousActionduration;
             Parameters = parameters.ToList();
             SelectorId = selectorId;
             ActionType = "continuous";
@@ -37,19 +37,19 @@ namespace Azure.ResourceManager.Chaos.Models
         /// <summary> Initializes a new instance of ContinuousAction. </summary>
         /// <param name="actionType"> Enum that discriminates between action models. </param>
         /// <param name="name"> String that represents a Capability URN. </param>
-        /// <param name="continusActionduration"> ISO8601 formatted string that represents a duration. </param>
+        /// <param name="continuousActionduration"> ISO8601 formatted string that represents a duration. </param>
         /// <param name="parameters"> List of key value pairs. </param>
         /// <param name="selectorId"> String that represents a selector. </param>
-        internal ContinuousAction(string actionType, string name, string continusActionduration, IList<KeyValuePair> parameters, string selectorId) : base(actionType, name)
+        internal ContinuousAction(string actionType, string name, string continuousActionduration, IList<KeyValuePair> parameters, string selectorId) : base(actionType, name)
         {
-            ContinusActionduration = continusActionduration;
+            ContinuousActionduration = continuousActionduration;
             Parameters = parameters;
             SelectorId = selectorId;
             ActionType = actionType ?? "continuous";
         }
 
         /// <summary> ISO8601 formatted string that represents a duration. </summary>
-        public string ContinusActionduration { get; set; }
+        public string ContinuousActionduration { get; set; }
         /// <summary> List of key value pairs. </summary>
         public IList<KeyValuePair> Parameters { get; }
         /// <summary> String that represents a selector. </summary>

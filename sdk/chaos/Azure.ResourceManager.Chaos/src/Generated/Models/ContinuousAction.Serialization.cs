@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Chaos.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("duration"u8);
-            writer.WriteStringValue(ContinusActionduration);
+            writer.WriteStringValue(ContinuousActionduration);
             writer.WritePropertyName("parameters"u8);
             writer.WriteStartArray();
             foreach (var item in Parameters)

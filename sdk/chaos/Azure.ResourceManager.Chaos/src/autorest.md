@@ -47,7 +47,12 @@ rename-rules:
   Etag: ETag|etag
 
 rename-mapping:
-  ContinuousAction.duration: continusActionduration|string
+  ContinuousAction.duration: continuousActionduration|string
   DelayAction.duration: delayActionduration|string
 
+# directive:
+#     - from: swagger-document #MaintenanceWindows.json, MaintenanceWindowOptions.json
+#       where: $.definitions.delayAction.properties.duration
+#       transform: >
+#           $.format = "duration";
 ```
