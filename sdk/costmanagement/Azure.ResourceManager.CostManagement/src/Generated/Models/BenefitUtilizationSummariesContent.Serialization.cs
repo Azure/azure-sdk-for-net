@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.CostManagement.Models
 {
-    public partial class BenefitUtilizationSummariesRequest : IUtf8JsonSerializable
+    public partial class BenefitUtilizationSummariesContent : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.CostManagement.Models
             writer.WriteEndObject();
         }
 
-        internal static BenefitUtilizationSummariesRequest DeserializeBenefitUtilizationSummariesRequest(JsonElement element)
+        internal static BenefitUtilizationSummariesContent DeserializeBenefitUtilizationSummariesContent(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                     continue;
                 }
             }
-            return new BenefitUtilizationSummariesRequest(billingAccountId.Value, billingProfileId.Value, benefitOrderId.Value, benefitId.Value, grain, startDate, endDate, Optional.ToNullable(kind));
+            return new BenefitUtilizationSummariesContent(billingAccountId.Value, billingProfileId.Value, benefitOrderId.Value, benefitId.Value, grain, startDate, endDate, Optional.ToNullable(kind));
         }
     }
 }

@@ -20,6 +20,9 @@ credential-scopes: https://cognitiveservices.azure.com/.default
 
 modelerfour:
   lenient-model-deduplication: true
+methods-to-keep-client-default-value:
+- ConversationalAnalysisAuthoring_GetModelEvaluationResults
+- ConversationalAnalysisAuthoring_ExportProject
 ```
 
 ## Customizations

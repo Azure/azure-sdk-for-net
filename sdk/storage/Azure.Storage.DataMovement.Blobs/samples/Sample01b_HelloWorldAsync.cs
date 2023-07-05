@@ -716,16 +716,11 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
                 #endregion Snippet:TransferManagerTryPause_Async
 
                 #region Snippet:TransferManagerResume_Async
-                // Resume from checkpoint id
-                TransferOptions optionsWithResumeTransferId = new TransferOptions()
-                {
-                    ResumeFromCheckpointId = dataTransfer.Id
-                };
 
-                DataTransfer resumedTransfer = await transferManager.StartTransferAsync(
+                DataTransfer resumedTransfer = await transferManager.ResumeTransferAsync(
+                    transferId: dataTransfer.Id,
                     sourceResource: sourceResource,
-                    destinationResource: destinationResource,
-                    transferOptions: optionsWithResumeTransferId);
+                    destinationResource: destinationResource);
                 #endregion Snippet:TransferManagerResume_Async
 
                 // Wait for download to finish
@@ -777,16 +772,10 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
                 await transferManager.PauseTransferIfRunningAsync(transferId);
                 #endregion Snippet:TransferManagerTryPauseId_Async
 
-                // Resume from checkpoint id
-                TransferOptions optionsWithResumeTransferId = new TransferOptions()
-                {
-                    ResumeFromCheckpointId = dataTransfer.Id
-                };
-
-                DataTransfer resumedTransfer = await transferManager.StartTransferAsync(
+                DataTransfer resumedTransfer = await transferManager.ResumeTransferAsync(
+                    transferId: transferId,
                     sourceResource: sourceResource,
-                    destinationResource: destinationResource,
-                    transferOptions: optionsWithResumeTransferId);
+                    destinationResource: destinationResource);
 
                 // Wait for download to finish
                 await resumedTransfer.AwaitCompletion();
@@ -836,16 +825,10 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
                 await dataTransfer.PauseIfRunningAsync();
                 #endregion Snippet:DataTransferTryPause_Async
 
-                // Resume from checkpoint id
-                TransferOptions optionsWithResumeTransferId = new TransferOptions()
-                {
-                    ResumeFromCheckpointId = dataTransfer.Id
-                };
-
-                DataTransfer resumedTransfer = await transferManager.StartTransferAsync(
+                DataTransfer resumedTransfer = await transferManager.ResumeTransferAsync(
+                    transferId: dataTransfer.Id,
                     sourceResource: sourceResource,
-                    destinationResource: destinationResource,
-                    transferOptions: optionsWithResumeTransferId);
+                    destinationResource: destinationResource);
 
                 // Wait for download to finish
                 await resumedTransfer.AwaitCompletion();
