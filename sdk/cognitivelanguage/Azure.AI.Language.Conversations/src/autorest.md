@@ -20,6 +20,9 @@ credential-scopes: https://cognitiveservices.azure.com/.default
 
 modelerfour:
   lenient-model-deduplication: true
+methods-to-keep-client-default-value:
+- ConversationalAnalysisAuthoring_GetModelEvaluationResults
+- ConversationalAnalysisAuthoring_ExportProject
 ```
 
 ## Customizations
@@ -171,6 +174,15 @@ directive:
         url: "https://learn.microsoft.com/rest/api/language/" + version + "/conversation-analysis-runtime/" + operationId.replace(/([a-z0-9])([A-Z])/g, "$1-$2").toLowerCase()
     };
 
+- from: analyzeconversations.json
+  where-operation-match: /AnalyzeConversation_/
+  transform: |
+    var version = $doc.info.version;
+    var operationId = $.operationId.substring($.operationId.indexOf("_") + 1);
+    $["externalDocs"] = {
+        url: "https://learn.microsoft.com/rest/api/language/" + version + "/analyze-conversation/" + operationId.replace(/([a-z0-9])([A-Z])/g, "$1-$2").toLowerCase()
+    };
+
 - from: analyzeconversations-authoring.json
   where: $.paths.*.*
   transform: |
@@ -224,6 +236,10 @@ directive:
 - rename-operation:
     from: ConversationalAnalysisAuthoring_Import
     to: ConversationalAnalysisAuthoring_ImportProject
+
+- rename-operation:
+    from: ConversationalAnalysisAuthoring_GetLoadSnapshotStatus
+    to: ConversationalAnalysisAuthoring_GetLoadSnapshotJobStatus
 ```
 
 ### C# customizations

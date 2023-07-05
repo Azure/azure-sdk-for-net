@@ -20,16 +20,16 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            IReadOnlyList<FactoryDataFlowData> value = default;
+            IReadOnlyList<DataFactoryDataFlowData> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
                 {
-                    List<FactoryDataFlowData> array = new List<FactoryDataFlowData>();
+                    List<DataFactoryDataFlowData> array = new List<DataFactoryDataFlowData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(FactoryDataFlowData.DeserializeFactoryDataFlowData(item));
+                        array.Add(DataFactoryDataFlowData.DeserializeDataFactoryDataFlowData(item));
                     }
                     value = array;
                     continue;

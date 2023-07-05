@@ -2,13 +2,9 @@
 
 ## 1.0.0-beta.2 (Unreleased)
 
-### Features Added
-
-### Breaking Changes
-
 ### Bugs Fixed
 
-### Other Changes
+- Update dependency libraries versions
 
 ## 1.0.0-beta.1 (2022-10-11)
 

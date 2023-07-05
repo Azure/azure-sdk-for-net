@@ -5,6 +5,7 @@ using System;
 using System.Threading;
 using Azure.Core.Pipeline;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals;
+using Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics;
 using OpenTelemetry;
 using OpenTelemetry.Logs;
 
@@ -47,7 +48,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             }
             catch (Exception ex)
             {
-                AzureMonitorExporterEventSource.Log.WriteError("FailedToExport", ex);
+                AzureMonitorExporterEventSource.Log.FailedToExport(nameof(AzureMonitorLogExporter), _instrumentationKey, ex);
             }
 
             return exportResult;
@@ -59,6 +60,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             {
                 if (disposing)
                 {
+                    AzureMonitorExporterEventSource.Log.DisposedObject(nameof(AzureMonitorLogExporter));
                     _transmitter?.Dispose();
                 }
 

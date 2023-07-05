@@ -37,16 +37,9 @@ namespace Azure.AI.TextAnalytics.Samples
             // classify your documents, see https://aka.ms/azsdk/textanalytics/customfunctionalities.
             string projectName = TestEnvironment.SingleClassificationProjectName;
             string deploymentName = TestEnvironment.SingleClassificationDeploymentName;
-            SingleLabelClassifyAction singleLabelClassifyAction = new(projectName, deploymentName);
-
-            TextAnalyticsActions actions = new()
-            {
-                SingleLabelClassifyActions = new List<SingleLabelClassifyAction>() { singleLabelClassifyAction }
-            };
 
             // Perform the text analysis operation.
-            AnalyzeActionsOperation operation = client.StartAnalyzeActions(batchedDocuments, actions);
-            operation.WaitForCompletion();
+            ClassifyDocumentOperation operation = client.SingleLabelClassify(WaitUntil.Completed, batchedDocuments, projectName, deploymentName);
 
             Console.WriteLine($"The operation has completed.");
             Console.WriteLine();
@@ -60,20 +53,26 @@ namespace Azure.AI.TextAnalytics.Samples
             Console.WriteLine();
 
             // View the operation results.
-            foreach (AnalyzeActionsResult documentsInPage in operation.GetValues())
+            foreach (ClassifyDocumentResultCollection documentsInPage in operation.GetValues())
             {
-                IReadOnlyCollection<SingleLabelClassifyActionResult> singleClassificationActionResults = documentsInPage.SingleLabelClassifyResults;
-
-                foreach (SingleLabelClassifyActionResult classificationActionResults in singleClassificationActionResults)
+                foreach (ClassifyDocumentResult documentResult in documentsInPage)
                 {
-                    Console.WriteLine($" Action name: {classificationActionResults.ActionName}");
-                    foreach (ClassifyDocumentResult documentResult in classificationActionResults.DocumentsResults)
+                    if (documentResult.HasError)
                     {
-                        ClassificationCategory classification = documentResult.ClassificationCategories.First();
-
-                        Console.WriteLine($"  Class label \"{classification.Category}\" predicted with a confidence score of {classification.ConfidenceScore}.");
-                        Console.WriteLine();
+                        Console.WriteLine($"  Error!");
+                        Console.WriteLine($"  Document error code: {documentResult.Error.ErrorCode}");
+                        Console.WriteLine($"  Message: {documentResult.Error.Message}");
+                        continue;
                     }
+
+                    Console.WriteLine($"  Predicted the following class:");
+                    Console.WriteLine();
+
+                    ClassificationCategory classification = documentResult.ClassificationCategories.First();
+
+                    Console.WriteLine($"  Category: {classification.Category}");
+                    Console.WriteLine($"  Confidence score: {classification.ConfidenceScore}");
+                    Console.WriteLine();
                 }
             }
         }

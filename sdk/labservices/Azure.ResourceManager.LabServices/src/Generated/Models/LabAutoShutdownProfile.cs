@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.LabServices.Models
 
         /// <summary> Initializes a new instance of LabAutoShutdownProfile. </summary>
         /// <param name="shutdownOnDisconnect"> Whether shutdown on disconnect is enabled. </param>
-        /// <param name="shutdownWhenNotConnected"> Whether a VM will get shutdown when it hasn&apos;t been connected to after a period of time. </param>
+        /// <param name="shutdownWhenNotConnected"> Whether a VM will get shutdown when it hasn't been connected to after a period of time. </param>
         /// <param name="shutdownOnIdle"> Whether a VM will get shutdown when it has idled for a period of time. </param>
         /// <param name="disconnectDelay"> The amount of time a VM will stay running after a user disconnects if this behavior is enabled. </param>
         /// <param name="noConnectDelay"> The amount of time a VM will stay running before it is shutdown if no connection is made and this behavior is enabled. </param>
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.LabServices.Models
 
         /// <summary> Whether shutdown on disconnect is enabled. </summary>
         public LabServicesEnableState? ShutdownOnDisconnect { get; set; }
-        /// <summary> Whether a VM will get shutdown when it hasn&apos;t been connected to after a period of time. </summary>
+        /// <summary> Whether a VM will get shutdown when it hasn't been connected to after a period of time. </summary>
         public LabServicesEnableState? ShutdownWhenNotConnected { get; set; }
         /// <summary> Whether a VM will get shutdown when it has idled for a period of time. </summary>
         public LabVirtualMachineShutdownOnIdleMode? ShutdownOnIdle { get; set; }

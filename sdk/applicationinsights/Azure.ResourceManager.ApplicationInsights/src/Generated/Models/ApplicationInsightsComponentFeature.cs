@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
         /// <summary> Initializes a new instance of ApplicationInsightsComponentFeature. </summary>
         /// <param name="featureName"> The pricing feature name. </param>
         /// <param name="meterId"> The meter id used for the feature. </param>
-        /// <param name="meterRateFrequency"> The meter rate for the feature&apos;s meter. </param>
+        /// <param name="meterRateFrequency"> The meter rate for the feature's meter. </param>
         /// <param name="resourceId"> Reserved, not used now. </param>
         /// <param name="isHidden"> Reserved, not used now. </param>
         /// <param name="capabilities"> A list of Application Insights component feature capability. </param>
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
         public string FeatureName { get; }
         /// <summary> The meter id used for the feature. </summary>
         public string MeterId { get; }
-        /// <summary> The meter rate for the feature&apos;s meter. </summary>
+        /// <summary> The meter rate for the feature's meter. </summary>
         public string MeterRateFrequency { get; }
         /// <summary> Reserved, not used now. </summary>
         public string ResourceId { get; }

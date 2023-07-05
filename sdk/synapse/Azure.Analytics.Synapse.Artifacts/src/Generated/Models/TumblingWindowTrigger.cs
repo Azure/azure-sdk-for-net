@@ -45,7 +45,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="interval"> The interval of the time windows. The minimum interval allowed is 15 Minutes. </param>
         /// <param name="startTime"> The start time for the time period for the trigger during which events are fired for windows that are ready. Only UTC time is currently supported. </param>
         /// <param name="endTime"> The end time for the time period for the trigger during which events are fired for windows that are ready. Only UTC time is currently supported. </param>
-        /// <param name="delay"> Specifies how long the trigger waits past due time before triggering new run. It doesn&apos;t alter window start and end time. The default is 0. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </param>
+        /// <param name="delay"> Specifies how long the trigger waits past due time before triggering new run. It doesn't alter window start and end time. The default is 0. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </param>
         /// <param name="maxConcurrency"> The max number of parallel time windows (ready for execution) for which a new run is triggered. </param>
         /// <param name="retryPolicy"> Retry policy that will be applied for failed pipeline runs. </param>
         /// <param name="dependsOn">
@@ -77,7 +77,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public DateTimeOffset StartTime { get; set; }
         /// <summary> The end time for the time period for the trigger during which events are fired for windows that are ready. Only UTC time is currently supported. </summary>
         public DateTimeOffset? EndTime { get; set; }
-        /// <summary> Specifies how long the trigger waits past due time before triggering new run. It doesn&apos;t alter window start and end time. The default is 0. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </summary>
+        /// <summary> Specifies how long the trigger waits past due time before triggering new run. It doesn't alter window start and end time. The default is 0. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </summary>
         public object Delay { get; set; }
         /// <summary> The max number of parallel time windows (ready for execution) for which a new run is triggered. </summary>
         public int MaxConcurrency { get; set; }

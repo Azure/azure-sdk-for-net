@@ -25,9 +25,9 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         private const string AKSHCIValue = "AKS-HCI";
         private const string ThreePAzureStackHCIValue = "3P-AZURE-STACK-HCI";
 
-        /// <summary> If this option is chosen, you must set one of &quot;azureStackEdgeDevice&quot;, &quot;connectedCluster&quot; or &quot;customLocation&quot;. If multiple are set, they must be consistent with each other. </summary>
+        /// <summary> If this option is chosen, you must set one of "azureStackEdgeDevice", "connectedCluster" or "customLocation". If multiple are set, they must be consistent with each other. </summary>
         public static PlatformType AKSHCI { get; } = new PlatformType(AKSHCIValue);
-        /// <summary> If this option is chosen, you must set one of &quot;azureStackHciCluster&quot;, &quot;connectedCluster&quot; or &quot;customLocation&quot;. If multiple are set, they must be consistent with each other. </summary>
+        /// <summary> If this option is chosen, you must set one of "azureStackHciCluster", "connectedCluster" or "customLocation". If multiple are set, they must be consistent with each other. </summary>
         public static PlatformType ThreePAzureStackHCI { get; } = new PlatformType(ThreePAzureStackHCIValue);
         /// <summary> Determines if two <see cref="PlatformType"/> values are the same. </summary>
         public static bool operator ==(PlatformType left, PlatformType right) => left.Equals(right);

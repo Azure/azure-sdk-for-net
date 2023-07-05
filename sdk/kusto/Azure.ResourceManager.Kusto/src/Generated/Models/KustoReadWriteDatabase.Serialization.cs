@@ -36,6 +36,11 @@ namespace Azure.ResourceManager.Kusto.Models
                 writer.WritePropertyName("hotCachePeriod"u8);
                 writer.WriteStringValue(HotCachePeriod.Value, "P");
             }
+            if (Optional.IsDefined(KeyVaultProperties))
+            {
+                writer.WritePropertyName("keyVaultProperties"u8);
+                writer.WriteObjectValue(KeyVaultProperties);
+            }
             writer.WriteEndObject();
             writer.WriteEndObject();
         }
@@ -57,6 +62,8 @@ namespace Azure.ResourceManager.Kusto.Models
             Optional<TimeSpan> hotCachePeriod = default;
             Optional<DatabaseStatistics> statistics = default;
             Optional<bool> isFollowed = default;
+            Optional<KustoKeyVaultProperties> keyVaultProperties = default;
+            Optional<SuspensionDetails> suspensionDetails = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("location"u8))
@@ -151,11 +158,29 @@ namespace Azure.ResourceManager.Kusto.Models
                             isFollowed = property0.Value.GetBoolean();
                             continue;
                         }
+                        if (property0.NameEquals("keyVaultProperties"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            keyVaultProperties = KustoKeyVaultProperties.DeserializeKustoKeyVaultProperties(property0.Value);
+                            continue;
+                        }
+                        if (property0.NameEquals("suspensionDetails"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            suspensionDetails = SuspensionDetails.DeserializeSuspensionDetails(property0.Value);
+                            continue;
+                        }
                     }
                     continue;
                 }
             }
-            return new KustoReadWriteDatabase(id, name, type, systemData.Value, Optional.ToNullable(location), kind, Optional.ToNullable(provisioningState), Optional.ToNullable(softDeletePeriod), Optional.ToNullable(hotCachePeriod), statistics.Value, Optional.ToNullable(isFollowed));
+            return new KustoReadWriteDatabase(id, name, type, systemData.Value, Optional.ToNullable(location), kind, Optional.ToNullable(provisioningState), Optional.ToNullable(softDeletePeriod), Optional.ToNullable(hotCachePeriod), statistics.Value, Optional.ToNullable(isFollowed), keyVaultProperties.Value, suspensionDetails.Value);
         }
     }
 }

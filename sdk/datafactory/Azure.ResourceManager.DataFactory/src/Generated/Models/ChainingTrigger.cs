@@ -13,14 +13,14 @@ using Azure.Core;
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> Trigger that allows the referenced pipeline to depend on other pipeline runs based on runDimension Name/Value pairs. Upstream pipelines should declare the same runDimension Name and their runs should have the values for those runDimensions. The referenced pipeline run would be triggered if the values for the runDimension match for all upstream pipeline runs. </summary>
-    public partial class ChainingTrigger : FactoryTriggerDefinition
+    public partial class ChainingTrigger : DataFactoryTriggerDefinition
     {
         /// <summary> Initializes a new instance of ChainingTrigger. </summary>
         /// <param name="pipeline"> Pipeline for which runs are created when all upstream pipelines complete successfully. </param>
         /// <param name="dependsOn"> Upstream Pipelines. </param>
         /// <param name="runDimension"> Run Dimension property that needs to be emitted by upstream pipelines. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="pipeline"/>, <paramref name="dependsOn"/> or <paramref name="runDimension"/> is null. </exception>
-        public ChainingTrigger(TriggerPipelineReference pipeline, IEnumerable<FactoryPipelineReference> dependsOn, string runDimension)
+        public ChainingTrigger(TriggerPipelineReference pipeline, IEnumerable<DataFactoryPipelineReference> dependsOn, string runDimension)
         {
             Argument.AssertNotNull(pipeline, nameof(pipeline));
             Argument.AssertNotNull(dependsOn, nameof(dependsOn));
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="pipeline"> Pipeline for which runs are created when all upstream pipelines complete successfully. </param>
         /// <param name="dependsOn"> Upstream Pipelines. </param>
         /// <param name="runDimension"> Run Dimension property that needs to be emitted by upstream pipelines. </param>
-        internal ChainingTrigger(string triggerType, string description, FactoryTriggerRuntimeState? runtimeState, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, TriggerPipelineReference pipeline, IList<FactoryPipelineReference> dependsOn, string runDimension) : base(triggerType, description, runtimeState, annotations, additionalProperties)
+        internal ChainingTrigger(string triggerType, string description, DataFactoryTriggerRuntimeState? runtimeState, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, TriggerPipelineReference pipeline, IList<DataFactoryPipelineReference> dependsOn, string runDimension) : base(triggerType, description, runtimeState, annotations, additionalProperties)
         {
             Pipeline = pipeline;
             DependsOn = dependsOn;
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Pipeline for which runs are created when all upstream pipelines complete successfully. </summary>
         public TriggerPipelineReference Pipeline { get; set; }
         /// <summary> Upstream Pipelines. </summary>
-        public IList<FactoryPipelineReference> DependsOn { get; }
+        public IList<DataFactoryPipelineReference> DependsOn { get; }
         /// <summary> Run Dimension property that needs to be emitted by upstream pipelines. </summary>
         public string RunDimension { get; set; }
     }

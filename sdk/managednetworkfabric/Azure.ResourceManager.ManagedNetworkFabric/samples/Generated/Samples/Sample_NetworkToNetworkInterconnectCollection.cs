@@ -46,9 +46,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
             string networkToNetworkInterconnectName = "DefaultNNI";
             NetworkToNetworkInterconnectData data = new NetworkToNetworkInterconnectData()
             {
+                NniType = NniType.CE,
                 IsManagementType = BooleanEnumProperty.True,
                 UseOptionB = BooleanEnumProperty.False,
-                Layer2Configuration = new NetworkToNetworkInterconnectPropertiesLayer2Configuration(1500)
+                Layer2Configuration = new Layer2Configuration(1500)
                 {
                     PortCount = 10,
                 },

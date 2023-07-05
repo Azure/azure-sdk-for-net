@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.DataBox.Models
         Enabled,
         /// <summary> Edit is disabled for Reverse Transport Preferences. </summary>
         Disabled,
-        /// <summary> Edit is not supported for Reverse Transport Preferences. Either subscription feature is not available or SKU doesn&apos;t support this feature. </summary>
+        /// <summary> Edit is not supported for Reverse Transport Preferences. Either subscription feature is not available or SKU doesn't support this feature. </summary>
         NotSupported
     }
 }

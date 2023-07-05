@@ -1,6 +1,6 @@
 # Release History
 
-## 1.2.0-beta.2 (Unreleased)
+## 1.2.0-beta.3 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,14 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.2.0-beta.2 (2023-06-02)
+
+### Other Changes
+
+- Bump api-version of `SqlVulnerabilityAssessmentsScanOperations` to `2023-02-01-preview`.
+- Bump api-version of `sqlVulnerabilityAssessmentsScanResultsOperations` to `2023-02-01-preview`.
+- Bump api-version of `SqlVulnerabilityAssessmentsBaselineRuleOperations` to `2023-02-01-preview`.
 
 ## 1.2.0-beta.1 (2023-05-31)
 

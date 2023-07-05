@@ -34,8 +34,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
         /// <param name="annotation"> Switch configuration description. </param>
-        /// <param name="redistributeConnectedSubnets"> Advertise Connected Subnets. Ex: &quot;True&quot; | &quot;False&quot;. </param>
-        /// <param name="redistributeStaticRoutes"> Advertise Static Routes. Ex: &quot;True&quot; | &quot;False&quot;. </param>
+        /// <param name="redistributeConnectedSubnets"> Advertise Connected Subnets. Ex: "True" | "False". </param>
+        /// <param name="redistributeStaticRoutes"> Advertise Static Routes. Ex: "True" | "False". </param>
         /// <param name="aggregateRouteConfiguration"> List of Ipv4 and Ipv6 route configurations. </param>
         /// <param name="description"> L3 Isolation Domain description. </param>
         /// <param name="connectedSubnetRoutePolicy"> Connected Subnet RoutePolicy. </param>
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <param name="administrativeState"> Administrative state of the IsolationDomain. Example: Enabled | Disabled. </param>
         /// <param name="optionBDisabledOnResources"> List of resources the OptionB is disabled on. Can be either entire NetworkFabric or NetworkRack. </param>
         /// <param name="provisioningState"> Gets the provisioning state of the resource. </param>
-        internal L3IsolationDomainData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string annotation, RedistributeConnectedSubnet? redistributeConnectedSubnets, RedistributeStaticRoute? redistributeStaticRoutes, L3IsolationDomainPatchPropertiesAggregateRouteConfiguration aggregateRouteConfiguration, string description, L3IsolationDomainPatchPropertiesConnectedSubnetRoutePolicy connectedSubnetRoutePolicy, string networkFabricId, IReadOnlyList<string> disabledOnResources, EnabledDisabledState? administrativeState, IReadOnlyList<string> optionBDisabledOnResources, ProvisioningState? provisioningState) : base(id, name, resourceType, systemData, tags, location)
+        internal L3IsolationDomainData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string annotation, RedistributeConnectedSubnet? redistributeConnectedSubnets, RedistributeStaticRoute? redistributeStaticRoutes, AggregateRouteConfiguration aggregateRouteConfiguration, string description, L3IsolationDomainPatchPropertiesConnectedSubnetRoutePolicy connectedSubnetRoutePolicy, string networkFabricId, IReadOnlyList<string> disabledOnResources, EnabledDisabledState? administrativeState, IReadOnlyList<string> optionBDisabledOnResources, ProvisioningState? provisioningState) : base(id, name, resourceType, systemData, tags, location)
         {
             Annotation = annotation;
             RedistributeConnectedSubnets = redistributeConnectedSubnets;
@@ -61,12 +61,12 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
 
         /// <summary> Switch configuration description. </summary>
         public string Annotation { get; set; }
-        /// <summary> Advertise Connected Subnets. Ex: &quot;True&quot; | &quot;False&quot;. </summary>
+        /// <summary> Advertise Connected Subnets. Ex: "True" | "False". </summary>
         public RedistributeConnectedSubnet? RedistributeConnectedSubnets { get; set; }
-        /// <summary> Advertise Static Routes. Ex: &quot;True&quot; | &quot;False&quot;. </summary>
+        /// <summary> Advertise Static Routes. Ex: "True" | "False". </summary>
         public RedistributeStaticRoute? RedistributeStaticRoutes { get; set; }
         /// <summary> List of Ipv4 and Ipv6 route configurations. </summary>
-        public L3IsolationDomainPatchPropertiesAggregateRouteConfiguration AggregateRouteConfiguration { get; set; }
+        public AggregateRouteConfiguration AggregateRouteConfiguration { get; set; }
         /// <summary> L3 Isolation Domain description. </summary>
         public string Description { get; set; }
         /// <summary> Connected Subnet RoutePolicy. </summary>

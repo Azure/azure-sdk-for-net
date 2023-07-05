@@ -93,7 +93,7 @@ namespace Azure.Communication.CallAutomation
                 var repeatabilityHeaders = new RepeatabilityHeaders();
                 return _callRecordingRestClient.StartRecording(request,
                     repeatabilityHeaders.RepeatabilityRequestId,
-                    repeatabilityHeaders.GetRepeatabilityFirstSentString(),
+                    repeatabilityHeaders.RepeatabilityFirstSent,
                     cancellationToken: cancellationToken);
             }
             catch (Exception ex)
@@ -154,7 +154,7 @@ namespace Azure.Communication.CallAutomation
                 var repeatabilityHeaders = new RepeatabilityHeaders();
                 return await _callRecordingRestClient.StartRecordingAsync(request,
                     repeatabilityHeaders.RepeatabilityRequestId,
-                    repeatabilityHeaders.GetRepeatabilityFirstSentString(),
+                    repeatabilityHeaders.RepeatabilityFirstSent,
                     cancellationToken: cancellationToken).ConfigureAwait(false);
             }
             catch (Exception ex)

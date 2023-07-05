@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.MySql
         }
 
         /// <summary>
-        /// Get a server&apos;s security alert policy.
+        /// Get a server's security alert policy.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.MySql
         }
 
         /// <summary>
-        /// Get a server&apos;s security alert policy.
+        /// Get a server's security alert policy.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -198,7 +198,7 @@ namespace Azure.ResourceManager.MySql
         }
 
         /// <summary>
-        /// Get the server&apos;s threat detection policies.
+        /// Get the server's threat detection policies.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -220,7 +220,7 @@ namespace Azure.ResourceManager.MySql
         }
 
         /// <summary>
-        /// Get the server&apos;s threat detection policies.
+        /// Get the server's threat detection policies.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>

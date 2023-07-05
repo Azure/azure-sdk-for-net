@@ -27,10 +27,16 @@ namespace Azure.Communication.JobRouter
             }
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind);
-            writer.WritePropertyName("minConcurrentOffers"u8);
-            writer.WriteNumberValue(MinConcurrentOffers);
-            writer.WritePropertyName("maxConcurrentOffers"u8);
-            writer.WriteNumberValue(MaxConcurrentOffers);
+            if (Optional.IsDefined(MinConcurrentOffers))
+            {
+                writer.WritePropertyName("minConcurrentOffers"u8);
+                writer.WriteNumberValue(MinConcurrentOffers);
+            }
+            if (Optional.IsDefined(MaxConcurrentOffers))
+            {
+                writer.WritePropertyName("maxConcurrentOffers"u8);
+                writer.WriteNumberValue(MaxConcurrentOffers);
+            }
             if (Optional.IsDefined(BypassSelectors))
             {
                 writer.WritePropertyName("bypassSelectors"u8);
@@ -48,8 +54,8 @@ namespace Azure.Communication.JobRouter
             Optional<RouterRule> scoringRule = default;
             Optional<ScoringRuleOptions> scoringRuleOptions = default;
             string kind = default;
-            int minConcurrentOffers = default;
-            int maxConcurrentOffers = default;
+            Optional<int> minConcurrentOffers = default;
+            Optional<int> maxConcurrentOffers = default;
             Optional<bool> bypassSelectors = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -68,7 +74,7 @@ namespace Azure.Communication.JobRouter
                     {
                         continue;
                     }
-                    scoringRuleOptions = ScoringRuleOptions.DeserializeScoringRuleOptions(property.Value);
+                    scoringRuleOptions = JobRouter.ScoringRuleOptions.DeserializeScoringRuleOptions(property.Value);
                     continue;
                 }
                 if (property.NameEquals("kind"u8))
@@ -78,11 +84,19 @@ namespace Azure.Communication.JobRouter
                 }
                 if (property.NameEquals("minConcurrentOffers"u8))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
                     minConcurrentOffers = property.Value.GetInt32();
                     continue;
                 }
                 if (property.NameEquals("maxConcurrentOffers"u8))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
                     maxConcurrentOffers = property.Value.GetInt32();
                     continue;
                 }

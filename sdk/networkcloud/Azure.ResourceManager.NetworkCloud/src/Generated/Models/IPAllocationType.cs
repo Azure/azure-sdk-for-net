@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
-    /// <summary> The type of the IP address allocation. </summary>
+    /// <summary> The type of the IP address allocation, defaulted to "DualStack". </summary>
     public readonly partial struct IPAllocationType : IEquatable<IPAllocationType>
     {
         private readonly string _value;

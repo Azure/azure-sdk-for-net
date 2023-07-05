@@ -12,7 +12,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppComplianceAutomation.Models
 {
-    /// <summary> Snapshot&apos;s properties. </summary>
+    /// <summary> Snapshot's properties. </summary>
     public partial class SnapshotProperties
     {
         /// <summary> Initializes a new instance of SnapshotProperties. </summary>

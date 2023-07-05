@@ -994,6 +994,7 @@ namespace Azure.ResourceManager.HDInsight.Models
     {
         public HDInsightStorageAccountInfo() { }
         public string Container { get { throw null; } set { } }
+        public bool? EnableSecureChannel { get { throw null; } set { } }
         public string Fileshare { get { throw null; } set { } }
         public string FileSystem { get { throw null; } set { } }
         public bool? IsDefault { get { throw null; } set { } }

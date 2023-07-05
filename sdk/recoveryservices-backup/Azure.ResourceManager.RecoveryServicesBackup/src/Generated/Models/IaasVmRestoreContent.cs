@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="encryptionDetails"> Details needed if the VM was encrypted at the time of backup. </param>
         /// <param name="restoreDiskLunList"> List of Disk LUNs for partial restore. </param>
         /// <param name="doesRestoreWithManagedDisks"> Flag to denote of an Unmanaged disk VM should be restored with Managed disks. </param>
-        /// <param name="diskEncryptionSetId"> DiskEncryptionSet&apos;s ID - needed if the VM needs to be encrypted at rest during restore with customer managed key. </param>
+        /// <param name="diskEncryptionSetId"> DiskEncryptionSet's ID - needed if the VM needs to be encrypted at rest during restore with customer managed key. </param>
         /// <param name="zones"> Target zone where the VM and its disks should be restored. </param>
         /// <param name="identityInfo"> Managed Identity information required to access customer storage account. </param>
         /// <param name="identityBasedRestoreDetails"> IaaS VM workload specific restore details for restores using managed identity. </param>
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         public IList<int> RestoreDiskLunList { get; }
         /// <summary> Flag to denote of an Unmanaged disk VM should be restored with Managed disks. </summary>
         public bool? DoesRestoreWithManagedDisks { get; set; }
-        /// <summary> DiskEncryptionSet&apos;s ID - needed if the VM needs to be encrypted at rest during restore with customer managed key. </summary>
+        /// <summary> DiskEncryptionSet's ID - needed if the VM needs to be encrypted at rest during restore with customer managed key. </summary>
         public string DiskEncryptionSetId { get; set; }
         /// <summary> Target zone where the VM and its disks should be restored. </summary>
         public IList<string> Zones { get; }

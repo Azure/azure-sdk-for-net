@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.StorageCache
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="junctions"> List of Cache namespace junctions to target for namespace associations. </param>
+        /// <param name="junctions"> List of cache namespace junctions to target for namespace associations. </param>
         /// <param name="targetType"> Type of the Storage Target. </param>
         /// <param name="provisioningState"> ARM provisioning state, see https://github.com/Azure/azure-resource-manager-rpc/blob/master/v1.0/Addendum.md#provisioningstate-property. </param>
         /// <param name="state"> Storage target operational state. </param>
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.StorageCache
             Location = location;
         }
 
-        /// <summary> List of Cache namespace junctions to target for namespace associations. </summary>
+        /// <summary> List of cache namespace junctions to target for namespace associations. </summary>
         public IList<NamespaceJunction> Junctions { get; }
         /// <summary> Type of the Storage Target. </summary>
         public StorageTargetType? TargetType { get; set; }

@@ -14,7 +14,7 @@
         "x-ms-client-request-id": "65ed456c2349ba2c8b19c011ade81e6d",
         "x-ms-return-client-request-id": "true"
       },
-      "RequestBody": "[{\u0022Text\u0022:\u0022This is a test.\u0022}]",
+      "RequestBody": "[{\u0022text\u0022:\u0022This is a test.\u0022}]",
       "StatusCode": 200,
       "ResponseHeaders": {
         "Access-Control-Expose-Headers": [

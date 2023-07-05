@@ -154,7 +154,7 @@
 
 # PRLabel: %Cognitive - Language
 # ServiceLabel: %Cognitive - Language %Service Attention
-/sdk/cognitivelanguage/                                            @heaths @rokulka @mshaban-msft
+/sdk/cognitivelanguage/                                            @quentinRobinson @wangyuantao @heaths
 
 # ServiceLabel: %Cognitive - Anomaly Detector %Service Attention
 /sdk/cognitiveservices/AnomalyDetector/                            @yingqunpku @bowgong
@@ -196,7 +196,7 @@
 /sdk/cognitiveservices/Knowledge.QnAMaker/                         @bingisbestest @nerajput1607
 
 # PRLabel: %Cognitive - Text Analytics
-/sdk/textanalytics/                                                @joseharriaga @kinelski @heaths
+/sdk/textanalytics/                                                @quentinRobinson @wangyuantao @joseharriaga @kinelski @heaths
 
 # ServiceLabel: %Cognitive - Text Analytics %Service Attention
 /sdk/cognitiveservices/Language.TextAnalytics/                     @assafi
@@ -208,7 +208,7 @@
 /sdk/translation/                                                  @mikeymcz @cpoulain @joseharriaga
 
 # ServiceLabel: %Cognitive - Speech %Service Attention
-#/<NotInRepo>/                                                     @robch @oscholz
+#/<NotInRepo>/                                                     @robch
 
 # ServiceLabel: %Cognitive - LUIS %Service Attention
 /sdk/cognitiveservices/Language.LUIS*                              @cahann @kayousef
@@ -268,28 +268,28 @@
 /sdk/communication/Azure.Communication.Rooms/                      @minnieliu @paolamvhz @alexokun @Mrayyan @shwali-msft @allchiang-msft @mikehang-msft
 
 # ServiceLabel: %Compute %Service Attention
-#/<NotInRepo>/                                                     @Drewm3 @TravisCragg-MSFT @nikhilpatel909 @jaylabell @sandeepraichura @hilaryw29 @MsGabsta
+#/<NotInRepo>/                                                     @Drewm3 @TravisCragg-MSFT @nikhilpatel909 @sandeepraichura @hilaryw29 @MsGabsta @ushnaarshadkhan
 
 # PRLabel: %Compute
-/sdk/compute/                                                      @bilaakpan-ms @sandido @dkulkarni-ms @haagha @madewithsmiles @MS-syh2qs @grizzlytheodore @amjads1 @avirishuv @vaibhav-agar @Drewm3
+/sdk/compute/                                                      @bilaakpan-ms @sandido @dkulkarni-ms @haagha @madewithsmiles @MS-syh2qs @grizzlytheodore @TravisCragg-MSFT
 
 # ServiceLabel: %Compute - Extensions %Service Attention
-#/<NotInRepo>/                                                     @amjads1 @Drewm3
+#/<NotInRepo>/                                                     @MsGabsta @TravisCragg-MSFT
 
 # ServiceLabel: %Compute - Images %Service Attention
-#/<NotInRepo>/                                                     @Drewm3 @vaibhav-agar
+#/<NotInRepo>/                                                     @TravisCragg-MSFT @sandeepraichura
 
 # ServiceLabel: %Compute - Managed Disks %Service Attention
-#/<NotInRepo>/                                                     @Drewm3 @vaibhav-agar
+#/<NotInRepo>/                                                     @TravisCragg-MSFT @ushnaarshadkhan
 
 # ServiceLabel: %Compute - RDFE %Service Attention
-#/<NotInRepo>/                                                     @Drewm3 @avirishuv
+#/<NotInRepo>/                                                     @Drewm3 @TravisCragg-MSFT
 
 # ServiceLabel: %Compute - VM %Service Attention
-#/<NotInRepo>/                                                     @Drewm3 @avirishuv
+#/<NotInRepo>/                                                     @Drewm3 @TravisCragg-MSFT
 
 # ServiceLabel: %Compute - VMSS %Service Attention
-#/<NotInRepo>/                                                     @Drewm3 @avirishuv
+#/<NotInRepo>/                                                     @TravisCragg-MSFT @hilaryw29
 
 # PRLabel: %Confidential Ledger
 /sdk/confidentialledger/                                           @christothes

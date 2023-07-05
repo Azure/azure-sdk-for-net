@@ -7,7 +7,7 @@
 
 namespace Azure.ResourceManager.Batch.Models
 {
-    /// <summary> Defines the desired size of the pool. This can either be &apos;fixedScale&apos; where the requested targetDedicatedNodes is specified, or &apos;autoScale&apos; which defines a formula which is periodically reevaluated. If this property is not specified, the pool will have a fixed scale with 0 targetDedicatedNodes. </summary>
+    /// <summary> Defines the desired size of the pool. This can either be 'fixedScale' where the requested targetDedicatedNodes is specified, or 'autoScale' which defines a formula which is periodically reevaluated. If this property is not specified, the pool will have a fixed scale with 0 targetDedicatedNodes. </summary>
     public partial class BatchAccountPoolScaleSettings
     {
         /// <summary> Initializes a new instance of BatchAccountPoolScaleSettings. </summary>
