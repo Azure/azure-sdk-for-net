@@ -25,13 +25,6 @@ namespace Azure.ResourceManager.MySql.Models
         private const string Ver5_6Value = "5.6";
         private const string Ver5_7Value = "5.7";
         private const string Ver8_0Value = "8.0";
-
-        /// <summary> 5.6. </summary>
-        public static MySqlServerVersion Ver5_6 { get; } = new MySqlServerVersion(Ver5_6Value);
-        /// <summary> 5.7. </summary>
-        public static MySqlServerVersion Ver5_7 { get; } = new MySqlServerVersion(Ver5_7Value);
-        /// <summary> 8.0. </summary>
-        public static MySqlServerVersion Ver8_0 { get; } = new MySqlServerVersion(Ver8_0Value);
         /// <summary> Determines if two <see cref="MySqlServerVersion"/> values are the same. </summary>
         public static bool operator ==(MySqlServerVersion left, MySqlServerVersion right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MySqlServerVersion"/> values are not the same. </summary>

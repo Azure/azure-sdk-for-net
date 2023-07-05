@@ -152,10 +152,6 @@ rename-mapping:
   LogFile.properties.type: LogFileType
   ConfigurationListResult.value: Values
   NameAvailabilityRequest: MySqlNameAvailabilityContent
-  ServerVersion.5.6: Ver5__6
-  ServerVersion.5.7: Ver5__7
-  ServerVersion.8.0: Ver8__0
-  ServerVersion.8.0.21: Ver8__0__21
 
 override-operation-name:
   ServerParameters_ListUpdateConfigurations: UpdateConfigurations
@@ -301,10 +297,6 @@ rename-mapping:
   ResetAllToDefault: MySqlFlexibleServerConfigurationResetAllToDefault
   ServerGtidSetParameter: MySqlFlexibleServerGtidSetContent
   ValidateBackupResponse: MySqlFlexibleServerValidateBackupResult
-  ServerVersion.5.6: Ver5__6
-  ServerVersion.5.7: Ver5__7
-  ServerVersion.8.0: Ver8__0
-  ServerVersion.8.0.21: Ver8__0__21
 
 override-operation-name:
   CheckNameAvailability_Execute: CheckMySqlFlexibleServerNameAvailability
