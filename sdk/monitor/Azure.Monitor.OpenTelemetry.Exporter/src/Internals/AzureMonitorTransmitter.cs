@@ -43,9 +43,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 
             _connectionVars = InitializeConnectionVars(options, platform);
 
-            _applicationInsightsRestClient = InitializeRestClient(options, _connectionVars);
-
             _transmissionStateManager = new TransmissionStateManager();
+
+            _applicationInsightsRestClient = InitializeRestClient(options, _connectionVars);
 
             _fileBlobProvider = InitializeOfflineStorage(platform, _connectionVars, options.DisableOfflineStorage, options.StorageDirectory);
 
@@ -168,22 +168,33 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 
             try
             {
-                using var httpMessage = async ?
+                if (_transmissionStateManager.State == TransmissionState.Closed)
+                {
+                    using var httpMessage = async ?
                     await _applicationInsightsRestClient.InternalTrackAsync(telemetryItems, cancellationToken).ConfigureAwait(false) :
                     _applicationInsightsRestClient.InternalTrackAsync(telemetryItems, cancellationToken).Result;
 
-                result = HttpPipelineHelper.IsSuccess(httpMessage);
+                    result = HttpPipelineHelper.IsSuccess(httpMessage);
 
-                if (result == ExportResult.Failure && _fileBlobProvider != null)
-                {
-                    _transmissionStateManager.EnableBackOff(httpMessage.Response);
-                    result = HttpPipelineHelper.HandleFailures(httpMessage, _fileBlobProvider, _connectionVars);
+                    if (result == ExportResult.Failure && _fileBlobProvider != null)
+                    {
+                        _transmissionStateManager.EnableBackOff(httpMessage.Response);
+                        result = HttpPipelineHelper.HandleFailures(httpMessage, _fileBlobProvider, _connectionVars);
+                    }
+                    else
+                    {
+                        _transmissionStateManager.ResetConsecutiveErrors();
+                        _transmissionStateManager.CloseTransmission();
+                        AzureMonitorExporterEventSource.Log.TransmissionSuccess(_connectionVars.InstrumentationKey);
+                    }
                 }
                 else
                 {
-                    _transmissionStateManager.ResetConsecutiveErrors();
-                    _transmissionStateManager.CloseTransmission();
-                    AzureMonitorExporterEventSource.Log.TransmissionSuccess(_connectionVars.InstrumentationKey);
+                    byte[] requestContent = HttpPipelineHelper.GetSerializedContent(telemetryItems);
+                    if (_fileBlobProvider != null)
+                    {
+                        result = _fileBlobProvider.SaveTelemetry(requestContent);
+                    }
                 }
             }
             catch (Exception ex)

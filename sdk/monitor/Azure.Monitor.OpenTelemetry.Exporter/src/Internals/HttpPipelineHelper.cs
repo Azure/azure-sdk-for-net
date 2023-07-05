@@ -15,6 +15,7 @@ using Azure.Monitor.OpenTelemetry.Exporter.Internals.PersistentStorage;
 using System.Diagnostics.CodeAnalysis;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.ConnectionString;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics;
+using System.Collections.Generic;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 {
@@ -82,6 +83,18 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 
             retryAfter = default;
             return false;
+        }
+
+        internal static byte[] GetSerializedContent(IEnumerable<TelemetryItem> body)
+        {
+            using var content = new NDJsonWriter();
+            foreach (var item in body)
+            {
+                content.JsonWriter.WriteObjectValue(item);
+                content.WriteNewLine();
+            }
+
+            return content.ToBytes().ToArray();
         }
 
         internal static bool TryGetRequestContent(RequestContent? content, [NotNullWhen(true)] out byte[]? requestContent)
