@@ -10,26 +10,21 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
 {
     internal partial class RequestData
     {
-        public RequestData(int version, Activity activity, ref ActivityTagsProcessor activityTagsProcessor) : base(version)
+        public RequestData(int version, Activity activity, ref ActivityTagsProcessor activityTagsProcessor, string schemaVersion) : base(version)
         {
             string? url = null;
 
-            switch (activityTagsProcessor.activityType)
+            if (activityTagsProcessor.activityType.HasFlag(OperationType.Http))
             {
-                case OperationType.Http:
-                    url = activityTagsProcessor.MappedTags.GetRequestUrl();
-                    break;
-                case OperationType.Messaging:
-                    url = AzMonList.GetTagValue(ref activityTagsProcessor.MappedTags, SemanticConventions.AttributeMessagingUrl)?.ToString();
-                    break;
+                url = activityTagsProcessor.MappedTags.GetV2RequestUrl();
             }
 
             Id = activity.Context.SpanId.ToHexString();
-            Name = TraceHelper.GetOperationName(activity, ref activityTagsProcessor.MappedTags).Truncate(SchemaConstants.RequestData_Name_MaxLength);
+            Name = TraceHelper.GetV2OperationName(activity, url, ref activityTagsProcessor.MappedTags).Truncate(SchemaConstants.RequestData_Name_MaxLength);
             Duration = activity.Duration < SchemaConstants.RequestData_Duration_LessThanDays
                 ? activity.Duration.ToString("c", CultureInfo.InvariantCulture)
                 : SchemaConstants.Duration_MaxValue;
-            ResponseCode = AzMonList.GetTagValue(ref activityTagsProcessor.MappedTags, SemanticConventions.AttributeHttpStatusCode)
+            ResponseCode = AzMonList.GetTagValue(ref activityTagsProcessor.MappedTags, SemanticConventions.AttributeHttpResponseStatusCode)
                 ?.ToString().Truncate(SchemaConstants.RequestData_ResponseCode_MaxLength)
                 ?? "0";
 
@@ -49,21 +44,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
             }
 
             TraceHelper.AddPropertiesToTelemetry(Properties, ref activityTagsProcessor.UnMappedTags);
-        }
-
-        internal static bool IsSuccess(Activity activity, string? responseCode, OperationType operationType)
-        {
-            if (operationType.HasFlag(OperationType.Http)
-                && responseCode != null
-                && int.TryParse(responseCode, out int statusCode))
-            {
-                bool isSuccessStatusCode = statusCode != 0 && statusCode < 400;
-                return activity.Status != ActivityStatusCode.Error && isSuccessStatusCode;
-            }
-            else
-            {
-                return activity.Status != ActivityStatusCode.Error;
-            }
         }
     }
 }
