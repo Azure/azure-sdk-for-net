@@ -18,7 +18,7 @@ namespace Azure.Storage.DataMovement.Blobs
     public class AppendBlobStorageResource : StorageResourceSingle
     {
         internal AppendBlobClient BlobClient { get; set; }
-        private AppendBlobStorageResourceOptions _options;
+        internal AppendBlobStorageResourceOptions _options;
         private long? _length;
         private ETag? _etagDownloadLock = default;
 
