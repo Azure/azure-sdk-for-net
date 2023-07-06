@@ -14,6 +14,10 @@
 
 This is the first beta release of Azure PaloAltoNetworks.Ngfw client library.
 
+## 1.0.0 (2023-07-14)
+
+This release is the first stable release of the Azure PaloAltoNetworks.Ngfw Management client library.
+
 ### General New Features
 
 This package follows the [new Azure SDK guidelines](https://azure.github.io/azure-sdk/general_introduction.html), and provides many core capabilities:

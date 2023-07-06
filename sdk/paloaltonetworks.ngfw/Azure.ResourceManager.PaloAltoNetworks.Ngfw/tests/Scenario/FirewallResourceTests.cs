@@ -164,5 +164,14 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Tests.Scenario
             await resourceForDeletion.DeleteAsync(WaitUntil.Completed);
             Assert.IsFalse(await ResGroup.GetFirewallResources().ExistsAsync(resourceForDeletion.Data.Name));
         }
+
+        [TestCase]
+        [RecordedTest]
+        public async Task GetSupportInfo()
+        {
+            SupportInfo response = await DefaultResource1.GetSupportInfoAsync();
+            Assert.NotNull(response);
+            Assert.AreEqual("https://live.paloaltonetworks.com?productSku=PAN-CLOUD-NGFW-AZURE-PAYG", response.HelpURL);
+        }
     }
 }
