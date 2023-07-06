@@ -12,7 +12,7 @@ using System.Linq;
 namespace Azure.AI.OpenAI
 {
     /// <summary> Model factory for models. </summary>
-    public static partial class AzureOpenAIModelFactory
+    public static partial class AzureAIOpenAIModelFactory
     {
         /// <summary> Initializes a new instance of Embeddings. </summary>
         /// <param name="data"> Embedding values for the prompts submitted in the request. </param>
@@ -46,6 +46,27 @@ namespace Azure.AI.OpenAI
         public static EmbeddingsUsage EmbeddingsUsage(int promptTokens = default, int totalTokens = default)
         {
             return new EmbeddingsUsage(promptTokens, totalTokens);
+        }
+
+        /// <summary> Initializes a new instance of Choice. </summary>
+        /// <param name="text"> The generated text for a given completions prompt. </param>
+        /// <param name="index"> The ordered index associated with this completions choice. </param>
+        /// <param name="logProbabilityModel"> The log probabilities model for tokens associated with this completions choice. </param>
+        /// <param name="finishReason"> Reason for finishing. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="text"/> or <paramref name="logProbabilityModel"/> is null. </exception>
+        /// <returns> A new <see cref="OpenAI.Choice"/> instance for mocking. </returns>
+        public static Choice Choice(string text = null, int index = default, CompletionsLogProbabilityModel logProbabilityModel = null, CompletionsFinishReason finishReason = default)
+        {
+            if (text == null)
+            {
+                throw new ArgumentNullException(nameof(text));
+            }
+            if (logProbabilityModel == null)
+            {
+                throw new ArgumentNullException(nameof(logProbabilityModel));
+            }
+
+            return new Choice(text, index, logProbabilityModel, finishReason);
         }
 
         /// <summary> Initializes a new instance of CompletionsLogProbabilityModel. </summary>
