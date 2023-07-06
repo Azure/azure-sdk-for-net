@@ -321,7 +321,7 @@ namespace Azure.Storage.DataMovement.Blobs
             return new BlobSyncUploadFromUriOptions()
             {
                 HttpHeaders = options?.HttpHeaders,
-                // Metadata = options?.Metadata,
+                Metadata = options?.Metadata,
                 Tags = options?.Tags,
                 AccessTier = options?.AccessTier,
                 SourceConditions = new BlobRequestConditions()

@@ -112,10 +112,33 @@ await dataTransfer.PauseIfRunningAsync();
 
 Resume a transfer
 ```C# Snippet:TransferManagerResume_Async
-DataTransfer resumedTransfer = await transferManager.ResumeTransferAsync(
-    transferId: dataTransfer.Id,
-    sourceResource: sourceResource,
-    destinationResource: destinationResource);
+async Task<(StorageResource Source, StorageResource Destination)> MakeResourcesAsync(DataTransferProperties info)
+{
+    StorageResource sourceResource = null, destinationResource = null;
+    if (BlobStorageResources.TryGetResourceProviders(
+        info,
+        out BlobStorageResourceProvider blobSrcProvider,
+        out BlobStorageResourceProvider blobDstProvider))
+    {
+        sourceResource ??= await blobSrcProvider.MakeResourceAsync(GetMyCredential(info.SourcePath));
+        destinationResource ??= await blobSrcProvider.MakeResourceAsync(GetMyCredential(info.DestinationPath));
+    }
+    if (LocalStorageResources.TryGetResourceProviders(
+        info,
+        out LocalStorageResourceProvider localSrcProvider,
+        out LocalStorageResourceProvider localDstProvider))
+    {
+        sourceResource ??= localSrcProvider.MakeResource();
+        destinationResource ??= localDstProvider.MakeResource();
+    }
+    return (sourceResource, destinationResource);
+}
+List<DataTransfer> resumedTransfers = new();
+await foreach (DataTransferProperties transferProperties in transferManager.GetResumableTransfersAsync())
+{
+    (StorageResource resumeSource, StorageResource resumeDestination) = await MakeResourcesAsync(transferProperties);
+    resumedTransfers.Add(await transferManager.ResumeTransferAsync(transferProperties.TransferId, resumeSource, resumeDestination));
+}
 ```
 
 ## Troubleshooting

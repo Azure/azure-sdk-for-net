@@ -2,6 +2,10 @@
 
 ## 1.0.0-beta.2 (Unreleased)
 
+### Features Added
+
+- Support SAS authentication
+
 ### Bugs Fixed
 
 - Update dependency libraries versions
