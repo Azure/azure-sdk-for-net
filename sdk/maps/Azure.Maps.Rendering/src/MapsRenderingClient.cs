@@ -93,6 +93,35 @@ namespace Azure.Maps.Rendering
         }
 
         /// <summary> Initializes a new instance of MapsRenderingClient. </summary>
+        /// <param name="credential"> The Shared Access Signature credential used to connect to Azure. This signature
+        /// can be constructed using the <see cref="AzureSasCredential"/>.</param>
+        public MapsRenderingClient(AzureSasCredential credential)
+        {
+            Argument.AssertNotNull(credential, nameof(credential));
+
+            var endpoint = new Uri("https://atlas.microsoft.com");
+            var options = new MapsRenderingClientOptions();
+            _clientDiagnostics = new ClientDiagnostics(options);
+            _pipeline = HttpPipelineBuilder.Build(options, new MapsSasCredentialPolicy(credential));
+            restClient = new RenderRestClient(_clientDiagnostics, _pipeline, endpoint, null, options.Version);
+        }
+
+        /// <summary> Initializes a new instance of MapsRenderingClient. </summary>
+        /// <param name="credential"> The Shared Access Signature credential used to connect to Azure. This signature
+        /// can be constructed using the <see cref="AzureSasCredential"/>.</param>
+        /// <param name="options"> The options for configuring the client. </param>
+        public MapsRenderingClient(AzureSasCredential credential, MapsRenderingClientOptions options)
+        {
+            Argument.AssertNotNull(credential, nameof(credential));
+
+            var endpoint = options.Endpoint;
+            options ??= new MapsRenderingClientOptions();
+            _clientDiagnostics = new ClientDiagnostics(options);
+            _pipeline = HttpPipelineBuilder.Build(options, new MapsSasCredentialPolicy(credential));
+            restClient = new RenderRestClient(_clientDiagnostics, _pipeline, endpoint, null, options.Version);
+        }
+
+        /// <summary> Initializes a new instance of MapsRenderingClient. </summary>
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="endpoint"> server parameter. </param>

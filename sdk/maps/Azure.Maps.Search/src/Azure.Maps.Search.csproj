@@ -25,6 +25,7 @@
   <!-- Shared source from Azure.Maps -->
   <ItemGroup>
     <ProjectReference Include="$(MSBuildThisFileDirectory)..\..\Azure.Maps.Common\src\Azure.Maps.Common.csproj" />
+    <Compile Include="$(MSBuildThisFileDirectory)..\..\Azure.Maps.Common\src\MapsSasCredentialPolicy.cs" LinkBase="Shared" />
   </ItemGroup>
 
 </Project>
