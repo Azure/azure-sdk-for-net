@@ -9,6 +9,7 @@
     <WarnOnPackingNonPackableProject>false</WarnOnPackingNonPackableProject>
     <NoWarn>
       $(NoWarn);
+      AZC0001;
       NU5104;
     </NoWarn>
   </PropertyGroup>
