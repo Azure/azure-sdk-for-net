@@ -11,13 +11,13 @@ using System.ComponentModel;
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
     /// <summary> Gets a value indicating whether fast provisioning is supported. "Enabled" means fast provisioning is supported. "Disabled" stands for fast provisioning is not supported. </summary>
-    public readonly partial struct PostgreSqlFlexibleServerFastProvisioningSupportedENum : IEquatable<PostgreSqlFlexibleServerFastProvisioningSupportedENum>
+    public readonly partial struct PostgreSqlFlexibleServerFastProvisioningSupportedEnum : IEquatable<PostgreSqlFlexibleServerFastProvisioningSupportedEnum>
     {
         private readonly string _value;
 
-        /// <summary> Initializes a new instance of <see cref="PostgreSqlFlexibleServerFastProvisioningSupportedENum"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="PostgreSqlFlexibleServerFastProvisioningSupportedEnum"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public PostgreSqlFlexibleServerFastProvisioningSupportedENum(string value)
+        public PostgreSqlFlexibleServerFastProvisioningSupportedEnum(string value)
         {
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
@@ -26,21 +26,21 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         private const string DisabledValue = "Disabled";
 
         /// <summary> Enabled. </summary>
-        public static PostgreSqlFlexibleServerFastProvisioningSupportedENum Enabled { get; } = new PostgreSqlFlexibleServerFastProvisioningSupportedENum(EnabledValue);
+        public static PostgreSqlFlexibleServerFastProvisioningSupportedEnum Enabled { get; } = new PostgreSqlFlexibleServerFastProvisioningSupportedEnum(EnabledValue);
         /// <summary> Disabled. </summary>
-        public static PostgreSqlFlexibleServerFastProvisioningSupportedENum Disabled { get; } = new PostgreSqlFlexibleServerFastProvisioningSupportedENum(DisabledValue);
-        /// <summary> Determines if two <see cref="PostgreSqlFlexibleServerFastProvisioningSupportedENum"/> values are the same. </summary>
-        public static bool operator ==(PostgreSqlFlexibleServerFastProvisioningSupportedENum left, PostgreSqlFlexibleServerFastProvisioningSupportedENum right) => left.Equals(right);
-        /// <summary> Determines if two <see cref="PostgreSqlFlexibleServerFastProvisioningSupportedENum"/> values are not the same. </summary>
-        public static bool operator !=(PostgreSqlFlexibleServerFastProvisioningSupportedENum left, PostgreSqlFlexibleServerFastProvisioningSupportedENum right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="PostgreSqlFlexibleServerFastProvisioningSupportedENum"/>. </summary>
-        public static implicit operator PostgreSqlFlexibleServerFastProvisioningSupportedENum(string value) => new PostgreSqlFlexibleServerFastProvisioningSupportedENum(value);
+        public static PostgreSqlFlexibleServerFastProvisioningSupportedEnum Disabled { get; } = new PostgreSqlFlexibleServerFastProvisioningSupportedEnum(DisabledValue);
+        /// <summary> Determines if two <see cref="PostgreSqlFlexibleServerFastProvisioningSupportedEnum"/> values are the same. </summary>
+        public static bool operator ==(PostgreSqlFlexibleServerFastProvisioningSupportedEnum left, PostgreSqlFlexibleServerFastProvisioningSupportedEnum right) => left.Equals(right);
+        /// <summary> Determines if two <see cref="PostgreSqlFlexibleServerFastProvisioningSupportedEnum"/> values are not the same. </summary>
+        public static bool operator !=(PostgreSqlFlexibleServerFastProvisioningSupportedEnum left, PostgreSqlFlexibleServerFastProvisioningSupportedEnum right) => !left.Equals(right);
+        /// <summary> Converts a string to a <see cref="PostgreSqlFlexibleServerFastProvisioningSupportedEnum"/>. </summary>
+        public static implicit operator PostgreSqlFlexibleServerFastProvisioningSupportedEnum(string value) => new PostgreSqlFlexibleServerFastProvisioningSupportedEnum(value);
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is PostgreSqlFlexibleServerFastProvisioningSupportedENum other && Equals(other);
+        public override bool Equals(object obj) => obj is PostgreSqlFlexibleServerFastProvisioningSupportedEnum other && Equals(other);
         /// <inheritdoc />
-        public bool Equals(PostgreSqlFlexibleServerFastProvisioningSupportedENum other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(PostgreSqlFlexibleServerFastProvisioningSupportedEnum other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
