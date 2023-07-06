@@ -74,7 +74,7 @@ internal class SampleJsonValidator : SchemaValidator
 }
 ```
 
-## Serialize and deserialize JSON data using the Event Hubs `EventData` type
+## Serialize and deserialize JSON data using the Event H
 
 In order to serialize an `EventData` instance with JSON information, you can do the following:
 

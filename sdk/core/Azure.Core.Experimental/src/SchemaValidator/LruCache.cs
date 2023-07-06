@@ -17,8 +17,8 @@ namespace Azure.Core.Experimental
         where TKey : notnull
     {
         private readonly int _capacity;
-        private readonly LinkedList<KeyValuePair<TKey, TValue>> _linkedList;
-        private readonly Dictionary<TKey, (LinkedListNode<KeyValuePair<TKey, TValue>> Node, int Length)> _map;
+        private readonly LinkedList<KeyValuePair<TKey, TValue?>> _linkedList;
+        private readonly Dictionary<TKey, (LinkedListNode<KeyValuePair<TKey, TValue?>> Node, int Length)> _map;
         private readonly object _syncLock;
 
         /// <summary>
@@ -38,8 +38,8 @@ namespace Azure.Core.Experimental
         public LruCache(int capacity)
         {
             _capacity = capacity;
-            _linkedList = new LinkedList<KeyValuePair<TKey, TValue>>();
-            _map = new Dictionary<TKey, (LinkedListNode<KeyValuePair<TKey, TValue>>, int)>();
+            _linkedList = new LinkedList<KeyValuePair<TKey, TValue?>>();
+            _map = new Dictionary<TKey, (LinkedListNode<KeyValuePair<TKey, TValue?>>, int)>();
             _syncLock = new object();
         }
 
@@ -72,7 +72,7 @@ namespace Azure.Core.Experimental
         }
 
         /// <summary>
-        /// 
+        /// TODO.
         /// </summary>
         /// <param name="key"></param>
         /// <param name="val"></param>
@@ -89,7 +89,7 @@ namespace Azure.Core.Experimental
                 }
 
                 // add new node
-                var node = new LinkedListNode<KeyValuePair<TKey, TValue>>(new KeyValuePair<TKey, TValue>(key, val));
+                var node = new LinkedListNode<KeyValuePair<TKey, TValue?>>(new KeyValuePair<TKey, TValue?>(key, val));
                 _linkedList.AddFirst(node);
                 _map[key] = (node, length);
                 TotalLength += length;
@@ -97,7 +97,7 @@ namespace Azure.Core.Experimental
                 if (_map.Count > _capacity)
                 {
                     // remove least recently used node
-                    LinkedListNode<KeyValuePair<TKey, TValue>> last = _linkedList.Last!;
+                    LinkedListNode<KeyValuePair<TKey, TValue?>> last = _linkedList.Last!;
                     _linkedList.RemoveLast();
                     var toRemove = _map[last.Value.Key];
                     _map.Remove(last.Value.Key);

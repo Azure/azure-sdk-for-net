@@ -13,7 +13,7 @@
   <ItemGroup>
     <!--<PackageReference Include="Azure.Core" />-->
     <ProjectReference Include="..\..\..\core\Azure.Core\src\Azure.Core.csproj" />
-    <!-- Temporary, until we move SchemaValidator into core.-->
+    <!-- Temporary, until we move SchemaValidator and LruCache into core.-->
     <ProjectReference Include="..\..\..\core\Azure.Core.Experimental\src\Azure.Core.Experimental.csproj" />
   </ItemGroup>
 
@@ -21,7 +21,6 @@
   <ItemGroup>
     <Compile Include="$(AzureCoreSharedSources)ArrayBufferWriter.cs" LinkBase="Shared" />
     <Compile Include="$(AzureCoreSharedSources)AzureEventSource.cs" LinkBase="Shared" />
-    <Compile Include="$(AzureCoreSharedSources)LruCache.cs" LinkBase="Shared" />
   </ItemGroup>
 
 </Project>
