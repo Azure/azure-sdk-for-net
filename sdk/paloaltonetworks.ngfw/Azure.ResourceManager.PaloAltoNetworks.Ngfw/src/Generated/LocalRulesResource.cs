@@ -7,7 +7,6 @@
 
 using System;
 using System.Globalization;
-using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -40,13 +39,6 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <summary> Initializes a new instance of the <see cref="LocalRulesResource"/> class for mocking. </summary>
         protected LocalRulesResource()
         {
-        }
-
-        internal LocalRulesResource(ArmClient client, LocalRulesResourceData data, ResourceIdentifier id) : this(client, id)
-        {
-            LocalRulesResourceData localRulesData = new LocalRulesResourceData(id, data.Name, data.ResourceType, data.SystemData, data.ETag, data.RuleName, data.Priority, data.Description, data.RuleState, data.Source, data.NegateSource, data.Destination, data.NegateDestination, data.Applications, data.Category, data.Protocol, data.ProtocolPortList, data.InboundInspectionCertificate, data.AuditComment, data.ActionType, data.EnableLogging, data.DecryptionRuleType, data.Tags, data.ProvisioningState);
-            HasData = true;
-            _data = localRulesData;
         }
 
         /// <summary> Initializes a new instance of the <see cref = "LocalRulesResource"/> class. </summary>
