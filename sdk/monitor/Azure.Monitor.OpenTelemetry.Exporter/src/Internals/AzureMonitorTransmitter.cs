@@ -171,8 +171,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                 if (_transmissionStateManager.State == TransmissionState.Closed)
                 {
                     using var httpMessage = async ?
-                        await _applicationInsightsRestClient.InternalTrackAsync(telemetryItems, cancellationToken).ConfigureAwait(false) :
-                        _applicationInsightsRestClient.InternalTrackAsync(telemetryItems, cancellationToken).Result;
+                    await _applicationInsightsRestClient.InternalTrackAsync(telemetryItems, cancellationToken).ConfigureAwait(false) :
+                    _applicationInsightsRestClient.InternalTrackAsync(telemetryItems, cancellationToken).Result;
 
                     result = HttpPipelineHelper.IsSuccess(httpMessage);
 
