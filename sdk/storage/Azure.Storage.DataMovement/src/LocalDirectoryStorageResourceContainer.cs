@@ -25,9 +25,9 @@ namespace Azure.Storage.DataMovement
         public override string Path => _path;
 
         /// <summary>
-        /// Cannot produce Uri
+        /// Defines whether the storage resource type can produce a web URL.
         /// </summary>
-        public override ProduceUriType CanProduceUri => ProduceUriType.NoUri;
+        public override bool CanProduceUri => false;
 
         /// <summary>
         /// Cannot get Uri. Will throw NotSupportedException();

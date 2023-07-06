@@ -71,11 +71,11 @@ namespace Azure.Storage.DataMovement
 
         /// <summary>
         /// Defines the error handling method to follow when an error is seen. Defaults to
-        /// <see cref="ErrorHandlingOptions.StopOnAllFailures"/>.
+        /// <see cref="ErrorHandlingBehavior.StopOnAllFailures"/>.
         ///
-        /// See <see cref="ErrorHandlingOptions"/>.
+        /// See <see cref="ErrorHandlingBehavior"/>.
         /// </summary>
-        internal ErrorHandlingOptions _errorHandling;
+        internal ErrorHandlingBehavior _errorHandling;
 
         /// <summary>
         /// Cancels the channels operations when disposing.
@@ -127,7 +127,7 @@ namespace Azure.Storage.DataMovement
             _checkpointer = _checkpointerOptions != default ? _checkpointerOptions.GetCheckpointer() : CreateDefaultCheckpointer();
             _dataTransfers = new Dictionary<string, DataTransfer>();
             _arrayPool = ArrayPool<byte>.Shared;
-            _errorHandling = options?.ErrorHandling != default ? options.ErrorHandling : ErrorHandlingOptions.StopOnAllFailures;
+            _errorHandling = options?.ErrorHandling != default ? options.ErrorHandling : ErrorHandlingBehavior.StopOnAllFailures;
         }
 
         #region Job Channel Management
@@ -516,9 +516,9 @@ namespace Azure.Storage.DataMovement
         {
             // If the resource cannot produce a Uri, it means it can only produce a local path
             // From here we only support an upload job
-            if (sourceResource.CanProduceUri == ProduceUriType.NoUri)
+            if (!sourceResource.CanProduceUri)
             {
-                if (destinationResource.CanProduceUri == ProduceUriType.ProducesUri)
+                if (destinationResource.CanProduceUri)
                 {
                     // Stream to Uri job (Upload Job)
                     StreamToUriTransferJob streamToUriJob = new StreamToUriTransferJob(
@@ -557,7 +557,7 @@ namespace Azure.Storage.DataMovement
             else
             {
                 // Source is remote
-                if (destinationResource.CanProduceUri == ProduceUriType.ProducesUri)
+                if (destinationResource.CanProduceUri)
                 {
                     // Service to Service Job (Copy job)
                     ServiceToServiceTransferJob serviceToServiceJob = new ServiceToServiceTransferJob(
@@ -632,9 +632,9 @@ namespace Azure.Storage.DataMovement
         {
             // If the resource cannot produce a Uri, it means it can only produce a local path
             // From here we only support an upload job
-            if (sourceResource.CanProduceUri == ProduceUriType.NoUri)
+            if (!sourceResource.CanProduceUri)
             {
-                if (destinationResource.CanProduceUri == ProduceUriType.ProducesUri)
+                if (destinationResource.CanProduceUri)
                 {
                     // Stream to Uri job (Upload Job)
                     StreamToUriTransferJob streamToUriJob = new StreamToUriTransferJob(
@@ -680,7 +680,7 @@ namespace Azure.Storage.DataMovement
             else
             {
                 // Source is remote
-                if (destinationResource.CanProduceUri == ProduceUriType.ProducesUri)
+                if (destinationResource.CanProduceUri)
                 {
                     // Service to Service Job (Copy job)
                     ServiceToServiceTransferJob serviceToServiceJob = new ServiceToServiceTransferJob(
