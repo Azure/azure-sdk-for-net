@@ -12,14 +12,15 @@ namespace Azure.Core.Serialization
     public class ModelSerializerOptions
     {
         /// <summary>
-        /// Bool that determines if ReadOnlyProperties will be serialized. Default is false.
+        /// String that determines Format of serialized model. "D" = data format which means both properties are false, "W" = wire format which means both properties are true Default is "D".
         /// </summary>
-        public bool IgnoreReadOnlyProperties { get; set; }
-
-        /// <summary>
-        /// Bool that determines if AdditionalProperties will be serialized. Default is false.
-        /// </summary>
-        public bool IgnoreAdditionalProperties { get; set; }
+        public string Format
+        {
+            get
+            {
+                return "D";
+            }
+        }
 
         /// <summary>
         /// Bool that determines if Json will be PrettyPrinted. Default is false.

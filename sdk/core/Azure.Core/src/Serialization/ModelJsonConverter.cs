@@ -17,9 +17,9 @@ namespace Azure.Core.Serialization
 #pragma warning restore AZC0014 // Avoid using banned types in public API
     {
         /// <summary>
-        /// .
+        /// String that determines Format of serialized model. "D" = data format which means both properties are false, "W" = wire format which means both properties are true Default is "D".
         /// </summary>
-        public bool IgnoreAdditionalProperties { get; set; } = true;
+        public string Format { get; set; } = "D";
 
         /// <summary>
         /// .
@@ -27,12 +27,11 @@ namespace Azure.Core.Serialization
         public ModelJsonConverter() { }
 
         /// <summary>
-        /// .
+        /// String that determines Format of serialized model. "D" = data format which means both properties are false, "W" = wire format which means both properties are true Default is "D".
         /// </summary>
-        /// <param name="ignoreAdditionalProperties"></param>
-        public ModelJsonConverter(bool ignoreAdditionalProperties)
+        public ModelJsonConverter(string format)
         {
-            IgnoreAdditionalProperties = ignoreAdditionalProperties;
+            Format = format;
         }
 
         /// <summary>
@@ -81,8 +80,7 @@ namespace Azure.Core.Serialization
         private ModelSerializerOptions ConvertOptions(JsonSerializerOptions options)
         {
             ModelSerializerOptions serializableOptions = new ModelSerializerOptions();
-            serializableOptions.IgnoreAdditionalProperties = IgnoreAdditionalProperties;
-            serializableOptions.IgnoreReadOnlyProperties = options.IgnoreReadOnlyProperties;
+            serializableOptions.Format = Format;
             return serializableOptions;
         }
     }
