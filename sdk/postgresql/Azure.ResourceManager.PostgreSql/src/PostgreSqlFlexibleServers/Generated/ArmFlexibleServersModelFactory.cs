@@ -47,28 +47,28 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             return new PostgreSqlFlexibleServerBackupData(id, name, resourceType, systemData, backupType, completedOn, source);
         }
 
-        /// <summary> Initializes a new instance of PostgreSqlFlexibleServerCapability. </summary>
+        /// <summary> Initializes a new instance of PostgreSqlFlexibleServerCapabilityProperties. </summary>
         /// <param name="status"> The status of the capability. </param>
         /// <param name="reason"> The reason for the capability not being available. </param>
         /// <param name="name"> Name of flexible servers capability. </param>
         /// <param name="supportedServerEditions"> List of supported flexible server editions. </param>
         /// <param name="supportedServerVersions"> The list of server versions supported for this capability. </param>
-        /// <param name="fastProvisioningSupported"> Gets a value indicating whether fast provisioning is supported. &quot;Enabled&quot; means fast provisioning is supported. &quot;Disabled&quot; stands for fast provisioning is not supported. </param>
+        /// <param name="fastProvisioningSupported"> Gets a value indicating whether fast provisioning is supported. "Enabled" means fast provisioning is supported. "Disabled" stands for fast provisioning is not supported. </param>
         /// <param name="supportedFastProvisioningEditions"> List of supported server editions for fast provisioning. </param>
-        /// <param name="geoBackupSupported"> Determines if geo-backup is supported in this region. &quot;Enabled&quot; means geo-backup is supported. &quot;Disabled&quot; stands for geo-back is not supported. </param>
-        /// <param name="zoneRedundantHaSupported"> A value indicating whether Zone Redundant HA is supported in this region. &quot;Enabled&quot; means zone redundant HA is supported. &quot;Disabled&quot; stands for zone redundant HA is not supported. </param>
-        /// <param name="zoneRedundantHaAndGeoBackupSupported"> A value indicating whether Zone Redundant HA and Geo-backup is supported in this region. &quot;Enabled&quot; means zone redundant HA and geo-backup is supported. &quot;Disabled&quot; stands for zone redundant HA and geo-backup is not supported. </param>
-        /// <param name="storageAutoGrowthSupported"> A value indicating whether storage auto-grow is supported in this region. &quot;Enabled&quot; means storage auto-grow is supported. &quot;Disabled&quot; stands for storage auto-grow is not supported. </param>
-        /// <param name="onlineResizeSupported"> A value indicating whether online resize is supported in this region for the given subscription. &quot;Enabled&quot; means storage online resize is supported. &quot;Disabled&quot; means storage online resize is not supported. </param>
-        /// <param name="restricted"> A value indicating whether this region is restricted. &quot;Enabled&quot; means region is restricted. &quot;Disabled&quot; stands for region is not restricted. </param>
-        /// <returns> A new <see cref="Models.PostgreSqlFlexibleServerCapability"/> instance for mocking. </returns>
-        public static PostgreSqlFlexibleServerCapability PostgreSqlFlexibleServerCapability(PostgreSqlFlexbileServerCapabilityStatus? status = null, string reason = null, string name = null, IEnumerable<PostgreSqlFlexibleServerEditionCapability> supportedServerEditions = null, IEnumerable<PostgreSqlFlexibleServerServerVersionCapability> supportedServerVersions = null, PostgreSqlFlexibleServerFastProvisioningSupportedENum? fastProvisioningSupported = null, IEnumerable<PostgreSqlFlexibleServerFastProvisioningEditionCapability> supportedFastProvisioningEditions = null, PostgreSqlFlexibleServerGeoBackupSupportedEnum? geoBackupSupported = null, PostgreSqlFlexibleServerZoneRedundantHaSupportedEnum? zoneRedundantHaSupported = null, PostgreSqlFlexibleServerZoneRedundantHaAndGeoBackupSupportedEnum? zoneRedundantHaAndGeoBackupSupported = null, PostgreSqlFlexibleServerStorageAutoGrowthSupportedEnum? storageAutoGrowthSupported = null, PostgreSqlFlexibleServerOnlineResizeSupportedEnum? onlineResizeSupported = null, PostgreSqlFlexibleServerZoneRedundantRestrictedEnum? restricted = null)
+        /// <param name="geoBackupSupported"> Determines if geo-backup is supported in this region. "Enabled" means geo-backup is supported. "Disabled" stands for geo-back is not supported. </param>
+        /// <param name="zoneRedundantHaSupported"> A value indicating whether Zone Redundant HA is supported in this region. "Enabled" means zone redundant HA is supported. "Disabled" stands for zone redundant HA is not supported. </param>
+        /// <param name="zoneRedundantHaAndGeoBackupSupported"> A value indicating whether Zone Redundant HA and Geo-backup is supported in this region. "Enabled" means zone redundant HA and geo-backup is supported. "Disabled" stands for zone redundant HA and geo-backup is not supported. </param>
+        /// <param name="storageAutoGrowthSupported"> A value indicating whether storage auto-grow is supported in this region. "Enabled" means storage auto-grow is supported. "Disabled" stands for storage auto-grow is not supported. </param>
+        /// <param name="onlineResizeSupported"> A value indicating whether online resize is supported in this region for the given subscription. "Enabled" means storage online resize is supported. "Disabled" means storage online resize is not supported. </param>
+        /// <param name="restricted"> A value indicating whether this region is restricted. "Enabled" means region is restricted. "Disabled" stands for region is not restricted. </param>
+        /// <returns> A new <see cref="Models.PostgreSqlFlexibleServerCapabilityProperties"/> instance for mocking. </returns>
+        public static PostgreSqlFlexibleServerCapabilityProperties PostgreSqlFlexibleServerCapabilityProperties(PostgreSqlFlexbileServerCapabilityStatus? status = null, string reason = null, string name = null, IEnumerable<PostgreSqlFlexibleServerEditionCapability> supportedServerEditions = null, IEnumerable<PostgreSqlFlexibleServerServerVersionCapability> supportedServerVersions = null, PostgreSqlFlexibleServerFastProvisioningSupportedENum? fastProvisioningSupported = null, IEnumerable<PostgreSqlFlexibleServerFastProvisioningEditionCapability> supportedFastProvisioningEditions = null, PostgreSqlFlexibleServerGeoBackupSupportedEnum? geoBackupSupported = null, PostgreSqlFlexibleServerZoneRedundantHaSupportedEnum? zoneRedundantHaSupported = null, PostgreSqlFlexibleServerZoneRedundantHaAndGeoBackupSupportedEnum? zoneRedundantHaAndGeoBackupSupported = null, PostgreSqlFlexibleServerStorageAutoGrowthSupportedEnum? storageAutoGrowthSupported = null, PostgreSqlFlexibleServerOnlineResizeSupportedEnum? onlineResizeSupported = null, PostgreSqlFlexibleServerZoneRedundantRestrictedEnum? restricted = null)
         {
             supportedServerEditions ??= new List<PostgreSqlFlexibleServerEditionCapability>();
             supportedServerVersions ??= new List<PostgreSqlFlexibleServerServerVersionCapability>();
             supportedFastProvisioningEditions ??= new List<PostgreSqlFlexibleServerFastProvisioningEditionCapability>();
 
-            return new PostgreSqlFlexibleServerCapability(status, reason, name, supportedServerEditions?.ToList(), supportedServerVersions?.ToList(), fastProvisioningSupported, supportedFastProvisioningEditions?.ToList(), geoBackupSupported, zoneRedundantHaSupported, zoneRedundantHaAndGeoBackupSupported, storageAutoGrowthSupported, onlineResizeSupported, restricted);
+            return new PostgreSqlFlexibleServerCapabilityProperties(status, reason, name, supportedServerEditions?.ToList(), supportedServerVersions?.ToList(), fastProvisioningSupported, supportedFastProvisioningEditions?.ToList(), geoBackupSupported, zoneRedundantHaSupported, zoneRedundantHaAndGeoBackupSupported, storageAutoGrowthSupported, onlineResizeSupported, restricted);
         }
 
         /// <summary> Initializes a new instance of PostgreSqlFlexibleServerEditionCapability. </summary>
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <param name="vCores"> Supported vCores. </param>
         /// <param name="supportedIops"> Supported IOPS. </param>
         /// <param name="supportedMemoryPerVcoreMb"> Supported memory per vCore in MB. </param>
-        /// <param name="supportedZones"> List of supported Availability Zones. E.g. &quot;1&quot;, &quot;2&quot;, &quot;3&quot;. </param>
+        /// <param name="supportedZones"> List of supported Availability Zones. E.g. "1", "2", "3". </param>
         /// <param name="supportedHaMode"> Supported high availability mode. </param>
         /// <returns> A new <see cref="Models.PostgreSqlFlexibleServerSkuCapability"/> instance for mocking. </returns>
         public static PostgreSqlFlexibleServerSkuCapability PostgreSqlFlexibleServerSkuCapability(PostgreSqlFlexbileServerCapabilityStatus? status = null, string reason = null, string name = null, int? vCores = null, int? supportedIops = null, long? supportedMemoryPerVcoreMb = null, IEnumerable<string> supportedZones = null, IEnumerable<PostgreSqlFlexibleServerHAMode> supportedHaMode = null)
@@ -273,8 +273,8 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <param name="network"> Network properties of a server. This Network property is required to be passed only in case you want the server to be Private access server. </param>
         /// <param name="highAvailability"> High availability properties of a server. </param>
         /// <param name="maintenanceWindow"> Maintenance window properties of a server. </param>
-        /// <param name="sourceServerResourceId"> The source server resource ID to restore from. It&apos;s required when &apos;createMode&apos; is &apos;PointInTimeRestore&apos; or &apos;GeoRestore&apos; or &apos;Replica&apos; or &apos;ReviveDropped&apos;. This property is returned only for Replica server. </param>
-        /// <param name="pointInTimeUtc"> Restore point creation time (ISO8601 format), specifying the time to restore from. It&apos;s required when &apos;createMode&apos; is &apos;PointInTimeRestore&apos; or &apos;GeoRestore&apos; or &apos;ReviveDropped&apos;. </param>
+        /// <param name="sourceServerResourceId"> The source server resource ID to restore from. It's required when 'createMode' is 'PointInTimeRestore' or 'GeoRestore' or 'Replica' or 'ReviveDropped'. This property is returned only for Replica server. </param>
+        /// <param name="pointInTimeUtc"> Restore point creation time (ISO8601 format), specifying the time to restore from. It's required when 'createMode' is 'PointInTimeRestore' or 'GeoRestore' or 'ReviveDropped'. </param>
         /// <param name="availabilityZone"> availability zone information of the server. </param>
         /// <param name="replicationRole"> Replication role of the server. </param>
         /// <param name="replicaCapacity"> Replicas allowed for a server. </param>
@@ -289,7 +289,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 
         /// <summary> Initializes a new instance of PostgreSqlFlexibleServerUserAssignedIdentity. </summary>
         /// <param name="userAssignedIdentities"> represents user assigned identities map. </param>
-        /// <param name="identityType"> the types of identities associated with this resource; currently restricted to &apos;None and UserAssigned&apos;. </param>
+        /// <param name="identityType"> the types of identities associated with this resource; currently restricted to 'None and UserAssigned'. </param>
         /// <param name="tenantId"> Tenant id of the server. </param>
         /// <returns> A new <see cref="Models.PostgreSqlFlexibleServerUserAssignedIdentity"/> instance for mocking. </returns>
         public static PostgreSqlFlexibleServerUserAssignedIdentity PostgreSqlFlexibleServerUserAssignedIdentity(IDictionary<string, UserAssignedIdentity> userAssignedIdentities = null, PostgreSqlFlexibleServerIdentityType identityType = default, Guid? tenantId = null)

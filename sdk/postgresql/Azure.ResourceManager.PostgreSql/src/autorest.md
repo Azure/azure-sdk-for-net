@@ -254,7 +254,7 @@ rename-mapping:
   CapabilityStatus: PostgreSqlFlexbileServerCapabilityStatus
   DbServerMetadata: PostgreSqlServerMetadata
   FastProvisioningSupportedEnum: PostgreSqlFlexibleServerFastProvisioningSupportedENum
-  FlexibleServerCapability: PostgreSqlFlexibleServerCapability
+  FlexibleServerCapability: PostgreSqlFlexibleServerCapabilityProperties
   FlexibleServersLogFile: PostgreSqlFlexibleServersLogFile
   FlexibleServersLogFileListResult: PostgreSqlFlexibleServersLogFileListResult
   GeoBackupSupportedEnum: PostgreSqlFlexibleServerGeoBackupSupportedEnum

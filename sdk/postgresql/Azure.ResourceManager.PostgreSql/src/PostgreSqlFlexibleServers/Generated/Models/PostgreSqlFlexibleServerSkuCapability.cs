@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <param name="vCores"> Supported vCores. </param>
         /// <param name="supportedIops"> Supported IOPS. </param>
         /// <param name="supportedMemoryPerVcoreMb"> Supported memory per vCore in MB. </param>
-        /// <param name="supportedZones"> List of supported Availability Zones. E.g. &quot;1&quot;, &quot;2&quot;, &quot;3&quot;. </param>
+        /// <param name="supportedZones"> List of supported Availability Zones. E.g. "1", "2", "3". </param>
         /// <param name="supportedHaMode"> Supported high availability mode. </param>
         internal PostgreSqlFlexibleServerSkuCapability(PostgreSqlFlexbileServerCapabilityStatus? status, string reason, string name, int? vCores, int? supportedIops, long? supportedMemoryPerVcoreMb, IReadOnlyList<string> supportedZones, IReadOnlyList<PostgreSqlFlexibleServerHAMode> supportedHaMode) : base(status, reason)
         {
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         public int? SupportedIops { get; }
         /// <summary> Supported memory per vCore in MB. </summary>
         public long? SupportedMemoryPerVcoreMb { get; }
-        /// <summary> List of supported Availability Zones. E.g. &quot;1&quot;, &quot;2&quot;, &quot;3&quot;. </summary>
+        /// <summary> List of supported Availability Zones. E.g. "1", "2", "3". </summary>
         public IReadOnlyList<string> SupportedZones { get; }
         /// <summary> Supported high availability mode. </summary>
         public IReadOnlyList<PostgreSqlFlexibleServerHAMode> SupportedHaMode { get; }

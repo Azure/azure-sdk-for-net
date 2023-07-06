@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
-    /// <summary> A value indicating whether Zone Redundant HA is supported in this region. &quot;Enabled&quot; means zone redundant HA is supported. &quot;Disabled&quot; stands for zone redundant HA is not supported. </summary>
+    /// <summary> A value indicating whether Zone Redundant HA is supported in this region. "Enabled" means zone redundant HA is supported. "Disabled" stands for zone redundant HA is not supported. </summary>
     public readonly partial struct PostgreSqlFlexibleServerZoneRedundantHaSupportedEnum : IEquatable<PostgreSqlFlexibleServerZoneRedundantHaSupportedEnum>
     {
         private readonly string _value;

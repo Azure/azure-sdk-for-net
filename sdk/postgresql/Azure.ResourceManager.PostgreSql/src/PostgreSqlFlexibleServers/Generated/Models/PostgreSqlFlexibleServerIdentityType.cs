@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
-    /// <summary> the types of identities associated with this resource; currently restricted to &apos;None and UserAssigned&apos;. </summary>
+    /// <summary> the types of identities associated with this resource; currently restricted to 'None and UserAssigned'. </summary>
     public readonly partial struct PostgreSqlFlexibleServerIdentityType : IEquatable<PostgreSqlFlexibleServerIdentityType>
     {
         private readonly string _value;

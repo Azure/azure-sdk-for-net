@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
-    /// <summary> A value indicating whether online resize is supported in this region for the given subscription. &quot;Enabled&quot; means storage online resize is supported. &quot;Disabled&quot; means storage online resize is not supported. </summary>
+    /// <summary> A value indicating whether online resize is supported in this region for the given subscription. "Enabled" means storage online resize is supported. "Disabled" means storage online resize is not supported. </summary>
     public readonly partial struct PostgreSqlFlexibleServerOnlineResizeSupportedEnum : IEquatable<PostgreSqlFlexibleServerOnlineResizeSupportedEnum>
     {
         private readonly string _value;

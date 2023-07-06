@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
-    /// <summary> A value indicating whether storage auto-grow is supported in this region. &quot;Enabled&quot; means storage auto-grow is supported. &quot;Disabled&quot; stands for storage auto-grow is not supported. </summary>
+    /// <summary> A value indicating whether storage auto-grow is supported in this region. "Enabled" means storage auto-grow is supported. "Disabled" stands for storage auto-grow is not supported. </summary>
     public readonly partial struct PostgreSqlFlexibleServerStorageAutoGrowthSupportedEnum : IEquatable<PostgreSqlFlexibleServerStorageAutoGrowthSupportedEnum>
     {
         private readonly string _value;

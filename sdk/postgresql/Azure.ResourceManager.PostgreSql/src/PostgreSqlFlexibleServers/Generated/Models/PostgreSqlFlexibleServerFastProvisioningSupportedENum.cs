@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
-    /// <summary> Gets a value indicating whether fast provisioning is supported. &quot;Enabled&quot; means fast provisioning is supported. &quot;Disabled&quot; stands for fast provisioning is not supported. </summary>
+    /// <summary> Gets a value indicating whether fast provisioning is supported. "Enabled" means fast provisioning is supported. "Disabled" stands for fast provisioning is not supported. </summary>
     public readonly partial struct PostgreSqlFlexibleServerFastProvisioningSupportedENum : IEquatable<PostgreSqlFlexibleServerFastProvisioningSupportedENum>
     {
         private readonly string _value;

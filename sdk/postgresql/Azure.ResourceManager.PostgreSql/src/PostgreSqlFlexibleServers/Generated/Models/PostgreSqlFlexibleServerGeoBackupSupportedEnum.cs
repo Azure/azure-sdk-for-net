@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
-    /// <summary> Determines if geo-backup is supported in this region. &quot;Enabled&quot; means geo-backup is supported. &quot;Disabled&quot; stands for geo-back is not supported. </summary>
+    /// <summary> Determines if geo-backup is supported in this region. "Enabled" means geo-backup is supported. "Disabled" stands for geo-back is not supported. </summary>
     public readonly partial struct PostgreSqlFlexibleServerGeoBackupSupportedEnum : IEquatable<PostgreSqlFlexibleServerGeoBackupSupportedEnum>
     {
         private readonly string _value;

@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
-    /// <summary> A value indicating whether this region is restricted. &quot;Enabled&quot; means region is restricted. &quot;Disabled&quot; stands for region is not restricted. </summary>
+    /// <summary> A value indicating whether this region is restricted. "Enabled" means region is restricted. "Disabled" stands for region is not restricted. </summary>
     public readonly partial struct PostgreSqlFlexibleServerZoneRedundantRestrictedEnum : IEquatable<PostgreSqlFlexibleServerZoneRedundantRestrictedEnum>
     {
         private readonly string _value;

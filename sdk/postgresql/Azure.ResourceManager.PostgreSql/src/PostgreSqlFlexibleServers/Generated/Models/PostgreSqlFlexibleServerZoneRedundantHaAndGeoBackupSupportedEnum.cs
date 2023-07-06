@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
-    /// <summary> A value indicating whether Zone Redundant HA and Geo-backup is supported in this region. &quot;Enabled&quot; means zone redundant HA and geo-backup is supported. &quot;Disabled&quot; stands for zone redundant HA and geo-backup is not supported. </summary>
+    /// <summary> A value indicating whether Zone Redundant HA and Geo-backup is supported in this region. "Enabled" means zone redundant HA and geo-backup is supported. "Disabled" stands for zone redundant HA and geo-backup is not supported. </summary>
     public readonly partial struct PostgreSqlFlexibleServerZoneRedundantHaAndGeoBackupSupportedEnum : IEquatable<PostgreSqlFlexibleServerZoneRedundantHaAndGeoBackupSupportedEnum>
     {
         private readonly string _value;

@@ -16,20 +16,20 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <summary> Initializes a new instance of PostgreSqlFlexibleServerCapabilitiesListResult. </summary>
         internal PostgreSqlFlexibleServerCapabilitiesListResult()
         {
-            Value = new ChangeTrackingList<PostgreSqlFlexibleServerCapability>();
+            Value = new ChangeTrackingList<PostgreSqlFlexibleServerCapabilityProperties>();
         }
 
         /// <summary> Initializes a new instance of PostgreSqlFlexibleServerCapabilitiesListResult. </summary>
         /// <param name="value"> A list of supported capabilities. </param>
         /// <param name="nextLink"> Link to retrieve next page of results. </param>
-        internal PostgreSqlFlexibleServerCapabilitiesListResult(IReadOnlyList<PostgreSqlFlexibleServerCapability> value, string nextLink)
+        internal PostgreSqlFlexibleServerCapabilitiesListResult(IReadOnlyList<PostgreSqlFlexibleServerCapabilityProperties> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> A list of supported capabilities. </summary>
-        public IReadOnlyList<PostgreSqlFlexibleServerCapability> Value { get; }
+        public IReadOnlyList<PostgreSqlFlexibleServerCapabilityProperties> Value { get; }
         /// <summary> Link to retrieve next page of results. </summary>
         public string NextLink { get; }
     }

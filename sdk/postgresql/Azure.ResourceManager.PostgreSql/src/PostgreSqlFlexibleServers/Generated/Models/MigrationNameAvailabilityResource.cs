@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
-    /// <summary> Represents a migration name&apos;s availability. </summary>
+    /// <summary> Represents a migration name's availability. </summary>
     public partial class MigrationNameAvailabilityResource
     {
         /// <summary> Initializes a new instance of MigrationNameAvailabilityResource. </summary>
