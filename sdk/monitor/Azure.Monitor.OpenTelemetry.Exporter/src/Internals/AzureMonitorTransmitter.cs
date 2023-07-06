@@ -185,7 +185,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                     {
                         _transmissionStateManager.ResetConsecutiveErrors();
                         _transmissionStateManager.CloseTransmission();
-                        AzureMonitorExporterEventSource.Log.TransmissionSuccess(_connectionVars.InstrumentationKey);
+                        AzureMonitorExporterEventSource.Log.TransmissionSuccess(origin, _connectionVars.InstrumentationKey);
                     }
                 }
                 else
@@ -199,7 +199,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             }
             catch (Exception ex)
             {
-                AzureMonitorExporterEventSource.Log.TransmitterFailed(_connectionVars.InstrumentationKey, ex);
+                AzureMonitorExporterEventSource.Log.TransmitterFailed(origin, _connectionVars.InstrumentationKey, ex);
             }
 
             return result;
