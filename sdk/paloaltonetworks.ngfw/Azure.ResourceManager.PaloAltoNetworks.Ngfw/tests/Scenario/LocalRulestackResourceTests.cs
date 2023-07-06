@@ -239,5 +239,14 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Tests.Scenario
             AsyncPageable<PredefinedUrlCategory> response = LocalRulestackResource.GetPredefinedUrlCategoriesAsync();
             Assert.NotNull(response);
         }
+
+        [TestCase]
+        [RecordedTest]
+        public async Task GetSupportInfo()
+        {
+            SupportInfo response = await LocalRulestackResource.GetSupportInfoAsync();
+            Assert.NotNull(response);
+            Assert.AreEqual("https://live.paloaltonetworks.com?productSku=PAN-CLOUD-NGFW-AZURE-PAYG", response.HelpURL);
+        }
     }
 }
