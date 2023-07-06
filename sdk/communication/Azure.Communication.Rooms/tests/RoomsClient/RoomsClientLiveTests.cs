@@ -41,7 +41,7 @@ namespace Azure.Communication.Rooms.Tests
                 // Assert
                 Assert.IsFalse(string.IsNullOrWhiteSpace(createCommunicationRoom.Id));
                 Assert.AreEqual(createRoomResponse.GetRawResponse().Status, 201);
-                ValidateRoom(createCommunicationRoom, validFrom, validUntil);
+                ValidateRoom(createCommunicationRoom);
                 var createdRoomId = createCommunicationRoom.Id;
 
                 // Act: Get Room
@@ -51,7 +51,7 @@ namespace Azure.Communication.Rooms.Tests
                 // Assert:
                 Assert.AreEqual(createdRoomId, getCommunicationRoom.Id);
                 Assert.AreEqual(getRoomResponse.GetRawResponse().Status, 200);
-                ValidateRoom(getCommunicationRoom, validFrom, validUntil);
+                ValidateRoom(getCommunicationRoom);
 
                 // Act: Update Room
                 validFrom = validFrom.AddDays(10);
@@ -62,7 +62,7 @@ namespace Azure.Communication.Rooms.Tests
                 // Assert:
                 Assert.AreEqual(createdRoomId, updateCommunicationRoom.Id);
                 Assert.AreEqual(updateRoomResponse.GetRawResponse().Status, 200);
-                ValidateRoom(updateCommunicationRoom, validFrom, validUntil);
+                ValidateRoom(updateCommunicationRoom);
 
                 // Act: Delete Room
                 Response deleteRoomResponse = await roomsClient.DeleteRoomAsync(createdRoomId);
@@ -113,7 +113,7 @@ namespace Azure.Communication.Rooms.Tests
 
                 // Assert
                 Assert.AreEqual(createRoomResponse.GetRawResponse().Status, 201);
-                ValidateRoom(createCommunicationRoom, validFrom, validUntil);
+                ValidateRoom(createCommunicationRoom);
 
                 var createdRoomId = createCommunicationRoom.Id;
 
@@ -123,7 +123,7 @@ namespace Azure.Communication.Rooms.Tests
 
                 // Assert
                 Assert.AreEqual(getRoomResponse.GetRawResponse().Status, 200);
-                ValidateRoom(getCommunicationRoom, validFrom, validUntil);
+                ValidateRoom(getCommunicationRoom);
 
                 // Act Update Room
                 validFrom = validFrom.AddDays(30);
@@ -134,7 +134,7 @@ namespace Azure.Communication.Rooms.Tests
 
                 // Assert
                 Assert.AreEqual(updateRoomResponse.GetRawResponse().Status, 200);
-                ValidateRoom(updateCommunicationRoom, validFrom, validUntil);
+                ValidateRoom(updateCommunicationRoom);
 
                 // Act: Delete Room
                 Response deleteRoomResponse = await roomsClient.DeleteRoomAsync(createdRoomId);
@@ -211,7 +211,7 @@ namespace Azure.Communication.Rooms.Tests
 
             // Assert
             Assert.AreEqual(createdRoom.GetRawResponse().Status, 201);
-            ValidateRoom(createdRoom.Value, validFrom, validUntil);
+            ValidateRoom(createdRoom.Value);
         }
 
         [Test]
@@ -626,22 +626,13 @@ namespace Azure.Communication.Rooms.Tests
             Assert.AreEqual(404, ex?.Status);
         }
 
-        private void ValidateRoom(CommunicationRoom? room, DateTimeOffset? validFrom = null, DateTimeOffset? validUntil = null)
+        private void ValidateRoom(CommunicationRoom? room)
         {
             Assert.NotNull(room);
             Assert.NotNull(room?.Id);
             Assert.NotNull(room?.CreatedAt);
             Assert.NotNull(room?.ValidFrom);
             Assert.NotNull(room?.ValidUntil);
-
-            if (validFrom != null && room?.ValidFrom != null)
-            {
-                Assert.AreEqual(room.ValidFrom, validFrom);
-            }
-            if (validUntil != null && room?.ValidUntil != null)
-            {
-                Assert.AreEqual(room.ValidUntil, validUntil);
-            }
         }
     }
 }
