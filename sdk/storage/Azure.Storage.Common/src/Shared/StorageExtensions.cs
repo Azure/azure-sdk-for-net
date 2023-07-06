@@ -3,6 +3,7 @@
 
 using System;
 using System.Threading;
+using System.Threading.Tasks;
 using Azure.Core;
 
 namespace Azure.Storage.Shared
@@ -60,17 +61,13 @@ namespace Azure.Storage.Shared
             return Convert.ToBase64String(id);
         }
 
-        public static HttpAuthorization GetCopyAuthorizationHeader(
+        public static async Task<AccessToken> GetCopyAuthorizationTokenAsync(
             this TokenCredential tokenCredential,
             CancellationToken cancellationToken = default)
         {
-            AccessToken accessToken =
-                   tokenCredential.GetToken(
-                       new TokenRequestContext(Constants.CopyHttpAuthorization.Scopes),
-                       cancellationToken);
-            return new HttpAuthorization(
-                    scheme: Constants.CopyHttpAuthorization.BearerScheme,
-                    parameter: accessToken.Token);
+            return await tokenCredential.GetTokenAsync(
+                new TokenRequestContext(Constants.CopyHttpAuthorization.Scopes),
+                cancellationToken).ConfigureAwait(false);
         }
     }
 }

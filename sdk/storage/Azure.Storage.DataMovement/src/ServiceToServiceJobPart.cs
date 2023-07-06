@@ -201,7 +201,8 @@ namespace Azure.Storage.DataMovement
         {
             try
             {
-                StorageResourceCopyFromUriOptions options = GetCopyFromUriOptions();
+                StorageResourceCopyFromUriOptions options =
+                    await GetCopyFromUriOptionsAsync(_cancellationToken).ConfigureAwait(false);
                 await _destinationResource.CopyFromUriAsync(
                     sourceResource: _sourceResource,
                     overwrite: _createMode == StorageResourceCreateMode.Overwrite,
@@ -233,7 +234,8 @@ namespace Azure.Storage.DataMovement
         {
             try
             {
-                StorageResourceCopyFromUriOptions options = GetCopyFromUriOptions();
+                StorageResourceCopyFromUriOptions options =
+                    await GetCopyFromUriOptionsAsync(_cancellationToken).ConfigureAwait(false);
                 await _destinationResource.CopyBlockFromUriAsync(
                     sourceResource: _sourceResource,
                     overwrite: _createMode == StorageResourceCreateMode.Overwrite,
@@ -344,7 +346,8 @@ namespace Azure.Storage.DataMovement
         {
             try
             {
-                StorageResourceCopyFromUriOptions options = GetCopyFromUriOptions();
+                StorageResourceCopyFromUriOptions options =
+                    await GetCopyFromUriOptionsAsync(_cancellationToken).ConfigureAwait(false);
                 await _destinationResource.CopyBlockFromUriAsync(
                     sourceResource: _sourceResource,
                     overwrite: _createMode == StorageResourceCreateMode.Overwrite,
@@ -421,15 +424,17 @@ namespace Azure.Storage.DataMovement
             }
         }
 
-        private StorageResourceCopyFromUriOptions GetCopyFromUriOptions()
+        private async Task<StorageResourceCopyFromUriOptions> GetCopyFromUriOptionsAsync(CancellationToken cancellationToken)
         {
             StorageResourceCopyFromUriOptions options = default;
-            if (_sourceResource._authScheme.CanProduceHttpAuthorization)
+            AccessToken accessToken = await _sourceResource.GetCopyAuthorizationTokenAsync(cancellationToken).ConfigureAwait(false);
+            if (accessToken.Token != null)
             {
-                HttpAuthorization httpAuthorization = _sourceResource._authScheme.HttpAuthorization;
                 options = new StorageResourceCopyFromUriOptions()
                 {
-                    SourceAuthentication = httpAuthorization,
+                    SourceAuthentication = new HttpAuthorization(
+                        scheme: Constants.CopyHttpAuthorization.BearerScheme,
+                        parameter: accessToken.Token)
                 };
             }
             return options;

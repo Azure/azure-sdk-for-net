@@ -21,6 +21,7 @@ namespace Azure.Storage.DataMovement.Blobs
         private AppendBlobStorageResourceOptions _options;
         private long? _length;
         private ETag? _etagDownloadLock = default;
+        private AccessToken _accessToken;
 
         /// <summary>
         /// The identifier for the type of storage resource.
@@ -70,13 +71,7 @@ namespace Azure.Storage.DataMovement.Blobs
         {
             BlobClient = blobClient;
             _options = options;
-
-            // Set credential internally if passed one.
-            HttpAuthorization tokenCredential = BlobBaseClientInternals.GetCopyAuthorizationHeader(blobClient, CancellationToken.None);
-            if (tokenCredential != null)
-            {
-                SetAuthorizationScheme(tokenCredential);
-            }
+            _accessToken = default;
         }
 
         /// <summary>
@@ -259,6 +254,30 @@ namespace Azure.Storage.DataMovement.Blobs
             Response<BlobProperties> response = await BlobClient.GetPropertiesAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
             GrabEtag(response.GetRawResponse());
             return response.Value.ToStorageResourceProperties();
+        }
+
+        /// <summary>
+        /// Gets the HTTP Authorization header for the storage resource if available.
+        /// </summary>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// Gets the HTTP Authorization header for the storage resource if available. If not available
+        /// will return default.
+        /// </returns>
+        public override async Task<AccessToken> GetCopyAuthorizationTokenAsync(CancellationToken cancellationToken = default)
+        {
+            if (_accessToken.Equals(default))
+            {
+                if (DateTimeOffset.Compare(DateTimeOffset.UtcNow, _accessToken.ExpiresOn) < 0)
+                {
+                    return _accessToken;
+                }
+            }
+            _accessToken = await BlobBaseClientInternals.GetCopyAuthorizationTokenAsync(BlobClient, cancellationToken).ConfigureAwait(false);
+            return _accessToken;
         }
 
         /// <summary>

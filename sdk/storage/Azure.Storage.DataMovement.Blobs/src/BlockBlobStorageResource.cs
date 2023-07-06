@@ -29,6 +29,7 @@ namespace Azure.Storage.DataMovement.Blobs
         private BlockBlobStorageResourceOptions _options;
         private long? _length;
         private ETag? _etagDownloadLock = default;
+        private AccessToken _accessToken;
 
         /// <summary>
         /// The identifier for the type of storage resource.
@@ -86,19 +87,7 @@ namespace Azure.Storage.DataMovement.Blobs
             BlobClient = blobClient;
             _blocks = new ConcurrentDictionary<long, string>();
             _options = options;
-
-            // Set credential internally if passed one.
-            HttpAuthorization tokenCredential = BlobBaseClientInternals.GetCopyAuthorizationHeader(blobClient, CancellationToken.None);
-            if (tokenCredential != null)
-            {
-                SetAuthorizationScheme(tokenCredential);
-            }
-            // TODO: add back in when AzureSasCredential supports generating SAS's
-            //AzureSasCredential sasCredential = BlobBaseClientInternals.GetSasCredential(blobClient);
-            //else if (sasCredential != null)
-            //{
-            //SetAuthorizationScheme(sasCredential);
-            //}
+            _accessToken = default;
         }
 
         /// <summary>
@@ -277,6 +266,10 @@ namespace Azure.Storage.DataMovement.Blobs
         ///
         /// See <see cref="StorageResourceProperties"/>.
         /// </summary>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
         /// <returns>Returns the properties of the Storage Resource. See <see cref="StorageResourceProperties"/>.</returns>
         public override async Task<StorageResourceProperties> GetPropertiesAsync(CancellationToken cancellationToken = default)
         {
@@ -287,8 +280,40 @@ namespace Azure.Storage.DataMovement.Blobs
         }
 
         /// <summary>
+        /// Gets the HTTP Authorization header for the storage resource if available.
+        /// </summary>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// Gets the HTTP Authorization header for the storage resource if available. If not available
+        /// will return default.
+        /// </returns>
+        public override async Task<AccessToken> GetCopyAuthorizationTokenAsync(CancellationToken cancellationToken = default)
+        {
+            if (_accessToken.Equals(default))
+            {
+                if (DateTimeOffset.Compare(DateTimeOffset.UtcNow, _accessToken.ExpiresOn) < 0)
+                {
+                    return _accessToken;
+                }
+            }
+            _accessToken = await BlobBaseClientInternals.GetCopyAuthorizationTokenAsync(BlobClient, cancellationToken).ConfigureAwait(false);
+            return _accessToken;
+        }
+
+        /// <summary>
         /// Commits the block list given.
         /// </summary>
+        /// <param name="overwrite">
+        /// If set to true, will overwrite the blob if exists.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>The Task which Commits the list of ids</returns>
         public override async Task CompleteTransferAsync(
             bool overwrite,
             CancellationToken cancellationToken = default)

@@ -647,10 +647,16 @@ namespace Azure.Storage.Blobs.Specialized
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>The BlobServiceClient's HttpPipeline.</returns>
-        protected static HttpAuthorization GetCopyAuthorizationHeader(
+        protected static async Task<AccessToken> GetCopyAuthorizationTokenAsync(
             BlobBaseClient client,
             CancellationToken cancellationToken = default)
-            => client.ClientConfiguration?.OAuthTokenCredential?.GetCopyAuthorizationHeader(cancellationToken);
+        {
+            if (client.ClientConfiguration.OAuthTokenCredential != default)
+            {
+                return await client.ClientConfiguration.OAuthTokenCredential.GetCopyAuthorizationTokenAsync(cancellationToken).ConfigureAwait(false);
+            }
+            return default;
+        }
         #endregion internal static accessors for Azure.Storage.DataMovement.Blobs
 
         ///// <summary>

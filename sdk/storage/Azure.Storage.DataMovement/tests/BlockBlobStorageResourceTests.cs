@@ -297,6 +297,50 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
         }
 
         [RecordedTest]
+        public async Task CopyFromUriAsync_AccessToken()
+        {
+            // Arrange
+            BlobServiceClient serviceClient = BlobsClientBuilder.GetServiceClient_OAuth();
+            await using DisposingBlobContainer test = await GetTestContainerAsync(
+                service: serviceClient,
+                publicAccessType: PublicAccessType.None);
+
+            BlockBlobClient sourceClient = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
+            BlockBlobClient destinationClient = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
+
+            long length = Constants.KB;
+            var data = GetRandomBuffer(length);
+            using (var stream = new MemoryStream(data))
+            {
+                await sourceClient.UploadAsync(
+                    content: stream);
+            }
+
+            BlockBlobStorageResource sourceResource = new BlockBlobStorageResource(sourceClient);
+            BlockBlobStorageResource destinationResource = new BlockBlobStorageResource(destinationClient);
+            AccessToken sourceBearerToken = await sourceResource.GetCopyAuthorizationTokenAsync();
+            StorageResourceCopyFromUriOptions options = new StorageResourceCopyFromUriOptions()
+            {
+                SourceAuthentication = new HttpAuthorization(
+                    scheme: "Bearer",
+                    parameter: sourceBearerToken.Token)
+            };
+
+            // Act
+            await destinationResource.CopyFromUriAsync(
+                sourceResource: sourceResource,
+                overwrite: false,
+                completeLength: length,
+                options: options);
+
+            // Assert
+            await destinationClient.ExistsAsync();
+            BlobDownloadStreamingResult result = await destinationClient.DownloadStreamingAsync();
+            Assert.NotNull(result);
+            TestHelper.AssertSequenceEqual(data, result.Content.AsBytes().ToArray());
+        }
+
+        [RecordedTest]
         public async Task CopyFromUriAsync_Error()
         {
             // Arrange
@@ -445,6 +489,53 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
         }
 
         [RecordedTest]
+        public async Task CopyBlockFromUriAsync_AccessToken()
+        {
+            // Arrange
+            BlobServiceClient serviceClient = BlobsClientBuilder.GetServiceClient_OAuth();
+            await using DisposingBlobContainer test = await GetTestContainerAsync(
+                service: serviceClient,
+                publicAccessType: PublicAccessType.None);
+            BlockBlobClient sourceClient = test.Container.GetBlockBlobClient(GetNewBlobName());
+            BlockBlobClient destinationClient = test.Container.GetBlockBlobClient(GetNewBlobName());
+
+            var data = GetRandomBuffer(4 * Constants.KB);
+            var blockLength = Constants.KB;
+            using (var stream = new MemoryStream(data))
+            {
+                await sourceClient.UploadAsync(
+                    content: stream);
+            }
+
+            BlockBlobStorageResource sourceResource = new BlockBlobStorageResource(sourceClient);
+            BlockBlobStorageResource destinationResource = new BlockBlobStorageResource(destinationClient);
+
+            AccessToken accessToken = await sourceResource.GetCopyAuthorizationTokenAsync();
+            StorageResourceCopyFromUriOptions options = new StorageResourceCopyFromUriOptions()
+            {
+                SourceAuthentication = new HttpAuthorization(
+                    scheme: "Bearer",
+                    parameter: accessToken.Token)
+            };
+
+            // Act
+            await destinationResource.CopyBlockFromUriAsync(
+                sourceResource: sourceResource,
+                overwrite: false,
+                range: new HttpRange(0, blockLength),
+                options: options);
+            await destinationResource.CompleteTransferAsync(false);
+
+            // Assert
+            await destinationClient.ExistsAsync();
+            BlobDownloadStreamingResult result = await destinationClient.DownloadStreamingAsync();
+            Assert.NotNull(result);
+            byte[] blockData = new byte[blockLength];
+            Array.Copy(data, 0, blockData, 0, blockLength);
+            TestHelper.AssertSequenceEqual(blockData, result.Content.AsBytes().ToArray());
+        }
+
+        [RecordedTest]
         public async Task CopyBlockFromUriAsync_Error()
         {
             // Arrange
@@ -567,6 +658,60 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
 
             // Assert
             Assert.IsTrue(await blobClient.ExistsAsync());
+        }
+
+        [RecordedTest]
+        public async Task GetCopyAuthorizationTokenAsync()
+        {
+            // Arrange
+            await using DisposingBlobContainer testContainer = await GetTestContainerAsync();
+            BlockBlobClient blobClient = testContainer.Container.GetBlockBlobClient(GetNewBlobName());
+
+            long length = Constants.KB;
+            var data = GetRandomBuffer(length);
+            using (var stream = new MemoryStream(data))
+            {
+                await blobClient.UploadAsync(
+                    content: stream);
+            }
+
+            BlockBlobStorageResource sourceResource = new BlockBlobStorageResource(blobClient);
+
+            // Act - Get access token
+            AccessToken accessToken = await sourceResource.GetCopyAuthorizationTokenAsync();
+
+            // Assert
+            Assert.NotNull(accessToken);
+        }
+
+        [RecordedTest]
+        public async Task GetCopyAuthorizationTokenAsync_OAuth()
+        {
+            // Arrange
+            var containerName = GetNewContainerName();
+            BlobServiceClient service = BlobsClientBuilder.GetServiceClient_OAuth();
+            await using DisposingBlobContainer testContainer = await GetTestContainerAsync(
+                service,
+                containerName,
+                publicAccessType: PublicAccessType.None);
+            BlockBlobClient blobClient = testContainer.Container.GetBlockBlobClient(GetNewBlobName());
+
+            long length = Constants.KB;
+            var data = GetRandomBuffer(length);
+            using (var stream = new MemoryStream(data))
+            {
+                await blobClient.UploadAsync(
+                    content: stream);
+            }
+
+            BlockBlobStorageResource sourceResource = new BlockBlobStorageResource(blobClient);
+
+            // Act - Get access token
+            AccessToken accessToken = await sourceResource.GetCopyAuthorizationTokenAsync();
+
+            // Assert
+            Assert.NotNull(accessToken);
+            Assert.NotNull(accessToken.Token);
         }
     }
 }

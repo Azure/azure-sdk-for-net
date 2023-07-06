@@ -5,6 +5,7 @@ using System;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Storage.DataMovement.Models;
 using Azure.Storage.Tests.Shared;
 
@@ -79,6 +80,11 @@ namespace Azure.Storage.DataMovement.Tests
                 contentLength: Length ?? 0,
                 lastAccessed: default,
                 resourceType: StorageResourceType.LocalFile));
+        }
+
+        public override Task<AccessToken> GetCopyAuthorizationTokenAsync(CancellationToken cancellationToken = default)
+        {
+            return Task.FromResult<AccessToken>(default);
         }
 
         public override Task<ReadStreamStorageResourceResult> ReadStreamAsync(long position = 0, long? length = null, CancellationToken cancellationToken = default)

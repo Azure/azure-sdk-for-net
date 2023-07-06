@@ -12,16 +12,10 @@ namespace Azure.Storage.DataMovement
     public abstract class StorageResource
     {
         /// <summary>
-        /// Stores the authentication scheme that client authenticates with.
-        /// </summary>
-        internal ResourceAuthorization _authScheme;
-
-        /// <summary>
         /// The protected constructor for the abstract StorageResourceBase class (to allow for mocking).
         /// </summary>
         protected StorageResource()
         {
-            _authScheme = new ResourceAuthorization();
         }
 
         /// <summary>
@@ -43,23 +37,5 @@ namespace Azure.Storage.DataMovement
         /// Defines whether the storage resource is a container.
         /// </summary>
         public abstract bool IsContainer { get; }
-
-        // TODO: add back in when AzureSasCredential supports generating SAS's
-        // <summary>
-        // Internal constructor to accept the authorization Scheme
-        // </summary>
-        //protected void SetAuthorizationScheme(AzureSasCredential sasCredential)
-        //{
-        //_authScheme.SetAuthentication(sasCredential);
-        //}
-
-        /// <summary>
-        /// Internal constructor to accept the authorization Scheme
-        /// </summary>
-        /// <param name="authorization"></param>
-        protected void SetAuthorizationScheme(HttpAuthorization authorization)
-        {
-            _authScheme.SetAuthentication(authorization);
-        }
     }
 }
