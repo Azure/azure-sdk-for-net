@@ -48,7 +48,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                             telemetryItem.Data = new MonitorBase
                             {
                                 BaseType = "RequestData",
-                                BaseData = new RequestData(Version, activity, ref activityTagsProcessor),
+                                BaseData = activityTagsProcessor.activityType.HasFlag(OperationType.V2)
+                                                ? new RequestData(Version, activity, ref activityTagsProcessor, schemaVersion: "V2")
+                                                : new RequestData(Version, activity, ref activityTagsProcessor)
                             };
                             break;
                         case TelemetryType.Dependency:
@@ -165,6 +167,30 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                 if (!string.IsNullOrWhiteSpace(httpUrl) && Uri.TryCreate(httpUrl!.ToString(), UriKind.RelativeOrAbsolute, out var uri) && uri.IsAbsoluteUri)
                 {
                     return $"{httpMethod} {uri.AbsolutePath}";
+                }
+            }
+
+            return activity.DisplayName;
+        }
+
+        internal static string GetV2OperationName(Activity activity, string? url,  ref AzMonList MappedTags)
+        {
+            var httpMethod = AzMonList.GetTagValue(ref MappedTags, SemanticConventions.AttributeHttpRequestMethod)?.ToString();
+            if (!string.IsNullOrWhiteSpace(httpMethod))
+            {
+                var httpRoute = AzMonList.GetTagValue(ref MappedTags, SemanticConventions.AttributeHttpRoute)?.ToString();
+
+                // ASP.NET instrumentation assigns route as {controller}/{action}/{id} which would result in the same name for different operations.
+                // To work around that we will use path from httpUrl.
+                if (httpRoute?.Contains("{controller}") == false)
+                {
+                    return $"{httpMethod} {httpRoute}";
+                }
+
+                url ??= MappedTags.GetV2RequestUrl();
+                if (url != null)
+                {
+                    return $"{httpMethod} {url}";
                 }
             }
 

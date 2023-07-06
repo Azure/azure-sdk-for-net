@@ -42,6 +42,8 @@ namespace Azure.Maps.Routing
         protected MapsRoutingClient() { }
         public MapsRoutingClient(Azure.AzureKeyCredential credential) { }
         public MapsRoutingClient(Azure.AzureKeyCredential credential, Azure.Maps.Routing.MapsRoutingClientOptions options) { }
+        public MapsRoutingClient(Azure.AzureSasCredential credential) { }
+        public MapsRoutingClient(Azure.AzureSasCredential credential, Azure.Maps.Routing.MapsRoutingClientOptions options) { }
         public MapsRoutingClient(Azure.Core.TokenCredential credential, string clientId) { }
         public MapsRoutingClient(Azure.Core.TokenCredential credential, string clientId, Azure.Maps.Routing.MapsRoutingClientOptions options) { }
         public virtual Azure.Response<Azure.Maps.Routing.Models.RouteDirections> GetDirections(Azure.Maps.Routing.RouteDirectionQuery query, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }

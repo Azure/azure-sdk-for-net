@@ -192,7 +192,7 @@ namespace Azure.Storage.DataMovement.Tests
         public async Task LocalToBlockBlobSize_SmallChunk()
         {
             long fileSize = Constants.KB;
-            int waitTimeInSec = 10;
+            int waitTimeInSec = 25;
             TransferOptions options = new TransferOptions()
             {
                 InitialTransferSize = 100,
@@ -1023,7 +1023,7 @@ namespace Azure.Storage.DataMovement.Tests
         public async Task LocalToAppend_SmallChunk()
         {
             long size = Constants.KB;
-            int waitTimeInSec = 10;
+            int waitTimeInSec = 25;
 
             TransferOptions options = new TransferOptions()
             {

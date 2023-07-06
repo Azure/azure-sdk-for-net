@@ -21,12 +21,13 @@ namespace Azure.Storage.DataMovement.Blobs
     public class BlockBlobStorageResource : StorageResourceSingle
     {
         internal BlockBlobClient BlobClient { get; set; }
+        internal BlockBlobStorageResourceOptions _options;
+
         /// <summary>
         /// In order to ensure the block list is sent in the correct order
         /// we will order them by the offset (i.e. {offset, block_id}).
         /// </summary>
         private ConcurrentDictionary<long, string> _blocks;
-        private BlockBlobStorageResourceOptions _options;
         private long? _length;
         private ETag? _etagDownloadLock = default;
 

@@ -18,7 +18,7 @@ namespace Azure.Storage.DataMovement.Blobs
     public class PageBlobStorageResource : StorageResourceSingle
     {
         internal PageBlobClient BlobClient { get; set; }
-        private PageBlobStorageResourceOptions _options;
+        internal PageBlobStorageResourceOptions _options;
         private long? _length;
         private ETag? _etagDownloadLock = default;
 

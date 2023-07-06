@@ -321,7 +321,7 @@ namespace Azure.Storage.DataMovement.Blobs
             return new BlobSyncUploadFromUriOptions()
             {
                 HttpHeaders = options?.HttpHeaders,
-                // Metadata = options?.Metadata,
+                Metadata = options?.Metadata,
                 Tags = options?.Tags,
                 AccessTier = options?.AccessTier,
                 SourceConditions = new BlobRequestConditions()
@@ -515,7 +515,7 @@ namespace Azure.Storage.DataMovement.Blobs
                 // Get Metadata
                 int metadataIndex = DataMovementConstants.PlanFile.DstBlobMetadataLengthIndex;
                 int metadataReadLength = DataMovementConstants.PlanFile.DstBlobTagsLengthIndex - metadataIndex;
-                string metadata = await checkpointer.GetHeaderValue(
+                string metadata = await checkpointer.GetHeaderUShortValue(
                     transferId,
                     metadataIndex,
                     metadataReadLength,
@@ -526,7 +526,7 @@ namespace Azure.Storage.DataMovement.Blobs
                 // Get blob tags
                 int tagsIndex = DataMovementConstants.PlanFile.DstBlobTagsLengthIndex;
                 int tagsReadLength = DataMovementConstants.PlanFile.DstBlobIsSourceEncrypted - tagsIndex;
-                string tags = await checkpointer.GetHeaderValue(
+                string tags = await checkpointer.GetHeaderLongValue(
                     transferId,
                     tagsIndex,
                     tagsReadLength,
