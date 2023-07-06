@@ -104,7 +104,6 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                 Storage.StorageSizeInGB = value;
             }
         }
-
         /// <summary> Storage properties of a server. </summary>
         public PostgreSqlFlexibleServerStorage Storage { get; set; }
         /// <summary> AuthConfig properties of a server. </summary>
