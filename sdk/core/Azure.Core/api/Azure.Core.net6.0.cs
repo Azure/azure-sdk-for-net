@@ -1149,7 +1149,6 @@ namespace Azure.Core.Serialization
         public bool IgnoreAdditionalProperties { get { throw null; } set { } }
         public bool IgnoreReadOnlyProperties { get { throw null; } set { } }
         public string? NameHint { get { throw null; } set { } }
-        public bool PrettyPrint { get { throw null; } set { } }
         public System.Collections.Generic.Dictionary<System.Type, Azure.Core.Serialization.ObjectSerializer> Serializers { get { throw null; } }
     }
     public abstract partial class ObjectSerializer
