@@ -6,29 +6,29 @@ using System.Text.Json;
 using System.IO;
 using Azure.Core.Serialization;
 using System;
-using Azure.Core.Tests.Public.ResourceManager.Compute;
 using System.Reflection;
 using BenchmarkDotNet.Configs;
 using Azure.Core.TestFramework;
 using System.Text;
 using Microsoft.Extensions.Options;
+using Azure.Core.Tests.Public.ResourceManager.Resources;
 
 namespace Azure.Core.Perf
 {
     [MemoryDiagnoser]
     [GroupBenchmarksBy(BenchmarkLogicalGroupRule.ByCategory)]
-    public class SerializationBenchmark
+    public class LargeSerializationBenchmark
     {
-        private string _json = File.ReadAllText(Path.Combine(Directory.GetParent(Assembly.GetExecutingAssembly().Location).FullName, "SerializationBenchmark", "TestData", "AvailabilitySetData.json"));
-        private AvailabilitySetData _model;
+        private string _json = File.ReadAllText(Path.Combine(Directory.GetParent(Assembly.GetExecutingAssembly().Location).FullName, "SerializationBenchmark", "TestData", "ResourceProviderData.json"));
+        private ResourceProviderData _model;
         private Response _response;
         private ModelSerializerOptions _options;
         private BinaryData _data;
 
-        public SerializationBenchmark()
+        public LargeSerializationBenchmark()
         {
             _data = BinaryData.FromString(_json);
-            _model = ModelSerializer.Deserialize<AvailabilitySetData>(_data);
+            _model = ModelSerializer.Deserialize<ResourceProviderData>(_data);
             MockResponse response = new MockResponse(200);
             response.ContentStream = new MemoryStream(Encoding.UTF8.GetBytes(_json));
             _response = response;
@@ -94,14 +94,14 @@ namespace Azure.Core.Perf
         public void Deserialize_UseInternal()
         {
             using JsonDocument doc = JsonDocument.Parse(_json);
-            AvailabilitySetData.DeserializeAvailabilitySetData(doc.RootElement);
+            ResourceProviderData.DeserializeResourceProviderData(doc.RootElement);
         }
 
         [Benchmark]
         [BenchmarkCategory("Cast")]
         public void Deserialize_UseExplicitCast()
         {
-            var aset = (AvailabilitySetData)_response;
+            var aset = (ResourceProviderData)_response;
             _response.ContentStream.Position = 0; //reset for reuse
         }
 
@@ -112,14 +112,14 @@ namespace Azure.Core.Perf
             JsonSerializerOptions options = new JsonSerializerOptions();
             options.IgnoreReadOnlyProperties = true;
             options.Converters.Add(new ModelJsonConverter(true));
-            JsonSerializer.Deserialize<AvailabilitySetData>(_json, options);
+            JsonSerializer.Deserialize<ResourceProviderData>(_json, options);
         }
 
         [Benchmark]
         [BenchmarkCategory("ModelSerializer")]
         public void Deserialize_UseModelSerializer()
         {
-            ModelSerializer.Deserialize<AvailabilitySetData>(BinaryData.FromString(_json), _options);
+            ModelSerializer.Deserialize<ResourceProviderData>(BinaryData.FromString(_json), _options);
         }
 
         [Benchmark]

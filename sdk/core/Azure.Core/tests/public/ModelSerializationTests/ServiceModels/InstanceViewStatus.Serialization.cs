@@ -9,7 +9,7 @@ using System;
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.ResourceManager.Compute.Models
+namespace Azure.Core.Tests.Public.ResourceManager.Compute.Models
 {
     public partial class InstanceViewStatus : IUtf8JsonSerializable
     {

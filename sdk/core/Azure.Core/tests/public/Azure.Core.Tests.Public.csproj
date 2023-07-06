@@ -27,5 +27,10 @@
     <Compile Include="..\TestClients\LowLevelClient\PetStoreClient.cs" LinkBase="Shared/Tests" />
     <Compile Include="..\TestClients\LowLevelClient\PetStoreClientOptions.cs" LinkBase="Shared/Tests" />
   </ItemGroup>
+  <ItemGroup>
+    <None Update="ModelSerializationTests\TestData\ResourceProviderData.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
 
 </Project>

@@ -5,7 +5,7 @@
 
 using Azure.Core;
 
-namespace Azure.ResourceManager.Models
+namespace Azure.Core.Tests.Public.ResourceManager.Models
 {
     /// <summary> Common fields that are returned in the response for all Azure Resource Manager resources. </summary>
     public abstract partial class ResourceData

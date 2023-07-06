@@ -1,14 +1,14 @@
-﻿ // Copyright (c) Microsoft Corporation. All rights reserved.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Text;
-using NUnit.Framework;
-using Azure.Core.Tests.Public.ModelSerializationTests.Models;
+using System.Text.Json;
 using Azure.Core.Serialization;
-using System.Collections.Generic;
-using System;
-using Azure.ResourceManager.Compute;
+using Azure.Core.Tests.Public.ResourceManager.Compute;
+using NUnit.Framework;
 
 namespace Azure.Core.Tests.Public.ModelSerializationTests
 {
@@ -18,7 +18,17 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
         [TestCase(true, false)]
         [TestCase(false, true)]
         [TestCase(false, false)]
-        public void RoundTripTest(bool ignoreReadOnlyProperties, bool ignoreAdditionalProperties)
+        public void RoundTripTest(bool ignoreReadOnlyProperties, bool ignoreAdditionalProperties) =>
+            RoundTripTest(ignoreReadOnlyProperties, ignoreAdditionalProperties, SerializeWithModelSerializer);
+
+        [TestCase(true, true)]
+        [TestCase(true, false)]
+        [TestCase(false, true)]
+        [TestCase(false, false)]
+        public void BufferTest(bool ignoreReadOnlyProperties, bool ignoreAdditionalProperties) =>
+            RoundTripTest(ignoreReadOnlyProperties, ignoreAdditionalProperties, SerializeWithBuffer);
+
+        private void RoundTripTest(bool ignoreReadOnlyProperties, bool ignoreAdditionalProperties, Func<AvailabilitySetData, ModelSerializerOptions, string> serialize)
         {
             ModelSerializerOptions options = new ModelSerializerOptions();
             options.IgnoreAdditionalProperties = ignoreAdditionalProperties;
@@ -40,13 +50,32 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
             AvailabilitySetData model = ModelSerializer.Deserialize<AvailabilitySetData>(new BinaryData(Encoding.UTF8.GetBytes(serviceResponse)), options);
 
             ValidateModel(model);
-            var data = ModelSerializer.Serialize(model, options);
-            string roundTrip = data.ToString();
+            string roundTrip = serialize(model, options);
 
             Assert.That(roundTrip, Is.EqualTo(expectedSerializedString));
 
             AvailabilitySetData model2 = ModelSerializer.Deserialize<AvailabilitySetData>(new BinaryData(Encoding.UTF8.GetBytes(roundTrip)), options);
             CompareModels(model, model2, ignoreReadOnlyProperties);
+        }
+
+        private string SerializeWithModelSerializer(AvailabilitySetData model, ModelSerializerOptions options)
+        {
+            var data = ModelSerializer.Serialize(model, options);
+            return data.ToString();
+        }
+
+        private string SerializeWithBuffer(AvailabilitySetData model, ModelSerializerOptions options)
+        {
+            using var multiBufferRequestContent = new MultiBufferRequestContent(bufferSize: 4048);
+            var writer = new Utf8JsonWriter(multiBufferRequestContent);
+            model.Serialize(writer);
+            writer.Flush();
+            RequestContent content = multiBufferRequestContent;
+            using var stream = new MemoryStream();
+            content.WriteTo(stream, default);
+            stream.Position = 0;
+            using var reader = new StreamReader(stream);
+            return reader.ReadToEnd();
         }
 
         private void CompareModels(AvailabilitySetData model, AvailabilitySetData model2, bool ignoreReadOnlyProperties)

@@ -11,24 +11,15 @@ using System.IO;
 using System.Text.Json;
 using Azure.Core;
 using Azure.Core.Serialization;
-using Azure.ResourceManager.Compute.Models;
-using Azure.ResourceManager.Models;
-using Azure.ResourceManager.Resources.Models;
+using Azure.Core.Tests.Public.ResourceManager.Compute.Models;
+using Azure.Core.Tests.Public.ResourceManager.Models;
+using Azure.Core.Tests.Public.ResourceManager.Resources.Models;
 
-namespace Azure.ResourceManager.Compute
+namespace Azure.Core.Tests.Public.ResourceManager.Compute
 {
     public partial class AvailabilitySetData : IUtf8JsonSerializable, IModelSerializable
     {
-        private static readonly ModelSerializerOptions _azureSerivceOptions = new ModelSerializerOptions()
-        {
-            IgnoreAdditionalProperties = true,
-            IgnoreReadOnlyProperties = true,
-        };
-
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
-        {
-            Serialize(writer, _azureSerivceOptions);
-        }
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => Serialize(writer, ModelSerializerOptions.AzureSerivceDefault);
 
         private void Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
@@ -99,7 +90,7 @@ namespace Azure.ResourceManager.Compute
 
         public static AvailabilitySetData DeserializeAvailabilitySetData(JsonElement element, ModelSerializerOptions options = default)
         {
-            options ??= _azureSerivceOptions;
+            options ??= ModelSerializerOptions.AzureSerivceDefault;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -253,7 +244,8 @@ namespace Azure.ResourceManager.Compute
 
         object IModelSerializable.Deserialize(BinaryData data, ModelSerializerOptions options)
         {
-            return DeserializeAvailabilitySetData(JsonDocument.Parse(data).RootElement, options);
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeAvailabilitySetData(doc.RootElement, options);
         }
 
         // only used for public access to internal serialize

@@ -12,6 +12,15 @@ namespace Azure.Core.Serialization
     public class ModelSerializerOptions
     {
         /// <summary>
+        /// .
+        /// </summary>
+        public static readonly ModelSerializerOptions AzureSerivceDefault = new ModelSerializerOptions()
+        {
+            IgnoreAdditionalProperties = true,
+            IgnoreReadOnlyProperties = true,
+        };
+
+        /// <summary>
         /// Bool that determines if ReadOnlyProperties will be serialized. Default is false.
         /// </summary>
         public bool IgnoreReadOnlyProperties { get; set; }

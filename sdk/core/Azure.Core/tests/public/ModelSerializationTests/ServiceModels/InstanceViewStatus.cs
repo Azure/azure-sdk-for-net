@@ -7,7 +7,7 @@
 
 using System;
 
-namespace Azure.ResourceManager.Compute.Models
+namespace Azure.Core.Tests.Public.ResourceManager.Compute.Models
 {
     /// <summary> Instance view status. </summary>
     public partial class InstanceViewStatus

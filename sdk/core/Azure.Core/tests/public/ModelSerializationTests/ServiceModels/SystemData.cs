@@ -8,7 +8,7 @@
 using System;
 using Azure.Core;
 
-namespace Azure.ResourceManager.Models
+namespace Azure.Core.Tests.Public.ResourceManager.Models
 {
     /// <summary> Metadata pertaining to creation and last modification of the resource. </summary>
     public partial class SystemData

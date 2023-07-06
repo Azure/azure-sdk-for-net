@@ -8,11 +8,11 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.Compute.Models;
-using Azure.ResourceManager.Models;
-using Azure.ResourceManager.Resources.Models;
+using Azure.Core.Tests.Public.ResourceManager.Compute.Models;
+using Azure.Core.Tests.Public.ResourceManager.Models;
+using Azure.Core.Tests.Public.ResourceManager.Resources.Models;
 
-namespace Azure.ResourceManager.Compute
+namespace Azure.Core.Tests.Public.ResourceManager.Compute
 {
     /// <summary>
     /// A class representing the AvailabilitySet data model.
@@ -32,7 +32,6 @@ namespace Azure.ResourceManager.Compute
         public static explicit operator AvailabilitySetData(Response response)
         {
             using JsonDocument jsonDocument = JsonDocument.Parse(response.ContentStream);
-            response.ContentStream.Position = 0; //only used for benchmark so we can reuse the response object 
             return DeserializeAvailabilitySetData(jsonDocument.RootElement);
         }
 
