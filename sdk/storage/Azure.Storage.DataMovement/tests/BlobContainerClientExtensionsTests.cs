@@ -4,6 +4,7 @@
 using System;
 using System.IO;
 using System.Reflection;
+using System.Threading;
 using System.Threading.Tasks;
 using Azure.Identity;
 using Azure.Storage.Blobs;
@@ -134,7 +135,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
 
             public Action<StorageResource, StorageResource, TransferOptions> OnStartTransferContainerAsync { get; set; }
 
-            public override Task<DataTransfer> StartTransferAsync(StorageResource sourceResource, StorageResource destinationResource, TransferOptions transferOptions = null)
+            public override Task<DataTransfer> StartTransferAsync(StorageResource sourceResource, StorageResource destinationResource, TransferOptions transferOptions = null, CancellationToken cancellationToken = default)
             {
                 if (OnStartTransferContainerAsync != null)
                 {

@@ -26,6 +26,7 @@ namespace Azure.Storage.DataMovement.Blobs
         public override long? Length { get { throw null; } }
         public override long MaxChunkSize { get { throw null; } }
         public override string Path { get { throw null; } }
+        public override string ResourceId { get { throw null; } }
         public override Azure.Storage.DataMovement.TransferType TransferType { get { throw null; } }
         public override System.Uri Uri { get { throw null; } }
         public override System.Threading.Tasks.Task CompleteTransferAsync(bool overwrite, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -70,6 +71,18 @@ namespace Azure.Storage.DataMovement.Blobs
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } set { } }
         public Azure.Storage.UploadTransferValidationOptions UploadTransferValidationOptions { get { throw null; } set { } }
     }
+    public partial class BlobStorageResourceProvider
+    {
+        internal BlobStorageResourceProvider() { }
+        public System.Threading.Tasks.Task<Azure.Storage.DataMovement.StorageResource> MakeResourceAsync(Azure.AzureSasCredential credential, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public System.Threading.Tasks.Task<Azure.Storage.DataMovement.StorageResource> MakeResourceAsync(Azure.Core.TokenCredential credential, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public System.Threading.Tasks.Task<Azure.Storage.DataMovement.StorageResource> MakeResourceAsync(Azure.Storage.StorageSharedKeyCredential credential, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public System.Threading.Tasks.Task<Azure.Storage.DataMovement.StorageResource> MakeResourceAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public static partial class BlobStorageResources
+    {
+        public static bool TryGetResourceProviders(Azure.Storage.DataMovement.Models.DataTransferProperties info, out Azure.Storage.DataMovement.Blobs.BlobStorageResourceProvider sourceProvider, out Azure.Storage.DataMovement.Blobs.BlobStorageResourceProvider destinationProvider) { throw null; }
+    }
     public partial class BlockBlobStorageResource : Azure.Storage.DataMovement.StorageResourceSingle
     {
         public BlockBlobStorageResource(Azure.Storage.Blobs.Specialized.BlockBlobClient blobClient, Azure.Storage.DataMovement.Blobs.BlockBlobStorageResourceOptions options = null) { }
@@ -77,6 +90,7 @@ namespace Azure.Storage.DataMovement.Blobs
         public override long? Length { get { throw null; } }
         public override long MaxChunkSize { get { throw null; } }
         public override string Path { get { throw null; } }
+        public override string ResourceId { get { throw null; } }
         public override Azure.Storage.DataMovement.TransferType TransferType { get { throw null; } }
         public override System.Uri Uri { get { throw null; } }
         public override System.Threading.Tasks.Task CompleteTransferAsync(bool overwrite, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -100,6 +114,7 @@ namespace Azure.Storage.DataMovement.Blobs
         public override long? Length { get { throw null; } }
         public override long MaxChunkSize { get { throw null; } }
         public override string Path { get { throw null; } }
+        public override string ResourceId { get { throw null; } }
         public override Azure.Storage.DataMovement.TransferType TransferType { get { throw null; } }
         public override System.Uri Uri { get { throw null; } }
         public override System.Threading.Tasks.Task CompleteTransferAsync(bool overwrite, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }

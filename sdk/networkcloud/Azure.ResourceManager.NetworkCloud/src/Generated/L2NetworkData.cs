@@ -30,6 +30,7 @@ namespace Azure.ResourceManager.NetworkCloud
             Argument.AssertNotNull(l2IsolationDomainId, nameof(l2IsolationDomainId));
 
             ExtendedLocation = extendedLocation;
+            AssociatedResourceIds = new ChangeTrackingList<string>();
             HybridAksClustersAssociatedIds = new ChangeTrackingList<string>();
             L2IsolationDomainId = l2IsolationDomainId;
             VirtualMachinesAssociatedIds = new ChangeTrackingList<string>();
@@ -43,18 +44,20 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
         /// <param name="extendedLocation"> The extended location of the cluster associated with the resource. </param>
+        /// <param name="associatedResourceIds"> The list of resource IDs for the other Microsoft.NetworkCloud resources that have attached this network. </param>
         /// <param name="clusterId"> The resource ID of the Network Cloud cluster this L2 network is associated with. </param>
         /// <param name="detailedStatus"> The more detailed status of the L2 network. </param>
         /// <param name="detailedStatusMessage"> The descriptive message about the current detailed status. </param>
-        /// <param name="hybridAksClustersAssociatedIds"> The list of Hybrid AKS cluster resource ID(s) that are associated with this L2 network. </param>
-        /// <param name="hybridAksPluginType"> The network plugin type for Hybrid AKS. </param>
+        /// <param name="hybridAksClustersAssociatedIds"> Field Deprecated. These fields will be empty/omitted. The list of Hybrid AKS cluster resource ID(s) that are associated with this L2 network. </param>
+        /// <param name="hybridAksPluginType"> Field Deprecated. The field was previously optional, now it will have no defined behavior and will be ignored. The network plugin type for Hybrid AKS. </param>
         /// <param name="interfaceName"> The default interface name for this L2 network in the virtual machine. This name can be overridden by the name supplied in the network attachment configuration of that virtual machine. </param>
         /// <param name="l2IsolationDomainId"> The resource ID of the Network Fabric l2IsolationDomain. </param>
         /// <param name="provisioningState"> The provisioning state of the L2 network. </param>
-        /// <param name="virtualMachinesAssociatedIds"> The list of virtual machine resource ID(s), excluding any Hybrid AKS virtual machines, that are currently using this L2 network. </param>
-        internal L2NetworkData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ExtendedLocation extendedLocation, string clusterId, L2NetworkDetailedStatus? detailedStatus, string detailedStatusMessage, IReadOnlyList<string> hybridAksClustersAssociatedIds, HybridAksPluginType? hybridAksPluginType, string interfaceName, string l2IsolationDomainId, L2NetworkProvisioningState? provisioningState, IReadOnlyList<string> virtualMachinesAssociatedIds) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="virtualMachinesAssociatedIds"> Field Deprecated. These fields will be empty/omitted. The list of virtual machine resource ID(s), excluding any Hybrid AKS virtual machines, that are currently using this L2 network. </param>
+        internal L2NetworkData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ExtendedLocation extendedLocation, IReadOnlyList<string> associatedResourceIds, string clusterId, L2NetworkDetailedStatus? detailedStatus, string detailedStatusMessage, IReadOnlyList<string> hybridAksClustersAssociatedIds, HybridAksPluginType? hybridAksPluginType, string interfaceName, string l2IsolationDomainId, L2NetworkProvisioningState? provisioningState, IReadOnlyList<string> virtualMachinesAssociatedIds) : base(id, name, resourceType, systemData, tags, location)
         {
             ExtendedLocation = extendedLocation;
+            AssociatedResourceIds = associatedResourceIds;
             ClusterId = clusterId;
             DetailedStatus = detailedStatus;
             DetailedStatusMessage = detailedStatusMessage;
@@ -68,15 +71,17 @@ namespace Azure.ResourceManager.NetworkCloud
 
         /// <summary> The extended location of the cluster associated with the resource. </summary>
         public ExtendedLocation ExtendedLocation { get; set; }
+        /// <summary> The list of resource IDs for the other Microsoft.NetworkCloud resources that have attached this network. </summary>
+        public IReadOnlyList<string> AssociatedResourceIds { get; }
         /// <summary> The resource ID of the Network Cloud cluster this L2 network is associated with. </summary>
         public string ClusterId { get; }
         /// <summary> The more detailed status of the L2 network. </summary>
         public L2NetworkDetailedStatus? DetailedStatus { get; }
         /// <summary> The descriptive message about the current detailed status. </summary>
         public string DetailedStatusMessage { get; }
-        /// <summary> The list of Hybrid AKS cluster resource ID(s) that are associated with this L2 network. </summary>
+        /// <summary> Field Deprecated. These fields will be empty/omitted. The list of Hybrid AKS cluster resource ID(s) that are associated with this L2 network. </summary>
         public IReadOnlyList<string> HybridAksClustersAssociatedIds { get; }
-        /// <summary> The network plugin type for Hybrid AKS. </summary>
+        /// <summary> Field Deprecated. The field was previously optional, now it will have no defined behavior and will be ignored. The network plugin type for Hybrid AKS. </summary>
         public HybridAksPluginType? HybridAksPluginType { get; set; }
         /// <summary> The default interface name for this L2 network in the virtual machine. This name can be overridden by the name supplied in the network attachment configuration of that virtual machine. </summary>
         public string InterfaceName { get; set; }
@@ -84,7 +89,7 @@ namespace Azure.ResourceManager.NetworkCloud
         public string L2IsolationDomainId { get; set; }
         /// <summary> The provisioning state of the L2 network. </summary>
         public L2NetworkProvisioningState? ProvisioningState { get; }
-        /// <summary> The list of virtual machine resource ID(s), excluding any Hybrid AKS virtual machines, that are currently using this L2 network. </summary>
+        /// <summary> Field Deprecated. These fields will be empty/omitted. The list of virtual machine resource ID(s), excluding any Hybrid AKS virtual machines, that are currently using this L2 network. </summary>
         public IReadOnlyList<string> VirtualMachinesAssociatedIds { get; }
     }
 }

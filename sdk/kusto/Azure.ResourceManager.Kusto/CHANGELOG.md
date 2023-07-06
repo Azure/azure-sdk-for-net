@@ -1,14 +1,16 @@
 # Release History
 
-## 1.4.0-beta.2 (Unreleased)
+## 1.4.0 (2023-07-05)
 
 ### Features Added
 
-### Breaking Changes
-
-### Bugs Fixed
+- Introduced Cluster Migrate functionality.
+- Introduced Database invite follower functionality.
+- Introduced Database CMK functionality.
 
 ### Other Changes
+
+- Upgraded to Azure API version 2023-05-02.
 
 ## 1.4.0-beta.1 (2023-05-30)
 

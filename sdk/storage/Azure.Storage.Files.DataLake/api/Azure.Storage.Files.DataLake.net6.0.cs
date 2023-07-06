@@ -933,23 +933,6 @@ namespace Azure.Storage.Files.DataLake.Models
         None = 0,
         Metadata = 1,
     }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct ListBlobsShowOnly : System.IEquatable<Azure.Storage.Files.DataLake.Models.ListBlobsShowOnly>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public ListBlobsShowOnly(string value) { throw null; }
-        public static Azure.Storage.Files.DataLake.Models.ListBlobsShowOnly Deleted { get { throw null; } }
-        public bool Equals(Azure.Storage.Files.DataLake.Models.ListBlobsShowOnly other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.Storage.Files.DataLake.Models.ListBlobsShowOnly left, Azure.Storage.Files.DataLake.Models.ListBlobsShowOnly right) { throw null; }
-        public static implicit operator Azure.Storage.Files.DataLake.Models.ListBlobsShowOnly (string value) { throw null; }
-        public static bool operator !=(Azure.Storage.Files.DataLake.Models.ListBlobsShowOnly left, Azure.Storage.Files.DataLake.Models.ListBlobsShowOnly right) { throw null; }
-        public override string ToString() { throw null; }
-    }
     public partial class PathAccessControl
     {
         internal PathAccessControl() { }

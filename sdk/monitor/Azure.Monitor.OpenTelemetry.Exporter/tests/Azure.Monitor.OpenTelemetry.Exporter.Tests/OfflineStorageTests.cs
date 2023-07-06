@@ -231,6 +231,34 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             transmitter.Dispose();
         }
 
+        [Fact]
+        public void TelemetryIsStoredOfflineWhenTransmissionStateIsSetToOpen()
+        {
+            using var activity = CreateActivity("TestActivity");
+            var telemetryItem = CreateTelemetryItem(activity);
+            List<TelemetryItem> telemetryItems = new List<TelemetryItem>
+            {
+                telemetryItem
+            };
+
+            var mockResponse = new MockResponse(200).SetContent("Ok");
+            var transmitter = GetTransmitter(mockResponse);
+
+            // Set the state to Open
+            transmitter._transmissionStateManager.OpenTransmission();
+            Assert.Equal(TransmissionState.Open, transmitter._transmissionStateManager.State);
+
+            // Transmit
+            transmitter.TrackAsync(telemetryItems, false, CancellationToken.None).EnsureCompleted();
+
+            //Assert
+            // Telemetry should be stored offline as the state is open.
+            Assert.NotNull(transmitter._fileBlobProvider);
+            Assert.Single(transmitter._fileBlobProvider.GetBlobs());
+
+            transmitter.Dispose();
+        }
+
         private static AzureMonitorTransmitter GetTransmitter(params MockResponse[] mockResponse)
         {
             MockTransport mockTransport = new MockTransport(mockResponse);
