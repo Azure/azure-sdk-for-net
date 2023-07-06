@@ -85,6 +85,34 @@ You can also run tests via the command line using `dotnet test`, but that will r
 
 If you are using system environment variables, make sure to restart Visual Studio or the terminal after setting or changing the environment variables.
 
+## Test proxy
+
+Using the test proxy tool, migrate the local recording files to the external repository [azure-sdk-assets](https://github.com/Azure/azure-sdk-assets). Please refer to [this document](https://github.com/Azure/azure-sdk-tools/blob/main/tools/test-proxy/Azure.Sdk.Tools.TestProxy/README.md#installation) for the installation of the test proxy.
+
+> If an RP's root directory contains an `assets.json` file, it means that all local recording files for that RP have been migrated to the `azure-sdk-assets` repo.
+
+1. How to migrate recordings
+ 
+The Engineering System team provided a PowerShell script that can be used to migrate recordings automatically, but it needs to be executed once for each package. To get the script and guidance on how to run it, see: [Transitioning recording assets from language repositories into azure-sdk-assets](https://nam06.safelinks.protection.outlook.com/?url=https%3A%2F%2Fgithub.com%2FAzure%2Fazure-sdk-tools%2Fblob%2Fmain%2Feng%2Fcommon%2Ftestproxy%2Ftransition-scripts%2FREADME.md&data=05%7C01%7Cv-minghc%40microsoft.com%7C884353a5d83a4f7daef608db6d61e24b%7C72f988bf86f141af91ab2d7cd011db47%7C1%7C0%7C638224039445940738%7CUnknown%7CTWFpbGZsb3d8eyJWIjoiMC4wLjAwMDAiLCJQIjoiV2luMzIiLCJBTiI6Ik1haWwiLCJXVCI6Mn0%3D%7C3000%7C%7C%7C&sdata=ZKJqiD58%2FC6LvkWrG1iY2%2F7dRSQarAXsO9se7ftl1pE%3D&reserved=0)
+
+2. Running tests
+
+After migrating the recording files, you can run the tests again or execute the following command to download the recording files from the remote repository to the local machine:
+```
+cd azure-sdk-for-net/sdk/{service}/{package}
+test-proxy restore -a ./assets.json
+```
+The local recording files will be stored in `azure-sdk-for-net/.assets/{10-character}/net/sdk/{service}/{package}/tests/SessionRecords`.
+
+3. Push the recording files to the assets repository.
+
+```
+cd azure-sdk-for-net/sdk/{service}/{package}
+test-proxy push -a ./assets.json
+```
+The test-proxy push command will upload the corresponding SessionRecords files under `\.assets` and update the tag in `assets.json`.
+After the push is complete, you can find the corresponding tag in the `Switch branches/tags` section of the [azure-sdk-assets](https://github.com/Azure/azure-sdk-assets) repo  to verify the recording files you uploaded.
+
 ## Samples
 
 Our samples are structured as unit tests so we can easily verify they're up to date and working correctly. These tests aren't recorded and make minimal use of test infrastructure to keep them easy to read.
