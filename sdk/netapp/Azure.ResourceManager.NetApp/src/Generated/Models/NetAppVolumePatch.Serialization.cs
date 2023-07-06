@@ -92,6 +92,11 @@ namespace Azure.ResourceManager.NetApp.Models
                 writer.WritePropertyName("coolnessPeriod"u8);
                 writer.WriteNumberValue(CoolnessPeriod.Value);
             }
+            if (Optional.IsDefined(SnapshotDirectoryVisible))
+            {
+                writer.WritePropertyName("snapshotDirectoryVisible"u8);
+                writer.WriteBooleanValue(SnapshotDirectoryVisible.Value);
+            }
             writer.WriteEndObject();
             writer.WriteEndObject();
         }

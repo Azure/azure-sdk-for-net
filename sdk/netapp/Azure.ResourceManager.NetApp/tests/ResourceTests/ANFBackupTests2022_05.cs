@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.NetApp.Tests
             _resourceGroup = null;
         }
 
-        [Ignore("Permission issue, disable this case temporary")]
+        //[Ignore("Permission issue, disable this case temporary")]
         [RecordedTest]
         public async Task CreateVolumWithBackupConfigWithVaultIdShouldWorkUsing2022_05_01()
         {

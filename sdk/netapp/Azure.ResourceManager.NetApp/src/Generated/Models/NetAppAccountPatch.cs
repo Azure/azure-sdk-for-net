@@ -21,6 +21,8 @@ namespace Azure.ResourceManager.NetApp.Models
             ActiveDirectories = new ChangeTrackingList<NetAppAccountActiveDirectory>();
         }
 
+        /// <summary> The identity used for the resource. </summary>
+        public ManagedServiceIdentity Identity { get; set; }
         /// <summary> Azure lifecycle management. </summary>
         public string ProvisioningState { get; }
         /// <summary> Active Directories. </summary>

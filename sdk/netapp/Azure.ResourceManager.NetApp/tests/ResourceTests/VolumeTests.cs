@@ -573,6 +573,25 @@ namespace Azure.ResourceManager.NetApp.Tests
             await volumeResource1.BreakFileLocksAsync(WaitUntil.Completed, parameters);
         }
 
+        [RecordedTest]
+        public async Task GetGetGroupIdListForLdapUserNonLDAPVolumeShouldReturnError()
+        {
+            //create volume
+            string volumeName = Recording.GenerateAssetName("volumeName-");
+            await CreateVirtualNetwork();
+            NetAppVolumeResource volumeResource1 = await CreateVolume(DefaultLocation, NetAppFileServiceLevel.Premium, _defaultUsageThreshold, volumeName: volumeName);
+            VerifyVolumeProperties(volumeResource1, true);
+            volumeResource1.Should().BeEquivalentTo((await volumeResource1.GetAsync()).Value);
+            //validate if created successfully
+            NetAppVolumeResource volumeResource2 = await _volumeCollection.GetAsync(volumeResource1.Data.Name.Split('/').Last());
+            VerifyVolumeProperties(volumeResource2, true);
+
+            //Call break file locks
+            GetGroupIdListForLdapUserContent parameters = new("fakeUser");
+            RequestFailedException exception = Assert.ThrowsAsync<RequestFailedException>(async () => { await volumeResource1.GetGetGroupIdListForLdapUserAsync(WaitUntil.Completed, parameters); });
+            Assert.AreEqual(400, exception.Status);
+        }
+
         private async Task WaitForReplicationStatus(NetAppVolumeResource volumeResource, NetAppMirrorState mirrorState)
         {
             var maxDelay = TimeSpan.FromSeconds(240);

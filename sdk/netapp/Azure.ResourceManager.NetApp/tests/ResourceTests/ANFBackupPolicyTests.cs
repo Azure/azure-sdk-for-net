@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.NetApp.Tests
             _resourceGroup = null;
         }
 
-        [Ignore("Permission issue, disable this case temporary")]
+        //[Ignore("Permission issue, disable this case temporary")]
         [RecordedTest]
         public async Task CreateDeleteBackupPolicy()
         {
@@ -90,7 +90,6 @@ namespace Azure.ResourceManager.NetApp.Tests
             Assert.AreEqual(404, exception.Status);
         }
 
-        [Ignore("Permission issue, disable this case temporary")]
         [RecordedTest]
         public async Task ListBackupPolicies()
         {
@@ -129,7 +128,6 @@ namespace Azure.ResourceManager.NetApp.Tests
             Assert.IsFalse(await _backupPolicyCollection.ExistsAsync(backupPolicyName + "1"));
         }
 
-        [Ignore("Permission issue, disable this case temporary")]
         [RecordedTest]
         public async Task UpdateBackupPolicy()
         {
@@ -140,7 +138,7 @@ namespace Azure.ResourceManager.NetApp.Tests
 
             //Update with patch
             NetAppBackupPolicyPatch backupPolicyPatch = new(DefaultLocation);
-            backupPolicyPatch.DailyBackupsToKeep = 1;
+            backupPolicyPatch.DailyBackupsToKeep = 2;
             NetAppBackupPolicyResource backupPolicyPatchedResource = (await backupPolicyResource1.UpdateAsync(WaitUntil.Completed, backupPolicyPatch)).Value;
             NetAppBackupPolicyResource backupPolicyPatchedResource2 = await _backupPolicyCollection.GetAsync(backupPolicyName);
             Assert.AreEqual(backupPolicyName, backupPolicyPatchedResource2.Id.Name);
@@ -150,7 +148,6 @@ namespace Azure.ResourceManager.NetApp.Tests
             Assert.AreEqual(_backupPolicy.IsEnabled, backupPolicyPatchedResource2.Data.IsEnabled);
         }
 
-        [Ignore("Permission issue, disable this case temporary")]
         [RecordedTest]
         public async Task CreateVolumeWithBackupPolicy()
         {
