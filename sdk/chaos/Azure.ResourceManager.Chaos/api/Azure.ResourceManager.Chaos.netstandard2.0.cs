@@ -340,6 +340,9 @@ namespace Azure.ResourceManager.Chaos.Models
     {
         public ContinuousAction(string name, string continuousActionduration, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Chaos.Models.KeyValuePair> parameters, string selectorId) : base (default(string)) { }
         public string ContinuousActionduration { get { throw null; } set { } }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        [System.ObsoleteAttribute("This property is obsolete and will be removed in a future release", false)]
+        public System.TimeSpan Duration { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Chaos.Models.KeyValuePair> Parameters { get { throw null; } }
         public string SelectorId { get { throw null; } set { } }
     }
@@ -347,6 +350,9 @@ namespace Azure.ResourceManager.Chaos.Models
     {
         public DelayAction(string name, string delayActionduration) : base (default(string)) { }
         public string DelayActionduration { get { throw null; } set { } }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        [System.ObsoleteAttribute("This property is obsolete and will be removed in a future release", false)]
+        public System.TimeSpan Duration { get { throw null; } set { } }
     }
     public partial class DiscreteAction : Azure.ResourceManager.Chaos.Models.Action
     {
