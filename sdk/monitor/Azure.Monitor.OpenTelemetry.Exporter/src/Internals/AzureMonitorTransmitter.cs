@@ -158,7 +158,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 
         public string InstrumentationKey => _connectionVars.InstrumentationKey;
 
-        public async ValueTask<ExportResult> TrackAsync(IEnumerable<TelemetryItem> telemetryItems, string origin, bool async, CancellationToken cancellationToken)
+        public async ValueTask<ExportResult> TrackAsync(IEnumerable<TelemetryItem> telemetryItems, TelemetryItemOrigin origin, bool async, CancellationToken cancellationToken)
         {
             ExportResult result = ExportResult.Failure;
             if (cancellationToken.IsCancellationRequested)
