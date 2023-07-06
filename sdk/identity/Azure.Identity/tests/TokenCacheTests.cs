@@ -257,9 +257,10 @@ namespace Azure.Identity.Tests
         }
 
         [Test]
-        public async Task RegisteredEventsAreCalledOnFirstUpdate()
+        public async Task RegisteredEventsAreCalledOnFirstUpdate(
+            [Values(true, false)] bool enableCae)
         {
-            cache = new TokenCache(new TestInMemoryTokenCacheOptions(bytes));
+            cache = new TokenCache(new TestInMemoryTokenCacheOptions(bytes), enableCae: enableCae);
 
             TokenCacheNotificationArgs mockArgs = GetMockArgs(mockSerializer, true);
             bool updatedCalled = false;
@@ -276,7 +277,14 @@ namespace Azure.Identity.Tests
             cache.TokenCacheUpdatedAsync += (args) =>
             {
                 updatedCalled = true;
+                Assert.AreEqual(enableCae, args.EnableCae);
                 return Task.CompletedTask;
+            };
+
+            cache.RefreshCacheFromOptionsAsync += (args, cancellationToken) =>
+            {
+                Assert.AreEqual(enableCae, args.EnableCae);
+                return Task.FromResult(new TokenCacheData(bytes));
             };
 
             await cache.RegisterCache(IsAsync, mockMSALCache.Object, default);
@@ -359,7 +367,8 @@ namespace Azure.Identity.Tests
         }
 
         [Test]
-        public async Task Serialize()
+        public async Task Serialize(
+            [Values(true, false)] bool enableCae)
         {
             var evt = new ManualResetEventSlim();
             var mockPublicClient = new Mock<IPublicClientApplication>();
@@ -374,7 +383,10 @@ namespace Azure.Identity.Tests
                 .Setup(m => m.SetAfterAccessAsync(It.IsAny<Func<TokenCacheNotificationArgs, Task>>()))
                 .Callback<Func<TokenCacheNotificationArgs, Task>>(afterAccess => main_OnAfterCacheAccessAsync = afterAccess);
 
-            var cache = new TokenCache(new TestInMemoryTokenCacheOptions(bytes, updateHandler), default, publicApplicationFactory: new Func<IPublicClientApplication>(() => mockPublicClient.Object));
+            var cache = new TokenCache(new TestInMemoryTokenCacheOptions(
+                bytes,
+                updateHandler), default, publicApplicationFactory: new Func<IPublicClientApplication>(() => mockPublicClient.Object),
+                enableCae: enableCae);
             await cache.RegisterCache(IsAsync, mockMSALCache.Object, default);
 
             await main_OnBeforeCacheAccessAsync.Invoke(mockArgs);
@@ -383,6 +395,7 @@ namespace Azure.Identity.Tests
             Task updateHandler(TokenCacheUpdatedArgs args)
             {
                 Assert.That(args.UnsafeCacheData.ToArray(), Is.EqualTo(updatedBytes));
+                Assert.AreEqual(enableCae, args.EnableCae);
                 evt.Set();
                 return Task.CompletedTask;
             };
