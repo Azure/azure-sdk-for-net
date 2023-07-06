@@ -18,7 +18,11 @@ sdk\<service name>\Azure.ResourceManager.<service>\tests\Scenario
 sdk\<service name>\Azure.ResourceManager.<service>\tests\SessionRecords
 ```
 
-**Note**: Considering that in Git directories exist implicitly, so you might need to create the `Scenario` and `SessionRecords` directories by yourself after cloning the repo.
+**Note**: 
+
+1.Considering that in Git directories exist implicitly, so you might need to create the `Scenario` and `SessionRecords` directories by yourself after cloning the repo.
+
+2. The recording files under SessionRecords will eventually be migrated to the assets repository by the test proxy. For more details, please refer to [these steps](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/resourcemanager/Azure.ResourceManager/docs/TestGuide.md#test-proxy).
 
 ## Writing scenario tests
 
@@ -111,6 +115,7 @@ cd azure-sdk-for-net/sdk/{service}/{package}
 test-proxy push -a ./assets.json
 ```
 The test-proxy push command will upload the corresponding SessionRecords files under `\.assets` and update the tag in `assets.json`.
+
 After the push is complete, you can find the corresponding tag in the `Switch branches/tags` section of the [azure-sdk-assets](https://github.com/Azure/azure-sdk-assets) repo  to verify the recording files you uploaded.
 
 ## Samples
