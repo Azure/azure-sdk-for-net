@@ -20,7 +20,7 @@ sdk\<service name>\Azure.ResourceManager.<service>\tests\SessionRecords
 
 **Note**: 
 
-1.Considering that in Git directories exist implicitly, so you might need to create the `Scenario` and `SessionRecords` directories by yourself after cloning the repo.
+1. Considering that in Git directories exist implicitly, so you might need to create the `Scenario` and `SessionRecords` directories by yourself after cloning the repo.
 
 2. The recording files under SessionRecords will eventually be migrated to the assets repository by the test proxy. For more details, please refer to [these steps](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/resourcemanager/Azure.ResourceManager/docs/TestGuide.md#test-proxy).
 
