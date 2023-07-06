@@ -14,7 +14,7 @@
         "x-ms-client-request-id": "f316a320bd85c32262ac22b2728ad814",
         "x-ms-return-client-request-id": "true"
       },
-      "RequestBody": "[{\u0022Text\u0022:\u0022ap kaise ho\u0022}]",
+      "RequestBody": "[{\u0022text\u0022:\u0022ap kaise ho\u0022}]",
       "StatusCode": 200,
       "ResponseHeaders": {
         "Access-Control-Expose-Headers": [

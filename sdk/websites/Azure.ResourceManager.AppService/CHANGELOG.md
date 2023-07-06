@@ -9,6 +9,7 @@
 ### Bugs Fixed
 
 - Fixed an issue that exception throws when `Uri` type field is empty during deserialization of `WebAppBackupData`.
+- Fixed an issue that exception throws when `Uri` type field is empty during deserialization of `WebSiteInstanceStatusData`.
 
 ### Other Changes
 

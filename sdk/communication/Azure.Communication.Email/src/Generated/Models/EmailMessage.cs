@@ -14,7 +14,6 @@ namespace Azure.Communication.Email
     /// <summary> Message payload for sending an email. </summary>
     public partial class EmailMessage
     {
-
         /// <summary> Custom email headers to be passed. </summary>
         public IDictionary<string, string> Headers { get; }
         /// <summary> Sender email address from a verified domain. </summary>

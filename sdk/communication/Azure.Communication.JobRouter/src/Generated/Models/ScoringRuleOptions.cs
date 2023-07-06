@@ -13,7 +13,6 @@ namespace Azure.Communication.JobRouter
     /// <summary> Encapsulates all options that can be passed as parameters for scoring rule with BestWorkerMode. </summary>
     public partial class ScoringRuleOptions
     {
-
         /// <summary> Initializes a new instance of ScoringRuleOptions. </summary>
         /// <param name="batchSize"> (Optional) Set batch size when AllowScoringBatchOfWorkers is set to true. Defaults to 20 if not configured. </param>
         /// <param name="scoringParameters">

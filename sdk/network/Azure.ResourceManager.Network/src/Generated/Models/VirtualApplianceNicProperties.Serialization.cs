@@ -21,6 +21,7 @@ namespace Azure.ResourceManager.Network.Models
             Optional<string> name = default;
             Optional<string> publicIPAddress = default;
             Optional<string> privateIPAddress = default;
+            Optional<string> instanceName = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -38,8 +39,13 @@ namespace Azure.ResourceManager.Network.Models
                     privateIPAddress = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("instanceName"u8))
+                {
+                    instanceName = property.Value.GetString();
+                    continue;
+                }
             }
-            return new VirtualApplianceNicProperties(name.Value, publicIPAddress.Value, privateIPAddress.Value);
+            return new VirtualApplianceNicProperties(name.Value, publicIPAddress.Value, privateIPAddress.Value, instanceName.Value);
         }
     }
 }

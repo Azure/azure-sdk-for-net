@@ -4,11 +4,7 @@
 
 ### Features Added
 
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
+- Create SAS credential policy
 
 ## 1.0.0-beta.3 (2022-11-08)
 

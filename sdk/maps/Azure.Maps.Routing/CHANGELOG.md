@@ -4,11 +4,11 @@
 
 ### Features Added
 
-### Breaking Changes
+- Support SAS authentication
 
 ### Bugs Fixed
 
-### Other Changes
+- Update dependency libraries versions
 
 ## 1.0.0-beta.1 (2022-10-11)
 
