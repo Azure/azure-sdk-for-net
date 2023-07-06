@@ -13,7 +13,7 @@ using Azure.Health.Insights.ClinicalMatching;
 namespace Microsoft.Extensions.Azure
 {
     /// <summary> Extension methods to add <see cref="ClinicalMatchingClient"/> to client builder. </summary>
-    public static partial class AzureHealthInsightsClientBuilderExtensions
+    public static partial class AzureHealthInsightsClinicalMatchingClientBuilderExtensions
     {
         /// <summary> Registers a <see cref="ClinicalMatchingClient"/> instance. </summary>
         /// <param name="builder"> The builder to register with. </param>
