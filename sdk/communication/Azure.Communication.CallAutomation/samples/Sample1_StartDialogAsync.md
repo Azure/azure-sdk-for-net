@@ -4,7 +4,7 @@ This sample demonstrates how to add a Dialog Bot to a phone call and start it.
 
 To get started you will need:
 - A Communication Service Resource.  See [README][README] for prerequisites and instructions.
-- A Dialog Bot App
+- A Nuance Mix Bot. See [Nuance Mix][Nuance_Mix] for instructions
 
 ## Creating a `CallAutomationClient`
 
@@ -43,3 +43,4 @@ await callDialog.StartDialogAsync(dialogOptions);
 [README]: https://github.com/Azure/azure-sdk-for-net/blob/a20e269162fa88a43e5ba0e5bb28f2e76c74a484/sdk/communication/Azure.Communication.CallingServer/README.md#getting-started
 [create_call_sample]: https://github.com/Azure/azure-sdk-for-net/blob/a20e269162fa88a43e5ba0e5bb28f2e76c74a484/sdk/communication/Azure.Communication.CallingServer/samples/Sample1_CreateCallAsync.md
 [Quickstart]: https://replace-sample
+[Nuance_Mix]: https://docs.nuance.com/mix/
