@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             Optional<string> name = default;
             Optional<IReadOnlyList<PostgreSqlFlexibleServerEditionCapability>> supportedServerEditions = default;
             Optional<IReadOnlyList<PostgreSqlFlexibleServerServerVersionCapability>> supportedServerVersions = default;
-            Optional<PostgreSqlFlexibleServerFastProvisioningSupportedEnum> fastProvisioningSupported = default;
+            Optional<PostgreSqlFlexibleServerFastProvisioningSupportedEnum1> fastProvisioningSupported = default;
             Optional<IReadOnlyList<PostgreSqlFlexibleServerFastProvisioningEditionCapability>> supportedFastProvisioningEditions = default;
             Optional<PostgreSqlFlexibleServerGeoBackupSupportedEnum> geoBackupSupported = default;
             Optional<PostgreSqlFlexibleServerZoneRedundantHaSupportedEnum> zoneRedundantHaSupported = default;
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                     {
                         continue;
                     }
-                    fastProvisioningSupported = new PostgreSqlFlexibleServerFastProvisioningSupportedEnum(property.Value.GetString());
+                    fastProvisioningSupported = new PostgreSqlFlexibleServerFastProvisioningSupportedEnum1(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("supportedFastProvisioningEditions"u8))

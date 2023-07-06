@@ -4,6 +4,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using System.ComponentModel;
 using Azure.Core;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
@@ -33,7 +34,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <param name="storageAutoGrowthSupported"> A value indicating whether storage auto-grow is supported in this region. "Enabled" means storage auto-grow is supported. "Disabled" stands for storage auto-grow is not supported. </param>
         /// <param name="onlineResizeSupported"> A value indicating whether online resize is supported in this region for the given subscription. "Enabled" means storage online resize is supported. "Disabled" means storage online resize is not supported. </param>
         /// <param name="restricted"> A value indicating whether this region is restricted. "Enabled" means region is restricted. "Disabled" stands for region is not restricted. </param>
-        internal PostgreSqlFlexibleServerCapabilityProperties(PostgreSqlFlexbileServerCapabilityStatus? status, string reason, string name, IReadOnlyList<PostgreSqlFlexibleServerEditionCapability> supportedServerEditions, IReadOnlyList<PostgreSqlFlexibleServerServerVersionCapability> supportedServerVersions, PostgreSqlFlexibleServerFastProvisioningSupportedEnum? fastProvisioningSupported, IReadOnlyList<PostgreSqlFlexibleServerFastProvisioningEditionCapability> supportedFastProvisioningEditions, PostgreSqlFlexibleServerGeoBackupSupportedEnum? geoBackupSupported, PostgreSqlFlexibleServerZoneRedundantHaSupportedEnum? zoneRedundantHaSupported, PostgreSqlFlexibleServerZoneRedundantHaAndGeoBackupSupportedEnum? zoneRedundantHaAndGeoBackupSupported, PostgreSqlFlexibleServerStorageAutoGrowthSupportedEnum? storageAutoGrowthSupported, PostgreSqlFlexibleServerOnlineResizeSupportedEnum? onlineResizeSupported, PostgreSqlFlexibleServerZoneRedundantRestrictedEnum? restricted) : base(status, reason)
+        internal PostgreSqlFlexibleServerCapabilityProperties(PostgreSqlFlexbileServerCapabilityStatus? status, string reason, string name, IReadOnlyList<PostgreSqlFlexibleServerEditionCapability> supportedServerEditions, IReadOnlyList<PostgreSqlFlexibleServerServerVersionCapability> supportedServerVersions, PostgreSqlFlexibleServerFastProvisioningSupportedEnum1? fastProvisioningSupported, IReadOnlyList<PostgreSqlFlexibleServerFastProvisioningEditionCapability> supportedFastProvisioningEditions, PostgreSqlFlexibleServerGeoBackupSupportedEnum? geoBackupSupported, PostgreSqlFlexibleServerZoneRedundantHaSupportedEnum? zoneRedundantHaSupported, PostgreSqlFlexibleServerZoneRedundantHaAndGeoBackupSupportedEnum? zoneRedundantHaAndGeoBackupSupported, PostgreSqlFlexibleServerStorageAutoGrowthSupportedEnum? storageAutoGrowthSupported, PostgreSqlFlexibleServerOnlineResizeSupportedEnum? onlineResizeSupported, PostgreSqlFlexibleServerZoneRedundantRestrictedEnum? restricted) : base(status, reason)
         {
             Name = name;
             SupportedServerEditions = supportedServerEditions;
@@ -61,7 +62,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <summary> The list of server versions supported for this capability. </summary>
         public IReadOnlyList<PostgreSqlFlexibleServerServerVersionCapability> SupportedServerVersions { get; }
         /// <summary> Gets a value indicating whether fast provisioning is supported. "Enabled" means fast provisioning is supported. "Disabled" stands for fast provisioning is not supported. </summary>
-        public PostgreSqlFlexibleServerFastProvisioningSupportedEnum? FastProvisioningSupported { get; }
+        public PostgreSqlFlexibleServerFastProvisioningSupportedEnum1? FastProvisioningSupported { get; }
         /// <summary> List of supported server editions for fast provisioning. </summary>
         public IReadOnlyList<PostgreSqlFlexibleServerFastProvisioningEditionCapability> SupportedFastProvisioningEditions { get; }
         /// <summary> Determines if geo-backup is supported in this region. "Enabled" means geo-backup is supported. "Disabled" stands for geo-back is not supported. </summary>
@@ -91,5 +92,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         public PostgreSqlFlexibleServerOnlineResizeSupportedEnum? OnlineResizeSupported { get; }
         /// <summary> A value indicating whether this region is restricted. "Enabled" means region is restricted. "Disabled" stands for region is not restricted. </summary>
         public PostgreSqlFlexibleServerZoneRedundantRestrictedEnum? Restricted { get; }
+        /// <summary> The status. </summary>
+        public new string Status { get; }
     }
 }

@@ -253,7 +253,7 @@ rename-mapping:
   CancelEnum: PostgreSqlMigrationCancelEnum
   CapabilityStatus: PostgreSqlFlexbileServerCapabilityStatus
   DbServerMetadata: PostgreSqlServerMetadata
-  FastProvisioningSupportedEnum: PostgreSqlFlexibleServerFastProvisioningSupportedEnum
+  FastProvisioningSupportedEnum: PostgreSqlFlexibleServerFastProvisioningSupportedEnum1
   FlexibleServerCapability: PostgreSqlFlexibleServerCapabilityProperties
   FlexibleServersLogFile: PostgreSqlFlexibleServersLogFile
   FlexibleServersLogFileListResult: PostgreSqlFlexibleServersLogFileListResult
