@@ -142,7 +142,7 @@ namespace Azure.Identity
             {
                 if (RefreshCacheFromOptionsAsync != null)
                 {
-                    Data = (await RefreshCacheFromOptionsAsync(new TokenCacheRefreshArgs(args), default).ConfigureAwait(false))
+                    Data = (await RefreshCacheFromOptionsAsync(new TokenCacheRefreshArgs(args, EnableCae), default).ConfigureAwait(false))
                         .CacheBytes.ToArray();
                 }
                 args.TokenCache.DeserializeMsalV3(Data, true);
@@ -181,7 +181,7 @@ namespace Azure.Identity
                 if (TokenCacheUpdatedAsync != null)
                 {
                     var eventBytes = Data.ToArray();
-                    await TokenCacheUpdatedAsync(new TokenCacheUpdatedArgs(eventBytes)).ConfigureAwait(false);
+                    await TokenCacheUpdatedAsync(new TokenCacheUpdatedArgs(eventBytes, EnableCae)).ConfigureAwait(false);
                 }
 
                 _lastUpdated = _cacheAccessMap.GetOrCreateValue(tokenCache).Update();

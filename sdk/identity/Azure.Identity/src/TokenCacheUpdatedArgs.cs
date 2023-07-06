@@ -10,14 +10,20 @@ namespace Azure.Identity
     /// </summary>
     public class TokenCacheUpdatedArgs
     {
-        internal TokenCacheUpdatedArgs(ReadOnlyMemory<byte> cacheData)
+        internal TokenCacheUpdatedArgs(ReadOnlyMemory<byte> cacheData, bool enableCae)
         {
             UnsafeCacheData = cacheData;
+            EnableCae = enableCae;
         }
 
         /// <summary>
         /// The <see cref="TokenCachePersistenceOptions"/> instance which was updated.
         /// </summary>
         public ReadOnlyMemory<byte> UnsafeCacheData { get; }
+
+        /// <summary>
+        /// Whether or not the cache is enabled for CAE.
+        /// </summary>
+        public bool EnableCae { get; }
     }
 }
