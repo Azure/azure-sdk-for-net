@@ -28,7 +28,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             Assert.NotNull(activity);
             var activityTagsProcessor = TraceHelper.EnumerateActivityTags(activity);
 
-            var remoteDependencyDataType = new RemoteDependencyData(2, activity, ref activityTagsProcessor, schemaVersion:"New").Type;
+            var remoteDependencyDataType = new RemoteDependencyData(2, activity, ref activityTagsProcessor, schemaVersion:SchemaConstants.DefaultSchemaVersion).Type;
 
             Assert.Equal("InProc", remoteDependencyDataType);
         }
@@ -47,7 +47,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             Assert.NotNull(activity);
             var activityTagsProcessor = TraceHelper.EnumerateActivityTags(activity);
 
-            var remoteDependencyData = new RemoteDependencyData(2, activity, ref activityTagsProcessor, schemaVersion:"New");
+            var remoteDependencyData = new RemoteDependencyData(2, activity, ref activityTagsProcessor, schemaVersion:SchemaConstants.DefaultSchemaVersion);
 
             Assert.Equal("DemoAzureResource", activityTagsProcessor.AzureNamespace);
             if (activity.Kind == ActivityKind.Internal)
@@ -84,7 +84,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
 
             var activityTagsProcessor = TraceHelper.EnumerateActivityTags(activity);
 
-            var remoteDependencyData = new RemoteDependencyData(2, activity, ref activityTagsProcessor, schemaVersion: "New");
+            var remoteDependencyData = new RemoteDependencyData(2, activity, ref activityTagsProcessor, schemaVersion: SchemaConstants.DefaultSchemaVersion);
 
             Assert.Equal("GET /search", remoteDependencyData.Name);
             Assert.Equal(activity.Context.SpanId.ToHexString(), remoteDependencyData.Id);
@@ -114,7 +114,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
 
             var activityTagsProcessor = TraceHelper.EnumerateActivityTags(activity);
 
-            var remoteDependencyDataName = new RemoteDependencyData(2, activity, ref activityTagsProcessor, schemaVersion: "New").Name;
+            var remoteDependencyDataName = new RemoteDependencyData(2, activity, ref activityTagsProcessor, schemaVersion: SchemaConstants.DefaultSchemaVersion).Name;
 
             Assert.Equal(activity.DisplayName, remoteDependencyDataName);
         }
