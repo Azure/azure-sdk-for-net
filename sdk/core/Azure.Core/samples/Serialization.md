@@ -79,7 +79,7 @@ DogListProperty dog = new DogListProperty
 };
 
 JsonSerializerOptions options = new JsonSerializerOptions();
-options.Converters.Add(new ModelJsonConverter(false));
+options.Converters.Add(new ModelJsonConverter("D"));
 
 string json = System.Text.Json.JsonSerializer.Serialize(dog, options);
 ```
@@ -90,7 +90,7 @@ string json = System.Text.Json.JsonSerializer.Serialize(dog, options);
 string json = @"[{""LatinName"":""Animalia"",""Weight"":1.1,""Name"":""Doggo"",""IsHungry"":false,""FoodConsumed"":[""kibble"",""egg"",""peanut butter""],""NumberOfLegs"":4}]";
 
 JsonSerializerOptions options = new JsonSerializerOptions();
-options.Converters.Add(new ModelJsonConverter(false));
+options.Converters.Add(new ModelJsonConverter("D"));
 
 DogListProperty dog = System.Text.Json.JsonSerializer.Deserialize<DogListProperty>(json, options);
 ```
