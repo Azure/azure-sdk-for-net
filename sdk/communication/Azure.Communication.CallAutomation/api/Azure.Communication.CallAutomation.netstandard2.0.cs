@@ -359,6 +359,7 @@ namespace Azure.Communication.CallAutomation
         public string OperationContext { get { throw null; } set { } }
         public Azure.Communication.CallAutomation.PlaySource Prompt { get { throw null; } set { } }
         public string SpeechLanguage { get { throw null; } set { } }
+        public string SpeechModelEndpointId { get { throw null; } set { } }
         public Azure.Communication.CommunicationIdentifier TargetParticipant { get { throw null; } }
     }
     public partial class CallMediaRecognizeSpeechOptions : Azure.Communication.CallAutomation.CallMediaRecognizeOptions
@@ -1182,6 +1183,7 @@ namespace Azure.Communication.CallAutomation
     public partial class SsmlSource : Azure.Communication.CallAutomation.PlaySource
     {
         public SsmlSource(string ssmlText) { }
+        public string CustomVoiceEndpointId { get { throw null; } set { } }
         public string SsmlText { get { throw null; } }
     }
     public partial class StartDialogOptions
@@ -1223,6 +1225,7 @@ namespace Azure.Communication.CallAutomation
         public TextSource(string text) { }
         public TextSource(string text, string voiceName) { }
         public TextSource(string text, string sourceLocale, Azure.Communication.CallAutomation.GenderType gender) { }
+        public string CustomVoiceEndpointId { get { throw null; } set { } }
         public string SourceLocale { get { throw null; } set { } }
         public string Text { get { throw null; } }
         public Azure.Communication.CallAutomation.GenderType? VoiceGender { get { throw null; } set { } }

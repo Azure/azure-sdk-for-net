@@ -50,25 +50,6 @@ namespace Azure.ResourceManager.HDInsight
                 return new SubscriptionResourceExtensionClient(client, scope);
             });
         }
-        #region HDInsightClusterResource
-        /// <summary>
-        /// Gets an object representing a <see cref="HDInsightClusterResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="HDInsightClusterResource.CreateResourceIdentifier" /> to create a <see cref="HDInsightClusterResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="HDInsightClusterResource" /> object. </returns>
-        public static HDInsightClusterResource GetHDInsightClusterResource(this ArmClient client, ResourceIdentifier id)
-        {
-            return client.GetResourceClient(() =>
-            {
-                HDInsightClusterResource.ValidateResourceId(id);
-                return new HDInsightClusterResource(client, id);
-            }
-            );
-        }
-        #endregion
-
         #region HDInsightApplicationResource
         /// <summary>
         /// Gets an object representing a <see cref="HDInsightApplicationResource" /> along with the instance operations that can be performed on it but with no data.
@@ -83,6 +64,25 @@ namespace Azure.ResourceManager.HDInsight
             {
                 HDInsightApplicationResource.ValidateResourceId(id);
                 return new HDInsightApplicationResource(client, id);
+            }
+            );
+        }
+        #endregion
+
+        #region HDInsightClusterResource
+        /// <summary>
+        /// Gets an object representing a <see cref="HDInsightClusterResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="HDInsightClusterResource.CreateResourceIdentifier" /> to create a <see cref="HDInsightClusterResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="HDInsightClusterResource" /> object. </returns>
+        public static HDInsightClusterResource GetHDInsightClusterResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return client.GetResourceClient(() =>
+            {
+                HDInsightClusterResource.ValidateResourceId(id);
+                return new HDInsightClusterResource(client, id);
             }
             );
         }

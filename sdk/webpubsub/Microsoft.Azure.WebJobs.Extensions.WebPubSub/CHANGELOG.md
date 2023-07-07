@@ -1,14 +1,10 @@
 # Release History
 
-## 1.6.0-beta.1 (Unreleased)
-
-### Features Added
-
-### Breaking Changes
+## 1.6.0 (2023-06-30)
 
 ### Bugs Fixed
-
-### Other Changes
+- Fix secondary key validation failed.
+- Fix multi request origins validation.
 
 ## 1.5.0 (2023-03-21)
 

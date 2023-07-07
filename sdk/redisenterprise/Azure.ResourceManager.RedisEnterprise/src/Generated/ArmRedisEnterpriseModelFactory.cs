@@ -18,7 +18,6 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
     /// <summary> Model factory for models. </summary>
     public static partial class ArmRedisEnterpriseModelFactory
     {
-
         /// <summary> Initializes a new instance of RedisEnterpriseOperationStatus. </summary>
         /// <param name="id"> The operation's unique id. </param>
         /// <param name="name"> The operation's name. </param>

@@ -237,9 +237,9 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="ifMatch"> ETag of the Entity. ETag should match the current entity state from the header response of the GET request or it should be * for unconditional update. </param>
         /// <param name="patch"> Update parameters. </param>
         /// <param name="notify">
-        /// Notify change in Subscription State. 
-        ///  - If false, do not send any email notification for change of state of subscription 
-        ///  - If true, send email notification of change of state of subscription 
+        /// Notify change in Subscription State.
+        ///  - If false, do not send any email notification for change of state of subscription
+        ///  - If true, send email notification of change of state of subscription
         /// </param>
         /// <param name="appType"> Determines the type of application which send the create user request. Default is legacy publisher portal. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -278,9 +278,9 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="ifMatch"> ETag of the Entity. ETag should match the current entity state from the header response of the GET request or it should be * for unconditional update. </param>
         /// <param name="patch"> Update parameters. </param>
         /// <param name="notify">
-        /// Notify change in Subscription State. 
-        ///  - If false, do not send any email notification for change of state of subscription 
-        ///  - If true, send email notification of change of state of subscription 
+        /// Notify change in Subscription State.
+        ///  - If false, do not send any email notification for change of state of subscription
+        ///  - If true, send email notification of change of state of subscription
         /// </param>
         /// <param name="appType"> Determines the type of application which send the create user request. Default is legacy publisher portal. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

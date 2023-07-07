@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <summary> Initializes a new instance of PlatformTelemetryDataSource. </summary>
         /// <param name="streams"> List of platform telemetry streams to collect. </param>
         /// <param name="name">
-        /// A friendly name for the data source. 
+        /// A friendly name for the data source.
         /// This name should be unique across all data sources (regardless of type) within the data collection rule.
         /// </param>
         internal PlatformTelemetryDataSource(IList<string> streams, string name)
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <summary> List of platform telemetry streams to collect. </summary>
         public IList<string> Streams { get; }
         /// <summary>
-        /// A friendly name for the data source. 
+        /// A friendly name for the data source.
         /// This name should be unique across all data sources (regardless of type) within the data collection rule.
         /// </summary>
         public string Name { get; set; }

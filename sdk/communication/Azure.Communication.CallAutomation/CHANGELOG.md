@@ -1,6 +1,6 @@
 # Release History
 
-## 1.0.0-beta.2 (Unreleased)
+## 1.1.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,23 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.0.0 (2023-06-14)
+
+### Features Added
+- Outbound calls can now be created without providing a User Identifier. This value can be specified in the CallAutomationClientOption if desired.
+- AnswerCall now accepts OperationContext.
+- Calls can be answered by a specific communication identifier user.
+- RemoveParticipant now sends success and failure events with the request.
+- ParticipantsUpdated event now includes a sequence number to distinguish the ordering of events.
+- CallConnectionProperties now includes CorrelationId.
+- StartRecording now accepts ChannelAffinity.
+- Added EventProcessor, an easy and powerful way to handle Call Automation events. See README for details.
+
+### Breaking Changes
+- AddParticipant and RemoveParticipant now only accept one participant at a time.
+- CallSource has been flattened out.
+- CallInvite model replaces previous models for handling outbound calls.
 
 ## 1.0.0-beta.1 (2022-11-07)
 This is a refresh of Azure Communication Service's Calling-Server library. It is now called Call Automation. Call Automation enables developers to build call workflows. Personalise customer interactions by listening to call events and take actions based on your business logic. For more information, please see the [README][read_me].

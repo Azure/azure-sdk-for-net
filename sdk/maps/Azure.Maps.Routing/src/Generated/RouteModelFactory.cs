@@ -56,8 +56,8 @@ namespace Azure.Maps.Routing.Models
         /// <param name="formatVersion"> Format Version property. </param>
         /// <param name="routes"> Routes array. </param>
         /// <param name="optimizedWaypoints">
-        /// Optimized sequence of waypoints. It shows the index from the user provided waypoint sequence for the original and optimized list. For instance, a response: 
-        /// 
+        /// Optimized sequence of waypoints. It shows the index from the user provided waypoint sequence for the original and optimized list. For instance, a response:
+        ///
         /// ```
         /// &lt;optimizedWaypoints&gt;
         /// &lt;waypoint providedIndex="0" optimizedIndex="1"/&gt;
@@ -65,7 +65,7 @@ namespace Azure.Maps.Routing.Models
         /// &lt;waypoint providedIndex="2" optimizedIndex="0"/&gt;
         /// &lt;/optimizedWaypoints&gt;
         /// ```
-        /// 
+        ///
         /// means that the original sequence is [0, 1, 2] and optimized sequence is [1, 2, 0]. Since the index starts by 0 the original is "first, second, third" while the optimized is "second, third, first".
         /// </param>
         /// <param name="report"> Reports the effective settings used in the current call. </param>

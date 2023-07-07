@@ -7,5 +7,9 @@ namespace Azure.ResourceManager.CognitiveServices.Tests
 {
     public class CognitiveServicesManagementTestEnvironment : TestEnvironment
     {
+        public CognitiveServicesManagementTestEnvironment()
+            : base()
+        {
+        }
     }
 }

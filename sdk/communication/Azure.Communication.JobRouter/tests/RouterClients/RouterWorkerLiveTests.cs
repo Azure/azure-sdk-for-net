@@ -80,7 +80,6 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
         }
 
         [Test]
-        [Ignore(reason: "Pagination doesn't get generated correctly")]
         public async Task GetWorkersTest()
         {
             JobRouterClient routerClient = CreateRouterClientWithConnectionString();
@@ -121,8 +120,8 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
                     QueueIds = { [createQueue2.Id] = new RouterQueueAssignment() },
                     ChannelConfigurations =
                     {
-                        ["WebChat"] = new ChannelConfiguration(1) { MaxNumberOfJobs = 4 },
-                        ["Voip"] = new ChannelConfiguration(10) { MaxNumberOfJobs = 9 }
+                        ["WebChat"] = new ChannelConfiguration(5) { MaxNumberOfJobs = 1 },
+                        ["Voip"] = new ChannelConfiguration(10) { MaxNumberOfJobs = 1 }
                     },
                     AvailableForOffers = true,
                 });
@@ -130,7 +129,7 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
             AddForCleanup(new Task(async () => await routerClient.UpdateWorkerAsync(new UpdateWorkerOptions(workerId2) { AvailableForOffers = false })));
 
             var registerWorker3Response = await routerClient.CreateWorkerAsync(
-                new CreateWorkerOptions(workerId3, 10)
+                new CreateWorkerOptions(workerId3, 12)
                 {
                     QueueIds =
                     {

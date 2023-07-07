@@ -14,7 +14,6 @@ namespace Azure.Communication.JobRouter
     /// <summary> Describes a condition that must be met against a set of labels for worker selection. </summary>
     public partial class RouterWorkerSelector
     {
-
         /// <summary> Initializes a new instance of RouterWorkerSelector. </summary>
         /// <param name="key"> The label key to query against. </param>
         /// <param name="labelOperator"> Describes how the value of the label is compared to the value defined on the label selector. </param>

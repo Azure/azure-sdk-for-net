@@ -12,7 +12,6 @@ namespace Azure.Communication.JobRouter.Models
     /// <summary> Policy governing how jobs are distributed to workers. </summary>
     public partial class DistributionPolicy
     {
-
         /// <summary> Initializes a new instance of DistributionPolicy. </summary>
         /// <param name="id"> The unique identifier of the policy. </param>
         /// <param name="name"> The human readable name of the policy. </param>

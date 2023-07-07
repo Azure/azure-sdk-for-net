@@ -2,11 +2,8 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Reflection.Metadata;
-using System.Text;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Azure.Storage.Blobs;
@@ -36,7 +33,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             // Assert
             Assert.AreEqual(uri, storageResource.Uri);
             Assert.AreEqual(blobClient.Name, storageResource.Path);
-            Assert.AreEqual(ProduceUriType.ProducesUri, storageResource.CanProduceUri);
+            Assert.IsTrue(storageResource.CanProduceUri);
         }
 
         [RecordedTest]
