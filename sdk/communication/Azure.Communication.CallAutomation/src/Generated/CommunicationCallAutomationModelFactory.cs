@@ -12,7 +12,7 @@ using System.Linq;
 namespace Azure.Communication.CallAutomation
 {
     /// <summary> Model factory for models. </summary>
-    public static partial class CallAutomationModelFactory
+    public static partial class CommunicationCallAutomationModelFactory
     {
         /// <summary> Initializes a new instance of TransferCallToParticipantResult. </summary>
         /// <param name="operationContext"> The operation context provided by client. </param>
